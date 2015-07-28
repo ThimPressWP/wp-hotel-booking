@@ -1,0 +1,21 @@
+.hb-form-table{}
+.hb-form-field{
+    margin: 0 0 25px 0;
+}
+.hb-form-field:after{
+    content: '';
+    display: block;
+    clear: both;
+}
+.hb-form-field .hb-form-field-label{
+    min-height: 5px;
+    float: left;
+    width: 25%;
+    font-weight: bold;
+}
+.hb-form-field .hb-form-field-input{
+    margin-left: 25%;
+}
+.hb-form-field .hb-form-field-input-inner{
+    margin-left: 20px;
+}
