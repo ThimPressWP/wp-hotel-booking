@@ -3,6 +3,48 @@
  * Common function for admin side
  */
 
+function hb_dropdown_room_capacities( $args = array() ){
+    $args = wp_parse_args(
+        $args,
+        array(
+            'echo'  => true
+        )
+    );
+    ob_start();
+    wp_dropdown_categories(
+        array(
+            'taxonomy'      => 'hb_room_capacity',
+            'hide_empty'    => false
+        )
+    );
+    $output = ob_get_clean();
+    if( $args['echo'] ){
+        echo $output;
+    }
+    return $output;
+}
+
+function hb_dropdown_room_types( $args = array() ){
+    $args = wp_parse_args(
+        $args,
+        array(
+            'echo'  => true
+        )
+    );
+    ob_start();
+    wp_dropdown_categories(
+        array(
+            'taxonomy'      => 'hb_room_type',
+            'hide_empty'    => false
+        )
+    );
+    $output = ob_get_clean();
+    if( $args['echo'] ){
+        echo $output;
+    }
+    return $output;
+}
+
 /**
  * Define default tabs for settings
  *
@@ -43,43 +85,52 @@ function hb_admin_settings_tab_content( $selected ){
         call_user_func_array( "hb_admin_settings_tab_{$selected}", array() );
     }
 }
-
 add_action( 'hb_admin_settings_tab_before', 'hb_admin_settings_tab_content' );
 
-HB_Meta_Box::instance(
-    'room_settings',
-    array(
-        'title' => __( 'Room Settings', 'tp-hotel-booking' ),
-        'post_type' => 'hb_room'
-    ),
-    array()
-)->add_field(
-    array(
-        'name'      => 'num_of_rooms',
-        'label'     => __( 'Number of rooms', 'tp-hotel-booking' ),
-        'type'      => 'number',
-        'std'       => '100',
-        'desc'      => __( 'The number of rooms', 'tp-hotel-booking' ),
-        'min'       => 1,
-        'max'       => 100
-    )
-)->add_field(
-    array(
-        'name'      => 'room_type',
-        'label'     => __( 'Room type', 'tp-hotel-booking' ),
-        'type'      => 'select'
-    ),
-    array(
-        'name'      => 'num_of_adults',
-        'label'     => __( 'Number of adults', 'tp-hotel-booking' ),
-        'type'      => 'select'
-    ),
-    array(
-        'name'      => 'max_child_per_room',
-        'label'     => __( 'Max child per room', 'tp-hotel-booking' ),
-        'type'      => 'number',
-        'std'       => 0,
-        'min'       => 0,
-        'max'       => 100
-    )
-);
+function hb_add_meta_boxes(){
+    HB_Meta_Box::instance(
+        'room_settings',
+        array(
+            'title' => __( 'Room Settings', 'tp-hotel-booking' ),
+            'post_type' => 'hb_room'
+        ),
+        array()
+    )->add_field(
+        array(
+            'name'      => 'num_of_rooms',
+            'label'     => __( 'Number of rooms', 'tp-hotel-booking' ),
+            'type'      => 'number',
+            'std'       => '100',
+            'desc'      => __( 'The number of rooms', 'tp-hotel-booking' ),
+            'min'       => 1,
+            'max'       => 100
+        )
+    )->add_field(
+        array(
+            'name'      => 'room_type',
+            'label'     => __( 'Room type', 'tp-hotel-booking' ),
+            'type'      => 'html',
+            'content'   => hb_dropdown_room_types(
+                array(
+                    'echo'      => false,
+                    'name'      => 'room_type',
+                    'std'       => ''
+                )
+            )
+        ),
+        array(
+            'name'      => 'num_of_adults',
+            'label'     => __( 'Number of adults', 'tp-hotel-booking' ),
+            'type'      => 'select'
+        ),
+        array(
+            'name'      => 'max_child_per_room',
+            'label'     => __( 'Max child per room', 'tp-hotel-booking' ),
+            'type'      => 'number',
+            'std'       => 0,
+            'min'       => 0,
+            'max'       => 100
+        )
+    );
+}
+add_action( 'init', 'hb_add_meta_boxes', 50 );

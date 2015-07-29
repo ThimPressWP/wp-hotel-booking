@@ -187,7 +187,7 @@ class HB_Meta_Box{
      */
     static function instance( $id, $args, $fields ){
         if( empty( self::$_meta_boxes[ $id ] ) ){
-            if( empty( $args['id'] ) ) $args['id'] = $id;
+            if( empty( $args['name'] ) ) $args['name'] = $id;
             self::$_meta_boxes[ $id ] = new self( $args, $fields );
         }
         return self::$_meta_boxes[ $id ];

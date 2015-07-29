@@ -22,5 +22,15 @@ if( ! array_key_exists( $selected_tab, $tabs ) ){
         <p>
             <button class="button"><?php _e( 'Update', 'tp-hotel-booking' );?></button>
         </p>
+        <?php
+        wp_list_categories(
+            array(
+                'taxonomy'      => 'hb_room_type',
+                'hide_empty'    => false
+            )
+        );
+
+        hb_list_room_types();
+        ?>
     </form>
 </div>
