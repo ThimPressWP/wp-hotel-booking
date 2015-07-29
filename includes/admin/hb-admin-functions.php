@@ -21,7 +21,7 @@ function hb_admin_settings_tabs(){
  * Callback handler for Hotel Information tab content
  */
 function hb_admin_settings_tab_hotel_info(){
-    echo 'Hotel Info';
+    TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings/hotel-info.php' );
 }
 
 /**
@@ -58,58 +58,28 @@ HB_Meta_Box::instance(
         'name'      => 'num_of_rooms',
         'label'     => __( 'Number of rooms', 'tp-hotel-booking' ),
         'type'      => 'number',
-        'std'       => '1000',
+        'std'       => '100',
         'desc'      => __( 'The number of rooms', 'tp-hotel-booking' ),
-        'min'       => 0,
-        'max'       => 10
+        'min'       => 1,
+        'max'       => 100
     )
 )->add_field(
     array(
         'name'      => 'room_type',
         'label'     => __( 'Room type', 'tp-hotel-booking' ),
         'type'      => 'select'
-    )
-);
-
-HB_Meta_Box::instance(
-    'room_type',
-    array(
-        'title' => __( 'Room Type', 'tp-hotel-booking' ),
-        'post_type' => 'hb_room'
     ),
-    array()
-)->add_field(
     array(
-        'name'      => 'xxxxxxxxxxxxxxxxxxxx',
-        'label'     => __( 'Number of rooms', 'tp-hotel-booking' ),
-        'type'      => 'text'
-    )
-)->add_field(
-    array(
-        'name'      => 'yyyyyyyyyyyyyyyyyyyyyyy',
-        'label'     => __( 'Room type', 'tp-hotel-booking' ),
+        'name'      => 'num_of_adults',
+        'label'     => __( 'Number of adults', 'tp-hotel-booking' ),
         'type'      => 'select'
-    )
-);
-
-
-HB_Meta_Box::instance(
-    'room_typex',
-    array(
-        'title' => __( 'Room Type', 'tp-hotel-booking' ),
-        'post_type' => 'post'
     ),
-    array()
-)->add_field(
     array(
-        'name'      => 'xxxxxxxxxxxxxxxxxxxx',
-        'label'     => __( 'Number of rooms', 'tp-hotel-booking' ),
-        'type'      => 'text'
-    )
-)->add_field(
-    array(
-        'name'      => 'yyyyyyyyyyyyyyyyyyyyyyy',
-        'label'     => __( 'Room type', 'tp-hotel-booking' ),
-        'type'      => 'select'
+        'name'      => 'max_child_per_room',
+        'label'     => __( 'Max child per room', 'tp-hotel-booking' ),
+        'type'      => 'number',
+        'std'       => 0,
+        'min'       => 0,
+        'max'       => 100
     )
 );

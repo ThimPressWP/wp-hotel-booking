@@ -23,6 +23,20 @@ class HB_Admin_Menu{
                 'manage_options',
                 'tp_hotel_booking_settings',
                 array( $this, 'settings_page' )
+            ),
+            array(
+                'tp_hotel_booking',
+                __( 'Room Types', 'tp-hotel-booking' ),
+                __( 'Room Types', 'tp-hotel-booking' ),
+                'tp_hotel_booking',
+                'edit-tags.php?taxonomy=hb_room_type'
+            ),
+            array(
+                'tp_hotel_booking',
+                __( 'Room Capacities', 'tp-hotel-booking' ),
+                __( 'Room Capacities', 'tp-hotel-booking' ),
+                'tp_hotel_booking',
+                'edit-tags.php?taxonomy=hb_room_capacity'
             )
         );
 

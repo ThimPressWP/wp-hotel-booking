@@ -34,6 +34,9 @@ class HB_Meta_Box{
 
     }
 
+    /**
+     * Add meta box to post
+     */
     function add_meta_box(){
         $meta_box_id    = $this->_args['id'];
         $meta_box_title = $this->_args['title'];
@@ -54,15 +57,35 @@ class HB_Meta_Box{
         }
     }
 
+    /**
+     * Add new field to meta box
+     *
+     * @param array
+     * @return HB_Meta_Box instance
+     */
     function add_field( $field ){
-        $this->_fields[] = (array)$field;
+        $args = func_get_args();
+        foreach( $args as $f ) {
+            $this->_fields[] = (array)$f;
+        }
         return $this;
     }
 
+    /**
+     * Return all fields of meta box
+     * @return array
+     */
     function get_fields(){
         return $this->_fields;
     }
 
+    /**
+     * Check to see if a meta key is already added to the post
+     *
+     * @param int
+     * @param string
+     * @return bool
+     */
     function has_post_meta( $object_id, $meta_key ){
         $meta_type = 'post';
         $meta_cache = wp_cache_get($object_id, $meta_type . '_meta');
@@ -73,6 +96,12 @@ class HB_Meta_Box{
         }
         return array_key_exists( $meta_key, $meta_cache );
     }
+
+    /**
+     * Output meta box content
+     *
+     * @param int
+     */
     function render( $post ){
         if( $fields = $this->_fields ){
             echo '<ul class="hb-form-table">';
@@ -101,14 +130,29 @@ class HB_Meta_Box{
         wp_nonce_field( $this->get_nonce_field_action(), $this->get_nonce_field_name() );
     }
 
+    /**
+     * Get name of nonce field for this meta box
+     *
+     * @return string
+     */
     function get_nonce_field_name(){
         return 'meta_box_' . $this->_args['name'];
     }
 
+    /**
+     * Get name of nonce field action for this meta box
+     *
+     * @return string
+     */
     function get_nonce_field_action(){
         return 'update_meta_box_' . $this->_args['name'];
     }
 
+    /**
+     * Update meta data when saving post
+     *
+     * @param int
+     */
     function update( $post_id ){
         if ( ! isset( $_POST[ $this->get_nonce_field_name() ] ) || ! wp_verify_nonce( $_POST[ $this->get_nonce_field_name() ], $this->get_nonce_field_action() ) ) return;
         if( ! $this->_fields ) return;
@@ -118,6 +162,12 @@ class HB_Meta_Box{
         }
 
     }
+
+    /**
+     * Update all meta boxes registered
+     *
+     * @param $post_id
+     */
     static function update_meta_boxes( $post_id ){
         if( 'post' != strtolower( $_SERVER['REQUEST_METHOD'] ) ) return;
         if( ! ( $meta_boxes = self::$_meta_boxes ) ) return;
@@ -126,6 +176,15 @@ class HB_Meta_Box{
             $meta_box->update( $post_id );
         }
     }
+
+    /**
+     * Get an instance of a meta box, create a new one if it is not exists
+     *
+     * @param string $id
+     * @param array $args
+     * @param array $fields
+     * @return HB_Meta_Box instance
+     */
     static function instance( $id, $args, $fields ){
         if( empty( self::$_meta_boxes[ $id ] ) ){
             if( empty( $args['id'] ) ) $args['id'] = $id;
@@ -135,4 +194,7 @@ class HB_Meta_Box{
     }
 }
 
+/**
+ * Save post action
+ */
 add_action( 'save_post', array( 'HB_Meta_Box', 'update_meta_boxes' ) );

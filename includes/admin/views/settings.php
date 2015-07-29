@@ -17,6 +17,7 @@ if( ! array_key_exists( $selected_tab, $tabs ) ){
     <form method="post" action="" enctype="multipart/form-data">
         <?php do_action( "hb_admin_settings_tab_before", $selected_tab );?>
         <?php do_action( "hb_admin_settings_tab_{$selected_tab}" );?>
+        <?php wp_nonce_field( "hb_admin_settings_tab_{$selected_tab}", "hb_admin_settings_tab_{$selected_tab}_field" );?>
         <?php do_action( "hb_admin_settings_tab_after", $selected_tab );?>
         <p>
             <button class="button"><?php _e( 'Update', 'tp-hotel-booking' );?></button>

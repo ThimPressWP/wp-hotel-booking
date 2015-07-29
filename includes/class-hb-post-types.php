@@ -9,6 +9,20 @@ class HB_Post_Types{
      */
     function __construct(){
         add_action( 'init', array( $this, 'register_post_types' ) );
+        add_action( 'admin_menu' , array( $this, 'remove_meta_boxes' ) );
+
+        add_action( 'admin_head-edit-tags.php', array( $this, 'fix_menu_parent_file' ) );
+    }
+    function fix_menu_parent_file() {
+        if ( in_array( $_GET['taxonomy'], array( 'hb_room_type', 'hb_room_capacity' ) ) )
+            $GLOBALS['parent_file'] = 'tp_hotel_booking';
+    }
+    /**
+     * Remove default meta boxes
+     */
+    function remove_meta_boxes() {
+        remove_meta_box( 'hb_room_typediv', 'hb_room', 'side' );
+        remove_meta_box( 'hb_room_capacitydiv', 'hb_room', 'side' );
     }
 
     /**
@@ -50,6 +64,82 @@ class HB_Post_Types{
             'rewrite'            => array( 'slug' => 'rooms', 'hierarchical' => true, 'with_front' => false )
         );
         register_post_type( 'hb_room', $args );
+
+        /**
+         * Register room type taxonomy
+         */
+        register_taxonomy( 'hb_room_type',
+            array( 'hb_room' ),
+            array(
+                'hierarchical'          => true,
+                'update_count_callback' => '_wc_term_recount',
+                'label'                 => __( 'Room Type', 'tp-hotel-booking' ),
+                'labels' => array(
+                    'name'              => __( 'Room Types', 'tp-hotel-booking' ),
+                    'singular_name'     => __( 'Room Type', 'tp-hotel-booking' ),
+                    'menu_name'         => _x( 'Types', 'Admin menu name', 'tp-hotel-booking' ),
+                    'search_items'      => __( 'Search Room Types', 'tp-hotel-booking' ),
+                    'all_items'         => __( 'All Room Types', 'tp-hotel-booking' ),
+                    'parent_item'       => __( 'Parent Room Type', 'tp-hotel-booking' ),
+                    'parent_item_colon' => __( 'Parent Room Type:', 'tp-hotel-booking' ),
+                    'edit_item'         => __( 'Edit Room Type', 'tp-hotel-booking' ),
+                    'update_item'       => __( 'Update Room Type', 'tp-hotel-booking' ),
+                    'add_new_item'      => __( 'Add New Room Type', 'tp-hotel-booking' ),
+                    'new_item_name'     => __( 'New Room Type Name', 'tp-hotel-booking' )
+                ),
+                'show_ui'               => true,
+                'query_var'             => true,
+                'capabilities'          => array(
+                    'manage_terms' => 'manage_hb_room_terms',
+                    'edit_terms'   => 'edit_hb_room_terms',
+                    'delete_terms' => 'delete_hb_room_terms',
+                    'assign_terms' => 'assign_hb_room_terms',
+                ),
+                'rewrite'               => array(
+                    'slug'         => 'hb_room_type',
+                    'with_front'   => false,
+                    'hierarchical' => false,
+                )
+            )
+        );
+
+        /**
+         * Register room capacity taxonomy
+         */
+        register_taxonomy( 'hb_room_capacity',
+            array( 'hb_room' ),
+            array(
+                'hierarchical'          => true,
+                'update_count_callback' => '_wc_term_recount',
+                'label'                 => __( 'Room Capacity', 'tp-hotel-booking' ),
+                'labels' => array(
+                    'name'              => __( 'Room Capacities', 'tp-hotel-booking' ),
+                    'singular_name'     => __( 'Room Capacity', 'tp-hotel-booking' ),
+                    'menu_name'         => _x( 'Types', 'Admin menu name', 'tp-hotel-booking' ),
+                    'search_items'      => __( 'Search Room Capacities', 'tp-hotel-booking' ),
+                    'all_items'         => __( 'All Room Capacity', 'tp-hotel-booking' ),
+                    'parent_item'       => __( 'Parent Room Capacity', 'tp-hotel-booking' ),
+                    'parent_item_colon' => __( 'Parent Room Capacity:', 'tp-hotel-booking' ),
+                    'edit_item'         => __( 'Edit Room Capacity', 'tp-hotel-booking' ),
+                    'update_item'       => __( 'Update Room Capacity', 'tp-hotel-booking' ),
+                    'add_new_item'      => __( 'Add New Room Capacity', 'tp-hotel-booking' ),
+                    'new_item_name'     => __( 'New Room Type Capacity', 'tp-hotel-booking' )
+                ),
+                'show_ui'               => true,
+                'query_var'             => true,
+                'capabilities'          => array(
+                    'manage_terms' => 'manage_hb_room_terms',
+                    'edit_terms'   => 'edit_hb_room_terms',
+                    'delete_terms' => 'delete_hb_room_terms',
+                    'assign_terms' => 'assign_hb_room_terms',
+                ),
+                'rewrite'               => array(
+                    'slug'         => 'hb_room_capacity',
+                    'with_front'   => false,
+                    'hierarchical' => true,
+                )
+            )
+        );
 
         /**
          * Register custom post type for booking
