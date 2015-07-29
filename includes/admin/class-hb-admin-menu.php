@@ -21,7 +21,6 @@ class HB_Admin_Menu{
                 __( 'Room Types', 'tp-hotel-booking' ),
                 __( 'Room Types', 'tp-hotel-booking' ),
                 'manage_options',
-            
                 'edit-tags.php?taxonomy=hb_room_type'
             ),
             'room_capacity' => array(
@@ -29,7 +28,6 @@ class HB_Admin_Menu{
                 __( 'Room Capacities', 'tp-hotel-booking' ),
                 __( 'Room Capacities', 'tp-hotel-booking' ),
                 'manage_options',
-                
                 'edit-tags.php?taxonomy=hb_room_capacity'
             ),
             'settings'   => array(
