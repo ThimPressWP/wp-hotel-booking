@@ -157,7 +157,7 @@ class HB_Settings{
         if( ! $prefix || ! is_string( $prefix ) ){
             $prefix = 'tp_hotel_booking_';
         }
-        if( ! self::$_instances[ $prefix ] ){
+        if( empty( self::$_instances[ $prefix ] ) ){
             self::$_instances[ $prefix ] = new self( $prefix, $default );
         }
         return self::$_instances[ $prefix ];
