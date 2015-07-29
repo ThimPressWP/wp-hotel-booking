@@ -46,8 +46,6 @@ class HB_Admin_Menu{
         if ( $menu_items ) foreach ( $menu_items as $item ) {
             call_user_func_array( 'add_submenu_page', $item );
         }
-
-        echo '456';
     }
 
     function settings_page(){

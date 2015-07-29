@@ -138,8 +138,6 @@ class HB_Post_Types{
         );
         register_post_type( 'hb_room', $args );
 
-        echo "123";
-
         /**
          * Register room type taxonomy
          */
