@@ -38,7 +38,7 @@ class HB_Meta_Box{
      * Add meta box to post
      */
     function add_meta_box(){
-        $meta_box_id    = $this->_args['id'];
+        $meta_box_id    = $this->_args['name'];
         $meta_box_title = $this->_args['title'];
         $callback       = ! empty( $this->_args['callback'] ) ? $this->_args['callback'] : array( $this, 'render' );
         $post_types     = ! empty( $this->_args['post_type'] ) ? $this->_args['post_type'] : 'post';

@@ -109,19 +109,28 @@ function hb_add_meta_boxes(){
         array(
             'name'      => 'room_type',
             'label'     => __( 'Room type', 'tp-hotel-booking' ),
-            'type'      => 'html',
-            'content'   => hb_dropdown_room_types(
+            'type'      => 'select',
+            'options'   => hb_get_room_types(
                 array(
-                    'echo'      => false,
-                    'name'      => 'room_type',
-                    'std'       => ''
+                    'map_fields' => array(
+                        'term_id'   => 'value',
+                        'name' => 'text'
+                    )
                 )
             )
         ),
         array(
             'name'      => 'num_of_adults',
             'label'     => __( 'Number of adults', 'tp-hotel-booking' ),
-            'type'      => 'select'
+            'type'      => 'select',
+            'options'   => hb_get_room_capacities(
+                array(
+                    'map_fields' => array(
+                        'term_id'   => 'value',
+                        'name' => 'text'
+                    )
+                )
+            )
         ),
         array(
             'name'      => 'max_child_per_room',
