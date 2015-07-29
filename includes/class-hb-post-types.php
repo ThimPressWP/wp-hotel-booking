@@ -138,6 +138,8 @@ class HB_Post_Types{
         );
         register_post_type( 'hb_room', $args );
 
+        echo "123";
+
         /**
          * Register room type taxonomy
          */
@@ -162,12 +164,6 @@ class HB_Post_Types{
                 ),
                 'show_ui'               => true,
                 'query_var'             => true,
-                'capabilities'          => array(
-                    'manage_terms' => 'manage_hb_room_terms',
-                    'edit_terms'   => 'edit_hb_room_terms',
-                    'delete_terms' => 'delete_hb_room_terms',
-                    'assign_terms' => 'assign_hb_room_terms',
-                ),
                 'rewrite'               => array(
                     'slug'         => 'hb_room_type',
                     'with_front'   => false,
@@ -200,12 +196,6 @@ class HB_Post_Types{
                 ),
                 'show_ui'               => true,
                 'query_var'             => true,
-                'capabilities'          => array(
-                    'manage_terms' => 'manage_hb_room_terms',
-                    'edit_terms'   => 'edit_hb_room_terms',
-                    'delete_terms' => 'delete_hb_room_terms',
-                    'assign_terms' => 'assign_hb_room_terms',
-                ),
                 'rewrite'               => array(
                     'slug'         => 'hb_room_capacity',
                     'with_front'   => false,
