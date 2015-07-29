@@ -20,14 +20,16 @@ class HB_Admin_Menu{
                 'tp_hotel_booking',
                 __( 'Room Types', 'tp-hotel-booking' ),
                 __( 'Room Types', 'tp-hotel-booking' ),
-                'tp_hotel_booking',
+                'manage_options',
+            
                 'edit-tags.php?taxonomy=hb_room_type'
             ),
             'room_capacity' => array(
                 'tp_hotel_booking',
                 __( 'Room Capacities', 'tp-hotel-booking' ),
                 __( 'Room Capacities', 'tp-hotel-booking' ),
-                'tp_hotel_booking',
+                'manage_options',
+                
                 'edit-tags.php?taxonomy=hb_room_capacity'
             ),
             'settings'   => array(
@@ -46,6 +48,8 @@ class HB_Admin_Menu{
         if ( $menu_items ) foreach ( $menu_items as $item ) {
             call_user_func_array( 'add_submenu_page', $item );
         }
+
+        echo '456';
     }
 
     function settings_page(){
