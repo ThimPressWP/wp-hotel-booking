@@ -1,4 +1,51 @@
 <?php
+
+function hb_dropdown_room_capacities( $args = array() ){
+    $args = wp_parse_args(
+        $args,
+        array(
+            'echo'  => true
+        )
+    );
+    ob_start();
+    wp_dropdown_categories(
+        array_merge( $args,
+            array(
+                'taxonomy'      => 'hb_room_capacity',
+                'hide_empty'    => false
+            )
+        )
+    );
+    $output = ob_get_clean();
+    if( $args['echo'] ){
+        echo $output;
+    }
+    return $output;
+}
+
+function hb_dropdown_room_types( $args = array() ){
+    $args = wp_parse_args(
+        $args,
+        array(
+            'echo'  => true
+        )
+    );
+    ob_start();
+    wp_dropdown_categories(
+        array_merge( $args,
+            array(
+                'taxonomy'      => 'hb_room_type',
+                'hide_empty'    => false,
+            )
+        )
+    );
+    $output = ob_get_clean();
+    if( $args['echo'] ){
+        echo $output;
+    }
+    return $output;
+}
+
 function hb_get_room_types( $args = array() ){
     $args = wp_parse_args(
         $args,
@@ -57,6 +104,36 @@ function hb_get_room_capacities( $args = array() ){
     return $types;
 }
 
+function hb_get_child_per_room(){
+    global $wpdb;
+    $query = $wpdb->prepare("
+        SELECT DISTINCT meta_value
+        FROM {$wpdb->postmeta} pm
+        INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+        WHERE p.post_type=%s
+          AND meta_key=%s
+    ", 'hb_room', 'max_child_per_room' );
+    return $wpdb->get_col( $query );
+}
+
+function hb_dropdown_child_per_room( $args = array() ){
+    $args = wp_parse_args(
+        $args,
+        array(
+            'name'      => '',
+            'selected'  => ''
+        )
+    );
+    $rows = hb_get_child_per_room();
+    $output = '<select name="' . $args['name'] . '">';
+    if( $rows ){
+        foreach( $rows as $num ){
+            $output .= sprintf( '<option value="%1$d"%2$s>%1$d</option>', $num, $args['selected'] == $num ? ' selected="selected"' : '' );
+        }
+    }
+    $output .= '</select>';
+    echo $output;
+}
 function hb_payment_currencies() {
     $currencies = array(
         'AED' => 'United Arab Emirates Dirham (د.إ)',
@@ -107,4 +184,13 @@ function hb_payment_currencies() {
     );
 
     return apply_filters( 'hb_payment_currencies', $currencies );
+}
+
+/**
+ * Checks to see if is enable overwrite templates from theme
+ *
+ * @return bool
+ */
+function hb_enable_overwrite_template(){
+    return HB_Settings::instance()->get( 'overwrite_templates' ) == 'on';
 }

@@ -3,6 +3,14 @@ $settings = hb_settings();
 ?>
 <table class="form-table">
     <tr>
+        <th><?php _e( 'Search Page', 'tp-hotel-booking' );?></th>
+        <td>
+            <select name="<?php echo $settings->get_field_name('search_page_id');?>">
+
+            </select>
+        </td>
+    </tr>
+    <tr>
         <th><?php _e( 'Currency', 'tp-hotel-booking' );?></th>
         <td>
             <select name="<?php echo $settings->get_field_name('currency');?>">

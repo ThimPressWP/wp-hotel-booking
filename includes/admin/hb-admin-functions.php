@@ -2,49 +2,6 @@
 /**
  * Common function for admin side
  */
-
-function hb_dropdown_room_capacities( $args = array() ){
-    $args = wp_parse_args(
-        $args,
-        array(
-            'echo'  => true
-        )
-    );
-    ob_start();
-    wp_dropdown_categories(
-        array(
-            'taxonomy'      => 'hb_room_capacity',
-            'hide_empty'    => false
-        )
-    );
-    $output = ob_get_clean();
-    if( $args['echo'] ){
-        echo $output;
-    }
-    return $output;
-}
-
-function hb_dropdown_room_types( $args = array() ){
-    $args = wp_parse_args(
-        $args,
-        array(
-            'echo'  => true
-        )
-    );
-    ob_start();
-    wp_dropdown_categories(
-        array(
-            'taxonomy'      => 'hb_room_type',
-            'hide_empty'    => false
-        )
-    );
-    $output = ob_get_clean();
-    if( $args['echo'] ){
-        echo $output;
-    }
-    return $output;
-}
-
 /**
  * Define default tabs for settings
  *

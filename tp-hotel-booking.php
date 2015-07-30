@@ -8,6 +8,9 @@ Version: 0.9
 Author URI: http://thimpress.com
 */
 
+define( 'HB_FILE', __FILE__ );
+define( 'HB_PLUGIN_PATH', dirname( __FILE__ ) );
+define( 'HB_VERSION', '0.9' );
 /**
  * Class TP_Hotel_Booking
  */
@@ -76,6 +79,9 @@ class TP_Hotel_Booking{
             $this->_include( 'includes/admin/class-hb-admin-menu.php' );
             $this->_include( 'includes/class-hb-meta-box.php' );
             $this->_include( 'includes/admin/hb-admin-functions.php' );
+        }else{
+            $this->_include( 'includes/hb-template-functions.php' );
+            $this->_include( 'includes/class-hb-shortcodes.php' );
         }
         $this->_include( 'includes/class-hb-post-types.php' );
         $this->_include( 'includes/hb-functions.php' );
@@ -124,14 +130,19 @@ class TP_Hotel_Booking{
      * Enqueue assets for the plugin
      */
     function enqueue_assets(){
+        wp_register_script( 'jquery-ui-datepicker', $this->plugin_url( 'includes/assets/js/jquery.ui.datepicker.min.js' ), array( 'jquery' ) );
         if( is_admin() ){
-            wp_register_style( 'tp-admin-hotel-booking', $this->plugin_url( 'includes/assets/admin.tp-hotel-booking.css' ) );
+            wp_register_style( 'tp-admin-hotel-booking', $this->plugin_url( 'includes/assets/css/admin.tp-hotel-booking.css' ) );
         }else{
-            wp_register_style( 'tp-hotel-booking', $this->plugin_url( 'includes/assets/tp-hotel-booking.css' ) );
+            wp_register_style( 'tp-hotel-booking', $this->plugin_url( 'includes/assets/css/hotel-booking.css' ) );
+            wp_register_script( 'tp-hotel-booking', $this->plugin_url( 'includes/assets/js/hotel-booking.js' ), array( 'jquery', 'jquery-ui-datepicker' ) );
         }
 
         if( is_admin() ) {
-            wp_enqueue_style('tp-admin-hotel-booking');
+            wp_enqueue_style( 'tp-admin-hotel-booking' );
+        }else{
+            wp_enqueue_style( 'tp-hotel-booking' );
+            wp_enqueue_script( 'tp-hotel-booking' );
         }
     }
 

@@ -10,7 +10,7 @@ class HB_Post_Types{
      */
     function __construct(){
         add_action( 'init', array( $this, 'register_post_types' ) );
-        add_action( 'init', array( $this, 'get_ordering' ) );
+        add_action( 'init', array( $this, 'update_taxonomy' ) );
 
         add_action( 'admin_menu' , array( $this, 'remove_meta_boxes' ) );
         add_action( 'admin_head-edit-tags.php', array( $this, 'fix_menu_parent_file' ) );
@@ -27,14 +27,14 @@ class HB_Post_Types{
         add_action( 'edited_hb_room_type', array( $this, 'update_taxonomy_custom_fields' ), 10 );
         add_action( 'edited_hb_room_capacity', array( $this, 'update_taxonomy_custom_fields' ), 10 );
 
+        add_action( 'delete_term_taxonomy', array( $this, 'delete_term_data' ) );
     }
 
-    function get_ordering(){
-        if( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] == 'hb-update-ordering' ){
+    function update_taxonomy(){
+        if( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] == 'hb-update-taxonomy' ){
             $taxonomy = ! empty( $_REQUEST['taxonomy'] ) ? $_REQUEST['taxonomy'] : '';
-
+            global $wpdb;
             if( ! empty( $_POST[ "{$taxonomy}_ordering" ] ) ){
-                global $wpdb;
                 $when = array();
                 $ids = array();
                 foreach( $_POST[ "{$taxonomy}_ordering" ] as $term_id => $ordering ){
@@ -51,7 +51,31 @@ class HB_Post_Types{
                 ", join( "\n", $when ), join(', ', $ids ) );
                 $wpdb->query( $query );
             }
+
+            if( ! empty( $_POST[ "{$taxonomy}_capacity" ] ) ){
+                foreach( $_POST[ "{$taxonomy}_capacity" ] as $term_id => $capacity ) {
+                    if( $capacity ) {
+                        update_option( 'hb_taxonomy_capacity_' . $term_id, $capacity );
+                    }else{
+                        delete_option( 'hb_taxonomy_capacity_' . $term_id );
+                    }
+                }
+            }
+
+            if( ! empty( $_POST[ "{$taxonomy}_thumbnail" ] ) ){
+                foreach( $_POST[ "{$taxonomy}_thumbnail" ] as $term_id => $thumb_id ) {
+                    if( $thumb_id ) {
+                        update_option( 'hb_taxonomy_thumbnail_' . $term_id, $thumb_id );
+                    }else{
+                        delete_option( 'hb_taxonomy_thumbnail_' . $term_id );
+                    }
+                }
+            }
         }
+    }
+
+    function delete_term_data( $term_id ){
+        delete_option( 'hb_taxonomy_thumbnail_' . $term_id );
     }
 
     function taxonomy_custom_fields( $term ) {
@@ -78,6 +102,11 @@ class HB_Post_Types{
     }
 
     function taxonomy_columns( $columns ){
+        if( 'hb_room_type' == $_REQUEST['taxonomy'] ){
+            $columns['thumbnail'] = __( 'Image', 'tp-hotel-booking' );
+        }else{
+            $columns['capacity'] = __( 'Capacity', 'tp-hotel-booking' );
+        }
         $columns['ordering'] = __( 'Ordering', 'tp-hotel-booking' );
         return $columns;
     }
@@ -87,11 +116,33 @@ class HB_Post_Types{
         $term = get_term( $term_id, $taxonomy );
         switch ($column_name) {
             case 'ordering':
-                $content = sprintf( '<input type="text" name="%s_ordering[%d]" value="%d" />', $taxonomy, $term_id, $term->term_group );
-                wp_enqueue_script( 'hb-edit-tags', TP_Hotel_Booking::instance()->plugin_url( 'includes/assets/js/edit-tags.js' ), array( 'jquery' ) );
+                $content = sprintf( '<input type="text" name="%s_ordering[%d]" value="%d" size="3" />', $taxonomy, $term_id, $term->term_group );
+                break;
+            case 'thumbnail':
+                $thumb_id = get_option( 'hb_taxonomy_thumbnail_' . $term_id );
+                $content = '<div class="hb-taxonomy-thumbnail-selector' . ( $thumb_id ? ' has-attachment' : '') . '" data-id="' . $term_id . '" data-taxonomy="'.$taxonomy.'">';
+                if( $thumb_id ){
+                    if( $thumb = wp_get_attachment_image_src( $thumb_id ) ) {
+                        $content .= '<img src="' . $thumb[0] . '" />';
+                        $content .= '<input type="hidden" name="' . $taxonomy . '_thumbnail[' . $term_id . ']" value="' . $thumb_id . '" />';
+                    }
+                }else{
+                    $content .= '<input type="hidden" name="' . $taxonomy . '_thumbnail[' . $term_id . ']" value="0" />';
+                }
+                $content .= '</div>';
+                break;
+            case 'capacity':
+                $capacity = get_option( 'hb_taxonomy_capacity_' . $term_id );
+                $content = '<input type="text" name="' . $taxonomy . '_capacity[' . $term_id . ']" value="' . $capacity .'" size="2" />';
                 break;
             default:
                 break;
+        }
+        if( in_array( $column_name, array( 'ordering', 'thumbnail' ) ) ){
+            wp_enqueue_media();
+            wp_enqueue_style( 'hb-edit-tags', TP_Hotel_Booking::instance()->plugin_url( 'includes/assets/css/edit-tags.css' ) );
+            wp_enqueue_script( 'hb-media-selector', TP_Hotel_Booking::instance()->plugin_url( 'includes/assets/js/media-selector.js' ), array( 'jquery' ) );
+            wp_enqueue_script( 'hb-edit-tags', TP_Hotel_Booking::instance()->plugin_url( 'includes/assets/js/edit-tags.js' ) );
         }
         return $content;
     }
@@ -109,6 +160,9 @@ class HB_Post_Types{
     function remove_meta_boxes() {
         remove_meta_box( 'hb_room_typediv', 'hb_room', 'side' );
         remove_meta_box( 'hb_room_capacitydiv', 'hb_room', 'side' );
+
+        remove_meta_box( 'tagsdiv-hb_room_type', 'hb_room', 'side' );
+        remove_meta_box( 'tagsdiv-hb_room_capacity', 'hb_room', 'side' );
     }
 
     /**
