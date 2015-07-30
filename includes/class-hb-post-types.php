@@ -15,35 +15,46 @@ class HB_Post_Types{
         add_action( 'admin_menu' , array( $this, 'remove_meta_boxes' ) );
         add_action( 'admin_head-edit-tags.php', array( $this, 'fix_menu_parent_file' ) );
 
-        add_action( 'hb_room_type_edit_form_fields', array( $this, 'room_type_custom_fields' ), 10, 2 );
-        add_filter( 'manage_edit-hb_room_type_columns', array( $this, 'room_type_columns' ) );
-        add_filter( 'manage_hb_room_type_custom_column', array( $this, 'room_type_column_content' ), 10, 3 );
-        add_action( 'edited_hb_room_type', array( $this, 'update_room_type_custom_fields' ), 10 );
+        //add_action( 'hb_room_type_edit_form_fields', array( $this, 'taxonomy_custom_fields' ), 10, 2 );
+        //add_action( 'hb_room_capacity_edit_form_fields', array( $this, 'taxonomy_custom_fields' ), 10, 2 );
+
+        add_filter( 'manage_edit-hb_room_type_columns', array( $this, 'taxonomy_columns' ) );
+        add_filter( 'manage_edit-hb_room_capacity_columns', array( $this, 'taxonomy_columns' ) );
+
+        add_filter( 'manage_hb_room_type_custom_column', array( $this, 'taxonomy_column_content' ), 10, 3 );
+        add_filter( 'manage_hb_room_capacity_custom_column', array( $this, 'taxonomy_column_content' ), 10, 3 );
+
+        add_action( 'edited_hb_room_type', array( $this, 'update_taxonomy_custom_fields' ), 10 );
+        add_action( 'edited_hb_room_capacity', array( $this, 'update_taxonomy_custom_fields' ), 10 );
 
     }
 
     function get_ordering(){
-        return;
-        if( ! empty( $_REQUEST['taxonomy'] ) ){
-            global $wpdb;
-            $term_slug = $_REQUEST['taxonomy'];
-            $terms = get_terms( $term_slug, array( 'hide_empty' => false ) );
+        if( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] == 'hb-update-ordering' ){
+            $taxonomy = ! empty( $_REQUEST['taxonomy'] ) ? $_REQUEST['taxonomy'] : '';
 
-            if( $terms ){
-                echo $query = $wpdb->prepare("
-                    SELECT tt.term_taxonomy_id, tr.term_order
-                    FROM `{$wpdb->term_relationships}` tr
-                    INNER JOIN `{$wpdb->term_taxonomy}` tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
-                    WHERE tt.taxonomy = %s
-                ", $term_slug );
+            if( ! empty( $_POST[ "{$taxonomy}_ordering" ] ) ){
+                global $wpdb;
+                $when = array();
+                $ids = array();
+                foreach( $_POST[ "{$taxonomy}_ordering" ] as $term_id => $ordering ){
+                    $when[] = "WHEN term_id = {$term_id} THEN {$ordering}";
+                    $ids[] = $term_id;
+                }
 
-                $ordering = $wpdb->get_results( $query );
-                print_r($ordering);
+                $query = sprintf("
+                    UPDATE {$wpdb->terms}
+                    SET term_group = CASE
+                       %s
+                    END
+                    WHERE term_id IN(%s)
+                ", join( "\n", $when ), join(', ', $ids ) );
+                $wpdb->query( $query );
             }
         }
     }
 
-    function room_type_custom_fields( $term ) {
+    function taxonomy_custom_fields( $term ) {
         ?>
         <tr class="form-field">
             <th scope="row" valign="top">
@@ -58,7 +69,7 @@ class HB_Post_Types{
     <?php
     }
 
-    function update_room_type_custom_fields( $term_id ) {
+    function update_taxonomy_custom_fields( $term_id ) {
         if ( isset( $_POST['tp_hotel_booking'] ) ) {
             foreach ( $_POST['tp_hotel_booking'] as $key => $term_meta ){
                 //update_option("hb_room_type_{$term_id}_{$key}", $term_meta);
@@ -66,16 +77,18 @@ class HB_Post_Types{
         }
     }
 
-    function room_type_columns( $columns ){
+    function taxonomy_columns( $columns ){
         $columns['ordering'] = __( 'Ordering', 'tp-hotel-booking' );
         return $columns;
     }
 
-    function room_type_column_content( $content, $column_name, $term_id ){
-        $term = get_term( $term_id, 'hb_room_type' );
+    function taxonomy_column_content( $content, $column_name, $term_id ){
+        $taxonomy = $_REQUEST['taxonomy'];
+        $term = get_term( $term_id, $taxonomy );
         switch ($column_name) {
             case 'ordering':
-                $content = sprintf( '<input type="text" name="tp_room_type_order[%1$d]" value="%1$d" />', $term->term_group );
+                $content = sprintf( '<input type="text" name="%s_ordering[%d]" value="%d" />', $taxonomy, $term_id, $term->term_group );
+                wp_enqueue_script( 'hb-edit-tags', TP_Hotel_Booking::instance()->plugin_url( 'includes/assets/js/edit-tags.js' ), array( 'jquery' ) );
                 break;
             default:
                 break;
@@ -144,7 +157,7 @@ class HB_Post_Types{
         register_taxonomy( 'hb_room_type',
             array( 'hb_room' ),
             array(
-                'hierarchical'          => true,
+                'hierarchical'          => false,
                 'update_count_callback' => '_wc_term_recount',
                 'label'                 => __( 'Room Type', 'tp-hotel-booking' ),
                 'labels' => array(
@@ -176,7 +189,7 @@ class HB_Post_Types{
         register_taxonomy( 'hb_room_capacity',
             array( 'hb_room' ),
             array(
-                'hierarchical'          => true,
+                'hierarchical'          => false,
                 'update_count_callback' => '_wc_term_recount',
                 'label'                 => __( 'Room Capacity', 'tp-hotel-booking' ),
                 'labels' => array(

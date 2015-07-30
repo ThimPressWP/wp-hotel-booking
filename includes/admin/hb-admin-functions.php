@@ -52,9 +52,9 @@ function hb_dropdown_room_types( $args = array() ){
  */
 function hb_admin_settings_tabs(){
     $tabs = array(
+        'general'       => __( 'General', 'tp-hotel-booking' ),
         'hotel_info'    => __( 'Hotel Information', 'tp-hotel-booking' ),
-        'payments'      => __( 'Payments', 'tp-hotel-booking' ),
-        'other'         => __( 'Other Settings', 'tp-hotel-booking' ),
+        'payments'      => __( 'Payments', 'tp-hotel-booking' )
     );
     return apply_filters( 'hb_admin_settings_tabs', $tabs );
 }
@@ -70,14 +70,14 @@ function hb_admin_settings_tab_hotel_info(){
  * Callback handler for Hotel Information tab content
  */
 function hb_admin_settings_tab_payments(){
-    echo 'Payment Gateways';
+    TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings/payments.php' );
 }
 
 /**
  * Callback handler for Hotel Information tab content
  */
-function hb_admin_settings_tab_other(){
-    echo 'Other settings here';
+function hb_admin_settings_tab_general(){
+    TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings/general.php' );
 }
 
 function hb_admin_settings_tab_content( $selected ){
@@ -120,7 +120,7 @@ function hb_add_meta_boxes(){
             )
         ),
         array(
-            'name'      => 'num_of_adults',
+            'name'      => 'room_capacity',
             'label'     => __( 'Number of adults', 'tp-hotel-booking' ),
             'type'      => 'select',
             'options'   => hb_get_room_capacities(
@@ -143,3 +143,9 @@ function hb_add_meta_boxes(){
     );
 }
 add_action( 'init', 'hb_add_meta_boxes', 50 );
+function hb_update_meta_box_room_settings( $post_id ){
+    wp_set_object_terms( $post_id, intval( $_POST['room_type'] ), 'hb_room_type' );
+    wp_set_object_terms( $post_id, intval( $_POST['room_capacity'] ), 'hb_room_capacity' );
+}
+
+add_action( 'hb_update_meta_box_room_settings', 'hb_update_meta_box_room_settings' );

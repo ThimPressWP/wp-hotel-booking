@@ -160,7 +160,7 @@ class HB_Meta_Box{
         foreach( $this->_fields as $field ){
             update_post_meta( $post_id, $field['name'], $_POST[ $field['name'] ] );
         }
-
+        do_action( 'hb_update_meta_box_' . $this->_args['name'], $post_id );
     }
 
     /**

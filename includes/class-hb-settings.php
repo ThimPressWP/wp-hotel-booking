@@ -166,6 +166,11 @@ class HB_Settings{
 $GLOBALS['hb_settings'] = HB_Settings::instance(
     '',
     array(
+        'currency'                      => 'USD',
+        'price_currency_position'       => 'before',
+        'price_thousands_separator'     => ',',
+        'price_decimals_separator'      => '.',
+        'price_number_of_decimal'       => '2',
         'hotel_name'            => 'Hanoi Daewoo Hotel',
         'hotel_address'         => 'Số 360, Phố Kim Mã, Quận Ba Đình, Quận Ba Đình, Hà Nội, Việt Nam',
         'hotel_city'            => 'Hà Nội',
