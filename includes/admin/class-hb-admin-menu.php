@@ -30,6 +30,14 @@ class HB_Admin_Menu{
                 'manage_options',
                 'edit-tags.php?taxonomy=hb_room_capacity'
             ),
+            'pricing_table'   => array(
+                'tp_hotel_booking',
+                __( 'Pricing Plan', 'tp-hotel-booking' ),
+                __( 'Pricing Plan', 'tp-hotel-booking' ),
+                'manage_options',
+                'tp_hotel_booking_pricing',
+                array( $this, 'pricing_table' )
+            ),
             'settings'   => array(
                 'tp_hotel_booking',
                 __( 'Settings', 'tp-hotel-booking' ),
@@ -50,6 +58,10 @@ class HB_Admin_Menu{
 
     function settings_page(){
         TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings.php' );
+    }
+
+    function pricing_table(){
+        TP_Hotel_Booking::instance()->_include( 'includes/admin/views/pricing-table.php' );
     }
 }
 
