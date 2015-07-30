@@ -49,7 +49,8 @@ function hb_add_meta_boxes(){
         'room_settings',
         array(
             'title' => __( 'Room Settings', 'tp-hotel-booking' ),
-            'post_type' => 'hb_room'
+            'post_type' => 'hb_room',
+            'meta_key_prefix' => '_hb_'
         ),
         array()
     )->add_field(

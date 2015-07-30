@@ -58,6 +58,7 @@ function hb_get_room_types( $args = array() ){
     );
     $terms = (array) get_terms( "hb_room_type", $args );
     if( is_array( $args['map_fields' ] ) ){
+        $types = array();
         foreach( $terms as $term ){
             $type = new stdClass();
             foreach( $args['map_fields'] as $from => $to ){
@@ -87,6 +88,7 @@ function hb_get_room_capacities( $args = array() ){
     );
     $terms = (array) get_terms( "hb_room_capacity", $args );
     if( is_array( $args['map_fields' ] ) ){
+        $types = array();
         foreach( $terms as $term ){
             $type = new stdClass();
             foreach( $args['map_fields'] as $from => $to ){
@@ -193,4 +195,47 @@ function hb_payment_currencies() {
  */
 function hb_enable_overwrite_template(){
     return HB_Settings::instance()->get( 'overwrite_templates' ) == 'on';
+}
+
+function hb_get_request( $name, $default = null, $var = '' ){
+    $return = $default;
+    switch( strtolower( $var ) ){
+        case 'post': $var = $_POST; break;
+        case 'get': $var = $_GET; break;
+        default: $var = $_REQUEST;
+    }
+    if( ! empty( $var[ $name ] ) ){
+        $return = $var[ $name ];
+    }
+    return $return;
+}
+
+function hb_search_rooms( $args = array() ){
+    $args = wp_parse_args(
+        $args,
+        array(
+            'check_in_date'     => date( 'm/d/Y' ),
+            'check_out_date'    => date( 'm/d/Y' ),
+            'adults'            => 1,
+            'max_child'         => 0
+        )
+    );
+    $results = array();
+    global $wpdb;
+
+    $query = $wpdb->prepare("
+        SELECT *
+        FROM {$wpdb->posts}
+        WHERE
+          post_type = %s
+          AND post_status = %s
+    ", 'hb_room', 'publish' );
+
+    if( $results = $wpdb->get_results( $query ) ){
+        foreach( $results as $k => $p ){
+            $results[ $k ] = HB_Room::instance( $p );
+        }
+    }
+
+    return $results;
 }

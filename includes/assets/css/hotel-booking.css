@@ -1,3 +1,8 @@
+.clearfix:after{
+    content: '';
+    display: block;
+    clear: both;
+}
 #hotel-booking-search{
 
 }
@@ -18,4 +23,32 @@
 }
 .hb-form-field-input{
 
+}
+
+.hb-search-results{
+    list-style: none;
+    margin: 0 0 40px 0;
+    padding: 0;
+}
+.hb-search-results .hb-room{}
+.hb-search-results .hb-room-thumbnail{
+    width: 150px;
+    float: left;
+}
+.hb-search-results .hb-room-info{
+    margin-left: 170px;
+}
+.hb-search-results .hb-room-meta{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+}
+.hb-search-results .hb-room-meta > li > label{
+    width: 30%;
+    display: inline-block;
+}
+.hb-search-results .hb-room-meta > li > div{
+    width: 69%;
+    display: inline-block;
 }

@@ -131,16 +131,19 @@ class TP_Hotel_Booking{
      */
     function enqueue_assets(){
         wp_register_script( 'jquery-ui-datepicker', $this->plugin_url( 'includes/assets/js/jquery.ui.datepicker.min.js' ), array( 'jquery' ) );
+        wp_register_style( 'jquery-ui-datepicker', $this->plugin_url( 'includes/assets/css/jquery.ui.datepicker.css' ) );
         if( is_admin() ){
             wp_register_style( 'tp-admin-hotel-booking', $this->plugin_url( 'includes/assets/css/admin.tp-hotel-booking.css' ) );
         }else{
             wp_register_style( 'tp-hotel-booking', $this->plugin_url( 'includes/assets/css/hotel-booking.css' ) );
+
             wp_register_script( 'tp-hotel-booking', $this->plugin_url( 'includes/assets/js/hotel-booking.js' ), array( 'jquery', 'jquery-ui-datepicker' ) );
         }
 
         if( is_admin() ) {
             wp_enqueue_style( 'tp-admin-hotel-booking' );
         }else{
+            wp_enqueue_style( 'jquery-ui-datepicker' );
             wp_enqueue_style( 'tp-hotel-booking' );
             wp_enqueue_script( 'tp-hotel-booking' );
         }

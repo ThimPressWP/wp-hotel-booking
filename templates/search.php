@@ -5,13 +5,13 @@
             <li class="hb-form-field">
                 <label><?php _e( 'Check-in date', 'tp-hotel-booking' );?></label>
                 <div class="hb-form-field-input">
-                    <input type="text" name="check_in_date" />
+                    <input type="text" name="check_in_date" id="check_in_date" value="<?php echo $check_in_date;?>" />
                 </div>
             </li>
             <li class="hb-form-field">
                 <label><?php _e( 'Check-in date', 'tp-hotel-booking' );?></label>
                 <div class="hb-form-field-input">
-                    <input type="text" name="check_out_date" />
+                    <input type="text" name="check_out_date" id="check_out_date" value="<?php echo $check_out_date;?>" />
                 </div>
             </li>
             <li class="hb-form-field">
@@ -21,7 +21,7 @@
                         hb_dropdown_room_capacities(
                             array(
                                 'name'      => 'adults',
-                                'selected'  => ! empty( $_REQUEST['adults'] ) ? $_REQUEST['adults'] : ''
+                                'selected'  => $adults
                             )
                         );
                     ?>
@@ -34,13 +34,14 @@
                     hb_dropdown_child_per_room(
                         array(
                             'name'      => 'max_child',
-                            'selected'  => ! empty( $_REQUEST['max_child'] ) ? $_REQUEST['max_child'] : ''
+                            'selected'  => $max_child
                         )
                     );
                     ?>
                 </div>
             </li>
         </ul>
+        <input type="hidden" name="hotel-booking" value="results">
         <p>
         <button type="submit"><?php _e( 'Search', 'tp-hotel-booking' );?></button>
         </p>

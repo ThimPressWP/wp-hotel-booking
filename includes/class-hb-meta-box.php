@@ -27,7 +27,14 @@ class HB_Meta_Box{
      * @param array
      */
     function __construct( $args = array(), $fields = array() ){
-        $this->_args    = $args;
+        $this->_args    = wp_parse_args(
+            $args,
+            array(
+                'title'             => '',
+                'post_type'         => 'post',
+                'meta_key_prefix'   => ''
+            )
+        );
         $this->_fields  = $fields;
 
         add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
@@ -94,7 +101,7 @@ class HB_Meta_Box{
             $meta_cache = update_meta_cache( $meta_type, array( $object_id ) );
             $meta_cache = $meta_cache[$object_id];
         }
-        return array_key_exists( $meta_key, $meta_cache );
+        return array_key_exists( $this->_args['meta_key_prefix'] . $meta_key, $meta_cache );
     }
 
     /**
@@ -109,8 +116,9 @@ class HB_Meta_Box{
                 echo '<li class="hb-form-field">';
                 echo '<label class="hb-form-field-label">' . $field['label'] . '</label>';
                 if( $this->has_post_meta( $post->ID, $field['name'] ) ) {
-                    $field['std'] = get_post_meta( $post->ID, $field['name'], true );
+                    $field['std'] = get_post_meta( $post->ID, $this->_args['meta_key_prefix'] . $field['name'], true );
                 }
+                $field['name'] = $this->_args['meta_key_prefix'] . $field['name'];
                 if( empty( $field['id'] ) ){
                     $field['id'] = sanitize_title( $field['name'] );
                 }
@@ -158,7 +166,7 @@ class HB_Meta_Box{
         if( ! $this->_fields ) return;
 
         foreach( $this->_fields as $field ){
-            update_post_meta( $post_id, $field['name'], $_POST[ $field['name'] ] );
+            update_post_meta( $post_id, $this->_args['meta_key_prefix'] . $field['name'], $_POST[ $this->_args['meta_key_prefix'] . $field['name'] ] );
         }
         do_action( 'hb_update_meta_box_' . $this->_args['name'], $post_id );
     }
