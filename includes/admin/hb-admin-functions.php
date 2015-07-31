@@ -192,13 +192,7 @@ function hb_bookings_meta_boxes() {
             'label' => __('Last Name', 'tp-hotel-booking'),
             'type'  => 'text',
             'std'   => ''
-        ),
-        array(
-            'name'  => 'first_name',
-            'label' => __('First Name', 'tp-hotel-booking'),
-            'type'  => 'text',
-            'std'   => ''
-        )        
+        )
     );
 }
 add_action( 'init', 'hb_bookings_meta_boxes', 50 );
@@ -207,16 +201,37 @@ function hb_booking_table_head( $default ) {
     unset($default['author']);
     unset($default['date']);
     unset($default['title']);
+    $default['booking_id']   = __('Booking ID', 'tp-hotel-booking');
     $default['customer_name']   = __('Customer Name', 'tp-hotel-booking');
     $default['check_in_date']   = __('Check-in Date', 'tp-hotel-booking');
     $default['check_out_date']  = __('Check-out Date', 'tp-hotel-booking');
     $default['room_type_room']  = __('Room Type/Number of Room', 'tp-hotel-booking');
+    $default['booking_date']  = __('Booking Date', 'tp-hotel-booking');
     return $default;
 }
 add_filter('manage_hb_booking_posts_columns', 'hb_booking_table_head');
 
 
-function hb_manage_booking_column() {
-
-}
-
+function hb_manage_booking_column( $column_name, $post_id ) {
+    if ($column_name == 'booking_id') {
+        $booking_id = $post_id;
+        echo $booking_id;
+    }
+    if ($column_name == 'customer_name') {
+        $customer_name = get_post_meta( $post_id, '_hb_first_name', true );
+        echo $customer_name;
+    }
+    if ($column_name == 'check_in_date') {
+        $check_in_date = get_post_meta( $post_id, '_hb_check_in_date', true );
+        echo date( _x( 'F d, Y', 'Check-in date format', 'tp-hotel-booking' ), strtotime( $check_in_date ) );
+    }
+    if ($column_name == 'check_out_date') {
+    $check_in_date = get_post_meta( $post_id, '_hb_check_out_date', true );
+      echo  date( _x( 'F d, Y', 'Check-out date format', 'tp-hotel-booking' ), strtotime( $check_out_date ) );
+    }
+    if ($column_name == 'booking_date') {
+    $booking_date = get_post_meta( $post_id, '_hb_booking_date', true );
+      echo  date( _x( 'F d, Y', 'Booking date format', 'tp-hotel-booking' ), strtotime( $booking_date ) );
+    }
+}   
+add_action('manage_hb_booking_posts_custom_columns', 'hb_manage_booking_column', 10, 2);
