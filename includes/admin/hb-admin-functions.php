@@ -105,5 +105,100 @@ function hb_update_meta_box_room_settings( $post_id ){
     wp_set_object_terms( $post_id, intval( $_POST['room_type'] ), 'hb_room_type' );
     wp_set_object_terms( $post_id, intval( $_POST['room_capacity'] ), 'hb_room_capacity' );
 }
-
 add_action( 'hb_update_meta_box_room_settings', 'hb_update_meta_box_room_settings' );
+
+
+function hb_bookings_meta_boxes() {
+    HB_Meta_Box::instance(
+        'booking_info',
+        array(
+            'title'             => __('Booking Info','tp-hotel-booking'),
+            'post_type'         => 'hb_booking',
+            'meta_key_prefix'   => '_hb_'
+        ),
+        array()
+    )->add_field(        
+        array(
+            'name'  => 'check_in_date',
+            'label' => __('Check-in date', 'tp-hotel-booking'),
+            'type'  => 'text',
+            'std'   => ''            
+        ),
+        array(
+            'name'  => 'checkout_out_date',
+            'label' => __('Check-out date', 'tp-hotel-booking'),
+            'type'  => 'text',
+            'std'   => ''
+        ),
+        array(
+            'name'  => 'aldult_per_room',
+            'label' => __('Adult per room'),
+            'type'  => 'number',
+            'std'   => '1',
+            'min'   => '1',
+            'max'   => '6'
+        ),
+        array(
+            'name'  => 'child_per_room',
+            'label' => 'Child Per Room',
+            'type'  => 'number',
+            'std'   => '0',
+            'min'   => '0',
+            'max'   => '2'            
+        ),
+        array(
+            'name'  => 'numer_ber_room',
+            'label' => 'Number of room',
+            'type'  => 'number',
+            'std'   => '1',
+            'min'   => '1',            
+        ),
+        array(
+            'name'  => 'room_type',
+            'label' => 'Room Type',
+            'type'  => 'text',
+            'std'   => '1',                    
+        )
+    );
+    HB_Meta_Box::instance(
+        'customer_info',
+        array(
+            'title'             => __('Customer Information','tp-hotel-booking'),
+            'post_type'         => 'hb_booking',
+            'meta_key_prefix'   => '_hb_'
+        ),
+        array()
+    )->add_field(        
+        array(
+            'name'  => 'email',
+            'label' => __('email', 'tp-hotel-booking'),
+            'type'  => 'text',
+            'std'   => ''            
+        ),        
+        array(
+            'name'  => 'email',
+            'label' => __('Email', 'tp-hotel-booking'),
+            'type'  => 'text',
+            'std'   => ''            
+        ),
+        array(
+            'name'  => 'first_name',
+            'label' => __('First Name', 'tp-hotel-booking'),
+            'type'  => 'text',
+            'std'   => ''
+        ),
+        array(
+            'name'  => 'last_name',
+            'label' => __('Last Name', 'tp-hotel-booking'),
+            'type'  => 'text',
+            'std'   => ''
+        ),
+        array(
+            'name'  => 'first_name',
+            'label' => __('First Name', 'tp-hotel-booking'),
+            'type'  => 'text',
+            'std'   => ''
+        )        
+    );
+}
+add_action( 'init', 'hb_bookings_meta_boxes', 50 );
