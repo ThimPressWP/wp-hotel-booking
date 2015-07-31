@@ -6,7 +6,13 @@ $total_rooms = 0;
 if( $rooms ) foreach( $rooms as $room ) {
     $total_rooms += $room;
 }
-$total_rights = hb_count_nights_to_dates( $end_date, $start_date );
+$total_nights = hb_count_nights_two_dates( $end_date, $start_date );
+$total = 0;
+foreach( $_REQUEST['hb-num-of-rooms'] as $room_id => $num ){
+    $total += $num * $_REQUEST['hb-room-details-total'][ $room_id ];
+}
+$tax = 0.12;
+$grand_total = $total + $total * $tax;
 ?>
 <div id="hotel-booking-payment">
 
@@ -31,8 +37,40 @@ $total_rights = hb_count_nights_to_dates( $end_date, $start_date );
             </li>
         </ul>
         <h3><?php _e( 'Booking Rooms', 'tp-hotel-booking' );?></h3>
-        <?php if( $rooms ) foreach( $rooms as $room ){?>
+        <table>
+            <thead>
+                <th><?php _e( 'Number of rooms', 'tp-hotel-booking' );?></th>
+                <th><?php _e( 'Room type', 'tp-hotel-booking' );?></th>
+                <th><?php _e( 'Capacity', 'tp-hotel-booking' );?></th>
+                <th><?php _e( 'Gross Total', 'tp-hotel-booking' );?></th>
+            </thead>
+        <?php if( $rooms ) foreach( $rooms as $id => $num_of_rooms ){?>
+            <?php
+            if( ! $num_of_rooms ) continue;
+            $room = HB_Room::instance( $id );
+            ?>
+            <tr>
+                <td><?php echo $num_of_rooms;?></td>
+                <td><?php echo $room->name;?> (<?php echo $room->capacity_title;?>)</td>
+                <td><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'tp-hotel-booking' ), $room->capacity );?> </td>
+                <td><?php echo $room->get_total( $start_date, $total_nights, $num_of_rooms );?></td>
+            </tr>
         <?php }?>
+            <tr>
+                <td colspan="3"><?php _e( 'Sub Total', 'tp-hotel-booking' );?></td>
+                <td><?php echo $total;?></td>
+            </tr>
+            <?php if( $tax ){?>
+            <tr>
+                <td colspan="3"><?php _e( 'Tax', 'tp-hotel-booking' );?></td>
+                <td><?php echo $tax;?></td>
+            </tr>
+            <?php }?>
+            <tr>
+                <td colspan="3"><?php _e( 'Grand Total', 'tp-hotel-booking' );?></td>
+                <td><?php echo $grand_total;?></td>
+            </tr>
+        </table>
         <input type="hidden" name="hotel-booking" value="confirm" />
         <input type="hidden" name="check_in_date" value="<?php echo $start_date;?>" />
         <input type="hidden" name="check_out_date" value="<?php echo $end_date;?>">

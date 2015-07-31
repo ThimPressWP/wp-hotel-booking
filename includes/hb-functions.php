@@ -245,7 +245,7 @@ function hb_search_rooms( $args = array() ){
     return $results;
 }
 
-function hb_count_nights_to_dates( $end = null, $start ){
+function hb_count_nights_two_dates( $end = null, $start ){
     if( ! $end ) $end = time();
     else if( is_string( $end ) ){
         $end = @strtotime( $end );
@@ -255,4 +255,11 @@ function hb_count_nights_to_dates( $end = null, $start ){
     }
     $datediff = $end - $start;
     return floor( $datediff / ( 60 * 60 * 24 ) );
+}
+
+function hb_date_to_name( $date ){
+    $date_names = array(
+        'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
+    );
+    return $date_names[ $date ];
 }
