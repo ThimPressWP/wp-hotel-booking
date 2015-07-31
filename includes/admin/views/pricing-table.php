@@ -1,4 +1,5 @@
 <?php
+
 $week_names = array(
     __( 'Sun', 'tp-hotel-booking' ),
     __( 'Mon', 'tp-hotel-booking' ),
