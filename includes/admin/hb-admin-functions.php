@@ -202,3 +202,21 @@ function hb_bookings_meta_boxes() {
     );
 }
 add_action( 'init', 'hb_bookings_meta_boxes', 50 );
+
+function hb_booking_table_head( $default ) {
+    unset($default['author']);
+    unset($default['date']);
+    unset($default['title']);
+    $default['customer_name']   = __('Customer Name', 'tp-hotel-booking');
+    $default['check_in_date']   = __('Check-in Date', 'tp-hotel-booking');
+    $default['check_out_date']  = __('Check-out Date', 'tp-hotel-booking');
+    $default['room_type_room']  = __('Room Type/Number of Room', 'tp-hotel-booking');
+    return $default;
+}
+add_filter('manage_hb_booking_posts_columns', 'hb_booking_table_head');
+
+
+function hb_manage_booking_column() {
+
+}
+
