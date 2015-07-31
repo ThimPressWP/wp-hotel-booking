@@ -12,7 +12,8 @@ function hb_dropdown_room_capacities( $args = array() ){
         array_merge( $args,
             array(
                 'taxonomy'      => 'hb_room_capacity',
-                'hide_empty'    => false
+                'hide_empty'    => false,
+                'name'          => 'hb-room-capacities'
             )
         )
     );
@@ -36,6 +37,8 @@ function hb_dropdown_room_types( $args = array() ){
             array(
                 'taxonomy'      => 'hb_room_type',
                 'hide_empty'    => false,
+                'name'          => 'hb-room-types',
+                'echo'          => true
             )
         )
     );
@@ -114,6 +117,8 @@ function hb_get_child_per_room(){
         INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
         WHERE p.post_type=%s
           AND meta_key=%s
+          AND meta_value <> 0
+        ORDER BY meta_value ASC
     ", 'hb_room', 'max_child_per_room' );
     return $wpdb->get_col( $query );
 }
@@ -238,4 +243,16 @@ function hb_search_rooms( $args = array() ){
     }
 
     return $results;
+}
+
+function hb_count_nights_to_dates( $end = null, $start ){
+    if( ! $end ) $end = time();
+    else if( is_string( $end ) ){
+        $end = @strtotime( $end );
+    }
+    if( is_string( $start ) ){
+        $start = strtotime( $start );
+    }
+    $datediff = $end - $start;
+    return floor( $datediff / ( 60 * 60 * 24 ) );
 }

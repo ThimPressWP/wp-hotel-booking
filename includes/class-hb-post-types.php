@@ -302,6 +302,41 @@ class HB_Post_Types{
             'hierarchical'       => false
         );
         register_post_type( 'hb_booking', $args );
+
+        /**
+         * Register custom post type for pricing plan
+         */
+        $args = array(
+            'labels'             => array(
+                /*'name'               => _x( 'Bookings', 'Post Type General Name', 'learn_press' ),
+                'singular_name'      => _x( 'Booking', 'Post Type Singular Name', 'learn_press' ),
+                'menu_name'          => __( 'Bookings', 'learn_press' ),
+                'parent_item_colon'  => __( 'Parent Item:', 'learn_press' ),
+                'all_items'          => __( 'Bookings', 'learn_press' ),
+                'view_item'          => __( 'View Booking', 'learn_press' ),
+                'add_new_item'       => __( 'Add New Booking', 'learn_press' ),
+                'add_new'            => __( 'Add New', 'learn_press' ),
+                'edit_item'          => __( 'Edit Booking', 'learn_press' ),
+                'update_item'        => __( 'Update Booking', 'learn_press' ),
+                'search_items'       => __( 'Search Booking', 'learn_press' ),
+                'not_found'          => __( 'No booking found', 'learn_press' ),
+                'not_found_in_trash' => __( 'No booking found in Trash', 'learn_press' ),*/
+            ),
+            'public'             => false,
+            'query_var'          => false,
+            'publicly_queryable' => false,
+            'show_ui'            => false,
+            'has_archive'        => false,
+            //'capability_type'    => 'hb_booking',
+            'map_meta_cap'       => true,
+            'show_in_menu'       => false,
+            'show_in_admin_bar'  => false,
+            'show_in_nav_menus'  => false,
+            'supports'           => array( 'title', 'author' ),
+            'hierarchical'       => false
+        );
+
+        register_post_type( 'hb_pricing_plan', $args );
     }
 }
 

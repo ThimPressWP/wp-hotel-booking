@@ -61,6 +61,7 @@ class HB_Admin_Menu{
     }
 
     function pricing_table(){
+        wp_enqueue_script( 'wp-util' );
         TP_Hotel_Booking::instance()->_include( 'includes/admin/views/pricing-table.php' );
     }
 }
