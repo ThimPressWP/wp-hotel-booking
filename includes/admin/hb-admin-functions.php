@@ -44,6 +44,17 @@ function hb_admin_settings_tab_content( $selected ){
 }
 add_action( 'hb_admin_settings_tab_before', 'hb_admin_settings_tab_content' );
 
+/**
+ * Admin translation text
+ * @return mixed
+ */
+function hb_admin_l18n(){
+    $l18n = array(
+        'confirm_remove_pricing_table'  => __( 'Are you sure you want to remove this pricing table?', 'tp-hotel-booking' )
+    );
+    return apply_filters( 'hb_admin_l18n', $l18n );
+}
+
 function hb_add_meta_boxes(){
     HB_Meta_Box::instance(
         'room_settings',
@@ -101,12 +112,12 @@ function hb_add_meta_boxes(){
     );
 }
 add_action( 'init', 'hb_add_meta_boxes', 50 );
+
 function hb_update_meta_box_room_settings( $post_id ){
     wp_set_object_terms( $post_id, intval( $_POST['room_type'] ), 'hb_room_type' );
     wp_set_object_terms( $post_id, intval( $_POST['room_capacity'] ), 'hb_room_capacity' );
 }
 add_action( 'hb_update_meta_box_room_settings', 'hb_update_meta_box_room_settings' );
-
 
 function hb_bookings_meta_boxes() {
     HB_Meta_Box::instance(
@@ -235,3 +246,66 @@ function hb_manage_booking_column( $column_name, $post_id ) {
     }
 }   
 add_action('manage_hb_booking_posts_custom_columns', 'hb_manage_booking_column', 10, 2);
+
+function hb_delete_pricing_plan( $ids ){
+    global $wpdb;
+    if( $ids ) {
+        $query = $wpdb->prepare("
+            DELETE
+            FROM {$wpdb->posts}
+            WHERE post_type = %s
+            AND ID IN(" . ( is_array( $ids ) ? join(",", $ids) : $ids ) . ")
+        ", 'hb_pricing_plan');
+        $wpdb->query( $query );
+    }
+}
+function hb_update_pricing_plan( ){
+    if ( ! isset( $_POST['hb-update-pricing-plan-field'] ) || ! wp_verify_nonce( $_POST['hb-update-pricing-plan-field'], 'hb-update-pricing-plan' ) ){
+        return;
+    }
+    if( ! empty( $_POST['price'] ) ){
+        $loop = 0;
+        $post_ids = array();
+        foreach( $_POST['price'] as $t => $v ){
+            $start  = $_POST['date-start'][ $t ];
+            $end    = $_POST['date-end'][ $t ];
+            $prices = $_POST['price'][ $t ];
+            if( $t > 0 ){
+                $post_id = intval( $t );
+            }else{
+                $post_id = wp_insert_post(
+                    array(
+                        'post_title'    => $loop == 0 ? 'Regular Price' : "Date Range[{$start} to {$end}]",
+                        'post_type'     => 'hb_pricing_plan',
+                        'post_status'   => 'publish'
+                    )
+                );
+            }
+            if( $post_id ){
+                update_post_meta( $post_id, '_hb_pricing_plan_start', $start );
+                update_post_meta( $post_id, '_hb_pricing_plan_end', $end );
+                update_post_meta( $post_id, '_hb_pricing_plan_prices', $prices );
+                update_post_meta( $post_id, '_hb_pricing_plan_room', $_POST['hb-room-types'] );
+            }
+            $post_ids[] = $post_id;
+            $loop++;
+        }
+        $existing_ids = get_posts(
+            array(
+                'post_type'         => 'hb_pricing_plan',
+                'posts_per_page'    => 9999,
+                'fields'            => 'ids',
+                'meta_query' => array(
+                    array(
+                        'key'     => '_hb_pricing_plan_room',
+                        'value'   => $_POST['hb-room-types']
+                    )
+                )
+            )
+        );
+        $delete_ids = array_diff( $existing_ids, $post_ids );
+        hb_delete_pricing_plan($delete_ids);
+    }
+    //echo '<pre>';print_r($_POST);echo '</pre>';die();
+}
+add_action( 'init', 'hb_update_pricing_plan' );

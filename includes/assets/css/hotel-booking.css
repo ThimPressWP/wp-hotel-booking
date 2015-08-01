@@ -24,6 +24,25 @@
 .hb-form-field-input{
 
 }
+.hb-form-field.label-left .hb-form-field-label,
+.hb-form-field.label-left > label{
+    float: left;
+    width: 30%;
+}
+.hb-form-field.label-left .hb-form-field-input{
+    width: 68%;
+    float: right;
+}
+.hb-form-field.label-left:after{
+    display: block;
+    clear: both;
+    content: '';
+}
+.hb-required{
+    color: #FF0000;
+    vertical-align: middle;
+    margin: 0 10px;
+}
 
 .hb-search-results{
     list-style: none;
@@ -51,4 +70,47 @@
 .hb-search-results .hb-room-meta > li > div{
     width: 69%;
     display: inline-block;
+}
+.hb-align-right{
+    text-align: right;
+}
+.hb-col-padding{
+    padding: 20px;
+}
+.hb-col-margin{
+    margin: 20px;
+}
+.hb-col-border{
+    border: 1px solid #DDD;
+}
+/**/
+.hb-order-existing-customer,
+.hb-order-new-customer{
+    /*float: left;
+    width: 48.5%;*/
+    position: relative;
+    margin-bottom: 40px;
+}
+.hb-order-new-customer{
+    /*float: right;*/
+}
+.hb-order-new-customer input[name="first_name"]{
+    width: 30%;
+}
+.hb-order-new-customer input[name="last_name"]{
+    width: 68%;
+    float: right;
+}
+.hb-order-existing-customer > div > h4,
+.hb-order-new-customer > div > h4{
+    margin-top: 0;
+}
+.hb-order-existing-customer:after{
+    content: attr( data-label );
+    position: absolute;
+    bottom: -40px;
+    width: 100%;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
 }

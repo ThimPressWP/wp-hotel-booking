@@ -19,3 +19,45 @@
 .hb-form-field .hb-form-field-input-inner{
     margin-left: 20px;
 }
+
+/* pricing table */
+.hb-pricing-table{
+    border: 1px solid #DDD;
+    display: inline-block;
+    position: relative;
+    margin-bottom: 20px;
+    background-color: #FFF;
+}
+.hb-pricing-table-title{
+    padding: 10px;
+    margin: 0;
+    font-size: 16px;
+    height: 32px;
+    line-height: 32px;
+}
+.hb-pricing-list{
+    border-top: 1px solid #EEE;
+    padding: 10px 5px 5px 10px;
+}
+.hb-pricing-list th,
+.hb-pricing-list td{
+    padding: 5px 5px 5px 0;
+}
+.hb-pricing-list tbody th{
+    text-align: left;
+}
+.hb-pricing-controls{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+.hb-pricing-controls a{
+    margin-left: 0px;
+    border: 1px solid #DDD;
+    background-color: #F5F5F5;
+    padding: 5px;
+}
+.hb-pricing-table.regular-price .hb-pricing-table-title input,
+.hb-pricing-table.regular-price .hb-pricing-controls .dashicons-trash{
+    display: none;
+}

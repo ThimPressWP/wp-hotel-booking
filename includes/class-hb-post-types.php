@@ -174,19 +174,19 @@ class HB_Post_Types{
          */
         $args = array(
             'labels'             => array(
-                'name'               => _x( 'Rooms', 'Post Type General Name', 'learn_press' ),
-                'singular_name'      => _x( 'Room', 'Post Type Singular Name', 'learn_press' ),
-                'menu_name'          => __( 'Rooms', 'learn_press' ),
-                'parent_item_colon'  => __( 'Parent Item:', 'learn_press' ),
-                'all_items'          => __( 'Rooms', 'learn_press' ),
-                'view_item'          => __( 'View Room', 'learn_press' ),
-                'add_new_item'       => __( 'Add New Room', 'learn_press' ),
-                'add_new'            => __( 'Add New', 'learn_press' ),
-                'edit_item'          => __( 'Edit Room', 'learn_press' ),
-                'update_item'        => __( 'Update Room', 'learn_press' ),
-                'search_items'       => __( 'Search Room', 'learn_press' ),
-                'not_found'          => __( 'No room found', 'learn_press' ),
-                'not_found_in_trash' => __( 'No room found in Trash', 'learn_press' ),
+                'name'               => _x( 'Rooms', 'Post Type General Name', 'tp-hotel-booking' ),
+                'singular_name'      => _x( 'Room', 'Post Type Singular Name', 'tp-hotel-booking' ),
+                'menu_name'          => __( 'Rooms', 'tp-hotel-booking' ),
+                'parent_item_colon'  => __( 'Parent Item:', 'tp-hotel-booking' ),
+                'all_items'          => __( 'Rooms', 'tp-hotel-booking' ),
+                'view_item'          => __( 'View Room', 'tp-hotel-booking' ),
+                'add_new_item'       => __( 'Add New Room', 'tp-hotel-booking' ),
+                'add_new'            => __( 'Add New', 'tp-hotel-booking' ),
+                'edit_item'          => __( 'Edit Room', 'tp-hotel-booking' ),
+                'update_item'        => __( 'Update Room', 'tp-hotel-booking' ),
+                'search_items'       => __( 'Search Room', 'tp-hotel-booking' ),
+                'not_found'          => __( 'No room found', 'tp-hotel-booking' ),
+                'not_found_in_trash' => __( 'No room found in Trash', 'tp-hotel-booking' ),
             ),
             'public'             => true,
             'query_var'          => true,
@@ -274,19 +274,19 @@ class HB_Post_Types{
          */
         $args = array(
             'labels'             => array(
-                'name'               => _x( 'Bookings', 'Post Type General Name', 'learn_press' ),
-                'singular_name'      => _x( 'Booking', 'Post Type Singular Name', 'learn_press' ),
-                'menu_name'          => __( 'Bookings', 'learn_press' ),
-                'parent_item_colon'  => __( 'Parent Item:', 'learn_press' ),
-                'all_items'          => __( 'Bookings', 'learn_press' ),
-                'view_item'          => __( 'View Booking', 'learn_press' ),
-                'add_new_item'       => __( 'Add New Booking', 'learn_press' ),
-                'add_new'            => __( 'Add New', 'learn_press' ),
-                'edit_item'          => __( 'Edit Booking', 'learn_press' ),
-                'update_item'        => __( 'Update Booking', 'learn_press' ),
-                'search_items'       => __( 'Search Booking', 'learn_press' ),
-                'not_found'          => __( 'No booking found', 'learn_press' ),
-                'not_found_in_trash' => __( 'No booking found in Trash', 'learn_press' ),
+                'name'               => _x( 'Bookings', 'Post Type General Name', 'tp-hotel-booking' ),
+                'singular_name'      => _x( 'Booking', 'Post Type Singular Name', 'tp-hotel-booking' ),
+                'menu_name'          => __( 'Bookings', 'tp-hotel-booking' ),
+                'parent_item_colon'  => __( 'Parent Item:', 'tp-hotel-booking' ),
+                'all_items'          => __( 'Bookings', 'tp-hotel-booking' ),
+                'view_item'          => __( 'View Booking', 'tp-hotel-booking' ),
+                'add_new_item'       => __( 'Add New Booking', 'tp-hotel-booking' ),
+                'add_new'            => __( 'Add New', 'tp-hotel-booking' ),
+                'edit_item'          => __( 'Edit Booking', 'tp-hotel-booking' ),
+                'update_item'        => __( 'Update Booking', 'tp-hotel-booking' ),
+                'search_items'       => __( 'Search Booking', 'tp-hotel-booking' ),
+                'not_found'          => __( 'No booking found', 'tp-hotel-booking' ),
+                'not_found_in_trash' => __( 'No booking found in Trash', 'tp-hotel-booking' ),
             ),
             'public'             => false,
             'query_var'          => true,
@@ -302,6 +302,41 @@ class HB_Post_Types{
             'hierarchical'       => false
         );
         register_post_type( 'hb_booking', $args );
+
+        /**
+         * Register custom post type for pricing plan
+         */
+        $args = array(
+            'labels'             => array(
+                /*'name'               => _x( 'Bookings', 'Post Type General Name', 'tp-hotel-booking' ),
+                'singular_name'      => _x( 'Booking', 'Post Type Singular Name', 'tp-hotel-booking' ),
+                'menu_name'          => __( 'Bookings', 'tp-hotel-booking' ),
+                'parent_item_colon'  => __( 'Parent Item:', 'tp-hotel-booking' ),
+                'all_items'          => __( 'Bookings', 'tp-hotel-booking' ),
+                'view_item'          => __( 'View Booking', 'tp-hotel-booking' ),
+                'add_new_item'       => __( 'Add New Booking', 'tp-hotel-booking' ),
+                'add_new'            => __( 'Add New', 'tp-hotel-booking' ),
+                'edit_item'          => __( 'Edit Booking', 'tp-hotel-booking' ),
+                'update_item'        => __( 'Update Booking', 'tp-hotel-booking' ),
+                'search_items'       => __( 'Search Booking', 'tp-hotel-booking' ),
+                'not_found'          => __( 'No booking found', 'tp-hotel-booking' ),
+                'not_found_in_trash' => __( 'No booking found in Trash', 'tp-hotel-booking' ),*/
+            ),
+            'public'             => false,
+            'query_var'          => false,
+            'publicly_queryable' => false,
+            'show_ui'            => false,
+            'has_archive'        => false,
+            //'capability_type'    => 'hb_booking',
+            'map_meta_cap'       => true,
+            'show_in_menu'       => false,
+            'show_in_admin_bar'  => false,
+            'show_in_nav_menus'  => false,
+            'supports'           => array( 'title', 'author' ),
+            'hierarchical'       => false
+        );
+
+        register_post_type( 'hb_pricing_plan', $args );
     }
 }
 

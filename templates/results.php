@@ -13,5 +13,7 @@
                 <a href="<?php echo get_the_permalink(33);?>"><?php _e( 'Search again!', 'tp-hotel-booking' );?></a>
             </p>
         <?php endif;?>
+        <input type="hidden" name="check_in_date" value="<?php echo hb_get_request( 'check_in_date' );?>" />
+        <input type="hidden" name="check_out_date" value="<?php echo hb_get_request( 'check_out_date' );?>">
     </form>
 </div>

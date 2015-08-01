@@ -12,7 +12,8 @@ function hb_dropdown_room_capacities( $args = array() ){
         array_merge( $args,
             array(
                 'taxonomy'      => 'hb_room_capacity',
-                'hide_empty'    => false
+                'hide_empty'    => false,
+                'name'          => 'hb-room-capacities'
             )
         )
     );
@@ -36,6 +37,8 @@ function hb_dropdown_room_types( $args = array() ){
             array(
                 'taxonomy'      => 'hb_room_type',
                 'hide_empty'    => false,
+                'name'          => 'hb-room-types',
+                'echo'          => true
             )
         )
     );
@@ -114,6 +117,8 @@ function hb_get_child_per_room(){
         INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id
         WHERE p.post_type=%s
           AND meta_key=%s
+          AND meta_value <> 0
+        ORDER BY meta_value ASC
     ", 'hb_room', 'max_child_per_room' );
     return $wpdb->get_col( $query );
 }
@@ -239,3 +244,80 @@ function hb_search_rooms( $args = array() ){
 
     return $results;
 }
+
+function hb_count_nights_two_dates( $end = null, $start ){
+    if( ! $end ) $end = time();
+    else if( is_string( $end ) ){
+        $end = @strtotime( $end );
+    }
+    if( is_string( $start ) ){
+        $start = strtotime( $start );
+    }
+    $datediff = $end - $start;
+    return floor( $datediff / ( 60 * 60 * 24 ) );
+}
+
+function hb_date_to_name( $date ){
+    $date_names = array(
+        'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
+    );
+    return $date_names[ $date ];
+}
+
+function hb_dropdown_titles( $args = array() ){
+    $args = wp_parse_args(
+        $args,
+        array(
+            'name'              => 'title',
+            'selected'          => '',
+            'show_option_none'  => __( '--Select--', 'tp-hotel-booking' ),
+            'option_none_value' => -1,
+            'echo'              => true
+        )
+    );
+    $name = '';
+    $selected = '';
+    $echo = false;
+    $show_option_none = false;
+    $option_none_value = -1;
+    extract( $args );
+    $titles = apply_filters( 'hb_customer_titles', array(
+            'mr'    => __( 'Mr.', 'tp-hotel-booking' ),
+            'ms'    => __( 'Ms.', 'tp-hotel-booking' ),
+            'mrs'   => __( 'Mrs.', 'tp-hotel-booking' ),
+            'miss'  => __( 'Miss.', 'tp-hotel-booking' ),
+            'dr'    => __( 'Dr.', 'tp-hotel-booking' ),
+            'Prof'  => __( 'Prof.', 'tp-hotel-booking' )
+        )
+    );
+    $output = '<select name="' . $name . '">';
+    if( $show_option_none ){
+        $output .= sprintf( '<option value="%s">%s</option>', $option_none_value, $show_option_none );
+    }
+    if( $titles ) foreach( $titles as $slug => $title ){
+        $output .= sprintf( '<option value="%s"%s>%s</option>', $slug, $slug == $selected ? ' selected="selected"' : '', $title );
+    }
+    $output .= '</select>';
+    if( $echo ){
+        echo $output;
+    }
+    return $output;
+}
+
+function hb_l18n(){
+    $translation = array(
+        'invalid_email' => __( 'Your email address is invalid', 'tp-hotel-booking' )
+    );
+    return apply_filters( 'hb_l18n', $translation );
+}
+
+function hb_customer_place_order(){
+    if( strtolower( $_SERVER['REQUEST_METHOD'] ) != 'post' ){
+        return;
+    }
+    if ( ! isset( $_POST['hb_customer_place_order_field'] ) || ! wp_verify_nonce( $_POST['hb_customer_place_order_field'], 'hb_customer_place_order' ) ){
+        return;
+    }
+    print_r( $_POST );die();
+}
+add_action( 'init', 'hb_customer_place_order' );
