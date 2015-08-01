@@ -36,8 +36,10 @@ class HB_Shortcodes{
                 break;
             case 'confirm':
                 $template = 'confirm.php';
+                break;
             case 'complete':
                 $template = 'message.php';
+                break;
         }
         return hb_get_template_content( $template, $atts );
     }

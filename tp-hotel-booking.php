@@ -46,6 +46,8 @@ class TP_Hotel_Booking{
 
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
+        add_action( 'wp_print_scripts', array( $this, 'global_js' ) );
+
     }
 
     /**
@@ -75,6 +77,7 @@ class TP_Hotel_Booking{
      * Includes common files and libraries
      */
     function includes(){
+        $this->_include( 'includes/class-hb-ajax.php' );
         if( is_admin() ) {
             $this->_include( 'includes/admin/class-hb-admin-menu.php' );
             $this->_include( 'includes/class-hb-meta-box.php' );
@@ -143,6 +146,8 @@ class TP_Hotel_Booking{
         }else{
             wp_register_style( 'tp-hotel-booking', $this->plugin_url( 'includes/assets/css/hotel-booking.css' ) );
             wp_register_script( 'tp-hotel-booking', $this->plugin_url( 'includes/assets/js/hotel-booking.js' ), $dependencies );
+
+            wp_localize_script( 'tp-hotel-booking', 'hotel_booking_l18n', hb_l18n() );
         }
 
         if( is_admin() ) {
@@ -153,6 +158,16 @@ class TP_Hotel_Booking{
             wp_enqueue_style( 'tp-hotel-booking' );
             wp_enqueue_script( 'tp-hotel-booking' );
         }
+    }
+
+    function global_js(){
+    ?>
+        <script type="text/javascript">
+            var hotel_settings = {
+                ajax: '<?php echo admin_url( 'admin-ajax.php' );?>'
+            }
+        </script>
+    <?php
     }
 
     /**
