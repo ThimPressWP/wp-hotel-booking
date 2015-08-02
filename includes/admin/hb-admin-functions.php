@@ -119,6 +119,134 @@ function hb_update_meta_box_room_settings( $post_id ){
 }
 add_action( 'hb_update_meta_box_room_settings', 'hb_update_meta_box_room_settings' );
 
+function hb_bookings_meta_boxes() {
+    HB_Meta_Box::instance(
+        'booking_info',
+        array(
+            'title'             => __('Booking Info','tp-hotel-booking'),
+            'post_type'         => 'hb_booking',
+            'meta_key_prefix'   => '_hb_'
+        ),
+        array()
+    )->add_field(        
+        array(
+            'name'  => 'check_in_date',
+            'label' => __('Check-in date', 'tp-hotel-booking'),
+            'type'  => 'text',
+            'std'   => ''            
+        ),
+        array(
+            'name'  => 'checkout_out_date',
+            'label' => __('Check-out date', 'tp-hotel-booking'),
+            'type'  => 'text',
+            'std'   => ''
+        ),
+        array(
+            'name'  => 'aldult_per_room',
+            'label' => __('Adult per room'),
+            'type'  => 'number',
+            'std'   => '1',
+            'min'   => '1',
+            'max'   => '6'
+        ),
+        array(
+            'name'  => 'child_per_room',
+            'label' => 'Child Per Room',
+            'type'  => 'number',
+            'std'   => '0',
+            'min'   => '0',
+            'max'   => '2'            
+        ),
+        array(
+            'name'  => 'numer_ber_room',
+            'label' => 'Number of room',
+            'type'  => 'number',
+            'std'   => '1',
+            'min'   => '1',            
+        ),
+        array(
+            'name'  => 'room_type',
+            'label' => 'Room Type',
+            'type'  => 'text',
+            'std'   => '1',                    
+        )
+    );
+    HB_Meta_Box::instance(
+        'customer_info',
+        array(
+            'title'             => __('Customer Information','tp-hotel-booking'),
+            'post_type'         => 'hb_booking',
+            'meta_key_prefix'   => '_hb_'
+        ),
+        array()
+    )->add_field(        
+        array(
+            'name'  => 'email',
+            'label' => __('email', 'tp-hotel-booking'),
+            'type'  => 'text',
+            'std'   => ''            
+        ),        
+        array(
+            'name'  => 'email',
+            'label' => __('Email', 'tp-hotel-booking'),
+            'type'  => 'text',
+            'std'   => ''            
+        ),
+        array(
+            'name'  => 'first_name',
+            'label' => __('First Name', 'tp-hotel-booking'),
+            'type'  => 'text',
+            'std'   => ''
+        ),
+        array(
+            'name'  => 'last_name',
+            'label' => __('Last Name', 'tp-hotel-booking'),
+            'type'  => 'text',
+            'std'   => ''
+        )
+    );
+}
+add_action( 'init', 'hb_bookings_meta_boxes', 50 );
+
+function hb_booking_table_head( $default ) {
+    unset($default['author']);
+    unset($default['date']);
+    unset($default['title']);
+    $default['booking_id']   = __('Booking ID', 'tp-hotel-booking');
+    $default['customer_name']   = __('Customer Name', 'tp-hotel-booking');
+    $default['check_in_date']   = __('Check-in Date', 'tp-hotel-booking');
+    $default['check_out_date']  = __('Check-out Date', 'tp-hotel-booking');
+    $default['room_type_room']  = __('Room Type/Number of Room', 'tp-hotel-booking');
+    $default['booking_date']  = __('Booking Date', 'tp-hotel-booking');
+    return $default;
+}
+add_filter('manage_hb_booking_posts_columns', 'hb_booking_table_head');
+
+
+function hb_manage_booking_column( $column_name, $post_id ) {
+    if ($column_name == 'booking_id') {
+        $booking_id = $post_id;
+        echo $booking_id;
+    }
+    if ($column_name == 'customer_name') {
+        $customer_name = get_post_meta( $post_id, '_hb_first_name', true );
+        echo $customer_name;
+    }
+    if ($column_name == 'check_in_date') {
+        $check_in_date = get_post_meta( $post_id, '_hb_check_in_date', true );
+        echo date( _x( 'F d, Y', 'Check-in date format', 'tp-hotel-booking' ), strtotime( $check_in_date ) );
+    }
+    if ($column_name == 'check_out_date') {
+    $check_in_date = get_post_meta( $post_id, '_hb_check_out_date', true );
+      echo  date( _x( 'F d, Y', 'Check-out date format', 'tp-hotel-booking' ), strtotime( $check_out_date ) );
+    }
+    if ($column_name == 'booking_date') {
+    $booking_date = get_post_meta( $post_id, '_hb_booking_date', true );
+      echo  date( _x( 'F d, Y', 'Booking date format', 'tp-hotel-booking' ), strtotime( $booking_date ) );
+    }
+}   
+add_action('manage_hb_booking_posts_custom_columns', 'hb_manage_booking_column', 10, 2);
+
 function hb_delete_pricing_plan( $ids ){
     global $wpdb;
     if( $ids ) {
