@@ -179,7 +179,9 @@ $GLOBALS['hb_settings'] = HB_Settings::instance(
         'hotel_zip_code'        => '1000',
         'hotel_phone_number'    => '0123.456.789',
         'hotel_fax_number'      => '',
-        'hotel_email_address'   => 'daewoo_hotel@gmail.com'
+        'hotel_email_address'   => 'daewoo_hotel@gmail.com',
+        'tax'                   => 0,
+        'price_including_tax'   => 0
     )
 );
 

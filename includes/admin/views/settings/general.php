@@ -49,4 +49,17 @@ $settings = hb_settings();
             <input type="text" class="regular-text" name="<?php echo $settings->get_field_name('price_number_of_decimal');?>" value="<?php echo $settings->get('price_number_of_decimal');?>" />
         </td>
     </tr>
+    <tr>
+        <th><?php _e( 'Tax', 'tp-hotel-booking' );?></th>
+        <td>
+            <input type="text" class="regular-text" name="<?php echo $settings->get_field_name('tax');?>" value="<?php echo $settings->get('tax');?>" />%
+        </td>
+    </tr>
+    <tr>
+        <th><?php _e( 'Price including tax', 'tp-hotel-booking' );?></th>
+        <td>
+            <input type="hidden" name="<?php echo $settings->get_field_name('price_including_tax');?>" value="0" />
+            <input type="checkbox" name="<?php echo $settings->get_field_name('price_including_tax');?>" <?php checked( $settings->get('price_including_tax') ? 1 : 0, 1 );?> value="1" />
+        </td>
+    </tr>
 </table>

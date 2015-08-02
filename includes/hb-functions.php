@@ -230,7 +230,9 @@ function hb_search_rooms( $args = array() ){
 
     $query = $wpdb->prepare("
         SELECT *
-        FROM {$wpdb->posts}
+        FROM {$wpdb->posts} booking
+        INNER JOIN {$wpdb->postmeta} pm ON booking.ID = pm.meta_value
+        INNER JOIN {$wpdb->posts} booking ON
         WHERE
           post_type = %s
           AND post_status = %s
@@ -304,6 +306,23 @@ function hb_dropdown_titles( $args = array() ){
     return $output;
 }
 
+function hb_create_empty_post(){
+    $posts = get_posts(
+        array(
+            'post_type'         => 'any',
+            'posts_per_page'    => 1
+        )
+    );
+
+    if( $posts ){
+        foreach( get_object_vars( $posts[0] ) as $key => $value ){
+            $posts[0]->{$key} = null;
+        }
+        return $posts[0];
+    }
+    return new stdClass();
+}
+
 function hb_l18n(){
     $translation = array(
         'invalid_email' => __( 'Your email address is invalid', 'tp-hotel-booking' )
@@ -311,13 +330,96 @@ function hb_l18n(){
     return apply_filters( 'hb_l18n', $translation );
 }
 
+function hb_get_tax_settings(){
+    $settings = HB_Settings::instance();
+    if( $tax = $settings->get('tax') ){
+        $tax = $tax / 100;
+    }
+    if( hb_price_including_tax() ){
+        $tax = -$tax;
+    }
+    return $tax;
+}
+
+function hb_price_including_tax(){
+    $settings = HB_Settings::instance();
+    return $settings->get('price_including_tax');
+}
+
 function hb_customer_place_order(){
+
     if( strtolower( $_SERVER['REQUEST_METHOD'] ) != 'post' ){
         return;
     }
+
     if ( ! isset( $_POST['hb_customer_place_order_field'] ) || ! wp_verify_nonce( $_POST['hb_customer_place_order_field'], 'hb_customer_place_order' ) ){
         return;
     }
-    print_r( $_POST );die();
+
+
+    TP_Hotel_Booking::instance()->_include( 'includes/class-hb-room.php' );
+    $check_in = hb_get_request('check_in_date');
+    $check_out = hb_get_request('check_out_date');
+    $settings = HB_Settings::instance();
+    $tax = hb_get_tax_settings();
+    $price_including_tax = hb_price_including_tax();
+    $rooms = hb_get_request( 'num_of_rooms' );
+    $total = 0;
+    foreach( $rooms as $id => $num_of_rooms ){
+        $room = HB_Room::instance( $id );
+        $total += $room->get_total( $check_in, $check_out, $num_of_rooms, false );
+    }
+    if( ! $price_including_tax ){
+        $grand_total = $total + $total * $tax;
+    }else{
+        $grand_total = $total;
+    }
+    $request = maybe_unserialize( base64_decode( $_POST['sig'] ) );
+
+    $booking = HB_Booking::instance( 0 );
+    $booking->post->post_title = sprintf( __( 'Booking from %s to %s', 'tp-hotel-booking' ), $check_in, $check_out );
+    $booking->post->post_content = hb_get_request( 'addition_information' );
+    $booking->post->post_status = 'pending';
+
+    $booking->set_customer(
+        'data',
+        array(
+            '_hb_title'         => hb_get_request( 'title' ),
+            '_hb_first_name'    => hb_get_request( 'first_name' ),
+            '_hb_last_name'     => hb_get_request( 'last_name' ),
+            '_hb_address'       => hb_get_request( 'address' ),
+            '_hb_city'          => hb_get_request( 'city' ),
+            '_hb_state'         => hb_get_request( 'state' ),
+            '_hb_postal_code'   => hb_get_request( 'postal_code' ),
+            '_hb_country'       => hb_get_request( 'country' ),
+            '_hb_phone'         => hb_get_request( 'phone' ),
+            '_hb_email'         => hb_get_request( 'email' ),
+            '_hb_fax'           => hb_get_request( 'fax' )
+        )
+    );
+    $booking_info = array(
+        '_hb_check_in_date'     => strtotime( $request['check_in_date '] ),
+        '_hb_check_out_date'    => strtotime( $request['check_out_date'] ),
+        '_hb_total_nights'      => $request['total_nights'],
+        '_hb_tax'               => $settings->get('tax'),
+        '_hb_price_including_tax' => $price_including_tax ? 1 : 0,
+        '_sub_total'                => $total,
+        '_total'                    => $grand_total
+    );
+
+    $booking->set_booking_info(
+        $booking_info
+    );
+
+    $booking_id = $booking->update();
+    if( $booking_id ){
+        $booking_rooms = hb_get_request( 'num_of_rooms' );
+        foreach( $booking_rooms as $room_id => $num_of_rooms ){
+            add_post_meta( $booking_id, '_hb_room_id', $room_id );
+        }
+        update_post_meta( $booking_id, '_hb_rooms', $booking_rooms );
+    }
+
+    return $booking_id;
 }
 add_action( 'init', 'hb_customer_place_order' );

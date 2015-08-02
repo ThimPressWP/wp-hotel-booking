@@ -61,7 +61,15 @@ class HB_Room{
         }
         return $return;
     }
-    function get_price( $date = null ){
+    function get_price( $date = null, $including_tax = true ){
+        $tax = 0;
+        if( $including_tax ){
+            $settings = HB_Settings::instance();
+            if( ! $settings->get( 'price_including_tax' ) ) {
+                $tax = $settings->get('tax');
+                $tax = $tax / 100;
+            }
+        }
         if( ! $date ) $date = time();
         elseif( is_string( $date ) ){
             $date = @strtotime( $date );
@@ -95,12 +103,13 @@ class HB_Room{
             $prices = get_post_meta( $selected_plan->ID, '_hb_pricing_plan_prices', true );
             if( $prices ){
                 $return = $prices[ $this->capacity_id ][ date( 'w', $date ) ];
+                $return = $return + $return * $tax;
             }
         }
         //print_r($prices);
         return floatval( $return );
     }
-    function get_total( $from, $to, $num_of_rooms = 1 ){
+    function get_total( $from, $to, $num_of_rooms = 1, $including_tax = true ){
         $nights = 0;
         $total = 0;
         if( ! is_numeric( $from ) ){
@@ -109,9 +118,9 @@ class HB_Room{
             $from_time = $from;
         }
         if( ! is_numeric( $to ) ){
-            $to_time = strtolower( $to );
+            $to_time = strtotime( $to );
         }else{
-            if( $to >= HOUR_IN_SECONDS ){
+            if( $to >= DAY_IN_SECONDS ){
                 $to_time = $to;
             }else{
                 $nights = $to;
@@ -122,7 +131,7 @@ class HB_Room{
         }
         $from = mktime( 0, 0, 0, date( 'm', $from_time ), date( 'd', $from_time ), date( 'Y', $from_time ) );
         for( $i = 0; $i < $nights; $i++ ){
-            $total_per_night = $this->get_price( $from + $i * HOUR_IN_SECONDS * 24 );
+            $total_per_night = $this->get_price( $from + $i * DAY_IN_SECONDS, $including_tax );
             $total += $total_per_night * $num_of_rooms;
         }
         return $total;

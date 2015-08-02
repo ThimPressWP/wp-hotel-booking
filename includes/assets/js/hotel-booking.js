@@ -65,7 +65,7 @@
             onSelect: function(selected) {
                 var date = jQuery(this).datepicker('getDate');
                 if(date){
-                    date.setDate(date.getDate() + 2);
+                    date.setDate(date.getDate() + 1);
                 }
                 $("#check_out_date").datepicker("option","minDate", date)
             }

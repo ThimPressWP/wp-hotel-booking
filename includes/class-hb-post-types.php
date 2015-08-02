@@ -304,6 +304,40 @@ class HB_Post_Types{
         register_post_type( 'hb_booking', $args );
 
         /**
+         * Register custom post type for customer
+         */
+        $args = array(
+            'labels'             => array(
+                'name'               => _x( 'Customers', 'Post Type General Name', 'tp-hotel-booking' ),
+                'singular_name'      => _x( 'Customer', 'Post Type Singular Name', 'tp-hotel-booking' ),
+                'menu_name'          => __( 'Customers', 'tp-hotel-booking' ),
+                'parent_item_colon'  => __( 'Parent Item:', 'tp-hotel-booking' ),
+                'all_items'          => __( 'Customers', 'tp-hotel-booking' ),
+                'view_item'          => __( 'View Customer', 'tp-hotel-booking' ),
+                'add_new_item'       => __( 'Add New Customer', 'tp-hotel-booking' ),
+                'add_new'            => __( 'Add New', 'tp-hotel-booking' ),
+                'edit_item'          => __( 'Edit Customer', 'tp-hotel-booking' ),
+                'update_item'        => __( 'Update Customer', 'tp-hotel-booking' ),
+                'search_items'       => __( 'Search Customer', 'tp-hotel-booking' ),
+                'not_found'          => __( 'No customer found', 'tp-hotel-booking' ),
+                'not_found_in_trash' => __( 'No customer found in Trash', 'tp-hotel-booking' ),
+            ),
+            'public'             => false,
+            'query_var'          => true,
+            'publicly_queryable' => false,
+            'show_ui'            => true,
+            'has_archive'        => false,
+            //'capability_type'    => 'hb_booking',
+            'map_meta_cap'       => true,
+            'show_in_menu'       => 'tp_hotel_booking',
+            'show_in_admin_bar'  => true,
+            'show_in_nav_menus'  => true,
+            'supports'           => array( 'title', 'author' ),
+            'hierarchical'       => false
+        );
+        register_post_type( 'hb_customer', $args );
+
+        /**
          * Register custom post type for pricing plan
          */
         $args = array(

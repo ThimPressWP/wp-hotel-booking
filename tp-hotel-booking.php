@@ -89,6 +89,7 @@ class TP_Hotel_Booking{
         $this->_include( 'includes/class-hb-post-types.php' );
         $this->_include( 'includes/hb-functions.php' );
         $this->_include( 'includes/class-hb-settings.php' );
+        $this->_include( 'includes/class-hb-booking.php' );
     }
 
     /**
