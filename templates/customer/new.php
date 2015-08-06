@@ -9,7 +9,7 @@ $postal_code = 10000;
 $country = 'Vietnamese';
 $phone = '0123456789';
 $fax = '';
-$email = 'thuhuyen@gmail.com';
+$email = 'iamacustomer@gmail.com';
 $addition_information = 'I want to ...';
 ?>
 <div class="hb-order-new-customer">
@@ -19,7 +19,7 @@ $addition_information = 'I want to ...';
             <li class="hb-form-field">
                 <label class="hb-form-field-label"><?php _e( 'Title', 'tp-hotel-booking' );?><span class="hb-required">*</span> </label>
                 <div class="hb-form-field-input">
-                    <?php hb_dropdown_titles();?>
+                    <?php hb_dropdown_titles( array( 'selected' => $title ) );?>
                 </div>
             </li>
             <li class="hb-form-field">
