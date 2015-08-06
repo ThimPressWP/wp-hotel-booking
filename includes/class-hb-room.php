@@ -4,6 +4,7 @@ class HB_Room{
     protected $_plans = null;
     public $post = null;
     protected $_external_data = array();
+    protected $_room_details_total = 0;
 
     function __construct( $post ){
         if( is_numeric( $post ) ) {
@@ -13,8 +14,14 @@ class HB_Room{
         }
     }
 
-    function set_data( $key, $value ){
-        $this->_external_data[ $key ] = $value;
+    function set_data( $key, $value = null ){
+        if( is_array( $key ) ){
+            foreach( $key as $k => $v ){
+                $this->set_data( $k, $v );
+            }
+        }else {
+            $this->_external_data[$key] = $value;
+        }
         return $this;
     }
 
@@ -65,11 +72,39 @@ class HB_Room{
                 }
                 $return .= '</select>';
                 break;
-
+            case 'room_details_total':
+                return $this->_room_details_total;
+                break;
             case 'price_table':
                 $return = 'why i am here?';
         }
         return $return;
+    }
+    function get_booking_room_details(){
+        $details = array();
+        $room_details_total = 0;
+        $start_date = $this->get_data( 'check_in_date' );
+        $end_date = $this->get_data( 'check_out_date' );
+
+        $start_date_to_time = strtotime( $start_date );
+        $end_date_to_time = strtotime( $end_date );
+
+        $nights = hb_count_nights_two_dates( $end_date, $start_date );
+        for( $i = 0; $i < $nights; $i++ ){
+            $c_date = $start_date_to_time + $i * DAY_IN_SECONDS * 24;
+            $date = date('w', $c_date );
+            if( ! $details[ $date ] ){
+                $details[ $date ] = array(
+                    'count' => 0,
+                    'price' => 0
+                );
+            }
+            $details[ $date ]['count'] ++;
+            $details[ $date ]['price'] = $this->get_total( $c_date, 1, 1 );
+            $room_details_total +=  $details[ $date ]['count'] * $details[ $date ]['price'];
+        }
+        $this->_room_details_total = $room_details_total;
+        return $details;
     }
     function get_price( $date = null, $including_tax = true ){
         $tax = 0;

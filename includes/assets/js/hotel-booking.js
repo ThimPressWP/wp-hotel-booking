@@ -1,4 +1,5 @@
 ;(function($){
+    var $doc = $(document);
     function isEmail( email ){
         return new RegExp( '^[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+@[-!#$%&\'*+\\/0-9=?A-Z^_`a-z{|}~]+\.[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+$' ).test(email);
     }
@@ -100,6 +101,11 @@
         $('form#hb-payment-form').submit(orderSubmit);
 
         $('#fetch-customer-info').click(fetchCustomerInfo);
+
+        $doc.on('click', '.hb-view-booking-room-details', function(e){
+            e.preventDefault();
+            $(this).closest('.hb-room-content').find('.hb-booking-room-details').fadeToggle();
+        })
     })
 
 })((jQuery));

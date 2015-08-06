@@ -438,6 +438,191 @@ function hb_customer_place_order(){
 }
 add_action( 'init', 'hb_customer_place_order' );
 
+function hb_get_currency() {
+    $currencies     = hb_payment_currencies();
+    $currency_codes = array_keys( $currencies );
+    $currency       = reset( $currency_codes );
+
+    return apply_filters( 'hb_currency', HB_Settings::instance()->get( 'currency', $currency ) );
+}
+
+function hb_get_currency_symbol( $currency = '' ) {
+    if ( ! $currency ) {
+        $currency = hb_get_currency();
+    }
+
+    switch ( $currency ) {
+        case 'AED' :
+            $currency_symbol = 'د.إ';
+            break;
+        case 'AUD' :
+        case 'CAD' :
+        case 'CLP' :
+        case 'COP' :
+        case 'HKD' :
+        case 'MXN' :
+        case 'NZD' :
+        case 'SGD' :
+        case 'USD' :
+            $currency_symbol = '&#36;';
+            break;
+        case 'BDT':
+            $currency_symbol = '&#2547;&nbsp;';
+            break;
+        case 'BGN' :
+            $currency_symbol = '&#1083;&#1074;.';
+            break;
+        case 'BRL' :
+            $currency_symbol = '&#82;&#36;';
+            break;
+        case 'CHF' :
+            $currency_symbol = '&#67;&#72;&#70;';
+            break;
+        case 'CNY' :
+        case 'JPY' :
+        case 'RMB' :
+            $currency_symbol = '&yen;';
+            break;
+        case 'CZK' :
+            $currency_symbol = '&#75;&#269;';
+            break;
+        case 'DKK' :
+            $currency_symbol = 'kr.';
+            break;
+        case 'DOP' :
+            $currency_symbol = 'RD&#36;';
+            break;
+        case 'EGP' :
+            $currency_symbol = 'EGP';
+            break;
+        case 'EUR' :
+            $currency_symbol = '&euro;';
+            break;
+        case 'GBP' :
+            $currency_symbol = '&pound;';
+            break;
+        case 'HRK' :
+            $currency_symbol = 'Kn';
+            break;
+        case 'HUF' :
+            $currency_symbol = '&#70;&#116;';
+            break;
+        case 'IDR' :
+            $currency_symbol = 'Rp';
+            break;
+        case 'ILS' :
+            $currency_symbol = '&#8362;';
+            break;
+        case 'INR' :
+            $currency_symbol = 'Rs.';
+            break;
+        case 'ISK' :
+            $currency_symbol = 'Kr.';
+            break;
+        case 'KIP' :
+            $currency_symbol = '&#8365;';
+            break;
+        case 'KRW' :
+            $currency_symbol = '&#8361;';
+            break;
+        case 'MYR' :
+            $currency_symbol = '&#82;&#77;';
+            break;
+        case 'NGN' :
+            $currency_symbol = '&#8358;';
+            break;
+        case 'NOK' :
+            $currency_symbol = '&#107;&#114;';
+            break;
+        case 'NPR' :
+            $currency_symbol = 'Rs.';
+            break;
+        case 'PHP' :
+            $currency_symbol = '&#8369;';
+            break;
+        case 'PLN' :
+            $currency_symbol = '&#122;&#322;';
+            break;
+        case 'PYG' :
+            $currency_symbol = '&#8370;';
+            break;
+        case 'RON' :
+            $currency_symbol = 'lei';
+            break;
+        case 'RUB' :
+            $currency_symbol = '&#1088;&#1091;&#1073;.';
+            break;
+        case 'SEK' :
+            $currency_symbol = '&#107;&#114;';
+            break;
+        case 'THB' :
+            $currency_symbol = '&#3647;';
+            break;
+        case 'TRY' :
+            $currency_symbol = '&#8378;';
+            break;
+        case 'TWD' :
+            $currency_symbol = '&#78;&#84;&#36;';
+            break;
+        case 'UAH' :
+            $currency_symbol = '&#8372;';
+            break;
+        case 'VND' :
+            $currency_symbol = '&#8363;';
+            break;
+        case 'ZAR' :
+            $currency_symbol = '&#82;';
+            break;
+        default :
+            $currency_symbol = $currency;
+            break;
+    }
+
+    return apply_filters( 'hb_currency_symbol', $currency_symbol, $currency );
+}
+function hb_format_price( $price, $with_currency = true ){
+    $settings = HB_Settings::instance();
+    $position = $settings->get( 'price_currency_position' );
+    $price_thousands_separator = $settings->get( 'price_thousands_separator' );
+    $price_decimals_separator = $settings->get( 'price_decimals_separator' );
+    $price_number_of_decimal = $settings->get( 'price_number_of_decimal' );
+    if ( ! is_numeric( $price ) )
+        $price = 0;
+    $before   = $after = '';
+    if ( $with_currency ) {
+        if ( gettype( $with_currency ) != 'string' ) {
+            $currency = hb_get_currency_symbol();
+        } else {
+            $currency = $with_currency;
+        }
+
+        switch ( $position ) {
+            default:
+                $before = $currency;
+                break;
+            case 'left_with_space':
+                $before = $currency . ' ';
+                break;
+            case 'right':
+                $after = $currency;
+                break;
+            case 'right_with_space':
+                $after = ' ' . $currency;
+        }
+    }
+
+    $price =
+        $before
+        . number_format(
+            $price,
+            $price_number_of_decimal,
+            $price_decimals_separator,
+            $price_thousands_separator
+        ) . $after;
+
+    return $price;
+}
+
 function hb_search_rooms( $args = array() ){
     global $wpdb;
 
@@ -519,7 +704,14 @@ function hb_search_rooms( $args = array() ){
 */
     if( $search = $wpdb->get_results( $query ) ){
         foreach( $search as $k => $p ){
-            $results[ $k ] = HB_Room::instance( $p );
+            $room = HB_Room::instance( $p );
+            $room->set_data(
+                array(
+                    'check_in_date' => $args['check_in_date'],
+                    'check_out_date' => $args['check_out_date']
+                )
+            )->get_booking_room_details();
+            $results[ $k ] = $room;
         }
     }
     //print_r($search);

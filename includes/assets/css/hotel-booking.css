@@ -114,3 +114,7 @@
     height: 40px;
     line-height: 40px;
 }
+.hb-booking-room-details{
+    display: none;
+    margin-top: 20px;
+}

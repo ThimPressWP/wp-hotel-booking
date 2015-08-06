@@ -241,12 +241,12 @@ function hb_manage_booking_column( $column_name, $post_id ) {
         echo date( _x( 'F d, Y', 'Check-in date format', 'tp-hotel-booking' ), strtotime( $check_in_date ) );
     }
     if ($column_name == 'check_out_date') {
-    $check_in_date = get_post_meta( $post_id, '_hb_check_out_date', true );
-      echo  date( _x( 'F d, Y', 'Check-out date format', 'tp-hotel-booking' ), strtotime( $check_out_date ) );
+        $check_out_date = get_post_meta( $post_id, '_hb_check_out_date', true );
+        echo  date( _x( 'F d, Y', 'Check-out date format', 'tp-hotel-booking' ), strtotime( $check_out_date ) );
     }
     if ($column_name == 'booking_date') {
-    $booking_date = get_post_meta( $post_id, '_hb_booking_date', true );
-      echo  date( _x( 'F d, Y', 'Booking date format', 'tp-hotel-booking' ), strtotime( $booking_date ) );
+        $booking_date = get_post_meta( $post_id, '_hb_booking_date', true );
+        echo  date( _x( 'F d, Y', 'Booking date format', 'tp-hotel-booking' ), strtotime( $booking_date ) );
     }
 }   
 add_action('manage_hb_booking_posts_custom_columns', 'hb_manage_booking_column', 10, 2);

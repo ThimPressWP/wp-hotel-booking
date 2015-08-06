@@ -49,7 +49,7 @@ $sig = array(
             </li>
             <li class="hb-form-field label-left">
                 <label><?php _e( 'Total Rooms', 'tp-hotel-booking' );?></label>
-                <div><?php echo $total_rooms;?></div>
+                <div><?php echo hb_format_price( $total_rooms );?></div>
             </li>
         </ul>
         <h3><?php _e( 'Booking Rooms', 'tp-hotel-booking' );?></h3>
@@ -71,20 +71,20 @@ $sig = array(
                 <td><?php echo $room->name;?> (<?php echo $room->capacity_title;?>)</td>
                 <td><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'tp-hotel-booking' ), $room->capacity );?> </td>
                 <td class="hb-align-right">
-                    <?php echo $sub_total;?>
+                    <?php echo hb_format_price( $sub_total );?>
                     <?php
                     $sig['num_of_rooms'][ $room->post->ID ] = $num_of_rooms;
                     $sig['sub_total_of_rooms'][ $room->post->ID ] = $sub_total;
                     ?>
-                    <input type="text" name="num_of_rooms[<?php echo $room->post->ID;?>]" value="<?php echo $num_of_rooms;?>" />
-                    <input type="text" name="sub_total_of_rooms[<?php echo $room->post->ID;?>]" value="<?php echo $sub_total;?>" />
+                    <input type="hidden" name="num_of_rooms[<?php echo $room->post->ID;?>]" value="<?php echo $num_of_rooms;?>" />
+                    <input type="hidden" name="sub_total_of_rooms[<?php echo $room->post->ID;?>]" value="<?php echo $sub_total;?>" />
                 </td>
             </tr>
         <?php }?>
             <tr>
                 <td colspan="3"><?php _e( 'Sub Total', 'tp-hotel-booking' );?></td>
                 <td class="hb-align-right">
-                    <?php echo $total;?>
+                    <?php echo hb_format_price( $total );?>
                 </td>
             </tr>
             <?php if( $tax ){?>
@@ -100,7 +100,7 @@ $sig = array(
             <?php }?>
             <tr>
                 <td colspan="3"><?php _e( 'Grand Total', 'tp-hotel-booking' );?></td>
-                <td class="hb-align-right"><?php echo $grand_total;?></td>
+                <td class="hb-align-right"><?php echo hb_format_price( $grand_total );?></td>
             </tr>
         </table>
         <?php hb_get_template( 'customer.php' );?>
