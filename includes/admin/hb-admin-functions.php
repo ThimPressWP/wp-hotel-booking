@@ -116,6 +116,10 @@ add_action( 'init', 'hb_add_meta_boxes', 50 );
 function hb_update_meta_box_room_settings( $post_id ){
     wp_set_object_terms( $post_id, intval( $_POST['room_type'] ), 'hb_room_type' );
     wp_set_object_terms( $post_id, intval( $_POST['room_capacity'] ), 'hb_room_capacity' );
+    //echo '<pre>';print_r($_POST);echo '</pre>';die();
+
+    $adults = get_option( 'hb_taxonomy_capacity_' . $_POST['_hb_room_capacity'] );
+    update_post_meta( $post_id, '_hb_max_adults_per_room', intval( $adults ) );
 }
 add_action( 'hb_update_meta_box_room_settings', 'hb_update_meta_box_room_settings' );
 
@@ -257,6 +261,13 @@ function hb_delete_pricing_plan( $ids ){
             AND ID IN(" . ( is_array( $ids ) ? join(",", $ids) : $ids ) . ")
         ", 'hb_pricing_plan');
         $wpdb->query( $query );
+
+        $delete_query = $wpdb->prepare("
+            DELETE
+            FROM {$wpdb->postmeta}
+            WHERE post_id IN(%s)
+        ", ( is_array( $ids ) ? join(",", $ids) : $ids ) );
+        $wpdb->query( $delete_query );
     }
 }
 function hb_update_pricing_plan( ){

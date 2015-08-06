@@ -61,3 +61,7 @@
 .hb-pricing-table.regular-price .hb-pricing-controls .dashicons-trash{
     display: none;
 }
+th.column-room_capacity,
+th.column-room_type{
+    width: 100px;
+}

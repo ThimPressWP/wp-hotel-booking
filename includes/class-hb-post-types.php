@@ -28,6 +28,32 @@ class HB_Post_Types{
         add_action( 'edited_hb_room_capacity', array( $this, 'update_taxonomy_custom_fields' ), 10 );
 
         add_action( 'delete_term_taxonomy', array( $this, 'delete_term_data' ) );
+
+        add_filter( 'manage_hb_room_posts_columns' , array( $this, 'custom_room_columns' ) );
+        add_action( 'manage_hb_room_posts_custom_column', array( $this, 'custom_room_columns_filter' ) );
+    }
+
+    function custom_room_columns( $a ){
+        $a['room_type'] = __( 'Room Type', 'tp-hotel-booking' );
+        $a['room_capacity'] = __( 'Room Capacity', 'tp-hotel-booking' );
+        return $a;
+    }
+
+    function custom_room_columns_filter( $column ){
+        global $post;
+        switch( $column ){
+            case 'room_type':
+                $type_id = get_post_meta( $post->ID, '_hb_room_type', true );
+                $type = get_term( $type_id, 'hb_room_type' );
+
+                $cap_id = get_post_meta( $post->ID, '_hb_room_capacity', true );
+                $cap = get_term( $cap_id, 'hb_room_capacity' );
+
+                printf( '%s (%s)', $type->name, $cap->name );
+                break;
+            case 'room_capacity':
+                echo get_post_meta( $post->ID, '_hb_max_child_per_room', true );
+        }
     }
 
     function update_taxonomy(){
@@ -371,6 +397,10 @@ class HB_Post_Types{
         );
 
         register_post_type( 'hb_pricing_plan', $args );
+
+        if( is_admin() ){
+            TP_Hotel_Booking::instance()->_include( 'includes/walkers/class-hb-walker-room-type-dropdown.php' );
+        }
     }
 }
 

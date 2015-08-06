@@ -17,6 +17,7 @@ function hb_dropdown_room_capacities( $args = array() ){
             )
         )
     );
+
     $output = ob_get_clean();
     if( $args['echo'] ){
         echo $output;
@@ -43,6 +44,7 @@ function hb_dropdown_room_types( $args = array() ){
         )
     );
     $output = ob_get_clean();
+
     if( $args['echo'] ){
         echo $output;
     }
@@ -119,7 +121,7 @@ function hb_get_child_per_room(){
           AND meta_key=%s
           AND meta_value <> 0
         ORDER BY meta_value ASC
-    ", 'hb_room', 'max_child_per_room' );
+    ", 'hb_room', '_hb_max_child_per_room' );
     return $wpdb->get_col( $query );
 }
 
@@ -213,38 +215,6 @@ function hb_get_request( $name, $default = null, $var = '' ){
         $return = $var[ $name ];
     }
     return $return;
-}
-
-function hb_search_rooms( $args = array() ){
-    $args = wp_parse_args(
-        $args,
-        array(
-            'check_in_date'     => date( 'm/d/Y' ),
-            'check_out_date'    => date( 'm/d/Y' ),
-            'adults'            => 1,
-            'max_child'         => 0
-        )
-    );
-    $results = array();
-    global $wpdb;
-
-    $query = $wpdb->prepare("
-        SELECT *
-        FROM {$wpdb->posts} booking
-        INNER JOIN {$wpdb->postmeta} pm ON booking.ID = pm.meta_value
-        INNER JOIN {$wpdb->posts} booking ON
-        WHERE
-          post_type = %s
-          AND post_status = %s
-    ", 'hb_room', 'publish' );
-
-    if( $results = $wpdb->get_results( $query ) ){
-        foreach( $results as $k => $p ){
-            $results[ $k ] = HB_Room::instance( $p );
-        }
-    }
-
-    return $results;
 }
 
 function hb_count_nights_two_dates( $end = null, $start ){
@@ -346,6 +316,47 @@ function hb_price_including_tax(){
     return $settings->get('price_including_tax');
 }
 
+function hb_dropdown_numbers( $args = array() ){
+    $args = wp_parse_args(
+        $args,
+        array(
+            'min'       => 0,
+            'max'       => 100,
+            'selected'  => 0,
+            'name'      => '',
+            'id'        => '',
+            'class'     => '',
+            'echo'      => true,
+            'show_option_none'  => '',
+            'option_none_value' => ''
+        )
+    );
+    $min = 0;
+    $max = 100;
+    $selected = 0;
+    $name = '';
+    $id = '';
+    $class = '';
+    $echo = true;
+    $show_option_none = false;
+    $option_none_value = '';
+
+    extract( $args );
+
+    $id = empty( $id ) ? sanitize_title( $name ) : $id;
+    $output = '<select name="' . $name . '" id="' . $id . '"' . ( $class ? "" : ' class="' . $class . '"' ) . '>';
+    if( $show_option_none ) {
+        $output .= '<option value="' . $option_none_value . '">' . $show_option_none . '</option>';
+    }
+    for( $i = $min; $i <= $max; $i++ ){
+        $output .= sprintf( '<option value="%1$d"%2$s>%1$d</option>', $i, $selected == $i ? ' selected="selected"' : '' );
+    }
+    $output .= '</select>';
+    if( $echo ){
+        echo $output;
+    }
+    return $output;
+}
 function hb_customer_place_order(){
 
     if( strtolower( $_SERVER['REQUEST_METHOD'] ) != 'post' ){
@@ -398,7 +409,7 @@ function hb_customer_place_order(){
         )
     );
     $booking_info = array(
-        '_hb_check_in_date'     => strtotime( $request['check_in_date '] ),
+        '_hb_check_in_date'     => strtotime( $request['check_in_date'] ),
         '_hb_check_out_date'    => strtotime( $request['check_out_date'] ),
         '_hb_total_nights'      => $request['total_nights'],
         '_hb_tax'               => $settings->get('tax'),
@@ -415,11 +426,103 @@ function hb_customer_place_order(){
     if( $booking_id ){
         $booking_rooms = hb_get_request( 'num_of_rooms' );
         foreach( $booking_rooms as $room_id => $num_of_rooms ){
-            add_post_meta( $booking_id, '_hb_room_id', $room_id );
+            // insert multiple meta value
+            for( $i = 0; $i < $num_of_rooms; $i ++ ) {
+                add_post_meta($booking_id, '_hb_room_id', $room_id);
+            }
         }
-        update_post_meta( $booking_id, '_hb_rooms', $booking_rooms );
+        //update_post_meta( $booking_id, '_hb_rooms', $booking_rooms );
     }
 
     return $booking_id;
 }
 add_action( 'init', 'hb_customer_place_order' );
+
+function hb_search_rooms( $args = array() ){
+    global $wpdb;
+
+    $tax_id = hb_get_request( 'hb-room-capacities' );
+    $tax = get_term( $tax_id, 'hb_room_capacity' );
+    if( ! is_wp_error( $tax ) ){
+        $adults = get_option( 'hb_taxonomy_capacity_' . $tax_id );
+    }else{
+        $adults = -1;
+    }
+
+    $args = wp_parse_args(
+        $args,
+        array(
+            'check_in_date'     => date( 'm/d/Y' ),
+            'check_out_date'    => date( 'm/d/Y' ),
+            'adults'            => $adults,
+            'max_child'         => 0
+        )
+    );
+
+    $check_in_time = strtotime( $args['check_in_date'] );
+    $check_out_time = strtotime( $args['check_out_date'] );
+    $check_in_date_to_time = mktime( 0, 0, 0, date( 'm', $check_in_time ), date( 'd', $check_in_time ), date( 'Y', $check_in_time ) );
+    $check_out_date_to_time = mktime( 0, 0, 0, date( 'm', $check_out_time ), date( 'd', $check_out_time ), date( 'Y', $check_out_time ) );
+
+    $results = array();
+
+    /**
+     * Count available rooms
+     */
+    $query_count_available = $wpdb->prepare("
+        (
+            SELECT ra.meta_value
+            FROM {$wpdb->postmeta} ra
+            INNER JOIN {$wpdb->posts} r ON ra.post_id = r.ID AND ra.meta_key = %s
+                WHERE r.ID=rooms.ID
+        )
+    ", '_hb_num_of_rooms');
+
+    /**
+     * Count booked rooms
+     */
+    $query_count_not_available = $wpdb->prepare("
+        (
+            SELECT count(booking.ID)
+            FROM {$wpdb->posts} booking
+            INNER JOIN {$wpdb->postmeta} bm ON bm.post_id = booking.ID AND bm.meta_key = %s
+            INNER JOIN {$wpdb->postmeta} bi ON bi.post_id = booking.ID AND bi.meta_key = %s
+            INNER JOIN {$wpdb->postmeta} bo ON bo.post_id = booking.ID AND bo.meta_key = %s
+            WHERE
+                bm.meta_value=rooms.ID
+                AND bi.meta_value >= %d
+                AND bo.meta_value <= %d
+        )
+    ", '_hb_room_id', '_hb_check_in_date', '_hb_check_out_date', $check_in_date_to_time, $check_out_date_to_time );
+
+    /**
+     *
+     */
+    $query = $wpdb->prepare("
+        SELECT rooms.*, {$query_count_available} - {$query_count_not_available} as available_rooms
+        FROM {$wpdb->posts} rooms
+        INNER JOIN {$wpdb->postmeta} pm ON pm.post_id = rooms.ID AND pm.meta_key = %s
+        INNER JOIN {$wpdb->postmeta} pm2 ON pm2.post_id = rooms.ID AND pm2.meta_key = %s
+        WHERE
+          rooms.post_type = %s
+          AND rooms.post_status = %s
+          AND pm.meta_value >= %d
+          AND pm2.meta_value >= %d
+        HAVING available_rooms > 0
+    ", '_hb_max_child_per_room', '_hb_max_adults_per_room', 'hb_room', 'publish', hb_get_request('max_child'), $adults );
+
+    /*
+    echo '<pre>';
+    echo date('d.m.Y h:i:s', 1438992000);
+    print_r($_REQUEST);
+    echo $query;
+*/
+    if( $search = $wpdb->get_results( $query ) ){
+        foreach( $search as $k => $p ){
+            $results[ $k ] = HB_Room::instance( $p );
+        }
+    }
+    //print_r($search);
+    /**echo '</pre>';*/
+    return $results;
+}

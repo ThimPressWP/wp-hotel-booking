@@ -3,6 +3,7 @@ class HB_Room{
     protected static $_instance = array();
     protected $_plans = null;
     public $post = null;
+    protected $_external_data = array();
 
     function __construct( $post ){
         if( is_numeric( $post ) ) {
@@ -10,6 +11,15 @@ class HB_Room{
         }elseif( $post instanceof WP_Post || is_object( $post ) ){
             $this->post = $post;
         }
+    }
+
+    function set_data( $key, $value ){
+        $this->_external_data[ $key ] = $value;
+        return $this;
+    }
+
+    function get_data( $key ){
+        return ! empty( $this->_external_data[ $key ] ) ? $this->_external_data[ $key ] : false;
     }
 
     function __get( $key ){
@@ -57,7 +67,7 @@ class HB_Room{
                 break;
 
             case 'price_table':
-                $return = 'yyyy';
+                $return = 'why i am here?';
         }
         return $return;
     }
