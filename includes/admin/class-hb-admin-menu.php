@@ -32,8 +32,8 @@ class HB_Admin_Menu{
             ),
             'pricing_table'   => array(
                 'tp_hotel_booking',
-                __( 'Pricing Plan', 'tp-hotel-booking' ),
-                __( 'Pricing Plan', 'tp-hotel-booking' ),
+                __( 'Pricing Plans', 'tp-hotel-booking' ),
+                __( 'Pricing Plans', 'tp-hotel-booking' ),
                 'manage_options',
                 'tp_hotel_booking_pricing',
                 array( $this, 'pricing_table' )

@@ -63,7 +63,21 @@
 
         $('.hb-pricing-table').each(function(){
             init_pricing_plan(this);
-        })
+        });
+
+        var $tabClicked = $('.hb-payment-gateways .subsubsub li a').click(function(e){
+            e.preventDefault();
+            var id = $(this).attr('href'),
+                $div = $(id),
+                $parent = $(this).parent();
+            $parent.addClass('current').siblings().removeClass('current');
+            $div.show().css("opacity", 1).siblings('.hb-payment-gateway-settings').hide();
+
+            history.pushState({}, '', window.location.href.replace(/#?.*/, '') + id);
+
+            return false;
+        }).filter('[href*="'+window.location.hash+'"]').trigger('click');
+
     }
 
     $doc.ready( _ready );

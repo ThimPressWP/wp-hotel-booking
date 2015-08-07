@@ -1,4 +1,5 @@
 <?php
+/*
 $start_date = hb_get_request( 'check_in_date' );
 $end_date = hb_get_request( 'check_out_date' );
 $rooms = $_REQUEST['hb-num-of-rooms'];
@@ -10,10 +11,6 @@ if( $rooms ) foreach( $rooms as $room_id => $num_of_rooms ) {
     $total += $room->get_total( $start_date, $end_date, $num_of_rooms, false );
 }
 $total_nights = hb_count_nights_two_dates( $end_date, $start_date );
-
-foreach( $_REQUEST['hb-num-of-rooms'] as $room_id => $num ){
-//    $total += $num * $_REQUEST['hb-room-details-total'][ $room_id ];
-}
 $tax = hb_get_tax_settings();
 if( $tax > 0 ) {
     $grand_total = $total + $total * $tax;
@@ -28,7 +25,8 @@ $sig = array(
     'sub_total_of_rooms'    => array(),
     'total'                 => $total,
     'grand_total'           => $grand_total
-);
+);*/
+$cart = HB_Cart::instance();
 ?>
 <div id="hotel-booking-payment">
 
@@ -37,19 +35,19 @@ $sig = array(
         <ul class="hb-form-table">
             <li class="hb-form-field label-left">
                 <label><?php _e( 'Check-in Date', 'tp-hotel-booking' );?></label>
-                <div><?php echo hb_get_request('check_in_date');?></div>
+                <div><?php echo $cart->check_in_date;?></div>
             </li>
             <li class="hb-form-field label-left">
                 <label><?php _e( 'Check-out Date', 'tp-hotel-booking' );?></label>
-                <div><?php echo hb_get_request('check_out_date');?></div>
+                <div><?php echo $cart->check_out_date;?></div>
             </li>
             <li class="hb-form-field label-left">
                 <label><?php _e( 'Total Nights', 'tp-hotel-booking' );?></label>
-                <div><?php echo $total_nights;?></div>
+                <div><?php echo $cart->total_nights;?></div>
             </li>
             <li class="hb-form-field label-left">
                 <label><?php _e( 'Total Rooms', 'tp-hotel-booking' );?></label>
-                <div><?php echo hb_format_price( $total_rooms );?></div>
+                <div><?php echo $cart->total_rooms;?></div>
             </li>
         </ul>
         <h3><?php _e( 'Booking Rooms', 'tp-hotel-booking' );?></h3>
@@ -60,11 +58,10 @@ $sig = array(
                 <th><?php _e( 'Capacity', 'tp-hotel-booking' );?></th>
                 <th class="hb-align-right"><?php _e( 'Gross Total', 'tp-hotel-booking' );?></th>
             </thead>
-        <?php if( $rooms ) foreach( $rooms as $id => $num_of_rooms ){?>
+        <?php if( $rooms = $cart->get_rooms() ) foreach( $rooms as $room ){?>
             <?php
-            if( intval( $num_of_rooms ) == 0 ) continue;
-                $room = HB_Room::instance( $id );
-                $sub_total = $room->get_total( $start_date, $total_nights, $num_of_rooms, false );
+            if( ( $num_of_rooms = intval( $room->get_data( 'num_of_rooms' ) ) ) == 0 ) continue;
+                $sub_total = $room->get_total( $cart->check_in_date, $cart->check_out_date, $num_of_rooms, false );
             ?>
             <tr>
                 <td><?php echo $num_of_rooms;?></td>
@@ -84,7 +81,7 @@ $sig = array(
             <tr>
                 <td colspan="3"><?php _e( 'Sub Total', 'tp-hotel-booking' );?></td>
                 <td class="hb-align-right">
-                    <?php echo hb_format_price( $total );?>
+                    <?php echo hb_format_price( $cart->sub_total );?>
                 </td>
             </tr>
             <?php if( $tax ){?>
@@ -102,17 +99,23 @@ $sig = array(
                 <td colspan="3"><?php _e( 'Grand Total', 'tp-hotel-booking' );?></td>
                 <td class="hb-align-right"><?php echo hb_format_price( $grand_total );?></td>
             </tr>
+            <?php if( $advance_payment = hb_get_advance_payment() ){?>
+            <tr>
+                <td colspan="3"><?php printf( __( 'Advance Payment (%s%% of Grand Total)', 'tp-hotel-booking' ), $advance_payment );?></td>
+                <td class="hb-align-right"><?php echo hb_format_price( $grand_total * $advance_payment / 100 );?></td>
+            </tr>
+            <?php }?>
         </table>
         <?php hb_get_template( 'customer.php' );?>
+
+        <?php hb_get_template( 'payment-method.php' );?>
         <?php wp_nonce_field( 'hb_customer_place_order', 'hb_customer_place_order_field' );?>
         <input type="hidden" name="hotel-booking" value="place_order" />
         <input type="hidden" name="sig" value="<?php echo base64_encode( serialize( $sig ) );?>" />
         <input type="hidden" name="check_in_date" value="<?php echo $start_date;?>" />
         <input type="hidden" name="check_out_date" value="<?php echo $end_date;?>" />
         <input type="hidden" name="total_nights" value="<?php echo $total_nights;?>" />
-
-
-        <?php $tos_page_id = 57;?>
+        <input type="hidden" name="action" value="hotel_booking_place_order" />
         <?php if( $tos_page_id ){?>
         <p>
             <label>

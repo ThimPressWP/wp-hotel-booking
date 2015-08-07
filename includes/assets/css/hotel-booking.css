@@ -85,7 +85,8 @@
 }
 /**/
 .hb-order-existing-customer,
-.hb-order-new-customer{
+.hb-order-new-customer,
+.hb-payment-form{
     /*float: left;
     width: 48.5%;*/
     position: relative;
@@ -102,7 +103,8 @@
     float: right;
 }
 .hb-order-existing-customer > div > h4,
-.hb-order-new-customer > div > h4{
+.hb-order-new-customer > div > h4,
+.hb-payment-form > div > h4{
     margin-top: 0;
 }
 .hb-order-existing-customer:after{
@@ -117,4 +119,12 @@
 .hb-booking-room-details{
     display: none;
     margin-top: 20px;
+}
+.hb-payment-methods{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.hb-payment-methods > li{
+    margin: 0 0 20px 0;
 }

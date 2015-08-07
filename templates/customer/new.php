@@ -78,12 +78,6 @@ $addition_information = 'I want to ...';
                 </div>
             </li>
             <li class="hb-form-field">
-                <label class="hb-form-field-label"><?php _e( 'Payment Method', 'tp-hotel-booking' );?><span class="hb-required">*</span></label>
-                <div class="hb-form-field-input">
-                    <input type="email" />
-                </div>
-            </li>
-            <li class="hb-form-field">
                 <label class="hb-form-field-label"><?php _e( 'Addition Information', 'tp-hotel-booking' );?></label>
                 <div class="hb-form-field-input">
                     <textarea name="addition_information"><?php echo $addition_information;?></textarea>

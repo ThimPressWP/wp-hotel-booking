@@ -115,12 +115,15 @@ class HB_Settings{
 
     function update_settings(){
         if( strtolower( $_SERVER['REQUEST_METHOD']) != 'post' ) return;
-        if( $this->_options ) foreach( $this->_options as $k => $v ){
-            if( array_key_exists( $this->_option_prefix . $k, $_POST ) ){
-                $this->set( $k, $_POST[ $this->_option_prefix . $k ] );
+        foreach( $_POST as $k => $v ){
+            if( preg_match( '!^' . $this->_option_prefix . '!', $k ) ) {
+                $option_key = preg_replace( '!^' . $this->_option_prefix . '!', '', $k );
+                if( ! $option_key ) continue;
+                $this->set( $option_key, $_POST[ $k ]);
             }
-            $this->update();
+
         }
+        $this->update();
     }
 
     /**
@@ -139,7 +142,7 @@ class HB_Settings{
         if( $options = $wpdb->get_results( $query) ){
             foreach( $options as $option ){
                 $name = str_replace( $this->_option_prefix, '', $option->option_name );
-                $this->_options[ $name ] = $option->option_value;
+                $this->_options[ $name ] = maybe_unserialize( $option->option_value );
             }
         }
         return $this->_options;

@@ -4,8 +4,8 @@
         return new RegExp( '^[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+@[-!#$%&\'*+\\/0-9=?A-Z^_`a-z{|}~]+\.[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+$' ).test(email);
     }
     function parseJSON(data){
-        if(!$.isPlainObject(data)){
-            var m = data.match(/<!-- HB_AJAX_START -->(.*)<!-- HB_AJAX_START -->/);
+        if( ! $.isPlainObject(data) ){
+            var m = data.match(/<!-- HB_AJAX_START -->(.*)<!-- HB_AJAX_END -->/);
             try {
                 if (m) {
                     data = $.parseJSON(m[1]);
@@ -45,6 +45,21 @@
         });
     }
 
+    function validateOrder( $form ){
+        var $payment_method = $('input[name="hb-payment-method"]:checked');
+        if( $payment_method.length == 0 ){
+            alert( hotel_booking_l18n.no_payment_method_selected );
+            return false;
+        }
+
+        var $tos = $('input[name="tos"]');
+        if( $tos.length && ! $tos.is(':checked') ){
+            alert( hotel_booking_l18n.confirm_tos );
+            return false;
+        }
+        return true;
+    }
+
     function orderSubmit(e){
         var $form = $(this),
             action = window.location.href.replace(/\?.*/, '');
@@ -52,10 +67,40 @@
             if ($form.triggerHandler('hb_order_submit') === false) {
                 return false;
             }
+
+            if( ! validateOrder( $form ) ){
+                return false;
+            }
+
             $form.attr('action', action);
+
+            $.ajax({
+                type: 'POST',
+                url: hotel_settings.ajax,
+                data: $form.serialize(),
+                dataType: 'text',
+                success: function (code) {
+                    try {
+                        var response = parseJSON(code);
+                        if( response.result == 'success' ){
+                            if( response.redirect ){
+                                window.location.href = response.redirect;
+                            }
+                        }
+                    }catch(e){
+                        alert(e)
+                    }
+                },
+                error: function(){
+                    alert('eror')
+                }
+
+            });
+
         }catch(e){
             alert(e)
         }
+        return false;
     }
     $(document).ready(function(){
         $.datepicker.setDefaults({ dateFormat: 'mm/dd/yy'});

@@ -229,10 +229,21 @@ function hb_count_nights_two_dates( $end = null, $start ){
     return floor( $datediff / ( 60 * 60 * 24 ) );
 }
 
-function hb_date_to_name( $date ){
+function hb_date_names(){
     $date_names = array(
-        'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
+        __( 'Sun', 'tp-hotel-booking' ),
+        __( 'Mon', 'tp-hotel-booking' ),
+        __( 'Tue', 'tp-hotel-booking' ),
+        __( 'Web', 'tp-hotel-booking' ),
+        __( 'Thu', 'tp-hotel-booking' ),
+        __( 'Fri', 'tp-hotel-booking' ),
+        __( 'Sat', 'tp-hotel-booking' )
     );
+    return apply_filters( 'hb_date_names', $date_names );
+}
+
+function hb_date_to_name( $date ){
+    $date_names = hb_date_names();
     return $date_names[ $date ];
 }
 
@@ -259,7 +270,7 @@ function hb_dropdown_titles( $args = array() ){
             'mrs'   => __( 'Mrs.', 'tp-hotel-booking' ),
             'miss'  => __( 'Miss.', 'tp-hotel-booking' ),
             'dr'    => __( 'Dr.', 'tp-hotel-booking' ),
-            'Prof'  => __( 'Prof.', 'tp-hotel-booking' )
+            'prof'  => __( 'Prof.', 'tp-hotel-booking' )
         )
     );
     $output = '<select name="' . $name . '">';
@@ -295,7 +306,9 @@ function hb_create_empty_post(){
 
 function hb_l18n(){
     $translation = array(
-        'invalid_email' => __( 'Your email address is invalid', 'tp-hotel-booking' )
+        'invalid_email'                 => __( 'Your email address is invalid', 'tp-hotel-booking' ),
+        'no_payment_method_selected'    => __( 'Please select your payment method ', 'tp-hotel-booking' ),
+        'confirm_tos'                   => __( 'Please accept our Terms and Conditions ', 'tp-hotel-booking' )
     );
     return apply_filters( 'hb_l18n', $translation );
 }
@@ -357,6 +370,22 @@ function hb_dropdown_numbers( $args = array() ){
     }
     return $output;
 }
+
+function hb_send_json( $data ){
+    echo '<!-- HB_AJAX_START -->';
+    @header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
+    echo wp_json_encode( $data );
+    echo '<!-- HB_AJAX_END -->';
+    if ( defined( 'DOING_AJAX' ) && DOING_AJAX )
+        wp_die();
+    else
+        die;
+}
+
+function hb_is_ajax(){
+    return defined( 'DOING_AJAX' ) && DOING_AJAX;
+}
+
 function hb_customer_place_order(){
 
     if( strtolower( $_SERVER['REQUEST_METHOD'] ) != 'post' ){
@@ -367,6 +396,28 @@ function hb_customer_place_order(){
         return;
     }
 
+    $payment_method = hb_get_user_payment_method( hb_get_request( 'hb-payment-method' ) );
+
+    if( ! $payment_method ){
+        throw new Exception( __( 'The payment method is not available', 'tp-hotel-booking' ) );
+    }
+
+    $result = $payment_method->process_checkout();
+
+    if ( ! empty( $result['result'] ) && $result['result'] == 'success' ) {
+
+        $result = apply_filters( 'hb_payment_successful_result', $result );
+
+        if ( hb_is_ajax() ) {
+            hb_send_json( $result );
+            exit;
+        } else {
+            wp_redirect( $result['redirect'] );
+            exit;
+        }
+
+    }
+    exit();
 
     TP_Hotel_Booking::instance()->_include( 'includes/class-hb-room.php' );
     $check_in = hb_get_request('check_in_date');
@@ -414,8 +465,8 @@ function hb_customer_place_order(){
         '_hb_total_nights'      => $request['total_nights'],
         '_hb_tax'               => $settings->get('tax'),
         '_hb_price_including_tax' => $price_including_tax ? 1 : 0,
-        '_sub_total'                => $total,
-        '_total'                    => $grand_total
+        '_hb_sub_total'                => $total,
+        '_hb_total'                    => $grand_total
     );
 
     $booking->set_booking_info(
@@ -436,7 +487,12 @@ function hb_customer_place_order(){
 
     return $booking_id;
 }
-add_action( 'init', 'hb_customer_place_order' );
+
+function hb_get_current_user(){
+    return wp_get_current_user();
+}
+
+//add_action( 'init', 'hb_customer_place_order' );
 
 function hb_get_currency() {
     $currencies     = hb_payment_currencies();
@@ -717,4 +773,55 @@ function hb_search_rooms( $args = array() ){
     //print_r($search);
     /**echo '</pre>';*/
     return $results;
+}
+
+function hb_get_payment_gateways( $args = array() ){
+    static $payment_gateways = array();
+    if( ! $payment_gateways ) {
+        $defaults = array(
+            'paypal' => new HB_Payment_Gateway_Paypal(),
+            'stripe' => new HB_Payment_Gateway_Stripe()
+        );
+        $payment_gateways = apply_filters('hb_payment_gateways', $defaults);
+    }
+    $args = wp_parse_args(
+        $args,
+        array(
+            'enable' => false
+        )
+    );
+    if( $args['enable'] ){
+        $gateways = array();
+        foreach( $payment_gateways as $k => $gateway ){
+            if( $gateway->is_enable() ){
+                $gateways[ $k ] = $gateway;
+            }
+        }
+    }else{
+        $gateways = $payment_gateways;
+    }
+    return $gateways;
+}
+
+function hb_get_user_payment_method( $slug ){
+    $methods = hb_get_payment_gateways( array( 'enable' => true ) );
+    $method = false;
+    if( $methods && ! empty( $methods[ $slug ] ) ){
+        $method = $methods[ $slug ];
+    }
+    return $method;
+}
+
+function hb_get_page_id( $name ){
+    $settings = hb_settings();
+    return $settings->get( "{$name}_page_id" );
+}
+
+function hb_get_page_permalink( $name ){
+    return get_the_permalink( hb_get_page_id( $name ) );
+}
+
+function hb_get_advance_payment(){
+    $advance_payment = HB_Settings::instance()->get( 'advance_payment' );
+    return apply_filters( 'hb_advance_payment', $advance_payment );
 }

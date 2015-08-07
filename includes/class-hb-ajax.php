@@ -5,7 +5,8 @@ class HB_Ajax{
         if( self::$_loaded ) return;
 
         $ajax_actions = array(
-            'fetch_custom_info' => true
+            'fetch_custom_info' => true,
+            'place_order'    => true
         );
 
         foreach( $ajax_actions as $action => $priv ){
@@ -21,6 +22,10 @@ class HB_Ajax{
     static function fetch_custom_info(){
         print_r( $_POST );
         die();
+    }
+
+    static function place_order(){
+        hb_customer_place_order();
     }
 }
 

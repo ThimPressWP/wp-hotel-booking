@@ -5,9 +5,31 @@ $settings = hb_settings();
     <tr>
         <th><?php _e( 'Search Page', 'tp-hotel-booking' );?></th>
         <td>
-            <select name="<?php echo $settings->get_field_name('search_page_id');?>">
-
-            </select>
+            <?php
+                wp_dropdown_pages(
+                    array(
+                        'show_option_none'  => __( '---Select page---', 'tp-hotel-booking' ),
+                        'option_none_value' => 0,
+                        'name'      => $settings->get_field_name('search_page_id'),
+                        'selected'  => $settings->get('search_page_id')
+                    )
+                );
+            ?>
+        </td>
+    </tr>
+    <tr>
+        <th><?php _e( 'Search Page', 'tp-hotel-booking' );?></th>
+        <td>
+            <?php
+            wp_dropdown_pages(
+                array(
+                    'show_option_none'  => __( '---Select page---', 'tp-hotel-booking' ),
+                    'option_none_value' => 0,
+                    'name'      => $settings->get_field_name('terms_page_id'),
+                    'selected'  => $settings->get('terms_page_id')
+                )
+            );
+            ?>
         </td>
     </tr>
     <tr>
@@ -60,6 +82,12 @@ $settings = hb_settings();
         <td>
             <input type="hidden" name="<?php echo $settings->get_field_name('price_including_tax');?>" value="0" />
             <input type="checkbox" name="<?php echo $settings->get_field_name('price_including_tax');?>" <?php checked( $settings->get('price_including_tax') ? 1 : 0, 1 );?> value="1" />
+        </td>
+    </tr>
+    <tr>
+        <th><?php _e( 'Advance Payment', 'tp-hotel-booking' );?></th>
+        <td>
+            <input type="text" class="regular-text" name="<?php echo $settings->get_field_name('advance_payment');?>" value="<?php echo $settings->get('advance_payment');?>" />%
         </td>
     </tr>
 </table>

@@ -55,10 +55,14 @@ class TP_Hotel_Booking{
      *
      * @param string
      * @param bool
+     * @param array
      */
-    function _include( $file, $root = true ){
+    function _include( $file, $root = true, $args = array() ){
         if( $root ){
             $file = $this->plugin_path( $file );
+        }
+        if( is_array( $args ) ){
+            extract( $args );
         }
         require_once $file;
     }
@@ -77,6 +81,7 @@ class TP_Hotel_Booking{
      * Includes common files and libraries
      */
     function includes(){
+        $this->_include( 'includes/class-hb-autoloader.php' );
         $this->_include( 'includes/class-hb-ajax.php' );
         if( is_admin() ) {
             $this->_include( 'includes/admin/class-hb-admin-menu.php' );
@@ -88,8 +93,12 @@ class TP_Hotel_Booking{
         }
         $this->_include( 'includes/class-hb-post-types.php' );
         $this->_include( 'includes/hb-functions.php' );
+        $this->_include( 'includes/class-hb-cart.php' );
         $this->_include( 'includes/class-hb-settings.php' );
         $this->_include( 'includes/class-hb-booking.php' );
+        $this->_include( 'includes/payment-gateways/class-hb-payment-gateway-base.php' );
+        $this->_include( 'includes/payment-gateways/class-hb-payment-gateway-paypal.php' );
+        $this->_include( 'includes/hb-webhooks.php' );
     }
 
     /**

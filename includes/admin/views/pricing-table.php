@@ -43,7 +43,7 @@ if( $pricing_plans ) {
 ?>
 
 <div class="wrap" id="tp_hotel_booking_pricing">
-    <h2><?php _e( 'Pricing Plan', 'tp-hotel-booking' );?></h2>
+    <h2><?php _e( 'Pricing Plans', 'tp-hotel-booking' );?></h2>
     <form method="post" name="pricing-table-form">
         <p><strong><?php _e( 'Select type of room', 'tp-hotel-booking' );?></strong>&nbsp;&nbsp;<?php echo $room_type_select;?></p>
         <?php if( $room_type_id ){?>

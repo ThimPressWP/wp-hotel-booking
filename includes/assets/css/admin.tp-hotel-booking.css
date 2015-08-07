@@ -1,3 +1,8 @@
+.clearfix:after{
+    content: '';
+    display: block;
+    clear: both;
+}
 .hb-form-table{}
 .hb-form-field{
     margin: 0 0 25px 0;
@@ -64,4 +69,18 @@
 th.column-room_capacity,
 th.column-room_type{
     width: 100px;
+}
+.hb-payment-gateways .subsubsub .current{
+    font-weight: bold;
+}
+.hb-payment-gateway-settings{
+    opacity: 0;
+    float: left;
+    width: 100%;
+    margin-right: -100%;
+    overflow: hidden;
+    clear: both;
+}
+.hb-payment-gateway-settings.current{
+    opacity: 1;
 }

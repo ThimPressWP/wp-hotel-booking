@@ -10,7 +10,7 @@
         <?php else:?>
             <p><?php _e( 'No room found', 'tp-hotel-booking' );?></p>
             <p>
-                <a href="<?php echo get_the_permalink(33);?>"><?php _e( 'Search again!', 'tp-hotel-booking' );?></a>
+                <a href="<?php echo hb_get_page_permalink( 'search' );?>"><?php _e( 'Search again!', 'tp-hotel-booking' );?></a>
             </p>
         <?php endif;?>
         <input type="hidden" name="check_in_date" value="<?php echo hb_get_request( 'check_in_date' );?>" />
