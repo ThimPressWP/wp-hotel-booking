@@ -78,7 +78,6 @@
             return false;
         }).filter('[href*="'+window.location.hash+'"]').trigger('click');
 
-        })
 
         $.datepicker.setDefaults({ dateFormat: 'mm/dd/yy'});
         $(".datetime-picker-metabox").datepicker({
