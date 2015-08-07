@@ -163,6 +163,7 @@ class TP_Hotel_Booking{
         if( is_admin() ) {
             wp_enqueue_style( 'tp-admin-hotel-booking' );
             wp_enqueue_script( 'tp-admin-hotel-booking' );
+            wp_enqueue_style( 'jquery-ui-datepicker' );
         }else{
             wp_enqueue_style( 'jquery-ui-datepicker' );
             wp_enqueue_style( 'tp-hotel-booking' );

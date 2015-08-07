@@ -9,7 +9,7 @@
                 </div>
             </li>
             <li class="hb-form-field">
-                <label><?php _e( 'Check-in date', 'tp-hotel-booking' );?></label>
+                <label><?php _e( 'Check-out date', 'tp-hotel-booking' );?></label>
                 <div class="hb-form-field-input">
                     <input type="text" name="check_out_date" id="check_out_date" value="<?php echo $check_out_date;?>" />
                 </div>
