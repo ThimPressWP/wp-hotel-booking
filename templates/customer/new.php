@@ -1,5 +1,5 @@
 <?php
-$title = 'mr';
+/*$title = 'mr';
 $first_name = 'Nguyễn Ngọc';
 $last_name = 'Tú';
 $address = 'Thắng Trí - Minh Trí - Sóc Sơn - Hà Nội';
@@ -10,9 +10,9 @@ $country = 'Vietnamese';
 $phone = '0123456789';
 $fax = '';
 $email = 'iamacustomer@gmail.com';
-$addition_information = 'I want to ...';
+$addition_information = 'I want to ...';*/
 ?>
-<div class="hb-order-new-customer">
+<div class="hb-order-new-customer" id="hb-order-new-customer">
     <div class="hb-col-padding hb-col-border">
         <h4><?php _e( 'New Customer', 'tp-hotel-booking' );?></h4>
         <ul class="hb-form-table">
@@ -77,12 +77,7 @@ $addition_information = 'I want to ...';
                     <input type="text" name="fax" value="<?php echo $fax;?>" placeholder="<?php _e( 'Fax', 'tp-hotel-booking' );?>" />
                 </div>
             </li>
-            <li class="hb-form-field">
-                <label class="hb-form-field-label"><?php _e( 'Addition Information', 'tp-hotel-booking' );?></label>
-                <div class="hb-form-field-input">
-                    <textarea name="addition_information"><?php echo $addition_information;?></textarea>
-                </div>
-            </li>
         </ul>
+        <input type="hidden" name="existing-customer-id" value="" />
     </div>
 </div>

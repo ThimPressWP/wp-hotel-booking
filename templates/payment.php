@@ -84,7 +84,7 @@ $cart = HB_Cart::instance();
                     <?php echo hb_format_price( $cart->sub_total );?>
                 </td>
             </tr>
-            <?php if( $tax ){?>
+            <?php if( $tax = hb_get_tax_settings() ){?>
             <tr>
                 <td colspan="3">
                     <?php _e( 'Tax', 'tp-hotel-booking' );?>
@@ -97,18 +97,30 @@ $cart = HB_Cart::instance();
             <?php }?>
             <tr>
                 <td colspan="3"><?php _e( 'Grand Total', 'tp-hotel-booking' );?></td>
-                <td class="hb-align-right"><?php echo hb_format_price( $grand_total );?></td>
+                <td class="hb-align-right"><?php echo hb_format_price( $cart->total );?></td>
             </tr>
-            <?php if( $advance_payment = hb_get_advance_payment() ){?>
+            <?php if( $advance_payment = $cart->advance_payment ){?>
             <tr>
-                <td colspan="3"><?php printf( __( 'Advance Payment (%s%% of Grand Total)', 'tp-hotel-booking' ), $advance_payment );?></td>
-                <td class="hb-align-right"><?php echo hb_format_price( $grand_total * $advance_payment / 100 );?></td>
+                <td colspan="3">
+                    <?php printf( __( 'Advance Payment (%s%% of Grand Total)', 'tp-hotel-booking' ), hb_get_advance_payment() );?>
+                </td>
+                <td class="hb-align-right"><?php echo hb_format_price( $advance_payment );?></td>
             </tr>
+                <?php if( hb_get_advance_payment() < 100 ){?>
+                <tr>
+                    <td colspan="4" class="hb-align-right">
+                        <label>
+                            <input type="checkbox" name="pay_all" />
+                            <?php _e( 'I want to pay all', 'tp-hotel-booking' );?>
+                        </label>
+                    </td>
+                </tr>
+                <?php }?>
             <?php }?>
         </table>
         <?php hb_get_template( 'customer.php' );?>
-
         <?php hb_get_template( 'payment-method.php' );?>
+        <?php hb_get_template( 'addition-information.php' );?>
         <?php wp_nonce_field( 'hb_customer_place_order', 'hb_customer_place_order_field' );?>
         <input type="hidden" name="hotel-booking" value="place_order" />
         <input type="hidden" name="sig" value="<?php echo base64_encode( serialize( $sig ) );?>" />
@@ -116,7 +128,7 @@ $cart = HB_Cart::instance();
         <input type="hidden" name="check_out_date" value="<?php echo $end_date;?>" />
         <input type="hidden" name="total_nights" value="<?php echo $total_nights;?>" />
         <input type="hidden" name="action" value="hotel_booking_place_order" />
-        <?php if( $tos_page_id ){?>
+        <?php if( $tos_page_id = hb_get_page_id( 'terms' ) ){?>
         <p>
             <label>
                 <input type="checkbox" name="tos" value="1" />

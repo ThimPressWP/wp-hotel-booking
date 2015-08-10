@@ -84,6 +84,7 @@ $settings = hb_settings();
             <input type="checkbox" name="<?php echo $settings->get_field_name('price_including_tax');?>" <?php checked( $settings->get('price_including_tax') ? 1 : 0, 1 );?> value="1" />
         </td>
     </tr>
+
     <tr>
         <th><?php _e( 'Advance Payment', 'tp-hotel-booking' );?></th>
         <td>

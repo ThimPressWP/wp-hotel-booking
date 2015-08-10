@@ -1,5 +1,5 @@
 <?php
-function learn_press_register_web_hook( $key, $param ) {
+function hb_register_web_hook( $key, $param ) {
     if ( !$key ) {
         return;
     }

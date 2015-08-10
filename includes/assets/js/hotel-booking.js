@@ -34,13 +34,33 @@
             dataType: 'html',
             type: 'post',
             data: {
-                action: 'hotel_booking_fetch_custom_info'
+                action: 'hotel_booking_fetch_custom_info',
+                email: $email.val()
             },
             success: function(response){
-                response = parseJSON(response)
+                response = parseJSON(response);
+                if( response && response.ID ){
+                    var $container = $('#hb-order-new-customer');
+                    for( var key in response.data ){
+                        var inputName = key.replace(/^_hb_/, '');
+                        var $field = $container.find('input[name="'+inputName+'"], select[name="'+inputName+'"], textarea[name="'+inputName+'"]');
+                        $field.val(response.data[key]);
+                    }
+                    $container.find('input[name="existing-customer-id"]').val(response.ID);
+                    $('.hb-order-existing-customer').fadeOut(function(){
+                        $(this).remove();
+                    });
+                }else{
+                    alert( 'Customer email not found!' );
+                }
+                $button.removeAttr('disabled');
+                $email.removeAttr('disabled');
+
             },
             error: function(){
-                alert(hotel_booking_l18n.ajax_error)
+                alert(hotel_booking_l18n.ajax_error);
+                $button.removeAttr('disabled');
+                $email.removeAttr('disabled');
             }
         });
     }

@@ -55,7 +55,7 @@ class HB_Autoloader {
     public function autoload( $class ) {
         $class = strtolower( $class );
         $file  = $this->get_file_name_from_class( $class );
-        $path  = '';
+        $path  = $path = $this->include_path;
 
         // payment gateways
         if ( strpos( $class, 'hb_payment_gateway_' ) === 0 ) {

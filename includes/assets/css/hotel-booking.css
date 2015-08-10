@@ -86,7 +86,8 @@
 /**/
 .hb-order-existing-customer,
 .hb-order-new-customer,
-.hb-payment-form{
+.hb-payment-form,
+.hb-addition-information{
     /*float: left;
     width: 48.5%;*/
     position: relative;
@@ -104,7 +105,8 @@
 }
 .hb-order-existing-customer > div > h4,
 .hb-order-new-customer > div > h4,
-.hb-payment-form > div > h4{
+.hb-payment-form > div > h4,
+.hb-addition-information > div > h4{
     margin-top: 0;
 }
 .hb-order-existing-customer:after{

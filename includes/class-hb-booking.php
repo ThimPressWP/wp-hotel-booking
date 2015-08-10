@@ -59,7 +59,7 @@ class HB_Booking{
     function update(){
         $customer_id = 0;
 
-        if( $this->_customer ){
+        /*if( $this->_customer ){
             $customer_data = get_object_vars( $this->_customer );
             $customer_data['post_type'] = 'hb_customer';
             $customer_data['post_status'] = 'publish';
@@ -70,22 +70,22 @@ class HB_Booking{
                 $customer_id = wp_insert_post( $customer_data );
 
             }
-        }
-        if( $customer_id && ! empty( $this->post ) ) {
+        }*/
+        //if( $customer_id && ! empty( $this->post ) ) {
 
-            if( ! empty( $this->_customer->data ) ){
+            /*if( ! empty( $this->_customer->data ) ){
                 $customer_data = (array)$this->_customer->data;
                 foreach( $customer_data as $k => $v ){
                     update_post_meta( $customer_id, $k, $v );
 
                 }
-            }
+            }*/
 
             $post_data = get_object_vars($this->post);
 
             // ensure the post_type is correct
-            $post_data['post_type'] = 'hb_booking';
-            $post_data['post_status'] = 'publish';
+            $post_data['post_type']     = 'hb_booking';
+            $post_data['post_status']   = 'publish';
             if ($this->post->ID) {
                 $booking_id = wp_update_post($post_data);
             } else {
@@ -93,18 +93,12 @@ class HB_Booking{
                 $this->post->ID = $booking_id;
             }
             if( $booking_id ){
-                update_post_meta( $booking_id, '_hb_customer_id', $customer_id );
-                foreach( $this->_booking_info as $k => $v ){
-                    /*if( ! preg_match( '!^_hb_!', $k ) ){
-                        $meta_key = '_hb_' . $k;
-                    }else{
-                        $meta_key = $k;
-                    }*/
-                    $meta_key = $k;
+                //update_post_meta( $booking_id, '_hb_customer_id', $customer_id );
+                foreach( $this->_booking_info as $meta_key => $v ){
                     update_post_meta( $booking_id, $meta_key, $v );
                 }
             }
-        }
+        //}
         return $this->post->ID;
     }
 

@@ -51,11 +51,14 @@ class HB_Shortcodes{
                         )
                     );
                 if( $rooms ) foreach( $rooms as $room_id => $num_of_rooms ) {
+                    if( ! $num_of_rooms ) continue;
                     $cart->add_to_cart( $room_id, $num_of_rooms );
-                    $total_rooms += $num_of_rooms;
                     $room = HB_Room::instance( $room_id );
+                    $room->set_data( 'num_of_rooms', $num_of_rooms );
+                    $total_rooms += $num_of_rooms;
                     $total += $room->get_total( $start_date, $end_date, $num_of_rooms, false );
                 }
+
                 $total_nights = hb_count_nights_two_dates( $end_date, $start_date );
                 $tax = hb_get_tax_settings();
                 if( $tax > 0 ) {
@@ -63,6 +66,7 @@ class HB_Shortcodes{
                 }else{
                     $grand_total = $total;
                 }
+
                 $sig = array(
                     'check_in_date'         => hb_get_request( 'check_in_date' ),
                     'check_out_date'        => hb_get_request( 'check_out_date' ),
@@ -77,10 +81,10 @@ class HB_Shortcodes{
                     //'total_nights'  => $total_nights,
                     //'total_rooms'   => $total_rooms,
                     //'rooms'         => $rooms,
-                    'total'         => $total,
-                    'tax'           => $tax,
-                    'grand_total'   => $grand_total,
-                    'tos_page_id'   => hb_get_page_id( 'terms' )
+                    //'total'         => $total,
+                    //'tax'           => $tax,
+                    //'grand_total'   => $grand_total,
+                    //'tos_page_id'   => hb_get_page_id( 'terms' )
                 );
                 break;
             case 'confirm':

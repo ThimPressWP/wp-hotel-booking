@@ -386,6 +386,50 @@ function hb_is_ajax(){
     return defined( 'DOING_AJAX' ) && DOING_AJAX;
 }
 
+function hb_update_customer_info( $data ){
+    $is_new = false;
+    if( ! empty( $data['ID'] ) ){
+        $customer_id = $data['ID'];
+        $customer = get_post( $customer_id );
+        if( ! $customer || get_post_meta( $customer_id, '_hb_email', true ) != $data['email'] ){
+            $customer_id = 0;
+        }
+    }
+    if( ! $customer_id ){
+        $is_new = true;
+        $customer_id = wp_insert_post(
+            array(
+                'post_type'     => 'hb_customer',
+                'post_status'   => 'publish',
+                'post_title'    => __( 'Hotel Booking Customer', 'tp-hotel-booking' )
+            )
+        );
+    }
+    if( $customer_id ) {
+        foreach ($data as $k => $v) {
+            if( $k == 'ID' ) continue;
+            if( ! $is_new && $k == 'email' ) continue;
+            update_post_meta($customer_id, "_hb_{$k}", $v);
+        }
+    }
+    return $customer_id;
+}
+
+function hb_get_customer( $customer_id ){
+    $customer = get_post( $customer_id );
+    if( $customer && $customer->post_type == 'hb_customer' ){
+        $customer->data = array();
+        $data = get_post_meta( $customer->ID );
+        foreach( $data as $k => $v ) {
+            $key_name = preg_replace( '!^_hb_!', '', $k );
+            $customer->data[ $key_name ] = $v[0];
+        }
+    }else{
+        $customer = null;
+    }
+    return $customer;
+}
+
 function hb_customer_place_order(){
 
     if( strtolower( $_SERVER['REQUEST_METHOD'] ) != 'post' ){
@@ -402,7 +446,24 @@ function hb_customer_place_order(){
         throw new Exception( __( 'The payment method is not available', 'tp-hotel-booking' ) );
     }
 
-    $result = $payment_method->process_checkout();
+    $customer_info = array(
+        'ID'            => hb_get_request( 'existing-customer-id' ),
+        'title'         => hb_get_request( 'title' ),
+        'first_name'    => hb_get_request( 'first_name' ),
+        'last_name'     => hb_get_request( 'last_name' ),
+        'address'       => hb_get_request( 'address' ),
+        'city'          => hb_get_request( 'city' ),
+        'state'         => hb_get_request( 'state' ),
+        'postal_code'   => hb_get_request( 'postal_code' ),
+        'country'       => hb_get_request( 'country' ),
+        'phone'         => hb_get_request( 'phone' ),
+        'email'         => hb_get_request( 'email' ),
+        'fax'           => hb_get_request( 'fax' ),
+    );
+    $customer_id = hb_update_customer_info( $customer_info );
+    if( $customer_id ) {
+        $result = $payment_method->process_checkout( $customer_id );
+    }
 
     if ( ! empty( $result['result'] ) && $result['result'] == 'success' ) {
 
@@ -418,74 +479,6 @@ function hb_customer_place_order(){
 
     }
     exit();
-
-    TP_Hotel_Booking::instance()->_include( 'includes/class-hb-room.php' );
-    $check_in = hb_get_request('check_in_date');
-    $check_out = hb_get_request('check_out_date');
-    $settings = HB_Settings::instance();
-    $tax = hb_get_tax_settings();
-    $price_including_tax = hb_price_including_tax();
-    $rooms = hb_get_request( 'num_of_rooms' );
-    $total = 0;
-    foreach( $rooms as $id => $num_of_rooms ){
-        $room = HB_Room::instance( $id );
-        $total += $room->get_total( $check_in, $check_out, $num_of_rooms, false );
-    }
-    if( ! $price_including_tax ){
-        $grand_total = $total + $total * $tax;
-    }else{
-        $grand_total = $total;
-    }
-    $request = maybe_unserialize( base64_decode( $_POST['sig'] ) );
-
-    $booking = HB_Booking::instance( 0 );
-    $booking->post->post_title = sprintf( __( 'Booking from %s to %s', 'tp-hotel-booking' ), $check_in, $check_out );
-    $booking->post->post_content = hb_get_request( 'addition_information' );
-    $booking->post->post_status = 'pending';
-
-    $booking->set_customer(
-        'data',
-        array(
-            '_hb_title'         => hb_get_request( 'title' ),
-            '_hb_first_name'    => hb_get_request( 'first_name' ),
-            '_hb_last_name'     => hb_get_request( 'last_name' ),
-            '_hb_address'       => hb_get_request( 'address' ),
-            '_hb_city'          => hb_get_request( 'city' ),
-            '_hb_state'         => hb_get_request( 'state' ),
-            '_hb_postal_code'   => hb_get_request( 'postal_code' ),
-            '_hb_country'       => hb_get_request( 'country' ),
-            '_hb_phone'         => hb_get_request( 'phone' ),
-            '_hb_email'         => hb_get_request( 'email' ),
-            '_hb_fax'           => hb_get_request( 'fax' )
-        )
-    );
-    $booking_info = array(
-        '_hb_check_in_date'     => strtotime( $request['check_in_date'] ),
-        '_hb_check_out_date'    => strtotime( $request['check_out_date'] ),
-        '_hb_total_nights'      => $request['total_nights'],
-        '_hb_tax'               => $settings->get('tax'),
-        '_hb_price_including_tax' => $price_including_tax ? 1 : 0,
-        '_hb_sub_total'                => $total,
-        '_hb_total'                    => $grand_total
-    );
-
-    $booking->set_booking_info(
-        $booking_info
-    );
-
-    $booking_id = $booking->update();
-    if( $booking_id ){
-        $booking_rooms = hb_get_request( 'num_of_rooms' );
-        foreach( $booking_rooms as $room_id => $num_of_rooms ){
-            // insert multiple meta value
-            for( $i = 0; $i < $num_of_rooms; $i ++ ) {
-                add_post_meta($booking_id, '_hb_room_id', $room_id);
-            }
-        }
-        //update_post_meta( $booking_id, '_hb_rooms', $booking_rooms );
-    }
-
-    return $booking_id;
 }
 
 function hb_get_current_user(){
@@ -824,4 +817,31 @@ function hb_get_page_permalink( $name ){
 function hb_get_advance_payment(){
     $advance_payment = HB_Settings::instance()->get( 'advance_payment' );
     return apply_filters( 'hb_advance_payment', $advance_payment );
+}
+
+function hb_do_transaction( $method, $transaction = false ){
+    do_action( 'hb_do_transaction_' . $method, $transaction );
+}
+
+function hb_handle_purchase_request(){
+    hb_get_payment_gateways();
+    $method_var = 'hb-transaction-method';
+    $requested_transaction_method = empty( $_REQUEST[$method_var] ) ? false : $_REQUEST[$method_var];
+    hb_do_transaction( $requested_transaction_method );
+}
+
+function hb_get_bookings( $args = array() ){
+    $defaults = array(
+        'post_type' => 'hb_booking',
+    );
+
+    $args = wp_parse_args( $args, $defaults );
+
+    $bookings = get_posts( $args );
+
+    return apply_filters( 'hb_get_bookings', $bookings, $args );
+}
+
+function hb_update_booking_status( $booking_id, $status ){
+    update_post_meta( $booking_id, '_hb_booking_status', $status );
 }

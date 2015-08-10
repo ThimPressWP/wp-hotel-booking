@@ -20,7 +20,28 @@ class HB_Ajax{
     }
 
     static function fetch_custom_info(){
-        print_r( $_POST );
+        $email = hb_get_request( 'email' );
+        $query_args = array(
+            'post_type'     => 'hb_customer',
+            'meta_query' => array(
+                array(
+                    'key' => '_hb_email',
+                    'value' => $email,
+                    'compare' => 'EQUALS'
+                ),
+            )
+        );
+        if( $posts = get_posts( $query_args ) ){
+            $customer = $posts[0];
+            $customer->data = array();
+            $data = get_post_meta( $customer->ID );
+            foreach( $data as $k => $v ) {
+                $customer->data[$k] = $v[0];
+            }
+        }else{
+            $customer = null;
+        }
+        hb_send_json( $customer );
         die();
     }
 

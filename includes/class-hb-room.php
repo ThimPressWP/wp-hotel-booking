@@ -72,8 +72,11 @@ class HB_Room{
                 }
                 $return .= '</select>';
                 break;
+            case 'num_of_rooms':
+                $return = $this->get_data( 'num_of_rooms' );
+                break;
             case 'room_details_total':
-                return $this->_room_details_total;
+                $return = $this->_room_details_total;
                 break;
             case 'price_table':
                 $return = 'why i am here?';
