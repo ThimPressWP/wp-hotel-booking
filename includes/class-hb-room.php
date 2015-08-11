@@ -96,7 +96,7 @@ class HB_Room{
         for( $i = 0; $i < $nights; $i++ ){
             $c_date = $start_date_to_time + $i * DAY_IN_SECONDS * 24;
             $date = date('w', $c_date );
-            if( empty( $details[ $date ] ) ){
+            if( ! isset( $details[ $date ] ) ){
                 $details[ $date ] = array(
                     'count' => 0,
                     'price' => 0
