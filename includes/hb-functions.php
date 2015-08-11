@@ -848,7 +848,7 @@ function hb_update_booking_status( $booking_id, $status ){
 
 function hb_maybe_modify_page_content(){
     global $post;
-    echo $post->ID;
+    //echo $post->ID;
 }
 
 add_action( 'template_redirect', 'hb_maybe_modify_page_content' );
