@@ -184,7 +184,11 @@ class HB_Post_Types{
                 $content .= '</div>';*/
                 $attachments = get_option( 'hb_taxonomy_thumbnail_' . $term_id );
                 $count = is_array( $attachments ) ? sizeof( $attachments ) : 0;
-                echo '<a href="" class="hb-edit-room-gallery">' . sprintf( _n( 'Edit (%d image)', 'Edit (%d images)', $count, 'tp-hotel-booking' ), $count )  . '</a>';
+                if( $count > 0 ) {
+                    echo '<a href="" class="hb-edit-room-gallery">' . sprintf(_n('Edit (%d image)', 'Edit (%d images)', $count, 'tp-hotel-booking'), $count) . '</a>';
+                }else{
+                    echo '<a href="" class="hb-edit-room-gallery">' . __( 'Edit (0 image)', 'tp-hotel-booking') . '</a>';
+                }
                 break;
             case 'capacity':
                 $capacity = get_option( 'hb_taxonomy_capacity_' . $term_id );
