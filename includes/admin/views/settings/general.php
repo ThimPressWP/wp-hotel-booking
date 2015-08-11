@@ -18,7 +18,7 @@ $settings = hb_settings();
         </td>
     </tr>
     <tr>
-        <th><?php _e( 'Search Page', 'tp-hotel-booking' );?></th>
+        <th><?php _e( 'Terms and Conditions Page', 'tp-hotel-booking' );?></th>
         <td>
             <?php
             wp_dropdown_pages(
