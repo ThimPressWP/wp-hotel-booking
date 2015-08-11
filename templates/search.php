@@ -1,3 +1,9 @@
+<?php
+$check_in_date = hb_get_request( 'check_in_date' );
+$check_out_date = hb_get_request( 'check_out_date' );
+$adults = 2;
+$max_child = 2;
+?>
 <div id="hotel-booking-search">
     <h3><?php _e( 'Search your room', 'tp-hotel-booking' );?></h3>
     <form name="hb-search-form">
