@@ -66,6 +66,27 @@
     }
 
     function validateOrder( $form ){
+
+        var $title = $('select[name="title"]', $form);
+        if( -1 == $title.val() ){
+            alert( hotel_booking_l18n.empty_customer_title );
+            return false;
+        }
+
+        var $firstName = $('input[name="first_name"]', $form);
+        if( ! $firstName.val() ){
+            alert( hotel_booking_l18n.empty_customer_first_name );
+            $firstName.focus();
+            return false;
+        }
+
+        var $lastName = $('input[name="last_name"]', $form);
+        if( ! $lastName.val() ){
+            alert( hotel_booking_l18n.empty_customer_last_name );
+            $lastName.focus();
+            return false;
+        }
+
         var $payment_method = $('input[name="hb-payment-method"]:checked');
         if( $payment_method.length == 0 ){
             alert( hotel_booking_l18n.no_payment_method_selected );
@@ -161,6 +182,19 @@
                 return false;
             }
             return true;
+        });
+        $('form[name="hb-search-results"]').submit(function(){
+            var total_rooms = 0;
+
+            $('select[name^="hb-num-of-rooms"]').each(function(){
+                if( this.value ) {
+                    total_rooms += parseInt(this.value);
+                }
+            });
+            if( total_rooms == 0 ) {
+                alert( hotel_booking_l18n.no_rooms_selected );
+                return false;
+            }
         });
 
         $('form#hb-payment-form').submit(orderSubmit);

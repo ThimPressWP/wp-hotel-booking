@@ -1,5 +1,5 @@
 <div id="hotel-booking-results">
-    <form name="hb-search-form">
+    <form name="hb-search-results">
         <h3><?php _e( 'Search results', 'tp-hotel-booking' );?></h3>
         <?php if( $results ):?>
             <?php hb_get_template( 'results/list.php', array( 'results' => $results ) );?>

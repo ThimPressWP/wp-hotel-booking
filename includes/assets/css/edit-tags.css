@@ -65,3 +65,51 @@
 .hb-taxonomy-thumbnail-selector:hover:after{
     display: block;
 }
+.taxonomy-hb_room_type .column-description,
+.taxonomy-hb_room_type .column-posts,
+.taxonomy-hb_room_capacity .column-description,
+.taxonomy-hb_room_capacity .column-posts{
+    _display: none;
+}
+.hb-room-gallery > ul{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+.hb-room-gallery > ul > li.attachment{
+    width: 20%;
+}
+.attachment.add-new .dashicons{
+    font-size: 40px;
+    line-height: 55px;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 50%;
+    margin-top: -25px;
+    left: 50%;
+    margin-left: -25px;
+    color: #FFF;
+}
+.attachment.add-new:hover .dashicons{
+    color: #00a0d2;
+}
+.attachment .trash:after{
+    content: "\f182";
+    font-family: dashicons;
+    position: absolute;
+    z-index: 5;
+    font-size: 40px;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    top: 50%;
+    left: 50%;
+    margin-top: -25px;
+    margin-left: -25px;
+    color: #FF0000;
+    display: none;
+}
+.attachment:hover .trash:after{
+    display: block;
+}

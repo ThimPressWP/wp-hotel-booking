@@ -84,3 +84,35 @@ th.column-room_type{
 .hb-payment-gateway-settings.current{
     opacity: 1;
 }
+.post-type-hb_room .column-date{
+    display: none;
+}
+.post-type-hb_room .column-author{
+    width: 150px;
+}
+.post-type-hb_room td.column-room_capacity{
+    text-align: right;
+}
+.post-type-hb_booking .column-title{
+    width: 100px;
+}
+.post-type-hb_booking .column-total{
+    width: 80px;
+}
+.post-type-hb_booking .column-details{
+    width: 80px;
+}
+.post-type-hb_booking .column-check_in_date,
+.post-type-hb_booking .column-check_out_date,
+.post-type-hb_booking .column-customer_name{
+    width: 130px;
+}
+.post-type-hb_booking .column-booking_date{
+    width: 100px;
+}
+.post-type-hb_booking .column-check_in_date,
+.post-type-hb_booking .column-check_out_date,
+.post-type-hb_booking .column-booking_date,
+.post-type-hb_booking .column-total{
+    text-align: right;
+}

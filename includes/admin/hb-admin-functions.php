@@ -303,14 +303,13 @@ add_action( 'init', 'hb_customer_meta_box', 50 );
 function hb_booking_table_head( $default ) {
     unset($default['author']);
     unset($default['date']);
-    // unset($default['title']);
-    $default['booking_id']   = __('Booking ID', 'tp-hotel-booking');
-    $default['customer_name']   = __('Customer Name', 'tp-hotel-booking');
-    $default['check_in_date']   = __('Check-in Date', 'tp-hotel-booking');
-    $default['check_out_date']  = __('Check-out Date', 'tp-hotel-booking');
-    $default['room_type_room']  = __('Room Type/Number of Room', 'tp-hotel-booking');
-    $default['date']  = __('Booking Date', 'tp-hotel-booking');
-    $default['total']  = __('Total', 'tp-hotel-booking');    
+    $default['customer_name']   = __( 'Customer Name', 'tp-hotel-booking' );
+    $default['check_in_date']   = __( 'Check-in Date', 'tp-hotel-booking' );
+    $default['check_out_date']  = __( 'Check-out Date', 'tp-hotel-booking' );
+    $default['booking_date']    = __( 'Booking Date', 'tp-hotel-booking' );
+    $default['total']           = __( 'Total', 'tp-hotel-booking' );
+    $default['title']           = __( 'ID', 'tp-hotel-booking' );
+    $default['details']         = __( 'View Details', 'tp-hotel-booking' );
     return $default;
 }
 add_filter('manage_hb_booking_posts_columns', 'hb_booking_table_head');
@@ -319,31 +318,41 @@ add_filter('manage_hb_booking_posts_columns', 'hb_booking_table_head');
 /**
  * Retrieve information for listing in booking list
  * 
- * @param  [type] $column_name [description]
- * @param  [type] $post_id     [description]
- * @return [type]              [description]
+ * @param  string
+ * @param  int
+ * @return mixed
  */
 function hb_manage_booking_column( $column_name, $post_id ) {    
-    if ($column_name == 'booking_id') {
-        $booking_id = $post_id;
-        echo $booking_id;        
-    }
-    if ($column_name == 'customer_name') {
-        $customer_id = get_post_meta( $post_id, '_hb_customer_id', true );
-        $customer_name = get_post_meta( $customer_id, '_hb_title', true ) . get_post_meta( $customer_id, '_hb_first_name', true ) . ' ' . get_post_meta( $customer_id, '_hb_last_name', true );      
-        echo $customer_name;
-    }
-    if ($column_name == 'check_in_date') {
-        $check_in_date = get_post_meta( $post_id, '_hb_check_in_date', true );
-        echo date( _x( 'F d, Y', 'Check-in date format', 'tp-hotel-booking' ), strtotime( $check_in_date ) );
-    }
-    if ($column_name == 'check_out_date') {
-        $check_out_date = get_post_meta( $post_id, '_hb_check_out_date', true );
-        echo  date( _x( 'F d, Y', 'Check-out date format', 'tp-hotel-booking' ), strtotime( $check_out_date ) );
-    }    
-    if ($column_name == 'total') {
-        $total = get_post_meta( $post_id, '_hb_total', true );
-        echo  $total;
+    switch ( $column_name ){
+        case 'booking_id':
+            $booking_id = $post_id;
+            echo hb_format_order_number( $booking_id );
+            break;
+        case 'customer_name':
+            $customer_id = get_post_meta( $post_id, '_hb_customer_id', true );
+            $title = hb_get_title_by_slug( get_post_meta( $customer_id, '_hb_title', true ) );
+            $first_name = get_post_meta( $customer_id, '_hb_first_name', true );
+            $last_name = get_post_meta( $customer_id, '_hb_last_name', true );
+            printf( '%s %s %s', $title ? $title : 'Cus.', $first_name, $last_name );
+            break;
+        case 'check_in_date':
+            $check_in_date = get_post_meta( $post_id, '_hb_check_in_date', true );
+            echo date( _x( 'F d, Y', 'Check-in date format', 'tp-hotel-booking' ), $check_in_date );
+            break;
+        case 'check_out_date':
+            $check_out_date = get_post_meta( $post_id, '_hb_check_out_date', true );
+            echo  date( _x( 'F d, Y', 'Check-out date format', 'tp-hotel-booking' ), $check_out_date );
+            break;
+        case 'total':
+            $total      = get_post_meta( $post_id, '_hb_total', true );
+            $currency   = get_post_meta( $post_id, '_hb_currency', true );
+            echo hb_format_price( $total, hb_get_currency_symbol( $currency ) );
+            break;
+        case 'booking_date':
+            echo date( 'm.d.Y', strtotime( get_post_field( 'post_date', $post_id ) ) );
+            break;
+        case 'details':
+            echo '<a href="">' . __( 'View', 'tp-hotel-booking' ) . '</a>';
     }
 }   
 add_action('manage_hb_booking_posts_custom_column', 'hb_manage_booking_column', 10, 2);
@@ -437,46 +446,62 @@ function hb_booking_filter( $query ){
 function hb_customer_posts_columns( $default ) {
     unset($default['author']);
     unset($default['date']);
-    // unset($default['title']);    
-    $default['customer_name']   = __('Customer Name', 'tp-hotel-booking');
-    $default['customer_address']   = __('Custormer Address', 'tp-hotel-booking');
-    $default['phone_number']  = __('Phone Number', 'tp-hotel-booking');
-    $default['email']  = __('Email', 'tp-hotel-booking');    
-    $default['booking']  = __('Booking', 'tp-hotel-booking');
-    $default['booking_date']  = __('Booking Date', 'tp-hotel-booking');
+    $default['customer_address']    = __( 'Address', 'tp-hotel-booking' );
+    $default['phone_number']        = __( 'Phone Number', 'tp-hotel-booking' );
+    $default['email']               = __( 'Email', 'tp-hotel-booking' );
+    $default['bookings']            = __( 'Bookings', 'tp-hotel-booking' );
+    $default['title']               = __( 'Cus. Name', 'tp-hotel-booking' );
     return $default;
 }
 add_filter('manage_hb_customer_posts_columns', 'hb_customer_posts_columns');
 
+function hb_edit_post_change_title_in_list() {
+    add_filter( 'the_title', 'hb_edit_post_new_title_in_list', 100, 2 );
+}
+add_action( 'admin_head-edit.php', 'hb_edit_post_change_title_in_list' );
+
+function hb_edit_post_new_title_in_list( $title, $post_id ){
+    global $post_type;
+    if( $post_type == 'hb_customer' ) {
+        $title = hb_get_title_by_slug(get_post_meta($post_id, '_hb_title', true));
+        $first_name = get_post_meta($post_id, '_hb_first_name', true);
+        $last_name = get_post_meta($post_id, '_hb_last_name', true);
+        $customer_name = sprintf('%s %s %s', $title ? $title : 'Cus.', $first_name, $last_name);
+        $title = $customer_name;
+    }elseif( $post_type == 'hb_booking' ) {
+        $title = hb_format_order_number( $post_id );
+    }
+    return $title;
+}
 
 function hb_manage_customer_column( $column_name, $post_id ) {        
-    if ($column_name == 'customer_name') {
-        $customer_name = get_post_meta( $post_id, '_hb_title', true ) . get_post_meta( $post_id, '_hb_first_name', true ) . ' ' . get_post_meta( $post_id, '_hb_last_name', true );
-        echo $customer_name;
-    }
-    if ($column_name == 'customer_address') {
-        $customer_address = get_post_meta( $post_id, '_hb_address', true );
-        echo $customer_address;
-    }
-    if ($column_name == 'phone_number') {
-        $phone = get_post_meta( $post_id, '_hb_phone', true );
-        echo $phone;
-    }
-    if ($column_name == 'email') {
-        $email = get_post_meta( $post_id, '_hb_email', true );
-        echo $email;
-    }
-    if ($column_name == 'booking') {
-        // global $wpdb;
-        // $query = $wpdb->prepare("
-        //         SELECT ID
-        //         FROM {$wpdb->posts} as p1
-        //         LEFT JOIN {$wpdb->postmeta} as p2
-        //         ON p1.ID = p2._hb_customer_id
-        //         WHERE p2._hb_customer_id = %s
-        //     ", $post_id);
-        // $booking = $wpdb->query( $query );
-        echo  '<a href=' . get_admin_url() . 'edit.php?post_type=hb_booking&customer_id='. $post_id . '>View Booking</a>';
+    switch ( $column_name ){
+        case 'customer_name':
+            $title = hb_get_title_by_slug ( get_post_meta( $post_id, '_hb_title', true ) );
+            $first_name =  get_post_meta( $post_id, '_hb_first_name', true );
+            $last_name = get_post_meta( $post_id, '_hb_last_name', true );
+            $customer_name = sprintf( '%s %s %s', $title ? $title : 'Cus.', $first_name, $last_name );
+            echo $customer_name;
+            break;
+        case 'customer_address':
+            $customer_address = get_post_meta( $post_id, '_hb_address', true );
+            echo $customer_address;
+            break;
+        case 'phone_number':
+            $phone = get_post_meta( $post_id, '_hb_phone', true );
+            echo $phone;
+            break;
+        case 'email':
+            $email = get_post_meta( $post_id, '_hb_email', true );
+            echo $email;
+            break;
+        case 'bookings':
+            printf(
+                '<a href="%sedit.php?post_type=hb_booking&customer_id=%d">%s</a>',
+                get_admin_url(),
+                $post_id,
+                __( 'View Booking', 'tp-hotel-booking' )
+            );
     }
 }   
 add_action('manage_hb_customer_posts_custom_column', 'hb_manage_customer_column', 10, 2);
@@ -567,3 +592,52 @@ function hb_update_pricing_plan( ){
     //echo '<pre>';print_r($_POST);echo '</pre>';die();
 }
 add_action( 'init', 'hb_update_pricing_plan' );
+
+function hb_admin_js_template(){
+?>
+<script type="text/html" id="tmpl-room-type-gallery">
+<tr id="room-gallery-{{data.id}}" class="room-gallery">
+    <td colspan="{{data.colspan}}">
+        <div class="hb-room-gallery">
+            <ul>
+                <# jQuery.each(data.gallery, function(){ var attachment = this;#>
+                    <li class="attachment">
+                        <div class="attachment-preview trash">
+                            <div class="thumbnail">
+                                <div class="centered">
+                                    <img src="{{attachment.src}}" alt="">
+                                    <input type="text" name="hb-gallery[{{data.id}}][gallery][]" value="{{attachment.id}}" />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                <# }); #>
+                <li class="attachment add-new">
+                    <div class="attachment-preview">
+                        <div class="thumbnail">
+                            <div class="dashicons-plus dashicons">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <input type="hidden" name="hb-gallery[{{data.id}}][id]" value="{{data.id}}" />
+    </td>
+</tr>
+</script>
+<script type="text/html" id="tmpl-room-type-attachment">
+    <li class="attachment">
+        <div class="attachment-preview trash">
+            <div class="thumbnail">
+                <div class="centered">
+                    <img src="{{data.src}}" alt="">
+                    <input type="text" name="hb-gallery[{{data.gallery_id}}][gallery][]" value="{{data.id}}" />
+                </div>
+            </div>
+        </div>
+    </li>
+</script>
+<?php
+}
+add_action( 'admin_print_scripts', 'hb_admin_js_template');

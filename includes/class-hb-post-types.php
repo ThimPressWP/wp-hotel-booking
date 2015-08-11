@@ -36,6 +36,13 @@ class HB_Post_Types{
     function custom_room_columns( $a ){
         $a['room_type'] = __( 'Room Type', 'tp-hotel-booking' );
         $a['room_capacity'] = __( 'Room Capacity', 'tp-hotel-booking' );
+
+        // move comments to the last of list
+        if( isset( $a['comments'] ) ){
+            $t = $a['comments'];
+            unset( $a['comments'] );
+            $a['comments'] = $t;
+        }
         return $a;
     }
 
@@ -97,6 +104,19 @@ class HB_Post_Types{
                     }
                 }
             }
+
+            if( ! empty( $_POST['hb-gallery'] ) && $gallery = $_POST['hb-gallery'] ){
+                foreach( $gallery as $term_id => $options ){
+                    if( ! empty( $options['gallery'] ) ){
+                        update_option( 'hb_taxonomy_thumbnail_' . $term_id, $options['gallery'] );
+                    }else{
+                        delete_option( 'hb_taxonomy_thumbnail_' . $term_id );
+                    }
+                }
+
+                //print_r($_POST);
+                //die();
+            }
         }
     }
 
@@ -129,11 +149,17 @@ class HB_Post_Types{
 
     function taxonomy_columns( $columns ){
         if( 'hb_room_type' == $_REQUEST['taxonomy'] ){
-            $columns['thumbnail'] = __( 'Image', 'tp-hotel-booking' );
+            $columns['thumbnail'] = __( 'Gallery', 'tp-hotel-booking' );
         }else{
             $columns['capacity'] = __( 'Capacity', 'tp-hotel-booking' );
         }
         $columns['ordering'] = __( 'Ordering', 'tp-hotel-booking' );
+        if( isset( $columns['description'] ) ){
+            unset( $columns['description'] );
+        }
+        if( isset( $columns['posts'] ) ) {
+            unset($columns['posts']);
+        }
         return $columns;
     }
 
@@ -145,7 +171,7 @@ class HB_Post_Types{
                 $content = sprintf( '<input type="text" name="%s_ordering[%d]" value="%d" size="3" />', $taxonomy, $term_id, $term->term_group );
                 break;
             case 'thumbnail':
-                $thumb_id = get_option( 'hb_taxonomy_thumbnail_' . $term_id );
+                /*$thumb_id = get_option( 'hb_taxonomy_thumbnail_' . $term_id );
                 $content = '<div class="hb-taxonomy-thumbnail-selector' . ( $thumb_id ? ' has-attachment' : '') . '" data-id="' . $term_id . '" data-taxonomy="'.$taxonomy.'">';
                 if( $thumb_id ){
                     if( $thumb = wp_get_attachment_image_src( $thumb_id ) ) {
@@ -155,7 +181,9 @@ class HB_Post_Types{
                 }else{
                     $content .= '<input type="hidden" name="' . $taxonomy . '_thumbnail[' . $term_id . ']" value="0" />';
                 }
-                $content .= '</div>';
+                $content .= '</div>';*/
+                $count = get_option( 'hb_taxonomy_thumbnail_' . $term_id );
+                echo '<a href="" class="hb-edit-room-gallery">' . sprintf( __( 'Edit (%d)', 'tp-hotel-booking' ), $count ? sizeof( $count ) : 0 ) . '</a>';
                 break;
             case 'capacity':
                 $capacity = get_option( 'hb_taxonomy_capacity_' . $term_id );

@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * List room capacities into dropdown select
+ *
+ * @param array
+ * @return string
+ */
 function hb_dropdown_room_capacities( $args = array() ){
     $args = wp_parse_args(
         $args,
@@ -25,6 +30,12 @@ function hb_dropdown_room_capacities( $args = array() ){
     return $output;
 }
 
+/**
+ * List room types into dropdown select
+ *
+ * @param array $args
+ * @return string
+ */
 function hb_dropdown_room_types( $args = array() ){
     $args = wp_parse_args(
         $args,
@@ -51,6 +62,12 @@ function hb_dropdown_room_types( $args = array() ){
     return $output;
 }
 
+/**
+ * Get room types taxonomy
+ *
+ * @param array $args
+ * @return array
+ */
 function hb_get_room_types( $args = array() ){
     $args = wp_parse_args(
         $args,
@@ -81,6 +98,12 @@ function hb_get_room_types( $args = array() ){
     return $types;
 }
 
+/**
+ * Get room capacities taxonomy
+ *
+ * @param array $args
+ * @return array
+ */
 function hb_get_room_capacities( $args = array() ){
     $args = wp_parse_args(
         $args,
@@ -111,6 +134,11 @@ function hb_get_room_capacities( $args = array() ){
     return $types;
 }
 
+/**
+ * Get list of child per each room with all available rooms
+ *
+ * @return mixed
+ */
 function hb_get_child_per_room(){
     global $wpdb;
     $query = $wpdb->prepare("
@@ -125,6 +153,11 @@ function hb_get_child_per_room(){
     return $wpdb->get_col( $query );
 }
 
+/**
+ * List child of room into dropdown select
+ *
+ * @param array $args
+ */
 function hb_dropdown_child_per_room( $args = array() ){
     $args = wp_parse_args(
         $args,
@@ -143,6 +176,12 @@ function hb_dropdown_child_per_room( $args = array() ){
     $output .= '</select>';
     echo $output;
 }
+
+/**
+ * Get the list of common currencies
+ *
+ * @return mixed
+ */
 function hb_payment_currencies() {
     $currencies = array(
         'AED' => 'United Arab Emirates Dirham (د.إ)',
@@ -204,6 +243,14 @@ function hb_enable_overwrite_template(){
     return HB_Settings::instance()->get( 'overwrite_templates' ) == 'on';
 }
 
+/**
+ * Get a variable from request
+ *
+ * @param string
+ * @param mixed
+ * @param mixed
+ * @return mixed
+ */
 function hb_get_request( $name, $default = null, $var = '' ){
     $return = $default;
     switch( strtolower( $var ) ){
@@ -217,6 +264,13 @@ function hb_get_request( $name, $default = null, $var = '' ){
     return $return;
 }
 
+/**
+ * Calculate the nights between to dates
+ *
+ * @param null $end
+ * @param $start
+ * @return float
+ */
 function hb_count_nights_two_dates( $end = null, $start ){
     if( ! $end ) $end = time();
     else if( is_string( $end ) ){
@@ -247,6 +301,23 @@ function hb_date_to_name( $date ){
     return $date_names[ $date ];
 }
 
+function hb_get_common_titles(){
+    return apply_filters( 'hb_customer_titles', array(
+            'mr'    => __( 'Mr.', 'tp-hotel-booking' ),
+            'ms'    => __( 'Ms.', 'tp-hotel-booking' ),
+            'mrs'   => __( 'Mrs.', 'tp-hotel-booking' ),
+            'miss'  => __( 'Miss.', 'tp-hotel-booking' ),
+            'dr'    => __( 'Dr.', 'tp-hotel-booking' ),
+            'prof'  => __( 'Prof.', 'tp-hotel-booking' )
+        )
+    );
+}
+
+function hb_get_title_by_slug( $slug ){
+    $titles = hb_get_common_titles();
+    return ! empty( $titles[ $slug ] ) ? $titles[ $slug ] : '';
+}
+
 function hb_dropdown_titles( $args = array() ){
     $args = wp_parse_args(
         $args,
@@ -264,15 +335,7 @@ function hb_dropdown_titles( $args = array() ){
     $show_option_none = false;
     $option_none_value = -1;
     extract( $args );
-    $titles = apply_filters( 'hb_customer_titles', array(
-            'mr'    => __( 'Mr.', 'tp-hotel-booking' ),
-            'ms'    => __( 'Ms.', 'tp-hotel-booking' ),
-            'mrs'   => __( 'Mrs.', 'tp-hotel-booking' ),
-            'miss'  => __( 'Miss.', 'tp-hotel-booking' ),
-            'dr'    => __( 'Dr.', 'tp-hotel-booking' ),
-            'prof'  => __( 'Prof.', 'tp-hotel-booking' )
-        )
-    );
+    $titles = hb_get_common_titles();
     $output = '<select name="' . $name . '">';
     if( $show_option_none ){
         $output .= sprintf( '<option value="%s">%s</option>', $option_none_value, $show_option_none );
@@ -308,7 +371,11 @@ function hb_l18n(){
     $translation = array(
         'invalid_email'                 => __( 'Your email address is invalid', 'tp-hotel-booking' ),
         'no_payment_method_selected'    => __( 'Please select your payment method ', 'tp-hotel-booking' ),
-        'confirm_tos'                   => __( 'Please accept our Terms and Conditions ', 'tp-hotel-booking' )
+        'confirm_tos'                   => __( 'Please accept our Terms and Conditions ', 'tp-hotel-booking' ),
+        'no_rooms_selected'             => __( 'Please select at least one the room', 'tp-hotel-booking' ),
+        'empty_customer_title'          => __( 'Please select your title', 'tp-hotel-booking' ),
+        'empty_customer_first_name'     => __( 'Please enter your first name', 'tp-hotel-booking'),
+        'empty_customer_last_name'      => __( 'Please enter your last name', 'tp-hotel-booking' )
     );
     return apply_filters( 'hb_l18n', $translation );
 }
@@ -823,6 +890,9 @@ function hb_do_transaction( $method, $transaction = false ){
     do_action( 'hb_do_transaction_' . $method, $transaction );
 }
 
+/**
+ * Process purchase request
+ */
 function hb_handle_purchase_request(){
     hb_get_payment_gateways();
     $method_var = 'hb-transaction-method';
@@ -834,26 +904,40 @@ function hb_get_bookings( $args = array() ){
     $defaults = array(
         'post_type' => 'hb_booking',
     );
-
     $args = wp_parse_args( $args, $defaults );
-
     $bookings = get_posts( $args );
-
     return apply_filters( 'hb_get_bookings', $bookings, $args );
 }
 
+/**
+ * Update booking status
+ *
+ * @param int
+ * @param string
+ */
 function hb_update_booking_status( $booking_id, $status ){
     update_post_meta( $booking_id, '_hb_booking_status', $status );
 }
 
+/**
+ *
+ */
 function hb_maybe_modify_page_content(){
     global $post;
-    //echo $post->ID;
+    if( is_page() && $post->ID == hb_get_page_id( 'search' ) ){
+        $post->post_content = '[hotel_booking]';
+    }
 }
-
 add_action( 'template_redirect', 'hb_maybe_modify_page_content' );
 
+/**
+ * Init some task when wp init
+ */
 function hb_init(){
     hb_get_payment_gateways();
 }
 add_action( 'init', 'hb_init' );
+
+function hb_format_order_number( $order_number ) {
+    return '#' . sprintf( "%'.010d", $order_number );
+}
