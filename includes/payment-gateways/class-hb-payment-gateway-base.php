@@ -49,7 +49,7 @@ class HB_Payment_Gateway_Base{
         return false;
     }
 
-    function process_checkout(){
+    function process_checkout( $customer_id = null ){
         return array(
             'result' => ''
         );
