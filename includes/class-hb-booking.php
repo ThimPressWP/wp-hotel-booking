@@ -9,7 +9,7 @@ class HB_Booking{
     private $_booking_info = array();
 
     function __construct( $post ){
-        if( is_numeric( $post ) ) {
+        if( is_numeric( $post ) && $post && get_post_type( $post ) == 'hb_booking') {
             $this->post = get_post( $post );
         }elseif( $post instanceof WP_Post || is_object( $post ) ){
             $this->post = $post;
