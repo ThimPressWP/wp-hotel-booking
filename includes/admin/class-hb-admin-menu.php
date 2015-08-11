@@ -11,7 +11,7 @@ class HB_Admin_Menu{
             'manage_options',
             'tp_hotel_booking',
             '',
-            'dashicons-welcome-learn-more',
+            'dashicons-calendar',
             '3.99'
         );
 
