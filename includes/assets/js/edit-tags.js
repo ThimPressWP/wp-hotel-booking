@@ -68,7 +68,11 @@
                         $gallery
                             .fadeOut()
                             .insertAfter($tr);
-                        $gallery.fadeIn();
+                        $gallery.fadeIn(function(){
+                            $('ul', this).sortable({
+                                items: '.attachment:not(.add-new)'
+                            });
+                        });
                     }
                 });
             }else{
@@ -93,9 +97,9 @@
                         .find('input[type="hidden"]').val(source.id);
                 }
             });
-        }).on('click', '.attachment-preview.trash', function(){
+        }).on('click', '.attachment .dashicons-trash', function(){
             $(this).parent().remove();
-        })
-
+        });
+        $('.hb-room-gallery > ul').sortable();
     });
 })(jQuery);

@@ -78,6 +78,10 @@
 }
 .hb-room-gallery > ul > li.attachment{
     width: 20%;
+    cursor: move;
+}
+.hb-room-gallery .attachment-preview{
+    cursor: move;
 }
 .attachment.add-new .dashicons{
     font-size: 40px;
@@ -94,22 +98,18 @@
 .attachment.add-new:hover .dashicons{
     color: #00a0d2;
 }
-.attachment .trash:after{
-    content: "\f182";
-    font-family: dashicons;
+.attachment .dashicons-trash{
     position: absolute;
     z-index: 5;
-    font-size: 40px;
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-    top: 50%;
-    left: 50%;
-    margin-top: -25px;
-    margin-left: -25px;
-    color: #FF0000;
-    display: none;
+    font-size: 24px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    color: #FFF;
+    right: 10px;
+    bottom: 10px;
+    cursor: pointer;
 }
-.attachment:hover .trash:after{
-    display: block;
+.attachment .dashicons-trash:hover{
+    color: #FF0000;
 }

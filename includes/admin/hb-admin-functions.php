@@ -602,14 +602,15 @@ function hb_admin_js_template(){
             <ul>
                 <# jQuery.each(data.gallery, function(){ var attachment = this;#>
                     <li class="attachment">
-                        <div class="attachment-preview trash">
+                        <div class="attachment-preview">
                             <div class="thumbnail">
                                 <div class="centered">
                                     <img src="{{attachment.src}}" alt="">
-                                    <input type="text" name="hb-gallery[{{data.id}}][gallery][]" value="{{attachment.id}}" />
+                                    <input type="hidden" name="hb-gallery[{{data.id}}][gallery][]" value="{{attachment.id}}" />
                                 </div>
                             </div>
                         </div>
+                        <div class="dashicons dashicons-trash"></div>
                     </li>
                 <# }); #>
                 <li class="attachment add-new">
@@ -628,14 +629,15 @@ function hb_admin_js_template(){
 </script>
 <script type="text/html" id="tmpl-room-type-attachment">
     <li class="attachment">
-        <div class="attachment-preview trash">
+        <div class="attachment-preview">
             <div class="thumbnail">
                 <div class="centered">
                     <img src="{{data.src}}" alt="">
-                    <input type="text" name="hb-gallery[{{data.gallery_id}}][gallery][]" value="{{data.id}}" />
+                    <input type="hidden" name="hb-gallery[{{data.gallery_id}}][gallery][]" value="{{data.id}}" />
                 </div>
             </div>
         </div>
+        <div class="dashicons dashicons-trash"></div>
     </li>
 </script>
 <?php

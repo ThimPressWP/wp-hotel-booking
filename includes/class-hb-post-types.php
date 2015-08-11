@@ -195,8 +195,8 @@ class HB_Post_Types{
         if( in_array( $column_name, array( 'ordering', 'thumbnail' ) ) ){
             wp_enqueue_media();
             wp_enqueue_style( 'hb-edit-tags', TP_Hotel_Booking::instance()->plugin_url( 'includes/assets/css/edit-tags.css' ) );
-            wp_enqueue_script( 'hb-media-selector', TP_Hotel_Booking::instance()->plugin_url( 'includes/assets/js/media-selector.js' ), array( 'jquery' ) );
-            wp_enqueue_script( 'hb-edit-tags', TP_Hotel_Booking::instance()->plugin_url( 'includes/assets/js/edit-tags.js' ) );
+            wp_enqueue_script( 'hb-media-selector', TP_Hotel_Booking::instance()->plugin_url( 'includes/assets/js/media-selector.js' ) );
+            wp_enqueue_script( 'hb-edit-tags', TP_Hotel_Booking::instance()->plugin_url( 'includes/assets/js/edit-tags.js' ), array( 'jquery', 'jquery-ui-sortable' ) );
         }
         return $content;
     }
