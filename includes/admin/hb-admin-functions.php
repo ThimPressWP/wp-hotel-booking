@@ -186,6 +186,12 @@ function hb_bookings_meta_boxes() {
             'label' => 'Room ID',
             'type'  => 'multiple',
             'std'   => '1',                    
+        ),
+        array(
+            'name'  => 'booking_status',
+            'label' => 'Status',
+            'std'   => '',
+            'type'  => 'text'
         )
     );    
 }

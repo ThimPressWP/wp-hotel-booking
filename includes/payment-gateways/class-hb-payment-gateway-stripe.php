@@ -30,7 +30,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
         return ! empty( $this->_settings['enable'] ) && $this->_settings['enable'] == 'on';
     }
 
-    function process_checkout(){
+    function process_checkout( $customer_id = null ){
         return array(
             'result'    => 'success',
             'redirect'  => 'http://24h.com.vn'
