@@ -168,7 +168,7 @@ class HB_Post_Types{
         $term = get_term( $term_id, $taxonomy );
         switch ($column_name) {
             case 'ordering':
-                $content = sprintf( '<input type="text" name="%s_ordering[%d]" value="%d" size="3" />', $taxonomy, $term_id, $term->term_group );
+                $content = sprintf( '<input class="hb-number-field" type="number" name="%s_ordering[%d]" value="%d" size="3" />', $taxonomy, $term_id, $term->term_group );
                 break;
             case 'thumbnail':
                 /*$thumb_id = get_option( 'hb_taxonomy_thumbnail_' . $term_id );
@@ -187,7 +187,7 @@ class HB_Post_Types{
                 break;
             case 'capacity':
                 $capacity = get_option( 'hb_taxonomy_capacity_' . $term_id );
-                $content = '<input type="text" name="' . $taxonomy . '_capacity[' . $term_id . ']" value="' . $capacity .'" size="2" />';
+                $content = '<input class="hb-number-field" type="number" name="' . $taxonomy . '_capacity[' . $term_id . ']" value="' . $capacity .'" size="2" />';
                 break;
             default:
                 break;

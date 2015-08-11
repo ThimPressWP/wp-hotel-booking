@@ -152,3 +152,7 @@
 .attachment:hover .dashicons-trash{
     display: block;
 }
+.hb-number-field{
+    width: 50px;
+    text-align: center;
+}
