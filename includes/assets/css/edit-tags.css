@@ -71,6 +71,33 @@
 .taxonomy-hb_room_capacity .column-posts{
     _display: none;
 }
+.hb-room-gallery{
+    background-color: #F5F5F5;
+    position: relative;
+    border: 1px solid #DDD;
+}
+.hb-room-gallery:before{
+    content: '';
+    border: 10px solid #DDD;
+    display: inline-block;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    position: absolute;
+    top: -20px;
+    left: 35px;
+}
+.hb-room-gallery:after{
+    content: '';
+    border: 9px solid #F5F5F5;
+    display: inline-block;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    position: absolute;
+    top: -18px;
+    left: 36px;
+}
 .hb-room-gallery > ul{
     margin: 0;
     padding: 0;
@@ -108,7 +135,7 @@
     color: #FFF;
     right: 10px;
     bottom: 10px;
-    cursor: pointer;
+    cursor: pointer;.
 }
 .attachment .dashicons-trash:hover{
     color: #FF0000;
