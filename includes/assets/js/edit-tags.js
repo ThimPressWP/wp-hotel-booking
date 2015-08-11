@@ -49,7 +49,6 @@
                 $gallery = $('#room-gallery-'+gallery_id);
             $('.room-gallery').fadeOut();
             if( $gallery.length == 0 ) {
-
                 $.ajax({
                     url: ajaxurl,
                     type: 'post',
