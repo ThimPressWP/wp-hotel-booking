@@ -230,7 +230,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
 
         return $paypal_payment_url;
     }
-    function process_checkout( $customer_id ){
+    function process_checkout( $customer_id = null ){
         return array(
             'result'    => 'success',
             'redirect'  => $this->_get_paypal_basic_checkout_url(  $customer_id  )
