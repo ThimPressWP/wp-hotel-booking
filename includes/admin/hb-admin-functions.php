@@ -492,7 +492,7 @@ add_filter( 'parse_query', 'hb_booking_custormer_filter' );
  */
 function hb_booking_custormer_filter( $query ){
     global $pagenow;    
-    if ( 'hb_booking' == $_GET['post_type'] && is_admin() && $pagenow=='edit.php' && isset($_GET['customer_id']) && $_GET['customer_id'] != '') {
+    if ( isset( $_GET['post_type']) && 'hb_booking' == $_GET['post_type'] && is_admin() && $pagenow=='edit.php' && isset($_GET['customer_id']) && $_GET['customer_id'] != '') {
         $query->query_vars['meta_key'] = '_hb_customer_id';
         $query->query_vars['meta_value'] = $_GET['customer_id'];
     }    
