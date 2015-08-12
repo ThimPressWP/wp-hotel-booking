@@ -177,6 +177,28 @@ function hb_dropdown_child_per_room( $args = array() ){
     echo $output;
 }
 
+function hb_get_room_type_capacities( $type_id ){
+    return intval( get_option( "hb_taxonomy_capacity_{$type_id}" ) );
+}
+
+function hb_parse_request(){
+    $params = hb_get_request( 'hotel-booking-params' );
+    if( $params ){
+        $params = maybe_unserialize( base64_decode( $params ) );
+        if( $params ){
+            foreach( $params as $k => $v ){
+                $_GET[ $k ] = $v;
+                $_POST[ $k ] = $v;
+                $_REQUEST[ $k ] = $v;
+            }
+        }
+        if( isset( $_GET['hotel-booking-params'] ) ) unset( $_GET['hotel-booking-params'] );
+        if( isset( $_POST['hotel-booking-params'] ) ) unset( $_POST['hotel-booking-params'] );
+        if( isset( $_REQUEST['hotel-booking-params'] ) ) unset( $_REQUEST['hotel-booking-params'] );
+    }
+}
+add_action( 'init', 'hb_parse_request' );
+
 /**
  * Get the list of common currencies
  *
@@ -375,7 +397,11 @@ function hb_l18n(){
         'no_rooms_selected'             => __( 'Please select at least one the room', 'tp-hotel-booking' ),
         'empty_customer_title'          => __( 'Please select your title', 'tp-hotel-booking' ),
         'empty_customer_first_name'     => __( 'Please enter your first name', 'tp-hotel-booking'),
-        'empty_customer_last_name'      => __( 'Please enter your last name', 'tp-hotel-booking' )
+        'empty_customer_last_name'      => __( 'Please enter your last name', 'tp-hotel-booking' ),
+        'empty_check_in_date'           => __( 'Please select check in date', 'tp-hotel-booking' ),
+        'empty_check_out_date'          => __( 'Please select check out date', 'tp-hotel-booking' ),
+        'check_in_date_must_be_greater' => __( 'Check in date must be greater than the current', 'tp-hotel-booking' ),
+        'check_out_date_must_be_greater'    => __( 'Check out date must be greater than the check in', 'tp-hotel-booking' ),
     );
     return apply_filters( 'hb_l18n', $translation );
 }

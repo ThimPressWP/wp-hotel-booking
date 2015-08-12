@@ -7,7 +7,9 @@ class HB_Ajax{
         $ajax_actions = array(
             'fetch_custom_info'         => true,
             'place_order'               => true,
-            'load_room_type_galley'     => false
+            'load_room_type_galley'     => false,
+            'parse_search_params'       => true,
+            'parse_booking_params'      => true
         );
 
         foreach( $ajax_actions as $action => $priv ){
@@ -63,6 +65,58 @@ class HB_Ajax{
         }
         hb_send_json( $attachments );
     }
+
+    static function parse_search_params(){
+        if ( ! hb_get_request( 'nonce', $_POST ) || ! wp_verify_nonce( hb_get_request( 'nonce', $_POST ), 'hb_search_nonce_action' ) ) {
+            hb_send_json( array( 'success' => 0, 'message' => __( 'Invalid request', 'tp-hotel-booking' ) ) );
+        }
+
+        $check_in   = hb_get_request( 'check_in_date' );
+        $check_out  = hb_get_request( 'check_out_date' );
+        $cap_id     = hb_get_request( 'hb-room-capacities' );
+        $max_child  = hb_get_request( 'max_child' );
+
+        $cap = hb_get_room_type_capacities( $cap_id );
+        $params = array(
+            'hotel-booking'     => hb_get_request( 'hotel-booking' ),
+            'check_in_date'     => $check_in,
+            'check_out_date'    => $check_out,
+            'adults'            => $cap,
+            'max_child'         => $max_child
+        );
+        hb_send_json(
+            array(
+                'success'   => 1,
+                'sig'       => base64_encode( serialize( $params ) )
+            )
+        );
+    }
+
+    static function parse_booking_params(){
+        if ( ! hb_get_request( 'nonce', $_POST ) || ! wp_verify_nonce( hb_get_request( 'nonce', $_POST ), 'hb_booking_nonce_action' ) ) {
+            hb_send_json( array( 'success' => 0, 'message' => __( 'Invalid request', 'tp-hotel-booking' ) ) );
+        }
+
+        $check_in       = hb_get_request( 'check_in_date' );
+        $check_out      = hb_get_request( 'check_out_date' );
+        $num_of_rooms   = hb_get_request( 'hb-num-of-rooms' );
+
+        $params = array(
+            'hotel-booking'     => hb_get_request( 'hotel-booking' ),
+            'check_in_date'     => $check_in,
+            'check_out_date'    => $check_out,
+            'hb-num-of-rooms'   => $num_of_rooms
+        );
+
+        //print_r($params);
+        hb_send_json(
+            array(
+                'success'   => 1,
+                'sig'       => base64_encode( serialize( $params ) )
+            )
+        );
+    }
+
 }
 
 new HB_Ajax();

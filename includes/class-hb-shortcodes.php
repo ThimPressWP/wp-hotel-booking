@@ -19,12 +19,27 @@ class HB_Shortcodes{
                 'check_in_date'     => $start_date,
                 'check_out_date'    => $end_date,
                 'adults'            => hb_get_request( 'adults' ),
-                'max_child'         => hb_get_request( 'max_child' )
+                'max_child'         => hb_get_request( 'max_child' ),
+                'search_page'       => null
             )
         );
         $page = hb_get_request( 'hotel-booking' );
         $template = 'search.php';
         $template_args = array();
+        $search_permalink = '';
+        if( $search_page = $atts['search_page'] ){
+            if( is_numeric( $search_page ) ){
+                $search_permalink = get_the_permalink( $search_page );
+            }else{
+                $search_permalink = $search_page;
+            }
+        }else{
+            global $post;
+            if( $post && ( $post_id = $post->ID ) && is_page( $post_id ) ){
+                $search_permalink = get_the_permalink( $post_id );
+            }
+        }
+        $template_args['search_page'] = $search_permalink;
         switch( $page ){
             case 'results':
                 $template = 'results.php';
@@ -77,15 +92,7 @@ class HB_Shortcodes{
                     'grand_total'           => $grand_total
                 );
                 $template = 'payment.php';
-                $template_args = array(
-                    //'total_nights'  => $total_nights,
-                    //'total_rooms'   => $total_rooms,
-                    //'rooms'         => $rooms,
-                    //'total'         => $total,
-                    //'tax'           => $tax,
-                    //'grand_total'   => $grand_total,
-                    //'tos_page_id'   => hb_get_page_id( 'terms' )
-                );
+
                 break;
             case 'confirm':
                 $template = 'confirm.php';
