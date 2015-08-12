@@ -190,7 +190,7 @@ function hb_bookings_meta_boxes() {
         array(
             'name'  => 'booking_status',
             'label' => 'Status',
-            'std'   => '',
+            'std'   => 'Actives',
             'type'  => 'text'
         )
     );    
@@ -353,7 +353,7 @@ function hb_manage_booking_column( $column_name, $post_id ) {
             echo date( 'F d, Y', strtotime( get_post_field( 'post_date', $post_id ) ) );
             break;
         case 'details':
-            echo '<a href="">' . __( 'View', 'tp-hotel-booking' ) . '</a>';
+            echo '<a href="'. get_admin_url() .'?page=hb_booking_details&id='. $post_id .' ">' . __( 'View', 'tp-hotel-booking' ) . '</a>';
     }
 }   
 add_action('manage_hb_booking_posts_custom_column', 'hb_manage_booking_column', 10, 2);
@@ -644,3 +644,97 @@ function hb_admin_js_template(){
 <?php
 }
 add_action( 'admin_print_scripts', 'hb_admin_js_template');
+
+
+function hb_booking_detail_page_register() {
+    add_menu_page(
+        __('Booking Details', 'tp-hotel-booking'),     // page title
+        '',     // menu title
+        'manage_options',   // capability
+        'hb_booking_details',     // menu slug
+        'hb_booking_detail_page' // callback function
+    );
+}
+add_action( 'admin_menu', 'hb_booking_detail_page_register' );
+
+function hb_booking_detail_page() {
+    if( is_admin() && $_GET['page'] == 'hb_booking_details' ) {
+        $booking_id = $_GET['id'];
+        $customer_id = get_post_meta( $booking_id, '_hb_customer_id', true );
+        ?>            
+            <h1><?php _e( 'View Details: ','tp-hotel-booking' ); echo hb_format_order_number( $booking_id );  ?></h1>
+            <h2><?php _e( 'Customer infomation', 'tp-hotel-booking') ?></h2>
+            <ul>
+                <li>
+                    <label> <?php _e( 'Name: ', 'tp-hotel-booking' ) ?> </label>
+                    <span><?php echo get_post_meta( $customer_id, '', true ) ?></span>
+                </li>
+                <li>
+                    <label> <?php _e( 'Address: ', 'tp-hotel-booking'); ?> </label>
+                    <span><?php echo get_post_meta( $customer_id, '_hb_address', true ); ?></span>
+                </li>
+                <li>
+                    <label> <?php _e( 'City: ', 'tp-hotel-booking' ); ?> </label>
+                    <span><?php echo get_post_meta( $customer_id, '_hb_city', true ) ?></span>
+                </li>
+                <li>
+                    <label><?php _e( 'State: ', 'tp-hotel-booking' ); ?></label>
+                    <span><?php echo get_post_meta( $customer_id, '_hb_state', true ) ?></span>
+                </li>
+                <li>
+                    <label><?php _e( 'Country: ', 'tp-hotel-booking' ); ?></label>
+                    <span><?php echo get_post_meta( $customer_id, '_hb_country', true ) ?></span>
+                </li>
+                <li>
+                    <label><?php _e( 'Zip/ Post Code: ','tp-hotel-booking' ); ?></label>
+                    <span><?php echo get_post_meta( $customer_id, '_hb_postal_code', true ) ?></span>
+                </li>
+                <li>
+                    <label><?php _e( 'Phone: ', 'tp-hotel-booking' ); ?></label>
+                    <span><?php echo get_post_meta( $customer_id, '_hb_phone', true ) ?></span>
+                </li>     
+                <li>
+                    <label><?php _e( 'Fax: ', 'tp-hotel-booking' ); ?></label>
+                    <span><?php echo get_post_meta( $customer_id, '_hb_fax', true) ?></span>
+                </li>
+                <li>
+                    <label><?php _e( 'Email: ', 'tp-hotel-booking' ); ?></label>
+                    <span><?php echo get_post_meta( $customer_id, '_hb_email', true ) ?></span>
+                </li>
+            </ul>
+            <h2><?php _e( 'Booking Details', 'tp-hotel-booking') ?></h2>
+            <ul>
+                <li>
+                    <label><?php _e( 'Check-in date: ', 'tp-hotel-booking' ); ?></label>
+                    <span><?php echo date( _x( 'F d, Y', 'Check-in date format', 'tp-hotel-booking' ), strtotime( get_post_meta( $booking_id, '_hb_check_in_date', true ) ) ); ?></span>
+                </li>
+                <li>
+                    <label><?php _e( 'Check-out date: ', 'tp-hotel-booking' ); ?></label>
+                    <span><?php echo date( _x( 'F d, Y', 'Check-in date format', 'tp-hotel-booking' ), strtotime( get_post_meta( $booking_id, '_hb_check_out_date', true ) ) ); ?></span>                    
+                </li>
+                <li>
+                    <label><?php _e( 'Total nights: ', 'tp-hotel-booking' ); ?></label>
+                    <span><?php echo get_post_meta( $booking_id, '_hb_total_nights', true ) ?></span>
+                </li>
+                <li>
+                    <label><?php _e( 'Tax: ', 'tp-hotel-booking' ); ?></label>
+                    <span><?php echo get_post_meta( $booking_id, '_hb_tax', true ) ?></span>
+                </li>
+                <li>
+                    <label><?php _e( 'Price including tax: ', 'tp-hotel-booking' ); ?></label>
+                    <span><?php echo get_post_meta( $booking_id, '_hb_price_including_tax', true ) ?></span>
+                </li>
+                <li>
+                    <label><?php _e( 'Sub Total: ', 'tp-hotel-booking' ); ?></label>
+                    <span><?php echo get_post_meta( $booking_id, '_hb_sub_total', true ) ?></span>
+                </li>
+                <li>
+                    <label><?php _e( 'Total: ', 'tp-hotel-booking' ); ?></label>
+                    <span><?php echo get_post_meta( $booking_id, '_hb_total', true ) ?></span>
+                </li>
+            </ul>
+            <h2><?php _e( 'Payment Details', 'tp-hotel-booking') ?></h2>
+        <?php
+    } else return;
+}
+
