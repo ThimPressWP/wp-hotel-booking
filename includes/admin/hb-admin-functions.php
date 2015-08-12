@@ -337,11 +337,12 @@ function hb_manage_booking_column( $column_name, $post_id ) {
             break;
         case 'check_in_date':
             $check_in_date = get_post_meta( $post_id, '_hb_check_in_date', true );
-            echo date( _x( 'F d, Y', 'Check-in date format', 'tp-hotel-booking' ), $check_in_date );
+            // echo $check_in_date;
+            echo date( _x( 'F d, Y', 'Check-in date format', 'tp-hotel-booking' ), strtotime($check_in_date) );
             break;
         case 'check_out_date':
             $check_out_date = get_post_meta( $post_id, '_hb_check_out_date', true );
-            echo  date( _x( 'F d, Y', 'Check-out date format', 'tp-hotel-booking' ), $check_out_date );
+            echo date( _x( 'F d, Y', 'Check-out date format', 'tp-hotel-booking' ), strtotime($check_out_date) );
             break;
         case 'total':
             $total      = get_post_meta( $post_id, '_hb_total', true );
@@ -349,7 +350,7 @@ function hb_manage_booking_column( $column_name, $post_id ) {
             echo hb_format_price( $total, hb_get_currency_symbol( $currency ) );
             break;
         case 'booking_date':
-            echo date( 'm.d.Y', strtotime( get_post_field( 'post_date', $post_id ) ) );
+            echo date( 'F d, Y', strtotime( get_post_field( 'post_date', $post_id ) ) );
             break;
         case 'details':
             echo '<a href="">' . __( 'View', 'tp-hotel-booking' ) . '</a>';
