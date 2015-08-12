@@ -48,6 +48,7 @@ class TP_Hotel_Booking{
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
         add_action( 'wp_print_scripts', array( $this, 'global_js' ) );
         add_action( 'template_redirect', 'hb_handle_purchase_request', 999 );
+        add_action( 'widgets_init', array( $this, 'register_widgets' ) );
 
     }
 
@@ -92,6 +93,7 @@ class TP_Hotel_Booking{
             $this->_include( 'includes/hb-template-functions.php' );
             $this->_include( 'includes/class-hb-shortcodes.php' );
         }
+        $this->_include( 'includes/widgets/class-hb-widget-search.php' );
         $this->_include( 'includes/class-hb-post-types.php' );
         $this->_include( 'includes/hb-functions.php' );
         $this->_include( 'includes/class-hb-cart.php' );
@@ -172,6 +174,9 @@ class TP_Hotel_Booking{
         }
     }
 
+    /**
+     * Output global js settings
+     */
     function global_js(){
     ?>
         <script type="text/javascript">
@@ -180,6 +185,13 @@ class TP_Hotel_Booking{
             }
         </script>
     <?php
+    }
+
+    /**
+     * Register widgets
+     */
+    function register_widgets() {
+        register_widget( 'HB_Widget_Search' );
     }
 
     /**

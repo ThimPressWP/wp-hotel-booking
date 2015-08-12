@@ -1,8 +1,30 @@
 ;(function($){
     var $doc = $(document);
+
+    if( Date.prototype.compareWith == undefined ) {
+        Date.prototype.compareWith = function( d ){
+            if( typeof d == 'string' ){
+                d = new Date( d );
+            }
+            var thisTime = parseInt( this.getTime() / 1000 ),
+                compareTime = parseInt( d.getTime() / 1000 );
+            if( thisTime > compareTime ){
+                return 1;
+            }else if( thisTime < compareTime ){
+                return -1;
+            }
+            return 0;
+        }
+    }
     function isEmail( email ){
         return new RegExp( '^[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+@[-!#$%&\'*+\\/0-9=?A-Z^_`a-z{|}~]+\.[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+$' ).test(email);
     }
+
+    function isDate( date ){
+        date = new Date( date );
+        return !isNaN(date.getTime());
+    }
+
     function parseJSON(data){
         if( ! $.isPlainObject(data) ){
             var m = data.match(/<!-- HB_AJAX_START -->(.*)<!-- HB_AJAX_END -->/);
@@ -163,7 +185,7 @@
             maxDate:"+365D",
             numberOfMonths: 2,
             onSelect: function(selected) {
-                $("#check_out_date").datepicker("option","maxDate", selected)
+                $("#check_in_date").datepicker("option","maxDate", selected)
             }
         });
         $("#datepickerImage").click(function() {
@@ -173,15 +195,48 @@
             $("#txtToDate").datepicker("show");
         });
 
-        $('#hb-search-form').submit(function() {
-            if($('#check_in_date').val() == ''){
-                alert('Please Enter Check-In Date');
-                return false;
-            }else if(jQuery('#check_out_date').val() == ''){
-                alert('Please Enter Check-Out Date');
+        $('form[name="hb-search-form"]').submit(function() {
+            var $check_in = $('#check_in_date', this);
+            if( ! isDate( $check_in.val() ) ){
+                alert( hotel_booking_l18n.empty_check_in_date );
+                $check_in.focus();
                 return false;
             }
-            return true;
+
+            var $check_out = $('#check_out_date', this);
+            if( ! isDate( $check_out.val() ) ){
+                alert( hotel_booking_l18n.empty_check_out_date );
+                $check_out.focus();
+                return false;
+            }
+
+            var check_in = new Date( $check_in.val() ),
+                check_out = new Date( $check_out.val()),
+                current = new Date();
+            /*if( check_in.compareWith( current ) == -1 ){
+                alert( hotel_booking_l18n.check_in_date_must_be_greater );
+                $check_in.focus();
+                return false;
+            }*/
+            if( check_in.compareWith( check_out ) >= 0 ){
+                alert( hotel_booking_l18n.check_out_date_must_be_greater );
+                $check_out.focus();
+                return false;
+            }
+
+            $.ajax({
+                url: hotel_settings.ajax,
+                type: 'post',
+                dataType: 'html',
+                data: $(this).serialize(),
+                success: function (response) {
+                    response = parseJSON(response)
+                    if(response.success && response.sig){
+                        window.location.href = window.location.href + '?hotel-booking-params='+response.sig
+                    }
+                }
+            });
+            return false;
         });
         $('form[name="hb-search-results"]').submit(function(){
             var total_rooms = 0;
@@ -195,6 +250,21 @@
                 alert( hotel_booking_l18n.no_rooms_selected );
                 return false;
             }
+
+            $.ajax({
+                url: hotel_settings.ajax,
+                type: 'post',
+                dataType: 'html',
+                data: $(this).serialize(),
+                success: function (response) {
+                    response = parseJSON(response)
+                    if(response.success && response.sig){
+                        window.location.href = window.location.href.replace(/\?(.*)/, '?hotel-booking-params='+response.sig )
+                    }
+                }
+            });
+
+            return false;
         });
 
         $('form#hb-payment-form').submit(orderSubmit);

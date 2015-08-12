@@ -30,7 +30,7 @@ $cart = HB_Cart::instance();
 ?>
 <div id="hotel-booking-payment">
 
-    <form name="hb-payment-form" id="hb-payment-form" method="post" action="">
+    <form name="hb-payment-form" id="hb-payment-form" method="post" action="<?php echo $search_page;?>">
         <h3><?php _e( 'Booking Details', 'tp-hotel-booking' );?></h3>
         <ul class="hb-form-table">
             <li class="hb-form-field label-left">
