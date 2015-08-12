@@ -1,6 +1,6 @@
 <?php
 $email = '';
-if( $customer->data ) {
+if( $customer && $customer->data ) {
     extract($customer->data);
 }
 ?>
