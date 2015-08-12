@@ -12,7 +12,7 @@ $payment_gateways = hb_get_payment_gateways( array( 'enable' => true ) );
                 <?php echo $gateway->title;?>
             </label>
             <?php if( has_action( 'hb_payment_gateway_form_' . $gateway->slug ) ){?>
-            <div class="">
+            <div class="hb-payment-method-form <?php echo $gateway->slug;?>">
             <?php do_action( 'hb_payment_gateway_form_' . $gateway->slug );?>
             </div>
             <?php }?>

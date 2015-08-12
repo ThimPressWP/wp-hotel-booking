@@ -130,3 +130,7 @@
 .hb-payment-methods > li{
     margin: 0 0 20px 0;
 }
+
+.hb-payment-method-form{
+    display: none;
+}

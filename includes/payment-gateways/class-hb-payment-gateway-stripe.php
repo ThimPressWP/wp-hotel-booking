@@ -19,6 +19,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
 
     function init(){
         add_action( 'hb_payment_gateway_settings_stripe', array( $this, 'admin_settings' ) );
+        add_action( 'hb_payment_gateway_form_' . $this->slug, array( $this, 'form' ) );
     }
 
     function admin_settings( $gateway ){
@@ -35,5 +36,9 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
             'result'    => 'success',
             'redirect'  => 'http://24h.com.vn'
         );
+    }
+
+    function form(){
+        echo _e( 'Pay with Credit card');
     }
 }

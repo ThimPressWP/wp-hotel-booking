@@ -331,6 +331,11 @@
         $doc.on('click', '.hb-view-booking-room-details', function(e){
             e.preventDefault();
             $(this).closest('.hb-room-content').find('.hb-booking-room-details').fadeToggle();
+        }).on('click', 'input[name="hb-payment-method"]', function(){
+            if( this.checked ){
+                $('.hb-payment-method-form:not(.'+this.value+')').slideUp();
+                $('.hb-payment-method-form.'+this.value+'').slideDown();
+            }
         })
     })
 

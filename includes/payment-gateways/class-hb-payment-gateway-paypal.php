@@ -69,6 +69,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
 
     function form(){
         echo _e( 'Pay with Paypal');
+        echo '<img src="http://pctechmag.com/wp-content/uploads/2013/04/PayPal-logo-1.png" style="display: block; width: 100px;" />';
     }
 
     function process_booking_paypal_standard(){
