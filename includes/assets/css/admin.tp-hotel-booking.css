@@ -24,6 +24,10 @@
 .hb-form-field .hb-form-field-input-inner{
     margin-left: 20px;
 }
+.hb-form-field .hb-form-field-input textarea{
+    width: 100%;
+    min-height: 100px;
+}
 
 /* pricing table */
 .hb-pricing-table{

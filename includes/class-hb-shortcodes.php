@@ -54,8 +54,6 @@ class HB_Shortcodes{
                 break;
             case 'payment':
                 $rooms          = hb_get_request( 'hb-num-of-rooms' );
-                $total_rooms    = 0;
-                $total          = 0;
                 $cart           = HB_Cart::instance();
                 $cart
                     ->empty_cart()
@@ -70,29 +68,31 @@ class HB_Shortcodes{
                     $cart->add_to_cart( $room_id, $num_of_rooms );
                     $room = HB_Room::instance( $room_id );
                     $room->set_data( 'num_of_rooms', $num_of_rooms );
-                    $total_rooms += $num_of_rooms;
-                    $total += $room->get_total( $start_date, $end_date, $num_of_rooms, false );
+                    /*$total_rooms += $num_of_rooms;
+                    $total += $room->get_total( $start_date, $end_date, $num_of_rooms, false );*/
                 }
+                if( is_user_logged_in() ){
+                    global $current_user;
+                    get_currentuserinfo();
 
-                $total_nights = hb_count_nights_two_dates( $end_date, $start_date );
-                $tax = hb_get_tax_settings();
-                if( $tax > 0 ) {
-                    $grand_total = $total + $total * $tax;
+                    $template_args['customer'] = hb_get_customer( $current_user->user_email );
+
                 }else{
-                    $grand_total = $total;
+                    $template_args['customer'] = hb_create_empty_post();
+                    $template_args['customer']->data = array(
+                        'title'             => '',
+                        'first_name'        => '',
+                        'last_name'         => '',
+                        'address'           => '',
+                        'city'              => '',
+                        'state'             => '',
+                        'postal_code'       => '',
+                        'country'           => '',
+                        'phone'             => '',
+                        'fax'               => ''
+                    );
                 }
-
-                $sig = array(
-                    'check_in_date'         => hb_get_request( 'check_in_date' ),
-                    'check_out_date'        => hb_get_request( 'check_out_date' ),
-                    'total_nights'          => $total_nights,
-                    'num_of_rooms'          => array(),
-                    'sub_total_of_rooms'    => array(),
-                    'total'                 => $total,
-                    'grand_total'           => $grand_total
-                );
                 $template = 'payment.php';
-
                 break;
             case 'confirm':
                 $template = 'confirm.php';

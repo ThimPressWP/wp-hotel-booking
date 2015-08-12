@@ -70,7 +70,7 @@
                     }
                     $container.find('input[name="existing-customer-id"]').val(response.ID);
                     $('.hb-order-existing-customer').fadeOut(function(){
-                        $(this).remove();
+                        //$(this).remove();
                     });
                 }else{
                     alert( 'Customer email not found!' );
@@ -92,6 +92,7 @@
         var $title = $('select[name="title"]', $form);
         if( -1 == $title.val() ){
             alert( hotel_booking_l18n.empty_customer_title );
+            $title.focus();
             return false;
         }
 
@@ -109,6 +110,55 @@
             return false;
         }
 
+        var $address = $('input[name="address"]', $form);
+        if( ! $address.val() ){
+            alert( hotel_booking_l18n.empty_customer_address );
+            $address.focus();
+            return false;
+        }
+
+        var $city = $('input[name="city"]', $form);
+        if( ! $city.val() ){
+            alert( hotel_booking_l18n.empty_customer_city );
+            $city.focus();
+            return false;
+        }
+
+        var $state = $('input[name="state"]', $form);
+        if( ! $state.val() ){
+            alert( hotel_booking_l18n.empty_customer_state );
+            $state.focus();
+            return false;
+        }
+
+        var $postalCode = $('input[name="postal_code"]', $form);
+        if( ! $postalCode.val() ){
+            alert( hotel_booking_l18n.empty_customer_postal_code );
+            $postalCode.focus();
+            return false;
+        }
+
+        var $country = $('input[name="country"]', $form);
+        if( ! $country.val() ){
+            alert( hotel_booking_l18n.empty_customer_country );
+            $country.focus();
+            return false;
+        }
+
+        var $phone = $('input[name="phone"]', $form);
+        if( ! $phone.val() ){
+            alert( hotel_booking_l18n.empty_customer_phone );
+            $phone.focus();
+            return false;
+        }
+
+        var $email = $('input[name="email"]', $form);
+        if( ! isEmail( $email.val() ) ){
+            alert( hotel_booking_l18n.customer_email_invalid );
+            $email.focus();
+            return false;
+        }
+
         var $payment_method = $('input[name="hb-payment-method"]:checked');
         if( $payment_method.length == 0 ){
             alert( hotel_booking_l18n.no_payment_method_selected );
@@ -119,6 +169,13 @@
         if( $tos.length && ! $tos.is(':checked') ){
             alert( hotel_booking_l18n.confirm_tos );
             return false;
+        }
+        if( $('input[name="existing-customer-id"]', $form).val() ) {
+            if ($email.val() != $('input[name="existing-customer-email"]', $form).val() ) {
+                if( ! confirm(hotel_booking_l18n.customer_email_not_match) ){
+                    return false;
+                }
+            }
         }
         return true;
     }

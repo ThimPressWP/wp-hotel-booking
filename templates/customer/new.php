@@ -1,16 +1,18 @@
 <?php
-/*$title = 'mr';
-$first_name = 'Nguyễn Ngọc';
-$last_name = 'Tú';
-$address = 'Thắng Trí - Minh Trí - Sóc Sơn - Hà Nội';
-$city = 'Hà Nội';
+$title = '';
+$first_name = '';
+$last_name = '';
+$address = '';
+$city = '';
 $state = '';
-$postal_code = 10000;
-$country = 'Vietnamese';
-$phone = '0123456789';
+$postal_code = '';
+$country = '';
+$phone = '';
 $fax = '';
-$email = 'iamacustomer@gmail.com';
-$addition_information = 'I want to ...';*/
+$email = '';
+$addition_information = '';
+
+//extract( $customer->data );
 ?>
 <div class="hb-order-new-customer" id="hb-order-new-customer">
     <div class="hb-col-padding hb-col-border">

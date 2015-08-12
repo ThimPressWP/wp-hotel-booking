@@ -118,15 +118,11 @@ $cart = HB_Cart::instance();
                 <?php }?>
             <?php }?>
         </table>
-        <?php hb_get_template( 'customer.php' );?>
-        <?php hb_get_template( 'payment-method.php' );?>
+        <?php hb_get_template( 'customer.php', array( 'customer' => $customer ) );?>
+        <?php hb_get_template( 'payment-method.php', array( 'customer' => $customer ) );?>
         <?php hb_get_template( 'addition-information.php' );?>
         <?php wp_nonce_field( 'hb_customer_place_order', 'hb_customer_place_order_field' );?>
         <input type="hidden" name="hotel-booking" value="place_order" />
-        <input type="hidden" name="sig" value="<?php echo base64_encode( serialize( $sig ) );?>" />
-        <input type="hidden" name="check_in_date" value="<?php echo $start_date;?>" />
-        <input type="hidden" name="check_out_date" value="<?php echo $end_date;?>" />
-        <input type="hidden" name="total_nights" value="<?php echo $total_nights;?>" />
         <input type="hidden" name="action" value="hotel_booking_place_order" />
         <?php if( $tos_page_id = hb_get_page_id( 'terms' ) ){?>
         <p>

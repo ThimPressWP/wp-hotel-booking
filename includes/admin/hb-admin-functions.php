@@ -108,6 +108,13 @@ function hb_add_meta_boxes(){
             'std'       => 0,
             'min'       => 0,
             'max'       => 100
+        ),
+        array(
+            'name'      => 'room_addition_information',
+            'label'     => __( 'Addition Information', 'tp-hotel-booking' ),
+            'type'      => 'textarea',
+            'std'       => '',
+            'editor'    => true
         )
     );
 }

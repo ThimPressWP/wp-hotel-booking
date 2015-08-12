@@ -196,6 +196,7 @@ function hb_parse_request(){
         if( isset( $_POST['hotel-booking-params'] ) ) unset( $_POST['hotel-booking-params'] );
         if( isset( $_REQUEST['hotel-booking-params'] ) ) unset( $_REQUEST['hotel-booking-params'] );
     }
+    print_r( $_REQUEST);
 }
 add_action( 'init', 'hb_parse_request' );
 
@@ -398,6 +399,16 @@ function hb_l18n(){
         'empty_customer_title'          => __( 'Please select your title', 'tp-hotel-booking' ),
         'empty_customer_first_name'     => __( 'Please enter your first name', 'tp-hotel-booking'),
         'empty_customer_last_name'      => __( 'Please enter your last name', 'tp-hotel-booking' ),
+
+        'empty_customer_address'        => __( 'Please enter your address', 'tp-hotel-booking' ),
+        'empty_customer_city'           => __( 'Please enter your city name', 'tp-hotel-booking' ),
+        'empty_customer_state'          => __( 'Please enter your state', 'tp-hotel-booking' ),
+        'empty_customer_postal_code'    => __( 'Please enter your postal code', 'tp-hotel-booking' ),
+        'empty_customer_country'        => __( 'Please select your country', 'tp-hotel-booking' ),
+        'empty_customer_phone'          => __( 'Please enter your phone number', 'tp-hotel-booking' ),
+        'customer_email_invalid'        => __( 'Your email is invalid', 'tp-hotel-booking' ),
+        'customer_email_not_match'      => __( 'Your email does not match with existing email! Ok to create a new customer information', 'tp-hotel-booking' ),
+
         'empty_check_in_date'           => __( 'Please select check in date', 'tp-hotel-booking' ),
         'empty_check_out_date'          => __( 'Please select check out date', 'tp-hotel-booking' ),
         'check_in_date_must_be_greater' => __( 'Check in date must be greater than the current', 'tp-hotel-booking' ),
@@ -509,6 +520,16 @@ function hb_update_customer_info( $data ){
 }
 
 function hb_get_customer( $customer_id ){
+    if( is_string( $customer_id ) ){
+        global $wpdb;
+        $query = $wpdb->prepare("
+            SELECT post_id
+            FROM {$wpdb->postmeta}
+            WHERE meta_key = %s
+            AND meta_value = %s
+        ", '_hb_email', $customer_id );
+        $customer_id = $wpdb->get_var( $query );
+    }
     $customer = get_post( $customer_id );
     if( $customer && $customer->post_type == 'hb_customer' ){
         $customer->data = array();
