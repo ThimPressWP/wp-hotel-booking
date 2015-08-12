@@ -1,6 +1,8 @@
 <?php
 $email = '';
-extract( $customer->data );
+if( $customer->data ) {
+    extract($customer->data);
+}
 ?>
 <div class="hb-order-existing-customer" data-label="-Or-">
     <div class="hb-col-padding hb-col-border">
