@@ -196,7 +196,6 @@ function hb_parse_request(){
         if( isset( $_POST['hotel-booking-params'] ) ) unset( $_POST['hotel-booking-params'] );
         if( isset( $_REQUEST['hotel-booking-params'] ) ) unset( $_REQUEST['hotel-booking-params'] );
     }
-    print_r( $_REQUEST);
 }
 add_action( 'init', 'hb_parse_request' );
 
