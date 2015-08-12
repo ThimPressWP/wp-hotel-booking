@@ -108,6 +108,9 @@
     padding: 5px;
     cursor: move;
 }
+.hb-room-gallery > ul > li.attachment:hover .centered{
+    opacity: 0.4;
+}
 .hb-room-gallery .attachment-preview{
     cursor: move;
 }
@@ -122,6 +125,10 @@
     left: 50%;
     margin-left: -25px;
     color: #FFF;
+    cursor: pointer;
+}
+.attachment.add-new{
+    cursor: pointer;
 }
 .attachment.add-new:hover .dashicons{
     color: #00a0d2;
@@ -136,8 +143,16 @@
     color: #FFF;
     right: 10px;
     bottom: 10px;
-    cursor: pointer;.
+    cursor: pointer;
+    display: none;
 }
 .attachment .dashicons-trash:hover{
     color: #FF0000;
+}
+.attachment:hover .dashicons-trash{
+    display: block;
+}
+.hb-number-field{
+    width: 50px;
+    text-align: center;
 }

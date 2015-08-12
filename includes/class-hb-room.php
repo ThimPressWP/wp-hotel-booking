@@ -56,7 +56,12 @@ class HB_Room{
                 if( has_post_thumbnail( $this->post->ID ) ){
                     $return = get_the_post_thumbnail( $this->post->ID, 'thumbnail' );
                 }else{
-                    $return = '<img src="" />';
+                    $room_type_id = get_post_meta( $this->post->ID, '_hb_room_type', true );
+                    $gallery = get_option( "hb_taxonomy_thumbnail_{$room_type_id}" );
+                    if( $gallery ){
+                        $attachment_id = reset( $gallery );
+                        $return = wp_get_attachment_image( $attachment_id, 'thumbnail' );//wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
+                    }
                 }
                 break;
             case 'max_child':

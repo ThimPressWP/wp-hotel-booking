@@ -611,7 +611,7 @@ function hb_admin_js_template(){
                                 </div>
                             </div>
                         </div>
-                        <div class="dashicons dashicons-trash"></div>
+                        <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'tp-hotel-booking' );?>"></a>
                     </li>
                 <# }); #>
                 <li class="attachment add-new">
@@ -638,7 +638,7 @@ function hb_admin_js_template(){
                 </div>
             </div>
         </div>
-        <div class="dashicons dashicons-trash"></div>
+        <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'tp-hotel-booking' );?>"></a>
     </li>
 </script>
 <?php

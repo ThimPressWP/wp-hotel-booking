@@ -168,7 +168,7 @@ class HB_Post_Types{
         $term = get_term( $term_id, $taxonomy );
         switch ($column_name) {
             case 'ordering':
-                $content = sprintf( '<input type="text" name="%s_ordering[%d]" value="%d" size="3" />', $taxonomy, $term_id, $term->term_group );
+                $content = sprintf( '<input class="hb-number-field" type="number" name="%s_ordering[%d]" value="%d" size="3" />', $taxonomy, $term_id, $term->term_group );
                 break;
             case 'thumbnail':
                 /*$thumb_id = get_option( 'hb_taxonomy_thumbnail_' . $term_id );
@@ -182,12 +182,17 @@ class HB_Post_Types{
                     $content .= '<input type="hidden" name="' . $taxonomy . '_thumbnail[' . $term_id . ']" value="0" />';
                 }
                 $content .= '</div>';*/
-                $count = get_option( 'hb_taxonomy_thumbnail_' . $term_id );
-                echo '<a href="" class="hb-edit-room-gallery">' . sprintf( __( 'Edit (%d)', 'tp-hotel-booking' ), $count ? sizeof( $count ) : 0 ) . '</a>';
+                $attachments = get_option( 'hb_taxonomy_thumbnail_' . $term_id );
+                $count = is_array( $attachments ) ? sizeof( $attachments ) : 0;
+                if( $count > 0 ) {
+                    echo '<a href="" class="hb-edit-room-gallery">' . sprintf(_n('Edit (%d image)', 'Edit (%d images)', $count, 'tp-hotel-booking'), $count) . '</a>';
+                }else{
+                    echo '<a href="" class="hb-edit-room-gallery">' . __( 'Edit (0 image)', 'tp-hotel-booking') . '</a>';
+                }
                 break;
             case 'capacity':
                 $capacity = get_option( 'hb_taxonomy_capacity_' . $term_id );
-                $content = '<input type="text" name="' . $taxonomy . '_capacity[' . $term_id . ']" value="' . $capacity .'" size="2" />';
+                $content = '<input class="hb-number-field" type="number" name="' . $taxonomy . '_capacity[' . $term_id . ']" value="' . $capacity .'" size="2" />';
                 break;
             default:
                 break;
