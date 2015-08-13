@@ -1,13 +1,37 @@
 <?php
+
+/**
+ * Class HB_Booking
+ */
 class HB_Booking{
+
+    /**
+     * @var array
+     */
     protected static $_instance = array();
 
+    /**
+     * Store post object
+     *
+     * @var WP_Post
+     */
     public $post = null;
 
+    /**
+     * @var null
+     */
     private $_customer = null;
 
+    /**
+     * @var array
+     */
     private $_booking_info = array();
 
+    /**
+     * Constructor
+     *
+     * @param $post
+     */
     function __construct( $post ){
         if( is_numeric( $post ) && $post && get_post_type( $post ) == 'hb_booking') {
             $this->post = get_post( $post );
@@ -23,6 +47,11 @@ class HB_Booking{
         }
     }
 
+    /**
+     * Load customer meta data
+     *
+     * @access private
+     */
     private function load_customer(){
         $customer_id = get_post_meta( $this->post->ID, '_hb_customer_id', true );
         $this->_customer = get_post( $customer_id );
@@ -32,6 +61,12 @@ class HB_Booking{
         }
     }
 
+    /**
+     * Set customer meta data
+     *
+     * @param $customer
+     * @return null|object|stdClass
+     */
     function set_customer( $customer ){
         if( empty( $this->_customer ) ){
             $this->_customer = hb_create_empty_post();
@@ -48,6 +83,11 @@ class HB_Booking{
         return $this->_customer;
     }
 
+    /**
+     * Set booking information
+     *
+     * @param $info
+     */
     function set_booking_info( $info ){
         if( func_num_args() > 1 ){
             $this->_booking_info[ $info ] = func_get_arg(1);
@@ -56,52 +96,38 @@ class HB_Booking{
         }
     }
 
+    /**
+     * Update booking and relevant data
+     *
+     * @return mixed
+     */
     function update(){
-        $customer_id = 0;
+        $post_data = get_object_vars($this->post);
 
-        /*if( $this->_customer ){
-            $customer_data = get_object_vars( $this->_customer );
-            $customer_data['post_type'] = 'hb_customer';
-            $customer_data['post_status'] = 'publish';
-            $customer_data['post_title'] = 'Hotel Booking Customer';
-            if( ! empty( $this->_customer->ID ) ){
-                $customer_id = wp_update_post( $customer_data );
-            }else{
-                $customer_id = wp_insert_post( $customer_data );
-
+        // ensure the post_type is correct
+        $post_data['post_type']     = 'hb_booking';
+        $post_data['post_status']   = 'publish';
+        if ($this->post->ID) {
+            $booking_id = wp_update_post($post_data);
+        } else {
+            $booking_id = wp_insert_post($post_data, true);
+            $this->post->ID = $booking_id;
+        }
+        if( $booking_id ){
+            //update_post_meta( $booking_id, '_hb_customer_id', $customer_id );
+            foreach( $this->_booking_info as $meta_key => $v ){
+                update_post_meta( $booking_id, $meta_key, $v );
             }
-        }*/
-        //if( $customer_id && ! empty( $this->post ) ) {
-
-            /*if( ! empty( $this->_customer->data ) ){
-                $customer_data = (array)$this->_customer->data;
-                foreach( $customer_data as $k => $v ){
-                    update_post_meta( $customer_id, $k, $v );
-
-                }
-            }*/
-
-            $post_data = get_object_vars($this->post);
-
-            // ensure the post_type is correct
-            $post_data['post_type']     = 'hb_booking';
-            $post_data['post_status']   = 'publish';
-            if ($this->post->ID) {
-                $booking_id = wp_update_post($post_data);
-            } else {
-                $booking_id = wp_insert_post($post_data, true);
-                $this->post->ID = $booking_id;
-            }
-            if( $booking_id ){
-                //update_post_meta( $booking_id, '_hb_customer_id', $customer_id );
-                foreach( $this->_booking_info as $meta_key => $v ){
-                    update_post_meta( $booking_id, $meta_key, $v );
-                }
-            }
-        //}
+        }
         return $this->post->ID;
     }
 
+    /**
+     * Get an instance of HB_Booking by post ID or WP_Post object
+     *
+     * @param $booking
+     * @return HB_Booking
+     */
     static function instance( $booking ){
         $post = $booking;
         if( $booking instanceof WP_Post ){

@@ -1,11 +1,23 @@
 <?php
+
+/**
+ * Class HB_Ajax
+ */
 class HB_Ajax{
+
+    /**
+     * @var bool
+     */
     protected static $_loaded = false;
+
+    /**
+     * Constructor
+     */
     function __construct(){
         if( self::$_loaded ) return;
 
         $ajax_actions = array(
-            'fetch_custom_info'         => true,
+            'fetch_customer_info'       => true,
             'place_order'               => true,
             'load_room_type_galley'     => false,
             'parse_search_params'       => true,
@@ -22,7 +34,10 @@ class HB_Ajax{
         self::$_loaded = true;
     }
 
-    static function fetch_custom_info(){
+    /**
+     * Fetch customer information with user email
+     */
+    static function fetch_customer_info(){
         $email = hb_get_request( 'email' );
         $query_args = array(
             'post_type'     => 'hb_customer',
@@ -48,10 +63,18 @@ class HB_Ajax{
         die();
     }
 
+    /**
+     * Process the order with customer information posted via form
+     *
+     * @throws Exception
+     */
     static function place_order(){
         hb_customer_place_order();
     }
 
+    /**
+     * Get all images for a room type
+     */
     static function load_room_type_galley(){
         $term_id = hb_get_request( 'term_id' );
         $attachment_ids = get_option( 'hb_taxonomy_thumbnail_' . $term_id );
@@ -66,6 +89,9 @@ class HB_Ajax{
         hb_send_json( $attachments );
     }
 
+    /**
+     * Catch variables via post method and build a request param
+     */
     static function parse_search_params(){
         if ( ! hb_get_request( 'nonce', $_POST ) || ! wp_verify_nonce( hb_get_request( 'nonce', $_POST ), 'hb_search_nonce_action' ) ) {
             hb_send_json( array( 'success' => 0, 'message' => __( 'Invalid request', 'tp-hotel-booking' ) ) );

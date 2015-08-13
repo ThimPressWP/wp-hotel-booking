@@ -60,6 +60,13 @@ class HB_Cart{
         return $value;
     }
 
+    /**
+     * Set extra option for cart
+     *
+     * @param $name
+     * @param null $value
+     * @return $this
+     */
     function set_option( $name, $value = null ){
         if( is_array( $name ) ){
             foreach( $name as $k => $v ){
@@ -98,18 +105,39 @@ class HB_Cart{
         return apply_filters( 'hb_cart_total_nights', $total_nights );
     }
 
+    /**
+     * Get extra option of cart
+     *
+     * @param $name
+     * @return bool
+     */
     function get_option( $name ){
         return ! empty(  $_SESSION['hb_cart']['options'][ $name ] ) ? $_SESSION['hb_cart']['options'][ $name ] : false;
     }
 
+    /**
+     * Get cart id
+     *
+     * @return mixed
+     */
     function get_cart_id(){
         return $_SESSION['hb_cart']['cart_id'];
     }
 
+    /**
+     * Get rooms from cart
+     *
+     * @return mixed
+     */
     function get_products(){
         return $_SESSION['hb_cart']['products'];
     }
 
+    /**
+     * Calculate sub total (without tax) and return
+     *
+     * @return mixed
+     */
     function get_sub_total(){
         $sub_total = 0;
         if( $rooms = $this->get_rooms() ) foreach( $rooms as $room_id => $room ) {
@@ -117,23 +145,13 @@ class HB_Cart{
         }
 
         return apply_filters( 'hb_cart_sub_total', $sub_total );
-        $total_nights = hb_count_nights_two_dates( $end_date, $start_date );
-        $tax = hb_get_tax_settings();
-        if( $tax > 0 ) {
-            $grand_total = $total + $total * $tax;
-        }else{
-            $grand_total = $total;
-        }
-
-        $sub_total = 0;
-        $products = $this->get_products();
-        if( $products ) foreach( $products as $product ){
-            $sub_total += learn_press_is_free_course( $product['id'] ) ? 0 : floatval( learn_press_get_course_price( $product['id'] ) );
-        }
-        learn_press_format_price( $sub_total );
-        return apply_filters( 'learn_press_get_cart_subtotal', $sub_total, $this->get_cart_id() );
     }
 
+    /**
+     * Calculate cart total (with tax) and return
+     *
+     * @return mixed
+     */
     function get_total(){
         $sub_total  = $this->get_sub_total();
 
@@ -147,6 +165,11 @@ class HB_Cart{
         return apply_filters( 'learn_press_get_cart_total', $grand_total, $this->get_cart_id() );
     }
 
+    /**
+     * Get advance payment based on cart total
+     *
+     * @return float|int
+     */
     function get_advance_payment(){
         $total = 0;
         if( $advance_payment = hb_get_advance_payment() ) {
@@ -155,6 +178,11 @@ class HB_Cart{
         return $total;
     }
 
+    /**
+     * Get all HB_Room instance from cart
+     *
+     * @return array
+     */
     function get_rooms( ){
         $rooms = array();
         if( $_rooms = $this->get_products() ){
@@ -167,10 +195,22 @@ class HB_Cart{
         return $rooms;
     }
 
+    /**
+     * Generate an unique cart id
+     *
+     * @return string
+     */
     function generate_cart_id(){
         return md5( time() );
     }
 
+    /**
+     * Add a room to cart
+     *
+     * @param $room_id
+     * @param int $quantity
+     * @return $this
+     */
     function add_to_cart( $room_id, $quantity = 1 ){
         $room = HB_Room::instance( $room_id );
         $price = $room->get_price();
@@ -182,15 +222,30 @@ class HB_Cart{
         return $this;
     }
 
+    /**
+     * Clear all rooms from cart
+     *
+     * @return $this
+     */
     function empty_cart(){
         unset( $_SESSION['hb_cart']['products'] );
         return $this;
     }
 
+    /**
+     * Destroy cart session
+     */
     function destroy(){
         unset( $_SESSION['hb_cart'] );
     }
 
+    /**
+     * Get an instance of HB_Cart
+     *
+     * @param bool $prop
+     * @param bool $args
+     * @return bool|HB_Cart|mixed
+     */
     static function instance( $prop = false, $args = false ){
         if( !self::$instance ){
             self::$instance = new self();
@@ -206,11 +261,22 @@ if( !is_admin() ) {
     $GLOBALS['hb_cart'] = HB_Cart::instance();
 }
 
+/**
+ * Get HB_Cart instance
+ *
+ * @param null $prop
+ * @return bool|HB_Cart|mixed
+ */
 function hb_get_cart( $prop = null ){
     return HB_Cart::instance( $prop );
 }
 
-
+/**
+ * Get cart total
+ *
+ * @param bool $pre_paid
+ * @return float|int|mixed
+ */
 function hb_get_cart_total( $pre_paid = false ){
     $cart = HB_Cart::instance();
     if( $pre_paid ){
@@ -221,11 +287,21 @@ function hb_get_cart_total( $pre_paid = false ){
     return $total;
 }
 
+/**
+ * Generate an unique string
+ *
+ * @return mixed
+ */
 function hb_uniqid(){
     $hash = str_replace( '.', '', microtime( true ) . uniqid() );
     return apply_filters( 'hb_generate_unique_hash', $hash );
 }
 
+/**
+ * Get cart description
+ *
+ * @return string
+ */
 function hb_get_cart_description(){
     $cart = HB_Cart::instance();
     $description = array();
@@ -236,11 +312,22 @@ function hb_get_cart_description(){
 }
 
 
+/**
+ * Get check out return URL
+ *
+ * @return mixed
+ */
 function hb_get_return_url(){
     $url = get_site_url();
     return apply_filters( 'hb_return_url', $url );
 }
 
+/**
+ * Generate transaction object to store after the order placed
+ *
+ * @param $customer_id
+ * @return stdClass
+ */
 function hb_generate_transaction_object( $customer_id ){
     $customer = hb_get_customer( $customer_id );
     $cart = HB_Cart::instance();
@@ -281,19 +368,47 @@ function hb_generate_transaction_object( $customer_id ){
     return $transaction_object;
 }
 
+/**
+ * Set booking data to cache
+ *
+ * @param $method
+ * @param $temp_id
+ * @param $customer_id
+ * @param $transaction
+ */
 function hb_set_transient_transaction( $method, $temp_id, $customer_id, $transaction ){
     // store booking info in a day
     set_transient( $method . '-' . $temp_id, array( 'customer_id' => $customer_id, 'transaction_object' => $transaction ), 60 * 60 * 24 );
 }
 
+/**
+ * Get booking data from cache
+ *
+ * @param $method
+ * @param $temp_id
+ * @return mixed
+ */
 function hb_get_transient_transaction( $method, $temp_id ){
     return get_transient( $method . '-' . $temp_id );
 }
 
+/**
+ * Delete booking data from cache
+ *
+ * @param $method
+ * @param $temp_id
+ * @return mixed
+ */
 function hb_delete_transient_transaction( $method, $temp_id ) {
     return delete_transient( $method . '-' . $temp_id );
 }
 
+/**
+ * Add booking
+ *
+ * @param $transaction
+ * @return mixed
+ */
 function hb_add_transaction( $transaction ){
     return hb_add_booking( $transaction );
 }

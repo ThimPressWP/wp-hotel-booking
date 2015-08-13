@@ -178,10 +178,19 @@ function hb_dropdown_child_per_room( $args = array() ){
     echo $output;
 }
 
+/**
+ * Get capacity of a room type
+ *
+ * @param $type_id
+ * @return int
+ */
 function hb_get_room_type_capacities( $type_id ){
     return intval( get_option( "hb_taxonomy_capacity_{$type_id}" ) );
 }
 
+/**
+ * Parse a param from request has encoded
+ */
 function hb_parse_request(){
     $params = hb_get_request( 'hotel-booking-params' );
     if( $params ){
@@ -373,6 +382,11 @@ function hb_dropdown_titles( $args = array() ){
     return $output;
 }
 
+/**
+ * Create an empty object with all fields as a WP_Post object
+ *
+ * @return stdClass
+ */
 function hb_create_empty_post(){
     $posts = get_posts(
         array(
@@ -390,6 +404,11 @@ function hb_create_empty_post(){
     return new stdClass();
 }
 
+/**
+ * Localize script for front-end
+ *
+ * @return mixed
+ */
 function hb_l18n(){
     $translation = array(
         'invalid_email'                 => __( 'Your email address is invalid', 'tp-hotel-booking' ),
@@ -417,6 +436,11 @@ function hb_l18n(){
     return apply_filters( 'hb_l18n', $translation );
 }
 
+/**
+ * Get tax setting
+ *
+ * @return float|mixed
+ */
 function hb_get_tax_settings(){
     $settings = HB_Settings::instance();
     if( $tax = $settings->get('tax') ){
@@ -475,6 +499,9 @@ function hb_dropdown_numbers( $args = array() ){
     return $output;
 }
 
+/**
+ * @param $data
+ */
 function hb_send_json( $data ){
     echo '<!-- HB_AJAX_START -->';
     @header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
@@ -544,6 +571,11 @@ function hb_get_customer( $customer_id ){
     return $customer;
 }
 
+/**
+ * Place order for a booking
+ *
+ * @throws Exception
+ */
 function hb_customer_place_order(){
 
     if( strtolower( $_SERVER['REQUEST_METHOD'] ) != 'post' ){

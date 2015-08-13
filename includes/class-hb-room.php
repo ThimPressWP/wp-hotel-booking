@@ -1,11 +1,39 @@
 <?php
+
+/**
+ * Class HB_Room
+ */
 class HB_Room{
+    /**
+     * @var array
+     */
     protected static $_instance = array();
+
+    /**
+     * @var null
+     */
     protected $_plans = null;
+
+    /**
+     * @var null|WP_Post
+     */
     public $post = null;
+
+    /**
+     * @var array
+     */
     protected $_external_data = array();
+
+    /**
+     * @var int
+     */
     protected $_room_details_total = 0;
 
+    /**
+     * Constructor
+     *
+     * @param $post
+     */
     function __construct( $post ){
         if( is_numeric( $post ) ) {
             $this->post = get_post( $post );
@@ -14,6 +42,13 @@ class HB_Room{
         }
     }
 
+    /**
+     * Set extra data form room
+     *
+     * @param $key
+     * @param null $value
+     * @return $this
+     */
     function set_data( $key, $value = null ){
         if( is_array( $key ) ){
             foreach( $key as $k => $v ){
@@ -25,10 +60,22 @@ class HB_Room{
         return $this;
     }
 
+    /**
+     * Get extra data of room
+     *
+     * @param $key
+     * @return bool
+     */
     function get_data( $key ){
         return ! empty( $this->_external_data[ $key ] ) ? $this->_external_data[ $key ] : false;
     }
 
+    /**
+     * Magic function to get a variable of room
+     *
+     * @param $key
+     * @return int|string
+     */
     function __get( $key ){
         static $fields = array();
         $return = '';
@@ -88,6 +135,10 @@ class HB_Room{
         }
         return $return;
     }
+
+    /**
+     * @return array
+     */
     function get_booking_room_details(){
         $details = array();
         $room_details_total = 0;
@@ -114,6 +165,14 @@ class HB_Room{
         $this->_room_details_total = $room_details_total;
         return $details;
     }
+
+    /**
+     * Get room price based on plan settings
+     *
+     * @param null $date
+     * @param bool $including_tax
+     * @return float
+     */
     function get_price( $date = null, $including_tax = true ){
         $tax = 0;
         if( $including_tax ){
@@ -162,6 +221,16 @@ class HB_Room{
         //print_r($prices);
         return floatval( $return );
     }
+
+    /**
+     * Get total price of room
+     *
+     * @param $from
+     * @param $to
+     * @param int $num_of_rooms
+     * @param bool $including_tax
+     * @return float|int
+     */
     function get_total( $from, $to, $num_of_rooms = 1, $including_tax = true ){
         $nights = 0;
         $total = 0;
@@ -189,6 +258,11 @@ class HB_Room{
         }
         return $total;
     }
+
+    /**
+     * Get list of pricing plan of this room type
+     * @return null
+     */
     function get_pricing_plans(){
         if( ! $this->_plans ) {
             $plans = get_posts(
@@ -208,6 +282,12 @@ class HB_Room{
         return $this->_plans;
     }
 
+    /**
+     * Get unique instance of HB_Room
+     *
+     * @param $room
+     * @return mixed
+     */
     static function instance( $room ){
         $post = $room;
         if( $room instanceof WP_Post ){

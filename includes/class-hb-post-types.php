@@ -4,7 +4,11 @@
  * Class HB_Post_Types
  */
 class HB_Post_Types{
+    /**
+     * @var array
+     */
     protected static $_ordering = array();
+
     /**
      * Construction
      */
@@ -38,6 +42,9 @@ class HB_Post_Types{
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
     }
 
+    /**
+     * Enqueue scripts
+     */
     function enqueue_scripts(){
         if( in_array( hb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) ){
             wp_enqueue_media();
@@ -47,6 +54,12 @@ class HB_Post_Types{
         }
     }
 
+    /**
+     * Add more fields to taxonomy screen
+     *
+     * @param $term
+     * @param $term_name
+     */
     function room_type_more_fields( $term, $term_name ) {
         $attachment_ids = get_option( 'hb_taxonomy_thumbnail_' . $term->term_id );
         ?>
@@ -88,6 +101,12 @@ class HB_Post_Types{
     <?php
     }
 
+    /**
+     * Add more column to taxonomy manage
+     *
+     * @param $a
+     * @return mixed
+     */
     function custom_room_columns( $a ){
         $a['room_type'] = __( 'Room Type', 'tp-hotel-booking' );
         $a['room_capacity'] = __( 'Room Capacity', 'tp-hotel-booking' );
@@ -101,6 +120,11 @@ class HB_Post_Types{
         return $a;
     }
 
+    /**
+     * Display content for taxonomy custom field
+     *
+     * @param $column
+     */
     function custom_room_columns_filter( $column ){
         global $post;
         switch( $column ){
@@ -118,6 +142,9 @@ class HB_Post_Types{
         }
     }
 
+    /**
+     * Update custom fields for taxonomy
+     */
     function update_taxonomy(){
 
         if( ! empty( $_REQUEST['action'] ) && in_array( hb_get_request( 'taxonomy'), array( 'hb_room_type', 'hb_room_capacity' ) ) ){

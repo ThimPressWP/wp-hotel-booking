@@ -1,9 +1,23 @@
 <?php
+
+/**
+ * Class HB_Shortcodes
+ */
 class HB_Shortcodes{
+
+    /**
+     * Initial
+     */
     static function init(){
         add_shortcode( 'hotel_booking', array( __CLASS__, 'hotel_booking' ) );
     }
 
+    /**
+     * Shortcode to display the search form
+     *
+     * @param $atts
+     * @return string
+     */
     static function hotel_booking( $atts ){
         if( ! class_exists( 'HB_Room' ) ){
             TP_Hotel_Booking::instance()->_include( 'includes/class-hb-room.php' );
@@ -26,6 +40,8 @@ class HB_Shortcodes{
         $page = hb_get_request( 'hotel-booking' );
         $template = 'search.php';
         $template_args = array();
+
+        // find the url for form action
         $search_permalink = '';
         if( $search_page = $atts['search_page'] ){
             if( is_numeric( $search_page ) ){
@@ -40,6 +56,10 @@ class HB_Shortcodes{
             }
         }
         $template_args['search_page'] = $search_permalink;
+
+        /**
+         * Display the template based on current step
+         */
         switch( $page ){
             case 'results':
                 $template = 'results.php';
@@ -105,4 +125,5 @@ class HB_Shortcodes{
     }
 }
 
+// Init
 HB_Shortcodes::init();

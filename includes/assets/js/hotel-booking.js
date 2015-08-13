@@ -56,7 +56,7 @@
             dataType: 'html',
             type: 'post',
             data: {
-                action: 'hotel_booking_fetch_custom_info',
+                action: 'hotel_booking_fetch_customer_info',
                 email: $email.val()
             },
             success: function(response){
