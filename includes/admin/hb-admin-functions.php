@@ -666,7 +666,7 @@ function hb_booking_detail_page() {
         $customer_id = get_post_meta( $booking_id, '_hb_customer_id', true );
         ?>
         <div class="wrap">
-            <h2><?php _e( 'View Details: ','tp-hotel-booking' ); echo hb_format_order_number( $booking_id );  ?></h2>
+            <h2><?php _e( 'Booking Details: ','tp-hotel-booking' ); echo hb_format_order_number( $booking_id );  ?></h2>
             <h3><?php _e( 'Customer infomation', 'tp-hotel-booking') ?></h3>
             <ul>
                 <li>
@@ -706,7 +706,7 @@ function hb_booking_detail_page() {
                     <span><?php echo get_post_meta( $customer_id, '_hb_email', true ) ?></span>
                 </li>
             </ul>
-            <h2><?php _e( 'Booking Details', 'tp-hotel-booking') ?></h2>
+            <h3><?php _e( 'Booking Details', 'tp-hotel-booking') ?></h3>
             <ul>
                 <li>
                     <label><?php _e( 'Check-in date: ', 'tp-hotel-booking' ); ?></label>
