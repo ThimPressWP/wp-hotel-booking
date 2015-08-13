@@ -21,8 +21,8 @@ class HB_Admin_Menu{
             add_filter( 'tp_hotel_booking_menu_items', array( $this, 'add_booking_details_menu' ) );
         ?>
             <style type="text/css">
-                #adminmenu .current{
-                    __display: none;
+                #adminmenu .toplevel_page_tp_hotel_booking ul.wp-submenu > li:last-child{
+                    display: none;
                 }
             </style>
         <?php
