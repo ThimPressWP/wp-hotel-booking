@@ -40,6 +40,7 @@ if( $pricing_plans ) {
 }else{
     $regular_plan = null;
 }
+$count_plants = count( $pricing_plans );
 ?>
 
 <div class="wrap" id="tp_hotel_booking_pricing">
@@ -47,13 +48,14 @@ if( $pricing_plans ) {
     <form method="post" name="pricing-table-form">
         <p><strong><?php _e( 'Select type of room', 'tp-hotel-booking' );?></strong>&nbsp;&nbsp;<?php echo $room_type_select;?></p>
         <?php if( $room_type_id ){?>
-        <div class="hb-pricing-table regular-price">
+        <div class="hb-pricing-table regular-price clearfix">
             <h3 class="hb-pricing-table-title">
                 <span><?php _e( 'Regular price', 'tp-hotel-booking' );?></span>
-                <input type="text" class="datepicker" name="date-start[<?php echo $regular_plan ? $regular_plan->ID : '__INDEX__';?>]" size="10" />
-                <input type="text" class="datepicker" name="date-end[<?php echo $regular_plan ? $regular_plan->ID : '__INDEX__';?>]" size="10" />
+                <input type="text" class="datepicker" name="date-start[<?php echo $regular_plan ? $regular_plan->ID : '__INDEX__';?>]" size="10" readonly="readonly" />
+                <input type="text" class="datepicker" name="date-end[<?php echo $regular_plan ? $regular_plan->ID : '__INDEX__';?>]" size="10" readonly="readonly" />
             </h3>
             <div class="hb-pricing-controls">
+                <a href="" class="dashicons dashicons-edit" data-action="edit" title="<?php _e( 'Clone', 'tp-hotel-booking' );?>"></a>
                 <a href="" class="dashicons dashicons-admin-page" data-action="clone" title="<?php _e( 'Clone', 'tp-hotel-booking' );?>"></a>
                 <a href="" class="dashicons dashicons-trash" data-action="remove" title="<?php _e( 'Remove', 'tp-hotel-booking' );?>"></a>
             </div>
@@ -84,7 +86,7 @@ if( $pricing_plans ) {
                                     <?php
                                     $price = ! empty( $regular_prices[ $capacity->term_id ][ $i ] ) ? $regular_prices[ $capacity->term_id ][ $i ] : '';
                                     ?>
-                                    <input class="hb-pricing-price" type="text" name="price[<?php echo $regular_plan ? $regular_plan->ID : '__INDEX__';?>][<?php echo $capacity->term_id;?>][<?php echo $i;?>]" value="<?php echo $price;?>" size="10" />
+                                    <input class="hb-pricing-price" type="text" name="price[<?php echo $regular_plan ? $regular_plan->ID : '__INDEX__';?>][<?php echo $capacity->term_id;?>][<?php echo $i;?>]" value="<?php echo $price;?>" size="10" readonly="readonly" />
                                 </td>
                             <?php }?>
                         </tr>
@@ -96,7 +98,15 @@ if( $pricing_plans ) {
                 </table>
             </div>
         </div>
-        <h3><?php _e( 'Other plan', 'tp-hotel-booking' );?></h3>
+            <div class="clearfix"></div>
+        <h3 class="clearfix">
+            <?php _e( 'Other plan', 'tp-hotel-booking' );?>
+            <span class="count"><?php printf( _n( '(%d plan)', '(%d plans)', $count_plants, 'tp-hotel-booking' ), $count_plants );?></span>
+        </h3>
+        <p>
+            <button class="button hb-add-new-plan" type="button"><?php _e( 'Add Plan', 'tp-hotel-booking' );?></button>
+            <button class="button button-primary"><?php _e( 'Update', 'tp-hotel-booking');?></button>
+        </p>
         <div id="hb-pricing-plan-list">
         <?php if( $pricing_plans ): foreach( $pricing_plans as $plan ){?>
             <?php
@@ -107,10 +117,11 @@ if( $pricing_plans ) {
             <div class="hb-pricing-table">
                 <h3 class="hb-pricing-table-title">
                     <span><?php _e( 'Date Range', 'tp-hotel-booking' );?></span>
-                    <input type="text" class="datepicker" name="date-start[<?php echo $plan->ID;?>]" size="10" value="<?php echo $start_date;?>" />
-                    <input type="text" class="datepicker" name="date-end[<?php echo $plan->ID;?>]" size="10" value="<?php echo $end_date;?>" />
+                    <input type="text" class="datepicker" name="date-start[<?php echo $plan->ID;?>]" size="10" value="<?php echo $start_date;?>" readonly="readonly" />
+                    <input type="text" class="datepicker" name="date-end[<?php echo $plan->ID;?>]" size="10" value="<?php echo $end_date;?>" readonly="readonly" />
                 </h3>
                 <div class="hb-pricing-controls">
+                    <a href="" class="dashicons dashicons-edit" data-action="edit" title="<?php _e( 'Clone', 'tp-hotel-booking' );?>"></a>
                     <a href="" class="dashicons dashicons-admin-page" data-action="clone" title="<?php _e( 'Clone', 'tp-hotel-booking' );?>"></a>
                     <a href="" class="dashicons dashicons-trash" data-action="remove" title="<?php _e( 'Remove', 'tp-hotel-booking' );?>"></a>
                 </div>
@@ -133,7 +144,7 @@ if( $pricing_plans ) {
                                     <?php for( $i = 0; $i < 7; $i++ ){?>
                                         <td>
                                             <?php $price = ! empty( $plan_prices[ $capacity->term_id ] ) ? ( array_key_exists( $i, $plan_prices[ $capacity->term_id ] ) ? $plan_prices[ $capacity->term_id ][ $i ] : '' ) : '';?>
-                                            <input class="hb-pricing-price" type="text" name="price[<?php echo $plan->ID;?>][<?php echo $capacity->term_id;?>][<?php echo $i;?>]" value="<?php echo $price;?>" size="10" />
+                                            <input class="hb-pricing-price" type="text" name="price[<?php echo $plan->ID;?>][<?php echo $capacity->term_id;?>][<?php echo $i;?>]" value="<?php echo $price;?>" size="10" readonly="readonly" />
                                         </td>
                                     <?php }?>
                                 </tr>
@@ -145,24 +156,27 @@ if( $pricing_plans ) {
                     </table>
                 </div>
             </div>
-        <?php } endif;?>
+        <?php } else:?>
+            <p id="hb-no-plan-message"> <?php _e( 'No addition plans', 'tp-hotel-booking' );?></p>
+        <?php endif;?>
         </div>
         <?php wp_nonce_field( 'hb-update-pricing-plan', 'hb-update-pricing-plan-field' );?>
         <p>
-            <button class="button"><?php _e( 'Add new', 'tp-hotel-booking' );?></button>
+            <button type="button" class="button hb-add-new-plan"><?php _e( 'Add Plan', 'tp-hotel-booking' );?></button>
             <button class="button button-primary"><?php _e( 'Update', 'tp-hotel-booking' );?></button>
         </p>
         <?php }?>
     </form>
 </div>
 <script type="text/html" id="tmpl-hb-pricing-table">
-    <div class="hb-pricing-table regular-price">
+    <div class="hb-pricing-table">
         <h3 class="hb-pricing-table-title">
-            <span><?php _e( 'Regular price', 'tp-hotel-booking' );?></span>
-            <input type="text" class="datepicker" name="date-start[__INDEX__]" size="10" />
-            <input type="text" class="datepicker" name="date-end[__INDEX__]" size="10" />
+            <span><?php _e( 'Date Range', 'tp-hotel-booking' );?></span>
+            <input type="text" class="datepicker" name="date-start[__INDEX__]" size="10" readonly="readonly" />
+            <input type="text" class="datepicker" name="date-end[__INDEX__]" size="10" readonly="readonly" />
         </h3>
         <div class="hb-pricing-controls">
+            <a href="" class="dashicons dashicons-edit" data-action="edit" title="<?php _e( 'Clone', 'tp-hotel-booking' );?>"></a>
             <a href="" class="dashicons dashicons-admin-page" data-action="clone" title="<?php _e( 'Clone', 'tp-hotel-booking' );?>"></a>
             <a href="" class="dashicons dashicons-trash" data-action="remove" title="<?php _e( 'Remove', 'tp-hotel-booking' );?>"></a>
         </div>
@@ -184,7 +198,7 @@ if( $pricing_plans ) {
                             <th><?php echo $capacity->name;?></th>
                             <?php for( $i = 0; $i < 7; $i++ ){?>
                                 <td>
-                                    <input class="hb-pricing-price" type="text" name="price[__INDEX__][<?php echo $capacity->term_id;?>][<?php echo $i;?>]" value="" size="10" />
+                                    <input class="hb-pricing-price" type="text" name="price[__INDEX__][<?php echo $capacity->term_id;?>][<?php echo $i;?>]" value="" size="10" readonly="readonly" />
                                 </td>
                             <?php }?>
                         </tr>

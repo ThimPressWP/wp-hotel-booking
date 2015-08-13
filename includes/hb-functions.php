@@ -50,6 +50,7 @@ function hb_dropdown_room_types( $args = array() ){
                 'taxonomy'      => 'hb_room_type',
                 'hide_empty'    => false,
                 'name'          => 'hb-room-types',
+                'orderby'       => 'term_group',
                 'echo'          => true
             )
         )
@@ -886,7 +887,7 @@ function hb_get_payment_gateways( $args = array() ){
     if( ! $payment_gateways ) {
         $defaults = array(
             'paypal' => new HB_Payment_Gateway_Paypal(),
-            'stripe' => new HB_Payment_Gateway_Stripe()
+            'offline-payment' => new HB_Payment_Gateway_Offline_Payment()
         );
         $payment_gateways = apply_filters('hb_payment_gateways', $defaults);
     }

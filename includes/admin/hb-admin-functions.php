@@ -50,7 +50,9 @@ add_action( 'hb_admin_settings_tab_before', 'hb_admin_settings_tab_content' );
  */
 function hb_admin_l18n(){
     $l18n = array(
-        'confirm_remove_pricing_table'  => __( 'Are you sure you want to remove this pricing table?', 'tp-hotel-booking' )
+        'confirm_remove_pricing_table'  => __( 'Are you sure you want to remove this pricing table?', 'tp-hotel-booking' ),
+        'empty_pricing_plan_start_date' => __( 'Select start date for plan', 'tp-hotel-booking'),
+        'empty_pricing_plan_start_end' => __( 'Select end date for plan', 'tp-hotel-booking'),
     );
     return apply_filters( 'hb_admin_l18n', $l18n );
 }
@@ -121,8 +123,8 @@ function hb_add_meta_boxes(){
 add_action( 'init', 'hb_add_meta_boxes', 50 );
 
 function hb_update_meta_box_room_settings( $post_id ){
-    wp_set_object_terms( $post_id, intval( $_POST['room_type'] ), 'hb_room_type' );
-    wp_set_object_terms( $post_id, intval( $_POST['room_capacity'] ), 'hb_room_capacity' );
+    wp_set_object_terms( $post_id, intval( $_POST['_hb_room_type'] ), 'hb_room_type' );
+    //wp_set_object_terms( $post_id, intval( $_POST['room_capacity'] ), 'hb_room_capacity' );
     //echo '<pre>';print_r($_POST);echo '</pre>';die();
 
     $adults = get_option( 'hb_taxonomy_capacity_' . $_POST['_hb_room_capacity'] );

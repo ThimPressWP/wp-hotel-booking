@@ -30,12 +30,17 @@
 }
 
 /* pricing table */
+#hb-pricing-plan-list{
+    overflow: hidden;
+    clear: both;
+}
 .hb-pricing-table{
     border: 1px solid #DDD;
-    display: inline-block;
     position: relative;
     margin-bottom: 20px;
     background-color: #FFF;
+    float: left;
+    clear: both;
 }
 .hb-pricing-table-title{
     padding: 10px;

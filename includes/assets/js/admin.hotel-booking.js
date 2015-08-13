@@ -1,5 +1,35 @@
 ;(function($){
     var $doc = $(document);
+
+    if( Date.prototype.compareWith == undefined ) {
+        Date.prototype.compareWith = function( d ){
+            if( typeof d == 'string' ){
+                d = new Date( d );
+            }
+            var thisTime = parseInt( this.getTime() / 1000 ),
+                compareTime = parseInt( d.getTime() / 1000 );
+            if( thisTime > compareTime ){
+                return 1;
+            }else if( thisTime < compareTime ){
+                return -1;
+            }
+            return 0;
+        }
+    }
+    function isEmail( email ){
+        return new RegExp( '^[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+@[-!#$%&\'*+\\/0-9=?A-Z^_`a-z{|}~]+\.[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+$' ).test(email);
+    }
+
+    function isDate( date ){
+        date = new Date( date );
+        return !isNaN(date.getTime());
+    }
+
+    function create_pricing_plan(data){
+        var $plan = $( wp.template('hb-pricing-table')(data) );
+        return $plan;
+    }
+
     function init_pricing_plan( plan ){
         $(plan).find('.datepicker').datepicker({
             onSelect: function(date){
@@ -18,7 +48,7 @@
                 case 'clone':
                     var $cloned = $(wp.template('hb-pricing-table')({})),
                         $inputs = $cloned.find('.hb-pricing-price');
-                    $cloned.hide().css("background-color", "#FF0000").css("transition", "background-color 0.5s");
+                    $cloned.hide().css("background-color", "#00A0D2").css("transition", "background-color 0.5s");
                     init_pricing_plan( $cloned );
                     $table.find('.hb-pricing-price').each(function(i){
                         $inputs.eq(i).val(this.value);
@@ -30,11 +60,29 @@
                     }else{
                         $cloned.insertAfter($table);
                     }
-                    $cloned.fadeTo(350, 0.8).delay(1000).fadeTo(250, 1, function(){$(this).css("background-color", "");});
+                    $cloned.fadeTo(350, 0.8).delay(1000).fadeTo(250, 1, function(){
+                        $(this).css("background-color", "");
+                        $('.dashicons-edit', this).trigger('click');
+                    });
+                    $('#hb-no-plan-message').hide();
+                    break;
+                case 'edit':
+                    if( $button.hasClass('dashicons-edit') ){
+                        $('input', $table).removeAttr('readonly');
+                        $button.removeClass('dashicons-edit').addClass('dashicons-yes');
+                        $('.hb-pricing-table .dashicons-yes').not($button).trigger('click')
+                    }else{
+                        $('input', $table).attr('readonly', 'readonly');
+                        $button.removeClass('dashicons-yes').addClass('dashicons-edit');
+                    }
                     break;
                 case 'remove':
                     if( confirm( hotel_booking_l18n.confirm_remove_pricing_table ) ) {
+                        if( $table.siblings('.hb-pricing-table').length == 0){
+                            $('#hb-no-plan-message').show();
+                        }
                         $table.remove();
+
                     }
                     break;
             }
@@ -48,17 +96,32 @@
         });
 
         $('form[name="pricing-table-form"]').submit(function(){
+            var can_submit = true;
             $('.hb-pricing-table').each(function(i){
                 var $table = $(this),
                     $start = $table.find('input[name^="date-start"]'),
                     $end = $table.find('input[name^="date-end"]');
+                if(! $table.hasClass( 'regular-price')) {
+                    if (!isDate($start.val())) {
+                        alert(hotel_booking_l18n.empty_pricing_plan_start_date );
+                        $start.focus();
+                        can_submit = false;
+                    } else if (!isDate($end.val())) {
+                        alert(hotel_booking_l18n.empty_pricing_plan_start_date);
+                        $end.focus();
+                        can_submit = false;
+                    }
+
+                    if (!can_submit) return false;
+                }
                 $table.find('input[type="text"]').each(function(){
                     var $input = $(this),
                         name = $input.attr('name');
                     name = name.replace(/__INDEX__/, i - 1000);
                     $input.attr('name', name);
                 })
-            })
+            });
+            return can_submit;
         });
 
         $('.hb-pricing-table').each(function(){
@@ -95,9 +158,22 @@
         $("#datepickerImage").click(function() {
             $("#txtFromDate").datepicker("show");
         });
-        // $("#datepickerImage1").click(function() {
-        //     $("#txtToDate").datepicker("show");
-        // });
+
+        $('.hb-add-new-plan').click(function(){
+            var $plan = $(wp.template('hb-pricing-table')({}));
+            $('#hb-pricing-plan-list').prepend($plan);
+            init_pricing_plan( $plan );
+            $plan.css("opacity", 0).css("background-color", "#00A0D2").css("transition", "background-color 0.5s");
+            if( $(window).scrollTop() > $plan.offset().top - 100 ){
+                $(window).scrollTop( $plan.offset().top - 100);
+            }
+            $plan.fadeTo(350, 0.8).delay(1000).fadeTo(250, 1, function(){
+                $(this).css("background-color", "");
+                $('a[data-action="edit"]', $plan).trigger('click');
+            });
+            $('#hb-no-plan-message').hide();
+
+        });
     }
 
     $doc.ready( _ready );

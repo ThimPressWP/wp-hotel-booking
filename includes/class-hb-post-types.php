@@ -31,6 +31,61 @@ class HB_Post_Types{
 
         add_filter( 'manage_hb_room_posts_columns' , array( $this, 'custom_room_columns' ) );
         add_action( 'manage_hb_room_posts_custom_column', array( $this, 'custom_room_columns_filter' ) );
+
+        //add_action( 'hb_room_type_add_form_fields', array( $this, 'room_type_more_fields' ), 10, 2 );
+        add_action( 'hb_room_type_edit_form_fields', array( $this, 'room_type_more_fields' ), 10, 2 );
+
+        add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+    }
+
+    function enqueue_scripts(){
+        if( in_array( hb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) ){
+            wp_enqueue_media();
+            wp_enqueue_script('hb-media-selector', TP_Hotel_Booking::instance()->plugin_url('includes/assets/js/media-selector.js'));
+            wp_enqueue_style( 'hb-edit-tags', TP_Hotel_Booking::instance()->plugin_url( 'includes/assets/css/edit-tags.css' ) );
+            wp_enqueue_script( 'hb-edit-tags', TP_Hotel_Booking::instance()->plugin_url( 'includes/assets/js/edit-tags.js' ), array( 'jquery', 'jquery-ui-sortable' ) );
+        }
+    }
+
+    function room_type_more_fields( $term, $term_name ) {
+        $attachment_ids = get_option( 'hb_taxonomy_thumbnail_' . $term->term_id );
+        ?>
+        <tr class="form-field" id="room-gallery-<?php echo $term->term_id;?>">
+            <th scope="row" valign="top"><label for="term_meta[custom_term_meta]"><?php _e( 'Gallery', 'pippin' ); ?></label></th>
+            <td>
+                <div class="hb-room-gallery">
+                    <ul>
+                        <?php if( $attachment_ids ): foreach( $attachment_ids as $attachment_id ){?>
+                        <?php
+                            $attachment = wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
+                            if( ! $attachment ) continue;
+                            ?>
+                        <li class="attachment">
+                            <div class="attachment-preview">
+                                <div class="thumbnail">
+                                    <div class="centered">
+                                        <img src="<?php echo $attachment[0];?>" alt="">
+                                        <input type="hidden" name="hb-gallery[<?php echo $term->term_id;?>][gallery][]" value="<?php echo $attachment_id;?>" />
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'tp-hotel-booking' );?>"></a>
+                        </li>
+                        <?php }?>
+                        <?php endif;?>
+                        <li class="attachment add-new">
+                            <div class="attachment-preview">
+                                <div class="thumbnail">
+                                    <div class="dashicons-plus dashicons">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    <?php
     }
 
     function custom_room_columns( $a ){
@@ -64,7 +119,8 @@ class HB_Post_Types{
     }
 
     function update_taxonomy(){
-        if( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] == 'hb-update-taxonomy' ){
+
+        if( ! empty( $_REQUEST['action'] ) && in_array( hb_get_request( 'taxonomy'), array( 'hb_room_type', 'hb_room_capacity' ) ) ){
             $taxonomy = ! empty( $_REQUEST['taxonomy'] ) ? $_REQUEST['taxonomy'] : '';
             global $wpdb;
             if( ! empty( $_POST[ "{$taxonomy}_ordering" ] ) ){
@@ -114,10 +170,9 @@ class HB_Post_Types{
                     }
                 }
 
-                //print_r($_POST);
-                //die();
             }
         }
+
     }
 
     function delete_term_data( $term_id ){
@@ -197,12 +252,7 @@ class HB_Post_Types{
             default:
                 break;
         }
-        if( in_array( $column_name, array( 'ordering', 'thumbnail' ) ) ){
-            wp_enqueue_media();
-            wp_enqueue_style( 'hb-edit-tags', TP_Hotel_Booking::instance()->plugin_url( 'includes/assets/css/edit-tags.css' ) );
-            wp_enqueue_script( 'hb-media-selector', TP_Hotel_Booking::instance()->plugin_url( 'includes/assets/js/media-selector.js' ) );
-            wp_enqueue_script( 'hb-edit-tags', TP_Hotel_Booking::instance()->plugin_url( 'includes/assets/js/edit-tags.js' ), array( 'jquery', 'jquery-ui-sortable' ) );
-        }
+
         return $content;
     }
 
@@ -210,7 +260,7 @@ class HB_Post_Types{
      * Fix menu parent for taxonomy menu item
      */
     function fix_menu_parent_file() {
-        if ( in_array( $_GET['taxonomy'], array( 'hb_room_type', 'hb_room_capacity' ) ) )
+        if ( in_array( hb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) )
             $GLOBALS['parent_file'] = 'tp_hotel_booking';
     }
     /**
@@ -270,8 +320,7 @@ class HB_Post_Types{
         register_taxonomy( 'hb_room_type',
             array( 'hb_room' ),
             array(
-                'hierarchical'          => false,
-                'update_count_callback' => '_wc_term_recount',
+                'hierarchical'          => true,
                 'label'                 => __( 'Room Type', 'tp-hotel-booking' ),
                 'labels' => array(
                     'name'              => __( 'Room Types', 'tp-hotel-booking' ),
@@ -286,11 +335,12 @@ class HB_Post_Types{
                     'add_new_item'      => __( 'Add New Room Type', 'tp-hotel-booking' ),
                     'new_item_name'     => __( 'New Room Type Name', 'tp-hotel-booking' )
                 ),
+                'public'                => true,
                 'show_ui'               => true,
                 'query_var'             => true,
                 'rewrite'               => array(
                     'slug'         => 'hb_room_type',
-                    'with_front'   => false,
+                    'with_front'   => true,
                     'hierarchical' => false,
                 )
             )

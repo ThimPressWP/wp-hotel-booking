@@ -71,6 +71,9 @@
 .taxonomy-hb_room_capacity .column-posts{
     _display: none;
 }
+.taxonomy-hb_room_type .term-parent-wrap{
+    display: none;
+}
 .hb-room-gallery{
     background-color: #F5F5F5;
     position: relative;
@@ -107,12 +110,17 @@
     width: 10%;
     padding: 5px;
     cursor: move;
+    float: left;
+    margin: 0;
 }
 .hb-room-gallery > ul > li.attachment:hover .centered{
     opacity: 0.4;
 }
 .hb-room-gallery .attachment-preview{
     cursor: move;
+}
+.form-field .hb-room-gallery{
+    width: 95%;
 }
 .attachment.add-new .dashicons{
     font-size: 40px;
