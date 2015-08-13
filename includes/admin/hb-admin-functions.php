@@ -362,7 +362,7 @@ function hb_manage_booking_column( $column_name, $post_id ) {
             echo date( 'F d, Y', strtotime( get_post_field( 'post_date', $post_id ) ) );
             break;
         case 'details':
-            echo '<a href="'. get_admin_url() .'?page=hb_booking_details&id='. $post_id .' ">' . __( 'View', 'tp-hotel-booking' ) . '</a>';
+            echo '<a href="'. admin_url('admin.php?page=hb_booking_details&id='. $post_id) . '">' . __( 'View', 'tp-hotel-booking' ) . '</a>';
     }
 }   
 add_action('manage_hb_booking_posts_custom_column', 'hb_manage_booking_column', 10, 2);
@@ -656,13 +656,7 @@ add_action( 'admin_print_scripts', 'hb_admin_js_template');
 
 
 function hb_booking_detail_page_register() {
-    add_menu_page(
-        __('Booking Details', 'tp-hotel-booking'),     // page title
-        '',     // menu title
-        'manage_options',   // capability
-        'hb_booking_details',     // menu slug
-        'hb_booking_detail_page' // callback function
-    );
+
 }
 add_action( 'admin_menu', 'hb_booking_detail_page_register' );
 
@@ -670,9 +664,10 @@ function hb_booking_detail_page() {
     if( is_admin() && $_GET['page'] == 'hb_booking_details' ) {
         $booking_id = $_GET['id'];
         $customer_id = get_post_meta( $booking_id, '_hb_customer_id', true );
-        ?>            
-            <h1><?php _e( 'View Details: ','tp-hotel-booking' ); echo hb_format_order_number( $booking_id );  ?></h1>
-            <h2><?php _e( 'Customer infomation', 'tp-hotel-booking') ?></h2>
+        ?>
+        <div class="wrap">
+            <h2><?php _e( 'View Details: ','tp-hotel-booking' ); echo hb_format_order_number( $booking_id );  ?></h2>
+            <h3><?php _e( 'Customer infomation', 'tp-hotel-booking') ?></h3>
             <ul>
                 <li>
                     <label> <?php _e( 'Name: ', 'tp-hotel-booking' ) ?> </label>
@@ -742,7 +737,8 @@ function hb_booking_detail_page() {
                     <span><?php echo get_post_meta( $booking_id, '_hb_total', true ) ?></span>
                 </li>
             </ul>
-            <h2><?php _e( 'Payment Details', 'tp-hotel-booking') ?></h2>
+            <h3><?php _e( 'Payment Details', 'tp-hotel-booking') ?></h3>
+        </div>
         <?php
     } else return;
 }
