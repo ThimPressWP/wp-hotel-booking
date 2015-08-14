@@ -39,8 +39,8 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
         $last_name = get_post_meta($customer_id, '_hb_last_name', true);
         $customer_name = sprintf('%s %s %s', $title ? $title : 'Cus.', $first_name, $last_name);
 
-        $check_in = get_post_meta( $booking_id, '_hb_check_in_date', true );
-        $check_out = get_post_meta( $booking_id, '_hb_check_out_date', true );
+        $check_in = intval( get_post_meta( $booking_id, '_hb_check_in_date', true ) );
+        $check_out = intval( get_post_meta( $booking_id, '_hb_check_out_date', true ) );
         $currency = hb_get_currency_symbol( get_post_meta( $booking_id, '_hb_currency', true ) );
         $_rooms = get_post_meta( $booking_id, '_hb_room_id' );
         $rooms = array();
