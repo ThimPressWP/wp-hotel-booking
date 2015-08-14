@@ -150,10 +150,11 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
         add_filter( 'wp_mail_content_type', array( $this, 'set_html_content_type' ) );
         $to = get_post_meta( $customer_id, '_hb_email', true );
         wp_mail( $to, $email_subject, $email_content );
+        echo "[$to], [$email_subject]";
         remove_filter( 'wp_mail_content_type', array( $this, 'set_html_content_type' ) );
         return array(
             'result'    => 'success',
-            'redirect'  => '?hotel-booking-offline-payment=1'
+            //'redirect'  => '?hotel-booking-offline-payment=1'
         );
     }
 

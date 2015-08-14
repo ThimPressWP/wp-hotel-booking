@@ -23,7 +23,7 @@ $field_name = $settings->get_field_name('offline-payment');
     <tr>
         <th><?php _e( 'Email Subject', 'tp-hotel-booking' );?></th>
         <td>
-            <input type="text" class="regular-text" name="<?php echo $field_name['email_subject'];?>" value="<?php echo esc_attr( $payment['email_subject'] );?>" />
+            <input type="text" class="regular-text" name="<?php echo $payment['email_subject'];?>" value="<?php echo esc_attr( $payment['email_subject'] );?>" />
         </td>
     </tr>
     <tr>
