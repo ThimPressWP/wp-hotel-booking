@@ -40,8 +40,56 @@ class HB_Post_Types{
         add_action( 'hb_room_type_edit_form_fields', array( $this, 'room_type_more_fields' ), 10, 2 );
 
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+
+        //add_filter( 'pre_get_posts', array( $this, 'filter_post_type' ) );
+
+        add_filter( 'posts_fields', array( $this, 'posts_fields' ) );
+        add_filter( 'posts_join_paged', array( $this, 'posts_join_paged' ) );
+        add_filter( 'posts_where_paged', array( $this, 'posts_where_paged' ) );
+        add_filter( 'posts_where' , array( $this, 'posts_where_paged' ) );
     }
 
+    function posts_fields( $fields ){
+        if( $this->is_search_customer() ){
+        }
+        return $fields;
+    }
+
+    function posts_join_paged( $join ){
+        if( $this->is_search_customer() ){
+            global $wpdb;
+            $join .= "
+                INNER JOIN {$wpdb->postmeta} pm1 ON {$wpdb->posts}.ID = pm1.post_id and pm1.meta_key='_hb_first_name'
+                INNER JOIN {$wpdb->postmeta} pm2 ON {$wpdb->posts}.ID = pm2.post_id and pm2.meta_key='_hb_last_name'
+                INNER JOIN {$wpdb->postmeta} pm3 ON {$wpdb->posts}.ID = pm3.post_id and pm3.meta_key='_hb_email'
+                INNER JOIN {$wpdb->postmeta} pm4 ON {$wpdb->posts}.ID = pm4.post_id and pm4.meta_key='_hb_phone'
+                INNER JOIN {$wpdb->postmeta} pm5 ON {$wpdb->posts}.ID = pm5.post_id and pm5.meta_key='_hb_address'
+            ";
+        }
+        return $join;
+    }
+
+    function posts_where_paged( $where ){
+        if( $s = $this->is_search_customer() ) {
+            $where .= "
+                OR (
+                    pm1.meta_value LIKE '%{$s}%'
+                    OR pm2.meta_value LIKE '%{$s}%'
+                    OR pm3.meta_value LIKE '%{$s}%'
+                    OR pm4.meta_value LIKE '%{$s}%'
+                    OR pm5.meta_value LIKE '%{$s}%'
+                )
+            ";
+        }
+        return $where;
+    }
+    function is_search_customer(){
+        global $post_type;
+        if( $post_type == 'hb_customer' && $s = hb_get_request( 's' ) ){
+            return $s;
+        }
+        return false;
+    }
     /**
      * Enqueue scripts
      */
