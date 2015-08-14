@@ -140,22 +140,30 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
         );
 
         $settings = HB_Settings::instance()->get('offline-payment');
-        $email_subject = $settings['email_subject'];
-        $email_content = $settings['email_content'];
+        $email_subject = ! empty( $settings['email_subject'] ) ? $settings['email_subject'] : false;
+        $email_content = ! empty( $settings['email_content'] ) ? $settings['email_content'] : false;
 
-        if( preg_match( '!{{booking_details}}!', $email_content ) ){
-            $booking_details = $this->booking_details( $transaction );
-            $email_content = preg_replace( '!\{\{booking_details\}\}!', $booking_details, $email_content );
+        if( ! $email_subject || ! $email_content ) {
+            return array(
+                'result'    => 'fail',
+                //'redirect'  => '?hotel-booking-offline-payment=1'
+            );
+        }else{
+            if (preg_match('!{{booking_details}}!', $email_content)) {
+                $booking_details = $this->booking_details($transaction);
+                $email_content = preg_replace('!\{\{booking_details\}\}!', $booking_details, $email_content);
+            }
+            add_filter('wp_mail_content_type', array($this, 'set_html_content_type'));
+            $to = get_post_meta($customer_id, '_hb_email', true);
+            wp_mail($to, $email_subject, $email_content);
+            echo "[$to], [$email_subject]";
+            remove_filter('wp_mail_content_type', array($this, 'set_html_content_type'));
+            return array(
+                'result'    => 'success',
+                //'redirect'  => '?hotel-booking-offline-payment=1'
+            );
         }
-        add_filter( 'wp_mail_content_type', array( $this, 'set_html_content_type' ) );
-        $to = get_post_meta( $customer_id, '_hb_email', true );
-        wp_mail( $to, $email_subject, $email_content );
-        echo "[$to], [$email_subject]";
-        remove_filter( 'wp_mail_content_type', array( $this, 'set_html_content_type' ) );
-        return array(
-            'result'    => 'success',
-            //'redirect'  => '?hotel-booking-offline-payment=1'
-        );
+
     }
 
     function form(){
