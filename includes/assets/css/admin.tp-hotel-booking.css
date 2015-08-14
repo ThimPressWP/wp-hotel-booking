@@ -128,3 +128,13 @@ th.column-room_type{
 #adminmenu .toplevel_page_hb_booking_details{
     _display: none;
 }
+
+.customer-information {
+    width: 50%;
+}
+
+.customer-information tr {
+    width: 500px;
+    border: 1px solid black;
+    background: #666;
+}

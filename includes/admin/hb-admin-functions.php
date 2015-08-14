@@ -668,7 +668,50 @@ function hb_booking_detail_page() {
         <div class="wrap">
             <h2><?php _e( 'Booking Details: ','tp-hotel-booking' ); echo hb_format_order_number( $booking_id );  ?></h2>
             <h3><?php _e( 'Customer infomation', 'tp-hotel-booking') ?></h3>
-            <ul>
+            <table  class="customer-information">
+                <tr>
+                    <td><?php _e( 'Name', 'tp-hotel-booking' ) ?> </td>
+                    <td><?php                        
+                        $title = hb_get_title_by_slug( get_post_meta( $customer_id, '_hb_title', true ) );
+                        $first_name = get_post_meta( $customer_id, '_hb_first_name', true );
+                        $last_name = get_post_meta( $customer_id, '_hb_last_name', true );
+                        printf( '%s %s %s', $title ? $title : 'Cus.', $first_name, $last_name );
+                    ?></td>
+                </tr>
+                <tr>
+                    <td> <?php _e( 'Address ', 'tp-hotel-booking'); ?> </td>
+                    <td><?php echo get_post_meta( $customer_id, '_hb_address', true ); ?></td>
+                </tr>
+                <tr>
+                    <td> <?php _e( 'City ', 'tp-hotel-booking' ); ?> </td>
+                    <td><?php echo get_post_meta( $customer_id, '_hb_city', true ) ?></td>
+                </tr>
+                <tr>
+                    <td><?php _e( 'State ', 'tp-hotel-booking' ); ?></td>
+                    <td><?php echo get_post_meta( $customer_id, '_hb_state', true ) ?></td>
+                </tr>
+                <tr>
+                    <td><?php _e( 'Country ', 'tp-hotel-booking' ); ?></td>
+                    <td><?php echo get_post_meta( $customer_id, '_hb_country', true ) ?></td>
+                </tr>
+                <tr>
+                    <td><?php _e( 'Zip/ Post Code ','tp-hotel-booking' ); ?></td>
+                    <td><?php echo get_post_meta( $customer_id, '_hb_postal_code', true ) ?></td>
+                </tr>
+                <tr>
+                    <td><?php _e( 'Phone ', 'tp-hotel-booking' ); ?></td>
+                    <td><?php echo get_post_meta( $customer_id, '_hb_phone', true ) ?></td>
+                </tr>     
+                <tr>
+                    <td><?php _e( 'Fax ', 'tp-hotel-booking' ); ?></td>
+                    <td><?php echo get_post_meta( $customer_id, '_hb_fax', true) ?></td>
+                </tr>
+                <tr>
+                    <td><?php _e( 'Email ', 'tp-hotel-booking' ); ?></td>
+                    <td><?php echo get_post_meta( $customer_id, '_hb_email', true ) ?></td>
+                </tr>
+            </table>
+            <!-- <ul>
                 <li>
                     <label> <?php _e( 'Name: ', 'tp-hotel-booking' ) ?> </label>
                     <span><?php echo get_post_meta( $customer_id, '', true ) ?></span>
@@ -705,9 +748,39 @@ function hb_booking_detail_page() {
                     <label><?php _e( 'Email: ', 'tp-hotel-booking' ); ?></label>
                     <span><?php echo get_post_meta( $customer_id, '_hb_email', true ) ?></span>
                 </li>
-            </ul>
+            </ul> -->
             <h3><?php _e( 'Booking Details', 'tp-hotel-booking') ?></h3>
-            <ul>
+            <table class="booking-details">
+                <tr>
+                    <td><?php _e( 'Check-in date ', 'tp-hotel-booking' ); ?></td>
+                    <td><?php echo date( _x( 'F d, Y', 'Check-in date format', 'tp-hotel-booking' ), strtotime( get_post_meta( $booking_id, '_hb_check_in_date', true ) ) ); ?></td>
+                </tr>
+                <tr>
+                    <td><?php _e( 'Check-out date ', 'tp-hotel-booking' ); ?></td>
+                    <td><?php echo date( _x( 'F d, Y', 'Check-in date format', 'tp-hotel-booking' ), strtotime( get_post_meta( $booking_id, '_hb_check_out_date', true ) ) ); ?></td>                    
+                </tr>
+                <tr>
+                    <td><?php _e( 'Total nights ', 'tp-hotel-booking' ); ?></td>
+                    <td><?php echo get_post_meta( $booking_id, '_hb_total_nights', true ) ?></td>
+                </tr>
+                <tr>
+                    <td><?php _e( 'Tax ', 'tp-hotel-booking' ); ?></td>
+                    <td><?php echo get_post_meta( $booking_id, '_hb_tax', true ) ?></td>
+                </tr>
+                <tr>
+                    <td><?php _e( 'Price including tax ', 'tp-hotel-booking' ); ?></td>
+                    <td><?php echo get_post_meta( $booking_id, '_hb_price_including_tax', true ) ?></td>
+                </tr>
+                <tr>
+                    <td><?php _e( 'Sub Total ', 'tp-hotel-booking' ); ?></td>
+                    <td><?php echo get_post_meta( $booking_id, '_hb_sub_total', true ) ?></td>
+                </tr>
+                <tr>
+                    <td><?php _e( 'Total ', 'tp-hotel-booking' ); ?></td>
+                    <td><?php echo get_post_meta( $booking_id, '_hb_total', true ) ?></td>
+                </tr>
+            </table>
+            <!-- <ul>
                 <li>
                     <label><?php _e( 'Check-in date: ', 'tp-hotel-booking' ); ?></label>
                     <span><?php echo date( _x( 'F d, Y', 'Check-in date format', 'tp-hotel-booking' ), strtotime( get_post_meta( $booking_id, '_hb_check_in_date', true ) ) ); ?></span>
@@ -736,7 +809,7 @@ function hb_booking_detail_page() {
                     <label><?php _e( 'Total: ', 'tp-hotel-booking' ); ?></label>
                     <span><?php echo get_post_meta( $booking_id, '_hb_total', true ) ?></span>
                 </li>
-            </ul>
+            </ul> -->
             <h3><?php _e( 'Payment Details', 'tp-hotel-booking') ?></h3>
         </div>
         <?php
