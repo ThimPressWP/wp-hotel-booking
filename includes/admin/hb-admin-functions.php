@@ -11,7 +11,8 @@ function hb_admin_settings_tabs(){
     $tabs = array(
         'general'       => __( 'General', 'tp-hotel-booking' ),
         'hotel_info'    => __( 'Hotel Information', 'tp-hotel-booking' ),
-        'payments'      => __( 'Payments', 'tp-hotel-booking' )
+        'payments'      => __( 'Payments', 'tp-hotel-booking' ),
+        'lightbox'      => __( 'Lightbox', 'tp-hotel-booking' )
     );
     return apply_filters( 'hb_admin_settings_tabs', $tabs );
 }
@@ -35,6 +36,13 @@ function hb_admin_settings_tab_payments(){
  */
 function hb_admin_settings_tab_general(){
     TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings/general.php' );
+}
+
+/**
+ * Callback handler for Hotel Information tab content
+ */
+function hb_admin_settings_tab_lightbox(){
+    TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings/lightbox.php' );
 }
 
 function hb_admin_settings_tab_content( $selected ){

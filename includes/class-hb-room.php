@@ -111,6 +111,9 @@ class HB_Room{
                     }
                 }
                 break;
+            case 'gallery':
+                $return = $this->get_gallery();
+                break;
             case 'max_child':
                 $return = get_post_meta( $this->post->ID, '_hb_max_child_per_room', true );
                 break;
@@ -134,6 +137,37 @@ class HB_Room{
                 $return = 'why i am here?';
         }
         return $return;
+    }
+
+    function get_gallery( $with_featured = true ){
+        $gallery = array();
+        if( $with_featured && $thumb_id = get_post_thumbnail_id( $this->post->ID ) ) {
+            $featured_thumb = wp_get_attachment_image_src( $thumb_id, 'thumbnail' );
+            $featured_full = wp_get_attachment_image_src( $thumb_id, 'full' );
+            $alt = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
+            $gallery[] = array(
+                'id'    => $thumb_id,
+                'src'   => $featured_full[0],
+                'thumb' => $featured_thumb[0],
+                'alt'   => $alt ? $alt : get_the_title( $thumb_id )
+            );
+        }
+
+        $room_type = get_post_meta( $this->post->ID, '_hb_room_type', true );
+        if( $room_type_gallery = get_option( 'hb_taxonomy_thumbnail_' . $room_type ) ){
+            foreach( $room_type_gallery as $thumb_id ){
+                $thumb = wp_get_attachment_image_src( $thumb_id, 'thumbnail' );
+                $full = wp_get_attachment_image_src( $thumb_id, 'full' );
+                $alt = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
+                $gallery[] = array(
+                    'id'    => $thumb_id,
+                    'src'   => $full[0],
+                    'thumb' => $thumb[0],
+                    'alt'   => $alt ? $alt : get_the_title( $thumb_id )
+                );
+            }
+        }
+        return $gallery;
     }
 
     /**

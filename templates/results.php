@@ -1,3 +1,4 @@
+<?php do_action( 'hb_before_search_result' );?>
 <div id="hotel-booking-results">
     <form name="hb-search-results" action="<?php echo $search_page;?>">
         <h3><?php _e( 'Search results', 'tp-hotel-booking' );?></h3>

@@ -1,7 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Tu
- * Date: 8/7/2015
- * Time: 3:50 PM
- */
+
+add_action( 'hb_before_search_result', 'hb_enqueue_lightbox_assets' );
+add_action( 'hb_lightbox_assets_lightbox2', 'hb_lightbox_assets_lightbox2' );
+add_action( 'hb_lightbox_assets_fancyBox', 'hb_lightbox_assets_fancyBox' );

@@ -90,6 +90,7 @@ class TP_Hotel_Booking{
             $this->_include( 'includes/class-hb-meta-box.php' );
             $this->_include( 'includes/admin/hb-admin-functions.php' );
         }else{
+            $this->_include( 'includes/hb-template-hooks.php' );
             $this->_include( 'includes/hb-template-functions.php' );
             $this->_include( 'includes/class-hb-shortcodes.php' );
         }

@@ -121,3 +121,35 @@ function hb_get_template_content( $template_name, $args = array(), $template_pat
     hb_get_template( $template_name, $args, $template_path, $default_path );
     return ob_get_clean();
 }
+
+function hb_enqueue_lightbox_assets(){
+    $settings = HB_Settings::instance();
+    $lightbox_settings = $settings->get('lightbox');
+    if( ! $lightbox_settings ) return;
+    if( empty( $lightbox_settings['lightbox'] ) ) return;
+    do_action( 'hb_lightbox_assets_' . $lightbox_settings['lightbox'] );
+}
+
+function hb_lightbox_assets_lightbox2(){
+    wp_enqueue_script( 'lightbox2', TP_Hotel_Booking::instance()->plugin_url( 'includes/lightbox/lightbox2/src/js/lightbox.js' ) );
+    wp_enqueue_style( 'lightbox2', TP_Hotel_Booking::instance()->plugin_url( 'includes/lightbox/lightbox2/src/css/lightbox.css' ) );
+    ?>
+    <script type="text/javascript">
+    jQuery(function(){
+
+    });
+    </script>
+    <?php
+}
+
+function hb_lightbox_assets_fancyBox(){
+    wp_enqueue_script( 'fancyBox', TP_Hotel_Booking::instance()->plugin_url( 'includes/lightbox/fancyBox/source/jquery.fancyBox.js' ) );
+    wp_enqueue_style( 'fancyBox', TP_Hotel_Booking::instance()->plugin_url( 'includes/lightbox/fancyBox/source/jquery.fancyBox.css' ) );
+    ?>
+    <script type="text/javascript">
+        jQuery(function($){
+            $(".hb-room-gallery").fancybox();
+        });
+    </script>
+<?php
+}
