@@ -58,7 +58,8 @@ $addition_information = '';
             <li class="hb-form-field">
                 <label class="hb-form-field-label"><?php _e( 'Country', 'tp-hotel-booking' );?><span class="hb-required">*</span></label>
                 <div class="hb-form-field-input">
-                    <input type="text" name="country" value="<?php echo $country;?>" placeholder="<?php _e( 'Country', 'tp-hotel-booking' );?>" />
+                    <?php hb_dropdown_countries( array( 'name' => 'country', 'show_option_none' => __( '--Country--', 'tp-hotel-booking' ) ) );?>
+                    <!-- <input type="text" name="country" value="<?php echo $country;?>" placeholder="<?php _e( 'Country', 'tp-hotel-booking' );?>" />-->
                 </div>
             </li>
             <li class="hb-form-field">

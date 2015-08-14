@@ -5,13 +5,23 @@ $field = wp_parse_args(
         'id'            => '',
         'name'          => '',
         'std'           => '',
-        'placeholder'   => ''
+        'placeholder'   => '',
+        'attr'          => ''
     )
 );
+$field_attr = '';
+if( $field['attr'] ){
+    if( is_array( $field['attr'] ) ){
+        $field_attr = join( " ", $field['attr'] );
+    }else{
+        $field_attr = $field['attr'];
+    }
+}
 printf(
-    '<input type="text" name="%s" id="%s" value="%s" placeholder="%s"  />',
+    '<input class="regular-text" type="text" name="%s" id="%s" value="%s" placeholder="%s" %s />',
     $field['name'],
     $field['id'],
     $field['std'],
-    $field['placeholder']
+    $field['placeholder'],
+    $field_attr
 );

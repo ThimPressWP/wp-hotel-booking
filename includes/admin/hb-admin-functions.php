@@ -289,7 +289,7 @@ function hb_customer_meta_box() {
         array(
             'name'  => 'country',
             'label' => __('Country', 'tp-hotel-booking'),
-            'type'  => 'text'                    
+            'type'  => 'country',
         ),
         array(
             'name'  => 'phone',
@@ -299,7 +299,8 @@ function hb_customer_meta_box() {
         array(
             'name'  => 'email',
             'label' => __('Email', 'tp-hotel-booking'),
-            'type'  => 'text'                    
+            'type'  => 'text',
+            'attr'  => 'readonly="readonly"'
         ),
         array(
             'name'  => 'fax',

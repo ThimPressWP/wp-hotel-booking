@@ -138,3 +138,12 @@ th.column-room_type{
     border: 1px solid black;
     background: #666;
 }
+.post-type-hb_customer .column-bookings{
+    width: 150px;
+}
+.post-type-hb_customer .column-phone_number{
+     width: 150px;
+ }
+.post-type-hb_customer #post-body-content{
+    display: none;
+}

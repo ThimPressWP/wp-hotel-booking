@@ -468,7 +468,7 @@ class HB_Post_Types{
             'show_in_menu'       => 'tp_hotel_booking',
             'show_in_admin_bar'  => true,
             'show_in_nav_menus'  => true,
-            'supports'           => array( 'title', 'author' ),
+            'supports'           => array( '' ),
             'hierarchical'       => false
         );
         register_post_type( 'hb_customer', $args );

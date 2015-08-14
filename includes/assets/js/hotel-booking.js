@@ -138,7 +138,7 @@
             return false;
         }
 
-        var $country = $('input[name="country"]', $form);
+        var $country = $('select[name="country"]', $form);
         if( ! $country.val() ){
             alert( hotel_booking_l18n.empty_customer_country );
             $country.focus();
@@ -289,7 +289,7 @@
                 success: function (response) {
                     response = parseJSON(response)
                     if(response.success && response.sig){
-                        window.location.href = window.location.href + '?hotel-booking-params='+response.sig
+                        window.location.href = window.location.href.replace(/\?.*/, '') + '?hotel-booking-params='+response.sig
                     }
                 }
             });
