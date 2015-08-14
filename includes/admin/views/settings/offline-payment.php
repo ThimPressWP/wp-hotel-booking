@@ -23,13 +23,22 @@ $field_name = $settings->get_field_name('offline-payment');
     <tr>
         <th><?php _e( 'Email Subject', 'tp-hotel-booking' );?></th>
         <td>
-            <input type="text" class="regular-text" name="<?php echo $field_name;?>[email_subject];?>" value="<?php echo esc_attr( $payment['email_subject'] );?>" />
+            <input type="text" class="regular-text" name="<?php echo $field_name;?>[email_subject]" value="<?php echo esc_attr( $payment['email_subject'] );?>" />
         </td>
     </tr>
     <tr>
         <th><?php _e( 'Email Content', 'tp-hotel-booking' );?></th>
         <td>
-        <?php wp_editor( $payment['email_content'], "{$field_name}[email_content]" );?>
+        <?php wp_editor( $payment['email_content'], "{$field_name}_email_content" );?>
+        <textarea style="display: none;" name="<?php echo $field_name;?>[email_content]"><?php echo $payment['email_content'];?></textarea>
         </td>
     </tr>
 </table>
+<script type="text/javascript">
+    jQuery(function($){
+        $('form[name="hb-admin-settings-form"]').submit(function(){
+            tinymce.triggerSave();
+            $('textarea[name^="tp_hotel_booking_offline-payment"]').val( $( '#tp_hotel_booking_offline-payment_email_content').val() );
+        });
+    })
+</script>
