@@ -50,6 +50,7 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
             }
             $rooms[ $id ] ++;
         }
+        ob_start();
     ?>
         <h3><?php printf( __( 'Booking Details %s', 'tp-hotel-booking' ), hb_format_order_number( $booking_id ) );?></h3>
         <table style="border: 1px solid #DDD;font-family: verdana, arial, sans-serif; font-size: 14px;" cellpadding="5">
@@ -121,6 +122,7 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
             </tbody>
         </table>
     <?php
+        return ob_get_clean();
     }
 
     function set_html_content_type(){
