@@ -52,7 +52,7 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
         }
         ob_start();
     ?>
-        <table style="border: 1px solid #DDD;font-family: verdana, arial, sans-serif; font-size: 14px;" cellpadding="5">
+        <table style="border: 1px solid #DDD;font-family: verdana, arial, sans-serif; font-size: 14px; min-width: 800px;" cellpadding="5">
             <tbody>
                 <tr>
                     <td colspan="4">
@@ -60,26 +60,26 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3" style="font-weight: bold;">
+                    <td style="font-weight: bold;">
                         <?php _e( 'Customer Name', 'tp-hotel-booking' );?>
                     </td>
-                    <td><?php echo $customer_name;?></td>
+                    <td colspan="3" ><?php echo $customer_name;?></td>
                 </tr>
                 <tr>
-                    <td colspan="3" style="font-weight: bold;"><?php _e( 'Check In Date', 'tp-hotel-booking' );?></td>
-                    <td><?php echo date( 'l d M Y', $check_in );?></td>
+                    <td style="font-weight: bold;"><?php _e( 'Check In Date', 'tp-hotel-booking' );?></td>
+                    <td colspan="3"><?php echo date( 'l d M Y', $check_in );?></td>
                 </tr>
                 <tr>
-                    <td colspan="3" style="font-weight: bold;"><?php _e( 'Check Out Date', 'tp-hotel-booking' );?></td>
-                    <td><?php echo date( 'l d M Y', $check_out );?></td>
+                    <td style="font-weight: bold;"><?php _e( 'Check Out Date', 'tp-hotel-booking' );?></td>
+                    <td colspan="3"><?php echo date( 'l d M Y', $check_out );?></td>
                 </tr>
                 <tr>
-                    <td colspan="3" style="font-weight: bold;"><?php _e( 'Total Nights', 'tp-hotel-booking' );?></td>
-                    <td><?php echo get_post_meta( $booking_id, '_hb_total_nights', true ) ;?></td>
+                    <td style="font-weight: bold;"><?php _e( 'Total Nights', 'tp-hotel-booking' );?></td>
+                    <td colspan="3"><?php echo get_post_meta( $booking_id, '_hb_total_nights', true ) ;?></td>
                 </tr>
                 <tr>
-                    <td colspan="3" style="font-weight: bold;"><?php _e( 'Total Rooms', 'tp-hotel-booking' );?></td>
-                    <td><?php echo count($_rooms);?></td>
+                    <td style="font-weight: bold;"><?php _e( 'Total Rooms', 'tp-hotel-booking' );?></td>
+                    <td colspan="3"><?php echo count($_rooms);?></td>
                 </tr>
                 <tr>
                     <td colspan="4">
@@ -114,15 +114,15 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
                 </tr>
                 <?php }?>
                 <tr>
-                    <td colspan="3" style="font-weight: bold;"><?php _e( 'Sub Total', 'tp-hotel-booking' );?></td>
+                    <td colspan="3" style="font-weight: bold; text-align: right;"><?php _e( 'Sub Total', 'tp-hotel-booking' );?></td>
                     <td><?php echo hb_format_price( get_post_meta( $booking_id, '_hb_sub_total', true ), $currency );?></td>
                 </tr>
                 <tr>
                     <td colspan="3" style="font-weight: bold;"><?php _e( 'Tax', 'tp-hotel-booking' );?></td>
-                    <td><?php echo get_post_meta( $booking_id, '_hb_tax', true ) * 100;?>%</td>
+                    <td style="text-align: right;"><?php echo get_post_meta( $booking_id, '_hb_tax', true ) * 100;?>%</td>
                 </tr>
                 <tr>
-                    <td colspan="3" style="font-weight: bold;"><?php _e( 'Grand Total', 'tp-hotel-booking' );?></td>
+                    <td colspan="3" style="font-weight: bold;text-align: right;"><?php _e( 'Grand Total', 'tp-hotel-booking' );?></td>
                     <td><?php echo hb_format_price( get_post_meta( $booking_id, '_hb_sub_total', true ), $currency );?></td>
                 </tr>
             </tbody>
