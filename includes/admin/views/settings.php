@@ -21,7 +21,7 @@ if( ! array_key_exists( $selected_tab, $tabs ) ){
         <?php do_action( "hb_admin_settings_tab_after", $selected_tab );?>
         <div class="clearfix"></div>
         <p class="clearfix">
-            <button class="button"><?php _e( 'Update', 'tp-hotel-booking' );?></button>
+            <button class="button button-primary"><?php _e( 'Update', 'tp-hotel-booking' );?></button>
         </p>
     </form>
 </div>

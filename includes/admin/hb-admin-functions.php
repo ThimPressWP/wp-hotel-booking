@@ -322,8 +322,10 @@ function hb_booking_table_head( $default ) {
     unset($default['author']);
     unset($default['date']);
     $default['customer_name']   = __( 'Customer Name', 'tp-hotel-booking' );
-    $default['check_in_date']   = __( 'Check-in Date', 'tp-hotel-booking' );
-    $default['check_out_date']  = __( 'Check-out Date', 'tp-hotel-booking' );
+
+    //$default['check_in_date']   = __( 'Check-in Date', 'tp-hotel-booking' );
+    //$default['check_out_date']  = __( 'Check-out Date', 'tp-hotel-booking' );
+    $default['from_to']         = __( 'Check In/Out', 'tp-hotel-booking' );
     $default['booking_date']    = __( 'Booking Date', 'tp-hotel-booking' );
     $default['total']           = __( 'Total', 'tp-hotel-booking' );
     $default['title']           = __( 'ID', 'tp-hotel-booking' );
@@ -353,14 +355,13 @@ function hb_manage_booking_column( $column_name, $post_id ) {
             $last_name = get_post_meta( $customer_id, '_hb_last_name', true );
             printf( '%s %s %s', $title ? $title : 'Cus.', $first_name, $last_name );
             break;
-        case 'check_in_date':
+        case 'from_to':
             $check_in_date = get_post_meta( $post_id, '_hb_check_in_date', true );
-            // echo $check_in_date;
-            echo date( _x( 'F d, Y', 'Check-in date format', 'tp-hotel-booking' ), strtotime($check_in_date) );
-            break;
-        case 'check_out_date':
+            $check_in_date = date( _x( 'm/d/Y', 'Check-in date format', 'tp-hotel-booking' ), $check_in_date );
+
             $check_out_date = get_post_meta( $post_id, '_hb_check_out_date', true );
-            echo date( _x( 'F d, Y', 'Check-out date format', 'tp-hotel-booking' ), strtotime($check_out_date) );
+            $check_out_date = date( _x( 'm/d/Y', 'Check-out date format', 'tp-hotel-booking' ), $check_out_date );
+            printf( __( 'From <strong>%s</strong><br />To <strong>%s</strong>', 'tp-hotel-booking' ), $check_in_date, $check_out_date );
             break;
         case 'total':
             $total      = get_post_meta( $post_id, '_hb_total', true );

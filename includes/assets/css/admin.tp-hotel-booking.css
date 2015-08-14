@@ -103,17 +103,15 @@ th.column-room_type{
     text-align: right;
 }
 .post-type-hb_booking .column-title{
-    width: 100px;
+    width: 200px;
 }
-.post-type-hb_booking .column-total{
-    width: 80px;
-}
+.post-type-hb_booking .column-total,
 .post-type-hb_booking .column-details{
-    width: 80px;
+    width: 60px;
 }
 .post-type-hb_booking .column-check_in_date,
 .post-type-hb_booking .column-check_out_date,
-.post-type-hb_booking .column-customer_name{
+.post-type-hb_booking .column-from_to{
     width: 130px;
 }
 .post-type-hb_booking .column-booking_date{
@@ -144,6 +142,7 @@ th.column-room_type{
 .post-type-hb_customer .column-phone_number{
      width: 150px;
  }
-.post-type-hb_customer #post-body-content{
+.post-type-hb_customer #post-body-content,
+.post-type-hb_booking #post-body-content{
     display: none;
 }
