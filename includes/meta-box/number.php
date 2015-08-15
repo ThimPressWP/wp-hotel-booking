@@ -8,16 +8,30 @@ $field = wp_parse_args(
         'step'  => '',
         'min'   => '',
         'max'   => '',
-        'placeholder' => ''
+        'placeholder' => '',
+        'attr'          => ''
     )
 );
+$field_attr = '';
+if( $field['attr'] ){
+    if( is_array( $field['attr'] ) ){
+        $field_attr = join( " ", $field['attr'] );
+    }else{
+        $field_attr = $field['attr'];
+    }
+}
+$value = $field['std'];
+if( is_callable( $field['filter'] ) ){
+    $value = call_user_func_array( $field['filter'], array( $value ) );
+}
 printf(
-    '<input type="number" name="%s" id="%s" value="%s" step="%s" min="%s" max="%s" placeholder="%s"  />',
+    '<input type="number" name="%s" id="%s" value="%s" step="%s" min="%s" max="%s" placeholder="%s" %s />',
     $field['name'],
     $field['id'],
-    $field['std'],
+    $value,
     $field['step'],
     $field['min'],
     $field['max'],
-    $field['placeholder']
+    $field['placeholder'],
+    $field_attr
 );

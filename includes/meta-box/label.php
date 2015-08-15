@@ -1,13 +1,10 @@
-<?php 
+<?php
 $field = wp_parse_args(
     $field,
     array(
-        'id'            => '',
-        'name'          => '',
         'std'           => '',
-        'placeholder'   => '',
         'attr'          => '',
-        'filter'        => ''
+        'filter'        => null
     )
 );
 $field_attr = '';
@@ -18,13 +15,14 @@ if( $field['attr'] ){
         $field_attr = $field['attr'];
     }
 }
+
 $value = $field['std'];
 if( is_callable( $field['filter'] ) ){
     $value = call_user_func_array( $field['filter'], array( $value ) );
 }
-printf('<input type="text" class="datetime-picker-metabox" id="%s" name="%s" value="%s" %s />',
-    $field['id'],
-    $field['name'],
-    $value,
-    $field_attr
+
+printf(
+    '<span %s>%s</span>',
+    $field_attr,
+    $value
 );

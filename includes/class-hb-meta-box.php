@@ -166,7 +166,9 @@ class HB_Meta_Box{
         if( ! $this->_fields ) return;
 
         foreach( $this->_fields as $field ){
-            update_post_meta( $post_id, $this->_args['meta_key_prefix'] . $field['name'], $_POST[ $this->_args['meta_key_prefix'] . $field['name'] ] );
+            if( array_key_exists( $this->_args['meta_key_prefix'] . $field['name'], $_POST ) ) {
+                update_post_meta($post_id, $this->_args['meta_key_prefix'] . $field['name'], $_POST[$this->_args['meta_key_prefix'] . $field['name']]);
+            }
         }
         do_action( 'hb_update_meta_box_' . $this->_args['name'], $post_id );
     }

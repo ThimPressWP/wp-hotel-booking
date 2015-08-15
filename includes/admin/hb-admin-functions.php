@@ -153,62 +153,87 @@ function hb_bookings_meta_boxes() {
         array(
             'name'  => 'customer_id',
             'label' => __('Customer ID', 'tp-hotel-booking'),
-            'type'  => 'text',
-            'std'   => ''            
+            'type'  => 'label',
+            'std'   => '',
+            'attr'  => 'readonly="readonly"'
         ),        
         array(
             'name'  => 'check_in_date',
             'label' => __('Check-in date', 'tp-hotel-booking'),
-            'type'  => 'datetime',
-            'std'   => ''            
+            'type'  => 'label',
+            'std'   => '',
+            'attr'  => 'readonly="readonly"',
+            'filter' => 'hb_meta_box_field_datetime'
         ),
         array(
             'name'  => 'check_out_date',
             'label' => __('Check-out date', 'tp-hotel-booking'),
-            'type'  => 'datetime',
-            'std'   => ''
+            'type'  => 'label',
+            'std'   => '',
+            'attr'  => 'readonly="readonly"',
+            'filter' => 'hb_meta_box_field_datetime'
         ),
         array(
             'name'  => 'total_nights',
             'label' => __('Total Nights', 'tp-hotel-booking'),
-            'type'  => 'number',
-            'std'   => '1'
+            'type'  => 'label',
+            'std'   => '1',
+            'attr'  => 'readonly="readonly"'
         ),
         array(
             'name'  => 'tax',
             'label' => __('Tax', 'tp-hotel-booking'),
-            'type'  => 'number',
-            'std'   => '0'
+            'type'  => 'label',
+            'std'   => '0',
+            'attr'  => 'readonly="readonly"',
+            'filter' => 'hb_meta_box_field_tax'
         ),        
         array(
             'name'  => 'price_including_tax',
             'label' => __('Price Including Tax', 'tp-hotel-booking'),
-            'type'  => 'number',
-            'std'   => '0'
+            'type'  => 'label',
+            'std'   => '0',
+            'attr'  => 'readonly="readonly"',
+            'filter' => 'hb_meta_box_field_price_including_tax'
+        ),
+
+        array(
+            'name'  => 'sub_total',
+            'label' => __('Sub Total', 'tp-hotel-booking'),
+            'type'  => 'label',
+            'std'   => '',
+            'attr'  => 'readonly="readonly"',
+            'filter' => 'hb_meta_box_field_sub_total'
         ),
         array(
             'name'  => 'total',
             'label' => __('Total', 'tp-hotel-booking'),
-            'type'  => 'number',
-            'std'   => '0'
+            'type'  => 'label',
+            'std'   => '0',
+            'attr'  => 'readonly="readonly"',
+            'filter' => 'hb_meta_box_field_total'
         ),
-        array(
-            'name'  => 'sub_total',
-            'label' => __('Sub Total', 'tp-hotel-booking'),
-            'type'  => 'number',
-            'std'   => ''
-        ),
-        array(
+        /*array(
             'name'  => 'room_id',
             'label' => 'Room ID',
             'type'  => 'multiple',
             'std'   => '1',                    
-        ),
+        ),*/
         array(
             'name'  => 'booking_status',
             'label' => 'Status',
             'std'   => 'Actives',
-            'type'  => 'text'
+            'type'  => 'select',
+            'options' => array(
+                array(
+                    'value' => 'Pending',
+                    'text'  => __( 'Pending', 'tp-hotel-booking' )
+                ),
+                array(
+                    'value' => 'Complete',
+                    'text'  => __( 'Complete', 'tp-hotel-booking' )
+                )
+            )
         )
     );    
 }
@@ -828,3 +853,19 @@ function hb_booking_detail_page() {
     } else return;
 }
 
+function hb_meta_box_field_datetime( $value ){
+    return date( 'l, m/d/Y', $value );
+}
+function hb_meta_box_field_tax( $value ){
+
+    return ( $value * 100 ) . '%';
+}
+function hb_meta_box_field_sub_total( $value ){
+    return hb_format_price( $value );
+}
+function hb_meta_box_field_total( $value ){
+    return hb_format_price( $value );
+}
+function hb_meta_box_field_price_including_tax( $value ){
+    return $value == 'yes' ? __( 'Yes', 'tp-hotel-booking' ) : __( 'No', 'tp-hotel-booking' ) ;
+}

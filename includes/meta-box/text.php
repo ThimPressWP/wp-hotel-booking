@@ -6,7 +6,8 @@ $field = wp_parse_args(
         'name'          => '',
         'std'           => '',
         'placeholder'   => '',
-        'attr'          => ''
+        'attr'          => '',
+        'filter'        => null
     )
 );
 $field_attr = '';
@@ -17,11 +18,17 @@ if( $field['attr'] ){
         $field_attr = $field['attr'];
     }
 }
+
+$value = $field['std'];
+if( is_callable( $field['filter'] ) ){
+    $value = call_user_func_array( $field['filter'], array( $value ) );
+}
+
 printf(
     '<input class="regular-text" type="text" name="%s" id="%s" value="%s" placeholder="%s" %s />',
     $field['name'],
     $field['id'],
-    $field['std'],
+    $value,
     $field['placeholder'],
     $field_attr
 );
