@@ -1295,3 +1295,17 @@ function hb_dropdown_countries( $args = array() ){
     }
     echo '</select>';
 }
+
+function hb_add_message( $message, $type = 'message' ){
+    $messages = get_transient( 'hb_message' );
+    if( empty( $messages ) ){
+        $messages = array();
+    }
+
+    $messages[] = array(
+        'type'      => $type,
+        'message'   => $message
+    );
+
+    set_transient( 'hb_message', $messages, MINUTE_IN_SECONDS * 3 );
+}

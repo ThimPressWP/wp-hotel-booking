@@ -366,7 +366,9 @@ function hb_manage_booking_column( $column_name, $post_id ) {
         case 'total':
             $total      = get_post_meta( $post_id, '_hb_total', true );
             $currency   = get_post_meta( $post_id, '_hb_currency', true );
-            echo hb_format_price( $total, hb_get_currency_symbol( $currency ) );
+            $total_with_currency = hb_format_price( $total, hb_get_currency_symbol( $currency ) );
+            echo $total_with_currency;
+            do_action( 'hb_manage_booing_column_total', $post_id, $total, $total_with_currency );
             break;
         case 'booking_date':
             echo date( 'F d, Y', strtotime( get_post_field( 'post_date', $post_id ) ) );

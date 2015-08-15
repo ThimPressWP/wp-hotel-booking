@@ -50,14 +50,21 @@ class HB_Post_Types{
     }
 
     function posts_fields( $fields ){
-        if( $this->is_search_customer() ){
+        if( $this->is_search( 'customer' ) ){
         }
         return $fields;
     }
 
+    /**
+     * Join with postmeta to enable search by customer meta such as first name, last name, email, etc...
+     *
+     * @param $join
+     * @return string
+     */
     function posts_join_paged( $join ){
-        if( $this->is_search_customer() ){
-            global $wpdb;
+        global $wpdb;
+
+        if( $this->is_search( 'customer' ) ){
             $join .= "
                 INNER JOIN {$wpdb->postmeta} pm1 ON {$wpdb->posts}.ID = pm1.post_id and pm1.meta_key='_hb_first_name'
                 INNER JOIN {$wpdb->postmeta} pm2 ON {$wpdb->posts}.ID = pm2.post_id and pm2.meta_key='_hb_last_name'
@@ -65,12 +72,28 @@ class HB_Post_Types{
                 INNER JOIN {$wpdb->postmeta} pm4 ON {$wpdb->posts}.ID = pm4.post_id and pm4.meta_key='_hb_phone'
                 INNER JOIN {$wpdb->postmeta} pm5 ON {$wpdb->posts}.ID = pm5.post_id and pm5.meta_key='_hb_address'
             ";
+        }elseif( $this->is_search( 'booking' ) ){
+
+            $join .= "
+                INNER JOIN {$wpdb->postmeta} pm ON {$wpdb->posts}.ID=pm.post_id and pm.meta_key='_hb_customer_id'
+                INNER JOIN {$wpdb->postmeta} cus1 ON cus1.post_id = pm.meta_value and cus1.meta_key='_hb_first_name'
+                INNER JOIN {$wpdb->postmeta} cus2 ON cus2.post_id = pm.meta_value and cus2.meta_key='_hb_last_name'
+                INNER JOIN {$wpdb->postmeta} cus3 ON cus3.post_id = pm.meta_value and cus3.meta_key='_hb_email'
+                INNER JOIN {$wpdb->postmeta} cus4 ON cus4.post_id = pm.meta_value and cus4.meta_key='_hb_phone'
+                INNER JOIN {$wpdb->postmeta} cus5 ON cus5.post_id = pm.meta_value and cus5.meta_key='_hb_address'
+            ";
         }
         return $join;
     }
 
+    /**
+     * Conditions to filter customer by meta value such as first name, last name, email, etc...
+     *
+     * @param $where
+     * @return string
+     */
     function posts_where_paged( $where ){
-        if( $s = $this->is_search_customer() ) {
+        if( $s = $this->is_search( 'customer' ) ) {
             $where .= "
                 OR (
                     pm1.meta_value LIKE '%{$s}%'
@@ -80,16 +103,29 @@ class HB_Post_Types{
                     OR pm5.meta_value LIKE '%{$s}%'
                 )
             ";
+        }elseif( $s = $this->is_search( 'booking' ) ) {
+            $where .= "
+                OR (
+                    cus1.meta_value LIKE '%{$s}%'
+                    OR cus2.meta_value LIKE '%{$s}%'
+                    OR cus3.meta_value LIKE '%{$s}%'
+                    OR cus4.meta_value LIKE '%{$s}%'
+                    OR cus5.meta_value LIKE '%{$s}%'
+                )
+            ";
         }
         return $where;
     }
-    function is_search_customer(){
+
+    function is_search( $type ){
         global $post_type;
-        if( $post_type == 'hb_customer' && $s = hb_get_request( 's' ) ){
+        if( $post_type == "hb_{$type}" && $s = hb_get_request( 's' ) ){
             return $s;
         }
         return false;
     }
+
+
     /**
      * Enqueue scripts
      */

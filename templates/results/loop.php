@@ -28,7 +28,7 @@ $featured = $gallery ? array_shift( $gallery ) : false;
                     <div><?php echo hb_format_price( $room->room_details_total );?></div>
                 </li>
                 <li>
-                    <label><?php _e( 'Select room', 'tp-hotel-booking' );?></label>
+                    <label><?php _e( 'Select number of room', 'tp-hotel-booking' );?></label>
                     <div>
                         <?php
                         hb_dropdown_numbers(

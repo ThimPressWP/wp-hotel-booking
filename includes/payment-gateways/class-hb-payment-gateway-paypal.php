@@ -64,7 +64,15 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         add_action( 'hb_do_checkout_' . $this->_slug, array( $this, 'process_checkout' ) );
         add_action( 'hb_do_transaction_paypal-standard', array( $this, 'process_booking_paypal_standard' ) );
         add_action( 'hb_web_hook_hotel-booking-paypal-standard', array( $this, 'web_hook_process_paypal_standard' ) );
+        add_action( 'hb_manage_booing_column_total', array( $this, 'column_total_content' ), 10, 3 );
         hb_register_web_hook( 'paypal-standard', 'hotel-booking-paypal-standard' );
+    }
+
+    function column_total_content( $booking_id, $total, $total_with_currency ){
+        if( $total && get_post_meta( $booking_id, '_hb_method', true ) == 'paypal-standard' ) {
+            $advance_payment = get_post_meta($booking_id, '_hb_advance_payment', true);
+            printf(__('<br /><small>(Paid %s%% of %s via %s)</small>', 'tp-hotel-booking'), round( $advance_payment / $total, 2 ) * 100, $total_with_currency, 'Paypal' );
+        }
     }
 
     function form(){

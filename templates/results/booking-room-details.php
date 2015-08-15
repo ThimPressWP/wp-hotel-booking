@@ -5,7 +5,7 @@
     echo '<tr>';
     if( $details ) foreach( $details as $d => $info ){
         echo '<td>';
-        echo sprintf( '%d x %s', $info['count'], '[' . hb_date_to_name( $d ) . ']', hb_format_price( $info['price'] ) );
+        echo sprintf( '%d x %s', $info['count'], '[' . hb_date_to_name( $d )  . ']', hb_format_price( $info['price'] ) );
         echo '</td>';
     }
     echo '</tr>';

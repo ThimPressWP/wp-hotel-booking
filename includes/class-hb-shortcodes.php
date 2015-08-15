@@ -121,7 +121,12 @@ class HB_Shortcodes{
                 $template = 'message.php';
                 break;
         }
-        return hb_get_template_content( $template, $template_args );
+        ob_start();
+        do_action( 'hb_wrapper_start' );
+        hb_get_template( $template, $template_args );
+        do_action( 'hb_wrapper_end' );
+        $output = ob_get_clean();
+        return $output;
     }
 }
 

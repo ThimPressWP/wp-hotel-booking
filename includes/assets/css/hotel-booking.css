@@ -137,3 +137,13 @@
 .hb-room-type-gallery{
     display: none;
 }
+.hb-message{
+    border: 1px solid #B4DCFF;
+    margin: 0 0 20px;
+    background-color: #F0F8FF;
+}
+.hb-message-content{
+    margin: 10px;
+    /* font-size: 14px; */
+    color: #43A7FF;
+}

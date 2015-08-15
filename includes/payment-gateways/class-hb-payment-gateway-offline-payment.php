@@ -20,6 +20,13 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
     function init(){
         add_action( 'hb_payment_gateway_settings_' . $this->slug, array( $this, 'admin_settings' ) );
         add_action( 'hb_payment_gateway_form_' . $this->slug, array( $this, 'form' ) );
+        add_action( 'hb_manage_booing_column_total', array( $this, 'column_total_content' ), 10, 3 );
+    }
+
+    function column_total_content( $booking_id, $total, $total_with_currency ){
+        if( get_post_meta( $booking_id, '_hb_method', true ) == 'offline-payment' ) {
+            _e( '<br />(<small>Pay on arrival</small>)', 'tp-hotel-booking' );
+        }
     }
 
     function admin_settings( $gateway ){
@@ -165,12 +172,13 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
             add_filter('wp_mail_content_type', array($this, 'set_html_content_type'));
             $to = get_post_meta($customer_id, '_hb_email', true);
             $return = wp_mail($to, $email_subject, stripslashes( $email_content ), $headers );
-            echo "[$to], [$email_subject]";
             remove_filter('wp_mail_content_type', array($this, 'set_html_content_type'));
+
+            hb_add_message( sprintf( __( 'Thank you! Your booking has been placed. Please check your email %s to view booking details', 'tp-hotel-booking' ), $to ) );
             return array(
                 'result'    => 'success',
-                'r'         => $return
-                //'redirect'  => '?hotel-booking-offline-payment=1'
+                'r'         => $return,
+                'redirect'  => '?hotel-booking-offline-payment=1'
             );
         }
 

@@ -153,3 +153,9 @@ function hb_lightbox_assets_fancyBox(){
     </script>
 <?php
 }
+
+if( ! function_exists( 'hb_display_message' ) ){
+    function hb_display_message(){
+        hb_get_template( 'global/message.php' );
+    }
+}
