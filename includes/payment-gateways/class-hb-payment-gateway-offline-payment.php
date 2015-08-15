@@ -130,7 +130,7 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
                 </tr>
                 <tr style="background-color: #FFFFFF;">
                     <td colspan="3" style="font-weight: bold;"><?php _e( 'Grand Total', 'tp-hotel-booking' );?></td>
-                    <td style="text-align: right;"><?php echo hb_format_price( get_post_meta( $booking_id, '_hb_sub_total', true ), $currency );?></td>
+                    <td style="text-align: right;"><?php echo hb_format_price( get_post_meta( $booking_id, '_hb_total', true ), $currency );?></td>
                 </tr>
             </tbody>
         </table>
