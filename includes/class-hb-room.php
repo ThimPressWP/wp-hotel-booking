@@ -265,22 +265,30 @@ class HB_Room{
      * @param bool $including_tax
      * @return float|int
      */
-    function get_total( $from, $to, $num_of_rooms = 1, $including_tax = true ){
+    function get_total( $from = null, $to = null, $num_of_rooms = 1, $including_tax = true ){
         $nights = 0;
         $total = 0;
-        if( ! is_numeric( $from ) ){
-            $from_time = strtotime( $from );
-        }else{
-            $from_time = $from;
-        }
-        if( ! is_numeric( $to ) ){
-            $to_time = strtotime( $to );
-        }else{
-            if( $to >= DAY_IN_SECONDS ){
-                $to_time = $to;
-            }else{
-                $nights = $to;
+        if( is_null( $from ) && is_null( $to ) ){
+            $to_time = intval( $this->get_data( 'check_out_date' ) );
+            $from_time = intval( $this->get_data( 'check_in_date' ) );
+        }else {
+            if (!is_numeric($from)) {
+                $from_time = strtotime($from);
+            } else {
+                $from_time = $from;
             }
+            if (!is_numeric($to)) {
+                $to_time = strtotime($to);
+            } else {
+                if ($to >= DAY_IN_SECONDS) {
+                    $to_time = $to;
+                } else {
+                    $nights = $to;
+                }
+            }
+        }
+        if( ! $num_of_rooms ){
+            $num_of_rooms = intval( $this->get_data( 'num_of_rooms' ) );
         }
         if( ! $nights ){
             $nights = hb_count_nights_two_dates( $to_time, $from_time );

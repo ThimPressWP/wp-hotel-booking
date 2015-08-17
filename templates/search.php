@@ -47,6 +47,7 @@ $max_child = 2;
                 </div>
             </li>
         </ul>
+        <?php //echo $ajax_nonce = wp_create_nonce( "hb_search_nonce_action" );?>
         <?php wp_nonce_field( 'hb_search_nonce_action', 'nonce' );?>
         <input type="hidden" name="hotel-booking" value="results" />
         <input type="hidden" name="action" value="hotel_booking_parse_search_params" />

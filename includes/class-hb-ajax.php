@@ -93,9 +93,10 @@ class HB_Ajax{
      * Catch variables via post method and build a request param
      */
     static function parse_search_params(){
-        if ( ! hb_get_request( 'nonce', $_POST ) || ! wp_verify_nonce( hb_get_request( 'nonce', $_POST ), 'hb_search_nonce_action' ) ) {
+        /*if ( ! hb_get_request( 'nonce', $_POST ) || ! wp_verify_nonce( hb_get_request( 'nonce', $_POST ), 'hb_search_nonce_action' ) ) {
             hb_send_json( array( 'success' => 0, 'message' => __( 'Invalid request', 'tp-hotel-booking' ) ) );
-        }
+        }*/
+        check_ajax_referer( 'hb_search_nonce_action', 'nonce' );
 
         $check_in   = hb_get_request( 'check_in_date' );
         $check_out  = hb_get_request( 'check_out_date' );
@@ -119,9 +120,11 @@ class HB_Ajax{
     }
 
     static function parse_booking_params(){
-        if ( ! hb_get_request( 'nonce', $_POST ) || ! wp_verify_nonce( hb_get_request( 'nonce', $_POST ), 'hb_booking_nonce_action' ) ) {
+        /*if ( ! hb_get_request( 'nonce', $_POST ) || ! wp_verify_nonce( hb_get_request( 'nonce', $_POST ), 'hb_booking_nonce_action' ) ) {
             hb_send_json( array( 'success' => 0, 'message' => __( 'Invalid request', 'tp-hotel-booking' ) ) );
-        }
+        }*/
+
+        check_ajax_referer( 'hb_booking_nonce_action', 'nonce' );
 
         $check_in       = hb_get_request( 'check_in_date' );
         $check_out      = hb_get_request( 'check_out_date' );

@@ -12,7 +12,7 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
     function __construct(){
         parent::__construct();
         $this->_title = __( 'Offline Payment', 'tp-hotel-booking' );
-        $this->_description = __( '', 'tp-hotel-booking' );
+        $this->_description = __( 'Pay on arrival', 'tp-hotel-booking' );
         $this->_settings = HB_Settings::instance()->get('stripe');
         $this->init();
     }
@@ -21,6 +21,11 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
         add_action( 'hb_payment_gateway_settings_' . $this->slug, array( $this, 'admin_settings' ) );
         add_action( 'hb_payment_gateway_form_' . $this->slug, array( $this, 'form' ) );
         add_action( 'hb_manage_booing_column_total', array( $this, 'column_total_content' ), 10, 3 );
+        add_filter( 'hb_payment_method_title_offline-payment', array( $this, 'payment_method_title' ) );
+    }
+
+    function payment_method_title(){
+        return $this->_description;
     }
 
     function column_total_content( $booking_id, $total, $total_with_currency ){

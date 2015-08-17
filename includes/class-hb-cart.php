@@ -475,6 +475,7 @@ function hb_add_booking( $transaction ){
         '_hb_currency'              => $transaction_object->currency,
         '_hb_customer_id'           => $transaction['customer_id'],
         '_hb_method'                => $transaction['method'],
+        '_hb_method_title'          => hb_get_payment_method_title( $transaction['method'] ),
         '_hb_method_id'             => $transaction['method_id'],
         '_hb_booking_status'        => $transaction['status']
     );
@@ -486,14 +487,30 @@ function hb_add_booking( $transaction ){
     $booking_id = $booking->update();
     if( $booking_id ){
         //$booking_rooms = hb_get_request( 'num_of_rooms' );
-        foreach( $rooms as $room ){
-            $num_of_rooms = $room['quantity'];
+        $prices = array();
+        foreach( $rooms as $room_options ){
+            $num_of_rooms = $room_options['quantity'];
             // insert multiple meta value
             for( $i = 0; $i < $num_of_rooms; $i ++ ) {
-                add_post_meta( $booking_id, '_hb_room_id', $room['id'] );
+                add_post_meta( $booking_id, '_hb_room_id', $room_options['id'] );
             }
+            $room = HB_Room::instance( $room_options['id'] );
+            $room->set_data(
+                array(
+                    'num_of_rooms'      => $num_of_rooms,
+                    'check_in_date'     => $check_in,
+                    'check_out_date'    => $check_out
+                )
+            );
+            $prices[ $room_options['id'] ] = $room->get_total( $check_in, $check_out, $num_of_rooms, false );
         }
+
+        add_post_meta( $booking_id, '_hb_room_price', $prices );
         //update_post_meta( $booking_id, '_hb_rooms', $booking_rooms );
     }
     return $booking_id;
+}
+
+function hb_get_payment_method_title( $method_slug ){
+    return apply_filters( 'hb_payment_method_title_' . $method_slug, __( 'N/A' ) );
 }

@@ -136,7 +136,6 @@ th.column-room_type{
 .customer-information tr {
     width: 500px;
     border: 1px solid black;
-    background: #666;
 }
 .post-type-hb_customer .column-bookings{
     width: 150px;
@@ -147,4 +146,37 @@ th.column-room_type{
 .post-type-hb_customer #post-body-content,
 .post-type-hb_booking #post-body-content{
     display: none;
+}
+
+/**/
+.hb-booking-table,
+.hb-booking-rooms{
+    border: 1px solid #DDD;
+    border-collapse: collapse;
+    max-width: 800px;
+    background-color: #FFF;
+    font-size: 14px;
+    width: 50%;
+    margin-bottom: 20px;
+}
+.hb-booking-table td,
+.hb-booking-table th,
+.hb-booking-rooms td,
+.hb-booking-rooms th{
+    border: 1px solid #DDD;
+    padding: 10px;
+}
+.hb-booking-table thead th,
+.hb-booking-rooms thead th{
+    background-color: #F5F5F5;
+}
+.hb-booking-table thead h3,
+.hb-booking-rooms thead h3{
+    text-align: left;
+    margin: 0;
+    padding: 0;
+}
+.hb-booking-table tbody th{
+    text-align: left;
+    width: 30%;
 }

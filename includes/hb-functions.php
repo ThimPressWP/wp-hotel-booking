@@ -582,9 +582,9 @@ function hb_customer_place_order(){
         return;
     }
 
-    if ( ! isset( $_POST['hb_customer_place_order_field'] ) || ! wp_verify_nonce( $_POST['hb_customer_place_order_field'], 'hb_customer_place_order' ) ){
+    /*if ( ! isset( $_POST['hb_customer_place_order_field'] ) || ! wp_verify_nonce( $_POST['hb_customer_place_order_field'], 'hb_customer_place_order' ) ){
         return;
-    }
+    }*/
 
     $payment_method = hb_get_user_payment_method( hb_get_request( 'hb-payment-method' ) );
 

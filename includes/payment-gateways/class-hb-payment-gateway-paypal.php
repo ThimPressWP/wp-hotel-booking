@@ -65,7 +65,12 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         add_action( 'hb_do_transaction_paypal-standard', array( $this, 'process_booking_paypal_standard' ) );
         add_action( 'hb_web_hook_hotel-booking-paypal-standard', array( $this, 'web_hook_process_paypal_standard' ) );
         add_action( 'hb_manage_booing_column_total', array( $this, 'column_total_content' ), 10, 3 );
+        add_filter( 'hb_payment_method_title_paypal', array( $this, 'payment_method_title' ) );
         hb_register_web_hook( 'paypal-standard', 'hotel-booking-paypal-standard' );
+    }
+
+    function payment_method_title(){
+        return $this->_description;
     }
 
     function column_total_content( $booking_id, $total, $total_with_currency ){

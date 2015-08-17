@@ -413,7 +413,7 @@ class HB_Post_Types{
             'publicly_queryable' => true,
             'show_ui'            => true,
             'has_archive'        => 'rooms',
-            //'capability_type'    => 'hb_room',
+            //'capability_type'    => 'post',
             'map_meta_cap'       => true,
             'show_in_menu'       => 'tp_hotel_booking',
             'show_in_admin_bar'  => true,
@@ -513,13 +513,16 @@ class HB_Post_Types{
             'publicly_queryable' => false,
             'show_ui'            => true,
             'has_archive'        => false,
-            //'capability_type'    => 'hb_booking',
+            'capability_type'    => 'post',
             'map_meta_cap'       => true,
             'show_in_menu'       => 'tp_hotel_booking',
             'show_in_admin_bar'  => true,
             'show_in_nav_menus'  => true,
             'supports'           => array( 'title', 'author' ),
-            'hierarchical'       => false
+            'hierarchical'       => false,
+            'capabilities'       => array(
+                'create_posts'  => 'do_not_allow'
+            )
         );
         register_post_type( 'hb_booking', $args );
 
@@ -547,13 +550,16 @@ class HB_Post_Types{
             'publicly_queryable' => false,
             'show_ui'            => true,
             'has_archive'        => false,
-            //'capability_type'    => 'hb_booking',
+            'capability_type'    => 'post',
             'map_meta_cap'       => true,
             'show_in_menu'       => 'tp_hotel_booking',
             'show_in_admin_bar'  => true,
             'show_in_nav_menus'  => true,
             'supports'           => array( '' ),
-            'hierarchical'       => false
+            'hierarchical'       => false,
+            'capabilities'       => array(
+                'create_posts'  => 'do_not_allow'
+            )
         );
         register_post_type( 'hb_customer', $args );
 
