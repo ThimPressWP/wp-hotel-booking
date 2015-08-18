@@ -438,8 +438,8 @@ function hb_booking_restrict_manage_posts(){
             )
         );
         ?>
-        <input type="text" id="hb-booking-date-from" class="hb-date-field" value="<?php echo $from;?>" name="date-from" readonly />
-        <input type="text" id="hb-booking-date-to" class="hb-date-field" value="<?php echo $to;?>" name="date-to" readonly />
+        <input type="text" id="hb-booking-date-from" class="hb-date-field" value="<?php echo $from;?>" name="date-from" readonly placeholder="<?php _e( 'From', 'tp-hotel-booking' );?>" />
+        <input type="text" id="hb-booking-date-to" class="hb-date-field" value="<?php echo $to;?>" name="date-to" readonly placeholder="<?php _e( 'To', 'tp-hotel-booking' );?>" />
         <select name="filter-type">
             <option value=""><?php _e( '---Filter By---', 'tp-hotel-booking' );?></option>
             <?php foreach( $filter_types as $slug => $text ){?>
