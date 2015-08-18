@@ -45,12 +45,38 @@ class HB_Post_Types{
 
         add_filter( 'posts_fields', array( $this, 'posts_fields' ) );
         add_filter( 'posts_join_paged', array( $this, 'posts_join_paged' ) );
-        add_filter( 'posts_where_paged', array( $this, 'posts_where_paged' ) );
-        add_filter( 'posts_where' , array( $this, 'posts_where_paged' ) );
+        //add_filter( 'posts_where_paged', array( $this, 'posts_where_paged' ) );
+        add_filter( 'posts_where' , array( $this, 'posts_where_paged' ), 999 );
+        //add_filter( 'posts_orderby' , array( $this, 'posts_orderby' ) );
+
+        add_filter( 'get_terms_orderby', array( $this, 'terms_orderby' ), 100, 3 );
+        add_filter( 'get_terms_args', array( $this, 'terms_args' ), 100, 2 );
+    }
+
+    function terms_orderby( $orderby, $args, $taxonomies ){
+        if( in_array( hb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) ){
+            $orderby = 'term_group';
+
+        }
+
+        return $orderby;
+    }
+
+    function terms_args( $args, $taxonomies ){
+        if( in_array( hb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) ){
+            $args['order'] = 'ASC';
+        }
+        return $args;
     }
 
     function posts_fields( $fields ){
-        if( $this->is_search( 'customer' ) ){
+        if( hb_get_request( 'post_type' ) == 'hb_booking' ) {
+            $from       = hb_get_request('date-from');
+            $to         = hb_get_request('date-to');
+            $filter     = hb_get_request('filter-type');
+            if( $from && $to && $filter == 'booking-date' ) {
+                $fields .= ", DATE_FORMAT(`post_date`,'%Y%m%d') AS post_date_timestamp";
+            }
         }
         return $fields;
     }
@@ -83,6 +109,28 @@ class HB_Post_Types{
                 INNER JOIN {$wpdb->postmeta} cus5 ON cus5.post_id = pm.meta_value and cus5.meta_key='_hb_address'
             ";
         }
+
+        if( hb_get_request( 'post_type' ) == 'hb_booking' ){
+            $from   = hb_get_request( 'date-from' );
+            $to     = hb_get_request( 'date-to' );
+            $filter = hb_get_request( 'filter-type' );
+            if( $from && $to & $filter ){
+                switch( $filter ){
+                    case 'booking-date':
+                        break;
+                    case 'check-in-date':
+                        $join .= "
+                            INNER JOIN {$wpdb->postmeta} pm_check_in ON {$wpdb->posts}.ID=pm_check_in.post_id and pm_check_in.meta_key='_hb_check_in_date'
+                        ";
+                        break;
+                    case 'check-out-date':
+                        $join .= "
+                            INNER JOIN {$wpdb->postmeta} pm_check_out ON {$wpdb->posts}.ID=pm_check_out.post_id and pm_check_out.meta_key='_hb_check_out_date'
+                        ";
+                        break;
+                }
+            }
+        }
         return $join;
     }
 
@@ -114,7 +162,60 @@ class HB_Post_Types{
                 )
             ";
         }
+
+        if( hb_get_request( 'post_type' ) == 'hb_booking' ){
+            $from   = hb_get_request( 'date-from' );
+            $to     = hb_get_request( 'date-to' );
+            $filter = hb_get_request( 'filter-type' );
+            if( $from && $to & $filter ){
+                $from   = strtotime( $from );
+                $to     = strtotime( $to );
+                switch( $filter ){
+                    case 'booking-date':
+                        $from   = date( 'Ymd', $from );
+                        $to     = date( 'Ymd', $to );
+                        if( $from == $to ){
+                            $where .= "
+                                HAVING post_date_timestamp = {$from}
+                            ";
+                        }else {
+                            $where .= "
+                                HAVING post_date_timestamp >= {$from} AND post_date_timestamp <= {$to}
+                            ";
+                        }
+                        break;
+                    case 'check-in-date':
+                        $where .= "
+                            AND ( pm_check_in.meta_value >= {$from} AND pm_check_in.meta_value <= {$to} )
+                        ";
+                        break;
+                    case 'check-out-date':
+                        $where .= "
+                            AND ( pm_check_out.meta_value >= {$from} AND pm_check_out.meta_value <= {$to} )
+                        ";
+                        break;
+                }
+            }
+        }
+
         return $where;
+    }
+
+    function posts_orderby( $orderby ){
+        if( hb_get_request( 'post_type' ) == 'hb_booking' ) {
+            $from = hb_get_request('date-from');
+            $to = hb_get_request('date-to');
+            $filter = hb_get_request('filter-type');
+            if ($from && $to & $filter) {
+                switch ($filter) {
+                    case 'booking-date':
+                        $from = strtotime( $from );
+                        $to = strtotime( $to );
+                        $orderby = "HAVING post_date_timestamp >= {$from} AND post_date_timestamp <= {$to} " . $orderby;
+                }
+            }
+        }
+        return $orderby;
     }
 
     function is_search( $type ){

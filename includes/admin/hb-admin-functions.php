@@ -424,6 +424,29 @@ function hb_booking_restrict_manage_posts(){
         $values = array(
             'Today check-in' => date('m/d/Y'),            
         );
+        $from           = hb_get_request( 'date-from' );
+        $to             = hb_get_request( 'date-to' );
+        $filter_type    = hb_get_request( 'filter-type' );
+
+        $filter_types = apply_filters(
+            'hb_booking_filter_types',
+            array(
+                'booking-date'      => __( 'Booking date', 'tp-hotel-booking' ),
+                'check-in-date'     => __( 'Check-in date', 'tp-hotel-booking' ),
+                'check-out-date'    => __( 'Check-out date', 'tp-hotel-booking' )
+            )
+        );
+        ?>
+        <input type="text" id="hb-booking-date-from" class="hb-date-field" value="<?php echo $from;?>" name="date-from" readonly />
+        <input type="text" id="hb-booking-date-to" class="hb-date-field" value="<?php echo $to;?>" name="date-to" readonly />
+        <select name="filter-type">
+            <option value=""><?php _e( '---Filter By---', 'tp-hotel-booking' );?></option>
+            <?php foreach( $filter_types as $slug => $text ){?>
+            <option value="<?php echo $slug;?>" <?php selected( $slug == $filter_type );?>><?php echo $text;?></option>
+            <?php }?>
+        </select>
+        <?php
+        return;
         ?>
         <select name="filter_by_checkin_date">
         <option value=""><?php _e('All Check-in Date ', 'tp-hotel-booking'); ?></option>
@@ -484,8 +507,8 @@ function hb_booking_filter( $query ){
         $query->query_vars['meta_value'] = $_GET['filter_by_checkin_date'];
     }
     if ( 'hb_booking' == $type && is_admin() && $pagenow=='edit.php' && isset($_GET['filter_by_checkout_date']) && $_GET['filter_by_checkout_date'] != '') {
-        $query->query_vars['meta_key'] = '_hb_check_out_date';
-        $query->query_vars['meta_value'] = $_GET['filter_by_checkout_date'];
+        //$query->query_vars['meta_key'] = '_hb_check_out_date';
+        //$query->query_vars['meta_value'] = $_GET['filter_by_checkout_date'];
     }
 }
 

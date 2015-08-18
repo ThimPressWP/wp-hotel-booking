@@ -174,6 +174,20 @@
             $('#hb-no-plan-message').hide();
 
         });
+
+        $('#hb-booking-date-from').datepicker({
+            onSelect: function(){
+                var date = jQuery(this).datepicker('getDate');
+
+                $("#hb-booking-date-to").datepicker("option","minDate", date)
+            }
+        });
+        $('#hb-booking-date-to').datepicker({
+            onSelect: function(){
+                var date = jQuery(this).datepicker('getDate');
+                $("#hb-booking-date-from").datepicker("option","maxDate", date)
+            }
+        });
     }
 
     $doc.ready( _ready );

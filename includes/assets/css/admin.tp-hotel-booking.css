@@ -180,3 +180,16 @@ th.column-room_type{
     text-align: left;
     width: 30%;
 }
+
+.tablenav.top select[name="filter-type"]{
+    float: none;
+    vertical-align: top;
+}
+#hb-booking-date-from,
+#hb-booking-date-to,
+#hb-booking-date-from[readonly="readonly"],
+#hb-booking-date-to[readonly="readonly"]{
+    background-color: #FFF;
+    width: 100px;
+    text-align: center;
+}
