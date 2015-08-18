@@ -147,7 +147,7 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
                     <td style="text-align: right;">
                         <?php
                         $cap_id = get_post_meta( $id, '_hb_room_capacity', true );
-                        $term = get_term( $cap_id, 'hb_room_type' );
+                        $term = get_term( $cap_id, 'hb_room_capacity' );
                         if( $term ){
                             printf( '%s (%d)', $term->name, get_option( 'hb_taxonomy_capacity_' . $cap_id ) );
                         }

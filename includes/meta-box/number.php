@@ -9,7 +9,8 @@ $field = wp_parse_args(
         'min'   => '',
         'max'   => '',
         'placeholder' => '',
-        'attr'          => ''
+        'attr'          => '',
+        'filter'    => false
     )
 );
 $field_attr = '';
