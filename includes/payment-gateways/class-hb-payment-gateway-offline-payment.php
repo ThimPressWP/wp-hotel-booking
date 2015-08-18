@@ -129,14 +129,13 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
                     </td>
                 </tr>
                 <tr style="background-color: #FFFFFF;">
-                    <td style="font-weight: bold;"><?php _e( 'Number of rooms', 'tp-hotel-booking' );?></td>
                     <td style="font-weight: bold;"><?php _e( 'Room type', 'tp-hotel-booking' );?></td>
-                    <td style="font-weight: bold;"><?php _e( 'Capacity', 'tp-hotel-booking' );?></td>
+                    <td style="font-weight: bold; text-align: right;"><?php _e( 'Number of rooms', 'tp-hotel-booking' );?></td>
+                    <td style="font-weight: bold; text-align: right;"><?php _e( 'Capacity', 'tp-hotel-booking' );?></td>
                     <td style="font-weight: bold;text-align: right;"><?php _e( 'Total', 'tp-hotel-booking' );?></td>
                 </tr>
                 <?php foreach( $rooms as $id => $num_of_rooms ){?>
                 <tr style="background-color: #FFFFFF;">
-                    <td><?php echo $num_of_rooms;?></td>
                     <td>
                         <?php
                         echo get_the_title( $id );
@@ -144,8 +143,15 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
                         if( $term ) echo " (", $term->name, ")";
                         ?>
                     </td>
+                    <td style="text-align: right;"><?php echo $num_of_rooms;?></td>
                     <td style="text-align: right;">
-                        <?php echo get_post_meta( $id, '_hb_room_capacity', true );?>
+                        <?php
+                        $cap_id = get_post_meta( $id, '_hb_room_capacity', true );
+                        $term = get_term( $cap_id, 'hb_room_type' );
+                        if( $term ){
+                            printf( '%s (%d)', $term->name, get_option( 'hb_taxonomy_capacity_' . $cap_id ) );
+                        }
+                        ?>
                     </td>
                     <td style="text-align: right;">
                         <?php
