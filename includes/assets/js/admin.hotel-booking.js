@@ -188,6 +188,17 @@
                 $("#hb-booking-date-from").datepicker("option","maxDate", date)
             }
         });
+
+        $('form#posts-filter').submit(function(){
+            var counter = 0;
+            $('#hb-booking-date-from, #hb-booking-date-to, select[name="filter-type"]').each(function(){
+                if( $(this).val() ) counter++;
+            });
+            if( counter > 0 && counter < 3 ){
+                alert( hotel_booking_l18n.filter_error );
+                return false;
+            }
+        });
     }
 
     $doc.ready( _ready );

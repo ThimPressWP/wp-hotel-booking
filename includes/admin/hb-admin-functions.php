@@ -60,7 +60,8 @@ function hb_admin_l18n(){
     $l18n = array(
         'confirm_remove_pricing_table'  => __( 'Are you sure you want to remove this pricing table?', 'tp-hotel-booking' ),
         'empty_pricing_plan_start_date' => __( 'Select start date for plan', 'tp-hotel-booking'),
-        'empty_pricing_plan_start_end' => __( 'Select end date for plan', 'tp-hotel-booking'),
+        'empty_pricing_plan_start_end'  => __( 'Select end date for plan', 'tp-hotel-booking'),
+        'filter_error'                  => __( 'Please select date range and filter type', 'tp-hotel-booking' )
     );
     return apply_filters( 'hb_admin_l18n', $l18n );
 }
@@ -437,7 +438,9 @@ function hb_booking_restrict_manage_posts(){
                 'check-out-date'    => __( 'Check-out date', 'tp-hotel-booking' )
             )
         );
+
         ?>
+        <span><?php _e( 'Date Range', 'tp-hotel-booking' );?></span>
         <input type="text" id="hb-booking-date-from" class="hb-date-field" value="<?php echo $from;?>" name="date-from" readonly placeholder="<?php _e( 'From', 'tp-hotel-booking' );?>" />
         <input type="text" id="hb-booking-date-to" class="hb-date-field" value="<?php echo $to;?>" name="date-to" readonly placeholder="<?php _e( 'To', 'tp-hotel-booking' );?>" />
         <select name="filter-type">
