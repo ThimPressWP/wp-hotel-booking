@@ -143,8 +143,8 @@ function hb_lightbox_assets_lightbox2(){
 }
 
 function hb_lightbox_assets_fancyBox(){
-    wp_enqueue_script( 'fancyBox', TP_Hotel_Booking::instance()->plugin_url( 'includes/lightbox/fancyBox/source/jquery.fancyBox.js' ) );
-    wp_enqueue_style( 'fancyBox', TP_Hotel_Booking::instance()->plugin_url( 'includes/lightbox/fancyBox/source/jquery.fancyBox.css' ) );
+    wp_enqueue_script( 'fancyBox', TP_Hotel_Booking::instance()->plugin_url( 'includes/lightbox/fancyBox/source/jquery.fancybox.js' ) );
+    wp_enqueue_style( 'fancyBox', TP_Hotel_Booking::instance()->plugin_url( 'includes/lightbox/fancyBox/source/jquery.fancybox.css' ) );
     ?>
     <script type="text/javascript">
         jQuery(function($){

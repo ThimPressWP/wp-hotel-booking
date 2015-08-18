@@ -89,9 +89,11 @@ th.column-room_type{
     margin-right: -100%;
     overflow: hidden;
     clear: both;
+    display: none;
 }
 .hb-payment-gateway-settings.current{
     opacity: 1;
+    display: block;
 }
 .post-type-hb_room .column-date{
     display: none;

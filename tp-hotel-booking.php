@@ -49,7 +49,12 @@ class TP_Hotel_Booking{
         add_action( 'wp_print_scripts', array( $this, 'global_js' ) );
         add_action( 'template_redirect', 'hb_handle_purchase_request', 999 );
         add_action( 'widgets_init', array( $this, 'register_widgets' ) );
+        register_activation_hook( __FILE__, array( $this, 'install' ) );
+        $this->install();
+    }
 
+    function install(){
+        $this->_include( 'includes/install.php' );
     }
 
     /**
