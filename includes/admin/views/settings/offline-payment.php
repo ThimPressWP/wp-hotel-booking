@@ -30,6 +30,10 @@ $field_name = $settings->get_field_name('offline-payment');
         <th><?php _e( 'Email Content', 'tp-hotel-booking' );?></th>
         <td>
         <?php wp_editor( $payment['email_content'], "{$field_name}_email_content" );?>
+            <p class="description">
+                <?php _e( 'Place holder: ', 'tp-hotel-booking' );?>
+                {{site_name}}, {{customer_name}}, {{booking_details}}
+            </p>
         <textarea style="display: none;" name="<?php echo $field_name;?>[email_content]"><?php echo $payment['email_content'];?></textarea>
         </td>
     </tr>

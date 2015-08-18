@@ -216,6 +216,9 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
             if ( preg_match( '!{{customer_name}}!', $email_content ) ) {
                 $email_content = preg_replace( '!\{\{customer_name\}\}!', hb_get_customer_fullname( $customer_id, true ), $email_content );
             }
+            if ( preg_match( '!{{site_name}}!', $email_content ) ) {
+                $email_content = preg_replace( '!\{\{site_name\}\}!', get_bloginfo( 'name' ), $email_content );
+            }
             if ( preg_match( '!{{booking_details}}!', $email_content ) ) {
                 $booking_details = $this->booking_details( $transaction );
                 $email_content = preg_replace( '!\{\{booking_details\}\}!', $booking_details, $email_content );
