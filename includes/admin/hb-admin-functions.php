@@ -399,7 +399,8 @@ function hb_manage_booking_column( $column_name, $post_id ) {
             echo date( 'F d, Y', strtotime( get_post_field( 'post_date', $post_id ) ) );
             break;
         case 'details':
-            echo '<a href="'. admin_url('admin.php?page=hb_booking_details&id='. $post_id) . '">' . __( 'View', 'tp-hotel-booking' ) . '</a>';
+            $status = get_post_meta( $post_id, '_hb_booking_status', true );
+            echo '<a href="'. admin_url('admin.php?page=hb_booking_details&id='. $post_id) . '">' . sprintf( __( 'View (%s)', 'tp-hotel-booking' ), $status ) . '</a>';
     }
 }   
 add_action('manage_hb_booking_posts_custom_column', 'hb_manage_booking_column', 10, 2);

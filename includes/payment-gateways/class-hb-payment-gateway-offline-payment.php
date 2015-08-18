@@ -210,10 +210,17 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
                 //'redirect'  => '?hotel-booking-offline-payment=1'
             );
         }else{
-            if (preg_match('!{{booking_details}}!', $email_content)) {
-                $booking_details = $this->booking_details($transaction);
-                $email_content = preg_replace('!\{\{booking_details\}\}!', $booking_details, $email_content);
+            if( function_exists( 'wpautop' ) ) {
+                $email_content = wpautop( $email_content );
             }
+            if ( preg_match( '!{{customer_name}}!', $email_content ) ) {
+                $email_content = preg_replace( '!\{\{customer_name\}\}!', hb_get_customer_fullname( $customer_id, true ), $email_content );
+            }
+            if ( preg_match( '!{{booking_details}}!', $email_content ) ) {
+                $booking_details = $this->booking_details( $transaction );
+                $email_content = preg_replace( '!\{\{booking_details\}\}!', $booking_details, $email_content );
+            }
+
             $headers[]       = 'Content-Type: text/html; charset=UTF-8';
             add_filter('wp_mail_content_type', array($this, 'set_html_content_type'));
             $to = get_post_meta($customer_id, '_hb_email', true);
