@@ -1296,6 +1296,12 @@ function hb_dropdown_countries( $args = array() ){
     echo '</select>';
 }
 
+/**
+ * Add a message to queue
+ *
+ * @param $message
+ * @param string $type
+ */
 function hb_add_message( $message, $type = 'message' ){
     $messages = get_transient( 'hb_message' );
     if( empty( $messages ) ){
@@ -1307,5 +1313,6 @@ function hb_add_message( $message, $type = 'message' ){
         'message'   => $message
     );
 
+    // hold in transient for 3 minutes
     set_transient( 'hb_message', $messages, MINUTE_IN_SECONDS * 3 );
 }

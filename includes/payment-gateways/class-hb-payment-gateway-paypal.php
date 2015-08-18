@@ -58,6 +58,9 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         $this->init();
     }
 
+    /**
+     * Init hooks
+     */
     function init(){
         add_action( 'hb_payment_gateway_settings_' . $this->slug, array( $this, 'admin_settings' ) );
         add_action( 'hb_payment_gateway_form_' . $this->slug, array( $this, 'form' ) );
@@ -69,10 +72,22 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         hb_register_web_hook( 'paypal-standard', 'hotel-booking-paypal-standard' );
     }
 
+    /**
+     * Get payment method title
+     *
+     * @return mixed
+     */
     function payment_method_title(){
         return $this->_description;
     }
 
+    /**
+     * Display text in total column
+     *
+     * @param $booking_id
+     * @param $total
+     * @param $total_with_currency
+     */
     function column_total_content( $booking_id, $total, $total_with_currency ){
         if( $total && get_post_meta( $booking_id, '_hb_method', true ) == 'paypal-standard' ) {
             $advance_payment = get_post_meta($booking_id, '_hb_advance_payment', true);
@@ -80,11 +95,14 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         }
     }
 
+
     function form(){
         echo _e( 'Pay with Paypal');
-        echo '<img src="http://pctechmag.com/wp-content/uploads/2013/04/PayPal-logo-1.png" style="display: block; width: 100px;" />';
     }
 
+    /**
+     * @return bool
+     */
     function process_booking_paypal_standard(){
         if( ! empty( $_REQUEST['hb-transaction-method'] ) && ( 'paypal-standard' == $_REQUEST['hb-transaction-method'] ) ) {
             // if we have a paypal-nonce in $_REQUEST that meaning user has clicked go back to our site after finished the transaction
@@ -110,14 +128,12 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
                     $transaction_status = $_REQUEST['payment_status'];
                 else
                     $transaction_status = NULL;
-
-
                 if ( ! empty( $transaction_id ) && ! empty( $transient_transaction_id ) && ! empty( $transaction_status ) ) {
 
                     try {
                         //If the transient still exists, delete it and add the official transaction
                         if ( $transaction_object = hb_get_transient_transaction( 'hbps', $transient_transaction_id ) ) {
-                            //hb_delete_transient_transaction( 'hbps', $transient_transaction_id  );
+                            hb_delete_transient_transaction( 'hbps', $transient_transaction_id  );
                             $booking_id = hb_add_transaction(
                                 array(
                                     'method'    => 'paypal-standard',
@@ -127,17 +143,11 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
                                     'transaction_object' => $transaction_object['transaction_object']
                                 )
                             );
-                            //print_r( $transaction_object );
-                            //wp_redirect( ( $confirm_page_id = learn_press_get_page_id( 'taken_course_confirm' ) ) && get_post( $confirm_page_id ) ? learn_press_get_order_confirm_url( $order_id ) : get_site_url()  );
-                            //die();
                         }
-
                     }
                     catch ( Exception $e ) {
                         return false;
-
                     }
-
                 } else if ( is_null( $transaction_id ) && is_null( $transient_transaction_id ) && is_null( $transaction_status ) ) {
                 }
             }
@@ -146,6 +156,10 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         wp_redirect( get_site_url() );
     }
 
+    /**
+     * Web hook to process booking with Paypal IPN
+     * @param $request
+     */
     function web_hook_process_paypal_standard( $request ){
         $payload['cmd'] = '_notify-validate';
         foreach( $_POST as $key => $value ) {
@@ -203,6 +217,12 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         return 0;
     }
 
+    /**
+     * Get Paypal checkout url
+     *
+     * @param $customer_id
+     * @return string
+     */
     protected function _get_paypal_basic_checkout_url(  $customer_id ){
 
         $paypal = HB_Settings::instance()->get( 'paypal' );
@@ -244,6 +264,13 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
 
         return $paypal_payment_url;
     }
+
+    /**
+     * Process checkout
+     *
+     * @param null $customer_id
+     * @return array
+     */
     function process_checkout( $customer_id = null ){
         return array(
             'result'    => 'success',
@@ -251,11 +278,19 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         );
     }
 
+    /**
+     * Print admin settings page
+     *
+     * @param $gateway
+     */
     function admin_settings( $gateway ){
         $template = TP_Hotel_Booking::instance()->locate( 'includes/admin/views/settings/paypal.php' );
         include_once $template;
     }
 
+    /**
+     * @return bool
+     */
     function is_enable(){
         return ! empty( $this->_settings['enable'] ) && $this->_settings['enable'] == 'on';
     }

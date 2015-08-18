@@ -17,6 +17,9 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
         $this->init();
     }
 
+    /**
+     * Init hooks
+     */
     function init(){
         add_action( 'hb_payment_gateway_settings_' . $this->slug, array( $this, 'admin_settings' ) );
         add_action( 'hb_payment_gateway_form_' . $this->slug, array( $this, 'form' ) );
@@ -24,26 +27,53 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
         add_filter( 'hb_payment_method_title_offline-payment', array( $this, 'payment_method_title' ) );
     }
 
+    /**
+     * Payment method title
+     *
+     * @return mixed
+     */
     function payment_method_title(){
         return $this->_description;
     }
 
+    /**
+     * Print the text in total column
+     *
+     * @param $booking_id
+     * @param $total
+     * @param $total_with_currency
+     */
     function column_total_content( $booking_id, $total, $total_with_currency ){
         if( get_post_meta( $booking_id, '_hb_method', true ) == 'offline-payment' ) {
             _e( '<br />(<small>Pay on arrival</small>)', 'tp-hotel-booking' );
         }
     }
 
+    /**
+     * Print admin settings
+     *
+     * @param $gateway
+     */
     function admin_settings( $gateway ){
         $template = TP_Hotel_Booking::instance()->locate( 'includes/admin/views/settings/offline-payment.php' );
         include_once $template;
     }
 
+    /**
+     * Check to see if this payment is enable
+     *
+     * @return bool
+     */
     function is_enable(){
         return ! empty( $this->_settings['enable'] ) && $this->_settings['enable'] == 'on';
     }
 
-
+    /**
+     * Booking details for email content
+     *
+     * @param $booking_id
+     * @return string
+     */
     function booking_details( $booking_id ){
         $customer_id = get_post_meta( $booking_id, '_hb_customer_id', true );
         $title = hb_get_title_by_slug(get_post_meta($customer_id, '_hb_title', true));
@@ -143,10 +173,21 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
         return ob_get_clean();
     }
 
+    /**
+     * Filter content type to text/html for email
+     *
+     * @return string
+     */
     function set_html_content_type(){
         return 'text/html';
     }
 
+    /**
+     * Process checkout booking
+     *
+     * @param null $customer_id
+     * @return array
+     */
     function process_checkout( $customer_id = null ){
         $booking    = hb_generate_transaction_object( $customer_id );
         $transaction = hb_add_transaction(

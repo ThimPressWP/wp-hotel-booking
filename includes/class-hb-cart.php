@@ -414,55 +414,20 @@ function hb_add_transaction( $transaction ){
 }
 
 function hb_add_booking( $transaction ){
-    /*$transaction = array(
-        'method'    => 'paypal-standard',
-        'method_id' => $transaction_id,
-        'status'    => $transaction_status,
-        'customer_id'   => $transaction_object['customer_id'],
-        'transaction_object' => $transaction_object['transaction_object']
-    )*/
     TP_Hotel_Booking::instance()->_include( 'includes/class-hb-room.php' );
 
-    $transaction_object = $transaction['transaction_object'];
+    $transaction_object     = $transaction['transaction_object'];
+    $check_in               = $transaction_object->check_in_date;
+    $check_out              = $transaction_object->check_out_date;
+    $tax                    = $transaction_object->tax;
+    $price_including_tax    = $transaction_object->price_including_tax;
+    $rooms                  = $transaction_object->rooms;
 
-    $check_in               = $transaction_object->check_in_date; //('check_in_date');
-    $check_out              = $transaction_object->check_out_date; //('check_out_date');
-    $tax                    = $transaction_object->tax;// hb_get_tax_settings();
-    $price_including_tax    = $transaction_object->price_including_tax; // hb_price_including_tax();
-    $rooms                  = $transaction_object->rooms;// hb_get_request( 'num_of_rooms' );
-    /*$total = 0;
-    foreach( $rooms as $id => $num_of_rooms ){
-        $room = HB_Room::instance( $id );
-        $total += $room->get_total( $check_in, $check_out, $num_of_rooms, false );
-    }
-    if( ! $price_including_tax ){
-        $grand_total = $total + $total * $tax;
-    }else{
-        $grand_total = $total;
-    }
-    $request = maybe_unserialize( base64_decode( $_POST['sig'] ) );
-*/
     $booking = HB_Booking::instance( 0 );
     $booking->post->post_title      = sprintf( __( 'Booking from %s to %s', 'tp-hotel-booking' ), $check_in, $check_out );
     $booking->post->post_content    = $transaction_object->addition_information;
     $booking->post->post_status     = 'pending';
 
-    /*$booking->set_customer(
-        'data',
-        array(
-            '_hb_title'         => hb_get_request( 'title' ),
-            '_hb_first_name'    => hb_get_request( 'first_name' ),
-            '_hb_last_name'     => hb_get_request( 'last_name' ),
-            '_hb_address'       => hb_get_request( 'address' ),
-            '_hb_city'          => hb_get_request( 'city' ),
-            '_hb_state'         => hb_get_request( 'state' ),
-            '_hb_postal_code'   => hb_get_request( 'postal_code' ),
-            '_hb_country'       => hb_get_request( 'country' ),
-            '_hb_phone'         => hb_get_request( 'phone' ),
-            '_hb_email'         => hb_get_request( 'email' ),
-            '_hb_fax'           => hb_get_request( 'fax' )
-        )
-    );*/
     $booking_info = array(
         '_hb_check_in_date'         => strtotime( $check_in ),
         '_hb_check_out_date'        => strtotime( $check_out ),
@@ -486,7 +451,6 @@ function hb_add_booking( $transaction ){
 
     $booking_id = $booking->update();
     if( $booking_id ){
-        //$booking_rooms = hb_get_request( 'num_of_rooms' );
         $prices = array();
         foreach( $rooms as $room_options ){
             $num_of_rooms = $room_options['quantity'];
@@ -506,7 +470,6 @@ function hb_add_booking( $transaction ){
         }
 
         add_post_meta( $booking_id, '_hb_room_price', $prices );
-        //update_post_meta( $booking_id, '_hb_rooms', $booking_rooms );
     }
     return $booking_id;
 }

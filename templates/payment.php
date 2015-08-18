@@ -1,31 +1,4 @@
 <?php
-/*
-$start_date = hb_get_request( 'check_in_date' );
-$end_date = hb_get_request( 'check_out_date' );
-$rooms = $_REQUEST['hb-num-of-rooms'];
-$total_rooms = 0;
-$total = 0;
-if( $rooms ) foreach( $rooms as $room_id => $num_of_rooms ) {
-    $total_rooms += $num_of_rooms;
-    $room = HB_Room::instance( $room_id );
-    $total += $room->get_total( $start_date, $end_date, $num_of_rooms, false );
-}
-$total_nights = hb_count_nights_two_dates( $end_date, $start_date );
-$tax = hb_get_tax_settings();
-if( $tax > 0 ) {
-    $grand_total = $total + $total * $tax;
-}else{
-    $grand_total = $total;
-}
-$sig = array(
-    'check_in_date'         => hb_get_request( 'check_in_date' ),
-    'check_out_date'        => hb_get_request( 'check_out_date' ),
-    'total_nights'          => $total_nights,
-    'num_of_rooms'          => array(),
-    'sub_total_of_rooms'    => array(),
-    'total'                 => $total,
-    'grand_total'           => $grand_total
-);*/
 $cart = HB_Cart::instance();
 ?>
 <div id="hotel-booking-payment">
