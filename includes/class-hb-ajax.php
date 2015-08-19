@@ -21,7 +21,8 @@ class HB_Ajax{
             'place_order'               => true,
             'load_room_type_galley'     => false,
             'parse_search_params'       => true,
-            'parse_booking_params'      => true
+            'parse_booking_params'      => true,
+            'apply_coupon'              => true
         );
 
         foreach( $ajax_actions as $action => $priv ){
@@ -116,6 +117,24 @@ class HB_Ajax{
                 'success'   => 1,
                 'sig'       => base64_encode( serialize( $params ) )
             )
+        );
+    }
+
+    static function apply_coupon(){
+        //check_ajax_referer( 'hb_booking_nonce_action', 'nonce' );
+        $code = hb_get_request( 'code' );
+        ob_start();
+        $today = strtotime( date('m/d/Y') );
+        $coupon = hb_get_coupons_active( $today, $code );
+        $output = ob_get_clean();
+        $response = array();
+        if( $coupon ){
+            $response['result'] = 'success';
+            $response['type'] = get_post_meta( $coupon->ID, '_hb_coupon_discount_type', true );
+            $response['value'] = get_post_meta( $coupon->ID, '_hb_coupon_discount_value', true );
+        }
+        hb_send_json(
+            $response
         );
     }
 

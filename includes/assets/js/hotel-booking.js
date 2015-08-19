@@ -230,6 +230,28 @@
             $coupon.focus();
             return false;
         }
+        $.ajax({
+            type: 'POST',
+            url: hotel_settings.ajax,
+            data: {
+                action: 'hotel_booking_apply_coupon',
+                code: $coupon.val()
+            },
+            dataType: 'text',
+            success: function (code) {
+                try {
+                    var response = parseJSON(code);
+                    if (response.result == 'success') {
+                        alert( JSON.stringify(response));
+                    }
+                } catch (e) {
+                    alert(e)
+                }
+            },
+            error: function () {
+                alert('error')
+            }
+        });
     }
     $(document).ready(function(){
         $.datepicker.setDefaults({ dateFormat: 'mm/dd/yy'});

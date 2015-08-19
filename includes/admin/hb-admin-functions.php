@@ -168,12 +168,14 @@ function hb_add_meta_boxes(){
         array(
             'name'      => 'coupon_date_from',
             'label'     => __( 'Validate from', 'tp-hotel-booking' ),
-            'type'      => 'datetime'
+            'type'      => 'datetime',
+            'filter' => 'hb_meta_box_field_coupon_date'
         ),
         array(
             'name'      => 'coupon_date_to',
             'label'     => __( 'Validate until', 'tp-hotel-booking' ),
-            'type'      => 'datetime'
+            'type'      => 'datetime',
+            'filter' => 'hb_meta_box_field_coupon_date'
         ),
         array(
             'name'      => 'minimum_spend',
@@ -823,4 +825,19 @@ function hb_meta_box_field_total( $value ){
 }
 function hb_meta_box_field_price_including_tax( $value ){
     return $value == 'yes' ? __( 'Yes', 'tp-hotel-booking' ) : __( 'No', 'tp-hotel-booking' ) ;
+}
+
+function hb_meta_box_coupon_date( $value, $field_name, $meta_box_name ){
+    if( in_array( $field_name, array( 'coupon_date_from', 'coupon_date_to' ) ) && $meta_box_name == 'coupon_settings' ){
+        $value = strtotime( $value );
+    }
+    return $value;
+}
+add_action( 'hb_meta_box_update_meta_value', 'hb_meta_box_coupon_date', 10, 3 );
+
+function hb_meta_box_field_coupon_date( $value ){
+    if( intval( $value ) ) {
+        return date('m/d/Y', $value);
+    }
+    return $value;
 }

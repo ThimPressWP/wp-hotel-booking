@@ -479,15 +479,35 @@ function hb_get_payment_method_title( $method_slug ){
 }
 
 
-function hb_get_coupons_active( $from, $to ){
+function hb_get_coupons_active( $date, $code = false ){
     $coupons = false;
     $enable = HB_Settings::instance()->get( 'enable_coupon' );
     if( $enable ) {
         $args = array(
             'post_type' => 'hb_coupon',
             'posts_per_page' => 999,
-
+            'meta_query' => array(
+                'relation' => 'AND',
+                array(
+                    'value' => $date,
+                    'key'   => '_hb_coupon_date_from',
+                    'compare' => '<='
+                ),
+                array(
+                    'value' => $date,
+                    'key'   => '_hb_coupon_date_to',
+                    'compare' => '>='
+                )
+            )
         );
+        if( ( $coupons = get_posts( $args ) ) && $code ){
+            foreach( $coupons as $coupon ){
+                if( strcasecmp( $coupon->post_title, $code ) == 0 ){
+                    $coupons = $coupon;
+                    break;
+                }
+            }
+        }
     }
     return $coupons;
 }
