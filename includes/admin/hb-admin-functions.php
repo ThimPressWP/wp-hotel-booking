@@ -128,6 +128,84 @@ function hb_add_meta_boxes(){
             'editor'    => true
         )
     );
+
+    // coupon meta box
+    HB_Meta_Box::instance(
+        'coupon_settings',
+        array(
+            'title' => __( 'Coupon Settings', 'tp-hotel-booking' ),
+            'post_type' => 'hb_coupon',
+            'meta_key_prefix' => '_hb_',
+            'context' => 'normal',
+            'priority' => 'high'
+        ),
+        array()
+    )->add_field(
+        array(
+            'name'      => 'coupon_description',
+            'label'     => __( 'Description', 'tp-hotel-booking' ),
+            'type'      => 'textarea',
+            'std'       => ''
+        ),
+        array(
+            'name'      => 'coupon_discount_type',
+            'label'     => __( 'Discount type', 'tp-hotel-booking' ),
+            'type'      => 'select',
+            'std'       => '',
+            'options'   => array(
+                'fixed_cart' => __( 'Cart discount', 'tp-hotel-booking' ),
+                'percent_cart' => __( 'Cart % discount', 'tp-hotel-booking' )
+            )
+        ),
+        array(
+            'name'      => 'coupon_discount_value',
+            'label'     => __( 'Discount value', 'tp-hotel-booking' ),
+            'type'      => 'number',
+            'std'       => '',
+            'min'       => 0,
+            'step'      => 0.1
+        ),
+        array(
+            'name'      => 'coupon_date_from',
+            'label'     => __( 'Validate from', 'tp-hotel-booking' ),
+            'type'      => 'datetime'
+        ),
+        array(
+            'name'      => 'coupon_date_to',
+            'label'     => __( 'Validate until', 'tp-hotel-booking' ),
+            'type'      => 'datetime'
+        ),
+        array(
+            'name'      => 'minimum_spend',
+            'label'     => __( 'Minimum spend', 'tp-hotel-booking' ),
+            'type'      => 'number',
+            'desc'      => __( 'This field allows you to set the minimum subtotal needed to use the coupon.', 'tp-hotel-booking' ),
+            'min'       => 0,
+            'step'      => 0.1
+        ),
+        array(
+            'name'      => 'maximum_spend',
+            'label'     => __( 'Maximum spend', 'tp-hotel-booking' ),
+            'type'      => 'number',
+            'desc'      => __( 'This field allows you to set the maximum subtotal allowed when using the coupon.', 'tp-hotel-booking' ),
+            'min'       => 0,
+            'step'      => 0.1
+        ),
+        array(
+            'name'      => 'limit_per_coupon',
+            'label'     => __( 'Usage limit per coupon', 'tp-hotel-booking' ),
+            'type'      => 'number',
+            'desc'      => __( 'How many times this coupon can be used before it is void.', 'tp-hotel-booking' ),
+            'min'       => 0
+        ),
+        array(
+            'name'      => 'limit_per_customer',
+            'label'     => __( 'Usage limit per customer', 'tp-hotel-booking' ),
+            'type'      => 'number',
+            'desc'      => __( 'How many times this coupon can be used by an individual customer.', 'tp-hotel-booking' ),
+            'min'       => 0
+        )
+    );
 }
 add_action( 'init', 'hb_add_meta_boxes', 50 );
 

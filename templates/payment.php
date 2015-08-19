@@ -57,6 +57,14 @@ $cart = HB_Cart::instance();
                     <?php echo hb_format_price( $cart->sub_total );?>
                 </td>
             </tr>
+            <?php if( HB_Settings::instance()->get( 'enable_coupon' ) ){?>
+            <tr>
+                <td colspan="4" class="hb-align-right" >
+                    <input type="text" name="hb-coupon-code" placeholder="<?php _e( 'Coupon', 'tp-hotel-booking' );?>" style="width: 50%; vertical-align: top;" />
+                    <button type="button" id="hb-apply-coupon"><?php _e( 'Apply Coupon', 'tp-hotel-booking' );?></button>
+                </td>
+            </tr>
+            <?php } ?>
             <?php if( $tax = hb_get_tax_settings() ){?>
             <tr>
                 <td colspan="3">

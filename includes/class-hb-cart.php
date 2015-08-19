@@ -477,3 +477,17 @@ function hb_add_booking( $transaction ){
 function hb_get_payment_method_title( $method_slug ){
     return apply_filters( 'hb_payment_method_title_' . $method_slug, __( 'N/A' ) );
 }
+
+
+function hb_get_coupons_active( $from, $to ){
+    $coupons = false;
+    $enable = HB_Settings::instance()->get( 'enable_coupon' );
+    if( $enable ) {
+        $args = array(
+            'post_type' => 'hb_coupon',
+            'posts_per_page' => 999,
+
+        );
+    }
+    return $coupons;
+}

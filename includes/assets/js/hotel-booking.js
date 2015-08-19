@@ -222,6 +222,15 @@
         }
         return false;
     }
+
+    function applyCoupon(){
+        var $coupon = $('input[name="hb-coupon-code"]');
+        if( ! $coupon.val() ){
+            alert('xxx')
+            $coupon.focus();
+            return false;
+        }
+    }
     $(document).ready(function(){
         $.datepicker.setDefaults({ dateFormat: 'mm/dd/yy'});
         $("#check_in_date").datepicker({
@@ -336,6 +345,8 @@
                 $('.hb-payment-method-form:not(.'+this.value+')').slideUp();
                 $('.hb-payment-method-form.'+this.value+'').slideDown();
             }
+        }).on('click', '#hb-apply-coupon', function(){
+            applyCoupon();
         })
     })
 

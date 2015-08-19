@@ -49,7 +49,8 @@ class HB_Meta_Box{
         $meta_box_title = $this->_args['title'];
         $callback       = ! empty( $this->_args['callback'] ) ? $this->_args['callback'] : array( $this, 'render' );
         $post_types     = ! empty( $this->_args['post_type'] ) ? $this->_args['post_type'] : 'post';
-
+        $priority       = ! empty( $this->_args['priority'] ) ? $this->_args['priority'] : 'default';
+        $context        = ! empty( $this->_args['context'] ) ? $this->_args['context'] : 'normal';
         if( is_string( $post_types ) ){
             $post_types = explode( ',', $post_types );
         }
@@ -59,7 +60,9 @@ class HB_Meta_Box{
                 $meta_box_id,
                 $meta_box_title,
                 $callback,
-                $post_type
+                $post_type,
+                $context,
+                $priority
             );
         }
     }
