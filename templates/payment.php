@@ -71,7 +71,7 @@ $cart = HB_Cart::instance();
                 <?php }else{?>
                     <tr>
                         <td colspan="4" class="hb-align-right" >
-                            <input type="text" name="hb-coupon-code" value="SUMMER2015" placeholder="<?php _e( 'Coupon', 'tp-hotel-booking' );?>" style="width: 50%; vertical-align: top;" />
+                            <input type="text" name="hb-coupon-code" value="" placeholder="<?php _e( 'Coupon', 'tp-hotel-booking' );?>" style="width: 50%; vertical-align: top;" />
                             <button type="button" id="hb-apply-coupon"><?php _e( 'Apply Coupon', 'tp-hotel-booking' );?></button>
                         </td>
                     </tr>

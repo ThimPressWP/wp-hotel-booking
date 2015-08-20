@@ -141,6 +141,8 @@ class HB_Ajax{
                 }
                 set_transient('hb_user_coupon_' . session_id(), $coupon, HOUR_IN_SECONDS);
             }
+        }else{
+            $response['message'] = __( 'Coupon does not exist!', 'tp-hotel-booking' );
         }
         hb_send_json(
             $response

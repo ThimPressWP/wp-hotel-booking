@@ -382,6 +382,8 @@
                     response = parseJSON(response)
                     if(response.result == 'success'){
                         window.location.href = window.location.href
+                    }else{
+                        alert(response.message);
                     }
                 }
             });
