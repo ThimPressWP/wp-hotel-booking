@@ -243,6 +243,8 @@
                     var response = parseJSON(code);
                     if (response.result == 'success') {
                         window.location.href = window.location.href;
+                    }else{
+                        alert(response.message);
                     }
                 } catch (e) {
                     alert(e)
@@ -382,8 +384,6 @@
                     response = parseJSON(response)
                     if(response.result == 'success'){
                         window.location.href = window.location.href
-                    }else{
-                        alert(response.message);
                     }
                 }
             });
