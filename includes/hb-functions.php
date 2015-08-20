@@ -432,6 +432,8 @@ function hb_l18n(){
         'empty_check_out_date'          => __( 'Please select check out date', 'tp-hotel-booking' ),
         'check_in_date_must_be_greater' => __( 'Check in date must be greater than the current', 'tp-hotel-booking' ),
         'check_out_date_must_be_greater'    => __( 'Check out date must be greater than the check in', 'tp-hotel-booking' ),
+
+        'enter_coupon_code'             => __( 'Please enter coupon code', 'tp-hotel-booking' )
     );
     return apply_filters( 'hb_l18n', $translation );
 }

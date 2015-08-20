@@ -226,7 +226,7 @@
     function applyCoupon(){
         var $coupon = $('input[name="hb-coupon-code"]');
         if( ! $coupon.val() ){
-            alert('xxx')
+            alert(hotel_booking_l18n.enter_coupon_code)
             $coupon.focus();
             return false;
         }
