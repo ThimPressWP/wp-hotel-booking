@@ -140,6 +140,7 @@ class HB_Ajax{
                     session_start();
                 }
                 set_transient('hb_user_coupon_' . session_id(), $coupon, HOUR_IN_SECONDS);
+                hb_add_message( __( 'Coupon code applied', 'tp-hotel-booking' ) );
             }
         }else{
             $response['message'] = __( 'Coupon does not exist!', 'tp-hotel-booking' );
