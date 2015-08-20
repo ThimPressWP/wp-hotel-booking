@@ -242,7 +242,7 @@
                 try {
                     var response = parseJSON(code);
                     if (response.result == 'success') {
-                        alert( JSON.stringify(response));
+                        window.location.href = window.location.href;
                     }
                 } catch (e) {
                     alert(e)
@@ -369,7 +369,23 @@
             }
         }).on('click', '#hb-apply-coupon', function(){
             applyCoupon();
-        })
+        }).on('click', '#hb-remove-coupon', function(evt){
+            evt.preventDefault();
+            $.ajax({
+                url: hotel_settings.ajax,
+                type: 'post',
+                dataType: 'html',
+                data: {
+                    action: 'hotel_booking_remove_coupon'
+                },
+                success: function (response) {
+                    response = parseJSON(response)
+                    if(response.result == 'success'){
+                        window.location.href = window.location.href
+                    }
+                }
+            });
+        });
     })
 
 })((jQuery));

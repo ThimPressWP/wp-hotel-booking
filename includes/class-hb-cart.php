@@ -11,6 +11,9 @@ class HB_Cart{
      */
     private static $instance = false;
 
+    /**
+     * @var array
+     */
     protected $_options = array();
 
     /**
@@ -26,6 +29,11 @@ class HB_Cart{
                 'options'   => array(),
                 'products'  => array()
             );
+        }
+        if( HB_Settings::instance()->get( 'enable_coupon' ) ) {
+            if ($coupon = get_transient('hb_user_coupon_' . session_id())) {
+                HB_Coupon::instance($coupon);
+            }
         }
     }
 
@@ -501,11 +509,16 @@ function hb_get_coupons_active( $date, $code = false ){
             )
         );
         if( ( $coupons = get_posts( $args ) ) && $code ){
+            $found = false;
             foreach( $coupons as $coupon ){
-                if( strcasecmp( $coupon->post_title, $code ) == 0 ){
+                if( strcmp( $coupon->post_title, $code ) == 0 ){
                     $coupons = $coupon;
+                    $found = true;
                     break;
                 }
+            }
+            if( ! $found ){
+                $coupons = false;
             }
         }
     }

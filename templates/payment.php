@@ -51,20 +51,41 @@ $cart = HB_Cart::instance();
                 </td>
             </tr>
         <?php }?>
+
+            <?php if( HB_Settings::instance()->get( 'enable_coupon' ) ){?>
+                <?php
+                if( $coupon = get_transient( 'hb_user_coupon_' . session_id() ) ){
+                    $coupon = HB_Coupon::instance( $coupon );
+                    echo 'hb_user_coupon_' . session_id();
+                    ?>
+                    <tr>
+                        <td colspan="3" class="hb-align-right" >
+                            <?php printf( __( 'Coupon applied: %s', 'tp-hotel-booking' ), $coupon->coupon_code );?>
+                            <p class="hb-remove-coupon" align="right">
+                                <a href="" id="hb-remove-coupon"><?php _e( 'Remove', 'tp-hotel-booking' );?></a>
+                            </p>
+                        </td>
+                        <td class="hb-align-right">
+                            -<?php echo hb_format_price( $coupon->discount_value );?>
+                        </td>
+                    </tr>
+                <?php }else{?>
+                    <tr>
+                        <td colspan="4" class="hb-align-right" >
+                            <input type="text" name="hb-coupon-code" value="SUMMER2015" placeholder="<?php _e( 'Coupon', 'tp-hotel-booking' );?>" style="width: 50%; vertical-align: top;" />
+                            <button type="button" id="hb-apply-coupon"><?php _e( 'Apply Coupon', 'tp-hotel-booking' );?></button>
+                        </td>
+                    </tr>
+                <?php } ?>
+            <?php } ?>
+
             <tr>
                 <td colspan="3"><?php _e( 'Sub Total', 'tp-hotel-booking' );?></td>
                 <td class="hb-align-right">
                     <?php echo hb_format_price( $cart->sub_total );?>
                 </td>
             </tr>
-            <?php if( HB_Settings::instance()->get( 'enable_coupon' ) ){?>
-            <tr>
-                <td colspan="4" class="hb-align-right" >
-                    <input type="text" name="hb-coupon-code" placeholder="<?php _e( 'Coupon', 'tp-hotel-booking' );?>" style="width: 50%; vertical-align: top;" />
-                    <button type="button" id="hb-apply-coupon"><?php _e( 'Apply Coupon', 'tp-hotel-booking' );?></button>
-                </td>
-            </tr>
-            <?php } ?>
+
             <?php if( $tax = hb_get_tax_settings() ){?>
             <tr>
                 <td colspan="3">

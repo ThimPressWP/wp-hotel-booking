@@ -13,7 +13,7 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
         parent::__construct();
         $this->_title = __( 'Offline Payment', 'tp-hotel-booking' );
         $this->_description = __( 'Pay on arrival', 'tp-hotel-booking' );
-        $this->_settings = HB_Settings::instance()->get('stripe');
+        $this->_settings = HB_Settings::instance()->get('offline-payment');
         $this->init();
     }
 
