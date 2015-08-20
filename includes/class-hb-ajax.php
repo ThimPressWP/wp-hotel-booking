@@ -123,7 +123,6 @@ class HB_Ajax{
 
     static function apply_coupon(){
         ! session_id() && session_start();
-        //check_ajax_referer( 'hb_booking_nonce_action', 'nonce' );
         $code = hb_get_request( 'code' );
         ob_start();
         $today = strtotime( date('m/d/Y') );
@@ -131,13 +130,17 @@ class HB_Ajax{
         $output = ob_get_clean();
         $response = array();
         if( $coupon ){
-            $response['result'] = 'success';
-            $response['type'] = get_post_meta( $coupon->ID, '_hb_coupon_discount_type', true );
-            $response['value'] = get_post_meta( $coupon->ID, '_hb_coupon_discount_value', true );
-            if( ! session_id() ){
-                session_start();
+            $coupon = HB_Coupon::instance( $coupon );
+            $response = $coupon->validate();
+            if( $response['is_valid'] ) {
+                $response['result'] = 'success';
+                $response['type'] = get_post_meta($coupon->ID, '_hb_coupon_discount_type', true);
+                $response['value'] = get_post_meta($coupon->ID, '_hb_coupon_discount_value', true);
+                if (!session_id()) {
+                    session_start();
+                }
+                set_transient('hb_user_coupon_' . session_id(), $coupon, HOUR_IN_SECONDS);
             }
-            set_transient( 'hb_user_coupon_' . session_id(), $coupon, HOUR_IN_SECONDS );
         }
         hb_send_json(
             $response

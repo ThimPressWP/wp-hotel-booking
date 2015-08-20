@@ -171,7 +171,7 @@ class HB_Meta_Box{
         foreach( $this->_fields as $field ){
             if( array_key_exists( $this->_args['meta_key_prefix'] . $field['name'], $_POST ) ) {
                 $meta_value = $_POST[$this->_args['meta_key_prefix'] . $field['name']];
-                $meta_value = apply_filters( 'hb_meta_box_update_meta_value', $meta_value, $field['name'], $this->_args['name'] );
+                $meta_value = apply_filters( 'hb_meta_box_update_meta_value', $meta_value, $field['name'], $this->_args['name'], $post_id );
                 update_post_meta($post_id, $this->_args['meta_key_prefix'] . $field['name'], $meta_value );
             }
         }

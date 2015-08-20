@@ -247,6 +247,10 @@ class HB_Cart{
         unset( $_SESSION['hb_cart'] );
     }
 
+    function update_order_status( $status ){
+
+    }
+
     /**
      * Get an instance of HB_Cart
      *
@@ -371,9 +375,46 @@ function hb_generate_transaction_object( $customer_id ){
     $transaction_object->total_nights           = $cart->total_nights;
     $transaction_object->currency               = hb_get_currency();
 
+    if( HB_Settings::instance()->get( 'enable_coupon' ) && $coupon = get_transient( 'hb_user_coupon_' . session_id() ) ){
+        $coupon = HB_Coupon::instance( $coupon );
+        $transaction_object->coupon = array(
+            'id'        => $coupon->ID,
+            'code'      => $coupon->coupon_code,
+            'value'     => $coupon->discount_value
+        );
+    }
+
     $transaction_object = apply_filters( 'hb_generate_transaction_object', $transaction_object );
 
     return $transaction_object;
+}
+
+/**
+ * Update booking status
+ *
+ * @param int
+ * @param string
+ */
+function hb_update_booking_status( $booking_id, $status ){
+    $old_status = get_post_meta( $booking_id, '_hb_booking_status', true );
+
+    if( strcasecmp( $old_status, $status ) != 0 ) {
+        update_post_meta($booking_id, '_hb_booking_status', $status);
+        if ($coupon = get_post_meta($booking_id, '_hb_coupon', true)) {
+            $usage_count = get_post_meta($coupon['id'], '_hb_usage_count', true);
+            if (strcasecmp($status, 'complete') == 0) {
+                $usage_count++;
+            } else {
+                if ($usage_count > 0) {
+                    $usage_count--;
+                }else{
+                    $usage_count = 0;
+                }
+            }
+            update_post_meta( $coupon['id'], '_hb_usage_count', $usage_count );
+        }
+        do_action( 'hb_update_booking_status', $status, $old_status, $booking_id );
+    }
 }
 
 /**
@@ -450,7 +491,8 @@ function hb_add_booking( $transaction ){
         '_hb_method'                => $transaction['method'],
         '_hb_method_title'          => hb_get_payment_method_title( $transaction['method'] ),
         '_hb_method_id'             => $transaction['method_id'],
-        '_hb_booking_status'        => $transaction['status']
+        '_hb_booking_status'        => $transaction['status'],
+        '_hb_coupon'                => $transaction_object->coupon
     );
 
     $booking->set_booking_info(

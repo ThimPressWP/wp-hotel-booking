@@ -56,7 +56,6 @@ $cart = HB_Cart::instance();
                 <?php
                 if( $coupon = get_transient( 'hb_user_coupon_' . session_id() ) ){
                     $coupon = HB_Coupon::instance( $coupon );
-                    echo 'hb_user_coupon_' . session_id();
                     ?>
                     <tr>
                         <td colspan="3" class="hb-align-right" >

@@ -201,15 +201,29 @@ function hb_add_meta_boxes(){
             'min'       => 0
         ),
         array(
-            'name'      => 'limit_per_customer',
-            'label'     => __( 'Usage limit per customer', 'tp-hotel-booking' ),
-            'type'      => 'number',
-            'desc'      => __( 'How many times this coupon can be used by an individual customer.', 'tp-hotel-booking' ),
-            'min'       => 0
+            'name'      => 'used',
+            'label'     => __( 'Used', 'tp-hotel-booking' ),
+            'type'      => 'label',
+            'filter'    => 'hb_meta_box_field_coupon_used'
         )
+//        array(
+//            'name'      => 'limit_per_customer',
+//            'label'     => __( 'Usage limit per customer', 'tp-hotel-booking' ),
+//            'type'      => 'number',
+//            'desc'      => __( 'How many times this coupon can be used by an individual customer.', 'tp-hotel-booking' ),
+//            'min'       => 0
+//        )
     );
 }
 add_action( 'init', 'hb_add_meta_boxes', 50 );
+
+function hb_meta_box_coupon_settings_update_meta_value( $meta_value, $field_name, $meta_box_name, $post_id  ){
+    if( $field_name == 'booking_status' ){
+        hb_update_booking_status( $post_id, $meta_value );
+    }
+    return $meta_value;
+}
+add_filter( 'hb_meta_box_update_meta_value', 'hb_meta_box_coupon_settings_update_meta_value', 10, 4 );
 
 function hb_update_meta_box_room_settings( $post_id ){
     wp_set_object_terms( $post_id, intval( $_POST['_hb_room_type'] ), 'hb_room_type' );
@@ -840,4 +854,9 @@ function hb_meta_box_field_coupon_date( $value ){
         return date('m/d/Y', $value);
     }
     return $value;
+}
+
+function hb_meta_box_field_coupon_used( $value ){
+    global $post;
+    return intval( get_post_meta( $post->ID, '_hb_usage_count', true ) );
 }

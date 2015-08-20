@@ -83,6 +83,38 @@ class HB_Coupon{
         $discount = $this->get_discount_value();
         return $sub_total - $discount;
     }
+
+    function get_cart_sub_total(){
+        remove_filter( 'hb_cart_sub_total', array( $this, 'apply_sub_total_discount' ), 999 );
+        $cart = HB_Cart::instance();
+        $cart_sub_total = $cart->get_sub_total();
+        add_filter( 'hb_cart_sub_total', array( $this, 'apply_sub_total_discount' ), 999 );
+        return $cart_sub_total;
+    }
+
+    function validate(){
+        $return = array(
+            'is_valid'      => false
+        );
+        if( ! empty( $this->_settings['minimum_spend' ] ) && ( $minimum_spend = intval( $this->_settings['minimum_spend'] ) > 0 ) ){
+            $return['is_valid'] = $this->get_cart_sub_total() >= $minimum_spend;
+        }
+
+        if( $return['is_valid'] &&  ! empty( $this->_settings['maximum_spend' ] ) && ( $maximum_spend = intval( $this->_settings['maximum_spend'] ) > 0 ) ){
+            $return['is_valid'] = $this->get_cart_sub_total() <= $maximum_spend;
+        }
+
+        if( $return['is_valid'] &&  ! empty( $this->_settings['limit_per_coupon' ] ) && ( $limit_per_coupon = intval( $this->_settings['limit_per_coupon'] ) > 0 ) ){
+            $usage_count = ! empty( $this->_settings['usage_count'] ) ? intval( $this->_settings['usage_count'] ) : 0;
+            $return['is_valid'] = $limit_per_coupon > $usage_count;
+        }
+
+        /*if( $return['is_valid'] &&  ! empty( $this->_settings['limit_per_customer' ] ) && ( $limit_per_customer = intval( $this->_settings['limit_per_customer'] ) > 0 ) ){
+            //$return['is_valid'] = $this->get_cart_sub_total() <= $maximum_spend;
+        }*/
+        return $return;
+    }
+
     /**
      * Get unique instance of HB_Room
      *
@@ -95,6 +127,8 @@ class HB_Coupon{
             $id = $coupon->ID;
         }elseif( is_object( $coupon ) && isset( $coupon->ID ) ){
             $id = $coupon->ID;
+        }elseif( $coupon instanceof HB_Coupon ) {
+            return $coupon;
         }else{
             $id = $coupon;
         }

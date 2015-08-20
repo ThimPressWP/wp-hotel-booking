@@ -989,16 +989,6 @@ function hb_get_bookings( $args = array() ){
 }
 
 /**
- * Update booking status
- *
- * @param int
- * @param string
- */
-function hb_update_booking_status( $booking_id, $status ){
-    update_post_meta( $booking_id, '_hb_booking_status', $status );
-}
-
-/**
  *
  */
 function hb_maybe_modify_page_content(){
