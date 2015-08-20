@@ -521,6 +521,9 @@ function hb_add_booking( $transaction ){
 
         add_post_meta( $booking_id, '_hb_room_price', $prices );
     }
+
+    delete_transient( 'hb_user_coupon_' . session_id() );
+
     return $booking_id;
 }
 

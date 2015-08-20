@@ -153,6 +153,7 @@ class HB_Ajax{
     static function remove_coupon(){
         ! session_id() && session_start();
         delete_transient( 'hb_user_coupon_' . session_id() );
+        hb_add_message( __( 'Coupon code removed', 'tp-hotel-booking' ) );
         hb_send_json(
             array(
                 'result' => 'success'
