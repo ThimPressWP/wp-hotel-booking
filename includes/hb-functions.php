@@ -823,13 +823,15 @@ function hb_format_price( $price, $with_currency = true ){
 function hb_search_rooms( $args = array() ){
     global $wpdb;
 
-    $tax_id = hb_get_request( 'hb-room-capacities' );
+    /*$tax_id = hb_get_request( 'hb-room-capacities' );
     $tax = get_term( $tax_id, 'hb_room_capacity' );
     if( ! is_wp_error( $tax ) ){
         $adults = get_option( 'hb_taxonomy_capacity_' . $tax_id );
     }else{
         $adults = -1;
-    }
+    }*/
+
+    $adults = hb_get_request( 'adults' );
 
     $args = wp_parse_args(
         $args,
