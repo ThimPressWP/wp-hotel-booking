@@ -102,15 +102,14 @@ class HB_Ajax{
 
         $check_in   = hb_get_request( 'check_in_date' );
         $check_out  = hb_get_request( 'check_out_date' );
-        $cap_id     = hb_get_request( 'hb-room-capacities' );
+        $adults_capacity     = hb_get_request( 'adults_capacity' );
         $max_child  = hb_get_request( 'max_child' );
 
-        $cap = hb_get_room_type_capacities( $cap_id );
         $params = array(
             'hotel-booking'     => hb_get_request( 'hotel-booking' ),
             'check_in_date'     => $check_in,
             'check_out_date'    => $check_out,
-            'adults'            => $cap,
+            'adults'            => $adults_capacity,
             'max_child'         => $max_child
         );
         hb_send_json(

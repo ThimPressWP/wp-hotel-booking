@@ -1,4 +1,17 @@
 <?php
+function hb_get_max_capacity_of_rooms(){
+    static $max = null;
+    if( ! is_null( $max ) ){
+        return $max;
+    }
+    $terms = get_terms( 'hb_room_capacity', array( 'hide_empty' => false ) );
+    if( $terms ) foreach( $terms as $term ){
+        if( ( $cap = get_option( "hb_taxonomy_capacity_{$term->term_id}") ) && ( intval( $cap ) > $max ) ){
+            $max = $cap;
+        }
+    }
+    return $max;
+}
 /**
  * List room capacities into dropdown select
  *
@@ -155,6 +168,16 @@ function hb_get_child_per_room(){
 }
 
 /**
+ * Get list of child per each room with all available rooms
+ *
+ * @return mixed
+ */
+function hb_get_max_child_of_rooms(){
+    $rows = hb_get_child_per_room();
+    return $rows ? end( $rows ) : -1;
+}
+
+/**
  * List child of room into dropdown select
  *
  * @param array $args
@@ -167,11 +190,12 @@ function hb_dropdown_child_per_room( $args = array() ){
             'selected'  => ''
         )
     );
-    $rows = hb_get_child_per_room();
+    $max_child = hb_get_max_child_of_rooms();
     $output = '<select name="' . $args['name'] . '">';
-    if( $rows ){
-        foreach( $rows as $num ){
-            $output .= sprintf( '<option value="%1$d"%2$s>%1$d</option>', $num, $args['selected'] == $num ? ' selected="selected"' : '' );
+        $output .= '<option value="0">' . __( '--Select--','tp-hotel-booking' ) . '</option>';
+    if( $max_child > 0 ){
+        for( $i = 1; $i <= $max_child; $i++ ){
+            $output .= sprintf( '<option value="%1$d"%2$s>%1$d</option>', $i, $args['selected'] == $i ? ' selected="selected"' : '' );
         }
     }
     $output .= '</select>';
@@ -822,17 +846,7 @@ function hb_format_price( $price, $with_currency = true ){
 
 function hb_search_rooms( $args = array() ){
     global $wpdb;
-
-    /*$tax_id = hb_get_request( 'hb-room-capacities' );
-    $tax = get_term( $tax_id, 'hb_room_capacity' );
-    if( ! is_wp_error( $tax ) ){
-        $adults = get_option( 'hb_taxonomy_capacity_' . $tax_id );
-    }else{
-        $adults = -1;
-    }*/
-
     $adults = hb_get_request( 'adults' );
-
     $args = wp_parse_args(
         $args,
         array(

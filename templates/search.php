@@ -21,26 +21,30 @@ $max_child = 2;
                 </div>
             </li>
             <li class="hb-form-field">
-                <label><?php _e( 'Adults', 'tp-hotel-booking' );?></label>
+                <label><?php _e( 'Adults per room', 'tp-hotel-booking' );?></label>
                 <div class="hb-form-field-input">
                     <?php
-                        hb_dropdown_room_capacities(
+                        hb_dropdown_numbers(
                             array(
-                                'name'      => 'capacity_id',
-                                'selected'  => $adults
+                                'name'      => 'adults_capacity',
+                                'min'       => 1,
+                                'max'       => hb_get_max_capacity_of_rooms(),
                             )
                         );
                     ?>
                 </div>
             </li>
             <li class="hb-form-field">
-                <label><?php _e( 'Child', 'tp-hotel-booking' );?></label>
+                <label><?php _e( 'Child per room', 'tp-hotel-booking' );?></label>
                 <div class="hb-form-field-input">
                     <?php
-                    hb_dropdown_child_per_room(
+                    hb_dropdown_numbers(
                         array(
                             'name'      => 'max_child',
-                            'selected'  => $max_child
+                            'min'   => 1,
+                            'max'   => hb_get_max_child_of_rooms(),
+                            'show_option_none'  => __( '--Select--', 'tp-hotel-booking' ),
+                            'option_none_value' => 0
                         )
                     );
                     ?>
