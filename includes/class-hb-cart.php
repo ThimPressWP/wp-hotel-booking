@@ -487,10 +487,11 @@ function hb_add_booking( $transaction ){
         '_hb_method'                => $transaction['method'],
         '_hb_method_title'          => hb_get_payment_method_title( $transaction['method'] ),
         '_hb_method_id'             => $transaction['method_id'],
-        '_hb_booking_status'        => $transaction['status'],
-        '_hb_coupon'                => $transaction_object->coupon
+        '_hb_booking_status'        => $transaction['status']
     );
-
+    if( ! empty( $transaction_object->coupon ) ){
+        $booking_info['_hb_coupon'] = $transaction_object->coupon;
+    }
     $booking->set_booking_info(
         $booking_info
     );

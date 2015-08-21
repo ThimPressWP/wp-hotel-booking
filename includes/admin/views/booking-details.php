@@ -140,20 +140,26 @@ $booking_id = hb_get_request( 'id' );
         <?php
         }
         ?>
+        <?php if( $coupon = get_post_meta( $booking_id, '_hb_coupon', true ) ){?>
             <tr>
-                <th colspan="3" align="left"><?php _e( 'Sub Total ', 'tp-hotel-booking' ); ?></th>
+                <th colspan="3" align="left"><?php printf( __( 'Coupon Applied (%s)', 'tp-hotel-booking' ), $coupon['code'] ); ?></th>
+                <td align="right">-<?php echo hb_format_price( $coupon['value'], $currency_symbol ); ?></td>
+            </tr>
+        <?php }?>
+            <tr>
+                <th colspan="3" align="left"><?php _e( 'Sub Total', 'tp-hotel-booking' ); ?></th>
                 <td align="right"><?php echo hb_format_price( get_post_meta( $booking_id, '_hb_sub_total', true ), $currency_symbol ); ?></td>
             </tr>
             <tr>
-                <th colspan="3" align="left"><?php _e( 'Price including tax ', 'tp-hotel-booking' ); ?></th>
+                <th colspan="3" align="left"><?php _e( 'Price including tax', 'tp-hotel-booking' ); ?></th>
                 <td align="right"><?php echo get_post_meta( $booking_id, '_hb_price_including_tax', true ) == 'yes' ? __( 'Yes', 'tp-hotel-booking') : __( 'No', 'tp-hotel-booking'); ?></td>
             </tr>
             <tr>
-                <th colspan="3" align="left"><?php _e( 'Tax ', 'tp-hotel-booking' ); ?></th>
+                <th colspan="3" align="left"><?php _e( 'Tax', 'tp-hotel-booking' ); ?></th>
                 <td align="right"><?php echo get_post_meta( $booking_id, '_hb_tax', true ) * 100; ?>%</td>
             </tr>
             <tr>
-                <th colspan="3" align="left"><?php _e( 'Total ', 'tp-hotel-booking' ); ?></th>
+                <th colspan="3" align="left"><?php _e( 'Total', 'tp-hotel-booking' ); ?></th>
                 <td align="right"><?php echo hb_format_price( get_post_meta( $booking_id, '_hb_total', true ), $currency_symbol ); ?></td>
             </tr>
         </tbody>
