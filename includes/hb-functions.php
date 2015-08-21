@@ -549,7 +549,7 @@ function hb_update_customer_info( $data ){
 }
 
 function hb_get_customer( $customer_id ){
-    if( is_string( $customer_id ) ){
+    if( is_string( $customer_id ) && intval( $customer_id ) == 0 ){
         global $wpdb;
         $query = $wpdb->prepare("
             SELECT post_id

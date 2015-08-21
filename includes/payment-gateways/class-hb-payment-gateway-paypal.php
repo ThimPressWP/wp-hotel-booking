@@ -231,7 +231,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         $customer = hb_get_customer( $customer_id );
         $paypal_args = array (
             'cmd'      => '_xclick',
-            'amount'   => hb_get_cart_total( ! hb_get_request( 'pay_all' ) ),
+            'amount'   => round( hb_get_cart_total( ! hb_get_request( 'pay_all' ) ), 2 ),
             'quantity' => '1',
         );
 
@@ -256,7 +256,6 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
             'custom'        => $temp_id,
             'no_shipping'   => '1'
         );
-
         $query = array_merge( $paypal_args, $query );
         $query = apply_filters( 'hb_paypal_standard_query', $query );
 

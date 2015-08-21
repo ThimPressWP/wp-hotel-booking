@@ -184,7 +184,7 @@ class HB_Room{
 
         $nights = hb_count_nights_two_dates( $end_date, $start_date );
         for( $i = 0; $i < $nights; $i++ ){
-            $c_date = $start_date_to_time + $i * DAY_IN_SECONDS * 24;
+            $c_date = $start_date_to_time + $i * DAY_IN_SECONDS;
             $date = date('w', $c_date );
             if( ! isset( $details[ $date ] ) ){
                 $details[ $date ] = array(

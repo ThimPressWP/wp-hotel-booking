@@ -20,7 +20,7 @@ class HB_Cart{
      * Construction
      */
     function __construct(){
-        if( self::$instance ) return;
+        //if( self::$instance ) return;
 
         if( !session_id() ) session_start();
         if( empty( $_SESSION['hb_cart'] ) ){
@@ -35,6 +35,7 @@ class HB_Cart{
                 HB_Coupon::instance($coupon);
             }
         }
+        //die();
     }
 
     /**
@@ -151,7 +152,6 @@ class HB_Cart{
         if( $rooms = $this->get_rooms() ) foreach( $rooms as $room_id => $room ) {
             $sub_total += $room->get_total( $this->check_in_date, $this->check_out_date, $room->get_data( 'num_of_rooms' ), false );
         }
-
         return apply_filters( 'hb_cart_sub_total', $sub_total );
     }
 
@@ -262,11 +262,7 @@ class HB_Cart{
         if( !self::$instance ){
             self::$instance = new self();
         }
-        $ins = self::$instance;
-        if( $prop ) {
-            $prop = 'get_' . $prop;
-        }
-        return $prop && is_callable( array( $ins, $prop ) ) ? call_user_func_array( array( $ins, $prop ), (array)$args ) : $ins;
+        return self::$instance;
     }
 }
 if( !is_admin() ) {
