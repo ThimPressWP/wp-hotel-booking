@@ -195,3 +195,6 @@ th.column-room_type{
     width: 100px;
     text-align: center;
 }
+.negative-price{
+    color: #FF0000;
+}

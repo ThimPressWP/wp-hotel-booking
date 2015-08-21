@@ -143,7 +143,7 @@ $booking_id = hb_get_request( 'id' );
         <?php if( $coupon = get_post_meta( $booking_id, '_hb_coupon', true ) ){?>
             <tr>
                 <th colspan="3" align="left"><?php printf( __( 'Coupon Applied (%s)', 'tp-hotel-booking' ), $coupon['code'] ); ?></th>
-                <td align="right">-<?php echo hb_format_price( $coupon['value'], $currency_symbol ); ?></td>
+                <td align="right" class="negative-price">-<?php echo hb_format_price( $coupon['value'], $currency_symbol ); ?></td>
             </tr>
         <?php }?>
             <tr>
