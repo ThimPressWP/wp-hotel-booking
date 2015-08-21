@@ -185,4 +185,22 @@ $booking_id = hb_get_request( 'id' );
             </tr>
         </tbody>
     </table>
+    <?php if( $addition_information = get_post_field( 'post_content', $booking_id ) ){?>
+    <table class="hb-booking-table">
+        <thead>
+        <tr>
+            <td colspan="2">
+                <h3><?php _e( 'Addition Information', 'tp-hotel-booking') ?></h3>
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td colspan="2">
+                <?php echo $addition_information;?>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <?php }?>
 </div>
