@@ -1326,3 +1326,17 @@ function hb_get_customer_fullname( $customer_id, $with_title = false ){
     $last_name  = get_post_meta( $customer_id, '_hb_last_name', true );
     return sprintf( '%s%s %s', $title ? $title . ' ' : '', $first_name, $last_name );
 }
+/**
+    TODO:
+    - Check render shortcode title, lable
+ */
+function hb_render_label_shortcode( $atts = array(), $name = '', $text = '', $check = '' )
+{
+    $show = false;
+    if( !isset($atts[$name]) || strtolower($atts[$name]) === $check )
+        $show = true;
+    if( $show === false )
+        return;
+
+    echo '<label>'.sprintf(__('%1$s', 'tp-hotel-booking'), $text).'</label>';
+}

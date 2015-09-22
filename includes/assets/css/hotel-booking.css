@@ -4,7 +4,47 @@
     clear: both;
 }
 #hotel-booking-search{
-
+    width: auto;
+    max-width: 100%;
+    padding: 35px;
+}
+#hotel-booking-search input,
+#hotel-booking-search select,
+#hotel-booking-search textarea,
+#hotel-booking-search button{
+    position: relative;
+    width: auto;
+    min-width: 200px;
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    font-size: 15px;
+    color: #7a7a7a;
+    padding: 12px 8px;
+    line-height: 15px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+#hotel-booking-search button{
+    background-color: #2eb0d1;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+}
+#hotel-booking-search input:hover,
+#hotel-booking-search select:hover,
+#hotel-booking-search textarea:hover,
+#hotel-booking-search button:hover,
+#hotel-booking-search input:focus,
+#hotel-booking-search select:focus,
+#hotel-booking-search textarea:focus,
+#hotel-booking-search button:focus{
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
 }
 .hb-search-form{
 
@@ -20,8 +60,13 @@
 .hb-form-field-label{
     display: block;
     font-weight: bold;
+    font-size: 15px;
+    color: #000;
 }
 .hb-form-field-input{
+
+}
+.hb_input_date_check{
 
 }
 .hb-form-field.label-left .hb-form-field-label,

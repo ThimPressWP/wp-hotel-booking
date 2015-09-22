@@ -58,6 +58,11 @@ class HB_Shortcodes{
         $template_args['search_page'] = $search_permalink;
 
         /**
+        *  Add argument use in shortcode display
+        */
+        $template_args['atts']         = $atts;
+
+        /**
          * Display the template based on current step
          */
         switch( $page ){

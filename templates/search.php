@@ -5,23 +5,31 @@ $adults = 2;
 $max_child = 2;
 ?>
 <div id="hotel-booking-search">
+<?php
+    // display title widget or shortcode
+    $atts = array();
+    if( $args && isset($args['atts']) )
+        $atts = $args['atts'];
+    if ( !isset($atts['show_title']) || strtolower($atts['show_title']) === 'true' ):
+?>
     <h3><?php _e( 'Search your room', 'tp-hotel-booking' );?></h3>
+<?php endif; ?>
     <form name="hb-search-form" action="<?php echo $search_page;?>">
         <ul class="hb-form-table">
             <li class="hb-form-field">
-                <label><?php _e( 'Check-in date', 'tp-hotel-booking' );?></label>
+                <?php hb_render_label_shortcode( $atts, 'show_lable', 'Arrival Date', 'true'); ?>
                 <div class="hb-form-field-input">
-                    <input type="text" name="check_in_date" id="check_in_date" value="<?php echo $check_in_date;?>" placeholder="<?php _e( 'Check in date', 'tp-hotel-booking' );?>" />
+                    <input type="text" name="check_in_date" id="check_in_date" class="hb_input_date_check" value="<?php echo $check_in_date;?>" placeholder="<?php _e( 'Arrival Date', 'tp-hotel-booking' );?>" />
                 </div>
             </li>
             <li class="hb-form-field">
-                <label><?php _e( 'Check-out date', 'tp-hotel-booking' );?></label>
+                <?php hb_render_label_shortcode( $atts, 'show_lable', 'Departure Date', 'true'); ?>
                 <div class="hb-form-field-input">
-                    <input type="text" name="check_out_date" id="check_out_date" value="<?php echo $check_out_date;?>" placeholder="<?php _e( 'Check out date', 'tp-hotel-booking' );?>" />
+                    <input type="text" name="check_out_date" id="check_out_date" class="hb_input_date_check" value="<?php echo $check_out_date;?>" placeholder="<?php _e( 'Departure Date', 'tp-hotel-booking' );?>" />
                 </div>
             </li>
             <li class="hb-form-field">
-                <label><?php _e( 'Adults per room', 'tp-hotel-booking' );?></label>
+                <?php hb_render_label_shortcode( $atts, 'show_lable', 'Adults', 'true'); ?>
                 <div class="hb-form-field-input">
                     <?php
                         hb_dropdown_numbers(
@@ -29,13 +37,15 @@ $max_child = 2;
                                 'name'      => 'adults_capacity',
                                 'min'       => 1,
                                 'max'       => hb_get_max_capacity_of_rooms(),
+                                'show_option_none'  => __( 'Adults', 'tp-hotel-booking' ),
+                                'option_none_value' => 0
                             )
                         );
                     ?>
                 </div>
             </li>
             <li class="hb-form-field">
-                <label><?php _e( 'Child per room', 'tp-hotel-booking' );?></label>
+                <?php hb_render_label_shortcode( $atts, 'show_lable', 'Children', 'true'); ?>
                 <div class="hb-form-field-input">
                     <?php
                     hb_dropdown_numbers(
@@ -43,7 +53,7 @@ $max_child = 2;
                             'name'      => 'max_child',
                             'min'   => 1,
                             'max'   => hb_get_max_child_of_rooms(),
-                            'show_option_none'  => __( '--Select--', 'tp-hotel-booking' ),
+                            'show_option_none'  => __( 'Children', 'tp-hotel-booking' ),
                             'option_none_value' => 0
                         )
                     );
@@ -52,11 +62,11 @@ $max_child = 2;
             </li>
         </ul>
         <?php //echo $ajax_nonce = wp_create_nonce( "hb_search_nonce_action" );?>
-        <?php wp_nonce_field( 'hb_search_nonce_action', 'nonce' );?>
+        <?php wp_nonce_field( 'hb_search_nonce_action', 'nonce' ); ?>
         <input type="hidden" name="hotel-booking" value="results" />
         <input type="hidden" name="action" value="hotel_booking_parse_search_params" />
         <p>
-        <button type="submit"><?php _e( 'Search', 'tp-hotel-booking' );?></button>
+        <button type="submit"><?php _e( 'Check Availability', 'tp-hotel-booking' );?></button>
         </p>
     </form>
 </div>

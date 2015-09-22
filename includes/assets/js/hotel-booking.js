@@ -260,7 +260,7 @@
         $("#check_in_date").datepicker({
             minDate: 0,
             maxDate: "+365D",
-            numberOfMonths: 2,
+            numberOfMonths: 1,
             onSelect: function(selected) {
                 var date = jQuery(this).datepicker('getDate');
                 if(date){
@@ -273,7 +273,7 @@
         $("#check_out_date").datepicker({
             minDate: 0,
             maxDate:"+365D",
-            numberOfMonths: 2,
+            numberOfMonths: 1,
             onSelect: function(selected) {
                 $("#check_in_date").datepicker("option","maxDate", selected)
             }
