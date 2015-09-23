@@ -34,7 +34,17 @@ class HB_Widget_Search extends WP_Widget{
             echo $args['before_title'] . $title . $args['after_title'];
         }
         $search = hb_get_page_permalink( 'search' );
-        echo do_shortcode('[hotel_booking search_page="' . $search . '"]');
+
+        // check show title search form
+        $show_title = 'true';
+        if( isset($instance['show_title']) )
+            $show_title = $instance['show_title'];
+        // check show label search form
+        $show_label = 'true';
+        if( isset($instance['show_label']) )
+            $show_label = $instance['show_label'];
+
+        echo do_shortcode('[hotel_booking search_page="' . $search . '" show_title="'.$show_title.'" show_label="'.$show_label.'"]');
         echo $args['after_widget'];
     }
 
@@ -44,10 +54,21 @@ class HB_Widget_Search extends WP_Widget{
      */
     function form( $instance ){
         $title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Search your room', 'tp-hotel-booking' );
+        $checked_title = ( !isset($instance['show_title']) || $instance['show_title'] === 'true' ) ? 'checked' : '';
+        $checked_label = ( !isset($instance['show_label']) || $instance['show_label'] === 'true' ) ? 'checked' : '';
         ?>
         <p>
             <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
             <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+        </p>
+        <!--show title, label form-->
+        <p>
+            <input type="checkbox" id="<?php echo esc_attr($this->get_field_id( 'show_title' )); ?>" name="<?php echo esc_attr($this->get_field_name( 'show_title' )); ?>" value="true"<?php echo $checked_title; ?>>
+            <label for="<?php echo $this->get_field_id( 'show_title' ); ?>"><?php _e( 'Show title search form' ) ?></label>
+        </p>
+        <p>
+            <input type="checkbox" id="<?php echo esc_attr($this->get_field_id( 'show_label' )); ?>" name="<?php echo esc_attr($this->get_field_name( 'show_label' )); ?>" value="true"<?php echo $checked_label; ?>>
+            <label for="<?php echo $this->get_field_id( 'show_label' ); ?>"><?php _e( 'Show label search form' ) ?></label>
         </p>
         <?php
     }
@@ -63,6 +84,9 @@ class HB_Widget_Search extends WP_Widget{
         $instance = array();
         $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
 
+        // show title, label form
+        $instance['show_title'] = ( isset( $new_instance['show_title'] ) ) ? strip_tags( $new_instance['show_title'] ) : 'false';
+        $instance['show_label'] = ( isset( $new_instance['show_label'] ) ) ? strip_tags( $new_instance['show_label'] ) : 'false';
         return $instance;
     }
 }
