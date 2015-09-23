@@ -17,19 +17,19 @@ $max_child = 2;
     <form name="hb-search-form" action="<?php echo $search_page;?>">
         <ul class="hb-form-table">
             <li class="hb-form-field">
-                <?php hb_render_label_shortcode( $atts, 'show_lable', 'Arrival Date', 'true'); ?>
-                <div class="hb-form-field-input">
+                <?php hb_render_label_shortcode( $atts, 'show_label', 'Arrival Date', 'true'); ?>
+                <div class="hb-form-field-input hb_input_field">
                     <input type="text" name="check_in_date" id="check_in_date" class="hb_input_date_check" value="<?php echo $check_in_date;?>" placeholder="<?php _e( 'Arrival Date', 'tp-hotel-booking' );?>" />
                 </div>
             </li>
             <li class="hb-form-field">
-                <?php hb_render_label_shortcode( $atts, 'show_lable', 'Departure Date', 'true'); ?>
-                <div class="hb-form-field-input">
+                <?php hb_render_label_shortcode( $atts, 'show_label', 'Departure Date', 'true'); ?>
+                <div class="hb-form-field-input hb_input_field">
                     <input type="text" name="check_out_date" id="check_out_date" class="hb_input_date_check" value="<?php echo $check_out_date;?>" placeholder="<?php _e( 'Departure Date', 'tp-hotel-booking' );?>" />
                 </div>
             </li>
             <li class="hb-form-field">
-                <?php hb_render_label_shortcode( $atts, 'show_lable', 'Adults', 'true'); ?>
+                <?php hb_render_label_shortcode( $atts, 'show_label', 'Adults', 'true'); ?>
                 <div class="hb-form-field-input">
                     <?php
                         hb_dropdown_numbers(
@@ -45,7 +45,7 @@ $max_child = 2;
                 </div>
             </li>
             <li class="hb-form-field">
-                <?php hb_render_label_shortcode( $atts, 'show_lable', 'Children', 'true'); ?>
+                <?php hb_render_label_shortcode( $atts, 'show_label', 'Children', 'true'); ?>
                 <div class="hb-form-field-input">
                     <?php
                     hb_dropdown_numbers(
