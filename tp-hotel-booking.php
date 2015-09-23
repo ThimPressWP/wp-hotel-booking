@@ -10,6 +10,7 @@ Author URI: http://thimpress.com
 
 define( 'HB_FILE', __FILE__ );
 define( 'HB_PLUGIN_PATH', dirname( __FILE__ ) );
+define( 'HB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
 define( 'HB_VERSION', '0.9' );
 /**
  * Class TP_Hotel_Booking
@@ -100,6 +101,7 @@ class TP_Hotel_Booking{
             $this->_include( 'includes/class-hb-shortcodes.php' );
         }
         $this->_include( 'includes/widgets/class-hb-widget-search.php' );
+        $this->_include( 'includes/widgets/class-hb-widget-room-carousel.php' );
         $this->_include( 'includes/class-hb-post-types.php' );
         $this->_include( 'includes/hb-functions.php' );
         $this->_include( 'includes/class-hb-cart.php' );
@@ -156,6 +158,14 @@ class TP_Hotel_Booking{
             'jquery',
             'jquery-ui-datepicker'
         );
+        // carousel libraries
+        $carouselJs = array(
+                'jquery.carouFredSel-6.2.1-packed.js',
+                'jquery.mousewheel.min.js',
+                'jquery.touchSwipe.min.js',
+                'jquery.transit.min.js',
+                'jquery.ba-throttle-debounce.min.js'
+            );
         wp_register_script( 'jquery-ui-datepicker', $this->plugin_url( 'includes/assets/js/jquery.ui.datepicker.min.js' ), array( 'jquery' ) );
         wp_register_style( 'jquery-ui-datepicker', $this->plugin_url( 'includes/assets/css/jquery.ui.datepicker.css' ) );
         if( is_admin() ){
@@ -167,6 +177,11 @@ class TP_Hotel_Booking{
             wp_register_script( 'tp-hotel-booking', $this->plugin_url( 'includes/assets/js/hotel-booking.js' ), $dependencies );
 
             wp_localize_script( 'tp-hotel-booking', 'hotel_booking_l18n', hb_l18n() );
+
+            // rooms slider widget
+            foreach ($carouselJs as $key => $lib) {
+                wp_register_script( 'tp-hotel-booking-'.$key, $this->plugin_url( 'includes/assets/js/carousel/' . $lib ), $dependencies );
+            }
         }
 
         if( is_admin() ) {
@@ -177,6 +192,10 @@ class TP_Hotel_Booking{
             wp_enqueue_style( 'jquery-ui-datepicker' );
             wp_enqueue_style( 'tp-hotel-booking' );
             wp_enqueue_script( 'tp-hotel-booking' );
+            // rooms slider widget
+            foreach ($carouselJs as $key => $lib) {
+                wp_enqueue_script( 'tp-hotel-booking-'.$key, $this->plugin_url( 'includes/assets/js/carousel/' . $lib ) );
+            }
         }
     }
 
@@ -198,6 +217,7 @@ class TP_Hotel_Booking{
      */
     function register_widgets() {
         register_widget( 'HB_Widget_Search' );
+        register_widget( 'HB_Widget_Room_Carousel' );
     }
 
     /**
