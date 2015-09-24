@@ -23,6 +23,7 @@ class HB_Autoloader {
         spl_autoload_register( array( $this, 'autoload' ) );
 
         $this->include_path = untrailingslashit( HB_PLUGIN_PATH ) . '/includes/';
+        add_filter('template_include', array($this, 'template_loader'));
     }
 
     /**
@@ -64,6 +65,12 @@ class HB_Autoloader {
                 //if ( empty( $path ) || ( ! $this->load_file( $path . $file ) && strpos( $class, 'lpr_' ) === 0 ) ) {
         $this->load_file( $path . $file );
         //}
+    }
+
+    public function template_loader($template)
+    {
+        $tpl_path = get_page_template();
+        return $template;
     }
 }
 

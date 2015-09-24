@@ -53,7 +53,7 @@ class HB_Widget_Search extends WP_Widget{
      * @param $instance
      */
     function form( $instance ){
-        $title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Search your room', 'tp-hotel-booking' );
+        $title = ! empty( $instance['title'] ) ? $instance['title'] : '';
         $checked_title = ( !isset($instance['show_title']) || $instance['show_title'] === 'true' ) ? 'checked' : '';
         $checked_label = ( !isset($instance['show_label']) || $instance['show_label'] === 'true' ) ? 'checked' : '';
         ?>
