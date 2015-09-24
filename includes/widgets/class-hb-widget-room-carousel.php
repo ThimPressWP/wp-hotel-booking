@@ -37,7 +37,7 @@ class HB_Widget_Room_Carousel extends WP_Widget{
         $currentcy = hb_get_currency_symbol();
         if( $terms ):
     ?>
-            <div id="<?php echo $args['widget_id'] ?>">
+            <div id="<?php echo $args['widget_id'] ?>" class="hb_room_carousel_container">
                 <div class="hb_room_carousel">
                     <?php foreach ($terms as $key => $term): ?>
                         <?php $galleries = get_option( 'hb_taxonomy_thumbnail_' . $term->term_id ); ?>
@@ -70,7 +70,7 @@ class HB_Widget_Room_Carousel extends WP_Widget{
                                                 }
                                                 else
                                                 {
-                                                    echo current($prices) . $currentcy;
+                                                    echo $current . $currentcy;
                                                 }
                                             ?>
                                         </span>
@@ -98,11 +98,11 @@ class HB_Widget_Room_Carousel extends WP_Widget{
                             items: {
                                 height: 'auto',
                                 visible: {
-                                    min: 1,
-                                    max: 4
+                                    min: <?php echo $items ?>,
+                                    max: <?php echo $items ?>
                                 }
                             },
-                            width: '100%',
+                            width: 'auto',
                             prev: {
                                 button: '#<?php echo $args['widget_id'] ?> .navigation .prev'
                             },
@@ -114,11 +114,18 @@ class HB_Widget_Room_Carousel extends WP_Widget{
                             pauseOnHover: true,
                             onCreate: function()
                             {
-                                var elementWidth = $(this).width();
-                                var itemWidth = elementWidth / <?php echo $items ?>;
-                                $(this).find('.item').css({'width': itemWidth});
+                                
                             },
-                            swipe: true
+                            swipe: {
+                                onTouch: true,
+                                onMouse: true
+                            },
+                            scroll : {
+                                items           : 1,
+                                easing          : "swing",
+                                duration        : 700,
+                                pauseOnHover    : true
+                            }
                         });
                     });
                 })(jQuery);
