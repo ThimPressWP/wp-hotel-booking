@@ -39,6 +39,21 @@ class HB_Widget_Room_Carousel extends WP_Widget{
         if( $terms ):
     ?>
             <div id="<?php echo $args['widget_id'] ?>" class="hb_room_carousel_container">
+                <!--navigation-->
+                <?php if( !isset($instance['navigation']) || $instance['navigation'] ): ?>
+                    <div class="navigation">
+                        <div class="prev"><i class="fa fa-angle-left"></i></div>
+                        <div class="next"><i class="fa fa-angle-right"></i></div>
+                    </div>
+                <?php endif; ?>
+                <!--pagination-->
+                <?php if( !isset($instance['pagination']) || $instance['pagination'] ): ?>
+                    <div class="pagination"></div>
+                <?php endif; ?>
+                <!--text_link-->
+                <?php if( isset($instance['text_link']) && $instance['text_link'] !== '' ): ?>
+                    <div class="text_link"><a href="#"><?php echo $instance['text_link']; ?></a></div>
+                <?php endif; ?>
                 <div class="hb_room_carousel">
                     <?php foreach ($terms as $key => $term): ?>
                         <?php $galleries = get_option( 'hb_taxonomy_thumbnail_' . $term->term_id ); ?>
@@ -80,18 +95,6 @@ class HB_Widget_Room_Carousel extends WP_Widget{
                             </div>
                     <?php endforeach;?>
                 </div>
-                <?php if( !isset($instance['navigation']) || $instance['navigation'] ): ?>
-                    <div class="navigation">
-                        <div class="prev"><i class="fa fa-angle-left"></i></div>
-                        <div class="next"><i class="fa fa-angle-right"></i></div>
-                    </div>
-                <?php endif; ?>
-                <?php if( !isset($instance['pagination']) || $instance['pagination'] ): ?>
-                    <div class="pagination"></div>
-                <?php endif; ?>
-                <?php if( isset($instance['text_link']) && $instance['text_link'] !== '' ): ?>
-                    <div class="text_link"><a href="#"><?php echo $instance['text_link']; ?></a></div>
-                <?php endif; ?>
             </div>
             <script type="text/javascript">
                 (function($){
