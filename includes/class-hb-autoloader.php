@@ -69,7 +69,19 @@ class HB_Autoloader {
 
     public function template_loader($template)
     {
-        $tpl_path = get_page_template();
+        // if( !is_single() )
+        //     return $template;
+
+        // $post_type = get_post_type();
+
+        // if( $post_type !== 'hb_room' )
+        //     return $template;
+
+        // $template = untrailingslashit(HB_PLUGIN_PATH) . '/templates/single-room.php';
+        // $template = locate_template(array('single-room.php', $template));
+        // if ( '' != $template ) {
+        //     return $template ;
+        // }
         return $template;
     }
 }

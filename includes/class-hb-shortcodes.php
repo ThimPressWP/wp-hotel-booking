@@ -10,6 +10,7 @@ class HB_Shortcodes{
      */
     static function init(){
         add_shortcode( 'hotel_booking', array( __CLASS__, 'hotel_booking' ) );
+        add_shortcode( 'hotel_booking_slider', array( __CLASS__, 'hotel_booking_slider' ) );
     }
 
     /**
@@ -132,6 +133,119 @@ class HB_Shortcodes{
         do_action( 'hb_wrapper_end' );
         $output = ob_get_clean();
         return $output;
+    }
+
+    static function hotel_booking_slider($atts, $content = null)
+    {
+        $number_rooms = isset($atts['rooms']) ? (int)$atts['rooms'] : 10;
+        $size = isset($atts['image_size']) ? $atts['image_size'] : 'thumbnail';
+        $items = isset($atts['number']) ? (int)$atts['number'] : 4;
+        $terms = get_terms( 'hb_room_type', array('hide_empty' => 0));
+        $currentcy = hb_get_currency_symbol();
+        $sliderId = 'hotel_booking_slider_'.uniqid();
+        if( $terms ):
+    ?>
+            <div id="<?php echo $sliderId ?>" class="hb_room_carousel_container">
+                <!--navigation-->
+                <?php if( !isset($atts['navigation']) || $atts['navigation'] ): ?>
+                    <div class="navigation">
+                        <div class="prev"><i class="fa fa-angle-left"></i></div>
+                        <div class="next"><i class="fa fa-angle-right"></i></div>
+                    </div>
+                <?php endif; ?>
+                <!--pagination-->
+                <?php if( !isset($atts['pagination']) || $atts['pagination'] ): ?>
+                    <div class="pagination"></div>
+                <?php endif; ?>
+                <!--text_link-->
+                <?php if( isset($atts['text_link']) && $atts['text_link'] !== '' ): ?>
+                    <div class="text_link"><a href="#"><?php echo $atts['text_link']; ?></a></div>
+                <?php endif; ?>
+                <div class="hb_room_carousel">
+                    <?php foreach ($terms as $key => $term): ?>
+                        <?php $galleries = get_option( 'hb_taxonomy_thumbnail_' . $term->term_id ); ?>
+                        <?php $gallery = $galleries ? $galleries[0] : HB_PLUGIN_URL . '/includes/assets/js/carousel/default.png'; ?>
+                        <?php
+                            $prices = hb_get_price_plan_room($term->term_id);
+                            sort($prices);
+                            $currency = get_option( 'tp_hotel_booking_currency' );
+                        ?>
+                            <div class="item">
+                                <div class="media">
+                                    <a href="<?php echo esc_attr(get_term_link($term, 'hb_room_type')); ?>" class="media-image" title="<?php echo esc_attr($term->name); ?>">
+                                    <?php echo wp_get_attachment_image($gallery, 'large'); ?>
+                                    </a>
+                                </div>
+                                <div class="title">
+                                    <h4>
+                                        <a href="<?php echo esc_attr(get_term_link($term, 'hb_room_type')); ?>" class="media-image"><?php echo esc_attr($term->name); ?></a>
+                                    </h4>
+                                </div>
+                                <?php if( (!isset($atts['price']) || $atts['price'] !== '*') && $prices ): ?>
+                                    <div class="price">
+                                        <span>
+                                            <?php
+                                                $current = current($prices);
+                                                $end = end($prices);
+                                                if( $current !== $end && $atts['price'] === 'min_to_max' )
+                                                {
+                                                    echo $current . ' - ' . $end . $currentcy;
+                                                }
+                                                else
+                                                {
+                                                    echo $current . $currentcy;
+                                                }
+                                            ?>
+                                        </span>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                    <?php endforeach;?>
+                </div>
+            </div>
+            <script type="text/javascript">
+                (function($){
+                    "use strict";
+                    $(document).ready(function(){
+                        $('#<?php echo $sliderId ?> .hb_room_carousel').carouFredSel({
+                            responsive: true,
+                            items: {
+                                height: 'auto',
+                                visible: {
+                                    min: <?php echo $items ?>,
+                                    max: <?php echo $items ?>
+                                }
+                            },
+                            width: 'auto',
+                            prev: {
+                                button: '#<?php echo $sliderId; ?> .navigation .prev'
+                            },
+                            next: {
+                                button: '#<?php echo $sliderId; ?> .navigation .next'
+                            },
+                            pagination: '#<?php echo $sliderId; ?> > .pagination',
+                            mousewheel: true,
+                            pauseOnHover: true,
+                            onCreate: function()
+                            {
+
+                            },
+                            swipe: {
+                                onTouch: true,
+                                onMouse: true
+                            },
+                            scroll : {
+                                items           : 1,
+                                easing          : "swing",
+                                duration        : 700,
+                                pauseOnHover    : true
+                            }
+                        });
+                    });
+                })(jQuery);
+            </script>
+    <?php
+        endif;
     }
 }
 
