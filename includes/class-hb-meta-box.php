@@ -117,7 +117,8 @@ class HB_Meta_Box{
             echo '<ul class="hb-form-table">';
             foreach( $fields as $field ){
                 echo '<li class="hb-form-field">';
-                echo '<label class="hb-form-field-label">' . $field['label'] . '</label>';
+                if( isset($field['label']) && $field['label'] != '' )
+                    echo '<label class="hb-form-field-label">' . $field['label'] . '</label>';
                 if( $this->has_post_meta( $post->ID, $field['name'] ) ) {
                     $field['std'] = get_post_meta( $post->ID, $this->_args['meta_key_prefix'] . $field['name'], true );
                 }

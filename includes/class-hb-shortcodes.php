@@ -10,6 +10,7 @@ class HB_Shortcodes{
      */
     static function init(){
         add_shortcode( 'hotel_booking', array( __CLASS__, 'hotel_booking' ) );
+        add_shortcode( 'hotel_booking_slider', array( __CLASS__, 'hotel_booking_slider' ) );
     }
 
     /**
@@ -132,6 +133,133 @@ class HB_Shortcodes{
         do_action( 'hb_wrapper_end' );
         $output = ob_get_clean();
         return $output;
+    }
+
+    static function hotel_booking_slider($atts, $content = null)
+    {
+        $number_rooms = isset($atts['rooms']) ? (int)$atts['rooms'] : 10;
+        $size = isset($atts['image_size']) ? $atts['image_size'] : 'thumbnail';
+        $items = isset($atts['number']) ? (int)$atts['number'] : 4;
+        // $posts = get_terms( 'hb_room_type', array('hide_empty' => 0)); gallery of room_type taxonmy change to gallery of room post_type
+        $posts = get_posts( array(
+                'post_type'         => 'hb_room',
+                'posts_per_page'    => $number_rooms,
+                'orderby'           => 'date',
+                'order'             => 'DESC',
+                // 'meta_key'          => '_hb_gallery'
+            ) );
+        $currentcy = hb_get_currency_symbol();
+        $sliderId = 'hotel_booking_slider_'.uniqid();
+        $upload_dir = wp_upload_dir();
+        $upload_base_dir = $upload_dir['basedir'];
+        $upload_base_url = $upload_dir['baseurl'];
+        if( $posts ):
+    ?>
+            <div id="<?php echo $sliderId ?>" class="hb_room_carousel_container">
+                <!--navigation-->
+                <?php if( !isset($atts['navigation']) || $atts['navigation'] ): ?>
+                    <div class="navigation">
+                        <div class="prev"><i class="fa fa-angle-left"></i></div>
+                        <div class="next"><i class="fa fa-angle-right"></i></div>
+                    </div>
+                <?php endif; ?>
+                <!--pagination-->
+                <?php if( !isset($atts['pagination']) || $atts['pagination'] ): ?>
+                    <div class="pagination"></div>
+                <?php endif; ?>
+                <!--text_link-->
+                <?php if( isset($atts['text_link']) && $atts['text_link'] !== '' ): ?>
+                    <div class="text_link"><a href="#"><?php echo $atts['text_link']; ?></a></div>
+                <?php endif; ?>
+                <div class="hb_room_carousel">
+                    <?php foreach ($posts as $key => $post): ?>
+                        <?php $galleries = get_post_meta( $post->ID, '_hb_gallery', true ); ?>
+                        <?php
+                            $gallery = ( $galleries && file_exists(untrailingslashit($upload_base_dir).$galleries[0]) ) ? untrailingslashit($upload_base_url).$galleries[0] : HB_PLUGIN_URL . '/includes/assets/js/carousel/default.png';
+                        ?>
+                        <?php
+                            $prices = hb_get_price_plan_room($post->ID);
+                            sort($prices);
+                            $currency = get_option( 'tp_hotel_booking_currency' );
+                            $title = $post->post_title;
+                        ?>
+                            <div class="item">
+                                <div class="media">
+                                    <a href="<?php echo esc_url(get_the_permalink($post->ID)); ?>" class="media-image" title="<?php echo esc_attr($title); ?>">
+                                    <?php //echo wp_get_attachment_image($gallery, 'large'); ?>
+                                    <img src="<?php echo $gallery ?>" alt="<?php echo esc_attr($title); ?>">
+                                    </a>
+                                </div>
+                                <div class="title">
+                                    <h4>
+                                        <a href="<?php echo esc_url(get_the_permalink($post->ID)); ?>" class="media-image"><?php echo $title; ?></a>
+                                    </h4>
+                                </div>
+                                <?php if( (!isset($atts['price']) || $atts['price'] !== '*') && $prices ): ?>
+                                    <div class="price">
+                                        <span>
+                                            <?php
+                                                $current = current($prices);
+                                                $end = end($prices);
+                                                if( $current !== $end && $atts['price'] === 'min_to_max' )
+                                                {
+                                                    echo $current . ' - ' . $end . $currentcy;
+                                                }
+                                                else
+                                                {
+                                                    echo $current . $currentcy;
+                                                }
+                                            ?>
+                                        </span>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                    <?php endforeach;?>
+                </div>
+            </div>
+            <script type="text/javascript">
+                (function($){
+                    "use strict";
+                    $(document).ready(function(){
+                        $('#<?php echo $sliderId ?> .hb_room_carousel').carouFredSel({
+                            responsive: true,
+                            items: {
+                                height: 'auto',
+                                visible: {
+                                    min: <?php echo $items ?>,
+                                    max: <?php echo $items ?>
+                                }
+                            },
+                            width: 'auto',
+                            prev: {
+                                button: '#<?php echo $sliderId; ?> .navigation .prev'
+                            },
+                            next: {
+                                button: '#<?php echo $sliderId; ?> .navigation .next'
+                            },
+                            pagination: '#<?php echo $sliderId; ?> > .pagination',
+                            mousewheel: true,
+                            pauseOnHover: true,
+                            onCreate: function()
+                            {
+
+                            },
+                            swipe: {
+                                onTouch: true,
+                                onMouse: true
+                            },
+                            scroll : {
+                                items           : 1,
+                                easing          : "swing",
+                                duration        : 700,
+                                pauseOnHover    : true
+                            }
+                        });
+                    });
+                })(jQuery);
+            </script>
+    <?php
+        endif;
     }
 }
 

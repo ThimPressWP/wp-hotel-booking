@@ -198,3 +198,95 @@ th.column-room_type{
 .negative-price{
     color: #FF0000;
 }
+
+/*gallerry settings meta box*/
+#gallery_settings{
+    background-color: #F5F5F5;
+    position: relative;
+    border: 1px solid #DDD;
+}
+#gallery_settings .hb-form-field-input{
+    margin-left: 0;
+}
+#gallery_settings:before{
+    content: '';
+    border: 10px solid #DDD;
+    display: inline-block;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    position: absolute;
+    top: -20px;
+    left: 35px;
+}
+#gallery_settings:after{
+    content: '';
+    border: 9px solid #F5F5F5;
+    display: inline-block;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    position: absolute;
+    top: -18px;
+    left: 36px;
+}
+#gallery_settings ul{
+    margin: 5px;
+    padding: 0;
+    overflow: hidden;
+}
+#gallery_settings ul li.attachment{
+    width: 10%;
+    padding: 5px;
+    cursor: move;
+    float: left;
+    margin: 0;
+}
+#gallery_settings ul li.attachment:hover .centered{
+    opacity: 0.4;
+}
+#gallery_settings .attachment-preview{
+    cursor: move;
+}
+.form-field #gallery_settings{
+    width: 95%;
+}
+.attachment.add-new .dashicons{
+    font-size: 40px;
+    line-height: 55px;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 50%;
+    margin-top: -25px;
+    left: 50%;
+    margin-left: -25px;
+    color: #FFF;
+    cursor: pointer;
+}
+.attachment.add-new{
+    cursor: pointer;
+}
+.attachment.add-new:hover .dashicons{
+    color: #00a0d2;
+}
+.attachment .dashicons-trash{
+    position: absolute;
+    z-index: 5;
+    font-size: 24px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    color: #FFF;
+    right: 10px;
+    bottom: 10px;
+    cursor: pointer;
+    display: none;
+}
+.attachment .dashicons-trash:hover{
+    color: #FF0000;
+}
+.attachment:hover .dashicons-trash{
+    display: block;
+}
+/*end gallerry settings meta box*/

@@ -22,10 +22,10 @@ class HB_Post_Types{
         //add_action( 'hb_room_type_edit_form_fields', array( $this, 'taxonomy_custom_fields' ), 10, 2 );
         //add_action( 'hb_room_capacity_edit_form_fields', array( $this, 'taxonomy_custom_fields' ), 10, 2 );
 
-        add_filter( 'manage_edit-hb_room_type_columns', array( $this, 'taxonomy_columns' ) );
+        // add_filter( 'manage_edit-hb_room_type_columns', array( $this, 'taxonomy_columns' ) );
         add_filter( 'manage_edit-hb_room_capacity_columns', array( $this, 'taxonomy_columns' ) );
 
-        add_filter( 'manage_hb_room_type_custom_column', array( $this, 'taxonomy_column_content' ), 10, 3 );
+        // add_filter( 'manage_hb_room_type_custom_column', array( $this, 'taxonomy_column_content' ), 10, 3 );
         add_filter( 'manage_hb_room_capacity_custom_column', array( $this, 'taxonomy_column_content' ), 10, 3 );
 
         add_action( 'edited_hb_room_type', array( $this, 'update_taxonomy_custom_fields' ), 10 );
@@ -37,7 +37,7 @@ class HB_Post_Types{
         add_action( 'manage_hb_room_posts_custom_column', array( $this, 'custom_room_columns_filter' ) );
 
         //add_action( 'hb_room_type_add_form_fields', array( $this, 'room_type_more_fields' ), 10, 2 );
-        add_action( 'hb_room_type_edit_form_fields', array( $this, 'room_type_more_fields' ), 10, 2 );
+        // add_action( 'hb_room_type_edit_form_fields', array( $this, 'room_type_more_fields' ), 10, 2 );
 
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
@@ -303,7 +303,7 @@ class HB_Post_Types{
         $attachment_ids = get_option( 'hb_taxonomy_thumbnail_' . $term->term_id );
         ?>
         <tr class="form-field" id="room-gallery-<?php echo $term->term_id;?>">
-            <th scope="row" valign="top"><label for="term_meta[custom_term_meta]"><?php _e( 'Gallery', 'pippin' ); ?></label></th>
+            <th scope="row" valign="top"><label for="term_meta[custom_term_meta]"><?php _e( 'Gallery', 'tp-hotel-booking' ); ?></label></th>
             <td>
                 <div class="hb-room-gallery">
                     <ul>

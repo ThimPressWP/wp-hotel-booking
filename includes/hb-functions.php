@@ -77,6 +77,31 @@ function hb_dropdown_room_types( $args = array() ){
 }
 
 /**
+ * List room types into dropdown select
+ *
+ * @param array $args
+ * @return string
+ */
+function hb_dropdown_rooms( $args = array('selected' => '') ){
+    $posts = get_posts(
+            array(
+                'post_type'      =>  'hb_room',
+                'posts_per_page'    => 9999
+            )
+        );
+    $output = '<select name="hb-room" id="hb-room-select">';
+    $emptySelected = new stdClass;
+    $emptySelected->ID = '';
+    $emptySelected->post_title = __('---Select Room---', 'tp-hotel-booking');
+    $posts = array_merge( array( $emptySelected ), $posts );
+    foreach ($posts as $key => $post) {
+        $output .= '<option value="'.$post->ID.'"'.( $post->ID === $args['selected'] ? ' selected' : '' ).'>'.$post->post_title.'</option>';
+    }
+    $output .= '</select>';
+    return $output;
+}
+
+/**
  * Get room types taxonomy
  *
  * @param array $args
@@ -1341,15 +1366,26 @@ function hb_render_label_shortcode( $atts = array(), $name = '', $text = '', $ch
     echo '<label>'.sprintf(__('%1$s', 'tp-hotel-booking'), $text).'</label>';
 }
 
-function hb_get_price_plan_room( $term_id = null )
+function hb_get_price_plan_room( $post_id = null )
 {
-    if( $term_id === null )
+    if( $post_id === null )
         return null;
-    global $wpdb;
-    $postmeta = $wpdb->get_row( "SELECT post_id FROM {$wpdb->postmeta} WHERE `meta_key` = '_hb_pricing_plan_room' AND `meta_value` = '{$term_id}'");
-    $prices = get_post_meta($postmeta->post_id, '_hb_pricing_plan_prices', true);
+    $pricing_plans = get_posts(
+        array(
+            'post_type'         => 'hb_pricing_plan',
+            'posts_per_page'    => 9999,
+            'meta_query' => array(
+                array(
+                    'key'       => '_hb_pricing_plan_room',
+                    'value'     => $post_id
+                )
+            )
+        )
+    );
+    $pricing_plans = array_pop($pricing_plans);
+    $prices = get_post_meta($pricing_plans->ID, '_hb_pricing_plan_prices', true);
     $price_plans = array();
-    if( $postmeta && $prices )
+    if( $pricing_plans && $prices )
     {
         foreach ($prices as $key => $price) {
             $price_plans = array_merge($price_plans, $price);

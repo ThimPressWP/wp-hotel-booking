@@ -88,10 +88,10 @@
             }
         });
 
-        $('#tp_hotel_booking_pricing #hb-room-types').change(function(){
+        $('#tp_hotel_booking_pricing #hb-room-select').change(function(){
             var location = window.location.href;
-            location = location.replace(/[&]?hb-room-type=[0-9]+/, '');
-            if( this.value != 0 ) location += '&hb-room-type='+this.value;
+            location = location.replace(/[&]?hb-room=[0-9]+/, '');
+            if( this.value != 0 ) location += '&hb-room='+this.value;
             window.location.href = location;
         });
 
@@ -140,7 +140,6 @@
 
             return false;
         }).filter('[href*="'+window.location.hash+'"]').trigger('click');
-
 
         $.datepicker.setDefaults({ dateFormat: 'mm/dd/yy'});
         $(".datetime-picker-metabox").datepicker({
@@ -199,6 +198,42 @@
                 return false;
             }
         });
+
+        $('#gallery_settings').on('click', '.attachment.add-new', function(event){
+            event.preventDefault();
+            var fileFrame = wp.media.frames.file_frame = wp.media({
+                multiple : true
+            });
+            var self = $(this);
+            fileFrame.on('select', function() {
+                var attachments = fileFrame.state().get('selection').toJSON();
+                var html = '';
+
+                for( var i = 0; i < attachments.length; i++ )
+                {
+                    var attachment = attachments[i];
+                    var url = attachment.url.replace( hotel_settings.upload_base_url, '' );
+                    html += '<li class="attachment">';
+                        html += '<div class="attachment-preview">';
+                        html +=     '<div class="thumbnail">';
+                        html +=         '<div class="centered">'
+                                            html += '<img src="'+attachment.url+'"/>';
+                                            html += '<input type="hidden" name="_hb_gallery[]" value="'+url+'" />'
+                        html +=         '</div>';
+                        html +=     '</div>';
+                        html += '</div>';
+                        html += '<a class="dashicons dashicons-trash" title="Remove this image"></a>';
+                    html += '</li>';
+                }
+                self.before(html);
+            });
+            fileFrame.open();
+        })
+        .on('click', '.attachment .dashicons-trash', function(event){
+            event.preventDefault();
+            $(this).parent().remove();
+        });
+        $('#gallery_settings ul').sortable();
     }
 
     $doc.ready( _ready );

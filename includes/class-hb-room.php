@@ -103,12 +103,21 @@ class HB_Room{
                 if( has_post_thumbnail( $this->post->ID ) ){
                     $return = get_the_post_thumbnail( $this->post->ID, 'thumbnail' );
                 }else{
-                    $room_type_id = get_post_meta( $this->post->ID, '_hb_room_type', true );
-                    $gallery = get_option( "hb_taxonomy_thumbnail_{$room_type_id}" );
-                    if( $gallery ){
-                        $attachment_id = reset( $gallery );
-                        $return = wp_get_attachment_image( $attachment_id, 'thumbnail' );//wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
+                    $gallery = get_post_meta( $this->post->ID, '_hb_room_gallery', true );
+                    if( ( $gallery && file_exists(untrailingslashit($upload_base_dir).$gallery[0]) ) )
+                    {
+                        $return = '<img src="'.untrailingslashit($upload_base_url).$galleries[0].'" alt="'.$this->post->post_title.'"/>';
                     }
+                    else
+                    {
+                        $return = '<img src="'.HB_PLUGIN_URL . '/includes/assets/js/carousel/default.png'.'" alt="'.$this->post->post_title.'"/>';
+                    }
+                    // $room_type_id = get_post_meta( $this->post->ID, '_hb_room_type', true );
+                    // $gallery = get_option( "hb_taxonomy_thumbnail_{$room_type_id}" );
+                    // if( $gallery ){
+                    //     $attachment_id = reset( $gallery );
+                    //     $return = wp_get_attachment_image( $attachment_id, 'thumbnail' );//wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
+                    // }
                 }
                 break;
             case 'gallery':
@@ -314,7 +323,7 @@ class HB_Room{
                     'meta_query' => array(
                         array(
                             'key' => '_hb_pricing_plan_room',
-                            'value' => $this->room_type
+                            'value' => $this->post->ID
                         )
                     )
                 )

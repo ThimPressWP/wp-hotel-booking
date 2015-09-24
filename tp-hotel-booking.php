@@ -203,10 +203,16 @@ class TP_Hotel_Booking{
      * Output global js settings
      */
     function global_js(){
+        $upload_dir = wp_upload_dir();
+        $upload_base_url = $upload_dir['baseurl'];
     ?>
         <script type="text/javascript">
             var hotel_settings = {
-                ajax: '<?php echo admin_url( 'admin-ajax.php' );?>'
+                ajax: '<?php echo admin_url( 'admin-ajax.php' );?>',
+                upload_base_url: '<?php echo esc_js($upload_base_url) ?>',
+                meta_key: {
+                    prefix: '_hb_'
+                }
             }
         </script>
     <?php

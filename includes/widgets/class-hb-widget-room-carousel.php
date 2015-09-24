@@ -31,114 +31,18 @@ class HB_Widget_Room_Carousel extends WP_Widget{
     public function widget( $args, $instance )
     {
         echo $args['before_widget'];
-        $number_rooms = isset($instance['rooms']) ? (int)$instance['rooms'] : 10;
-        $size = isset($instance['image_size']) ? $instance['image_size'] : 'thumbnail';
-        $items = isset($instance['number']) ? (int)$instance['number'] : 4;
-        $terms = get_terms( 'hb_room_type', array('hide_empty' => 0));
-        $currentcy = hb_get_currency_symbol();
-        if( $terms ):
-    ?>
-            <div id="<?php echo $args['widget_id'] ?>" class="hb_room_carousel_container">
-                <!--navigation-->
-                <?php if( !isset($instance['navigation']) || $instance['navigation'] ): ?>
-                    <div class="navigation">
-                        <div class="prev"><i class="fa fa-angle-left"></i></div>
-                        <div class="next"><i class="fa fa-angle-right"></i></div>
-                    </div>
-                <?php endif; ?>
-                <!--pagination-->
-                <?php if( !isset($instance['pagination']) || $instance['pagination'] ): ?>
-                    <div class="pagination"></div>
-                <?php endif; ?>
-                <!--text_link-->
-                <?php if( isset($instance['text_link']) && $instance['text_link'] !== '' ): ?>
-                    <div class="text_link"><a href="#"><?php echo $instance['text_link']; ?></a></div>
-                <?php endif; ?>
-                <div class="hb_room_carousel">
-                    <?php foreach ($terms as $key => $term): ?>
-                        <?php $galleries = get_option( 'hb_taxonomy_thumbnail_' . $term->term_id ); ?>
-                        <?php $gallery = $galleries ? $galleries[0] : HB_PLUGIN_URL . '/includes/assets/js/carousel/default.png'; ?>
-                        <?php
-                            $prices = hb_get_price_plan_room($term->term_id);
-                            sort($prices);
-                            $currency = get_option( 'tp_hotel_booking_currency' );
-                        ?>
-                            <div class="item">
-                                <div class="media">
-                                    <a href="<?php echo esc_attr(get_term_link($term, 'hb_room_type')); ?>" class="media-image" title="<?php echo esc_attr($term->name); ?>">
-                                    <?php echo wp_get_attachment_image($gallery, 'large'); ?>
-                                    </a>
-                                </div>
-                                <div class="title">
-                                    <h4>
-                                        <a href="<?php echo esc_attr(get_term_link($term, 'hb_room_type')); ?>" class="media-image"><?php echo esc_attr($term->name); ?></a>
-                                    </h4>
-                                </div>
-                                <?php if( (!isset($instance['price']) || $instance['price'] !== '*') && $prices ): ?>
-                                    <div class="price">
-                                        <span>
-                                            <?php
-                                                $current = current($prices);
-                                                $end = end($prices);
-                                                if( $current !== $end && $instance['price'] === 'min_to_max' )
-                                                {
-                                                    echo $current . ' - ' . $end . $currentcy;
-                                                }
-                                                else
-                                                {
-                                                    echo $current . $currentcy;
-                                                }
-                                            ?>
-                                        </span>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-                    <?php endforeach;?>
-                </div>
-            </div>
-            <script type="text/javascript">
-                (function($){
-                    "use strict";
-                    $(document).ready(function(){
-                        $('#<?php echo $args['widget_id'] ?> .hb_room_carousel').carouFredSel({
-                            responsive: true,
-                            items: {
-                                height: 'auto',
-                                visible: {
-                                    min: <?php echo $items ?>,
-                                    max: <?php echo $items ?>
-                                }
-                            },
-                            width: 'auto',
-                            prev: {
-                                button: '#<?php echo $args['widget_id'] ?> .navigation .prev'
-                            },
-                            next: {
-                                button: '#<?php echo $args['widget_id'] ?> .navigation .next'
-                            },
-                            pagination: '#<?php echo $args['widget_id']; ?> > .pagination',
-                            mousewheel: true,
-                            pauseOnHover: true,
-                            onCreate: function()
-                            {
-
-                            },
-                            swipe: {
-                                onTouch: true,
-                                onMouse: true
-                            },
-                            scroll : {
-                                items           : 1,
-                                easing          : "swing",
-                                duration        : 700,
-                                pauseOnHover    : true
-                            }
-                        });
-                    });
-                })(jQuery);
-            </script>
-    <?php
-        endif;
+        $html = array();
+        if( $instance )
+        {
+            $html[] = '[hotel_booking_slider';
+            foreach ($instance as $att => $param) {
+                if( is_array($param) )
+                    continue;
+                $html[] = $att.'="'.$param.'"';
+            }
+            $html[] = '][/hotel_booking_slider]';
+        }
+        echo do_shortcode( implode(' ', $html) );
         echo $args['after_widget'];
     }
 
@@ -168,14 +72,14 @@ class HB_Widget_Room_Carousel extends WP_Widget{
             <label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of items:' ); ?></label>
             <input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" value="<?php echo esc_attr( $number ); ?>" min="1">
         </p>
-        <p>
-            <label for="<?php echo $this->get_field_id( 'image_size' ); ?>"><?php _e( 'Select Image Size to display:' ); ?></label>
-            <select name="<?php echo $this->get_field_name( 'image_size' ); ?>">
-            <?php foreach ($images_size as $size => $args): ?>
-                <option value="<?php echo $size ?>"<?php echo $thumb === $size ? ' selected' : '' ?>><?php echo $args['width'] . 'x' . $args['height'] ?></option>
-            <?php endforeach; ?>
+        <!-- <p>
+            <label for="<?php //echo $this->get_field_id( 'image_size' ); ?>"><?php //_e( 'Select Image Size to display:' ); ?></label>
+            <select name="<?php //echo $this->get_field_name( 'image_size' ); ?>">
+            <?php //foreach ($images_size as $size => $args): ?>
+                <option value="<?php //echo $size ?>"<?php //echo $thumb === $size ? ' selected' : '' ?>><?php //echo $args['width'] . 'x' . $args['height'] ?></option>
+            <?php //endforeach; ?>
             </select>
-        </p>
+        </p> -->
         <p>
             <label><?php _e( 'Price:' ); ?></label>
             <select name="<?php echo $this->get_field_name( 'price' ); ?>" for="<?php echo $this->get_field_id( 'price' ); ?>">
@@ -233,8 +137,8 @@ class HB_Widget_Room_Carousel extends WP_Widget{
         // text_link
         $instance['text_link'] = ( isset( $new_instance['text_link'] ) ) ? strip_tags( $new_instance['text_link'] ) : '';
 
-        // pagination
-        $instance['image_size'] = ( isset( $new_instance['image_size'] ) ) ? strip_tags( $new_instance['image_size'] ) : 'thumbnail';
+        // image_size
+        // $instance['image_size'] = ( isset( $new_instance['image_size'] ) ) ? strip_tags( $new_instance['image_size'] ) : 'thumbnail';
 
         // nav
         $instance['nav'] = ( isset( $new_instance['nav'] ) ) ? strip_tags( $new_instance['nav'] ) : 1;

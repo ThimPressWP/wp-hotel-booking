@@ -10,19 +10,9 @@ $week_names = array(
     __( 'Sat', 'tp-hotel-booking' )
 );
 
-$capacities = hb_get_room_capacities(
-);
+$capacities = hb_get_room_capacities();
 
-$room_type_id = intval( hb_get_request( 'hb-room-type' ) );
-$room_type_select = hb_dropdown_room_types(
-    array(
-        'selected' => hb_get_request('hb-room-type'),
-        'show_option_none' => __( '---Select---', 'tp-hotel-booking' ),
-        'option_none_value' => 0,
-        'echo' => false
-    )
-);
-
+$room_id = intval( hb_get_request( 'hb-room' ) );
 $pricing_plans = get_posts(
     array(
         'post_type'         => 'hb_pricing_plan',
@@ -30,11 +20,12 @@ $pricing_plans = get_posts(
         'meta_query' => array(
             array(
                 'key'     => '_hb_pricing_plan_room',
-                'value'   => $room_type_id
+                'value'   => $room_id
             )
         )
     )
 );
+
 if( $pricing_plans ) {
     $regular_plan = array_pop($pricing_plans);
 }else{
@@ -46,8 +37,8 @@ $count_plants = count( $pricing_plans );
 <div class="wrap" id="tp_hotel_booking_pricing">
     <h2><?php _e( 'Pricing Plans', 'tp-hotel-booking' );?></h2>
     <form method="post" name="pricing-table-form">
-        <p><strong><?php _e( 'Select type of room', 'tp-hotel-booking' );?></strong>&nbsp;&nbsp;<?php echo $room_type_select;?></p>
-        <?php if( $room_type_id ){?>
+        <p><strong><?php _e( 'Select name of room', 'tp-hotel-booking' );?></strong>&nbsp;&nbsp;<?php echo hb_dropdown_rooms( array('selected' => $room_id) ); //$room_type_select; ?></p>
+        <?php if( $room_id ){?>
         <div class="hb-pricing-table regular-price clearfix">
             <h3 class="hb-pricing-table-title">
                 <span><?php _e( 'Regular price', 'tp-hotel-booking' );?></span>
