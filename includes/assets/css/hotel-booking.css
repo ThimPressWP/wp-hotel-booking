@@ -192,3 +192,7 @@
     /* font-size: 14px; */
     color: #43A7FF;
 }
+/*widget slider*/
+.hb_room_carousel .item{
+    float: left;
+}
