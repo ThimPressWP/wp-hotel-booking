@@ -175,9 +175,6 @@ class HB_Shortcodes{
                     <?php foreach ($posts as $key => $post): ?>
                         <?php $galleries = get_post_meta( $post->ID, '_hb_gallery', true ); ?>
                         <?php
-                            $gallery = ( $galleries && file_exists(untrailingslashit($upload_base_dir).$galleries[0]) ) ? untrailingslashit($upload_base_url).$galleries[0] : HB_PLUGIN_URL . '/includes/assets/js/carousel/default.png';
-                        ?>
-                        <?php
                             $prices = hb_get_price_plan_room($post->ID);
                             sort($prices);
                             $currency = get_option( 'tp_hotel_booking_currency' );
@@ -186,8 +183,7 @@ class HB_Shortcodes{
                             <div class="item">
                                 <div class="media">
                                     <a href="<?php echo esc_url(get_the_permalink($post->ID)); ?>" class="media-image" title="<?php echo esc_attr($title); ?>">
-                                    <?php //echo wp_get_attachment_image($gallery, 'large'); ?>
-                                    <img src="<?php echo $gallery ?>" alt="<?php echo esc_attr($title); ?>">
+                                    <?php echo get_the_post_thumbnail( $post->ID, $size); ?>
                                     </a>
                                 </div>
                                 <div class="title">

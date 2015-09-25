@@ -110,7 +110,7 @@ class HB_Room{
                     }
                     else
                     {
-                        $return = '<img src="'.HB_PLUGIN_URL . '/includes/assets/js/carousel/default.png'.'" alt="'.$this->post->post_title.'"/>';
+                        $return = '<img src="'.HB_PLUGIN_URL . '/includes/carousel/default.png'.'" alt="'.$this->post->post_title.'"/>';
                     }
                     // $room_type_id = get_post_meta( $this->post->ID, '_hb_room_type', true );
                     // $gallery = get_option( "hb_taxonomy_thumbnail_{$room_type_id}" );

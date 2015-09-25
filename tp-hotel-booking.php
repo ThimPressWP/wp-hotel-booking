@@ -180,7 +180,7 @@ class TP_Hotel_Booking{
 
             // rooms slider widget
             foreach ($carouselJs as $key => $lib) {
-                wp_register_script( 'tp-hotel-booking-'.$key, $this->plugin_url( 'includes/assets/js/carousel/' . $lib ), $dependencies );
+                wp_register_script( 'tp-hotel-booking-'.$key, $this->plugin_url( 'includes/carousel/' . $lib ), $dependencies );
             }
         }
 
@@ -194,7 +194,7 @@ class TP_Hotel_Booking{
             wp_enqueue_script( 'tp-hotel-booking' );
             // rooms slider widget
             foreach ($carouselJs as $key => $lib) {
-                wp_enqueue_script( 'tp-hotel-booking-'.$key, $this->plugin_url( 'includes/assets/js/carousel/' . $lib ) );
+                wp_enqueue_script( 'tp-hotel-booking-'.$key, $this->plugin_url( 'includes/carousel/' . $lib ) );
             }
         }
     }
