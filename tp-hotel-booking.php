@@ -90,6 +90,7 @@ class TP_Hotel_Booking{
      */
     function includes(){
         $this->_include( 'includes/class-hb-autoloader.php' );
+        $this->_include( 'includes/class-hb-booking-template-loader.php' );
         $this->_include( 'includes/class-hb-ajax.php' );
         if( is_admin() ) {
             $this->_include( 'includes/admin/class-hb-admin-menu.php' );

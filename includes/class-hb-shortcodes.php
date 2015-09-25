@@ -169,7 +169,7 @@ class HB_Shortcodes{
                 <?php endif; ?>
                 <!--text_link-->
                 <?php if( isset($atts['text_link']) && $atts['text_link'] !== '' ): ?>
-                    <div class="text_link"><a href="#"><?php echo $atts['text_link']; ?></a></div>
+                    <div class="text_link"><a href="<?php echo esc_url(get_post_type_archive_link('hb_room')) ?>"><?php echo $atts['text_link']; ?></a></div>
                 <?php endif; ?>
                 <div class="hb_room_carousel">
                     <?php foreach ($posts as $key => $post): ?>

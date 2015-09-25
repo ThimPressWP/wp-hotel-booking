@@ -23,7 +23,6 @@ class HB_Autoloader {
         spl_autoload_register( array( $this, 'autoload' ) );
 
         $this->include_path = untrailingslashit( HB_PLUGIN_PATH ) . '/includes/';
-        add_filter('template_include', array($this, 'template_loader'));
     }
 
     /**
@@ -65,29 +64,6 @@ class HB_Autoloader {
                 //if ( empty( $path ) || ( ! $this->load_file( $path . $file ) && strpos( $class, 'lpr_' ) === 0 ) ) {
         $this->load_file( $path . $file );
         //}
-    }
-
-    public function template_loader($template)
-    {
-        if( !is_single() )
-            return $template;
-
-        $post_type = get_post_type();
-
-        if( $post_type !== 'hb_room' )
-            return $template;
-
-        $template = hb_template_path() . '/single-room.php';
-        $template = locate_template(array('single-room.php', $template));
-
-        if( ! $template && file_exists( untrailingslashit(HB_PLUGIN_PATH) . '/templates/single-room.php' ) )
-        {
-            $template = untrailingslashit(HB_PLUGIN_PATH) . '/templates/single-room.php';
-        }
-        if ( '' != $template ) {
-            return $template ;
-        }
-        return $template;
     }
 }
 

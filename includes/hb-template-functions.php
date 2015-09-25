@@ -161,7 +161,7 @@ if( ! function_exists( 'hb_display_message' ) ){
 }
 
 /*=====================================================
-=            single-room.php template hooks            =
+=                      template hooks                  =
 =====================================================*/
 if( ! function_exists( 'hotel_booking_before_main_content' ) )
 {
@@ -187,5 +187,4 @@ if( ! function_exists( 'hotel_booking_sidebar' ) )
 
     }
 }
-
-/*=====  End of single-room.php template hooks  ======*/
+/*=====  End of template hooks  ======*/
