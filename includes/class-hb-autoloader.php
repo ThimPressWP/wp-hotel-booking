@@ -77,7 +77,7 @@ class HB_Autoloader {
         if( $post_type !== 'hb_room' )
             return $template;
 
-        $template = hb_template_path() . '/templates/single-room.php';
+        $template = hb_template_path() . '/single-room.php';
         $template = locate_template(array('single-room.php', $template));
 
         if( ! $template && file_exists( untrailingslashit(HB_PLUGIN_PATH) . '/templates/single-room.php' ) )
