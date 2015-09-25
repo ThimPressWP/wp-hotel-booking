@@ -4,9 +4,9 @@
  *
  * Override this template by copying it to yourtheme/tp-hotel-booking/templates/single-product.php
  *
- * @author 		WooThemes
+ * @author 		ThimPress
  * @package 	tp-hotel-booking/templates
- * @version     1.6.4
+ * @version     0.9
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -15,6 +15,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header(); ?>
 
+	<?php
+		/**
+		 * hotel_booking_before_main_content hook
+		 */
+		do_action( 'hotel_booking_before_main_content' );
+	?>
 
+		<?php while ( have_posts() ) : the_post(); ?>
+
+			<?php hb_get_template_part( 'content', 'single-product' ); ?>
+
+		<?php endwhile; // end of the loop. ?>
+
+	<?php
+		/**
+		 * hotel_booking_after_main_content hook
+		 *
+		 * @hooked woocommerce_output_content_wrapper_end - 10 (outputs closing divs for the content)
+		 */
+		do_action( 'hotel_booking_after_main_content' );
+	?>
+
+	<?php
+		/**
+		 * hotel_booking_sidebar hook
+		 *
+		 * @hooked hotel_booking_sidebar - 10
+		 */
+		do_action( 'hotel_booking_sidebar' );
+	?>
 
 <?php get_footer(); ?>

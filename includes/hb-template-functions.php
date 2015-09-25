@@ -159,3 +159,33 @@ if( ! function_exists( 'hb_display_message' ) ){
         hb_get_template( 'global/message.php' );
     }
 }
+
+/*=====================================================
+=            single-room.php template hooks            =
+=====================================================*/
+if( ! function_exists( 'hotel_booking_before_main_content' ) )
+{
+    function hotel_booking_before_main_content()
+    {
+
+    }
+}
+
+if( ! function_exists( 'hotel_booking_after_main_content' ) )
+{
+    // others room block
+    function hotel_booking_after_main_content()
+    {
+
+    }
+}
+
+if( ! function_exists( 'hotel_booking_sidebar' ) )
+{
+    function hotel_booking_sidebar()
+    {
+
+    }
+}
+
+/*=====  End of single-room.php template hooks  ======*/
