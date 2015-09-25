@@ -203,11 +203,11 @@ class HB_Shortcodes{
                                                 $end = end($prices);
                                                 if( $current !== $end && $atts['price'] === 'min_to_max' )
                                                 {
-                                                    echo $current . ' - ' . $end . $currentcy;
+                                                    echo $currentcy.$current . ' - ' . $end;
                                                 }
                                                 else
                                                 {
-                                                    echo $current . $currentcy;
+                                                    echo $currentcy.$current;
                                                 }
                                             ?>
                                         </span>
