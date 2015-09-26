@@ -368,13 +368,19 @@ class HB_Post_Types{
         global $post;
         switch( $column ){
             case 'room_type':
-                $type_id = get_post_meta( $post->ID, '_hb_room_type', true );
-                $type = get_term( $type_id, 'hb_room_type' );
+                // $type_id = get_post_meta( $post->ID, '_hb_room_type', true );
+                // $type = get_term( $type_id, 'hb_room_type' );
+                $terms = wp_get_post_terms( $post->ID, 'hb_room_type' );
 
                 $cap_id = get_post_meta( $post->ID, '_hb_room_capacity', true );
                 $cap = get_term( $cap_id, 'hb_room_capacity' );
 
-                printf( '%s (%s)', $type->name, $cap->name );
+                // printf( '%s (%s)', $type->name, $cap->name );
+                $room_types = array();
+                foreach ($terms as $key => $term) {
+                    $room_types[] = $term->name;
+                }
+                printf( '%s (%s)', implode(', ', $room_types), $cap->name );
                 break;
             case 'room_capacity':
                 echo get_post_meta( $post->ID, '_hb_max_child_per_room', true );
@@ -533,10 +539,10 @@ class HB_Post_Types{
      * Remove default meta boxes
      */
     function remove_meta_boxes() {
-        remove_meta_box( 'hb_room_typediv', 'hb_room', 'side' );
+        // remove_meta_box( 'hb_room_typediv', 'hb_room', 'side' );
         remove_meta_box( 'hb_room_capacitydiv', 'hb_room', 'side' );
 
-        remove_meta_box( 'tagsdiv-hb_room_type', 'hb_room', 'side' );
+        // remove_meta_box( 'tagsdiv-hb_room_type', 'hb_room', 'side' );
         remove_meta_box( 'tagsdiv-hb_room_capacity', 'hb_room', 'side' );
     }
 
@@ -604,11 +610,7 @@ class HB_Post_Types{
                 'public'                => true,
                 'show_ui'               => true,
                 'query_var'             => true,
-                'rewrite'               => array(
-                    'slug'         => 'hb_room_type',
-                    'with_front'   => true,
-                    'hierarchical' => false,
-                )
+                'rewrite'               => true
             )
         );
 
@@ -619,7 +621,7 @@ class HB_Post_Types{
             array( 'hb_room' ),
             array(
                 'hierarchical'          => false,
-                'update_count_callback' => '_wc_term_recount',
+                // 'update_count_callback' => '_wc_term_recount',
                 'label'                 => __( 'Room Capacity', 'tp-hotel-booking' ),
                 'labels' => array(
                     'name'              => __( 'Room Capacities', 'tp-hotel-booking' ),

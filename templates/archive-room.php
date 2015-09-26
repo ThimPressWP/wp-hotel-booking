@@ -47,9 +47,9 @@ get_header(); ?>
 				do_action( 'hotel_booking_before_shop_loop' );
 			?>
 
-			<?php //hotel_booking_room_loop_start(); ?>
+			<?php hotel_booking_room_loop_start(); ?>
 
-				<?php //hotel_booking_room_subcategories(); ?>
+				<?php hotel_booking_room_subcategories(); ?>
 
 				<?php while ( have_posts() ) : the_post(); ?>
 
@@ -57,7 +57,7 @@ get_header(); ?>
 
 				<?php endwhile; // end of the loop. ?>
 
-			<?php //hotel_booking_room_loop_end(); ?>
+			<?php hotel_booking_room_loop_end(); ?>
 
 			<?php
 				/**

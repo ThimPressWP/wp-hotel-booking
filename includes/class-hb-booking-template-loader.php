@@ -23,31 +23,47 @@ class HB_TemplateLoader {
     {
         $post_type = get_post_type();
 
-        $tpl_name = '';
+        $file = '';
+        $find = array();
         if( $post_type !== 'hb_room' )
             return $template;
 
         if( is_post_type_archive( 'hb_room' ) )
         {
-            $tpl_name = 'archive-room.php';
-            $template = hb_template_path() . '/' . $tpl_name;
+            $file = 'archive-room.php';
+        }
+        else if( is_room_taxonomy() )
+        {
+            $term   = get_queried_object();
+
+            if ( is_tax( 'hb_room_type' ) || is_tax( 'hb_room_capacity' ) ) {
+                $file = 'taxonomy-' . $term->taxonomy . '.php';
+            } else {
+                $file = 'archive-room.php';
+            }
+
+            $find[] = 'taxonomy-' . $term->taxonomy . '-' . $term->slug . '.php';
+            $find[] = hb_template_path() . 'taxonomy-' . $term->taxonomy . '-' . $term->slug . '.php';
+            $find[] = 'taxonomy-' . $term->taxonomy . '.php';
+            $find[] = hb_template_path() . 'taxonomy-' . $term->taxonomy . '.php';
+            $find[] = $file;
         }
         else if( is_single() )
         {
-            $tpl_name = 'single-room.php';
-            $template = hb_template_path() . '/' . $tpl_name;
+            $file = 'single-room.php';
         }
 
-        $hb_template = untrailingslashit(HB_PLUGIN_PATH) . '/templates/' . $tpl_name;
-        $template = locate_template( array( $tpl_name, $template ) );
-        if( ! $template && file_exists( $hb_template ) )
+        if( $file )
         {
-            $template = $hb_template;
+            $find[] = hb_template_path() . $file;
+            $hb_template = untrailingslashit(HB_PLUGIN_PATH) . '/templates/' . $file;
+            $template = locate_template( array_unique( $find ) );
+            if( ! $template && file_exists( $hb_template ) )
+            {
+                $template = $hb_template;
+            }
         }
 
-        if ( '' != $template ) {
-            return $template ;
-        }
         return $template;
     }
 }

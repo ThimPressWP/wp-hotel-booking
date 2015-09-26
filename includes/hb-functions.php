@@ -1351,45 +1351,78 @@ function hb_get_customer_fullname( $customer_id, $with_title = false ){
     $last_name  = get_post_meta( $customer_id, '_hb_last_name', true );
     return sprintf( '%s%s %s', $title ? $title . ' ' : '', $first_name, $last_name );
 }
-/**
-    TODO:
-    - Check render shortcode title, lable
- */
-function hb_render_label_shortcode( $atts = array(), $name = '', $text = '', $check = '' )
-{
-    $show = false;
-    if( !isset($atts[$name]) || strtolower($atts[$name]) === $check )
-        $show = true;
-    if( $show === false )
-        return;
 
-    echo '<label>'.sprintf(__('%1$s', 'tp-hotel-booking'), $text).'</label>';
+if ( ! function_exists( 'is_room_category' ) ) {
+
+    /**
+     * is_room_category - Returns true when viewing a room category.
+     * @param  string $term (default: '') The term slug your checking for. Leave blank to return true on any.
+     * @return bool
+     */
+    function is_room_category( $term = '' ) {
+        return is_tax( 'hb_room', $term );
+    }
+}
+if ( ! function_exists( 'is_room_taxonomy' ) ) {
+
+    /**
+     * Returns true when viewing a room taxonomy archive.
+     * @return bool
+     */
+    function is_room_taxonomy() {
+        return is_tax( get_object_taxonomies( 'hb_room' ) );
+    }
 }
 
-function hb_get_price_plan_room( $post_id = null )
+if( ! function_exists( 'hb_render_label_shortcode' ) )
 {
-    if( $post_id === null )
-        return null;
-    $pricing_plans = get_posts(
-        array(
-            'post_type'         => 'hb_pricing_plan',
-            'posts_per_page'    => 9999,
-            'meta_query' => array(
-                array(
-                    'key'       => '_hb_pricing_plan_room',
-                    'value'     => $post_id
+    /**
+     * Returns html label shortcode search.
+     * @return html
+     */
+    function hb_render_label_shortcode( $atts = array(), $name = '', $text = '', $check = '' )
+    {
+        $show = false;
+        if( !isset($atts[$name]) || strtolower($atts[$name]) === $check )
+            $show = true;
+        if( $show === false )
+            return;
+
+        echo '<label>'.sprintf(__('%1$s', 'tp-hotel-booking'), $text).'</label>';
+    }
+}
+
+if( function_exists('hb_get_price_plan_room') )
+{
+    /**
+     * Returns array price of room.
+     * @return array
+     */
+    function hb_get_price_plan_room( $post_id = null )
+    {
+        if( $post_id === null )
+            return null;
+        $pricing_plans = get_posts(
+            array(
+                'post_type'         => 'hb_pricing_plan',
+                'posts_per_page'    => 9999,
+                'meta_query' => array(
+                    array(
+                        'key'       => '_hb_pricing_plan_room',
+                        'value'     => $post_id
+                    )
                 )
             )
-        )
-    );
-    $pricing_plans = array_pop($pricing_plans);
-    $prices = get_post_meta($pricing_plans->ID, '_hb_pricing_plan_prices', true);
-    $price_plans = array();
-    if( $pricing_plans && $prices )
-    {
-        foreach ($prices as $key => $price) {
-            $price_plans = array_merge($price_plans, $price);
+        );
+        $pricing_plans = array_pop($pricing_plans);
+        $prices = get_post_meta($pricing_plans->ID, '_hb_pricing_plan_prices', true);
+        $price_plans = array();
+        if( $pricing_plans && $prices )
+        {
+            foreach ($prices as $key => $price) {
+                $price_plans = array_merge($price_plans, $price);
+            }
         }
+        return $price_plans;
     }
-    return $price_plans;
 }
