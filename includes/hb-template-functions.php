@@ -160,6 +160,139 @@ if( ! function_exists( 'hb_display_message' ) ){
     }
 }
 
+/****************************************************************** Loop ******************************************************************/
+
+if ( ! function_exists( 'hotel_booking_page_title' ) ) {
+
+    /**
+     * hotel_booking_page_title function.
+     *
+     * @param  boolean $echo
+     * @return string
+     */
+    function hotel_booking_page_title( $echo = true ) {
+
+        if ( is_search() ) {
+            $page_title = sprintf( __( 'Search Results: &ldquo;%s&rdquo;', 'tp-hotel-booking '), get_search_query() );
+
+            if ( get_query_var( 'paged' ) )
+                $page_title .= sprintf( __( '&nbsp;&ndash; Page %s', 'tp-hotel-booking' ), get_query_var( 'paged' ) );
+
+        } elseif ( is_tax() ) {
+
+            $page_title = single_term_title( "", false );
+
+        } else {
+
+            $shop_page_id = hb_get_page_id( 'shop' );
+            $page_title   = get_the_title( $shop_page_id );
+
+        }
+
+        $page_title = apply_filters( 'hotel_booking_page_title', $page_title );
+
+        if ( $echo )
+            echo $page_title;
+        else
+            return $page_title;
+    }
+}
+
+if ( ! function_exists( 'hotel_booking_room_loop_start' ) ) {
+
+    /**
+     * Output the start of a room loop. By default this is a UL
+     *
+     * @param bool $echo
+     * @return string
+     */
+    function hotel_booking_room_loop_start( $echo = true ) {
+        ob_start();
+        hb_get_template( 'loop/loop-start.php' );
+        if ( $echo )
+            echo ob_get_clean();
+        else
+            return ob_get_clean();
+    }
+}
+if ( ! function_exists( 'hotel_booking_room_loop_end' ) ) {
+
+    /**
+     * Output the end of a room loop. By default this is a UL
+     *
+     * @param bool $echo
+     * @return string
+     */
+    function hotel_booking_room_loop_end( $echo = true ) {
+        ob_start();
+
+        hb_get_template( 'loop/loop-end.php' );
+
+        if ( $echo )
+            echo ob_get_clean();
+        else
+            return ob_get_clean();
+    }
+}
+if (  ! function_exists( 'hotel_booking_template_loop_room_title' ) ) {
+
+    /**
+     * Show the room title in the room loop. By default this is an H3
+     */
+    function hotel_booking_template_loop_room_title() {
+        hb_get_template( 'loop/title.php' );
+    }
+}
+if ( ! function_exists( 'hotel_booking_taxonomy_archive_description' ) ) {
+
+    /**
+     * Show an archive description on taxonomy archives
+     *
+     * @subpackage  Archives
+     */
+    function hotel_booking_taxonomy_archive_description() {
+        if ( is_tax( array( 'room_cat', 'room_tag' ) ) && get_query_var( 'paged' ) == 0 ) {
+            $description = hb_format_content( term_description() );
+            if ( $description ) {
+                echo '<div class="term-description">' . $description . '</div>';
+            }
+        }
+    }
+}
+if ( ! function_exists( 'hotel_booking_room_archive_description' ) ) {
+
+    /**
+     * Show a shop page description on room archives
+     *
+     * @subpackage  Archives
+     */
+    function hotel_booking_room_archive_description() {
+        if ( is_post_type_archive( 'room' ) && get_query_var( 'paged' ) == 0 ) {
+            $shop_page   = get_post( hb_get_page_id( 'shop' ) );
+            if ( $shop_page ) {
+                $description = hb_format_content( $shop_page->post_content );
+                if ( $description ) {
+                    echo '<div class="page-description">' . $description . '</div>';
+                }
+            }
+        }
+    }
+}
+
+if ( ! function_exists( 'hotel_booking_room_subcategories' ) ) {
+
+    /**
+     * Display product sub categories as thumbnails.
+     *
+     * @subpackage  Loop
+     * @param array $args
+     * @return null|boolean
+     */
+    function hotel_booking_room_subcategories( $args = array() ) {
+
+    }
+}
+
 /*=====================================================
 =                      template hooks                  =
 =====================================================*/

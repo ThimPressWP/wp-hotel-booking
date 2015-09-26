@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for displaying product content in the single-product.php template
+ * The template for displaying room content in the single-room.php template
  *
  * Override this template by copying it to yourtheme/tp-hotel-booking/content-single-room.php
  *
@@ -17,10 +17,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php
 	/**
-	 * hotel_booking_before_single_product hook
+	 * hotel_booking_before_single_room hook
 	 *
 	 */
-	 do_action( 'hotel_booking_before_single_product' );
+	 do_action( 'hotel_booking_before_single_room' );
 
 	 if ( post_password_required() ) {
 	 	echo get_the_password_form();
@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	 }
 ?>
 
-<div itemscope itemtype="<?php ?>" id="product-<?php the_ID(); ?>" <?php post_class(); ?>>
+<div id="room-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 	<?php
 		/**
@@ -65,13 +65,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 		 *
 		 * @hooked hotel_booking_output_room_data_tabs - 10
 		 * @hooked hotel_booking_upsell_display - 15
-		 * @hooked hotel_booking_output_related_products - 20
+		 * @hooked hotel_booking_output_related_rooms - 20
 		 */
 		do_action( 'hotel_booking_after_single_room_summary' );
 	?>
 
 	<meta itemprop="url" content="<?php the_permalink(); ?>" />
 
-</div><!-- #product-<?php the_ID(); ?> -->
+</div><!-- #room-<?php the_ID(); ?> -->
 
-<?php do_action( 'hotel_booking_after_single_product' ); ?>
+<?php do_action( 'hotel_booking_after_single_room' ); ?>

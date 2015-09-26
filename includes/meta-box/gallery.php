@@ -5,13 +5,13 @@
 ?>
 <div class="hb-form-field-input">
     <ul>
-        <?php if( $meta_value ): foreach ($meta_value as $key => $src): ?>
+        <?php if( $meta_value ): foreach ($meta_value as $key => $id): ?>
             <li class="attachment">
                 <div class="attachment-preview">
                     <div class="thumbnail">
                         <div class="centered">
-                        	<img src="<?php echo untrailingslashit($upload_base_url).$src ?>" />
-                            <input type="hidden" name="<?php echo $field['name'] ?>[]" value="<?php echo esc_attr($src);?>" />
+                        	<?php echo wp_get_attachment_image( $id, 'thumbnail' ); ?>
+                            <input type="hidden" name="<?php echo $field['name'] ?>[]" value="<?php echo esc_attr($id);?>" />
                         </div>
                     </div>
                 </div>

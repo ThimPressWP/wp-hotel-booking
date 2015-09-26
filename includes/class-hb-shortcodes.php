@@ -175,8 +175,12 @@ class HB_Shortcodes{
                     <?php foreach ($posts as $key => $post): ?>
                         <?php $galleries = get_post_meta( $post->ID, '_hb_gallery', true ); ?>
                         <?php
-                            $prices = hb_get_price_plan_room($post->ID);
-                            sort($prices);
+                            $prices = array();
+                            if( function_exists('hb_get_price_plan_room') )
+                            {
+                                $prices = hb_get_price_plan_room($post->ID);
+                                sort($prices);
+                            }
                             $currency = get_option( 'tp_hotel_booking_currency' );
                             $title = $post->post_title;
                         ?>

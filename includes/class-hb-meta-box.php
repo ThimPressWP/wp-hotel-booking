@@ -176,6 +176,7 @@ class HB_Meta_Box{
                 update_post_meta($post_id, $this->_args['meta_key_prefix'] . $field['name'], $meta_value );
             }
         }
+
         do_action( 'hb_update_meta_box_' . $this->_args['name'], $post_id );
     }
 
@@ -186,6 +187,7 @@ class HB_Meta_Box{
      */
     static function update_meta_boxes( $post_id ){
         if( 'post' != strtolower( $_SERVER['REQUEST_METHOD'] ) ) return;
+
         if( ! ( $meta_boxes = self::$_meta_boxes ) ) return;
 
         foreach( $meta_boxes as $meta_box ){

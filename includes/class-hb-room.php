@@ -162,19 +162,17 @@ class HB_Room{
             );
         }
 
-        $room_type = get_post_meta( $this->post->ID, '_hb_room_type', true );
-        if( $room_type_gallery = get_option( 'hb_taxonomy_thumbnail_' . $room_type ) ){
-            foreach( $room_type_gallery as $thumb_id ){
-                $thumb = wp_get_attachment_image_src( $thumb_id, 'thumbnail' );
-                $full = wp_get_attachment_image_src( $thumb_id, 'full' );
-                $alt = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
-                $gallery[] = array(
-                    'id'    => $thumb_id,
-                    'src'   => $full[0],
-                    'thumb' => $thumb[0],
-                    'alt'   => $alt ? $alt : get_the_title( $thumb_id )
-                );
-            }
+        $galleries = get_post_meta( $this->post->ID, '_hb_gallery', true );
+        foreach( $galleries as $thumb_id ){
+            $thumb = wp_get_attachment_image_src( $thumb_id, 'thumbnail' );
+            $full = wp_get_attachment_image_src( $thumb_id, 'full' );
+            $alt = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
+            $gallery[] = array(
+                'id'    => $thumb_id,
+                'src'   => $full[0],
+                'thumb' => $thumb[0],
+                'alt'   => $alt ? $alt : get_the_title( $thumb_id )
+            );
         }
         return $gallery;
     }

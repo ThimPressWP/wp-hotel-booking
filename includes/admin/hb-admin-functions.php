@@ -242,7 +242,7 @@ function hb_meta_box_coupon_settings_update_meta_value( $meta_value, $field_name
 add_filter( 'hb_meta_box_update_meta_value', 'hb_meta_box_coupon_settings_update_meta_value', 10, 4 );
 
 function hb_update_meta_box_room_settings( $post_id ){
-    wp_set_object_terms( $post_id, intval( $_POST['_hb_room_type'] ), 'hb_room_type' );
+    // wp_set_object_terms( $post_id, intval( $_POST['_hb_room_type'] ), 'hb_room_type' ); // save taxonomy
     //wp_set_object_terms( $post_id, intval( $_POST['room_capacity'] ), 'hb_room_capacity' );
     //echo '<pre>';print_r($_POST);echo '</pre>';die();
 

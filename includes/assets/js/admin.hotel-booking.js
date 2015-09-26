@@ -218,7 +218,7 @@
                         html +=     '<div class="thumbnail">';
                         html +=         '<div class="centered">'
                                             html += '<img src="'+attachment.url+'"/>';
-                                            html += '<input type="hidden" name="_hb_gallery[]" value="'+url+'" />'
+                                            html += '<input type="hidden" name="_hb_gallery[]" value="'+attachment.id+'" />'
                         html +=         '</div>';
                         html +=     '</div>';
                         html += '</div>';
