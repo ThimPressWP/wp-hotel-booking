@@ -81,7 +81,12 @@ class HB_Room{
         $return = '';
         switch( $key ){
             case 'room_type':
-                $return = intval( get_post_meta( $this->post->ID, '_hb_room_type', true ) );
+                // $return = intval( get_post_meta( $this->post->ID, '_hb_room_type', true ) );
+                $terms = get_the_terms( $this->post->ID, 'hb_room_type' );
+                $return = array();
+                foreach ($terms as $key => $term) {
+                    $return[] = $term->term_id;
+                }
                 break;
             case 'name':
                 $return = get_the_title( $this->post->ID );
