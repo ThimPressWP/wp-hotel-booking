@@ -320,4 +320,36 @@ if( ! function_exists( 'hotel_booking_sidebar' ) )
 
     }
 }
+
+if( ! function_exists('hotel_booking_loop_room_thumbnail') )
+{
+    function hotel_booking_loop_room_thumbnail()
+    {
+        hb_get_template('loop/thumbnail.php');
+    }
+}
+
+if( ! function_exists( 'hotel_booking_loop_room_title' ) )
+{
+    function hotel_booking_loop_room_title()
+    {
+        hb_get_template('loop/title.php');
+    }
+}
+
+if( ! function_exists( 'hotel_booking_loop_room_price' ) )
+{
+    function hotel_booking_loop_room_price()
+    {
+        hb_get_template('loop/price.php');
+    }
+}
+
+if( ! function_exists( 'hotel_booking_after_shop_loop' ) )
+{
+    function hotel_booking_after_shop_loop()
+    {
+        hb_get_template('pagination.php');
+    }
+}
 /*=====  End of template hooks  ======*/
