@@ -108,10 +108,11 @@ class HB_Room{
                 if( has_post_thumbnail( $this->post->ID ) ){
                     $return = get_the_post_thumbnail( $this->post->ID, 'thumbnail' );
                 }else{
-                    $gallery = get_post_meta( $this->post->ID, '_hb_room_gallery', true );
-                    if( ( $gallery && file_exists(untrailingslashit($upload_base_dir).$gallery[0]) ) )
+                    $gallery = get_post_meta( $this->post->ID, '_hb_gallery', true );
+                    if( $gallery )
                     {
-                        $return = '<img src="'.untrailingslashit($upload_base_url).$galleries[0].'" alt="'.$this->post->post_title.'"/>';
+                        $attachment_id = array_shift($gallery);
+                        $return = wp_get_attachment_image( $attachment_id, 'thumbnail' );
                     }
                     else
                     {
