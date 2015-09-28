@@ -300,7 +300,7 @@ if( ! function_exists( 'hotel_booking_before_main_content' ) )
 {
     function hotel_booking_before_main_content()
     {
-
+        return;
     }
 }
 
@@ -309,7 +309,7 @@ if( ! function_exists( 'hotel_booking_after_main_content' ) )
     // others room block
     function hotel_booking_after_main_content()
     {
-
+        return;
     }
 }
 
@@ -317,7 +317,7 @@ if( ! function_exists( 'hotel_booking_sidebar' ) )
 {
     function hotel_booking_sidebar()
     {
-
+        return;
     }
 }
 

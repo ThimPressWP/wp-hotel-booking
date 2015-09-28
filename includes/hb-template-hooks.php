@@ -15,6 +15,6 @@ add_action('hotel_booking_loop_room_thumbnail', 'hotel_booking_loop_room_thumbna
 // title
 add_action('hotel_booking_loop_room_title', 'hotel_booking_loop_room_title' );
 // price display
-add_filter('hotel_booking_loop_room_price', 'hotel_booking_loop_room_price');
+add_action('hotel_booking_loop_room_price', 'hotel_booking_loop_room_price');
 // pagination
 add_action('hotel_booking_after_shop_loop', 'hotel_booking_after_shop_loop' );

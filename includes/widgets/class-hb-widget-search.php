@@ -43,7 +43,6 @@ class HB_Widget_Search extends WP_Widget{
         $show_label = 'true';
         if( isset($instance['show_label']) )
             $show_label = $instance['show_label'];
-
         echo do_shortcode('[hotel_booking search_page="' . $search . '" show_title="'.$show_title.'" show_label="'.$show_label.'"]');
         echo $args['after_widget'];
     }

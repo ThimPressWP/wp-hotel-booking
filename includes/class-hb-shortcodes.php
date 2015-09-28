@@ -39,7 +39,7 @@ class HB_Shortcodes{
             )
         );
         $page = hb_get_request( 'hotel-booking' );
-        $template = 'search.php';
+        $template = 'search-room.php';
         $template_args = array();
 
         // find the url for form action
@@ -57,7 +57,6 @@ class HB_Shortcodes{
             }
         }
         $template_args['search_page'] = $search_permalink;
-
         /**
         *  Add argument use in shortcode display
         */
@@ -127,6 +126,7 @@ class HB_Shortcodes{
                 $template = 'message.php';
                 break;
         }
+
         ob_start();
         do_action( 'hb_wrapper_start' );
         hb_get_template( $template, $template_args );
@@ -169,7 +169,7 @@ class HB_Shortcodes{
                 <?php endif; ?>
                 <!--text_link-->
                 <?php if( isset($atts['text_link']) && $atts['text_link'] !== '' ): ?>
-                    <div class="text_link"><a href="<?php echo esc_url(get_post_type_archive_link('hb_room')) ?>"><?php echo $atts['text_link']; ?></a></div>
+                    <div class="text_link"><a href="<?php echo get_post_type_archive_link('hb_room'); ?>"><?php echo $atts['text_link']; ?></a></div>
                 <?php endif; ?>
                 <div class="hb_room_carousel">
                     <?php foreach ($posts as $key => $post): ?>
@@ -186,13 +186,13 @@ class HB_Shortcodes{
                         ?>
                             <div class="item">
                                 <div class="media">
-                                    <a href="<?php echo esc_url(get_the_permalink($post->ID)); ?>" class="media-image" title="<?php echo esc_attr($title); ?>">
+                                    <a href="<?php echo get_the_permalink($post->ID); ?>" class="media-image" title="<?php echo esc_attr($title); ?>">
                                     <?php echo get_the_post_thumbnail( $post->ID, $size); ?>
                                     </a>
                                 </div>
                                 <div class="title">
                                     <h4>
-                                        <a href="<?php echo esc_url(get_the_permalink($post->ID)); ?>" class="media-image"><?php echo $title; ?></a>
+                                        <a href="<?php echo get_the_permalink($post->ID); ?>" class="media-image"><?php echo $title; ?></a>
                                     </h4>
                                 </div>
                                 <?php if( (!isset($atts['price']) || $atts['price'] !== '*') && $prices ): ?>
