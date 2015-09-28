@@ -128,13 +128,14 @@
             init_pricing_plan(this);
         });
 
-        var $tabClicked = $('.hb-payment-gateways .subsubsub li a').click(function(e){
+        var $tabClicked = $('.hb-admin-sub-tab li a').click(function(e){
             e.preventDefault();
             var id = $(this).attr('href'),
                 $div = $(id),
                 $parent = $(this).parent();
             $parent.addClass('current').siblings().removeClass('current');
-            $div.show().css("opacity", 1).siblings('.hb-payment-gateway-settings').hide();
+
+            $div.show().css("opacity", 1).siblings('.hb-sub-tab-content').hide();
 
             history.pushState({}, '', window.location.href.replace(/#?.*/, '') + id);
 
@@ -233,6 +234,15 @@
             event.preventDefault();
             $(this).parent().remove();
         });
+
+        $('input[name="tp_hotel_booking_email_new_booking_enable"]').on('change _change', function(){
+            var $siblings = $(this).closest('tr').siblings('.' + $(this).attr('name'));
+            if( this.checked ){
+                $siblings.show();
+            }else {
+                $siblings.hide();
+            }
+        }).trigger('change');
         $('#gallery_settings ul').sortable();
     }
 

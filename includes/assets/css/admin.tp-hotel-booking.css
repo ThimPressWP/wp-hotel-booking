@@ -79,10 +79,14 @@ th.column-room_capacity,
 th.column-room_type{
     width: 100px;
 }
+.hb-admin-sub-tab a{
+    outline: none;
+    box-shadow: none;
+}
 .hb-payment-gateways .subsubsub .current{
     font-weight: bold;
 }
-.hb-payment-gateway-settings{
+.hb-sub-tab-content{
     opacity: 0;
     float: left;
     width: 100%;
@@ -91,7 +95,7 @@ th.column-room_type{
     clear: both;
     display: none;
 }
-.hb-payment-gateway-settings.current{
+.hb-sub-tab-content.current{
     opacity: 1;
     display: block;
 }

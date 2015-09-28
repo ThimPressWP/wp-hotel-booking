@@ -169,7 +169,7 @@ class HB_Room{
         }
 
         $galleries = get_post_meta( $this->post->ID, '_hb_gallery', true );
-        foreach( $galleries as $thumb_id ){
+        if( $galleries ) foreach( $galleries as $thumb_id ){
             $thumb = wp_get_attachment_image_src( $thumb_id, 'thumbnail' );
             $full = wp_get_attachment_image_src( $thumb_id, 'full' );
             $alt = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );

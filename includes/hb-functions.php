@@ -570,13 +570,15 @@ function hb_is_ajax(){
 
 function hb_update_customer_info( $data ){
     $is_new = false;
+
     if( ! empty( $data['ID'] ) ){
-        $customer_id = $data['ID'];
+        $customer_id = absint( $data['ID'] );
         $customer = get_post( $customer_id );
-        if( ! $customer || get_post_meta( $customer_id, '_hb_email', true ) != $data['email'] ){
+        if( ! $customer || ( get_post_meta( $customer_id, '_hb_email', true ) != $data['email'] ) ){
             $customer_id = 0;
         }
     }
+
     if( ! $customer_id ){
         $is_new = true;
         $customer_id = wp_insert_post(
@@ -629,52 +631,7 @@ function hb_get_customer( $customer_id ){
  */
 function hb_customer_place_order(){
 
-    if( strtolower( $_SERVER['REQUEST_METHOD'] ) != 'post' ){
-        return;
-    }
-
-    /*if ( ! isset( $_POST['hb_customer_place_order_field'] ) || ! wp_verify_nonce( $_POST['hb_customer_place_order_field'], 'hb_customer_place_order' ) ){
-        return;
-    }*/
-
-    $payment_method = hb_get_user_payment_method( hb_get_request( 'hb-payment-method' ) );
-
-    if( ! $payment_method ){
-        throw new Exception( __( 'The payment method is not available', 'tp-hotel-booking' ) );
-    }
-
-    $customer_info = array(
-        'ID'            => hb_get_request( 'existing-customer-id' ),
-        'title'         => hb_get_request( 'title' ),
-        'first_name'    => hb_get_request( 'first_name' ),
-        'last_name'     => hb_get_request( 'last_name' ),
-        'address'       => hb_get_request( 'address' ),
-        'city'          => hb_get_request( 'city' ),
-        'state'         => hb_get_request( 'state' ),
-        'postal_code'   => hb_get_request( 'postal_code' ),
-        'country'       => hb_get_request( 'country' ),
-        'phone'         => hb_get_request( 'phone' ),
-        'email'         => hb_get_request( 'email' ),
-        'fax'           => hb_get_request( 'fax' ),
-    );
-    $customer_id = hb_update_customer_info( $customer_info );
-    if( $customer_id ) {
-        $result = $payment_method->process_checkout( $customer_id );
-    }
-
-    if ( ! empty( $result['result'] ) && $result['result'] == 'success' ) {
-
-        $result = apply_filters( 'hb_payment_successful_result', $result );
-
-        if ( hb_is_ajax() ) {
-            hb_send_json( $result );
-            exit;
-        } else {
-            wp_redirect( $result['redirect'] );
-            exit;
-        }
-
-    }
+    HB_Checkout::instance()->process_checkout();
     exit();
 }
 

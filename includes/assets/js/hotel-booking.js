@@ -314,6 +314,7 @@
                 return false;
             }
 
+            var action = $(this).attr('action') || window.location.href;
             $.ajax({
                 url: hotel_settings.ajax,
                 type: 'post',
@@ -322,7 +323,8 @@
                 success: function (response) {
                     response = parseJSON(response)
                     if(response.success && response.sig){
-                        window.location.href = window.location.href.replace(/\?.*/, '') + '?hotel-booking-params='+response.sig
+
+                        window.location.href = action.replace(/\?.*/, '') + '?hotel-booking-params='+response.sig;
                     }
                 }
             });
