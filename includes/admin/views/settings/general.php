@@ -46,10 +46,10 @@ $settings = hb_settings();
         <th><?php _e( 'Currency Position', 'tp-hotel-booking' );?></th>
         <td>
             <select name="<?php echo $settings->get_field_name('price_currency_position');?>" tabindex="-1">
-                <option value="left" <?php selected( $settings->get('price_currency_position') == 'left' );?>>Left ( $69.99 )</option>
-                <option value="right" <?php selected( $settings->get('price_currency_position') == 'right' );?>>Right ( 69.99$ )</option>
-                <option value="left_with_space" <?php selected( $settings->get('price_currency_position') == 'left_with_space' );?>>Left with space ( $ 69.99 )</option>
-                <option value="right_with_space" <?php selected( $settings->get('price_currency_position') == 'right_with_space' );?>>Right with space ( 69.99 $ )</option>
+                <option value="left" <?php selected( $settings->get('price_currency_position') == 'left' );?>><?php _e('Left ( $69.99 )', 'tp-hotel-booking') ?></option>
+                <option value="right" <?php selected( $settings->get('price_currency_position') == 'right' );?>><?php _e('Right ( 69.99$ )', 'tp-hotel-booking') ?></option>
+                <option value="left_with_space" <?php selected( $settings->get('price_currency_position') == 'left_with_space' );?>><?php _e('Left with space ( $ 69.99 )', 'tp-hotel-booking') ?></option>
+                <option value="right_with_space" <?php selected( $settings->get('price_currency_position') == 'right_with_space' );?>><?php _e('Right with space ( 69.99 $ )', 'tp-hotel-booking') ?></option>
             </select>
         </td>
     </tr>
@@ -82,6 +82,16 @@ $settings = hb_settings();
         <td>
             <input type="hidden" name="<?php echo $settings->get_field_name('price_including_tax');?>" value="0" />
             <input type="checkbox" name="<?php echo $settings->get_field_name('price_including_tax');?>" <?php checked( $settings->get('price_including_tax') ? 1 : 0, 1 );?> value="1" />
+        </td>
+    </tr>
+    <tr>
+        <th><?php _e( 'Price display', 'tp-hotel-booking' );?></th>
+        <td>
+            <select name="<?php echo $settings->get_field_name('price_display');?>" tabindex="-1">
+                <option value="min" <?php selected( $settings->get('price_display') == 'min' );?>><?php _e('Min', 'tp-hotel-booking') ?></option>
+                <option value="max" <?php selected( $settings->get('price_display') == 'max' );?>><?php _e('Max', 'tp-hotel-booking') ?></option>
+                <option value="min_to_max" <?php selected( $settings->get('price_display') == 'min_to_max' );?>><?php _e('Min to Max', 'tp-hotel-booking') ?></option>
+            </select>
         </td>
     </tr>
 

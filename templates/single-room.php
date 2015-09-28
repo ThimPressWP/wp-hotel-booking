@@ -24,7 +24,7 @@ get_header(); ?>
 
 		<?php while ( have_posts() ) : the_post(); ?>
 
-			<?php hb_get_template_part( 'content', 'single-product' ); ?>
+			<?php hb_get_template_part( 'content', 'single-room' ); ?>
 
 		<?php endwhile; // end of the loop. ?>
 

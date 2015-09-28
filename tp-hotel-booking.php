@@ -168,6 +168,18 @@ class TP_Hotel_Booking{
                 'jquery.transit.min.js',
                 'jquery.ba-throttle-debounce.min.js'
             );
+
+        // gallery libraries
+        $gallery = array(
+                'js'    => array(
+                        'jquery.mobile.customized.min.js',
+                        'jquery.easing.1.3.js',
+                        'camera.min.js'
+                    ),
+                'css'   => array(
+                        'camera.css'
+                    )
+            );
         wp_register_script( 'jquery-ui-datepicker', $this->plugin_url( 'includes/assets/js/jquery.ui.datepicker.min.js' ), array( 'jquery' ) );
         wp_register_style( 'jquery-ui-datepicker', $this->plugin_url( 'includes/assets/css/jquery.ui.datepicker.css' ) );
         if( is_admin() ){
@@ -182,7 +194,23 @@ class TP_Hotel_Booking{
 
             // rooms slider widget
             foreach ($carouselJs as $key => $lib) {
-                wp_register_script( 'tp-hotel-booking-'.$key, $this->plugin_url( 'includes/carousel/' . $lib ), $dependencies );
+                wp_register_script( 'tp-hotel-booking-carousel'.$key, $this->plugin_url( 'includes/carousel/' . $lib ), $dependencies );
+            }
+
+            // room galleria
+            foreach ($gallery as $key => $libs) {
+                if( $key === 'js' )
+                {
+                    foreach ($libs as $k => $lib) {
+                        wp_register_script( 'tp-hotel-booking-gallery-js-'.$k, $this->plugin_url( 'includes/camera/' . $key . '/' . $lib ), $dependencies );
+                    }
+                }
+                else
+                {
+                    foreach ($libs as $k => $lib) {
+                        wp_register_style( 'tp-hotel-booking-gallery-css-'.$k, $this->plugin_url( 'includes/camera/' . $key . '/' . $lib ) );
+                    }
+                }
             }
         }
 
@@ -197,6 +225,22 @@ class TP_Hotel_Booking{
             // rooms slider widget
             foreach ($carouselJs as $key => $lib) {
                 wp_enqueue_script( 'tp-hotel-booking-'.$key, $this->plugin_url( 'includes/carousel/' . $lib ) );
+            }
+
+            // room galleria
+            foreach ($gallery as $key => $libs) {
+                if( $key === 'js' )
+                {
+                    foreach ($libs as $k => $lib) {
+                        wp_enqueue_script( 'tp-hotel-booking-gallery-js-'.$k );
+                    }
+                }
+                else
+                {
+                    foreach ($libs as $k => $lib) {
+                        wp_enqueue_style( 'tp-hotel-booking-gallery-css-'.$k );
+                    }
+                }
             }
         }
     }
