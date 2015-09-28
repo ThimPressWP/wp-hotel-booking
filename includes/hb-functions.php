@@ -1392,7 +1392,7 @@ if( ! function_exists( 'hb_render_label_shortcode' ) )
     }
 }
 
-if( function_exists('hb_get_price_plan_room') )
+if( ! function_exists('hb_get_price_plan_room') )
 {
     /**
      * Returns array price of room.
