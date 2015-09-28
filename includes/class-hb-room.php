@@ -169,6 +169,9 @@ class HB_Room{
         }
 
         $galleries = get_post_meta( $this->post->ID, '_hb_gallery', true );
+        if( ! $galleries )
+            return $gallery;
+
         foreach( $galleries as $thumb_id ){
             $thumb = wp_get_attachment_image_src( $thumb_id, 'thumbnail' );
             $full = wp_get_attachment_image_src( $thumb_id, 'full' );
