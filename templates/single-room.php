@@ -43,7 +43,7 @@ get_header(); ?>
 		 *
 		 * @hooked hotel_booking_sidebar - 10
 		 */
-		do_action( 'hotel_booking_sidebar' );
+		// do_action( 'hotel_booking_sidebar' );
 	?>
 
 <?php get_footer(); ?>

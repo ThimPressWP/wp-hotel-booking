@@ -61,6 +61,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	</div><!-- .summary -->
 
-</li><!-- #room-<?php the_ID(); ?> -->
+</li>
 
 <?php do_action( 'hotel_booking_after_loop_room' ); ?>

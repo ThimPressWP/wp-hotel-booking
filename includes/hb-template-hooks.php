@@ -10,7 +10,6 @@ add_action( 'hb_wrapper_start', 'hb_display_message' );
 add_action( 'hotel_booking_before_main_content', 'hotel_booking_before_main_content' );
 add_action( 'hotel_booking_after_main_content', 'hotel_booking_after_main_content' );
 add_action( 'hotel_booking_sidebar', 'hotel_booking_sidebar' );
-
 //thumbnail
 add_action('hotel_booking_loop_room_thumbnail', 'hotel_booking_loop_room_thumbnail');
 // title
@@ -24,6 +23,8 @@ add_action('hotel_booking_after_shop_loop', 'hotel_booking_after_shop_loop' );
 add_action('hotel_booking_single_room_gallery', 'hotel_booking_single_room_gallery' );
 // room details
 add_action('hotel_booking_single_room_infomation', 'hotel_booking_single_room_infomation' );
+// room related
+add_action( 'hotel_booking_after_single_room', 'hotel_booking_single_room_related' );add_action('hotel_booking_single_room_infomation', 'hotel_booking_single_room_infomation' );
 
 add_filter( 'body_class', 'hb_body_class' );
 //add_filter( 'post_class', 'wc_product_post_class', 20, 3 );

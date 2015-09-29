@@ -357,7 +357,7 @@ if( ! function_exists( 'hotel_booking_single_room_gallery' ) )
 {
     function hotel_booking_single_room_gallery()
     {
-        hb_get_template('loop/gallery.php');
+        hb_get_template('single-room/gallery.php');
     }
 }
 
@@ -365,7 +365,7 @@ if( ! function_exists( 'hotel_booking_single_room_infomation' ) )
 {
     function hotel_booking_single_room_infomation()
     {
-        
+        hb_get_template('single-room/details.php');
     }
 }
 
@@ -394,4 +394,18 @@ if( ! function_exists( 'hb_body_class' ) ){
         return array_unique( $classes );
     }
 }
+
+if( ! function_exists( 'hotel_booking_single_room_related' ) )
+{
+
+    /*
+    * related room
+    * @return html
+    */
+    function hotel_booking_single_room_related()
+    {
+        hb_get_template('single-room/related-room.php');
+    }
+}
+
 /*=====  End of template hooks  ======*/

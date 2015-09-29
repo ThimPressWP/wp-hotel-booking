@@ -107,6 +107,9 @@ class HB_Room{
             case 'capacity_id':
                 $return = get_post_meta( $this->post->ID, '_hb_room_capacity', true );
                 break;
+            case 'addition_information':
+                $return = get_post_meta( $this->post->ID, '_hb_room_addition_information', true );
+                break;
             case 'thumbnail':
                 if( has_post_thumbnail( $this->post->ID ) ){
                     $return = get_the_post_thumbnail( $this->post->ID, 'thumbnail' );
@@ -172,9 +175,10 @@ class HB_Room{
         }
 
         $galleries = get_post_meta( $this->post->ID, '_hb_gallery', true );
-        if( $galleries === false )
+        if( ! $galleries )
             return $gallery;
-        if( $gallery ) foreach( $galleries as $thumb_id ){
+
+        foreach( $galleries as $thumb_id ){
             $thumb = wp_get_attachment_image_src( $thumb_id, 'thumbnail' );
             $full = wp_get_attachment_image_src( $thumb_id, 'full' );
             $alt = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
@@ -340,6 +344,46 @@ class HB_Room{
             $this->_plans = $plans;
         }
         return $this->_plans;
+    }
+
+    function get_related_rooms()
+    {
+        $room_types = get_the_terms( $this->post->ID, 'hb_room_type' );
+        $room_capacity = (int)get_post_meta( $this->post->ID, '_hb_room_capacity', true );
+        $max_adults_per_room = (int)get_post_meta( $this->post->ID, '_hb_max_adults_per_room', true );
+        $max_child_per_room = (int)get_post_meta( $this->post->ID, '_hb_max_child_per_room', true );
+
+        $taxonomis = array();
+        foreach ($room_types as $key => $tax) {
+            $taxonomis[] = $tax->term_id;
+        }
+        $args = array(
+                'post_type'     => 'hb_room',
+                'status'        => 'publish',
+                'meta_query'    => array(
+                        array(
+                            'key'       => '_hb_max_adults_per_room',
+                            'value'     => $max_adults_per_room,
+                            'compare'   => '>=',
+                        ),
+                        array(
+                            'key'       => '_hb_max_child_per_room',
+                            'value'     => $max_child_per_room,
+                            'compare'   => '>='
+                        ),
+                    ),
+                'tax_query' => array(
+                        array(
+                            'taxonomy' => 'hb_room_type',
+                            'field'    => 'term_id',
+                            'terms'    => $taxonomis
+                        ),
+                    ),
+                'post__not_in'  => array( $this->post->ID )
+            );
+        $query = new WP_Query( $args );
+        wp_reset_postdata();
+        return $query;
     }
 
     /**
