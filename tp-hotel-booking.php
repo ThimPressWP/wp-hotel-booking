@@ -157,6 +157,7 @@ class TP_Hotel_Booking{
     function enqueue_assets(){
         $dependencies = array(
             'jquery',
+            'jquery-ui-sortable',
             'jquery-ui-datepicker'
         );
         // carousel libraries

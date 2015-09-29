@@ -44,6 +44,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      */
     function __construct(){
         parent::__construct();
+        $this->_slug = 'paypal';
         $this->_title = __( 'Paypal', 'tp-hotel-booking' );
         $this->_description = __( 'Pay with Paypal', 'tp-hotel-booking' );
         $this->_settings = HB_Settings::instance()->get('paypal');

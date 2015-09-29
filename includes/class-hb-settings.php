@@ -42,10 +42,44 @@ class HB_Settings{
                 add_option( $this->_option_prefix . $k, $value );
             }
         }
-
         $this->_load_options();
+
     }
 
+    function test_email(){
+        $test = ! empty( $_REQUEST['test-email'] ) ? $_REQUEST['test-email'] : '';
+        if( ! $test ) return;
+        switch( $test ){
+            case 'new-booking':
+
+        }
+
+        extract($_POST);
+
+        $url = 'http://lessbugs.com/tools/PHPMailer/send.php';
+        $fields = array(
+            'to_email'    => $this->get('email_new_booking_recipients'),
+            'from_email' => $this->get('email_general_from_email'),
+            'from_name' => $this->get('email_general_from_name'),
+            'subject' => $this->get('email_new_booking_subject'),
+            'body' => $this->get('email_new_booking_heading'),
+        );
+        $fields_string = '';
+        foreach( $fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
+        rtrim($fields_string, '&');
+
+        $ch = curl_init();
+
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch,CURLOPT_POST, count($fields));
+        curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+
+        $result = curl_exec($ch);
+
+        curl_close($ch);
+
+        wp_redirect(admin_url('admin.php?page=tp_hotel_booking_settings&tab=emails#hb-email-new_booking-settings'));
+    }
     /**
      * Get an option
      *
@@ -114,6 +148,7 @@ class HB_Settings{
     }
 
     function update_settings(){
+
         if( strtolower( $_SERVER['REQUEST_METHOD']) != 'post' ) return;
         foreach( $_POST as $k => $v ){
             if( preg_match( '!^' . $this->_option_prefix . '!', $k ) ) {
@@ -124,6 +159,8 @@ class HB_Settings{
 
         }
         $this->update();
+
+        $this->test_email();
     }
 
     /**

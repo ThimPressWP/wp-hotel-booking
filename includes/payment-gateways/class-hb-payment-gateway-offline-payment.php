@@ -11,6 +11,7 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
 
     function __construct(){
         parent::__construct();
+        $this->_slug = 'offline-payment';
         $this->_title = __( 'Offline Payment', 'tp-hotel-booking' );
         $this->_description = __( 'Pay on arrival', 'tp-hotel-booking' );
         $this->_settings = HB_Settings::instance()->get('offline-payment');
@@ -23,7 +24,6 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
     function init(){
         add_action( 'hb_payment_gateway_settings_' . $this->slug, array( $this, 'admin_settings' ) );
         add_action( 'hb_payment_gateway_form_' . $this->slug, array( $this, 'form' ) );
-        add_action( 'hb_manage_booing_column_total', array( $this, 'column_total_content' ), 10, 3 );
         add_filter( 'hb_payment_method_title_offline-payment', array( $this, 'payment_method_title' ) );
     }
 
@@ -200,7 +200,16 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
      * @param null $customer_id
      * @return array
      */
-    function process_checkout( $customer_id = null ){
+    function process_checkout( $booking_id = null ){
+        $booking = HB_Booking::instance( $booking_id );
+        if( $booking ){
+            $booking->update_status( 'processing' );
+        }
+        return array(
+            'result'    => 'success',
+            'redirect'  => '?hotel-booking-offline-payment=1'
+        );
+
         $booking    = hb_generate_transaction_object( $customer_id );
         $transaction = hb_add_transaction(
             array(
