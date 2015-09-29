@@ -31,6 +31,10 @@ class HB_Checkout{
     function create_booking(){
         $customer_id = get_transient( 'hb_current_customer' );
 
+        $transaction_object = hb_generate_transaction_object( $customer_id );
+        if( ! $transaction_object ){
+            throw new Exception( sprintf( __( 'Sorry, your session has expired. <a href="%s">Return to homepage</a>', 'tp-hotel-booking' ), home_url() ) );
+        }
         // Insert or update the post data
         $booking_id = absint( get_transient( 'booking_awaiting_payment' ) );
         // Resume the unpaid order if its pending
@@ -44,7 +48,9 @@ class HB_Checkout{
             $booking = HB_Booking::instance( $booking_id );
         }
 
-        $transaction_object = hb_generate_transaction_object( $customer_id );
+
+
+
 
         $check_in               = $transaction_object->check_in_date;
         $check_out              = $transaction_object->check_out_date;
@@ -97,7 +103,7 @@ class HB_Checkout{
 
             add_post_meta( $booking_id, '_hb_room_price', $prices );
         }
-
+        do_action( 'hb_new_booking', $booking_id );
         return $booking_id;
     }
 
@@ -131,6 +137,15 @@ class HB_Checkout{
                     }
                     // No payment was required for order
                     $booking->payment_complete();
+
+                    HB_Cart::instance()->empty_cart();
+
+
+                    $return_url = $booking->get_checkout_booking_received_url();
+                    hb_send_json( array(
+                        'result' 	=> 'success',
+                        'redirect'  => apply_filters( 'hb_checkout_no_payment_needed_redirect', $return_url, $booking )
+                    ) );
 
                 }
             }else{

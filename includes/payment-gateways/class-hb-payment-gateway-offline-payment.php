@@ -205,6 +205,9 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
         if( $booking ){
             $booking->update_status( 'processing' );
         }
+
+        HB_Cart::instance()->empty_cart();
+
         return array(
             'result'    => 'success',
             'redirect'  => '?hotel-booking-offline-payment=1'

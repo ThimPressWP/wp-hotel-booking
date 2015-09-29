@@ -54,31 +54,6 @@ class HB_Settings{
 
         }
 
-        extract($_POST);
-
-        $url = 'http://lessbugs.com/tools/PHPMailer/send.php';
-        $fields = array(
-            'to_email'    => $this->get('email_new_booking_recipients'),
-            'from_email' => $this->get('email_general_from_email'),
-            'from_name' => $this->get('email_general_from_name'),
-            'subject' => $this->get('email_new_booking_subject'),
-            'body' => $this->get('email_new_booking_heading'),
-        );
-        $fields_string = '';
-        foreach( $fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
-        rtrim($fields_string, '&');
-
-        $ch = curl_init();
-
-        curl_setopt($ch,CURLOPT_URL, $url);
-        curl_setopt($ch,CURLOPT_POST, count($fields));
-        curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-
-        $result = curl_exec($ch);
-
-        curl_close($ch);
-
-        wp_redirect(admin_url('admin.php?page=tp_hotel_booking_settings&tab=emails#hb-email-new_booking-settings'));
     }
     /**
      * Get an option
@@ -183,6 +158,23 @@ class HB_Settings{
             }
         }
         return $this->_options;
+    }
+
+    function __toString(){
+        return json_encode( $this->_options );
+    }
+
+    function toJson( $fields = array() ){
+        if( $fields ){
+            $options = array();
+            foreach( $fields as $k => $v ){
+                $options[ $v ] = $this->get( $v );
+            }
+            $return = json_encode( $options );
+        }else{
+            $return = json_encode( $this->_options );
+        }
+        return $return;
     }
 
     /**

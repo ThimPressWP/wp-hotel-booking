@@ -482,7 +482,8 @@ function hb_l18n(){
         'check_in_date_must_be_greater' => __( 'Check in date must be greater than the current', 'tp-hotel-booking' ),
         'check_out_date_must_be_greater'    => __( 'Check out date must be greater than the check in', 'tp-hotel-booking' ),
 
-        'enter_coupon_code'             => __( 'Please enter coupon code', 'tp-hotel-booking' )
+        'enter_coupon_code'             => __( 'Please enter coupon code', 'tp-hotel-booking' ),
+        'review_rating_required'        => __( 'Please select a rating', 'tp-hotel-booking' )
     );
     return apply_filters( 'hb_l18n', $translation );
 }
@@ -951,6 +952,25 @@ function hb_get_page_permalink( $name ){
     return get_the_permalink( hb_get_page_id( $name ) );
 }
 
+function hb_get_endpoint_url( $endpoint, $value = '', $permalink = '' ) {
+    if ( ! $permalink )
+        $permalink = get_permalink();
+
+    if ( get_option( 'permalink_structure' ) ) {
+        if ( strstr( $permalink, '?' ) ) {
+            $query_string = '?' . parse_url( $permalink, PHP_URL_QUERY );
+            $permalink    = current( explode( '?', $permalink ) );
+        } else {
+            $query_string = '';
+        }
+        $url = trailingslashit( $permalink ) . $endpoint . '/' . $value . $query_string;
+    } else {
+        $url = add_query_arg( $endpoint, $value, $permalink );
+    }
+
+    return apply_filters( 'hb_get_endpoint_url', $url, $endpoint, $value, $permalink );
+}
+
 function hb_get_advance_payment(){
     $advance_payment = HB_Settings::instance()->get( 'advance_payment' );
     return apply_filters( 'hb_advance_payment', $advance_payment );
@@ -1383,3 +1403,88 @@ if( ! function_exists('hb_get_price_plan_room') )
         return $price_plans;
     }
 }
+
+function hb_customer_booked_room(){
+    return true;
+}
+function hb_new_booking_email( $booking_id ){
+    $settings = HB_Settings::instance();
+    $booking = HB_Booking::instance( $booking_id );
+    $url = 'http://lessbugs.com/tools/PHPMailer/send.php';
+    $subject = $settings->get('email_new_booking_subject');
+    $email_heading = $settings->get('email_new_booking_heading');
+    $format = $settings->get('email_new_booking_format');
+    if( ! $subject ){
+        $subject = '[{site_title}] New customer booking ({order_number}) - {order_date}';
+    }
+
+    $find = array(
+        'order-date'    => '{order_date}',
+        'order-number'  => '{order_number}',
+        'site-title'    => '{site_title}'
+    );
+
+    $replace = array(
+        'order-date'    => date_i18n( 'd.m.Y', strtotime( date('d.m.Y')) ),
+        'order-number'  => $booking->get_booking_number(),
+        'site-title'    => wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES )
+    );
+
+    $subject = str_replace( $find, $replace, $subject );
+
+    if( ! $email_heading ){
+        $email_heading = __( 'New customer booking', 'tp-hotel-booking' );
+    }
+    $body = hb_get_template_content( 'emails/admin-new-booking.php', array(
+        'email_heading'   => $email_heading,
+        'booking'           => HB_Booking::instance( $booking_id )
+    ));
+
+    $fields = array(
+        'to_email'    => $settings->get('email_new_booking_recipients'),
+        'from_email' => $settings->get('email_general_from_email'),
+        'from_name' => $settings->get('email_general_from_name'),
+        'subject' => $subject,
+        'body' => $body,
+        'is_html' => $format == 'html' ? '1' : '0'
+    );
+    $fields_string = http_build_query( $fields );
+    $ch = curl_init();
+    curl_setopt($ch,CURLOPT_URL, $url);
+    curl_setopt($ch,CURLOPT_POST, count($fields));
+    curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+    $result = curl_exec($ch);
+    curl_close($ch);
+}
+add_action( 'hb_booking_status_pending_to_processing', 'hb_new_booking_email' );
+add_action( 'hb_booking_status_pending_to_completed', 'hb_new_booking_email' );
+
+
+/**
+ *
+ * @return string
+ */
+function hb_date_format() {
+    return apply_filters( 'hb_date_format', 'd.m.Y' );
+}
+
+if ( ! function_exists( 'is_room_taxonomy' ) ) {
+
+    /**
+     * @return bool
+     */
+    function is_room_taxonomy() {
+        return is_tax( get_object_taxonomies( 'hb_room' ) );
+    }
+}
+
+if ( ! function_exists( 'is_room' ) ) {
+
+    /**
+     * @return bool
+     */
+    function is_room() {
+        return is_singular( array( 'hb_room' ) );
+    }
+}
+

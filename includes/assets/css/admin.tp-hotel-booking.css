@@ -204,14 +204,16 @@ th.column-room_type{
 }
 
 /*gallerry settings meta box*/
+/*
 #gallery_settings{
     background-color: #F5F5F5;
     position: relative;
     border: 1px solid #DDD;
-}
+}*/
 #gallery_settings .hb-form-field-input{
     margin-left: 0;
 }
+/*
 #gallery_settings:before{
     content: '';
     border: 10px solid #DDD;
@@ -233,7 +235,7 @@ th.column-room_type{
     position: absolute;
     top: -18px;
     left: 36px;
-}
+}*/
 #gallery_settings ul{
     margin: 5px;
     padding: 0;

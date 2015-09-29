@@ -99,8 +99,8 @@ class HB_Cart{
     function get_total_rooms(){
         $total_rooms = 0;
         if( $rooms = $this->get_products() ){
-            foreach( $rooms as $id => $num_of_rooms ){
-                $total_rooms += intval( $num_of_rooms );
+            foreach( $rooms as $id => $room ){
+                $total_rooms += intval( $room['quantity'] );
             }
         }
         return apply_filters( 'hb_cart_total_rooms', $total_rooms );
@@ -255,6 +255,10 @@ class HB_Cart{
 
     }
 
+    function is_empty(){
+        return ! $this->get_rooms();
+    }
+
     /**
      * Get an instance of HB_Cart
      *
@@ -343,7 +347,7 @@ function hb_get_return_url(){
 function hb_generate_transaction_object( $customer_id ){
     $customer = hb_get_customer( $customer_id );
     $cart = HB_Cart::instance();
-
+    if( $cart->is_empty() ) return false;
     $rooms = array();
     if( $_rooms = $cart->get_rooms() ){
         foreach( $_rooms as $key => $room ) {
@@ -515,8 +519,8 @@ function hb_create_booking( $args = array() ){
         $booking->post->post_status  = 'hb-' . $args['status'];
     }
 
-    /*$booking_info = array(
-        '_hb_check_in_date'         => strtotime( $check_in ),
+    $booking_info = array(
+        /*'_hb_check_in_date'         => strtotime( $check_in ),
         '_hb_check_out_date'        => strtotime( $check_out ),
         '_hb_total_nights'          => $transaction_object->total_nights,
         '_hb_tax'                   => $tax,
@@ -529,14 +533,15 @@ function hb_create_booking( $args = array() ){
         '_hb_method'                => $transaction['method'],
         '_hb_method_title'          => hb_get_payment_method_title( $transaction['method'] ),
         '_hb_method_id'             => $transaction['method_id'],
-        '_hb_booking_status'        => $transaction['status']
+        '_hb_booking_status'        => $transaction['status'],*/
+        '_hb_booking_key'              => 'hb_' . apply_filters( 'hb_generate_booking_key', uniqid( 'booking' ) )
     );
     if( ! empty( $transaction_object->coupon ) ){
         $booking_info['_hb_coupon'] = $transaction_object->coupon;
     }
     $booking->set_booking_info(
         $booking_info
-    );*/
+    );
 
     $booking_id = $booking->update();
     /*if( $booking_id ){

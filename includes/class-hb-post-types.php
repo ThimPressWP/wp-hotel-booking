@@ -582,7 +582,7 @@ class HB_Post_Types{
             'taxonomies'         => array( 'room_category', 'room_tag' ),
             'supports'           => array( 'title', 'editor', 'thumbnail', 'revisions', 'comments', 'author' ),
             'hierarchical'       => false,
-            'rewrite'            => array( 'slug' => 'rooms', 'hierarchical' => true, 'with_front' => false )
+            'rewrite'            => array( 'slug' => 'rooms', 'with_front' => false, 'feeds' => true )
         );
         register_post_type( 'hb_room', $args );
 
@@ -684,7 +684,7 @@ class HB_Post_Types{
         register_post_type( 'hb_booking', $args );
 
         register_post_status( 'hb-pending', array(
-            'label'                     => _x( 'Pending Payment', 'Order status', 'tp-hotel-booking' ),
+            'label'                     => _x( 'Pending Payment', 'Booking status', 'tp-hotel-booking' ),
             'public'                    => false,
             'exclude_from_search'       => false,
             'show_in_admin_all_list'    => true,
@@ -692,15 +692,15 @@ class HB_Post_Types{
             'label_count'               => _n_noop( 'Pending Payment <span class="count">(%s)</span>', 'Pending Payment <span class="count">(%s)</span>', 'tp-hotel-booking' )
         ) );
         register_post_status( 'hb-processing', array(
-            'label'                     => _x( 'Processing', 'Order status', 'tp-hotel-booking' ),
+            'label'                     => _x( 'Processing', 'Booking status', 'tp-hotel-booking' ),
             'public'                    => false,
             'exclude_from_search'       => false,
             'show_in_admin_all_list'    => true,
             'show_in_admin_status_list' => true,
             'label_count'               => _n_noop( 'Processing <span class="count">(%s)</span>', 'Processing <span class="count">(%s)</span>', 'tp-hotel-booking' )
         ) );
-        register_post_status( 'wc-completed', array(
-            'label'                     => _x( 'Completed', 'Order status', 'tp-hotel-booking' ),
+        register_post_status( 'hb-completed', array(
+            'label'                     => _x( 'Completed', 'Booking status', 'tp-hotel-booking' ),
             'public'                    => false,
             'exclude_from_search'       => false,
             'show_in_admin_all_list'    => true,
@@ -818,6 +818,8 @@ class HB_Post_Types{
         if( is_admin() ){
             TP_Hotel_Booking::instance()->_include( 'includes/walkers/class-hb-walker-room-type-dropdown.php' );
         }
+
+        add_post_type_support( 'hb_room', array( 'comments' ) );
     }
 }
 

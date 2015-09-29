@@ -35,10 +35,13 @@ class HB_Room{
      * @param $post
      */
     function __construct( $post ){
-        if( is_numeric( $post ) ) {
+        if( is_numeric( $post ) && $post && get_post_type( $post ) == 'hb_room') {
             $this->post = get_post( $post );
         }elseif( $post instanceof WP_Post || is_object( $post ) ){
             $this->post = $post;
+        }
+        if( empty( $this->post ) ){
+            $this->post = hb_create_empty_post();
         }
     }
 
@@ -171,7 +174,7 @@ class HB_Room{
         $galleries = get_post_meta( $this->post->ID, '_hb_gallery', true );
         if( $galleries === false )
             return $gallery;
-        foreach( $galleries as $thumb_id ){
+        if( $gallery ) foreach( $galleries as $thumb_id ){
             $thumb = wp_get_attachment_image_src( $thumb_id, 'thumbnail' );
             $full = wp_get_attachment_image_src( $thumb_id, 'full' );
             $alt = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
@@ -337,6 +340,28 @@ class HB_Room{
             $this->_plans = $plans;
         }
         return $this->_plans;
+    }
+
+    /**
+     * Get reviews count for a room
+     *
+     * @return mixed
+     */
+    function get_review_count() {
+        global $wpdb;
+        $transient_name = rand().'hb_review_count_' . $this->post->ID;
+        if ( false === ( $count = get_transient( $transient_name ) ) ) {
+            $count = $wpdb->get_var( $wpdb->prepare("
+				SELECT COUNT(*) FROM $wpdb->comments
+				WHERE comment_parent = 0
+				AND comment_post_ID = %d
+				AND comment_approved = '1'
+			", $this->post->ID ) );
+
+            //set_transient( $transient_name, $count, DAY_IN_SECONDS * 30 );
+        }
+
+        return apply_filters( 'hb_room_review_count', $count, $this );
     }
 
     /**

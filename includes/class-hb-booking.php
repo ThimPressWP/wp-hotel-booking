@@ -62,6 +62,12 @@ class HB_Booking{
         $this->id = $this->post->ID;
     }
 
+    function __get( $key ){
+        if( ! isset( $this->{$key} ) ){
+            return get_post_meta( $this->id, '_hb_' . $key, true );
+        }
+    }
+
     /**
      * Load customer meta data
      *
@@ -176,6 +182,10 @@ class HB_Booking{
         }
     }
 
+    function get_booking_number(){
+        return '#' . sprintf( "%'.010d", $this->id );
+    }
+
     function payment_complete(){
         do_action( 'hb_pre_payment_complete', $this->id );
 
@@ -190,6 +200,17 @@ class HB_Booking{
             do_action( 'hb_payment_complete_order_status_' . $this->get_status(), $this->id );
         }
     }
+
+    public function get_checkout_booking_received_url() {
+
+        $received_url = hb_get_endpoint_url( 'booking-received', $this->id, hb_get_page_permalink( 'search' ) );
+
+
+        $received_url = add_query_arg( 'key', $this->booking_key, $received_url );
+
+        return apply_filters( 'hb_get_checkout_booking_received_url', $received_url, $this );
+    }
+
 
     /**
      * Get an instance of HB_Booking by post ID or WP_Post object
