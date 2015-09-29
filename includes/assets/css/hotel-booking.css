@@ -193,6 +193,7 @@
     color: #43A7FF;
 }
 /*widget slider*/
-.hb_room_carousel .item{
+.hb_room_carousel .item,
+.hb_related_other_room.has_slider li{
     float: left;
 }

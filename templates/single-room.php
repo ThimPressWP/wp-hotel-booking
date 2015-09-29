@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-//get_header(); ?>
+get_header(); ?>
 
 	<?php
 		/**
@@ -43,7 +43,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		 *
 		 * @hooked hotel_booking_sidebar - 10
 		 */
-		do_action( 'hotel_booking_sidebar' );
+		// do_action( 'hotel_booking_sidebar' );
 	?>
 
-<?php //get_footer(); ?>
+<?php get_footer(); ?>

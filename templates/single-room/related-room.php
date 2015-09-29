@@ -11,37 +11,65 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-$post_Id = get_the_ID();
-$room_types = get_the_terms( $post_Id, 'hb_room_type' );
-$room_capacity = (int)get_post_meta( $post_Id, '_hb_room_capacity', true );
-$max_adults_per_room = (int)get_post_meta( $post_Id, '_hb_max_adults_per_room', true );
-$max_child_per_room = (int)get_post_meta( $post_Id, '_hb_max_child_per_room', true );
+$room = HB_Room::instance( get_the_ID() );
+$related = $room->get_related_rooms();
+?>
+<?php if( $related->posts ): ?>
+	<div class="hb_related_other_room has_slider">
+		<h2><?php _e( 'Other Rooms', 'tp-hotel-booking' ); ?></h2>
+		<?php hotel_booking_room_loop_start(); ?>
 
-$taxonomis = array();
-foreach ($room_types as $key => $tax) {
-	$taxonomis[] = $tax->term_id;
-}
-$args = array(
-		'post_type'		=> 'hb_room',
-		'status'		=> 'publish',
-		'meta_query'	=> array(
-				array(
-		            'key' 		=> '_hb_max_adults_per_room',
-		            'value' 	=> $max_adults_per_room,
-		            'compare' 	=> '<=',
-		        ),
-		        array(
-		            'key' 		=> '_hb_max_child_per_room',
-		            'value' 	=> $max_child_per_room,
-		            'compare'	=> '<='
-		        ),
-			),
-		'tax_query' => array(
-				array(
-					'taxonomy' => 'hb_room_type',
-					'field'    => 'term_id',
-					'terms'    => $taxonomis,
-				),
-			),
-	);
-$query = new WP_Query( $args );
+			<?php while ( $related->have_posts() ) : $related->the_post(); ?>
+
+				<?php hb_get_template_part( 'content', 'room' ); ?>
+
+			<?php endwhile; // end of the loop. ?>
+
+		<?php hotel_booking_room_loop_end(); ?>
+		<div class="navigation">
+            <div class="prev"><i class="fa fa-angle-left"></i></div>
+            <div class="next"><i class="fa fa-angle-right"></i></div>
+        </div>
+	</div>
+
+	<script type="text/javascript">
+	    (function($){
+	        "use strict";
+	        $(document).ready(function(){
+	            $('.hb_related_other_room ul.rooms').carouFredSel({
+	                responsive: true,
+	                items: {
+	                    height: 'auto',
+	                    visible: {
+	                        min: 4,
+	                        max: 4
+	                    }
+	                },
+	                prev: {
+	                    button: '.hb_related_other_room .navigation .prev'
+	                },
+	                next: {
+	                    button: '.hb_related_other_room .navigation .next'
+	                },
+	                mousewheel: true,
+	                pauseOnHover: true,
+	                onCreate: function()
+	                {
+
+	                },
+	                swipe: {
+	                    onTouch: true,
+	                    onMouse: true
+	                },
+	                scroll : {
+	                    items           : 1,
+	                    easing          : "swing",
+	                    duration        : 700,
+	                    pauseOnHover    : true
+	                }
+	            });
+	        });
+	    })(jQuery);
+	</script>
+
+<?php endif; ?>

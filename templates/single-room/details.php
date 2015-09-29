@@ -18,9 +18,10 @@
         );
     $tabs = apply_filters( 'hotel_booking_single_room_infomation_tabs', $tabsInfo );
     // prepend after li tabs single
-    do_action( 'hotel_booking_before_single_room_infomation' )
+    do_action( 'hotel_booking_before_single_room_infomation' );
 ?>
     <div class="hb_single_room_details">
+
         <ul class="hb_single_room_tabs">
 
             <?php foreach ( $tabs as $key => $tab ): ?>
@@ -29,6 +30,7 @@
 
             <?php endforeach; ?>
         </ul>
+
         <?php
         // append after li tabs single
         do_action( 'hotel_booking_after_single_room_infomation' ); ?>
@@ -47,6 +49,5 @@
 
             <?php endforeach; ?>
         </div>
-    </div>
 
-    <?php
+    </div>
