@@ -31,6 +31,8 @@ class HB_TemplateLoader {
         if( is_post_type_archive( 'hb_room' ) )
         {
             $file = 'archive-room.php';
+            $find[] = $file;
+            $find[] = hb_template_path() . '/archive-room.php';
         }
         else if( is_room_taxonomy() )
         {
@@ -51,6 +53,7 @@ class HB_TemplateLoader {
         else if( is_single() )
         {
             $file = 'single-room.php';
+            $find[] = $file;
         }
 
         if( $file )

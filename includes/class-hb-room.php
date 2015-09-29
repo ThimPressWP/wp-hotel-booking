@@ -343,15 +343,27 @@ class HB_Room{
         return $this->_plans;
     }
 
-    function query_related(  )
+    function query_related( $limit = 5 )
     {
         $sql = array();
+        $exclude_ids = array( $this->post->ID );
         $room_types = get_the_terms( $this->post->ID, 'hb_room_type' );
-        $room_capacity = get_post_meta( $this->post->ID, '_hb_room_capacity', true );
-        var_dump($room_capacity); die();
-
+        $room_capacity = (int)get_post_meta( $this->post->ID, '_hb_room_capacity', true );
+        $max_adults_per_room = (int)get_post_meta( $this->post->ID, '_hb_max_adults_per_room', true );
+        $max_child_per_room = (int)get_post_meta( $this->post->ID, '_hb_max_child_per_room', true );
+        global $wpdb;
         $sql[] = "SELECT DISTINCT ID FROM {$wpdb->posts} AS p";
-        $sql[] = " INNER JOIN {$wpdb->postmeta} AS pm ON ( pm.post_id = p.ID AND pm.meta_key='_visibility' )";
+        $sql[] = " INNER JOIN {$wpdb->postmeta} AS pm ON ( pm.post_id = p.ID AND pm.meta_key ='_hb_room_capacity' )";
+        $sql[] = " INNER JOIN {$wpdb->postmeta} AS pm2 ON ( pm2.post_id = p.ID AND pm2.meta_key ='_hb_max_child_per_room' )";
+        $sql[] = " INNER JOIN {$wpdb->postmeta} AS pm3 ON ( pm3.post_id = p.ID AND pm3.meta_key ='_hb_max_adults_per_room' )";
+        $sql[] = " INNER JOIN {$wpdb->term_relationships} AS tr ON (p.ID = tr.object_id)";
+        $sql[] = " INNER JOIN {$wpdb->term_taxonomy} AS tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id)";
+        $sql[] = " WHERE p.post_status = 'publish'";
+        $sql[] = " AND p.post_type = 'hb_room'";
+        $sql[] = " AND p.ID != {$this->post->ID}";
+        $sql[] = " AND pm2.meta_key = '_hb_max_adults_per_room' AND pm2.meta_value <= {$max_adults_per_room}";
+        $sql[] = " AND pm3.meta_key = '_hb_max_child_per_room' AND pm3.meta_value <= {$max_child_per_room}";
+        $sql[] = " LIMIT {$limit} ";
 
         return implode('', $sql);
     }
@@ -359,6 +371,7 @@ class HB_Room{
     function get_related_rooms()
     {
         $sql = $this->query_related();
+        return $sql;
     }
 
     /**
