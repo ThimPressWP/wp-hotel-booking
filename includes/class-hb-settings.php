@@ -86,11 +86,11 @@ class HB_Settings{
      * @param string
      * @return mixed
      */
-    function get( $name ){
+    function get( $name, $default = false ){
         if( ! empty( $this->_options[ $name ] ) ){
             return $this->_options[ $name ];
         }
-        return false;
+        return $default;
     }
 
     /**
