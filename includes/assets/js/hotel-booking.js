@@ -407,7 +407,7 @@
             hb_single_details_content.find(tab_id).show();
             return false;
         });
-    })
+
 
         $('.hb-rating-input').rating();
     })
