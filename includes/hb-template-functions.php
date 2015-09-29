@@ -369,6 +369,32 @@ if( ! function_exists( 'hotel_booking_single_room_infomation' ) )
     }
 }
 
+if ( ! function_exists( 'hb_comments' ) ) {
+
+    /**
+     * Output the Review comments template.
+     *
+     * @param WP_Comment object
+     * @param mixed
+     * @param int
+     */
+    function hb_comments( $comment, $args, $depth ) {
+        $GLOBALS['comment'] = $comment;
+        hb_get_template( 'single-room/review.php', array( 'comment' => $comment, 'args' => $args, 'depth' => $depth ) );
+    }
+}
+
+if( ! function_exists( 'hb_body_class' ) ){
+    function hb_body_class( $classes ) {
+        $classes = (array) $classes;
+        if ( is_room() || is_room_taxonomy() ) {
+            $classes[] = 'tp-hotel-booking';
+        }
+
+        return array_unique( $classes );
+    }
+}
+
 if( ! function_exists( 'hotel_booking_single_room_related' ) )
 {
 

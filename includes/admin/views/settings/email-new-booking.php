@@ -39,40 +39,14 @@ $settings = hb_settings();
             <?php
             $template_formats = array(
                 'plain'     => __( 'Plain Text', 'tp-hotel-booking' ),
-                'html'      => __( 'HTML', 'tp-hotel-booking' ),
-                'multipart' => __( 'Multipart', 'tp-hotel-booking' ),
+                'html'      => __( 'HTML', 'tp-hotel-booking' )
             );
             ?>
-            <select name="<?php echo $settings->get('email_new_booking_format');?>">
+            <select name="<?php echo $settings->get_field_name('email_new_booking_format');?>">
                 <?php foreach( $template_formats as $k => $v ){?>
                 <option value="<?php echo $k;?>" <?php selected( $k == $settings->get('email_new_booking_format') );?>><?php echo $v;?></option>
                 <?php }?>
             </select>
-        </td>
-    </tr>
-    <tr class="<?php echo $settings->get_field_name('email_new_booking_enable');?>">
-        <th><?php _e( 'HTML Template', 'tp-hotel-booking' );?></th>
-        <td>
-            <?php
-            $templates = array(
-                'a' => __( 'A', 'tp-hotel-booking' ),
-                'b' => __( 'B', 'tp-hotel-booking' ),
-                'c' => __( 'C', 'tp-hotel-booking' ),
-            );
-            ?>
-            <select name="<?php echo $settings->get_field_name('email_new_booking_template');?>">
-                <?php foreach( $templates as $k => $v ){?>
-                <option value="<?php echo $k;?>" <?php selected( $k == $settings->get('email_new_booking_template') );?>><?php echo $v;?></option>
-                <?php }?>
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td>
-
-        </td>
-        <td>
-            <a href="<?php echo admin_url( 'admin.php?page=tp_hotel_booking_settings&tab=emails&test-email=new-booking#hb-email-new_booking-settings' );?>" id="tp-test-email-new-booking" class="button"><?php _e( 'Test email', 'tp-hotel-booking' );?></a>
         </td>
     </tr>
 </table>

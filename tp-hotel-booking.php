@@ -96,11 +96,12 @@ class TP_Hotel_Booking{
             $this->_include( 'includes/admin/class-hb-admin-menu.php' );
             $this->_include( 'includes/class-hb-meta-box.php' );
             $this->_include( 'includes/admin/hb-admin-functions.php' );
-        }else{
-            $this->_include( 'includes/hb-template-hooks.php' );
-            $this->_include( 'includes/hb-template-functions.php' );
-            $this->_include( 'includes/class-hb-shortcodes.php' );
         }
+        $this->_include( 'includes/class-hb-comments.php' );
+        $this->_include( 'includes/hb-template-hooks.php' );
+        $this->_include( 'includes/hb-template-functions.php' );
+        $this->_include( 'includes/class-hb-shortcodes.php' );
+
         $this->_include( 'includes/widgets/class-hb-widget-search.php' );
         $this->_include( 'includes/widgets/class-hb-widget-room-carousel.php' );
         $this->_include( 'includes/class-hb-post-types.php' );
@@ -182,6 +183,7 @@ class TP_Hotel_Booking{
             );
         wp_register_script( 'jquery-ui-datepicker', $this->plugin_url( 'includes/assets/js/jquery.ui.datepicker.min.js' ), array( 'jquery' ) );
         wp_register_style( 'jquery-ui-datepicker', $this->plugin_url( 'includes/assets/css/jquery.ui.datepicker.css' ) );
+        wp_register_style( 'tp-hotel-booking-star', $this->plugin_url( 'includes/assets/css/star.css' ) );
         if( is_admin() ){
             wp_register_style( 'tp-admin-hotel-booking', $this->plugin_url( 'includes/assets/css/admin.tp-hotel-booking.css' ) );
             wp_register_script( 'tp-admin-hotel-booking', $this->plugin_url( 'includes/assets/js/admin.hotel-booking.js' ), $dependencies );
@@ -243,6 +245,7 @@ class TP_Hotel_Booking{
                 }
             }
         }
+        wp_enqueue_style( 'tp-hotel-booking-star' );
     }
 
     /**
@@ -255,6 +258,7 @@ class TP_Hotel_Booking{
         <script type="text/javascript">
             var hotel_settings = {
                 ajax: '<?php echo admin_url( 'admin-ajax.php' );?>',
+                settings: <?php echo HB_Settings::instance()->toJson( apply_filters( 'hb_settings_fields', array( 'review_rating_required' ) ) );?>,
                 upload_base_url: '<?php echo esc_js($upload_base_url) ?>',
                 meta_key: {
                     prefix: '_hb_'

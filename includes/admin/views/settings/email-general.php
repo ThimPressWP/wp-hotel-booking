@@ -18,21 +18,3 @@ $settings = hb_settings();
         </td>
     </tr>
 </table>
-
-<!-- Email Template block -->
-<h3><?php _e( 'Email Template', 'tp-hotel-booking' );?></h3>
-<p class="description"><?php _e( 'The name and email address of the sender displays in email', 'tp-hotel-booking' );?></p>
-<table class="form-table">
-    <tr>
-        <th><?php _e( 'From Name', 'tp-hotel-booking' );?></th>
-        <td>
-            <input type="text" class="regular-text" name="<?php echo $settings->get_field_name('email_general_x');?>" value="<?php echo $settings->get('email_general_x');?>" />
-        </td>
-    </tr>
-    <tr>
-        <th><?php _e( 'From Email', 'tp-hotel-booking' );?></th>
-        <td>
-            <input type="text" class="regular-text" name="<?php echo $settings->get_field_name('email_general_y');?>" value="<?php echo $settings->get('email_general_y');?>" />
-        </td>
-    </tr>
-</table>

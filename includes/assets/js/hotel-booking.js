@@ -407,6 +407,36 @@
             hb_single_details_content.find(tab_id).show();
             return false;
         });
-    })
 
+
+        $('.hb-rating-input').rating();
+    })
+    $.fn.rating = function(){
+        return $.each(this, function(){
+            var $el = $(this).html( '<div class="rating-input"><span><input name="rating" id="rating" type="hidden" value="" /></span></div>');
+            $('.rating-input', $el).mousemove(function(e){
+                var parentOffset = $(this).parent().offset(),
+                    relX = e.pageX - parentOffset.left,
+                    w = relX - ( relX % 19 ) + 19,
+                    rating = w / 19;
+                $(this).find('span').width( w ).attr('rating', rating);
+            }).mouseout(function(){
+                var rating = $('input', this).val();
+                $(this).find('span').width( rating * 19 );
+            }).mousedown(function(){
+                $('input', $(this)).attr('value', $('>span', this).attr('rating'))
+                $(this).addClass('mousedown');
+            }).mouseup(function(){
+                $(this).removeClass('mousedown');
+            });
+            $(document.body).on( 'click', '#respond #submit', function() {
+                var $rating = $( this ).closest( '#respond' ).find( '#rating' ),
+                    rating  = $rating.val();
+                if ( $rating.size() > 0 && ! rating && hotel_settings.settings.review_rating_required === '1' ) {
+                    window.alert( hotel_booking_l18n.review_rating_required );
+                    return false;
+                }
+            });
+        })
+    }
 })((jQuery));
