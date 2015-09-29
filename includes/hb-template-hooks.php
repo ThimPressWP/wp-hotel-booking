@@ -23,3 +23,5 @@ add_action('hotel_booking_after_shop_loop', 'hotel_booking_after_shop_loop' );
 add_action('hotel_booking_single_room_gallery', 'hotel_booking_single_room_gallery' );
 // room details
 add_action('hotel_booking_single_room_infomation', 'hotel_booking_single_room_infomation' );
+// room related
+add_action( 'hotel_booking_after_single_room', 'hotel_booking_single_room_related' );

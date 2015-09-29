@@ -314,6 +314,7 @@
                 return false;
             }
 
+            var action = $(this).attr('action') || window.location.href;
             $.ajax({
                 url: hotel_settings.ajax,
                 type: 'post',
@@ -322,7 +323,8 @@
                 success: function (response) {
                     response = parseJSON(response)
                     if(response.success && response.sig){
-                        window.location.href = window.location.href.replace(/\?.*/, '') + '?hotel-booking-params='+response.sig
+
+                        window.location.href = action.replace(/\?.*/, '') + '?hotel-booking-params='+response.sig;
                     }
                 }
             });
@@ -387,6 +389,23 @@
                     }
                 }
             });
+        });
+
+        // single room detail tabs
+        var hb_single_details = $('.hb_single_room_details');
+        var hb_single_details_tab = hb_single_details.find('.hb_single_room_tabs')
+        var hb_single_details_content = hb_single_details.find('.hb_single_room_tabs_content');
+        var hb_single_tab_details = $('.hb_single_room_tab_details');
+
+        $('.hb_single_room_tabs_content .hb_single_room_tab_details:not(:first)').hide();
+        hb_single_details_tab.find('a').on('click', function(event){
+            event.preventDefault();
+            hb_single_details_tab.find('a').removeClass('active');
+            $(this).addClass('active');
+            var tab_id = $(this).attr('href');
+            hb_single_tab_details.hide();
+            hb_single_details_content.find(tab_id).show();
+            return false;
         });
     })
 

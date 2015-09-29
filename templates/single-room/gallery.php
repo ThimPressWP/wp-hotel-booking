@@ -28,7 +28,8 @@ $galeries = $room->get_gallery(false);
 		"use strict";
 		$(document).ready(function(){
 			$('#camera_wrap_<?php the_ID() ?>').camera({
-				height: '56%',
+				height: '400px',
+				loader: 'bar',
 				pagination: false,
 				thumbnails: true
 			});

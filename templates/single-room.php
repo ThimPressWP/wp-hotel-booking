@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-get_header(); ?>
+//get_header(); ?>
 
 	<?php
 		/**
@@ -46,4 +46,4 @@ get_header(); ?>
 		do_action( 'hotel_booking_sidebar' );
 	?>
 
-<?php get_footer(); ?>
+<?php //get_footer(); ?>

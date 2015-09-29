@@ -28,6 +28,20 @@ class HB_Booking{
     private $_booking_info = array();
 
     /**
+     * Order id
+     *
+     * @var int
+     */
+    public $id = 0;
+
+    /**
+     * Order Status
+     *
+     * @var string
+     */
+    public $post_status                 = '';
+
+    /**
      * Constructor
      *
      * @param $post
@@ -45,6 +59,7 @@ class HB_Booking{
         if( ! empty( $this->post->ID ) ){
             $this->load_customer();
         }
+        $this->id = $this->post->ID;
     }
 
     /**
@@ -92,7 +107,7 @@ class HB_Booking{
         if( func_num_args() > 1 ){
             $this->_booking_info[ $info ] = func_get_arg(1);
         }else {
-            $this->_booking_info = (array)$info;
+            $this->_booking_info = array_merge( $this->_booking_info, (array)$info );
         }
     }
 
@@ -106,7 +121,6 @@ class HB_Booking{
 
         // ensure the post_type is correct
         $post_data['post_type']     = 'hb_booking';
-        $post_data['post_status']   = 'publish';
         if ($this->post->ID) {
             $booking_id = wp_update_post($post_data);
         } else {
@@ -118,8 +132,63 @@ class HB_Booking{
             foreach( $this->_booking_info as $meta_key => $v ){
                 update_post_meta( $booking_id, $meta_key, $v );
             }
+
         }
+        $this->id = $this->post->ID;
         return $this->post->ID;
+    }
+
+    public function get_status() {
+        $this->post->post_status = get_post_status( $this->id );
+        return apply_filters( 'hb_order_get_status', 'hb-' === substr( $this->post->post_status, 0, 3 ) ? substr( $this->post->post_status, 3 ) : $this->post->post_status, $this );
+    }
+
+    public function has_status( $status ) {
+        return apply_filters( 'hb_booking_has_status', ( is_array( $status ) && in_array( $this->get_status(), $status ) ) || $this->get_status() === $status ? true : false, $this, $status );
+    }
+
+    function update_status( $new_status = 'pending' ){
+        // Standardise status names.
+        $new_status = 'hb-' === substr( $new_status, 0, 3 ) ? substr( $new_status, 3 ) : $new_status;
+        $old_status = $this->get_status();
+
+        if ( $new_status !== $old_status || ! in_array( $this->post_status, array_keys( hb_get_booking_statuses() ) ) ) {
+
+            // Update the order
+            wp_update_post( array( 'ID' => $this->id, 'post_status' => 'hb-' . $new_status ) );
+            $this->post_status = 'hb-' . $new_status;
+
+            // Status was changed
+            do_action( 'hb_booking_status_' . $new_status, $this->id );
+            do_action( 'hb_booking_status_' . $old_status . '_to_' . $new_status, $this->id );
+            do_action( 'hb_booking_status_changed', $this->id, $old_status, $new_status );
+
+            switch ( $new_status ) {
+
+                case 'completed' :
+
+                    break;
+
+                case 'processing' :
+
+                    break;
+            }
+        }
+    }
+
+    function payment_complete(){
+        do_action( 'hb_pre_payment_complete', $this->id );
+
+        delete_transient( 'booking_awaiting_payment' );
+
+        $valid_booking_statuses = apply_filters( 'hb_valid_order_statuses_for_payment_complete', array( 'pending' ), $this );
+
+        if ( $this->id && $this->has_status( $valid_booking_statuses ) ) {
+            $this->update_status( 'completed' );
+            do_action( 'hb_payment_complete', $this->id );
+        }else{
+            do_action( 'hb_payment_complete_order_status_' . $this->get_status(), $this->id );
+        }
     }
 
     /**

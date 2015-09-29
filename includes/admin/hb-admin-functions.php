@@ -12,6 +12,7 @@ function hb_admin_settings_tabs(){
         'general'       => __( 'General', 'tp-hotel-booking' ),
         'hotel_info'    => __( 'Hotel Information', 'tp-hotel-booking' ),
         'payments'      => __( 'Payments', 'tp-hotel-booking' ),
+        'emails'        => __( 'Emails', 'tp-hotel-booking' ),
         'lightbox'      => __( 'Lightbox', 'tp-hotel-booking' )
     );
     return apply_filters( 'hb_admin_settings_tabs', $tabs );
@@ -45,12 +46,32 @@ function hb_admin_settings_tab_lightbox(){
     TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings/lightbox.php' );
 }
 
+/**
+ * Callback handler for Emails tab content
+ */
+function hb_admin_settings_tab_emails(){
+    TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings/emails.php' );
+}
+
+/**
+ * @param $selected
+ */
 function hb_admin_settings_tab_content( $selected ){
     if( is_callable( "hb_admin_settings_tab_{$selected}" ) ) {
         call_user_func_array( "hb_admin_settings_tab_{$selected}", array() );
     }
 }
 add_action( 'hb_admin_settings_tab_before', 'hb_admin_settings_tab_content' );
+
+function hb_admin_settings_tab_email_general(){
+    TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings/email-general.php' );
+}
+add_action( 'hb_email_general_settings', 'hb_admin_settings_tab_email_general' );
+
+function hb_admin_settings_tab_email_new_booking(){
+    TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings/email-new-booking.php' );
+}
+add_action( 'hb_email_new_booking_settings', 'hb_admin_settings_tab_email_new_booking' );
 
 /**
  * Admin translation text
@@ -86,19 +107,19 @@ function hb_add_meta_boxes(){
             'max'       => 100
         )
     )->add_field(
-        array(
-            'name'      => 'room_type',
-            'label'     => __( 'Room type', 'tp-hotel-booking' ),
-            'type'      => 'select',
-            'options'   => hb_get_room_types(
-                array(
-                    'map_fields' => array(
-                        'term_id'   => 'value',
-                        'name' => 'text'
-                    )
-                )
-            )
-        ),
+        // array(
+        //     'name'      => 'room_type',
+        //     'label'     => __( 'Room type', 'tp-hotel-booking' ),
+        //     'type'      => 'select',
+        //     'options'   => hb_get_room_types(
+        //         array(
+        //             'map_fields' => array(
+        //                 'term_id'   => 'value',
+        //                 'name' => 'text'
+        //             )
+        //         )
+        //     )
+        // ),
         array(
             'name'      => 'room_capacity',
             'label'     => __( 'Number of adults', 'tp-hotel-booking' ),
@@ -504,6 +525,9 @@ function hb_manage_booking_column( $column_name, $post_id ) {
             $currency   = get_post_meta( $post_id, '_hb_currency', true );
             $total_with_currency = hb_format_price( $total, hb_get_currency_symbol( $currency ) );
             echo $total_with_currency;
+            if( $method = hb_get_user_payment_method( get_post_meta( $post_id, '_hb_method', true ) ) ) {
+                printf( __( '<br />(<small>%s</small>)', 'tp-hotel-booking' ), $method->description );
+            }
             do_action( 'hb_manage_booing_column_total', $post_id, $total, $total_with_currency );
             break;
         case 'booking_date':
@@ -516,6 +540,26 @@ function hb_manage_booking_column( $column_name, $post_id ) {
 }
 add_action('manage_hb_booking_posts_custom_column', 'hb_manage_booking_column', 10, 2);
 
+function hb_request_query( $vars = array() ){
+    global $typenow, $wp_query, $wp_post_statuses;
+
+    if ( 'hb_booking' === $typenow ) {
+        // Status
+        if ( ! isset( $vars['post_status'] ) ) {
+            $post_statuses = hb_get_booking_statuses();
+
+            foreach ( $post_statuses as $status => $value ) {
+                if ( isset( $wp_post_statuses[ $status ] ) && false === $wp_post_statuses[ $status ]->show_in_admin_all_list ) {
+                    unset( $post_statuses[ $status ] );
+                }
+            }
+
+            $vars['post_status'] = array_keys( $post_statuses );
+        }
+    }
+    return $vars;
+}
+add_filter( 'request', 'hb_request_query' );
 
 add_action( 'restrict_manage_posts', 'hb_booking_restrict_manage_posts' );
 /**

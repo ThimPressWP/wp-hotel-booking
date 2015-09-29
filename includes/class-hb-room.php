@@ -104,6 +104,9 @@ class HB_Room{
             case 'capacity_id':
                 $return = get_post_meta( $this->post->ID, '_hb_room_capacity', true );
                 break;
+            case 'addition_information':
+                $return = get_post_meta( $this->post->ID, '_hb_room_addition_information', true );
+                break;
             case 'thumbnail':
                 if( has_post_thumbnail( $this->post->ID ) ){
                     $return = get_the_post_thumbnail( $this->post->ID, 'thumbnail' );
@@ -338,6 +341,24 @@ class HB_Room{
             $this->_plans = $plans;
         }
         return $this->_plans;
+    }
+
+    function query_related(  )
+    {
+        $sql = array();
+        $room_types = get_the_terms( $this->post->ID, 'hb_room_type' );
+        $room_capacity = get_post_meta( $this->post->ID, '_hb_room_capacity', true );
+        var_dump($room_capacity); die();
+
+        $sql[] = "SELECT DISTINCT ID FROM {$wpdb->posts} AS p";
+        $sql[] = " INNER JOIN {$wpdb->postmeta} AS pm ON ( pm.post_id = p.ID AND pm.meta_key='_visibility' )";
+
+        return implode('', $sql);
+    }
+
+    function get_related_rooms()
+    {
+        $sql = $this->query_related();
     }
 
     /**
