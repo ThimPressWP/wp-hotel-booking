@@ -74,6 +74,9 @@ class HB_Reizer{
             // generator image file with size setting in frontend
             $attachment = wp_get_attachment_url( $attachmentID );
             $return = $aq_resize->process( $attachment, (int)$size['width'], (int)$size['height'], true, $single );
+
+            if( $return === false )
+                $return = $attachment;
             return $return;
         }
         else
