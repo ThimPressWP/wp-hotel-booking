@@ -16,7 +16,11 @@ $related = $room->get_related_rooms();
 ?>
 <?php if( $related->posts ): ?>
 	<div class="hb_related_other_room has_slider">
-		<h2><?php _e( 'Other Rooms', 'tp-hotel-booking' ); ?></h2>
+		<h3><?php _e( 'Other Rooms', 'tp-hotel-booking' ); ?></h3>
+		<div class="navigation">
+            <div class="prev"><i class="fa fa-angle-left"></i></div>
+            <div class="next"><i class="fa fa-angle-right"></i></div>
+        </div>
 		<?php hotel_booking_room_loop_start(); ?>
 
 			<?php while ( $related->have_posts() ) : $related->the_post(); ?>
@@ -26,10 +30,6 @@ $related = $room->get_related_rooms();
 			<?php endwhile; // end of the loop. ?>
 
 		<?php hotel_booking_room_loop_end(); ?>
-		<div class="navigation">
-            <div class="prev"><i class="fa fa-angle-left"></i></div>
-            <div class="next"><i class="fa fa-angle-right"></i></div>
-        </div>
 	</div>
 
 	<script type="text/javascript">
@@ -51,8 +51,9 @@ $related = $room->get_related_rooms();
 	                next: {
 	                    button: '.hb_related_other_room .navigation .next'
 	                },
-	                mousewheel: true,
+	                mousewheel: false,
 	                pauseOnHover: true,
+	                auto: false,
 	                onCreate: function()
 	                {
 
