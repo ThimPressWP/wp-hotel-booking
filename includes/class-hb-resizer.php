@@ -21,7 +21,7 @@ class HB_Reizer{
     * $_instance variable
     * @return self
     */
-    protected $_instance = null;
+    static $_instance = null;
 
     /**
     * list attachment image in the room. gallery, thumbnail
@@ -43,12 +43,12 @@ class HB_Reizer{
 
     }
 
-    function getInstance( $args = null )
+    static function getInstance( $args = null )
     {
-        if( ! $this->_instance )
-            $this->_instance = new self( $args );
+        if( ! self::$_instance )
+            self::$_instance = new self( $args );
 
-        return $this->_instance;
+        return self::$_instance;
     }
 
     public static function getAttachments()
@@ -63,16 +63,16 @@ class HB_Reizer{
         return self::$_attachments;
     }
 
-    public static function process( $id = null, $size = array() )
+    public static function process( $post_id = null, $size = array() )
     {
         if( ! self::$args )
             return;
 
         $aq_resize = Aq_Resize::getInstance();
-        if( $id && $size )
+        if( $post_id && $size )
         {
-            $attachment = '';
-            $return = $aq_resize->process( $attachment, $arg['width'], $arg['height'], true, false );
+            $attachment = wp_get_attachment_url( get_post_thumbnail_id($post_id) );
+            $return = $aq_resize->process( $attachment, $size['width'], $size['height'], true, false );
             return $return;
         }
         else
