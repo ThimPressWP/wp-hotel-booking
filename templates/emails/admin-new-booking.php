@@ -36,48 +36,48 @@ foreach( $_rooms as $id ){
 <h2>
     <a class="link" href="<?php echo admin_url( 'post.php?post=' . $booking->id . '&action=edit' ); ?>"><?php printf( __( 'Booking #%s', 'tp-hotel-booking'), $booking->get_booking_number() ); ?></a> (<?php printf( '<time datetime="%s">%s</time>', date_i18n( 'c', strtotime( $booking->order_date ) ), date_i18n( 'd.m.Y', strtotime( $booking->order_date ) ) ); ?>)</h2>
 
-<table style="color: #444444;background-color: #DDD;font-family: verdana, arial, sans-serif; font-size: 14px; min-width: 800px;" cellpadding="5" cellspacing="1">
+<table class="booking-table" cellpadding="5" cellspacing="1">
     <tbody>
-    <tr style="background-color: #F5F5F5;">
+    <tr class="booking-table-head">
         <td colspan="4">
-            <h3 style="margin: 5px 0;"><?php printf( __( 'Booking Details %s', 'tp-hotel-booking' ), hb_format_order_number( $booking_id ) );?></h3>
+            <h3><?php printf( __( 'Booking Details %s', 'tp-hotel-booking' ), hb_format_order_number( $booking_id ) );?></h3>
         </td>
     </tr>
-    <tr style="background-color: #FFFFFF;">
-        <td style="font-weight: bold;">
+    <tr class="booking-table-row">
+        <td class="bold-text">
             <?php _e( 'Customer Name', 'tp-hotel-booking' );?>
         </td>
         <td colspan="3" ><?php echo $customer_name;?></td>
     </tr>
-    <tr style="background-color: #FFFFFF;">
-        <td style="font-weight: bold;"><?php _e( 'Check In Date', 'tp-hotel-booking' );?></td>
+    <tr class="booking-table-row">
+        <td class="bold-text"><?php _e( 'Check In Date', 'tp-hotel-booking' );?></td>
         <td colspan="3"><?php echo date( 'l d M Y', $check_in );?></td>
     </tr>
-    <tr style="background-color: #FFFFFF;">
-        <td style="font-weight: bold;"><?php _e( 'Check Out Date', 'tp-hotel-booking' );?></td>
+    <tr class="booking-table-row">
+        <td class="bold-text"><?php _e( 'Check Out Date', 'tp-hotel-booking' );?></td>
         <td colspan="3"><?php echo date( 'l d M Y', $check_out );?></td>
     </tr>
-    <tr style="background-color: #FFFFFF;">
-        <td style="font-weight: bold;"><?php _e( 'Total Nights', 'tp-hotel-booking' );?></td>
+    <tr class="booking-table-row">
+        <td class="bold-text"><?php _e( 'Total Nights', 'tp-hotel-booking' );?></td>
         <td colspan="3"><?php echo get_post_meta( $booking_id, '_hb_total_nights', true ) ;?></td>
     </tr>
-    <tr style="background-color: #FFFFFF;">
-        <td style="font-weight: bold;"><?php _e( 'Total Rooms', 'tp-hotel-booking' );?></td>
+    <tr class="booking-table-row">
+        <td class="bold-text"><?php _e( 'Total Rooms', 'tp-hotel-booking' );?></td>
         <td colspan="3"><?php echo count($_rooms);?></td>
     </tr>
-    <tr style="background-color: #F5F5F5;">
+    <tr class="booking-table-head">
         <td colspan="4">
-            <h3 style="margin: 5px 0;"><?php _e( 'Booking Rooms', 'tp-hotel-booking' ) ;?></h3>
+            <h3><?php _e( 'Booking Rooms', 'tp-hotel-booking' ) ;?></h3>
         </td>
     </tr>
-    <tr style="background-color: #FFFFFF;">
-        <td style="font-weight: bold;"><?php _e( 'Room type', 'tp-hotel-booking' );?></td>
-        <td style="font-weight: bold; text-align: right;"><?php _e( 'Number of rooms', 'tp-hotel-booking' );?></td>
-        <td style="font-weight: bold; text-align: right;"><?php _e( 'Capacity', 'tp-hotel-booking' );?></td>
-        <td style="font-weight: bold;text-align: right;"><?php _e( 'Total', 'tp-hotel-booking' );?></td>
+    <tr class="booking-table-row">
+        <td class="bold-text"><?php _e( 'Room type', 'tp-hotel-booking' );?></td>
+        <td class="text-align-right bold-text"><?php _e( 'Number of rooms', 'tp-hotel-booking' );?></td>
+        <td class="text-align-right bold-text"><?php _e( 'Capacity', 'tp-hotel-booking' );?></td>
+        <td class="text-align-right bold-text"><?php _e( 'Total', 'tp-hotel-booking' );?></td>
     </tr>
     <?php foreach( $rooms as $id => $num_of_rooms ){?>
-        <tr style="background-color: #FFFFFF;">
+        <tr class="booking-table-row">
             <td>
                 <?php
                 echo get_the_title( $id );
@@ -91,8 +91,8 @@ foreach( $_rooms as $id ){
                 if( $term ) echo " (", implode(', ', $room_types), ")";
                 ?>
             </td>
-            <td style="text-align: right;"><?php echo $num_of_rooms;?></td>
-            <td style="text-align: right;">
+            <td class="text-align-right"><?php echo $num_of_rooms;?></td>
+            <td class="text-align-right">
                 <?php
                 $cap_id = get_post_meta( $id, '_hb_room_capacity', true );
                 $term = get_term( $cap_id, 'hb_room_capacity' );
@@ -101,7 +101,7 @@ foreach( $_rooms as $id ){
                 }
                 ?>
             </td>
-            <td style="text-align: right;">
+            <td class="text-align-right">
                 <?php
                 $room = HB_Room::instance( $id );
                 echo hb_format_price( $room->get_total( $check_in, $check_out, $num_of_rooms, false ), $currency );
@@ -109,17 +109,17 @@ foreach( $_rooms as $id ){
             </td>
         </tr>
     <?php }?>
-    <tr style="background-color: #FFFFFF;">
-        <td colspan="3" style="font-weight: bold;"><?php _e( 'Sub Total', 'tp-hotel-booking' );?></td>
-        <td style=" text-align: right;"><?php echo hb_format_price( get_post_meta( $booking_id, '_hb_sub_total', true ), $currency );?></td>
+    <tr class="booking-table-row">
+        <td colspan="3" class="bold-text"><?php _e( 'Sub Total', 'tp-hotel-booking' );?></td>
+        <td class="text-align-right"><?php echo hb_format_price( get_post_meta( $booking_id, '_hb_sub_total', true ), $currency );?></td>
     </tr>
-    <tr style="background-color: #FFFFFF;">
-        <td colspan="3" style="font-weight: bold;"><?php _e( 'Tax', 'tp-hotel-booking' );?></td>
-        <td style="text-align: right;"><?php echo get_post_meta( $booking_id, '_hb_tax', true ) * 100;?>%</td>
+    <tr class="booking-table-row">
+        <td colspan="3" class="bold-text"><?php _e( 'Tax', 'tp-hotel-booking' );?></td>
+        <td class="text-align-right"><?php echo get_post_meta( $booking_id, '_hb_tax', true ) * 100;?>%</td>
     </tr>
-    <tr style="background-color: #FFFFFF;">
-        <td colspan="3" style="font-weight: bold;"><?php _e( 'Grand Total', 'tp-hotel-booking' );?></td>
-        <td style="text-align: right;"><?php echo hb_format_price( get_post_meta( $booking_id, '_hb_total', true ), $currency );?></td>
+    <tr class="booking-table-row">
+        <td colspan="3" class="bold-text"><?php _e( 'Grand Total', 'tp-hotel-booking' );?></td>
+        <td class="text-align-right"><?php echo hb_format_price( get_post_meta( $booking_id, '_hb_total', true ), $currency );?></td>
     </tr>
     </tbody>
 </table>
