@@ -63,16 +63,26 @@ class HB_Reizer{
         return self::$_attachments;
     }
 
-    public static function process()
+    public static function process( $id = null, $size = array() )
     {
         if( ! self::$args )
             return;
 
         $aq_resize = Aq_Resize::getInstance();
-        foreach ( self::$_attachments as $key => $attachment ) {
-            foreach (self::$args as $key => $arg) {
-                $aq_resize->process( $attachment, $arg['width'], $arg['height'] );
+        if( $id && $size )
+        {
+            $attachment = '';
+            $return = $aq_resize->process( $attachment, $arg['width'], $arg['height'], true, false );
+            return $return;
+        }
+        else
+        {
+            foreach ( self::$_attachments as $key => $attachment ) {
+                foreach (self::$args as $key => $arg) {
+                    $aq_resize->process( $attachment, $arg['width'], $arg['height'] );
+                }
             }
+            return true;
         }
         return true;
     }

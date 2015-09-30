@@ -23,14 +23,14 @@ $settings = hb_settings();
         <th><?php _e( 'Subject', 'tp-hotel-booking' );?></th>
         <td>
             <input type="text" class="regular-text" name="<?php echo $settings->get_field_name('email_new_booking_subject');?>" value="<?php echo $settings->get('email_new_booking_subject');?>" />
-            <p class="description"><?php _e( 'Subject for email. Leave blank to use the default: <code>[{site_title}] New customer booking ({order_number}) - {order_date}</code>.', 'tp-hotel-booking' );?></p>
+            <p class="description"><?php _e( 'Subject for email. Leave blank to use the default: <code>[{site_title}] New customer booking ({booking_number}) - {booking_date}</code>.', 'tp-hotel-booking' );?></p>
         </td>
     </tr>
     <tr class="<?php echo $settings->get_field_name('email_new_booking_enable');?>">
         <th><?php _e( 'Email Heading', 'tp-hotel-booking' );?></th>
         <td>
             <input type="text" class="regular-text" name="<?php echo $settings->get_field_name('email_new_booking_heading');?>" value="<?php echo $settings->get('email_new_booking_heading');?>" />
-            <p class="description"><?php _e( 'The main heading displays in the top of email. Default heading: <code>New customer order</code>.', 'tp-hotel-booking' );?></p>
+            <p class="description"><?php _e( 'The main heading displays in the top of email. Default heading: <code>New customer booking</code>.', 'tp-hotel-booking' );?></p>
         </td>
     </tr>
     <tr class="<?php echo $settings->get_field_name('email_new_booking_enable');?>">
