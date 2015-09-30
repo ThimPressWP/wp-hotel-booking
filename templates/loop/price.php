@@ -34,5 +34,6 @@ $prices = hb_get_price_plan_room(get_the_ID());
 			<span class="price_min"><?php echo $currency; ?><?php echo array_shift($prices) ?></span>
 
 		<?php endif; ?>
+		<span class="unit"><?php _e( 'Night', 'tp-hotel-booking' ); ?></span>
 	</div>
 <?php endif; ?>

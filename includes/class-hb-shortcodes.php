@@ -211,6 +211,7 @@ class HB_Shortcodes{
                                                 }
                                             ?>
                                         </span>
+                                        <span class="unit"><?php  _e( 'Night', 'tp-hotel-booking' ); ?></span>
                                     </div>
                                 <?php endif; ?>
                             </div>
