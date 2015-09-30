@@ -1454,9 +1454,27 @@ function hb_new_booking_email( $booking_id ){
         'booking'           => HB_Booking::instance( $booking_id )
     ));
 
-    $headers = "Content-Type: " . ( $format == 'html' ? 'text/html' : 'text/plain' ) . "\r\n";
-    wp_mail( $to, $subject, $body, $headers );
+    // get CSS styles
+    ob_start();
+    wc_get_template( 'emails/email-styles.php' );
+    $css = apply_filters( 'hb_email_styles', ob_get_clean() );
 
+    try {
+        TP_Hotel_Booking::instance()->_include( 'includes/libraries/class-emogrifier.php' );
+        // apply CSS styles inline for picky email clients
+        $emogrifier = new Emogrifier( $body, $css );
+        $body = $emogrifier->emogrify();
+
+    } catch ( Exception $e ) {
+    }
+
+    $headers = "Content-Type: " . ( $format == 'html' ? 'text/html' : 'text/plain' ) . "\r\n";
+    $send = wp_mail( $to, $subject, $body, $headers );
+    echo "[$send]";
+    print_r( $to );
+    print_r( $headers );
+    print_r( $body );
+    die();
 }
 add_action( 'hb_booking_status_pending_to_processing', 'hb_new_booking_email' );
 add_action( 'hb_booking_status_pending_to_completed', 'hb_new_booking_email' );
