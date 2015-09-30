@@ -34,7 +34,9 @@ foreach( $_rooms as $id ){
 <?php do_action( 'hb_email_before_booking_table', $booking, true, false ); ?>
 
 <h2>
-    <a class="link" href="<?php echo admin_url( 'post.php?post=' . $booking->id . '&action=edit' ); ?>"><?php printf( __( 'Booking #%s', 'tp-hotel-booking'), $booking->get_booking_number() ); ?></a> (<?php printf( '<time datetime="%s">%s</time>', date_i18n( 'c', strtotime( $booking->order_date ) ), date_i18n( 'd.m.Y', strtotime( $booking->order_date ) ) ); ?>)</h2>
+    <a class="link" href="<?php echo admin_url( 'post.php?post=' . $booking->id . '&action=edit' ); ?>"><?php printf( __( 'Booking %s', 'tp-hotel-booking'), $booking->get_booking_number() ); ?></a>
+    (<?php printf( '<time datetime="%s">%s</time>', date_i18n( 'c', strtotime( $booking->order_date ) ), date_i18n( hb_date_format(), strtotime( $booking->order_date ) ) ); ?>)
+</h2>
 
 <table class="booking-table" cellpadding="5" cellspacing="1">
     <tbody>

@@ -1471,11 +1471,7 @@ function hb_new_booking_email( $booking_id ){
 
     $headers = "Content-Type: " . ( $format == 'html' ? 'text/html' : 'text/plain' ) . "\r\n";
     $send = wp_mail( $to, $subject, $body, $headers );
-    echo "[$send]";
-    print_r( $to );
-    print_r( $headers );
-    print_r( $body );
-    die();
+    return $send;
 }
 add_action( 'hb_booking_status_pending_to_processing', 'hb_new_booking_email' );
 add_action( 'hb_booking_status_pending_to_completed', 'hb_new_booking_email' );
@@ -1487,7 +1483,7 @@ add_action( 'hb_booking_status_pending_to_completed', 'hb_new_booking_email' );
  * @return string
  */
 function hb_date_format() {
-    return apply_filters( 'hb_date_format', 'd.m.Y' );
+    return apply_filters( 'hb_date_format', 'd M Y' );
 }
 
 if ( ! function_exists( 'is_room_taxonomy' ) ) {
