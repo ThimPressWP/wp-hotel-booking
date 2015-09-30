@@ -410,6 +410,15 @@
 
 
         $('.hb-rating-input').rating();
+
+        $('#commentform').submit( function() {
+            /*var $email = $( this ).closest( '#respond' ).find( '#email' );
+            if( ! $email.val() ){
+                $email.focus();
+                alert('enter your email');
+                return false;
+            }*/
+        });
     })
     $.fn.rating = function(){
         return $.each(this, function(){

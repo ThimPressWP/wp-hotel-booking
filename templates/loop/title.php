@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 <div class="title">
-	<h3>
+	<h4>
 		<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-	</h3>
+	</h4>
 </div>

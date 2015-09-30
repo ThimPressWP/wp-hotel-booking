@@ -14,6 +14,7 @@ class HB_Post_Types{
      */
     function __construct(){
         add_action( 'init', array( $this, 'register_post_types' ) );
+        add_action( 'init', array( $this, 'register_post_statues' ) );
         add_action( 'init', array( $this, 'update_taxonomy' ) );
 
         add_action( 'admin_menu' , array( $this, 'remove_meta_boxes' ) );
@@ -683,31 +684,6 @@ class HB_Post_Types{
         );
         register_post_type( 'hb_booking', $args );
 
-        register_post_status( 'hb-pending', array(
-            'label'                     => _x( 'Pending Payment', 'Booking status', 'tp-hotel-booking' ),
-            'public'                    => false,
-            'exclude_from_search'       => false,
-            'show_in_admin_all_list'    => true,
-            'show_in_admin_status_list' => true,
-            'label_count'               => _n_noop( 'Pending Payment <span class="count">(%s)</span>', 'Pending Payment <span class="count">(%s)</span>', 'tp-hotel-booking' )
-        ) );
-        register_post_status( 'hb-processing', array(
-            'label'                     => _x( 'Processing', 'Booking status', 'tp-hotel-booking' ),
-            'public'                    => false,
-            'exclude_from_search'       => false,
-            'show_in_admin_all_list'    => true,
-            'show_in_admin_status_list' => true,
-            'label_count'               => _n_noop( 'Processing <span class="count">(%s)</span>', 'Processing <span class="count">(%s)</span>', 'tp-hotel-booking' )
-        ) );
-        register_post_status( 'hb-completed', array(
-            'label'                     => _x( 'Completed', 'Booking status', 'tp-hotel-booking' ),
-            'public'                    => false,
-            'exclude_from_search'       => false,
-            'show_in_admin_all_list'    => true,
-            'show_in_admin_status_list' => true,
-            'label_count'               => _n_noop( 'Completed <span class="count">(%s)</span>', 'Completed <span class="count">(%s)</span>', 'tp-hotel-booking' )
-        ) );
-
         /**
          * Register custom post type for customer
          */
@@ -818,8 +794,36 @@ class HB_Post_Types{
         if( is_admin() ){
             TP_Hotel_Booking::instance()->_include( 'includes/walkers/class-hb-walker-room-type-dropdown.php' );
         }
+    }
 
-        add_post_type_support( 'hb_room', array( 'comments' ) );
+    /**
+     * Registers custom post statues
+     */
+    function register_post_statues(){
+        register_post_status( 'hb-pending', array(
+            'label'                     => _x( 'Pending Payment', 'Booking status', 'tp-hotel-booking' ),
+            'public'                    => false,
+            'exclude_from_search'       => false,
+            'show_in_admin_all_list'    => true,
+            'show_in_admin_status_list' => true,
+            'label_count'               => _n_noop( 'Pending Payment <span class="count">(%s)</span>', 'Pending Payment <span class="count">(%s)</span>', 'tp-hotel-booking' )
+        ) );
+        register_post_status( 'hb-processing', array(
+            'label'                     => _x( 'Processing', 'Booking status', 'tp-hotel-booking' ),
+            'public'                    => false,
+            'exclude_from_search'       => false,
+            'show_in_admin_all_list'    => true,
+            'show_in_admin_status_list' => true,
+            'label_count'               => _n_noop( 'Processing <span class="count">(%s)</span>', 'Processing <span class="count">(%s)</span>', 'tp-hotel-booking' )
+        ) );
+        register_post_status( 'hb-completed', array(
+            'label'                     => _x( 'Completed', 'Booking status', 'tp-hotel-booking' ),
+            'public'                    => false,
+            'exclude_from_search'       => false,
+            'show_in_admin_all_list'    => true,
+            'show_in_admin_status_list' => true,
+            'label_count'               => _n_noop( 'Completed <span class="count">(%s)</span>', 'Completed <span class="count">(%s)</span>', 'tp-hotel-booking' )
+        ) );
     }
 }
 

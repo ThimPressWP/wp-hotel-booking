@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	 }
 ?>
 
-<div id="room-<?php the_ID(); ?>" <?php post_class(); ?>>
+<div id="room-<?php the_ID(); ?>" <?php post_class('hb_single_room'); ?>>
 
 	<?php
 		/**
@@ -46,6 +46,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 			 * hotel_booking_single_room_title hook
 			 */
 			do_action( 'hotel_booking_single_room_title' );
+			
+			/**
+			 * hotel_booking_loop_room_single_price
+			 */
+			do_action( 'hotel_booking_loop_room_price' );
 
 			/**
 			 * hotel_booking_single_room_gallery hook

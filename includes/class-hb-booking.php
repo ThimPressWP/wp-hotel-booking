@@ -144,15 +144,31 @@ class HB_Booking{
         return $this->post->ID;
     }
 
+    /**
+     * Get current status of booking
+     *
+     * @return mixed
+     */
     public function get_status() {
         $this->post->post_status = get_post_status( $this->id );
         return apply_filters( 'hb_order_get_status', 'hb-' === substr( $this->post->post_status, 0, 3 ) ? substr( $this->post->post_status, 3 ) : $this->post->post_status, $this );
     }
 
+    /**
+     * Checks to see if current booking has status as passed
+     *
+     * @param $status
+     * @return mixed
+     */
     public function has_status( $status ) {
         return apply_filters( 'hb_booking_has_status', ( is_array( $status ) && in_array( $this->get_status(), $status ) ) || $this->get_status() === $status ? true : false, $this, $status );
     }
 
+    /**
+     * Updates booking to new status if needed
+     *
+     * @param string $new_status
+     */
     function update_status( $new_status = 'pending' ){
         // Standardise status names.
         $new_status = 'hb-' === substr( $new_status, 0, 3 ) ? substr( $new_status, 3 ) : $new_status;
@@ -182,10 +198,17 @@ class HB_Booking{
         }
     }
 
+    /**
+     * Format booking number id
+     * @return string
+     */
     function get_booking_number(){
         return '#' . sprintf( "%'.010d", $this->id );
     }
 
+    /**
+     * Mark booking as complete
+     */
     function payment_complete(){
         do_action( 'hb_pre_payment_complete', $this->id );
 
@@ -201,16 +224,16 @@ class HB_Booking{
         }
     }
 
+    /**
+     * Get checkout booking success url
+     *
+     * @return mixed
+     */
     public function get_checkout_booking_received_url() {
-
         $received_url = hb_get_endpoint_url( 'booking-received', $this->id, hb_get_page_permalink( 'search' ) );
-
-
         $received_url = add_query_arg( 'key', $this->booking_key, $received_url );
-
         return apply_filters( 'hb_get_checkout_booking_received_url', $received_url, $this );
     }
-
 
     /**
      * Get an instance of HB_Booking by post ID or WP_Post object
