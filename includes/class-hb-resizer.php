@@ -63,23 +63,25 @@ class HB_Reizer{
         return self::$_attachments;
     }
 
-    public static function process( $post_id = null, $size = array() )
+    public static function process( $attachmentID = null, $size = array(), $single = true )
     {
         if( ! self::$args )
             return;
 
         $aq_resize = Aq_Resize::getInstance();
-        if( $post_id && $size )
+        if( $attachmentID && $size )
         {
-            $attachment = wp_get_attachment_url( get_post_thumbnail_id($post_id) );
-            $return = $aq_resize->process( $attachment, $size['width'], $size['height'], true, false );
+            // generator image file with size setting in frontend
+            $attachment = wp_get_attachment_url( $attachmentID );
+            $return = $aq_resize->process( $attachment, (int)$size['width'], (int)$size['height'], true, $single );
             return $return;
         }
         else
         {
+            // generator image file with size setting when submit update
             foreach ( self::$_attachments as $key => $attachment ) {
                 foreach (self::$args as $key => $arg) {
-                    $aq_resize->process( $attachment, $arg['width'], $arg['height'] );
+                    $aq_resize->process( $attachment, (int)$arg['width'], (int)$arg['height'] );
                 }
             }
             return true;
