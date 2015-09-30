@@ -29,3 +29,12 @@ add_action('hotel_booking_single_room_infomation', 'hotel_booking_single_room_in
 add_filter( 'body_class', 'hb_body_class' );
 //add_filter( 'post_class', 'wc_product_post_class', 20, 3 );
 
+// add_action( 'pre_get_posts', 'custom_num_room' );
+// function custom_num_room( $query )
+// {
+	// if( $query->get( 'post_type' ) === 'hb_room' )
+	// {
+	// 	$query->set( 'posts_per_page', 5 );
+	// }
+	// return $query;
+// }
