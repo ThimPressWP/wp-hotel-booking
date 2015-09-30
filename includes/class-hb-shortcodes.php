@@ -211,6 +211,7 @@ class HB_Shortcodes{
                                                 }
                                             ?>
                                         </span>
+                                        <span class="unit"><?php  _e( 'Night', 'tp-hotel-booking' ); ?></span>
                                     </div>
                                 <?php endif; ?>
                             </div>
@@ -238,7 +239,8 @@ class HB_Shortcodes{
                                 button: '#<?php echo $sliderId; ?> .navigation .next'
                             },
                             pagination: '#<?php echo $sliderId; ?> > .pagination',
-                            mousewheel: true,
+                            mousewheel: false,
+                            auto: false,
                             pauseOnHover: true,
                             onCreate: function()
                             {
