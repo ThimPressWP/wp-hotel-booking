@@ -30,3 +30,5 @@ add_filter( 'body_class', 'hb_body_class' );
 //add_filter( 'post_class', 'wc_product_post_class', 20, 3 );
 
 add_action( 'pre_get_posts', 'hotel_booking_num_room_archive', 999 );
+
+add_action( 'the_post', array( 'HB_Room', 'hb_setup_room_data' ) );
