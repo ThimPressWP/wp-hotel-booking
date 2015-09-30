@@ -105,6 +105,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      * @return bool
      */
     function process_booking_paypal_standard(){
+        return;
         if( ! empty( $_REQUEST['hb-transaction-method'] ) && ( 'paypal-standard' == $_REQUEST['hb-transaction-method'] ) ) {
             // if we have a paypal-nonce in $_REQUEST that meaning user has clicked go back to our site after finished the transaction
             // so, create a new order
@@ -133,6 +134,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
 
                     try {
                         //If the transient still exists, delete it and add the official transaction
+
                         if ( $transaction_object = hb_get_transient_transaction( 'hbps', $transient_transaction_id ) ) {
                             hb_delete_transient_transaction( 'hbps', $transient_transaction_id  );
                             $booking_id = hb_add_transaction(
@@ -172,7 +174,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
 
         if ( 'VERIFIED' === $body ) {
             if ( ! empty( $request['txn_type'] ) ) {
-                if ( ! empty( $request['transaction_subject'] ) && $transient_data = hb_get_transient_transaction( 'hbps', $request['transaction_subject'] ) ) {
+                /*if ( ! empty( $request['transaction_subject'] ) && $transient_data = hb_get_transient_transaction( 'hbps', $request['transaction_subject'] ) ) {
                     hb_delete_transient_transaction( 'hbps', $request['transaction_subject'] );
                     $transaction = hb_add_transaction(
                         array(
@@ -183,18 +185,98 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
                             'transaction_object'    => $transient_data['transaction_object']
                         )
                     );
-                }
+                }*/
+
                 switch ( $request['txn_type'] ) {
                     case 'web_accept':
-                        switch ( strtolower( $request['payment_status'] ) ) {
-                            case 'completed' :
-                                hb_update_booking_status( $this->get_order_id( $request['txn_id'] ), $request['payment_status']);
-                                break;
+                        if ( ! empty( $request['custom'] ) && ( $booking = $this->get_booking( $request['custom'] ) ) ) {
+
+                            $request['payment_status'] = strtolower( $request['payment_status'] );
+
+                            if ( isset( $request['test_ipn'] ) && 1 == $request['test_ipn'] && 'pending' == $request['payment_status'] ) {
+                                $request['payment_status'] = 'completed';
+                            }
+
+                            if ( method_exists( $this, 'payment_status_' . $request['payment_status'] ) ) {
+                                call_user_func( array( $this, 'payment_status_' . $request['payment_status'] ), $booking, $request );
+                            }
                         }
                         break;
+
                 }
             }
         }
+    }
+
+    function get_booking( $raw_custom ){
+        if ( ( $custom = json_decode( $raw_custom ) ) && is_object( $custom ) ) {
+            $booking_id  = $custom->booking_id;
+            $booking_key = $custom->booking_key;
+
+            // Fallback to serialized data if safe. This is @deprecated in 2.3.11
+        } elseif ( preg_match( '/^a:2:{/', $raw_custom ) && ! preg_match( '/[CO]:\+?[0-9]+:"/', $raw_custom ) && ( $custom = maybe_unserialize( $raw_custom ) ) ) {
+            $booking_id  = $custom[0];
+            $booking_key = $custom[1];
+
+            // Nothing was found
+        } else {
+            _e( 'Error: Booking ID and key were not found in "custom".' );
+            return false;
+        }
+
+        if ( ! $booking = HB_Booking::instance( $booking_id ) ) {
+            $booking_id = hb_get_booking_id_by_key( $booking_key );
+            $booking    = HB_Booking::instance( $booking_id );
+        }
+
+        if ( ! $booking || $booking->booking_key !== $booking_key ) {
+            _e( 'Error: Booking Keys do not match.' );
+            return false;
+        }
+    }
+
+    /**
+     * Handle a completed payment
+     *
+     * @param HB_Booking
+     * @param Paypal IPN params
+     */
+    protected function payment_status_completed( $booking, $request ) {
+
+        // Booking status is already completed
+        if ( $booking->has_status( 'completed' ) ) {
+            exit;
+        }
+
+        if ( 'completed' === $request['payment_status'] ) {
+            $this->payment_complete( $booking, ( ! empty( $request['txn_id'] ) ? $request['txn_id'] : '' ), __( 'IPN payment completed', 'tp-hotel-booking' ) );
+
+            // save paypal fee
+            if ( ! empty( $request['mc_fee'] ) ) {
+                update_post_meta( $booking->post->id, 'PayPal Transaction Fee', $request['mc_fee'] );
+            }
+
+        } else {
+        }
+    }
+
+    /**
+     * Handle a pending payment
+     *
+     * @param  HB_Booking
+     * @param Paypal IPN params
+     */
+    protected function payment_status_pending( $booking, $request ) {
+        $this->payment_status_completed( $booking, $request );
+    }
+
+    /**
+     * @param HB_Booking
+     * @param string $txn_id
+     * @param string $note - not use
+     */
+    function payment_complete( $booking, $txn_id = '', $note = '' ){
+        $booking->payment_complete( $txn_id );
     }
 
     /**
@@ -254,7 +336,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
             'email'         => $customer->data['email'],
             'rm'            => '2',
             'cancel_return' => hb_get_return_url(),
-            'custom'        => $temp_id,
+            'custom'        => json_encode( array( 'booking_id' => $booking->id, 'booking_key' => $booking->booking_key ) ),
             'no_shipping'   => '1'
         );
         $query = array_merge( $paypal_args, $query );

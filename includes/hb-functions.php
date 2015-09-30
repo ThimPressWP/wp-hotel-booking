@@ -1391,6 +1391,8 @@ if( ! function_exists('hb_get_price_plan_room') )
                 )
             )
         );
+        if( ! $pricing_plans )
+            return null;
         $pricing_plans = array_pop($pricing_plans);
         $prices = get_post_meta($pricing_plans->ID, '_hb_pricing_plan_prices', true);
         $price_plans = array();
@@ -1471,15 +1473,19 @@ function hb_new_booking_email( $booking_id ){
 
     $headers = "Content-Type: " . ( $format == 'html' ? 'text/html' : 'text/plain' ) . "\r\n";
     $send = wp_mail( $to, $subject, $body, $headers );
-    echo "[$send]";
-    print_r( $to );
-    print_r( $headers );
-    print_r( $body );
-    die();
+    return $send;
 }
 add_action( 'hb_booking_status_pending_to_processing', 'hb_new_booking_email' );
 add_action( 'hb_booking_status_pending_to_completed', 'hb_new_booking_email' );
 
+
+function hb_get_booking_id_by_key( $booking_key ){
+    global $wpdb;
+
+    $booking_id = $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM {$wpdb->prefix}postmeta WHERE meta_key = '_hb_booking_key' AND meta_value = %s", $booking_key ) );
+
+    return $booking_id;
+}
 
 /**
  * Get date format
@@ -1487,7 +1493,7 @@ add_action( 'hb_booking_status_pending_to_completed', 'hb_new_booking_email' );
  * @return string
  */
 function hb_date_format() {
-    return apply_filters( 'hb_date_format', 'd.m.Y' );
+    return apply_filters( 'hb_date_format', 'd M Y' );
 }
 
 if ( ! function_exists( 'is_room_taxonomy' ) ) {

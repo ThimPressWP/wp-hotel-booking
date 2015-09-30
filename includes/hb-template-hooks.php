@@ -24,8 +24,9 @@ add_action('hotel_booking_single_room_gallery', 'hotel_booking_single_room_galle
 // room details
 add_action('hotel_booking_single_room_infomation', 'hotel_booking_single_room_infomation' );
 // room related
-add_action( 'hotel_booking_after_single_product', 'hotel_booking_single_room_related' );add_action('hotel_booking_single_room_infomation', 'hotel_booking_single_room_infomation' );
-
+add_action( 'hotel_booking_after_single_product', 'hotel_booking_single_room_related' );
+add_action('hotel_booking_single_room_infomation', 'hotel_booking_single_room_infomation' );
 add_filter( 'body_class', 'hb_body_class' );
 //add_filter( 'post_class', 'wc_product_post_class', 20, 3 );
 
+add_action( 'pre_get_posts', 'hotel_booking_num_room_archive', 999 );

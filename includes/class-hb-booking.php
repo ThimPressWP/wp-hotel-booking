@@ -208,8 +208,10 @@ class HB_Booking{
 
     /**
      * Mark booking as complete
+     *
+     * @param string - transaction ID provided payment gateway
      */
-    function payment_complete(){
+    function payment_complete( $transaction_id = '' ){
         do_action( 'hb_pre_payment_complete', $this->id );
 
         delete_transient( 'booking_awaiting_payment' );
@@ -217,7 +219,13 @@ class HB_Booking{
         $valid_booking_statuses = apply_filters( 'hb_valid_order_statuses_for_payment_complete', array( 'pending' ), $this );
 
         if ( $this->id && $this->has_status( $valid_booking_statuses ) ) {
+
             $this->update_status( 'completed' );
+
+            if ( ! empty( $transaction_id ) ) {
+                add_post_meta( $this->id, '_transaction_id', $transaction_id, true );
+            }
+
             do_action( 'hb_payment_complete', $this->id );
         }else{
             do_action( 'hb_payment_complete_order_status_' . $this->get_status(), $this->id );

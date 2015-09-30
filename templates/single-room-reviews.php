@@ -24,8 +24,6 @@ if ( ! comments_open() ) {
                 printf( _n( '%s review for %s', '%s reviews for %s', $count, 'tp-hotel-booking' ), $count, get_the_title() );
             else
                 _e( 'Reviews', 'tp-hotel-booking' );
-
-            echo "[", have_comments(), "]";
             ?></h2>
 
         <?php if ( have_comments() ) : ?>
@@ -74,18 +72,12 @@ if ( ! comments_open() ) {
                     'comment_field' => ''
                 );
 
-                //if ( $account_page_url = wc_get_page_permalink( 'myaccount' ) ) {
-                 //   $comment_form['must_log_in'] = '<p class="must-log-in">' .  sprintf( __( 'You must be <a href="%s">logged in</a> to post a review.', 'tp-hotel-booking' ), esc_url( $account_page_url ) ) . '</p>';
-                //}
-
                 if ( $settings->get( 'enable_review_rating' ) ) {
                     $comment_form['comment_field'] = '<p class="comment-form-rating"><label for="rating">' . __( 'Your Rating', 'tp-hotel-booking' ) .'</label>
                     </p><div class="hb-rating-input"></div>';
                 }
 
                 $comment_form['comment_field'] .= '<p class="comment-form-comment"><label for="comment">' . __( 'Your Review', 'tp-hotel-booking' ) . '</label><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></p>';
-                //$comment_form['comment_field'] .= '<p class="comment-form-email"><label for="email">' . __( 'Your Email', 'tp-hotel-booking' ) . '</label><input type="email" id="email" name="email" cols="45" rows="8" aria-required="true" placeholder="'.__('Your email', 'tp-hotel-booking').'" /></p>';
-
                 comment_form( apply_filters( 'hb_product_review_comment_form_args', $comment_form ) );
                 ?>
             </div>

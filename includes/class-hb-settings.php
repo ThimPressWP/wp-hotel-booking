@@ -21,6 +21,8 @@ class HB_Settings{
      */
     protected $_options = array();
 
+    protected $_resizeImage = array();
+
     /**
      * Construction
      *
@@ -28,7 +30,7 @@ class HB_Settings{
      * @param array
      */
     function __construct( $new_prefix = null, $default = array() ){
-        add_action( 'init', array( $this, 'update_settings' ) );
+        add_action( 'admin_init', array( $this, 'update_settings' ) );
         if( $new_prefix ){
             $this->_option_prefix = $new_prefix;
         }
@@ -61,11 +63,11 @@ class HB_Settings{
      * @param string
      * @return mixed
      */
-    function get( $name ){
+    function get( $name, $default = false ){
         if( ! empty( $this->_options[ $name ] ) ){
             return $this->_options[ $name ];
         }
-        return false;
+        return $default;
     }
 
     /**
@@ -100,6 +102,24 @@ class HB_Settings{
         if( $this->_options ) foreach( $this->_options as $k => $v ){
             update_option( $this->_option_prefix . $k, $v );
         }
+
+        // process resize, crop new image for catalog and single details page
+        if( $this->_resizeImage && class_exists( 'HB_Reizer' ) )
+        {
+            $sizes = array(
+                    array(
+                            'width'         => $this->_resizeImage['catalog_image_width'],
+                            'height'        => $this->_resizeImage['catalog_image_height']
+                        ),
+                    array(
+                            'width'         => $this->_resizeImage['room_image_gallery_width'],
+                            'height'        => $this->_resizeImage['room_image_gallery_height']
+                        )
+                );
+
+            $resizer = HB_Reizer::getInstance( $sizes );
+            $resizer->process();
+        }
     }
 
     /**
@@ -126,12 +146,12 @@ class HB_Settings{
      * Update settings
      */
     function update_settings(){
-
         if( strtolower( $_SERVER['REQUEST_METHOD']) != 'post' ) return;
         foreach( $_POST as $k => $v ){
             if( preg_match( '!^' . $this->_option_prefix . '!', $k ) ) {
                 $option_key = preg_replace( '!^' . $this->_option_prefix . '!', '', $k );
                 if( ! $option_key ) continue;
+                $this->beforeResizeImage( $option_key, $_POST[ $k ] );
                 $this->set( $option_key, $_POST[ $k ]);
             }
 
@@ -154,7 +174,7 @@ class HB_Settings{
             ",
             $this->_option_prefix . '%'
         );
-        if( $options = $wpdb->get_results( $query) ){
+        if( $options = $wpdb->get_results( $query ) ){
             foreach( $options as $option ){
                 $name = str_replace( $this->_option_prefix, '', $option->option_name );
                 $this->_options[ $name ] = maybe_unserialize( $option->option_value );
@@ -190,6 +210,30 @@ class HB_Settings{
             $return = json_encode( $this->_options );
         }
         return $return;
+    }
+
+    /**
+    * Check render new image size if have changed
+    * @return $this->_resizeImage
+    */
+    function beforeResizeImage( $name, $value )
+    {
+        $default = array(
+                'catalog_image_width'               => $this->get( 'catalog_image_width', 270 ),
+                'catalog_image_height'              => $this->get( 'catalog_image_height', 270 ),
+                'room_image_gallery_width'          => $this->get( 'room_image_gallery_width', 270 ),
+                'room_image_gallery_height'         => $this->get( 'room_image_gallery_height', 270 ),
+            );
+
+        if( ! array_key_exists( $name, $default ) )
+            return;
+
+        if( (int)$value === (int)$this->get( $name ) )
+            return;
+
+        $this->_resizeImage = wp_parse_args( array( $name => $value ), $default );
+
+        return $this->_resizeImage;
     }
 
     /**
