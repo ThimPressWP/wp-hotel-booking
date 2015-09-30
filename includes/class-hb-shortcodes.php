@@ -190,7 +190,7 @@ class HB_Shortcodes{
                                     <a href="<?php echo get_the_permalink($post->ID); ?>" class="media-image" title="<?php echo esc_attr($title); ?>">
                                     <?php
                                         $room = HB_Room::instance($post->ID);
-                                        $room->getImage( 'thumbnail' );
+                                        $room->getImage( 'catalog' );
                                     ?>
                                     </a>
                                 </div>

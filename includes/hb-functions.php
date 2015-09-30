@@ -1479,6 +1479,14 @@ add_action( 'hb_booking_status_pending_to_processing', 'hb_new_booking_email' );
 add_action( 'hb_booking_status_pending_to_completed', 'hb_new_booking_email' );
 
 
+function hb_get_booking_id_by_key( $booking_key ){
+    global $wpdb;
+
+    $booking_id = $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM {$wpdb->prefix}postmeta WHERE meta_key = '_hb_booking_key' AND meta_value = %s", $booking_key ) );
+
+    return $booking_id;
+}
+
 /**
  * Get date format
  *
