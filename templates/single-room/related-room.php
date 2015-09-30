@@ -16,7 +16,7 @@ $related = $room->get_related_rooms();
 ?>
 <?php if( $related->posts ): ?>
 	<div class="hb_related_other_room has_slider">
-		<h3><?php _e( 'Other Rooms', 'tp-hotel-booking' ); ?></h3>
+		<h3 class="title"><?php _e( 'Other Rooms', 'tp-hotel-booking' ); ?></h3>
 		<div class="navigation">
             <div class="prev"><i class="fa fa-angle-left"></i></div>
             <div class="next"><i class="fa fa-angle-right"></i></div>
