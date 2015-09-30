@@ -540,7 +540,7 @@ function hb_create_booking( $args = array() ){
         '_hb_method_title'          => hb_get_payment_method_title( $transaction['method'] ),
         '_hb_method_id'             => $transaction['method_id'],
         '_hb_booking_status'        => $transaction['status'],*/
-        '_hb_booking_key'              => 'hb_' . apply_filters( 'hb_generate_booking_key', uniqid( 'booking' ) )
+        '_hb_booking_key'              => apply_filters( 'hb_generate_booking_key', uniqid( 'booking' ) )
     );
     if( ! empty( $transaction_object->coupon ) ){
         $booking_info['_hb_coupon'] = $transaction_object->coupon;
