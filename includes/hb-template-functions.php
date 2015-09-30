@@ -397,7 +397,6 @@ if( ! function_exists( 'hb_body_class' ) ){
 
 if( ! function_exists( 'hotel_booking_single_room_related' ) )
 {
-
     /*
     * related room
     * @return html
@@ -408,4 +407,17 @@ if( ! function_exists( 'hotel_booking_single_room_related' ) )
     }
 }
 
+if( ! function_exists('hotel_booking_num_room_archive') )
+{
+
+    function hotel_booking_num_room_archive( $query )
+    {
+        if( isset($query->query_vars['post_type']) && $query->query_vars['post_type'] === 'hb_room' )
+        {
+            global $hb_settings;
+            $query->set( 'posts_per_page', $hb_settings->get( 'posts_per_page', 8 ) );
+        }
+        return $query;
+    }
+}
 /*=====  End of template hooks  ======*/
