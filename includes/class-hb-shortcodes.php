@@ -238,7 +238,8 @@ class HB_Shortcodes{
                                 button: '#<?php echo $sliderId; ?> .navigation .next'
                             },
                             pagination: '#<?php echo $sliderId; ?> > .pagination',
-                            mousewheel: true,
+                            mousewheel: false,
+                            auto: false,
                             pauseOnHover: true,
                             onCreate: function()
                             {

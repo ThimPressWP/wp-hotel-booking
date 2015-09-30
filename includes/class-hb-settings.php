@@ -122,6 +122,9 @@ class HB_Settings{
         return sanitize_title( $this->get_field_name( $name ) );
     }
 
+    /**
+     * Update settings
+     */
     function update_settings(){
 
         if( strtolower( $_SERVER['REQUEST_METHOD']) != 'post' ) return;
@@ -160,10 +163,22 @@ class HB_Settings{
         return $this->_options;
     }
 
+    /**
+     * Magic function to convert object to string with json format
+     *
+     * @return string
+     */
     function __toString(){
         return json_encode( $this->_options );
     }
 
+    /**
+     * Return settings to json format
+     * If $fields is empty, all fields will be converted
+     *
+     * @param array $fields
+     * @return string
+     */
     function toJson( $fields = array() ){
         if( $fields ){
             $options = array();

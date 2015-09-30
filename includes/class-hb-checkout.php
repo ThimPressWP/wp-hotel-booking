@@ -1,11 +1,35 @@
 <?php
-class HB_Checkout{
-    static protected $_instance = null;
-    public $payment_method = '';
-    function __construct(){
 
+/**
+ * Class HB_Checkout
+ */
+class HB_Checkout{
+
+    /**
+     * @var HB_Checkout object instance
+     * @access protected
+     */
+    static protected $_instance = null;
+
+    /**
+     * Payment method
+     *
+     * @var string
+     */
+    public $payment_method = '';
+
+    /**
+     * Constructor
+     */
+    function __construct(){
+        //
     }
 
+    /**
+     * Create new customer for checkout if needed
+     *
+     * @return int
+     */
     function create_customer(){
         $customer_info = array(
             'ID'            => hb_get_request( 'existing-customer-id' ),
@@ -28,6 +52,12 @@ class HB_Checkout{
         return $customer_id;
     }
 
+    /**
+     * Creates temp new booking if needed
+     *
+     * @return mixed|WP_Error
+     * @throws Exception
+     */
     function create_booking(){
         $customer_id = get_transient( 'hb_current_customer' );
 
@@ -41,23 +71,17 @@ class HB_Checkout{
         if ( $booking_id > 0 && ( $booking = HB_Booking::instance( $booking_id ) ) && $booking->post->ID && $booking->has_status( array( 'pending', 'failed' ) ) ) {
             $booking_data['ID'] = $booking_id;
             $booking->set_booking_info( $booking_data );
-
-
         } else {
             $booking_id = hb_create_booking( );
             $booking = HB_Booking::instance( $booking_id );
         }
-
-
-
-
-
         $check_in               = $transaction_object->check_in_date;
         $check_out              = $transaction_object->check_out_date;
         $tax                    = $transaction_object->tax;
         $price_including_tax    = $transaction_object->price_including_tax;
         $rooms                  = $transaction_object->rooms;
 
+        // booking meta data
         $booking_info = array(
             '_hb_check_in_date'         => strtotime( $check_in ),
             '_hb_check_out_date'        => strtotime( $check_out ),
@@ -107,6 +131,11 @@ class HB_Checkout{
         return $booking_id;
     }
 
+    /**
+     * Process checkout
+     *
+     * @throws Exception
+     */
     function process_checkout(){
 
         if( strtolower( $_SERVER['REQUEST_METHOD'] ) != 'post' ){
@@ -137,16 +166,12 @@ class HB_Checkout{
                     }
                     // No payment was required for order
                     $booking->payment_complete();
-
                     HB_Cart::instance()->empty_cart();
-
-
                     $return_url = $booking->get_checkout_booking_received_url();
                     hb_send_json( array(
                         'result' 	=> 'success',
                         'redirect'  => apply_filters( 'hb_checkout_no_payment_needed_redirect', $return_url, $booking )
                     ) );
-
                 }
             }else{
                 die( 'can not create booking' );
@@ -169,6 +194,11 @@ class HB_Checkout{
         }
     }
 
+    /**
+     * Get unique instance for this object
+     *
+     * @return HB_Checkout
+     */
     static function instance(){
         if( empty( self::$_instance ) ){
             self::$_instance = new self();

@@ -1404,13 +1404,27 @@ if( ! function_exists('hb_get_price_plan_room') )
     }
 }
 
-function hb_customer_booked_room(){
+/**
+ * Checks to see if a user is booked room
+ *
+ * @param string $customer_email
+ * @param int $room_id
+ * @return bool
+ */
+function hb_customer_booked_room( $customer_email , $room_id ){
     return true;
 }
+
+/**
+ * Send email to user after they booked room
+ *
+ * @param int $booking_id
+ */
 function hb_new_booking_email( $booking_id ){
     $settings = HB_Settings::instance();
     $booking = HB_Booking::instance( $booking_id );
-    $url = 'http://lessbugs.com/tools/PHPMailer/send.php';
+
+    $to = $settings->get('email_new_booking_recipients');
     $subject = $settings->get('email_new_booking_subject');
     $email_heading = $settings->get('email_new_booking_heading');
     $format = $settings->get('email_new_booking_format');
@@ -1440,27 +1454,16 @@ function hb_new_booking_email( $booking_id ){
         'booking'           => HB_Booking::instance( $booking_id )
     ));
 
-    $fields = array(
-        'to_email'    => $settings->get('email_new_booking_recipients'),
-        'from_email' => $settings->get('email_general_from_email'),
-        'from_name' => $settings->get('email_general_from_name'),
-        'subject' => $subject,
-        'body' => $body,
-        'is_html' => $format == 'html' ? '1' : '0'
-    );
-    $fields_string = http_build_query( $fields );
-    $ch = curl_init();
-    curl_setopt($ch,CURLOPT_URL, $url);
-    curl_setopt($ch,CURLOPT_POST, count($fields));
-    curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-    $result = curl_exec($ch);
-    curl_close($ch);
+    $headers = "Content-Type: " . ( $format == 'html' ? 'text/html' : 'text/plain' ) . "\r\n";
+    wp_mail( $to, $subject, $body, $headers );
+
 }
 add_action( 'hb_booking_status_pending_to_processing', 'hb_new_booking_email' );
 add_action( 'hb_booking_status_pending_to_completed', 'hb_new_booking_email' );
 
 
 /**
+ * Get date format
  *
  * @return string
  */

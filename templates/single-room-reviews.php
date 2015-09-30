@@ -51,7 +51,7 @@ if ( ! comments_open() ) {
         <?php endif; ?>
     </div>
 
-    <?php if ( hb_customer_booked_room( '', get_current_user_id(), $room->id ) ) : ?>
+    <?php if ( hb_customer_booked_room( '', $room->id ) ) : ?>
 
         <div id="review_form_wrapper">
             <div id="review_form">
@@ -84,6 +84,7 @@ if ( ! comments_open() ) {
                 }
 
                 $comment_form['comment_field'] .= '<p class="comment-form-comment"><label for="comment">' . __( 'Your Review', 'tp-hotel-booking' ) . '</label><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></p>';
+                //$comment_form['comment_field'] .= '<p class="comment-form-email"><label for="email">' . __( 'Your Email', 'tp-hotel-booking' ) . '</label><input type="email" id="email" name="email" cols="45" rows="8" aria-required="true" placeholder="'.__('Your email', 'tp-hotel-booking').'" /></p>';
 
                 comment_form( apply_filters( 'hb_product_review_comment_form_args', $comment_form ) );
                 ?>
