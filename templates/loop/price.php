@@ -23,17 +23,15 @@ $prices = hb_get_price_plan_room(get_the_ID());
 
 		<?php if( $price_display === 'max' ): ?>
 
-			<?php echo $currency ?><span class="price_max"><?php echo array_pop($prices) ?></span>
+			<span class="price_max"><?php echo $currency ?><?php echo array_pop($prices) ?></span>
 
 		<?php elseif( $price_display === 'min_to_max' ): ?>
 
-			<span class="price_min"><?php echo array_shift($prices) ?></span> - <span class="price_max"><?php echo array_pop($prices) ?></span>
-
-			<?php echo $currency; ?>
+			<span class="price_min"><?php echo $currency; ?><?php echo array_shift($prices) ?></span> - <span class="price_max"><?php echo array_pop($prices) ?></span>
 
 		<?php elseif( $price_display === 'min' ): ?>
 
-			<?php echo $currency; ?><span class="price_min"><?php echo array_shift($prices) ?></span>
+			<span class="price_min"><?php echo $currency; ?><?php echo array_shift($prices) ?></span>
 
 		<?php endif; ?>
 	</div>
