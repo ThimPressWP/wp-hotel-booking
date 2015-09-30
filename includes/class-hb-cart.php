@@ -466,6 +466,12 @@ function hb_add_transaction( $transaction ){
     return hb_add_booking( $transaction );
 }
 
+/**
+ * Creates new booking
+ *
+ * @param array $args
+ * @return mixed|WP_Error
+ */
 function hb_create_booking( $args = array() ){
     $default_args = array(
         'status'        => '',
@@ -570,6 +576,11 @@ function hb_create_booking( $args = array() ){
     return $booking_id;
 }
 
+/**
+ * Gets all statuses that room supported
+ *
+ * @return array
+ */
 function hb_get_booking_statuses() {
     $booking_statuses = array(
         'hb-pending'    => _x( 'Pending Payment', 'Booking status', 'tp-hotel-booking' ),
@@ -641,11 +652,22 @@ function hb_create_booking_2( $args = array() ){
 
     return HB_Booking::instance( $booking_id );
 }
+
+/**
+ * Get payment method title by slug
+ *
+ * @param $method_slug
+ * @return mixed
+ */
 function hb_get_payment_method_title( $method_slug ){
     return apply_filters( 'hb_payment_method_title_' . $method_slug, __( 'N/A' ) );
 }
 
-
+/**
+ * @param $date
+ * @param bool $code
+ * @return bool
+ */
 function hb_get_coupons_active( $date, $code = false ){
     $coupons = false;
     $enable = HB_Settings::instance()->get( 'enable_coupon' );
