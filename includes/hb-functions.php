@@ -1456,9 +1456,10 @@ function hb_new_booking_email( $booking_id ){
 
     // get CSS styles
     ob_start();
-    wc_get_template( 'emails/email-styles.php' );
+    hb_get_template( 'emails/email-styles.php' );
     $css = apply_filters( 'hb_email_styles', ob_get_clean() );
-
+    $css = preg_replace( '!</?style>!', '', $css );
+    print_r($css);
     try {
         TP_Hotel_Booking::instance()->_include( 'includes/libraries/class-emogrifier.php' );
         // apply CSS styles inline for picky email clients
