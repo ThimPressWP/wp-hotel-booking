@@ -10,9 +10,11 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
-
+global $hb_settings;
 ?>
 <div class="media">
-	<?php $thumbnail = apply_filters( 'hotel_booking_loop_room_thumbnail_size', 'thumbnail' ); ?>
-	<a href="<?php the_permalink(); ?>"><?php the_post_thumbnail($thumbnail); ?></a>
+	<a href="<?php the_permalink(); ?>">
+		<?php $size = array( $hb_settings->get('catalog_image_width'), $hb_settings->get('catalog_image_height') ); ?>
+		<?php echo apply_filters( 'hotel_booking_loop_room_thumbnail_size', get_the_post_thumbnail( get_the_ID(), $size) ) ; ?>
+	</a>
 </div>
