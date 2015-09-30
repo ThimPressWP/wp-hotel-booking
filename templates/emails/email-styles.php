@@ -1,6 +1,10 @@
 <style>
     .booking-table{
-        color: #444444;background-color: #DDD;font-family: verdana, arial, sans-serif; font-size: 14px; min-width: 800px;
+        color: #444444;
+        background-color: #DDD;
+        font-family: verdana, arial, sans-serif;
+        font-size: 14px;
+        min-width: 800px;
     }
     .booking-table-head{
         background-color: #F5F5F5;
