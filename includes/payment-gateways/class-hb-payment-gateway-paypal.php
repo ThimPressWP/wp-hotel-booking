@@ -133,6 +133,8 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
 
                     try {
                         //If the transient still exists, delete it and add the official transaction
+                        print_r($_REQUEST);
+                        die();
                         if ( $transaction_object = hb_get_transient_transaction( 'hbps', $transient_transaction_id ) ) {
                             hb_delete_transient_transaction( 'hbps', $transient_transaction_id  );
                             $booking_id = hb_add_transaction(
