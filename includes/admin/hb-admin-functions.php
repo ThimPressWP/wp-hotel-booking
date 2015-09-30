@@ -13,7 +13,8 @@ function hb_admin_settings_tabs(){
         'hotel_info'    => __( 'Hotel Information', 'tp-hotel-booking' ),
         'payments'      => __( 'Payments', 'tp-hotel-booking' ),
         'emails'        => __( 'Emails', 'tp-hotel-booking' ),
-        'lightbox'      => __( 'Lightbox', 'tp-hotel-booking' )
+        'lightbox'      => __( 'Lightbox', 'tp-hotel-booking' ),
+        'room'          => __( 'Room', 'tp-hotel-booking' )
     );
     return apply_filters( 'hb_admin_settings_tabs', $tabs );
 }
@@ -70,6 +71,11 @@ add_action( 'hb_email_general_settings', 'hb_admin_settings_tab_email_general' )
 
 function hb_admin_settings_tab_email_new_booking(){
     TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings/email-new-booking.php' );
+}
+add_action( 'hb_email_new_booking_settings', 'hb_admin_settings_tab_email_new_booking' );
+
+function hb_admin_settings_tab_room(){
+    TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings/room.php' );
 }
 add_action( 'hb_email_new_booking_settings', 'hb_admin_settings_tab_email_new_booking' );
 
