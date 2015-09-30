@@ -31,7 +31,7 @@ class HB_Comments{
      * @param string $template
      * @return string
      */
-    function load_comments_template( $template ){
+    static function load_comments_template( $template ){
         if ( get_post_type() !== 'hb_room' ) {
             return $template;
         }

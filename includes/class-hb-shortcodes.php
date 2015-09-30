@@ -179,7 +179,8 @@ class HB_Shortcodes{
                             if( function_exists('hb_get_price_plan_room') )
                             {
                                 $prices = hb_get_price_plan_room($post->ID);
-                                sort($prices);
+                                if( $prices )
+                                    sort($prices);
                             }
                             $currency = get_option( 'tp_hotel_booking_currency' );
                             $title = $post->post_title;

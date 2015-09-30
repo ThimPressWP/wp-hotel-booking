@@ -1391,6 +1391,8 @@ if( ! function_exists('hb_get_price_plan_room') )
                 )
             )
         );
+        if( ! $pricing_plans )
+            return null;
         $pricing_plans = array_pop($pricing_plans);
         $prices = get_post_meta($pricing_plans->ID, '_hb_pricing_plan_prices', true);
         $price_plans = array();

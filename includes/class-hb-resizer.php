@@ -21,7 +21,7 @@ class HB_Reizer{
     * $_instance variable
     * @return self
     */
-    protected $_instance = null;
+    static $_instance = null;
 
     /**
     * list attachment image in the room. gallery, thumbnail
@@ -43,12 +43,12 @@ class HB_Reizer{
 
     }
 
-    function getInstance( $args = null )
+    static function getInstance( $args = null )
     {
-        if( ! $this->_instance )
-            $this->_instance = new self( $args );
+        if( ! self::$_instance )
+            self::$_instance = new self( $args );
 
-        return $this->_instance;
+        return self::$_instance;
     }
 
     public static function getAttachments()
@@ -63,16 +63,31 @@ class HB_Reizer{
         return self::$_attachments;
     }
 
-    public static function process()
+    public static function process( $attachmentID = null, $size = array(), $single = true )
     {
         if( ! self::$args )
             return;
 
         $aq_resize = Aq_Resize::getInstance();
-        foreach ( self::$_attachments as $key => $attachment ) {
-            foreach (self::$args as $key => $arg) {
-                $aq_resize->process( $attachment, $arg['width'], $arg['height'] );
+        if( $attachmentID && $size )
+        {
+            // generator image file with size setting in frontend
+            $attachment = wp_get_attachment_url( $attachmentID );
+            $return = $aq_resize->process( $attachment, (int)$size['width'], (int)$size['height'], true, $single );
+
+            if( $return === false )
+                $return = $attachment;
+            return $return;
+        }
+        else
+        {
+            // generator image file with size setting when submit update
+            foreach ( self::$_attachments as $key => $attachment ) {
+                foreach (self::$args as $key => $arg) {
+                    $aq_resize->process( $attachment, (int)$arg['width'], (int)$arg['height'] );
+                }
             }
+            return true;
         }
         return true;
     }
