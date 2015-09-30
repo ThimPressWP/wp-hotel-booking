@@ -13,6 +13,12 @@ $settings = hb_settings();
         </td>
     </tr>
     <tr>
+        <th><?php _e( 'Number of post display in page', 'tp-hotel-booking' );?></th>
+        <td>
+            <input type="number" name="<?php echo $settings->get_field_name('posts_per_page'); ?>" value="<?php echo $settings->get('posts_per_page', 8);?>" size="8" min="0"/>
+        </td>
+    </tr>
+    <tr>
         <th><?php _e( 'Catalog images size', 'tp-hotel-booking' );?></th>
         <td>
             <input type="number" name="<?php echo $settings->get_field_name('catalog_image_width'); ?>" value="<?php echo $settings->get('catalog_image_width', 270);?>" size="4" min="0"/>

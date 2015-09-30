@@ -17,18 +17,14 @@ $room = HB_Room::instance(get_the_ID());
 $galeries = $room->get_gallery(false);
 
 global $hb_settings;
-$size = array(
-	'width' 	=> $hb_settings->get('room_image_gallery_width'),
-	'height'	=> $hb_settings->get('room_image_gallery_height')
-);
 // resizer class
-$resizer = HB_Reizer::getInstance( $size );
+$resizer = HB_Reizer::getInstance();
 ?>
 
 <?php if( $galeries ): ?>
 	<div class="hb_room_gallery camera_wrap camera_emboss" id="camera_wrap_<?php the_ID() ?>">
 		<?php foreach ($galeries as $key => $gallery): ?>
-			<?php $src = $resizer->process( $gallery['id'], $size ); ?>
+			<?php $src = $resizer->process( $gallery['id'], 'gallery' ); ?>
 		    <div data-thumb="<?php echo esc_attr( $gallery['thumb'] ); ?>" data-src="<?php echo apply_filters( 'hotel_booking_room_gallery_size', $src); ?>"></div>
 		<?php endforeach; ?>
 	</div>

@@ -33,9 +33,6 @@ class HB_Reizer{
 
     function __construct( $args = null )
     {
-        if( ! $args )
-            return;
-
         self::$args = $args;
 
         if( ! self::$_attachments )
@@ -63,33 +60,45 @@ class HB_Reizer{
         return self::$_attachments;
     }
 
-    public static function process( $attachmentID = null, $size = array(), $single = true )
+    public static function process( $attachmentID = null, $type = 'catalog', $single = true, $upscale = true )
     {
-        if( ! self::$args )
-            return;
-
         $aq_resize = Aq_Resize::getInstance();
-        if( $attachmentID && $size )
+        global $hb_settings;
+        if( ! self::$args && $attachmentID )
         {
+            if( $type === 'catalog' )
+            {
+                $size = array(
+                    'width' => $hb_settings->get('catalog_image_width', 270),
+                    'height' => $hb_settings->get('catalog_image_height', 270)
+                );
+            }
+            else if( $type === 'gallery' )
+            {
+                $size = array(
+                    'width'     => $hb_settings->get('room_image_gallery_width', 1000),
+                    'height'    => $hb_settings->get('room_image_gallery_height', 667)
+                );
+            }
             // generator image file with size setting in frontend
             $attachment = wp_get_attachment_url( $attachmentID );
-            $return = $aq_resize->process( $attachment, (int)$size['width'], (int)$size['height'], true, $single );
+            $return = $aq_resize->process( $attachment, (int)$size['width'], (int)$size['height'], true, $single, $upscale );
 
             if( $return === false )
                 $return = $attachment;
             return $return;
         }
-        else
+        else if( self::$args )
         {
             // generator image file with size setting when submit update
             foreach ( self::$_attachments as $key => $attachment ) {
                 foreach (self::$args as $key => $arg) {
-                    $aq_resize->process( $attachment, (int)$arg['width'], (int)$arg['height'] );
+                    $aq_resize->process( $attachment, (int)$arg['width'], (int)$arg['height'], true, $single, $upscale );
                 }
             }
             return true;
         }
-        return true;
+        return false;
     }
 
 }
