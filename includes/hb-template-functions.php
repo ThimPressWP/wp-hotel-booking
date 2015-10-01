@@ -420,4 +420,28 @@ if( ! function_exists('hotel_booking_num_room_archive') )
         return $query;
     }
 }
+
+if( ! function_exists( 'hotel_booking_remove_widget_search' ) )
+{
+    function hotel_booking_remove_widget_search( $sidebar_widgets )
+    {
+        global $post;
+
+        if( ! is_page() )
+            return $sidebar_widgets;
+
+        if( ! $post->ID == hb_get_page_id( 'search' ) )
+            return $sidebar_widgets;
+
+        foreach ( $sidebar_widgets as $sidebarID => $widgets ) {
+            foreach ($widgets as $key => $widget) {
+                if( strpos($widget, 'hb_widget_search') === 0 )
+                {
+                    unset($sidebar_widgets[$sidebarID][$key]);
+                }
+            }
+        }
+        return $sidebar_widgets;
+    }
+}
 /*=====  End of template hooks  ======*/
