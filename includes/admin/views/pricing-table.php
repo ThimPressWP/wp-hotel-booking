@@ -10,9 +10,10 @@ $week_names = array(
     __( 'Sat', 'tp-hotel-booking' )
 );
 
-$capacities = hb_get_room_capacities();
-
 $room_id = intval( hb_get_request( 'hb-room' ) );
+
+$capacitiyID = get_post_meta( $room_id, '_hb_room_capacity', true );
+
 $pricing_plans = get_posts(
     array(
         'post_type'         => 'hb_pricing_plan',
@@ -61,27 +62,25 @@ $count_plants = count( $pricing_plans );
                 <table>
                     <thead>
                         <tr>
-                            <th><?php _e( 'Capacity', 'tp-hotel-booking' );?></th>
+                            <!-- <th><?php //_e( 'Capacity', 'tp-hotel-booking' );?></th> -->
                             <?php for( $i = 0; $i < 7; $i++ ){?>
                             <th><?php echo $week_names[ $i ];?></th>
                             <?php } ?>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if( $capacities ):?>
-                        <?php foreach( $capacities as $capacity ):?>
+                        <?php if( $capacitiyID ):?>
                         <tr>
-                            <th><?php echo $capacity->name;?></th>
+                            <!-- <th><?php //echo $capacity->name;?></th> -->
                             <?php for( $i = 0; $i < 7; $i++ ){?>
                                 <td>
                                     <?php
-                                    $price = ! empty( $regular_prices[ $capacity->term_id ][ $i ] ) ? $regular_prices[ $capacity->term_id ][ $i ] : '';
+                                    $price = ! empty( $regular_prices[ $capacitiyID ][ $i ] ) ? $regular_prices[ $capacitiyID ][ $i ] : '';
                                     ?>
-                                    <input class="hb-pricing-price" type="text" name="price[<?php echo $regular_plan ? $regular_plan->ID : '__INDEX__';?>][<?php echo $capacity->term_id;?>][<?php echo $i;?>]" value="<?php echo $price;?>" size="10" readonly="readonly" />
+                                    <input class="hb-pricing-price" type="text" name="price[<?php echo $regular_plan ? $regular_plan->ID : '__INDEX__';?>][<?php echo $capacitiyID;?>][<?php echo $i;?>]" value="<?php echo $price;?>" size="10" readonly="readonly" />
                                 </td>
                             <?php }?>
                         </tr>
-                        <?php endforeach;?>
                         <?php else:?>
                         <tr><td colspan="7"><?php _e( 'No capacities found', 'tp-hotel-booking' );?></td></tr>
                         <?php endif;?>
@@ -101,9 +100,9 @@ $count_plants = count( $pricing_plans );
         <div id="hb-pricing-plan-list">
         <?php if( $pricing_plans ): foreach( $pricing_plans as $plan ){?>
             <?php
-            $plan_prices = get_post_meta($plan->ID, '_hb_pricing_plan_prices', true);
-            $start_date = get_post_meta($plan->ID, '_hb_pricing_plan_start', true);
-            $end_date = get_post_meta($plan->ID, '_hb_pricing_plan_end', true);
+                $plan_prices = get_post_meta($plan->ID, '_hb_pricing_plan_prices', true);
+                $start_date = get_post_meta($plan->ID, '_hb_pricing_plan_start', true);
+                $end_date = get_post_meta($plan->ID, '_hb_pricing_plan_end', true);
             ?>
             <div class="hb-pricing-table">
                 <h3 class="hb-pricing-table-title">
@@ -128,18 +127,17 @@ $count_plants = count( $pricing_plans );
                         </tr>
                         </thead>
                         <tbody>
-                        <?php if( $capacities ):?>
-                            <?php foreach( $capacities as $capacity ):?>
-                                <tr>
-                                    <th><?php echo $capacity->name;?></th>
-                                    <?php for( $i = 0; $i < 7; $i++ ){?>
-                                        <td>
-                                            <?php $price = ! empty( $plan_prices[ $capacity->term_id ] ) ? ( array_key_exists( $i, $plan_prices[ $capacity->term_id ] ) ? $plan_prices[ $capacity->term_id ][ $i ] : '' ) : '';?>
-                                            <input class="hb-pricing-price" type="text" name="price[<?php echo $plan->ID;?>][<?php echo $capacity->term_id;?>][<?php echo $i;?>]" value="<?php echo $price;?>" size="10" readonly="readonly" />
-                                        </td>
-                                    <?php }?>
-                                </tr>
-                            <?php endforeach;?>
+                        <?php if( $capacitiyID ):?>
+                        <?php $capacity = get_term( $capacitiyID, 'hb_room_capacity' ) ?>
+                            <tr>
+                                <th><?php echo $capacity->name;?></th>
+                                <?php for( $i = 0; $i < 7; $i++ ){?>
+                                    <td>
+                                        <?php $price = ! empty( $plan_prices[ $capacitiyID ] ) ? ( array_key_exists( $i, $plan_prices[ $capacitiyID ] ) ? $plan_prices[ $capacitiyID ][ $i ] : '' ) : '';?>
+                                        <input class="hb-pricing-price" type="text" name="price[<?php echo $plan->ID;?>][<?php echo $capacitiyID;?>][<?php echo $i;?>]" value="<?php echo $price;?>" size="10" readonly="readonly" />
+                                    </td>
+                                <?php }?>
+                            </tr>
                         <?php else:?>
                             <tr><td colspan="7"><?php _e( 'No capacities found', 'tp-hotel-booking' );?></td></tr>
                         <?php endif;?>
@@ -183,17 +181,16 @@ $count_plants = count( $pricing_plans );
                 </tr>
                 </thead>
                 <tbody>
-                <?php if( $capacities ):?>
-                    <?php foreach( $capacities as $capacity ):?>
-                        <tr>
-                            <th><?php echo $capacity->name;?></th>
-                            <?php for( $i = 0; $i < 7; $i++ ){?>
-                                <td>
-                                    <input class="hb-pricing-price" type="text" name="price[__INDEX__][<?php echo $capacity->term_id;?>][<?php echo $i;?>]" value="" size="10" readonly="readonly" />
-                                </td>
-                            <?php }?>
-                        </tr>
-                    <?php endforeach;?>
+                <?php if( $capacitiyID ):?>
+                <?php $capacity = get_term( $capacitiyID, 'hb_room_capacity' ) ?>
+                    <tr>
+                        <th><?php echo $capacity->name;?></th>
+                        <?php for( $i = 0; $i < 7; $i++ ){?>
+                            <td>
+                                <input class="hb-pricing-price" type="text" name="price[__INDEX__][<?php echo $capacitiyID;?>][<?php echo $i;?>]" value="" size="10" readonly="readonly" />
+                            </td>
+                        <?php }?>
+                    </tr>
                 <?php else:?>
                     <tr><td colspan="7"><?php _e( 'No capacities found', 'tp-hotel-booking' );?></td></tr>
                 <?php endif;?>
