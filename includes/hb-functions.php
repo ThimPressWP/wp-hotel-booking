@@ -1487,6 +1487,12 @@ function hb_get_booking_id_by_key( $booking_key ){
     return $booking_id;
 }
 
+function hb_get_booking_status_label( $booking_id ){
+    $statuses = hb_get_booking_statuses();
+    $status = get_post_status( $booking_id );
+    return ! empty( $statuses[ $status ] ) ? $statuses[ $status ] : __( 'Pending', 'tp-hotel-booking' );
+}
+
 /**
  * Get date format
  *
@@ -1516,3 +1522,4 @@ if ( ! function_exists( 'is_room' ) ) {
     }
 }
 
+print_r( get_transient('xxxxx'));

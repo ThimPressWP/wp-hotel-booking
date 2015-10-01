@@ -172,8 +172,10 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         $response = wp_remote_post( $paypal_api_url, array( 'body' => $payload ) );
         $body = wp_remote_retrieve_body( $response );
 
+        set_transient('xxxxx', $_REQUEST, HOUR_IN_SECONDS);
         if ( 'VERIFIED' === $body ) {
             if ( ! empty( $request['txn_type'] ) ) {
+
                 /*if ( ! empty( $request['transaction_subject'] ) && $transient_data = hb_get_transient_transaction( 'hbps', $request['transaction_subject'] ) ) {
                     hb_delete_transient_transaction( 'hbps', $request['transaction_subject'] );
                     $transaction = hb_add_transaction(
