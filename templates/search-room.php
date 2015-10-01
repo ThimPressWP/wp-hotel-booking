@@ -4,7 +4,7 @@ $check_out_date = hb_get_request( 'check_out_date' );
 $adults = 2;
 $max_child = 2;
 ?>
-<div id="hotel-booking-search">
+<div id="hotel-booking-search-<?php echo uniqid(); ?>" class="hotel-booking-search">
 <?php
     // display title widget or shortcode
     $atts = array();
@@ -66,7 +66,7 @@ $max_child = 2;
         <input type="hidden" name="hotel-booking" value="results" />
         <input type="hidden" name="action" value="hotel_booking_parse_search_params" />
         <p>
-        <button type="submit"><?php _e( 'Check Availability', 'tp-hotel-booking' );?></button>
+            <button type="submit"><?php _e( 'Check Availability', 'tp-hotel-booking' );?></button>
         </p>
     </form>
 </div>
