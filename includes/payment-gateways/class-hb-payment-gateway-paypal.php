@@ -175,8 +175,6 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         $response = wp_remote_post( $paypal_api_url, array( 'body' => $payload ) );
         $body = wp_remote_retrieve_body( $response );
         if ( 'VERIFIED' === $body ) {
-            ob_start();
-
             if ( ! empty( $request['txn_type'] ) ) {
 
                 /*if ( ! empty( $request['transaction_subject'] ) && $transient_data = hb_get_transient_transaction( 'hbps', $request['transaction_subject'] ) ) {
@@ -191,29 +189,23 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
                         )
                     );
                 }*/
-                //print_r($_REQUEST);
                 switch ( $request['txn_type'] ) {
                     case 'web_accept':
                         if ( ! empty( $request['custom'] ) && ( $booking = $this->get_booking( $request['custom'] ) ) ) {
-                            echo "KKK";
                             $request['payment_status'] = strtolower( $request['payment_status'] );
 
                             if ( isset( $request['test_ipn'] ) && 1 == $request['test_ipn'] && 'pending' == $request['payment_status'] ) {
                                 $request['payment_status'] = 'completed';
                             }
-                            print_r($request);
                             if ( method_exists( $this, 'payment_status_' . $request['payment_status'] ) ) {
                                 call_user_func( array( $this, 'payment_status_' . $request['payment_status'] ), $booking, $request );
-                                echo "CALL:(".'payment_status_' . $request['payment_status'].");";
                             }
                         }
                         break;
 
                 }
             }
-            set_transient('xxxxx', ob_get_clean(), HOUR_IN_SECONDS);
         }
-
     }
 
     function get_booking( $raw_custom ){
@@ -239,9 +231,10 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         }
 
         if ( ! $booking || $booking->booking_key !== $booking_key ) {
-            _e( 'Error: Booking Keys do not match.' );
+            printf( __( 'Error: Booking Keys do not match %s and %s.' ) , $booking->booking_key, $booking_key );
             return false;
         }
+        return $booking;
     }
 
     /**
@@ -259,7 +252,6 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
 
         if ( 'completed' === $request['payment_status'] ) {
             $this->payment_complete( $booking, ( ! empty( $request['txn_id'] ) ? $request['txn_id'] : '' ), __( 'IPN payment completed', 'tp-hotel-booking' ) );
-
             // save paypal fee
             if ( ! empty( $request['mc_fee'] ) ) {
                 update_post_meta( $booking->post->id, 'PayPal Transaction Fee', $request['mc_fee'] );
