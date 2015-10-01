@@ -1522,7 +1522,9 @@ if ( ! function_exists( 'is_room' ) ) {
     }
 }
 if( !empty($_REQUEST['test_ipn'])) {
+    echo "[[[[[";
     print_r(get_transient('xxxxx'));
+    echo "]]]]]";
 }
 
 if( untrailingslashit(get_site_url()) != 'http://demo.thimpress.com/sailing' ) {
