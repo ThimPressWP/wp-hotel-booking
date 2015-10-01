@@ -11,11 +11,14 @@
             'title'     => __( 'Additional Information', 'tp-hotel-booking' ),
             'content'   => $room->__get('addition_information')
         );
-    $tabsInfo[] = array(
-            'id'        => 'hb_room_reviews',
-            'title'     => __( 'Reviews', 'tp-hotel-booking' ),
-            'content'   => ''
-        );
+    if( comments_open() )
+    {
+        $tabsInfo[] = array(
+                'id'        => 'hb_room_reviews',
+                'title'     => __( 'Reviews', 'tp-hotel-booking' ),
+                'content'   => ''
+            );
+    }
     $tabs = apply_filters( 'hotel_booking_single_room_infomation_tabs', $tabsInfo );
     // prepend after li tabs single
     do_action( 'hotel_booking_before_single_room_infomation' );
@@ -24,11 +27,13 @@
 
         <ul class="hb_single_room_tabs">
 
-            <?php foreach ( $tabs as $key => $tab ): ?> ?>
+            <?php foreach ( $tabs as $key => $tab ): ?>
                 <li>
-                    <?php do_action('hotel_booking_single_room_before_tabs_' . $tab['id']); ?>
-                    <?php printf( '%s', $tab['title'] ) ?>
-                    <?php do_action('hotel_booking_single_room_after_tabs_' . $tab['id']); ?>
+                    <a href="#<?php echo esc_attr( $tab['id'] ) ?>">
+                        <?php do_action('hotel_booking_single_room_before_tabs_' . $tab['id']); ?>
+                        <?php printf( '%s', $tab['title'] ) ?>
+                        <?php do_action('hotel_booking_single_room_after_tabs_' . $tab['id']); ?>
+                    </a>
                 </li>
 
             <?php endforeach; ?>
