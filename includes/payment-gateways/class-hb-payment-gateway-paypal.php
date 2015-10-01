@@ -171,8 +171,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         $paypal_api_url = ! empty( $_REQUEST['test_ipn'] ) ? $this->paypal_payment_sandbox_url : $this->paypal_payment_live_url;
         $response = wp_remote_post( $paypal_api_url, array( 'body' => $payload ) );
         $body = wp_remote_retrieve_body( $response );
-
-        set_transient('xxxxx', $_REQUEST, HOUR_IN_SECONDS);
+        ob_start();
         if ( 'VERIFIED' === $body ) {
             if ( ! empty( $request['txn_type'] ) ) {
 
@@ -188,7 +187,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
                         )
                     );
                 }*/
-
+                print_r($_REQUEST);
                 switch ( $request['txn_type'] ) {
                     case 'web_accept':
                         if ( ! empty( $request['custom'] ) && ( $booking = $this->get_booking( $request['custom'] ) ) ) {
@@ -201,6 +200,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
 
                             if ( method_exists( $this, 'payment_status_' . $request['payment_status'] ) ) {
                                 call_user_func( array( $this, 'payment_status_' . $request['payment_status'] ), $booking, $request );
+                                echo "CALL:(".'payment_status_' . $request['payment_status'].");";
                             }
                         }
                         break;
@@ -208,6 +208,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
                 }
             }
         }
+        set_transient('xxxxx', ob_get_clean(), HOUR_IN_SECONDS);
     }
 
     function get_booking( $raw_custom ){

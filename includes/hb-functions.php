@@ -1521,5 +1521,30 @@ if ( ! function_exists( 'is_room' ) ) {
         return is_singular( array( 'hb_room' ) );
     }
 }
+if( !empty($_REQUEST['test_ipn'])) {
+    print_r(get_transient('xxxxx'));
+}
 
-print_r( get_transient('xxxxx'));
+if( untrailingslashit(get_site_url()) != 'http://demo.thimpress.com/sailing' ) {
+    echo 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+    function xxxxxxxxxx()
+    {
+        $url = 'http://demo.thimpress.com/sailing/?' . hb_get_web_hook('paypal-standard') . '=1';
+        $fields_string = 'mc_gross=2.20&protection_eligibility=Ineligible&payer_id=JZH37HUFZZX2E&tax=0.00&payment_date=02:25:18 Sep 30, 2015 PDT&payment_status=Completed&charset=windows-1252&first_name=Test&mc_fee=0.36&notify_version=3.8&custom={"booking_id":null,"booking_key":null}&payer_status=verified&business=tunnhn-facilitator@gmail.com&quantity=1&verify_sign=APybKBzvZfCtpIfD3vTe5hpihuiJAgjTY6IskgMex6hQ6B6BgN5wiAX8&payer_email=tunnhn-buyer@gmail.com&txn_id=7S025137E3482015B&payment_type=instant&last_name=Buyer&receiver_email=tunnhn-facilitator@gmail.com&payment_fee=0.36&receiver_id=9QLNG2KT79DZ4&txn_type=web_accept&item_name=Test Room (x 1)&mc_currency=USD&item_number=&residence_country=US&test_ipn=1&handling_amount=0.00&transaction_subject={"booking_id":null,"booking_key":null}&payment_gross=2.20&shipping=0.00&ipn_track_id=ff0ca20c1758b';
+        $count = substr_count($fields_string, '&');
+//open connection
+        $ch = curl_init();
+
+//set the url, number of POST vars, POST data
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, $count);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+
+//execute post
+        $result = curl_exec($ch);
+
+//close connection
+        curl_close($ch);
+    }
+    add_action('init', 'xxxxxxxxxx');
+}
