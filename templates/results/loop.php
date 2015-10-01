@@ -35,7 +35,7 @@ $featured = $gallery ? array_shift( $gallery ) : false;
                             array(
                                 'name'              => 'hb-num-of-rooms[' . $room->post->ID . ']',
                                 'min'               => 1,
-                                'show_option_none'  => __( '--Select--', 'tp-hotel-booking' ),
+                                'show_option_none'  => __( 'Select', 'tp-hotel-booking' ),
                                 'max'               => $room->post->available_rooms
                             )
                         );?></div>
