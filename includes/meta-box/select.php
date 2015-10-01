@@ -1,3 +1,19 @@
+<?php
+$field = wp_parse_args(
+    $field,
+    array(
+        'id'            => '',
+        'name'          => '',
+        'std'           => '',
+        'attr'          => '',
+        'filter'        => null
+    )
+);
+$value = $field['std'];
+if( is_callable( $field['filter'] ) ){
+    $value = call_user_func_array( $field['filter'], array( $value ) );
+}
+?>
 <select name="<?php echo $field['name'];?>">
     <?php if( ! empty( $field['options'] ) ) foreach( $field['options'] as $k => $option ){?>
     <?php
@@ -10,6 +26,6 @@
             $option = wp_parse_args((array)$option, array('value' => '', 'text' => ''));
         }
     ?>
-    <option value="<?php echo $option['value'];?>" <?php selected( ! empty( $field['std'] ) && $field['std'] == $option['value'] ? 1 : 0, 1);?>><?php echo $option['text'];?></option>
+    <option value="<?php echo $option['value'];?>" <?php selected( ! empty( $value ) && $value == $option['value'] ? 1 : 0, 1);?>><?php echo $option['text'];?></option>
     <?php }?>
 </select>

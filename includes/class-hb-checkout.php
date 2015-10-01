@@ -70,6 +70,7 @@ class HB_Checkout{
         // Resume the unpaid order if its pending
         if ( $booking_id > 0 && ( $booking = HB_Booking::instance( $booking_id ) ) && $booking->post->ID && $booking->has_status( array( 'pending', 'failed' ) ) ) {
             $booking_data['ID'] = $booking_id;
+            $booking_data['post_content'] = hb_get_request( 'addition_information' );
             $booking->set_booking_info( $booking_data );
         } else {
             $booking_id = hb_create_booking( );

@@ -72,14 +72,14 @@ class HB_Widget_Room_Carousel extends WP_Widget{
             <label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of items:' ); ?></label>
             <input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" value="<?php echo esc_attr( $number ); ?>" min="1">
         </p>
-        <p>
-            <label for="<?php echo $this->get_field_id( 'image_size' ); ?>"><?php _e( 'Select Image Size to display:' ); ?></label>
-            <select name="<?php echo $this->get_field_name( 'image_size' ); ?>">
-            <?php foreach ($images_size as $size => $args): ?>
-                <option value="<?php echo $size ?>"<?php echo $thumb === $size ? ' selected' : '' ?>><?php echo $args['width'] . 'x' . $args['height'] ?></option>
-            <?php endforeach; ?>
+        <!-- <p>
+            <label for="<?php //echo $this->get_field_id( 'image_size' ); ?>"><?php //_e( 'Select Image Size to display:' ); ?></label>
+            <select name="<?php //echo $this->get_field_name( 'image_size' ); ?>">
+            <?php //foreach ($images_size as $size => $args): ?>
+                <option value="<?php //echo $size ?>"<?php //echo $thumb === $size ? ' selected' : '' ?>><?php// echo $args['width'] . 'x' . $args['height'] ?></option>
+            <?php //endforeach; ?>
             </select>
-        </p>
+        </p> -->
         <p>
             <label><?php _e( 'Price:' ); ?></label>
             <select name="<?php echo $this->get_field_name( 'price' ); ?>" for="<?php echo $this->get_field_id( 'price' ); ?>">
@@ -138,7 +138,7 @@ class HB_Widget_Room_Carousel extends WP_Widget{
         $instance['text_link'] = ( isset( $new_instance['text_link'] ) ) ? strip_tags( $new_instance['text_link'] ) : '';
 
         // image_size
-        $instance['image_size'] = ( isset( $new_instance['image_size'] ) ) ? strip_tags( $new_instance['image_size'] ) : 'thumbnail';
+        // $instance['image_size'] = ( isset( $new_instance['image_size'] ) ) ? strip_tags( $new_instance['image_size'] ) : 'thumbnail';
 
         // nav
         $instance['nav'] = ( isset( $new_instance['nav'] ) ) ? strip_tags( $new_instance['nav'] ) : 1;

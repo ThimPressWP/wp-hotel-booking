@@ -60,45 +60,20 @@ class HB_Reizer{
         return self::$_attachments;
     }
 
-    public static function process( $attachmentID = null, $type = 'catalog', $single = true, $upscale = true )
+    public static function process( $attachmentID = null, $size = array(), $single = false, $upscale = true )
     {
         $aq_resize = Aq_Resize::getInstance();
         global $hb_settings;
-        if( ! self::$args && $attachmentID )
-        {
-            if( $type === 'catalog' )
-            {
-                $size = array(
-                    'width' => $hb_settings->get('catalog_image_width', 270),
-                    'height' => $hb_settings->get('catalog_image_height', 270)
-                );
-            }
-            else if( $type === 'gallery' )
-            {
-                $size = array(
-                    'width'     => $hb_settings->get('room_image_gallery_width', 1000),
-                    'height'    => $hb_settings->get('room_image_gallery_height', 667)
-                );
-            }
-            // generator image file with size setting in frontend
-            $attachment = wp_get_attachment_url( $attachmentID );
-            $return = $aq_resize->process( $attachment, (int)$size['width'], (int)$size['height'], true, $single, $upscale );
+        if( ! $attachmentID )
+            return false;
 
-            if( $return === false )
-                $return = $attachment;
-            return $return;
-        }
-        else if( self::$args )
-        {
-            // generator image file with size setting when submit update
-            foreach ( self::$_attachments as $key => $attachment ) {
-                foreach (self::$args as $key => $arg) {
-                    $aq_resize->process( $attachment, (int)$arg['width'], (int)$arg['height'], true, $single, $upscale );
-                }
-            }
-            return true;
-        }
-        return false;
+        if( !isset($size['width']) || !isset($size['height']) )
+            return false;
+
+        // generator image file with size setting in frontend
+        $attachment = wp_get_attachment_url( $attachmentID );
+        return $aq_resize->process( $attachment, (int)$size['width'], (int)$size['height'], true, $single, $upscale );
+
     }
 
 }

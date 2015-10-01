@@ -197,7 +197,7 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
     /**
      * Process checkout booking
      *
-     * @param null $customer_id
+     * @param null $booking_id
      * @return array
      */
     function process_checkout( $booking_id = null ){

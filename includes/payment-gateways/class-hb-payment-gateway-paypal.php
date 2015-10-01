@@ -105,8 +105,11 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      * @return bool
      */
     function process_booking_paypal_standard(){
-        return;
+        //return;
         if( ! empty( $_REQUEST['hb-transaction-method'] ) && ( 'paypal-standard' == $_REQUEST['hb-transaction-method'] ) ) {
+
+            wp_redirect( get_site_url() );
+            exit();
             // if we have a paypal-nonce in $_REQUEST that meaning user has clicked go back to our site after finished the transaction
             // so, create a new order
             if( ! empty( $_REQUEST['paypal-nonce'] ) && wp_verify_nonce( $_REQUEST['paypal-nonce'], 'hb-paypal-nonce' )  ) {
@@ -171,9 +174,9 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         $paypal_api_url = ! empty( $_REQUEST['test_ipn'] ) ? $this->paypal_payment_sandbox_url : $this->paypal_payment_live_url;
         $response = wp_remote_post( $paypal_api_url, array( 'body' => $payload ) );
         $body = wp_remote_retrieve_body( $response );
-
         if ( 'VERIFIED' === $body ) {
             if ( ! empty( $request['txn_type'] ) ) {
+
                 /*if ( ! empty( $request['transaction_subject'] ) && $transient_data = hb_get_transient_transaction( 'hbps', $request['transaction_subject'] ) ) {
                     hb_delete_transient_transaction( 'hbps', $request['transaction_subject'] );
                     $transaction = hb_add_transaction(
@@ -186,17 +189,14 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
                         )
                     );
                 }*/
-
                 switch ( $request['txn_type'] ) {
                     case 'web_accept':
                         if ( ! empty( $request['custom'] ) && ( $booking = $this->get_booking( $request['custom'] ) ) ) {
-
                             $request['payment_status'] = strtolower( $request['payment_status'] );
 
                             if ( isset( $request['test_ipn'] ) && 1 == $request['test_ipn'] && 'pending' == $request['payment_status'] ) {
                                 $request['payment_status'] = 'completed';
                             }
-
                             if ( method_exists( $this, 'payment_status_' . $request['payment_status'] ) ) {
                                 call_user_func( array( $this, 'payment_status_' . $request['payment_status'] ), $booking, $request );
                             }
@@ -209,6 +209,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
     }
 
     function get_booking( $raw_custom ){
+        $raw_custom = stripslashes( $raw_custom );
         if ( ( $custom = json_decode( $raw_custom ) ) && is_object( $custom ) ) {
             $booking_id  = $custom->booking_id;
             $booking_key = $custom->booking_key;
@@ -230,9 +231,10 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         }
 
         if ( ! $booking || $booking->booking_key !== $booking_key ) {
-            _e( 'Error: Booking Keys do not match.' );
+            printf( __( 'Error: Booking Keys do not match %s and %s.' ) , $booking->booking_key, $booking_key );
             return false;
         }
+        return $booking;
     }
 
     /**
@@ -250,7 +252,6 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
 
         if ( 'completed' === $request['payment_status'] ) {
             $this->payment_complete( $booking, ( ! empty( $request['txn_id'] ) ? $request['txn_id'] : '' ), __( 'IPN payment completed', 'tp-hotel-booking' ) );
-
             // save paypal fee
             if ( ! empty( $request['mc_fee'] ) ) {
                 update_post_meta( $booking->post->id, 'PayPal Transaction Fee', $request['mc_fee'] );
@@ -303,28 +304,31 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
     /**
      * Get Paypal checkout url
      *
-     * @param $customer_id
+     * @param $booking_id
      * @return string
      */
-    protected function _get_paypal_basic_checkout_url(  $customer_id ){
+    protected function _get_paypal_basic_checkout_url(  $booking_id ){
 
         $paypal = HB_Settings::instance()->get( 'paypal' );
 
         //$user = hb_get_current_user();
-        $customer = hb_get_customer( $customer_id );
+        $customer = hb_get_customer( get_transient('hb_current_customer') );
         $paypal_args = array (
             'cmd'      => '_xclick',
             'amount'   => round( hb_get_cart_total( ! hb_get_request( 'pay_all' ) ), 2 ),
             'quantity' => '1',
         );
 
-        $booking    = hb_generate_transaction_object( $customer_id );
-        $temp_id    = hb_uniqid();
-
-        hb_set_transient_transaction( 'hbps', $temp_id, $customer->ID, $booking );
+        $booking    = HB_Booking::instance( $booking_id );
+        $advance_payment = hb_get_advance_payment();
+        $pay_all = hb_get_request( 'pay_all' );
 
         $nonce = wp_create_nonce( 'hb-paypal-nonce' );
         $paypal_email = $paypal['sandbox'] ? $paypal['sandbox_email'] : $paypal['email'];
+        $custom = array( 'booking_id' => $booking->id, 'booking_key' => $booking->booking_key );
+        if( $advance_payment && ! $pay_all ){
+            $custom['advance_payment'] = $advance_payment;
+        }
         $query = array(
             'business'      => $paypal_email,
             'item_name'     => hb_get_cart_description(),
@@ -336,9 +340,13 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
             'email'         => $customer->data['email'],
             'rm'            => '2',
             'cancel_return' => hb_get_return_url(),
-            'custom'        => json_encode( array( 'booking_id' => $booking->id, 'booking_key' => $booking->booking_key ) ),
+            'custom'        => json_encode( $custom ),
             'no_shipping'   => '1'
         );
+        if( ! hb_get_request( 'pay_all' ) ){
+            $query['item_desc'] = sprintf( __( 'Advance Payment %s', 'tp-hotel-booking' ), $advance_payment . '%');
+            $query['item_description'] = sprintf( __( 'Advance payment %s', 'tp-hotel-booking' ), $advance_payment . '%');
+        }
         $query = array_merge( $paypal_args, $query );
         $query = apply_filters( 'hb_paypal_standard_query', $query );
 
@@ -350,13 +358,13 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
     /**
      * Process checkout
      *
-     * @param null $customer_id
+     * @param null $booking_id
      * @return array
      */
-    function process_checkout( $customer_id = null ){
+    function process_checkout( $booking_id = null ){
         return array(
             'result'    => 'success',
-            'redirect'  => $this->_get_paypal_basic_checkout_url(  $customer_id  )
+            'redirect'  => $this->_get_paypal_basic_checkout_url(  $booking_id  )
         );
     }
 

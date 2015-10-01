@@ -891,6 +891,9 @@ function hb_search_rooms( $args = array() ){
           AND pm2.meta_value = %d
         HAVING available_rooms > 0
     ", '_hb_max_child_per_room', '_hb_max_adults_per_room', 'hb_room', 'publish', hb_get_request('max_child'), $adults );
+
+    echo $query;
+
     if( $search = $wpdb->get_results( $query ) ){
         foreach( $search as $k => $p ){
             $room = HB_Room::instance( $p );
@@ -1487,6 +1490,16 @@ function hb_get_booking_id_by_key( $booking_key ){
     return $booking_id;
 }
 
+function hb_get_booking_status_label( $booking_id ){
+    $statuses = hb_get_booking_statuses();
+    if( is_numeric( $booking_id ) ) {
+        $status = get_post_status($booking_id);
+    }else{
+        $status = $booking_id;
+    }
+    return ! empty( $statuses[ $status ] ) ? $statuses[ $status ] : __( 'Pending', 'tp-hotel-booking' );
+}
+
 /**
  * Get date format
  *
@@ -1515,4 +1528,3 @@ if ( ! function_exists( 'is_room' ) ) {
         return is_singular( array( 'hb_room' ) );
     }
 }
-

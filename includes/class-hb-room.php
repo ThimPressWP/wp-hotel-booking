@@ -30,6 +30,11 @@ class HB_Room{
     protected $_room_details_total = 0;
 
     /**
+    * @return setting
+    */
+    protected $_settings;
+
+    /**
      * Constructor
      *
      * @param $post
@@ -43,6 +48,9 @@ class HB_Room{
         if( empty( $this->post ) ){
             $this->post = hb_create_empty_post();
         }
+        global $hb_settings;
+        if( ! $this->_settings )
+            $this->_settings = $hb_settings;
     }
 
     /**
@@ -124,16 +132,10 @@ class HB_Room{
                     {
                         $return = '<img src="'.HB_PLUGIN_URL . '/includes/carousel/default.png'.'" alt="'.$this->post->post_title.'"/>';
                     }
-                    // $room_type_id = get_post_meta( $this->post->ID, '_hb_room_type', true );
-                    // $gallery = get_option( "hb_taxonomy_thumbnail_{$room_type_id}" );
-                    // if( $gallery ){
-                    //     $attachment_id = reset( $gallery );
-                    //     $return = wp_get_attachment_image( $attachment_id, 'thumbnail' );//wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
-                    // }
                 }
                 break;
             case 'gallery':
-                $return = $this->get_gallery();
+                $return = $this->get_galleries();
                 break;
             case 'max_child':
                 $return = get_post_meta( $this->post->ID, '_hb_max_child_per_room', true );
@@ -160,7 +162,7 @@ class HB_Room{
         return $return;
     }
 
-    function get_gallery( $with_featured = true ){
+    function get_galleries( $with_featured = true ){
         $gallery = array();
         if( $with_featured && $thumb_id = get_post_thumbnail_id( $this->post->ID ) ) {
             $featured_thumb = wp_get_attachment_image_src( $thumb_id, 'thumbnail' );
@@ -179,13 +181,23 @@ class HB_Room{
             return $gallery;
 
         foreach( $galleries as $thumb_id ){
-            $thumb = wp_get_attachment_image_src( $thumb_id, 'thumbnail' );
-            $full = wp_get_attachment_image_src( $thumb_id, 'full' );
+            $alt = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
+
+            $w = $this->_settings->get('room_thumbnail_width', 150);
+            $h = $this->_settings->get('room_thumbnail_width', 150);
+
+            $size = apply_filters( 'hotel_booking_room_thumbnail_size', array( 'width' => $w, 'height' => $h ) );
+            $thumb = $this->renderImage( $thumb_id, $size);
+
+            $w = $this->_settings->get('room_image_gallery_width', 1000);
+            $h = $this->_settings->get('room_image_gallery_height', 667);
+            $size = apply_filters( 'hotel_booking_room_gallery_size', array( 'width' => $w, 'height' => $h ) );
+            $full = $this->renderImage( $thumb_id, $size);;
             $alt = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
             $gallery[] = array(
                 'id'    => $thumb_id,
-                'src'   => $full[0],
-                'thumb' => $thumb[0],
+                'src'   => $full,
+                'thumb' => $thumb,
                 'alt'   => $alt ? $alt : get_the_title( $thumb_id )
             );
         }
@@ -406,6 +418,104 @@ class HB_Room{
         }
 
         return apply_filters( 'hb_room_review_count', $count, $this );
+    }
+
+    function getImage( $type = 'catalog', $attachID = false, $echo = true )
+    {
+        if( $type === 'catalog' )
+        {
+            return $this->get_catalog( $attachID = false, $echo = true );
+        }
+        return $this->get_thumbnail( $attachID = false, $echo = true );
+    }
+
+    /**
+    * get thumbnail
+    * @return html or array atts
+    */
+    function get_thumbnail( $attachID = false, $echo = true )
+    {
+        $w = $this->_settings->get('room_thumbnail_width', 150);
+        $h = $this->_settings->get('room_thumbnail_height', 150);
+
+        $size = apply_filters( 'hotel_booking_room_thumbnail_size', array( 'width' => $w, 'height' => $h ) );
+
+        if( $attachID == false )
+            $attachID = get_post_thumbnail_id( $this->post->ID );
+
+        $image = $this->renderImage( $attachID, $size, false );
+
+        if( $echo && $image )
+        {
+            if( is_array($image) )
+            {
+                echo sprintf('<img src="%1$s" width="%2$s" height="%3$s" />', $image[0], $image[1], $image[2]);
+            }
+            else
+            {
+                sprintf('<img src="%1$s" width="%2$s" height="%3$s" />', $image, $w, $h);
+            }
+        }
+        else
+        {
+            return $image;
+        }
+    }
+
+    function get_catalog( $attachID = false, $echo = true )
+    {
+        $w = $this->_settings->get('catalog_image_width', 270);
+        $h = $this->_settings->get('catalog_image_height', 270);
+
+        $size = apply_filters( 'hotel_booking_room_gallery_size', array( 'width' => $w, 'height' => $h ) );
+
+        if( $attachID == false )
+            $attachID = get_post_thumbnail_id( $this->post->ID );
+
+        $image = $this->renderImage( $attachID, $size, false );
+
+        if( $echo && $image )
+        {
+            if( is_array($image) )
+            {
+                echo sprintf('<img src="%1$s" width="%2$s" height="%3$s" />', $image[0], $image[1], $image[2]);
+            }
+            else
+            {
+                sprintf('<img src="%1$s" width="%2$s" height="%3$s" />', $image, $w, $h);
+            }
+        }
+        else
+        {
+            return $image;
+        }
+    }
+
+    function renderImage( $attachID = null, $size = array(), $src = true )
+    {
+        $resizer = HB_Reizer::getInstance();
+
+        return $image = $resizer->process(
+                $attachID,
+                $size,
+                $src
+            );
+    }
+
+    static function hb_setup_room_data( $post )
+    {
+        unset( $GLOBALS['hb_room'] );
+
+        if ( is_int( $post ) )
+            $post = get_post( $post );
+
+        if( ! $post )
+            $post = $GLOBALS['post'];
+
+        if ( empty( $post->post_type ) || ! in_array( $post->post_type, array( 'hb_room' ) ) )
+            return;
+
+        return $GLOBALS['hb_room'] = HB_Room::instance($post);
     }
 
     /**

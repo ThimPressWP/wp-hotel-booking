@@ -398,6 +398,7 @@
         var hb_single_tab_details = $('.hb_single_room_tab_details');
 
         $('.hb_single_room_tabs_content .hb_single_room_tab_details:not(:first)').hide();
+        hb_single_details_tab.find('a:first').addClass('active');
         hb_single_details_tab.find('a').on('click', function(event){
             event.preventDefault();
             hb_single_details_tab.find('a').removeClass('active');

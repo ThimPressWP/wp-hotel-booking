@@ -42,4 +42,13 @@ $settings = hb_settings();
             px
         </td>
     </tr>
+    <tr>
+        <th><?php _e( 'Room images thumbnail', 'tp-hotel-booking' );?></th>
+        <td>
+            <input type="number" name="<?php echo $settings->get_field_name('room_thumbnail_width'); ?>" value="<?php echo $settings->get('room_thumbnail_width', 150);?>" size="4" min="0"/>
+            x
+            <input type="number" name="<?php echo $settings->get_field_name('room_thumbnail_height'); ?>" value="<?php echo $settings->get('room_thumbnail_height', 150);?>" size="4" min="0"/>
+            px
+        </td>
+    </tr>
 </table>
