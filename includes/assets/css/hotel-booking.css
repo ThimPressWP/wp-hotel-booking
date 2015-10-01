@@ -14,13 +14,14 @@
 #hotel-booking-search button{
     position: relative;
     width: auto;
+    height: 40px;
     min-width: 200px;
     border: 1px solid #cccccc;
     border-radius: 3px;
     font-size: 15px;
     color: #7a7a7a;
-    padding: 12px 8px;
-    line-height: 15px;
+    padding: 7px 8px;
+    line-height: 24px;
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
     -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
@@ -63,11 +64,20 @@
     font-size: 15px;
     color: #000;
 }
-.hb-form-field-input{
-
+.hb_input_field{
+	position: relative;
+}
+.hb_input_field:after{
+	position: absolute;
+	content: '\f073';
+	color: #aaa;
+	font-size: 15px;
+	font: normal normal normal 14px/1 FontAwesome;
+	right: 22px;
+	top: 12px;
 }
 .hb_input_date_check{
-
+	
 }
 .hb-form-field.label-left .hb-form-field-label,
 .hb-form-field.label-left > label{

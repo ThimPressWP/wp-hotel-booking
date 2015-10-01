@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			 * hotel_booking_single_room_title hook
 			 */
 			do_action( 'hotel_booking_single_room_title' );
-			
+
 			/**
 			 * hotel_booking_loop_room_single_price
 			 */

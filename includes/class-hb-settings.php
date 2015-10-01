@@ -57,6 +57,7 @@ class HB_Settings{
         }
 
     }
+
     /**
      * Get an option
      *
@@ -102,24 +103,6 @@ class HB_Settings{
         if( $this->_options ) foreach( $this->_options as $k => $v ){
             update_option( $this->_option_prefix . $k, $v );
         }
-
-        // process resize, crop new image for catalog and single details page
-        if( $this->_resizeImage && class_exists( 'HB_Reizer' ) )
-        {
-            $sizes = array(
-                    array(
-                            'width'         => $this->_resizeImage['catalog_image_width'],
-                            'height'        => $this->_resizeImage['catalog_image_height']
-                        ),
-                    array(
-                            'width'         => $this->_resizeImage['room_image_gallery_width'],
-                            'height'        => $this->_resizeImage['room_image_gallery_height']
-                        )
-                );
-
-            $resizer = HB_Reizer::getInstance( $sizes );
-            $resizer->process();
-        }
     }
 
     /**
@@ -151,7 +134,6 @@ class HB_Settings{
             if( preg_match( '!^' . $this->_option_prefix . '!', $k ) ) {
                 $option_key = preg_replace( '!^' . $this->_option_prefix . '!', '', $k );
                 if( ! $option_key ) continue;
-                $this->beforeResizeImage( $option_key, $_POST[ $k ] );
                 $this->set( $option_key, $_POST[ $k ]);
             }
 
@@ -210,30 +192,6 @@ class HB_Settings{
             $return = json_encode( $this->_options );
         }
         return $return;
-    }
-
-    /**
-    * Check render new image size if have changed
-    * @return $this->_resizeImage
-    */
-    function beforeResizeImage( $name, $value )
-    {
-        $default = array(
-                'catalog_image_width'               => $this->get( 'catalog_image_width', 270 ),
-                'catalog_image_height'              => $this->get( 'catalog_image_height', 270 ),
-                'room_image_gallery_width'          => $this->get( 'room_image_gallery_width', 270 ),
-                'room_image_gallery_height'         => $this->get( 'room_image_gallery_height', 270 ),
-            );
-
-        if( ! array_key_exists( $name, $default ) )
-            return;
-
-        if( (int)$value === (int)$this->get( $name ) )
-            return;
-
-        $this->_resizeImage = wp_parse_args( array( $name => $value ), $default );
-
-        return $this->_resizeImage;
     }
 
     /**
