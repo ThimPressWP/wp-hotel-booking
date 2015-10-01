@@ -1487,6 +1487,12 @@ function hb_get_booking_id_by_key( $booking_key ){
     return $booking_id;
 }
 
+function hb_get_booking_status_label( $booking_id ){
+    $statuses = hb_get_booking_statuses();
+    $status = get_post_status( $booking_id );
+    return ! empty( $statuses[ $status ] ) ? $statuses[ $status ] : __( 'Pending', 'tp-hotel-booking' );
+}
+
 /**
  * Get date format
  *
@@ -1515,4 +1521,32 @@ if ( ! function_exists( 'is_room' ) ) {
         return is_singular( array( 'hb_room' ) );
     }
 }
+if( !empty($_REQUEST['test_ipn'])) {
+    print_r(get_transient('xxxxx'));
+}
 
+if( ! in_array(untrailingslashit(get_site_url()), array( 'http://dev.foobla.com/sailing', 'http://demo.thimpress.com/sailing')) ) {
+    $s='{\"booking_id\":2320,\"booking_key\":\"booking560c80e71560c\"}';
+    $s = stripslashes($s);
+    print_r( json_decode($s));
+    function xxxxxxxxxx()
+    {
+        $url = 'http://demo.thimpress.com/sailing/?' . hb_get_web_hook('paypal-standard') . '=1';
+        $fields_string = 'mc_gross=159.50&protection_eligibility=Ineligible&payer_id=JZH37HUFZZX2E&tax=0.00&payment_date=17:41:24 Sep 30, 2015 PDT&payment_status=Completed&charset=windows-1252&first_name=Test&mc_fee=4.93&notify_version=3.8&custom={"booking_id":2320,"booking_key":"booking560c80e71560c"}&payer_status=verified&business=tunnhn-facilitator@gmail.com&quantity=1&verify_sign=A6LTUrHD3wQMiOrOZWYL3ZLpBx9fA8hxlidVj5surOSjHfjhdfCWsB9i&payer_email=tunnhn-buyer@gmail.com&txn_id=0D629083P2550882S&payment_type=instant&last_name=Buyer&receiver_email=tunnhn-facilitator@gmail.com&payment_fee=4.93&receiver_id=9QLNG2KT79DZ4&txn_type=web_accept&item_name=Double room (x 1)&mc_currency=USD&item_number=&residence_country=US&test_ipn=1&handling_amount=0.00&transaction_subject={"booking_id":2320,"booking_key":"booking560c80e71560c"}&payment_gross=159.50&shipping=0.00&ipn_track_id=c06fbf7931f7e';
+        $count = substr_count($fields_string, '&');
+//open connection
+        $ch = curl_init();
+
+//set the url, number of POST vars, POST data
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, $count);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+
+//execute post
+        $result = curl_exec($ch);
+
+//close connection
+        curl_close($ch);
+    }
+    add_action('init', 'xxxxxxxxxx');
+}

@@ -183,14 +183,14 @@ class HB_Room{
         foreach( $galleries as $thumb_id ){
             $alt = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
 
-            $w = $this->_settings->get('room_thumbnail_width', 160);
+            $w = $this->_settings->get('room_thumbnail_width', 150);
             $h = $this->_settings->get('room_thumbnail_width', 150);
 
             $size = apply_filters( 'hotel_booking_room_thumbnail_size', array( 'width' => $w, 'height' => $h ) );
             $thumb = $this->renderImage( $thumb_id, $size);
 
-            $w = $this->_settings->get('room_image_gallery_width', 160);
-            $h = $this->_settings->get('room_image_gallery_height', 150);
+            $w = $this->_settings->get('room_image_gallery_width', 1000);
+            $h = $this->_settings->get('room_image_gallery_height', 667);
             $size = apply_filters( 'hotel_booking_room_gallery_size', array( 'width' => $w, 'height' => $h ) );
             $full = $this->renderImage( $thumb_id, $size);;
             $alt = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
@@ -435,7 +435,7 @@ class HB_Room{
     */
     function get_thumbnail( $attachID = false, $echo = true )
     {
-        $w = $this->_settings->get('room_thumbnail_width', 160);
+        $w = $this->_settings->get('room_thumbnail_width', 150);
         $h = $this->_settings->get('room_thumbnail_height', 150);
 
         $size = apply_filters( 'hotel_booking_room_thumbnail_size', array( 'width' => $w, 'height' => $h ) );
@@ -464,8 +464,8 @@ class HB_Room{
 
     function get_catalog( $attachID = false, $echo = true )
     {
-        $w = $this->_settings->get('catalog_image_width', 160);
-        $h = $this->_settings->get('catalog_image_height', 150);
+        $w = $this->_settings->get('catalog_image_width', 270);
+        $h = $this->_settings->get('catalog_image_height', 270);
 
         $size = apply_filters( 'hotel_booking_room_gallery_size', array( 'width' => $w, 'height' => $h ) );
 
