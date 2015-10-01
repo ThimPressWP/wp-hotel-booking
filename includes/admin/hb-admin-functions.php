@@ -360,8 +360,9 @@ function hb_bookings_meta_boxes() {
         array(
             'name'  => 'booking_status',
             'label' => 'Status',
-            'std'   => 'Actives',
+            'std'   => 'hb-pending',
             'type'  => 'select',
+            'filter' => 'hb_meta_box_field_booking_status',
             'options' => hb_get_booking_statuses()/**array(
                 array(
                     'value' => 'Pending',
@@ -540,8 +541,9 @@ function hb_manage_booking_column( $column_name, $post_id ) {
             echo date( 'F d, Y', strtotime( get_post_field( 'post_date', $post_id ) ) );
             break;
         case 'details':
-            $status = get_post_meta( $post_id, '_hb_booking_status', true );
-            echo '<a href="'. admin_url('admin.php?page=hb_booking_details&id='. $post_id) . '">' . sprintf( __( 'View (%s)', 'tp-hotel-booking' ), $status ) . '</a>';
+            $status = get_post_status( $post_id );
+            echo '<a href="'. admin_url('admin.php?page=hb_booking_details&id='. $post_id) . '">' . __( 'View', 'tp-hotel-booking' ) . '</a><br />';
+            echo '<span class="hb-booking-status ' . $status . '">' . hb_get_booking_status_label( $post_id ) . '</span>';
     }
 }
 add_action('manage_hb_booking_posts_custom_column', 'hb_manage_booking_column', 10, 2);
@@ -920,6 +922,11 @@ function hb_meta_box_field_coupon_date( $value ){
         return date('m/d/Y', $value);
     }
     return $value;
+}
+
+function hb_meta_box_field_booking_status( $value ){
+    global $post;
+    return get_post_status( $post->ID );
 }
 
 function hb_meta_box_field_coupon_used( $value ){

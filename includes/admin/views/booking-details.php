@@ -186,7 +186,7 @@ $booking_id = hb_get_request( 'id' );
                     <?php _e( 'Booking status', 'tp-hotel-booking' );?>
                 </th>
                 <td>
-                    <?php echo hb_get_booking_status_label( $booking_id );?>
+                    <span class="hb-booking-status <?php echo get_post_status( $booking_id );?>"><?php echo hb_get_booking_status_label( $booking_id );?></span>
                 </td>
             </tr>
         </tbody>
