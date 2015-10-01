@@ -343,6 +343,10 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
             'custom'        => json_encode( $custom ),
             'no_shipping'   => '1'
         );
+        $query['item_desc'] = sprintf( __( 'Advance Payment %s', 'tp-hotel-booking' ), $advance_payment . '%');
+        $query['item_description'] = sprintf( __( 'Advance payment %s', 'tp-hotel-booking' ), $advance_payment . '%');
+        $query['desc'] = sprintf( __( 'advance payment %s', 'tp-hotel-booking' ), $advance_payment . '%');
+        $query['description'] = sprintf( __( 'advance Payment %s', 'tp-hotel-booking' ), $advance_payment . '%');
         if( ! hb_get_request( 'pay_all' ) ){
             $query['item_desc'] = sprintf( __( 'Advance Payment %s', 'tp-hotel-booking' ), $advance_payment . '%');
             $query['item_description'] = sprintf( __( 'Advance payment %s', 'tp-hotel-booking' ), $advance_payment . '%');
