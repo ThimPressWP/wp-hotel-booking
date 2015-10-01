@@ -542,8 +542,8 @@ function hb_manage_booking_column( $column_name, $post_id ) {
             break;
         case 'details':
             $status = get_post_status( $post_id );
-            echo '<a href="'. admin_url('admin.php?page=hb_booking_details&id='. $post_id) . '">' . __( 'View', 'tp-hotel-booking' ) . '</a>';
-            echo '<span class="hb-booking-status ' . $status . '">' . $status . '</span>';
+            echo '<a href="'. admin_url('admin.php?page=hb_booking_details&id='. $post_id) . '">' . __( 'View', 'tp-hotel-booking' ) . '</a><br />';
+            echo '<span class="hb-booking-status ' . $status . '">' . hb_get_booking_status_label( $post_id ) . '</span>';
     }
 }
 add_action('manage_hb_booking_posts_custom_column', 'hb_manage_booking_column', 10, 2);

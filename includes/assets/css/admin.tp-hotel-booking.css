@@ -301,15 +301,19 @@ th.column-room_type{
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
-    padding: 2px 5px;
+    padding: 0px 5px;
 }
 .hb-booking-status.hb-completed{
     background-color: #2eb0d1;
 }
 .hb-booking-status.hb-pending{
-    background-color: #F5F5F5;
+    background-color: #cccccc;
 }
 .hb-booking-status.hb-processing{
     background-color: #ffb316;
+}
+.column-details .hb-booking-status{
+    font-size: 10px;
+
 }
 /*end gallerry settings meta box*/

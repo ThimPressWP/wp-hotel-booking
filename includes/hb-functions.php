@@ -1489,7 +1489,11 @@ function hb_get_booking_id_by_key( $booking_key ){
 
 function hb_get_booking_status_label( $booking_id ){
     $statuses = hb_get_booking_statuses();
-    $status = get_post_status( $booking_id );
+    if( is_numeric( $booking_id ) ) {
+        $status = get_post_status($booking_id);
+    }else{
+        $status = $booking_id;
+    }
     return ! empty( $statuses[ $status ] ) ? $statuses[ $status ] : __( 'Pending', 'tp-hotel-booking' );
 }
 
