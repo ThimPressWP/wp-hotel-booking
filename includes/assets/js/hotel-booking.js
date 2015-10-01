@@ -396,9 +396,25 @@
         var hb_single_details_tab = hb_single_details.find('.hb_single_room_tabs')
         var hb_single_details_content = hb_single_details.find('.hb_single_room_tabs_content');
         var hb_single_tab_details = $('.hb_single_room_tab_details');
+        var hb_current_uri = window.location.href;
 
-        $('.hb_single_room_tabs_content .hb_single_room_tab_details:not(:first)').hide();
-        hb_single_details_tab.find('a:first').addClass('active');
+        var commentID = hb_current_uri.match( /\#comment-[0-9]+/gi );
+
+        if( commentID && typeof commentID[0] !== 'undefined' )
+        {
+            hb_single_details_tab.find('a').removeClass('active');
+            hb_single_details_tab.find('a[href="#hb_room_reviews"]').addClass('active');
+        }
+        else
+        {
+            hb_single_details_tab.find('a:first').addClass('active');
+            $('.hb_single_room_tabs_content .hb_single_room_tab_details:not(:first)').hide();
+        }
+
+        hb_single_tab_details.hide();
+        var tabActive = hb_single_details_tab.find('a.active').attr('href');
+        hb_single_details_content.find(tabActive).show();
+
         hb_single_details_tab.find('a').on('click', function(event){
             event.preventDefault();
             hb_single_details_tab.find('a').removeClass('active');
@@ -408,7 +424,6 @@
             hb_single_details_content.find(tab_id).show();
             return false;
         });
-
 
         $('.hb-rating-input').rating();
 
@@ -420,7 +435,9 @@
                 return false;
             }*/
         });
-    })
+    });
+
+    // rating single room
     $.fn.rating = function(){
         return $.each(this, function(){
             var $el = $(this).html( '<div class="rating-input"><span><input name="rating" id="rating" type="hidden" value="" /></span></div>');

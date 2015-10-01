@@ -24,9 +24,12 @@
 
         <ul class="hb_single_room_tabs">
 
-            <?php foreach ( $tabs as $key => $tab ): ?>
-
-                <li><a href="#<?php echo esc_attr( $tab['id'] ) ?>"><?php printf( '%s', $tab['title'] ) ?></a></li>
+            <?php foreach ( $tabs as $key => $tab ): ?> ?>
+                <li>
+                    <?php do_action('hotel_booking_single_room_before_tabs_' . $tab['id']); ?>
+                    <?php printf( '%s', $tab['title'] ) ?>
+                    <?php do_action('hotel_booking_single_room_after_tabs_' . $tab['id']); ?>
+                </li>
 
             <?php endforeach; ?>
         </ul>
