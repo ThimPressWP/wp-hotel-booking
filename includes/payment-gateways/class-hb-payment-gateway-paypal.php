@@ -174,8 +174,9 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         $paypal_api_url = ! empty( $_REQUEST['test_ipn'] ) ? $this->paypal_payment_sandbox_url : $this->paypal_payment_live_url;
         $response = wp_remote_post( $paypal_api_url, array( 'body' => $payload ) );
         $body = wp_remote_retrieve_body( $response );
-        ob_start();
         if ( 'VERIFIED' === $body ) {
+            ob_start();
+
             if ( ! empty( $request['txn_type'] ) ) {
 
                 /*if ( ! empty( $request['transaction_subject'] ) && $transient_data = hb_get_transient_transaction( 'hbps', $request['transaction_subject'] ) ) {
@@ -190,11 +191,11 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
                         )
                     );
                 }*/
-                print_r($_REQUEST);
+                //print_r($_REQUEST);
                 switch ( $request['txn_type'] ) {
                     case 'web_accept':
                         if ( ! empty( $request['custom'] ) && ( $booking = $this->get_booking( $request['custom'] ) ) ) {
-
+                            echo "KKK";
                             $request['payment_status'] = strtolower( $request['payment_status'] );
 
                             if ( isset( $request['test_ipn'] ) && 1 == $request['test_ipn'] && 'pending' == $request['payment_status'] ) {
@@ -210,8 +211,9 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
 
                 }
             }
+            set_transient('xxxxx', ob_get_clean(), HOUR_IN_SECONDS);
         }
-        set_transient('xxxxx', ob_get_clean(), HOUR_IN_SECONDS);
+
     }
 
     function get_booking( $raw_custom ){
