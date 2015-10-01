@@ -215,6 +215,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
     }
 
     function get_booking( $raw_custom ){
+        print_r($raw_custom);
         if ( ( $custom = json_decode( $raw_custom ) ) && is_object( $custom ) ) {
             $booking_id  = $custom->booking_id;
             $booking_key = $custom->booking_key;
