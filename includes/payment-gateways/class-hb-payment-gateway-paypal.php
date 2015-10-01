@@ -304,7 +304,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
     /**
      * Get Paypal checkout url
      *
-     * @param $customer_id
+     * @param $booking_id
      * @return string
      */
     protected function _get_paypal_basic_checkout_url(  $booking_id ){
@@ -320,12 +320,15 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         );
 
         $booking    = HB_Booking::instance( $booking_id );
-        //$temp_id    = hb_uniqid();
-
-        //hb_set_transient_transaction( 'hbps', $temp_id, $customer->ID, $booking );
+        $advance_payment = hb_get_advance_payment();
+        $pay_all = hb_get_request( 'pay_all' );
 
         $nonce = wp_create_nonce( 'hb-paypal-nonce' );
         $paypal_email = $paypal['sandbox'] ? $paypal['sandbox_email'] : $paypal['email'];
+        $custom = array( 'booking_id' => $booking->id, 'booking_key' => $booking->booking_key );
+        if( $advance_payment && ! $pay_all ){
+            $custom['advance_payment'] = $advance_payment;
+        }
         $query = array(
             'business'      => $paypal_email,
             'item_name'     => hb_get_cart_description(),
@@ -337,9 +340,13 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
             'email'         => $customer->data['email'],
             'rm'            => '2',
             'cancel_return' => hb_get_return_url(),
-            'custom'        => json_encode( array( 'booking_id' => $booking->id, 'booking_key' => $booking->booking_key ) ),
+            'custom'        => json_encode( $custom ),
             'no_shipping'   => '1'
         );
+        if( ! hb_get_request( 'pay_all' ) ){
+            $query['item_desc'] = sprintf( __( 'Advance Payment %s', 'tp-hotel-booking' ), $advance_payment . '%');
+            $query['item_description'] = sprintf( __( 'Advance payment %s', 'tp-hotel-booking' ), $advance_payment . '%');
+        }
         $query = array_merge( $paypal_args, $query );
         $query = apply_filters( 'hb_paypal_standard_query', $query );
 
