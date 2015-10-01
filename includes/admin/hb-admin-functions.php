@@ -362,7 +362,7 @@ function hb_bookings_meta_boxes() {
             'label' => 'Status',
             'std'   => 'Actives',
             'type'  => 'select',
-            'options' => array(
+            'options' => hb_get_booking_statuses()/**array(
                 array(
                     'value' => 'Pending',
                     'text'  => __( 'Pending', 'tp-hotel-booking' )
@@ -371,7 +371,7 @@ function hb_bookings_meta_boxes() {
                     'value' => 'Complete',
                     'text'  => __( 'Complete', 'tp-hotel-booking' )
                 )
-            )
+            )*/
         )
     );
 }
