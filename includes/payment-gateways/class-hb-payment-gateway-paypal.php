@@ -200,7 +200,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
                             if ( isset( $request['test_ipn'] ) && 1 == $request['test_ipn'] && 'pending' == $request['payment_status'] ) {
                                 $request['payment_status'] = 'completed';
                             }
-
+                            print_r($request);
                             if ( method_exists( $this, 'payment_status_' . $request['payment_status'] ) ) {
                                 call_user_func( array( $this, 'payment_status_' . $request['payment_status'] ), $booking, $request );
                                 echo "CALL:(".'payment_status_' . $request['payment_status'].");";
