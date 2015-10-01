@@ -360,8 +360,9 @@ function hb_bookings_meta_boxes() {
         array(
             'name'  => 'booking_status',
             'label' => 'Status',
-            'std'   => 'Actives',
+            'std'   => 'hb-pending',
             'type'  => 'select',
+            'filter' => 'hb_meta_box_field_booking_status',
             'options' => hb_get_booking_statuses()/**array(
                 array(
                     'value' => 'Pending',
@@ -920,6 +921,11 @@ function hb_meta_box_field_coupon_date( $value ){
         return date('m/d/Y', $value);
     }
     return $value;
+}
+
+function hb_meta_box_field_booking_status( $value ){
+    global $post;
+    return get_post_status( $post->ID );
 }
 
 function hb_meta_box_field_coupon_used( $value ){
