@@ -12,7 +12,7 @@ class HB_Comments{
      */
     function __construct(){
         add_action( 'comment_post', array( __CLASS__, 'add_comment_rating' ), 1 );
-        add_action( 'hotel_booking_single_room_infomation', 'comments_template' );
+        add_action( 'hotel_booking_single_room_before_tabs_content_hb_room_reviews', 'comments_template' );
         add_filter( 'comments_template', array( __CLASS__, 'load_comments_template' ) );
     }
 

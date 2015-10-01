@@ -97,7 +97,7 @@ $cart = HB_Cart::instance();
             </tr>
             <?php }?>
             <tr>
-                <td colspan="3"><?php _e( 'Grand Total', 'tp-hotel-booking' );?></td>
+                <td colspan="3"><?php _e( 'Grand Total', 'tp-hotel-booking' ); ?></td>
                 <td class="hb-align-right"><?php echo hb_format_price( $cart->total );?></td>
             </tr>
             <?php if( $advance_payment = $cart->advance_payment ){?>
