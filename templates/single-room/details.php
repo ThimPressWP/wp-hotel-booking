@@ -11,14 +11,6 @@
             'title'     => __( 'Additional Information', 'tp-hotel-booking' ),
             'content'   => $room->__get('addition_information')
         );
-    if( comments_open() )
-    {
-        $tabsInfo[] = array(
-                'id'        => 'hb_room_reviews',
-                'title'     => __( 'Reviews', 'tp-hotel-booking' ),
-                'content'   => ''
-            );
-    }
     $tabs = apply_filters( 'hotel_booking_single_room_infomation_tabs', $tabsInfo );
     // prepend after li tabs single
     do_action( 'hotel_booking_before_single_room_infomation' );

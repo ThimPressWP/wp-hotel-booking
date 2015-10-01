@@ -16,6 +16,7 @@ class HB_Comments{
         add_filter( 'comments_template', array( __CLASS__, 'load_comments_template' ) );
         // details title tab
         add_action( 'hotel_booking_single_room_after_tabs_hb_room_reviews', array( __CLASS__, 'comments_count' ) );
+        add_filter('hotel_booking_single_room_infomation_tabs', array( __CLASS__, 'addTabReviews' ));
     }
 
     /**
@@ -71,6 +72,20 @@ class HB_Comments{
     {
         global $hb_room;
         echo '<span class="comment-count">(' . $hb_room->get_review_count() . ')</span>';
+    }
+
+    static function addTabReviews( $tabsInfo )
+    {
+        if( ! comments_open() )
+            return $tabsInfo;
+
+        $tabsInfo[] = array(
+            'id'        => 'hb_room_reviews',
+            'title'     => __( 'Reviews', 'tp-hotel-booking' ),
+            'content'   => ''
+        );
+
+        return $tabsInfo;
     }
 }
 
