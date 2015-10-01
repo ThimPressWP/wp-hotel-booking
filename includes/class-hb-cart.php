@@ -504,6 +504,7 @@ function hb_create_booking( $args = array() ){
     $booking->post->post_content    = $transaction_object->addition_information;
     $booking->post->post_status     = 'hb-' . apply_filters( 'hb_default_order_status', 'pending' );
 
+
     /*if ( $args['booking_id'] > 0 ) {
         $updating         = true;
         $booking_data['ID'] = $args['booking_id'];

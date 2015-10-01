@@ -891,6 +891,9 @@ function hb_search_rooms( $args = array() ){
           AND pm2.meta_value = %d
         HAVING available_rooms > 0
     ", '_hb_max_child_per_room', '_hb_max_adults_per_room', 'hb_room', 'publish', hb_get_request('max_child'), $adults );
+
+    echo $query;
+
     if( $search = $wpdb->get_results( $query ) ){
         foreach( $search as $k => $p ){
             $room = HB_Room::instance( $p );
