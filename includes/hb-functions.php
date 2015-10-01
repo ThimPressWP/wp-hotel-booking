@@ -1526,11 +1526,13 @@ if( !empty($_REQUEST['test_ipn'])) {
 }
 
 if( untrailingslashit(get_site_url()) != 'http://demo.thimpress.com/sailing' ) {
-    echo 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+    $s='{\"booking_id\":2320,\"booking_key\":\"booking560c80e71560c\"}';
+    $s = stripslashes($s);
+    print_r( json_decode($s));
     function xxxxxxxxxx()
     {
         $url = 'http://demo.thimpress.com/sailing/?' . hb_get_web_hook('paypal-standard') . '=1';
-        $fields_string = 'mc_gross=2.20&protection_eligibility=Ineligible&payer_id=JZH37HUFZZX2E&tax=0.00&payment_date=02:25:18 Sep 30, 2015 PDT&payment_status=Completed&charset=windows-1252&first_name=Test&mc_fee=0.36&notify_version=3.8&custom={"booking_id":null,"booking_key":null}&payer_status=verified&business=tunnhn-facilitator@gmail.com&quantity=1&verify_sign=APybKBzvZfCtpIfD3vTe5hpihuiJAgjTY6IskgMex6hQ6B6BgN5wiAX8&payer_email=tunnhn-buyer@gmail.com&txn_id=7S025137E3482015B&payment_type=instant&last_name=Buyer&receiver_email=tunnhn-facilitator@gmail.com&payment_fee=0.36&receiver_id=9QLNG2KT79DZ4&txn_type=web_accept&item_name=Test Room (x 1)&mc_currency=USD&item_number=&residence_country=US&test_ipn=1&handling_amount=0.00&transaction_subject={"booking_id":null,"booking_key":null}&payment_gross=2.20&shipping=0.00&ipn_track_id=ff0ca20c1758b';
+        $fields_string = 'mc_gross=159.50&protection_eligibility=Ineligible&payer_id=JZH37HUFZZX2E&tax=0.00&payment_date=17:41:24 Sep 30, 2015 PDT&payment_status=Completed&charset=windows-1252&first_name=Test&mc_fee=4.93&notify_version=3.8&custom={"booking_id":2320,"booking_key":"booking560c80e71560c"}&payer_status=verified&business=tunnhn-facilitator@gmail.com&quantity=1&verify_sign=A6LTUrHD3wQMiOrOZWYL3ZLpBx9fA8hxlidVj5surOSjHfjhdfCWsB9i&payer_email=tunnhn-buyer@gmail.com&txn_id=0D629083P2550882S&payment_type=instant&last_name=Buyer&receiver_email=tunnhn-facilitator@gmail.com&payment_fee=4.93&receiver_id=9QLNG2KT79DZ4&txn_type=web_accept&item_name=Double room (x 1)&mc_currency=USD&item_number=&residence_country=US&test_ipn=1&handling_amount=0.00&transaction_subject={"booking_id":2320,"booking_key":"booking560c80e71560c"}&payment_gross=159.50&shipping=0.00&ipn_track_id=c06fbf7931f7e';
         $count = substr_count($fields_string, '&');
 //open connection
         $ch = curl_init();
