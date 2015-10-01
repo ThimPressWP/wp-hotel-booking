@@ -105,8 +105,11 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      * @return bool
      */
     function process_booking_paypal_standard(){
-        return;
+        //return;
         if( ! empty( $_REQUEST['hb-transaction-method'] ) && ( 'paypal-standard' == $_REQUEST['hb-transaction-method'] ) ) {
+
+            wp_redirect( get_site_url() );
+            exit();
             // if we have a paypal-nonce in $_REQUEST that meaning user has clicked go back to our site after finished the transaction
             // so, create a new order
             if( ! empty( $_REQUEST['paypal-nonce'] ) && wp_verify_nonce( $_REQUEST['paypal-nonce'], 'hb-paypal-nonce' )  ) {
