@@ -120,7 +120,7 @@ $count_plants = count( $pricing_plans );
                     <table>
                         <thead>
                         <tr>
-                            <th><?php _e( 'Capacity', 'tp-hotel-booking' );?></th>
+                            <!-- <th><?php //_e( 'Capacity', 'tp-hotel-booking' );?></th> -->
                             <?php for( $i = 0; $i < 7; $i++ ){?>
                                 <th><?php echo $week_names[ $i ];?></th>
                             <?php } ?>
@@ -130,7 +130,7 @@ $count_plants = count( $pricing_plans );
                         <?php if( $capacitiyID ):?>
                         <?php $capacity = get_term( $capacitiyID, 'hb_room_capacity' ) ?>
                             <tr>
-                                <th><?php echo $capacity->name;?></th>
+                                <!-- <th><?php //echo $capacity->name;?></th> -->
                                 <?php for( $i = 0; $i < 7; $i++ ){?>
                                     <td>
                                         <?php $price = ! empty( $plan_prices[ $capacitiyID ] ) ? ( array_key_exists( $i, $plan_prices[ $capacitiyID ] ) ? $plan_prices[ $capacitiyID ][ $i ] : '' ) : '';?>
@@ -174,7 +174,6 @@ $count_plants = count( $pricing_plans );
             <table>
                 <thead>
                 <tr>
-                    <th><?php _e( 'Capacity', 'tp-hotel-booking' );?></th>
                     <?php for( $i = 0; $i < 7; $i++ ){?>
                         <th><?php echo $week_names[ $i ];?></th>
                     <?php } ?>
@@ -184,7 +183,6 @@ $count_plants = count( $pricing_plans );
                 <?php if( $capacitiyID ):?>
                 <?php $capacity = get_term( $capacitiyID, 'hb_room_capacity' ) ?>
                     <tr>
-                        <th><?php echo $capacity->name;?></th>
                         <?php for( $i = 0; $i < 7; $i++ ){?>
                             <td>
                                 <input class="hb-pricing-price" type="text" name="price[__INDEX__][<?php echo $capacitiyID;?>][<?php echo $i;?>]" value="" size="10" readonly="readonly" />
