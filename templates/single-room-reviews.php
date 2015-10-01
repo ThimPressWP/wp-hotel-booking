@@ -58,7 +58,6 @@ if ( ! comments_open() ) {
             <div id="review_form">
                 <?php
                     $commenter = wp_get_current_commenter();
-
                     $comment_form = array(
                         'title_reply'          => have_comments() ? __( 'Add a review', 'tp-hotel-booking' ) : __( 'Be the first to review', 'tp-hotel-booking' ) . ' &ldquo;' . get_the_title() . '&rdquo;',
                         'title_reply_to'       => __( 'Leave a Reply to %s', 'tp-hotel-booking' ),

@@ -110,21 +110,3 @@ $settings = hb_settings();
         </td>
     </tr>
 </table>
-
-<h3 class="description"><?php _e( 'Room Ratings', 'tp-hotel-booking' );?></h3>
-<table class="form-table">
-    <tr>
-        <th><?php _e( 'Enable ratings on reviews', 'tp-hotel-booking' );?></th>
-        <td>
-            <input type="hidden" name="<?php echo $settings->get_field_name('enable_review_rating');?>" value="0" />
-            <input type="checkbox" name="<?php echo $settings->get_field_name('enable_review_rating');?>" <?php checked( $settings->get('enable_review_rating') ? 1 : 0, 1 );?> value="1" onchange="jQuery('.enable_ratings_on_reviews').toggleClass('hide-if-js', ! this.checked );" />
-        </td>
-    </tr>
-    <tr class="enable_ratings_on_reviews<?php echo $settings->get('enable_ratings_on_reviews') ? '' : ' hide-if-js';?>">
-        <th><?php _e( 'Ratings are required to leave a review', 'tp-hotel-booking' );?></th>
-        <td>
-            <input type="hidden" name="<?php echo $settings->get_field_name('review_rating_required');?>" value="0" />
-            <input type="checkbox" name="<?php echo $settings->get_field_name('review_rating_required');?>" <?php checked( $settings->get('review_rating_required') ? 1 : 0, 1 );?> value="1" />
-        </td>
-    </tr>
-</table>
