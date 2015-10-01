@@ -295,4 +295,21 @@ th.column-room_type{
 .attachment:hover .dashicons-trash{
     display: block;
 }
+.hb-booking-status{
+    display: inline-block;
+    background-color: #FFF;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    padding: 2px 5px;
+}
+.hb-booking-status.hb-completed{
+    background-color: #2eb0d1;
+}
+.hb-booking-status.hb-pending{
+    background-color: #F5F5F5;
+}
+.hb-booking-status.hb-processing{
+    background-color: #ffb316;
+}
 /*end gallerry settings meta box*/
