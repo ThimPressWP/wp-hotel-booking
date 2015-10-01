@@ -349,7 +349,8 @@ class HB_Post_Types{
      */
     function custom_room_columns( $a ){
         $a['room_type'] = __( 'Room Type', 'tp-hotel-booking' );
-        $a['room_capacity'] = __( 'Room Capacity', 'tp-hotel-booking' );
+        $a['room_capacity'] = __( 'Max Child', 'tp-hotel-booking' );
+        $a['room_price_plan'] = __( 'Price', 'tp-hotel-booking' );
 
         // move comments to the last of list
         if( isset( $a['comments'] ) ){
@@ -385,6 +386,10 @@ class HB_Post_Types{
                 break;
             case 'room_capacity':
                 echo get_post_meta( $post->ID, '_hb_max_child_per_room', true );
+                break;
+            case 'room_price_plan':
+                echo '<a href="'.admin_url( 'admin.php?page=tp_hotel_booking_pricing&hb-room='.$post->ID ).'">'.__('View Price', 'tp-hotel-booking').'</a>';
+                break;
         }
     }
 
