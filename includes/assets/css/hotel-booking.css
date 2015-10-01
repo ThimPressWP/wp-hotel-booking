@@ -13,7 +13,7 @@
 .hotel-booking-search textarea,
 .hotel-booking-search button{
     position: relative;
-    width: 100%;
+    width: auto;
     height: 40px;
     min-width: 200px;
     border: 1px solid #cccccc;
@@ -58,9 +58,15 @@
 .hb-form-field{
     margin: 0 0 20px 0;
 }
-.hb-form-field,
-#hotel-booking-search form button{
+.entry-content .hb-form-field,
+.entry-content .hotel-booking-search form button{
 	max-width: 300px;
+}
+.entry-content .hotel-booking-search input,
+.entry-content .hotel-booking-search select,
+.entry-content .hotel-booking-search textarea,
+.entry-content .hotel-booking-search button{
+	width: 100%;
 }
 .hb-form-field-label{
     display: block;
