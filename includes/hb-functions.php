@@ -1522,7 +1522,7 @@ if ( ! function_exists( 'is_room' ) ) {
     }
 }
 if( !empty($_REQUEST['test_ipn'])) {
-    echo "[[[[[,",$_REQUEST['test_ipn'];
+    echo "[[[[[",$_REQUEST['test_ipn'];
     print_r(get_transient('xxxxx'));
     echo "]]]]]";
 }
