@@ -309,22 +309,22 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      * @param $customer_id
      * @return string
      */
-    protected function _get_paypal_basic_checkout_url(  $customer_id ){
+    protected function _get_paypal_basic_checkout_url(  $booking_id ){
 
         $paypal = HB_Settings::instance()->get( 'paypal' );
 
         //$user = hb_get_current_user();
-        $customer = hb_get_customer( $customer_id );
+        $customer = hb_get_customer( get_transient('hb_current_customer') );
         $paypal_args = array (
             'cmd'      => '_xclick',
             'amount'   => round( hb_get_cart_total( ! hb_get_request( 'pay_all' ) ), 2 ),
             'quantity' => '1',
         );
 
-        $booking    = hb_generate_transaction_object( $customer_id );
-        $temp_id    = hb_uniqid();
+        $booking    = HB_Booking::instance( $booking_id );
+        //$temp_id    = hb_uniqid();
 
-        hb_set_transient_transaction( 'hbps', $temp_id, $customer->ID, $booking );
+        //hb_set_transient_transaction( 'hbps', $temp_id, $customer->ID, $booking );
 
         $nonce = wp_create_nonce( 'hb-paypal-nonce' );
         $paypal_email = $paypal['sandbox'] ? $paypal['sandbox_email'] : $paypal['email'];
@@ -353,13 +353,13 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
     /**
      * Process checkout
      *
-     * @param null $customer_id
+     * @param null $booking_id
      * @return array
      */
-    function process_checkout( $customer_id = null ){
+    function process_checkout( $booking_id = null ){
         return array(
             'result'    => 'success',
-            'redirect'  => $this->_get_paypal_basic_checkout_url(  $customer_id  )
+            'redirect'  => $this->_get_paypal_basic_checkout_url(  $booking_id  )
         );
     }
 
