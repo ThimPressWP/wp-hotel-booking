@@ -34,6 +34,13 @@ class HB_Room{
     */
     protected $_settings;
 
+
+    /**
+    * reivew detail
+    * @return null or array
+    */
+    public $_review_details = null;
+
     /**
      * Constructor
      *
@@ -407,17 +414,21 @@ class HB_Room{
         global $wpdb;
         $transient_name = rand().'hb_review_count_' . $this->post->ID;
         if ( false === ( $count = get_transient( $transient_name ) ) ) {
-            $count = $wpdb->get_var( $wpdb->prepare("
-				SELECT COUNT(*) FROM $wpdb->comments
-				WHERE comment_parent = 0
-				AND comment_post_ID = %d
-				AND comment_approved = '1'
-			", $this->post->ID ) );
+            $count = count($this->get_review_details());
 
             //set_transient( $transient_name, $count, DAY_IN_SECONDS * 30 );
         }
 
         return apply_filters( 'hb_room_review_count', $count, $this );
+    }
+
+    function get_review_details()
+    {
+        if( ! $this->_review_details )
+        {
+            return get_comments( array( 'post_id' => $this->post->ID ) );
+        }
+        return $this->_review_details;
     }
 
     function getImage( $type = 'catalog', $attachID = false, $echo = true )
@@ -427,6 +438,18 @@ class HB_Room{
             return $this->get_catalog( $attachID = false, $echo = true );
         }
         return $this->get_thumbnail( $attachID = false, $echo = true );
+    }
+
+    function get_average()
+    {
+        $comments = $this->get_review_details();
+        $average = 0;
+        foreach ($comments as $key => $comment) {
+            $rating = get_comment_meta( $comment->comment_ID, 'rating', true );
+            if( $rating )
+                $average = $average + $rating;
+        }
+        return $average % count($comments);
     }
 
     /**
