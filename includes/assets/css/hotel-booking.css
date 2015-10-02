@@ -357,8 +357,7 @@
 }
 .hb_room_carousel_container .item {
   width: 300px;
-  min-height: 315px;
-  min-width: 300px;
+  min-height: 290px;
   position: relative;
 }
 .hb_room_carousel_container .item .media {
