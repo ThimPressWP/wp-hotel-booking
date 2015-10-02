@@ -321,8 +321,8 @@
 .hb_room_carousel_container {
   margin-bottom: 72px;
 }
-.hb_room_carousel_container .caroufredsel_wrapper {
-  padding: 0 15px;
+.hb_room_carousel_container .hb_room_carousel {
+  margin: 0 -15px;
 }
 .hb_room_carousel_container .navigation {
   width: 215px;
@@ -362,9 +362,9 @@
   width: 300px;
   min-height: 290px;
   position: relative;
+  padding: 0 15px;
 }
 .hb_room_carousel_container .item .media {
-  margin: 0 15px;
   position: relative;
 }
 .hb_room_carousel_container .item .media:before {
@@ -715,6 +715,9 @@
   outline: none;
 }
 /** Other room slider **/
+.hb_related_other_room .tp-hotel-booking {
+  margin: 0 -15px;
+}
 .hb_related_other_room > .title {
   position: relative;
   line-height: 40px;
@@ -731,16 +734,9 @@
   background: #ffb606;
 }
 .hb_related_other_room li.hb_room {
-  padding: 0;
-  margin-right: 30px;
+  padding: 0 15px;
   min-width: 270px;
   max-width: 270px;
-}
-.hb_related_other_room li.hb_room .price {
-  right: 10px;
-}
-.hb_related_other_room .caroufredsel_wrapper {
-  margin: 0 !important;
 }
 .hb_related_other_room .navigation {
   width: auto;
