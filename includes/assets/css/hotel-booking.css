@@ -316,7 +316,7 @@
 
 
 /*** NEW CSS STYLE FOR PLUGIN HOTEL BOOKING ROOM ***/
-/** Carousel slider **/
+/** Hotel booking carousel slider **/
 .hb_room_carousel_container {
   margin-bottom: 72px;
 }
@@ -411,6 +411,7 @@
 .hb_room_carousel_container .item .price span.title-price {
   display: none;
 }
+/** Archive rooms **/
 .rooms {
   margin: 0 -15px;
   list-style: none;
@@ -481,6 +482,7 @@
 .rooms .hb_room .price span.title-price {
   display: none;
 }
+/** Rooms pagination **/
 .rooms-pagination .page-numbers {
   list-style: none;
   margin: 15px 0 5px;
@@ -537,11 +539,11 @@
   background: transparent;
   color: #ffb606;
 }
-.single.tp-hotel-booking .site-main.alignleft {
-  padding-right: 15px;
-}
-.single.tp-hotel-booking .site-main.alignright {
-  padding-left: 15px;
+/** Single rooms **/
+.hb_single_room {
+  /** Top slider single room **/
+  /** Tab description single room **/
+  /** Review box **/
 }
 .hb_single_room .title h4 {
   font-size: 40px;
@@ -710,6 +712,7 @@
 .hb_single_room #reviews #review_form_wrapper form .form-submit input[type="submit"]:focus {
   outline: none;
 }
+/** Other room slider **/
 .hb_related_other_room > .title {
   position: relative;
   line-height: 40px;
@@ -762,6 +765,7 @@
   float: right;
   background: url(../images/next.png) no-repeat center right;
 }
+/** Hotel booking result **/
 #hotel-booking-results form > h3 {
   font-size: 40px;
   color: #2a2a2a;
@@ -798,6 +802,7 @@
 #hotel-booking-results form button[type="submit"]:focus {
   outline: none;
 }
+/** hotel-booking-payment **/
 #hotel-booking-payment h3 {
   margin: 50px 0 15px;
 }
