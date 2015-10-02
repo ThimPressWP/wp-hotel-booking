@@ -64,7 +64,29 @@ class HB_Comments{
             if ( ! $_POST['rating'] || $_POST['rating'] > 5 || $_POST['rating'] < 0 ) {
                 return;
             }
+            // save comment rating
             add_comment_meta( $comment_id, 'rating', (int) esc_attr( $_POST['rating'] ), true );
+
+            // save post meta arveger_rating
+            $comment = get_comment( $comment_id );
+
+            $postID = $comment->comment_post_ID;
+
+            $room = HB_Room::instance( $postID );
+            $averger_rating = $room->average_rating();
+
+            $old_rating = get_post_meta( $postID, 'arveger_rating', true );
+            $old_modify = get_post_meta( $postID, 'arveger_rating_last_modify', true );
+            if( $old_rating )
+            {
+                update_post_meta( $postID, 'arveger_rating', $averger_rating );
+                update_post_meta( $postID, 'arveger_rating_last_modify', time() );
+            }
+            else
+            {
+                add_post_meta( $postID, 'arveger_rating', $averger_rating );
+                add_post_meta( $postID, 'arveger_rating_last_modify', time() );
+            }
         }
     }
 

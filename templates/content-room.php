@@ -57,6 +57,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 			 * hotel_booking_loop_room_price hook
 			 */
 			do_action( 'hotel_booking_loop_room_price' );
+
+			/**
+			 * hotel_booking_loop_room_price hook
+			 */
+			do_action( 'hotel_booking_loop_room_rating' );
 		?>
 
 	</div><!-- .summary -->

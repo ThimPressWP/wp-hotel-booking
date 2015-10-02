@@ -106,6 +106,15 @@ class HB_Widget_Room_Carousel extends WP_Widget{
             <label for="<?php echo $this->get_field_id( 'pagination' ); ?>0"><?php _e('No', 'tp-hotel-booking') ?></label>
         </p>
         <p>
+            <label><?php _e( 'Rating:' ); ?></label>
+            <!--yes-->
+            <input id="<?php echo $this->get_field_id( 'rating' ); ?>1" name="<?php echo $this->get_field_name( 'rating' ); ?>" type="radio" value="1"<?php echo (!isset($instance['rating']) || $instance['rating']) ? 'checked' : ''; ?>>
+            <label for="<?php echo $this->get_field_id( 'rating' ); ?>1"><?php _e('Yes', 'tp-hotel-booking') ?></label>
+            <!--no-->
+            <input id="<?php echo $this->get_field_id( 'rating' ); ?>0" name="<?php echo $this->get_field_name( 'rating' ); ?>" type="radio" value="0"<?php echo (isset($instance['rating']) && !$instance['rating']) ? 'checked' : ''; ?>>
+            <label for="<?php echo $this->get_field_id( 'rating' ); ?>0"><?php _e('No', 'tp-hotel-booking') ?></label>
+        </p>
+        <p>
             <label for="<?php echo $this->get_field_id( 'text_link' ); ?>"><?php _e('Text Link', 'tp-hotel-booking') ?></label>
             <input id="<?php echo $this->get_field_id( 'text_link' ); ?>" name="<?php echo $this->get_field_name( 'text_link' ); ?>" type="text" value="<?php echo esc_attr($text_link); ?>">
         </p>
@@ -145,6 +154,9 @@ class HB_Widget_Room_Carousel extends WP_Widget{
 
         // pagination
         $instance['pagination'] = ( isset( $new_instance['pagination'] ) ) ? strip_tags( $new_instance['pagination'] ) : 1;
+
+        // rating
+        $instance['rating'] = ( isset( $new_instance['rating'] ) ) ? strip_tags( $new_instance['rating'] ) : 1;
         return $instance;
     }
 

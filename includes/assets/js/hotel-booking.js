@@ -440,16 +440,18 @@
     // rating single room
     $.fn.rating = function(){
         return $.each(this, function(){
-            var $el = $(this).html( '<div class="rating-input"><span><input name="rating" id="rating" type="hidden" value="" /></span></div>');
+            var $el = $(this);
+            var starWidth = 15;
+            $el.html( '<div class="rating-input"><span><input name="rating" id="rating" type="hidden" value="" /></span></div>');
             $('.rating-input', $el).mousemove(function(e){
                 var parentOffset = $(this).parent().offset(),
                     relX = e.pageX - parentOffset.left,
-                    w = relX - ( relX % 19 ) + 19,
-                    rating = w / 19;
+                    w = relX - ( relX % starWidth ) + starWidth,
+                    rating = w / starWidth;
                 $(this).find('span').width( w ).attr('rating', rating);
             }).mouseout(function(){
                 var rating = $('input', this).val();
-                $(this).find('span').width( rating * 19 );
+                $(this).find('span').width( rating * starWidth );
             }).mousedown(function(){
                 $('input', $(this)).attr('value', $('>span', this).attr('rating'))
                 $(this).addClass('mousedown');

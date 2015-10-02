@@ -11,6 +11,8 @@ class HB_Shortcodes{
     static function init(){
         add_shortcode( 'hotel_booking', array( __CLASS__, 'hotel_booking' ) );
         add_shortcode( 'hotel_booking_slider', array( __CLASS__, 'hotel_booking_slider' ) );
+        add_shortcode( 'hotel_booking_best_reviews', array( __CLASS__, 'hotel_booking_best_reviews' ) );
+        add_shortcode( 'hotel_booking_lastest_reviews', array( __CLASS__, 'hotel_booking_lastest_reviews' ) );
     }
 
     /**
@@ -52,7 +54,7 @@ class HB_Shortcodes{
             }
         }else{
             global $post;
-            if( $post && ( $post_id = $post->ID ) && is_page( $post_id ) ){
+            if( $post && ( $post_id = get_the_ID() ) && is_page( $post_id ) ){
                 $search_permalink = get_the_permalink( $post_id );
             }
         }
@@ -141,21 +143,27 @@ class HB_Shortcodes{
         $size = isset($atts['image_size']) ? $atts['image_size'] : 'thumbnail';
         $items = isset($atts['number']) ? (int)$atts['number'] : 4;
         // $posts = get_terms( 'hb_room_type', array('hide_empty' => 0)); gallery of room_type taxonmy change to gallery of room post_type
-        $posts = get_posts( array(
+
+        $args = array(
                 'post_type'         => 'hb_room',
                 'posts_per_page'    => $number_rooms,
                 'orderby'           => 'date',
                 'order'             => 'DESC',
                 // 'meta_key'          => '_hb_gallery'
-            ) );
+            );
+        $the_query = new WP_Query( $args );
+
         $currentcy = hb_get_currency_symbol();
         $sliderId = 'hotel_booking_slider_'.uniqid();
         $upload_dir = wp_upload_dir();
         $upload_base_dir = $upload_dir['basedir'];
         $upload_base_url = $upload_dir['baseurl'];
-        if( $posts ):
+        if( $the_query->have_posts() ):
     ?>
-            <div id="<?php echo $sliderId ?>" class="hb_room_carousel_container">
+            <div id="<?php echo $sliderId ?>" class="hb_room_carousel_container tp-hotel-booking">
+                <?php if( isset($atts['title']) && $atts['title'] ): ?>
+                    <h3><?php echo $atts['title'] ?></h3>
+                <?php endif; ?>
                 <!--navigation-->
                 <?php if( !isset($atts['navigation']) || $atts['navigation'] ): ?>
                     <div class="navigation">
@@ -172,31 +180,31 @@ class HB_Shortcodes{
                     <div class="text_link"><a href="<?php echo get_post_type_archive_link('hb_room'); ?>"><?php echo $atts['text_link']; ?></a></div>
                 <?php endif; ?>
                 <div class="hb_room_carousel">
-                    <?php foreach ($posts as $key => $post): ?>
-                        <?php $galleries = get_post_meta( $post->ID, '_hb_gallery', true ); ?>
+                    <?php  while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
+                        <?php $galleries = get_post_meta( get_the_ID(), '_hb_gallery', true ); ?>
                         <?php
                             $prices = array();
                             if( function_exists('hb_get_price_plan_room') )
                             {
-                                $prices = hb_get_price_plan_room($post->ID);
+                                $prices = hb_get_price_plan_room(get_the_ID());
                                 if( $prices )
                                     sort($prices);
                             }
                             $currency = get_option( 'tp_hotel_booking_currency' );
-                            $title = $post->post_title;
+                            $title = get_the_title();
                         ?>
                             <div class="item">
                                 <div class="media">
-                                    <a href="<?php echo get_the_permalink($post->ID); ?>" class="media-image" title="<?php echo esc_attr($title); ?>">
+                                    <a href="<?php echo get_the_permalink(get_the_ID()); ?>" class="media-image" title="<?php echo esc_attr($title); ?>">
                                     <?php
-                                        $room = HB_Room::instance($post->ID);
-                                        $room->getImage( 'catalog' );
+                                        global $hb_room;
+                                        $hb_room->getImage( 'catalog' );
                                     ?>
                                     </a>
                                 </div>
                                 <div class="title">
                                     <h4>
-                                        <a href="<?php echo get_the_permalink($post->ID); ?>" class="media-image"><?php echo $title; ?></a>
+                                        <a href="<?php echo get_the_permalink(get_the_ID()); ?>" class="media-image"><?php echo $title; ?></a>
                                     </h4>
                                 </div>
                                 <?php if( (!isset($atts['price']) || $atts['price'] !== '*') && $prices ): ?>
@@ -218,8 +226,13 @@ class HB_Shortcodes{
                                         <span class="unit"><?php  _e( 'Night', 'tp-hotel-booking' ); ?></span>
                                     </div>
                                 <?php endif; ?>
+                                <!--rating-->
+                                <?php if( !isset($atts['rating']) || $atts['rating'] ): ?>
+                                    <?php hb_get_template( 'loop/rating.php' ) ?>
+                                <?php endif; ?>
                             </div>
-                    <?php endforeach;?>
+                    <?php endwhile; ?>
+                    <?php wp_reset_postdata(); ?>
                 </div>
             </div>
             <script type="text/javascript">
@@ -266,6 +279,72 @@ class HB_Shortcodes{
             </script>
     <?php
         endif;
+    }
+
+    static function hotel_booking_best_reviews( $atts )
+    {
+        $number = isset( $atts['number'] ) ? $atts['number'] : 5;
+        $args = array(
+                'post_type'     => 'hb_room',
+                'meta_key'      => 'arveger_rating',
+                'limit'         => $number,
+                'order'         => 'DESC',
+                'orderby'       => array( 'meta_value_num' => 'DESC' )
+            );
+        $query = new WP_Query( $args );
+
+        if( $query->have_posts() ): ?>
+
+            <div id="hotel_booking_best_reviews-<?php echo uniqid(); ?>" class="hotel_booking_best_reviews tp-hotel-booking">
+                <?php if( isset($atts['title']) && $atts['title'] ): ?>
+                    <h3><?php echo $atts['title'] ?></h3>
+                <?php endif; ?>
+                <?php hotel_booking_room_loop_start(); ?>
+
+                    <?php while ( $query->have_posts() ) : $query->the_post(); ?>
+
+                        <?php hb_get_template_part( 'content', 'room' ); ?>
+
+                    <?php endwhile; // end of the loop. ?>
+
+                <?php hotel_booking_room_loop_end(); ?>
+
+            </div>
+
+        <?php endif;
+    }
+
+    static function hotel_booking_lastest_reviews( $atts )
+    {
+        $number = isset( $atts['number'] ) ? $atts['number'] : 5;
+        $args = array(
+                'post_type'     => 'hb_room',
+                'meta_key'      => 'arveger_rating_last_modify',
+                'limit'         => $number,
+                'order'         => 'DESC',
+                'orderby'       => array( 'meta_value_num' => 'DESC' )
+            );
+        $query = new WP_Query( $args );
+
+        if( $query->have_posts() ): ?>
+
+            <div id="hotel_booking_lastest_reviews-<?php echo uniqid(); ?>" class="hotel_booking_lastest_reviews tp-hotel-booking">
+                <?php if( isset($atts['title']) && $atts['title'] ): ?>
+                    <h3><?php echo $atts['title'] ?></h3>
+                <?php endif; ?>
+                <?php hotel_booking_room_loop_start(); ?>
+
+                    <?php while ( $query->have_posts() ) : $query->the_post(); ?>
+
+                        <?php hb_get_template_part( 'content', 'room' ); ?>
+
+                    <?php endwhile; // end of the loop. ?>
+
+                <?php hotel_booking_room_loop_end(); ?>
+
+            </div>
+
+        <?php endif;
     }
 }
 
