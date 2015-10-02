@@ -321,6 +321,9 @@
 .hb_room_carousel_container {
   margin-bottom: 72px;
 }
+.hb_room_carousel_container .caroufredsel_wrapper {
+  padding: 0 15px;
+}
 .hb_room_carousel_container .navigation {
   width: 215px;
   margin: 0 auto;
@@ -361,7 +364,7 @@
   position: relative;
 }
 .hb_room_carousel_container .item .media {
-  margin-right: 30px;
+  margin: 0 15px;
   position: relative;
 }
 .hb_room_carousel_container .item .media:before {
@@ -389,7 +392,7 @@
 }
 .hb_room_carousel_container .item .price {
   position: absolute;
-  right: 40px;
+  right: 25px;
   bottom: 50px;
   text-align: right;
   color: #fff;
