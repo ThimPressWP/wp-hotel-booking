@@ -34,7 +34,7 @@ class HB_Post_Types{
 
         add_action( 'delete_term_taxonomy', array( $this, 'delete_term_data' ) );
 
-        add_filter( 'manage_hb_room_posts_columns' , array( $this, 'custom_room_columns' ) );
+        add_filter( 'manage_hb_room_posts_columns', array( $this, 'custom_room_columns' ) );
         add_action( 'manage_hb_room_posts_custom_column', array( $this, 'custom_room_columns_filter' ) );
 
         //add_action( 'hb_room_type_add_form_fields', array( $this, 'room_type_more_fields' ), 10, 2 );
@@ -351,6 +351,7 @@ class HB_Post_Types{
         $a['room_type'] = __( 'Room Type', 'tp-hotel-booking' );
         $a['room_capacity'] = __( 'Max Child', 'tp-hotel-booking' );
         $a['room_price_plan'] = __( 'Price', 'tp-hotel-booking' );
+        $a['room_average_rating'] = __( 'Average Rating', 'tp-hotel-booking' );
 
         // move comments to the last of list
         if( isset( $a['comments'] ) ){
@@ -389,6 +390,19 @@ class HB_Post_Types{
                 break;
             case 'room_price_plan':
                 echo '<a href="'.admin_url( 'admin.php?page=tp_hotel_booking_pricing&hb-room='.$post->ID ).'">'.__('View Price', 'tp-hotel-booking').'</a>';
+                break;
+            case 'room_average_rating':
+                $room = HB_Room::instance( $post->ID );
+                $rating = $room->average_rating();
+                $html = array();
+                $html[] = '<div class="rating">';
+                if( $rating ):
+                    $html[] =   '<div itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating" class="star-rating" title="'.( sprintf( __( 'Rated %d out of 5', 'tp-hotel-booking' ), $rating ) ).'">';
+                    $html[] =       '<span style="width:'.( ( $rating / 5 ) * 100 ) .'%"></span>';
+                    $html[] =   '</div>';
+                endif;
+                $html[] =  '</div>';
+                echo implode( '', $html);
                 break;
         }
     }
