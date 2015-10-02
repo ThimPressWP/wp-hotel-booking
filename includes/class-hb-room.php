@@ -234,8 +234,8 @@ class HB_Room{
                 );
             }
             $details[ $date ]['count'] ++;
-            $details[ $date ]['price'] = $this->get_total( $c_date, 1, 1 );
-            $room_details_total +=  $details[ $date ]['count'] * $details[ $date ]['price'];
+            $details[ $date ]['price'] += $this->get_total( $c_date, 1, 1 );
+            $room_details_total +=  $details[ $date ]['price'];
         }
         $this->_room_details_total = $room_details_total;
         return $details;
@@ -283,9 +283,11 @@ class HB_Room{
                 }
             }
         }
+
         if( ! $selected_plan ){
             $selected_plan = $regular_plan;
         }
+
         if( $selected_plan ){
             $prices = get_post_meta( $selected_plan->ID, '_hb_pricing_plan_prices', true );
             if( $prices ){
@@ -579,4 +581,5 @@ class HB_Room{
         }
         return self::$_instance[ $id ];
     }
+
 }
