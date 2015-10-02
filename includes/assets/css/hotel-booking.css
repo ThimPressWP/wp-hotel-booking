@@ -246,15 +246,15 @@
 .tp-hotel-booking #reviews .commentlist .description{
     color: #999;
 }
-.tp-hotel-booking #reviews .commentlist .star-rating{
+.tp-hotel-booking .star-rating{
     float: right;
     position: relative;
-    width: 95px;
+    width: 75px;
     height: 18px;
     line-height: 1;
 }
-.tp-hotel-booking #reviews .commentlist .star-rating:before,
-.tp-hotel-booking #reviews .commentlist .star-rating span:before{
+.tp-hotel-booking .star-rating:before,
+.tp-hotel-booking .star-rating span:before{
     content: "\e601\e601\e601\e601\e601";
     color: #ffb606;
     float: left;
@@ -263,10 +263,10 @@
     position: absolute;
     font-family: hotel-booking-star;
 }
-.tp-hotel-booking #reviews .commentlist .star-rating span:before{
+.tp-hotel-booking .star-rating span:before{
     content: "\e600\e600\e600\e600\e600";
 }
-.tp-hotel-booking #reviews .commentlist .star-rating span{
+.tp-hotel-booking .star-rating span{
     overflow: hidden;
     position: relative;
     display: inline-block;

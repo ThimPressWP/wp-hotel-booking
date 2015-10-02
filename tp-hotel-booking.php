@@ -104,6 +104,8 @@ class TP_Hotel_Booking{
 
         $this->_include( 'includes/widgets/class-hb-widget-search.php' );
         $this->_include( 'includes/widgets/class-hb-widget-room-carousel.php' );
+        $this->_include( 'includes/widgets/class-hb-widget-best-reviews.php' );
+        $this->_include( 'includes/widgets/class-hb-widget-lastest-reviews.php' );
         $this->_include( 'includes/class-hb-post-types.php' );
         $this->_include( 'includes/hb-functions.php' );
         $this->_include( 'includes/class-hb-cart.php' );
@@ -280,6 +282,8 @@ class TP_Hotel_Booking{
     function register_widgets() {
         register_widget( 'HB_Widget_Search' );
         register_widget( 'HB_Widget_Room_Carousel' );
+        register_widget( 'HB_Widget_Room_Best_Reviews' );
+        register_widget( 'HB_Widget_Room_Lastest_Reviews' );
     }
 
     /**

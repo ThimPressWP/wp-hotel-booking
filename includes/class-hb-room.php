@@ -373,9 +373,20 @@ class HB_Room{
         $max_child_per_room = (int)get_post_meta( $this->post->ID, '_hb_max_child_per_room', true );
 
         $taxonomis = array();
-        foreach ($room_types as $key => $tax) {
-            $taxonomis[] = $tax->term_id;
+        if( $room_types )
+        {
+            foreach ($room_types as $key => $tax) {
+                $taxonomis[] = $tax->term_id;
+            }
         }
+        else
+        {
+            $terms = get_terms( 'hb_room_type' );
+            foreach ($terms as $key => $term) {
+                $taxonomis[] = $term->term_id;
+            }
+        }
+
         $args = array(
                 'post_type'     => 'hb_room',
                 'status'        => 'publish',
@@ -440,16 +451,23 @@ class HB_Room{
         return $this->get_thumbnail( $attachID = false, $echo = true );
     }
 
-    function get_average()
+    function average_rating()
     {
         $comments = $this->get_review_details();
-        $average = 0;
+        $total = 0;
+        $i = 0;
         foreach ($comments as $key => $comment) {
             $rating = get_comment_meta( $comment->comment_ID, 'rating', true );
             if( $rating )
-                $average = $average + $rating;
+            {
+                $total = $total + $rating;
+                $i++;
+            }
         }
-        return $average % count($comments);
+        if( $comments && $i )
+            return $total / $i;
+
+        return null;
     }
 
     /**

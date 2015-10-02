@@ -318,3 +318,32 @@ th.column-room_type{
 
 }
 /*end gallerry settings meta box*/
+
+/**rating hb_room**/
+.wp-admin .star-rating{
+    float: right;
+    position: relative;
+    width: 75px;
+    height: 18px;
+    line-height: 1;
+}
+.wp-admin .star-rating:before,
+.wp-admin .star-rating span:before{
+    content: "\e601\e601\e601\e601\e601";
+    color: #ffb606;
+    float: left;
+    top: 0;
+    left: 0;
+    position: absolute;
+    font-family: hotel-booking-star;
+}
+.wp-admin .star-rating span:before{
+    content: "\e600\e600\e600\e600\e600";
+}
+.wp-admin .star-rating span{
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    height: 18px;
+}
+/**end rating hb_room**/

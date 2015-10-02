@@ -26,6 +26,8 @@ add_action('hotel_booking_single_room_infomation', 'hotel_booking_single_room_in
 // room related
 add_action( 'hotel_booking_after_single_product', 'hotel_booking_single_room_related' );
 add_action('hotel_booking_single_room_infomation', 'hotel_booking_single_room_infomation' );
+// room rating
+add_action( 'hotel_booking_loop_room_rating', 'hotel_booking_loop_room_rating' );
 add_filter( 'body_class', 'hb_body_class' );
 //add_filter( 'post_class', 'wc_product_post_class', 20, 3 );
 
