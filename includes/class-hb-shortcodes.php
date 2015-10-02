@@ -167,8 +167,8 @@ class HB_Shortcodes{
                 <!--navigation-->
                 <?php if( !isset($atts['navigation']) || $atts['navigation'] ): ?>
                     <div class="navigation">
-                        <div class="prev"><i class="fa fa-angle-left"></i></div>
-                        <div class="next"><i class="fa fa-angle-right"></i></div>
+                        <div class="prev"><span class="pe-7s-angle-left"></span></div>
+                        <div class="next"><span class="pe-7s-angle-right"></span></div>
                     </div>
                 <?php endif; ?>
                 <!--pagination-->

@@ -321,6 +321,9 @@
 .hb_room_carousel_container {
   margin-bottom: 72px;
 }
+.hb_room_carousel_container .hb_room_carousel {
+  margin: 0 -15px;
+}
 .hb_room_carousel_container .navigation {
   width: 215px;
   margin: 0 auto;
@@ -336,8 +339,8 @@
   cursor: pointer;
   z-index: 20;
 }
-.hb_room_carousel_container .navigation .prev i.fa,
-.hb_room_carousel_container .navigation .next i.fa {
+.hb_room_carousel_container .navigation .prev span[class*="pe-"],
+.hb_room_carousel_container .navigation .next span[class*="pe-"] {
   display: none;
 }
 .hb_room_carousel_container .navigation .next {
@@ -357,12 +360,11 @@
 }
 .hb_room_carousel_container .item {
   width: 300px;
-  min-height: 315px;
-  min-width: 300px;
+  min-height: 290px;
   position: relative;
+  padding: 0 15px;
 }
 .hb_room_carousel_container .item .media {
-  margin-right: 30px;
   position: relative;
 }
 .hb_room_carousel_container .item .media:before {
@@ -390,7 +392,7 @@
 }
 .hb_room_carousel_container .item .price {
   position: absolute;
-  right: 40px;
+  right: 25px;
   bottom: 50px;
   text-align: right;
   color: #fff;
@@ -713,6 +715,9 @@
   outline: none;
 }
 /** Other room slider **/
+.hb_related_other_room .tp-hotel-booking {
+  margin: 0 -15px;
+}
 .hb_related_other_room > .title {
   position: relative;
   line-height: 40px;
@@ -729,16 +734,9 @@
   background: #ffb606;
 }
 .hb_related_other_room li.hb_room {
-  padding: 0;
-  margin-right: 30px;
+  padding: 0 15px;
   min-width: 270px;
   max-width: 270px;
-}
-.hb_related_other_room li.hb_room .price {
-  right: 10px;
-}
-.hb_related_other_room .caroufredsel_wrapper {
-  margin: 0 !important;
 }
 .hb_related_other_room .navigation {
   width: auto;
@@ -756,8 +754,8 @@
   cursor: pointer;
   z-index: 20;
 }
-.hb_related_other_room .navigation .prev i.fa,
-.hb_related_other_room .navigation .next i.fa {
+.hb_related_other_room .navigation .prev span[class*="pe-"],
+.hb_related_other_room .navigation .next span[class*="pe-"] {
   display: none;
 }
 .hb_related_other_room .navigation .next {
