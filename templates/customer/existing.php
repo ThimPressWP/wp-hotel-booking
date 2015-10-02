@@ -11,7 +11,7 @@ if( isset( $customer ) && $customer->data ) {
             <li class="hb-form-field">
                 <label class="hb-form-field-label"><?php _e( 'Email', 'tp-hotel-booking' );?></label>
                 <div class="hb-form-field-input">
-                    <input type="email" name="existing-customer-email" value="<?php echo $email;?>" placeholder="<?php _e( 'your email here', 'tp-hotel-booking' );?>" />
+                    <input type="email" name="existing-customer-email" value="<?php echo $email;?>" placeholder="<?php _e( 'Your email here', 'tp-hotel-booking' );?>" />
                 </div>
             </li>
             <li>

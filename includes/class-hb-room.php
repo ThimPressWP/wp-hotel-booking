@@ -151,7 +151,7 @@ class HB_Room{
             case 'dropdown_room':
                 $max_rooms = get_post_meta( $this->post->ID, '_hb_num_of_rooms', true );
                 $return = '<select name="hb-num-of-rooms[' . $this->post->ID . ']">';
-                $return .= '<option value="0">' . __( '--Select--', 'tp-hotel-booking' ) . '</option>';
+                $return .= '<option value="0">' . __( 'Select', 'tp-hotel-booking' ) . '</option>';
                 for( $i = 1; $i <= $max_rooms; $i++ ){
                     $return .= sprintf( '<option value="%1$d">%1$d</option>', $i );
                 }

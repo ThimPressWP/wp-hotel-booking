@@ -217,7 +217,7 @@ function hb_dropdown_child_per_room( $args = array() ){
     );
     $max_child = hb_get_max_child_of_rooms();
     $output = '<select name="' . $args['name'] . '">';
-        $output .= '<option value="0">' . __( '--Select--','tp-hotel-booking' ) . '</option>';
+        $output .= '<option value="0">' . __( 'Select','tp-hotel-booking' ) . '</option>';
     if( $max_child > 0 ){
         for( $i = 1; $i <= $max_child; $i++ ){
             $output .= sprintf( '<option value="%1$d"%2$s>%1$d</option>', $i, $args['selected'] == $i ? ' selected="selected"' : '' );
@@ -405,7 +405,7 @@ function hb_dropdown_titles( $args = array() ){
         array(
             'name'              => 'title',
             'selected'          => '',
-            'show_option_none'  => __( '--Select--', 'tp-hotel-booking' ),
+            'show_option_none'  => __( 'Select', 'tp-hotel-booking' ),
             'option_none_value' => -1,
             'echo'              => true
         )
