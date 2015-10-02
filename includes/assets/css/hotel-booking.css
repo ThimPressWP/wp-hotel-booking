@@ -76,6 +76,7 @@
 }
 .hb_input_field{
 	position: relative;
+	display: inline-block;
 }
 .hb_input_field:after{
 	position: absolute;
@@ -502,9 +503,9 @@
   display: inline-block;
   overflow: hidden;
   color: #5a5a5a;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
   text-transform: uppercase;
 }
 .rooms-pagination .page-numbers li span.current {
@@ -520,9 +521,9 @@
   display: inline-block;
   color: #5a5a5a;
   overflow: hidden;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
   text-transform: uppercase;
 }
 .rooms-pagination .page-numbers li a:hover {
@@ -540,11 +541,6 @@
   color: #ffb606;
 }
 /** Single rooms **/
-.hb_single_room {
-  /** Top slider single room **/
-  /** Tab description single room **/
-  /** Review box **/
-}
 .hb_single_room .title h4 {
   font-size: 40px;
   line-height: 40px;
@@ -703,11 +699,15 @@
   padding: 10px 25px;
   line-height: 20px;
   border: 0;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
   background: #ffb606;
   color: #2a2a2a;
+}
+.hb_single_room #reviews #review_form_wrapper form .form-submit input[type="submit"]:hover {
+  background: #2a2a2a;
+  color: #fff;
 }
 .hb_single_room #reviews #review_form_wrapper form .form-submit input[type="submit"]:focus {
   outline: none;
@@ -793,11 +793,15 @@
   padding: 10px 25px;
   line-height: 20px;
   border: 0;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
   background: #ffb606;
   color: #2a2a2a;
+}
+#hotel-booking-results form button[type="submit"]:hover {
+  background: #2a2a2a;
+  color: #fff;
 }
 #hotel-booking-results form button[type="submit"]:focus {
   outline: none;
@@ -819,11 +823,16 @@
   padding: 10px 25px;
   line-height: 20px;
   border: 0;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
   background: #ffb606;
   color: #2a2a2a;
+}
+#hotel-booking-payment button[type="submit"]:hover,
+#hotel-booking-payment button[type="button"]:hover {
+  background: #2a2a2a;
+  color: #fff;
 }
 #hotel-booking-payment button[type="submit"]:focus,
 #hotel-booking-payment button[type="button"]:focus {
