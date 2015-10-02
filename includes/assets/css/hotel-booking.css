@@ -336,8 +336,8 @@
   cursor: pointer;
   z-index: 20;
 }
-.hb_room_carousel_container .navigation .prev i.fa,
-.hb_room_carousel_container .navigation .next i.fa {
+.hb_room_carousel_container .navigation .prev span[class*="pe-"],
+.hb_room_carousel_container .navigation .next span[class*="pe-"] {
   display: none;
 }
 .hb_room_carousel_container .navigation .next {
@@ -756,8 +756,8 @@
   cursor: pointer;
   z-index: 20;
 }
-.hb_related_other_room .navigation .prev i.fa,
-.hb_related_other_room .navigation .next i.fa {
+.hb_related_other_room .navigation .prev span[class*="pe-"],
+.hb_related_other_room .navigation .next span[class*="pe-"] {
   display: none;
 }
 .hb_related_other_room .navigation .next {

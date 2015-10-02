@@ -18,8 +18,8 @@ $related = $room->get_related_rooms();
 	<div class="hb_related_other_room has_slider">
 		<h3 class="title"><?php _e( 'Other Rooms', 'tp-hotel-booking' ); ?></h3>
 		<div class="navigation">
-            <div class="prev"><i class="fa fa-angle-left"></i></div>
-            <div class="next"><i class="fa fa-angle-right"></i></div>
+            <div class="prev"><span class="pe-7s-angle-left"></span></div>
+            <div class="next"><span class="pe-7s-angle-right"></span></div>
         </div>
 		<?php hotel_booking_room_loop_start(); ?>
 
