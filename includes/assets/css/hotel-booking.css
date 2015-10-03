@@ -590,7 +590,7 @@
   float: left;
   padding: 0;
   margin-top: 10px;
-  margin-right: 10px;
+  margin-right: 12px;
   overflow: hidden;
 }
 .hb_single_room .hb_room_gallery .camera_thumbs .camera_thumbs_cont ul li:last-child {
@@ -602,7 +602,7 @@
 .hb_single_room .hb_room_gallery .camera_thumbs .camera_thumbs_cont ul li img {
   margin: 0;
   border: 2px solid transparent;
-  max-width: 120px !important;
+  max-width: 135px !important;
 }
 .hb_single_room .hb-share {
   clear: both;
@@ -644,7 +644,7 @@
   border-bottom: 1px solid #ddd;
 }
 .hb_single_room .hb_single_room_details .hb_single_room_tabs > li {
-  padding-right: 20px;
+  padding-right: 40px;
   border: 0;
   display: inline-block;
   line-height: 30px;
@@ -657,6 +657,7 @@
   position: relative;
   display: block;
   line-height: 30px;
+  padding-bottom: 9px;
 }
 .hb_single_room .hb_single_room_details .hb_single_room_tabs > li a:after {
   content: '';
@@ -735,8 +736,8 @@
 }
 .hb_related_other_room li.hb_room {
   padding: 0 15px;
-  min-width: 270px;
-  max-width: 270px;
+  min-width: 295px;
+  max-width: 295px;
 }
 .hb_related_other_room .navigation {
   width: auto;
@@ -859,4 +860,123 @@
 }
 #hotel-booking-payment .hb-payment-methods > li .hb-payment-method-form {
   padding-left: 25px;
+}
+/** Input type date style **/
+.ui-datepicker.ui-widget {
+  z-index: 9999;
+  display: block;
+  position: relative;
+  color: #333;
+  background: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.5);
+  border-radius: 0;
+  padding: 8px;
+}
+.ui-datepicker.ui-widget .ui-datepicker-header {
+  background: transparent;
+  border: 0;
+}
+.ui-datepicker.ui-widget .ui-datepicker-header .ui-datepicker-prev,
+.ui-datepicker.ui-widget .ui-datepicker-header .ui-datepicker-next {
+  background: transparent;
+  background-repeat: no-repeat;
+  background-size: 75% 75%;
+  background-position: center center;
+  border: 0;
+  cursor: pointer;
+  width: 20px;
+  height: 30px;
+  -moz-opacity: 0.5;
+  -khtml-opacity: 0.5;
+  -webkit-opacity: 0.5;
+  opacity: 0.5;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=50);
+  filter: alpha(opacity=50);
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.ui-datepicker.ui-widget .ui-datepicker-header .ui-datepicker-prev span,
+.ui-datepicker.ui-widget .ui-datepicker-header .ui-datepicker-next span {
+  display: none;
+}
+.ui-datepicker.ui-widget .ui-datepicker-header .ui-datepicker-prev:hover,
+.ui-datepicker.ui-widget .ui-datepicker-header .ui-datepicker-next:hover {
+  -moz-opacity: 1;
+  -khtml-opacity: 1;
+  -webkit-opacity: 1;
+  opacity: 1;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=100);
+  filter: alpha(opacity=100);
+}
+.ui-datepicker.ui-widget .ui-datepicker-header .ui-datepicker-prev {
+  float: left;
+  left: 0;
+  right: auto;
+  top: 4px;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAUklEQVR42u3VMQoAIBADQf8Pgj+OD9hG2CtONJB2ymQkKe0HbwAP0xucDiQWARITIDEBEnMgMQ8S8+AqBIl6kKgHiXqQqAeJepBo/z38J/U0uAHlaBkBl9I4GwAAAABJRU5ErkJggg==);
+}
+.ui-datepicker.ui-widget .ui-datepicker-header .ui-datepicker-next {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAU0lEQVR42u3VOwoAMAgE0dwfAnNjU26bYkBCFGwfiL9VVWoO+BJ4Gf3gtsEKKoFBNTCoCAYVwaAiGNQGMUHMkjGbgjk2mIONuXo0nC8XnCf1JXgArVIZAQh5TKYAAAAASUVORK5CYII=);
+  float: right;
+  right: 0;
+  top: 4px;
+  left: auto;
+}
+.ui-datepicker.ui-widget .ui-datepicker-header .ui-datepicker-title {
+  color: #2a2a2a;
+  padding: 5px 3px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+}
+.ui-datepicker.ui-widget .ui-datepicker-calendar {
+  border: 0;
+  margin-bottom: 24px;
+}
+.ui-datepicker.ui-widget .ui-datepicker-calendar th {
+  color: #999;
+  font-size: 12px;
+  line-height: 25px;
+  font-weight: 700;
+  text-align: center;
+}
+.ui-datepicker.ui-widget .ui-datepicker-calendar th span {
+  cursor: help;
+  border-bottom: 1px dotted #777;
+}
+.ui-datepicker.ui-widget .ui-datepicker-calendar td {
+  padding: 0;
+  border: 0;
+  height: 27px;
+  overflow: hidden;
+}
+.ui-datepicker.ui-widget .ui-datepicker-calendar td.ui-state-disabled {
+  padding: 0;
+  border: 0;
+}
+.ui-datepicker.ui-widget .ui-datepicker-calendar td.ui-state-disabled .ui-state-default:hover {
+  background: #f5f5f5;
+  color: #666;
+}
+.ui-datepicker.ui-widget .ui-datepicker-calendar .ui-state-default {
+  cursor: pointer;
+  display: block;
+  outline: 0;
+  border: 0;
+  margin: 0;
+  width: 100%;
+  padding: 5px;
+  color: #666;
+  font-size: 12px;
+  line-height: 17px;
+  text-align: right;
+  background: #f5f5f5;
+}
+.ui-datepicker.ui-widget .ui-datepicker-calendar .ui-state-default:hover {
+  color: #fff;
+  background: #ffb606;
 }
