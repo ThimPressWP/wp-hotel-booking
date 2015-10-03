@@ -12,7 +12,7 @@
 
     echo '<tr>';
     if( $details ) foreach( $details as $d => $info ){
-        $room_details_sub_total = round( $info['price'] * $info['count'], 2 );
+        $room_details_sub_total = round( $info['price'], 2 );
         echo '<td>';
         echo hb_format_price( $room_details_sub_total );
         echo '</td>';

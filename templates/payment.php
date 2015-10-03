@@ -43,8 +43,8 @@ $cart = HB_Cart::instance();
                 <td class="hb-align-right">
                     <?php echo hb_format_price( $sub_total );?>
                     <?php
-                    $sig['num_of_rooms'][ $room->post->ID ] = $num_of_rooms;
-                    $sig['sub_total_of_rooms'][ $room->post->ID ] = $sub_total;
+                        $sig['num_of_rooms'][ $room->post->ID ] = $num_of_rooms;
+                        $sig['sub_total_of_rooms'][ $room->post->ID ] = $sub_total;
                     ?>
                     <input type="hidden" name="num_of_rooms[<?php echo $room->post->ID;?>]" value="<?php echo $num_of_rooms;?>" />
                     <input type="hidden" name="sub_total_of_rooms[<?php echo $room->post->ID;?>]" value="<?php echo $sub_total;?>" />

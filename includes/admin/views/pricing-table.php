@@ -150,10 +150,10 @@ $count_plants = count( $pricing_plans );
         <?php endif;?>
         </div>
         <?php wp_nonce_field( 'hb-update-pricing-plan', 'hb-update-pricing-plan-field' );?>
-        <p>
-            <button type="button" class="button hb-add-new-plan"><?php _e( 'Add Plan', 'tp-hotel-booking' );?></button>
-            <button class="button button-primary"><?php _e( 'Update', 'tp-hotel-booking' );?></button>
-        </p>
+        <!-- <p>
+            <button type="button" class="button hb-add-new-plan"><?php //_e( 'Add Plan', 'tp-hotel-booking' );?></button>
+            <button class="button button-primary"><?php //_e( 'Update', 'tp-hotel-booking' );?></button>
+        </p> -->
         <?php }?>
     </form>
 </div>
