@@ -29,7 +29,7 @@ $galeries = $hb_room->get_galleries( false );
 			"use strict";
 			$(document).ready(function(){
 				$('#camera_wrap_<?php the_ID() ?>').camera({
-					height: '400px',
+					height: '470px',
 					loader: 'bar',
 					pagination: false,
 					thumbnails: true
