@@ -65,7 +65,7 @@ $max_child = 2;
         <?php wp_nonce_field( 'hb_search_nonce_action', 'nonce' ); ?>
         <input type="hidden" name="hotel-booking" value="results" />
         <input type="hidden" name="action" value="hotel_booking_parse_search_params" />
-        <p>
+        <p class="hb-submit">
             <button type="submit"><?php _e( 'Check Availability', 'tp-hotel-booking' );?></button>
         </p>
     </form>
