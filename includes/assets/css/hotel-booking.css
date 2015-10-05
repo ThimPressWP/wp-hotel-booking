@@ -864,7 +864,7 @@
 /** Input type date style **/
 .ui-datepicker.ui-widget {
   z-index: 9999;
-  display: block;
+  display: none;
   position: relative;
   color: #333;
   background: #fff;
