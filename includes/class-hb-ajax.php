@@ -23,7 +23,8 @@ class HB_Ajax{
             'parse_search_params'       => true,
             'parse_booking_params'      => true,
             'apply_coupon'              => true,
-            'remove_coupon'             => true
+            'remove_coupon'             => true,
+            'ajax_add_to_cart'          => true
         );
 
         foreach( $ajax_actions as $action => $priv ){
@@ -186,6 +187,34 @@ class HB_Ajax{
                 'sig'       => base64_encode( serialize( $params ) )
             )
         );
+    }
+
+    static function ajax_add_to_cart()
+    {
+        if( ! check_ajax_referer( 'hb_booking_nonce_action', 'nonce' ) )
+            return;
+
+        if( ! isset( $_POST['room-id'] ) || ! isset($_POST['hb-num-of-rooms']) )
+            return;
+
+        if( ! isset( $_POST['check_in_date'] ) || ! isset($_POST['check_out_date']) )
+            return;
+
+        $room_id = (int)$_POST['room-id'];
+        $number_room = (int)$_POST['hb-num-of-rooms'];
+        $start_date = $_POST['check_in_date'];
+        $end_date = $_POST['check_out_date'];
+
+        $cart = HB_Cart::instance();
+
+        if( $cart->add_to_cart( $room_id, $number_room, $start_date, $end_date ) )
+        {
+            hb_send_json( array( 'status'   => 'success', 'message' => sprintf('<label class="hb_success_message">%1$s</label>', __('Add To Cart succesfully.', 'tp-hotel-booking')) ) );
+        }
+        else
+        {
+            hb_send_json( array( 'status' => 'warning', 'message' => __('Room selected. Please View Cart to change order', 'tp-hotel-booking') ) );
+        }
     }
 
 }

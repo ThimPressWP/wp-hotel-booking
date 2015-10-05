@@ -46,7 +46,7 @@ class HB_Room{
      *
      * @param $post
      */
-    function __construct( $post ){
+    function __construct( $post, $options = null ){
         if( is_numeric( $post ) && $post && get_post_type( $post ) == 'hb_room') {
             $this->post = get_post( $post );
         }elseif( $post instanceof WP_Post || is_object( $post ) ){
@@ -58,6 +58,9 @@ class HB_Room{
         global $hb_settings;
         if( ! $this->_settings )
             $this->_settings = $hb_settings;
+
+        if( $options )
+            $this->set_data( $options );
     }
 
     /**
@@ -165,6 +168,13 @@ class HB_Room{
                 break;
             case 'price_table':
                 $return = 'why i am here?';
+                break;
+            case 'check_in_date':
+                $return = $this->get_data('check_in_date');
+                break;
+            case 'check_out_date':
+                $return = $this->get_data('check_out_date');
+                break;
         }
         return $return;
     }
@@ -234,7 +244,7 @@ class HB_Room{
                 );
             }
             $details[ $date ]['count'] ++;
-            $details[ $date ]['price'] += $this->get_total( $c_date, 1, 1 );
+            $details[ $date ]['price'] += $this->get_total( $c_date, 1, 1, false );
             $room_details_total +=  $details[ $date ]['price'];
         }
         $this->_room_details_total = $room_details_total;
@@ -309,18 +319,19 @@ class HB_Room{
      * @return float|int
      */
     function get_total( $from = null, $to = null, $num_of_rooms = 1, $including_tax = true ){
+        $in_to_out = $this->get_data('in_to_out');
         $nights = 0;
         $total = 0;
         if( is_null( $from ) && is_null( $to ) ){
-            $to_time = intval( $this->get_data( 'check_out_date' ) );
-            $from_time = intval( $this->get_data( 'check_in_date' ) );
+            $to_time = (int)$in_to_out['check_out_date'];
+            $from_time = (int)$in_to_out['check_in_date'];
         }else {
             if (!is_numeric($from)) {
                 $from_time = strtotime($from);
             } else {
                 $from_time = $from;
             }
-            if (!is_numeric($to)) {
+            if ( !is_numeric($to) ) {
                 $to_time = strtotime($to);
             } else {
                 if ($to >= DAY_IN_SECONDS) {
@@ -330,8 +341,9 @@ class HB_Room{
                 }
             }
         }
+
         if( ! $num_of_rooms ){
-            $num_of_rooms = intval( $this->get_data( 'num_of_rooms' ) );
+            $num_of_rooms = intval( $this->get_data( 'quantity' ) );
         }
         if( ! $nights ){
             $nights = hb_count_nights_two_dates( $to_time, $from_time );
@@ -567,7 +579,7 @@ class HB_Room{
      * @param $room
      * @return mixed
      */
-    static function instance( $room ){
+    static function instance( $room, $options = null ){
         $post = $room;
         if( $room instanceof WP_Post ){
             $id = $room->ID;
@@ -576,8 +588,18 @@ class HB_Room{
         }else{
             $id = $room;
         }
-        if( empty( self::$_instance[ $id ] ) ){
-            self::$_instance[ $id ] = new self( $post );
+
+        if( empty( self::$_instance[ $id ] )){
+            return self::$_instance[ $id ] = new self( $post, $options );
+        }
+        else
+        {
+            $room = self::$_instance[ $id ];
+            if( isset($options['check_in_date'], $options['check_out_date'])
+                && ( $options['check_in_date'] !== $room->check_in_date || $options['check_out_date'] !== $room->check_out_date ) )
+            {
+                return new self( $post, $options );
+            }
         }
         return self::$_instance[ $id ];
     }

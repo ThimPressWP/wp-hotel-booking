@@ -270,10 +270,12 @@ class TP_Hotel_Booking{
                 upload_base_url: '<?php echo esc_js($upload_base_url) ?>',
                 meta_key: {
                     prefix: '_hb_'
-                }
+                },
+                nonce: '<?php echo wp_create_nonce( 'hb-nonce' ); ?>'
             }
         </script>
     <?php
+        $this->_include( 'includes/language_js.php' );
     }
 
     /**
