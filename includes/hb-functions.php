@@ -871,8 +871,8 @@ function hb_search_rooms( $args = array() ){
             INNER JOIN {$wpdb->postmeta} bo ON bo.post_id = booking.ID AND bo.meta_key = %s
             WHERE
                 bm.meta_value=rooms.ID
-                AND bi.meta_value >= %d
-                AND bo.meta_value <= %d
+                AND bi.meta_value <= %d
+                AND bo.meta_value => %d
         )
     ", '_hb_room_id', '_hb_check_in_date', '_hb_check_out_date', $check_in_date_to_time, $check_out_date_to_time );
 
