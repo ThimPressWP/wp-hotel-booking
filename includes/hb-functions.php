@@ -878,6 +878,7 @@ function hb_search_rooms( $args = array() ){
         )
     ", '_hb_room_id', '_hb_check_in_date', '_hb_check_out_date', $check_in_date_to_time, $check_out_date_to_time );
 
+            
     /**
      *
      */
