@@ -29,7 +29,7 @@ $cart = HB_Cart::instance();
                 <th><?php _e( 'Number of rooms', 'tp-hotel-booking' );?></th>
                 <th><?php _e( 'Room type', 'tp-hotel-booking' );?></th>
                 <th><?php _e( 'Capacity', 'tp-hotel-booking' );?></th>
-                <th class="hb-align-right"><?php _e( 'Gross Total', 'tp-hotel-booking' );?></th>
+                <th class="hb-align-right"><?php _e( 'Gross Total', 'tp-hotel-booking' ); ?></th>
             </thead>
         <?php if( $rooms = $cart->get_rooms() ) foreach( $rooms as $room ){?>
             <?php

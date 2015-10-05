@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class HB_Cart
  *
@@ -16,12 +15,12 @@ class HB_Cart{
      */
     protected $_options = array();
 
+    protected $_rooms = null;
+
     /**
      * Construction
      */
     function __construct(){
-        //if( self::$instance ) return;
-
         if( !session_id() ) session_start();
         if( empty( $_SESSION['hb_cart'] ) ){
             $_SESSION['hb_cart'] = array(
@@ -98,9 +97,9 @@ class HB_Cart{
      */
     function get_total_rooms(){
         $total_rooms = 0;
-        if( $rooms = $this->get_products() ){
+        if( $rooms = $this->get_rooms() ){
             foreach( $rooms as $id => $room ){
-                $total_rooms += intval( $room['quantity'] );
+                $total_rooms += (int)$room->get_data('quantity');
             }
         }
         return apply_filters( 'hb_cart_total_rooms', $total_rooms );
@@ -143,7 +142,9 @@ class HB_Cart{
      * @return mixed
      */
     function get_products(){
-        return $_SESSION['hb_cart']['products'];
+        if( isset($_SESSION['hb_cart']['products'], $_SESSION['hb_cart']['products']) )
+            return $_SESSION['hb_cart']['products'];
+        return null;
     }
 
     /**
@@ -153,8 +154,11 @@ class HB_Cart{
      */
     function get_sub_total(){
         $sub_total = 0;
-        if( $rooms = $this->get_rooms() ) foreach( $rooms as $room_id => $room ) {
-            $sub_total += $room->get_total( $this->check_in_date, $this->check_out_date, $room->get_data( 'num_of_rooms' ), false );
+        if( $rooms = $this->get_rooms() )
+        {
+            foreach( $rooms as $room_id => $room ) {
+                $sub_total += $room->get_total( $room->check_in_date, $room->check_out_date, $room->num_of_rooms, false );
+            }
         }
         return apply_filters( 'hb_cart_sub_total', $sub_total );
     }
@@ -196,15 +200,18 @@ class HB_Cart{
      * @return array
      */
     function get_rooms( ){
-        $rooms = array();
-        if( $_rooms = $this->get_products() ){
+        if( $this->_rooms )
+            return $this->_rooms;
 
-            foreach( $_rooms as $room ){
-                $rooms[ $room['id'] ] = HB_Room::instance( $room['id'] );
-                $rooms[ $room['id'] ]->set_data( 'num_of_rooms', $room['quantity'] );
+        if( $selected = $this->get_products() ){
+            foreach( $selected as $in_to_out => $rooms ){
+                foreach ($rooms as $id => $room) {
+                    $this->_rooms[] = HB_Room::instance( $id, $room );
+                }
             }
         }
-        return $rooms;
+
+        return $this->_rooms;
     }
 
     /**
@@ -223,14 +230,30 @@ class HB_Cart{
      * @param int $quantity
      * @return $this
      */
-    function add_to_cart( $room_id, $quantity = 1 ){
+    function add_to_cart( $room_id, $quantity = 1, $check_in_date,  $check_out_date ){
         $room = HB_Room::instance( $room_id );
         $price = $room->get_price();
-        $_SESSION['hb_cart']['products'][$room_id] = array(
-            'id'        => $room_id,
-            'quantity'  => $quantity,
-            'price'     => $price
-        );
+
+        $date = strtotime($check_in_date) . '_' . strtotime($check_out_date);
+
+        if ( ! isset( $_SESSION['hb_cart']['products'][$date] ) )
+            $_SESSION['hb_cart']['products'][$date] = array();
+
+        if ( ! isset( $_SESSION['hb_cart']['products'][$date][$room_id] ) )
+        {
+            $_SESSION['hb_cart']['products'][$date][$room_id] = array(
+                    'id'            => $room_id,
+                    'quantity'      => $quantity,
+                    'price'         => $price,
+                    'check_in_date' => $check_in_date,
+                    'check_out_date'=> $check_out_date
+                );
+        }
+        else
+        {
+            $_SESSION['hb_cart']['products'][$date][$room_id]['quantity'] = $quantity;
+        }
+
         return $this;
     }
 
@@ -273,6 +296,7 @@ class HB_Cart{
         return self::$instance;
     }
 }
+
 if( !is_admin() ) {
     $GLOBALS['hb_cart'] = HB_Cart::instance();
 }
@@ -327,7 +351,6 @@ function hb_get_cart_description(){
     return join( ', ', $description );
 }
 
-
 /**
  * Get check out return URL
  *
@@ -356,7 +379,7 @@ function hb_generate_transaction_object( $customer_id ){
                 'base_price'        => $room->get_price(),
                 'quantity'          => $room->num_of_rooms,
                 'name'              => $room->name,
-                'sub_total'         => $room->get_total( $cart->check_in_date, $cart->check_out_date, $room->num_of_rooms )
+                'sub_total'         => $room->get_total( $room->check_in_date, $room->check_out_date, $room->num_of_rooms )
             );
         }
     }

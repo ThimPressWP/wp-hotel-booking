@@ -70,7 +70,7 @@ class HB_Shortcodes{
         switch( $page ){
             case 'results':
                 $template = 'results.php';
-                $template_args['results'] = hb_search_rooms(
+                $template_args['results']   = hb_search_rooms(
                     array(
                         'check_in_date'     => $start_date,
                         'check_out_date'    => $end_date,
@@ -79,25 +79,34 @@ class HB_Shortcodes{
                     )
                 );
                 break;
-            case 'payment':
-                $rooms          = hb_get_request( 'hb-num-of-rooms' );
-                $cart           = HB_Cart::instance();
-                $cart
-                    ->empty_cart()
-                    ->set_option(
-                        array(
-                            'check_in_date'     => $start_date,
-                            'check_out_date'    => $end_date
-                        )
+            case 'cart':
+                $template = 'cart.php';
+                break;
+            case 'checkout':
+                if( is_user_logged_in() ){
+                    global $current_user;
+                    get_currentuserinfo();
+
+                    $template_args['customer'] = hb_get_customer( $current_user->user_email );
+
+                }else{
+                    $template_args['customer'] = hb_create_empty_post();
+                    $template_args['customer']->data = array(
+                        'title'             => '',
+                        'first_name'        => '',
+                        'last_name'         => '',
+                        'address'           => '',
+                        'city'              => '',
+                        'state'             => '',
+                        'postal_code'       => '',
+                        'country'           => '',
+                        'phone'             => '',
+                        'fax'               => ''
                     );
-                if( $rooms ) foreach( $rooms as $room_id => $num_of_rooms ) {
-                    if( ! $num_of_rooms ) continue;
-                    $cart->add_to_cart( $room_id, $num_of_rooms );
-                    $room = HB_Room::instance( $room_id );
-                    $room->set_data( 'num_of_rooms', $num_of_rooms );
-                    /*$total_rooms += $num_of_rooms;
-                    $total += $room->get_total( $start_date, $end_date, $num_of_rooms, false );*/
                 }
+                $template = 'checkout.php';
+                break;
+            case 'payment':
                 if( is_user_logged_in() ){
                     global $current_user;
                     get_currentuserinfo();
@@ -128,7 +137,6 @@ class HB_Shortcodes{
                 $template = 'message.php';
                 break;
         }
-// var_dump($template); die();
         ob_start();
         do_action( 'hb_wrapper_start' );
         hb_get_template( $template, $template_args );

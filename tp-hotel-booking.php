@@ -109,6 +109,7 @@ class TP_Hotel_Booking{
         $this->_include( 'includes/class-hb-post-types.php' );
         $this->_include( 'includes/hb-functions.php' );
         $this->_include( 'includes/class-hb-cart.php' );
+        $this->_include( 'includes/class-hb-cart-base.php' );
         $this->_include( 'includes/class-hb-resizer.php' );
         $this->_include( 'includes/class-hb-booking.php' );
         $this->_include( 'includes/class-hb-booking.php' );
@@ -270,10 +271,12 @@ class TP_Hotel_Booking{
                 upload_base_url: '<?php echo esc_js($upload_base_url) ?>',
                 meta_key: {
                     prefix: '_hb_'
-                }
+                },
+                nonce: '<?php echo wp_create_nonce( 'hb-nonce' ); ?>'
             }
         </script>
     <?php
+        $this->_include( 'includes/language_js.php' );
     }
 
     /**

@@ -860,3 +860,21 @@
 #hotel-booking-payment .hb-payment-methods > li .hb-payment-method-form {
   padding-left: 25px;
 }
+.hb_overlay_ajax{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  opacity: 0.8;
+  z-index: 1000;
+  transition: all 0.4s;
+  -webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -ms-transition: all 0.4s;
+}
+.hb_overlay_ajax.hide{
+  opacity: 0;
+}

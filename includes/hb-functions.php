@@ -537,7 +537,7 @@ function hb_dropdown_numbers( $args = array() ){
     extract( $args );
 
     $id = empty( $id ) ? sanitize_title( $name ) : $id;
-    $output = '<select name="' . $name . '" id="' . $id . '"' . ( $class ? "" : ' class="' . $class . '"' ) . '>';
+    $output = '<select name="' . $name . '" id="' . $id . '"' . ( $class ? ' class="' . $class . '"' : '' ) . '>';
     if( $show_option_none ) {
         $output .= '<option value="' . $option_none_value . '">' . $show_option_none . '</option>';
     }
@@ -828,6 +828,8 @@ function hb_format_price( $price, $with_currency = true ){
 }
 
 function hb_search_rooms( $args = array() ){
+    // $str = "SELECT rooms.*, ( SELECT ra.meta_value FROM wp_postmeta ra INNER JOIN wp_posts r ON ra.post_id = r.ID AND ra.meta_key = '_hb_num_of_rooms' WHERE r.ID=rooms.ID ) - ( SELECT count(booking.ID) FROM wp_posts booking INNER JOIN wp_postmeta bm ON bm.post_id = booking.ID AND bm.meta_key = '_hb_room_id' INNER JOIN wp_postmeta bi ON bi.post_id = booking.ID AND bi.meta_key = '_hb_check_in_date' INNER JOIN wp_postmeta bo ON bo.post_id = booking.ID AND bo.meta_key = '_hb_check_out_date' WHERE bm.meta_value=rooms.ID AND bi.meta_value <= 1446508800 AND bo.meta_value => 1447113600 ) as available_rooms FROM wp_posts rooms INNER JOIN wp_postmeta pm ON pm.post_id = rooms.ID AND pm.meta_key = '_hb_max_child_per_room' INNER JOIN wp_postmeta pm2 ON pm2.post_id = rooms.ID AND pm2.meta_key = '_hb_max_adults_per_room' WHERE rooms.post_type = 'hb_room' AND rooms.post_status = 'publish' AND pm.meta_value >= 1 AND pm2.meta_value = 1 HAVING available_rooms > 0";
+    // var_dump(substr($str, 560)); die();
     global $wpdb;
     $adults = hb_get_request( 'adults' );
     $args = wp_parse_args(
@@ -871,8 +873,8 @@ function hb_search_rooms( $args = array() ){
             INNER JOIN {$wpdb->postmeta} bo ON bo.post_id = booking.ID AND bo.meta_key = %s
             WHERE
                 bm.meta_value=rooms.ID
-                AND bi.meta_value >= %d
-                AND bo.meta_value <= %d
+                AND bi.meta_value <= %d
+                AND bo.meta_value >= %d
         )
     ", '_hb_room_id', '_hb_check_in_date', '_hb_check_out_date', $check_in_date_to_time, $check_out_date_to_time );
 
@@ -893,7 +895,6 @@ function hb_search_rooms( $args = array() ){
     ", '_hb_max_child_per_room', '_hb_max_adults_per_room', 'hb_room', 'publish', hb_get_request('max_child'), $adults );
 
     // echo $query;
-
     if( $search = $wpdb->get_results( $query ) ){
         foreach( $search as $k => $p ){
             $room = HB_Room::instance( $p );
@@ -904,6 +905,34 @@ function hb_search_rooms( $args = array() ){
                 )
             )->get_booking_room_details();
             $results[ $k ] = $room;
+        }
+    }
+
+    if( isset( $_SESSION['hb_cart'], $_SESSION['hb_cart']['products'] ) )
+    {
+        $products = $_SESSION['hb_cart']['products'];
+        foreach ($products as $date => $items) {
+            $date = explode('_', $date); // can not use list function
+            if( isset($date[0], $date[1]) )
+            {
+                $in = $date[0];
+                $out = $date[1];
+            }
+            foreach ($results as $key => $room) {
+                $room_id = $room->post->ID;
+                if( ! array_key_exists( $room_id, $items ) )
+                    continue;
+
+                if(
+                    ($in < strtotime($args['check_in_date']) && strtotime($args['check_in_date']) < $out)
+                    || ($in < strtotime($args['check_out_date']) && strtotime($args['check_out_date']) < $out)
+                )
+                {
+                    $total = $results[ $key ]->post->available_rooms;
+                    $results[ $key ]->post->available_rooms = (int)$total - (int)$items[$room_id]['quantity'];
+                }
+
+            }
         }
     }
     return $results;
@@ -1526,5 +1555,14 @@ if ( ! function_exists( 'is_room' ) ) {
      */
     function is_room() {
         return is_singular( array( 'hb_room' ) );
+    }
+}
+
+if( ! function_exists( 'get_cart_url' ) )
+{
+    function hb_get_url( $params = array() )
+    {
+        global $hb_settings;
+        return get_the_permalink( $hb_settings->get('search_page_id') ) . '?hotel-booking-params=' . base64_encode( serialize( $params ) );
     }
 }
