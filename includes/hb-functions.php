@@ -871,11 +871,13 @@ function hb_search_rooms( $args = array() ){
             INNER JOIN {$wpdb->postmeta} bo ON bo.post_id = booking.ID AND bo.meta_key = %s
             WHERE
                 bm.meta_value=rooms.ID
-                AND bi.meta_value >= %d
-                AND bo.meta_value <= %d
+                AND bi.meta_value <= %d
+                AND bo.meta_value => %d
         )
     ", '_hb_room_id', '_hb_check_in_date', '_hb_check_out_date', $check_in_date_to_time, $check_out_date_to_time );
-
+    var_dump($wpdb->query("SELECT count(booking.ID) FROM wp_posts booking INNER JOIN wp_postmeta bm ON bm.post_id = booking.ID AND bm.meta_key = '_hb_room_id' INNER JOIN wp_postmeta bi ON bi.post_id = booking.ID AND bi.meta_key = '_hb_check_in_date' INNER JOIN wp_postmeta bo ON bo.post_id = booking.ID AND bo.meta_key = '_hb_check_out_date' WHERE bm.meta_value=rooms.ID AND bi.meta_value <= 1446508800 AND bo.meta_value => 1447113600") );
+    die();
+            
     /**
      *
      */
