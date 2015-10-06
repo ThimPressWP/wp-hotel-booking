@@ -190,6 +190,9 @@ class HB_Room{
             case 'total_tax':
                 $return = $this->get_total($this->check_in_date, $this->check_out_date, $this->get_data( 'num_of_rooms' ));
                 break;
+            case 'search_key':
+                $return = $this->get_data('search_key');
+                break;
         }
         return $return;
     }

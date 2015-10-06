@@ -2,9 +2,9 @@
 $cart = HB_Cart::instance();
 global $hb_settings;
 ?>
-<div id="hotel-booking-payment">
+<div id="hotel-booking-cart">
 
-    <form name="hb-payment-form" id="hb-payment-form" method="post" action="<?php echo $search_page;?>">
+    <form id="hb-cart-form" method="post">
         <h3><?php _e( 'Booking Rooms', 'tp-hotel-booking' );?></h3>
         <table class="hb_table">
             <thead>
@@ -25,7 +25,7 @@ global $hb_settings;
                         <tr>
                             <td><?php echo $room->name;?> (<?php echo $room->capacity_title;?>)</td>
                             <td><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'tp-hotel-booking' ), $room->capacity );?> </td>
-                            <td><input type="number" class="hb_room_number_edit" name="num_of_rooms[<?php echo $room->post->ID;?>]" value="<?php echo $num_of_rooms; ?>" /></td>
+                            <td><input type="number" class="hb_room_number_edit" name="hotel_booking_cart[<?php echo $room->search_key ?>][<?php echo $room->ID;?>]" value="<?php echo $num_of_rooms; ?>" /></td>
                             <td><?php echo $room->check_in_date ?></td>
                             <td><?php echo $room->check_out_date ?></td>
                             <td><?php echo hb_count_nights_two_dates( $room->check_out_date, $room->check_in_date) ?></td>
@@ -66,7 +66,7 @@ global $hb_settings;
                 <?php } ?>
                 <tr>
                     <td colspan="6"><?php _e( 'Sub Total', 'tp-hotel-booking' );?></td>
-                    <td class="hb-align-right">
+                    <td class="hb-align-right hb_sub_total">
                         <?php echo hb_format_price( $cart->sub_total );?>
                     </td>
                 </tr>
@@ -83,14 +83,14 @@ global $hb_settings;
                 <?php }?>
                 <tr>
                     <td colspan="6"><?php _e( 'Grand Total', 'tp-hotel-booking' ); ?></td>
-                    <td class="hb-align-right"><?php echo hb_format_price( $cart->total );?></td>
+                    <td class="hb-align-right hb_grand_total "><?php echo hb_format_price( $cart->total );?></td>
                 </tr>
                 <?php if( $advance_payment = $cart->advance_payment ){?>
                 <tr>
                     <td colspan="6">
                         <?php printf( __( 'Advance Payment (%s%% of Grand Total)', 'tp-hotel-booking' ), hb_get_advance_payment() );?>
                     </td>
-                    <td class="hb-align-right"><?php echo hb_format_price( $advance_payment );?></td>
+                    <td class="hb-align-right hb_advance_payment"><?php echo hb_format_price( $advance_payment );?></td>
                 </tr>
                     <?php if( hb_get_advance_payment() < 100 ){?>
                     <tr>
@@ -104,8 +104,7 @@ global $hb_settings;
                     <?php }?>
                 <?php }?>
                 <tr>
-                    <?php wp_nonce_field( 'hb_customer_place_order', 'hb_customer_place_order_field' );?>
-                    <input type="hidden" name="action" value="hotel_booking_place_order" />
+                    <?php wp_nonce_field( 'hb_cart_field', 'hb_cart_field' );?>
                 </tr>
         </table>
         <p>

@@ -235,13 +235,12 @@ class HB_Ajax{
         if( isset( $_SESSION['hb_cart']['products'][$time_key], $_SESSION['hb_cart']['products'][$time_key][$room_id] ) )
             unset($_SESSION['hb_cart']['products'][$time_key][$room_id]);
 
-        ob_start();
-        hb_get_template('cart.php');
-        $html = ob_end_clean();
-
+        $cart = HB_Cart::instance();
         hb_send_json( array(
                 'status' => 'success',
-                'html'  => $html
+                'sub_total'  => hb_format_price( $cart->sub_total ),
+                'grand_total'   => hb_format_price( $cart->total ),
+                'advance_payment' => hb_format_price($cart->advance_payment)
             ) );
     }
 

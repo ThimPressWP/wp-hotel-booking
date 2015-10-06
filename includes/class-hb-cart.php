@@ -34,7 +34,7 @@ class HB_Cart{
                 HB_Coupon::instance($coupon);
             }
         }
-        //die();
+        add_action( 'init', array($this, 'hotel_booking_cart_update') );
     }
 
     /**
@@ -232,7 +232,6 @@ class HB_Cart{
      */
     function add_to_cart( $room_id, $quantity = 1, $check_in_date,  $check_out_date ){
         $room = HB_Room::instance( $room_id );
-        $price = $room->get_price();
 
         $date = strtotime($check_in_date) . '_' . strtotime($check_out_date);
 
@@ -243,8 +242,8 @@ class HB_Cart{
         {
             $_SESSION['hb_cart']['products'][$date][$room_id] = array(
                     'id'            => $room_id,
+                    'search_key'    => $date,
                     'quantity'      => $quantity,
-                    'price'         => $price,
                     'check_in_date' => $check_in_date,
                     'check_out_date'=> $check_out_date
                 );
@@ -280,6 +279,38 @@ class HB_Cart{
 
     function is_empty(){
         return ! $this->get_rooms();
+    }
+
+    function hotel_booking_cart_update()
+    {
+        if( ! isset( $_POST ) )
+            return;
+
+        if( ! isset( $_POST['hotel_booking_cart'] ) )
+            return;
+
+        if( ! isset($_POST['hb_cart_field']) || ! wp_verify_nonce( $_POST['hb_cart_field'], 'hb_cart_field' ) )
+            return;
+
+        $cart_number = $_POST['hotel_booking_cart'];
+
+        if( ! isset( $_SESSION['hb_cart']['products'] ) )
+            return;
+
+        $products = $_SESSION['hb_cart']['products'];
+
+        foreach ($cart_number as $search_key => $rooms) {
+            if( ! array_key_exists( $search_key, $products) )
+                continue;
+
+            foreach ($rooms as $id => $quantity) {
+                if( ! isset( $products[$search_key][ $id ] )  )
+                    continue;
+
+                $_SESSION['hb_cart']['products'][$search_key][ $id ]['quantity'] = (int) $quantity;
+            }
+        }
+        // var_dump($_SESSION['hb_cart']['products']); die();
     }
 
     /**
