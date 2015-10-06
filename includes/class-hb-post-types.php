@@ -810,6 +810,26 @@ class HB_Post_Types{
         );
         register_post_type( 'hb_coupon', $args );
 
+        /**
+         * Register custom post type for hb_booking_item
+         */
+        $args = array(
+            'labels'             => array(),
+            'public'             => false,
+            'query_var'          => false,
+            'publicly_queryable' => false,
+            'show_ui'            => false,
+            'has_archive'        => false,
+            'map_meta_cap'       => true,
+            'show_in_menu'       => false,
+            'show_in_admin_bar'  => false,
+            'show_in_nav_menus'  => false,
+            'supports'           => array( 'title', 'author' ),
+            'hierarchical'       => false
+        );
+
+        register_post_type( 'hb_booking_item', $args );
+
         if( is_admin() ){
             TP_Hotel_Booking::instance()->_include( 'includes/walkers/class-hb-walker-room-type-dropdown.php' );
         }

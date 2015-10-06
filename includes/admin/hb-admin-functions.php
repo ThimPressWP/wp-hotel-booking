@@ -269,10 +269,6 @@ function hb_meta_box_coupon_settings_update_meta_value( $meta_value, $field_name
 add_filter( 'hb_meta_box_update_meta_value', 'hb_meta_box_coupon_settings_update_meta_value', 10, 4 );
 
 function hb_update_meta_box_room_settings( $post_id ){
-    // wp_set_object_terms( $post_id, intval( $_POST['_hb_room_type'] ), 'hb_room_type' ); // save taxonomy
-    //wp_set_object_terms( $post_id, intval( $_POST['room_capacity'] ), 'hb_room_capacity' );
-    //echo '<pre>';print_r($_POST);echo '</pre>';die();
-
     $adults = get_option( 'hb_taxonomy_capacity_' . $_POST['_hb_room_capacity'] );
     update_post_meta( $post_id, '_hb_max_adults_per_room', intval( $adults ) );
 }
@@ -294,22 +290,6 @@ function hb_bookings_meta_boxes() {
             'type'  => 'label',
             'std'   => '',
             'attr'  => 'readonly="readonly"'
-        ),
-        array(
-            'name'  => 'check_in_date',
-            'label' => __('Check-in date', 'tp-hotel-booking'),
-            'type'  => 'label',
-            'std'   => '',
-            'attr'  => 'readonly="readonly"',
-            'filter' => 'hb_meta_box_field_datetime'
-        ),
-        array(
-            'name'  => 'check_out_date',
-            'label' => __('Check-out date', 'tp-hotel-booking'),
-            'type'  => 'label',
-            'std'   => '',
-            'attr'  => 'readonly="readonly"',
-            'filter' => 'hb_meta_box_field_datetime'
         ),
         array(
             'name'  => 'total_nights',
@@ -334,7 +314,6 @@ function hb_bookings_meta_boxes() {
             'attr'  => 'readonly="readonly"',
             'filter' => 'hb_meta_box_field_price_including_tax'
         ),
-
         array(
             'name'  => 'sub_total',
             'label' => __('Sub Total', 'tp-hotel-booking'),
@@ -351,28 +330,13 @@ function hb_bookings_meta_boxes() {
             'attr'  => 'readonly="readonly"',
             'filter' => 'hb_meta_box_field_total'
         ),
-        /*array(
-            'name'  => 'room_id',
-            'label' => 'Room ID',
-            'type'  => 'multiple',
-            'std'   => '1',
-        ),*/
         array(
             'name'  => 'booking_status',
             'label' => 'Status',
             'std'   => 'hb-pending',
             'type'  => 'select',
             'filter' => 'hb_meta_box_field_booking_status',
-            'options' => hb_get_booking_statuses()/**array(
-                array(
-                    'value' => 'Pending',
-                    'text'  => __( 'Pending', 'tp-hotel-booking' )
-                ),
-                array(
-                    'value' => 'Complete',
-                    'text'  => __( 'Complete', 'tp-hotel-booking' )
-                )
-            )*/
+            'options' => hb_get_booking_statuses()
         )
     );
 }
@@ -487,9 +451,6 @@ function hb_booking_table_head( $default ) {
     unset($default['date']);
     $default['customer_name']   = __( 'Customer Name', 'tp-hotel-booking' );
 
-    //$default['check_in_date']   = __( 'Check-in Date', 'tp-hotel-booking' );
-    //$default['check_out_date']  = __( 'Check-out Date', 'tp-hotel-booking' );
-    $default['from_to']         = __( 'Check In/Out', 'tp-hotel-booking' );
     $default['booking_date']    = __( 'Booking Date', 'tp-hotel-booking' );
     $default['total']           = __( 'Total', 'tp-hotel-booking' );
     $default['title']           = __( 'ID', 'tp-hotel-booking' );
@@ -518,14 +479,6 @@ function hb_manage_booking_column( $column_name, $post_id ) {
             $first_name = get_post_meta( $customer_id, '_hb_first_name', true );
             $last_name = get_post_meta( $customer_id, '_hb_last_name', true );
             printf( '%s %s %s', $title ? $title : 'Cus.', $first_name, $last_name );
-            break;
-        case 'from_to':
-            $check_in_date = get_post_meta( $post_id, '_hb_check_in_date', true );
-            $check_in_date = date( _x( 'm/d/Y', 'Check-in date format', 'tp-hotel-booking' ), $check_in_date );
-
-            $check_out_date = get_post_meta( $post_id, '_hb_check_out_date', true );
-            $check_out_date = date( _x( 'm/d/Y', 'Check-out date format', 'tp-hotel-booking' ), $check_out_date );
-            printf( __( 'From <strong>%s</strong><br />To <strong>%s</strong>', 'tp-hotel-booking' ), $check_in_date, $check_out_date );
             break;
         case 'total':
             $total      = get_post_meta( $post_id, '_hb_total', true );

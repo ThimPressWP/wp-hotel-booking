@@ -1,4 +1,4 @@
-<?php 
+<?php
 $field = wp_parse_args(
     $field,
     array(

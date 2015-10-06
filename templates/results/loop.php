@@ -6,7 +6,9 @@ $featured = $gallery ? array_shift( $gallery ) : false;
 
     <form name="hb-search-results" class="hb-search-room-results">
 
-        <h4 class="hb-room-name"><?php echo $room->name;?> (<?php echo $room->capacity_title;?>)</h4>
+        <h4 class="hb-room-name">
+            <?php echo $room->name;?> (<?php echo $room->capacity_title;?>)
+        </h4>
         <div class="hb-room-content">
             <div class="hb-room-thumbnail">
                 <?php if( $featured ):?>

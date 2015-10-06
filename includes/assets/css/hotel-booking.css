@@ -55,6 +55,10 @@
     margin: 0;
     padding: 0;
 }
+.hb-form-table.col-2{
+    float: left;
+    width: 50%
+}
 .hb-form-field{
     margin: 0 0 20px 0;
 }
@@ -142,6 +146,7 @@
 }
 .hb-col-padding{
     padding: 20px;
+    overflow: hidden;
 }
 .hb-col-margin{
     margin: 20px;

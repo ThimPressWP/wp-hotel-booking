@@ -6,6 +6,7 @@ $booking_id = hb_get_request( 'id' );
     <h2><?php _e( 'Booking Details: ','tp-hotel-booking' ); echo hb_format_order_number( $booking_id );  ?></h2>
     <?php
     $booking = HB_Booking::instance( $booking_id );
+    $booking_details = $booking->booking_details_rooms($booking_id);
     if( ! $booking->post->ID ){
         _e( 'Invalid booking', 'tp-hotel-booking' );
         return;
@@ -65,27 +66,51 @@ $booking_id = hb_get_request( 'id' );
     </table>
     <table class="booking-details hb-booking-table">
         <thead>
-            <th colspan="4">
+            <th colspan="24">
                 <h3><?php _e( 'Booking Details', 'tp-hotel-booking') ?></h3>
             </th>
         </thead>
+        <thead>
+            <th colspan="4">
+                <h3><?php _e( 'Room Name', 'tp-hotel-booking') ?></h3>
+            </th>
+            <th colspan="4">
+                <h3><?php _e( 'Capacity', 'tp-hotel-booking') ?></h3>
+            </th>
+            <th colspan="4">
+                <h3><?php _e( 'Number of rooms', 'tp-hotel-booking') ?></h3>
+            </th>
+            <th colspan="4">
+                <h3><?php _e( 'Check - in', 'tp-hotel-booking') ?></h3>
+            </th>
+            <th colspan="4">
+                <h3><?php _e( 'Check - out', 'tp-hotel-booking') ?></h3>
+            </th>
+            <th colspan="4">
+                <h3><?php _e( 'Night', 'tp-hotel-booking') ?></h3>
+            </th>
+        </thead>
         <tbody>
-            <tr>
-                <th align="left"><?php _e( 'Check-in date ', 'tp-hotel-booking' ); ?></th>
-                <td colspan="3"><?php echo date( _x( 'F d, Y', 'Check-in date format', 'tp-hotel-booking' ), get_post_meta( $booking_id, '_hb_check_in_date', true ) ); ?></td>
-            </tr>
-            <tr>
-                <th align="left"><?php _e( 'Check-out date ', 'tp-hotel-booking' ); ?></th>
-                <td colspan="3"><?php echo date( _x( 'F d, Y', 'Check-in date format', 'tp-hotel-booking' ), get_post_meta( $booking_id, '_hb_check_out_date', true ) ); ?></td>
-            </tr>
-            <tr>
-                <th align="left"><?php _e( 'Total nights ', 'tp-hotel-booking' ); ?></th>
-                <td colspan="3"><?php echo get_post_meta( $booking_id, '_hb_total_nights', true ); ?></td>
-            </tr>
-            <tr>
-                <th align="left"><?php _e( 'Total rooms ', 'tp-hotel-booking' ); ?></th>
-                <td colspan="3"><?php echo get_post_meta( $booking_id, '_hb_total_nights', true ); ?></td>
-            </tr>
+            <?php foreach ($booking_details as $key => $details): ?>
+                <?php
+                    $roomID = (int)get_post_meta( $details->ID, '_hb_id', true );
+                    $check_out = (int)get_post_meta( $details->ID, '_hb_check_out_date', true );
+                    $check_in = (int)get_post_meta( $details->ID, '_hb_check_in_date', true );
+                    $room = HB_Room::instance( $roomID, array(
+                            'id'            => $roomID,
+                            'check_in_date' => $check_in,
+                            'check_out_date' => $check_out
+                        ) );
+                ?>
+                <tr>
+                    <td colspan="4"><?php echo $room->name;?> (<?php echo $room->capacity_title; ?>)</td>
+                    <td colspan="4"><?php echo sprintf( _n( '%d adult', '%d adults', HB_Room::instance($roomID)->capacity , 'tp-hotel-booking' ), HB_Room::instance($roomID)->capacity ); ?></td>
+                    <td colspan="4"><?php echo get_post_meta( $details->ID, '_hb_quantity', true ) ?></td>
+                    <td colspan="4"><?php echo date( _x( 'F d, Y', 'Check-in date format', 'tp-hotel-booking' ), $room->check_in_date ); ?></td>
+                    <td colspan="4"><?php echo date( _x( 'F d, Y', 'Check-in date format', 'tp-hotel-booking' ), $room->check_out_date ); ?></td>
+                    <td colspan="4"><?php echo hb_count_nights_two_dates( $room->check_out_date, $room->check_in_date ); ?></td>
+                </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
     <table class="hb-booking-rooms">
@@ -104,7 +129,6 @@ $booking_id = hb_get_request( 'id' );
         </thead>
         <tbody>
         <?php
-
         $_rooms = get_post_meta( $booking_id, '_hb_room_id' );
         $rooms = array();
         foreach( $_rooms as $room_id ){

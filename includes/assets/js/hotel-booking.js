@@ -202,6 +202,7 @@
                 success: function (code) {
                     try {
                         var response = parseJSON(code);
+                        console.debug(response); return;
                         if( response.result == 'success' ){
                             if( response.redirect != undefined ){
                                 window.location.href = response.redirect;

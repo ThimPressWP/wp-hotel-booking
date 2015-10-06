@@ -1,6 +1,7 @@
 <?php
 $cart = HB_Cart::instance();
 global $hb_settings;
+var_dump($_SESSION['hb_cart']['products']);
 ?>
 <div id="hotel-booking-payment">
 
@@ -23,8 +24,8 @@ global $hb_settings;
                             $sub_total = $room->get_total( $room->check_in_date, $room->check_out_date, $num_of_rooms, false );
                         ?>
                         <tr>
-                            <td><?php echo $room->name;?> (<?php echo $room->capacity_title;?>)</td>
-                            <td><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'tp-hotel-booking' ), $room->capacity );?> </td>
+                            <td><?php echo $room->name;?> (<?php echo $room->capacity_title; ?>)</td>
+                            <td><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'tp-hotel-booking' ), $room->capacity ); ?> </td>
                             <td><?php echo $num_of_rooms ?></td>
                             <td><?php echo $room->check_in_date ?></td>
                             <td><?php echo $room->check_out_date ?></td>
@@ -43,7 +44,7 @@ global $hb_settings;
                         $coupon = HB_Coupon::instance( $coupon );
                         ?>
                         <tr>
-                            <td colspan="3" class="hb-align-right" >
+                            <td colspan="6" class="hb-align-right" >
                                 <?php printf( __( 'Coupon applied: %s', 'tp-hotel-booking' ), $coupon->coupon_code );?>
                                 <p class="hb-remove-coupon" align="right">
                                     <a href="" id="hb-remove-coupon"><?php _e( 'Remove', 'tp-hotel-booking' );?></a>

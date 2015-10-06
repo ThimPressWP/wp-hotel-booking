@@ -45,7 +45,7 @@ global $hb_settings;
                         $coupon = HB_Coupon::instance( $coupon );
                         ?>
                         <tr>
-                            <td colspan="3" class="hb-align-right" >
+                            <td colspan="6" class="hb-align-right" >
                                 <?php printf( __( 'Coupon applied: %s', 'tp-hotel-booking' ), $coupon->coupon_code );?>
                                 <p class="hb-remove-coupon" align="right">
                                     <a href="" id="hb-remove-coupon"><?php _e( 'Remove', 'tp-hotel-booking' );?></a>
