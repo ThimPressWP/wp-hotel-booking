@@ -781,7 +781,7 @@
   background: url(../images/next.png) no-repeat center right;
 }
 /** Hotel booking result **/
-#hotel-booking-results form > h3 {
+#hotel-booking-results > h3 {
   font-size: 40px;
   color: #2a2a2a;
 }
@@ -806,11 +806,17 @@
   outline: none;
 }
 #hotel-booking-results .hb-search-results > .hb-room {
-  margin: 20px 0;
+  margin: 20px 0 30px;
 }
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-name {
   color: #2a2a2a;
   font-size: 24px;
+}
+#hotel-booking-results .hb-search-results > .hb-room .hb-room-thumbnail img {
+  max-width: 270px;
+}
+#hotel-booking-results .hb-search-results > .hb-room .hb-room-info {
+  margin-left: 300px;
 }
 #hotel-booking-results .hb-search-results > .hb-room .hb-view-booking-room-details {
   color: #ffb606;
@@ -819,10 +825,13 @@
   text-decoration: underline;
 }
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li {
-  margin-bottom: 4px;
+  margin-bottom: 10px;
 }
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li select {
   padding: 3px 20px 3px 5px;
+}
+#hotel-booking-results a:hover {
+  text-decoration: underline;
 }
 /** hotel-booking-payment **/
 #hotel-booking-payment h3 {
@@ -844,7 +853,7 @@
   margin: 10px 0 10px 5px;
 }
 #hotel-booking-payment input[type="number"] {
-  max-width: 40px;
+  max-width: 80px;
   text-align: center;
 }
 #hotel-booking-payment button[type="submit"],
