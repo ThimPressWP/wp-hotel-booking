@@ -116,6 +116,6 @@ global $hb_settings;
             </label>
         </p>
         <?php }?>
-        <p><button type="submit"><?php _e( 'Check out', 'tp-hotel-booking' );?></button></p>
+        <p><button type="submit" class="hb_button"><?php _e( 'Check out', 'tp-hotel-booking' );?></button></p>
     </form>
 </div>

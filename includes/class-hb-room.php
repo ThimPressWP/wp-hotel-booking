@@ -101,6 +101,9 @@ class HB_Room{
         static $fields = array();
         $return = '';
         switch( $key ){
+            case 'ID':
+                $return = $this->get_data('id');
+                break;
             case 'room_type':
                 // $return = intval( get_post_meta( $this->post->ID, '_hb_room_type', true ) );
                 $terms = get_the_terms( $this->post->ID, 'hb_room_type' );
@@ -175,6 +178,18 @@ class HB_Room{
             case 'check_out_date':
                 $return = $this->get_data('check_out_date');
                 break;
+            case 'in_to_out':
+                $return = strtotime($this->get_data('check_in_date')) . '_' . strtotime($this->get_data('check_out_date'));
+                break;
+            case 'quantity':
+                $return = $this->get_data('quantity');
+                break;
+            case 'total':
+                $return = $this->get_total($this->check_in_date, $this->check_out_date, $this->get_data( 'num_of_rooms' ), false);
+                break;
+            case 'total_tax':
+                $return = $this->get_total($this->check_in_date, $this->check_out_date, $this->get_data( 'num_of_rooms' ));
+                break;
         }
         return $return;
     }
@@ -201,7 +216,7 @@ class HB_Room{
             $alt = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
 
             $w = $this->_settings->get('room_thumbnail_width', 150);
-            $h = $this->_settings->get('room_thumbnail_width', 150);
+            $h = $this->_settings->get('room_thumbnail_height', 150);
 
             $size = apply_filters( 'hotel_booking_room_thumbnail_size', array( 'width' => $w, 'height' => $h ) );
             $thumb = $this->renderImage( $thumb_id, $size);
@@ -319,12 +334,11 @@ class HB_Room{
      * @return float|int
      */
     function get_total( $from = null, $to = null, $num_of_rooms = 1, $including_tax = true ){
-        $in_to_out = $this->get_data('in_to_out');
         $nights = 0;
         $total = 0;
         if( is_null( $from ) && is_null( $to ) ){
-            $to_time = (int)$in_to_out['check_out_date'];
-            $from_time = (int)$in_to_out['check_in_date'];
+            $to_time = (int)$this->check_out_date;
+            $from_time = (int)$this->check_in_date;
         }else {
             if (!is_numeric($from)) {
                 $from_time = strtotime($from);
@@ -343,7 +357,7 @@ class HB_Room{
         }
 
         if( ! $num_of_rooms ){
-            $num_of_rooms = intval( $this->get_data( 'quantity' ) );
+            $num_of_rooms = intval( $this->quantity );
         }
         if( ! $nights ){
             $nights = hb_count_nights_two_dates( $to_time, $from_time );
