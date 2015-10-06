@@ -49,6 +49,8 @@ $addition_information = '';
                     <input type="text" name="state" value="<?php echo $state;?>" placeholder="<?php _e( 'State', 'tp-hotel-booking' );?>" />
                 </div>
             </li>
+        </ul>
+        <ul class="hb-form-table">
             <li class="hb-form-field">
                 <label class="hb-form-field-label"><?php _e( 'Postal Code', 'tp-hotel-booking' );?><span class="hb-required">*</span></label>
                 <div class="hb-form-field-input">

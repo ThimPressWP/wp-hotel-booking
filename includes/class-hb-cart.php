@@ -428,8 +428,6 @@ function hb_generate_transaction_object( $customer_id ){
     $transaction_object->coupons_total_discount = '';
     $transaction_object->tax                    = hb_get_tax_settings();
     $transaction_object->price_including_tax    = hb_price_including_tax();
-    $transaction_object->check_in_date          = $cart->check_in_date;
-    $transaction_object->check_out_date         = $cart->check_out_date;
     $transaction_object->addition_information   = hb_get_request( 'addition_information' );
     $transaction_object->total_nights           = $cart->total_nights;
     $transaction_object->currency               = hb_get_currency();
@@ -536,8 +534,8 @@ function hb_create_booking( $args = array() ){
         'parent'        => 0
     );
     $args       = wp_parse_args( $args, $default_args );
-    if( is_null( $args['customer_id'] ) ){
-        $args['customer_id'] = absint( get_transient( 'hb_current_customer' ) );
+    if( is_null( $args['customer_id'] && isset( $_SESSION['hb_cart']['customer_id'] ) ) ){
+        $args['customer_id'] = absint( $_SESSION['hb_cart']['customer_id'] );
     }
 
     TP_Hotel_Booking::instance()->_include( 'includes/class-hb-room.php' );
@@ -559,21 +557,6 @@ function hb_create_booking( $args = array() ){
     $booking->post->post_content    = $transaction_object->addition_information;
     $booking->post->post_status     = 'hb-' . apply_filters( 'hb_default_order_status', 'pending' );
 
-
-    /*if ( $args['booking_id'] > 0 ) {
-        $updating         = true;
-        $booking_data['ID'] = $args['booking_id'];
-    } else {
-        $updating                    = false;
-        $booking_data['post_type']     = 'hb_booking';
-        $booking_data['post_status']   = 'hb-' . apply_filters( 'hb_default_order_status', 'pending' );
-        $booking_data['ping_status']   = 'closed';
-        $booking_data['post_author']   = 1;
-        $booking_data['post_password'] = uniqid( 'booking' );
-        $booking_data['post_title']    = sprintf( __( 'Booking &ndash; %s', 'tp-hotel-booking' ), strftime( _x( '%b %d, %Y @ %I:%M %p', 'Booking date parsed by strftime', 'tp-hotel-booking' ) ) );
-        $booking_data['post_parent']   = absint( $args['parent'] );
-    }*/
-
     if ( $args['status'] ) {
         if ( ! in_array( 'hb-' . $args['status'], array_keys( hb_get_booking_statuses() ) ) ) {
             return new WP_Error( 'hb_invalid_booking_status', __( 'Invalid booking status', 'tp-hotel-booking' ) );
@@ -582,20 +565,6 @@ function hb_create_booking( $args = array() ){
     }
 
     $booking_info = array(
-        /*'_hb_check_in_date'         => strtotime( $check_in ),
-        '_hb_check_out_date'        => strtotime( $check_out ),
-        '_hb_total_nights'          => $transaction_object->total_nights,
-        '_hb_tax'                   => $tax,
-        '_hb_price_including_tax'   => $price_including_tax ? 1 : 0,
-        '_hb_sub_total'             => $transaction_object->sub_total,
-        '_hb_total'                 => $transaction_object->total,
-        '_hb_advance_payment'       => $transaction_object->advance_payment,
-        '_hb_currency'              => $transaction_object->currency,
-        '_hb_customer_id'           => $args['customer_id'],
-        '_hb_method'                => $transaction['method'],
-        '_hb_method_title'          => hb_get_payment_method_title( $transaction['method'] ),
-        '_hb_method_id'             => $transaction['method_id'],
-        '_hb_booking_status'        => $transaction['status'],*/
         '_hb_booking_key'              => apply_filters( 'hb_generate_booking_key', uniqid( 'booking' ) )
     );
     if( ! empty( $transaction_object->coupon ) ){
@@ -606,28 +575,6 @@ function hb_create_booking( $args = array() ){
     );
 
     $booking_id = $booking->update();
-    /*if( $booking_id ){
-        $prices = array();
-        delete_post_meta( $booking_id, '_hb_room_id' );
-        if( $rooms ) foreach( $rooms as $room_options ){
-            $num_of_rooms = $room_options['quantity'];
-            // insert multiple meta value
-            for( $i = 0; $i < $num_of_rooms; $i ++ ) {
-                add_post_meta( $booking_id, '_hb_room_id', $room_options['id'] );
-            }
-            $room = HB_Room::instance( $room_options['id'] );
-            $room->set_data(
-                array(
-                    'num_of_rooms'      => $num_of_rooms,
-                    'check_in_date'     => $check_in,
-                    'check_out_date'    => $check_out
-                )
-            );
-            $prices[ $room_options['id'] ] = $room->get_total( $check_in, $check_out, $num_of_rooms, false );
-        }
-
-        add_post_meta( $booking_id, '_hb_room_price', $prices );
-    }*/
 
     return $booking_id;
 }
@@ -690,16 +637,6 @@ function hb_create_booking_2( $args = array() ){
     }
     if ( is_wp_error( $booking_id ) ) {
         return $booking_id;
-    }
-
-    if ( ! $updating ) {
-        //update_post_meta( $booking_id, '_order_key', 'wc_' . apply_filters( 'woocommerce_generate_order_key', uniqid( 'order_' ) ) );
-        /*update_post_meta( $booking_id, '_order_currency', get_woocommerce_currency() );
-        update_post_meta( $booking_id, '_prices_include_tax', get_option( 'woocommerce_prices_include_tax' ) );
-        update_post_meta( $booking_id, '_customer_ip_address', WC_Geolocation::get_ip_address() );
-        update_post_meta( $booking_id, '_customer_user_agent', isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '' );
-        update_post_meta( $booking_id, '_customer_user', 0 );
-        update_post_meta( $booking_id, '_created_via', sanitize_text_field( $args['created_via'] ) );*/
     }
 
     if ( is_numeric( $args['customer_id'] ) ) {
