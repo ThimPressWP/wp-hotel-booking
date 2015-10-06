@@ -310,6 +310,7 @@ class HB_Cart{
                 $_SESSION['hb_cart']['products'][$search_key][ $id ]['quantity'] = (int) $quantity;
             }
         }
+        return;
         // var_dump($_SESSION['hb_cart']['products']); die();
     }
 

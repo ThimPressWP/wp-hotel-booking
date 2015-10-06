@@ -5,7 +5,7 @@ global $hb_settings;
 <div id="hotel-booking-cart">
 
     <form id="hb-cart-form" method="post">
-        <h3><?php _e( 'Booking Rooms', 'tp-hotel-booking' );?></h3>
+        <h3><?php _e( 'Cart', 'tp-hotel-booking' );?></h3>
         <table class="hb_table">
             <thead>
                 <th><?php _e( 'Room type', 'tp-hotel-booking' );?></th>
@@ -92,16 +92,6 @@ global $hb_settings;
                     </td>
                     <td class="hb-align-right hb_advance_payment"><?php echo hb_format_price( $advance_payment );?></td>
                 </tr>
-                    <?php if( hb_get_advance_payment() < 100 ){?>
-                    <tr>
-                        <td colspan="7" class="hb-align-right">
-                            <label>
-                                <input type="checkbox" name="pay_all" />
-                                <?php _e( 'I want to pay all', 'tp-hotel-booking' );?>
-                            </label>
-                        </td>
-                    </tr>
-                    <?php }?>
                 <?php }?>
                 <tr>
                     <?php wp_nonce_field( 'hb_cart_field', 'hb_cart_field' );?>
