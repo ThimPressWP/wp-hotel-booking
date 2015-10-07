@@ -106,30 +106,6 @@ class HB_Shortcodes{
                 }
                 $template = 'checkout.php';
                 break;
-            case 'payment':
-                if( is_user_logged_in() ){
-                    global $current_user;
-                    get_currentuserinfo();
-
-                    $template_args['customer'] = hb_get_customer( $current_user->user_email );
-
-                }else{
-                    $template_args['customer'] = hb_create_empty_post();
-                    $template_args['customer']->data = array(
-                        'title'             => '',
-                        'first_name'        => '',
-                        'last_name'         => '',
-                        'address'           => '',
-                        'city'              => '',
-                        'state'             => '',
-                        'postal_code'       => '',
-                        'country'           => '',
-                        'phone'             => '',
-                        'fax'               => ''
-                    );
-                }
-                $template = 'payment.php';
-                break;
             case 'confirm':
                 $template = 'confirm.php';
                 break;

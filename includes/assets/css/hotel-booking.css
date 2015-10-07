@@ -54,6 +54,8 @@
     list-style: none;
     margin: 0;
     padding: 0;
+    float: left;
+    width: 50%
 }
 .hb-form-field{
     margin: 0 0 20px 0;
@@ -142,6 +144,7 @@
 }
 .hb-col-padding{
     padding: 20px;
+    overflow: hidden;
 }
 .hb-col-margin{
     margin: 20px;
@@ -1051,4 +1054,13 @@
 .ui-datepicker.ui-widget .ui-datepicker-calendar .ui-state-default:hover {
   color: #fff;
   background: #ffb606;
+}
+.hb_overlay_ajax{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-color: #fff;
+  opacity: 0.9;
 }

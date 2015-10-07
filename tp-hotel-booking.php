@@ -271,7 +271,7 @@ class TP_Hotel_Booking{
                 meta_key: {
                     prefix: '_hb_'
                 },
-                nonce: '<?php echo wp_create_nonce( 'hb-nonce' ); ?>'
+                nonce: '<?php echo wp_create_nonce( 'hb_booking_nonce_action' ); ?>'
             }
         </script>
     <?php

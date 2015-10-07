@@ -66,7 +66,10 @@ class HB_Checkout{
             throw new Exception( sprintf( __( 'Sorry, your session has expired. <a href="%s">Return to homepage</a>', 'tp-hotel-booking' ), home_url() ) );
         }
         // Insert or update the post data
-        $booking_id = absint( get_transient( 'booking_awaiting_payment' ) );
+        $booking_id = false;
+        if( isset( $_SESSION['hb_cart']['booking_id'] ) )
+            $booking_id = $_SESSION['hb_cart']['booking_id'];
+
         // Resume the unpaid order if its pending
         if ( $booking_id > 0 && ( $booking = HB_Booking::instance( $booking_id ) ) && $booking->post->ID && $booking->has_status( array( 'pending', 'failed' ) ) ) {
             $booking_data['ID'] = $booking_id;
@@ -98,6 +101,7 @@ class HB_Checkout{
             '_hb_method_title'          => $this->payment_method->title,
             '_hb_method_id'             => $this->payment_method->method_id
         );
+
         if( ! empty( $transaction_object->coupon ) ){
             $booking_info['_hb_coupon'] = $transaction_object->coupon;
         }
@@ -143,10 +147,6 @@ class HB_Checkout{
             return;
         }
 
-        /*if ( ! isset( $_POST['hb_customer_place_order_field'] ) || ! wp_verify_nonce( $_POST['hb_customer_place_order_field'], 'hb_customer_place_order' ) ){
-            return;
-        }*/
-
         $payment_method = hb_get_user_payment_method( hb_get_request( 'hb-payment-method' ) );
 
         if( ! $payment_method ){
@@ -159,7 +159,10 @@ class HB_Checkout{
             $booking_id = $this->create_booking();
             if( $booking_id ) {
                 if (HB_Cart::instance()->needs_payment()) {
-                    set_transient('booking_awaiting_payment', $booking_id, HOUR_IN_SECONDS);
+                    if( ! isset( $_SESSION['hb_cart']['booking_id']) )
+                    {
+                        $_SESSION['hb_cart']['booking_id'] = $booking_id;
+                    }
                     $result = $payment_method->process_checkout( $booking_id );
                 } else {
                     if (empty($booking)) {

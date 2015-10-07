@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 /**
  * Class HB_Ajax
  */
@@ -24,7 +24,8 @@ class HB_Ajax{
             'parse_booking_params'      => true,
             'apply_coupon'              => true,
             'remove_coupon'             => true,
-            'ajax_add_to_cart'          => true
+            'ajax_add_to_cart'          => true,
+            'ajax_remove_item_cart'     => true
         );
 
         foreach( $ajax_actions as $action => $priv ){
@@ -215,6 +216,32 @@ class HB_Ajax{
         {
             hb_send_json( array( 'status' => 'warning', 'message' => __('Room selected. Please View Cart to change order', 'tp-hotel-booking') ) );
         }
+    }
+
+    static function ajax_remove_item_cart()
+    {
+        if( ! check_ajax_referer( 'hb_booking_nonce_action', 'nonce' ) )
+            return;
+
+        if( ! isset( $_POST['time'] ) || ! isset( $_POST['room'] ) )
+            return;
+
+        $time_key = $_POST['time'];
+        $room_id = $_POST['room'];
+
+        if( ! isset($_SESSION['hb_cart']) || ! isset($_SESSION['hb_cart']['products']) )
+            return;
+
+        if( isset( $_SESSION['hb_cart']['products'][$time_key], $_SESSION['hb_cart']['products'][$time_key][$room_id] ) )
+            unset($_SESSION['hb_cart']['products'][$time_key][$room_id]);
+
+        $cart = HB_Cart::instance();
+        hb_send_json( array(
+                'status' => 'success',
+                'sub_total'  => hb_format_price( $cart->sub_total ),
+                'grand_total'   => hb_format_price( $cart->total ),
+                'advance_payment' => hb_format_price($cart->advance_payment)
+            ) );
     }
 
 }

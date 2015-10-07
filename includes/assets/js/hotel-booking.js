@@ -541,5 +541,42 @@
         });
 
         // var updateOrderButton
+        $(document).on('click', '.hb_remove_cart_item', function(e){
+            e.preventDefault();
+
+            var tr = $(this).parents('tr');
+            var dateID = $(this).attr('data-date');
+            var roomID = $(this).attr('data-id');
+            $.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                data: {
+                    time: dateID,
+                    room: roomID,
+                    nonce: hotel_settings.nonce,
+                    action: 'hotel_booking_ajax_remove_item_cart'
+                },
+                dataType: 'html',
+                beforeSend: function()
+                {
+                    tr.hb_overlay_ajax_start();
+                }
+            }).done( function( res ){
+                res = parseJSON(res);
+                if( typeof res.status === 'undefined' || res.status !== 'success' )
+                    alert( hotel_settings_language.waring.try_again );
+
+                if( typeof res.sub_total !== 'undefined' )
+                    $('.hb_sub_total').html( res.sub_total );
+
+                if( typeof res.grand_total !== 'undefined' )
+                    $('.hb_grand_total').html( res.grand_total );
+
+                if( typeof res.advance_payment !== 'undefined' )
+                    $('.hb_advance_payment').html( res.advance_payment );
+                tr.hb_overlay_ajax_stop();
+                tr.remove();
+            });
+        });
     });
 })((jQuery));
