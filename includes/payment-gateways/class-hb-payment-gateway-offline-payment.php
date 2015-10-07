@@ -200,29 +200,20 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
      * @param null $booking_id
      * @return array
      */
-    function process_checkout( $booking_id = null ){
+    function process_checkout( $booking_id = null, $customer_id = null ){
         $booking = HB_Booking::instance( $booking_id );
         if( $booking ){
             $booking->update_status( 'processing' );
         }
 
-        HB_Cart::instance()->empty_cart();
+        // HB_Cart::instance()->empty_cart();
 
-        return array(
-            'result'    => 'success',
-            'redirect'  => '?hotel-booking-offline-payment=1'
-        );
+        // return array(
+        //     'result'    => 'success',
+        //     'redirect'  => '?hotel-booking-offline-payment=1'
+        // );
 
-        $booking    = hb_generate_transaction_object( $customer_id );
-        $transaction = hb_add_transaction(
-            array(
-                'method'                => 'offline-payment',
-                'method_id'             => 'N/A',
-                'status'                => 'Pending',
-                'customer_id'           => $customer_id,
-                'transaction_object'    => $booking
-            )
-        );
+        $booking    = hb_generate_transaction_object( );
 
         $settings = HB_Settings::instance()->get('offline-payment');
         $email_subject = ! empty( $settings['email_subject'] ) ? $settings['email_subject'] : false;
@@ -244,7 +235,8 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
                 $email_content = preg_replace( '!\{\{site_name\}\}!', get_bloginfo( 'name' ), $email_content );
             }
             if ( preg_match( '!{{booking_details}}!', $email_content ) ) {
-                $booking_details = $this->booking_details( $transaction );
+                // $booking_details = $this->booking_details( $transaction );
+                $booking_details = $this->booking_details( $booking_id );
                 $email_content = preg_replace( '!\{\{booking_details\}\}!', $booking_details, $email_content );
             }
 

@@ -404,7 +404,8 @@ function hb_get_return_url(){
  * @param $customer_id
  * @return stdClass
  */
-function hb_generate_transaction_object( $customer_id ){
+// function hb_generate_transaction_object( $customer_id ){
+function hb_generate_transaction_object( ){
     $cart = HB_Cart::instance();
     if( $cart->is_empty() ) return false;
     $rooms = array();

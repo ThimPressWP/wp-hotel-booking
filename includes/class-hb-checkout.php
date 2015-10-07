@@ -159,7 +159,7 @@ class HB_Checkout{
                     {
                         $_SESSION['hb_cart']['booking_id'] = $booking_id;
                     }
-                    $result = $payment_method->process_checkout( $booking_id );
+                    $result = $payment_method->process_checkout( $booking_id , $customer_id );
                 } else {
                     if (empty($booking)) {
                         $booking = HB_Booking::instance($booking_id);
