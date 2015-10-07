@@ -247,6 +247,7 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
             remove_filter('wp_mail_content_type', array($this, 'set_html_content_type'));
 
             hb_add_message( sprintf( __( 'Thank you! Your booking has been placed. Please check your email %s to view booking details', 'tp-hotel-booking' ), $to ) );
+            HB_Cart::instance()->empty_cart();
             return array(
                 'result'    => 'success',
                 'r'         => $return,
