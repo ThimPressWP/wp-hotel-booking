@@ -518,17 +518,6 @@ class HB_Post_Types{
                 $content = sprintf( '<input class="hb-number-field" type="number" name="%s_ordering[%d]" value="%d" size="3" />', $taxonomy, $term_id, $term->term_group );
                 break;
             case 'thumbnail':
-                /*$thumb_id = get_option( 'hb_taxonomy_thumbnail_' . $term_id );
-                $content = '<div class="hb-taxonomy-thumbnail-selector' . ( $thumb_id ? ' has-attachment' : '') . '" data-id="' . $term_id . '" data-taxonomy="'.$taxonomy.'">';
-                if( $thumb_id ){
-                    if( $thumb = wp_get_attachment_image_src( $thumb_id ) ) {
-                        $content .= '<img src="' . $thumb[0] . '" />';
-                        $content .= '<input type="hidden" name="' . $taxonomy . '_thumbnail[' . $term_id . ']" value="' . $thumb_id . '" />';
-                    }
-                }else{
-                    $content .= '<input type="hidden" name="' . $taxonomy . '_thumbnail[' . $term_id . ']" value="0" />';
-                }
-                $content .= '</div>';*/
                 $attachments = get_option( 'hb_taxonomy_thumbnail_' . $term_id );
                 $count = is_array( $attachments ) ? sizeof( $attachments ) : 0;
                 if( $count > 0 ) {
@@ -809,6 +798,26 @@ class HB_Post_Types{
             'hierarchical'       => false
         );
         register_post_type( 'hb_coupon', $args );
+
+        /**
+         * Register custom post type for hb_booking_item
+         */
+        $args = array(
+            'labels'             => array(),
+            'public'             => false,
+            'query_var'          => false,
+            'publicly_queryable' => false,
+            'show_ui'            => false,
+            'has_archive'        => false,
+            'map_meta_cap'       => true,
+            'show_in_menu'       => false,
+            'show_in_admin_bar'  => false,
+            'show_in_nav_menus'  => false,
+            'supports'           => array( 'title', 'author' ),
+            'hierarchical'       => false
+        );
+
+        register_post_type( 'hb_booking_item', $args );
 
         if( is_admin() ){
             TP_Hotel_Booking::instance()->_include( 'includes/walkers/class-hb-walker-room-type-dropdown.php' );

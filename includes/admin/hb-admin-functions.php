@@ -269,10 +269,6 @@ function hb_meta_box_coupon_settings_update_meta_value( $meta_value, $field_name
 add_filter( 'hb_meta_box_update_meta_value', 'hb_meta_box_coupon_settings_update_meta_value', 10, 4 );
 
 function hb_update_meta_box_room_settings( $post_id ){
-    // wp_set_object_terms( $post_id, intval( $_POST['_hb_room_type'] ), 'hb_room_type' ); // save taxonomy
-    //wp_set_object_terms( $post_id, intval( $_POST['room_capacity'] ), 'hb_room_capacity' );
-    //echo '<pre>';print_r($_POST);echo '</pre>';die();
-
     $adults = get_option( 'hb_taxonomy_capacity_' . $_POST['_hb_room_capacity'] );
     update_post_meta( $post_id, '_hb_max_adults_per_room', intval( $adults ) );
 }
@@ -294,22 +290,6 @@ function hb_bookings_meta_boxes() {
             'type'  => 'label',
             'std'   => '',
             'attr'  => 'readonly="readonly"'
-        ),
-        array(
-            'name'  => 'check_in_date',
-            'label' => __('Check-in date', 'tp-hotel-booking'),
-            'type'  => 'label',
-            'std'   => '',
-            'attr'  => 'readonly="readonly"',
-            'filter' => 'hb_meta_box_field_datetime'
-        ),
-        array(
-            'name'  => 'check_out_date',
-            'label' => __('Check-out date', 'tp-hotel-booking'),
-            'type'  => 'label',
-            'std'   => '',
-            'attr'  => 'readonly="readonly"',
-            'filter' => 'hb_meta_box_field_datetime'
         ),
         array(
             'name'  => 'total_nights',
@@ -334,7 +314,6 @@ function hb_bookings_meta_boxes() {
             'attr'  => 'readonly="readonly"',
             'filter' => 'hb_meta_box_field_price_including_tax'
         ),
-
         array(
             'name'  => 'sub_total',
             'label' => __('Sub Total', 'tp-hotel-booking'),
@@ -351,28 +330,20 @@ function hb_bookings_meta_boxes() {
             'attr'  => 'readonly="readonly"',
             'filter' => 'hb_meta_box_field_total'
         ),
-        /*array(
-            'name'  => 'room_id',
-            'label' => 'Room ID',
-            'type'  => 'multiple',
-            'std'   => '1',
-        ),*/
         array(
             'name'  => 'booking_status',
             'label' => 'Status',
             'std'   => 'hb-pending',
             'type'  => 'select',
             'filter' => 'hb_meta_box_field_booking_status',
-            'options' => hb_get_booking_statuses()/**array(
-                array(
-                    'value' => 'Pending',
-                    'text'  => __( 'Pending', 'tp-hotel-booking' )
-                ),
-                array(
-                    'value' => 'Complete',
-                    'text'  => __( 'Complete', 'tp-hotel-booking' )
-                )
-            )*/
+            'options' => hb_get_booking_statuses()
+        ),
+        array(
+            'name'  => 'advance_payment',
+            'label' => 'Advance Payment (50% of Grand Total)',
+            'std'   => '',
+            'type'  => 'label',
+            'filter' => 'hb_meta_box_field_sub_total'
         )
     );
 }

@@ -23,8 +23,8 @@ global $hb_settings;
                             $sub_total = $room->get_total( $room->check_in_date, $room->check_out_date, $num_of_rooms, false );
                         ?>
                         <tr>
-                            <td><?php echo $room->name;?> (<?php echo $room->capacity_title;?>)</td>
-                            <td><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'tp-hotel-booking' ), $room->capacity );?> </td>
+                            <td><?php echo $room->name;?> (<?php echo $room->capacity_title; ?>)</td>
+                            <td><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'tp-hotel-booking' ), $room->capacity ); ?> </td>
                             <td><?php echo $num_of_rooms ?></td>
                             <td><?php echo $room->check_in_date ?></td>
                             <td><?php echo $room->check_out_date ?></td>

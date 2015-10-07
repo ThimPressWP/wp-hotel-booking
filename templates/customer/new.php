@@ -17,7 +17,7 @@ $addition_information = '';
 <div class="hb-order-new-customer" id="hb-order-new-customer">
     <div class="hb-col-padding hb-col-border">
         <h4><?php _e( 'New Customer', 'tp-hotel-booking' );?></h4>
-        <ul class="hb-form-table">
+        <ul class="hb-form-table col-2">
             <li class="hb-form-field">
                 <label class="hb-form-field-label"><?php _e( 'Title', 'tp-hotel-booking' );?><span class="hb-required">*</span> </label>
                 <div class="hb-form-field-input">
@@ -50,7 +50,7 @@ $addition_information = '';
                 </div>
             </li>
         </ul>
-        <ul class="hb-form-table">
+        <ul class="hb-form-table col-2">
             <li class="hb-form-field">
                 <label class="hb-form-field-label"><?php _e( 'Postal Code', 'tp-hotel-booking' );?><span class="hb-required">*</span></label>
                 <div class="hb-form-field-input">

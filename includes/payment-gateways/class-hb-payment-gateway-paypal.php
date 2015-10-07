@@ -140,15 +140,6 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
 
                         if ( $transaction_object = hb_get_transient_transaction( 'hbps', $transient_transaction_id ) ) {
                             hb_delete_transient_transaction( 'hbps', $transient_transaction_id  );
-                            $booking_id = hb_add_transaction(
-                                array(
-                                    'method'    => 'paypal-standard',
-                                    'method_id' => $transaction_id,
-                                    'status'    => $transaction_status,
-                                    'customer_id'   => $transaction_object['customer_id'],
-                                    'transaction_object' => $transaction_object['transaction_object']
-                                )
-                            );
                         }
                     }
                     catch ( Exception $e ) {
@@ -177,18 +168,6 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         if ( 'VERIFIED' === $body ) {
             if ( ! empty( $request['txn_type'] ) ) {
 
-                /*if ( ! empty( $request['transaction_subject'] ) && $transient_data = hb_get_transient_transaction( 'hbps', $request['transaction_subject'] ) ) {
-                    hb_delete_transient_transaction( 'hbps', $request['transaction_subject'] );
-                    $transaction = hb_add_transaction(
-                        array(
-                            'method'                => 'paypal-standard',
-                            'method_id'             => $request['txn_id'],
-                            'status'                => $request['payment_status'],
-                            'customer_id'           => $transient_data['customer_id'],
-                            'transaction_object'    => $transient_data['transaction_object']
-                        )
-                    );
-                }*/
                 switch ( $request['txn_type'] ) {
                     case 'web_accept':
                         if ( ! empty( $request['custom'] ) && ( $booking = $this->get_booking( $request['custom'] ) ) ) {

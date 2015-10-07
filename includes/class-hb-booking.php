@@ -124,7 +124,6 @@ class HB_Booking{
      */
     function update(){
         $post_data = get_object_vars($this->post);
-
         // ensure the post_type is correct
         $post_data['post_type']     = 'hb_booking';
         if ($this->post->ID) {
@@ -142,6 +141,30 @@ class HB_Booking{
         }
         $this->id = $this->post->ID;
         return $this->post->ID;
+    }
+
+    function save_room( $params = array(), $booking_id )
+    {
+        $itemOfOrderId = wp_insert_post( array(
+                    'post_title'    => sprintf( 'Room order in %1$s to %2$s', $params['check_in_date'], $params['check_out_date']),
+                    'post_content'  => '',
+                    'post_status'   => 'publish',
+                    'post_type'     => 'hb_booking_item'
+            ) );
+
+        add_post_meta( $itemOfOrderId, '_hb_booking_id', $booking_id );
+
+        $check_in_time = strtotime( $params['check_in_date'] );
+        $check_out_time = strtotime( $params['check_out_date'] );
+
+        add_post_meta( $itemOfOrderId, '_hb_check_in_date', $check_in_time );
+        add_post_meta( $itemOfOrderId, '_hb_check_out_date', $check_out_time );
+
+        unset($params['check_in_date']);
+        unset($params['check_out_date']);
+        foreach ($params as $key => $value) {
+            add_post_meta( $itemOfOrderId, '_hb_' . $key, $value );
+        }
     }
 
     /**
@@ -241,6 +264,21 @@ class HB_Booking{
         $received_url = hb_get_endpoint_url( 'booking-received', $this->id, hb_get_page_permalink( 'search' ) );
         $received_url = add_query_arg( 'key', $this->booking_key, $received_url );
         return apply_filters( 'hb_get_checkout_booking_received_url', $received_url, $this );
+    }
+
+    function booking_details_rooms( $booking_id = null )
+    {
+        $args = array(
+                'post_type'     => 'hb_booking_item',
+                'status'        => 'publish',
+                'meta_query'    => array(
+                        array(
+                                'meta_key'      => '_hb_booking_id',
+                                'meta_value'    => $booking_id
+                            )
+                    )
+            );
+        return get_posts( $args );
     }
 
     /**

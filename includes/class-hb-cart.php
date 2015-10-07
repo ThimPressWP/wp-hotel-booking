@@ -111,9 +111,14 @@ class HB_Cart{
      * @return int
      */
     function get_total_nights(){
-        $start_date = $this->get_option( 'check_in_date' );
-        $end_date = $this->get_option( 'check_out_date' );
-        $total_nights = hb_count_nights_two_dates( $end_date, $start_date );
+        $total_nights = 0;
+
+        $rooms = $this->get_rooms();
+        if( $rooms = $this->get_rooms() ){
+            foreach( $rooms as $id => $room ){
+                $total_nights += hb_count_nights_two_dates( $room->check_out_date, $room->check_in_date );
+            }
+        }
         return apply_filters( 'hb_cart_total_nights', $total_nights );
     }
 
@@ -399,8 +404,8 @@ function hb_get_return_url(){
  * @param $customer_id
  * @return stdClass
  */
-function hb_generate_transaction_object( $customer_id ){
-    $customer = hb_get_customer( $customer_id );
+// function hb_generate_transaction_object( $customer_id ){
+function hb_generate_transaction_object( ){
     $cart = HB_Cart::instance();
     if( $cart->is_empty() ) return false;
     $rooms = array();
@@ -409,12 +414,17 @@ function hb_generate_transaction_object( $customer_id ){
             $rooms[ $key ] = array(
                 'id'                => $room->post->ID,
                 'base_price'        => $room->get_price(),
-                'quantity'          => $room->num_of_rooms,
+                'quantity'          => $room->quantity,
                 'name'              => $room->name,
-                'sub_total'         => $room->get_total( $room->check_in_date, $room->check_out_date, $room->num_of_rooms )
+                'check_in_date'     => $room->check_in_date,
+                'check_out_date'    => $room->check_out_date,
+                'sub_total'         => $room->get_total( $room->check_in_date, $room->check_out_date, $room->num_of_rooms, false )
             );
         }
     }
+
+    if( ! $rooms )
+        return;
 
     $transaction_object = new stdClass();
     $transaction_object->cart_id                = $cart->get_cart_id();
@@ -510,16 +520,6 @@ function hb_delete_transient_transaction( $method, $temp_id ) {
 }
 
 /**
- * Add booking
- *
- * @param $transaction
- * @return mixed
- */
-function hb_add_transaction( $transaction ){
-    return hb_add_booking( $transaction );
-}
-
-/**
  * Creates new booking
  *
  * @param array $args
@@ -540,20 +540,14 @@ function hb_create_booking( $args = array() ){
 
     TP_Hotel_Booking::instance()->_include( 'includes/class-hb-room.php' );
 
-    $transaction = hb_generate_transaction_object( $args['customer_id'] );//hb_generate_transaction_object( $args['customer_id'] );
-
-    //$transaction_object     = $transaction['transaction_object'];
-
     $transaction_object = hb_generate_transaction_object( $args['customer_id'] );
 
-    $check_in               = $transaction_object->check_in_date;
-    $check_out              = $transaction_object->check_out_date;
     $tax                    = $transaction_object->tax;
     $price_including_tax    = $transaction_object->price_including_tax;
     $rooms                  = $transaction_object->rooms;
 
     $booking = HB_Booking::instance( $args['booking_id'] );
-    $booking->post->post_title      = sprintf( __( 'Booking from %s to %s', 'tp-hotel-booking' ), $check_in, $check_out );
+    $booking->post->post_title      = sprintf( __( 'Booking ', 'tp-hotel-booking' ) );
     $booking->post->post_content    = $transaction_object->addition_information;
     $booking->post->post_status     = 'hb-' . apply_filters( 'hb_default_order_status', 'pending' );
 

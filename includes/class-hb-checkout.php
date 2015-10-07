@@ -62,6 +62,7 @@ class HB_Checkout{
         $customer_id = get_transient( 'hb_current_customer' );
 
         $transaction_object = hb_generate_transaction_object( $customer_id );
+
         if( ! $transaction_object ){
             throw new Exception( sprintf( __( 'Sorry, your session has expired. <a href="%s">Return to homepage</a>', 'tp-hotel-booking' ), home_url() ) );
         }
@@ -76,19 +77,15 @@ class HB_Checkout{
             $booking_data['post_content'] = hb_get_request( 'addition_information' );
             $booking->set_booking_info( $booking_data );
         } else {
-            $booking_id = hb_create_booking( );
+            $booking_id = hb_create_booking();
             $booking = HB_Booking::instance( $booking_id );
         }
-        $check_in               = $transaction_object->check_in_date;
-        $check_out              = $transaction_object->check_out_date;
         $tax                    = $transaction_object->tax;
         $price_including_tax    = $transaction_object->price_including_tax;
         $rooms                  = $transaction_object->rooms;
 
         // booking meta data
         $booking_info = array(
-            '_hb_check_in_date'         => strtotime( $check_in ),
-            '_hb_check_out_date'        => strtotime( $check_out ),
             '_hb_total_nights'          => $transaction_object->total_nights,
             '_hb_tax'                   => $tax,
             '_hb_price_including_tax'   => $price_including_tax ? 1 : 0,
@@ -113,21 +110,20 @@ class HB_Checkout{
         if( $booking_id ){
             $prices = array();
             delete_post_meta( $booking_id, '_hb_room_id' );
-            if( $rooms ) foreach( $rooms as $room_options ){
-                $num_of_rooms = $room_options['quantity'];
-                // insert multiple meta value
-                for( $i = 0; $i < $num_of_rooms; $i ++ ) {
-                    add_post_meta( $booking_id, '_hb_room_id', $room_options['id'] );
+            if( $rooms )
+            {
+                foreach( $rooms as $room_options ){
+                    $num_of_rooms = $room_options['quantity'];
+                    // insert multiple meta value
+                    for( $i = 0; $i < $num_of_rooms; $i ++ ) {
+                        add_post_meta( $booking_id, '_hb_room_id', $room_options['id'] );
+                    }
+                    $room = HB_Room::instance( $room_options['id'], $room_options);
+                    $prices[ $room_options['id'] ] = $room_options['sub_total'];
+
+                    // create post save item of order
+                    $booking->save_room( $room_options, $booking_id );
                 }
-                $room = HB_Room::instance( $room_options['id'] );
-                $room->set_data(
-                    array(
-                        'num_of_rooms'      => $num_of_rooms,
-                        'check_in_date'     => $check_in,
-                        'check_out_date'    => $check_out
-                    )
-                );
-                $prices[ $room_options['id'] ] = $room->get_total( $check_in, $check_out, $num_of_rooms, false );
             }
 
             add_post_meta( $booking_id, '_hb_room_price', $prices );
@@ -163,7 +159,7 @@ class HB_Checkout{
                     {
                         $_SESSION['hb_cart']['booking_id'] = $booking_id;
                     }
-                    $result = $payment_method->process_checkout( $booking_id );
+                    $result = $payment_method->process_checkout( $booking_id , $customer_id );
                 } else {
                     if (empty($booking)) {
                         $booking = HB_Booking::instance($booking_id);
