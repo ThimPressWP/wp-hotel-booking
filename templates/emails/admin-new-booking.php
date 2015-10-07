@@ -55,7 +55,7 @@ foreach( $_rooms as $id ){
         </tr>
         <tr class="booking-table-row">
             <td class="bold-text"><?php _e( 'Check In Date', 'tp-hotel-booking' );?></td>
-            <td colspan="3"><?php //echo date( 'l d M Y', $check_in );?></td>
+            <td colspan="3"><?php //echo date( 'l d M Y', $check_in ); ?></td>
         </tr>
         <tr class="booking-table-row">
             <td class="bold-text"><?php _e( 'Check Out Date', 'tp-hotel-booking' );?></td>

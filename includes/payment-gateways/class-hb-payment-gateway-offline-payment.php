@@ -81,8 +81,6 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
         $last_name = get_post_meta($customer_id, '_hb_last_name', true);
         $customer_name = sprintf('%s %s %s', $title ? $title : 'Cus.', $first_name, $last_name);
 
-        $check_in = intval( get_post_meta( $booking_id, '_hb_check_in_date', true ) );
-        $check_out = intval( get_post_meta( $booking_id, '_hb_check_out_date', true ) );
         $currency = hb_get_currency_symbol( get_post_meta( $booking_id, '_hb_currency', true ) );
         $_rooms = get_post_meta( $booking_id, '_hb_room_id' );
         $rooms = array();
@@ -106,14 +104,6 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
                         <?php _e( 'Customer Name', 'tp-hotel-booking' );?>
                     </td>
                     <td colspan="3" ><?php echo $customer_name;?></td>
-                </tr>
-                <tr style="background-color: #FFFFFF;">
-                    <td style="font-weight: bold;"><?php _e( 'Check In Date', 'tp-hotel-booking' );?></td>
-                    <td colspan="3"><?php echo date( 'l d M Y', $check_in );?></td>
-                </tr>
-                <tr style="background-color: #FFFFFF;">
-                    <td style="font-weight: bold;"><?php _e( 'Check Out Date', 'tp-hotel-booking' );?></td>
-                    <td colspan="3"><?php echo date( 'l d M Y', $check_out );?></td>
                 </tr>
                 <tr style="background-color: #FFFFFF;">
                     <td style="font-weight: bold;"><?php _e( 'Total Nights', 'tp-hotel-booking' );?></td>
@@ -162,7 +152,7 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
                     <td style="text-align: right;">
                         <?php
                         $room = HB_Room::instance( $id );
-                        echo hb_format_price( $room->get_total( $check_in, $check_out, $num_of_rooms, false ), $currency );
+                        echo hb_format_price( $room->get_total( $room->check_in_date, $room->check_out_date, $num_of_rooms, false ), $currency );
                         ?>
                     </td>
                 </tr>

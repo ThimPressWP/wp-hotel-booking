@@ -149,7 +149,7 @@ $booking_id = hb_get_request( 'id' );
                     )
                 );
             $term = get_term( $room->room_type, 'hb_room_type' );
-            if( $term ){
+            if( $term && isset($term->name) ){
                 $room_type = $term->name;
             }else{
                 $room_type = __( 'Unknown', 'tp-hotel-booking' );
@@ -184,7 +184,7 @@ $booking_id = hb_get_request( 'id' );
             </tr>
             <tr>
                 <th colspan="3" align="left"><?php _e( 'Total', 'tp-hotel-booking' ); ?></th>
-                <td align="right"><?php echo hb_format_price( get_post_meta( $booking_id, '_hb_total', true ), $currency_symbol ); ?></td>
+                <td align="right"><?php //echo hb_format_price( get_post_meta( $booking_id, '_hb_total', true ), $currency_symbol ); ?></td>
             </tr>
         </tbody>
     </table>

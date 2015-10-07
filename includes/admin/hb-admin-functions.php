@@ -852,6 +852,11 @@ function hb_booking_detail_page() {
     }
 }
 
+function hb_booking_load_detail_page( $booking_id )
+{
+    TP_Hotel_Booking::instance()->_include( 'includes/admin/views/booking-details.php' );
+}
+
 function hb_meta_box_field_datetime( $value ){
     return date( 'l, m/d/Y', $value );
 }

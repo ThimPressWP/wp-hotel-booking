@@ -138,7 +138,6 @@ class HB_Checkout{
      * @throws Exception
      */
     function process_checkout(){
-
         if( strtolower( $_SERVER['REQUEST_METHOD'] ) != 'post' ){
             return;
         }
