@@ -709,6 +709,12 @@
 .hb_single_room #reviews #review_form_wrapper {
   margin-top: 30px;
 }
+.hb_single_room #reviews #review_form_wrapper form input {
+  min-height: 40px;
+  border: 1px solid #ddd;
+  text-shadow: none;
+  box-shadow: none;
+}
 .hb_single_room #reviews #review_form_wrapper form p {
   margin-bottom: 20px;
 }
@@ -765,7 +771,6 @@
 .hb_related_other_room li.hb_room {
   padding: 0 15px;
   min-width: 300px;
-  max-width: 300px;
 }
 .hb_related_other_room .navigation {
   width: auto;
@@ -1054,13 +1059,4 @@
 .ui-datepicker.ui-widget .ui-datepicker-calendar .ui-state-default:hover {
   color: #fff;
   background: #ffb606;
-}
-.hb_overlay_ajax{
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  background-color: #fff;
-  opacity: 0.9;
 }
