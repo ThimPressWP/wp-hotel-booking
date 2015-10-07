@@ -520,16 +520,6 @@ function hb_delete_transient_transaction( $method, $temp_id ) {
 }
 
 /**
- * Add booking
- *
- * @param $transaction
- * @return mixed
- */
-function hb_add_transaction( $transaction ){
-    return hb_add_booking( $transaction );
-}
-
-/**
  * Creates new booking
  *
  * @param array $args
