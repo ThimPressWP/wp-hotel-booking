@@ -337,6 +337,13 @@ function hb_bookings_meta_boxes() {
             'type'  => 'select',
             'filter' => 'hb_meta_box_field_booking_status',
             'options' => hb_get_booking_statuses()
+        ),
+        array(
+            'name'  => 'advance_payment',
+            'label' => 'Advance Payment (50% of Grand Total)',
+            'std'   => '',
+            'type'  => 'label',
+            'filter' => 'hb_meta_box_field_sub_total'
         )
     );
 }

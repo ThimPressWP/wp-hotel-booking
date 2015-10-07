@@ -111,9 +111,14 @@ class HB_Cart{
      * @return int
      */
     function get_total_nights(){
-        $start_date = $this->get_option( 'check_in_date' );
-        $end_date = $this->get_option( 'check_out_date' );
-        $total_nights = hb_count_nights_two_dates( $end_date, $start_date );
+        $total_nights = 0;
+
+        $rooms = $this->get_rooms();
+        if( $rooms = $this->get_rooms() ){
+            foreach( $rooms as $id => $room ){
+                $total_nights += hb_count_nights_two_dates( $room->check_out_date, $room->check_in_date );
+            }
+        }
         return apply_filters( 'hb_cart_total_nights', $total_nights );
     }
 

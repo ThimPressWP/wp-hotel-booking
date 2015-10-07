@@ -62,6 +62,7 @@ class HB_Checkout{
         $customer_id = get_transient( 'hb_current_customer' );
 
         $transaction_object = hb_generate_transaction_object( $customer_id );
+
         if( ! $transaction_object ){
             throw new Exception( sprintf( __( 'Sorry, your session has expired. <a href="%s">Return to homepage</a>', 'tp-hotel-booking' ), home_url() ) );
         }

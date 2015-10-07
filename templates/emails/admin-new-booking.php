@@ -40,16 +40,13 @@ foreach( $_rooms as $id ){
 
 <table class="booking-table" cellpadding="5" cellspacing="1">
     <thead>
-        <tr>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
         <tr class="booking-table-head">
             <td colspan="4">
                 <h3><?php printf( __( 'Booking Details %s', 'tp-hotel-booking' ), hb_format_order_number( $booking_id ) );?></h3>
             </td>
         </tr>
+    </thead>
+    <tbody>
         <tr class="booking-table-row">
             <td class="bold-text">
                 <?php _e( 'Customer Name', 'tp-hotel-booking' );?>
@@ -58,11 +55,11 @@ foreach( $_rooms as $id ){
         </tr>
         <tr class="booking-table-row">
             <td class="bold-text"><?php _e( 'Check In Date', 'tp-hotel-booking' );?></td>
-            <td colspan="3"><?php echo date( 'l d M Y', $check_in );?></td>
+            <td colspan="3"><?php //echo date( 'l d M Y', $check_in );?></td>
         </tr>
         <tr class="booking-table-row">
             <td class="bold-text"><?php _e( 'Check Out Date', 'tp-hotel-booking' );?></td>
-            <td colspan="3"><?php echo date( 'l d M Y', $check_out );?></td>
+            <td colspan="3"><?php //echo date( 'l d M Y', $check_out );?></td>
         </tr>
         <tr class="booking-table-row">
             <td class="bold-text"><?php _e( 'Total Nights', 'tp-hotel-booking' );?></td>
@@ -111,7 +108,7 @@ foreach( $_rooms as $id ){
                 <td class="text-align-right">
                     <?php
                     $room = HB_Room::instance( $id );
-                    echo hb_format_price( $room->get_total( $check_in, $check_out, $num_of_rooms, false ), $currency );
+                    //echo hb_format_price( $room->get_total( $check_in, $check_out, $num_of_rooms, false ), $currency );
                     ?>
                 </td>
             </tr>
