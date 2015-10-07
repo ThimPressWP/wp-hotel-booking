@@ -54,6 +54,8 @@
     list-style: none;
     margin: 0;
     padding: 0;
+    float: left;
+    width: 50%
 }
 .hb-form-table.col-2{
     float: left;
@@ -502,6 +504,11 @@
 .rooms .hb_room .price span.title-price {
   display: none;
 }
+.rooms .hb_room .rating {
+  position: absolute;
+  bottom: 7px;
+  right: 15px;
+}
 /** Rooms pagination **/
 .rooms-pagination .page-numbers {
   list-style: none;
@@ -597,29 +604,34 @@
 }
 .hb_single_room .hb_room_gallery .camera_thumbs .camera_thumbs_cont {
   background: transparent;
+  width: auto;
+  margin: 0 -6px;
 }
 .hb_single_room .hb_room_gallery .camera_thumbs .camera_thumbs_cont ul {
   width: 100% !important;
   padding: 0;
+  overflow: hidden;
+  max-height: 150px;
 }
 .hb_single_room .hb_room_gallery .camera_thumbs .camera_thumbs_cont ul li {
   display: block;
   float: left;
   padding: 0;
   margin-top: 10px;
-  margin-right: 12px;
+  padding: 0 6px;
   overflow: hidden;
+  width: 20%;
 }
 .hb_single_room .hb_room_gallery .camera_thumbs .camera_thumbs_cont ul li:last-child {
   margin-right: 0;
 }
 .hb_single_room .hb_room_gallery .camera_thumbs .camera_thumbs_cont ul li.cameracurrent img {
-  border: 2px solid #ffb606;
+  border: 1px solid #ffb606;
 }
 .hb_single_room .hb_room_gallery .camera_thumbs .camera_thumbs_cont ul li img {
   margin: 0;
-  border: 2px solid transparent;
-  max-width: 135px !important;
+  border: 1px solid transparent;
+  width: 100%;
 }
 .hb_single_room .hb-share {
   clear: both;
@@ -839,11 +851,15 @@
   text-decoration: underline;
 }
 /** hotel-booking-payment **/
+#hotel-booking-cart h3,
 #hotel-booking-payment h3 {
   margin: 50px 0 15px;
 }
+#hotel-booking-cart input[type="number"],
 #hotel-booking-payment input[type="number"],
+#hotel-booking-cart input[type="text"],
 #hotel-booking-payment input[type="text"],
+#hotel-booking-cart input[type="email"],
 #hotel-booking-payment input[type="email"] {
   line-height: 20px;
   padding: 9px 20px 9px 10px;
@@ -851,17 +867,22 @@
   box-shadow: none;
   text-shadow: none;
 }
+#hotel-booking-cart input[name="hb-coupon-code"],
 #hotel-booking-payment input[name="hb-coupon-code"] {
   margin: 10px 0;
 }
+#hotel-booking-cart button#hb-apply-coupon,
 #hotel-booking-payment button#hb-apply-coupon {
   margin: 10px 0 10px 5px;
 }
+#hotel-booking-cart input[type="number"],
 #hotel-booking-payment input[type="number"] {
   max-width: 80px;
   text-align: center;
 }
+#hotel-booking-cart button[type="submit"],
 #hotel-booking-payment button[type="submit"],
+#hotel-booking-cart button[type="button"],
 #hotel-booking-payment button[type="button"] {
   padding: 10px 25px;
   line-height: 20px;
@@ -872,39 +893,50 @@
   background: #ffb606;
   color: #2a2a2a;
 }
+#hotel-booking-cart button[type="submit"]:hover,
 #hotel-booking-payment button[type="submit"]:hover,
+#hotel-booking-cart button[type="button"]:hover,
 #hotel-booking-payment button[type="button"]:hover {
   background: #2a2a2a;
   color: #fff;
 }
+#hotel-booking-cart button[type="submit"]:focus,
 #hotel-booking-payment button[type="submit"]:focus,
+#hotel-booking-cart button[type="button"]:focus,
 #hotel-booking-payment button[type="button"]:focus {
   outline: none;
 }
+#hotel-booking-cart select,
 #hotel-booking-payment select {
   line-height: 22px;
   padding: 8px 20px 8px 5px;
   border: 1px solid #ddd;
 }
+#hotel-booking-cart table th,
 #hotel-booking-payment table th {
   color: #2a2a2a;
   padding: 10px 17px;
 }
+#hotel-booking-cart table td,
 #hotel-booking-payment table td {
   padding: 10px 17px;
 }
+#hotel-booking-cart .hb-addition-information textarea,
 #hotel-booking-payment .hb-addition-information textarea {
   width: 100%;
   height: 100px;
   border: 1px solid #ddd;
   padding: 10px;
 }
+#hotel-booking-cart .hb-payment-methods > li,
 #hotel-booking-payment .hb-payment-methods > li {
   margin-bottom: 10px;
 }
+#hotel-booking-cart .hb-payment-methods > li .hb-payment-method-form,
 #hotel-booking-payment .hb-payment-methods > li .hb-payment-method-form {
   padding-left: 25px;
 }
+#hotel-booking-cart a:hover,
 #hotel-booking-payment a:hover {
   text-decoration: underline;
 }
