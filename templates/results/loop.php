@@ -14,7 +14,7 @@ $featured = $gallery ? array_shift( $gallery ) : false;
                 <?php if( $featured ):?>
                     <a class="hb-room-gallery" rel="hb-room-gallery-<?php echo $room->post->ID;?>" data-lightbox="hb-room-gallery[<?php echo $room->post->ID;?>]" data-title="<?php echo $featured['alt'];?>" href="<?php echo $featured['src'];?>">
                         <!-- <img src="<?php //echo $featured['thumb'];?>" alt="<?php //echo $featured['alt'];?>" data-id="<?php //echo $featured['id'];?>" /> -->
-                        <?php echo var_dump($room->getImage('catalog')); ?>
+                        <?php $room->getImage('catalog'); ?>
                     </a>
                 <?php endif; ?>
             </div>
