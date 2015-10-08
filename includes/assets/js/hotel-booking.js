@@ -225,6 +225,7 @@
 
     function applyCoupon(){
         var $coupon = $('input[name="hb-coupon-code"]');
+        var table = $coupon.parents('table');
         if( ! $coupon.val() ){
             alert(hotel_booking_l18n.enter_coupon_code)
             $coupon.focus();
@@ -238,7 +239,12 @@
                 code: $coupon.val()
             },
             dataType: 'text',
+            beforeSend: function()
+            {
+                table.hb_overlay_ajax_start();
+            },
             success: function (code) {
+                table.hb_overlay_ajax_stop();
                 try {
                     var response = parseJSON(code);
                     if (response.result == 'success') {
@@ -251,6 +257,7 @@
                 }
             },
             error: function () {
+                table.hb_overlay_ajax_stop();
                 alert('error')
             }
         });
@@ -382,6 +389,7 @@
             applyCoupon();
         }).on('click', '#hb-remove-coupon', function(evt){
             evt.preventDefault();
+            var table = $(this).parents('table');
             $.ajax({
                 url: hotel_settings.ajax,
                 type: 'post',
@@ -389,7 +397,12 @@
                 data: {
                     action: 'hotel_booking_remove_coupon'
                 },
+                beforeSend: function()
+                {
+                    table.hb_overlay_ajax_start();
+                },
                 success: function (response) {
+                    table.hb_overlay_ajax_stop();
                     response = parseJSON(response)
                     if(response.result == 'success'){
                         window.location.href = window.location.href
