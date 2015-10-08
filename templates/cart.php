@@ -89,7 +89,7 @@ global $hb_settings;
                             </tr>
                         <?php }else{?>
                             <tr>
-                                <td colspan="8" class="hb-align-right" >
+                                <td colspan="8" class="hb-align-center" >
                                     <input type="text" name="hb-coupon-code" value="" placeholder="<?php _e( 'Coupon', 'tp-hotel-booking' );?>" style="width: 150px; vertical-align: top;" />
                                     <button type="button" id="hb-apply-coupon" class="hb_button"><?php _e( 'Apply Coupon', 'tp-hotel-booking' );?></button>
                                 </td>
