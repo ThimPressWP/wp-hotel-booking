@@ -383,7 +383,7 @@ function hb_get_cart_description(){
     $cart = HB_Cart::instance();
     $description = array();
     foreach( $cart->get_rooms() as $room ){
-        $description[] = sprintf( '%s (x %d)', $room->name, $room->num_of_rooms );
+        $description[] = sprintf( '%s (x %d)', $room->name, $room->quantity );
     }
     return join( ', ', $description );
 }
