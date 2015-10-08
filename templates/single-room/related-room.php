@@ -41,7 +41,7 @@ $related = $room->get_related_rooms();
 	                items: {
 	                    height: 'auto',
 	                    visible: {
-	                        min: 4,
+	                        min: 1,
 	                        max: 4
 	                    }
 	                },
