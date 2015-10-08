@@ -257,27 +257,36 @@
     }
     $(document).ready(function(){
         $.datepicker.setDefaults({ dateFormat: 'mm/dd/yy'});
-        $("#check_in_date").datepicker({
-            minDate: 0,
+        var today = new Date();
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() + 1);
+
+        $('input[id^="check_in_date"]').datepicker({
+            minDate: tomorrow,
             maxDate: "+365D",
             numberOfMonths: 1,
             onSelect: function(selected) {
-                var date = jQuery(this).datepicker('getDate');
+                var unique = $(this).attr('id');
+                unique = unique.replace( 'check_in_date_', '' );
+                var date = $(this).datepicker('getDate');
                 if(date){
                     date.setDate(date.getDate() + 1);
                 }
-                $("#check_out_date").datepicker("option","minDate", date)
+                $("#check_out_date_"+unique).datepicker("option","minDate", date)
             }
         });
 
-        $("#check_out_date").datepicker({
-            minDate: 0,
-            maxDate:"+365D",
+        $('input[id^="check_out_date"]').datepicker({
+            minDate: tomorrow,
+            maxDate: "+365D",
             numberOfMonths: 1,
             onSelect: function(selected) {
-                $("#check_in_date").datepicker("option","maxDate", selected)
+                var unique = $(this).attr('id');
+                unique = unique.replace( 'check_out_date_', '' );
+                $("#check_in_date_"+unique).datepicker("option","maxDate", selected);
             }
         });
+
         $("#datepickerImage").click(function() {
             $("#txtFromDate").datepicker("show");
         });
@@ -285,15 +294,17 @@
             $("#txtToDate").datepicker("show");
         });
 
-        $('form[name="hb-search-form"]').submit(function() {
-            var $check_in = $('#check_in_date', this);
+        $('form[class^="hb-search-form"]').submit(function() {
+            var unique = $(this).attr('class');
+            unique = unique.replace( 'hb-search-form-', '' );
+            var $check_in = $('#check_in_date_'+unique, this);
             if( ! isDate( $check_in.val() ) ){
                 alert( hotel_booking_l18n.empty_check_in_date );
                 $check_in.focus();
                 return false;
             }
 
-            var $check_out = $('#check_out_date', this);
+            var $check_out = $('#check_out_date_'+unique, this);
             if( ! isDate( $check_out.val() ) ){
                 alert( hotel_booking_l18n.empty_check_out_date );
                 $check_out.focus();
