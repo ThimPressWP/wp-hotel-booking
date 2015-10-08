@@ -7,14 +7,16 @@ $featured = $gallery ? array_shift( $gallery ) : false;
     <form name="hb-search-results" class="hb-search-room-results">
 
         <h4 class="hb-room-name">
-            <?php echo $room->name;?> (<?php echo $room->capacity_title;?>)
+            <a href="<?php echo get_the_permalink($room->post->ID) ?>">
+                <?php echo $room->name;?> (<?php echo $room->capacity_title;?>)
+            </a>
         </h4>
         <div class="hb-room-content">
             <div class="hb-room-thumbnail">
                 <?php if( $featured ):?>
                     <a class="hb-room-gallery" rel="hb-room-gallery-<?php echo $room->post->ID;?>" data-lightbox="hb-room-gallery[<?php echo $room->post->ID;?>]" data-title="<?php echo $featured['alt'];?>" href="<?php echo $featured['src'];?>">
                         <!-- <img src="<?php //echo $featured['thumb'];?>" alt="<?php //echo $featured['alt'];?>" data-id="<?php //echo $featured['id'];?>" /> -->
-                        <?php echo var_dump($room->getImage('catalog')); ?>
+                        <?php $room->getImage('catalog'); ?>
                     </a>
                 <?php endif; ?>
             </div>
