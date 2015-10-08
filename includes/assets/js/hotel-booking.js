@@ -470,7 +470,8 @@
     {
         var _self = this;
         _self.css({
-            'position' : 'relative'
+            'position' : 'relative',
+            'overflow' : 'hidden'
         });
         var overlay = '<div class="hb_overlay_ajax">';
         overlay += '</div>';
@@ -496,6 +497,7 @@
         searchResult.each(function(){
             $(this).submit(function(event){
                 event.preventDefault();
+                var _form = $(this);
                 var number_room_select = $(this).find('.number_room_select').val();
                 if( typeof number_room_select === 'undefined' || number_room_select === '' )
                 {
@@ -511,14 +513,17 @@
                     dataType: 'html',
                     beforeSend: function()
                     {
-                        searchResult.hb_overlay_ajax_start();
+                        _form.hb_overlay_ajax_start();
                     },
                     success: function(code)
                     {
-                        searchResult.hb_overlay_ajax_stop();
+                        _form.hb_overlay_ajax_stop();
                         code = parseJSON(code);
                         if( typeof code.message !== 'undefined' )
+                        {
+                            room_title.find('.hb_success_message').remove();
                             room_title.append( code.message );
+                        }
 
                         if( typeof code.status !== 'undefined' && code.status === 'success' )
                         {

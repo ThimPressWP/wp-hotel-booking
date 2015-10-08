@@ -1063,3 +1063,12 @@
   color: #fff;
   background: #ffb606;
 }
+.hb_overlay_ajax{
+  opacity: 0.8;
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
