@@ -257,8 +257,11 @@
     }
     $(document).ready(function(){
         $.datepicker.setDefaults({ dateFormat: 'mm/dd/yy'});
+        var today = new Date();
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() + 1);
         $("#check_in_date").datepicker({
-            minDate: 0,
+            minDate: tomorrow,
             maxDate: "+365D",
             numberOfMonths: 1,
             onSelect: function(selected) {
@@ -271,7 +274,7 @@
         });
 
         $("#check_out_date").datepicker({
-            minDate: 0,
+            minDate: tomorrow,
             maxDate:"+365D",
             numberOfMonths: 1,
             onSelect: function(selected) {

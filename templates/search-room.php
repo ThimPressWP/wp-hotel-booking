@@ -1,8 +1,8 @@
 <?php
 $check_in_date = hb_get_request( 'check_in_date' );
 $check_out_date = hb_get_request( 'check_out_date' );
-$adults = hb_get_request( 'adults' ) ? hb_get_request( 'adults' ) : 1;
-$max_child = hb_get_request( 'max_child' ) ? hb_get_request( 'max_child' ) : 1;
+$adults = hb_get_request( 'adults' ) ? hb_get_request( 'adults' ) : 0;
+$max_child = hb_get_request( 'max_child' ) ? hb_get_request( 'max_child' ) : 0;
 ?>
 <div id="hotel-booking-search-<?php echo uniqid(); ?>" class="hotel-booking-search">
 <?php
