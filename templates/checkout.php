@@ -1,5 +1,6 @@
 <?php
 $cart = HB_Cart::instance();
+var_dump($_SESSION['hb_cart']['products']);
 global $hb_settings;
 ?>
 <div id="hotel-booking-payment">
