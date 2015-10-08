@@ -22,7 +22,7 @@ global $hb_settings;
                             if( ( $num_of_rooms = (int)$room->get_data('quantity') ) == 0 ) continue;
                             $sub_total = $room->get_total( $room->check_in_date, $room->check_out_date, $num_of_rooms, false );
                         ?>
-                        <tr>
+                        <tr class="hb_checkout_item">
                             <td><?php echo $room->name;?> (<?php echo $room->capacity_title; ?>)</td>
                             <td><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'tp-hotel-booking' ), $room->capacity ); ?> </td>
                             <td><?php echo $num_of_rooms ?></td>
@@ -54,6 +54,34 @@ global $hb_settings;
                 <td class="hb-align-right"><?php echo abs( $tax * 100 );?>%</td>
             </tr>
             <?php }?>
+
+            <?php if( $hb_settings->get( 'enable_coupon' ) ){?>
+                <?php
+                if( $coupon = get_transient( 'hb_user_coupon_' . session_id() ) ){
+                    $coupon = HB_Coupon::instance( $coupon );
+                    ?>
+                    <tr>
+                        <td>
+                            <p class="hb-remove-coupon" align="right">
+                                <a href="" id="hb-remove-coupon"><?php _e( 'Remove', 'tp-hotel-booking' );?></a>
+                            </p>
+                        </td>
+                        <td colspan="5" class="hb-align-right" >
+                            <span class="hb_coupon_code"><?php printf( __( 'Coupon applied: %s', 'tp-hotel-booking' ), $coupon->coupon_code );?></span>
+                        </td>
+                        <td class="hb-align-right">
+                            -<?php echo hb_format_price( $coupon->discount_value );?>
+                        </td>
+                    </tr>
+                <?php }else{?>
+                    <tr>
+                        <td colspan="8" class="hb-align-right" >
+                            <input type="text" name="hb-coupon-code" value="" placeholder="<?php _e( 'Coupon', 'tp-hotel-booking' );?>" style="width: 150px; vertical-align: top;" />
+                            <button type="button" id="hb-apply-coupon"><?php _e( 'Apply Coupon', 'tp-hotel-booking' );?></button>
+                        </td>
+                    </tr>
+                <?php } ?>
+            <?php } ?>
             <tr>
                 <td colspan="6"><?php _e( 'Grand Total', 'tp-hotel-booking' ); ?></td>
                 <td class="hb-align-right"><?php echo hb_format_price( $cart->total );?></td>
@@ -76,32 +104,6 @@ global $hb_settings;
                 </tr>
                 <?php }?>
             <?php }?>
-
-            <?php if( $hb_settings->get( 'enable_coupon' ) ){?>
-                <?php
-                if( $coupon = get_transient( 'hb_user_coupon_' . session_id() ) ){
-                    $coupon = HB_Coupon::instance( $coupon );
-                    ?>
-                    <tr>
-                        <td colspan="6" class="hb-align-right" >
-                            <?php printf( __( 'Coupon applied: %s', 'tp-hotel-booking' ), $coupon->coupon_code );?>
-                            <p class="hb-remove-coupon" align="right">
-                                <a href="" id="hb-remove-coupon"><?php _e( 'Remove', 'tp-hotel-booking' );?></a>
-                            </p>
-                        </td>
-                        <td class="hb-align-right">
-                            -<?php echo hb_format_price( $coupon->discount_value );?>
-                        </td>
-                    </tr>
-                <?php }else{?>
-                    <tr>
-                        <td colspan="8" class="hb-align-right" >
-                            <input type="text" name="hb-coupon-code" value="" placeholder="<?php _e( 'Coupon', 'tp-hotel-booking' );?>" style="width: 150px; vertical-align: top;" />
-                            <button type="button" id="hb-apply-coupon"><?php _e( 'Apply Coupon', 'tp-hotel-booking' );?></button>
-                        </td>
-                    </tr>
-                <?php } ?>
-            <?php } ?>
 
         </table>
         <?php hb_get_template( 'customer.php', array( 'customer' => $customer ) );?>
