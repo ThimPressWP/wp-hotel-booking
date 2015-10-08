@@ -61,7 +61,7 @@ class HB_Checkout{
     function create_booking(){
         $customer_id = get_transient( 'hb_current_customer' );
 
-        $transaction_object = hb_generate_transaction_object( $customer_id );
+        $transaction_object = hb_generate_transaction_object( );
 
         if( ! $transaction_object ){
             throw new Exception( sprintf( __( 'Sorry, your session has expired. <a href="%s">Return to homepage</a>', 'tp-hotel-booking' ), home_url() ) );
@@ -127,6 +127,7 @@ class HB_Checkout{
             }
 
             add_post_meta( $booking_id, '_hb_room_price', $prices );
+            add_post_meta( $booking_id, '_hb_booking_params', $_SESSION['hb_cart']['products'] );
         }
         do_action( 'hb_new_booking', $booking_id );
         return $booking_id;

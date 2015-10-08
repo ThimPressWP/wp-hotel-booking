@@ -124,39 +124,46 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
                     <td style="font-weight: bold; text-align: right;"><?php _e( 'Capacity', 'tp-hotel-booking' );?></td>
                     <td style="font-weight: bold;text-align: right;"><?php _e( 'Total', 'tp-hotel-booking' );?></td>
                 </tr>
-                <?php foreach( $rooms as $id => $num_of_rooms ){?>
-                <tr style="background-color: #FFFFFF;">
-                    <td>
-                        <?php
-                        echo get_the_title( $id );
-                        // $term = get_term( get_post_meta( $id, '_hb_room_type', true ), 'hb_room_type' );
-                        $terms = wp_get_post_terms( $id, 'hb_room_type' );
-                        $room_types = array();
-                        foreach ($terms as $key => $term) {
-                            $room_types[] = $term->name;
-                        }
-                        // if( $term ) echo " (", $term->name, ")";
-                        if( $term ) echo " (", implode(', ', $room_types), ")";
-                        ?>
-                    </td>
-                    <td style="text-align: right;"><?php echo $num_of_rooms;?></td>
-                    <td style="text-align: right;">
-                        <?php
-                        $cap_id = get_post_meta( $id, '_hb_room_capacity', true );
-                        $term = get_term( $cap_id, 'hb_room_capacity' );
-                        if( $term ){
-                            printf( '%s (%d)', $term->name, get_option( 'hb_taxonomy_capacity_' . $cap_id ) );
-                        }
-                        ?>
-                    </td>
-                    <td style="text-align: right;">
-                        <?php
-                        $room = HB_Room::instance( $id );
-                        echo hb_format_price( $room->get_total( $room->check_in_date, $room->check_out_date, $num_of_rooms, false ), $currency );
-                        ?>
-                    </td>
-                </tr>
-                <?php }?>
+                <?php $booking_rooms_params = get_post_meta( $booking_id, '_hb_booking_params', true ); ?>
+                <?php if( $booking_rooms_params ): ?>
+                    <?php foreach ($booking_rooms_params as $search_key => $rooms): ?>
+
+                            <?php foreach ($rooms as $id => $room_param) : ?>
+                                <tr style="background-color: #FFFFFF;">
+                                    <td>
+                                        <?php
+                                            $room = HB_Room::instance( $id, $room_param );
+                                            echo get_the_title( $id );
+                                            // $term = get_term( get_post_meta( $id, '_hb_room_type', true ), 'hb_room_type' );
+                                            $terms = wp_get_post_terms( $id, 'hb_room_type' );
+                                            $room_types = array();
+                                            foreach ($terms as $key => $term) {
+                                                $room_types[] = $term->name;
+                                            }
+                                            // if( $term ) echo " (", $term->name, ")";
+                                            if( $term ) echo " (", implode(', ', $room_types), ")";
+                                        ?>
+                                    </td>
+                                    <td style="text-align: right;"><?php echo $room->quantity;?></td>
+                                    <td style="text-align: right;">
+                                        <?php
+                                            $cap_id = get_post_meta( $id, '_hb_room_capacity', true );
+                                            $term = get_term( $cap_id, 'hb_room_capacity' );
+                                            if( $term ){
+                                                printf( '%s (%d)', $term->name, get_option( 'hb_taxonomy_capacity_' . $cap_id ) );
+                                            }
+                                        ?>
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <?php
+                                            echo hb_format_price( $room->get_total( $room->check_in_date, $room->check_out_date, $room->quantity, false ), $currency );
+                                        ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+
+                    <?php endforeach; ?>
+                <?php endif; ?>
                 <tr style="background-color: #FFFFFF;">
                     <td colspan="3" style="font-weight: bold;"><?php _e( 'Sub Total', 'tp-hotel-booking' );?></td>
                     <td style=" text-align: right;"><?php echo hb_format_price( get_post_meta( $booking_id, '_hb_sub_total', true ), $currency );?></td>

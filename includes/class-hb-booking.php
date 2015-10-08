@@ -266,19 +266,12 @@ class HB_Booking{
         return apply_filters( 'hb_get_checkout_booking_received_url', $received_url, $this );
     }
 
-    function booking_details_rooms( $booking_id = null )
+    function get_booking_rooms_params( $booking_id = null )
     {
-        $args = array(
-                'post_type'     => 'hb_booking_item',
-                'status'        => 'publish',
-                'meta_query'    => array(
-                        array(
-                                'meta_key'      => '_hb_booking_id',
-                                'meta_value'    => $booking_id
-                            )
-                    )
-            );
-        return get_posts( $args );
+        if( $booking_id == null )
+            $booking_id = $this->id;
+
+        return get_post_meta( $booking_id, '_hb_booking_params', true );
     }
 
     /**
