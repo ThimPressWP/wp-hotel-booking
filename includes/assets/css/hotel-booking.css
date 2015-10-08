@@ -144,6 +144,9 @@
 .hb-align-right{
     text-align: right;
 }
+.hb-align-center{
+    text-align: center;
+}
 .hb-col-padding{
     padding: 20px;
     overflow: hidden;
@@ -807,6 +810,7 @@
   font-size: 40px;
   color: #2a2a2a;
 }
+#hotel-booking-results form .hb_button.hb_checkout,
 #hotel-booking-results form button.hb_add_to_cart,
 #hotel-booking-results form button[type="submit"] {
   padding: 10px 25px;
@@ -818,11 +822,13 @@
   background: #ffb606;
   color: #2a2a2a;
 }
+#hotel-booking-results form .hb_button.hb_checkout:hover,
 #hotel-booking-results form button.hb_add_to_cart:hover,
 #hotel-booking-results form button[type="submit"]:hover {
   background: #2a2a2a;
   color: #fff;
 }
+#hotel-booking-results form .hb_button.hb_checkout:focus,
 #hotel-booking-results form button.hb_add_to_cart:focus,
 #hotel-booking-results form button[type="submit"]:focus {
   outline: none;
@@ -892,6 +898,8 @@
   max-width: 80px;
   text-align: center;
 }
+#hotel-booking-cart .hb_button.hb_checkout,
+#hotel-booking-payment .hb_button.hb_checkout,
 #hotel-booking-cart button[type="submit"],
 #hotel-booking-payment button[type="submit"],
 #hotel-booking-cart button[type="button"],
@@ -905,6 +913,8 @@
   background: #ffb606;
   color: #2a2a2a;
 }
+#hotel-booking-cart .hb_button.hb_checkout:hover,
+#hotel-booking-payment .hb_button.hb_checkout:hover,
 #hotel-booking-cart button[type="submit"]:hover,
 #hotel-booking-payment button[type="submit"]:hover,
 #hotel-booking-cart button[type="button"]:hover,
@@ -912,11 +922,21 @@
   background: #2a2a2a;
   color: #fff;
 }
+#hotel-booking-cart .hb_button.hb_checkout:focus,
+#hotel-booking-payment .hb_button.hb_checkout:focus,
 #hotel-booking-cart button[type="submit"]:focus,
 #hotel-booking-payment button[type="submit"]:focus,
 #hotel-booking-cart button[type="button"]:focus,
 #hotel-booking-payment button[type="button"]:focus {
   outline: none;
+}
+#hotel-booking-cart .hb_button.hb_checkout.update,
+#hotel-booking-payment .hb_button.hb_checkout.update,
+#hotel-booking-cart button[type="submit"].update,
+#hotel-booking-payment button[type="submit"].update,
+#hotel-booking-cart button[type="button"].update,
+#hotel-booking-payment button[type="button"].update {
+  margin-left: 5px;
 }
 #hotel-booking-cart select,
 #hotel-booking-payment select {
@@ -951,6 +971,13 @@
 #hotel-booking-cart a:hover,
 #hotel-booking-payment a:hover {
   text-decoration: underline;
+}
+#hotel-booking-cart .hb_grand_total,
+#hotel-booking-payment .hb_grand_total,
+#hotel-booking-cart .hb_sub_total,
+#hotel-booking-payment .hb_sub_total {
+  color: #2a2a2a;
+  font-weight: 700;
 }
 /** Input type date style **/
 .ui-datepicker.ui-widget {
