@@ -864,6 +864,20 @@ function hb_search_rooms( $args = array() ){
     /**
      * Count booked rooms
      */
+    // $query_count_not_available = $wpdb->prepare("
+    //     (
+    //         SELECT count(booking.ID)
+    //         FROM {$wpdb->posts} booking
+    //         INNER JOIN {$wpdb->postmeta} bm ON bm.post_id = booking.ID AND bm.meta_key = %s
+    //         INNER JOIN {$wpdb->postmeta} bi ON bi.post_id = booking.ID AND bi.meta_key = %s
+    //         INNER JOIN {$wpdb->postmeta} bo ON bo.post_id = booking.ID AND bo.meta_key = %s
+    //         WHERE
+    //             bm.meta_value=rooms.ID
+    //             AND bi.meta_value <= %d
+    //             AND bo.meta_value >= %d
+    //     )
+    // ", '_hb_room_id', '_hb_check_in_date', '_hb_check_out_date', $check_in_date_to_time, $check_out_date_to_time );
+
     $query_count_not_available = $wpdb->prepare("
         (
             SELECT count(booking.ID)
@@ -876,7 +890,7 @@ function hb_search_rooms( $args = array() ){
                 AND bi.meta_value <= %d
                 AND bo.meta_value >= %d
         )
-    ", '_hb_room_id', '_hb_check_in_date', '_hb_check_out_date', $check_in_date_to_time, $check_out_date_to_time );
+    ", '_hb_id', '_hb_check_in_date', '_hb_check_out_date', $check_in_date_to_time, $check_out_date_to_time );
 
     /**
      *
@@ -894,7 +908,7 @@ function hb_search_rooms( $args = array() ){
         HAVING available_rooms > 0
     ", '_hb_max_child_per_room', '_hb_max_adults_per_room', 'hb_room', 'publish', hb_get_request('max_child'), $adults );
 
-    echo $query;
+    // echo $query;
     if( $search = $wpdb->get_results( $query ) ){
         foreach( $search as $k => $p ){
             $room = HB_Room::instance( $p );
@@ -1031,24 +1045,41 @@ function hb_get_bookings( $args = array() ){
     return apply_filters( 'hb_get_bookings', $bookings, $args );
 }
 
+// function hb_maybe_modify_page_content(){
+//     global $post;
+//     if( is_page() && $post->ID == hb_get_page_id( 'search' ) ){
+
+//         // params search result
+//         $page = hb_get_request( 'hotel-booking' );
+//         $start_date     = hb_get_request( 'check_in_date' );
+//         $end_date       = hb_get_request( 'check_out_date' );
+//         $adults         = hb_get_request( 'adults' );
+//         $max_child      = hb_get_request( 'max_child' );
+
+//         $post->post_content = '[hotel_booking page="'.$page .'" check_in_date="'.$start_date.'" check_in_date="'.$end_date.'" adults="'.$adults.'" max_child="'.$max_child.'"]';
+//     }
+// }
+// add_action( 'template_redirect', 'hb_maybe_modify_page_content' );
+
 /**
  *
  */
-function hb_maybe_modify_page_content(){
+function hb_maybe_modify_page_content($content){
     global $post;
     if( is_page() && $post->ID == hb_get_page_id( 'search' ) ){
 
         // params search result
-        $page = hb_get_request( 'hotel-booking' );
+        $page           = hb_get_request( 'hotel-booking' );
         $start_date     = hb_get_request( 'check_in_date' );
         $end_date       = hb_get_request( 'check_out_date' );
         $adults         = hb_get_request( 'adults' );
         $max_child      = hb_get_request( 'max_child' );
 
-        $post->post_content = '[hotel_booking page="'.$page .'" check_in_date="'.$start_date.'" check_in_date="'.$end_date.'" adults="'.$adults.'" max_child="'.$max_child.'"]';
+        $content = '[hotel_booking page="'.$page .'" check_in_date="'.$start_date.'" check_in_date="'.$end_date.'" adults="'.$adults.'" max_child="'.$max_child.'"]';
     }
+    return $content;
 }
-add_action( 'template_redirect', 'hb_maybe_modify_page_content' );
+add_filter( 'the_content', 'hb_maybe_modify_page_content' );
 
 /**
  * Init some task when wp init

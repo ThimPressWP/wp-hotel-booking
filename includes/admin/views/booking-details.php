@@ -101,22 +101,24 @@ $booking_id = hb_get_request( 'id' );
                                             <?php
                                                 $room = HB_Room::instance( $id, $room_param );
                                                 echo get_the_title( $id );
-                                                // $term = get_term( get_post_meta( $id, '_hb_room_type', true ), 'hb_room_type' );
                                                 $terms = wp_get_post_terms( $id, 'hb_room_type' );
                                                 $room_types = array();
                                                 foreach ($terms as $key => $term) {
                                                     $room_types[] = $term->name;
                                                 }
-                                                // if( $term ) echo " (", $term->name, ")";
-                                                if( $term ) echo " (", implode(', ', $room_types), ")";
+                                                if( ! is_wp_error( $terms ) && ! empty( $room_types ) ) echo " (", implode(', ', $room_types), ")";
                                             ?>
                                         </td>
                                         <td style="text-align: right;" colspan="4">
                                             <?php
                                                 $cap_id = get_post_meta( $id, '_hb_room_capacity', true );
                                                 $term = get_term( $cap_id, 'hb_room_capacity' );
-                                                if( $term ){
+                                                if( ! is_wp_error( $term  ) ){
                                                     printf( '%s (%d)', $term->name, get_option( 'hb_taxonomy_capacity_' . $cap_id ) );
+                                                }
+                                                else
+                                                {
+                                                    printf( '%s', $term->name );
                                                 }
                                             ?>
                                         </td>
@@ -164,14 +166,12 @@ $booking_id = hb_get_request( 'id' );
                                         </td>
                                         <td>
                                             <?php
-                                                // $term = get_term( get_post_meta( $id, '_hb_room_type', true ), 'hb_room_type' );
                                                 $terms = wp_get_post_terms( $id, 'hb_room_type' );
                                                 $room_types = array();
                                                 foreach ($terms as $key => $term) {
                                                     $room_types[] = $term->name;
                                                 }
-                                                // if( $term ) echo " (", $term->name, ")";
-                                                if( $term ) echo " (", implode(', ', $room_types), ")";
+                                                if( ! empty( $room_types ) ) echo implode(', ', $room_types);
                                             ?>
                                         </td>
                                         <td align="right"><?php echo $room->quantity ?></td>
