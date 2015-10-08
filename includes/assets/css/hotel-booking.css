@@ -429,16 +429,16 @@
   clear: both;
   overflow: hidden;
 }
-.rooms.hb-catalog-column-5 > .hb_room {
+.rooms .post-type-archive-hb_room.hb-catalog-column-5 > .hb_room {
   width: 20%;
 }
-.rooms.hb-catalog-column-4 > .hb_room {
+.rooms .post-type-archive-hb_room.hb-catalog-column-4 > .hb_room {
   width: 25%;
 }
-.rooms.hb-catalog-column-3 > .hb_room {
+.rooms .post-type-archive-hb_room.hb-catalog-column-3 > .hb_room {
   width: 33.33%;
 }
-.rooms.hb-catalog-column-2 > .hb_room {
+.rooms .post-type-archive-hb_room.hb-catalog-column-2 > .hb_room {
   width: 50%;
 }
 .rooms .hb_room {
@@ -772,9 +772,10 @@
   left: 0;
   background: #ffb606;
 }
-.hb_related_other_room li.hb_room {
+.hb_related_other_room .rooms li.hb_room {
   padding: 0 15px;
   min-width: 300px;
+  width: 300px;
   max-width: 400px;
 }
 .hb_related_other_room .navigation {
