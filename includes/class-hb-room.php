@@ -518,17 +518,18 @@ class HB_Room{
         if( $attachID == false )
             $attachID = get_post_thumbnail_id( $this->post->ID );
 
+        $alt = get_post_meta($attachID, '_wp_attachment_image_alt', true );
         $image = $this->renderImage( $attachID, $size, false );
 
         if( $echo && $image )
         {
             if( is_array($image) )
             {
-                echo sprintf('<img src="%1$s" width="%2$s" height="%3$s" />', $image[0], $image[1], $image[2]);
+                echo sprintf('<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', $image[0], $image[1], $image[2], $alt);
             }
             else
             {
-                sprintf('<img src="%1$s" width="%2$s" height="%3$s" />', $image, $w, $h);
+                sprintf('<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', $image, $w, $h, $alt);
             }
         }
         else
@@ -547,17 +548,19 @@ class HB_Room{
         if( $attachID == false )
             $attachID = get_post_thumbnail_id( $this->post->ID );
 
+        $alt = get_post_meta($attachID, '_wp_attachment_image_alt', true );
+
         $image = $this->renderImage( $attachID, $size, false );
 
         if( $echo && $image )
         {
             if( is_array($image) )
             {
-                echo sprintf('<img src="%1$s" width="%2$s" height="%3$s" />', $image[0], $image[1], $image[2]);
+                echo sprintf('<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', $image[0], $image[1], $image[2], $alt);
             }
             else
             {
-                sprintf('<img src="%1$s" width="%2$s" height="%3$s" />', $image, $w, $h);
+                sprintf('<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', $image, $w, $h, $alt);
             }
         }
         else
