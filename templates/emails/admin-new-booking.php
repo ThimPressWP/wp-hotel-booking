@@ -15,8 +15,6 @@ $first_name = get_post_meta($customer_id, '_hb_first_name', true);
 $last_name = get_post_meta($customer_id, '_hb_last_name', true);
 $customer_name = sprintf('%s %s %s', $title ? $title : 'Cus.', $first_name, $last_name);
 
-// $check_in = intval( get_post_meta( $booking_id, '_hb_check_in_date', true ) );
-// $check_out = intval( get_post_meta( $booking_id, '_hb_check_out_date', true ) );
 $currency = hb_get_currency_symbol( get_post_meta( $booking_id, '_hb_currency', true ) );
 $_rooms = get_post_meta( $booking_id, '_hb_room_id' );
 $rooms = array();
@@ -55,7 +53,7 @@ foreach( $_rooms as $id ){
         </tr>
         <tr class="booking-table-row">
             <td class="bold-text"><?php _e( 'Check In Date', 'tp-hotel-booking' );?></td>
-            <td colspan="3"><?php //echo date( 'l d M Y', $check_in );?></td>
+            <td colspan="3"><?php //echo date( 'l d M Y', $check_in ); ?></td>
         </tr>
         <tr class="booking-table-row">
             <td class="bold-text"><?php _e( 'Check Out Date', 'tp-hotel-booking' );?></td>
@@ -80,39 +78,46 @@ foreach( $_rooms as $id ){
             <td class="text-align-right bold-text"><?php _e( 'Capacity', 'tp-hotel-booking' );?></td>
             <td class="text-align-right bold-text"><?php _e( 'Total', 'tp-hotel-booking' );?></td>
         </tr>
-        <?php foreach( $rooms as $id => $num_of_rooms ){?>
-            <tr class="booking-table-row">
-                <td>
-                    <?php
-                    echo get_the_title( $id );
-                    // $term = get_term( get_post_meta( $id, '_hb_room_type', true ), 'hb_room_type' );
-                    $terms = wp_get_post_terms( $id, 'hb_room_type' );
-                    $room_types = array();
-                    foreach ($terms as $key => $term) {
-                        $room_types[] = $term->name;
-                    }
-                    // if( $term ) echo " (", $term->name, ")";
-                    if( $term ) echo " (", implode(', ', $room_types), ")";
-                    ?>
-                </td>
-                <td class="text-align-right"><?php echo $num_of_rooms;?></td>
-                <td class="text-align-right">
-                    <?php
-                    $cap_id = get_post_meta( $id, '_hb_room_capacity', true );
-                    $term = get_term( $cap_id, 'hb_room_capacity' );
-                    if( $term ){
-                        printf( '%s (%d)', $term->name, get_option( 'hb_taxonomy_capacity_' . $cap_id ) );
-                    }
-                    ?>
-                </td>
-                <td class="text-align-right">
-                    <?php
-                    $room = HB_Room::instance( $id );
-                    //echo hb_format_price( $room->get_total( $check_in, $check_out, $num_of_rooms, false ), $currency );
-                    ?>
-                </td>
-            </tr>
-        <?php }?>
+        <?php $booking_rooms_params = get_post_meta( $booking_id, '_hb_booking_params', true ); ?>
+        <?php if( $booking_rooms_params ): ?>
+            <?php foreach ($booking_rooms_params as $search_key => $rooms): ?>
+
+                    <?php foreach ($rooms as $id => $room_param) : ?>
+                        <tr style="background-color: #FFFFFF;">
+                            <td>
+                                <?php
+                                    $room = HB_Room::instance( $id, $room_param );
+                                    echo get_the_title( $id );
+                                    // $term = get_term( get_post_meta( $id, '_hb_room_type', true ), 'hb_room_type' );
+                                    $terms = wp_get_post_terms( $id, 'hb_room_type' );
+                                    $room_types = array();
+                                    foreach ($terms as $key => $term) {
+                                        $room_types[] = $term->name;
+                                    }
+                                    // if( $term ) echo " (", $term->name, ")";
+                                    if( $term ) echo " (", implode(', ', $room_types), ")";
+                                ?>
+                            </td>
+                            <td style="text-align: right;"><?php echo $room->quantity;?></td>
+                            <td style="text-align: right;">
+                                <?php
+                                    $cap_id = get_post_meta( $id, '_hb_room_capacity', true );
+                                    $term = get_term( $cap_id, 'hb_room_capacity' );
+                                    if( $term ){
+                                        printf( '%s (%d)', $term->name, get_option( 'hb_taxonomy_capacity_' . $cap_id ) );
+                                    }
+                                ?>
+                            </td>
+                            <td style="text-align: right;">
+                                <?php
+                                    echo hb_format_price( $room->get_total( $room->check_in_date, $room->check_out_date, $room->quantity, false ), $currency );
+                                ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+
+            <?php endforeach; ?>
+        <?php endif; ?>
         <tr class="booking-table-row">
             <td colspan="3" class="bold-text"><?php _e( 'Sub Total', 'tp-hotel-booking' );?></td>
             <td class="text-align-right"><?php echo hb_format_price( get_post_meta( $booking_id, '_hb_sub_total', true ), $currency );?></td>

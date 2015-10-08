@@ -10,7 +10,6 @@ function hb_register_web_hook( $key, $param ) {
     do_action( 'hb_register_web_hook', $key, $param );
 }
 
-
 function hb_get_web_hooks() {
     $web_hooks = empty( $GLOBALS['tp-hotel-booking']['web_hooks'] ) ? array() : (array) $GLOBALS['tp-hotel-booking']['web_hooks'];
     return apply_filters( 'hb_web_hooks', $web_hooks );
@@ -21,7 +20,6 @@ function hb_get_web_hook( $key ){
     $web_hook  = empty( $web_hooks[ $key ] ) ? false : $web_hooks[ $key ];
     return apply_filters( 'hb_web_hook', $web_hook, $key );
 }
-
 
 function hb_process_web_hooks() {
     // Grab registered web_hooks
