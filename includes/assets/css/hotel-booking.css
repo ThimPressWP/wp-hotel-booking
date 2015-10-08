@@ -773,6 +773,7 @@
 .hb_related_other_room li.hb_room {
   padding: 0 15px;
   min-width: 300px;
+  max-width: 400px;
 }
 .hb_related_other_room .navigation {
   width: auto;
