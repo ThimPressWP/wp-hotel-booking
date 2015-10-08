@@ -39,6 +39,34 @@ global $hb_settings;
                 <?php endforeach; ?>
             <?php endif; ?>
 
+                <?php if( $hb_settings->get( 'enable_coupon' ) ){?>
+                    <?php
+                        if( $coupon = get_transient( 'hb_user_coupon_' . session_id() ) ){
+                            $coupon = HB_Coupon::instance( $coupon );
+                            ?>
+                            <tr>
+                                <td>
+                                    <p class="hb-remove-coupon" align="right">
+                                        <a href="" id="hb-remove-coupon"><?php _e( 'Remove', 'tp-hotel-booking' );?></a>
+                                    </p>
+                                </td>
+                                <td colspan="6" class="hb-align-right" >
+                                    <?php printf( __( 'Coupon applied: %s', 'tp-hotel-booking' ), $coupon->coupon_code );?>
+                                </td>
+                                <td class="hb-align-right">
+                                    -<?php echo hb_format_price( $coupon->discount_value );?>
+                                </td>
+                            </tr>
+                        <?php }else{?>
+                            <tr>
+                                <td colspan="8" class="hb-align-center" >
+                                    <input type="text" name="hb-coupon-code" value="" placeholder="<?php _e( 'Coupon', 'tp-hotel-booking' );?>" style="width: 150px; vertical-align: top;" />
+                                    <button type="button" id="hb-apply-coupon" class="hb_button"><?php _e( 'Apply Coupon', 'tp-hotel-booking' );?></button>
+                                </td>
+                            </tr>
+                    <?php } ?>
+                <?php } ?>
+
                 <tr>
                     <td colspan="7"><?php _e( 'Sub Total', 'tp-hotel-booking' );?></td>
                     <td class="hb-align-right hb_sub_total">
@@ -69,33 +97,6 @@ global $hb_settings;
                 </tr>
                 <?php }?>
 
-                <?php if( $hb_settings->get( 'enable_coupon' ) ){?>
-                    <?php
-                        if( $coupon = get_transient( 'hb_user_coupon_' . session_id() ) ){
-                            $coupon = HB_Coupon::instance( $coupon );
-                            ?>
-                            <tr>
-                                <td>
-                                    <p class="hb-remove-coupon" align="right">
-                                        <a href="" id="hb-remove-coupon"><?php _e( 'Remove', 'tp-hotel-booking' );?></a>
-                                    </p>
-                                </td>
-                                <td colspan="6" class="hb-align-right" >
-                                    <?php printf( __( 'Coupon applied: %s', 'tp-hotel-booking' ), $coupon->coupon_code );?>
-                                </td>
-                                <td class="hb-align-right">
-                                    -<?php echo hb_format_price( $coupon->discount_value );?>
-                                </td>
-                            </tr>
-                        <?php }else{?>
-                            <tr>
-                                <td colspan="8" class="hb-align-right" >
-                                    <input type="text" name="hb-coupon-code" value="" placeholder="<?php _e( 'Coupon', 'tp-hotel-booking' );?>" style="width: 150px; vertical-align: top;" />
-                                    <button type="button" id="hb-apply-coupon" class="hb_button"><?php _e( 'Apply Coupon', 'tp-hotel-booking' );?></button>
-                                </td>
-                            </tr>
-                    <?php } ?>
-                <?php } ?>
                 <tr>
                     <?php wp_nonce_field( 'hb_cart_field', 'hb_cart_field' );?>
                 </tr>

@@ -51,6 +51,7 @@
         }
         $button.attr('disabled', true);
         $email.attr('disabled', true);
+        var customer_table = $('.hb-col-padding hb-col-border');
         $.ajax({
             url: hotel_settings.ajax,
             dataType: 'html',
@@ -59,7 +60,12 @@
                 action: 'hotel_booking_fetch_customer_info',
                 email: $email.val()
             },
+            beforeSend: function()
+            {
+                customer_table.hb_overlay_ajax_start();
+            },
             success: function(response){
+                customer_table.hb_overlay_ajax_stop();
                 response = parseJSON(response);
                 if( response && response.ID ){
                     var $container = $('#hb-order-new-customer');
@@ -80,6 +86,7 @@
 
             },
             error: function(){
+                customer_table.hb_overlay_ajax_stop();
                 alert(hotel_booking_l18n.ajax_error);
                 $button.removeAttr('disabled');
                 $email.removeAttr('disabled');

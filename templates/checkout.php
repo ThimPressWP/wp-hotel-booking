@@ -37,24 +37,6 @@ global $hb_settings;
                 <?php endforeach; ?>
             <?php endif; ?>
 
-            <tr>
-                <td colspan="6"><?php _e( 'Sub Total', 'tp-hotel-booking' );?></td>
-                <td class="hb-align-right">
-                    <?php echo hb_format_price( $cart->sub_total );?>
-                </td>
-            </tr>
-            <?php if( $tax = hb_get_tax_settings() ){?>
-            <tr>
-                <td colspan="6">
-                    <?php _e( 'Tax', 'tp-hotel-booking' );?>
-                    <?php if( $tax < 0 ){?>
-                        <span><?php printf( __( '(price including tax)', 'tp-hotel-booking' ) );?></span>
-                    <?php }?>
-                </td>
-                <td class="hb-align-right"><?php echo abs( $tax * 100 );?>%</td>
-            </tr>
-            <?php }?>
-
             <?php if( $hb_settings->get( 'enable_coupon' ) ){?>
                 <?php
                 if( $coupon = get_transient( 'hb_user_coupon_' . session_id() ) ){
@@ -75,13 +57,32 @@ global $hb_settings;
                     </tr>
                 <?php }else{?>
                     <tr>
-                        <td colspan="8" class="hb-align-right" >
+                        <td colspan="8" class="hb-align-center" >
                             <input type="text" name="hb-coupon-code" value="" placeholder="<?php _e( 'Coupon', 'tp-hotel-booking' );?>" style="width: 150px; vertical-align: top;" />
                             <button type="button" id="hb-apply-coupon"><?php _e( 'Apply Coupon', 'tp-hotel-booking' );?></button>
                         </td>
                     </tr>
                 <?php } ?>
             <?php } ?>
+
+            <tr>
+                <td colspan="6"><?php _e( 'Sub Total', 'tp-hotel-booking' );?></td>
+                <td class="hb-align-right">
+                    <?php echo hb_format_price( $cart->sub_total );?>
+                </td>
+            </tr>
+            <?php if( $tax = hb_get_tax_settings() ){?>
+            <tr>
+                <td colspan="6">
+                    <?php _e( 'Tax', 'tp-hotel-booking' );?>
+                    <?php if( $tax < 0 ){?>
+                        <span><?php printf( __( '(price including tax)', 'tp-hotel-booking' ) );?></span>
+                    <?php }?>
+                </td>
+                <td class="hb-align-right"><?php echo abs( $tax * 100 );?>%</td>
+            </tr>
+            <?php }?>
+
             <tr>
                 <td colspan="6"><?php _e( 'Grand Total', 'tp-hotel-booking' ); ?></td>
                 <td class="hb-align-right"><?php echo hb_format_price( $cart->total );?></td>
