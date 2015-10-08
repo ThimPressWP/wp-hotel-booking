@@ -134,11 +134,11 @@
     line-height: 1.5;
 }
 .hb-search-results .hb-room-meta > li > label{
-    width: 30%;
+    width: 40%;
     display: inline-block;
 }
 .hb-search-results .hb-room-meta > li > div{
-    width: 69%;
+    width: 59%;
     display: inline-block;
 }
 .hb-align-right{
@@ -834,6 +834,13 @@
   color: #2a2a2a;
   font-size: 24px;
 }
+#hotel-booking-results .hb-search-results > .hb-room .hb-room-name a {
+  color: #2a2a2a;
+  text-decoration: none;
+}
+#hotel-booking-results .hb-search-results > .hb-room .hb-room-name a:hover {
+  color: #ffb606;
+}
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-thumbnail img {
   max-width: 270px;
 }
@@ -1063,13 +1070,4 @@
 .ui-datepicker.ui-widget .ui-datepicker-calendar .ui-state-default:hover {
   color: #fff;
   background: #ffb606;
-}
-.hb_overlay_ajax{
-  opacity: 0.8;
-  background-color: #fff;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
 }
