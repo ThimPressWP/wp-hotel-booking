@@ -535,6 +535,7 @@ function hb_dropdown_numbers( $args = array() ){
     $option_none_value = '';
 
     extract( $args );
+    // var_dump($selected);
 
     $id = empty( $id ) ? sanitize_title( $name ) : $id;
     $output = '<select name="' . $name . '" id="' . $id . '"' . ( $class ? ' class="' . $class . '"' : '' ) . '>';
@@ -1036,7 +1037,15 @@ function hb_get_bookings( $args = array() ){
 function hb_maybe_modify_page_content(){
     global $post;
     if( is_page() && $post->ID == hb_get_page_id( 'search' ) ){
-        $post->post_content = '[hotel_booking]';
+
+        // params search result
+        $page = hb_get_request( 'hotel-booking' );
+        $start_date     = hb_get_request( 'check_in_date' );
+        $end_date       = hb_get_request( 'check_out_date' );
+        $adults         = hb_get_request( 'adults' );
+        $max_child      = hb_get_request( 'max_child' );
+
+        $post->post_content = '[hotel_booking page="'.$page .'" check_in_date="'.$start_date.'" check_in_date="'.$end_date.'" adults="'.$adults.'" max_child="'.$max_child.'"]';
     }
 }
 add_action( 'template_redirect', 'hb_maybe_modify_page_content' );

@@ -40,7 +40,9 @@ class HB_Shortcodes{
                 'search_page'       => null
             )
         );
+
         $page = hb_get_request( 'hotel-booking' );
+
         $template = 'search-room.php';
         $template_args = array();
 
@@ -69,6 +71,8 @@ class HB_Shortcodes{
          */
         switch( $page ){
             case 'results':
+                if( ! isset( $atts['page'] ) || $atts['page'] !== 'results' )
+                    break;
                 $template = 'results.php';
                 $template_args['results']   = hb_search_rooms(
                     array(
@@ -80,9 +84,13 @@ class HB_Shortcodes{
                 );
                 break;
             case 'cart':
+                if( ! isset( $atts['page'] ) || $atts['page'] !== 'cart' )
+                    break;
                 $template = 'cart.php';
                 break;
             case 'checkout':
+                if( ! isset( $atts['page'] ) || $atts['page'] !== 'checkout' )
+                    break;
                 if( is_user_logged_in() ){
                     global $current_user;
                     get_currentuserinfo();
@@ -107,12 +115,17 @@ class HB_Shortcodes{
                 $template = 'checkout.php';
                 break;
             case 'confirm':
+                if( ! isset( $atts['page'] ) || $atts['page'] !== 'confirm' )
+                    break;
                 $template = 'confirm.php';
                 break;
             case 'complete':
+                if( ! isset( $atts['page'] ) || $atts['page'] !== 'complete' )
+                    break;
                 $template = 'message.php';
                 break;
         }
+
         ob_start();
         do_action( 'hb_wrapper_start' );
         hb_get_template( $template, $template_args );
