@@ -8,6 +8,7 @@ global $hb_settings;
         <h3><?php _e( 'Cart', 'tp-hotel-booking' );?></h3>
         <table class="hb_table">
             <thead>
+                <th><?php _e( 'Remove', 'tp-hotel-booking' ); ?></th>
                 <th><?php _e( 'Room type', 'tp-hotel-booking' );?></th>
                 <th><?php _e( 'Capacity', 'tp-hotel-booking' );?></th>
                 <th><?php _e( 'Number of rooms', 'tp-hotel-booking' );?></th>
@@ -15,7 +16,6 @@ global $hb_settings;
                 <th><?php _e( 'Check - out', 'tp-hotel-booking' ); ?></th>
                 <th><?php _e( 'Night', 'tp-hotel-booking' ); ?></th>
                 <th class="hb-align-right"><?php _e( 'Gross Total', 'tp-hotel-booking' ); ?></th>
-                <th><?php _e( 'Remove', 'tp-hotel-booking' ); ?></th>
             </thead>
             <?php if( $rooms = $cart->get_rooms() ): ?>
                 <?php foreach( $rooms as $room ): ?>
@@ -23,6 +23,7 @@ global $hb_settings;
                             if( ( $num_of_rooms = (int)$room->quantity ) == 0 ) continue;
                         ?>
                         <tr>
+                            <td></td>
                             <td><?php echo $room->name;?> (<?php echo $room->capacity_title;?>)</td>
                             <td><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'tp-hotel-booking' ), $room->capacity );?> </td>
                             <td><input type="number" class="hb_room_number_edit" name="hotel_booking_cart[<?php echo $room->search_key ?>][<?php echo $room->ID;?>]" value="<?php echo $num_of_rooms; ?>" /></td>
