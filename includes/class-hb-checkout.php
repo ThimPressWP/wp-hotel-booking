@@ -117,12 +117,13 @@ class HB_Checkout{
                     // insert multiple meta value
                     for( $i = 0; $i < $num_of_rooms; $i ++ ) {
                         add_post_meta( $booking_id, '_hb_room_id', $room_options['id'] );
+
+                        // create post save item of order
+                        $booking->save_room( $room_options, $booking_id );
                     }
                     $room = HB_Room::instance( $room_options['id'], $room_options);
                     $prices[ $room_options['id'] ] = $room_options['sub_total'];
 
-                    // create post save item of order
-                    $booking->save_room( $room_options, $booking_id );
                 }
             }
 

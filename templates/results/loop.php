@@ -39,15 +39,17 @@ $featured = $gallery ? array_shift( $gallery ) : false;
                         <label><?php _e( 'Select number of room', 'tp-hotel-booking' );?></label>
                         <div>
                             <?php
-                            hb_dropdown_numbers(
-                                array(
-                                    'name'              => 'hb-num-of-rooms',
-                                    'min'               => 1,
-                                    'show_option_none'  => __( 'Select', 'tp-hotel-booking' ),
-                                    'max'               => $room->post->available_rooms,
-                                    'class'             => 'number_room_select'
-                                )
-                            );?></div>
+                                hb_dropdown_numbers(
+                                    array(
+                                        'name'              => 'hb-num-of-rooms',
+                                        'min'               => 1,
+                                        'show_option_none'  => __( 'Select', 'tp-hotel-booking' ),
+                                        'max'               => $room->post->available_rooms,
+                                        'class'             => 'number_room_select'
+                                    )
+                                );
+                            ?>
+                        </div>
                     </li>
                     <li><button class="hb_add_to_cart"><?php _e( 'Add To Cart', 'tp-hotel-booking' ) ?></button></li>
                 </ul>

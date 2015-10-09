@@ -864,20 +864,6 @@ function hb_search_rooms( $args = array() ){
     /**
      * Count booked rooms
      */
-    // $query_count_not_available = $wpdb->prepare("
-    //     (
-    //         SELECT count(booking.ID)
-    //         FROM {$wpdb->posts} booking
-    //         INNER JOIN {$wpdb->postmeta} bm ON bm.post_id = booking.ID AND bm.meta_key = %s
-    //         INNER JOIN {$wpdb->postmeta} bi ON bi.post_id = booking.ID AND bi.meta_key = %s
-    //         INNER JOIN {$wpdb->postmeta} bo ON bo.post_id = booking.ID AND bo.meta_key = %s
-    //         WHERE
-    //             bm.meta_value=rooms.ID
-    //             AND bi.meta_value <= %d
-    //             AND bo.meta_value >= %d
-    //     )
-    // ", '_hb_room_id', '_hb_check_in_date', '_hb_check_out_date', $check_in_date_to_time, $check_out_date_to_time );
-
     $query_count_not_available = $wpdb->prepare("
         (
             SELECT count(booking.ID)
@@ -886,11 +872,17 @@ function hb_search_rooms( $args = array() ){
             INNER JOIN {$wpdb->postmeta} bi ON bi.post_id = booking.ID AND bi.meta_key = %s
             INNER JOIN {$wpdb->postmeta} bo ON bo.post_id = booking.ID AND bo.meta_key = %s
             WHERE
-                bm.meta_value=rooms.ID
-                AND bi.meta_value <= %d
-                AND bo.meta_value >= %d
+                booking.post_type = %s
+                AND bm.meta_value = rooms.ID
+                AND (bi.meta_value <= %d AND bo.meta_value >= %d)
+                OR (bi.meta_value >= %d AND bi.meta_value <= %d)
+                OR (bo.meta_value > %d AND bo.meta_value <= %d)
         )
-    ", '_hb_id', '_hb_check_in_date', '_hb_check_out_date', $check_in_date_to_time, $check_out_date_to_time );
+    ", '_hb_id', '_hb_check_in_date', '_hb_check_out_date', 'hb_booking_item',
+        $check_in_date_to_time, $check_out_date_to_time,
+        $check_in_date_to_time, $check_out_date_to_time,
+        $check_in_date_to_time, $check_out_date_to_time
+    );
 
     /**
      *
@@ -908,7 +900,6 @@ function hb_search_rooms( $args = array() ){
         HAVING available_rooms > 0
     ", '_hb_max_child_per_room', '_hb_max_adults_per_room', 'hb_room', 'publish', hb_get_request('max_child'), $adults );
 
-    // echo $query;
     if( $search = $wpdb->get_results( $query ) ){
         foreach( $search as $k => $p ){
             $room = HB_Room::instance( $p );
