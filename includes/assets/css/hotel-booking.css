@@ -836,6 +836,7 @@
 #hotel-booking-results form .hb_button.hb_checkout,
 #hotel-booking-results form button.hb_add_to_cart,
 #hotel-booking-results form button[type="submit"] {
+  text-decoration: none;
   padding: 10px 25px;
   line-height: 20px;
   border: 0;
@@ -858,10 +859,13 @@
 }
 #hotel-booking-results .hb-search-results > .hb-room {
   margin: 20px 0 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #eee;
 }
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-name {
   color: #2a2a2a;
-  font-size: 24px;
+  font-size: 30px;
+  font-weight: 600;
 }
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-name a {
   color: #2a2a2a;
@@ -887,6 +891,10 @@
 }
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li select {
   padding: 3px 20px 3px 5px;
+}
+#hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li > label {
+  font-weight: 400;
+  color: #2a2a2a;
 }
 #hotel-booking-results a:hover {
   text-decoration: underline;
@@ -927,6 +935,7 @@
 #hotel-booking-payment button[type="submit"],
 #hotel-booking-cart button[type="button"],
 #hotel-booking-payment button[type="button"] {
+  text-decoration: none;
   padding: 10px 25px;
   line-height: 20px;
   border: 0;
@@ -971,6 +980,11 @@
 #hotel-booking-payment table th {
   color: #2a2a2a;
   padding: 10px 17px;
+  text-align: center;
+}
+#hotel-booking-cart table tr.hb_checkout_item td,
+#hotel-booking-payment table tr.hb_checkout_item td {
+  text-align: center;
 }
 #hotel-booking-cart table td,
 #hotel-booking-payment table td {
