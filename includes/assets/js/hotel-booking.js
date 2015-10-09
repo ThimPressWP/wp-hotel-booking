@@ -384,9 +384,14 @@
 
         $('#fetch-customer-info').click(fetchCustomerInfo);
 
-        $doc.on('click', '.hb-view-booking-room-details', function(e){
+        $doc.on('click', '.hb-view-booking-room-details, .hb_search_room_item_detail_price_close', function(e){
             e.preventDefault();
-            $(this).closest('.hb-room-content').find('.hb-booking-room-details').fadeToggle();
+            var _self = $(this);
+            var _details = _self.parents('.hb-room-content').find('.hb-booking-room-details');
+
+            _details.toggleClass('active');
+
+            // $(this).closest('.hb-room-content').find('.hb-booking-room-details').fadeToggle();
         }).on('click', 'input[name="hb-payment-method"]', function(){
             if( this.checked ){
                 $('.hb-payment-method-form:not(.'+this.value+')').slideUp();

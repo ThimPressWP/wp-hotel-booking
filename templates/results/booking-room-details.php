@@ -1,23 +1,36 @@
 <div class="hb-booking-room-details">
-    <?php
-    $details = $room->get_booking_room_details();
-    echo '<table>';
-    echo '<tr>';
-    if( $details ) foreach( $details as $d => $info ){
-        echo '<td>';
-        echo sprintf( '%d x %s', $info['count'], '[' . hb_date_to_name( $d )  . ']', hb_format_price( $info['price'] ) );
-        echo '</td>';
-    }
-    echo '</tr>';
-
-    echo '<tr>';
-    if( $details ) foreach( $details as $d => $info ){
-        $room_details_sub_total = round( $info['price'], 2 );
-        echo '<td>';
-        echo hb_format_price( $room_details_sub_total );
-        echo '</td>';
-    }
-    echo '</tr>';
-    echo '</table>';
-    ?>
+    <span class="hb_search_room_item_detail_price_close">
+        <i class="fa fa-times"></i>
+    </span>
+    <?php $details = $room->get_booking_room_details(); ?>
+    <table>
+        <tbody>
+            <?php foreach ($details as $day => $info):?>
+                <tr>
+                    <th><?php printf( '%s', hb_date_to_name( $day ) ) ?></th>
+                    <td class="hb_search_item_total_description">
+                        <span>
+                            <?php printf( 'X%d %s', $info['count'], __('Night', 'tp-hotel-booking') ) ?>
+                        </span>
+                    </td>
+                    <td class="hb_search_item_price">
+                        <span><?php echo hb_format_price(round( $info['price'], 2 )); ?></span>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td class="hb_search_item_total_bold">
+                    <span><?php _e( 'Total', 'tp-hotel-booking' ) ?></span>
+                </td>
+                <td class="hb_search_item_total_description">
+                    <span><?php _e( '* vat is not included yet', 'tp-hotel-booking' ); ?></span>
+                </td>
+                <td class="hb_search_item_price">
+                    <span><?php echo hb_format_price( $room->room_details_total );?></span>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
 </div>

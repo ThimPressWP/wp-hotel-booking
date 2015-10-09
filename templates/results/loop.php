@@ -36,10 +36,11 @@ $featured = $gallery ? array_shift( $gallery ) : false;
                         <div>
                             <span class="hb_search_item_price"><?php echo hb_format_price( $room->room_details_total );?></span>
                             <a href="" class="hb-view-booking-room-details"><?php _e( '(View price breakdown)', 'tp-hotel-booking' );?></a>
+                            <?php hb_get_template( 'results/booking-room-details.php', array( 'room' => $room ) );?>
                         </div>
                     </li>
                     <li class="hb_search_quantity">
-                        <label><?php _e( 'Number of room', 'tp-hotel-booking' );?></label>
+                        <label><?php _e( 'Number of room:', 'tp-hotel-booking' );?></label>
                         <div>
                             <?php
                                 hb_dropdown_numbers(
@@ -57,7 +58,6 @@ $featured = $gallery ? array_shift( $gallery ) : false;
                     <li class="hb_search_add_to_cart"><button class="hb_add_to_cart"><?php _e( 'Select this room', 'tp-hotel-booking' ) ?></button></li>
                 </ul>
             </div>
-            <?php hb_get_template( 'results/booking-room-details.php', array( 'room' => $room ) );?>
         </div>
 
         <?php wp_nonce_field( 'hb_booking_nonce_action', 'nonce' ); ?>

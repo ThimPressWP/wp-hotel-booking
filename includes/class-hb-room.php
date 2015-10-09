@@ -245,7 +245,7 @@ class HB_Room{
     /**
      * @return array
      */
-    function get_booking_room_details(){
+    function get_booking_room_details( $tax = false ){
         $details = array();
         $room_details_total = 0;
         $start_date = $this->get_data( 'check_in_date' );
@@ -265,7 +265,7 @@ class HB_Room{
                 );
             }
             $details[ $date ]['count'] ++;
-            $details[ $date ]['price'] += $this->get_total( $c_date, 1, 1, false );
+            $details[ $date ]['price'] += $this->get_total( $c_date, 1, 1, $tax );
             $room_details_total +=  $details[ $date ]['price'];
         }
         $this->_room_details_total = $room_details_total;
