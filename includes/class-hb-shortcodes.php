@@ -73,6 +73,7 @@ class HB_Shortcodes{
             case 'results':
                 if( ! isset( $atts['page'] ) || $atts['page'] !== 'results' )
                     break;
+
                 $template = 'results.php';
                 $template_args['results']   = hb_search_rooms(
                     array(
@@ -123,6 +124,9 @@ class HB_Shortcodes{
                 if( ! isset( $atts['page'] ) || $atts['page'] !== 'complete' )
                     break;
                 $template = 'message.php';
+                break;
+            default:
+                $template = 'search-room.php';
                 break;
         }
 

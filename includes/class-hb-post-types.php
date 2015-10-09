@@ -55,6 +55,8 @@ class HB_Post_Types{
 
         add_filter( 'manage_hb_coupon_posts_columns' , array( $this, 'custom_coupon_columns' ) );
         add_action( 'manage_hb_coupon_posts_custom_column', array( $this, 'custom_coupon_columns_filter' ) );
+
+        add_action( 'delete_post', array( $this, 'delete_post_type' ) );
     }
 
     function custom_coupon_columns( $columns ){
@@ -852,6 +854,52 @@ class HB_Post_Types{
             'show_in_admin_status_list' => true,
             'label_count'               => _n_noop( 'Completed <span class="count">(%s)</span>', 'Completed <span class="count">(%s)</span>', 'tp-hotel-booking' )
         ) );
+    }
+
+    /**
+    *
+    */
+    function delete_post_type( $postID )
+    {
+
+        global $post_type;
+
+        $hb_post_type_delete = array(
+                'hb_room',
+                'hb_booking'
+            );
+
+        if( ! in_array( $post_type, $hb_post_type_delete ) )
+            return;
+
+        if( $post_type === 'hb_room' )
+            return;
+
+        if( $post_type === 'hb_booking' )
+        {
+            delete_post_meta( $postID, '_hb_method_id' );
+            delete_post_meta( $postID, '_hb_check_in_date' );
+            delete_post_meta( $postID, '_hb_check_out_date' );
+            delete_post_meta( $postID, '_hb_id' );
+            delete_post_meta( $postID, '_hb_name' );
+            delete_post_meta( $postID, '_hb_quantity' );
+            delete_post_meta( $postID, '_hb_sub_total' );
+            delete_post_meta( $postID, '_hb_customer_id' );
+            delete_post_meta( $postID, '_hb_booking_params' );
+            delete_post_meta( $postID, '_hb_currency' );
+            delete_post_meta( $postID, '_hb_method' );
+            delete_post_meta( $postID, '_hb_method_title' );
+            delete_post_meta( $postID, '_hb_room_id' );
+        }
+        else if( $post_type === 'hb_room' )
+        {
+            delete_post_meta( $postID, '_hb_num_of_rooms' );
+            delete_post_meta( $postID, '_hb_room_capacity' );
+            delete_post_meta( $postID, '_hb_max_child_per_room' );
+            delete_post_meta( $postID, '_hb_room_addition_information' );
+            delete_post_meta( $postID, '_hb_gallery' );
+        }
+
     }
 }
 

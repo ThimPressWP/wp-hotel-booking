@@ -6,7 +6,7 @@ global $hb_settings;
 
     <form name="hb-payment-form" id="hb-payment-form" method="post" action="<?php echo $search_page;?>">
         <h3><?php _e( 'Booking Rooms', 'tp-hotel-booking' );?></h3>
-        <table>
+        <table class="hb_table">
             <thead>
                 <th><?php _e( 'Room type', 'tp-hotel-booking' );?></th>
                 <th><?php _e( 'Capacity', 'tp-hotel-booking' );?></th>
@@ -37,24 +37,6 @@ global $hb_settings;
                 <?php endforeach; ?>
             <?php endif; ?>
 
-            <tr>
-                <td colspan="6"><?php _e( 'Sub Total', 'tp-hotel-booking' );?></td>
-                <td class="hb-align-right">
-                    <?php echo hb_format_price( $cart->sub_total );?>
-                </td>
-            </tr>
-            <?php if( $tax = hb_get_tax_settings() ){?>
-            <tr>
-                <td colspan="6">
-                    <?php _e( 'Tax', 'tp-hotel-booking' );?>
-                    <?php if( $tax < 0 ){?>
-                        <span><?php printf( __( '(price including tax)', 'tp-hotel-booking' ) );?></span>
-                    <?php }?>
-                </td>
-                <td class="hb-align-right"><?php echo abs( $tax * 100 );?>%</td>
-            </tr>
-            <?php }?>
-
             <?php if( $hb_settings->get( 'enable_coupon' ) ){?>
                 <?php
                 if( $coupon = get_transient( 'hb_user_coupon_' . session_id() ) ){
@@ -82,6 +64,25 @@ global $hb_settings;
                     </tr>
                 <?php } ?>
             <?php } ?>
+
+            <tr>
+                <td colspan="6"><?php _e( 'Sub Total', 'tp-hotel-booking' );?></td>
+                <td class="hb-align-right">
+                    <?php echo hb_format_price( $cart->sub_total );?>
+                </td>
+            </tr>
+            <?php if( $tax = hb_get_tax_settings() ){?>
+            <tr>
+                <td colspan="6">
+                    <?php _e( 'Tax', 'tp-hotel-booking' );?>
+                    <?php if( $tax < 0 ){?>
+                        <span><?php printf( __( '(price including tax)', 'tp-hotel-booking' ) );?></span>
+                    <?php }?>
+                </td>
+                <td class="hb-align-right"><?php echo abs( $tax * 100 );?>%</td>
+            </tr>
+            <?php }?>
+
             <tr>
                 <td colspan="6"><?php _e( 'Grand Total', 'tp-hotel-booking' ); ?></td>
                 <td class="hb-align-right"><?php echo hb_format_price( $cart->total );?></td>
