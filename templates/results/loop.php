@@ -6,11 +6,6 @@ $featured = $gallery ? array_shift( $gallery ) : false;
 
     <form name="hb-search-results" class="hb-search-room-results">
 
-        <h4 class="hb-room-name">
-            <a href="<?php echo get_the_permalink($room->post->ID) ?>">
-                <?php echo $room->name;?> (<?php echo $room->capacity_title;?>)
-            </a>
-        </h4>
         <div class="hb-room-content">
             <div class="hb-room-thumbnail">
                 <?php if( $featured ):?>
@@ -22,21 +17,30 @@ $featured = $gallery ? array_shift( $gallery ) : false;
             </div>
 
             <div class="hb-room-info">
+                <h4 class="hb-room-name">
+                    <a href="<?php echo get_the_permalink($room->post->ID) ?>">
+                        <?php echo $room->name;?> (<?php echo $room->capacity_title;?>)
+                    </a>
+                </h4>
                 <ul class="hb-room-meta">
-                    <li>
-                        <label><?php _e( 'Capacity', 'tp-hotel-booking' );?></label>
-                        <div><?php echo $room->capacity;?></div>
+                    <li class="hb_search_capacity">
+                        <label><?php _e( 'Capacity:', 'tp-hotel-booking' );?></label>
+                        <div class=""><?php echo $room->capacity;?></div>
                     </li>
-                    <li>
-                        <label><?php _e( 'Max Child', 'tp-hotel-booking' );?></label>
+                    <li class="hb_search_max_child">
+                        <label><?php _e( 'Max Child:', 'tp-hotel-booking' );?></label>
                         <div><?php echo $room->max_child;?></div>
                     </li>
-                    <li>
-                        <label><?php _e( 'Price', 'tp-hotel-booking' );?></label>
-                        <div><?php echo hb_format_price( $room->room_details_total );?></div>
+                    <li class="hb_search_price">
+                        <label><?php _e( 'Price:', 'tp-hotel-booking' );?></label>
+                        <div>
+                            <span class="hb_search_item_price"><?php echo hb_format_price( $room->room_details_total );?></span>
+                            <a href="" class="hb-view-booking-room-details"><?php _e( '(View price breakdown)', 'tp-hotel-booking' );?></a>
+                            <?php hb_get_template( 'results/booking-room-details.php', array( 'room' => $room ) );?>
+                        </div>
                     </li>
-                    <li>
-                        <label><?php _e( 'Select number of room', 'tp-hotel-booking' );?></label>
+                    <li class="hb_search_quantity">
+                        <label><?php _e( 'Number of room:', 'tp-hotel-booking' );?></label>
                         <div>
                             <?php
                                 hb_dropdown_numbers(
@@ -51,11 +55,9 @@ $featured = $gallery ? array_shift( $gallery ) : false;
                             ?>
                         </div>
                     </li>
-                    <li><button class="hb_add_to_cart"><?php _e( 'Add To Cart', 'tp-hotel-booking' ) ?></button></li>
+                    <li class="hb_search_add_to_cart"><button class="hb_add_to_cart"><?php _e( 'Select this room', 'tp-hotel-booking' ) ?></button></li>
                 </ul>
-                <a href="" class="hb-view-booking-room-details"><?php _e( 'View details', 'tp-hotel-booking' );?></a>
             </div>
-            <?php hb_get_template( 'results/booking-room-details.php', array( 'room' => $room ) );?>
         </div>
 
         <?php wp_nonce_field( 'hb_booking_nonce_action', 'nonce' ); ?>

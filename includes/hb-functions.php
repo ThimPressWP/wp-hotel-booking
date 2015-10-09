@@ -940,7 +940,26 @@ function hb_search_rooms( $args = array() ){
             }
         }
     }
-    return $results;
+
+    global $hb_settings;
+    $total = count($results);
+    $posts_per_page = (int)apply_filters( 'hb_number_search_results', $hb_settings->get( 'posts_per_page', 1 ) );
+    $page = isset( $_GET['hb_page'] ) ? abs( (int) $_GET['hb_page'] ) : 1;
+    $offset = ( $page * $posts_per_page ) - $posts_per_page;
+    $max_num_pages = ceil($total / $posts_per_page);
+
+    $data = array_slice( $results, $offset, $posts_per_page);
+
+    $GLOBALS['hb_search_rooms'] = array(
+            'max_num_pages'         => $max_num_pages,
+            'data'                  => $max_num_pages > 1 ? array_slice( $results, $offset, $posts_per_page) : $results,
+            'total'                 => $total,
+            'posts_per_page'        => $posts_per_page,
+            'offset'                => $offset,
+            'page'                  => $page,
+        );
+    global $hb_search_rooms;
+    return apply_filters( 'hb_search_resuts', $hb_search_rooms );
 }
 
 function hb_get_payment_gateways( $args = array() ){

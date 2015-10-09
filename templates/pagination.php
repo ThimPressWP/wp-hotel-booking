@@ -10,6 +10,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
+
 global $wp_query;
 
 if ( $wp_query->max_num_pages <= 1 ) {
