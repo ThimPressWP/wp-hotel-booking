@@ -902,7 +902,7 @@ function hb_search_rooms( $args = array() ){
 
     if( $search = $wpdb->get_results( $query ) ){
         foreach( $search as $k => $p ){
-            $room = HB_Room::instance( $p );
+            $room = HB_Room::instance( $p);
             $room->set_data(
                 array(
                     'check_in_date' => $args['check_in_date'],

@@ -269,6 +269,40 @@
             }
         });
     }
+
+    function hb_add_to_cart_callback(id, search_key, html)
+    {
+        var mini_cart = $('.hotel_booking_mini_cart');
+        var length = mini_cart.length;
+
+        for ( var i = 0; i < length; i++ )
+        {
+            var cart = $(mini_cart[i]);
+
+            var cart_item = $(mini_cart[i]).find('.hb_mini_cart_item');
+            var insert = false;
+
+            for ( var y = 0; cart_item.length; y++ )
+            {
+                var item = $(cart_item[y]);
+                var searchId = item.attr('data-search-key');
+                var roomId = item.attr('data-id');
+                if ( search_key !== searchId )
+                    continue;
+                if( id === parseInt(roomId) )
+                {
+                    item.replaceWith( html );
+                    insert = true;
+                }
+            }
+
+            if( insert === false )
+            {
+                cart.find('.hb_mini_cart_footer').before(html);
+            }
+        }
+    }
+
     $(document).ready(function(){
         $.datepicker.setDefaults({ dateFormat: 'mm/dd/yy'});
         var today = new Date();
@@ -559,6 +593,9 @@
                         {
                             room_title.find('.hb_success_message').remove();
                             room_title.append( code.message );
+                            var timeOut = setTimeout(function(){
+                                room_title.find('.hb_success_message').remove();
+                            }, 3000);
                         }
 
                         if( typeof code.status !== 'undefined' && code.status === 'success' )
@@ -570,6 +607,9 @@
                         {
                             alert(code.message);
                         }
+
+                        if( typeof code.html !== 'undefined' && typeof code.id !== 'undefined' && typeof code.search_key !== 'undefined' )
+                            hb_add_to_cart_callback(code.id, code.search_key, code.html);
                     },
                     error: function()
                     {

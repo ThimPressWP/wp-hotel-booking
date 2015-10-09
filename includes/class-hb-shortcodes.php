@@ -13,6 +13,7 @@ class HB_Shortcodes{
         add_shortcode( 'hotel_booking_slider', array( __CLASS__, 'hotel_booking_slider' ) );
         add_shortcode( 'hotel_booking_best_reviews', array( __CLASS__, 'hotel_booking_best_reviews' ) );
         add_shortcode( 'hotel_booking_lastest_reviews', array( __CLASS__, 'hotel_booking_lastest_reviews' ) );
+        add_shortcode( 'hotel_booking_cart', array( __CLASS__, 'hotel_booking_cart' ) );
     }
 
     /**
@@ -346,6 +347,32 @@ class HB_Shortcodes{
             </div>
 
         <?php endif;
+    }
+
+    static function hotel_booking_cart( $atts )
+    { ?>
+        <div id="hotel_booking_mini_cart_<?php echo uniqid() ?>" class="hotel_booking_mini_cart">
+            <?php if( isset($atts['title']) && $atts['title'] ): ?>
+
+                <h3><?php echo $atts['title'] ?></h3>
+
+            <?php endif; ?>
+
+            <?php if( ! is_user_logged_in() ): ?>
+
+                <p class="hotel_booking_mini_cart_description"><?php _e( 'You have to login to create new order.', 'tp-hotel-booking' ) ?></p>
+
+            <?php elseif ( isset( $_SESSION['hb_cart'], $_SESSION['hb_cart']['products'] ) || empty( $_SESSION['hb_cart']['products'] ) ): ?>
+
+                <?php hb_get_template( 'mini_cart.php' ); ?>
+
+            <?php else: ?>
+
+                <p class="hotel_booking_mini_cart_description"><?php _e( 'You cart is empty.', 'tp-hotel-booking' ) ?></p>
+
+            <?php endif; ?>
+        </div>
+    <?php
     }
 }
 

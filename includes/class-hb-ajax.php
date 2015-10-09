@@ -210,7 +210,28 @@ class HB_Ajax{
 
         if( $cart->add_to_cart( $room_id, $number_room, $start_date, $end_date ) )
         {
-            hb_send_json( array( 'status'   => 'success', 'message' => sprintf('<label class="hb_success_message">%1$s</label>', __('Add To Cart succesfully.', 'tp-hotel-booking')) ) );
+            $search_key = strtotime($start_date) . '_' . strtotime($end_date);
+
+            $room = HB_Room::instance( $room_id,
+                    array(
+                            'id'                => $room_id,
+                            'check_in_date'     => $start_date,
+                            'check_out_date'    => $end_date,
+                            'quantity'          => $number_room
+                        )
+                );
+            ob_start();
+            hb_get_template( 'loop/mini-cart-loop.php', array( 'room'   => $room ) );
+            $html = ob_get_clean();
+
+            hb_send_json(
+                array(
+                    'status'    => 'success',
+                    'message'   => sprintf('<label class="hb_success_message">%1$s</label>', __('Add To Cart succesfully.', 'tp-hotel-booking')),
+                    'id'        => $room_id,
+                    'search_key'=> $search_key,
+                    'html'      => $html
+                ));
         }
         else
         {
