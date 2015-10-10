@@ -270,10 +270,15 @@
         });
     }
 
-    function hb_add_to_cart_callback(id, search_key, html)
+    function hb_add_to_cart_callback( data )
     {
         var mini_cart = $('.hotel_booking_mini_cart');
         var length = mini_cart.length;
+        var template = wp.template( 'hb-minicart-item' );
+        template = template( data );
+
+        if( length === 0 )
+            return;
 
         for ( var i = 0; i < length; i++ )
         {
@@ -281,26 +286,59 @@
 
             var cart_item = $(mini_cart[i]).find('.hb_mini_cart_item');
             var insert = false;
+            var empty = cart.find('.hb_mini_cart_empty');
+            var footer_ele = cart.find('.hb_mini_cart_footer');
 
-            for ( var y = 0; cart_item.length; y++ )
+            var items_length = cart_item.length;
+
+            if( items_length === 0 )
             {
-                var item = $(cart_item[y]);
-                var searchId = item.attr('data-search-key');
-                var roomId = item.attr('data-id');
-                if ( search_key !== searchId )
-                    continue;
-                if( id === parseInt(roomId) )
+                var footer = wp.template( 'hb-minicart-footer' );
+                var ele = footer_ele;
+                if( empty.length === 1 )
                 {
-                    item.replaceWith( html );
-                    insert = true;
+                    empty.after( footer({}) );
+                    empty.before( template );
+                }
+                else
+                {
+                    footer_ele.before( template );
+                }
+                insert = true;
+                break;
+            }
+            else
+            {
+                for ( var y = 0; y < items_length; y++ )
+                {
+                    var item = $(cart_item[y]);
+                    var searchId = item.attr('data-search-key');
+                    var roomId = item.attr('data-id');
+                    if ( data.search_key !== searchId )
+                        continue;
+                    if( data.id === parseInt(roomId) )
+                    {
+                        item.replaceWith( template );
+                        insert = true;
+                        break;
+                    }
+                }
+
+                if( insert === false )
+                {
+                    footer_ele.before( template );
                 }
             }
-
-            if( insert === false )
-            {
-                cart.find('.hb_mini_cart_footer').before(html);
-            }
         }
+
+        // $('.hb_mini_cart_empty').addClass('hb_before_remove');
+        $('.hb_mini_cart_empty').remove();
+        var timeout = setTimeout(function(){
+            $('.hb_mini_cart_item').removeClass('active');
+            // $('.hb_mini_cart_empty').removeClass('hb_before_remove');
+            // $('.hb_mini_cart_empty').remove();
+            clearTimeout(timeout);
+        }, 3000);
     }
 
     $(document).ready(function(){
@@ -608,8 +646,8 @@
                             alert(code.message);
                         }
 
-                        if( typeof code.html !== 'undefined' && typeof code.id !== 'undefined' && typeof code.search_key !== 'undefined' )
-                            hb_add_to_cart_callback(code.id, code.search_key, code.html);
+                        if( typeof code.id !== 'undefined' && typeof code.search_key !== 'undefined' )
+                            hb_add_to_cart_callback( code );
                     },
                     error: function()
                     {
@@ -657,6 +695,63 @@
                     $('.hb_advance_payment').html( res.advance_payment );
                 tr.hb_overlay_ajax_stop();
                 tr.remove();
+            });
+        });
+
+        //remove minicart item
+        $('.hotel_booking_mini_cart').on('click', '.hb_mini_cart_remove', function(event){
+            event.preventDefault();
+            var minicart = $('.hotel_booking_mini_cart');
+            var item = $(this).parents('.hb_mini_cart_item');
+            var dateID = item.attr('data-search-key');
+            var roomID = item.attr('data-id');
+
+            $.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                data: {
+                    time: dateID,
+                    room: roomID,
+                    nonce: hotel_settings.nonce,
+                    action: 'hotel_booking_ajax_remove_item_cart'
+                },
+                dataType: 'html',
+                beforeSend: function()
+                {
+                    item.addClass('before_remove');
+                }
+            }).done( function( res ){
+                res = parseJSON(res);
+                if( typeof res.status === 'undefined' || res.status !== 'success' )
+                    alert( hotel_settings_language.waring.try_again );
+
+                for ( var i = 0; i < minicart.length; i++ )
+                {
+                    var cart = $(minicart[i]);
+                    var items = cart.find('.hb_mini_cart_item');
+
+                    for( var y = 0; y < items.length; y++ )
+                    {
+                        var _item = $(items[y]);
+                        var _item_dateID = _item.attr('data-search-key');
+                        var _item_roomID = _item.attr('data-id');
+                        if( dateID === _item_dateID && roomID === _item_roomID )
+                        {
+                            _item.remove();
+                            break;
+                        }
+                    }
+
+                    // append message empty cart
+                    items = cart.find('.hb_mini_cart_item');
+                    if( items.length === 0 )
+                    {
+                        var empty = wp.template('hb-minicart-empty');
+                        cart.find('.hb_mini_cart_footer').remove();
+                        cart.append( empty({}) );
+                        break;
+                    }
+                }
             });
         });
     });

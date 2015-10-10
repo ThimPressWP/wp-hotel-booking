@@ -201,6 +201,9 @@ class HB_Ajax{
         if( ! isset( $_POST['check_in_date'] ) || ! isset($_POST['check_out_date']) )
             return;
 
+        if( ! is_user_logged_in() )
+            hb_send_json( array( 'status' => 'warning', 'message' => __('Please login system to select this room', 'tp-hotel-booking') ) );
+
         $room_id = (int)$_POST['room-id'];
         $number_room = (int)$_POST['hb-num-of-rooms'];
         $start_date = $_POST['check_in_date'];
@@ -220,9 +223,6 @@ class HB_Ajax{
                             'quantity'          => $number_room
                         )
                 );
-            ob_start();
-            hb_get_template( 'loop/mini-cart-loop.php', array( 'room'   => $room ) );
-            $html = ob_get_clean();
 
             hb_send_json(
                 array(
@@ -230,7 +230,9 @@ class HB_Ajax{
                     'message'   => sprintf('<label class="hb_success_message">%1$s</label>', __('Add To Cart succesfully.', 'tp-hotel-booking')),
                     'id'        => $room_id,
                     'search_key'=> $search_key,
-                    'html'      => $html
+                    'name'      => sprintf( '%s (%s)', $room->name, $room->capacity_title ),
+                    'quantity'  => $number_room,
+                    'total'     => hb_format_price( $room->total )
                 ));
         }
         else
@@ -257,6 +259,7 @@ class HB_Ajax{
             unset($_SESSION['hb_cart']['products'][$time_key][$room_id]);
 
         $cart = HB_Cart::instance();
+
         hb_send_json( array(
                 'status' => 'success',
                 'sub_total'  => hb_format_price( $cart->sub_total ),
