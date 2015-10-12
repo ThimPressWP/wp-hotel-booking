@@ -313,7 +313,16 @@ class HB_Cart{
                 if( ! isset( $products[$search_key][ $id ] )  )
                     continue;
 
-                $_SESSION['hb_cart']['products'][$search_key][ $id ]['quantity'] = (int) $quantity;
+                $quantity = (int) $quantity;
+
+                if( $quantity === 0 )
+                {
+                    unset($_SESSION['hb_cart']['products'][$search_key][ $id ]);
+                }
+                else
+                {
+                    $_SESSION['hb_cart']['products'][$search_key][ $id ]['quantity'] = $quantity;
+                }
             }
         }
         return;

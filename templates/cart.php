@@ -15,7 +15,7 @@ global $hb_settings;
                 <th class="hb_check_in"><?php _e( 'Check - in', 'tp-hotel-booking' ); ?></th>
                 <th class="hb_check_out"><?php _e( 'Check - out', 'tp-hotel-booking' ); ?></th>
                 <th class="hb_night"><?php _e( 'Night', 'tp-hotel-booking' ); ?></th>
-                <th class="hb-align-right"><?php _e( 'Gross Total', 'tp-hotel-booking' ); ?></th>
+                <th class="hb_gross_total"><?php _e( 'Gross Total', 'tp-hotel-booking' ); ?></th>
             </thead>
             <?php if( $rooms = $cart->get_rooms() ): ?>
                 <?php foreach( $rooms as $room ): ?>
@@ -35,7 +35,7 @@ global $hb_settings;
                             <td class="hb_check_in"><?php echo $room->check_in_date ?></td>
                             <td class="hb_check_out"><?php echo $room->check_out_date ?></td>
                             <td class="hb_night"><?php echo hb_count_nights_two_dates( $room->check_out_date, $room->check_in_date) ?></td>
-                            <td class="hb-align-right">
+                            <td class="hb_gross_total">
                                 <?php echo hb_format_price( $room->total );?>
                             </td>
                         </tr>
@@ -89,14 +89,14 @@ global $hb_settings;
                 <tr class="hb_advance_grand_total">
                     <td colspan="8">
                         <?php _e( 'Grand Total', 'tp-hotel-booking' ); ?>
-                        <span class="hb-align-right hb_grand_total "><?php echo hb_format_price( $cart->total );?></span>
+                        <span class="hb-align-right"><?php echo hb_format_price( $cart->total );?></span>
                     </td>
                 </tr>
                 <?php if( $advance_payment = $cart->advance_payment ){?>
                 <tr class="hb_advance_payment">
                     <td colspan="8">
                         <?php printf( __( 'Advance Payment (%s%% of Grand Total)', 'tp-hotel-booking' ), hb_get_advance_payment() );?>
-                        <span class="hb-align-right hb_advance_payment"><?php echo hb_format_price( $advance_payment );?></span>
+                        <span class="hb-align-right"><?php echo hb_format_price( $advance_payment );?></span>
                     </td>
                 </tr>
                 <?php }?>

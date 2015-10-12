@@ -14,7 +14,7 @@ global $hb_settings;
                 <th class="hb_check_in"><?php _e( 'Check - in', 'tp-hotel-booking' ); ?></th>
                 <th class="hb_check_out"><?php _e( 'Check - out', 'tp-hotel-booking' ); ?></th>
                 <th class="hb_night"><?php _e( 'Night', 'tp-hotel-booking' ); ?></th>
-                <th class="hb-align-right"><?php _e( 'Gross Total', 'tp-hotel-booking' ); ?></th>
+                <th class="hb_gross_total"><?php _e( 'Gross Total', 'tp-hotel-booking' ); ?></th>
             </thead>
             <?php if( $rooms = $cart->get_rooms() ): ?>
                 <?php foreach( $rooms as $room ): ?>
@@ -29,7 +29,7 @@ global $hb_settings;
                             <td class="hb_check_in"><?php echo $room->check_in_date ?></td>
                             <td class="hb_check_out"><?php echo $room->check_out_date ?></td>
                             <td class="hb_night"><?php echo hb_count_nights_two_dates( $room->check_out_date, $room->check_in_date) ?></td>
-                            <td class="hb-align-right">
+                            <td class="hb_gross_total">
                                 <?php echo hb_format_price( $room->total );?>
                             </td>
                         </tr>
@@ -64,7 +64,7 @@ global $hb_settings;
 
             <tr class="hb_sub_total">
                 <td colspan="8"><?php _e( 'Sub Total', 'tp-hotel-booking' );?>
-                    <span class="hb-align-right hb_sub_total">
+                    <span class="hb-align-right">
                         <?php echo hb_format_price( $cart->sub_total );?>
                     </span>
                 </td>
@@ -96,8 +96,8 @@ global $hb_settings;
                 </tr>
                 <?php if( hb_get_advance_payment() < 100 ){?>
                 <tr class="hb_payment_all">
-                    <td colspan="7" class="hb-align-right">
-                        <label>
+                    <td colspan="8" class="hb-align-right">
+                        <label class="hb-align-right">
                             <input type="checkbox" name="pay_all" />
                             <?php _e( 'I want to pay all', 'tp-hotel-booking' );?>
                         </label>
