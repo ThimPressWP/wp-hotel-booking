@@ -102,7 +102,7 @@ class HB_Room{
         $return = '';
         switch( $key ){
             case 'ID':
-                $return = $this->get_data('id');
+                $return = $this->get_data('id') ? $this->get_data('id') : $this->post->ID;
                 break;
             case 'room_type':
                 // $return = intval( get_post_meta( $this->post->ID, '_hb_room_type', true ) );
@@ -610,6 +610,67 @@ class HB_Room{
         $prices['max'] = end( $sort );
 
         return $prices;
+    }
+
+    function pricing_plans_data()
+    {
+        $room_id = $this->post->ID;
+        $capacitiyID = get_post_meta( $room_id, '_hb_room_capacity', true );
+
+        $pricing_plans = get_posts(
+            array(
+                'post_type'         => 'hb_pricing_plan',
+                'posts_per_page'    => 9999,
+                'meta_query' => array(
+                    array(
+                        'key'     => '_hb_pricing_plan_room',
+                        'value'   => $room_id
+                    )
+                )
+            )
+        );
+
+        if( $pricing_plans ) {
+            $regular_plan = array_pop($pricing_plans);
+        }else{
+            $regular_plan = null;
+        }
+
+        $results = array();
+
+        $results['week'] = array(
+            __( 'Sun', 'tp-hotel-booking' ),
+            __( 'Mon', 'tp-hotel-booking' ),
+            __( 'Tue', 'tp-hotel-booking' ),
+            __( 'Wed', 'tp-hotel-booking' ),
+            __( 'Thu', 'tp-hotel-booking' ),
+            __( 'Fri', 'tp-hotel-booking' ),
+            __( 'Sat', 'tp-hotel-booking' )
+        );
+
+        $count_plants = count( $pricing_plans );
+        if( $count_plants )
+        {
+            foreach ( $pricing_plans as $ID => $post ) {
+                $end = get_post_meta($post->ID, '_hb_pricing_plan_end', true);
+                $start = get_post_meta($post->ID, '_hb_pricing_plan_start', true);
+                if( strtotime($end) > time() )
+                {
+                    $results['data'][$post->ID] = array();
+                    $results['data'][$post->ID]['price'] = get_post_meta($post->ID, '_hb_pricing_plan_prices', true);
+                    $results['data'][$post->ID]['plans'] = array(
+                            'start'     => $start,
+                            'end'       => $end
+                        );
+                }
+            }
+        }
+
+        $results['data']['regular']['price'] = get_post_meta($regular_plan->ID, '_hb_pricing_plan_prices', true);
+        $results['capacity']    = get_post_meta( $room_id, '_hb_room_capacity', true );
+
+        return apply_filters( 'hb_booking_pricing_plans', $results );;
+
     }
 
     static function hb_setup_room_data( $post )

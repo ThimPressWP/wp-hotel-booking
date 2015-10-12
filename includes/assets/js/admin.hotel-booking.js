@@ -36,6 +36,7 @@
 
             }
         });
+        $(plan).find('.datepicker').datepicker('disable');
     }
     function _ready(){
         $doc.on('click', '.hb-pricing-controls a', function(e){
@@ -71,10 +72,12 @@
                 case 'edit':
                     if( $button.hasClass('dashicons-edit') ){
                         $('input', $table).removeAttr('readonly');
+                        $('input', $table).datepicker("enable");
                         $button.removeClass('dashicons-edit').addClass('dashicons-yes');
                         $('.hb-pricing-table .dashicons-yes').not($button).trigger('click')
                     }else{
                         $('input', $table).attr('readonly', 'readonly');
+                        $('input', $table).datepicker("disable");
                         $button.removeClass('dashicons-yes').addClass('dashicons-edit');
                     }
                     break;

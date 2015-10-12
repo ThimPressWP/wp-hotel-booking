@@ -47,7 +47,7 @@ $count_plants = count( $pricing_plans );
                 <input type="text" class="datepicker" name="date-end[<?php echo $regular_plan ? $regular_plan->ID : '__INDEX__';?>]" size="10" readonly="readonly" />
             </h3>
             <div class="hb-pricing-controls">
-                <a href="" class="dashicons dashicons-edit" data-action="edit" title="<?php _e( 'Clone', 'tp-hotel-booking' );?>"></a>
+                <a href="" class="dashicons dashicons-edit" data-action="edit" title="<?php _e( 'Edit', 'tp-hotel-booking' );?>"></a>
                 <a href="" class="dashicons dashicons-admin-page" data-action="clone" title="<?php _e( 'Clone', 'tp-hotel-booking' );?>"></a>
                 <a href="" class="dashicons dashicons-trash" data-action="remove" title="<?php _e( 'Remove', 'tp-hotel-booking' );?>"></a>
             </div>
@@ -111,7 +111,7 @@ $count_plants = count( $pricing_plans );
                     <input type="text" class="datepicker" name="date-end[<?php echo $plan->ID;?>]" size="10" value="<?php echo $end_date;?>" readonly="readonly" />
                 </h3>
                 <div class="hb-pricing-controls">
-                    <a href="" class="dashicons dashicons-edit" data-action="edit" title="<?php _e( 'Clone', 'tp-hotel-booking' );?>"></a>
+                    <a href="" class="dashicons dashicons-edit" data-action="edit" title="<?php _e( 'Edit', 'tp-hotel-booking' );?>"></a>
                     <a href="" class="dashicons dashicons-admin-page" data-action="clone" title="<?php _e( 'Clone', 'tp-hotel-booking' );?>"></a>
                     <a href="" class="dashicons dashicons-trash" data-action="remove" title="<?php _e( 'Remove', 'tp-hotel-booking' );?>"></a>
                 </div>

@@ -52,6 +52,13 @@ $settings = hb_settings();
             px
         </td>
     </tr>
+    <tr>
+        <th><?php _e( 'Display pricing plans', 'tp-hotel-booking' );?></th>
+        <td>
+            <input type="hidden" name="<?php echo $settings->get_field_name('display_pricing_plans');?>" value="0" />
+            <input type="checkbox" name="<?php echo $settings->get_field_name('display_pricing_plans');?>" <?php checked( $settings->get('display_pricing_plans') ? 1 : 0, 1 );?> value="1" />
+        </td>
+    </tr>
 </table>
 
 <h3 class="description"><?php _e( 'Room Ratings', 'tp-hotel-booking' );?></h3>
