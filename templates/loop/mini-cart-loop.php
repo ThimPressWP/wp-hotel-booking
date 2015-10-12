@@ -8,7 +8,7 @@
 
 	<div class="hb_mini_cart_number">
 
-		<label><?php _e( 'Number of room: ', 'tp-hotel-booking' ); ?></label>
+		<label><?php _e( 'Quantity: ', 'tp-hotel-booking' ); ?></label>
 		<span><?php printf( '%s', $room->quantity );  ?></span>
 
 	</div>
