@@ -905,13 +905,17 @@ function hb_search_rooms( $args = array() ){
 
     if( $search = $wpdb->get_results( $query ) ){
         foreach( $search as $k => $p ){
-            $room = HB_Room::instance( $p);
-            $room->set_data(
-                array(
-                    'check_in_date' => $args['check_in_date'],
-                    'check_out_date' => $args['check_out_date']
-                )
-            )->get_booking_room_details();
+            $room = HB_Room::instance( $p, array(
+                    'check_in_date'     => $args['check_in_date'],
+                    'check_out_date'    => $args['check_out_date'],
+                    'quantity'          => 1
+                ) );
+            // $room->set_data(
+            //     array(
+            //         'check_in_date' => $args['check_in_date'],
+            //         'check_out_date' => $args['check_out_date']
+            //     )
+            // )->get_booking_room_details();
             $results[ $k ] = $room;
         }
     }

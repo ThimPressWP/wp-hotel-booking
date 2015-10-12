@@ -8,12 +8,12 @@ global $hb_settings;
         <h3><?php _e( 'Booking Rooms', 'tp-hotel-booking' );?></h3>
         <table class="hb_table">
             <thead>
-                <th><?php _e( 'Room type', 'tp-hotel-booking' );?></th>
-                <th><?php _e( 'Capacity', 'tp-hotel-booking' );?></th>
-                <th><?php _e( 'Number of rooms', 'tp-hotel-booking' );?></th>
-                <th><?php _e( 'Check - in', 'tp-hotel-booking' ); ?></th>
-                <th><?php _e( 'Check - out', 'tp-hotel-booking' ); ?></th>
-                <th><?php _e( 'Night', 'tp-hotel-booking' ); ?></th>
+                <th class="hb_room_type"><?php _e( 'Room type', 'tp-hotel-booking' );?></th>
+                <th class="hb_capacity"><?php _e( 'Capacity', 'tp-hotel-booking' );?></th>
+                <th class="hb_quantity"><?php _e( 'Quantity', 'tp-hotel-booking' );?></th>
+                <th class="hb_check_in"><?php _e( 'Check - in', 'tp-hotel-booking' ); ?></th>
+                <th class="hb_check_out"><?php _e( 'Check - out', 'tp-hotel-booking' ); ?></th>
+                <th class="hb_night"><?php _e( 'Night', 'tp-hotel-booking' ); ?></th>
                 <th class="hb-align-right"><?php _e( 'Gross Total', 'tp-hotel-booking' ); ?></th>
             </thead>
             <?php if( $rooms = $cart->get_rooms() ): ?>
@@ -23,15 +23,14 @@ global $hb_settings;
                             $sub_total = $room->get_total( $room->check_in_date, $room->check_out_date, $num_of_rooms, false );
                         ?>
                         <tr class="hb_checkout_item">
-                            <td><?php echo $room->name;?> (<?php echo $room->capacity_title; ?>)</td>
-                            <td><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'tp-hotel-booking' ), $room->capacity ); ?> </td>
-                            <td><?php echo $num_of_rooms ?></td>
-                            <td><?php echo $room->check_in_date ?></td>
-                            <td><?php echo $room->check_out_date ?></td>
-                            <td><?php echo hb_count_nights_two_dates( $room->check_out_date, $room->check_in_date) ?></td>
+                            <td class="hb_room_type"><?php echo $room->name;?> (<?php echo $room->capacity_title;?>)</td>
+                            <td class="hb_capacity"><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'tp-hotel-booking' ), $room->capacity );?> </td>
+                            <td class="hb_quantity"><input type="number" class="hb_room_number_edit" name="hotel_booking_cart[<?php echo $room->search_key ?>][<?php echo $room->ID;?>]" value="<?php echo $num_of_rooms; ?>" /></td>
+                            <td class="hb_check_in"><?php echo $room->check_in_date ?></td>
+                            <td class="hb_check_out"><?php echo $room->check_out_date ?></td>
+                            <td class="hb_night"><?php echo hb_count_nights_two_dates( $room->check_out_date, $room->check_in_date) ?></td>
                             <td class="hb-align-right">
-                                <?php echo hb_format_price( $sub_total );?>
-                                <input type="hidden" name="sub_total_of_rooms[<?php echo $room->post->ID;?>]" value="<?php echo $sub_total;?>" />
+                                <?php echo hb_format_price( $room->total );?>
                             </td>
                         </tr>
                 <?php endforeach; ?>
@@ -42,21 +41,19 @@ global $hb_settings;
                 if( $coupon = get_transient( 'hb_user_coupon_' . session_id() ) ){
                     $coupon = HB_Coupon::instance( $coupon );
                     ?>
-                    <tr>
-                        <td>
+                    <tr class="hb_coupon">
+                        <td class="hb_coupon_remove">
                             <p class="hb-remove-coupon" align="right">
-                                <a href="" id="hb-remove-coupon"><?php _e( 'Remove', 'tp-hotel-booking' );?></a>
+                                <a href="" id="hb-remove-coupon"><i class="fa fa-times"></i></a>
                             </p>
-                        </td>
-                        <td colspan="5" class="hb-align-right" >
-                            <span class="hb_coupon_code"><?php printf( __( 'Coupon applied: %s', 'tp-hotel-booking' ), $coupon->coupon_code );?></span>
-                        </td>
-                        <td class="hb-align-right">
-                            -<?php echo hb_format_price( $coupon->discount_value );?>
+                            <span class="hb-remove-coupon_code"><?php printf( __( 'Coupon applied: %s', 'tp-hotel-booking' ), $coupon->coupon_code );?></span>
+                            <span class="hb-align-right">
+                                -<?php echo hb_format_price( $coupon->discount_value );?>
+                            </span>
                         </td>
                     </tr>
                 <?php }else{?>
-                    <tr>
+                    <tr class="hb_coupon">
                         <td colspan="8" class="hb-align-center" >
                             <input type="text" name="hb-coupon-code" value="" placeholder="<?php _e( 'Coupon', 'tp-hotel-booking' );?>" style="width: 150px; vertical-align: top;" />
                             <button type="button" id="hb-apply-coupon"><?php _e( 'Apply Coupon', 'tp-hotel-booking' );?></button>
@@ -65,37 +62,40 @@ global $hb_settings;
                 <?php } ?>
             <?php } ?>
 
-            <tr>
-                <td colspan="6"><?php _e( 'Sub Total', 'tp-hotel-booking' );?></td>
-                <td class="hb-align-right">
-                    <?php echo hb_format_price( $cart->sub_total );?>
+            <tr class="hb_sub_total">
+                <td colspan="8"><?php _e( 'Sub Total', 'tp-hotel-booking' );?>
+                    <span class="hb-align-right hb_sub_total">
+                        <?php echo hb_format_price( $cart->sub_total );?>
+                    </span>
                 </td>
             </tr>
             <?php if( $tax = hb_get_tax_settings() ){?>
-            <tr>
-                <td colspan="6">
+            <tr class="hb_advance_tax">
+                <td colspan="8">
                     <?php _e( 'Tax', 'tp-hotel-booking' );?>
                     <?php if( $tax < 0 ){?>
                         <span><?php printf( __( '(price including tax)', 'tp-hotel-booking' ) );?></span>
                     <?php }?>
+                    <span class="hb-align-right"><?php echo abs( $tax * 100 );?>%</span>
                 </td>
-                <td class="hb-align-right"><?php echo abs( $tax * 100 );?>%</td>
             </tr>
             <?php }?>
 
-            <tr>
-                <td colspan="6"><?php _e( 'Grand Total', 'tp-hotel-booking' ); ?></td>
-                <td class="hb-align-right"><?php echo hb_format_price( $cart->total );?></td>
+            <tr class="hb_advance_grand_total">
+                <td colspan="8">
+                    <?php _e( 'Grand Total', 'tp-hotel-booking' ); ?>
+                    <span class="hb-align-right hb_grand_total "><?php echo hb_format_price( $cart->total );?></span>
+                </td>
             </tr>
             <?php if( $advance_payment = $cart->advance_payment ){?>
-                <tr>
-                    <td colspan="6">
+                <tr class="hb_advance_payment">
+                    <td colspan="8">
                         <?php printf( __( 'Advance Payment (%s%% of Grand Total)', 'tp-hotel-booking' ), hb_get_advance_payment() );?>
+                        <span class="hb-align-right"><?php echo hb_format_price( $advance_payment );?></span>
                     </td>
-                    <td class="hb-align-right"><?php echo hb_format_price( $advance_payment );?></td>
                 </tr>
                 <?php if( hb_get_advance_payment() < 100 ){?>
-                <tr>
+                <tr class="hb_payment_all">
                     <td colspan="7" class="hb-align-right">
                         <label>
                             <input type="checkbox" name="pay_all" />

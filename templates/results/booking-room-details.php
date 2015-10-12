@@ -35,7 +35,7 @@
                     ?>
                 </td>
                 <td class="hb_search_item_price">
-                    <?php echo hb_format_price( $room->room_details_total );?>
+                    <?php echo hb_format_price( $room->total_price );?>
                 </td>
             </tr>
         </tfoot>

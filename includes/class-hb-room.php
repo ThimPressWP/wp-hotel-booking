@@ -193,6 +193,16 @@ class HB_Room{
             case 'total_tax':
                 $return = $this->get_total($this->check_in_date, $this->check_out_date, $this->get_data( 'num_of_rooms' ));
                 break;
+            case 'total_price':
+                    if( hb_price_including_tax() )
+                    {
+                        $return = $this->get_total($this->check_in_date, $this->check_out_date, $this->get_data( 'num_of_rooms' ));
+                    }
+                    else
+                    {
+                        $return = $this->get_total($this->check_in_date, $this->check_out_date, $this->get_data( 'num_of_rooms' ), false);
+                    }
+                break;
             case 'search_key':
                 $return = $this->get_data('search_key');
                 break;
@@ -245,7 +255,7 @@ class HB_Room{
     /**
      * @return array
      */
-    function get_booking_room_details( $tax = false ){
+    function get_booking_room_details(){
         $details = array();
         $room_details_total = 0;
         $start_date = $this->get_data( 'check_in_date' );
@@ -253,6 +263,12 @@ class HB_Room{
 
         $start_date_to_time = strtotime( $start_date );
         $end_date_to_time = strtotime( $end_date );
+
+        $tax = false;
+        if( hb_price_including_tax() )
+        {
+            $tax = true;
+        }
 
         $nights = hb_count_nights_two_dates( $end_date, $start_date );
         for( $i = 0; $i < $nights; $i++ ){
@@ -267,6 +283,7 @@ class HB_Room{
             $details[ $date ]['count'] ++;
             $details[ $date ]['price'] += $this->get_total( $c_date, 1, 1, $tax );
             $room_details_total +=  $details[ $date ]['price'];
+
         }
         $this->_room_details_total = $room_details_total;
         return $details;
@@ -283,11 +300,12 @@ class HB_Room{
         $tax = 0;
         if( $including_tax ){
             $settings = HB_Settings::instance();
-            if( ! $settings->get( 'price_including_tax' ) ) {
+            if( $settings->get( 'price_including_tax' ) ) {
                 $tax = $settings->get('tax');
-                $tax = $tax / 100;
+                $tax = (float)$tax / 100;
             }
         }
+
         if( ! $date ) $date = time();
         elseif( is_string( $date ) ){
             $date = @strtotime( $date );
@@ -578,6 +596,20 @@ class HB_Room{
                 $size,
                 $src
             );
+    }
+
+    function pricing_plan()
+    {
+        $prices = array();
+        $prices = hb_get_price_plan_room(get_the_ID());
+        if( $prices )
+            sort($prices);
+
+        $sort = $prices;
+        $prices['min'] = current( $sort );
+        $prices['max'] = end( $sort );
+
+        return $prices;
     }
 
     static function hb_setup_room_data( $post )

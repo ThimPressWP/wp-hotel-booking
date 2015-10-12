@@ -189,13 +189,8 @@ class HB_Shortcodes{
                     <?php  while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
                         <?php $galleries = get_post_meta( get_the_ID(), '_hb_gallery', true ); ?>
                         <?php
-                            $prices = array();
-                            if( function_exists('hb_get_price_plan_room') )
-                            {
-                                $prices = hb_get_price_plan_room(get_the_ID());
-                                if( $prices )
-                                    sort($prices);
-                            }
+                            global $hb_room;
+                            $prices = $hb_room->pricing_plan();
                             $currency = get_option( 'tp_hotel_booking_currency' );
                             $title = get_the_title();
                         ?>
@@ -203,7 +198,6 @@ class HB_Shortcodes{
                                 <div class="media">
                                     <a href="<?php echo get_the_permalink(get_the_ID()); ?>" class="media-image" title="<?php echo esc_attr($title); ?>">
                                     <?php
-                                        global $hb_room;
                                         $hb_room->getImage( 'catalog' );
                                     ?>
                                     </a>
@@ -217,11 +211,15 @@ class HB_Shortcodes{
                                     <div class="price">
                                         <span>
                                             <?php
-                                                $current = current($prices);
-                                                $end = end($prices);
-                                                if( $current !== $end && $atts['price'] === 'min_to_max' )
+                                                $current = $prices['min'];
+                                                $end = $prices['max'];
+                                                if( $atts['price'] === 'min_to_max' && $current !== $end )
                                                 {
-                                                    echo $currentcy.$current . ' - ' . $end;
+                                                    echo $currentcy.$current . ' - ' . $currentcy.$end;
+                                                }
+                                                else if( $atts['price'] === 'max' )
+                                                {
+                                                    echo $currentcy.$end;
                                                 }
                                                 else
                                                 {
@@ -389,7 +387,7 @@ class HB_Shortcodes{
 
                 <div class="hb_mini_cart_number">
 
-                    <label><?php _e( 'Number of room: ', 'tp-hotel-booking' ); ?></label>
+                    <label><?php _e( 'Quantity: ', 'tp-hotel-booking' ); ?></label>
                     <span>{{ data.quantity }}</span>
 
                 </div>

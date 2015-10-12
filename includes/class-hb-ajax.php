@@ -232,7 +232,7 @@ class HB_Ajax{
                     'search_key'=> $search_key,
                     'name'      => sprintf( '%s (%s)', $room->name, $room->capacity_title ),
                     'quantity'  => $number_room,
-                    'total'     => hb_format_price( $room->total )
+                    'total'     => hb_format_price( $room->total_price )
                 ));
         }
         else

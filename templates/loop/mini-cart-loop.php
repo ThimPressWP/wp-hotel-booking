@@ -8,7 +8,7 @@
 
 	<div class="hb_mini_cart_number">
 
-		<label><?php _e( 'Number of room: ', 'tp-hotel-booking' ); ?></label>
+		<label><?php _e( 'Quantity: ', 'tp-hotel-booking' ); ?></label>
 		<span><?php printf( '%s', $room->quantity );  ?></span>
 
 	</div>
@@ -16,7 +16,7 @@
 	<div class="hb_mini_cart_price">
 
 		<label><?php _e( 'Price: ', 'tp-hotel-booking' ); ?></label>
-		<span><?php printf( '%s', hb_format_price( $room->total ) ) ?></span>
+		<span><?php printf( '%s', hb_format_price( $room->total_price ) ) ?></span>
 
 	</div>
 </div>
