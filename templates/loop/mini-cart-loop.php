@@ -13,7 +13,7 @@
 
 	</div>
 
-	<div class="hb_mini_cart_number">
+	<div class="hb_mini_cart_price">
 
 		<label><?php _e( 'Price: ', 'tp-hotel-booking' ); ?></label>
 		<span><?php printf( '%s', hb_format_price( $room->total ) ) ?></span>

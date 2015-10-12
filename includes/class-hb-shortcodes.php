@@ -396,7 +396,7 @@ class HB_Shortcodes{
 
                 </div>
 
-                <div class="hb_mini_cart_number">
+                <div class="hb_mini_cart_price">
 
                     <label><?php _e( 'Price: ', 'tp-hotel-booking' ); ?></label>
                     <span>{{{ data.total }}}</span>
