@@ -955,6 +955,9 @@
 #hotel-booking-results a:hover {
   text-decoration: underline;
 }
+#hotel-booking-results .rooms-pagination a:hover {
+  text-decoration: none;
+}
 /** hotel-booking-payment **/
 #hotel-booking-cart h3,
 #hotel-booking-payment h3 {
@@ -1035,6 +1038,10 @@
   padding: 8px 20px 8px 5px;
   border: 1px solid #ddd;
 }
+#hotel-booking-cart table.hb_table,
+#hotel-booking-payment table.hb_table {
+  margin-bottom: 30px;
+}
 #hotel-booking-cart table th,
 #hotel-booking-payment table th {
   color: #2a2a2a;
@@ -1044,10 +1051,6 @@
 #hotel-booking-cart table tr.hb_checkout_item td,
 #hotel-booking-payment table tr.hb_checkout_item td {
   text-align: center;
-}
-#hotel-booking-cart table td,
-#hotel-booking-payment table td {
-  padding: 10px 17px;
 }
 #hotel-booking-cart .hb-addition-information textarea,
 #hotel-booking-payment .hb-addition-information textarea {
@@ -1068,12 +1071,51 @@
 #hotel-booking-payment a:hover {
   text-decoration: underline;
 }
-#hotel-booking-cart .hb_grand_total,
-#hotel-booking-payment .hb_grand_total,
-#hotel-booking-cart .hb_sub_total,
-#hotel-booking-payment .hb_sub_total {
+#hotel-booking-cart .hb_sub_total .hb-align-right,
+#hotel-booking-payment .hb_sub_total .hb-align-right,
+#hotel-booking-cart .hb_advance_grand_total .hb-align-right,
+#hotel-booking-payment .hb_advance_grand_total .hb-align-right {
   color: #2a2a2a;
   font-weight: 700;
+}
+#hotel-booking-cart .hb_advance_payment .hb-align-right,
+#hotel-booking-payment .hb_advance_payment .hb-align-right,
+#hotel-booking-cart .hb_advance_grand_total .hb-align-right,
+#hotel-booking-payment .hb_advance_grand_total .hb-align-right,
+#hotel-booking-cart .hb_advance_tax .hb-align-right,
+#hotel-booking-payment .hb_advance_tax .hb-align-right,
+#hotel-booking-cart .hb_sub_total .hb-align-right,
+#hotel-booking-payment .hb_sub_total .hb-align-right {
+  float: right;
+  width: 118px;
+  margin: -10px 0;
+  padding: 10px 0;
+  border-left: 1px solid #eee;
+  text-align: right;
+}
+#hotel-booking-cart td,
+#hotel-booking-payment td {
+  padding: 10px 17px;
+}
+#hotel-booking-cart td.hb_gross_total,
+#hotel-booking-payment td.hb_gross_total {
+  width: 135px;
+  min-width: 135px;
+}
+#hotel-booking-cart .hb_remove_cart_item,
+#hotel-booking-payment .hb_remove_cart_item {
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  line-height: 24px;
+  display: table-cell;
+}
+#hotel-booking-cart .hb_remove_cart_item .fa,
+#hotel-booking-payment .hb_remove_cart_item .fa {
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  line-height: 24px;
 }
 /** Input type date style **/
 .ui-datepicker.ui-widget {
