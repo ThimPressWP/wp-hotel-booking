@@ -13,6 +13,9 @@ class HB_Shortcodes{
         add_shortcode( 'hotel_booking_slider', array( __CLASS__, 'hotel_booking_slider' ) );
         add_shortcode( 'hotel_booking_best_reviews', array( __CLASS__, 'hotel_booking_best_reviews' ) );
         add_shortcode( 'hotel_booking_lastest_reviews', array( __CLASS__, 'hotel_booking_lastest_reviews' ) );
+        add_shortcode( 'hotel_booking_cart', array( __CLASS__, 'hotel_booking_cart' ) );
+        add_action( 'wp_footer', array( __CLASS__, 'mini_cart' ) );
+        add_action( 'wp_enqueue_scripts', array( __CLASS__, 'utils' ) );
     }
 
     /**
@@ -346,6 +349,78 @@ class HB_Shortcodes{
             </div>
 
         <?php endif;
+    }
+
+    static function hotel_booking_cart( $atts )
+    { ?>
+        <div id="hotel_booking_mini_cart_<?php echo uniqid() ?>" class="hotel_booking_mini_cart">
+            <?php if( isset($atts['title']) && $atts['title'] ): ?>
+
+                <h3><?php echo $atts['title'] ?></h3>
+
+            <?php endif; ?>
+
+            <?php if( ! is_user_logged_in() ): ?>
+
+                <p class="hotel_booking_mini_cart_description"><?php _e( 'You have to login to create new order.', 'tp-hotel-booking' ) ?></p>
+
+            <?php elseif ( isset( $_SESSION['hb_cart'], $_SESSION['hb_cart']['products'] ) || empty( $_SESSION['hb_cart']['products'] ) ): ?>
+
+                <?php hb_get_template( 'mini_cart.php' ); ?>
+
+            <?php else: ?>
+
+                <p class="hotel_booking_mini_cart_description"><?php _e( 'You cart is empty.', 'tp-hotel-booking' ) ?></p>
+
+            <?php endif; ?>
+        </div>
+    <?php
+    }
+
+    static function mini_cart()
+    { ?>
+        <script type="text/html" id="tmpl-hb-minicart-item">
+            <div class="hb_mini_cart_item active" data-search-key="{{ data.search_key }}" data-id="{{ data.id }}">
+
+                <div class="hb_mini_cart_top">
+
+                    <h4>{{ data.name }}</h4>
+                    <span class="hb_mini_cart_remove"><i class="fa fa-times"></i></span>
+
+                </div>
+
+                <div class="hb_mini_cart_number">
+
+                    <label><?php _e( 'Number of room: ', 'tp-hotel-booking' ); ?></label>
+                    <span>{{ data.quantity }}</span>
+
+                </div>
+
+                <div class="hb_mini_cart_number">
+
+                    <label><?php _e( 'Price: ', 'tp-hotel-booking' ); ?></label>
+                    <span>{{{ data.total }}}</span>
+
+                </div>
+            </div>
+        </script>
+        <script type="text/html" id="tmpl-hb-minicart-footer">
+            <div class="hb_mini_cart_footer">
+
+                <a href="<?php echo hb_get_url(array( 'hotel-booking' => 'checkout')) ?>" class="hb_button hb_checkout"><?php _e( 'Check Out', 'tp-hotel-booking' );?></a>
+                <a href="<?php echo hb_get_url( array('hotel-booking' => 'cart') ); ?>" class="hb_button hb_view_cart"><?php _e( 'View Cart', 'tp-hotel-booking' );?></a>
+
+            </div>
+        </script>
+        <script type="text/html" id="tmpl-hb-minicart-empty">
+            <p class="hb_mini_cart_empty"><?php _e( 'Your cart is empty!', 'tp-hotel-booking' ); ?></p>
+        </script>
+    <?php
+    }
+
+    static function utils()
+    {
+        wp_enqueue_script( 'wp-util' );
     }
 }
 

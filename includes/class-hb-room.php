@@ -173,7 +173,7 @@ class HB_Room{
                 $return = $this->_room_details_total;
                 break;
             case 'price_table':
-                $return = 'why i am here?';
+                $return = __( 'why i am here?', 'tp-hotel-booking' );
                 break;
             case 'check_in_date':
                 $return = $this->get_data('check_in_date');
@@ -612,14 +612,17 @@ class HB_Room{
             $id = $room;
         }
 
-        if( empty( self::$_instance[ $id ] )){
+        if( empty( self::$_instance[ $id ] ) ){
             return self::$_instance[ $id ] = new self( $post, $options );
         }
         else
         {
             $room = self::$_instance[ $id ];
+
             if( isset($options['check_in_date'], $options['check_out_date'])
-                && ( $options['check_in_date'] !== $room->check_in_date || $options['check_out_date'] !== $room->check_out_date ) )
+                && ( ($options['check_in_date'] !== $room->check_in_date) || ($options['check_out_date'] !== $room->check_out_date) )
+                || $room->quantity === false
+            )
             {
                 return new self( $post, $options );
             }
