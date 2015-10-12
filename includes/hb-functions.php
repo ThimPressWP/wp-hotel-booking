@@ -496,10 +496,12 @@ function hb_l18n(){
 function hb_get_tax_settings(){
     $settings = HB_Settings::instance();
     if( $tax = $settings->get('tax') ){
-        $tax = $tax / 100;
+        $tax = (float)$settings->get('tax') / 100;
     }
-    if( hb_price_including_tax() ){
-        $tax = -$tax;
+
+    if( hb_price_including_tax() )
+    {
+        $tax = $tax;
     }
     return $tax;
 }
@@ -831,7 +833,8 @@ function hb_format_price( $price, $with_currency = true ){
 
 function hb_search_rooms( $args = array() ){
     global $wpdb;
-    $adults = hb_get_request( 'adults' );
+    $adults = hb_get_request( 'adults' ) ? hb_get_request( 'adults' ) : 1;
+    $max_child = hb_get_request('max_child') ? hb_get_request('max_child') : 1;
     $args = wp_parse_args(
         $args,
         array(
@@ -898,7 +901,7 @@ function hb_search_rooms( $args = array() ){
           AND pm.meta_value >= %d
           AND pm2.meta_value = %d
         HAVING available_rooms > 0
-    ", '_hb_max_child_per_room', '_hb_max_adults_per_room', 'hb_room', 'publish', hb_get_request('max_child'), $adults );
+    ", '_hb_max_child_per_room', '_hb_max_adults_per_room', 'hb_room', 'publish', $max_child, $adults );
 
     if( $search = $wpdb->get_results( $query ) ){
         foreach( $search as $k => $p ){

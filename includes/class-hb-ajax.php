@@ -227,7 +227,7 @@ class HB_Ajax{
             hb_send_json(
                 array(
                     'status'    => 'success',
-                    'message'   => sprintf('<label class="hb_success_message">%1$s</label>', __('Add To Cart succesfully.', 'tp-hotel-booking')),
+                    'message'   => sprintf('<label class="hb_success_message">%1$s</label>', __('Added successfully.', 'tp-hotel-booking')),
                     'id'        => $room_id,
                     'search_key'=> $search_key,
                     'name'      => sprintf( '%s (%s)', $room->name, $room->capacity_title ),

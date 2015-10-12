@@ -362,11 +362,7 @@ class HB_Shortcodes{
 
             <?php endif; ?>
 
-            <?php if( ! is_user_logged_in() ): ?>
-
-                <p class="hotel_booking_mini_cart_description"><?php _e( 'You have to login to create new order.', 'tp-hotel-booking' ) ?></p>
-
-            <?php elseif ( isset( $_SESSION['hb_cart'], $_SESSION['hb_cart']['products'] ) || empty( $_SESSION['hb_cart']['products'] ) ): ?>
+            <?php if ( isset( $_SESSION['hb_cart'], $_SESSION['hb_cart']['products'] ) || empty( $_SESSION['hb_cart']['products'] ) ): ?>
 
                 <?php hb_get_template( 'mini_cart.php' ); ?>
 
@@ -386,7 +382,7 @@ class HB_Shortcodes{
 
                 <div class="hb_mini_cart_top">
 
-                    <h4>{{ data.name }}</h4>
+                    <h4 class="hb_title">{{ data.name }}</h4>
                     <span class="hb_mini_cart_remove"><i class="fa fa-times"></i></span>
 
                 </div>
