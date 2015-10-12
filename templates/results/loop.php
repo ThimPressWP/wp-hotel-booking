@@ -40,7 +40,7 @@ $featured = $gallery ? array_shift( $gallery ) : false;
                         </div>
                     </li>
                     <li class="hb_search_quantity">
-                        <label><?php _e( 'Number of room:', 'tp-hotel-booking' );?></label>
+                        <label><?php _e( 'Quantity: ', 'tp-hotel-booking' );?></label>
                         <div>
                             <?php
                                 hb_dropdown_numbers(

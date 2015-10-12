@@ -23,7 +23,16 @@
                     <?php _e( 'Total', 'tp-hotel-booking' ) ?>
                 </td>
                 <td class="hb_search_item_total_description">
-                    <?php _e( '* vat is not included yet', 'tp-hotel-booking' ); ?>
+                    <?php
+                        if( hb_price_including_tax() )
+                        {
+                            _e( '* vat is included', 'tp-hotel-booking' );
+                        }
+                        else
+                        {
+                            _e( '* vat is not included yet', 'tp-hotel-booking' );
+                        }
+                    ?>
                 </td>
                 <td class="hb_search_item_price">
                     <?php echo hb_format_price( $room->room_details_total );?>

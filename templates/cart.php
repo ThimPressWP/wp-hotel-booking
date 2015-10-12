@@ -22,9 +22,12 @@ global $hb_settings;
                         <?php
                             if( ( $num_of_rooms = (int)$room->quantity ) == 0 ) continue;
                         ?>
-                        <tr>
+                        <tr class="hb_checkout_item">
                             <td>
-                                <a href="javascript:void(0)" class="hb_remove_cart_item" data-date="<?php echo $room->in_to_out; ?>" data-id="<?php echo $room->ID ?>"><?php _e( 'Remove', 'tp-hotel-booking' ); ?></a>
+                                <a href="javascript:void(0)" class="hb_remove_cart_item" data-date="<?php echo $room->in_to_out; ?>" data-id="<?php echo $room->ID ?>">
+                                    <?php //_e( 'Remove', 'tp-hotel-booking' ); ?>
+                                    <i class="fa fa-times"></i>
+                                </a>
                             </td>
                             <td><?php echo $room->name;?> (<?php echo $room->capacity_title;?>)</td>
                             <td><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'tp-hotel-booking' ), $room->capacity );?> </td>
