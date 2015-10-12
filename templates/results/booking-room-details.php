@@ -3,14 +3,14 @@
         <i class="fa fa-times"></i>
     </span>
     <?php $details = $room->get_booking_room_details(); ?>
-    <table>
+    <table class="hb_search_room_pricing_price">
         <tbody>
             <?php foreach ($details as $day => $info):?>
                 <tr>
                     <th><?php printf( '%s', hb_date_to_name( $day ) ) ?></th>
                     <td class="hb_search_item_total_description">
                         <span>
-                            <?php printf( 'X%d %s', $info['count'], __('Night', 'tp-hotel-booking') ) ?>
+                            <?php printf( 'x%d %s', $info['count'], __('Night', 'tp-hotel-booking') ) ?>
                         </span>
                     </td>
                     <td class="hb_search_item_price">
