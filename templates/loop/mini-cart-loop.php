@@ -1,3 +1,12 @@
+<?php
+/**
+ * Mini Cart loop
+ *
+ * @author 		ThimPress
+ * @package 	Tp-hotel-booking/Templates
+ * @version     0.9
+ */
+?>
 <div class="hb_mini_cart_item" data-search-key="<?php echo $room->in_to_out; ?>" data-id="<?php echo $room->ID ?>">
 
 	<div class="hb_mini_cart_top">

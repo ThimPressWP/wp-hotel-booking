@@ -45,7 +45,8 @@ class HB_Settings{
             }
         }
         $this->_load_options();
-
+        add_filter( 'hotel_booking_single_room_infomation_tabs', array($this, 'display_pricing_plans') );
+        add_action( 'hotel_booking_single_room_before_tabs_content_hb_room_pricing_plans', array($this, 'show_pricing') );
     }
 
     function test_email(){
@@ -194,6 +195,24 @@ class HB_Settings{
         return $return;
     }
 
+    function display_pricing_plans( $tabs )
+    {
+        if( ! $this->get('display_pricing_plans') )
+            return $tabs;
+
+        $tabs[] = array(
+                'id'        => 'hb_room_pricing_plans',
+                'title'     => __( 'Pricing Plans' ),
+                'content'   => ''
+            );
+        return $tabs;
+    }
+
+    function show_pricing()
+    {
+        hb_get_template( 'loop/pricing_plan.php' );
+    }
+
     /**
      * Get unique instance of HB_Settings
      * Create a new one if it is not created
@@ -232,7 +251,8 @@ $GLOBALS['hb_settings'] = HB_Settings::instance(
         'hotel_fax_number'      => '',
         'hotel_email_address'   => 'daewoo_hotel@gmail.com',
         'tax'                   => 0,
-        'price_including_tax'   => 0
+        'price_including_tax'   => 0,
+        'display_pricing_plans' => 0
     )
 );
 
