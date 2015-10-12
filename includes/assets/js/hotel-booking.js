@@ -382,6 +382,7 @@
 
         $('form[class^="hb-search-form"]').submit(function() {
             var unique = $(this).attr('class');
+            var button = $(this).find('buton[type="submit"]');
             unique = unique.replace( 'hb-search-form-', '' );
             var $check_in = $('#check_in_date_'+unique, this);
             if( ! isDate( $check_in.val() ) ){
@@ -417,12 +418,17 @@
                 type: 'post',
                 dataType: 'html',
                 data: $(this).serialize(),
+                beforeSend: function()
+                {
+                    button.addClass('hb_loading');
+                },
                 success: function (response) {
                     response = parseJSON(response)
                     if(response.success && response.sig){
 
                         window.location.href = action.replace(/\?.*/, '') + '?hotel-booking-params='+response.sig;
                     }
+                    button.removeClass('hb_loading');
                 }
             });
             return false;
@@ -606,6 +612,7 @@
             $(this).submit(function(event){
                 event.preventDefault();
                 var _form = $(this);
+                var button = _form.find('.hb_add_to_cart');
                 var number_room_select = $(this).find('.number_room_select').val();
                 if( typeof number_room_select === 'undefined' || number_room_select === '' )
                 {
@@ -621,7 +628,8 @@
                     dataType: 'html',
                     beforeSend: function()
                     {
-                        _form.hb_overlay_ajax_start();
+                        // _form.hb_overlay_ajax_start();
+                        button.addClass('hb_loading');
                     },
                     success: function(code)
                     {
@@ -648,10 +656,12 @@
 
                         if( typeof code.id !== 'undefined' && typeof code.search_key !== 'undefined' )
                             hb_add_to_cart_callback( code );
+                        button.removeClass('hb_loading');
                     },
                     error: function()
                     {
-                        searchResult.hb_overlay_ajax_stop();
+                        // searchResult.hb_overlay_ajax_stop();
+                        button.removeClass('hb_loading');
                         alert( hotel_settings_language.waring.try_again );
                     }
                 });
