@@ -40,7 +40,7 @@ unset($pricings['capacity']);
 				<?php for( $i = 0; $i < 7; $i++ ){?>
                     <td>
                         <?php $price = ! empty( $prices[ $capacitiyID ] ) ? ( array_key_exists( $i, $prices[ $capacitiyID ] ) ? $prices[ $capacitiyID ][ $i ] : '' ) : '';?>
-                        <?php printf( '%1$s', $price ) ?>
+                        <?php printf( '%1$s%2$s', hb_get_currency_symbol(), $price ) ?>
                     </td>
                 <?php }?>
 			</tr>

@@ -16,26 +16,29 @@ $price_display = apply_filters( 'hotel_booking_loop_room_price_display_style', $
 
 $currency = hb_get_currency_symbol();
 $prices = hb_get_price_plan_room(get_the_ID());
+$min = array_shift($prices);
+$max = array_pop($prices);
 ?>
 <?php if( $prices ): ?>
 	<div class="price">
 		<span class="title-price"><?php _e( 'Price', 'tp-hotel-booking' ); ?></span>
 		<?php if( $price_display === 'max' ): ?>
 
-			<span class="price_max"><?php echo $currency ?><?php echo array_pop($prices) ?></span>
+			<span class="price_max"><?php echo $currency ?><?php echo $max ?></span>
 
-		<?php elseif( $price_display === 'min_to_max' ): ?>
+		<?php elseif( $price_display === 'min_to_max' && $min !== $max ): ?>
 
 			<span class="price_min_to_max">
-				<?php echo $currency; ?><?php echo array_shift($prices) ?>
+				<?php echo $currency; ?><?php echo $min ?>
 			</span>
 			-
-			<span class="price_max"><?php echo $currency; ?><?php echo array_pop($prices) ?>
+			<span class="price_min_to_max">
+				<?php echo $currency; ?><?php echo $max; ?>
 			</span>
 
-		<?php elseif( $price_display === 'min' ): ?>
+		<?php else: ?>
 
-			<span class="price_min"><?php echo $currency; ?><?php echo array_shift($prices) ?></span>
+			<span class="price_min"><?php echo $currency; ?><?php echo $min ?></span>
 
 		<?php endif; ?>
 		<span class="unit"><?php _e( 'Night', 'tp-hotel-booking' ); ?></span>

@@ -785,7 +785,6 @@ function hb_update_pricing_plan( ){
         $delete_ids = array_diff( $existing_ids, $post_ids );
         hb_delete_pricing_plan($delete_ids);
     }
-    //echo '<pre>';print_r($_POST);echo '</pre>';die();
 }
 add_action( 'init', 'hb_update_pricing_plan' );
 

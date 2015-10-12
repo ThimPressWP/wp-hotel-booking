@@ -52,17 +52,16 @@ $count_plants = count( $pricing_plans );
                 <a href="" class="dashicons dashicons-trash" data-action="remove" title="<?php _e( 'Remove', 'tp-hotel-booking' );?>"></a>
             </div>
             <?php
-            if( $regular_plan ) {
-                $regular_prices = get_post_meta($regular_plan->ID, '_hb_pricing_plan_prices', true);
-            }else{
-                $regular_prices = array();
-            }
+                if( $regular_plan ) {
+                    $regular_prices = get_post_meta($regular_plan->ID, '_hb_pricing_plan_prices', true);
+                }else{
+                    $regular_prices = array();
+                }
             ?>
             <div class="hb-pricing-list">
                 <table>
                     <thead>
                         <tr>
-                            <!-- <th><?php //_e( 'Capacity', 'tp-hotel-booking' );?></th> -->
                             <?php for( $i = 0; $i < 7; $i++ ){?>
                             <th><?php echo $week_names[ $i ];?></th>
                             <?php } ?>

@@ -36,7 +36,7 @@
 
             }
         });
-        $(plan).find('.datepicker').datepicker('disable');
+        // $(plan).find('.datepicker').datepicker('disable');
     }
     function _ready(){
         $doc.on('click', '.hb-pricing-controls a', function(e){
