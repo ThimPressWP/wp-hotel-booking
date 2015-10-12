@@ -7,14 +7,12 @@
         <tbody>
             <?php foreach ($details as $day => $info):?>
                 <tr>
-                    <th><?php printf( '%s', hb_date_to_name( $day ) ) ?></th>
+                    <td class="hb_search_item_day"><?php printf( '%s', hb_date_to_name( $day ) ) ?></td>
                     <td class="hb_search_item_total_description">
-                        <span>
-                            <?php printf( 'x%d %s', $info['count'], __('Night', 'tp-hotel-booking') ) ?>
-                        </span>
+                        <?php printf( 'x%d %s', $info['count'], __('Night', 'tp-hotel-booking') ) ?>
                     </td>
                     <td class="hb_search_item_price">
-                        <span><?php echo hb_format_price(round( $info['price'], 2 )); ?></span>
+                        <?php echo hb_format_price(round( $info['price'], 2 )); ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -22,13 +20,13 @@
         <tfoot>
             <tr>
                 <td class="hb_search_item_total_bold">
-                    <span><?php _e( 'Total', 'tp-hotel-booking' ) ?></span>
+                    <?php _e( 'Total', 'tp-hotel-booking' ) ?>
                 </td>
                 <td class="hb_search_item_total_description">
-                    <span><?php _e( '* vat is not included yet', 'tp-hotel-booking' ); ?></span>
+                    <?php _e( '* vat is not included yet', 'tp-hotel-booking' ); ?>
                 </td>
                 <td class="hb_search_item_price">
-                    <span><?php echo hb_format_price( $room->room_details_total );?></span>
+                    <?php echo hb_format_price( $room->room_details_total );?>
                 </td>
             </tr>
         </tfoot>
