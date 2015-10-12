@@ -1490,6 +1490,25 @@ if( ! function_exists('hb_get_price_plan_room') )
                 $price_plans = array_merge($price_plans, $price);
             }
         }
+        return array_map( 'hb_before_generate_price', $price_plans );
+    }
+}
+
+if( ! function_exists( 'hb_before_generate_price' ) )
+{
+    function hb_before_generate_price( $price_plans )
+    {
+        $tax = 0;
+        $settings = HB_Settings::instance();
+        if( $settings->get( 'price_including_tax' ) ) {
+            $tax = $settings->get('tax');
+            $tax = (float)$tax / 100;
+        }
+
+        if( hb_price_including_tax() )
+        {
+            $price_plans = $price_plans + $price_plans * $tax;
+        }
         return $price_plans;
     }
 }
