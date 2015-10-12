@@ -384,7 +384,7 @@ class HB_Shortcodes{
 
                 <div class="hb_mini_cart_top">
 
-                    <h4>{{ data.name }}</h4>
+                    <h4 class="hb_title">{{ data.name }}</h4>
                     <span class="hb_mini_cart_remove"><i class="fa fa-times"></i></span>
 
                 </div>
