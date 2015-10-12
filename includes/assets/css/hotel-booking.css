@@ -914,6 +914,9 @@
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li:last-child {
   margin-bottom: 0;
 }
+#hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li .hb_search_item_price {
+  margin-left: 20px;
+}
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li select {
   padding: 3px 20px 3px 5px;
 }
@@ -926,6 +929,12 @@
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li > div {
   width: auto;
   margin-left: 20px;
+}
+#hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li > div.hb_view_price {
+  margin-left: 0;
+}
+#hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li.hb_search_price {
+  position: relative;
 }
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li.hb_search_capacity,
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li.hb_search_max_child {
