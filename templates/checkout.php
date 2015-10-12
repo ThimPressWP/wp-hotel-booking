@@ -4,7 +4,7 @@ global $hb_settings;
 ?>
 <div id="hotel-booking-payment">
 
-    <form name="hb-payment-form" id="hb-payment-form" method="post" action="<?php echo $search_page;?>">
+    <form name="hb-payment-form" id="hb-payment-form" method="post" action="<?php echo isset( $search_page ) ? $search_page : '';?>">
         <h3><?php _e( 'Booking Rooms', 'tp-hotel-booking' );?></h3>
         <table class="hb_table">
             <thead>

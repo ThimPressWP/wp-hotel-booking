@@ -68,7 +68,7 @@ global $hb_settings;
                 <?php } ?>
 
                 <tr>
-                    <td colspan="7"><?php _e( 'Sub Total', 'tp-hotel-booking' );?></td>
+                    <td colspan="7"><?php _e( 'Sub Total', 'tp-hotel-booking' );?><?php hb_price_including_tax() ? _e('(VAT is included)', 'tp-hotel-booking') : '' ?></td>
                     <td class="hb-align-right hb_sub_total">
                         <?php echo hb_format_price( $cart->sub_total );?>
                     </td>

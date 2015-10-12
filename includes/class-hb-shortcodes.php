@@ -14,6 +14,8 @@ class HB_Shortcodes{
         add_shortcode( 'hotel_booking_best_reviews', array( __CLASS__, 'hotel_booking_best_reviews' ) );
         add_shortcode( 'hotel_booking_lastest_reviews', array( __CLASS__, 'hotel_booking_lastest_reviews' ) );
         add_shortcode( 'hotel_booking_cart', array( __CLASS__, 'hotel_booking_cart' ) );
+        add_shortcode( 'hotel_booking_checkout', array( __CLASS__, 'hotel_booking_checkout' ) );
+        add_shortcode( 'hotel_booking_mini_cart', array( __CLASS__, 'hotel_booking_mini_cart' ) );
         add_action( 'wp_footer', array( __CLASS__, 'mini_cart' ) );
         add_action( 'wp_enqueue_scripts', array( __CLASS__, 'utils' ) );
     }
@@ -351,7 +353,7 @@ class HB_Shortcodes{
         <?php endif;
     }
 
-    static function hotel_booking_cart( $atts )
+    static function hotel_booking_mini_cart( $atts )
     { ?>
         <div id="hotel_booking_mini_cart_<?php echo uniqid() ?>" class="hotel_booking_mini_cart">
             <?php if( isset($atts['title']) && $atts['title'] ): ?>
@@ -421,6 +423,49 @@ class HB_Shortcodes{
     static function utils()
     {
         wp_enqueue_script( 'wp-util' );
+    }
+
+
+    static function hotel_booking_cart( $atts )
+    {
+        ob_start();
+        do_action( 'hb_wrapper_start' );
+        hb_get_template( 'cart.php', $atts );
+        do_action( 'hb_wrapper_end' );
+        $output = ob_get_clean();
+        return $output;
+    }
+
+    static function hotel_booking_checkout( $atts )
+    {
+        if( is_user_logged_in() ){
+            global $current_user;
+            get_currentuserinfo();
+
+            $template_args['customer'] = hb_get_customer( $current_user->user_email );
+
+        }else{
+            $template_args['customer'] = hb_create_empty_post();
+            $template_args['customer']->data = array(
+                'title'             => '',
+                'first_name'        => '',
+                'last_name'         => '',
+                'address'           => '',
+                'city'              => '',
+                'state'             => '',
+                'postal_code'       => '',
+                'country'           => '',
+                'phone'             => '',
+                'fax'               => ''
+            );
+        }
+
+        ob_start();
+        do_action( 'hb_wrapper_start' );
+        hb_get_template( 'checkout.php', $template_args );
+        do_action( 'hb_wrapper_end' );
+        $output = ob_get_clean();
+        return $output;
     }
 }
 

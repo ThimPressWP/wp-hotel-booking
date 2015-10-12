@@ -201,8 +201,8 @@ class HB_Ajax{
         if( ! isset( $_POST['check_in_date'] ) || ! isset($_POST['check_out_date']) )
             return;
 
-        if( ! is_user_logged_in() )
-            hb_send_json( array( 'status' => 'warning', 'message' => __('Please login system to select this room', 'tp-hotel-booking') ) );
+        // if( ! is_user_logged_in() )
+        //     hb_send_json( array( 'status' => 'warning', 'message' => __('Please login system to select this room', 'tp-hotel-booking') ) );
 
         $room_id = (int)$_POST['room-id'];
         $number_room = (int)$_POST['hb-num-of-rooms'];

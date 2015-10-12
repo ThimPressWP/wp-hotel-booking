@@ -159,6 +159,7 @@ class HB_Cart{
      */
     function get_sub_total(){
         $sub_total = 0;
+
         if( $rooms = $this->get_rooms() )
         {
             foreach( $rooms as $room_id => $room ) {

@@ -34,13 +34,13 @@ class HB_Widget_Cart extends WP_Widget{
         $html = array();
         if( $instance )
         {
-            $html[] = '[hotel_booking_cart';
+            $html[] = '[hotel_booking_mini_cart';
             foreach ($instance as $att => $param) {
                 if( is_array($param) )
                     continue;
                 $html[] = $att.'="'.$param.'"';
             }
-            $html[] = '][/hotel_booking_cart]';
+            $html[] = '][/hotel_booking_mini_cart]';
         }
         echo do_shortcode( implode(' ', $html) );
         echo $args['after_widget'];
