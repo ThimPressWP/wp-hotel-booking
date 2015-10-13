@@ -27,6 +27,13 @@ $settings = hb_settings();
             px
         </td>
     </tr>
+    <tr>
+        <th><?php _e( 'Display rating', 'tp-hotel-booking' );?></th>
+        <td>
+            <input type="hidden" name="<?php echo $settings->get_field_name('catalog_display_rating');?>" value="0" />
+            <input type="checkbox" name="<?php echo $settings->get_field_name('catalog_display_rating');?>" <?php checked( $settings->get('catalog_display_rating') ? 1 : 0, 1 );?> value="1"/>
+        </td>
+    </tr>
 </table>
 
 <h3><?php _e( 'Room settings', 'tp-hotel-booking' );?></h3>
@@ -75,6 +82,17 @@ $settings = hb_settings();
         <td>
             <input type="hidden" name="<?php echo $settings->get_field_name('review_rating_required');?>" value="0" />
             <input type="checkbox" name="<?php echo $settings->get_field_name('review_rating_required');?>" <?php checked( $settings->get('review_rating_required') ? 1 : 0, 1 );?> value="1" />
+        </td>
+    </tr>
+</table>
+
+<h3 class="description"><?php _e( 'Gallery images', 'tp-hotel-booking' );?></h3>
+<table class="form-table">
+    <tr>
+        <th><?php _e( 'Enable gallery lightbox', 'tp-hotel-booking' );?></th>
+        <td>
+            <input type="hidden" name="<?php echo $settings->get_field_name('enable_gallery');?>" value="0" />
+            <input type="checkbox" name="<?php echo $settings->get_field_name('enable_gallery');?>" <?php checked( $settings->get('enable_gallery') ? 1 : 0, 1 );?> value="1"/>
         </td>
     </tr>
 </table>

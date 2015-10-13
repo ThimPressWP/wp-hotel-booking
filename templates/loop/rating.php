@@ -13,7 +13,7 @@ $rating = $hb_room->average_rating();
 ?>
 <?php if( comments_open( $hb_room->ID ) ): ?>
 	<div class="rating">
-		<?php if ( $rating && $hb_settings->get( 'enable_review_rating' ) ) : ?>
+		<?php if ( $rating ) : ?>
 
 			<?php if( $rating ): ?>
 

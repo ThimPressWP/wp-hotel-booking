@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $hb_room;
 ?>
 <div class="media">
-	<a href="<?php the_permalink(); ?>">
+	<a href="<?php the_permalink(); ?>" class="media-image" title="<?php the_title() ?>">
 		<?php $hb_room->getImage( 'catalog' ); ?>
 	</a>
 </div>

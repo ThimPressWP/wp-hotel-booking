@@ -146,7 +146,6 @@ class HB_Shortcodes{
     static function hotel_booking_slider($atts, $content = null)
     {
         $number_rooms = isset($atts['rooms']) ? (int)$atts['rooms'] : 10;
-        $size = isset($atts['image_size']) ? $atts['image_size'] : 'thumbnail';
         $items = isset($atts['number']) ? (int)$atts['number'] : 4;
         // $posts = get_terms( 'hb_room_type', array('hide_empty' => 0)); gallery of room_type taxonmy change to gallery of room post_type
 
@@ -186,56 +185,15 @@ class HB_Shortcodes{
                     <div class="text_link"><a href="<?php echo get_post_type_archive_link('hb_room'); ?>"><?php echo $atts['text_link']; ?></a></div>
                 <?php endif; ?>
                 <div class="hb_room_carousel">
-                    <?php  while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
-                        <?php $galleries = get_post_meta( get_the_ID(), '_hb_gallery', true ); ?>
-                        <?php
-                            global $hb_room;
-                            $prices = $hb_room->pricing_plan();
-                            $currency = get_option( 'tp_hotel_booking_currency' );
-                            $title = get_the_title();
-                        ?>
-                            <div class="item">
-                                <div class="media">
-                                    <a href="<?php echo get_the_permalink(get_the_ID()); ?>" class="media-image" title="<?php echo esc_attr($title); ?>">
-                                    <?php
-                                        $hb_room->getImage( 'catalog' );
-                                    ?>
-                                    </a>
-                                </div>
-                                <div class="title">
-                                    <h4>
-                                        <a href="<?php echo get_the_permalink(get_the_ID()); ?>" class="media-image"><?php echo $title; ?></a>
-                                    </h4>
-                                </div>
-                                <?php if( (!isset($atts['price']) || $atts['price'] !== '*') && $prices ): ?>
-                                    <div class="price">
-                                        <span>
-                                            <?php
-                                                $current = $prices['min'];
-                                                $end = $prices['max'];
-                                                if( $atts['price'] === 'min_to_max' && $current !== $end )
-                                                {
-                                                    echo $currentcy.$current . ' - ' . $currentcy.$end;
-                                                }
-                                                else if( $atts['price'] === 'max' )
-                                                {
-                                                    echo $currentcy.$end;
-                                                }
-                                                else
-                                                {
-                                                    echo $currentcy.$current;
-                                                }
-                                            ?>
-                                        </span>
-                                        <span class="unit"><?php  _e( 'Night', 'tp-hotel-booking' ); ?></span>
-                                    </div>
-                                <?php endif; ?>
-                                <!--rating-->
-                                <?php if( !isset($atts['rating']) || $atts['rating'] ): ?>
-                                    <?php hb_get_template( 'loop/rating.php' ) ?>
-                                <?php endif; ?>
-                            </div>
-                    <?php endwhile; ?>
+                    <?php hotel_booking_room_loop_start(); ?>
+
+                    <?php while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
+
+                        <?php hb_get_template_part( 'content', 'room' ); ?>
+
+                    <?php endwhile; // end of the loop. ?>
+
+                <?php hotel_booking_room_loop_end(); ?>
                     <?php wp_reset_postdata(); ?>
                 </div>
             </div>
@@ -418,7 +376,6 @@ class HB_Shortcodes{
     {
         wp_enqueue_script( 'wp-util' );
     }
-
 
     static function hotel_booking_cart( $atts )
     {
