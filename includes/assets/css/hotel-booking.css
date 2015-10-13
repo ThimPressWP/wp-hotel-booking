@@ -606,15 +606,13 @@
   float: right;
   margin-top: -65px;
   line-height: 30px;
+  font-weight: 600;
+  font-size: 30px;
+  color: #ffb606;
 }
 .hb_single_room .price span.title-price {
   margin-right: 5px;
   color: #2a2a2a;
-}
-.hb_single_room .price span[class*='price_'] {
-  font-weight: 600;
-  font-size: 30px;
-  color: #ffb606;
 }
 .hb_single_room .price span.unit {
   font-size: 14px;
@@ -776,6 +774,15 @@
 .hb_single_room #reviews #review_form_wrapper form .form-submit input[type="submit"]:focus {
   outline: none;
 }
+.hb_single_room table.hb_room_pricing_plans tr th {
+  font-weight: 700;
+  color: #2a2a2a;
+  text-align: center;
+}
+.hb_single_room table.hb_room_pricing_plans tr td {
+  text-align: center;
+  padding: 10px;
+}
 /** Other room slider **/
 .hb_related_other_room {
   margin: 0 -15px;
@@ -914,7 +921,7 @@
   margin-right: 15px;
 }
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li select {
-  padding: 3px 20px 3px 5px;
+  padding: 3px 25px 3px 5px;
 }
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li > label {
   width: auto;
