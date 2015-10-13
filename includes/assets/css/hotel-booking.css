@@ -396,6 +396,7 @@
   min-height: 290px;
   position: relative;
   padding: 0 15px;
+  margin: 0;
 }
 /** Archive rooms **/
 .rooms {
@@ -595,7 +596,6 @@
 .hb_single_room .price span.unit {
   font-size: 14px;
   font-weight: 600;
-  color: #ffb606;
 }
 .hb_single_room .price span.unit:before {
   content: '/';
@@ -802,6 +802,7 @@
   min-width: 300px;
   width: 300px;
   max-width: 400px;
+  margin: 0;
 }
 .hb_related_other_room .navigation {
   width: auto;
