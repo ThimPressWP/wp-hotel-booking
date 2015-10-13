@@ -16,10 +16,12 @@ $price_display = apply_filters( 'hotel_booking_loop_room_price_display_style', $
 
 $currency = hb_get_currency_symbol();
 $prices = hb_get_price_plan_room(get_the_ID());
-$min = array_shift($prices);
-$max = array_pop($prices);
 ?>
 <?php if( $prices ): ?>
+	<?php
+		$min = current($prices);
+		$max = end($prices);
+	?>
 	<div class="price">
 		<span class="title-price"><?php _e( 'Price', 'tp-hotel-booking' ); ?></span>
 		<?php if( $price_display === 'max' ): ?>
