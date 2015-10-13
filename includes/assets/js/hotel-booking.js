@@ -389,8 +389,6 @@
                     break;
                 }
             }
-            if( typeof res.status === 'undefined' || res.status !== 'success' )
-                alert( hotel_settings_language.waring.try_again );
 
             if( typeof res.sub_total !== 'undefined' )
                 _table.find('span.hb_sub_total_value').html( res.sub_total );
@@ -797,7 +795,10 @@
             }).done( function( res ){
                 res = parseJSON(res);
                 if( typeof res.status === 'undefined' || res.status !== 'success' )
+                {
                     alert( hotel_settings_language.waring.try_again );
+                    return;
+                }
 
                 hb_remove_cart_item_callback( dateID, roomID, res );
             });

@@ -96,6 +96,7 @@ class TP_Hotel_Booking{
             $this->_include( 'includes/admin/class-hb-admin-menu.php' );
             $this->_include( 'includes/class-hb-meta-box.php' );
             $this->_include( 'includes/admin/hb-admin-functions.php' );
+            $this->_include( 'includes/admin/class-hb-admin-settings-hook.php' );
         }
         $this->_include( 'includes/class-hb-comments.php' );
         $this->_include( 'includes/hb-template-hooks.php' );

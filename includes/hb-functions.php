@@ -1640,3 +1640,38 @@ if( ! function_exists( 'get_cart_url' ) )
         return get_the_permalink( $hb_settings->get('search_page_id') ) . '?hotel-booking-params=' . base64_encode( serialize( $params ) );
     }
 }
+
+if( ! function_exists( 'hb_get_cart_url' ) )
+{
+    function hb_get_cart_url()
+    {
+        global $hb_settings;
+        $id = hb_get_page_id( 'my-rooms' );
+        if( $id && $hb_settings->get('my-rooms') )
+        {
+            return get_the_permalink( $id );
+        }
+        else
+        {
+            return hb_get_url( array('hotel-booking' => 'cart') );
+        }
+    }
+}
+
+if( ! function_exists( 'hb_get_checkout_url' ) )
+{
+    function hb_get_checkout_url()
+    {
+        global $hb_settings;
+        $id = hb_get_page_id( 'checkout' );
+
+        if( $id && $hb_settings->get('checkout') )
+        {
+            return get_the_permalink( $id );
+        }
+        else
+        {
+            return hb_get_url(array( 'hotel-booking' => 'checkout'));
+        }
+    }
+}
