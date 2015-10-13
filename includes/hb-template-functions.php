@@ -450,7 +450,11 @@ if( ! function_exists( 'hotel_booking_loop_room_rating' ) )
     function hotel_booking_loop_room_rating()
     {
         global $hb_room;
-        hb_get_template( 'loop/rating.php', array( 'rating' => $hb_room->average_rating() ) );
+        global $hb_settings;
+        if( $hb_settings->get( 'catalog_display_rating' ) )
+        {
+            hb_get_template( 'loop/rating.php', array( 'rating' => $hb_room->average_rating() ) );
+        }
     }
 }
 /*=====  End of template hooks  ======*/

@@ -83,19 +83,18 @@ function hb_dropdown_room_types( $args = array() ){
  * @return string
  */
 function hb_dropdown_rooms( $args = array('selected' => '') ){
-    $posts = get_posts(
-            array(
-                'post_type'      =>  'hb_room',
-                'posts_per_page'    => 9999
-            )
-        );
+    global $wpdb;
+    $posts = $wpdb->get_results( $wpdb->prepare(
+            "SELECT ID, post_title FROM {$wpdb->posts} WHERE `post_type` = %s", 'hb_room'
+        ), OBJECT );
+
     $output = '<select name="hb-room" id="hb-room-select">';
     $emptySelected = new stdClass;
     $emptySelected->ID = '';
     $emptySelected->post_title = __('---Select Room---', 'tp-hotel-booking');
     $posts = array_merge( array( $emptySelected ), $posts );
     foreach ($posts as $key => $post) {
-        $output .= '<option value="'.$post->ID.'"'.( $post->ID === $args['selected'] ? ' selected' : '' ).'>'.$post->post_title.'</option>';
+        $output .= '<option value="'.$post->ID.'"'.( $post->ID == $args['selected'] ? ' selected' : '' ).'>'.$post->post_title.'</option>';
     }
     $output .= '</select>';
     return $output;

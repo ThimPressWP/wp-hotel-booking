@@ -146,8 +146,6 @@ class HB_Shortcodes{
     static function hotel_booking_slider($atts, $content = null)
     {
         $number_rooms = isset($atts['rooms']) ? (int)$atts['rooms'] : 10;
-        $size = isset($atts['image_size']) ? $atts['image_size'] : 'thumbnail';
-        $items = isset($atts['number']) ? (int)$atts['number'] : 4;
         // $posts = get_terms( 'hb_room_type', array('hide_empty' => 0)); gallery of room_type taxonmy change to gallery of room post_type
 
         $args = array(
@@ -157,131 +155,10 @@ class HB_Shortcodes{
                 'order'             => 'DESC',
                 // 'meta_key'          => '_hb_gallery'
             );
-        $the_query = new WP_Query( $args );
+        $query = new WP_Query( $args );
 
-        $currentcy = hb_get_currency_symbol();
-        $sliderId = 'hotel_booking_slider_'.uniqid();
-        $upload_dir = wp_upload_dir();
-        $upload_base_dir = $upload_dir['basedir'];
-        $upload_base_url = $upload_dir['baseurl'];
-        if( $the_query->have_posts() ):
-    ?>
-            <div id="<?php echo $sliderId ?>" class="hb_room_carousel_container tp-hotel-booking">
-                <?php if( isset($atts['title']) && $atts['title'] ): ?>
-                    <h3><?php echo $atts['title'] ?></h3>
-                <?php endif; ?>
-                <!--navigation-->
-                <?php if( !isset($atts['navigation']) || $atts['navigation'] ): ?>
-                    <div class="navigation">
-                        <div class="prev"><span class="pe-7s-angle-left"></span></div>
-                        <div class="next"><span class="pe-7s-angle-right"></span></div>
-                    </div>
-                <?php endif; ?>
-                <!--pagination-->
-                <?php if( !isset($atts['pagination']) || $atts['pagination'] ): ?>
-                    <div class="pagination"></div>
-                <?php endif; ?>
-                <!--text_link-->
-                <?php if( isset($atts['text_link']) && $atts['text_link'] !== '' ): ?>
-                    <div class="text_link"><a href="<?php echo get_post_type_archive_link('hb_room'); ?>"><?php echo $atts['text_link']; ?></a></div>
-                <?php endif; ?>
-                <div class="hb_room_carousel">
-                    <?php  while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
-                        <?php $galleries = get_post_meta( get_the_ID(), '_hb_gallery', true ); ?>
-                        <?php
-                            global $hb_room;
-                            $prices = $hb_room->pricing_plan();
-                            $currency = get_option( 'tp_hotel_booking_currency' );
-                            $title = get_the_title();
-                        ?>
-                            <div class="item">
-                                <div class="media">
-                                    <a href="<?php echo get_the_permalink(get_the_ID()); ?>" class="media-image" title="<?php echo esc_attr($title); ?>">
-                                    <?php
-                                        $hb_room->getImage( 'catalog' );
-                                    ?>
-                                    </a>
-                                </div>
-                                <div class="title">
-                                    <h4>
-                                        <a href="<?php echo get_the_permalink(get_the_ID()); ?>" class="media-image"><?php echo $title; ?></a>
-                                    </h4>
-                                </div>
-                                <?php if( (!isset($atts['price']) || $atts['price'] !== '*') && $prices ): ?>
-                                    <div class="price">
-                                        <span>
-                                            <?php
-                                                $current = $prices['min'];
-                                                $end = $prices['max'];
-                                                if( $atts['price'] === 'min_to_max' && $current !== $end )
-                                                {
-                                                    echo $currentcy.$current . ' - ' . $currentcy.$end;
-                                                }
-                                                else if( $atts['price'] === 'max' )
-                                                {
-                                                    echo $currentcy.$end;
-                                                }
-                                                else
-                                                {
-                                                    echo $currentcy.$current;
-                                                }
-                                            ?>
-                                        </span>
-                                        <span class="unit"><?php  _e( 'Night', 'tp-hotel-booking' ); ?></span>
-                                    </div>
-                                <?php endif; ?>
-                                <!--rating-->
-                                <?php if( !isset($atts['rating']) || $atts['rating'] ): ?>
-                                    <?php hb_get_template( 'loop/rating.php' ) ?>
-                                <?php endif; ?>
-                            </div>
-                    <?php endwhile; ?>
-                    <?php wp_reset_postdata(); ?>
-                </div>
-            </div>
-            <script type="text/javascript">
-                (function($){
-                    "use strict";
-                    $(document).ready(function(){
-                        $('#<?php echo $sliderId ?> .hb_room_carousel').carouFredSel({
-                            responsive: true,
-                            items: {
-                                height: 'auto',
-                                visible: {
-                                    min: <?php echo $items ?>,
-                                    max: <?php echo $items ?>
-                                }
-                            },
-                            width: 'auto',
-                            prev: {
-                                button: '#<?php echo $sliderId; ?> .navigation .prev'
-                            },
-                            next: {
-                                button: '#<?php echo $sliderId; ?> .navigation .next'
-                            },
-                            pagination: '#<?php echo $sliderId; ?> > .pagination',
-                            mousewheel: false,
-                            auto: false,
-                            pauseOnHover: true,
-                            onCreate: function()
-                            {
-
-                            },
-                            swipe: {
-                                onTouch: true,
-                                onMouse: true
-                            },
-                            scroll : {
-                                items           : 1,
-                                easing          : "swing",
-                                duration        : 700,
-                                pauseOnHover    : true
-                            }
-                        });
-                    });
-                })(jQuery);
-            </script>
-    <?php
+        if( $query->have_posts() ):
+            hb_get_template( 'shortcodes/carousel.php', array( 'atts' => $atts, 'query' => $query ) );
         endif;
     }
 
@@ -297,25 +174,9 @@ class HB_Shortcodes{
             );
         $query = new WP_Query( $args );
 
-        if( $query->have_posts() ): ?>
-
-            <div id="hotel_booking_best_reviews-<?php echo uniqid(); ?>" class="hotel_booking_best_reviews tp-hotel-booking">
-                <?php if( isset($atts['title']) && $atts['title'] ): ?>
-                    <h3><?php echo $atts['title'] ?></h3>
-                <?php endif; ?>
-                <?php hotel_booking_room_loop_start(); ?>
-
-                    <?php while ( $query->have_posts() ) : $query->the_post(); ?>
-
-                        <?php hb_get_template_part( 'content', 'room' ); ?>
-
-                    <?php endwhile; // end of the loop. ?>
-
-                <?php hotel_booking_room_loop_end(); ?>
-
-            </div>
-
-        <?php endif;
+        if( $query->have_posts() ):
+            hb_get_template( 'shortcodes/best_reviews.php', array( 'atts' => $atts, 'query' => $query ));
+        endif;
     }
 
     static function hotel_booking_lastest_reviews( $atts )
@@ -330,25 +191,9 @@ class HB_Shortcodes{
             );
         $query = new WP_Query( $args );
 
-        if( $query->have_posts() ): ?>
-
-            <div id="hotel_booking_lastest_reviews-<?php echo uniqid(); ?>" class="hotel_booking_lastest_reviews tp-hotel-booking">
-                <?php if( isset($atts['title']) && $atts['title'] ): ?>
-                    <h3><?php echo $atts['title'] ?></h3>
-                <?php endif; ?>
-                <?php hotel_booking_room_loop_start(); ?>
-
-                    <?php while ( $query->have_posts() ) : $query->the_post(); ?>
-
-                        <?php hb_get_template_part( 'content', 'room' ); ?>
-
-                    <?php endwhile; // end of the loop. ?>
-
-                <?php hotel_booking_room_loop_end(); ?>
-
-            </div>
-
-        <?php endif;
+        if( $query->have_posts() ):
+            hb_get_template( 'shortcodes/lastest_reviews.php', array( 'atts' => $atts, 'query' => $query ));
+        endif;
     }
 
     static function hotel_booking_mini_cart( $atts )
@@ -418,7 +263,6 @@ class HB_Shortcodes{
     {
         wp_enqueue_script( 'wp-util' );
     }
-
 
     static function hotel_booking_cart( $atts )
     {

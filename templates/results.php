@@ -5,7 +5,7 @@
 <div id="hotel-booking-results">
     <h3><?php _e( 'Search results', 'tp-hotel-booking' );?></h3>
     <?php if( $results ):?>
-        <?php hb_get_template( 'results/list.php', array( 'results' => $hb_search_rooms['data'] ) );?>
+        <?php hb_get_template( 'results/list.php', array( 'results' => $hb_search_rooms['data'], 'atts' => $atts ) );?>
     <?php else: ?>
         <p><?php _e( 'No room found', 'tp-hotel-booking' );?></p>
         <p>
