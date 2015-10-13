@@ -253,7 +253,7 @@ $GLOBALS['hb_settings'] = HB_Settings::instance(
         'tax'                   => 0,
         'price_including_tax'   => 0,
         'display_pricing_plans' => 0,
-        'enable_gallery'        => 1,
+        'enable_gallery_lightbox' => 1,
         'catalog_display_rating'=> 1
     )
 );

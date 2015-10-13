@@ -457,4 +457,17 @@ if( ! function_exists( 'hotel_booking_loop_room_rating' ) )
         }
     }
 }
+
+if ( ! function_exists( 'hotel_booking_after_loop_room_item' ) )
+{
+    function hotel_booking_after_loop_room_item()
+    {
+        global $hb_settings;
+        if( $hb_settings->get('enable_gallery_lightbox') )
+        {
+            hb_get_template( 'loop/gallery-lightbox.php' );
+        }
+    }
+}
+
 /*=====  End of template hooks  ======*/

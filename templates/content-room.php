@@ -66,6 +66,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	</div><!-- .summary -->
 
+	<?php
+		/**
+		 * hotel_booking_after_loop_room_item hook
+		 *
+		 * @hooked hotel_booking_show_room_sale_flash - 10
+		 * @hooked hotel_booking_show_room_images - 20
+		 */
+		do_action( 'hotel_booking_after_loop_room_item' );
+	?>
+
 </li>
 
 <?php do_action( 'hotel_booking_after_loop_room' ); ?>

@@ -67,7 +67,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<?php
 		/**
-		 * hotel_booking_after_loop_room_summary hook
+		 * hotel_booking_after_loop_room hook
 		 *
 		 * @hooked hotel_booking_output_room_data_tabs - 10
 		 * @hooked hotel_booking_upsell_display - 15

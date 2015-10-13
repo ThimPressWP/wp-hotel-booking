@@ -11,7 +11,6 @@ $featured = $gallery ? array_shift( $gallery ) : false;
             <div class="hb-room-thumbnail">
                 <?php if( $featured ):?>
                     <a class="hb-room-gallery" rel="hb-room-gallery-<?php echo $room->post->ID;?>" data-lightbox="hb-room-gallery[<?php echo $room->post->ID;?>]" data-title="<?php echo $featured['alt'];?>" href="<?php echo $featured['src'];?>">
-                        <!-- <img src="<?php //echo $featured['thumb'];?>" alt="<?php //echo $featured['alt'];?>" data-id="<?php //echo $featured['id'];?>" /> -->
                         <?php $room->getImage('catalog'); ?>
                     </a>
                 <?php endif; ?>
@@ -68,7 +67,7 @@ $featured = $gallery ? array_shift( $gallery ) : false;
         <input type="hidden" name="hotel-booking" value="cart">
         <input type="hidden" name="action" value="hotel_booking_ajax_add_to_cart" />
     </form>
-    <?php if( ( isset($atts['gallery']) && $atts['gallery'] === 'true' ) || $hb_settings->get('enable_gallery') ): ?>
+    <?php if( ( isset($atts['gallery']) && $atts['gallery'] === 'true' ) || $hb_settings->get('enable_gallery_lightbox') ): ?>
         <div class="hb-room-type-gallery">
             <?php if( $gallery ): foreach( $gallery as $image ){?>
                 <a  class="hb-room-gallery" rel="hb-room-gallery-<?php echo $room->post->ID;?>" data-lightbox="hb-room-gallery[<?php echo $room->post->ID;?>]" data-title="<?php echo $image['alt'];?>" href="<?php echo $image['src'];?>">
