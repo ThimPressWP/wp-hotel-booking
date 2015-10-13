@@ -273,7 +273,8 @@ class TP_Hotel_Booking{
                 meta_key: {
                     prefix: '_hb_'
                 },
-                nonce: '<?php echo wp_create_nonce( 'hb_booking_nonce_action' ); ?>'
+                nonce: '<?php echo wp_create_nonce( 'hb_booking_nonce_action' ); ?>',
+                timezone: '<?php echo get_option('timezone_string') ?>'
             }
         </script>
     <?php
