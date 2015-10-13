@@ -42,7 +42,7 @@ $items = isset($atts['number']) ? (int)$atts['number'] : 4;
     (function($){
         "use strict";
         $(document).ready(function(){
-            $('#<?php echo $sliderId ?> .hb_room_carousel').carouFredSel({
+            $('#<?php echo $sliderId ?> .hb_room_carousel .rooms').carouFredSel({
                 responsive: true,
                 items: {
                     height: 'auto',
