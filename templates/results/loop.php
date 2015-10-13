@@ -74,5 +74,4 @@ $featured = $gallery ? array_shift( $gallery ) : false;
             </a>
         <?php } endif;?>
     </div>
-
 </li>
