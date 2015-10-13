@@ -728,13 +728,13 @@
                     alert( hotel_settings_language.waring.try_again );
 
                 if( typeof res.sub_total !== 'undefined' )
-                    $('.hb_sub_total').html( res.sub_total );
+                    $('span.hb_sub_total_value').html( res.sub_total );
 
                 if( typeof res.grand_total !== 'undefined' )
-                    $('.hb_grand_total').html( res.grand_total );
+                    $('span.hb_grand_total_value').html( res.grand_total );
 
                 if( typeof res.advance_payment !== 'undefined' )
-                    $('.hb_advance_payment').html( res.advance_payment );
+                    $('span.hb_advance_payment_value').html( res.advance_payment );
                 tr.hb_overlay_ajax_stop();
                 tr.remove();
                 hb_remove_cart_item_callback( dateID, roomID );

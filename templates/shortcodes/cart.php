@@ -70,7 +70,7 @@ global $hb_settings;
 
                 <tr class="hb_sub_total">
                     <td colspan="8"><?php _e( 'Sub Total', 'tp-hotel-booking' );?>
-                        <span class="hb-align-right hb_sub_total">
+                        <span class="hb-align-right hb_sub_total_value">
                             <?php echo hb_format_price( $cart->sub_total );?>
                         </span>
                     </td>
@@ -89,14 +89,14 @@ global $hb_settings;
                 <tr class="hb_advance_grand_total">
                     <td colspan="8">
                         <?php _e( 'Grand Total', 'tp-hotel-booking' ); ?>
-                        <span class="hb-align-right"><?php echo hb_format_price( $cart->total );?></span>
+                        <span class="hb-align-right hb_advance_grand_total_value"><?php echo hb_format_price( $cart->total );?></span>
                     </td>
                 </tr>
                 <?php if( $advance_payment = $cart->advance_payment ){?>
                 <tr class="hb_advance_payment">
                     <td colspan="8">
                         <?php printf( __( 'Advance Payment (%s%% of Grand Total)', 'tp-hotel-booking' ), hb_get_advance_payment() );?>
-                        <span class="hb-align-right"><?php echo hb_format_price( $advance_payment );?></span>
+                        <span class="hb-align-right hb_advance_payment_value"><?php echo hb_format_price( $advance_payment );?></span>
                     </td>
                 </tr>
                 <?php }?>
