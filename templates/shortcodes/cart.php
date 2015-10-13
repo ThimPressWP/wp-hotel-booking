@@ -8,7 +8,7 @@ global $hb_settings;
         <h3><?php _e( 'Cart', 'tp-hotel-booking' );?></h3>
         <table class="hb_table">
             <thead>
-                <th><?php //_e( 'Remove', 'tp-hotel-booking' ); ?></th>
+                <th>&nbsp;</th>
                 <th class="hb_room_type"><?php _e( 'Room type', 'tp-hotel-booking' );?></th>
                 <th class="hb_capacity"><?php _e( 'Capacity', 'tp-hotel-booking' );?></th>
                 <th class="hb_quantity"><?php _e( 'Quantity', 'tp-hotel-booking' );?></th>
@@ -22,7 +22,7 @@ global $hb_settings;
                         <?php
                             if( ( $num_of_rooms = (int)$room->quantity ) == 0 ) continue;
                         ?>
-                        <tr class="hb_checkout_item">
+                        <tr class="hb_checkout_item" data-date="<?php echo $room->in_to_out; ?>" data-id="<?php echo $room->ID ?>">
                             <td>
                                 <a href="javascript:void(0)" class="hb_remove_cart_item" data-date="<?php echo $room->in_to_out; ?>" data-id="<?php echo $room->ID ?>">
                                     <?php //_e( 'Remove', 'tp-hotel-booking' ); ?>
@@ -89,7 +89,7 @@ global $hb_settings;
                 <tr class="hb_advance_grand_total">
                     <td colspan="8">
                         <?php _e( 'Grand Total', 'tp-hotel-booking' ); ?>
-                        <span class="hb-align-right hb_advance_grand_total_value"><?php echo hb_format_price( $cart->total );?></span>
+                        <span class="hb-align-right hb_grand_total_value"><?php echo hb_format_price( $cart->total );?></span>
                     </td>
                 </tr>
                 <?php if( $advance_payment = $cart->advance_payment ){?>
