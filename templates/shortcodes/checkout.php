@@ -22,7 +22,7 @@ global $hb_settings;
                             if( ( $num_of_rooms = (int)$room->get_data('quantity') ) == 0 ) continue;
                             $sub_total = $room->get_total( $room->check_in_date, $room->check_out_date, $num_of_rooms, false );
                         ?>
-                        <tr class="hb_checkout_item">
+                        <tr class="hb_checkout_item" data-date="<?php echo $room->in_to_out; ?>" data-id="<?php echo $room->ID ?>">
                             <td class="hb_room_type"><?php echo $room->name;?> (<?php echo $room->capacity_title;?>)</td>
                             <td class="hb_capacity"><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'tp-hotel-booking' ), $room->capacity );?> </td>
                             <td class="hb_quantity"><?php echo $num_of_rooms; ?></td>
@@ -64,7 +64,7 @@ global $hb_settings;
 
             <tr class="hb_sub_total">
                 <td colspan="8"><?php _e( 'Sub Total', 'tp-hotel-booking' );?>
-                    <span class="hb-align-right">
+                    <span class="hb-align-right hb_sub_total_value">
                         <?php echo hb_format_price( $cart->sub_total );?>
                     </span>
                 </td>
@@ -84,14 +84,14 @@ global $hb_settings;
             <tr class="hb_advance_grand_total">
                 <td colspan="8">
                     <?php _e( 'Grand Total', 'tp-hotel-booking' ); ?>
-                    <span class="hb-align-right hb_grand_total "><?php echo hb_format_price( $cart->total );?></span>
+                    <span class="hb-align-right hb_grand_total_value"><?php echo hb_format_price( $cart->total );?></span>
                 </td>
             </tr>
             <?php if( $advance_payment = $cart->advance_payment ){?>
                 <tr class="hb_advance_payment">
                     <td colspan="8">
                         <?php printf( __( 'Advance Payment (%s%% of Grand Total)', 'tp-hotel-booking' ), hb_get_advance_payment() );?>
-                        <span class="hb-align-right"><?php echo hb_format_price( $advance_payment );?></span>
+                        <span class="hb-align-right hb_advance_payment_value"><?php echo hb_format_price( $advance_payment );?></span>
                     </td>
                 </tr>
                 <?php if( hb_get_advance_payment() < 100 ){?>

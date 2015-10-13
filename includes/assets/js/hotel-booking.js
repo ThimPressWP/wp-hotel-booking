@@ -341,7 +341,7 @@
         }, 3000);
     }
 
-    function hb_remove_cart_item_callback( dateID, roomID)
+    function hb_remove_cart_item_callback( dateID, roomID, res)
     {
         var minicart = $('.hotel_booking_mini_cart');
         for ( var i = 0; i < minicart.length; i++ )
@@ -370,6 +370,37 @@
                 cart.append( empty({}) );
                 break;
             }
+        }
+
+        var cart_table = $('#hotel-booking-payment, #hotel-booking-cart');
+
+        for( var i = 0; i < cart_table.length; i++ )
+        {
+            var _table = $(cart_table[i]);
+            var tr = _table.find('table').find('.hb_checkout_item');
+            for ( var y = 0; y < tr.length; y++ )
+            {
+                var _tr = $(tr[y]);
+                var _date = _tr.attr( 'data-date' );
+                var _roomID = _tr.attr('data-id');
+                if( _date === dateID && _roomID === roomID )
+                {
+                    _tr.remove();
+                    break;
+                }
+            }
+            if( typeof res.status === 'undefined' || res.status !== 'success' )
+                alert( hotel_settings_language.waring.try_again );
+
+            if( typeof res.sub_total !== 'undefined' )
+                _table.find('span.hb_sub_total_value').html( res.sub_total );
+
+            if( typeof res.grand_total !== 'undefined' )
+                _table.find('span.hb_grand_total_value').html( res.grand_total );
+
+            if( typeof res.advance_payment !== 'undefined' )
+                _table.find('span.hb_advance_payment_value').html( res.advance_payment );
+
         }
     }
 
@@ -768,7 +799,7 @@
                 if( typeof res.status === 'undefined' || res.status !== 'success' )
                     alert( hotel_settings_language.waring.try_again );
 
-                hb_remove_cart_item_callback( dateID, roomID );
+                hb_remove_cart_item_callback( dateID, roomID, res );
             });
         });
     });
