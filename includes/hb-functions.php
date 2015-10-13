@@ -94,7 +94,7 @@ function hb_dropdown_rooms( $args = array('selected' => '') ){
     $emptySelected->post_title = __('---Select Room---', 'tp-hotel-booking');
     $posts = array_merge( array( $emptySelected ), $posts );
     foreach ($posts as $key => $post) {
-        $output .= '<option value="'.$post->ID.'"'.( $post->ID === $args['selected'] ? ' selected' : '' ).'>'.$post->post_title.'</option>';
+        $output .= '<option value="'.$post->ID.'"'.( $post->ID == $args['selected'] ? ' selected' : '' ).'>'.$post->post_title.'</option>';
     }
     $output .= '</select>';
     return $output;
