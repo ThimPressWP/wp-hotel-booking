@@ -35,3 +35,4 @@ add_action( 'pre_get_posts', 'hotel_booking_num_room_archive', 999 );
 
 add_action( 'the_post', array( 'HB_Room', 'hb_setup_room_data' ) );
 // add_filter( 'sidebars_widgets', 'hotel_booking_remove_widget_search' );
+add_action( 'hotel_booking_after_loop_room_item', 'hotel_booking_after_loop_room_item' );

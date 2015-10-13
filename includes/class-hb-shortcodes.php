@@ -137,7 +137,7 @@ class HB_Shortcodes{
 
         ob_start();
         do_action( 'hb_wrapper_start' );
-        hb_get_template( $template, $template_args );
+        hb_get_template( 'shortcodes/'.$template, $template_args );
         do_action( 'hb_wrapper_end' );
         $output = ob_get_clean();
         return $output;
@@ -207,7 +207,7 @@ class HB_Shortcodes{
 
             <?php if ( isset( $_SESSION['hb_cart'], $_SESSION['hb_cart']['products'] ) || empty( $_SESSION['hb_cart']['products'] ) ): ?>
 
-                <?php hb_get_template( 'mini_cart.php' ); ?>
+                <?php hb_get_template( 'shortcodes/mini_cart.php' ); ?>
 
             <?php else: ?>
 
@@ -268,7 +268,7 @@ class HB_Shortcodes{
     {
         ob_start();
         do_action( 'hb_wrapper_start' );
-        hb_get_template( 'cart.php', $atts );
+        hb_get_template( 'shortcodes/cart.php', $atts );
         do_action( 'hb_wrapper_end' );
         $output = ob_get_clean();
         return $output;

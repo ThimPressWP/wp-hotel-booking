@@ -107,9 +107,9 @@ global $hb_settings;
             <?php }?>
 
         </table>
-        <?php hb_get_template( 'customer.php', array( 'customer' => $customer ) );?>
-        <?php hb_get_template( 'payment-method.php', array( 'customer' => $customer ) );?>
-        <?php hb_get_template( 'addition-information.php' );?>
+        <?php hb_get_template( 'shortcodes/customer.php', array( 'customer' => $customer ) );?>
+        <?php hb_get_template( 'shortcodes/payment-method.php', array( 'customer' => $customer ) );?>
+        <?php hb_get_template( 'shortcodes/addition-information.php' );?>
         <?php wp_nonce_field( 'hb_customer_place_order', 'hb_customer_place_order_field' );?>
         <input type="hidden" name="hotel-booking" value="place_order" />
         <input type="hidden" name="action" value="hotel_booking_place_order" />
