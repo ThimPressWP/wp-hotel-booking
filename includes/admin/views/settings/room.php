@@ -78,3 +78,14 @@ $settings = hb_settings();
         </td>
     </tr>
 </table>
+
+<h3 class="description"><?php _e( 'Gallery images', 'tp-hotel-booking' );?></h3>
+<table class="form-table">
+    <tr>
+        <th><?php _e( 'Enable gallery lightbox', 'tp-hotel-booking' );?></th>
+        <td>
+            <input type="hidden" name="<?php echo $settings->get_field_name('enable_gallery');?>" value="0" />
+            <input type="checkbox" name="<?php echo $settings->get_field_name('enable_gallery');?>" <?php checked( $settings->get('enable_gallery') ? 1 : 0, 1 );?> value="1"/>
+        </td>
+    </tr>
+</table>
