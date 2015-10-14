@@ -96,6 +96,7 @@ class TP_Hotel_Booking{
             $this->_include( 'includes/admin/class-hb-admin-menu.php' );
             $this->_include( 'includes/class-hb-meta-box.php' );
             $this->_include( 'includes/admin/hb-admin-functions.php' );
+            $this->_include( 'includes/admin/class-hb-admin-settings-hook.php' );
         }
         $this->_include( 'includes/class-hb-comments.php' );
         $this->_include( 'includes/hb-template-hooks.php' );
@@ -272,7 +273,8 @@ class TP_Hotel_Booking{
                 meta_key: {
                     prefix: '_hb_'
                 },
-                nonce: '<?php echo wp_create_nonce( 'hb_booking_nonce_action' ); ?>'
+                nonce: '<?php echo wp_create_nonce( 'hb_booking_nonce_action' ); ?>',
+                timezone: '<?php echo get_option('timezone_string') ?>'
             }
         </script>
     <?php

@@ -300,7 +300,7 @@ class HB_Shortcodes{
 
         ob_start();
         do_action( 'hb_wrapper_start' );
-        hb_get_template( 'checkout.php', $template_args );
+        hb_get_template( 'shortcodes/checkout.php', $template_args );
         do_action( 'hb_wrapper_end' );
         $output = ob_get_clean();
         return $output;
