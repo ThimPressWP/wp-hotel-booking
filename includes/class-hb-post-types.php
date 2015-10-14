@@ -381,12 +381,15 @@ class HB_Post_Types{
                 $cap_id = get_post_meta( $post->ID, '_hb_room_capacity', true );
                 $cap = get_term( $cap_id, 'hb_room_capacity' );
 
-                // printf( '%s (%s)', $type->name, $cap->name );
-                $room_types = array();
-                foreach ($terms as $key => $term) {
-                    $room_types[] = $term->name;
+                if( $cap && isset( $cap->name ) )
+                {
+                    // printf( '%s (%s)', $type->name, $cap->name );
+                    $room_types = array();
+                    foreach ($terms as $key => $term) {
+                        $room_types[] = $term->name;
+                    }
+                    printf( '%s (%s)', implode(', ', $room_types), $cap->name );
                 }
-                printf( '%s (%s)', implode(', ', $room_types), $cap->name );
                 break;
             case 'room_capacity':
                 echo get_post_meta( $post->ID, '_hb_max_child_per_room', true );
