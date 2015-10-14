@@ -462,7 +462,7 @@
   -ms-transition: all 0.3s;
   transition: all 0.3s;
 }
-.rooms .hb_room .summary:hover .media:before {
+.rooms .hb_room .summary:hover .media a:before {
   border-bottom-width: 167px;
   border-left-width: 167px;
 }
