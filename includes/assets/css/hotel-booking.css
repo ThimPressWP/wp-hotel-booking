@@ -431,7 +431,7 @@
   width: 100%;
   height: auto;
 }
-.rooms .hb_room .media:before {
+.rooms .hb_room .media a:before {
   content: '';
   position: absolute;
   width: 0;
