@@ -919,9 +919,9 @@ function hb_search_rooms( $args = array() ){
         }
     }
 
-    if( isset( $_SESSION['hb_cart'], $_SESSION['hb_cart']['products'] ) )
+    if( isset( $_SESSION['hb_cart'.HB_BLOG_ID], $_SESSION['hb_cart'.HB_BLOG_ID]['products'] ) )
     {
-        $products = $_SESSION['hb_cart']['products'];
+        $products = $_SESSION['hb_cart'.HB_BLOG_ID]['products'];
         foreach ($products as $date => $items) {
             $date = explode('_', $date); // can not use list function
             if( isset($date[0], $date[1]) )

@@ -22,8 +22,9 @@ class HB_Cart{
      */
     function __construct(){
         if( !session_id() ) session_start();
-        if( empty( $_SESSION['hb_cart'] ) ){
-            $_SESSION['hb_cart'] = array(
+
+        if( empty( $_SESSION['hb_cart'.HB_BLOG_ID] ) ){
+            $_SESSION['hb_cart'.HB_BLOG_ID] = array(
                 'cart_id'   => $this->generate_cart_id(),
                 'options'   => array(),
                 'products'  => array()
@@ -85,7 +86,7 @@ class HB_Cart{
                 $this->set_option( $k, $v );
             }
         }else {
-            $_SESSION['hb_cart']['options'][$name] = $value;
+            $_SESSION['hb_cart'.HB_BLOG_ID]['options'][$name] = $value;
         }
         return $this;
     }
@@ -129,7 +130,7 @@ class HB_Cart{
      * @return bool
      */
     function get_option( $name ){
-        return ! empty(  $_SESSION['hb_cart']['options'][ $name ] ) ? $_SESSION['hb_cart']['options'][ $name ] : false;
+        return ! empty(  $_SESSION['hb_cart'.HB_BLOG_ID]['options'][ $name ] ) ? $_SESSION['hb_cart'.HB_BLOG_ID]['options'][ $name ] : false;
     }
 
     /**
@@ -138,7 +139,7 @@ class HB_Cart{
      * @return mixed
      */
     function get_cart_id(){
-        return $_SESSION['hb_cart']['cart_id'];
+        return $_SESSION['hb_cart'.HB_BLOG_ID]['cart_id'];
     }
 
     /**
@@ -147,8 +148,8 @@ class HB_Cart{
      * @return mixed
      */
     function get_products(){
-        if( isset($_SESSION['hb_cart']['products'], $_SESSION['hb_cart']['products']) )
-            return $_SESSION['hb_cart']['products'];
+        if( isset($_SESSION['hb_cart'.HB_BLOG_ID]['products'], $_SESSION['hb_cart'.HB_BLOG_ID]['products']) )
+            return $_SESSION['hb_cart'.HB_BLOG_ID]['products'];
         return null;
     }
 
@@ -241,12 +242,12 @@ class HB_Cart{
 
         $date = strtotime($check_in_date) . '_' . strtotime($check_out_date);
 
-        if ( ! isset( $_SESSION['hb_cart']['products'][$date] ) )
-            $_SESSION['hb_cart']['products'][$date] = array();
+        if ( ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$date] ) )
+            $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$date] = array();
 
-        if ( ! isset( $_SESSION['hb_cart']['products'][$date][$room_id] ) )
+        if ( ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$date][$room_id] ) )
         {
-            $_SESSION['hb_cart']['products'][$date][$room_id] = array(
+            $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$date][$room_id] = array(
                     'id'            => $room_id,
                     'search_key'    => $date,
                     'quantity'      => $quantity,
@@ -256,7 +257,7 @@ class HB_Cart{
         }
         else
         {
-            $_SESSION['hb_cart']['products'][$date][$room_id]['quantity'] = $quantity;
+            $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$date][$room_id]['quantity'] = $quantity;
         }
 
         return $this;
@@ -268,7 +269,7 @@ class HB_Cart{
      * @return $this
      */
     function empty_cart(){
-        unset( $_SESSION['hb_cart']['products'] );
+        unset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'] );
         return $this;
     }
 
@@ -276,7 +277,7 @@ class HB_Cart{
      * Destroy cart session
      */
     function destroy(){
-        unset( $_SESSION['hb_cart'] );
+        unset( $_SESSION['hb_cart'.HB_BLOG_ID] );
     }
 
     function update_order_status( $status ){
@@ -300,10 +301,10 @@ class HB_Cart{
 
         $cart_number = $_POST['hotel_booking_cart'];
 
-        if( ! isset( $_SESSION['hb_cart']['products'] ) )
+        if( ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'] ) )
             return;
 
-        $products = $_SESSION['hb_cart']['products'];
+        $products = $_SESSION['hb_cart'.HB_BLOG_ID]['products'];
 
         foreach ($cart_number as $search_key => $rooms) {
             if( ! array_key_exists( $search_key, $products) )
@@ -317,16 +318,16 @@ class HB_Cart{
 
                 if( $quantity === 0 )
                 {
-                    unset($_SESSION['hb_cart']['products'][$search_key][ $id ]);
+                    unset($_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key][ $id ]);
                 }
                 else
                 {
-                    $_SESSION['hb_cart']['products'][$search_key][ $id ]['quantity'] = $quantity;
+                    $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key][ $id ]['quantity'] = $quantity;
                 }
             }
         }
         return;
-        // var_dump($_SESSION['hb_cart']['products']); die();
+        // var_dump($_SESSION['hb_cart'.HB_BLOG_ID]['products']); die();
     }
 
     /**
@@ -544,8 +545,8 @@ function hb_create_booking( $args = array() ){
         'parent'        => 0
     );
     $args       = wp_parse_args( $args, $default_args );
-    if( is_null( $args['customer_id'] && isset( $_SESSION['hb_cart']['customer_id'] ) ) ){
-        $args['customer_id'] = absint( $_SESSION['hb_cart']['customer_id'] );
+    if( is_null( $args['customer_id'] && isset( $_SESSION['hb_cart'.HB_BLOG_ID]['customer_id'] ) ) ){
+        $args['customer_id'] = absint( $_SESSION['hb_cart'.HB_BLOG_ID]['customer_id'] );
     }
 
     TP_Hotel_Booking::instance()->_include( 'includes/class-hb-room.php' );

@@ -205,7 +205,7 @@ class HB_Shortcodes{
 
             <?php endif; ?>
 
-            <?php if ( isset( $_SESSION['hb_cart'], $_SESSION['hb_cart']['products'] ) || empty( $_SESSION['hb_cart']['products'] ) ): ?>
+            <?php if ( isset( $_SESSION['hb_cart'.HB_BLOG_ID], $_SESSION['hb_cart'.HB_BLOG_ID]['products'] ) || empty( $_SESSION['hb_cart'.HB_BLOG_ID]['products'] ) ): ?>
 
                 <?php hb_get_template( 'shortcodes/mini_cart.php' ); ?>
 
