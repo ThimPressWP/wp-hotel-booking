@@ -4,9 +4,9 @@
  *
  * Closing li is left out on purpose!
  *
- * @author 		WooThemes
- * @package 	WooCommerce/Templates
- * @version     2.1.0
+ * @author 		ThimPress
+ * @package 	tp-hotel-booking/templates
+ * @version     0.9
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

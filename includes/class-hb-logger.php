@@ -3,7 +3,7 @@
  * Allows log files to be written to for debugging purposes.
  *
  * @class 		WC_Logger
- * @version		1.6.4
+ * @version		0.9
  * @package		WooCommerce/Classes
  * @category	Class
  * @author 		WooThemes

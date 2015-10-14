@@ -3,7 +3,7 @@
  * Display single product reviews (comments)
  *
  * @author 		ThimPress
- * @package 	hb/Templates
+ * @package 	tp-hotel-booking/templates
  * @version     2.3.2
  */
 

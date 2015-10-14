@@ -4,7 +4,7 @@
  *
  * @author  ThimPress
  * @package Tp-hotel-booking/Templates
- * @version 2.4.0
+ * @version 0.9
  */
 
 global $hb_settings;

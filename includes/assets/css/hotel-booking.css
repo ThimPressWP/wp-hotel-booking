@@ -479,6 +479,11 @@
 }
 .rooms .hb_room .title h4 a {
   color: #2a2a2a;
+  white-space: nowrap;
+  max-width: 100%;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .rooms .hb_room .price {
   position: absolute;
