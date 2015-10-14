@@ -68,8 +68,8 @@ class HB_Checkout{
         }
         // Insert or update the post data
         $booking_id = false;
-        if( isset( $_SESSION['hb_cart']['booking_id'] ) )
-            $booking_id = $_SESSION['hb_cart']['booking_id'];
+        if( isset( $_SESSION['hb_cart'.HB_BLOG_ID]['booking_id'] ) )
+            $booking_id = $_SESSION['hb_cart'.HB_BLOG_ID]['booking_id'];
 
         // Resume the unpaid order if its pending
         if ( $booking_id > 0 && ( $booking = HB_Booking::instance( $booking_id ) ) && $booking->post->ID && $booking->has_status( array( 'pending', 'failed' ) ) ) {
@@ -128,7 +128,7 @@ class HB_Checkout{
             }
 
             add_post_meta( $booking_id, '_hb_room_price', $prices );
-            add_post_meta( $booking_id, '_hb_booking_params', $_SESSION['hb_cart']['products'] );
+            add_post_meta( $booking_id, '_hb_booking_params', $_SESSION['hb_cart'.HB_BLOG_ID]['products'] );
         }
         do_action( 'hb_new_booking', $booking_id );
         return $booking_id;
@@ -156,9 +156,9 @@ class HB_Checkout{
             $booking_id = $this->create_booking();
             if( $booking_id ) {
                 if (HB_Cart::instance()->needs_payment()) {
-                    if( ! isset( $_SESSION['hb_cart']['booking_id']) )
+                    if( ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['booking_id']) )
                     {
-                        $_SESSION['hb_cart']['booking_id'] = $booking_id;
+                        $_SESSION['hb_cart'.HB_BLOG_ID]['booking_id'] = $booking_id;
                     }
                     $result = $payment_method->process_checkout( $booking_id , $customer_id );
                 } else {

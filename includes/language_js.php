@@ -10,5 +10,5 @@ $language = array(
 ?>
 <script type="text/javascript">
 	hotel_settings_language = <?php echo json_encode($language); ?>,
-	hotel_settings_cart = <?php echo ( ! isset($_SESSION['hb_cart']) && empty( $_SESSION['hb_cart'] ) ) ? 'false' : 'true' ?>
+	hotel_settings_cart = <?php echo ( ! isset($_SESSION['hb_cart'.HB_BLOG_ID]) && empty( $_SESSION['hb_cart'.HB_BLOG_ID] ) ) ? 'false' : 'true' ?>
 </script>

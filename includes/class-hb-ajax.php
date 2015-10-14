@@ -253,11 +253,11 @@ class HB_Ajax{
         $time_key = $_POST['time'];
         $room_id = $_POST['room'];
 
-        if( ! isset($_SESSION['hb_cart']) || ! isset($_SESSION['hb_cart']['products']) )
+        if( ! isset($_SESSION['hb_cart'.HB_BLOG_ID]) || ! isset($_SESSION['hb_cart'.HB_BLOG_ID]['products']) )
             return;
 
-        if( isset( $_SESSION['hb_cart']['products'][$time_key], $_SESSION['hb_cart']['products'][$time_key][$room_id] ) )
-            unset($_SESSION['hb_cart']['products'][$time_key][$room_id]);
+        if( isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$time_key], $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$time_key][$room_id] ) )
+            unset($_SESSION['hb_cart'.HB_BLOG_ID]['products'][$time_key][$room_id]);
 
         $cart = HB_Cart::instance();
 
