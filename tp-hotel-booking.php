@@ -274,7 +274,7 @@ class TP_Hotel_Booking{
                     prefix: '_hb_'
                 },
                 nonce: '<?php echo wp_create_nonce( 'hb_booking_nonce_action' ); ?>',
-                timezone: '<?php echo get_option('timezone_string') ?>'
+                timezone: '<?php echo current_time( 'timestamp' ) ?>'
             }
         </script>
     <?php

@@ -489,7 +489,7 @@ class HB_Room{
     {
         if( ! $this->_review_details )
         {
-            return get_comments( array( 'post_id' => $this->post->ID ) );
+            return get_comments( array( 'post_id' => $this->post->ID, 'status' => 'approve' ) );
         }
         return $this->_review_details;
     }
