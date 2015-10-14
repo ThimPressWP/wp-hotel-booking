@@ -229,6 +229,7 @@ class HB_Ajax{
                     'status'    => 'success',
                     'message'   => sprintf('<label class="hb_success_message">%1$s</label>', __('Added successfully.', 'tp-hotel-booking')),
                     'id'        => $room_id,
+                    'permalink' => get_permalink( $room_id ),
                     'search_key'=> $search_key,
                     'name'      => sprintf( '%s (%s)', $room->name, $room->capacity_title ),
                     'quantity'  => $number_room,

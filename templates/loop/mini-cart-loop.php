@@ -11,7 +11,7 @@
 
 	<div class="hb_mini_cart_top">
 
-		<h4 class="hb_title"><?php printf( '%s (%s)', $room->name, $room->capacity_title ) ?></h4>
+		<h4 class="hb_title"><a href="<?php echo get_permalink($room->ID); ?>"><?php printf( '%s %s', $room->name, $room->capacity_title ? '('.$room->capacity_title.')' : '' ) ?></a></h4>
 		<span class="hb_mini_cart_remove"><i class="fa fa-times"></i></span>
 	</div>
 

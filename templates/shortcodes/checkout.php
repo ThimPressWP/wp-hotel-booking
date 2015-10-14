@@ -23,7 +23,7 @@ global $hb_settings;
                             $sub_total = $room->get_total( $room->check_in_date, $room->check_out_date, $num_of_rooms, false );
                         ?>
                         <tr class="hb_checkout_item" data-date="<?php echo $room->in_to_out; ?>" data-id="<?php echo $room->ID ?>">
-                            <td class="hb_room_type"><?php echo $room->name;?> (<?php echo $room->capacity_title;?>)</td>
+                            <td class="hb_room_type"><a href="<?php echo get_permalink( $room->ID ); ?>"><?php echo $room->name; ?><?php printf( '%s', $room->capacity_title ? '('.$room->capacity_title.')' : '' ); ?></a></td>
                             <td class="hb_capacity"><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'tp-hotel-booking' ), $room->capacity );?> </td>
                             <td class="hb_quantity"><?php echo $num_of_rooms; ?></td>
                             <td class="hb_check_in"><?php echo $room->check_in_date ?></td>

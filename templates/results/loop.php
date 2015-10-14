@@ -19,7 +19,7 @@ $featured = $gallery ? array_shift( $gallery ) : false;
             <div class="hb-room-info">
                 <h4 class="hb-room-name">
                     <a href="<?php echo get_the_permalink($room->post->ID) ?>">
-                        <?php echo $room->name;?> (<?php echo $room->capacity_title;?>)
+                        <?php echo $room->name;?> <?php $room->capacity_title ? printf( '(%s)', $room->capacity_title ) : '' ;?>
                     </a>
                 </h4>
                 <ul class="hb-room-meta">

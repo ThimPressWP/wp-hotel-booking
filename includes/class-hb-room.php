@@ -123,7 +123,8 @@ class HB_Room{
                 $term_id = get_post_meta( $this->post->ID, '_hb_room_capacity', true );
                 if( $key == 'capacity_title' ) {
                     $term = get_term( $term_id, 'hb_room_capacity' );
-                    $return = $term->name;
+                    if( isset( $term->name ) )
+                        $return = $term->name;
                 }else{
                     $return = get_option( 'hb_taxonomy_capacity_' . $term_id );
                 }
