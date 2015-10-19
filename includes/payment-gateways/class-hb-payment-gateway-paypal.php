@@ -291,7 +291,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         $paypal = HB_Settings::instance()->get( 'paypal' );
 
         //$user = hb_get_current_user();
-        $customer = hb_get_customer( get_transient('hb_current_customer') );
+        $customer = hb_get_customer( get_transient('hb_current_customer_' . session_id ()) );
         $paypal_args = array (
             'cmd'      => '_xclick',
             'amount'   => round( hb_get_cart_total( ! hb_get_request( 'pay_all' ) ), 2 ),

@@ -48,7 +48,7 @@ class HB_Checkout{
         $customer_id = hb_update_customer_info( $customer_info );
 
         // set transient for current customer in one hour
-        set_transient( 'hb_current_customer', $customer_id, HOUR_IN_SECONDS );
+        set_transient( 'hb_current_customer_' . session_id(), $customer_id, HOUR_IN_SECONDS );
         return $customer_id;
     }
 
@@ -59,7 +59,7 @@ class HB_Checkout{
      * @throws Exception
      */
     function create_booking(){
-        $customer_id = get_transient( 'hb_current_customer' );
+        $customer_id = get_transient( 'hb_current_customer_' . session_id() );
 
         $transaction_object = hb_generate_transaction_object( );
 

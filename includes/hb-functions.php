@@ -1391,7 +1391,7 @@ function hb_dropdown_countries( $args = array() ){
  * @param string $type
  */
 function hb_add_message( $message, $type = 'message' ){
-    $messages = get_transient( 'hb_message' );
+    $messages = get_transient( 'hb_message_'.session_id() );
     if( empty( $messages ) ){
         $messages = array();
     }
@@ -1402,7 +1402,7 @@ function hb_add_message( $message, $type = 'message' ){
     );
 
     // hold in transient for 3 minutes
-    set_transient( 'hb_message', $messages, MINUTE_IN_SECONDS * 3 );
+    set_transient( 'hb_message_' . session_id(), $messages, MINUTE_IN_SECONDS * 3 );
 }
 
 function hb_get_customer_fullname( $customer_id, $with_title = false ){

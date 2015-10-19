@@ -1,5 +1,5 @@
 <?php
-if( $messages = get_transient( 'hb_message' ) ){
+if( $messages = get_transient( 'hb_message_'.session_id() ) ){
     foreach( $messages as $message ){
         ?>
         <div class="hb-message <?php echo $message['type'];?>">
@@ -10,4 +10,4 @@ if( $messages = get_transient( 'hb_message' ) ){
         <?php
     }
 }
-delete_transient( 'hb_message' );
+delete_transient( 'hb_message_'.session_id() );
