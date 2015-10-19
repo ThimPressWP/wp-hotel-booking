@@ -338,6 +338,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      * @return array
      */
     function process_checkout( $booking_id = null ){
+        unset($_SESSION['hb_cart'.HB_BLOG_ID]);
         return array(
             'result'    => 'success',
             'redirect'  => $this->_get_paypal_basic_checkout_url(  $booking_id  )
