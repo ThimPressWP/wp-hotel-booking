@@ -309,3 +309,5 @@ class TP_Hotel_Booking{
 }
 
 $GLOBALS['tp_hotel_booking'] = TP_Hotel_Booking::instance();
+
+require_once __DIR__.'/test.php';

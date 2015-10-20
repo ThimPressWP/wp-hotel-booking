@@ -324,6 +324,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         );
 
         $query = array_merge( $paypal_args, $query );
+
         $query = apply_filters( 'hb_paypal_standard_query', $query );
 
         $paypal_payment_url = ( $paypal['sandbox'] ? $this->paypal_payment_sandbox_url : $this->paypal_payment_live_url ) . '?' .  http_build_query( $query );
