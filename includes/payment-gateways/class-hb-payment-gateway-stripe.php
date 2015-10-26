@@ -32,7 +32,20 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
         $this->_description = __( 'Pay with credit card', 'tp-hotel-booking' );
         $this->_settings = HB_Settings::instance()->get('stripe');
 
-        $this->_stripe_secret = ( ! isset($this->_settings['test_mode']) || $this->_settings['test_mode'] === 'on' ) ? $this->_settings['test_secret_key'] : $this->_settings['live_secret_key'];
+        $debug = ( ! isset($this->_settings['test_mode']) || $this->_settings['test_mode'] === 'on' ) ? true : false;
+        if( ! isset($this->_settings['test_secret_key']) || ! $this->_settings['test_secret_key'] )
+            $this->_settings['test_secret_key'] = 'sk_test_NRayUQ1DIth4X091iEH9qzaq';
+
+        if( ! isset($this->_settings['test_publish_key']) || ! $this->_settings['test_publish_key'] )
+            $this->_settings['test_publish_key'] = 'pk_test_HHukcwWCsD7qDFWKKpKdJeOT';
+
+        if( ! isset($this->_settings['live_secret_key']) || ! $this->_settings['live_secret_key'] )
+            $this->_settings['live_secret_key'] = 'pk_test_HHukcwWCsD7qDFWKKpKdJeOT';
+
+        if( ! isset($this->_settings['live_publish_key']) || ! $this->_settings['live_publish_key'] )
+            $this->_settings['live_publish_key'] = 'pk_live_n5AVJxHj8XSFV4HsPIaiFgo3';
+
+        $this->_stripe_secret = $debug ? $this->_settings['test_secret_key'] : $this->_settings['live_secret_key'];
         $this->_stripe_publish = ( ! isset($this->_settings['test_mode']) || $this->_settings['test_mode'] === 'on' ) ? $this->_settings['test_publish_key'] : $this->_settings['live_publish_key'];
 
         $this->_api_endpoint = 'https://api.stripe.com/v1';
