@@ -48,6 +48,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
         $this->_stripe_secret = $debug ? $this->_settings['test_secret_key'] : $this->_settings['live_secret_key'];
         $this->_stripe_publish = ( ! isset($this->_settings['test_mode']) || $this->_settings['test_mode'] === 'on' ) ? $this->_settings['test_publish_key'] : $this->_settings['live_publish_key'];
 
+        add_action( 'wp_footer', array($this, 'global_js') );
         $this->_api_endpoint = 'https://api.stripe.com/v1';
         $this->init();
     }
@@ -153,6 +154,15 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
         }
 
         return $parsed_response;
+    }
+
+    public function global_js()
+    {
+        echo '<script type="text/javascript">
+            TPBooking_Payment_Paypal = {};
+            TPBooking_Payment_Paypal.stripe_secret = "'.$this->_stripe_secret.'";
+            TPBooking_Payment_Paypal.stripe_publish = "'.$this->stripe_publish.'";
+        </script>';
     }
 
     function form(){

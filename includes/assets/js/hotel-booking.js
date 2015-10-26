@@ -190,7 +190,7 @@
     function stripeSubmit( form )
     {
         var handler = StripeCheckout.configure({
-            key: 'pk_test_HHukcwWCsD7qDFWKKpKdJeOT',
+            key: typeof TPBooking_Payment_Paypal ? TPBooking_Payment_Paypal.stripe_secret : 'pk_test_HHukcwWCsD7qDFWKKpKdJeOT',
             image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
             locale: 'auto',
             token: function(token) {
