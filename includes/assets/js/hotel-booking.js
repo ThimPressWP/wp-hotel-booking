@@ -187,46 +187,106 @@
         return true;
     }
 
-    function orderSubmit(e){
-        var $form = $(this),
-            action = window.location.href.replace(/\?.*/, '');
-        try {
-            if ($form.triggerHandler('hb_order_submit') === false) {
-                return false;
+    function stripeSubmit( form )
+    {
+        var handler = StripeCheckout.configure({
+            key: 'pk_test_HHukcwWCsD7qDFWKKpKdJeOT',
+            image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+            locale: 'auto',
+            token: function(token) {
+                // Use the token to create the charge with a server-side script.
+                // You can access the token ID with `token.id`
+                stripe_payment_process(form, token);
             }
+        });
 
-            if( ! validateOrder( $form ) ){
-                return false;
+        var first_name  = form.find('input[name="first_name"]').val().trim();
+        var last_name  = form.find('input[name="last_name"]').val().trim();
+        var email = form.find('input[name="email"]').val().trim();
+
+        var price = form.find('input[name="total_price"]').val();
+        // Open Checkout with further options
+
+        handler.open({
+            name: first_name + ' ' + last_name,
+            description: email,
+            amount: price * 100
+        });
+    }
+
+    function stripe_payment_process( form, token )
+    {
+        var data = {};
+        var payment_data = form.serializeArray();
+        var button = form.find('button[type="submit"]');
+
+        $.each( payment_data, function(index, obj){
+            data[obj.name] = obj.value;
+        });
+
+        $.extend( token, data );
+
+        $.ajax({
+            url: ajaxurl,
+            data: token,
+            type: 'POST',
+            dataType:'html',
+            beforeSend: function(){
+                button.addClass('hb_loading');
             }
+        }).done(function( res ){
+            button.removeClass('hb_loading');
+            res = parseJSON(res);
 
-            $form.attr('action', action);
+            if( typeof res.result !== 'undefined' && res.result == 'success' )
+            {
+                if( typeof res.redirect !== 'undefined' )
+                    window.location.href = res.redirect;
+            }
+            else if( typeof res.message !== 'undefined' )
+            {
+                alert( res.message );
+            }
+        }).fail(function(){
+            button.removeClass('hb_loading');
+        });
+    }
 
-            $.ajax({
-                type: 'POST',
-                url: hotel_settings.ajax,
-                data: $form.serialize(),
-                dataType: 'text',
-                success: function (code) {
-                    try {
-                        var response = parseJSON(code);
-                        if( response.result == 'success' ){
-                            if( response.redirect != undefined ){
-                                window.location.href = response.redirect;
-                            }
+    function orderSubmit(form){
+        var action = window.location.href.replace(/\?.*/, '');
+        form.attr('action', action);
+        var button = form.find('button[type="submit"]');
+        $.ajax({
+            type: 'POST',
+            url: hotel_settings.ajax,
+            data: form.serialize(),
+            dataType: 'text',
+            beforeSend: function(){
+                button.addClass('hb_loading');
+            },
+            success: function (code) {
+                button.removeClass('hb_loading');
+                try {
+                    var response = parseJSON(code);
+                    if( response.result == 'success' ){
+                        if( response.redirect != undefined ){
+                            window.location.href = response.redirect;
                         }
-                    }catch(e){
-                        alert(e)
                     }
-                },
-                error: function(){
-                    alert('eror')
+                    else if( typeof response.message !== 'undefined' )
+                    {
+                        alert( response.message );
+                    }
+                }catch(e){
+                    alert(e)
                 }
+            },
+            error: function(){
+                button.removeClass('hb_loading');
+                alert('eror')
+            }
 
-            });
-
-        }catch(e){
-            alert(e)
-        }
+        });
         return false;
     }
 
@@ -519,7 +579,36 @@
         //     return false;
         // });
 
-        $('form#hb-payment-form').submit(orderSubmit);
+        $('form#hb-payment-form').submit(function(e){
+            e.preventDefault();
+            var _self = $(this);
+            var _method = _self.find('input[name="hb-payment-method"]:checked').val();
+
+            var action = window.location.href.replace(/\?.*/, '');
+            try {
+                if (_self.triggerHandler('hb_order_submit') === false) {
+                    return false;
+                }
+
+                _self.attr('action', action);
+
+                if( ! validateOrder( _self ) ){
+                    return false;
+                }
+
+                if( _method === 'stripe' )
+                {
+                    stripeSubmit( _self );
+                }
+                else
+                {
+                    orderSubmit( _self );
+                }
+
+            }catch(e){
+                alert(e)
+            }
+        });
 
         $('#fetch-customer-info').click(fetchCustomerInfo);
 

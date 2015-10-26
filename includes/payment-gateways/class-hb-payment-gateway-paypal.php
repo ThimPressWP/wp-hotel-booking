@@ -107,6 +107,8 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
     function process_booking_paypal_standard(){
         //return;
         if( ! empty( $_REQUEST['hb-transaction-method'] ) && ( 'paypal-standard' == $_REQUEST['hb-transaction-method'] ) ) {
+            $cart = HB_Cart::instance();
+            $cart->empty_cart();
 
             wp_redirect( get_site_url() );
             exit();
@@ -200,7 +202,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
 
             // Nothing was found
         } else {
-            _e( 'Error: Booking ID and key were not found in "custom".' );
+            _e( 'Error: Booking ID and key were not found in "custom".', 'tp-hotel-booking' );
             return false;
         }
 
@@ -210,7 +212,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         }
 
         if ( ! $booking || $booking->booking_key !== $booking_key ) {
-            printf( __( 'Error: Booking Keys do not match %s and %s.' ) , $booking->booking_key, $booking_key );
+            printf( __( 'Error: Booking Keys do not match %s and %s.', 'tp-hotel-booking' ) , $booking->booking_key, $booking_key );
             return false;
         }
         return $booking;
@@ -303,7 +305,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         $pay_all = hb_get_request( 'pay_all' );
 
         $nonce = wp_create_nonce( 'hb-paypal-nonce' );
-        $paypal_email = $paypal['sandbox'] ? $paypal['sandbox_email'] : $paypal['email'];
+        $paypal_email = $paypal['sandbox'] === 'on' ? $paypal['sandbox_email'] : $paypal['email'];
         $custom = array( 'booking_id' => $booking->id, 'booking_key' => $booking->booking_key );
         if( $advance_payment && ! $pay_all ){
             $custom['advance_payment'] = $advance_payment;
@@ -327,8 +329,10 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
 
         $query = apply_filters( 'hb_paypal_standard_query', $query );
 
-        $paypal_payment_url = ( $paypal['sandbox'] ? $this->paypal_payment_sandbox_url : $this->paypal_payment_live_url ) . '?' .  http_build_query( $query );
+        $paypal_payment_url = ( $paypal['sandbox'] === 'on' ? $this->paypal_payment_sandbox_url : $this->paypal_payment_live_url ) . '?' .  http_build_query( $query );
 
+        // $cart = HB_Cart::instance();
+        // $cart->empty_cart();
         return $paypal_payment_url;
     }
 
@@ -339,7 +343,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      * @return array
      */
     function process_checkout( $booking_id = null ){
-        unset($_SESSION['hb_cart'.HB_BLOG_ID]);
+        // unset($_SESSION['hb_cart'.HB_BLOG_ID]);
         return array(
             'result'    => 'success',
             'redirect'  => $this->_get_paypal_basic_checkout_url(  $booking_id  )

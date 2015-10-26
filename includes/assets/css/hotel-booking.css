@@ -339,7 +339,8 @@
 .hb_button:focus {
   outline: none;
 }
-.hb_add_to_cart.hb_loading {
+.hb_add_to_cart.hb_loading,
+.hb_button.hb_loading {
   -moz-opacity: 0.5;
   -khtml-opacity: 0.5;
   -webkit-opacity: 0.5;

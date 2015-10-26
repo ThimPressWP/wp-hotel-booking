@@ -194,7 +194,7 @@ class HB_Cart{
      * @return float|int
      */
     function get_advance_payment(){
-        $total = 0;
+        $total = $this->get_total();
         if( $advance_payment = hb_get_advance_payment() ) {
             $total = $this->get_total() * $advance_payment / 100;
         }
