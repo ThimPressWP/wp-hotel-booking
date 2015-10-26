@@ -32,8 +32,8 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
         $this->_description = __( 'Pay with credit card', 'tp-hotel-booking' );
         $this->_settings = HB_Settings::instance()->get('stripe');
 
-        $this->_stripe_secret = $this->_settings['test_mode'] === 'on' ? $this->_settings['test_secret_key'] : $this->_settings['live_secret_key'];
-        $this->_stripe_publish = $this->_settings['test_mode'] === 'on' ? $this->_settings['test_publish_key'] : $this->_settings['live_publish_key'];
+        $this->_stripe_secret = ( ! isset($this->_settings['test_mode']) || $this->_settings['test_mode'] === 'on' ) ? $this->_settings['test_secret_key'] : $this->_settings['live_secret_key'];
+        $this->_stripe_publish = ( ! isset($this->_settings['test_mode']) || $this->_settings['test_mode'] === 'on' ) ? $this->_settings['test_publish_key'] : $this->_settings['live_publish_key'];
 
         $this->_api_endpoint = 'https://api.stripe.com/v1';
         $this->init();
