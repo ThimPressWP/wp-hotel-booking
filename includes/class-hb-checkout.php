@@ -49,7 +49,7 @@ class HB_Checkout{
 
         // set transient for current customer in one hour
         set_transient( 'hb_current_customer_' . session_id(), $customer_id, HOUR_IN_SECONDS );
-        return $customer_id;
+        return $this->_customer = $customer_id;
     }
 
     /**
@@ -64,6 +64,10 @@ class HB_Checkout{
         $transaction_object = hb_generate_transaction_object( );
 
         if( ! $transaction_object ){
+            hb_send_json( array(
+                    'result'        => 'fail',
+                    'message'       => __( 'Your cart is empty', 'tp-hotel-booking' )
+                ) );
             throw new Exception( sprintf( __( 'Sorry, your session has expired. <a href="%s">Return to homepage</a>', 'tp-hotel-booking' ), home_url() ) );
         }
         // Insert or update the post data
@@ -152,7 +156,7 @@ class HB_Checkout{
 
         $customer_id = $this->create_customer();
         $this->payment_method = $payment_method;
-        if( $customer_id  ) {
+        if( $customer_id ) {
             $booking_id = $this->create_booking();
             if( $booking_id ) {
                 if (HB_Cart::instance()->needs_payment()) {

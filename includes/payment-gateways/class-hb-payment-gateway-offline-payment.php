@@ -253,6 +253,6 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
     }
 
     function form(){
-        echo _e( ' Pay on Arrival');
+        echo _e( ' Pay on Arrival', 'tp-hotel-booking' );
     }
 }

@@ -4,22 +4,50 @@
  * Class HB_Payment_Gateway_Stripe
  */
 class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
+
     /**
      * @var array
      */
     protected $_settings = array();
+
+    public $slug = 'stripe';
+
+    protected $_api_endpoint = '';
+
+    /**
+     * protected strip secret
+     */
+    protected $_stripe_secret = null;
+
+    /**
+     * protected strip secret
+     */
+    protected $_stripe_publish = null;
+
+    protected $_stripe = null;
 
     function __construct(){
         parent::__construct();
         $this->_title = __( 'Stripe', 'tp-hotel-booking' );
         $this->_description = __( 'Pay with credit card', 'tp-hotel-booking' );
         $this->_settings = HB_Settings::instance()->get('stripe');
+
+        $this->_stripe_secret = $this->_settings['test_mode'] === 'on' ? $this->_settings['test_secret_key'] : $this->_settings['live_secret_key'];
+        $this->_stripe_publish = $this->_settings['test_mode'] === 'on' ? $this->_settings['test_publish_key'] : $this->_settings['live_publish_key'];
+
+        $this->_api_endpoint = 'https://api.stripe.com/v1';
         $this->init();
     }
 
     function init(){
-        add_action( 'hb_payment_gateway_settings_stripe', array( $this, 'admin_settings' ) );
+        add_action( 'hb_payment_gateway_settings_' . $this->slug, array( $this, 'admin_settings' ) );
+        // add_action( 'hb_payment_gateway_settings_stripe', array( $this, 'admin_settings' ) );
         add_action( 'hb_payment_gateway_form_' . $this->slug, array( $this, 'form' ) );
+
+        if( ! class_exists( 'Stripe' ) )
+            require_once HB_PLUGIN_PATH . '/includes/libraries/stripe-php/init.php' ;
+
+        \Stripe\Stripe::setApiKey( $this->_stripe_secret );
     }
 
     function admin_settings( $gateway ){
@@ -31,11 +59,87 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
         return ! empty( $this->_settings['enable'] ) && $this->_settings['enable'] == 'on';
     }
 
-    function process_checkout( $customer_id = null ){
-        return array(
-            'result'    => 'success',
-            'redirect'  => 'http://24h.com.vn'
-        );
+    function process_checkout( $booking_id = null, $customer_id = null )
+    {
+        $cart = HB_Cart::instance();
+        $book = HB_Booking::instance( $booking_id );
+
+        $customer_id = $this->add_customer( $booking_id, $customer_id );
+
+        $request = array(
+                'amount'        => (float)$cart->get_advance_payment() * 100,
+                'currency'      => hb_get_currency(),
+                'customer'      => $customer_id,
+                'description'   => sprintf(
+                    __( '%s - Order %s', 'tp-hotel-booking' ),
+                    esc_html( get_bloginfo( 'name' ) ),
+                    $book->get_booking_number()
+                )
+            );
+
+        $response = $this->stripe_request( $request );
+
+        if( $response->id )
+        {
+            $book->update_status( 'completed' );
+            HB_Cart::instance()->empty_cart();
+            $return = array(
+                'result'    => 'success',
+                'redirect'  => hb_get_return_url()
+            );
+        }
+        else
+        {
+            $return = array( 'result' => 'error', 'message' => __( 'Please try again', 'tp-hotel-booking' ) );
+        }
+
+        return $return;
+    }
+
+    public function add_customer( $booking_id = null, $customer = null ) {
+
+        $customer_id = get_post_meta( $customer, 'tp-hotel-booking-stripe-id', true );
+
+        if( $customer_id )
+        {
+            return $customer_id;
+        }
+        else
+        {
+            $response = \Stripe\Customer::create(array(
+                "description" => sprintf( "Customer for %s", get_post_meta($customer, '_hb_email', true) ),
+                "source" => $_POST['id'] // token get by stripe.js
+            ));
+            add_post_meta( $customer, 'tp-hotel-booking-stripe-id', $response->id );
+            return $response->id;
+        }
+    }
+
+    public function stripe_request( $request, $api = 'charges' ) {
+        $response = wp_remote_post( $this->_api_endpoint . '/' . $api, array(
+                'method'        => 'POST',
+                'headers' => array(
+                'Authorization' => 'Basic ' . base64_encode( $this->_stripe_secret . ':' )
+            ),
+            'body'          => $request,
+            'timeout'       => 70,
+            'sslverify'     => false,
+            'user-agent'    => 'Thim BoockTicket ' . HB_VERSION
+        ));
+        if ( is_wp_error($response) )
+            return new WP_Error( 'stripe_error', __('There was a problem connecting to the payment gateway.', 'tp-hotel-booking') );
+        if( empty($response['body']) )
+            return new WP_Error( 'stripe_error', __('Empty response.', 'tp-hotel-booking') );
+
+        $parsed_response = json_decode( $response['body'] );
+        // Handle response
+        if ( ! empty( $parsed_response->error ) ) {
+            return new WP_Error( 'stripe_error', $parsed_response->error->message );
+        } elseif ( empty( $parsed_response->id ) ) {
+            return new WP_Error( 'stripe_error', __('Invalid response.', 'tp-hotel-booking') );
+        }
+
+        return $parsed_response;
     }
 
     function form(){

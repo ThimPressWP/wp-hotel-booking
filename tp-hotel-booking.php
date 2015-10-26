@@ -117,6 +117,7 @@ class TP_Hotel_Booking{
         $this->_include( 'includes/class-hb-booking.php' );
         $this->_include( 'includes/payment-gateways/class-hb-payment-gateway-base.php' );
         $this->_include( 'includes/payment-gateways/class-hb-payment-gateway-paypal.php' );
+        $this->_include( 'includes/payment-gateways/class-hb-payment-gateway-stripe.php' );
         $this->_include( 'includes/hb-webhooks.php' );
 
         if( ! class_exists( 'Aq_Resize' ) )
@@ -192,6 +193,7 @@ class TP_Hotel_Booking{
                         'camera.css'
                     )
             );
+
         wp_register_script( 'jquery-ui-datepicker', $this->plugin_url( 'includes/assets/js/jquery.ui.datepicker.min.js' ), array( 'jquery' ) );
         wp_register_style( 'jquery-ui-datepicker', $this->plugin_url( 'includes/assets/css/jquery.ui.datepicker.css' ) );
         wp_register_style( 'tp-hotel-booking-star', $this->plugin_url( 'includes/assets/css/star.css' ) );
@@ -202,6 +204,10 @@ class TP_Hotel_Booking{
         }else{
             wp_register_style( 'tp-hotel-booking', $this->plugin_url( 'includes/assets/css/hotel-booking.css' ) );
             wp_register_script( 'tp-hotel-booking', $this->plugin_url( 'includes/assets/js/hotel-booking.js' ), $dependencies );
+
+            // stripe assets
+            wp_register_script( 'tp-hotel-booking-stripe-js', $this->plugin_url( 'includes/assets/js/stripe.js' ), $dependencies );
+            wp_register_script( 'tp-hotel-booking-stripe-checkout-js', $this->plugin_url( 'includes/assets/js/checkout.js' ), $dependencies );
 
             wp_localize_script( 'tp-hotel-booking', 'hotel_booking_l18n', hb_l18n() );
 
@@ -235,6 +241,8 @@ class TP_Hotel_Booking{
             wp_enqueue_style( 'jquery-ui-datepicker' );
             wp_enqueue_style( 'tp-hotel-booking' );
             wp_enqueue_script( 'tp-hotel-booking' );
+            wp_enqueue_script( 'tp-hotel-booking-stripe-js' );
+            wp_enqueue_script( 'tp-hotel-booking-stripe-checkout-js' );
             // rooms slider widget
             foreach ($carouselJs as $key => $lib) {
                 wp_enqueue_script( 'tp-hotel-booking-'.$key, $this->plugin_url( 'includes/carousel/' . $lib ) );
@@ -309,5 +317,3 @@ class TP_Hotel_Booking{
 }
 
 $GLOBALS['tp_hotel_booking'] = TP_Hotel_Booking::instance();
-
-require_once __DIR__.'/test.php';
