@@ -59,9 +59,10 @@ class HB_Checkout{
      * @throws Exception
      */
     function create_booking(){
+        global $hb_settings;
         $customer_id = get_transient( 'hb_current_customer_' . session_id() );
 
-        $transaction_object = hb_generate_transaction_object( );
+        $transaction_object = hb_generate_transaction_object();
 
         if( ! $transaction_object ){
             hb_send_json( array(
@@ -114,6 +115,7 @@ class HB_Checkout{
         if( $booking_id ){
             $prices = array();
             delete_post_meta( $booking_id, '_hb_room_id' );
+            $tax = $hb_settings->get('tax');
             if( $rooms )
             {
                 foreach( $rooms as $room_options ){
@@ -121,17 +123,17 @@ class HB_Checkout{
                     // insert multiple meta value
                     for( $i = 0; $i < $num_of_rooms; $i ++ ) {
                         add_post_meta( $booking_id, '_hb_room_id', $room_options['id'] );
-
                         // create post save item of order
                         $booking->save_room( $room_options, $booking_id );
                     }
+                    // add_post_meta( $booking_id, '_hb_room_total', $room_options['sub_total'] );
                     $room = HB_Room::instance( $room_options['id'], $room_options);
                     $prices[ $room_options['id'] ] = $room_options['sub_total'];
 
                 }
             }
 
-            add_post_meta( $booking_id, '_hb_room_price', $prices );
+            // add_post_meta( $booking_id, '_hb_room_price', $prices );
             add_post_meta( $booking_id, '_hb_booking_params', $_SESSION['hb_cart'.HB_BLOG_ID]['products'] );
         }
         do_action( 'hb_new_booking', $booking_id );

@@ -891,6 +891,7 @@ function hb_meta_box_field_coupon_date( $value ){
 function hb_meta_box_field_booking_status( $value ){
     global $post;
     return get_post_status( $post->ID );
+    // return get_post_meta( $post->ID, '_hb_booking_status', true );
 }
 
 function hb_meta_box_field_coupon_used( $value ){
@@ -963,4 +964,65 @@ function hb_create_page( $slug, $option = '', $page_title = '', $page_content = 
     }
 
     return $page_id;
+}
+
+if ( ! function_exists( 'hb_get_rooms' ) )
+{
+    /**
+     * get all of post have post type hb_room
+     */
+    function hb_get_rooms()
+    {
+        $args = array(
+                'post_type'         => 'hb_room',
+                'posts_per_page'    => -1,
+                'order'             => 'ASC',
+                'orderby' => 'title'
+            );
+
+        return get_posts( $args );
+    }
+}
+
+add_filter( 'tp_hotel_booking_chart_sidebar_layout', 'hb_report_sidebar_layout', 10, 3 );
+
+if ( ! function_exists( 'hb_report_sidebar_layout' ) )
+{
+    function hb_report_sidebar_layout( $file, $tab, $range )
+    {
+        return HB_PLUGIN_PATH . '/includes/admin/views/reports/sidebar.php';
+    }
+}
+
+add_filter( 'tp_hotel_booking_chart_layout_canvas', 'hb_report_layout_canvas', 10, 3  );
+if( ! function_exists( 'hb_report_layout_canvas' ) )
+{
+    function hb_report_layout_canvas( $file, $tab, $range )
+    {
+        return HB_PLUGIN_PATH . '/includes/admin/views/reports/canvas.php';
+    }
+}
+add_action( 'save_post', 'hb_update_meta_box_booking_status' );
+if ( ! function_exists( 'hb_update_meta_box_booking_status' ) )
+{
+    /**
+     * update status booking
+     */
+    function hb_update_meta_box_booking_status( $post )
+    {
+        if( get_post_type() !== 'hb_booking' )
+            return;
+
+        if( ! isset($_POST['_hb_booking_status']) && ! $_POST['_hb_booking_status'] )
+            return;
+
+        $status = $_POST['_hb_booking_status'];
+
+        remove_action( 'save_post', 'hb_update_meta_box_booking_status' );
+
+        $book = HB_Booking::instance( $post );
+        $book->update_status( $_POST['_hb_booking_status'] );
+
+        add_action( 'save_post', 'hb_update_meta_box_booking_status' );
+    }
 }

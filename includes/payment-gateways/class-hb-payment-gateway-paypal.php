@@ -239,6 +239,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
             }
 
         } else {
+
         }
     }
 

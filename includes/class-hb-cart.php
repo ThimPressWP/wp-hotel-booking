@@ -551,7 +551,7 @@ function hb_create_booking( $args = array() ){
 
     TP_Hotel_Booking::instance()->_include( 'includes/class-hb-room.php' );
 
-    $transaction_object = hb_generate_transaction_object( $args['customer_id'] );
+    $transaction_object = hb_generate_transaction_object(); // hb_generate_transaction_object( $args['customer_id'] );
 
     $tax                    = $transaction_object->tax;
     $price_including_tax    = $transaction_object->price_including_tax;

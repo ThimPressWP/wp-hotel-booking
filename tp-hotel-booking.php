@@ -1,11 +1,11 @@
 <?php
 /*
-Plugin Name: TP Hotel Booking
-Plugin URI: http://thimpress.com/learnpress
-Description: [Description here]
-Author: ThimPress
-Version: 0.9
-Author URI: http://thimpress.com
+    Plugin Name: TP Hotel Booking
+    Plugin URI: http://thimpress.com/learnpress
+    Description: [Description here]
+    Author: ThimPress
+    Version: 0.9
+    Author URI: http://thimpress.com
 */
 
 define( 'HB_FILE', __FILE__ );
@@ -98,6 +98,7 @@ class TP_Hotel_Booking{
             $this->_include( 'includes/class-hb-meta-box.php' );
             $this->_include( 'includes/admin/hb-admin-functions.php' );
             $this->_include( 'includes/admin/class-hb-admin-settings-hook.php' );
+            $this->_include( 'includes/class-hb-report.php' );
         }
         $this->_include( 'includes/class-hb-comments.php' );
         $this->_include( 'includes/hb-template-hooks.php' );
