@@ -518,7 +518,6 @@ function hb_dropdown_numbers( $args = array() ){
             'max'       => 100,
             'selected'  => 0,
             'name'      => '',
-            'id'        => '',
             'class'     => '',
             'echo'      => true,
             'show_option_none'  => '',
