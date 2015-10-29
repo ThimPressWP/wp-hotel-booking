@@ -49,27 +49,27 @@ class HB_Report
 			break;
 
 			case 'year' :
-				$this->_start_in    = strtotime( date( 'Y-01-01', current_time('timestamp') ) );
-				$this->_end_in      = strtotime( 'midnight', current_time( 'timestamp' ) );
+				$this->_start_in    = date( 'Y-01-01', current_time('timestamp') );
+				$this->_end_in      = current_time( 'mysql' );
 				$this->chart_groupby = 'month';
 			break;
 
 			case 'last_month' :
 				$first_day_current_month = strtotime( date( 'Y-m-01', current_time( 'timestamp' ) ) );
-				$this->_start_in        = strtotime( date( 'Y-m-01', strtotime( '-1 DAY', $first_day_current_month ) ) );
-				$this->_end_in          = strtotime( date( 'Y-m-t', strtotime( '-1 DAY', $first_day_current_month ) ) );
+				$this->_start_in        = date( 'Y-m-01', strtotime( '-1 DAY', $first_day_current_month ) );
+				$this->_end_in          = date( 'Y-m-t', strtotime( '-1 DAY', $first_day_current_month ) );
 				$this->chart_groupby     = 'day';
 			break;
 
 			case 'current_month' :
-				$this->_start_in    = strtotime( date( 'Y-m-01', current_time('timestamp') ) );
-				$this->_end_in      = strtotime( 'midnight', current_time( 'timestamp' ) );
+				$this->_start_in    = date( 'Y-m-01', current_time('timestamp') );
+				$this->_end_in      = current_time( 'mysql' );
 				$this->chart_groupby = 'day';
 			break;
 
 			case '7day' :
-				$this->_start_in    = strtotime( '-6 days', current_time( 'timestamp' ) );
-				$this->_end_in      = strtotime( 'midnight', current_time( 'timestamp' ) );
+				$this->_start_in    = date( 'Y-m-d', strtotime( '-6 days', current_time( 'timestamp' ) ) );
+				$this->_end_in      = date( 'Y-m-d', strtotime( 'midnight', current_time( 'timestamp' ) ) );
 				$this->chart_groupby = 'day';
 			break;
 		}
@@ -84,21 +84,38 @@ class HB_Report
 	{
 		global $wpdb;
 
+		/**
+		 * pll is completed date
+		 * ptt is total of booking
+		 */
 		$query = $wpdb->prepare("
 				(
-					SELECT p.ID,
-					pm.meta_value AS completed_time
+					SELECT SUM(ptt.meta_value) AS total FROM `$wpdb->posts` pb
+					INNER JOIN `$wpdb->postmeta` AS pbl ON pb.ID = pbl.post_id AND pbl.meta_key = %s
+					INNER JOIN `$wpdb->postmeta` AS ptt ON pb.ID = ptt.post_id AND ptt.meta_key = %s
+					WHERE pb.post_type = %s
+					AND pbl.meta_value >= %s AND pbl.meta_value <= %s
+					AND DATE(pbl.meta_value) = DATE(completed_time)
+				)
+				", '_hb_booking_payment_completed', '_hb_total', 'hb_booking', $this->_start_in, $this->_end_in
+			);
+
+		$query = $wpdb->prepare("
+				(
+					SELECT pm.meta_value AS completed_time,
+					{$query} AS total
 					FROM `$wpdb->posts` AS p
 					INNER JOIN `$wpdb->postmeta` AS pm ON p.ID = pm.post_id AND pm.meta_key = %s
 					WHERE p.post_type = %s
 					AND p.post_status = %s
-					HAVING ( completed_time >= %d AND completed_time <= %d )
+					AND pm.meta_value >= %s AND pm.meta_value <= %s
+					GROUP BY completed_time
 				)
 				", '_hb_booking_payment_completed', 'hb_booking', 'hb-completed',
 				$this->_start_in, $this->_end_in
 			);
 
-		return $results = $wpdb->get_results( $query );
+		return $wpdb->get_results( $query );
 	}
 
 	public function get_room_availability()

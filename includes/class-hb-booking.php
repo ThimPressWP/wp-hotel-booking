@@ -214,7 +214,7 @@ class HB_Booking{
                     $payment_complete_date = get_post_meta( $this->post->ID, '_hb_booking_payment_completed', true  );
                     if( ! $payment_complete_date )
                     {
-                        add_post_meta( $this->post->ID, '_hb_booking_payment_completed', current_time( 'timestamp' ) );
+                        add_post_meta( $this->post->ID, '_hb_booking_payment_completed', current_time( 'mysql' ) );
                     }
                     break;
 

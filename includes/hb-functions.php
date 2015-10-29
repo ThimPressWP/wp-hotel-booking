@@ -538,7 +538,7 @@ function hb_dropdown_numbers( $args = array() ){
     extract( $args );
 
     $id = ! empty( $id ) ? $id : '' ;
-    $output = '<select name="' . $name . '" id="' . $id . '"' . ( $class ? ' class="' . $class . '"' : '' ) . '>';
+    $output = '<select name="' . $name . '" '.( $id ? 'id="' . $id . '"' : '' ).'' . ( $class ? ' class="' . $class . '"' : '' ) . '>';
     if( $show_option_none ) {
         $output .= '<option value="' . $option_none_value . '">' . $show_option_none . '</option>';
     }

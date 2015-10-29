@@ -64,12 +64,12 @@ $items = isset($atts['number']) ? (int)$atts['number'] : 4;
                 pauseOnHover: true,
                 onCreate: function()
                 {
-
+                    return true;
                 },
-                swipe: {
-                    onTouch: true,
-                    onMouse: true
-                },
+                // swipe: {
+                //     onTouch: true,
+                //     onMouse: true
+                // },
                 scroll : {
                     items           : 1,
                     easing          : "swing",
