@@ -6,7 +6,7 @@
 				'title'		=> __( 'Price', 'tp-hotel-booking' ),
 			),
 		array(
-				'id'		=> 'date',
+				'id'		=> 'room',
 				'title'		=> __( 'Room availability', 'tp-hotel-booking' ),
 			)
 	));

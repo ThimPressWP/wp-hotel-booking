@@ -2,42 +2,62 @@
 	$hb_report = HB_Report::instance();
 ?>
 <div id="tp-hotel-booking-chart-container">
-	<?php
-		$books = array();
-		$orders = $hb_report->getOrdersItems();
-		var_dump($orders); die();
-		foreach ( $orders as $key => $book) {
-			$book = HB_Booking::instance($book->ID);
-			// date( 'N', (int)$book->completed_time );
-			$books[] = array(
-					'ID'			=> $book->post->ID,
-					'total' 		=> get_post_meta( $book->post->ID, '_hb_total', true ),
-					'completed_time'=> (int)$book->completed_time,
-					'cutomer_id'	=> get_post_meta( $book->post->ID, '_hb_customer_id', true )
-				);
-		}
-	?>
-	<canvas id="tp-hotel-booking-canvas-chart"></canvas>
+	<div id="tp-hotel-booking-canvas-chart"></div>
 </div>
-<script type="text/javascript">
-	window.onload = function ()
-    {
-        var data = [4,8,6,3,5,2,6,8,4,5,7,8];
 
-        var bar = new RGraph.Bar({
-            id: 'cvs',
-            data: data,
-            options: {
-                backgroundGridAutofitNumvlines: 0,
-                linewidth: 0,
-                shadow: false,
-                hmargin: 10,
-                colors: ['Gradient(pink:red:#f33)', 'Gradient(green:#0f0)'],
-                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-                clearto: 'white',
-                variant: '3d',
-                gutterBottom: 90
-            }
-        }).wave({frames: 60});
-    };
+<script type="text/javascript" src="http://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+<script type="text/javascript">
+	(function($){
+		window.onload = function () {
+
+			//Better to construct options first and then pass it as a parameter
+			var options = {
+				theme: "theme4",
+				title: {
+					text: "<?php printf( 'Chart in %s to %s', $hb_report->_start_in, $hb_report->_end_in ) ?>",
+					padding: 5,
+					margin: 10,
+					fontSize: 30,
+					fontFamily: "tahoma",
+					fontWeight: "normal",
+					verticalAlign: "bottom",
+        			horizontalAlign: "center",
+				},
+		      	toolTip:{
+			        enabled: true,       //disable here
+			        animationEnabled: true, //disable here
+		      	},
+                animationEnabled: true,
+				axisY:{
+					valueFormatString:"$#",
+					interval: 100,
+					lineColor: '#006400',
+					gridThickness: 1,
+					gridDashType: "dot",
+					labelAngle: 45,
+					labelFontFamily: "tahoma",
+					labelFontColor: "#e74c3c",
+				},
+				axisX: {
+					interval: 1,
+					intervalType: "<?php echo esc_js($hb_report->chart_groupby) ?>",
+					includeZero: false,
+					lineColor: '#006400',
+					labelFontFamily: "tahoma",
+					labelFontColor: "#e74c3c",
+				},
+				data: [
+				{
+					type: "spline", //change it to line, area, bar, pie, etc
+					lineThickness: 3,
+					color: "#e74c3c",
+					dataPoints: <?php echo json_encode( $hb_report->getOrdersItems() ) ?>
+				}
+				]
+			};
+
+			$("#tp-hotel-booking-canvas-chart").CanvasJSChart(options);
+
+		}
+	})(jQuery);
 </script>
