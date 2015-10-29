@@ -1,63 +1,71 @@
 <?php
 	$hb_report = HB_Report::instance();
+	$params = $hb_report->getOrdersItems();
 ?>
 <div id="tp-hotel-booking-chart-container">
 	<div id="tp-hotel-booking-canvas-chart"></div>
 </div>
 
-<script type="text/javascript" src="http://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+<script src="http://dev.foobla.com/sailing/wp-content/plugins/tp-hotel-booking/includes/admin/views/reports/highcharts.js"></script>
 <script type="text/javascript">
 	(function($){
-		window.onload = function () {
+		$('#tp-hotel-booking-canvas-chart').highcharts({
+	            chart: {
+	                zoomType: 'x'
+	            },
+	            title: {
+	                text: "<?php echo esc_js( $hb_report->_title ) ?>"
+	            },
+	            subtitle: {
+	                text: document.ontouchstart === undefined ?
+	                        "<?php _e('Click and drag in the plot area to zoom in', 'tp-hotel-booking') ?>" : "<?php _e('Pinch the chart to zoom in', 'tp-hotel-booking') ?>"
+	            },
+	            xAxis: {
+	                type: 'datetime',
+		            minTickInterval: 3600*24*1000,//time in milliseconds
+				    minRange: 3600*24*1000,
+				    ordinal: false //this sets the fixed time formats
+	            },
+	            yAxis: {
+	                title: {
+	                    text: '<?php echo esc_js( ucfirst($hb_report->_chart_type) ) ?>'
+	                }
+	            },
+	            legend: {
+	                enabled: false
+	            },
+	            tooltip: {
+		            headerFormat: '<b>{point.x:%e. %b}</b><br>',
+		            pointFormat: '<b><?php _e( "Total", "tp-hotel-booking" ) ?>:</b> ${point.y:.2f}'
+		        },
+	            plotOptions: {
+	                area: {
+	                    fillColor: {
+	                        linearGradient: {
+	                            x1: 0,
+	                            y1: 0,
+	                            x2: 0,
+	                            y2: 1
+	                        },
+	                        stops: [
+	                            [0, Highcharts.getOptions().colors[0]],
+	                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+	                        ]
+	                    },
+	                    marker: {
+	                        radius: 2
+	                    },
+	                    lineWidth: 1,
+	                    states: {
+	                        hover: {
+	                            lineWidth: 1
+	                        }
+	                    },
+	                    threshold: null
+	                }
+	            },
 
-			//Better to construct options first and then pass it as a parameter
-			var options = {
-				theme: "theme4",
-				title: {
-					text: "<?php printf( 'Chart in %s to %s', $hb_report->_start_in, $hb_report->_end_in ) ?>",
-					padding: 5,
-					margin: 10,
-					fontSize: 30,
-					fontFamily: "tahoma",
-					fontWeight: "normal",
-					verticalAlign: "bottom",
-        			horizontalAlign: "center",
-				},
-		      	toolTip:{
-			        enabled: true,       //disable here
-			        animationEnabled: true, //disable here
-		      	},
-                animationEnabled: true,
-				axisY:{
-					valueFormatString:"$#",
-					interval: 100,
-					lineColor: '#006400',
-					gridThickness: 1,
-					gridDashType: "dot",
-					labelAngle: 45,
-					labelFontFamily: "tahoma",
-					labelFontColor: "#e74c3c",
-				},
-				axisX: {
-					interval: 1,
-					intervalType: "<?php echo esc_js($hb_report->chart_groupby) ?>",
-					includeZero: false,
-					lineColor: '#006400',
-					labelFontFamily: "tahoma",
-					labelFontColor: "#e74c3c",
-				},
-				data: [
-				{
-					type: "spline", //change it to line, area, bar, pie, etc
-					lineThickness: 3,
-					color: "#e74c3c",
-					dataPoints: <?php echo json_encode( $hb_report->getOrdersItems() ) ?>
-				}
-				]
-			};
-
-			$("#tp-hotel-booking-canvas-chart").CanvasJSChart(options);
-
-		}
+	            series: <?php echo json_encode( $hb_report->series() ) ?>
+	        });
 	})(jQuery);
 </script>

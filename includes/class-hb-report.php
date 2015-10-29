@@ -5,6 +5,7 @@
  */
 class HB_Report
 {
+	public $_title;
 
 	public $_chart_type = 'price';
 
@@ -18,6 +19,9 @@ class HB_Report
 
 	public $_axis_y = array();
 
+	public $_day_start;
+	public $_day_end;
+
 	static $_instance = array();
 
 	public function __construct( $range = null )
@@ -28,6 +32,8 @@ class HB_Report
 			$this->_chart_type = sanitize_text_field( $_GET['tab'] );
 
 		$this->calculate_current_range( $range );
+
+		$this->_title = sprintf( 'Chart in %s to %s', $this->_start_in, $this->_end_in );
 	}
 
 	public function calculate_current_range( $current_range )
@@ -80,11 +86,11 @@ class HB_Report
 				$this->_start_in    = date( 'Y-m-d', strtotime( '-6 days', current_time( 'timestamp' ) ) );
 				$this->_end_in      = date( 'Y-m-d', strtotime( 'midnight', current_time( 'timestamp' ) ) );
 				$this->chart_groupby = 'day';
-				$this->_axis_x = array( 'startValue' => (int)( date('d', strtotime($this->_start_in)) ), 'endValue' => (int)( date('d', strtotime($this->_end_in)) ) );
-				// $this->_axis_y = array( 'startValue' => , 'endValue' => );
 			break;
 		}
 
+		$this->_day_start = date( 'z', strtotime($this->_start_in) );
+		$this->_day_end = date( 'z', strtotime($this->_end_in) );
 	}
 
 	/**
@@ -136,6 +142,19 @@ class HB_Report
 		return $this->parseData( $wpdb->get_results( $query ) );
 	}
 
+	public function series()
+	{
+		$default = new stdClass;
+		$default->name = '';
+		$default->type = 'area';
+		$default->data = $this->getOrdersItems();
+		$default->pointInterval = 24 * 3600 * 1000;
+
+		return apply_filters( 'tp_hotel_booking_charts', array(
+				$default
+			));
+	}
+
 	public function get_room_availability()
 	{
 
@@ -145,15 +164,49 @@ class HB_Report
 	{
 
 		$data = array();
+		// $totals = false;
+		$excerpts = array();
+		$year = false;
+		// $month = false;
+
 		foreach ( $results as $key => $item) {
-			$data[] = array(
-					'x' =>  (int)date('d', strtotime($item->completed_time)),
-					'y'	=> (int)$item->total,
-					'value'	=> $item->total,
-					'label' => date( 'F j, Y', strtotime($item->completed_time) )
+
+			if( $year === false )
+			{
+				// $day = (int)date( 'd', strtotime($item->completed_time) );
+				// $month = (int)date( 'm', strtotime($item->completed_time) );
+				$year = (int)date( 'Y', strtotime($item->completed_time) );
+				// $totals = cal_days_in_month( CAL_GREGORIAN, $month, $year );
+			}
+
+			$excerpts[ (int)date("z", strtotime($item->completed_time)) ] = $item->completed_time;
+
+			$data[strtotime($item->completed_time)] = array(
+					strtotime( date('Y-m-d', strtotime($item->completed_time)) ) * 1000,
+					(float)$item->total
 				);
 		}
-		return $data;
+
+		$range = $this->_day_end - $this->_day_start;
+
+		for( $i = 1; $i < $range; $i++ )
+		{
+			$day = $this->_day_start + $i - 1;
+			if( ! array_key_exists( $day, $excerpts) )
+			{
+				$data[] = array(
+					(float)strtotime( date('Y-m-d', strtotime( $this->_start_in ) + 24 * 60 * 60 * $i ) ) * 1000,
+					0
+				);
+			}
+		}
+
+		sort($data);
+		$results = array();
+		foreach ($data as $key => $da) {
+			$results[] = $da;
+		}
+		return $results;
 	}
 
 	static function instance( $range = null )

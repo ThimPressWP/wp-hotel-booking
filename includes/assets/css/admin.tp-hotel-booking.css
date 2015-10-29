@@ -416,7 +416,7 @@ th.column-room_type{
     width: 100%;
 }
 #tp-hotel-booking-report-main #chart-sidebar{
-    width: 15%;
+    width: 10%;
     float: left;
 }
 #tp-hotel-booking-report-main #chart-sidebar .chart-legend{
@@ -452,7 +452,7 @@ th.column-room_type{
     font-family: sans-serif;
 }
 #tp-hotel-booking-chart-content{
-    width: 83%;
+    width: 88%;
     float: left;
     margin-left: 10px;
 }
