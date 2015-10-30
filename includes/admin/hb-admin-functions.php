@@ -999,7 +999,7 @@ if( ! function_exists( 'hb_report_layout_canvas' ) )
 {
     function hb_report_layout_canvas( $file, $tab, $range )
     {
-        return HB_PLUGIN_PATH . '/includes/admin/views/reports/canvas.php';
+        return HB_PLUGIN_PATH . '/includes/admin/views/reports/canvas_'.strtolower($tab).'.php';
     }
 }
 add_action( 'save_post', 'hb_update_meta_box_booking_status' );

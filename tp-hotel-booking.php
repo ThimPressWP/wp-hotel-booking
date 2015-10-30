@@ -99,6 +99,8 @@ class TP_Hotel_Booking{
             $this->_include( 'includes/admin/hb-admin-functions.php' );
             $this->_include( 'includes/admin/class-hb-admin-settings-hook.php' );
             $this->_include( 'includes/class-hb-report.php' );
+            $this->_include( 'includes/class-hb-report-price.php' );
+            $this->_include( 'includes/class-hb-report-room.php' );
         }
         $this->_include( 'includes/class-hb-comments.php' );
         $this->_include( 'includes/hb-template-hooks.php' );
