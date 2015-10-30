@@ -71,6 +71,17 @@
 						</a>
 					</li>
 				<?php endforeach; ?>
+				<li>
+					<form method="GET">
+						<?php wp_nonce_field( 'tp-hotel-booking-report', 'tp-hotel-booking-report' ); ?>
+						<input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
+						<input type="hidden" name="tab" value="<?php echo isset($_REQUEST['tab']) ? $_REQUEST['tab'] : 'price' ?>" />
+						<input type="hidden" name="range" value="custom" />
+						<input type="text" id="tp-hotel-report-checkin" name="report_in" value="<?php echo isset( $_REQUEST['report_in'] ) ? esc_attr($_REQUEST['report_in'] ) : ''; ?>" />
+						<input type="text" id="tp-hotel-report-checkout" name="report_out" value="<?php echo isset( $_REQUEST['report_out'] ) ? esc_attr($_REQUEST['report_out'] ) : ''; ?>" />
+						<button type="submit"><?php _e( 'Go', 'tp-hotel-booking' ) ?></button>
+					</form>
+				</li>
 			</ul>
 		</h3>
 
@@ -88,3 +99,22 @@
 	</div>
 
 </div>
+
+<script type="text/javascript">
+	(function($){
+		$.datepicker.setDefaults({ dateFormat: 'yyy/mm/dd'});
+        $('#tp-hotel-report-checkin').datepicker({
+            onSelect: function(){
+                var date = jQuery(this).datepicker('getDate');
+
+                $("#tp-hotel-report-checkout").datepicker("option","minDate", date)
+            }
+        });
+        $('#tp-hotel-report-checkout').datepicker({
+            onSelect: function(){
+                var date = jQuery(this).datepicker('getDate');
+                $("#tp-hotel-report-checkin").datepicker("option","maxDate", date)
+            }
+        });
+	})(jQuery);
+</script>
