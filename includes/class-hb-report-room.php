@@ -48,25 +48,57 @@ class HB_Report_Room extends HB_Report
 	public function getOrdersItems()
 	{
 		global $wpdb;
-		$query = $wpdb->prepare("
-				(
-		            SELECT count(booking_item.ID)
-		            FROM {$wpdb->posts} booking_item
-		            INNER JOIN {$wpdb->postmeta} bi ON bi.post_id = booking_item.ID AND bi.meta_key = %s
-		            INNER JOIN {$wpdb->postmeta} bo ON bo.post_id = booking_item.ID AND bo.meta_key = %s
-		            WHERE
-		                booking_item.post_type = %s
-		                AND bm.meta_value = rooms.ID
-		                AND (bi.meta_value <= %d AND bo.meta_value >= %d)
-		                OR (bi.meta_value >= %d AND bi.meta_value <= %d)
-		                OR (bo.meta_value > %d AND bo.meta_value <= %d)
-		        )
-		    ", '_hb_check_in_date', '_hb_check_out_date', 'hb_booking_item',
-		        strtotime($this->_start_in), strtotime($this->_end_in),
-		        strtotime($this->_start_in), strtotime($this->_end_in),
-		        strtotime($this->_start_in), strtotime($this->_end_in)
-			);
 
+		/**
+	     * Count available rooms
+	     */
+	    $query_count_available = $wpdb->prepare("
+	        (
+	            SELECT ra.meta_value
+	            FROM {$wpdb->postmeta} ra
+	            INNER JOIN {$wpdb->posts} r ON ra.post_id = r.ID AND ra.meta_key = %s
+	                WHERE r.ID=rooms.ID
+	        )
+	    ", '_hb_num_of_rooms');
+
+	    /**
+	     * Count booked rooms
+	     */
+	    $query_count_not_available = $wpdb->prepare("
+	        (
+	            SELECT count(booking.ID)
+	            FROM {$wpdb->posts} booking
+	            INNER JOIN {$wpdb->postmeta} bm ON bm.post_id = booking.ID AND bm.meta_key = %s
+	            INNER JOIN {$wpdb->postmeta} bi ON bi.post_id = booking.ID AND bi.meta_key = %s
+	            INNER JOIN {$wpdb->postmeta} bo ON bo.post_id = booking.ID AND bo.meta_key = %s
+	            WHERE
+	                booking.post_type = %s
+	                AND bm.meta_value = rooms.ID
+	                AND (DATE(from_unixtime(bi.meta_value)) <= %s AND DATE(from_unixtime(bo.meta_value)) >= %s)
+	                OR (DATE(from_unixtime(bi.meta_value)) >= %s AND DATE(from_unixtime(bi.meta_value)) <= %s)
+	                OR (DATE(from_unixtime(bo.meta_value)) > %s AND DATE(from_unixtime(bo.meta_value)) <= %s)
+	        )
+	    ", '_hb_id', '_hb_check_in_date', '_hb_check_out_date', 'hb_booking_item',
+	        $this->_start_in, $this->_end_in,
+	        $this->_start_in, $this->_end_in,
+	        $this->_start_in, $this->_end_in
+	    );
+
+	    /**
+	     * results
+	     */
+	    $query = $wpdb->prepare("
+	        SELECT rooms.ID as ID,
+	        rooms.post_title as title,
+	        {$query_count_available} as total,
+	        {$query_count_not_available} as unavailable,
+	        {$query_count_available} - {$query_count_not_available} as available
+	        FROM {$wpdb->posts} rooms
+	        WHERE
+	          	rooms.post_type = %s
+	          	AND rooms.post_status = %s
+	    ", 'hb_room', 'publish' );
+// echo $query;
 		return $this->parseData( $wpdb->get_results( $query ) );
 	}
 
@@ -85,6 +117,8 @@ class HB_Report_Room extends HB_Report
 
 	public function parseData( $results )
 	{
+		return;
+		// var_dump($results);die();
 		$data = array();
 		$excerpts = array();
 

@@ -1,11 +1,11 @@
 <?php
-	$hb_report = HB_Report::instance();
+	$hb_report_room = HB_Report_Room::instance();
+	$hb_report_room->getOrdersItems();
 ?>
 <div id="tp-hotel-booking-chart-container">
 	<div id="tp-hotel-booking-canvas-chart"></div>
 </div>
 
-<script src="http://dev.foobla.com/sailing/wp-content/plugins/tp-hotel-booking/includes/admin/views/reports/highcharts.js"></script>
 <script type="text/javascript">
 	(function($){
 		$('#tp-hotel-booking-canvas-chart').highcharts({
@@ -13,7 +13,7 @@
 	                zoomType: 'x'
 	            },
 	            title: {
-	                text: "<?php echo esc_js( $hb_report->_title ) ?>"
+	                text: "<?php echo esc_js( $hb_report_room->_title ) ?>"
 	            },
 	            subtitle: {
 	                text: document.ontouchstart === undefined ?
@@ -21,13 +21,10 @@
 	            },
 	            xAxis: {
 	                type: 'datetime',
-		            minTickInterval: 3600*24*1000,//time in milliseconds
-				    minRange: 3600*24*1000,
-				    ordinal: false //this sets the fixed time formats
 	            },
 	            yAxis: {
 	                title: {
-	                    text: '<?php echo esc_js( ucfirst($hb_report->_chart_type) ) ?>'
+	                    text: '<?php echo esc_js( ucfirst($hb_report_room->_chart_type) ) ?>'
 	                }
 	            },
 	            legend: {
@@ -64,7 +61,7 @@
 	                }
 	            },
 
-	            series: <?php echo json_encode( $hb_report->series() ) ?>
+	            series: <?php echo json_encode( $hb_report_room->series() ) ?>
 	        });
 	})(jQuery);
 </script>

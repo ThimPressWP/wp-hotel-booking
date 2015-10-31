@@ -3,7 +3,7 @@
 	$report_tabs = apply_filters( 'tp_hotel_booking_report_tab', array(
 		array(
 				'id'		=> 'price',
-				'title'		=> __( 'Price', 'tp-hotel-booking' ),
+				'title'		=> __( 'Booking Price', 'tp-hotel-booking' ),
 			),
 		array(
 				'id'		=> 'room',

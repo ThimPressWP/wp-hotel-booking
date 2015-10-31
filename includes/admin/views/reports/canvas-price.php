@@ -5,7 +5,6 @@
 	<div id="tp-hotel-booking-canvas-chart"></div>
 </div>
 
-<script src="http://dev.foobla.com/sailing/wp-content/plugins/tp-hotel-booking/includes/admin/views/reports/highcharts.js"></script>
 <script type="text/javascript">
 	(function($){
 		var options = {

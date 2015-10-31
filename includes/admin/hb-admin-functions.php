@@ -990,6 +990,17 @@ if ( ! function_exists( 'hb_report_sidebar_layout' ) )
 {
     function hb_report_sidebar_layout( $file, $tab, $range )
     {
+        $tab_range = HB_PLUGIN_PATH . '/includes/admin/views/reports/sidebar-'.$tab.'-'.$range.'.php';
+        $tab = HB_PLUGIN_PATH . '/includes/admin/views/reports/sidebar-'.$tab.'.php';
+        if( file_exists( $tab_range ) )
+        {
+            return $tab_range;
+        }
+        else if( file_exists($tab) )
+        {
+            return $tab;
+        }
+
         return HB_PLUGIN_PATH . '/includes/admin/views/reports/sidebar.php';
     }
 }
@@ -999,7 +1010,9 @@ if( ! function_exists( 'hb_report_layout_canvas' ) )
 {
     function hb_report_layout_canvas( $file, $tab, $range )
     {
-        return HB_PLUGIN_PATH . '/includes/admin/views/reports/canvas_'.strtolower($tab).'.php';
+        $file = HB_PLUGIN_PATH . '/includes/admin/views/reports/canvas-'.strtolower($tab).'.php';
+        if( file_exists($file) )
+            return $file;
     }
 }
 add_action( 'save_post', 'hb_update_meta_box_booking_status' );

@@ -907,12 +907,6 @@ function hb_search_rooms( $args = array() ){
                     'check_out_date'    => $args['check_out_date'],
                     'quantity'          => 1
                 ) );
-            // $room->set_data(
-            //     array(
-            //         'check_in_date' => $args['check_in_date'],
-            //         'check_out_date' => $args['check_out_date']
-            //     )
-            // )->get_booking_room_details();
             $results[ $k ] = $room;
         }
     }

@@ -15,10 +15,6 @@ abstract class HB_Report
 
 	public $chart_groupby;
 
-	public $_axis_x = array();
-
-	public $_axis_y = array();
-
 	public $_range_start;
 	public $_range_end;
 

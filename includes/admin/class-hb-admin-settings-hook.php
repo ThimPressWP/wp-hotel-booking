@@ -60,7 +60,7 @@ class HB_Admin_Settings_Hook extends HB_Settings {
 		if( ! $tab || ! $range )
 			return;
 
-		$file = apply_filters( "tp_hotel_booking_chart_{$tab}_{$range}", '', $tab, $range );
+		$file = apply_filters( "tp_hotel_booking_chart_sidebar_{$tab}_{$range}", '', $tab, $range );
 
 		if( ! $file || ! file_exists( $file ) )
 			$file = apply_filters( "tp_hotel_booking_chart_sidebar_layout", '', $tab, $range );
