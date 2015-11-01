@@ -466,4 +466,10 @@ th.column-room_type{
     min-height: 500px;
     height: auto;
 }
+#chart-sidebar div.Tokenize{
+    width: 100%;
+}
+#chart-sidebar div.Tokenize ul.TokensContainer{
+    height: auto;
+}
 /*REPORT*/

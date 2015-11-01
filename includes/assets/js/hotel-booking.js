@@ -189,8 +189,12 @@
 
     function stripeSubmit( form )
     {
+        var pl_key = 'pk_test_HHukcwWCsD7qDFWKKpKdJeOT';
+        if( typeof TPBooking_Payment_Paypal )
+            pl_key = TPBooking_Payment_Paypal.stripe_publish;
+
         var handler = StripeCheckout.configure({
-            key: typeof TPBooking_Payment_Paypal ? TPBooking_Payment_Paypal.stripe_secret : 'pk_test_HHukcwWCsD7qDFWKKpKdJeOT',
+            key: pl_key,
             image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
             locale: 'auto',
             token: function(token) {

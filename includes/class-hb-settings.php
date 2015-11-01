@@ -261,7 +261,7 @@ $GLOBALS['hb_settings'] = HB_Settings::instance(
         'test_mode'             => 'on',
         'test_secret_key'       => 'sk_test_NRayUQ1DIth4X091iEH9qzaq',
         'test_publish_key'      => 'pk_test_HHukcwWCsD7qDFWKKpKdJeOT',
-        'live_secret_key'       => 'pk_test_HHukcwWCsD7qDFWKKpKdJeOT',
+        'live_secret_key'       => 'sk_live_zrGPtvqgV6cTaH1G4K2AIVCK ',
         'live_publish_key'      => 'pk_live_n5AVJxHj8XSFV4HsPIaiFgo3'
     )
 );

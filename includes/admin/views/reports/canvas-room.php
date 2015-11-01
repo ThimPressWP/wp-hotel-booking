@@ -1,6 +1,6 @@
 <?php
 	$hb_report_room = HB_Report_Room::instance();
-	$hb_report_room->getOrdersItems();
+	$hb_report_room->series();
 ?>
 <div id="tp-hotel-booking-chart-container">
 	<div id="tp-hotel-booking-canvas-chart"></div>
@@ -10,59 +10,67 @@
 	(function($){
 		$('#tp-hotel-booking-canvas-chart').highcharts({
 	            chart: {
-	                zoomType: 'x'
-	            },
+	            type: 'column'
+	        },
+	        title: {
+	            text: 'Stacked column chart'
+	        },
+	        xAxis: {
+	            type: 'datetime'
+	        },
+	        yAxis: {
+	            min: 0,
 	            title: {
-	                text: "<?php echo esc_js( $hb_report_room->_title ) ?>"
+	                text: 'Total fruit consumption'
 	            },
-	            subtitle: {
-	                text: document.ontouchstart === undefined ?
-	                        "<?php _e('Click and drag in the plot area to zoom in', 'tp-hotel-booking') ?>" : "<?php _e('Pinch the chart to zoom in', 'tp-hotel-booking') ?>"
-	            },
-	            xAxis: {
-	                type: 'datetime',
-	            },
-	            yAxis: {
-	                title: {
-	                    text: '<?php echo esc_js( ucfirst($hb_report_room->_chart_type) ) ?>'
+	            stackLabels: {
+	                enabled: true,
+	                style: {
+	                    fontWeight: 'bold',
+	                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
 	                }
-	            },
-	            legend: {
-	                enabled: false
-	            },
-	            tooltip: {
-		            headerFormat: '<b>{point.x:%e. %b}</b><br>',
-		            pointFormat: '<b><?php _e( "Total", "tp-hotel-booking" ) ?>:</b> ${point.y:.2f}'
-		        },
-	            plotOptions: {
-	                area: {
-	                    fillColor: {
-	                        linearGradient: {
-	                            x1: 0,
-	                            y1: 0,
-	                            x2: 0,
-	                            y2: 1
-	                        },
-	                        stops: [
-	                            [0, Highcharts.getOptions().colors[0]],
-	                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-	                        ]
-	                    },
-	                    marker: {
-	                        radius: 2
-	                    },
-	                    lineWidth: 1,
-	                    states: {
-	                        hover: {
-	                            lineWidth: 1
-	                        }
-	                    },
-	                    threshold: null
+	            }
+	        },
+	        legend: {
+	            align: 'right',
+	            x: -30,
+	            verticalAlign: 'top',
+	            y: 25,
+	            floating: true,
+	            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+	            borderColor: '#CCC',
+	            borderWidth: 1,
+	            shadow: false
+	        },
+	        tooltip: {
+	            formatter: function () {
+	                return '<b>' + this.x + '</b><br/>' +
+	                    this.series.name + ': ' + this.y + '<br/>' +
+	                    'Total: ' + this.point.stackTotal;
+	            }
+	        },
+	        plotOptions: {
+	            column: {
+	                stacking: 'normal',
+	                dataLabels: {
+	                    enabled: true,
+	                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+	                    style: {
+	                        textShadow: '0 0 3px black'
+	                    }
 	                }
-	            },
-
-	            series: <?php echo json_encode( $hb_report_room->series() ) ?>
-	        });
+	            }
+	        },
+	        series: [{
+	            name: 'John',
+	            data: [5, 3, 4, 7, 2]
+	        }, {
+	            name: 'Jane',
+	            data: [2, 2, 3, 2, 1]
+	        }, {
+	            name: 'Joe',
+	            data: [3, 4, 4, 2, 5]
+	        }]
+	    });
 	})(jQuery);
 </script>
-<?php //var_dump($hb_report->getOrdersItems()) ?>

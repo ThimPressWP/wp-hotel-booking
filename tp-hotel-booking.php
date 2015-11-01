@@ -205,10 +205,9 @@ class TP_Hotel_Booking{
             wp_register_script( 'tp-admin-hotel-booking', $this->plugin_url( 'includes/assets/js/admin.hotel-booking.js' ), $dependencies );
             wp_localize_script( 'tp-admin-hotel-booking', 'hotel_booking_l18n', hb_admin_l18n() );
             //report
-            wp_register_style( 'tp-admin-hotel-booking-tagit', $this->plugin_url( 'includes/assets/css/jquery.tagit.css' ) );
-            wp_register_style( 'tp-admin-hotel-booking-tagit-ui', $this->plugin_url( 'includes/assets/css/tagit.ui-zendesk.css' ) );
             wp_register_script( 'tp-admin-hotel-booking-highcharts', $this->plugin_url( 'includes/assets/js/highcharts.js' ) );
-            wp_register_script( 'tp-admin-hotel-booking-tag', $this->plugin_url( 'includes/assets/js/tag-it.min.js' ) );
+            wp_register_script( 'tp-admin-hotel-booking-tokenize-js', $this->plugin_url( 'includes/assets/js/jquery.tokenize.js' ) );
+            wp_register_style( 'tp-admin-hotel-booking-tokenize-css', $this->plugin_url( 'includes/assets/css/jquery.tokenize.css' ) );
         }else{
             wp_register_style( 'tp-hotel-booking', $this->plugin_url( 'includes/assets/css/hotel-booking.css' ) );
             wp_register_script( 'tp-hotel-booking', $this->plugin_url( 'includes/assets/js/hotel-booking.js' ), $dependencies );
@@ -247,10 +246,12 @@ class TP_Hotel_Booking{
             wp_enqueue_style( 'jquery-ui-datepicker' );
 
             // report
+            wp_enqueue_script( 'jquery' );
+            wp_enqueue_script( 'jquery-ui-core' );
+            wp_enqueue_script( 'jquery-ui-autocomplete' );
             wp_enqueue_script( 'tp-admin-hotel-booking-highcharts' );
-            wp_enqueue_script( 'tp-admin-hotel-booking-tag' );
-            wp_enqueue_style( 'tp-admin-hotel-booking-tagit' );
-            wp_enqueue_style( 'tp-admin-hotel-booking-tagit-ui' );
+            wp_enqueue_script( 'tp-admin-hotel-booking-tokenize-js' );
+            wp_enqueue_style( 'tp-admin-hotel-booking-tokenize-css' );
         }else{
             wp_enqueue_style( 'jquery-ui-datepicker' );
             wp_enqueue_style( 'tp-hotel-booking' );
