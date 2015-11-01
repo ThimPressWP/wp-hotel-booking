@@ -36,7 +36,7 @@ abstract class HB_Report
 		switch ( $current_range ) {
 
 			case 'custom':
-				if( ! wp_verify_nonce( $_GET['tp-hotel-booking-report'], 'tp-hotel-booking-report' ) )
+				if( isset($_GET['tp-hotel-booking-report']) && ! wp_verify_nonce( $_GET['tp-hotel-booking-report'], 'tp-hotel-booking-report' ) )
 					return;
 
 				if( isset( $_GET, $_GET['report_in'] ) && $_GET['report_in'] )

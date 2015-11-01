@@ -208,4 +208,4 @@ class HB_Report_Price extends HB_Report
 
 }
 
-$GLOBAL['hb_report_price'] = HB_Report_Price::instance();
+// $GLOBAL['hb_report_price'] = HB_Report_Price::instance();

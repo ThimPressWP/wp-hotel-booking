@@ -79,6 +79,11 @@
 						<input type="hidden" name="range" value="custom" />
 						<input type="text" id="tp-hotel-report-checkin" name="report_in" value="<?php echo isset( $_REQUEST['report_in'] ) ? esc_attr($_REQUEST['report_in'] ) : ''; ?>" />
 						<input type="text" id="tp-hotel-report-checkout" name="report_out" value="<?php echo isset( $_REQUEST['report_out'] ) ? esc_attr($_REQUEST['report_out'] ) : ''; ?>" />
+						<?php if( isset($_GET['room_id']) && $_GET['room_id'] ): ?>
+							<?php foreach( $_GET['room_id'] as $key => $room ): ?>
+								<input type="hidden" name="room_id[]" value="<?php echo esc_attr( $room ) ?>">
+							<?php endforeach; ?>
+						<?php endif; ?>
 						<button type="submit"><?php _e( 'Go', 'tp-hotel-booking' ) ?></button>
 					</form>
 				</li>

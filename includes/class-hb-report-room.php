@@ -9,6 +9,8 @@ class HB_Report_Room extends HB_Report
 
 	public $_chart_type = 'room';
 
+	public $_rooms = array();
+
 	public $_start_in;
 
 	public $_end_in;
@@ -35,9 +37,27 @@ class HB_Report_Room extends HB_Report
 		if( isset( $_GET['tab'] ) && $_GET['tab'] )
 			$this->_chart_type = sanitize_text_field( $_GET['tab'] );
 
+		if( isset( $_GET['room_id'] ) && $_GET['room_id'] )
+			$this->_rooms = $_GET['room_id'];
+
 		$this->calculate_current_range( $this->_range );
 
 		$this->_title = sprintf( 'Chart in %s to %s', $this->_start_in, $this->_end_in );
+	}
+
+	public function get_rooms()
+	{
+		global $wpdb;
+		$query = $wpdb->prepare( "
+				(
+					SELECT ID, post_title FROM {$wpdb->posts}
+					WHERE
+						`post_type` = %s
+						AND `post_status` = %s
+				)
+			", 'hb_room', 'publish' );
+
+		return $wpdb->get_results( $query );
 	}
 
 	/**
@@ -49,56 +69,39 @@ class HB_Report_Room extends HB_Report
 	{
 		global $wpdb;
 
-		/**
-	     * Count available rooms
-	     */
-	    $query_count_available = $wpdb->prepare("
-	        (
-	            SELECT ra.meta_value
-	            FROM {$wpdb->postmeta} ra
-	            INNER JOIN {$wpdb->posts} r ON ra.post_id = r.ID AND ra.meta_key = %s
-	                WHERE r.ID=rooms.ID
-	        )
-	    ", '_hb_num_of_rooms');
+		$total = $wpdb->prepare("
+		        (
+		            SELECT ra.meta_value
+		            FROM {$wpdb->postmeta} ra
+		            INNER JOIN {$wpdb->posts} r ON ra.post_id = r.ID AND ra.meta_key = %s
+		                WHERE r.ID = room_ID
+		        )
+		    ", '_hb_num_of_rooms');
 
-	    /**
-	     * Count booked rooms
-	     */
-	    $query_count_not_available = $wpdb->prepare("
-	        (
-	            SELECT count(booking.ID)
-	            FROM {$wpdb->posts} booking
-	            INNER JOIN {$wpdb->postmeta} bm ON bm.post_id = booking.ID AND bm.meta_key = %s
-	            INNER JOIN {$wpdb->postmeta} bi ON bi.post_id = booking.ID AND bi.meta_key = %s
-	            INNER JOIN {$wpdb->postmeta} bo ON bo.post_id = booking.ID AND bo.meta_key = %s
-	            WHERE
-	                booking.post_type = %s
-	                AND bm.meta_value = rooms.ID
-	                AND (DATE(from_unixtime(bi.meta_value)) <= %s AND DATE(from_unixtime(bo.meta_value)) >= %s)
-	                OR (DATE(from_unixtime(bi.meta_value)) >= %s AND DATE(from_unixtime(bi.meta_value)) <= %s)
-	                OR (DATE(from_unixtime(bo.meta_value)) > %s AND DATE(from_unixtime(bo.meta_value)) <= %s)
-	        )
-	    ", '_hb_id', '_hb_check_in_date', '_hb_check_out_date', 'hb_booking_item',
-	        $this->_start_in, $this->_end_in,
-	        $this->_start_in, $this->_end_in,
-	        $this->_start_in, $this->_end_in
-	    );
+		// count(booked.ID) AS avaiable
+		$query = $wpdb->prepare("
+				SELECT booked.ID AS book_item_ID,
+				checkin.meta_value as checkindate,
+				checkout.meta_value as checkoutdate,
+				room_id.meta_value AS room_ID,
+				{$total} AS total
+				FROM $wpdb->posts AS booked
+				INNER JOIN {$wpdb->postmeta} AS room_id ON room_id.post_id = booked.ID AND room_id.meta_key = %s
+				INNER JOIN {$wpdb->postmeta} AS checkin ON checkin.post_id = booked.ID AND checkin.meta_key = %s
+				INNER JOIN {$wpdb->postmeta} AS checkout ON checkout.post_id = booked.ID AND checkout.meta_key = %s
+				WHERE
+					booked.post_type = %s
+					AND ( DATE( from_unixtime( checkin.meta_value ) ) <= %s AND DATE( from_unixtime( checkout.meta_value ) ) >= %s )
+					OR ( DATE( from_unixtime( checkin.meta_value ) ) >= %s AND DATE( from_unixtime( checkin.meta_value ) ) <= %s )
+					OR ( DATE( from_unixtime( checkout.meta_value ) ) > %s AND DATE( from_unixtime( checkout.meta_value ) ) <= %s )
+					AND room_id.meta_value IN( %s )
+			", '_hb_id', '_hb_check_in_date', '_hb_check_out_date', 'hb_booking_item',
+				$this->_start_in, $this->_end_in,
+				$this->_start_in, $this->_end_in,
+				$this->_start_in, $this->_end_in,
+				implode( ', ', $this->_rooms)
+			);
 
-	    /**
-	     * results
-	     */
-	    $query = $wpdb->prepare("
-	        SELECT rooms.ID as ID,
-	        rooms.post_title as title,
-	        {$query_count_available} as total,
-	        {$query_count_not_available} as unavailable,
-	        {$query_count_available} - {$query_count_not_available} as available
-	        FROM {$wpdb->posts} rooms
-	        WHERE
-	          	rooms.post_type = %s
-	          	AND rooms.post_status = %s
-	    ", 'hb_room', 'publish' );
-// echo $query;
 		return $this->parseData( $wpdb->get_results( $query ) );
 	}
 
@@ -117,8 +120,7 @@ class HB_Report_Room extends HB_Report
 
 	public function parseData( $results )
 	{
-		return;
-		// var_dump($results);die();
+		// var_dump($results);
 		$data = array();
 		$excerpts = array();
 
@@ -126,6 +128,11 @@ class HB_Report_Room extends HB_Report
 
 			if( $this->chart_groupby === 'day' )
 			{
+				$room_in = $item->checkindate;
+				$room_out = $item->checkoutdate;
+
+				// if(  )
+
 				$excerpts[ (int)date("z", strtotime($item->completed_date)) ] = $item->completed_date;
 				$keyr = strtotime($item->completed_date); // timestamp
 				/**
@@ -203,4 +210,4 @@ class HB_Report_Room extends HB_Report
 
 }
 
-$GLOBAL['hb_report_room'] = HB_Report_Room::instance();
+// $GLOBAL['hb_report_room'] = HB_Report_Room::instance();

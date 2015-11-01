@@ -93,6 +93,11 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
 
         $response = $this->stripe_request( $request );
 
+        if( is_wp_error( $response ) )
+        {
+            return array( 'result' => 'error', 'message' => sprintf( __( '%s. Please try again', 'tp-hotel-booking' ), $response->get_error_message() ) );
+        }
+
         if( $response->id )
         {
             $book->update_status( 'completed' );
@@ -120,12 +125,20 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
         }
         else
         {
-            $response = \Stripe\Customer::create(array(
-                "description" => sprintf( "Customer for %s", get_post_meta($customer, '_hb_email', true) ),
-                "source" => $_POST['id'] // token get by stripe.js
-            ));
-            add_post_meta( $customer, 'tp-hotel-booking-stripe-id', $response->id );
-            return $response->id;
+            try
+            {
+                $response = \Stripe\Customer::create(array(
+                    "description" => sprintf( "Customer for %s", get_post_meta($customer, '_hb_email', true) ),
+                    "source" => $_POST['id'] // token get by stripe.js
+                ));
+
+                add_post_meta( $customer, 'tp-hotel-booking-stripe-id', $response->id );
+                return $response->id;
+            }
+            catch(Exception $e )
+            {
+                return new WP_Error( 'tp-hotel-booking-stripe-error', sprintf( '%s', $e->getMessage() ) );
+            }
         }
     }
 
@@ -161,7 +174,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
         echo '<script type="text/javascript">
             TPBooking_Payment_Paypal = {};
             TPBooking_Payment_Paypal.stripe_secret = "'.$this->_stripe_secret.'";
-            TPBooking_Payment_Paypal.stripe_publish = "'.$this->stripe_publish.'";
+            TPBooking_Payment_Paypal.stripe_publish = "'.$this->_stripe_publish.'";
         </script>';
     }
 
