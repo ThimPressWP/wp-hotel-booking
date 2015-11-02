@@ -78,28 +78,35 @@ class HB_Report_Room extends HB_Report
 		        )
 		    ", '_hb_num_of_rooms');
 
-		// count(booked.ID) AS avaiable
+		$sub_query = array();
+		foreach ($this->_rooms as $key => $id) {
+			$sub_query[] = " room_id.meta_value = $id";
+		}
+		$sub_query = implode( ' OR' , $sub_query);
+
 		$query = $wpdb->prepare("
 				SELECT booked.ID AS book_item_ID,
 				checkin.meta_value as checkindate,
 				checkout.meta_value as checkoutdate,
 				room_id.meta_value AS room_ID,
-				{$total} AS total
+				{$total} AS total,
+				booking.ID AS book_id
 				FROM $wpdb->posts AS booked
 				INNER JOIN {$wpdb->postmeta} AS room_id ON room_id.post_id = booked.ID AND room_id.meta_key = %s
 				INNER JOIN {$wpdb->postmeta} AS checkin ON checkin.post_id = booked.ID AND checkin.meta_key = %s
 				INNER JOIN {$wpdb->postmeta} AS checkout ON checkout.post_id = booked.ID AND checkout.meta_key = %s
+				INNER JOIN {$wpdb->postmeta} AS pmb ON pmb.post_id = booked.ID AND pmb.meta_key = %s
+				RIGHT JOIN {$wpdb->posts} AS booking ON booking.ID = pmb.meta_value AND booking.post_status = %s
 				WHERE
 					booked.post_type = %s
 					AND ( DATE( from_unixtime( checkin.meta_value ) ) <= %s AND DATE( from_unixtime( checkout.meta_value ) ) >= %s )
 					OR ( DATE( from_unixtime( checkin.meta_value ) ) >= %s AND DATE( from_unixtime( checkin.meta_value ) ) <= %s )
 					OR ( DATE( from_unixtime( checkout.meta_value ) ) > %s AND DATE( from_unixtime( checkout.meta_value ) ) <= %s )
-					AND room_id.meta_value IN( %s )
-			", '_hb_id', '_hb_check_in_date', '_hb_check_out_date', 'hb_booking_item',
+					HAVING {$sub_query}
+			", '_hb_id', '_hb_check_in_date', '_hb_check_out_date', '_hb_booking_id', 'hb-completed', 'hb_booking_item',
 				$this->_start_in, $this->_end_in,
 				$this->_start_in, $this->_end_in,
-				$this->_start_in, $this->_end_in,
-				implode( ', ', $this->_rooms)
+				$this->_start_in, $this->_end_in
 			);
 
 		return $this->parseData( $wpdb->get_results( $query ) );
@@ -120,7 +127,29 @@ class HB_Report_Room extends HB_Report
 
 	public function parseData( $results )
 	{
-		// var_dump($results);
+		// var_dump($this->_range_end , $this->_range_start);
+		var_dump($results);return;
+
+		$series = array();
+		$prepare_by_ID = array();
+
+		foreach( $results as $key => $room_item )
+		{
+			$room_id = $room_item->room_ID;
+
+			if( ! isset( $prepare_by_ID[$room_id] ) )
+				$prepare_by_ID[$room_id] = array();
+
+			$prepare_by_ID[$room_id][] = $room_item;
+		}
+var_dump($prepare_by_ID);return;
+		foreach ( $prepare_by_ID as $id => $booked ) {
+			# code...
+		}
+
+
+
+
 		$data = array();
 		$excerpts = array();
 

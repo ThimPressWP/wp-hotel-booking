@@ -181,7 +181,7 @@ class HB_Checkout{
                     ) );
                 }
             }else{
-                die( 'can not create booking' );
+                die( __('can not create booking', 'tp-hotel-booking') );
             }
         }
 
