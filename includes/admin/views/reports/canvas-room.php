@@ -1,6 +1,6 @@
 <?php
 	$hb_report_room = HB_Report_Room::instance();
-	$hb_report_room->series();
+	$series = $hb_report_room->series();
 ?>
 <div id="tp-hotel-booking-chart-container">
 	<div id="tp-hotel-booking-canvas-chart"></div>
@@ -8,35 +8,32 @@
 
 <script type="text/javascript">
 	(function($){
-		$('#tp-hotel-booking-canvas-chart').highcharts({
+		var options = {
 	        chart: {
 	            type: 'column'
 	        },
 
 	        title: {
-	            text: 'Total fruit consumtion, grouped by gender'
+	            text: '<?php echo esc_js( $hb_report_room->_title ) ?>'
 	        },
 
 	        xAxis: {
-	        	type: 'datetime',
-                // dateTimeLabelFormats: { // don't display the dummy year
-                //       day: '%e. %b',
-                // }
+	        	type: 'datetime'
 	        },
 
 	        yAxis: {
 	            allowDecimals: false,
 	            min: 0,
 	            title: {
-	                text: 'Number of fruits'
+	                text: '<?php echo esc_js( "Number of rooms" ) ?>'
 	            }
 	        },
 
 	        tooltip: {
 	            formatter: function () {
-	                return '<b>' + this.x + '</b><br/>' +
-	                    this.series.name + ': ' + this.y + '<br/>' +
-	                    'Total: ' + this.point.stackTotal;
+	                return '<b>' + '<?php echo esc_js( "Quantity: " ) ?>' + this.y + '</b><br/>' +
+	                '<b>'+this.series.name+'</b>' + ': ' + this.y + '<br/>' +
+	                    '<b><?php echo esc_js( "Total: " ) ?></b> ' + this.point.stackTotal;
 	            }
 	        },
 
@@ -46,47 +43,22 @@
 	            }
 	        },
 
-	        series: [
-	        	{
-            		name: 'serie1',
-		            data: [
-							[Date.UTC(1970,  9, 18), 1   ],
-							[Date.UTC(1970,  9, 19), 2   ],
-							[Date.UTC(1970,  9, 20), 2   ],
-							[Date.UTC(1970,  9, 21), 1   ]
-		                ],
-		            stack: 0
-		        }, {
-		            name: 'serie2',
-		            data: [
-		                 [Date.UTC(1970,  9, 18), 1   ],
-		                 [Date.UTC(1970,  9, 19), 2   ],
-		                 [Date.UTC(1970,  9, 20), 2   ],
-		                 [Date.UTC(1970,  9, 21), 1   ]
-		                ],
-		            stack: 0
-		        },
-		        // second stack
-		        {
-		            name: 'serie3',
-		            data: [
-		                 [Date.UTC(1970,  9, 18), 1   ],
-		                 [Date.UTC(1970,  9, 19), 2   ],
-		                 [Date.UTC(1970,  9, 20), 2   ],
-		                 [Date.UTC(1970,  9, 21), 1   ]
-		                ],
-		            stack: 1
-		        }, {
-		            name: 'serie4',
-		            data: [
-		                 [Date.UTC(1970,  9, 18), 1   ],
-		                 [Date.UTC(1970,  9, 19), 2   ],
-		                 [Date.UTC(1970,  9, 20), 2   ],
-		                 [Date.UTC(1970,  9, 21), 1   ]
-		                ],
-		            stack: 1
-		        }
-	        ]
-	    });
+	        series: <?php echo json_encode( $series ) ?>
+	    };
+
+	    <?php if( ! $hb_report_room->_rooms ): ?>
+
+        	options.subtitle = {
+                text: "<?php echo esc_js( 'Please select room to display report chart' ) ?>"
+            }
+
+        <?php elseif( ! $series ): ?>
+
+	        options.subtitle = {
+	                text: "<?php echo esc_js( 'No results, room search have no order. Try with other rooms.' ) ?>"
+	            }
+
+        <?php endif; ?>
+		$('#tp-hotel-booking-canvas-chart').highcharts(options);
 	})(jQuery);
 </script>
