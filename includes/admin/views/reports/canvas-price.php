@@ -1,5 +1,5 @@
 <?php
-	$hb_report_price = HB_Report_Price::instance();
+	$hb_report = HB_Report_Price::instance();
 ?>
 <div id="tp-hotel-booking-chart-container">
 	<div id="tp-hotel-booking-canvas-chart"></div>
@@ -12,7 +12,7 @@
 	                zoomType: 'x'
 	            },
 	            title: {
-	                text: "<?php echo esc_js( $hb_report_price->_title ) ?>"
+	                text: "<?php echo esc_js( $hb_report->_title ) ?>"
 	            },
 	            subtitle: {
 	                text: document.ontouchstart === undefined ?
@@ -23,7 +23,7 @@
 	            },
 	            yAxis: {
 	                title: {
-	                    text: '<?php echo esc_js( ucfirst($hb_report_price->_chart_type) ) ?>'
+	                    text: '<?php echo esc_js( ucfirst($hb_report->_chart_type) ) ?>'
 	                }
 	            },
 	            legend: {
@@ -60,10 +60,10 @@
 	                }
 	            },
 
-	            series: <?php echo json_encode( $hb_report_price->series() ) ?>
+	            series: <?php echo json_encode( $hb_report->series() ) ?>
 	        };
 
-	        <?php if( $hb_report_price->chart_groupby === 'month' ): ?>
+	        <?php if( $hb_report->chart_groupby === 'month' ): ?>
 
 	        	options.xAxis.labels = {
 	        		formatter: function () {

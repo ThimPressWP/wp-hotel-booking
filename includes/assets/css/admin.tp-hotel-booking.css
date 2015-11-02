@@ -369,13 +369,23 @@ th.column-room_type{
     width: 100%;
     background-color: #f5f5f5;
 }
-#tp-hotel-booking-report h3 .export_csv {
+#tp-hotel-booking-export{
+    float: right;
+}
+#tp-hotel-booking-report h3 #tp-hotel-booking-export button{
     float: right;
     line-height: 26px;
+    color: #0073aa;
+    border: none;
     border-left: 1px solid #dfdfdf;
     padding: 10px;
     display: block;
     text-decoration: none;
+    background: none;
+}
+#tp-hotel-booking-report h3 #tp-hotel-booking-export button:hover{
+    cursor: pointer;
+    color: #777;
 }
 #tp-hotel-booking-report h3 ul {
     list-style: none;

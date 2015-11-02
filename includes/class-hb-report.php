@@ -20,6 +20,8 @@ abstract class HB_Report
 
 	public $_range;
 
+	protected $_query_results = null;
+
 	public function __construct( $range = null )
 	{
 		if( ! $range ) return;
@@ -31,12 +33,12 @@ abstract class HB_Report
 
 	}
 
-	protected function calculate_current_range( $current_range )
+	protected function calculate_current_range( $current_range = '7day' )
 	{
 		switch ( $current_range ) {
 
 			case 'custom':
-				if( isset($_GET['tp-hotel-booking-report']) && ! wp_verify_nonce( $_GET['tp-hotel-booking-report'], 'tp-hotel-booking-report' ) )
+				if( ! isset($_GET['tp-hotel-booking-report'])  )
 					return;
 
 				if( isset( $_GET, $_GET['report_in'] ) && $_GET['report_in'] )
@@ -114,6 +116,7 @@ abstract class HB_Report
 			$this->_range_start 	= date( 'm', strtotime($this->_start_in) );
 			$this->_range_end 	= date( 'm', strtotime($this->_end_in) );
 		}
+
 	}
 
 	/**
@@ -134,6 +137,14 @@ abstract class HB_Report
 	protected function parseData( $results )
 	{
 		return true;
+	}
+
+	/**
+	 * export
+	 */
+	protected function export_csv()
+	{
+
 	}
 
 }

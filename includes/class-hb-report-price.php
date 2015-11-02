@@ -20,6 +20,8 @@ class HB_Report_Price extends HB_Report
 
 	public $_range;
 
+	public $_query_results = null;
+
 	static $_instance = array();
 
 	public function __construct( $range = null )
@@ -33,7 +35,10 @@ class HB_Report_Price extends HB_Report
 
 		$this->calculate_current_range( $this->_range );
 
-		$this->_title = sprintf( 'Chart in %s to %s', $this->_start_in, $this->_end_in );
+		$this->_title = sprintf( __( 'Chart in %s to %s', 'tp-hotel-booking' ), $this->_start_in, $this->_end_in );
+
+		$this->_query_results = $this->getOrdersItems();
+		add_action( 'admin_init', array( $this, 'export_csv' ) );
 	}
 
 	/**
@@ -43,83 +48,98 @@ class HB_Report_Price extends HB_Report
 	 */
 	public function getOrdersItems()
 	{
-		global $wpdb;
-		/**
-		 * pll is completed date
-		 * ptt is total of booking quantity
-		 */
 
-		if( $this->chart_groupby === 'day' )
-		{
-			$total = $wpdb->prepare("
-					(
-						SELECT SUM(ptt.meta_value) AS total FROM `$wpdb->posts` pb
-						INNER JOIN `$wpdb->postmeta` AS pbl ON pb.ID = pbl.post_id AND pbl.meta_key = %s
-						INNER JOIN `$wpdb->postmeta` AS ptt ON pb.ID = ptt.post_id AND ptt.meta_key = %s
-						WHERE pb.post_type = %s
-						AND DATE(pbl.meta_value) >= %s AND DATE(pbl.meta_value) <= %s
-						AND DATE(pbl.meta_value) = completed_date
-					)
-					", '_hb_booking_payment_completed', '_hb_total', 'hb_booking', $this->_start_in, $this->_end_in
-				);
+		$transient_name = 'tp_hotel_booking_charts_query' . $this->_chart_type. '_' . $this->chart_groupby . '_' . $this->_range . '_' . $this->_start_in . '_' . $this->_end_in;
 
-			$query = $wpdb->prepare("
-					(
-						SELECT DATE(pm.meta_value) AS completed_date,
-						{$total} AS total
-						FROM `$wpdb->posts` AS p
-						INNER JOIN `$wpdb->postmeta` AS pm ON p.ID = pm.post_id AND pm.meta_key = %s
-						WHERE p.post_type = %s
-						AND p.post_status = %s
-						AND DATE(pm.meta_value) >= %s AND DATE(pm.meta_value) <= %s
-						GROUP BY completed_date
-					)
-					", '_hb_booking_payment_completed', 'hb_booking', 'hb-completed', $this->_start_in, $this->_end_in
-				);
+		if ( false === ( $results = get_transient( $transient_name ) ) ) {
+
+			global $wpdb;
+			/**
+			 * pll is completed date
+			 * ptt is total of booking quantity
+			 */
+
+			if( $this->chart_groupby === 'day' )
+			{
+				$total = $wpdb->prepare("
+						(
+							SELECT SUM(ptt.meta_value) AS total FROM `$wpdb->posts` pb
+							INNER JOIN `$wpdb->postmeta` AS pbl ON pb.ID = pbl.post_id AND pbl.meta_key = %s
+							INNER JOIN `$wpdb->postmeta` AS ptt ON pb.ID = ptt.post_id AND ptt.meta_key = %s
+							WHERE pb.post_type = %s
+							AND DATE(pbl.meta_value) >= %s AND DATE(pbl.meta_value) <= %s
+							AND DATE(pbl.meta_value) = completed_date
+						)
+						", '_hb_booking_payment_completed', '_hb_total', 'hb_booking', $this->_start_in, $this->_end_in
+					);
+
+				$query = $wpdb->prepare("
+						(
+							SELECT DATE(pm.meta_value) AS completed_date,
+							{$total} AS total
+							FROM `$wpdb->posts` AS p
+							INNER JOIN `$wpdb->postmeta` AS pm ON p.ID = pm.post_id AND pm.meta_key = %s
+							WHERE p.post_type = %s
+							AND p.post_status = %s
+							AND DATE(pm.meta_value) >= %s AND DATE(pm.meta_value) <= %s
+							GROUP BY completed_date
+						)
+						", '_hb_booking_payment_completed', 'hb_booking', 'hb-completed', $this->_start_in, $this->_end_in
+					);
+			}
+			else
+			{
+				$total = $wpdb->prepare("
+						(
+							SELECT SUM(ptt.meta_value) AS total FROM `$wpdb->posts` pb
+							INNER JOIN `$wpdb->postmeta` AS pbl ON pb.ID = pbl.post_id AND pbl.meta_key = %s
+							INNER JOIN `$wpdb->postmeta` AS ptt ON pb.ID = ptt.post_id AND ptt.meta_key = %s
+							WHERE pb.post_type = %s
+							AND MONTH(pbl.meta_value) >= MONTH(%s) AND MONTH(pbl.meta_value) <= MONTH(%s)
+							AND MONTH(pbl.meta_value) = completed_date
+						)
+						", '_hb_booking_payment_completed', '_hb_total', 'hb_booking', $this->_start_in, $this->_end_in
+					);
+
+				$query = $wpdb->prepare("
+						(
+							SELECT MONTH(pm.meta_value) AS completed_date, DATE(pm.meta_value) AS completed_time,
+							{$total} AS total
+							FROM `$wpdb->posts` AS p
+							INNER JOIN `$wpdb->postmeta` AS pm ON p.ID = pm.post_id AND pm.meta_key = %s
+							WHERE p.post_type = %s
+							AND p.post_status = %s
+							AND MONTH(pm.meta_value) >= MONTH(%s) AND MONTH(pm.meta_value) <= MONTH(%s)
+							GROUP BY completed_date
+						)
+						", '_hb_booking_payment_completed', 'hb_booking', 'hb-completed', $this->_start_in, $this->_end_in
+					);
+			}
+
+			$results = $wpdb->get_results( $query );
+			set_transient( $transient_name, $results, 12 * HOUR_IN_SECONDS );
 		}
-		else
-		{
-			$total = $wpdb->prepare("
-					(
-						SELECT SUM(ptt.meta_value) AS total FROM `$wpdb->posts` pb
-						INNER JOIN `$wpdb->postmeta` AS pbl ON pb.ID = pbl.post_id AND pbl.meta_key = %s
-						INNER JOIN `$wpdb->postmeta` AS ptt ON pb.ID = ptt.post_id AND ptt.meta_key = %s
-						WHERE pb.post_type = %s
-						AND MONTH(pbl.meta_value) >= MONTH(%s) AND MONTH(pbl.meta_value) <= MONTH(%s)
-						AND MONTH(pbl.meta_value) = completed_date
-					)
-					", '_hb_booking_payment_completed', '_hb_total', 'hb_booking', $this->_start_in, $this->_end_in
-				);
 
-			$query = $wpdb->prepare("
-					(
-						SELECT MONTH(pm.meta_value) AS completed_date, DATE(pm.meta_value) AS completed_time,
-						{$total} AS total
-						FROM `$wpdb->posts` AS p
-						INNER JOIN `$wpdb->postmeta` AS pm ON p.ID = pm.post_id AND pm.meta_key = %s
-						WHERE p.post_type = %s
-						AND p.post_status = %s
-						AND MONTH(pm.meta_value) >= MONTH(%s) AND MONTH(pm.meta_value) <= MONTH(%s)
-						GROUP BY completed_date
-					)
-					", '_hb_booking_payment_completed', 'hb_booking', 'hb-completed', $this->_start_in, $this->_end_in
-				);
-		}
-
-		return $this->parseData( $wpdb->get_results( $query ) );
+		return $results;
 	}
 
 	public function series()
 	{
-		$default = new stdClass;
-		$default->name = '';
-		$default->type = 'area';
+		$transient_name = 'tp_hotel_booking_charts_' . $this->_chart_type . '_' . $this->chart_groupby . '_' . $this->_range . '_' . $this->_start_in . '_' . $this->_end_in;
 
-		$default->data = $this->getOrdersItems();
+		if ( false === ( $chart_results = get_transient( $transient_name ) ) ) {
+			$default = new stdClass;
+			$default->name = '';
+			$default->type = 'area';
 
-		return apply_filters( 'tp_hotel_booking_charts', array(
-				$default
-			));
+			$default->data = $this->parseData( $this->_query_results );
+
+			$chart_results = array( $default );
+
+			set_transient( $transient_name, $chart_results, 12 * HOUR_IN_SECONDS );
+		}
+
+		return apply_filters( 'tp_hotel_booking_charts', $chart_results );
 	}
 
 	public function parseData( $results )
@@ -127,7 +147,7 @@ class HB_Report_Price extends HB_Report
 		$data = array();
 		$excerpts = array();
 
-		foreach ( $results as $key => $item) {
+		foreach ( $results as $key => $item ) {
 
 			if( $this->chart_groupby === 'day' )
 			{
@@ -192,6 +212,22 @@ class HB_Report_Price extends HB_Report
 		return $results;
 	}
 
+	public function export_csv()
+	{
+		if( ! isset( $_GET ) )
+			return;
+
+		if( ! isset( $_GET['tp-hotel-booking-report-export'] ) ||
+			! wp_verify_nonce( $_GET['tp-hotel-booking-report-export'], 'tp-hotel-booking-report-export' ) )
+			return;
+
+		if( ! isset( $_GET['tab'] ) || sanitize_file_name( $_GET['tab'] ) !== $this->_chart_type )
+			return;
+
+		var_dump($this->_query_results);die();
+
+	}
+
 	static function instance( $range = null )
 	{
 		if( ! $range && ! isset( $_GET['range'] ) )
@@ -208,4 +244,7 @@ class HB_Report_Price extends HB_Report
 
 }
 
-// $GLOBAL['hb_report_price'] = HB_Report_Price::instance();
+if( isset($_REQUEST['tab']) && $_REQUEST['tab'] === 'price' )
+{
+	$GLOBALS['hb_report'] = HB_Report_Price::instance();
+}

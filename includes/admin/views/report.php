@@ -1,4 +1,5 @@
 <?php
+	global $hb_report;
 	/* allow hook */
 	$report_tabs = apply_filters( 'tp_hotel_booking_report_tab', array(
 		array(
@@ -31,7 +32,7 @@
 
 <p style="clear:both"></p>
 
-<?php $rooms = hb_get_rooms(); ?>
+<?php //$rooms = hb_get_rooms(); ?>
 <?php
 	$date = apply_filters( 'tp_hotel_booking_report_date', array(
 		array(
@@ -62,7 +63,21 @@
 
 	<div id="poststuff">
 		<h3>
-			<a href="<?php echo admin_url( 'admin.php?page=tp_hotel_booking_report&action=export' ) ?>" class="export_csv"><?php _e( 'Export CSV', 'tp-hotel-booking' ) ?></a>
+			<!-- <a href="<?php //echo admin_url( 'admin.php?page=tp_hotel_booking_report&action=export' ) ?>" class="export_csv"><?php //_e( 'Export CSV', 'tp-hotel-booking' ) ?></a> -->
+			<!--export-->
+			<form id="tp-hotel-booking-export" action="GET">
+				<input type="hidden" name="page" value="<?php echo isset($_REQUEST['page']) ? esc_attr($_REQUEST['page']) : '' ?>" >
+				<input type="hidden" name="range" value="<?php echo isset($_REQUEST['range']) ? esc_attr($_REQUEST['range']) : '7day' ?>" >
+				<input type="hidden" name="tab" value="<?php echo isset($_REQUEST['tab']) ? esc_attr($_REQUEST['tab']) : 'price' ?>" >
+				<?php if( isset($_REQUEST['report_in']) ): ?>
+					<input type="hidden" name="report_in" value="<?php echo isset($_REQUEST['report_in']) ? esc_attr($_REQUEST['report_in']) : '' ?>" >
+				<?php endif; ?>
+				<?php if( isset($_REQUEST['report_out']) ): ?>
+					<input type="hidden" name="report_out" value="<?php echo isset($_REQUEST['report_out']) ? esc_attr($_REQUEST['report_out']) : '' ?>" >
+				<?php endif; ?>
+				<?php wp_nonce_field( 'tp-hotel-booking-report-export', 'tp-hotel-booking-report-export' ) ?>
+				<button type="submit"><?php _e( 'Export', 'tp-hotel-booking' ) ?></button>
+			</form>
 			<ul>
 				<?php foreach( $date as $key => $d ): ?>
 					<li <?php echo $d['id'] === $currentRang ? 'class="active"' : '' ?>>
@@ -73,7 +88,6 @@
 				<?php endforeach; ?>
 				<li>
 					<form method="GET">
-						<?php wp_nonce_field( 'tp-hotel-booking-report', 'tp-hotel-booking-report' ); ?>
 						<input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
 						<input type="hidden" name="tab" value="<?php echo isset($_REQUEST['tab']) ? $_REQUEST['tab'] : 'price' ?>" />
 						<input type="hidden" name="range" value="custom" />
@@ -84,6 +98,7 @@
 								<input type="hidden" name="room_id[]" value="<?php echo esc_attr( $room ) ?>">
 							<?php endforeach; ?>
 						<?php endif; ?>
+						<?php wp_nonce_field( 'tp-hotel-booking-report', 'tp-hotel-booking-report' ); ?>
 						<button type="submit"><?php _e( 'Go', 'tp-hotel-booking' ) ?></button>
 					</form>
 				</li>
@@ -107,7 +122,7 @@
 
 <script type="text/javascript">
 	(function($){
-		$.datepicker.setDefaults({ dateFormat: 'yyy/mm/dd'});
+		$.datepicker.setDefaults({ dateFormat: 'yy/mm/dd'});
         $('#tp-hotel-report-checkin').datepicker({
             onSelect: function(){
                 var date = jQuery(this).datepicker('getDate');

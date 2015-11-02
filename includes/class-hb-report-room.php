@@ -24,6 +24,8 @@ class HB_Report_Room extends HB_Report
 	public $_range_start;
 	public $_range_end;
 
+	public $_query_results = null;
+
 	public $_range;
 
 	static $_instance = array();
@@ -42,7 +44,10 @@ class HB_Report_Room extends HB_Report
 
 		$this->calculate_current_range( $this->_range );
 
-		$this->_title = sprintf( 'Chart in %s to %s', $this->_start_in, $this->_end_in );
+		$this->_title = sprintf( __( 'Chart in %s to %s', 'tp-hotel-booking' ), $this->_start_in, $this->_end_in );
+
+		$this->_query_results = $this->getOrdersItems();
+		add_action( 'tp_hotel_booking_download_export_csv', array( $this, 'export_csv' ) );
 	}
 
 	public function get_rooms()
@@ -67,160 +72,205 @@ class HB_Report_Room extends HB_Report
 	 */
 	public function getOrdersItems()
 	{
-		global $wpdb;
+		$transient_name = 'tp_hotel_booking_charts_query' . $this->_chart_type . '_' . $this->chart_groupby . '_' . $this->_range . '_' . $this->_start_in . '_' . $this->_end_in;
 
-		$total = $wpdb->prepare("
-		        (
-		            SELECT ra.meta_value
-		            FROM {$wpdb->postmeta} ra
-		            INNER JOIN {$wpdb->posts} r ON ra.post_id = r.ID AND ra.meta_key = %s
-		                WHERE r.ID = room_ID
-		        )
-		    ", '_hb_num_of_rooms');
-
-		$sub_query = array();
-		foreach ($this->_rooms as $key => $id) {
-			$sub_query[] = " room_id.meta_value = $id";
-		}
-		$sub_query = implode( ' OR' , $sub_query);
-
-		$query = $wpdb->prepare("
-				SELECT booked.ID AS book_item_ID,
-				checkin.meta_value as checkindate,
-				checkout.meta_value as checkoutdate,
-				room_id.meta_value AS room_ID,
-				{$total} AS total,
-				booking.ID AS book_id
-				FROM $wpdb->posts AS booked
-				INNER JOIN {$wpdb->postmeta} AS room_id ON room_id.post_id = booked.ID AND room_id.meta_key = %s
-				INNER JOIN {$wpdb->postmeta} AS checkin ON checkin.post_id = booked.ID AND checkin.meta_key = %s
-				INNER JOIN {$wpdb->postmeta} AS checkout ON checkout.post_id = booked.ID AND checkout.meta_key = %s
-				INNER JOIN {$wpdb->postmeta} AS pmb ON pmb.post_id = booked.ID AND pmb.meta_key = %s
-				RIGHT JOIN {$wpdb->posts} AS booking ON booking.ID = pmb.meta_value AND booking.post_status = %s
-				WHERE
-					booked.post_type = %s
-					AND ( DATE( from_unixtime( checkin.meta_value ) ) <= %s AND DATE( from_unixtime( checkout.meta_value ) ) >= %s )
-					OR ( DATE( from_unixtime( checkin.meta_value ) ) >= %s AND DATE( from_unixtime( checkin.meta_value ) ) <= %s )
-					OR ( DATE( from_unixtime( checkout.meta_value ) ) > %s AND DATE( from_unixtime( checkout.meta_value ) ) <= %s )
-					HAVING {$sub_query}
-			", '_hb_id', '_hb_check_in_date', '_hb_check_out_date', '_hb_booking_id', 'hb-completed', 'hb_booking_item',
-				$this->_start_in, $this->_end_in,
-				$this->_start_in, $this->_end_in,
-				$this->_start_in, $this->_end_in
-			);
-
-		return $this->parseData( $wpdb->get_results( $query ) );
-	}
-
-	public function series()
-	{
-		$default = new stdClass;
-		$default->name = '';
-		$default->type = 'area';
-
-		$default->data = $this->getOrdersItems();
-
-		return apply_filters( 'tp_hotel_booking_charts', array(
-				$default
-			));
-	}
-
-	public function parseData( $results )
-	{
-		// var_dump($this->_range_end , $this->_range_start);
-		var_dump($results);return;
-
-		$series = array();
-		$prepare_by_ID = array();
-
-		foreach( $results as $key => $room_item )
+		if ( false === ( $results = get_transient( $transient_name ) ) )
 		{
-			$room_id = $room_item->room_ID;
-
-			if( ! isset( $prepare_by_ID[$room_id] ) )
-				$prepare_by_ID[$room_id] = array();
-
-			$prepare_by_ID[$room_id][] = $room_item;
-		}
-var_dump($prepare_by_ID);return;
-		foreach ( $prepare_by_ID as $id => $booked ) {
-			# code...
-		}
-
-
-
-
-		$data = array();
-		$excerpts = array();
-
-		foreach ( $results as $key => $item) {
+			global $wpdb;
 
 			if( $this->chart_groupby === 'day' )
 			{
-				$room_in = $item->checkindate;
-				$room_out = $item->checkoutdate;
+				$total = $wpdb->prepare("
+				        (
+				            SELECT ra.meta_value
+				            FROM {$wpdb->postmeta} ra
+				            INNER JOIN {$wpdb->posts} r ON ra.post_id = r.ID AND ra.meta_key = %s
+				                WHERE r.ID = room_ID
+				        )
+				    ", '_hb_num_of_rooms');
 
-				// if(  )
+				$sub_query = array();
+				foreach ($this->_rooms as $key => $id) {
+					$sub_query[] = ' room_ID = ' . $id;
+				}
+				$sub_query = implode( ' OR' , $sub_query);
 
-				$excerpts[ (int)date("z", strtotime($item->completed_date)) ] = $item->completed_date;
-				$keyr = strtotime($item->completed_date); // timestamp
-				/**
-				 * compare 2015-10-30 19:50:50 => 2015-10-30. not use time
-				 */
-				$data[ $keyr ] = array(
-						strtotime( date('Y-m-d', $keyr ) ) * 1000,
-						(float)$item->total
+				$query = $wpdb->prepare("
+						SELECT booked.ID AS book_item_ID,
+						checkin.meta_value as checkindate,
+						checkout.meta_value as checkoutdate,
+						room_id.meta_value AS room_ID,
+						{$total} AS total,
+						booking.ID AS book_id
+						FROM $wpdb->posts AS booked
+						INNER JOIN {$wpdb->postmeta} AS room_id ON room_id.post_id = booked.ID AND room_id.meta_key = %s
+						INNER JOIN {$wpdb->postmeta} AS checkin ON checkin.post_id = booked.ID AND checkin.meta_key = %s
+						INNER JOIN {$wpdb->postmeta} AS checkout ON checkout.post_id = booked.ID AND checkout.meta_key = %s
+						INNER JOIN {$wpdb->postmeta} AS pmb ON pmb.post_id = booked.ID AND pmb.meta_key = %s
+						RIGHT JOIN {$wpdb->posts} AS booking ON booking.ID = pmb.meta_value AND booking.post_status = %s
+						WHERE
+							booked.post_type = %s
+							AND ( DATE( from_unixtime( checkin.meta_value ) ) <= %s AND DATE( from_unixtime( checkout.meta_value ) ) >= %s )
+							OR ( DATE( from_unixtime( checkin.meta_value ) ) >= %s AND DATE( from_unixtime( checkin.meta_value ) ) <= %s )
+							OR ( DATE( from_unixtime( checkout.meta_value ) ) > %s AND DATE( from_unixtime( checkout.meta_value ) ) <= %s )
+						HAVING {$sub_query}
+					", '_hb_id', '_hb_check_in_date', '_hb_check_out_date', '_hb_booking_id', 'hb-completed', 'hb_booking_item',
+						$this->_start_in, $this->_end_in,
+						$this->_start_in, $this->_end_in,
+						$this->_start_in, $this->_end_in
 					);
 			}
 			else
 			{
-				$keyr = strtotime( date( 'Y-m-1', strtotime($item->completed_time) ) ); // timestamp of first day month in the loop
-				$excerpts[ (int)date("m", strtotime($item->completed_time)) ] = date( 'Y-m-d', $keyr );
-				$data[ $keyr ] = array(
-						strtotime( date('Y-m-1', $keyr ) ) * 1000,
-						(float)$item->total
+				$total = $wpdb->prepare("
+				        (
+				            SELECT ra.meta_value
+				            FROM {$wpdb->postmeta} ra
+				            INNER JOIN {$wpdb->posts} r ON ra.post_id = r.ID AND ra.meta_key = %s
+				                WHERE r.ID = room_ID
+				        )
+				    ", '_hb_num_of_rooms');
+
+				$sub_query = array();
+				foreach ($this->_rooms as $key => $id) {
+					$sub_query[] = ' room_ID = ' . $id;
+				}
+				$sub_query = implode( ' OR' , $sub_query);
+
+				$query = $wpdb->prepare("
+						SELECT booked.ID AS book_item_ID,
+						checkin.meta_value as checkindate,
+						checkout.meta_value as checkoutdate,
+						room_id.meta_value AS room_ID,
+						{$total} AS total,
+						booking.ID AS book_id
+						FROM $wpdb->posts AS booked
+						INNER JOIN {$wpdb->postmeta} AS room_id ON room_id.post_id = booked.ID AND room_id.meta_key = %s
+						INNER JOIN {$wpdb->postmeta} AS checkin ON checkin.post_id = booked.ID AND checkin.meta_key = %s
+						INNER JOIN {$wpdb->postmeta} AS checkout ON checkout.post_id = booked.ID AND checkout.meta_key = %s
+						INNER JOIN {$wpdb->postmeta} AS pmb ON pmb.post_id = booked.ID AND pmb.meta_key = %s
+						RIGHT JOIN {$wpdb->posts} AS booking ON booking.ID = pmb.meta_value AND booking.post_status = %s
+						WHERE
+							booked.post_type = %s
+							AND ( MONTH( from_unixtime( checkin.meta_value ) ) <= MONTH(%s) AND MONTH( from_unixtime( checkout.meta_value ) ) >= MONTH(%s) )
+							OR ( MONTH( from_unixtime( checkin.meta_value ) ) >= MONTH(%s) AND MONTH( from_unixtime( checkin.meta_value ) ) <= MONTH(%s) )
+							OR ( MONTH( from_unixtime( checkout.meta_value ) ) > MONTH(%s) AND MONTH( from_unixtime( checkout.meta_value ) ) <= MONTH(%s) )
+						HAVING {$sub_query}
+					", '_hb_id', '_hb_check_in_date', '_hb_check_out_date', '_hb_booking_id', 'hb-completed', 'hb_booking_item',
+						$this->_start_in, $this->_end_in,
+						$this->_start_in, $this->_end_in,
+						$this->_start_in, $this->_end_in
 					);
 			}
+
+			$results = $wpdb->get_results( $query );
 		}
 
-		$range = $this->_range_end - $this->_range_start;
+		return $results;
+	}
 
-		$cache = $this->_start_in;
-		for( $i = 0; $i <= $range; $i++ )
+	public function series()
+	{
+		if( ! $this->_rooms )
+			return;
+
+		$transient_name = 'tp_hotel_booking_charts_' . $this->_chart_type . '_' . $this->chart_groupby . '_' . $this->_range . '_' . $this->_start_in . '_' . $this->_end_in;
+
+		if ( false === ( $chart_results = get_transient( $transient_name ) ) )
 		{
-			$reg = $this->_range_start + $i;
+			$chart_results = $this->parseData( $this->_query_results );
+			set_transient( $transient_name, $chart_results, 12 * HOUR_IN_SECONDS );
+		}
+		return apply_filters( 'tp_hotel_booking_charts', $chart_results );
+	}
 
-			if( ! array_key_exists( $reg, $excerpts) )
+	public function parseData( $results )
+	{
+
+		$series = array();
+
+		$ids = array();
+		foreach ($results as $key => $value) {
+			if( ! isset( $ids[ $value->room_ID ] ) )
+				$ids[$value->room_ID] = $value->total;
+		}
+
+		foreach( $ids as $id => $total )
+		{
+			if( ! isset( $series[ $id ] ) )
 			{
+				$prepare = array(
+						'name'	=> sprintf( __( '%s avaiable', 'tp-hotel-booking' ), get_the_title( $id ) ),
+						'data'	=> array(),
+						'stack' => $id
+					);
+				$unavaiable = array(
+						'name'	=> sprintf( __( '%s unavaiable', 'tp-hotel-booking' ), get_the_title( $id ) ),
+						'data'	=> array(),
+						'stack' => $id
+					);
+			}
+
+			$range = $this->_range_end - $this->_range_start;
+			$cache = $this->_start_in;
+			for( $i = 0; $i <= $range; $i++ )
+			{
+				$avaiable = 0;
 				if( $this->chart_groupby === 'day' )
 				{
-					$key = strtotime( $this->_start_in ) + 24 * 60 * 60 * $i;
-					$data[ $key ] = array(
-						(float)strtotime( date('Y-m-d', $key ) ) * 1000,
-						0
-					);
+					$current_time = strtotime( $this->_start_in ) + 24 * 60 * 60 * $i;
 				}
 				else
 				{
-
-					$cache = date( "Y-$reg-01", strtotime( $cache ) ); // cache current month in the loop
-
-					$data[ strtotime($cache) ] = array(
-						(float)strtotime( date('Y-m-1', strtotime($cache) ) ) * 1000,
-						0
-					);
+					$reg = $this->_range_start + $i;
+					$cache = date( "Y-$reg-01", strtotime( $cache ) );
+					$current_time = strtotime( date( "Y-$reg-01", strtotime( $cache ) ) ) ;
 				}
+
+				foreach ($results as $k => $v) {
+
+					if( (int)$v->room_ID !== (int)$id )
+						continue;
+
+					if( $this->chart_groupby === 'day' )
+					{
+						$_in = strtotime( date( 'Y-m-d', $v->checkindate ) );
+						$_out = strtotime( date( 'Y-m-d', $v->checkoutdate ) );
+					}
+					else
+					{
+						$_in = strtotime( date( 'Y-m-1', $v->checkindate ) );
+						$_out = strtotime( date( 'Y-m-1', $v->checkoutdate ) );
+					}
+
+					if( $current_time >= $_in && $current_time <= $_out )
+						$avaiable++;
+
+				}
+
+				$prepare['data'][] = array(
+						$current_time * 1000,
+						$avaiable
+				);
+				$unavaiable['data'][] = array(
+						$current_time * 1000,
+						$total - $avaiable
+				);
+
 			}
+
+			$series[] = $prepare;
+			$series[] = $unavaiable;
+
 		}
 
-		sort($data);
+		return $series;
 
-		$results = array();
+	}
 
-		foreach ($data as $key => $da) {
-			$results[] = $da;
-		}
-		return $results;
+	public function export_csv()
+	{
+		
 	}
 
 	static function instance( $range = null )
@@ -239,4 +289,7 @@ var_dump($prepare_by_ID);return;
 
 }
 
-// $GLOBAL['hb_report_room'] = HB_Report_Room::instance();
+if( isset($_REQUEST['tab']) && $_REQUEST['tab'] === 'room' )
+{
+	$GLOBALS['hb_report'] = HB_Report_Room::instance();
+}
