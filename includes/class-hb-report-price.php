@@ -54,11 +54,11 @@ class HB_Report_Price extends HB_Report
 		if ( false === ( $results = get_transient( $transient_name ) ) ) {
 
 			global $wpdb;
+
 			/**
 			 * pll is completed date
 			 * ptt is total of booking quantity
 			 */
-
 			if( $this->chart_groupby === 'day' )
 			{
 				$total = $wpdb->prepare("
@@ -226,6 +226,18 @@ class HB_Report_Price extends HB_Report
 
 		var_dump($this->_query_results);die();
 
+	}
+
+	public function date_format( $date = '' )
+	{
+		if( $this->chart_groupby === 'day' )
+		{
+			return date( 'F j, Y', strtotime($date) );
+		}
+		else
+		{
+			return date( 'F. Y', strtotime($date) );
+		}
 	}
 
 	static function instance( $range = null )

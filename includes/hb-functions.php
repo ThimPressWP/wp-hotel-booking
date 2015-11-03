@@ -1669,3 +1669,14 @@ if( ! function_exists( 'hb_get_checkout_url' ) )
         }
     }
 }
+
+if( ! function_exists( 'hb_random_color_part' ) )
+{
+    function hb_random_color_part() {
+        return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
+    }
+
+    function hb_random_color() {
+        return '#' . hb_random_color_part() . hb_random_color_part() . hb_random_color_part();
+    }
+}
