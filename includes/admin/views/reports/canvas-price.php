@@ -19,12 +19,13 @@
 	                        "<?php _e('Click and drag in the plot area to zoom in', 'tp-hotel-booking') ?>" : "<?php _e('Pinch the chart to zoom in', 'tp-hotel-booking') ?>"
 	            },
 	            xAxis: {
-	                type: 'datetime',
+	                type: 'datetime'
 	            },
 	            yAxis: {
 	                title: {
 	                    text: '<?php echo esc_js( ucfirst($hb_report->_chart_type) ) ?>'
-	                }
+	                },
+	                min: 0
 	            },
 	            legend: {
 	                enabled: false
