@@ -65,7 +65,7 @@
 		<h3>
 			<!-- <a href="<?php //echo admin_url( 'admin.php?page=tp_hotel_booking_report&action=export' ) ?>" class="export_csv"><?php //_e( 'Export CSV', 'tp-hotel-booking' ) ?></a> -->
 			<!--export-->
-			<form id="tp-hotel-booking-export" action="GET">
+			<form id="tp-hotel-booking-export" method="POST">
 				<input type="hidden" name="page" value="<?php echo isset($_REQUEST['page']) ? esc_attr($_REQUEST['page']) : '' ?>" >
 				<input type="hidden" name="range" value="<?php echo isset($_REQUEST['range']) ? esc_attr($_REQUEST['range']) : '7day' ?>" >
 				<input type="hidden" name="tab" value="<?php echo isset($_REQUEST['tab']) ? esc_attr($_REQUEST['tab']) : 'price' ?>" >

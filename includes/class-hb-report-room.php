@@ -47,7 +47,7 @@ class HB_Report_Room extends HB_Report
 		$this->_title = sprintf( __( 'Chart in %s to %s', 'tp-hotel-booking' ), $this->_start_in, $this->_end_in );
 
 		$this->_query_results = $this->getOrdersItems();
-		add_action( 'tp_hotel_booking_download_export_csv', array( $this, 'export_csv' ) );
+		add_action( 'admin_init', array( $this, 'export_csv' ) );
 	}
 
 	public function get_rooms()
@@ -270,7 +270,110 @@ class HB_Report_Room extends HB_Report
 
 	public function export_csv()
 	{
-		
+		if( ! isset( $_POST ) )
+			return;
+
+		if( ! isset( $_POST['tp-hotel-booking-report-export'] ) ||
+			! wp_verify_nonce( $_POST['tp-hotel-booking-report-export'], 'tp-hotel-booking-report-export' ) )
+			return;
+
+		if( ! isset( $_POST['tab'] ) || sanitize_file_name( $_POST['tab'] ) !== $this->_chart_type )
+			return;
+
+		$inputs = $this->parseData( $this->_query_results );
+
+		if( ! $inputs ) return;
+
+		$rooms = array();
+		foreach ( $inputs as $key => $input ) {
+			if( ! isset( $rooms[ $input['stack'] ] ) )
+				$rooms[ $input['stack'] ] = array();
+
+			$rooms[ $input['stack'] ][] = $input;
+		}
+
+		$filename = 'tp_hotel_export_'.$this->_chart_type.'_'.$this->_start_in.'_to_'. $this->_end_in . '.csv';
+		header('Content-Type: application/csv; charset=utf-8');
+		header('Content-Disposition: attachment; filename='.$filename);
+		// create a file pointer connected to the output stream
+		$output = fopen('php://output', 'w');
+
+		foreach ($rooms as $id => $params) {
+
+			// output the column headings
+			fputcsv( $output, array( sprintf( '%s', get_the_title( $id ) ) ) );
+
+			$column = array(
+					__( 'Date/Time', 'tp-hotel-booking' )
+				);
+
+			$avaiable_data = false;
+			if( isset( $params[0] ) )
+			{
+				$avaiables = $params[0];
+
+				$avaiable_data = array(
+						__( 'Avaiable', 'tp-hotel-booking' )
+					);
+				foreach ($avaiables['data'] as $key => $avai) {
+					if( $this->chart_groupby === 'day' )
+					{
+						if( isset( $avai[0], $avai[1] ) )
+							$time = $avai[0] / 1000;
+
+						$column[] = date( 'Y-m-d', $time );
+						$avaiable_data[] = $avai[1];
+					}
+					else
+					{
+						if( isset( $avai[0], $avai[1] ) )
+							$time = $avai[0] / 1000;
+
+						$column[] = date( 'F. Y', $time );
+						$avaiable_data[] = $avai[1];
+					}
+				}
+			}
+
+			if( $avaiable_data )
+			{
+				// heading and avaiable
+				fputcsv( $output, $column );
+				fputcsv( $output, $avaiable_data );
+			}
+
+			if( isset($params[1]) )
+			{
+				$unavaiable = $params[1];
+				$unavaiable_data = array(
+						__( 'Total', 'tp-hotel-booking' )
+					);
+				foreach ($unavaiable['data'] as $key => $avai) {
+					if( $this->chart_groupby === 'day' )
+					{
+						if( isset( $avai[0], $avai[1] ) )
+							$time = $avai[0] / 1000;
+
+						$column[] = date( 'Y-m-d', $time );
+						$unavaiable_data[] = $avai[1];
+					}
+					else
+					{
+						if( isset( $avai[0], $avai[1] ) )
+							$time = $avai[0] / 1000;
+
+						$column[] = date( 'F. Y', $time );
+						$unavaiable_data[] = $avai[1];
+					}
+				}
+				fputcsv( $output, $unavaiable_data );
+				fputcsv( $output, array() );
+			}
+
+		}
+
+		fpassthru($output); die();
+
 	}
 
 	static function instance( $range = null )

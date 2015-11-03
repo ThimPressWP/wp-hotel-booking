@@ -144,7 +144,7 @@ abstract class HB_Report
 	 */
 	protected function export_csv()
 	{
-
+		return true;
 	}
 
 }
