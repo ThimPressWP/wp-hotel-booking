@@ -462,6 +462,9 @@ th.column-room_type{
     display: block;
     font-family: sans-serif;
 }
+#tp-hotel-booking-report-main #chart-sidebar .chart-legend li p{
+    margin: 3px 0;
+}
 #tp-hotel-booking-chart-content{
     width: 88%;
     float: left;
