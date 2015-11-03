@@ -214,25 +214,67 @@ class HB_Report_Price extends HB_Report
 
 	public function export_csv()
 	{
-		if( ! isset( $_GET ) )
+		if( ! isset( $_POST ) )
 			return;
 
-		if( ! isset( $_GET['tp-hotel-booking-report-export'] ) ||
-			! wp_verify_nonce( $_GET['tp-hotel-booking-report-export'], 'tp-hotel-booking-report-export' ) )
+		if( ! isset( $_POST['tp-hotel-booking-report-export'] ) ||
+			! wp_verify_nonce( $_POST['tp-hotel-booking-report-export'], 'tp-hotel-booking-report-export' ) )
 			return;
 
-		if( ! isset( $_GET['tab'] ) || sanitize_file_name( $_GET['tab'] ) !== $this->_chart_type )
+		if( ! isset( $_POST['tab'] ) || sanitize_file_name( $_POST['tab'] ) !== $this->_chart_type )
 			return;
 
-		var_dump($this->_query_results);die();
+		$inputs = $this->parseData( $this->_query_results );
+		$column = array(
+				__( 'Date/Time', 'tp-hotel-booking' )
+			);
+		$data = array(
+				__( 'Earnings', 'tp-hotel-booking' )
+			);
+		foreach ($inputs as $key => $input) {
+			if( $this->chart_groupby === 'day' )
+			{
+				if( isset( $input[0], $input[1] ) )
+					$time = $input[0] / 1000;
 
+				$column[] = date( 'Y-m-d', $time );
+				$data[] = number_format($input[1], 2, '.', ',') .' '. hb_get_currency();
+			}
+			else
+			{
+				if( isset( $input[0], $input[1] ) )
+					$time = $input[0] / 1000;
+
+				$column[] = date( 'F. Y', $time );
+				$data[] = number_format($input[1], 2, '.', ',') .' '. hb_get_currency();
+			}
+		}
+
+		$column = apply_filters( 'tp_hotel_booking_export_report_price_column', $column );
+		$data = apply_filters( 'tp_hotel_booking_export_report_price_data', $data );
+
+		$filename = 'tp_hotel_export_'.$this->_chart_type.'_'.$this->_start_in.'_to_'. $this->_end_in . '.csv';
+		header('Content-Type: application/csv; charset=utf-8');
+		header('Content-Disposition: attachment; filename='.$filename);
+		// create a file pointer connected to the output stream
+		$output = fopen('php://output', 'w');
+
+		// output the column headings
+		fputcsv($output, $column);
+
+		fputcsv( $output, $data );
+
+		fpassthru($output);
+		die();
 	}
 
 	public function date_format( $date = '' )
 	{
 		if( $this->chart_groupby === 'day' )
 		{
-			return date( 'F j, Y', strtotime($date) );
+			if( $date != (int)$date || is_string($date) )
+				$date = strtotime($date);
+			return date( 'F j, Y', $date );
 		}
 		else
 		{
