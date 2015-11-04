@@ -203,7 +203,7 @@ class HB_Report_Room extends HB_Report
 			if( ! isset( $series[ $id ] ) )
 			{
 				$prepare = array(
-						'name'	=> sprintf( __( '%s avaiable', 'tp-hotel-booking' ), get_the_title( $id ) ),
+						'name'	=> sprintf( __( '%s unavaiable', 'tp-hotel-booking' ), get_the_title( $id ) ),
 						'data'	=> array(),
 						'stack' => $id
 					);
@@ -211,7 +211,7 @@ class HB_Report_Room extends HB_Report
 				if( $this->chart_groupby === 'day' )
 				{
 					$unavaiable = array(
-							'name'	=> sprintf( __( '%s unavaiable', 'tp-hotel-booking' ), get_the_title( $id ) ),
+							'name'	=> sprintf( __( '%s avaiable', 'tp-hotel-booking' ), get_the_title( $id ) ),
 							'data'	=> array(),
 							'stack' => $id
 						);
@@ -339,7 +339,7 @@ class HB_Report_Room extends HB_Report
 				$avaiables = $params[0];
 
 				$avaiable_data = array(
-						__( 'Avaiable', 'tp-hotel-booking' )
+						__( 'Unavaiable', 'tp-hotel-booking' )
 					);
 				foreach ($avaiables['data'] as $key => $avai) {
 					if( (int)$avai[1] === 0 )
@@ -380,7 +380,7 @@ class HB_Report_Room extends HB_Report
 				if( $this->chart_groupby === 'day' )
 				{
 					$unavaiable_data = array(
-							__( 'Unavaiable', 'tp-hotel-booking' )
+							__( 'Avaiable', 'tp-hotel-booking' )
 						);
 				}
 				else
