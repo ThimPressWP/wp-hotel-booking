@@ -5,6 +5,7 @@
 		$selected = $_GET['room_id'];
 ?>
 <form method="GET">
+
 	<h4><?php _e( 'Rooms Search', 'tp-hotel-booking' ) ?></h4>
 	<?php wp_nonce_field( 'tp-hotel-booking-report', 'tp-hotel-booking-report' ); ?>
 	<input type="hidden" name="page" value="<?php echo isset($_GET['page']) ? $_GET['page'] : '' ?>" />
@@ -16,7 +17,7 @@
 	<?php endif; ?>
 
 	<?php if( isset($_GET['report_out']) && $_GET['report_out'] ): ?>
-		<input type="hidden" name="report_out" value="<?php echo esc_attr( $_GET['report_out'] ) ?>">
+		<input type="hidden" name="report_out" value="<?php echo esc_attr( $_GET['report_out'] ) ?>" />
 	<?php endif; ?>
 
 	<?php $rooms = $hb_report_room->get_rooms(); ?>

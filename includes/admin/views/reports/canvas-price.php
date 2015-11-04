@@ -32,7 +32,7 @@
 	            },
 	            tooltip: {
 		            headerFormat: '<b>{point.x:%e. %b}</b><br>',
-		            pointFormat: '<b><?php _e( "Total", "tp-hotel-booking" ) ?>:</b> ${point.y:.2f}'
+		            pointFormat: '<b><?php _e( "Total", "tp-hotel-booking" ) ?>:</b> {point.y:,.2f} <?php echo hb_get_currency() ?>'
 		        },
 	            plotOptions: {
 	                area: {

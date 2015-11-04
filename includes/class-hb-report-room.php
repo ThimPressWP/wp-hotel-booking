@@ -42,6 +42,9 @@ class HB_Report_Room extends HB_Report
 		if( isset( $_GET['room_id'] ) && $_GET['room_id'] )
 			$this->_rooms = $_GET['room_id'];
 
+		if( ! $this->_rooms )
+			return;
+
 		$this->calculate_current_range( $this->_range );
 
 		$this->_title = sprintf( __( 'Chart in %s to %s', 'tp-hotel-booking' ), $this->_start_in, $this->_end_in );
@@ -204,11 +207,23 @@ class HB_Report_Room extends HB_Report
 						'data'	=> array(),
 						'stack' => $id
 					);
-				$unavaiable = array(
-						'name'	=> sprintf( __( '%s unavaiable', 'tp-hotel-booking' ), get_the_title( $id ) ),
-						'data'	=> array(),
-						'stack' => $id
-					);
+
+				if( $this->chart_groupby === 'day' )
+				{
+					$unavaiable = array(
+							'name'	=> sprintf( __( '%s unavaiable', 'tp-hotel-booking' ), get_the_title( $id ) ),
+							'data'	=> array(),
+							'stack' => $id
+						);
+				}
+				else
+				{
+					$unavaiable = array(
+							'name'	=> sprintf( __( '%s quantity of room', 'tp-hotel-booking' ), get_the_title( $id ) ),
+							'data'	=> array(),
+							'stack' => $id
+						);
+				}
 			}
 
 			$range = $this->_range_end - $this->_range_start;
@@ -227,7 +242,7 @@ class HB_Report_Room extends HB_Report
 					$current_time = strtotime( date( "Y-$reg-01", strtotime( $cache ) ) ) ;
 				}
 
-				foreach ($results as $k => $v) {
+				foreach ( $results as $k => $v ) {
 
 					if( (int)$v->room_ID !== (int)$id )
 						continue;
@@ -252,10 +267,21 @@ class HB_Report_Room extends HB_Report
 						$current_time * 1000,
 						$avaiable
 				);
-				$unavaiable['data'][] = array(
-						$current_time * 1000,
-						$total - $avaiable
-				);
+
+				if( $this->chart_groupby === 'day' )
+				{
+					$unavaiable['data'][] = array(
+							$current_time * 1000,
+							$total - $avaiable
+					);
+				}
+				else
+				{
+					$unavaiable['data'][] = array(
+							$current_time * 1000,
+							(int)$total
+					);
+				}
 
 			}
 
@@ -270,8 +296,7 @@ class HB_Report_Room extends HB_Report
 
 	public function export_csv()
 	{
-		if( ! isset( $_POST ) )
-			return;
+		if( ! isset( $_POST ) ) return;
 
 		if( ! isset( $_POST['tp-hotel-booking-report-export'] ) ||
 			! wp_verify_nonce( $_POST['tp-hotel-booking-report-export'], 'tp-hotel-booking-report-export' ) )
@@ -308,6 +333,7 @@ class HB_Report_Room extends HB_Report
 				);
 
 			$avaiable_data = false;
+			$excerpt = array();
 			if( isset( $params[0] ) )
 			{
 				$avaiables = $params[0];
@@ -316,6 +342,11 @@ class HB_Report_Room extends HB_Report
 						__( 'Avaiable', 'tp-hotel-booking' )
 					);
 				foreach ($avaiables['data'] as $key => $avai) {
+					if( (int)$avai[1] === 0 )
+					{
+						$excerpt[] = $key;
+						continue;
+					}
 					if( $this->chart_groupby === 'day' )
 					{
 						if( isset( $avai[0], $avai[1] ) )
@@ -345,10 +376,23 @@ class HB_Report_Room extends HB_Report
 			if( isset($params[1]) )
 			{
 				$unavaiable = $params[1];
-				$unavaiable_data = array(
-						__( 'Total', 'tp-hotel-booking' )
-					);
+
+				if( $this->chart_groupby === 'day' )
+				{
+					$unavaiable_data = array(
+							__( 'Unavaiable', 'tp-hotel-booking' )
+						);
+				}
+				else
+				{
+					$unavaiable_data = array(
+							__( 'Room Quantity', 'tp-hotel-booking' )
+						);
+				}
 				foreach ($unavaiable['data'] as $key => $avai) {
+					if( in_array( $key, $excerpt ) )
+						continue;
+
 					if( $this->chart_groupby === 'day' )
 					{
 						if( isset( $avai[0], $avai[1] ) )

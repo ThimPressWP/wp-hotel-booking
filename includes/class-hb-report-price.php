@@ -7,12 +7,24 @@ class HB_Report_Price extends HB_Report
 {
 	public $_title;
 
+	/**
+	 * report type
+	 */
 	public $_chart_type = 'price';
 
+	/**
+	 * input start check
+	 */
 	public $_start_in;
 
+	/**
+	 * input end check
+	 */
 	public $_end_in;
 
+	/**
+	 * group by month, day
+	 */
 	public $chart_groupby;
 
 	public $_range_start;
@@ -21,6 +33,11 @@ class HB_Report_Price extends HB_Report
 	public $_range;
 
 	public $_query_results = null;
+
+	/**
+	 * data generate sidebar price
+	 */
+	public $_sidebar_date = array();
 
 	static $_instance = array();
 
@@ -39,6 +56,7 @@ class HB_Report_Price extends HB_Report
 
 		$this->_query_results = $this->getOrdersItems();
 		add_action( 'admin_init', array( $this, 'export_csv' ) );
+		add_filter( 'tp_hotel_booking_sidebar_price_info', array( $this, 'total_ear' ) );
 	}
 
 	/**
@@ -96,21 +114,21 @@ class HB_Report_Price extends HB_Report
 							INNER JOIN `$wpdb->postmeta` AS ptt ON pb.ID = ptt.post_id AND ptt.meta_key = %s
 							WHERE pb.post_type = %s
 							AND MONTH(pbl.meta_value) >= MONTH(%s) AND MONTH(pbl.meta_value) <= MONTH(%s)
-							AND MONTH(pbl.meta_value) = completed_date
+							AND MONTH(pbl.meta_value) = completed_month
 						)
 						", '_hb_booking_payment_completed', '_hb_total', 'hb_booking', $this->_start_in, $this->_end_in
 					);
 
 				$query = $wpdb->prepare("
 						(
-							SELECT MONTH(pm.meta_value) AS completed_date, DATE(pm.meta_value) AS completed_time,
+							SELECT MONTH(pm.meta_value) AS completed_month, DATE(pm.meta_value) AS completed_date,
 							{$total} AS total
 							FROM `$wpdb->posts` AS p
 							INNER JOIN `$wpdb->postmeta` AS pm ON p.ID = pm.post_id AND pm.meta_key = %s
 							WHERE p.post_type = %s
 							AND p.post_status = %s
 							AND MONTH(pm.meta_value) >= MONTH(%s) AND MONTH(pm.meta_value) <= MONTH(%s)
-							GROUP BY completed_date
+							GROUP BY completed_month
 						)
 						", '_hb_booking_payment_completed', 'hb_booking', 'hb-completed', $this->_start_in, $this->_end_in
 					);
@@ -163,8 +181,8 @@ class HB_Report_Price extends HB_Report
 			}
 			else
 			{
-				$keyr = strtotime( date( 'Y-m-1', strtotime($item->completed_time) ) ); // timestamp of first day month in the loop
-				$excerpts[ (int)date("m", strtotime($item->completed_time)) ] = date( 'Y-m-d', $keyr );
+				$keyr = strtotime( date( 'Y-m-1', strtotime($item->completed_date) ) ); // timestamp of first day month in the loop
+				$excerpts[ (int)date("m", strtotime($item->completed_date)) ] = date( 'Y-m-d', $keyr );
 				$data[ $keyr ] = array(
 						strtotime( date('Y-m-1', $keyr ) ) * 1000,
 						(float)$item->total
@@ -224,48 +242,50 @@ class HB_Report_Price extends HB_Report
 		if( ! isset( $_POST['tab'] ) || sanitize_file_name( $_POST['tab'] ) !== $this->_chart_type )
 			return;
 
-		$inputs = $this->parseData( $this->_query_results );
-		$column = array(
-				__( 'Date/Time', 'tp-hotel-booking' )
-			);
-		$data = array(
-				__( 'Earnings', 'tp-hotel-booking' )
-			);
-		foreach ($inputs as $key => $input) {
-			if( $this->chart_groupby === 'day' )
-			{
-				if( isset( $input[0], $input[1] ) )
-					$time = $input[0] / 1000;
-
-				$column[] = date( 'Y-m-d', $time );
-				$data[] = number_format($input[1], 2, '.', ',') .' '. hb_get_currency();
-			}
-			else
-			{
-				if( isset( $input[0], $input[1] ) )
-					$time = $input[0] / 1000;
-
-				$column[] = date( 'F. Y', $time );
-				$data[] = number_format($input[1], 2, '.', ',') .' '. hb_get_currency();
-			}
-		}
-
-		$column = apply_filters( 'tp_hotel_booking_export_report_price_column', $column );
-		$data = apply_filters( 'tp_hotel_booking_export_report_price_data', $data );
+		// var_dump($this->_query_results); die();
 
 		$filename = 'tp_hotel_export_'.$this->_chart_type.'_'.$this->_start_in.'_to_'. $this->_end_in . '.csv';
 		header('Content-Type: application/csv; charset=utf-8');
 		header('Content-Disposition: attachment; filename='.$filename);
+
 		// create a file pointer connected to the output stream
 		$output = fopen('php://output', 'w');
+
+		$column = array(
+				__( 'Date/Time', 'tp-hotel-booking' )
+			);
+		if( $this->chart_groupby === 'month' )
+		{
+			$column = array(
+				__( 'Month', 'tp-hotel-booking' )
+			);
+		}
+
+		$column[] = __( 'Total Earning', 'tp-hotel-booking' );
+
+		$column = apply_filters( 'tp_hotel_booking_export_report_price_column', $column );
 
 		// output the column headings
 		fputcsv($output, $column);
 
-		fputcsv( $output, $data );
+		foreach ( $this->_query_results as $key => $item ) {
+			$data = array();
+			if( $this->chart_groupby === 'month' )
+			{
+				$data[] = date( 'M. Y', strtotime( date( "Y-{$item->completed_month}-1", strtotime( $item->completed_date ) ) ) );
+			}
+			else
+			{
+				$data[] = $item->completed_date;
+			}
+			$data[] = number_format($item->total, 2, '.', ',') .' '. hb_get_currency();
 
-		fpassthru($output);
-		die();
+			$data = apply_filters( 'tp_hotel_booking_export_report_price_data', $data, $item );
+
+			fputcsv( $output, $data );
+		}
+
+		fpassthru($output); die();
 	}
 
 	public function date_format( $date = '' )
@@ -280,6 +300,20 @@ class HB_Report_Price extends HB_Report
 		{
 			return date( 'F. Y', strtotime( date( 'Y-'.$date.'-1', time() ) ) );
 		}
+	}
+
+	function total_ear( $sidebars )
+	{
+		$price = 0;
+		foreach ($this->_query_results as $key => $item) {
+			$price = $price + $item->total;
+		}
+		$sidebars[] = array(
+				'title'		=> sprintf( __( 'Total %s to %s', 'tp-hotel-booking' ), $this->_start_in, $this->_end_in ),
+				'descr'		=> hb_format_price($price)
+			);
+
+		return $sidebars;
 	}
 
 	static function instance( $range = null )
@@ -298,7 +332,7 @@ class HB_Report_Price extends HB_Report
 
 }
 
-if( !isset($_REQUEST['tab']) || $_REQUEST['tab'] === 'price' )
+if( ! isset($_REQUEST['tab']) || $_REQUEST['tab'] === 'price' )
 {
 	$GLOBALS['hb_report'] = HB_Report_Price::instance();
 }
