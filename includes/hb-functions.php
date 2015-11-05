@@ -964,9 +964,10 @@ function hb_get_payment_gateways( $args = array() ){
     static $payment_gateways = array();
     if( ! $payment_gateways ) {
         $defaults = array(
-            'paypal' => new HB_Payment_Gateway_Paypal(),
-            'offline-payment' => new HB_Payment_Gateway_Offline_Payment(),
-            'stripe'        => new HB_Payment_Gateway_Stripe()
+            'paypal'            => new HB_Payment_Gateway_Paypal(),
+            'offline-payment'   => new HB_Payment_Gateway_Offline_Payment(),
+            'stripe'            => new HB_Payment_Gateway_Stripe(),
+            'authorize'         => new HB_Payment_Gateway_Authorize_Sim()
         );
         $payment_gateways = apply_filters('hb_payment_gateways', $defaults);
     }
@@ -1054,22 +1055,6 @@ function hb_get_bookings( $args = array() ){
     $bookings = get_posts( $args );
     return apply_filters( 'hb_get_bookings', $bookings, $args );
 }
-
-// function hb_maybe_modify_page_content(){
-//     global $post;
-//     if( is_page() && $post->ID == hb_get_page_id( 'search' ) ){
-
-//         // params search result
-//         $page = hb_get_request( 'hotel-booking' );
-//         $start_date     = hb_get_request( 'check_in_date' );
-//         $end_date       = hb_get_request( 'check_out_date' );
-//         $adults         = hb_get_request( 'adults' );
-//         $max_child      = hb_get_request( 'max_child' );
-
-//         $post->post_content = '[hotel_booking page="'.$page .'" check_in_date="'.$start_date.'" check_in_date="'.$end_date.'" adults="'.$adults.'" max_child="'.$max_child.'"]';
-//     }
-// }
-// add_action( 'template_redirect', 'hb_maybe_modify_page_content' );
 
 /**
  *

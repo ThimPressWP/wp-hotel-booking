@@ -395,12 +395,9 @@
             }
         }
 
-        // $('.hb_mini_cart_empty').addClass('hb_before_remove');
         $('.hb_mini_cart_empty').remove();
         var timeout = setTimeout(function(){
             $('.hb_mini_cart_item').removeClass('active');
-            // $('.hb_mini_cart_empty').removeClass('hb_before_remove');
-            // $('.hb_mini_cart_empty').remove();
             clearTimeout(timeout);
         }, 3000);
     }
@@ -558,30 +555,6 @@
             });
             return false;
         });
-        // $('form[name="hb-search-results"]').submit(function(){
-        //     var total_rooms = 0;
-
-        //     if( typeof hotel_settings_cart === 'undefined' || hotel_settings_cart === false )
-        //     {
-        //         alert( hotel_booking_l18n.no_rooms_selected );
-        //         return false;
-        //     }
-
-        //     $.ajax({
-        //         url: hotel_settings.ajax,
-        //         type: 'post',
-        //         dataType: 'html',
-        //         data: $(this).serialize(),
-        //         success: function (response) {
-        //             response = parseJSON(response)
-        //             if(response.success && response.sig){
-        //                 window.location.href = window.location.href.replace(/\?(.*)/, '?hotel-booking-params='+response.sig )
-        //             }
-        //         }
-        //     });
-
-        //     return false;
-        // });
 
         $('form#hb-payment-form').submit(function(e){
             e.preventDefault();
@@ -590,6 +563,7 @@
 
             var action = window.location.href.replace(/\?.*/, '');
             try {
+
                 if (_self.triggerHandler('hb_order_submit') === false) {
                     return false;
                 }
@@ -691,14 +665,7 @@
 
         $('.hb-rating-input').rating();
 
-        $('#commentform').submit( function() {
-            /*var $email = $( this ).closest( '#respond' ).find( '#email' );
-            if( ! $email.val() ){
-                $email.focus();
-                alert('enter your email');
-                return false;
-            }*/
-        });
+        $('#commentform').submit( function() {});
     });
 
     // rating single room

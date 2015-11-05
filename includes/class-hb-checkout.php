@@ -163,9 +163,7 @@ class HB_Checkout{
             if( $booking_id ) {
                 if (HB_Cart::instance()->needs_payment()) {
                     if( ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['booking_id']) )
-                    {
                         $_SESSION['hb_cart'.HB_BLOG_ID]['booking_id'] = $booking_id;
-                    }
                     $result = $payment_method->process_checkout( $booking_id , $customer_id );
                 } else {
                     if (empty($booking)) {

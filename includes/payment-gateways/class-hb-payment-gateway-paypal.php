@@ -98,7 +98,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
 
 
     function form(){
-        echo _e( 'Pay with Paypal');
+        echo _e( 'Pay with Paypal', 'tp-hotel-booking');
     }
 
     /**
@@ -332,8 +332,6 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
 
         $paypal_payment_url = ( $paypal['sandbox'] === 'on' ? $this->paypal_payment_sandbox_url : $this->paypal_payment_live_url ) . '?' .  http_build_query( $query );
 
-        // $cart = HB_Cart::instance();
-        // $cart->empty_cart();
         return $paypal_payment_url;
     }
 

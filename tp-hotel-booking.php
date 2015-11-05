@@ -121,6 +121,7 @@ class TP_Hotel_Booking{
         $this->_include( 'includes/payment-gateways/class-hb-payment-gateway-base.php' );
         $this->_include( 'includes/payment-gateways/class-hb-payment-gateway-paypal.php' );
         $this->_include( 'includes/payment-gateways/class-hb-payment-gateway-stripe.php' );
+        $this->_include( 'includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php' );
         $this->_include( 'includes/hb-webhooks.php' );
 
         if( ! class_exists( 'Aq_Resize' ) )

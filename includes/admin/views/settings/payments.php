@@ -11,7 +11,7 @@ $payment_gateways = hb_get_payment_gateways();
             <a href="#hb-payment-gateway-<?php echo $gateway->slug;?>"><?php echo $gateway->title;?></a>
         </li>
             <?php echo $i < $count ? '&nbsp;|&nbsp;' : '';?>
-        <?php }?>
+        <?php } ?>
     </ul>
     <div class="clearfix"></div>
     <?php $i = 0; foreach( $payment_gateways as $gateway ){?>
