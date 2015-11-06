@@ -244,7 +244,7 @@ $booking_id = hb_get_request( 'id' );
         <tbody>
         <tr>
             <td colspan="2">
-                <?php echo $addition_information;?>
+                <?php echo $addition_information; ?>
             </td>
         </tr>
         </tbody>

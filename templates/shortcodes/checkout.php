@@ -113,7 +113,8 @@ global $hb_settings;
         <?php wp_nonce_field( 'hb_customer_place_order', 'hb_customer_place_order_field' );?>
         <input type="hidden" name="hotel-booking" value="place_order" />
         <input type="hidden" name="action" value="hotel_booking_place_order" />
-        <input type="hidden" name="total_price" value="<?php echo $cart->advance_payment ? $cart->advance_payment : $cart->total ?>" />
+        <input type="hidden" name="total_advance" value="<?php echo $cart->advance_payment ? $cart->advance_payment : $cart->total ?>" />
+        <input type="hidden" name="total_price" value="<?php echo $cart->total ?>" />
         <?php if( $tos_page_id = hb_get_page_id( 'terms' ) ){?>
         <p>
             <label>

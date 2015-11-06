@@ -208,7 +208,16 @@
         var last_name  = form.find('input[name="last_name"]').val().trim();
         var email = form.find('input[name="email"]').val().trim();
 
-        var price = form.find('input[name="total_price"]').val();
+        var price = 0;
+        if( form.find( 'input[name="pay_all"]' ).is(':checked') )
+        {
+            price = form.find('input[name="total_price"]').val();
+        }
+        else
+        {
+            price = form.find('input[name="total_advance"]').val();
+        }
+
         // Open Checkout with further options
 
         handler.open({
