@@ -20,7 +20,7 @@ class HB_Booking{
     /**
      * @var null
      */
-    private $_customer = null;
+    public $_customer = null;
 
     /**
      * @var array
@@ -79,6 +79,7 @@ class HB_Booking{
         if( $this->_customer && $this->_customer->ID ){
             $customer_data = get_post_meta( $this->_customer->ID );
             $this->_customer->data = $customer_data;
+            return $customer_data;
         }
     }
 

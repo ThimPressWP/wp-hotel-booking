@@ -135,6 +135,7 @@ class HB_Shortcodes{
                 break;
         }
 
+        $template = apply_filters( 'tp_hotel_booking_shortcode_tpl', $template );
         ob_start();
         do_action( 'hb_wrapper_start' );
         hb_get_template( 'shortcodes/'.$template, $template_args );
@@ -266,9 +267,10 @@ class HB_Shortcodes{
 
     static function hotel_booking_cart( $atts )
     {
+        $template = apply_filters( 'tp_hotel_booking_cart_tpl', 'cart.php' );
         ob_start();
         do_action( 'hb_wrapper_start' );
-        hb_get_template( 'shortcodes/cart.php', $atts );
+        hb_get_template( 'shortcodes/'.$template, $atts );
         do_action( 'hb_wrapper_end' );
         $output = ob_get_clean();
         return $output;
@@ -298,9 +300,11 @@ class HB_Shortcodes{
             );
         }
 
+        $template = apply_filters( 'tp_hotel_booking_checkout_tpl', 'checkout.php' );
+        $template_args = apply_filters( 'tp_hotel_booking_checkout_tpl_template_args', $template_args );
         ob_start();
         do_action( 'hb_wrapper_start' );
-        hb_get_template( 'shortcodes/checkout.php', $template_args );
+        hb_get_template( 'shortcodes/'.$template, $template_args );
         do_action( 'hb_wrapper_end' );
         $output = ob_get_clean();
         return $output;
