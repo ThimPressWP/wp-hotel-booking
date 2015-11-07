@@ -122,7 +122,17 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base{
         $customer = $book->_customer->data;
         $time = time();
         $nonce = wp_create_nonce( 'replay-pay-nonce' );
-        $fingerprint = bin2hex(mhash(MHASH_MD5,  $this->_api_login_id . "^" . $book_id . "^" . $time . "^" . $book->advance_payment . "^", $this->_transaction_key));
+        if (function_exists('hash_hmac')) {
+            $fingerprint = hash_hmac(
+                    "md5",
+                    $this->_api_login_id . "^" . $book_id . "^" . $time . "^" . $book->advance_payment . "^" . hb_get_currency(),
+                    $this->_transaction_key
+                );
+        }
+        else
+        {
+            $fingerprint = bin2hex(mhash(MHASH_MD5, $this->_api_login_id . "^" . $book_id . "^" . $time . "^" . $book->advance_payment . "^" . hb_get_currency(), $this->_transaction_key));
+        }
         $authorize_args = array(
             'x_login'                  => $this->_api_login_id,
             'x_amount'                 => $book->advance_payment,
@@ -130,12 +140,14 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base{
             'x_invoice_num'            => $book_id,
             'x_relay_response'         => "TRUE",
             'x_relay_url'              => add_query_arg(
-                array( 'replay-pay' => $book_id, 'replay-pay-nonce' => $nonce ), hb_get_page_permalink( 'checkout' ) ),
+                array('replay-pay' => $book_id, 'replay-pay-nonce' => $nonce ),
+                hb_get_page_permalink( 'checkout' )
+            ),
             'x_fp_sequence'            => $book_id,
             'x_fp_hash'                => $fingerprint,
             'x_show_form'              => 'PAYMENT_FORM',
             'x_version'                => '3.1',
-            'x_fp_timestamp'           => time(),
+            'x_fp_timestamp'           => $time,
             'x_first_name'             => isset($customer['_hb_first_name']) ? $customer['_hb_first_name'][0] : '',
             'x_last_name'              => isset($customer['_hb_last_name']) ? $customer['_hb_last_name'][0] : '',
             'x_address'                => isset($customer['_hb_address']) ? $customer['_hb_address'][0] : '',
