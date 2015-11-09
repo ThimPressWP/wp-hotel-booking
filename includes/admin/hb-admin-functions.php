@@ -475,6 +475,7 @@ add_filter('manage_hb_booking_posts_columns', 'hb_booking_table_head');
  * @return mixed
  */
 function hb_manage_booking_column( $column_name, $post_id ) {
+    $status = get_post_status( $post_id );
     switch ( $column_name ){
         case 'booking_id':
             $booking_id = $post_id;
@@ -488,6 +489,7 @@ function hb_manage_booking_column( $column_name, $post_id ) {
             printf( '%s %s %s', $title ? $title : 'Cus.', $first_name, $last_name );
             break;
         case 'total':
+            global $hb_settings;
             $total      = get_post_meta( $post_id, '_hb_total', true );
             $currency   = get_post_meta( $post_id, '_hb_currency', true );
             $total_with_currency = hb_format_price( $total, hb_get_currency_symbol( $currency ) );
@@ -495,13 +497,27 @@ function hb_manage_booking_column( $column_name, $post_id ) {
             if( $method = hb_get_user_payment_method( get_post_meta( $post_id, '_hb_method', true ) ) ) {
                 printf( __( '<br />(<small>%s</small>)', 'tp-hotel-booking' ), $method->description );
             }
+            // display paid
+            if( $status === 'hb-processing' )
+            {
+                $advance_payment =  (float)get_post_meta( $post_id, '_hb_advance_payment', true );
+                $advance_settings = (float)get_post_meta( $post_id, '_hb_advance_payment_setting', true );
+                if( ! $advance_settings )
+                    $advance_settings = $hb_settings->get( 'advance_payment', 50 );
+
+                printf(
+                    __( '<br />(<small class="hb_advance_payment">Charged %s = %s</small>)', 'tp-hotel-booking' ),
+                    $advance_settings . '%',
+                    hb_format_price( $advance_payment, hb_get_currency_symbol( $currency ) )
+                );
+            }
+            // end display paid
             do_action( 'hb_manage_booing_column_total', $post_id, $total, $total_with_currency );
             break;
         case 'booking_date':
             echo date( 'F d, Y', strtotime( get_post_field( 'post_date', $post_id ) ) );
             break;
         case 'details':
-            $status = get_post_status( $post_id );
             echo '<a href="'. admin_url('admin.php?page=hb_booking_details&id='. $post_id) . '">' . __( 'View', 'tp-hotel-booking' ) . '</a><br />';
             echo '<span class="hb-booking-status ' . $status . '">' . hb_get_booking_status_label( $post_id ) . '</span>';
     }

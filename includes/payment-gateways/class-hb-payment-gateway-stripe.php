@@ -29,7 +29,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
     function __construct(){
         parent::__construct();
         $this->_title = __( 'Stripe', 'tp-hotel-booking' );
-        $this->_description = __( 'Pay with credit card', 'tp-hotel-booking' );
+        $this->_description = __( 'Pay with Stripe', 'tp-hotel-booking' );
         $this->_settings = maybe_unserialize(HB_Settings::instance()->get('stripe'));
 
         $debug = ( ! isset($this->_settings['test_mode']) || $this->_settings['test_mode'] === 'on' ) ? true : false;
@@ -80,8 +80,10 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
 
         $customer_id = $this->add_customer( $booking_id, $customer_id );
 
+        $advance_pay = (float)$cart->get_advance_payment();
+
         $request = array(
-                'amount'        => (float)$cart->get_advance_payment() * 100,
+                'amount'        => $advance_pay * 100,
                 'currency'      => hb_get_currency(),
                 'customer'      => $customer_id,
                 'description'   => sprintf(
@@ -100,7 +102,10 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
 
         if( $response->id )
         {
-            $book->update_status( 'completed' );
+            if( (float)$advance_pay === (float)$book->total )
+                $book->update_status( 'completed' );
+            else
+                $book->update_status( 'processing' );
             HB_Cart::instance()->empty_cart();
             $return = array(
                 'result'    => 'success',

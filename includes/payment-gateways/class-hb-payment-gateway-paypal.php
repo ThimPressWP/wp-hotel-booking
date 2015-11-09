@@ -225,14 +225,20 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      * @param Paypal IPN params
      */
     protected function payment_status_completed( $booking, $request ) {
-
         // Booking status is already completed
         if ( $booking->has_status( 'completed' ) ) {
             exit;
         }
 
         if ( 'completed' === $request['payment_status'] ) {
-            $this->payment_complete( $booking, ( ! empty( $request['txn_id'] ) ? $request['txn_id'] : '' ), __( 'IPN payment completed', 'tp-hotel-booking' ) );
+            if( (float)$booking->total === (float)$request['payment_gross'] )
+            {
+                $this->payment_complete( $booking, ( ! empty( $request['txn_id'] ) ? $request['txn_id'] : '' ), __( 'IPN payment completed', 'tp-hotel-booking' ) );
+            }
+            else
+            {
+                $booking->update_status( 'processing' );
+            }
             // save paypal fee
             if ( ! empty( $request['mc_fee'] ) ) {
                 update_post_meta( $booking->post->id, 'PayPal Transaction Fee', $request['mc_fee'] );
