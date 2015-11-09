@@ -59,8 +59,8 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base{
         $this->_description = __( 'Pay with Authorize.net', 'tp-hotel-booking' );
         $this->_settings = HB_Settings::instance()->get('authorize');
 
-        $this->_api_login_id = isset($this->_settings['api_login_id']) ? $this->_settings['api_login_id'] : '';
-        $this->_transaction_key = isset($this->_settings['transaction_key']) ? $this->_settings['transaction_key'] : '';
+        $this->_api_login_id = isset($this->_settings['api_login_id']) ? $this->_settings['api_login_id'] : '8u33RVeK';
+        $this->_transaction_key = isset($this->_settings['transaction_key']) ? $this->_settings['transaction_key'] : '36zHT3e446Hha7X8';
         $this->_secret_key = isset($this->_settings['secret_key']) ? $this->_settings['secret_key'] : '';
 
         $this->_production_authorize_url        = 'https://secure.authorize.net/gateway/transact.dll';
