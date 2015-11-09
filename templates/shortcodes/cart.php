@@ -31,7 +31,7 @@ global $hb_settings;
                             </td>
                             <td class="hb_room_type"><a href="<?php echo get_permalink( $room->ID ); ?>"><?php echo $room->name; ?><?php printf( '%s', $room->capacity_title ? ' ('.$room->capacity_title.')' : '' ); ?></a></td>
                             <td class="hb_capacity"><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'tp-hotel-booking' ), $room->capacity );?> </td>
-                            <td class="hb_quantity"><input type="number" class="hb_room_number_edit" name="hotel_booking_cart[<?php echo $room->search_key ?>][<?php echo $room->ID;?>]" value="<?php echo $num_of_rooms; ?>" /></td>
+                            <td class="hb_quantity"><input type="number" min="0" class="hb_room_number_edit" name="hotel_booking_cart[<?php echo $room->search_key ?>][<?php echo $room->ID;?>]" value="<?php echo $num_of_rooms; ?>" /></td>
                             <td class="hb_check_in"><?php echo $room->check_in_date ?></td>
                             <td class="hb_check_out"><?php echo $room->check_out_date ?></td>
                             <td class="hb_night"><?php echo hb_count_nights_two_dates( $room->check_out_date, $room->check_in_date) ?></td>
