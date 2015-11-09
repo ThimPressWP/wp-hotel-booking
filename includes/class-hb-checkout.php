@@ -91,17 +91,18 @@ class HB_Checkout{
 
         // booking meta data
         $booking_info = array(
-            '_hb_total_nights'          => $transaction_object->total_nights,
-            '_hb_tax'                   => $tax,
-            '_hb_price_including_tax'   => $price_including_tax ? 1 : 0,
-            '_hb_sub_total'             => $transaction_object->sub_total,
-            '_hb_total'                 => $transaction_object->total,
-            '_hb_advance_payment'       => $transaction_object->advance_payment,
-            '_hb_currency'              => $transaction_object->currency,
-            '_hb_customer_id'           => $customer_id,
-            '_hb_method'                => $this->payment_method->slug,
-            '_hb_method_title'          => $this->payment_method->title,
-            '_hb_method_id'             => $this->payment_method->method_id
+            '_hb_total_nights'              => $transaction_object->total_nights,
+            '_hb_tax'                       => $tax,
+            '_hb_price_including_tax'       => $price_including_tax ? 1 : 0,
+            '_hb_sub_total'                 => $transaction_object->sub_total,
+            '_hb_total'                     => $transaction_object->total,
+            '_hb_advance_payment'           => $transaction_object->advance_payment,
+            '_hb_advance_payment_setting'   => $hb_settings->get( 'advance_payment', 50 ),
+            '_hb_currency'                  => $transaction_object->currency,
+            '_hb_customer_id'               => $customer_id,
+            '_hb_method'                    => $this->payment_method->slug,
+            '_hb_method_title'              => $this->payment_method->title,
+            '_hb_method_id'                 => $this->payment_method->method_id
         );
 
         if( ! empty( $transaction_object->coupon ) ){
