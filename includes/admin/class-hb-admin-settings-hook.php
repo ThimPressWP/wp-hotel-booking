@@ -5,24 +5,23 @@ class HB_Admin_Settings_Hook extends HB_Settings {
 	public function __construct()
 	{
 		parent::__construct();
-		add_action( 'hb_update_settings_my-rooms', array( $this, 'create_pages' ) );
-		add_action( 'hb_update_settings_checkout', array( $this, 'create_pages' ) );
+		add_action( 'hb_update_settings_my-rooms', array( $this, 'create_pages' ), 10, 2 );
+		add_action( 'hb_update_settings_checkout', array( $this, 'create_pages' ), 10, 2 );
 		add_action( 'tp_hotel_booking_chart_sidebar', array($this, 'report_sidebar' ), 10, 2 );
 		add_action( 'tp_hotel_booking_chart_canvas', array($this, 'report_canvas' ), 10, 2 );
-
 	}
 
 	/**
 	 * Create pages that the plugin relies on, storing page id's in variables.
 	 */
-	public function create_pages( $param ) {
+	public function create_pages( $name, $value ) {
 
 		$pages = array();
 
-		if( empty( $param ) )
+		if( empty( $name ) )
 			return;
 
-		if( $param == 'my-rooms' )
+		if( $name == 'my-rooms' && $value == 1 )
 		{
 			$pages['my-rooms'] = array(
 				'name'    => _x( 'my-rooms', 'Page slug', 'tp-hotel-booking' ),
@@ -31,7 +30,7 @@ class HB_Admin_Settings_Hook extends HB_Settings {
 			);
 		}
 
-		if( $param === 'checkout' )
+		if( $name === 'checkout' && $value == 1 )
 		{
 			$pages['checkout'] = array(
 				'name'    => _x( 'room-checkout', 'Page slug', 'tp-hotel-booking' ),

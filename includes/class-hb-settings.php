@@ -81,7 +81,7 @@ class HB_Settings{
      */
     function set( $name, $value ){
         $this->_options[ $name ] = $value;
-        do_action( 'hb_update_settings_'.$name, $value );
+        do_action( 'hb_update_settings_'.$name, $name, $value );
         return $this->_options;
     }
 
