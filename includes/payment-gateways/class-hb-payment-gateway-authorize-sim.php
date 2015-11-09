@@ -309,7 +309,7 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base{
      * @return array
      */
     function process_checkout( $booking_id = null ){
-        echo $this->_get_authorize_basic_checkout_url(  $booking_id  ); die();
+        echo hb_get_page_permalink( 'checkout' ); die();
         return array(
             'result'    => 'success',
             'redirect'  => $this->_get_authorize_basic_checkout_url(  $booking_id  )
