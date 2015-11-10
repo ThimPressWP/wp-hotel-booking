@@ -19,18 +19,6 @@ $settings = hb_settings();
         </td>
     </tr>
     <tr>
-        <th><?php _e( 'Install and use page: ', 'tp-hotel-booking' ) ?></th>
-        <td>
-            <input type="hidden" name="<?php echo $settings->get_field_name('my-rooms');?>" value="0" />
-            <input type="checkbox" name="<?php echo $settings->get_field_name('my-rooms');?>" <?php checked( $settings->get('my-rooms') ? 1 : 0, 1 );?> value="1" id="my-rooms"/>
-            <label for="my-rooms"><?php _e( 'My Room', 'tp-hotel-booking' ) ?></label>
-
-            <input type="hidden" name="<?php echo $settings->get_field_name('checkout');?>" value="0" />
-            <input type="checkbox" name="<?php echo $settings->get_field_name('checkout');?>" <?php checked( $settings->get('checkout')? 1 : 0, 1 );?> value="1" id="checkout"/>
-            <label for="checkout"><?php _e( 'Checkout', 'tp-hotel-booking' ) ?></label>
-        </td>
-    </tr>
-    <tr>
         <th><?php _e( 'Terms and Conditions Page', 'tp-hotel-booking' );?></th>
         <td>
             <?php
