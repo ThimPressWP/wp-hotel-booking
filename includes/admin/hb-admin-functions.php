@@ -113,19 +113,6 @@ function hb_add_meta_boxes(){
             'max'       => 100
         )
     )->add_field(
-        // array(
-        //     'name'      => 'room_type',
-        //     'label'     => __( 'Room type', 'tp-hotel-booking' ),
-        //     'type'      => 'select',
-        //     'options'   => hb_get_room_types(
-        //         array(
-        //             'map_fields' => array(
-        //                 'term_id'   => 'value',
-        //                 'name' => 'text'
-        //             )
-        //         )
-        //     )
-        // ),
         array(
             'name'      => 'room_capacity',
             'label'     => __( 'Number of adults', 'tp-hotel-booking' ),
@@ -233,13 +220,6 @@ function hb_add_meta_boxes(){
             'type'      => 'label',
             'filter'    => 'hb_meta_box_field_coupon_used'
         )
-//        array(
-//            'name'      => 'limit_per_customer',
-//            'label'     => __( 'Usage limit per customer', 'tp-hotel-booking' ),
-//            'type'      => 'number',
-//            'desc'      => __( 'How many times this coupon can be used by an individual customer.', 'tp-hotel-booking' ),
-//            'min'       => 0
-//        )
     );
 
     HB_Meta_Box::instance(

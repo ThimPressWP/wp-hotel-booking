@@ -449,26 +449,6 @@ class HB_Post_Types{
                 }
             }
 
-            // if( ! empty( $_POST[ "{$taxonomy}_thumbnail" ] ) ){
-            //     foreach( $_POST[ "{$taxonomy}_thumbnail" ] as $term_id => $thumb_id ) {
-            //         if( $thumb_id ) {
-            //             update_option( 'hb_taxonomy_thumbnail_' . $term_id, $thumb_id );
-            //         }else{
-            //             delete_option( 'hb_taxonomy_thumbnail_' . $term_id );
-            //         }
-            //     }
-            // }
-
-            // if( ! empty( $_POST['hb-gallery'] ) && $gallery = $_POST['hb-gallery'] ){
-            //     foreach( $gallery as $term_id => $options ){
-            //         if( ! empty( $options['gallery'] ) ){
-            //             update_option( 'hb_taxonomy_thumbnail_' . $term_id, $options['gallery'] );
-            //         }else{
-            //             delete_option( 'hb_taxonomy_thumbnail_' . $term_id );
-            //         }
-            //     }
-
-            // }
         }
 
     }

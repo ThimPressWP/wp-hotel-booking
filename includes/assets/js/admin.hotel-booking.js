@@ -243,6 +243,8 @@
             $(this).parent().remove();
         });
 
+        $('form[name="hb-admin-settings-form"] select').select2();
+
         $('input[name="tp_hotel_booking_email_new_booking_enable"]').on('change _change', function(){
             var $siblings = $(this).closest('tr').siblings('.' + $(this).attr('name'));
             if( this.checked ){
