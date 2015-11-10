@@ -105,7 +105,7 @@ function hb_add_meta_boxes(){
     )->add_field(
         array(
             'name'      => 'num_of_rooms',
-            'label'     => __( 'Number of rooms', 'tp-hotel-booking' ),
+            'label'     => __( 'Quantity', 'tp-hotel-booking' ),
             'type'      => 'number',
             'std'       => '100',
             'desc'      => __( 'The number of rooms', 'tp-hotel-booking' ),
