@@ -412,7 +412,7 @@ if( ! function_exists('hotel_booking_num_room_archive') )
 
     function hotel_booking_num_room_archive( $query )
     {
-        if( isset($query->query_vars['post_type']) && $query->query_vars['post_type'] === 'hb_room' )
+        if( ! is_admin() && isset($query->query_vars['post_type']) && $query->query_vars['post_type'] === 'hb_room' )
         {
             global $hb_settings;
             $query->set( 'posts_per_page', $hb_settings->get( 'posts_per_page', 8 ) );

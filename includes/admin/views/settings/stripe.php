@@ -45,13 +45,13 @@ $field_name = $settings->get_field_name('stripe');
     <tr>
         <th><?php _e( 'Live Secret Key', 'tp-hotel-booking' );?></th>
         <td>
-            <input type="text" name="<?php echo $field_name;?>[live_secret_key]" value="<?php echo esc_attr( $stripe['live_secret_key'] ); ?>" />
+            <input type="text" class="regular-text" name="<?php echo $field_name;?>[live_secret_key]" value="<?php echo esc_attr( $stripe['live_secret_key'] ); ?>" />
         </td>
     </tr>
     <tr>
         <th><?php _e( 'Live Publishable Key', 'tp-hotel-booking' );?></th>
         <td>
-            <input type="text" name="<?php echo $field_name;?>[live_publish_key]" value="<?php echo esc_attr( $stripe['live_publish_key'] ); ?>" />
+            <input type="text" class="regular-text" name="<?php echo $field_name;?>[live_publish_key]" value="<?php echo esc_attr( $stripe['live_publish_key'] ); ?>" />
         </td>
     </tr>
 </table>
