@@ -1563,7 +1563,6 @@ function hb_new_booking_email( $booking_id ){
 add_action( 'hb_booking_status_pending_to_processing', 'hb_new_booking_email' );
 add_action( 'hb_booking_status_pending_to_completed', 'hb_new_booking_email' );
 
-
 function hb_get_booking_id_by_key( $booking_key ){
     global $wpdb;
 

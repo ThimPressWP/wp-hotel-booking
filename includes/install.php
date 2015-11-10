@@ -40,22 +40,36 @@ Thank for booking',
         'tp_hotel_booking_tax' => '10',
         'tp_hotel_booking_terms_page_id' => '0'
     );
-    /*global $wpdb;
-    $query = "
-        SELECT option_name, option_value
-        FROM {$wpdb->options}
-        WHERE option_name LIKE 'tp_hotel_booking%'
-    ";
-    $rows = $wpdb->get_results($query);
-    ob_start();
-    echo '$options = array(';
-    foreach( $rows as $row ){
-        echo "\n\t'" . $row->option_name . "' => '" . $row->option_value . "',";
-    }
-    echo ');';
-    file_put_contents( TP_Hotel_Booking::instance()->plugin_path( 'install.txt'), ob_get_clean());*/
     foreach( $options as $k => $v ){
         update_option( $k, $v );
     }
     update_option( 'tp_hotel_booking_ready', '1' );
+}
+
+global $hb_settings;
+$pages = array();
+if( ! hb_get_page_id( 'my-rooms' ) )
+{
+    $pages['my-rooms'] = array(
+        'name'    => _x( 'my-rooms', 'Page slug', 'tp-hotel-booking' ),
+        'title'   => _x( 'My Rooms', 'Page title', 'tp-hotel-booking' ),
+        'content' => '[' . apply_filters( 'hotel_booking_cart_shortcode_tag', 'hotel_booking_cart' ) . ']'
+    );
+}
+
+if( ! hb_get_page_id( 'checkout' ) )
+{
+    $pages['checkout'] = array(
+        'name'    => _x( 'room-checkout', 'Page slug', 'tp-hotel-booking' ),
+        'title'   => _x( 'Checkout', 'Page title', 'tp-hotel-booking' ),
+        'content' => '[' . apply_filters( 'hotel_booking_checkout_shortcode_tag', 'hotel_booking_checkout' ) . ']'
+    );
+}
+
+if( $pages )
+{
+    foreach ( $pages as $key => $page ) {
+        $pageId = hb_create_page( esc_sql( $page['name'] ), 'hotel_booking_' . $key . '_page_id', $page['title'], $page['content'], ! empty( $page['parent'] ) ? hb_get_page_id( $page['parent'] ) : '' );
+        $hb_settings->set( $key.'_page_id', $pageId );
+    }
 }

@@ -201,6 +201,7 @@ class TP_Hotel_Booking{
         wp_register_script( 'jquery-ui-datepicker', $this->plugin_url( 'includes/assets/js/jquery.ui.datepicker.min.js' ), array( 'jquery' ) );
         wp_register_style( 'jquery-ui-datepicker', $this->plugin_url( 'includes/assets/css/jquery.ui.datepicker.css' ) );
         wp_register_style( 'tp-hotel-booking-star', $this->plugin_url( 'includes/assets/css/star.css' ) );
+        wp_register_style( 'tp-hotel-booking-font-awesome', $this->plugin_url( 'includes/assets/css/font-awesome.min.css' ) );
         if( is_admin() ){
             wp_register_style( 'tp-admin-hotel-booking', $this->plugin_url( 'includes/assets/css/admin.tp-hotel-booking.css' ) );
             wp_register_script( 'tp-admin-hotel-booking', $this->plugin_url( 'includes/assets/js/admin.hotel-booking.js' ), $dependencies );
@@ -256,6 +257,7 @@ class TP_Hotel_Booking{
         }else{
             wp_enqueue_style( 'jquery-ui-datepicker' );
             wp_enqueue_style( 'tp-hotel-booking' );
+            wp_enqueue_style( 'tp-hotel-booking-font-awesome' );
             wp_enqueue_script( 'tp-hotel-booking' );
             wp_enqueue_script( 'tp-hotel-booking-stripe-js' );
             wp_enqueue_script( 'tp-hotel-booking-stripe-checkout-js' );
