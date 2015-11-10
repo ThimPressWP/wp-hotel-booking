@@ -523,15 +523,6 @@ class HB_Post_Types{
             case 'ordering':
                 $content = sprintf( '<input class="hb-number-field" type="number" name="%s_ordering[%d]" value="%d" size="3" />', $taxonomy, $term_id, $term->term_group );
                 break;
-            // case 'thumbnail':
-            //     $attachments = get_option( 'hb_taxonomy_thumbnail_' . $term_id );
-            //     $count = is_array( $attachments ) ? sizeof( $attachments ) : 0;
-            //     if( $count > 0 ) {
-            //         echo '<a href="" class="hb-edit-room-gallery">' . sprintf(_n('Edit (%d image)', 'Edit (%d images)', $count, 'tp-hotel-booking'), $count) . '</a>';
-            //     }else{
-            //         echo '<a href="" class="hb-edit-room-gallery">' . __( 'Edit (0 image)', 'tp-hotel-booking') . '</a>';
-            //     }
-            //     break;
             case 'capacity':
                 $capacity = get_option( 'hb_taxonomy_capacity_' . $term_id );
                 $content = '<input class="hb-number-field" type="number" name="' . $taxonomy . '_capacity[' . $term_id . ']" value="' . $capacity .'" size="2" />';
