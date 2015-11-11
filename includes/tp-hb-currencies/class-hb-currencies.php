@@ -1,12 +1,5 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-    exit;
-}
-
-if( ! function_exists( 'hb_settings' ) )
-	return;
-
 require_once __DIR__ . '/class-hb-currencies-settings.php';
 require_once __DIR__ . '/class-hb-currencies-storage.php';
 
@@ -57,17 +50,27 @@ class HB_SW_Curreny
 	 */
 	public function __construct( )
 	{
-		add_action( 'init', array( $this, 'init' ) );
 		// include file
 		$this->includes();
+		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
+		add_action( 'init', array( $this, 'init' ) );
+	}
+
+	/**
+	 * add action, filter
+	 * @return null
+	 */
+	public function init()
+	{
+		$this->_storage = HB_SW_Curreny_Storage::instance();
 
 		/**
 		 * if is multi currency is true
 		 * do all action in frontend
 		 */
+
 		if( $this->_is_multi )
 		{
-			add_action( 'widgets_init', array( $this, 'register_widgets' ) );
 			add_filter( 'hb_get_currency', array( $this, 'switch_currencies' ) );
 		}
 
@@ -82,17 +85,11 @@ class HB_SW_Curreny
 		}
 	}
 
-	/**
-	 * add action, filter
-	 * @return null
-	 */
-	public function init()
-	{
-		$this->_storage = HB_SW_Curreny_Storage::instance();
-	}
-
 	public function includes()
 	{
+		require_once __DIR__ . '/functions.php' ;
+		require_once __DIR__ . '/class-hb-abstract-shortcode.php' ;
+		require_once __DIR__ . '/shortcodes/class-hb-shortcode-currency-switcher.php' ;
 		require_once __DIR__ . '/widgets/class-hb-widget-currency-switch.php' ;
 	}
 
@@ -102,7 +99,7 @@ class HB_SW_Curreny
 	 */
 	public function register_widgets()
 	{
-		// register_widget( 'HB_Widget_Currency_Switch' );
+		register_widget( 'HB_Widget_Currency_Switch' );
 	}
 
 	public function switch_currencies( $currency )

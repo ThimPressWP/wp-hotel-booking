@@ -9,7 +9,8 @@ $currencies = wp_parse_args(
 	array(
 		'enable'				=> 1,
 		'is_multi_currency'		=> 1,
-        'aggregator'            => 'google'
+        'aggregator'            => 'google',
+        'storage'               => 'cookie'
 	)
 );
 
@@ -44,6 +45,23 @@ $currencies = wp_parse_args(
             <select name="<?php echo esc_attr( $settings->get_field_name('aggregator') ); ?>" tabindex="-1">
                 <?php foreach( $aggregators as $k => $agg ): ?>
                     <option value="<?php echo esc_attr( $k ) ?>" <?php selected( $currencies['aggregator'] == $k );?>><?php printf( '%s', $agg ) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th><?php _e( 'Currency storage', 'tp-hotel-booking' ); ?></th>
+        <?php
+            $storages = apply_filters( 'tp_hotel_booking_currency_storage', array(
+                    'session'       => __( 'Session', 'tp-hotel-booking' ),
+                    'cookie'        => __( 'Cookie', 'tp-hotel-booking' ),
+                    'transient'     => __( 'Transient', 'tp-hotel-booking' )
+                ) );
+        ?>
+        <td>
+            <select name="<?php echo esc_attr( $settings->get_field_name('storage') ); ?>" tabindex="-1">
+                <?php foreach( $storages as $k => $text ): ?>
+                    <option value="<?php echo esc_attr( $k ) ?>" <?php selected( $currencies['storage'] == $k );?>><?php printf( '%s', $text ) ?></option>
                 <?php endforeach; ?>
             </select>
         </td>

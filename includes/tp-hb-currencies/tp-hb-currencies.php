@@ -1,0 +1,40 @@
+<?php
+
+if ( ! defined( 'ABSPATH' ) )
+	exit;
+
+if( ! function_exists( 'hb_settings' ) )
+	return;
+
+if( ! defined( 'TP_HB_CURRENCY' ) )
+	define( 'TP_HB_CURRENCY', __DIR__ );
+
+if( ! defined( 'TP_HB_CURRENCY_URI' ) )
+	define( 'TP_HB_CURRENCY_URI', HB_PLUGIN_URL . '/includes/tp-hb-currencies' );
+
+require_once TP_HB_CURRENCY . '/class-hb-currencies.php';
+
+class HB_SW_Factory
+{
+
+	public function __construct()
+	{
+		/**
+		 * enqueue scripts
+		 */
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
+	}
+
+	/**
+	 * enqueue script
+	 * @return null
+	 */
+	public function enqueue()
+	{
+		wp_enqueue_script( 'tp-hb-currencies', TP_HB_CURRENCY_URI . '/assets/js/tp-hb-currencies.js', 'jquery', HB_VERSION, true );
+		wp_enqueue_style( 'tp-hb-currencies', TP_HB_CURRENCY_URI . '/assets/css/tp-hb-currencies.css');
+	}
+
+}
+
+new HB_SW_Factory();

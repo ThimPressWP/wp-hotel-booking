@@ -27,7 +27,6 @@ class HB_SW_Curreny_Storage
 	function __construct( )
 	{
 		add_filter( 'tp_hotel_booking_currency_aggregator', array( $this, 'aggregator' ) );
-
 	}
 
 	public function aggregator( $aggregators )
