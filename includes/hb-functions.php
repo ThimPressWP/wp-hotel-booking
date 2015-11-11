@@ -793,7 +793,9 @@ function hb_format_price( $price, $with_currency = true ){
     $price_number_of_decimal = $settings->get( 'price_number_of_decimal' );
     if ( ! is_numeric( $price ) )
         $price = 0;
-    $before   = $after = '';
+
+    $price = apply_filters( 'tp_hotel_booking_format_price', $price );
+    $before = $after = '';
     if ( $with_currency ) {
         if ( gettype( $with_currency ) != 'string' ) {
             $currency = hb_get_currency_symbol();

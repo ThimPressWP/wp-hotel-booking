@@ -214,6 +214,11 @@ class HB_Settings{
         hb_get_template( 'loop/pricing_plan.php' );
     }
 
+    function get_prefix()
+    {
+        return $this->_option_prefix;
+    }
+
     /**
      * Get unique instance of HB_Settings
      * Create a new one if it is not created

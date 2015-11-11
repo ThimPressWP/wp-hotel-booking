@@ -7,11 +7,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 if( ! function_exists( 'hb_settings' ) )
 	return;
 
+require_once __DIR__ . '/class-hb-currencies-settings.php';
+require_once __DIR__ . '/class-hb-currencies-storage.php';
+
 /**
  * class switch currency.
  */
 class HB_SW_Curreny
 {
+
+	/**
+	 * process action, cookie, sesssion, transient
+	 * @var null
+	 */
+	protected $_storage = null;
+
+	/**
+	 * protected method option
+	 * @var null
+	 */
+	protected $_options = null;
 
 	/**
 	 * default setting currency $hb_settings->get( 'currency', 'USD' );
@@ -38,22 +53,26 @@ class HB_SW_Curreny
 	static $_instance = null;
 
 	/**
-	 * __construct
+	 * __constructor
 	 */
-	public function __construct()
+	public function __construct( HB_SW_Curreny_Storage $storage, HB_SW_Curreny_Setting $settings )
 	{
 		global $hb_settings;
 
-		$this->_is_multi = $hb_settings->get( 'is_multi_currency', 1 );
-		$this->_default_currency = $hb_settings->get( 'currency', 'USD' );
-		$this->_current_currency = $this->get();
+		$this->_storage = $storage;
+
+		$this->_options = $settings;
+
+		$this->_is_multi = (boolean)$this->_options->get( 'is_multi_currency', 1 );
+		$this->_default_currency = $this->_options->_detault_currency;
+		$this->_current_currency = $this->_storage->get();
 
 		$this->init();
 	}
 
 	/**
 	 * add action, filter
-	 * @return [type] [description]
+	 * @return null
 	 */
 	public function init()
 	{
@@ -67,6 +86,7 @@ class HB_SW_Curreny
 		if( $this->_is_multi )
 		{
 			add_action( 'widgets_init', array( $this, 'register_widgets' ) );
+			add_action( 'tp_hotel_booking_sw_currencies', array( $this, 'switch_currencies' ) );
 		}
 
 		/**
@@ -76,6 +96,7 @@ class HB_SW_Curreny
 		{
 			add_filter( 'hb_admin_settings_tabs', array( $this, 'setting_tab' ) );
 			add_action( 'hb_admin_settings_tab_currencies', array( $this, 'admin_settings' ) );
+
 		}
 	}
 
@@ -85,39 +106,17 @@ class HB_SW_Curreny
 	}
 
 	/**
-	 * get value of option name
-	 * @param  string $name  name of the option
-	 * @param  [string, int, boolean, null] $value default val when option name == false
-	 * @return string, boolean, integer or null
-	 */
-	public function get( $name = null, $value = null )
-	{
-		if( ! $name )
-			return $value;
-
-		return $value;
-	}
-
-	/**
-	 * set option name COOKIE, SESSION, hb_setting, transient
-	 * @param [type] $name  name of option
-	 * @param [type] $value value of oftion name
-	 */
-	public function set( $name = null, $value = null )
-	{
-		if( ! $name  )
-			return;
-
-		return $value;
-	}
-
-	/**
 	 * register widget
 	 * @return null
 	 */
 	public function register_widgets()
 	{
 		// register_widget( 'HB_Widget_Currency_Switch' );
+	}
+
+	public function switch_currencies()
+	{
+
 	}
 
 	/**
@@ -149,7 +148,7 @@ class HB_SW_Curreny
 			$currency = $hb_settings->get( 'currency', 'USD' );
 
 		if( empty( self::$_instance[$currency] ) )
-			return self::$_instance[$currency] = new HB_SW_Curreny( $currency );
+			return self::$_instance[$currency] = new HB_SW_Curreny( new HB_SW_Curreny_Storage, new HB_SW_Curreny_Setting );
 
 		return self::$_instance[$currency];
 	}
