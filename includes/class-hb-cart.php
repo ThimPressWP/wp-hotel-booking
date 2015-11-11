@@ -451,7 +451,6 @@ function hb_generate_transaction_object( ){
     $transaction_object->price_including_tax    = hb_price_including_tax();
     $transaction_object->addition_information   = hb_get_request( 'addition_information' );
     $transaction_object->total_nights           = $cart->total_nights;
-    $transaction_object->currency               = hb_get_currency();
 
     if( HB_Settings::instance()->get( 'enable_coupon' ) && $coupon = get_transient( 'hb_user_coupon_' . session_id() ) ){
         $coupon = HB_Coupon::instance( $coupon );
