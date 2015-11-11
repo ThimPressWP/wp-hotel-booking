@@ -55,7 +55,7 @@ class HB_SW_Curreny
 	/**
 	 * __constructor
 	 */
-	public function __construct()
+	public function __construct( )
 	{
 		add_action( 'init', array( $this, 'init' ) );
 		// include file
