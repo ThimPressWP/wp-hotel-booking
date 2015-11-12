@@ -1,4 +1,5 @@
 <?php
+
 function hb_get_max_capacity_of_rooms(){
     static $max = null;
     if( ! is_null( $max ) ){
@@ -794,7 +795,7 @@ function hb_format_price( $price, $with_currency = true ){
     if ( ! is_numeric( $price ) )
         $price = 0;
 
-    $price = apply_filters( 'tp_hotel_booking_format_price', $price );
+    $price = apply_filters( 'tp_hotel_booking_price_switcher', $price );
     $before = $after = '';
     if ( $with_currency ) {
         if ( gettype( $with_currency ) != 'string' ) {

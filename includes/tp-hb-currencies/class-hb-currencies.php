@@ -10,40 +10,16 @@ class HB_SW_Curreny
 {
 
 	/**
-	 * process action, cookie, sesssion, transient
-	 * @var null
-	 */
-	protected $_storage = null;
-
-	/**
-	 * protected method option
-	 * @var null
-	 */
-	protected $_options = null;
-
-	/**
 	 * default setting currency $hb_settings->get( 'currency', 'USD' );
 	 * @var null
 	 */
 	public $_default_currency = null;
 
 	/**
-	 * current selected currency
-	 * @var null
-	 */
-	public $_current_currency = null;
-
-	/**
 	 * allow multi - currency
 	 * @var boolean
 	 */
 	public $_is_multi = false;
-
-	/**
-	 * instance instead new HB_SW_Curreny();
-	 * @var null
-	 */
-	static $_instance = null;
 
 	/**
 	 * __constructor
@@ -53,6 +29,14 @@ class HB_SW_Curreny
 		// include file
 		$this->includes();
 		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
+
+		/**
+		 * if is multi currency is true
+		 * do all action in frontend
+		 */
+		add_filter( 'hb_currency', array( $this, 'switch_currencies' ) );
+		add_filter( 'tp_hotel_booking_price_switcher', array( $this, 'switch_price' ) );
+		add_filter( 'tp_hotel_booking_currency_aggregator', array( $this, 'aggregator' ) );
 		add_action( 'init', array( $this, 'init' ) );
 	}
 
@@ -62,18 +46,6 @@ class HB_SW_Curreny
 	 */
 	public function init()
 	{
-		$this->_storage = HB_SW_Curreny_Storage::instance();
-
-		/**
-		 * if is multi currency is true
-		 * do all action in frontend
-		 */
-
-		if( $this->_is_multi )
-		{
-			add_filter( 'hb_get_currency', array( $this, 'switch_currencies' ) );
-		}
-
 		/**
 		 * generate settings in admin panel
 		 */
@@ -102,10 +74,56 @@ class HB_SW_Curreny
 		register_widget( 'HB_Widget_Currency_Switch' );
 	}
 
+	/**
+	 * switch currency
+	 * @param  string key $currency
+	 * @return string key
+	 */
 	public function switch_currencies( $currency )
 	{
+		$settings = HB_SW_Curreny_Setting::instance();
+		$storage = HB_SW_Curreny_Storage::instance();
+		if( $this->_is_multi = $settings->get('is_multi_currency', false) )
+		{
+			do_action( 'tp_hb_before_currencies_switcher' );
 
+			$currency = apply_filters( 'tp_hb_currencies_switcher', $storage->get( 'currency' ) );
+
+			do_action( 'tp_hb_after_currencies_switcher' );
+		}
 		return $currency;
+	}
+
+	/**
+	 * switch price
+	 * @param  numberic $price
+	 * @return numberic
+	 */
+	public function switch_price ( $price )
+	{
+		$settings = HB_SW_Curreny_Setting::instance();
+		$storage = HB_SW_Curreny_Storage::instance();
+
+		$default_currency = $settings->_detault_currency;
+
+		$current_currency = $storage->get( 'currency' );
+
+		$rate = $storage->get_rate( $default_currency, $current_currency );
+
+		return (float)$price * $rate;
+	}
+
+	/**
+	 * generate aggregator
+	 * @param  array $aggregators
+	 * @return array
+	 */
+	public function aggregator( $aggregators )
+	{
+		$aggregators[ 'yahoo' ] = 'http://finance.yahoo.com';
+		$aggregators[ 'google' ] = 'http://google.com/finance';
+
+		return $aggregators;
 	}
 
 	/**
@@ -119,29 +137,15 @@ class HB_SW_Curreny
 		return $tabs;
 	}
 
+	/**
+	 * admin setting
+	 * @return null
+	 */
 	function admin_settings()
 	{
 		// TP_Hotel_Booking::instance()->_include( 'includes/currencies/views/settings.php' );
 		require_once __DIR__ . '/settings/settings.php' ;
 	}
 
-	/**
-	 * get intance instead of new HB_SW_Curreny();
-	 * @param  text $currency
-	 * @return object
-	 */
-	static function instance( $currency = null )
-	{
-		global $hb_settings;
-		if( ! $currency )
-			$currency = $hb_settings->get( 'currency', 'USD' );
-
-		if( empty( self::$_instance[$currency] ) )
-			return self::$_instance[$currency] = new HB_SW_Curreny();
-
-		return self::$_instance[$currency];
-	}
-
 }
-
-$GLOBALS['hb_multi_currency'] = HB_SW_Curreny::instance();
+new HB_SW_Curreny();

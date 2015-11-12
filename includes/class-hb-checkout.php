@@ -99,6 +99,8 @@ class HB_Checkout{
             '_hb_advance_payment'           => $transaction_object->advance_payment,
             '_hb_advance_payment_setting'   => $hb_settings->get( 'advance_payment', 50 ),
             '_hb_currency'                  => $transaction_object->currency,
+            '_hb_payment_currency'          => $transaction_object->payment_currency,
+            '_hb_payment_currency_rate'     => $transaction_object->payment_currency_rate,
             '_hb_customer_id'               => $customer_id,
             '_hb_method'                    => $this->payment_method->slug,
             '_hb_method_title'              => $this->payment_method->title,

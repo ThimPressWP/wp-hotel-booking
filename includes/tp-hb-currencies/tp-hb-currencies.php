@@ -3,7 +3,7 @@
 if ( ! defined( 'ABSPATH' ) )
 	exit;
 
-if( ! function_exists( 'hb_settings' ) )
+if( ! defined( 'HB_PLUGIN_PATH' ) )
 	return;
 
 if( ! defined( 'TP_HB_CURRENCY' ) )
@@ -12,17 +12,23 @@ if( ! defined( 'TP_HB_CURRENCY' ) )
 if( ! defined( 'TP_HB_CURRENCY_URI' ) )
 	define( 'TP_HB_CURRENCY_URI', HB_PLUGIN_URL . '/includes/tp-hb-currencies' );
 
-require_once TP_HB_CURRENCY . '/class-hb-currencies.php';
+if( ! defined( 'TP_HB_STORAGE_NAME' ) )
+	define( 'TP_HB_STORAGE_NAME', 'tp_hb_sw_currency' );
 
 class HB_SW_Factory
 {
-
 	public function __construct()
 	{
 		/**
 		 * enqueue scripts
 		 */
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
+		$this->init();
+	}
+
+	function init()
+	{
+		require_once TP_HB_CURRENCY . '/class-hb-currencies.php';
 	}
 
 	/**

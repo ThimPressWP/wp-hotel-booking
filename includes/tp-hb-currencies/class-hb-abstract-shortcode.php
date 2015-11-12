@@ -40,6 +40,12 @@ abstract class HB_SW_Curreny_Shortcode
 	 */
 	public function render( $att, $content = null )
 	{
+
+		$settings = HB_SW_Curreny_Setting::instance();
+
+		if( ! $settings->get( 'enable' ) || ! $settings->get( 'is_multi_currency' ) )
+			return;
+
 		$html = array();
 
 		$html[] = $this->before();

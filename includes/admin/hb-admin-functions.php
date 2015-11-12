@@ -471,7 +471,9 @@ function hb_manage_booking_column( $column_name, $post_id ) {
         case 'total':
             global $hb_settings;
             $total      = get_post_meta( $post_id, '_hb_total', true );
-            $currency   = get_post_meta( $post_id, '_hb_currency', true );
+            $currency   = get_post_meta( $post_id, '_hb_payment_currency', true );
+            if( ! $currency )
+                $currency = get_post_meta( $post_id, '_hb_currency', true );
             $total_with_currency = hb_format_price( $total, hb_get_currency_symbol( $currency ) );
             echo $total_with_currency;
             if( $method = hb_get_user_payment_method( get_post_meta( $post_id, '_hb_method', true ) ) ) {
@@ -1020,6 +1022,9 @@ if ( ! function_exists( 'hb_update_meta_box_booking_status' ) )
     function hb_update_meta_box_booking_status( $post )
     {
         if( get_post_type() !== 'hb_booking' )
+            return;
+
+        if( ! isset($_POST) )
             return;
 
         if( ! isset($_POST['_hb_booking_status']) && ! $_POST['_hb_booking_status'] )

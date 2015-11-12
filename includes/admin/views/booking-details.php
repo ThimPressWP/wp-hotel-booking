@@ -1,18 +1,27 @@
 <?php
 $booking_id = hb_get_request( 'id' );
-
 ?>
 <div class="wrap">
     <h2><?php _e( 'Booking Details: ','tp-hotel-booking' ); echo hb_format_order_number( $booking_id );  ?></h2>
-    <?php
+<?php
     $booking = HB_Booking::instance( $booking_id );
     if( ! $booking->post->ID ){
         _e( 'Invalid booking', 'tp-hotel-booking' );
         return;
     }
     $customer_id = get_post_meta( $booking_id, '_hb_customer_id', true );
-    $currency_symbol = hb_get_currency_symbol( get_post_meta( $booking_id, '_hb_currency', true ) );
-    ?>
+    $default_currency = get_post_meta( $booking_id, '_hb_currency', true );
+    $default_currency_symbol = hb_get_currency_symbol( $default_currency );
+
+    $payment_currency = get_post_meta( $booking_id, '_hb_payment_currency', true );
+    if( ! $payment_currency  )
+        $payment_currency = $default_currency;
+
+    $currency_symbol = hb_get_currency_symbol( $payment_currency );
+    $rate = get_post_meta( $booking_id, '_hb_payment_currency_rate', true );
+    if( ! $rate )
+        $rate = 1;
+?>
     <table  class="hb-booking-table customer-information">
         <thead>
             <th colspan="2">
@@ -91,7 +100,7 @@ $booking_id = hb_get_request( 'id' );
         </thead>
         <tbody>
             <?php $booking_rooms_params = get_post_meta( $booking_id, '_hb_booking_params', true ); ?>
-            <?php $currency = hb_get_currency_symbol( get_post_meta( $booking_id, '_hb_currency', true ) ); ?>
+            <?php //$currency = hb_get_currency_symbol( get_post_meta( $booking_id, '_hb_currency', true ) ); ?>
                 <?php if( $booking_rooms_params ): ?>
                     <?php foreach ($booking_rooms_params as $search_key => $rooms): ?>
 
@@ -152,32 +161,32 @@ $booking_id = hb_get_request( 'id' );
         </thead>
         <tbody>
             <?php $booking_rooms_params = get_post_meta( $booking_id, '_hb_booking_params', true ); ?>
-            <?php $currency = hb_get_currency_symbol( get_post_meta( $booking_id, '_hb_currency', true ) ); ?>
+            <?php //$currency = hb_get_currency_symbol( get_post_meta( $booking_id, '_hb_currency', true ) ); ?>
                 <?php if( $booking_rooms_params ): ?>
                     <?php foreach ($booking_rooms_params as $search_key => $rooms): ?>
 
-                                <?php foreach ($rooms as $id => $room_param) : ?>
-                                    <tr style="background-color: #FFFFFF;">
-                                        <td>
-                                            <?php
-                                                $room = HB_Room::instance( $id, $room_param );
-                                                echo get_the_title( $id );
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <?php
-                                                $terms = wp_get_post_terms( $id, 'hb_room_type' );
-                                                $room_types = array();
-                                                foreach ($terms as $key => $term) {
-                                                    $room_types[] = $term->name;
-                                                }
-                                                if( ! empty( $room_types ) ) echo implode(', ', $room_types);
-                                            ?>
-                                        </td>
-                                        <td align="right"><?php echo $room->quantity ?></td>
-                                        <td align="right"><?php echo hb_format_price( $room->total, $currency_symbol );?></td>
-                                    </tr>
-                                <?php endforeach; ?>
+                            <?php foreach ($rooms as $id => $room_param) : ?>
+                                <tr style="background-color: #FFFFFF;">
+                                    <td>
+                                        <?php
+                                            $room = HB_Room::instance( $id, $room_param );
+                                            echo get_the_title( $id );
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                            $terms = wp_get_post_terms( $id, 'hb_room_type' );
+                                            $room_types = array();
+                                            foreach ($terms as $key => $term) {
+                                                $room_types[] = $term->name;
+                                            }
+                                            if( ! empty( $room_types ) ) echo implode(', ', $room_types);
+                                        ?>
+                                    </td>
+                                    <td align="right"><?php echo $room->quantity ?></td>
+                                    <td align="right"><?php echo hb_format_price( $room->total, $currency_symbol );?></td>
+                                </tr>
+                            <?php endforeach; ?>
 
                     <?php endforeach; ?>
                 <?php endif; ?>
@@ -200,8 +209,28 @@ $booking_id = hb_get_request( 'id' );
                 <td align="right"><?php echo get_post_meta( $booking_id, '_hb_tax', true ) * 100; ?>%</td>
             </tr>
             <tr>
+                <th colspan="3" align="left"><?php _e( 'Default Currency', 'tp-hotel-booking' ); ?></th>
+                <td align="right"><?php echo $default_currency; ?></td>
+            </tr>
+            <tr>
+                <th colspan="3" align="left"><?php _e( 'Payment Currency', 'tp-hotel-booking' ); ?></th>
+                <td align="right"><?php echo $payment_currency; ?></td>
+            </tr>
+            <tr>
+                <th colspan="3" align="left">
+                    <?php _e( 'Currency Rate', 'tp-hotel-booking' ); ?>
+                    <?php printf( '%s / %s', $default_currency, $payment_currency ) ?>
+                </th>
+                <td align="right"><?php printf( '%s', $rate ); ?></td>
+            </tr>
+            <tr>
                 <th colspan="3" align="left"><?php _e( 'Total', 'tp-hotel-booking' ); ?></th>
-                <td align="right"><?php echo hb_format_price( get_post_meta( $booking_id, '_hb_total', true ), $currency_symbol ); ?></td>
+                <td align="right">
+                    <?php echo hb_format_price( get_post_meta( $booking_id, '_hb_total', true ), $currency_symbol ); ?>
+                    <?php if( $rate && $rate != 1 ): ?>
+                        (<?php printf( '%s', hb_format_price( (float)get_post_meta( $booking_id, '_hb_total', true ) / (float)$rate , $default_currency_symbol ) ) ?>)
+                    <?php endif; ?>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -249,5 +278,5 @@ $booking_id = hb_get_request( 'id' );
         </tr>
         </tbody>
     </table>
-    <?php }?>
+    <?php } ?>
 </div>

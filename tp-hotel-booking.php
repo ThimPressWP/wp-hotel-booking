@@ -113,12 +113,12 @@ class TP_Hotel_Booking{
         $this->_include( 'includes/widgets/class-hb-widget-lastest-reviews.php' );
         $this->_include( 'includes/widgets/class-hb-widget-mini-cart.php' );
         $this->_include( 'includes/class-hb-post-types.php' );
+        $this->_include( 'includes/tp-hb-currencies/tp-hb-currencies.php' );
         $this->_include( 'includes/hb-functions.php' );
         $this->_include( 'includes/class-hb-cart.php' );
         $this->_include( 'includes/class-hb-resizer.php' );
         $this->_include( 'includes/class-hb-booking.php' );
         $this->_include( 'includes/class-hb-booking.php' );
-        $this->_include( 'includes/tp-hb-currencies/tp-hb-currencies.php' );
         $this->_include( 'includes/payment-gateways/class-hb-payment-gateway-base.php' );
         $this->_include( 'includes/payment-gateways/class-hb-payment-gateway-paypal.php' );
         $this->_include( 'includes/payment-gateways/class-hb-payment-gateway-stripe.php' );

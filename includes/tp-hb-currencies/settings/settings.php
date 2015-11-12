@@ -54,7 +54,7 @@ $currencies = wp_parse_args(
         <?php
             $storages = apply_filters( 'tp_hotel_booking_currency_storage', array(
                     'session'       => __( 'Session', 'tp-hotel-booking' ),
-                    'cookie'        => __( 'Cookie', 'tp-hotel-booking' ),
+                    // 'cookie'        => __( 'Cookie', 'tp-hotel-booking' ),
                     'transient'     => __( 'Transient', 'tp-hotel-booking' )
                 ) );
         ?>
