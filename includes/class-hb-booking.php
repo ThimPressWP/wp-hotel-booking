@@ -266,8 +266,9 @@ class HB_Booking{
      * @return mixed
      */
     public function get_checkout_booking_received_url() {
-        $received_url = hb_get_endpoint_url( 'booking-received', $this->id, hb_get_page_permalink( 'search' ) );
-        $received_url = add_query_arg( 'key', $this->booking_key, $received_url );
+        // $received_url = hb_get_endpoint_url( 'booking-received', $this->id, hb_get_page_permalink( 'search' ) );
+        // $received_url = add_query_arg( 'key', $this->booking_key, $received_url );
+        $received_url = hb_get_page_permalink( 'search' );
         return apply_filters( 'hb_get_checkout_booking_received_url', $received_url, $this );
     }
 

@@ -877,9 +877,9 @@ function hb_search_rooms( $args = array() ){
             WHERE
                 booking.post_type = %s
                 AND bm.meta_value = rooms.ID
-                AND (bi.meta_value <= %d AND bo.meta_value >= %d)
+                AND ( (bi.meta_value <= %d AND bo.meta_value >= %d)
                 OR (bi.meta_value >= %d AND bi.meta_value <= %d)
-                OR (bo.meta_value > %d AND bo.meta_value <= %d)
+                OR (bo.meta_value > %d AND bo.meta_value <= %d) )
         )
     ", '_hb_id', '_hb_check_in_date', '_hb_check_out_date', 'hb_booking_item',
         $check_in_date_to_time, $check_out_date_to_time,
@@ -896,10 +896,10 @@ function hb_search_rooms( $args = array() ){
         INNER JOIN {$wpdb->postmeta} pm ON pm.post_id = rooms.ID AND pm.meta_key = %s
         INNER JOIN {$wpdb->postmeta} pm2 ON pm2.post_id = rooms.ID AND pm2.meta_key = %s
         WHERE
-          rooms.post_type = %s
-          AND rooms.post_status = %s
-          AND pm.meta_value >= %d
-          AND pm2.meta_value = %d
+            rooms.post_type = %s
+            AND rooms.post_status = %s
+            AND pm.meta_value >= %d
+            AND pm2.meta_value = %d
         HAVING available_rooms > 0
     ", '_hb_max_child_per_room', '_hb_max_adults_per_room', 'hb_room', 'publish', $max_child, $adults );
 
