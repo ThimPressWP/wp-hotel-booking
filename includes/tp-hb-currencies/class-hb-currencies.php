@@ -10,12 +10,6 @@ class HB_SW_Curreny
 {
 
 	/**
-	 * default setting currency $hb_settings->get( 'currency', 'USD' );
-	 * @var null
-	 */
-	public $_default_currency = null;
-
-	/**
 	 * allow multi - currency
 	 * @var boolean
 	 */
@@ -30,6 +24,8 @@ class HB_SW_Curreny
 		$this->includes();
 		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
 
+		//wpml plugin
+		add_action( 'wpml_switch_language', array( $this, 'switch_language' ) );
 		/**
 		 * if is multi currency is true
 		 * do all action in frontend
@@ -37,6 +33,9 @@ class HB_SW_Curreny
 		add_filter( 'hb_currency', array( $this, 'switch_currencies' ) );
 		add_filter( 'tp_hotel_booking_price_switcher', array( $this, 'switch_price' ) );
 		add_filter( 'tp_hotel_booking_currency_aggregator', array( $this, 'aggregator' ) );
+
+		// transaction object
+		add_filter( 'tp_hotel_booking_checkout_booking_info', array( $this, 'generate_booking_info' ) );
 		add_action( 'init', array( $this, 'init' ) );
 	}
 
@@ -111,6 +110,28 @@ class HB_SW_Curreny
 		$rate = $storage->get_rate( $default_currency, $current_currency );
 
 		return (float)$price * $rate;
+	}
+
+	public function switch_language()
+	{
+
+	}
+
+	/**
+	 * generate transaction payment object
+	 * @param  object $transaction [description]
+	 * @return object              [description]
+	 */
+	public function generate_booking_info( $booking_info )
+	{
+	    global $hb_settings;
+	    $default_curreny = $hb_settings->get( 'currency', 'USD' );
+	    $payment_currency = hb_get_currency();
+		// booking meta data
+        $booking_info['_hb_payment_currency'] 		= apply_filters( 'tp_hotel_booking_payment_current_currency', $payment_currency );
+        $booking_info['_hb_payment_currency_rate'] 	= (float)apply_filters( 'tp_hotel_booking_payment_currency_rate', $default_curreny, $payment_currency );
+
+        return $booking_info;
 	}
 
 	/**

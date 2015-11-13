@@ -110,6 +110,8 @@ class HB_Checkout{
         if( ! empty( $transaction_object->coupon ) ){
             $booking_info['_hb_coupon'] = $transaction_object->coupon;
         }
+
+        $booking_info = apply_filters( 'tp_hotel_booking_checkout_booking_info', $booking_info );
         $booking->set_booking_info(
             $booking_info
         );

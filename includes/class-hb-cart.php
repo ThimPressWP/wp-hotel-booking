@@ -439,7 +439,6 @@ function hb_generate_transaction_object( ){
 
     global $hb_settings;
     $default_curreny = $hb_settings->get( 'currency', 'USD' );
-    $payment_currency = hb_get_currency();
 
     $transaction_object = new stdClass();
     $transaction_object->cart_id                = $cart->get_cart_id();
@@ -448,10 +447,6 @@ function hb_generate_transaction_object( ){
     $transaction_object->advance_payment        = hb_get_cart_total( ! hb_get_request( 'pay_all' ) );
     // currency of default
     $transaction_object->currency               = apply_filters( 'tp_hotel_booking_payment_currency', $default_curreny );
-    // payment currency
-    $transaction_object->payment_currency       = apply_filters( 'tp_hotel_booking_payment_current_currency', $payment_currency );
-    // payment currency rate
-    $transaction_object->payment_currency_rate  = (float)apply_filters( 'tp_hotel_booking_payment_currency_rate', $default_curreny, $payment_currency );
     $transaction_object->description            = hb_get_cart_description();
     $transaction_object->rooms                  = $rooms;
     $transaction_object->coupons                = '';
