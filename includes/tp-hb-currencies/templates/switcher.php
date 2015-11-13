@@ -1,6 +1,5 @@
 <?php $tp_currencies = hb_payment_currencies(); ?>
 <?php $storage = HB_SW_Curreny_Storage::instance(); ?>
-
 <form method="POST" class="hb_form_currencies_switcher">
 	<?php wp_nonce_field( 'hb_sw_currencies', 'hb_sw_currencies' ); ?>
 	<select name="hb_form_currencies_switcher_select" class="hb_form_currencies_switcher_select">

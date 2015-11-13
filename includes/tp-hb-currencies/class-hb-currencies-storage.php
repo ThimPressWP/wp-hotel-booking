@@ -33,8 +33,6 @@ class HB_SW_Curreny_Storage
 	function __construct( )
 	{
 		$this->_storage_name = TP_HB_STORAGE_NAME;
-		if( isset( $_GET['currency'] ) && $_GET['currency'] )
-			$this->set( 'currency', $_GET['currency'] );
 
 		add_action( 'tp_hb_currencies_switcher', array( $this, 'switcher' ) );
 		add_filter( 'tp_hotel_booking_payment_currency_rate', array( $this, 'get_rate' ), 10, 3 );

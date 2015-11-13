@@ -118,3 +118,69 @@ if( ! function_exists( 'hb_sw_get_template' ) )
 	    return apply_filters( 'hb_sw_locate_template', $template, $template_name, $template_path );
 	}
 }
+
+if( ! function_exists( 'hb_sw_currency_countries' ) )
+{
+	/**
+	 * country code => currency code
+	 * @return array
+	 */
+	function hb_sw_currency_countries()
+	{
+		$country_currency = array(
+			"US"	=>	"USD",
+			"EN"	=>	"EUR",
+			"BE"	=>	"EUR",
+			"ES"	=>	"EUR",
+			"LU"	=>	"EUR",
+			"PT"	=>	"EUR",
+			"DE"	=>	"EUR",
+			"FR"	=>	"EUR",
+			"MT"	=>	"EUR",
+			"SI"	=>	"EUR",
+			"IE"	=>	"EUR",
+			"IT"	=>	"EUR",
+			"NL"	=>	"EUR",
+			"SK"	=>	"EUR",
+			"GR"	=>	"EUR",
+			"CY"	=>	"EUR",
+			"AT"	=>	"EUR",
+			"FI"	=>	"EUR",
+			"JP"	=>	"JPY",
+			"BG"	=>	"BGN",
+			"CZ"	=>	"CZK",
+			"DK"	=>	"DKK",
+			"EE"	=>	"EEK",
+			"GB"	=>	"GBP",
+			"HU"	=>	"HUF",
+			"LT"	=>	"LTL",
+			"LV"	=>	"LVL",
+			"PL"	=>	"PLN",
+			"RO"	=>	"RON",
+			"SE"	=>	"SEK",
+			"CH"	=>	"CHF",
+			"NO"	=>	"NOK",
+			"HR"	=>	"HRK",
+			"RU"	=>	"RUB",
+			"TR"	=>	"TRY",
+			"AU"	=>	"AUD",
+			"BR"	=>	"BRL",
+			"CA"	=>	"CAD",
+			"CN"	=>	"CNY",
+			"HK"	=>	"HKD",
+			"ID"	=>	"IDR",
+			"IN"	=>	"INR",
+			"KR"	=>	"KRW",
+			"MX"	=>	"MXN",
+			"MY"	=>	"MYR",
+			"NZ"	=>	"NZD",
+			"PH"	=>	"PHP",
+			"SG"	=>	"SGD",
+			"TH"	=>	"THB",
+			"ZA"	=>	"ZAR",
+			"VI"	=>	"VND"
+		);
+
+		return apply_filters( 'hb_sw_currencies_languages', $country_currency );
+	}
+}

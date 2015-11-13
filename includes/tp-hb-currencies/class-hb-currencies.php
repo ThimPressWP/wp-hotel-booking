@@ -24,8 +24,6 @@ class HB_SW_Curreny
 		$this->includes();
 		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
 
-		//wpml plugin
-		add_action( 'wpml_switch_language', array( $this, 'switch_language' ) );
 		/**
 		 * if is multi currency is true
 		 * do all action in frontend
@@ -34,9 +32,46 @@ class HB_SW_Curreny
 		add_filter( 'tp_hotel_booking_price_switcher', array( $this, 'switch_price' ) );
 		add_filter( 'tp_hotel_booking_currency_aggregator', array( $this, 'aggregator' ) );
 
+		add_action( 'plugins_loaded', array( $this, 'set_currency' ) );
+		add_action( 'qtranslate_init_language', array( $this, 'qtranslate' ) );
+
 		// transaction object
 		add_filter( 'tp_hotel_booking_checkout_booking_info', array( $this, 'generate_booking_info' ) );
 		add_action( 'init', array( $this, 'init' ) );
+	}
+
+	/**
+	 * default currency
+	 */
+	public function set_currency()
+	{
+		$storage = HB_SW_Curreny_Storage::instance();
+
+		if( isset( $_GET['currency'] ) && $_GET['currency'] )
+			$storage->set( 'currency', $_GET['currency'] );
+	}
+
+	/**
+	 * [qtranslate switch language]
+	 * @param  [type] $params [description]
+	 * @return [type]         [description]
+	 */
+	public function qtranslate( $params )
+	{
+		if( ! isset( $params['language'] ) ) return;
+
+		$currency_countries = hb_sw_currency_countries();
+
+		$lang = strtoupper( $params['language'] );
+		if( array_key_exists( $lang, $currency_countries ) )
+		{
+			$currency = strtoupper( $currency_countries[ $lang ] );
+			if( $currency )
+			{
+				$storage = HB_SW_Curreny_Storage::instance();
+				$storage->set( 'currency', $currency );
+			}
+		}
 	}
 
 	/**
@@ -110,11 +145,6 @@ class HB_SW_Curreny
 		$rate = $storage->get_rate( $default_currency, $current_currency );
 
 		return (float)$price * $rate;
-	}
-
-	public function switch_language()
-	{
-
 	}
 
 	/**
