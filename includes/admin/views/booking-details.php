@@ -131,9 +131,9 @@ $booking_id = hb_get_request( 'id' );
                                                 }
                                             ?>
                                         </td>
+                                        <td style="text-align: right;" colspan="4"><?php echo $room->quantity;?></td>
                                         <td style="text-align: right;" colspan="4"><?php echo $room->check_in_date;?></td>
                                         <td style="text-align: right;" colspan="4"><?php echo $room->check_out_date;?></td>
-                                        <td style="text-align: right;" colspan="4"><?php echo $room->quantity;?></td>
                                         <td style="text-align: right;" colspan="4">
                                             <?php
                                                 echo hb_count_nights_two_dates( $room->check_out_date, $room->check_in_date);

@@ -189,9 +189,7 @@ class HB_Report_Room extends HB_Report
 
 	public function parseData( $results )
 	{
-
 		$series = array();
-
 		$ids = array();
 		foreach ($results as $key => $value) {
 			if( ! isset( $ids[ $value->room_ID ] ) )
@@ -251,15 +249,18 @@ class HB_Report_Room extends HB_Report
 					{
 						$_in = strtotime( date( 'Y-m-d', $v->checkindate ) );
 						$_out = strtotime( date( 'Y-m-d', $v->checkoutdate ) );
+
+						if( $current_time >= $_in && $current_time < $_out )
+							$avaiable++;
 					}
 					else
 					{
 						$_in = strtotime( date( 'Y-m-1', $v->checkindate ) );
 						$_out = strtotime( date( 'Y-m-1', $v->checkoutdate ) );
-					}
 
-					if( $current_time >= $_in && $current_time <= $_out )
-						$avaiable++;
+						if( $current_time >= $_in && $current_time <= $_out )
+							$avaiable++;
+					}
 
 				}
 
