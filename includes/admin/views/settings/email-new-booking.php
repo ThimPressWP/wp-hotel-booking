@@ -3,7 +3,7 @@ $settings = hb_settings();
 ?>
 <!-- New Booking block -->
 <h3><?php _e( 'New Booking', 'tp-hotel-booking' );?></h3>
-<p class="description"><?php _e( 'New booking emails are sent when a booking is received.');?></p>
+<p class="description"><?php _e( 'New booking emails are sent when a booking is received.', 'tp-hotel-booking');?></p>
 <table class="form-table">
     <tr>
         <th><?php _e( 'Enable', 'tp-hotel-booking' );?></th>

@@ -1506,6 +1506,31 @@ function hb_customer_booked_room( $customer_email , $room_id ){
 }
 
 /**
+ * filter email from
+ */
+add_filter( 'wp_mail_from', 'hb_wp_mail_from' );
+function hb_wp_mail_from( $email )
+{
+    global $hb_settings;
+    if( $email = $hb_settings->get( 'email_general_from_email', get_option( 'admin_email' ) ) )
+    {
+        if( filter_var( $email, FILTER_VALIDATE_EMAIL ) )
+        {
+            return $email;
+        }
+    }
+    return $email;
+}
+add_filter( 'wp_mail_from_name', 'hb_wp_mail_from_name' );
+function hb_wp_mail_from_name( $name ) {
+    global $hb_settings;
+    if( $name = $hb_settings->get( 'email_general_from_name' ) )
+    {
+        return $name;
+    }
+    return $name;
+}
+/**
  * Send email to user after they booked room
  *
  * @param int $booking_id
@@ -1557,6 +1582,7 @@ function hb_new_booking_email( $booking_id ){
         $body = $emogrifier->emogrify();
 
     } catch ( Exception $e ) {
+
     }
 
     $headers = "Content-Type: " . ( $format == 'html' ? 'text/html' : 'text/plain' ) . "\r\n";
