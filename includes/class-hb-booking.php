@@ -53,7 +53,7 @@ class HB_Booking{
             $this->post = $post;
         }
         if( empty( $this->post ) ){
-            $this->post = hb_create_empty_post();
+            $this->post = hb_create_empty_post( array( 'post_status' => 'hb-pending' ) );
         }
 
         if( ! empty( $this->post->ID ) ){

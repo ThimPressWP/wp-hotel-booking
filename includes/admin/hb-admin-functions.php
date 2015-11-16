@@ -1027,7 +1027,7 @@ if ( ! function_exists( 'hb_update_meta_box_booking_status' ) )
         if( ! isset($_POST) )
             return;
 
-        if( ! isset($_POST['_hb_booking_status']) && ! $_POST['_hb_booking_status'] )
+        if( ! isset($_POST['_hb_booking_status']) || ! $_POST['_hb_booking_status'] )
             return;
 
         $status = $_POST['_hb_booking_status'];
