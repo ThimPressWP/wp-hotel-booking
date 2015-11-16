@@ -1511,7 +1511,7 @@ function hb_customer_booked_room( $customer_email , $room_id ){
 /**
  * filter email from
  */
-add_filter( 'wp_mail_from', 'hb_wp_mail_from' );
+// add_filter( 'wp_mail_from', 'hb_wp_mail_from' );
 function hb_wp_mail_from( $email )
 {
     global $hb_settings;
@@ -1524,7 +1524,7 @@ function hb_wp_mail_from( $email )
     }
     return $email;
 }
-add_filter( 'wp_mail_from_name', 'hb_wp_mail_from_name' );
+// add_filter( 'wp_mail_from_name', 'hb_wp_mail_from_name' );
 function hb_wp_mail_from_name( $name ) {
     global $hb_settings;
     if( $name = $hb_settings->get( 'email_general_from_name' ) )

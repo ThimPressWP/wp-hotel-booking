@@ -204,8 +204,8 @@
             }
         });
 
-        var first_name  = form.find('input[name="first_name"]').val().trim();
-        var last_name  = form.find('input[name="last_name"]').val().trim();
+        var first_name = form.find('input[name="first_name"]').val().trim();
+        var last_name = form.find('input[name="last_name"]').val().trim();
         var email = form.find('input[name="email"]').val().trim();
 
         var price = 0;
