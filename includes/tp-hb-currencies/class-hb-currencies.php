@@ -92,7 +92,7 @@ class HB_SW_Curreny
 				$storage = HB_SW_Curreny_Storage::instance();
 				$storage->set( 'currency', $currency );
 			}
-		}	
+		}
 	}
 
 	/**
