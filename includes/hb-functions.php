@@ -436,7 +436,7 @@ function hb_dropdown_titles( $args = array() ){
  *
  * @return stdClass
  */
-function hb_create_empty_post(){
+function hb_create_empty_post( $args = array() ){
     $posts = get_posts(
         array(
             'post_type'         => 'any',
@@ -446,7 +446,10 @@ function hb_create_empty_post(){
 
     if( $posts ){
         foreach( get_object_vars( $posts[0] ) as $key => $value ){
-            $posts[0]->{$key} = null;
+            if( ! in_array( $key, $args ) )
+                $posts[0]->{$key} = null;
+            else
+                $posts[0]->{$key} = $args[$key];
         }
         return $posts[0];
     }
@@ -1590,7 +1593,9 @@ function hb_new_booking_email( $booking_id ){
     return $send;
 }
 add_action( 'hb_booking_status_pending_to_processing', 'hb_new_booking_email' );
+add_action( 'hb_booking_status_publish_to_processing', 'hb_new_booking_email' );
 add_action( 'hb_booking_status_pending_to_completed', 'hb_new_booking_email' );
+add_action( 'hb_booking_status_publish_to_completed', 'hb_new_booking_email' );
 
 function hb_get_booking_id_by_key( $booking_key ){
     global $wpdb;
