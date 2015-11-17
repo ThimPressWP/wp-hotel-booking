@@ -35,7 +35,7 @@ class HB_SW_Curreny
 		add_action( 'plugins_loaded', array( $this, 'set_currency' ) );
 		add_action( 'qtranslate_init_language', array( $this, 'qtranslate' ) );
 		// cookie check wpml;
-		add_action( 'icl_initial_language_set', array( $this, 'wpml_switcher' ) );
+		add_filter( 'icl_current_language', array( $this, 'wpml_switcher' ) );
 
 		// transaction object
 		add_filter( 'tp_hotel_booking_checkout_booking_info', array( $this, 'generate_booking_info' ) );
@@ -76,23 +76,21 @@ class HB_SW_Curreny
 		}
 	}
 
-	public function wpml_switcher()
+	public function wpml_switcher( $lag )
 	{
-		if( ! isset( $_COOKIE[ '_icl_current_language' ] ) ) return;
-
+		$storage = HB_SW_Curreny_Storage::instance();
 		$currency_countries = hb_sw_currency_countries();
-
-		$lang = strtoupper( $_COOKIE[ '_icl_current_language' ] );
-		if( array_key_exists( $lang, $currency_countries ) )
+		$country = strtoupper( $lag );
+		if( array_key_exists( $country, $currency_countries ) )
 		{
-			$currency = strtoupper( $currency_countries[ $lang ] );
+			$currency = strtoupper( $currency_countries[ $country ] );
 			if( $currency )
 			{
-				var_dump($currency);
 				$storage = HB_SW_Curreny_Storage::instance();
 				$storage->set( 'currency', $currency );
 			}
 		}
+		return $lag;
 	}
 
 	/**
