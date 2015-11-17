@@ -1067,7 +1067,7 @@ function hb_get_bookings( $args = array() ){
  */
 function hb_maybe_modify_page_content($content){
     global $post;
-    if( is_page() && $post->ID == hb_get_page_id( 'search' ) ){
+    if( is_page() && ( $post->ID == hb_get_page_id( 'search' ) || has_shortcode( $content, 'hotel_booking' ) ) ){
 
         // params search result
         $page           = hb_get_request( 'hotel-booking' );
