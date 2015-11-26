@@ -78,6 +78,8 @@ class HB_Meta_Box{
         foreach( $args as $f ) {
             $this->_fields[] = (array)$f;
         }
+        // metabox hook
+        $this->_fields = apply_filters( 'tp_hb_metabox_' . $this->_args['name'], $this->_fields );
         return $this;
     }
 

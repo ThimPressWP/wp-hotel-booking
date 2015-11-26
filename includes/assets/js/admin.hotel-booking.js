@@ -254,6 +254,29 @@
             }
         }).trigger('change');
         $('#gallery_settings ul').sortable();
+
+        /**
+         * other settings tabs
+         */
+        $('.tp_hotel_booking_tabs_settings li a:first').addClass('active');
+        $('.tp_hotel_booking_setting_fields:first').addClass('active');
+        $(document).on('click', '.tp_hotel_booking_tabs_settings li a', function(e){
+            e.preventDefault();
+            var self = $(this),
+                tab = self.attr( 'href' ),
+                tab_content = $(tab);
+
+            if( typeof tab === 'undefined' )
+                return;
+
+            $('.tp_hotel_booking_setting_fields').removeClass('active');
+            $('.tp_hotel_booking_tabs_settings li a').removeClass('active');
+            self.addClass('active');
+
+            if( tab_content.length === 1 )
+                tab_content.addClass( 'active' );
+
+        });
     }
 
     $doc.ready( _ready );

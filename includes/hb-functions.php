@@ -891,7 +891,7 @@ function hb_search_rooms( $args = array() ){
     );
 
     /**
-     *
+     * merge query select room
      */
     $query = $wpdb->prepare("
         SELECT rooms.*, {$query_count_available} - {$query_count_not_available} as available_rooms
@@ -902,9 +902,16 @@ function hb_search_rooms( $args = array() ){
             rooms.post_type = %s
             AND rooms.post_status = %s
             AND pm.meta_value >= %d
-            AND pm2.meta_value = %d
+            AND pm2.meta_value >= %d
         HAVING available_rooms > 0
     ", '_hb_max_child_per_room', '_hb_max_adults_per_room', 'hb_room', 'publish', $max_child, $adults );
+
+    $query = apply_filters( 'hb_search_query', $query, array(
+            'check_in'      => $check_in_date_to_time,
+            'check_out'     => $check_out_date_to_time,
+            'adults'        => $adults,
+            'child'         => $max_child
+        ), 99);
 
     if( $search = $wpdb->get_results( $query ) ){
         foreach( $search as $k => $p ){
@@ -962,8 +969,8 @@ function hb_search_rooms( $args = array() ){
             'offset'                => $offset,
             'page'                  => $page,
         );
-    global $hb_search_rooms;
-    return apply_filters( 'hb_search_resuts', $hb_search_rooms );
+
+    return apply_filters( 'hb_search_results', $GLOBALS['hb_search_rooms'], $args );
 }
 
 function hb_get_payment_gateways( $args = array() ){

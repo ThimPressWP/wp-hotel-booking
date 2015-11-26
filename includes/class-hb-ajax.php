@@ -211,20 +211,27 @@ class HB_Ajax{
 
         $cart = HB_Cart::instance();
 
+        do_action( 'tp_hotel_booking_before_add_to_cart', $_POST );
+
         if( $cart->add_to_cart( $room_id, $number_room, $start_date, $end_date ) )
         {
             $search_key = strtotime($start_date) . '_' . strtotime($end_date);
 
-            $room = HB_Room::instance( $room_id,
-                    array(
+            $room_params = array(
                             'id'                => $room_id,
                             'check_in_date'     => $start_date,
                             'check_out_date'    => $end_date,
                             'quantity'          => $number_room
-                        )
-                );
+                        );
 
-            hb_send_json(
+            /**
+             * add extra package to room
+             * @var [type]
+             */
+            $room_params = apply_filters( 'tp_hotel_booking_add_cart_room_param', $room_params, $_POST );
+            $room = HB_Room::instance( $room_id, $room_params );
+
+            $add_to_cart_results = apply_filters( 'tp_hb_add_to_cart_results',
                 array(
                     'status'    => 'success',
                     'message'   => sprintf('<label class="hb_success_message">%1$s</label>', __('Added successfully.', 'tp-hotel-booking')),
@@ -234,7 +241,9 @@ class HB_Ajax{
                     'name'      => sprintf( '%s (%s)', $room->name, $room->capacity_title ),
                     'quantity'  => $number_room,
                     'total'     => hb_format_price( $room->total_price )
-                ));
+                ) );
+
+            hb_send_json( $add_to_cart_results );
         }
         else
         {

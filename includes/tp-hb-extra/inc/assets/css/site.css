@@ -1,0 +1,109 @@
+.hb_addition_package_extra{
+	clear: both;
+    padding-top: 30px;
+}
+.hb_addition_package_extra .hb_addition_package_title_toggle{
+	margin: 0;
+}
+.hb_addition_package_extra .hb_package_toggle{
+    display: block;
+    border: 1px solid #e4e4e4;
+    color: #333333;
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+	text-decoration: none;
+    padding: 15px 30px;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+}
+.hb_addition_package_extra .hb_package_toggle:hover,
+.hb_addition_package_extra .hb_package_toggle.active{
+	border-color: #46598b;
+	color: #46598b;
+}
+.hb_addition_packages{
+	display: none;
+	/*transition: all 0.3s;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	-o-transition: all 0.3s;
+	-ms-transition: all 0.3s;*/
+}
+.hb_addition_packages.active{
+	/*display: block;*/
+}
+.hb_addition_packages_ul{
+	margin: 0 0 0 30px;
+	list-style: none;
+}
+.hb_addition_packages_ul li{
+	padding: 20px 20px 20px 0;
+	border-bottom: 1px solid #e4e4e4;
+}
+.hb_extra_optional_right{
+	float: left;
+	width: 0px
+}
+.hb_extra_optional_left{
+	padding-left: 30px;
+}
+.hb_package_title{
+	text-transform: uppercase;
+    color: #333333;
+    font-weight: 600;
+    font-size: 14px;
+    margin: 0;
+    padding: 5px 0;
+}
+.hb_package_title label:hover{
+	cursor: pointer;
+}
+.hb_package_title label{
+	margin: 0;
+}
+.hb_extra_title p{
+	font-size: 12px;
+	margin-bottom: 5px !important;
+}
+.hb_extra_detail_price .hb_optional_quantity{
+    box-shadow: none;
+    text-align: center;
+    border: 2px solid #d4d0ba;
+    font-family: inherit;
+    padding: 5px;
+    max-width: 60px;
+    padding: 1px;
+}
+.hb_extra_detail_price .hb_optional_quantity[readonly]{
+	background-color: #E8DFA9;
+}
+.hb_extra_detail_price strong{
+	font-size: 20px;
+}
+.hb_extra_detail_price small{
+	font-size: 13px;
+	font-style: italic;
+	font-weight: 400;
+}
+/**
+ * mini cart style
+ */
+.hb_mini_cart_price_packages ul{
+	margin-left: 0 0 0 15px !important;
+	border-top: 1px solid #e4e4e4;
+}
+.hb_mini_cart_price_packages ul li{
+	padding-left: 8px;
+	border-bottom: 1px dotted #e4e4e4;
+}
+.hb_mini_cart_price_packages .hb_package_title{
+    padding: 0;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+.hb_mini_cart_price_packages .hb_package_title span{
+	float: right;
+}

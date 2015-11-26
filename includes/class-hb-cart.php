@@ -213,12 +213,20 @@ class HB_Cart{
         if( $selected = $this->get_products() ){
             foreach( $selected as $in_to_out => $rooms ){
                 foreach ($rooms as $id => $room) {
-                    $this->_rooms[] = HB_Room::instance( $id, $room );
+                    $this->_rooms[ $id ] = HB_Room::instance( $id, $room );
                 }
             }
         }
 
         return $this->_rooms;
+    }
+
+    function get_room( $id )
+    {
+        $rooms = $this->get_rooms();
+
+        if( isset( $rooms[ $id ] ) )
+            return $rooms[ $id ];
     }
 
     /**
@@ -237,7 +245,7 @@ class HB_Cart{
      * @param int $quantity
      * @return $this
      */
-    function add_to_cart( $room_id, $quantity = 1, $check_in_date,  $check_out_date ){
+    function add_to_cart( $room_id, $quantity = 1, $check_in_date, $check_out_date ){
         $room = HB_Room::instance( $room_id );
 
         $date = strtotime($check_in_date) . '_' . strtotime($check_out_date);
@@ -245,20 +253,28 @@ class HB_Cart{
         if ( ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$date] ) )
             $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$date] = array();
 
-        if ( ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$date][$room_id] ) )
-        {
-            $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$date][$room_id] = array(
+        // if ( ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$date][$room_id] ) )
+        // {
+            $session_cart_id = array(
                     'id'            => $room_id,
                     'search_key'    => $date,
                     'quantity'      => $quantity,
                     'check_in_date' => $check_in_date,
                     'check_out_date'=> $check_out_date
                 );
-        }
-        else
-        {
-            $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$date][$room_id]['quantity'] = $quantity;
-        }
+
+            $posts = apply_filters( 'tp_hotel_booking_append_cart_data', array() );
+
+            $session_cart_id = apply_filters( 'tp_hb_session_cart_id', $session_cart_id, $posts );
+
+            do_action( 'tp_hotel_booking_add_to_cart', $session_cart_id, $posts );
+
+            $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$date][$room_id] = $session_cart_id;
+        // }
+        // else
+        // {
+        //     $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$date][$room_id]['quantity'] = $quantity;
+        // }
 
         return $this;
     }

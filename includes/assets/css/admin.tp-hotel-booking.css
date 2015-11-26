@@ -492,3 +492,44 @@ th.column-room_type{
     height: auto;
 }
 /*REPORT*/
+
+/*OTHER SETTINGS*/
+#tp_hotel_booking_other_settings{
+    margin-top: 5px;
+}
+.tp_hotel_booking_tabs_settings{
+    width: 20%;
+    max-width: 300px;
+    float: left;
+}
+.tp_hotel_booking_tabs_settings li a{
+    padding: 8px 12px;
+    display: block;
+    text-decoration: none;
+    color: #000;
+    background-color: #B5A1EA;
+    font-weight: 600;
+    transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+}
+.tp_hotel_booking_tabs_settings li a.active,
+.tp_hotel_booking_tabs_settings li a:hover{
+    background-color: #32373c;
+    padding-left: 30px;
+    color: rgba(240,245,250,.7);
+}
+.tp_hotel_booking_settings_content{
+    padding-left: 20%;
+
+}
+.tp_hotel_booking_setting_fields{
+    overflow: hidden;
+    display: none;
+    padding: 0 20px;
+}
+.tp_hotel_booking_setting_fields.active{
+    display: block;
+}
+/*END OTHER SETTINGS*/

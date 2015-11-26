@@ -66,7 +66,7 @@ if( ! hb_get_page_id( 'checkout' ) )
     );
 }
 
-if( $pages )
+if( $pages && function_exists( 'hb_create_page' ) )
 {
     foreach ( $pages as $key => $page ) {
         $pageId = hb_create_page( esc_sql( $page['name'] ), 'hotel_booking_' . $key . '_page_id', $page['title'], $page['content'], ! empty( $page['parent'] ) ? hb_get_page_id( $page['parent'] ) : '' );

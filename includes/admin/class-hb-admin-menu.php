@@ -81,16 +81,33 @@ class HB_Admin_Menu{
                 'manage_options',
                 'tp_hotel_booking_report',
                 array( $this, 'report_page' )
-            ),
-            'settings'   => array(
+            )
+        );
+
+        /**
+         * recive all addons menu in settings Other settings menu
+         */
+        $addon_menus = apply_filters( 'tp_hotel_booking_addon_menus', array() );
+        if( $addon_menus )
+        {
+            $menu_items[] = array(
+                'tp_hotel_booking',
+                __( 'Addition Packages', 'tp-hotel-booking' ),
+                __( 'Addition Packages', 'tp-hotel-booking' ),
+                'manage_options',
+                'tp_hotel_booking_other_settings',
+                array( $this, 'other_settings' )
+            );
+        }
+
+        $menu_items['settings'] = array(
                 'tp_hotel_booking',
                 __( 'Settings', 'tp-hotel-booking' ),
                 __( 'Settings', 'tp-hotel-booking' ),
                 'manage_options',
                 'tp_hotel_booking_settings',
                 array( $this, 'settings_page' )
-            )
-        );
+            );
 
         // Third-party can be add more items
         $menu_items = apply_filters( 'tp_hotel_booking_menu_items', $menu_items );
@@ -114,6 +131,13 @@ class HB_Admin_Menu{
     {
         TP_Hotel_Booking::instance()->_include( 'includes/admin/views/report.php' );
     }
+
+    function other_settings()
+    {
+        TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings/other_settings.php' );
+    }
 }
 
 new HB_Admin_Menu();
+
+// trip, night, number

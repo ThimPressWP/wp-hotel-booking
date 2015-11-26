@@ -111,8 +111,7 @@ function hb_add_meta_boxes(){
             'desc'      => __( 'The number of rooms', 'tp-hotel-booking' ),
             'min'       => 1,
             'max'       => 100
-        )
-    )->add_field(
+        ),
         array(
             'name'      => 'room_capacity',
             'label'     => __( 'Number of adults', 'tp-hotel-booking' ),

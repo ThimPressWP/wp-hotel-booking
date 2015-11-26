@@ -207,6 +207,9 @@ class HB_Room{
             case 'search_key':
                 $return = $this->get_data('search_key');
                 break;
+            case 'extra_packages':
+                $return = $this->get_data('extra_packages');
+                break;
         }
         return $return;
     }
@@ -392,7 +395,7 @@ class HB_Room{
             $total_per_night = $this->get_price( $from + $i * DAY_IN_SECONDS, $including_tax );
             $total += $total_per_night * $num_of_rooms;
         }
-        return $total;
+        return apply_filters( 'hotel_booking_room_total_price', $total, $this );
     }
 
     /**
@@ -715,7 +718,7 @@ class HB_Room{
 
             if( isset($options['check_in_date'], $options['check_out_date'])
                 && ( ($options['check_in_date'] !== $room->check_in_date) || ($options['check_out_date'] !== $room->check_out_date) )
-                || $room->quantity === false || $room->quantity != $options['quantity']
+                || $room->quantity === false || $room->quantity != $options['quantity'] || $options['extra_packages'] != $room->extra_packages
             )
             {
                 return new self( $post, $options );

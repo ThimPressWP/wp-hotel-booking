@@ -56,6 +56,7 @@ class TP_Hotel_Booking{
     }
 
     function install(){
+        $this->_include( 'includes/hb-functions.php' );
         $this->_include( 'includes/install.php' );
     }
 
@@ -113,7 +114,10 @@ class TP_Hotel_Booking{
         $this->_include( 'includes/widgets/class-hb-widget-lastest-reviews.php' );
         $this->_include( 'includes/widgets/class-hb-widget-mini-cart.php' );
         $this->_include( 'includes/class-hb-post-types.php' );
+        // addon
         $this->_include( 'includes/tp-hb-currencies/tp-hb-currencies.php' );
+        $this->_include( 'includes/tp-hb-extra/tp-hb-extra.php' );
+        // end addon
         $this->_include( 'includes/hb-functions.php' );
         $this->_include( 'includes/class-hb-cart.php' );
         $this->_include( 'includes/class-hb-resizer.php' );

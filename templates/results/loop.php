@@ -6,7 +6,7 @@ $featured = $gallery ? array_shift( $gallery ) : false;
 <li class="hb-room clearfix">
 
     <form name="hb-search-results" class="hb-search-room-results">
-
+        <?php do_action( 'tp_hotel_booking_loop_before_item', $room->post->ID ); ?>
         <div class="hb-room-content">
             <div class="hb-room-thumbnail">
                 <?php if( $featured ):?>
@@ -66,6 +66,8 @@ $featured = $gallery ? array_shift( $gallery ) : false;
         <input type="hidden" name="room-id" value="<?php echo esc_attr( $room->post->ID ); ?>">
         <input type="hidden" name="hotel-booking" value="cart">
         <input type="hidden" name="action" value="hotel_booking_ajax_add_to_cart" />
+
+        <?php do_action( 'tp_hotel_booking_loop_after_item', $room->post->ID ); ?>
     </form>
     <?php if( ( isset($atts['gallery']) && $atts['gallery'] === 'true' ) || $hb_settings->get('enable_gallery_lightbox') ): ?>
         <?php hb_get_template('loop/gallery-lightbox.php', array( 'room' => $room )) ?>
