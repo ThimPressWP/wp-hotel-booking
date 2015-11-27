@@ -22,7 +22,6 @@
 
         </div>
 
-            {{ console.debug(data.extra_packages) }}
         <# if ( typeof data.extra_packages !== 'undefined' && data.extra_packages.length > 0 ) { #>
             <div class="hb_mini_cart_price_packages">
                 <ul>
