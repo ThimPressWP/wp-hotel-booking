@@ -22,21 +22,22 @@ class HB_Room_Extra extends HB_Room
 	{
 		$extras = get_post_meta( $this->ID, $this->_meta_key, true );
 
-		if( ! $extras ) return;
-
 		$results = array();
-		foreach( $extras as $k => $post_id )
-		{
-			$ext = new stdClass();
-			$ext->ID 					= (int)$post_id;
-			$ext->title 				= get_the_title( $post_id );
-			$ext->description 			= get_post_field( 'post_content', $post_id );
-			$ext->price   				= (float)get_post_meta( $post_id, 'tp_hb_extra_room_price', true );
-			$ext->respondent   			= get_post_meta( $post_id, 'tp_hb_extra_room_respondent', true );
-			$ext->respondent_name   	= get_post_meta( $post_id, 'tp_hb_extra_room_respondent_name', true );
-            $ext->selected              = get_post_meta( $post_id, 'tp_hb_extra_room_selected', true );
-			$results[ $post_id ] = $ext;
-		}
+        if( ! empty( $extras ) )
+        {
+            foreach( $extras as $k => $post_id )
+            {
+                $ext = new stdClass();
+                $ext->ID                    = (int)$post_id;
+                $ext->title                 = get_the_title( $post_id );
+                $ext->description           = get_post_field( 'post_content', $post_id );
+                $ext->price                 = (float)get_post_meta( $post_id, 'tp_hb_extra_room_price', true );
+                $ext->respondent            = get_post_meta( $post_id, 'tp_hb_extra_room_respondent', true );
+                $ext->respondent_name       = get_post_meta( $post_id, 'tp_hb_extra_room_respondent_name', true );
+                $ext->selected              = get_post_meta( $post_id, 'tp_hb_extra_room_selected', true );
+                $results[ $post_id ] = $ext;
+            }
+        }
 
         $default = get_posts( array(
                 'posts_per_page'        => 9999,

@@ -233,9 +233,11 @@ class HB_Cart{
             foreach( $selected as $in_to_out => $rooms ){
                 if( $time_key === $in_to_out )
                 {
-                    foreach ($rooms as $id => $room) {
-                        if( $id == $id )
+                    foreach ($rooms as $room_id => $room) {
+                        if( $id === $room_id )
+                        {
                             return HB_Room::instance( $id, $room );
+                        }
                     }
                 }
             }
