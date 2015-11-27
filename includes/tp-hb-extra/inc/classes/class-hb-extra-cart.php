@@ -17,7 +17,7 @@ class HB_Extra_Cart
 		/**
 		 * return session cart
 		 */
-		add_filter( 'tp_hb_session_cart_id', array( $this, 'append_session' ), 10, 2 );
+		add_filter( 'tp_hb_session_cart_id', array( $this, 'append_session' ), 10, 3 );
 
 		/**
 		 * wp.template layout filter
@@ -33,11 +33,6 @@ class HB_Extra_Cart
 		 * profilter ro0m item price in minicart
 		 */
 		add_filter( 'hotel_booking_room_total_price', array( $this, 'filter_price' ), 10, 2 );
-
-		/**
-		 * add param to room callback after save to cart
-		 */
-		add_filter( 'tp_hotel_booking_add_cart_room_param', array( $this, 'ajax_mini_cart_callback' ), 10, 2 );
 
 		add_action( 'wp_ajax_tp_hotel_booking_remove_package', array( $this, 'remove_package' ) );
 		add_action( 'wp_ajax_nopriv_tp_hotel_booking_remove_package', array( $this, 'remove_package' ) );
@@ -70,28 +65,46 @@ class HB_Extra_Cart
 	 * @param  array $posts    $_POST param
 	 * @return array session
 	 */
-	public function append_session( $sessions, $posts )
+	public function append_session( $session_cart_id, $sessions, $posts )
 	{
-
-		if( ! isset( $posts['hb_optional_quantity'] ) || empty( $posts['hb_optional_quantity'] ) )
-			return $sessions;
-
 		if( ! isset( $posts['hb_optional_quantity_selected'] ) || empty( $posts['hb_optional_quantity_selected'] ) )
-			return $sessions;
+		{
+			$search_key = isset( $session_cart_id[ 'search_key' ] ) ? $session_cart_id[ 'search_key' ] : false;
+			$room_id = isset( $session_cart_id[ 'id' ] ) ? $session_cart_id[ 'id' ] : false;
 
-		$extras = array();
-		foreach ( $posts['hb_optional_quantity'] as $extra_id => $quantity ) {
-			if( ! array_key_exists( $extra_id, $posts['hb_optional_quantity_selected'] ) )
-				continue;
+			if( ! $search_key || ! array_key_exists( $search_key , $sessions ) )
+				return $session_cart_id;
 
-			unset( $sessions[ 'extra_packages' ][ $extra_id  ] );
-			$extras[ $extra_id ] = $quantity;
+			if( ! $room_id || ! array_key_exists( $room_id, $sessions[ $search_key ] ) )
+				return $session_cart_id;
+
+			if( ! isset( $sessions[ $search_key ][$room_id]['extra_packages'] ) )
+				return $session_cart_id;
+
+			$session_cart_id[ 'extra_packages' ] = $sessions[ $search_key ][$room_id]['extra_packages'];
+
+			return $session_cart_id;
 		}
+		else
+		{
+			if( ! isset( $posts['hb_optional_quantity'] ) || empty( $posts['hb_optional_quantity'] ) )
+				return $session_cart_id;
 
-		if( ! empty( $extras ) )
-			$sessions[ 'extra_packages' ] = $extras;
+			$extras = array();
+			foreach ( $posts['hb_optional_quantity'] as $extra_id => $quantity ) {
+				if( ! array_key_exists( $extra_id, $posts['hb_optional_quantity_selected'] ) )
+					continue;
 
-		return $sessions;
+				unset( $session_cart_id[ 'extra_packages' ][ $extra_id  ] );
+				$extras[ $extra_id ] = $quantity;
+			}
+
+			if( ! empty( $extras ) )
+				$session_cart_id[ 'extra_packages' ] = $extras;
+
+			return $session_cart_id;
+		}
+		return $session_cart_id;
 	}
 
 	/**
@@ -149,25 +162,6 @@ class HB_Extra_Cart
 		return $price;
 	}
 
-	public function ajax_mini_cart_callback( $params, $posts )
-	{
-		if( ! isset( $posts['hb_optional_quantity'] ) || ! isset( $posts['hb_optional_quantity_selected'] ) )
-			return $params;
-
-		if( empty( $posts['hb_optional_quantity'] ) || empty( $posts['hb_optional_quantity_selected'] ) )
-			return $params;
-
-		$params[ 'extra_packages' ] = array();
-		foreach ( $posts['hb_optional_quantity'] as $package_id => $quantity ) {
-			if( ! array_key_exists( $package_id, $posts['hb_optional_quantity_selected'] ) )
-				continue;
-
-			$params[ 'extra_packages' ][ $package_id ] = $quantity;
-		}
-
-		return $params;
-	}
-
 	function remove_package()
 	{
 		if( ! isset( $_POST ) || ! defined( 'HB_BLOG_ID' ) )
@@ -192,7 +186,7 @@ class HB_Extra_Cart
 
 		$hb_cart = HB_Cart::instance();
 
-		$room = $hb_cart->get_room( $room_id );
+		$room = $hb_cart->get_room( $room_id, $time_key );
 
 		$results =  array(
                     'status'    	=> 'success',

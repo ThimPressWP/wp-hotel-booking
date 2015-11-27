@@ -185,7 +185,7 @@ class HB_Cart{
             $grand_total = $sub_total;
         }
 
-        return apply_filters( 'learn_press_get_cart_total', $grand_total, $this->get_cart_id() );
+        return apply_filters( 'hotel_booking_get_cart_total', $grand_total, $this->get_cart_id() );
     }
 
     /**
@@ -213,7 +213,7 @@ class HB_Cart{
         if( $selected = $this->get_products() ){
             foreach( $selected as $in_to_out => $rooms ){
                 foreach ($rooms as $id => $room) {
-                    $this->_rooms[ $id ] = HB_Room::instance( $id, $room );
+                    $this->_rooms[] = HB_Room::instance( $id, $room );
                 }
             }
         }
@@ -221,12 +221,19 @@ class HB_Cart{
         return $this->_rooms;
     }
 
-    function get_room( $id )
+    function get_room( $id, $time_key )
     {
-        $rooms = $this->get_rooms();
-
-        if( isset( $rooms[ $id ] ) )
-            return $rooms[ $id ];
+        if( $selected = $this->get_products() ){
+            foreach( $selected as $in_to_out => $rooms ){
+                if( $time_key === $in_to_out )
+                {
+                    foreach ($rooms as $id => $room) {
+                        if( $id == $id )
+                            return HB_Room::instance( $id, $room );
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -265,7 +272,7 @@ class HB_Cart{
 
             $posts = apply_filters( 'tp_hotel_booking_append_cart_data', array() );
 
-            $session_cart_id = apply_filters( 'tp_hb_session_cart_id', $session_cart_id, $posts );
+            $session_cart_id = apply_filters( 'tp_hb_session_cart_id', $session_cart_id, $this->get_products(), $posts );
 
             do_action( 'tp_hotel_booking_add_to_cart', $session_cart_id, $posts );
 

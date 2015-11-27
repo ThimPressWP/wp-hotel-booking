@@ -216,20 +216,7 @@ class HB_Ajax{
         if( $cart->add_to_cart( $room_id, $number_room, $start_date, $end_date ) )
         {
             $search_key = strtotime($start_date) . '_' . strtotime($end_date);
-
-            $room_params = array(
-                            'id'                => $room_id,
-                            'check_in_date'     => $start_date,
-                            'check_out_date'    => $end_date,
-                            'quantity'          => $number_room
-                        );
-
-            /**
-             * add extra package to room
-             * @var [type]
-             */
-            $room_params = apply_filters( 'tp_hotel_booking_add_cart_room_param', $room_params, $_POST );
-            $room = HB_Room::instance( $room_id, $room_params );
+            $room = $cart->get_room( $room_id, $search_key );
 
             $add_to_cart_results = apply_filters( 'tp_hb_add_to_cart_results',
                 array(
