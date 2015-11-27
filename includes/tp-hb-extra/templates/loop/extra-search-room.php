@@ -32,10 +32,14 @@ $room_extra = $room_extra->get_extra();
 								<p><?php printf( '%s', $extra->description ) ?></p>
 							</div>
 							<div class="hb_extra_detail_price">
-								<input type="number" step="1" min="1" name="hb_optional_quantity[<?php echo esc_attr( $extra->ID  ); ?>]" value="1"
-									class="hb_optional_quantity<?php echo ( $extra->respondent !== 'number' ) ? ' tp_hb_readonly' : '' ?>"
-									<?php echo ( $extra->respondent !== 'number' ) ? ' readonly="readonly"' : '' ?>
-								/>
+								<?php if ( $extra->respondent === 'number' ): ?>
+									<input type="number" step="1" min="1" name="hb_optional_quantity[<?php echo esc_attr( $extra->ID  ); ?>]" value="1"
+										class="hb_optional_quantity<?php echo ( $extra->respondent !== 'number' ) ? ' tp_hb_readonly' : '' ?>"
+										<?php echo ( $extra->respondent !== 'number' ) ? ' readonly="readonly"' : '' ?>
+									/>
+								<?php else: ?>
+									<input type="hidden" step="1" min="1" name="hb_optional_quantity[<?php echo esc_attr( $extra->ID  ); ?>]" value="1"/>
+								<?php endif; ?>
 								<label>
 									<strong><?php printf( '%s', hb_format_price( $extra->price ) ) ?></strong>
 									<small><?php printf( '/ %s', $extra->respondent_name ? $extra->respondent_name : __( 'Package', 'tp-hb-extra' ) ) ?></small>
