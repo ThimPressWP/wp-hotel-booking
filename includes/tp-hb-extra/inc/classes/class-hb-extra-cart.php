@@ -40,6 +40,14 @@ class HB_Extra_Cart
 		 */
 		add_filter( 'tp_hb_add_to_cart_results', array( $this, 'add_to_cart_results' ), 10, 2 );
 
+		/**
+		 * booking params save _hb_booking_params
+		 */
+		add_filter( 'hotel_booking_booking_params', array( $this, 'booking_info' ) );
+
+		/**
+		 * ajax remove packages
+		 */
 		add_action( 'wp_ajax_tp_hotel_booking_remove_package', array( $this, 'remove_package' ) );
 		add_action( 'wp_ajax_nopriv_tp_hotel_booking_remove_package', array( $this, 'remove_package' ) );
 	}
@@ -251,6 +259,37 @@ class HB_Extra_Cart
 			$results['extra_packages'] = $extra_packages;
 		}
 		return $results;
+	}
+
+	/**
+	 * generate room info
+	 * @param  [type] $room_info [description]
+	 * @param  [type] $room      [description]
+	 * @return [type]            [description]
+	 */
+	function booking_info( $params )
+	{
+		foreach ( $params as $key => $rooms ) {
+			foreach ( $rooms as $room_id => $room_param ) {
+				if( isset( $room_param['extra_packages'] ) && ! empty( $room_param['extra_packages'] ) )
+				{
+					foreach ( $room_param['extra_packages'] as $id => $quantt ) {
+						$extra = HB_Extra_Package::instance( $id );
+						if( ! isset( $params[ $key ][ $room_id ][ 'extra_packages_details' ] ) )
+							$params[ $key ][ $room_id ][ 'extra_packages_details' ];
+
+						$params[ $key ][ $room_id ][ 'extra_packages_details' ][ $id ] = array(
+								'package_title'			=> sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->regular_price ) ),
+								'package_id'			=> $extra->ID,
+								'package_desciprition'	=> $extra->description,
+								'package_quantity'		=> $quantt
+							);
+					}
+				}
+			}
+		}
+
+		return $params;
 	}
 
 	/**

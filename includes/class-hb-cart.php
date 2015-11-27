@@ -451,7 +451,7 @@ function hb_generate_transaction_object( ){
     $rooms = array();
     if( $_rooms = $cart->get_rooms() ){
         foreach( $_rooms as $key => $room ) {
-            $rooms[ $key ] = array(
+            $rooms[ $key ] = apply_filters( 'hb_generate_transaction_object_room', array(
                 'id'                => $room->post->ID,
                 'base_price'        => $room->get_price(),
                 'quantity'          => $room->quantity,
@@ -459,7 +459,7 @@ function hb_generate_transaction_object( ){
                 'check_in_date'     => $room->check_in_date,
                 'check_out_date'    => $room->check_out_date,
                 'sub_total'         => $room->get_total( $room->check_in_date, $room->check_out_date, $room->num_of_rooms, false )
-            );
+            ), $room);
         }
     }
 
