@@ -12,6 +12,8 @@ class HB_Extra_Post_Type
 	function __construct()
 	{
 		add_action( 'init', array( $this, 'init' ) );
+
+		add_action( 'wp_ajax_tp_extra_package_remove', array( $this, 'tp_extra_package_remove' ) );
 	}
 
 	/**
@@ -78,7 +80,8 @@ class HB_Extra_Post_Type
 		$args = array(
 				'post_title'	=> isset( $post['name'] ) ? $post['name'] : '',
 				'post_content'	=> isset( $post['desc'] ) ? $post['desc'] : '',
-				'post_type'		=> 'hb_extra_room'
+				'post_type'		=> 'hb_extra_room',
+				'post_status'	=> 'publish'
 			);
 
 		if( ! $results )
@@ -119,6 +122,20 @@ class HB_Extra_Post_Type
 		}
 
 		return $post_id;
+	}
+
+	function tp_extra_package_remove()
+	{
+		if( ! isset( $_POST ) )
+			return;
+
+		if( ! isset( $_POST['package_id'] ) )
+			return;
+
+		if( wp_delete_post( $_POST['package_id'] ) )
+		{
+			wp_send_json( array( 'status' => 'success' ) );
+		}
 	}
 
 	/**

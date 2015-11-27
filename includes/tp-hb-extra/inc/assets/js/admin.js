@@ -13,17 +13,11 @@
 			$( document ).on( 'click', '.tp_extra_add_item', function(e){
 				e.preventDefault();
 				var current_package = $('.tp_extra_form_fields:last'),
-					current_package_id = current_package.find('.remove').find('a').attr('data-id');
-
-				if( typeof current_package_id !== 'undefined' )
-					new_package_id = parseInt(current_package_id) + parseInt(1);
-				else
-					new_package_id = 0;
-
-				var tmpl = wp.template( 'tp-hb-extra-room' );
+					new_package_id = 0,
+					tmpl = wp.template( 'tp-hb-extra-room' );
 				tmpl = tmpl({ id: new_package_id });
 
-				if( new_package_id === 0 )
+				if( current_package.length === 0 )
 					$('.tp_extra_form_head').after( tmpl );
 				else
 					current_package.after( tmpl );
@@ -39,9 +33,21 @@
 					return;
 
 				var _self = $(this),
+					package_id = _self.attr('data-id'),
 					exta = _self.parents( '.tp_extra_form_fields' );
 
-					exta.remove();
+				$.ajax({
+					url: ajaxurl,
+					type: 'POST',
+					data: {
+						package_id: package_id,
+						action: 'tp_extra_package_remove'
+					}
+				}).done( function( res ){
+					if( typeof res.status !== 'undefined' && res.status === 'success' ){
+						exta.remove();
+					}
+				});
 			});
 		},
 

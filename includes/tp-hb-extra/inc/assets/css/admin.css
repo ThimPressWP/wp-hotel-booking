@@ -40,7 +40,10 @@
 	width: 10%;
 }
 .tp_extra_form_fields .desc{
-	width: 40%;
+	width: 30%;
+}
+.tp_extra_form_fields > div > input[type="checkbox"]{
+	width: auto;
 }
 .tp_extra_form_fields > div > input,
 .tp_extra_form_fields > div > textarea,
@@ -49,8 +52,10 @@
 	max-width: 90%;
 	padding: 7px;
 }
+.tp_extra_form_fields .rooms,
 .tp_extra_form_fields > .type{
 	width: 10%;
+	text-align: center;
 }
 .tp_extra_form_fields > .price > *{
 	float: left;
