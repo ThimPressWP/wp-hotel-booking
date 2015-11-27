@@ -111,7 +111,7 @@ class HB_Checkout{
             $booking_info['_hb_coupon'] = $transaction_object->coupon;
         }
 
-        $booking_info = apply_filters( 'tp_hotel_booking_checkout_booking_info', $booking_info );
+        $booking_info = apply_filters( 'tp_hotel_booking_checkout_booking_info', $booking_info, $transaction_object );
         $booking->set_booking_info(
             $booking_info
         );
@@ -139,7 +139,8 @@ class HB_Checkout{
             }
 
             // add_post_meta( $booking_id, '_hb_room_price', $prices );
-            add_post_meta( $booking_id, '_hb_booking_params', $_SESSION['hb_cart'.HB_BLOG_ID]['products'] );
+            $booking_params = apply_filters( 'hotel_booking_booking_params', $_SESSION['hb_cart'.HB_BLOG_ID]['products'] );
+            add_post_meta( $booking_id, '_hb_booking_params', $booking_params );
         }
         do_action( 'hb_new_booking', $booking_id );
         return $booking_id;

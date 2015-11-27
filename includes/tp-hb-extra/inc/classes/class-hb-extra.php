@@ -10,6 +10,11 @@ class HB_Extra_Field
 		add_filter( 'tp-hb-extra-l10n', array( $this, 'language_js' ) );
 		add_filter( 'tp_hb_metabox_room_settings', array( $this, 'meta_fields' ) );
 		add_action( 'tp_hotel_booking_loop_after_item', array( $this, 'render_extra' ), 10, 1 );
+
+		/**
+		 * add package details booking
+		 */
+		add_action( 'hotel_booking_room_details_quantity', array( $this, 'admin_booking_room_details' ), 10, 3 );
 	}
 
 	/**
@@ -64,6 +69,28 @@ class HB_Extra_Field
 	function meta_value( $val )
 	{
 		return $val;
+	}
+
+	function admin_booking_room_details( $booking_params, $search_key, $room_id )
+	{
+		if( ! isset( $booking_params[ $search_key ] ) ||
+			! isset( $booking_params[ $search_key ][ $room_id ] ) ||
+			! isset($booking_params[ $search_key ][ $room_id ]['extra_packages_details'])
+		)
+		{
+			return;
+		}
+
+		$packages = $booking_params[ $search_key ][ $room_id ]['extra_packages_details'];
+		?>
+			<ul>
+				<?php foreach ( $packages as $id => $package ): ?>
+					<li>
+						<span><?php printf( '%s (x%s)', $package['package_title'], $package['package_quantity'] ) ?></span>
+					</li>
+				<?php endforeach ?>
+			</ul>
+		<?php
 	}
 
 	/**

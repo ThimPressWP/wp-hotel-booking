@@ -118,7 +118,7 @@ class HB_Extra_Package
 	 */
 	function get_price_package()
 	{
-		$price = (float)$this->regular_price * (int)$this->_room_quantity;
+		$price = (float)$this->regular_price;// * (int)$this->_room_quantity;
 		if( $this->respondent === 'number' )
 		{
 			$price = $price * $this->_package_quantity * $this->night;

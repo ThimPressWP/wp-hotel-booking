@@ -183,19 +183,22 @@ $booking_id = hb_get_request( 'id' );
                                             if( ! empty( $room_types ) ) echo implode(', ', $room_types);
                                         ?>
                                     </td>
-                                    <td align="right"><?php echo $room->quantity ?></td>
+                                    <td align="right">
+                                        <?php echo $room->quantity ?>
+                                        <?php do_action( 'hotel_booking_room_details_quantity', $booking_rooms_params, $search_key, $id ); ?>
+                                    </td>
                                     <td align="right"><?php echo hb_format_price( $room->total, $currency_symbol );?></td>
                                 </tr>
                             <?php endforeach; ?>
 
                     <?php endforeach; ?>
                 <?php endif; ?>
-        <?php if( $coupon = get_post_meta( $booking_id, '_hb_coupon', true ) ){?>
+        <?php if( $coupon = get_post_meta( $booking_id, '_hb_coupon', true ) ){ ?>
             <tr>
                 <th colspan="3" align="left"><?php printf( __( 'Coupon Applied (%s)', 'tp-hotel-booking' ), $coupon['code'] ); ?></th>
                 <td align="right" class="negative-price">-<?php echo hb_format_price( $coupon['value'], $currency_symbol ); ?></td>
             </tr>
-        <?php }?>
+        <?php } ?>
             <tr>
                 <th colspan="3" align="left"><?php _e( 'Sub Total', 'tp-hotel-booking' ); ?></th>
                 <td align="right"><?php echo hb_format_price( get_post_meta( $booking_id, '_hb_sub_total', true ), $currency_symbol ); ?></td>

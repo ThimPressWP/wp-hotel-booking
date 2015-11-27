@@ -104,7 +104,7 @@ foreach ( $extra_types as $key => $value ) {
         </div>
         <div class="type">
             <h4><?php _e( 'Price Type', 'tp-hb-extra' ); ?></h4>
-            <?php tp_hb_extra_select( $field_name . '[{{ data.id }}][respondent]', array( 'options' => $respondent ), array() ) ; ?>
+            <?php tp_hb_extra_select( $field_name . '[{{ data.id }}][respondent]', array( 'options' => $respondent ), '' ) ; ?>
         </div>
         <div class="remove">
             <a data-id="{{ data.id }}" class="button remove_button"><?php esc_attr_e( 'Remove', 'tp-hb-extra' ); ?></a>
