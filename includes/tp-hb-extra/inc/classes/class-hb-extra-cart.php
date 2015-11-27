@@ -32,8 +32,12 @@ class HB_Extra_Cart
 		/**
 		 * profilter ro0m item price in minicart
 		 */
-		add_filter( 'hotel_booking_room_total_price', array( $this, 'filter_price' ), 10, 2 );
+		add_filter( 'hotel_booking_room_total_price', array( $this, 'filter_price' ), 10, 3 );
 
+		/**
+		 * add filter add to cart results array
+		 * render object build mini cart
+		 */
 		add_filter( 'tp_hb_add_to_cart_results', array( $this, 'add_to_cart_results' ), 10, 2 );
 
 		add_action( 'wp_ajax_tp_hotel_booking_remove_package', array( $this, 'remove_package' ) );
@@ -152,13 +156,17 @@ class HB_Extra_Cart
 	 * @param  [type] $room  [description]
 	 * @return [type]        [description]
 	 */
-	public function filter_price( $price, $room )
+	public function filter_price( $price, $room, $tax )
 	{
 		if( $room->extra_packages )
 		{
 			foreach ( $room->extra_packages as $package_id => $quanity ) {
 				$package = HB_Extra_Package::instance( $package_id, $room->check_in_date, $room->check_out_date, $room->quantity, $quanity );
 				$price = $price + $package->price;
+				if( $tax === true )
+				{
+					$price = $price + $package->price * hb_get_tax_settings();
+				}
 			}
 		}
 		return $price;

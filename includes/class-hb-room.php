@@ -395,7 +395,7 @@ class HB_Room{
             $total_per_night = $this->get_price( $from + $i * DAY_IN_SECONDS, $including_tax );
             $total += $total_per_night * $num_of_rooms;
         }
-        return apply_filters( 'hotel_booking_room_total_price', $total, $this );
+        return apply_filters( 'hotel_booking_room_total_price', $total, $this, $including_tax );
     }
 
     /**

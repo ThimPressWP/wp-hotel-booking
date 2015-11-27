@@ -1,6 +1,7 @@
 <?php
 $cart = HB_Cart::instance();
 global $hb_settings;
+// var_dump($cart->get_rooms()); return;
 ?>
 <div id="hotel-booking-cart">
 
