@@ -34,6 +34,8 @@ class HB_Extra_Cart
 		 */
 		add_filter( 'hotel_booking_room_total_price', array( $this, 'filter_price' ), 10, 2 );
 
+		add_filter( 'tp_hb_add_to_cart_results', array( $this, 'add_to_cart_results' ), 10, 2 );
+
 		add_action( 'wp_ajax_tp_hotel_booking_remove_package', array( $this, 'remove_package' ) );
 		add_action( 'wp_ajax_nopriv_tp_hotel_booking_remove_package', array( $this, 'remove_package' ) );
 	}
@@ -207,15 +209,40 @@ class HB_Extra_Cart
 				$extra_packages[] = array(
 						'package_title'		=> sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->regular_price ) ),
 						'package_id'		=> $extra->ID,
-						'package_quantiy'	=> sprintf( 'x%s', $quantt )
+						'package_quantity'	=> sprintf( 'x%s', $quantt )
 					);
-				echo '<pre>'; print_r( $extra_packages ); die();
 			}
 		}
 		$results['extra_packages'] = $extra_packages;
 
 		$results = apply_filters( 'hb_remove_package_results', $results, $room_id );
         wp_send_json( $results );
+	}
+
+	/**
+	 * add to cart results
+	 * @param [array] $results [results]
+	 * @param [object] $room    [room object class]
+	 */
+	function add_to_cart_results( $results, $room )
+	{
+		if( $extraRoom = $room->extra_packages )
+		{
+			if( empty( $extraRoom ) )
+				return $results;
+
+			$extra_packages = array();
+			foreach ( $extraRoom as $id => $quantt ) {
+				$extra = HB_Extra_Package::instance( $id );
+				$extra_packages[] = array(
+						'package_title'		=> sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->regular_price ) ),
+						'package_id'		=> $extra->ID,
+						'package_quantity'	=> sprintf( 'x%s', $quantt )
+					);
+			}
+			$results['extra_packages'] = $extra_packages;
+		}
+		return $results;
 	}
 
 	/**

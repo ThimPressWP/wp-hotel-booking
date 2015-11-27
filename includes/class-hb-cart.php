@@ -221,6 +221,12 @@ class HB_Cart{
         return $this->_rooms;
     }
 
+    /**
+     * get room in the cart by search key and room ID
+     * @param  [int] $id            [ID of room]
+     * @param  [string] $time_key   [key search]
+     * @return [object]             [HB_Room object]
+     */
     function get_room( $id, $time_key )
     {
         if( $selected = $this->get_products() ){

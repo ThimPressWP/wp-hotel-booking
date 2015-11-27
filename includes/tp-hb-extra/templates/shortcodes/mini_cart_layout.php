@@ -22,6 +22,26 @@
 
         </div>
 
+            {{ console.debug(data.extra_packages) }}
+        <# if ( typeof data.extra_packages !== 'undefined' && data.extra_packages.length > 0 ) { #>
+            <div class="hb_mini_cart_price_packages">
+                <ul>
+                    <#  for ( var i = 0; i < data.extra_packages.length; i++ ) { #>
+                            <# var pack = data.extra_packages[i] #>
+                            <li>
+                                <h5 class="hb_package_title">
+                                    <a href="#">{{{ pack.package_title }}}</a>
+                                    <span>
+                                        ( {{{ pack.package_quantity }}} )
+                                        <a href="#" class="hb_package_remove" data-package="{{ pack.package_id }}"><i class="fa fa-times"></i></a>
+                                    </span>
+                                </h5>
+                            </li>
+                     <# } #>
+                </ul>
+            </div>
+        <# } #>
+
     </div>
 </script>
 <script type="text/html" id="tmpl-hb-minicart-footer">

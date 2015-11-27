@@ -217,9 +217,7 @@ class HB_Ajax{
         {
             $search_key = strtotime($start_date) . '_' . strtotime($end_date);
             $room = $cart->get_room( $room_id, $search_key );
-
-            $add_to_cart_results = apply_filters( 'tp_hb_add_to_cart_results',
-                array(
+            $add_to_cart_results = array(
                     'status'    => 'success',
                     'message'   => sprintf('<label class="hb_success_message">%1$s</label>', __('Added successfully.', 'tp-hotel-booking')),
                     'id'        => $room_id,
@@ -228,7 +226,9 @@ class HB_Ajax{
                     'name'      => sprintf( '%s (%s)', $room->name, $room->capacity_title ),
                     'quantity'  => $number_room,
                     'total'     => hb_format_price( $room->total_price )
-                ) );
+                );
+
+            $add_to_cart_results = apply_filters( 'tp_hb_add_to_cart_results', $add_to_cart_results, $room );
 
             hb_send_json( $add_to_cart_results );
         }

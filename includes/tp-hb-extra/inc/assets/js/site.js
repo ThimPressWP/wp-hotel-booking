@@ -59,8 +59,6 @@
 				var _self = $(this),
 					package_id = _self.attr( 'data-package' ),
 					_parents = _self.parents('.hb_mini_cart_item:first'),
-					_cart = _parents.parent(),
-					previous = _parents.prev(),
 					room_id = _parents.attr( 'data-id' ),
 					time_key = _parents.attr( 'data-search-key' );
 				$.ajax({
@@ -77,21 +75,7 @@
 					}
 				}).done( function( res ){
 					if( typeof res.status !== 'undefined' && res.status == 'success' )
-					{
-						var tmp = wp.template( 'hb-minicart-item' );
-						var item = tmp( res );
-						_parents.remove();
-
-						if( previous.length == 1 )
-						{
-							previous.after( item );
-						}
-						else
-						{
-							_cart.prepend( item );
-						}
-						console.debug(res.extra_packages); return;
-					}
+						HB_Booking_Cart.hb_add_to_cart_callback( res );
 				} );
 			});
 		}
