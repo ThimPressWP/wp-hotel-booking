@@ -230,17 +230,8 @@ class HB_Cart{
     function get_room( $id, $time_key )
     {
         if( $selected = $this->get_products() ){
-            foreach( $selected as $in_to_out => $rooms ){
-                if( $time_key === $in_to_out )
-                {
-                    foreach ($rooms as $room_id => $room) {
-                        if( $id === $room_id )
-                        {
-                            return HB_Room::instance( $id, $room );
-                        }
-                    }
-                }
-            }
+            if( isset( $selected[ $time_key ], $selected[ $time_key ][ $id ] ) )
+                return HB_Room::instance( $id, $selected[ $time_key ][ $id ] );
         }
     }
 

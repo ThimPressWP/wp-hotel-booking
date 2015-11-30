@@ -217,6 +217,7 @@ class HB_Ajax{
         {
             $search_key = strtotime($start_date) . '_' . strtotime($end_date);
             $room = $cart->get_room( $room_id, $search_key );
+
             $add_to_cart_results = array(
                     'status'    => 'success',
                     'message'   => sprintf('<label class="hb_success_message">%1$s</label>', __('Added successfully.', 'tp-hotel-booking')),
