@@ -7,7 +7,7 @@
 			// toggle extra field optional
 			this.toggle_extra();
 			// toggle input number when checked checkbox and process price
-			this.toggleCheckbox();
+			// this.toggleCheckbox();
 			// remove package cart
 			this.removePackage();
 
@@ -38,14 +38,21 @@
 
 				var _self = $(this),
 					_form = _self.parents( '.hb-search-room-results' ),
-					_exta_area = _form.find('.hb_addition_package_extra');
-
+					_exta_area = _form.find('.hb_addition_package_extra'),
+					_toggle = _exta_area.find( '.hb_addition_packages' );
 
 				if( _self.val() !== '' )
+				{
+					$( '.hb_addition_packages' ).removeClass('active').slideUp();
+					_toggle.addClass('active');
 					_exta_area.slideDown();
+				}
 				else
+				{
+					_toggle.removeClass('active');
 					_exta_area.slideUp();
-
+				}
+				TPHB_Extra_Site.optional_toggle( _toggle );
 
 			});
 
@@ -59,11 +66,15 @@
 				_self.toggleClass('active');
 				toggle.toggleClass('active');
 
-				if( toggle.hasClass('active') )
-					toggle.slideDown();
-				else
-					toggle.slideUp();
+				TPHB_Extra_Site.optional_toggle( toggle );
 			});
+		},
+
+		optional_toggle: function( toggle ){
+			if( toggle.hasClass('active') )
+				toggle.slideDown();
+			else
+				toggle.slideUp();
 		},
 
 		toggleCheckbox: function()
