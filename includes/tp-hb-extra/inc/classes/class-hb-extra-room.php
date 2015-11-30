@@ -18,6 +18,10 @@ class HB_Room_Extra extends HB_Room
 		parent::__construct( $post, $options = null );
 	}
 
+    /**
+     * get extra for search results
+     * @return array
+     */
 	function get_extra()
 	{
 		$extras = get_post_meta( $this->ID, $this->_meta_key, true );

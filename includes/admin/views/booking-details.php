@@ -86,7 +86,7 @@ $booking_id = hb_get_request( 'id' );
                 <h3><?php _e( 'Capacity', 'tp-hotel-booking') ?></h3>
             </th>
             <th colspan="4">
-                <h3><?php _e( 'Number of rooms', 'tp-hotel-booking') ?></h3>
+                <h3><?php _e( 'Quantity', 'tp-hotel-booking') ?></h3>
             </th>
             <th colspan="4">
                 <h3><?php _e( 'Check - in', 'tp-hotel-booking') ?></h3>
@@ -148,15 +148,16 @@ $booking_id = hb_get_request( 'id' );
     <table class="hb-booking-rooms">
         <thead>
             <tr>
-                <th colspan="4">
+                <th colspan="5">
                     <h3><?php _e( 'Room Details', 'tp-hotel-booking') ?></h3>
                 </th>
             </tr>
             <tr>
-                <th align="left"><?php _e( 'Name', 'tp-hotel-booking' );?></th>
+                <th align="left"><?php _e( 'Name', 'tp-hotel-booking' ); ?></th>
                 <th align="left"><?php _e( 'Type', 'tp-hotel-booking' );?></th>
-                <th align="right"><?php _e( 'Number of rooms', 'tp-hotel-booking' );?></th>
-                <th align="right"><?php _e( 'Sub total', 'tp-hotel-booking' );?></th>
+                <th align="left"><?php _e( 'Extra Package', 'tp-hotel-booking' ); ?></th>
+                <th align="right"><?php _e( 'Quantity', 'tp-hotel-booking' ); ?></th>
+                <th align="right"><?php _e( 'Sub total', 'tp-hotel-booking' ); ?></th>
             </tr>
         </thead>
         <tbody>
@@ -183,9 +184,11 @@ $booking_id = hb_get_request( 'id' );
                                             if( ! empty( $room_types ) ) echo implode(', ', $room_types);
                                         ?>
                                     </td>
+                                    <td align="left">
+                                        <?php do_action( 'hotel_booking_room_details_quantity', $booking_rooms_params, $search_key, $id ); ?>
+                                    </td>
                                     <td align="right">
                                         <?php echo $room->quantity ?>
-                                        <?php do_action( 'hotel_booking_room_details_quantity', $booking_rooms_params, $search_key, $id ); ?>
                                     </td>
                                     <td align="right"><?php echo hb_format_price( $room->total, $currency_symbol );?></td>
                                 </tr>
@@ -195,39 +198,39 @@ $booking_id = hb_get_request( 'id' );
                 <?php endif; ?>
         <?php if( $coupon = get_post_meta( $booking_id, '_hb_coupon', true ) ){ ?>
             <tr>
-                <th colspan="3" align="left"><?php printf( __( 'Coupon Applied (%s)', 'tp-hotel-booking' ), $coupon['code'] ); ?></th>
+                <th colspan="4" align="left"><?php printf( __( 'Coupon Applied (%s)', 'tp-hotel-booking' ), $coupon['code'] ); ?></th>
                 <td align="right" class="negative-price">-<?php echo hb_format_price( $coupon['value'], $currency_symbol ); ?></td>
             </tr>
         <?php } ?>
             <tr>
-                <th colspan="3" align="left"><?php _e( 'Sub Total', 'tp-hotel-booking' ); ?></th>
+                <th colspan="4" align="left"><?php _e( 'Sub Total', 'tp-hotel-booking' ); ?></th>
                 <td align="right"><?php echo hb_format_price( get_post_meta( $booking_id, '_hb_sub_total', true ), $currency_symbol ); ?></td>
             </tr>
             <tr>
-                <th colspan="3" align="left"><?php _e( 'Price including tax', 'tp-hotel-booking' ); ?></th>
+                <th colspan="4" align="left"><?php _e( 'Price including tax', 'tp-hotel-booking' ); ?></th>
                 <td align="right"><?php echo get_post_meta( $booking_id, '_hb_price_including_tax', true ) == 'yes' ? __( 'Yes', 'tp-hotel-booking') : __( 'No', 'tp-hotel-booking'); ?></td>
             </tr>
             <tr>
-                <th colspan="3" align="left"><?php _e( 'Tax', 'tp-hotel-booking' ); ?></th>
+                <th colspan="4" align="left"><?php _e( 'Tax', 'tp-hotel-booking' ); ?></th>
                 <td align="right"><?php echo get_post_meta( $booking_id, '_hb_tax', true ) * 100; ?>%</td>
             </tr>
             <tr>
-                <th colspan="3" align="left"><?php _e( 'Default Currency', 'tp-hotel-booking' ); ?></th>
+                <th colspan="4" align="left"><?php _e( 'Default Currency', 'tp-hotel-booking' ); ?></th>
                 <td align="right"><?php echo $default_currency; ?></td>
             </tr>
             <tr>
-                <th colspan="3" align="left"><?php _e( 'Payment Currency', 'tp-hotel-booking' ); ?></th>
+                <th colspan="4" align="left"><?php _e( 'Payment Currency', 'tp-hotel-booking' ); ?></th>
                 <td align="right"><?php echo $payment_currency; ?></td>
             </tr>
             <tr>
-                <th colspan="3" align="left">
+                <th colspan="4" align="left">
                     <?php _e( 'Currency Rate', 'tp-hotel-booking' ); ?>
                     <?php printf( '%s / %s', $default_currency, $payment_currency ) ?>
                 </th>
                 <td align="right"><?php printf( '%s', $rate ); ?></td>
             </tr>
             <tr>
-                <th colspan="3" align="left"><?php _e( 'Total', 'tp-hotel-booking' ); ?></th>
+                <th colspan="4" align="left"><?php _e( 'Total', 'tp-hotel-booking' ); ?></th>
                 <td align="right">
                     <?php echo hb_format_price( get_post_meta( $booking_id, '_hb_total', true ), $currency_symbol ); ?>
                     <?php if( $rate && $rate != 1 ): ?>
