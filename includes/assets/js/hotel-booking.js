@@ -354,7 +354,7 @@
             this.remove_cart();
         },
 
-        hb_add_to_cart_callback: function( data )
+        hb_add_to_cart_callback: function( data, callback )
         {
             var mini_cart = $('.hotel_booking_mini_cart');
             var length = mini_cart.length;
@@ -421,6 +421,11 @@
                 $('.hb_mini_cart_item').removeClass('active');
                 clearTimeout(timeout);
             }, 3000);
+
+            if( typeof callback !== 'undefined' )
+            {
+                callback();
+            }
         },
 
         hb_remove_cart_item_callback: function( dateID, roomID, res)

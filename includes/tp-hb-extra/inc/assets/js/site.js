@@ -10,7 +10,25 @@
 			this.toggleCheckbox();
 			// remove package cart
 			this.removePackage();
+
 		},
+
+		parseJSON: function(data){
+	        if( ! $.isPlainObject(data) ){
+	            var m = data.match(/<!-- HB_AJAX_START -->(.*)<!-- HB_AJAX_END -->/);
+	            try {
+	                if (m) {
+	                    data = $.parseJSON(m[1]);
+	                } else {
+	                    data = $.parseJSON(data);
+	                }
+	            }catch(e){
+	                console.log(e);
+	                data = {};
+	            }
+	        }
+	        return data;
+	    },
 
 		toggle_extra: function()
 		{
@@ -70,15 +88,49 @@
 						package_id: package_id,
 						time_key: time_key
 					},
+					dataType: 'html',
 					beforeSend: function(){
 
 					}
 				}).done( function( res ){
+					res = TPHB_Extra_Site.parseJSON(res);
 					if( typeof res.status !== 'undefined' && res.status == 'success' )
-						HB_Booking_Cart.hb_add_to_cart_callback( res );
+					{
+						HB_Booking_Cart.hb_add_to_cart_callback( res, function(){
+							var cart_table = $('#hotel-booking-payment, #hotel-booking-cart');
+
+				            for( var i = 0; i < cart_table.length; i++ )
+				            {
+				                var _table = $(cart_table[i]);
+				                var tr = _table.find('table').find('.hb_checkout_item');
+				                for ( var y = 0; y < tr.length; y++ )
+				                {
+				                    var _tr = $(tr[y]);
+				                    var _date = _tr.attr( 'data-date' );
+				                    var _roomID = _tr.attr('data-id');
+				                    if( _date === res.search_key && _roomID === res.id )
+				                    {
+				                        if( typeof res.item_total !== 'undefined' )
+				                    		_tr.find('.hb_gross_total').html( res.item_total );
+				                        break;
+				                    }
+				                }
+
+				                if( typeof res.sub_total !== 'undefined' )
+				                    _table.find('span.hb_sub_total_value').html( res.sub_total );
+
+				                if( typeof res.grand_total !== 'undefined' )
+				                    _table.find('span.hb_grand_total_value').html( res.grand_total );
+
+				                if( typeof res.advance_payment !== 'undefined' )
+				                    _table.find('span.hb_advance_payment_value').html( res.advance_payment );
+
+				            }
+						});
+					}
 				} );
 			});
-		}
+		},
 
 	};
 

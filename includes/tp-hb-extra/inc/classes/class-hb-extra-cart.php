@@ -207,13 +207,18 @@ class HB_Extra_Cart
 		$room = $hb_cart->get_room( $room_id, $time_key );
 
 		$results =  array(
-                    'status'    	=> 'success',
-                    'id'        	=> $room_id,
-                    'permalink' 	=> get_permalink( $room_id ),
-                    'search_key'	=> $time_key,
-                    'name'      	=> sprintf( '%s (%s)', $room->name, $room->capacity_title ),
-                    'quantity'  	=> $room->quantity,
-                    'total'     	=> hb_format_price( $room->total_price )
+                    'status'    		=> 'success',
+                    'id'        		=> $room_id,
+                    'permalink' 		=> get_permalink( $room_id ),
+                    'search_key'		=> $time_key,
+                    'name'      		=> sprintf( '%s (%s)', $room->name, $room->capacity_title ),
+                    'quantity'  		=> $room->quantity,
+                    'total'     		=> hb_format_price( $room->total_price ),
+                    // use to cart table
+                    'item_total'		=> hb_format_price( $room->total ),
+                    'sub_total'  		=> hb_format_price( $hb_cart->sub_total ),
+	                'grand_total'   	=> hb_format_price( $hb_cart->total ),
+	                'advance_payment' 	=> hb_format_price( $hb_cart->advance_payment )
             );
 
 		$extraRoom = $room->extra_packages;
@@ -232,7 +237,7 @@ class HB_Extra_Cart
 		$results['extra_packages'] = $extra_packages;
 
 		$results = apply_filters( 'hb_remove_package_results', $results, $room_id );
-        wp_send_json( $results );
+        hb_send_json( $results );
 	}
 
 	/**
