@@ -33,6 +33,22 @@
 		toggle_extra: function()
 		{
 
+			$(document).on( 'change', '.number_room_select', function(e){
+				e.preventDefault();
+
+				var _self = $(this),
+					_form = _self.parents( '.hb-search-room-results' ),
+					_exta_area = _form.find('.hb_addition_package_extra');
+
+
+				if( _self.val() !== '' )
+					_exta_area.slideDown();
+				else
+					_exta_area.slideUp();
+
+
+			});
+
 			$(document).on( 'click', '.hb_package_toggle', function( e ){
 				e.preventDefault();
 
