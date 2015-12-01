@@ -240,7 +240,7 @@
         $.extend( token, data );
 
         $.ajax({
-            url: ajaxurl,
+            url: hotel_settings.ajax,
             data: token,
             type: 'POST',
             dataType:'html',
@@ -506,7 +506,7 @@
                     var data = $(this).serializeArray();
                     var room_title = $(this).find('.hb-room-name');
                     $.ajax({
-                        url: ajaxurl,
+                        url: hotel_settings.ajax,
                         type: 'POST',
                         data: data,
                         dataType: 'html',
@@ -564,7 +564,7 @@
                 var dateID = $(this).attr('data-date');
                 var roomID = $(this).attr('data-id');
                 $.ajax({
-                    url: ajaxurl,
+                    url: hotel_settings.ajax,
                     type: 'POST',
                     data: {
                         time: dateID,
@@ -605,7 +605,7 @@
                 var roomID = item.attr('data-id');
 
                 $.ajax({
-                    url: ajaxurl,
+                    url: hotel_settings.ajax,
                     type: 'POST',
                     data: {
                         time: dateID,

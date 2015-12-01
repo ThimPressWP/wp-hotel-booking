@@ -43,7 +43,7 @@
 				}
 
 				$.ajax({
-					url: ajaxurl,
+					url: hotel_settings.ajax,
 					type: 'POST',
 					data: {
 						package_id: package_id,

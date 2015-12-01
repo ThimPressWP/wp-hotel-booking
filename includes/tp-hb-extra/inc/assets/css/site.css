@@ -110,11 +110,8 @@
 	float: right;
 }
 
-/*input[type=radio],
-input[type=checkbox]:checked{
-	background: red !important;
-}
-input[type=checkbox]:checked:before{
-	content: '\f147' !important;
+.hb_mini_cart_price_packages input[type="checkbox"]:checked:before{
+	content: '\2713' !important;
 	font: 400 21px/1 dashicons;
-}*/
+	margin: -6px 0 0 0px;
+}
