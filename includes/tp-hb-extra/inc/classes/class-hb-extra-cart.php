@@ -171,10 +171,6 @@ class HB_Extra_Cart
 			foreach ( $room->extra_packages as $package_id => $quanity ) {
 				$package = HB_Extra_Package::instance( $package_id, $room->check_in_date, $room->check_out_date, $room->quantity, $quanity );
 				$price = $price + $package->price;
-				if( $tax === true )
-				{
-					$price = $price + $package->price * hb_get_tax_settings();
-				}
 			}
 		}
 		return $price;
@@ -228,7 +224,7 @@ class HB_Extra_Cart
 			foreach ( $extraRoom as $id => $quantt ) {
 				$extra = HB_Extra_Package::instance( $id );
 				$extra_packages[] = array(
-						'package_title'		=> sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->regular_price ) ),
+						'package_title'		=> sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->regular_price_tax ) ),
 						'package_id'		=> $extra->ID,
 						'package_quantity'	=> sprintf( 'x%s', $quantt )
 					);
@@ -256,7 +252,7 @@ class HB_Extra_Cart
 			foreach ( $extraRoom as $id => $quantt ) {
 				$extra = HB_Extra_Package::instance( $id );
 				$extra_packages[] = array(
-						'package_title'		=> sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->regular_price ) ),
+						'package_title'		=> sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->regular_price_tax ) ),
 						'package_id'		=> $extra->ID,
 						'package_quantity'	=> sprintf( 'x%s', $quantt )
 					);
@@ -284,7 +280,7 @@ class HB_Extra_Cart
 							$params[ $key ][ $room_id ][ 'extra_packages_details' ];
 
 						$params[ $key ][ $room_id ][ 'extra_packages_details' ][ $id ] = array(
-								'package_title'			=> sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->regular_price ) ),
+								'package_title'			=> sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->regular_price_tax ) ),
 								'package_id'			=> $extra->ID,
 								'package_desciprition'	=> $extra->description,
 								'package_quantity'		=> $quantt

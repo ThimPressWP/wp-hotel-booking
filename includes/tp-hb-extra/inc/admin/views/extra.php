@@ -16,7 +16,6 @@ foreach ( $extra_types as $key => $value ) {
 ?>
 
 <!-- Email Sender Options block -->
-<h3><?php _e( 'Extra room', 'tp-hb-extra' ); ?></h3>
 <p class="description"><?php _e( 'Adding room\'s services packages with detail price for every service', 'tp-hb-extra' ); ?></p>
 <form action="" class="tp_extra_form_field_settings" method="POST">
     <div id="tp_extra_form">

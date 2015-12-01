@@ -136,7 +136,7 @@ if( ! function_exists( 'tp_hb_extra_type' ) )
 	function tp_hb_extra_type()
 	{
 		return apply_filters( 'tp_hb_extra_type', array(
-				'trip' 		=> __( 'Stip', 'tp-hb-extra' ),
+				'strip' 		=> __( 'Strip', 'tp-hb-extra' ),
 				'number'	=> __( 'Number', 'tp-hb-extra' )
 			)
 		);

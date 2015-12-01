@@ -496,6 +496,7 @@ th.column-room_type{
 /*OTHER SETTINGS*/
 #tp_hotel_booking_other_settings{
     margin-top: 5px;
+    padding-left: 15px;
 }
 .tp_hotel_booking_tabs_settings{
     /*width: 20%;

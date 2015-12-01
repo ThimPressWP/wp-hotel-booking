@@ -56,7 +56,13 @@ class HB_Extra_Package
 		if( ! $this->_check_out )
 			$this->_check_out = time();
 
+		if( ! $room_quantity )
+			$room_quantity = 1;
+
 		$this->_room_quantity = $room_quantity;
+
+		if( ! $package_quantity )
+			$package_quantity = 1;
 
 		$this->_package_quantity = $package_quantity;
 
@@ -84,7 +90,11 @@ class HB_Extra_Package
 				break;
 			case 'regular_price':
 				# code...
-				$return = get_post_meta( $this->_post->ID, 'tp_hb_extra_room_price', true );
+				$return = $this->get_regular_price( );
+				break;
+			case 'regular_price_tax':
+				# code...
+				$return = $this->get_regular_price( true );
 				break;
 			case 'quantity':
 				# code...
@@ -124,6 +134,23 @@ class HB_Extra_Package
 			$price = $price * $this->_package_quantity * $this->night;
 		}
 
+		if( hb_price_including_tax() )
+		{
+			return $price + $price * hb_get_tax_settings();
+		}
+		return $price;
+
+	}
+
+	function get_regular_price( $tax = false )
+	{
+
+		$price = get_post_meta( $this->_post->ID, 'tp_hb_extra_room_price', true );
+
+		if( $tax && hb_price_including_tax() )
+		{
+			return $price + $price * hb_get_tax_settings();
+		}
 		return $price;
 
 	}
