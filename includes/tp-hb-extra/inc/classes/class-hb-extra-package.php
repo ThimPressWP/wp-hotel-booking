@@ -90,7 +90,7 @@ class HB_Extra_Package
 				break;
 			case 'regular_price':
 				# code...
-				$return = $this->get_regular_price( );
+				$return = $this->get_regular_price();
 				break;
 			case 'regular_price_tax':
 				# code...
@@ -101,6 +101,10 @@ class HB_Extra_Package
 				$return = $this->_package_quantity;
 				break;
 			case 'price':
+				# code...
+				$return = $this->get_price_package( false );
+				break;
+			case 'price_tax':
 				# code...
 				$return = $this->get_price_package();
 				break;
@@ -126,7 +130,7 @@ class HB_Extra_Package
 	 * get price of package
 	 * @return float price of package
 	 */
-	function get_price_package()
+	function get_price_package( $tax = true )
 	{
 		$price = (float)$this->regular_price;// * (int)$this->_room_quantity;
 		if( $this->respondent === 'number' )
@@ -134,7 +138,7 @@ class HB_Extra_Package
 			$price = $price * $this->_package_quantity * $this->night;
 		}
 
-		if( hb_price_including_tax() )
+		if( $tax && hb_price_including_tax() )
 		{
 			return $price + $price * hb_get_tax_settings();
 		}

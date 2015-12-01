@@ -50,6 +50,8 @@ class HB_Extra_Cart
 		 */
 		add_action( 'wp_ajax_tp_hotel_booking_remove_package', array( $this, 'remove_package' ) );
 		add_action( 'wp_ajax_nopriv_tp_hotel_booking_remove_package', array( $this, 'remove_package' ) );
+
+		add_action( 'hotel_booking_cart_after_item', array( $this, 'cart_package_after_item' ) );
 	}
 
 	/**
@@ -166,16 +168,27 @@ class HB_Extra_Cart
 	 */
 	public function filter_price( $price, $room, $tax, $singular )
 	{
+		remove_filter( 'hotel_booking_room_total_price', array( $this, 'filter_price' ), 10, 4 );
+
 		if( $room->extra_packages )
 		{
 			foreach ( $room->extra_packages as $package_id => $quanity ) {
+				if( ! $singular )
+					continue;
+
 				$package = HB_Extra_Package::instance( $package_id, $room->check_in_date, $room->check_out_date, $room->quantity, $quanity );
-				if( $singular )
+				if( $tax )
+				{
+					$price = $price + $package->price_tax;
+				}
+				else
 				{
 					$price = $price + $package->price;
 				}
 			}
 		}
+
+		add_filter( 'hotel_booking_room_total_price', array( $this, 'filter_price' ), 10, 4 );
 		return $price;
 	}
 
@@ -294,6 +307,18 @@ class HB_Extra_Cart
 		}
 
 		return $params;
+	}
+
+	function cart_package_after_item( $room )
+	{
+		if( ! $room->extra_packages )
+			return;
+
+		foreach ( $room->extra_packages as $package_id => $quantity )
+		{
+			$package = HB_Extra_Package::instance( $package_id, $room->check_in_date, $room->check_out_date, $quantity );
+			tp_hb_extra_get_template( 'loop/cart-extra-package.php', array( 'package' => $package ) );
+		}
 	}
 
 	/**

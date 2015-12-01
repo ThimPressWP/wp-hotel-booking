@@ -164,7 +164,7 @@ class HB_Cart{
         if( $rooms = $this->get_rooms() )
         {
             foreach( $rooms as $room_id => $room ) {
-                $sub_total += $room->get_total( $room->check_in_date, $room->check_out_date, $room->num_of_rooms, false );
+                $sub_total += $room->get_total( $room->check_in_date, $room->check_out_date, $room->num_of_rooms, false, true );
             }
         }
         return apply_filters( 'hb_cart_sub_total', $sub_total );
