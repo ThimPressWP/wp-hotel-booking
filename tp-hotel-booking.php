@@ -167,7 +167,7 @@ class TP_Hotel_Booking{
     function load_text_domain(){
         $locale = get_locale();
         $dir    = $this->plugin_path( 'languages' );
-        $mofile = "{$dir}{$locale}.mo";
+        $mofile = "{$dir}/{$locale}.mo";
 
         // In themes/plugins/mu-plugins directory
         load_textdomain( 'tp-hotel-booking', $mofile );
