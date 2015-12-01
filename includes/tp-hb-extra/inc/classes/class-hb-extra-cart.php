@@ -32,7 +32,7 @@ class HB_Extra_Cart
 		/**
 		 * profilter ro0m item price in minicart
 		 */
-		add_filter( 'hotel_booking_room_total_price', array( $this, 'filter_price' ), 10, 3 );
+		add_filter( 'hotel_booking_room_total_price', array( $this, 'filter_price' ), 10, 4 );
 
 		/**
 		 * add filter add to cart results array
@@ -164,13 +164,16 @@ class HB_Extra_Cart
 	 * @param  [type] $room  [description]
 	 * @return [type]        [description]
 	 */
-	public function filter_price( $price, $room, $tax )
+	public function filter_price( $price, $room, $tax, $singular )
 	{
 		if( $room->extra_packages )
 		{
 			foreach ( $room->extra_packages as $package_id => $quanity ) {
 				$package = HB_Extra_Package::instance( $package_id, $room->check_in_date, $room->check_out_date, $room->quantity, $quanity );
-				$price = $price + $package->price;
+				if( $singular )
+				{
+					$price = $price + $package->price;
+				}
 			}
 		}
 		return $price;

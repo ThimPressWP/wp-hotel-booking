@@ -189,10 +189,10 @@ class HB_Room{
                 $return = $this->get_data('quantity');
                 break;
             case 'total':
-                $return = $this->get_total($this->check_in_date, $this->check_out_date, $this->get_data( 'num_of_rooms' ), false);
+                $return = $this->get_total($this->check_in_date, $this->check_out_date, $this->get_data( 'num_of_rooms' ), false, false);
                 break;
             case 'total_tax':
-                $return = $this->get_total($this->check_in_date, $this->check_out_date, $this->get_data( 'num_of_rooms' ));
+                $return = $this->get_total($this->check_in_date, $this->check_out_date, $this->get_data( 'num_of_rooms' ), true, false);
                 break;
             case 'total_price':
                     if( hb_price_including_tax() )
@@ -201,7 +201,7 @@ class HB_Room{
                     }
                     else
                     {
-                        $return = $this->get_total($this->check_in_date, $this->check_out_date, $this->get_data( 'num_of_rooms' ), false);
+                        $return = $this->get_total($this->check_in_date, $this->check_out_date, $this->get_data( 'num_of_rooms' ));
                     }
                 break;
             case 'search_key':
@@ -361,7 +361,7 @@ class HB_Room{
      * @param bool $including_tax
      * @return float|int
      */
-    function get_total( $from = null, $to = null, $num_of_rooms = 1, $including_tax = true ){
+    function get_total( $from = null, $to = null, $num_of_rooms = 1, $including_tax = true, $singular = true ){
         $nights = 0;
         $total = 0;
         if( is_null( $from ) && is_null( $to ) ){
@@ -395,7 +395,7 @@ class HB_Room{
             $total_per_night = $this->get_price( $from + $i * DAY_IN_SECONDS, $including_tax );
             $total += $total_per_night * $num_of_rooms;
         }
-        return apply_filters( 'hotel_booking_room_total_price', $total, $this, $including_tax );
+        return apply_filters( 'hotel_booking_room_total_price', $total, $this, $including_tax, $singular );
     }
 
     /**
