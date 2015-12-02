@@ -227,6 +227,7 @@ class HB_Extra_Cart
                     'quantity'  		=> $room->quantity,
                     'total'     		=> hb_format_price( $room->total_price ),
                     // use to cart table
+                    'package_id'		=> $package_id,
                     'item_total'		=> hb_format_price( $room->total ),
                     'sub_total'  		=> hb_format_price( $hb_cart->sub_total ),
 	                'grand_total'   	=> hb_format_price( $hb_cart->total ),
@@ -293,7 +294,7 @@ class HB_Extra_Cart
 					foreach ( $room_param['extra_packages'] as $id => $quantt ) {
 						$extra = HB_Extra_Package::instance( $id );
 						if( ! isset( $params[ $key ][ $room_id ][ 'extra_packages_details' ] ) )
-							$params[ $key ][ $room_id ][ 'extra_packages_details' ];
+							$params[ $key ][ $room_id ][ 'extra_packages_details' ] = array();
 
 						$params[ $key ][ $room_id ][ 'extra_packages_details' ][ $id ] = array(
 								'package_title'			=> sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->regular_price_tax ) ),
@@ -317,7 +318,7 @@ class HB_Extra_Cart
 		foreach ( $room->extra_packages as $package_id => $quantity )
 		{
 			$package = HB_Extra_Package::instance( $package_id, $room->check_in_date, $room->check_out_date, $quantity );
-			tp_hb_extra_get_template( 'loop/cart-extra-package.php', array( 'package' => $package ) );
+			tp_hb_extra_get_template( 'loop/cart-extra-package.php', array( 'package' => $package, 'room' => $room ) );
 		}
 	}
 
