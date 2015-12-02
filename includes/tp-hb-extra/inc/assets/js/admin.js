@@ -36,12 +36,6 @@
 					package_id = _self.attr('data-id'),
 					exta = _self.parents( '.tp_extra_form_fields' );
 
-				if( package_id == 0 )
-				{
-					exta.remove();
-					return;
-				}
-
 				$.ajax({
 					url: hotel_settings.ajax,
 					type: 'POST',

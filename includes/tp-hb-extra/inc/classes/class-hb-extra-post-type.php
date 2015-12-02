@@ -132,7 +132,7 @@ class HB_Extra_Post_Type
 		if( ! isset( $_POST['package_id'] ) )
 			return;
 
-		if( wp_delete_post( $_POST['package_id'] ) )
+		if( wp_delete_post( $_POST['package_id'] ) || ! get_post( $_POST['package_id'] ) )
 		{
 			wp_send_json( array( 'status' => 'success' ) );
 		}
