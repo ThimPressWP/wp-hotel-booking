@@ -4,7 +4,7 @@
     Plugin URI: http://thimpress.com/learnpress
     Description: [Description here]
     Author: ThimPress
-    Version: 1.0
+    Version: 1.0.1
     Author URI: http://thimpress.com
 */
 
@@ -56,7 +56,11 @@ class TP_Hotel_Booking{
     }
 
     function install(){
-        $this->_include( 'includes/hb-functions.php' );
+        if( ! function_exists( 'hb_create_page' ) )
+        {
+            $this->_include( 'includes/admin/hb-admin-functions.php' );
+            $this->_include( 'includes/hb-functions.php' );
+        }
         $this->_include( 'includes/install.php' );
     }
 
