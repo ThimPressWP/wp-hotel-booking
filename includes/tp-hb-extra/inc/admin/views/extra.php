@@ -79,8 +79,8 @@ foreach ( $extra_types as $key => $value ) {
                 </div>
                 <div class="rooms">
                     <h4><?php _e( 'All Rooms', 'tp-hb-extra' ); ?></h4>
-                    <input type="hidden" name="<?php echo esc_attr( $field_name ); ?>[0][rooms]" value="0"/>
-                    <input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>[0][rooms]" value="1"/>
+                    <input type="hidden" name="<?php echo esc_attr( $field_name ); ?>[0][selected]" value="0"/>
+                    <input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>[0][selected]" value="1"/>
                 </div>
                 <div class="remove">
                     <a data-id="" class="button remove_button"><?php esc_attr_e( 'Remove', 'tp-hb-extra' ); ?></a>
@@ -117,8 +117,8 @@ foreach ( $extra_types as $key => $value ) {
         </div>
         <div class="rooms">
             <h4><?php _e( 'All Rooms', 'tp-hb-extra' ); ?></h4>
-            <input type="hidden" name="<?php echo esc_attr( $field_name ); ?>[{{ data.id }}][rooms]" value="0"/>
-            <input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>[{{ data.id }}][rooms]" value="1"/>
+            <input type="hidden" name="<?php echo esc_attr( $field_name ); ?>[{{ data.id }}][selected]" value="0"/>
+            <input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>[{{ data.id }}][selected]" value="1"/>
         </div>
         <div class="remove">
             <a data-id="{{ data.id }}" class="button remove_button"><?php esc_attr_e( 'Remove', 'tp-hb-extra' ); ?></a>
