@@ -177,8 +177,8 @@ class HB_Extra_Package
 
 			if( $package->_check_in === $checkIn &&
 				$package->_check_out === $checkOut &&
-				$package->_room_quantity === $room_quantity &&
-				$package->_package_quantity === $package_quantity
+				$package->_room_quantity == $room_quantity &&
+				$package->_package_quantity == $package_quantity
 			)
 			{
 				return $package;

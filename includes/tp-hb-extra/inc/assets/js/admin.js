@@ -13,7 +13,7 @@
 			$( document ).on( 'click', '.tp_extra_add_item', function(e){
 				e.preventDefault();
 				var current_package = $('.tp_extra_form_fields:last'),
-					new_package_id = 0,
+					new_package_id = new Date().getTime(),
 					tmpl = wp.template( 'tp-hb-extra-room' );
 				tmpl = tmpl({ id: new_package_id });
 

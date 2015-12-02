@@ -106,7 +106,7 @@ global $hb_settings;
                 </tr>
         </table>
         <p>
-            <a href="<?php echo hb_get_url(array( 'hotel-booking' => 'checkout')) ?>" class="hb_button hb_checkout"><?php _e( 'Check Out', 'tp-hotel-booking' );?></a>
+            <a href="<?php echo hb_get_checkout_url() ?>" class="hb_button hb_checkout"><?php _e( 'Check Out', 'tp-hotel-booking' );?></a>
             <button type="submit" class="hb_button update"><?php _e( 'Update', 'tp-hotel-booking' ); ?></button>
         </p>
     </form>

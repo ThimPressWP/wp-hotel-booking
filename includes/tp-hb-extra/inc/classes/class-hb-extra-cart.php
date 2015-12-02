@@ -51,7 +51,14 @@ class HB_Extra_Cart
 		add_action( 'wp_ajax_tp_hotel_booking_remove_package', array( $this, 'remove_package' ) );
 		add_action( 'wp_ajax_nopriv_tp_hotel_booking_remove_package', array( $this, 'remove_package' ) );
 
+		/**
+		 * append package into cart
+		 */
 		add_action( 'hotel_booking_cart_after_item', array( $this, 'cart_package_after_item' ) );
+
+		add_filter( 'tp_hb_extra_cart_input', array( $this, 'check_respondent' ) );
+
+		add_filter( 'hotel_booking_update_cart', array( $this, 'update_cart_package' ), 10, 4 );
 	}
 
 	/**
@@ -241,9 +248,10 @@ class HB_Extra_Cart
 			foreach ( $extraRoom as $id => $quantt ) {
 				$extra = HB_Extra_Package::instance( $id );
 				$extra_packages[] = array(
-						'package_title'		=> sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->regular_price_tax ) ),
-						'package_id'		=> $extra->ID,
-						'package_quantity'	=> sprintf( 'x%s', $quantt )
+						'package_title'				=> sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->regular_price_tax ) ),
+						'package_id'				=> $extra->ID,
+						'package_quantity'			=> sprintf( 'x%s', $quantt ),
+						'package_respondent'		=> $extra->respondent
 					);
 			}
 		}
@@ -317,9 +325,54 @@ class HB_Extra_Cart
 
 		foreach ( $room->extra_packages as $package_id => $quantity )
 		{
-			$package = HB_Extra_Package::instance( $package_id, $room->check_in_date, $room->check_out_date, $quantity );
-			tp_hb_extra_get_template( 'loop/cart-extra-package.php', array( 'package' => $package, 'room' => $room ) );
+			$package = HB_Extra_Package::instance( $package_id, $room->check_in_date, $room->check_out_date, $room->quantity, (int)$quantity );
+			if( is_page( hb_get_page_id( 'checkout' ) ) || hb_get_request( 'hotel-booking' ) === 'checkout' )
+			{
+				tp_hb_extra_get_template( 'loop/checkout-extra-package.php', array( 'package' => $package, 'room' => $room ) );
+			}
+			else
+			{
+				tp_hb_extra_get_template( 'loop/cart-extra-package.php', array( 'package' => $package, 'room' => $room ) );
+			}
 		}
+	}
+
+	function check_respondent( $respondent )
+	{
+		remove_filter( 'tp_hb_extra_cart_input', array( $this, 'check_respondent' ) );
+		if( is_page( hb_get_page_id( 'checkout' ) ) || hb_get_request( 'hotel-booking' ) === 'checkout' )
+			return false;
+
+		if( is_page( hb_get_page_id( 'my-rooms' ) ) || hb_get_request( 'hotel-booking' ) === 'cart' )
+		{
+			if( $respondent === 'trip' )
+				return false;
+		}
+		add_filter( 'tp_hb_extra_cart_input', array( $this, 'check_respondent' ) );
+		return $respondent;
+	}
+
+	/**
+	 * submit update package in the cart page
+	 * @param  [array] $sessions $_SESSION
+	 * @param  [type] $posts    [description]
+	 * @return [array]           $_SESSION processed
+	 */
+	function update_cart_package( $sessions, $posts, $search_key, $room_id )
+	{
+
+		if( ! isset( $posts['hotel_booking_cart_package'] ) || empty( $posts['hotel_booking_cart_package'] ) )
+			return $sessions;
+
+		if( ! isset( $posts['hotel_booking_cart_package'][ $search_key ] ) )
+			return $sessions;
+
+		if( ! isset( $posts['hotel_booking_cart_package'][ $search_key ][ $room_id ] ) )
+			return $sessions;
+
+		$sessions['extra_packages'] = $posts['hotel_booking_cart_package'][ $search_key ][ $room_id ];
+
+		return $sessions;
 	}
 
 	/**
