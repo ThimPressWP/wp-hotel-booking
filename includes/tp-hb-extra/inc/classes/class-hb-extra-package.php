@@ -133,16 +133,8 @@ class HB_Extra_Package
 	function get_price_package( $tax = true )
 	{
 		$price = (float)$this->regular_price;// * (int)$this->_room_quantity;
-		if( $this->respondent === 'number' )
-		{
-			$price = $price * $this->_package_quantity * $this->night;
-		}
 
-		if( $tax && hb_price_including_tax() )
-		{
-			return $price + $price * hb_get_tax_settings();
-		}
-		return $price;
+		return apply_filters( 'tp_hb_extra_package_price', $price, $this->respondent, $this->_package_quantity, $this->night, $tax );
 
 	}
 

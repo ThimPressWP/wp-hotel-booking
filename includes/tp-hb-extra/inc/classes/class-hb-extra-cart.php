@@ -59,6 +59,35 @@ class HB_Extra_Cart
 		add_filter( 'tp_hb_extra_cart_input', array( $this, 'check_respondent' ) );
 
 		add_filter( 'hotel_booking_update_cart', array( $this, 'update_cart_package' ), 10, 4 );
+
+
+		/**
+		 * filter price by extra package type. For ex: number, trip type
+		 */
+		add_filter( 'tp_hb_extra_package_price', array( $this, 'addition_package_price' ), 10, 5 );
+	}
+
+	/**
+	 * [addition_package_price description]
+	 * @param  [float] $price
+	 * @param  [text] $respondent
+	 * @param  [int] $quantity
+	 * @param  [int] $night
+	 * @param  [boolean] $tax
+	 * @return [float]
+	 */
+	function addition_package_price( $price, $respondent, $quantity, $night, $tax )
+	{
+		if( $respondent === 'number' )
+		{
+			$price = $price * $quantity * $night;
+		}
+
+		if( $tax && hb_price_including_tax() )
+		{
+			return $price + $price * hb_get_tax_settings();
+		}
+		return $price;
 	}
 
 	/**
