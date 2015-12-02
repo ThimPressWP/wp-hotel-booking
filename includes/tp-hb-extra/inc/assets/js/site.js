@@ -39,9 +39,10 @@
 				var _self = $(this),
 					_form = _self.parents( '.hb-search-room-results' ),
 					_exta_area = _form.find('.hb_addition_package_extra'),
-					_toggle = _exta_area.find( '.hb_addition_packages' );
+					_toggle = _exta_area.find( '.hb_addition_packages' ),
+					_val = _self.val();
 
-				if( _self.val() !== '' )
+				if( _val !== '' )
 				{
 					$( '.hb_addition_packages' ).removeClass('active').slideUp();
 					_toggle.addClass('active');
@@ -51,7 +52,11 @@
 				{
 					_toggle.removeClass('active');
 					_exta_area.slideUp();
+					_val = 1;
 				}
+
+				_form.find( '.hb_optional_quantity' ).val( _val );
+
 				TPHB_Extra_Site.optional_toggle( _toggle );
 
 			});
