@@ -837,7 +837,7 @@ function hb_format_price( $price, $with_currency = true ) {
 		}
 	}
 
-	$price =
+	$price_format =
 		$before
 		. number_format(
 			$price,
@@ -846,70 +846,82 @@ function hb_format_price( $price, $with_currency = true ) {
 			$price_thousands_separator
 		) . $after;
 
-	return $price;
+	return apply_filters( 'hb_price_format', $price_format, $price, $with_currency );
 }
 
-function hb_search_rooms( $args = array() ) {
-	global $wpdb;
-	$adults    = hb_get_request( 'adults' ) ? hb_get_request( 'adults' ) : 1;
-	$max_child = hb_get_request( 'max_child' ) ? hb_get_request( 'max_child' ) : 1;
-	$args      = wp_parse_args(
-		$args,
-		array(
-			'check_in_date'  => date( 'm/d/Y' ),
-			'check_out_date' => date( 'm/d/Y' ),
-			'adults'         => $adults,
-			'max_child'      => 0
-		)
-	);
+function hb_search_rooms( $args = array() ){
+    global $wpdb;
+    $adults = hb_get_request( 'adults' ) ? hb_get_request( 'adults' ) : 1;
+    $max_child = hb_get_request('max_child') ? hb_get_request('max_child') : 1;
+    $args = wp_parse_args(
+        $args,
+        array(
+            'check_in_date'     => date( 'm/d/Y' ),
+            'check_out_date'    => date( 'm/d/Y' ),
+            'adults'            => $adults,
+            'max_child'         => 0
+        )
+    );
 
-	$check_in_time          = strtotime( $args['check_in_date'] );
-	$check_out_time         = strtotime( $args['check_out_date'] );
-	$check_in_date_to_time  = mktime( 0, 0, 0, date( 'm', $check_in_time ), date( 'd', $check_in_time ), date( 'Y', $check_in_time ) );
-	$check_out_date_to_time = mktime( 0, 0, 0, date( 'm', $check_out_time ), (int) date( 'd', $check_out_time ), date( 'Y', $check_out_time ) );
+    $check_in_time = strtotime( $args['check_in_date'] );
+    $check_out_time = strtotime( $args['check_out_date'] );
+    $check_in_date_to_time = mktime( 0, 0, 0, date( 'm', $check_in_time ), date( 'd', $check_in_time ), date( 'Y', $check_in_time ) );
+    $check_out_date_to_time = mktime( 0, 0, 0, date( 'm', $check_out_time ), (int)date( 'd', $check_out_time ), date( 'Y', $check_out_time ) );
 
-	$results = array();
+    $results = array();
 
-	/**
-	 * Count available rooms
-	 */
-	$query_count_available = $wpdb->prepare( "
+    /**
+     * Count available rooms
+     */
+    $query_count_available = $wpdb->prepare("
         (
             SELECT ra.meta_value
             FROM {$wpdb->postmeta} ra
             INNER JOIN {$wpdb->posts} r ON ra.post_id = r.ID AND ra.meta_key = %s
                 WHERE r.ID=rooms.ID
         )
-    ", '_hb_num_of_rooms' );
+    ", '_hb_num_of_rooms');
 
-	/**
-	 * Count booked rooms
-	 */
-	$query_count_not_available = $wpdb->prepare( "
+    $booking_status = $wpdb->prepare("
+            (
+                SELECT booked.post_status
+                FROM {$wpdb->posts} booked
+                WHERE
+                    booked.post_type = %s
+                    AND bk.meta_value = booked.ID
+            )
+        ", 'hb_booking');
+
+    /**
+     * Count booked rooms
+     */
+    $query_count_not_available = $wpdb->prepare("
         (
-            SELECT count(booking.ID)
-            FROM {$wpdb->posts} booking
-            INNER JOIN {$wpdb->postmeta} bm ON bm.post_id = booking.ID AND bm.meta_key = %s
-            INNER JOIN {$wpdb->postmeta} bi ON bi.post_id = booking.ID AND bi.meta_key = %s
-            INNER JOIN {$wpdb->postmeta} bo ON bo.post_id = booking.ID AND bo.meta_key = %s
+            SELECT count(book_item.ID)
+            FROM {$wpdb->posts} book_item
+            INNER JOIN {$wpdb->postmeta} bm ON bm.post_id = book_item.ID AND bm.meta_key = %s
+            INNER JOIN {$wpdb->postmeta} bi ON bi.post_id = book_item.ID AND bi.meta_key = %s
+            INNER JOIN {$wpdb->postmeta} bo ON bo.post_id = book_item.ID AND bo.meta_key = %s
+            INNER JOIN {$wpdb->postmeta} bk ON bk.post_id = book_item.ID AND bk.meta_key = %s
             WHERE
-                booking.post_type = %s
+                book_item.post_type = %s
                 AND bm.meta_value = rooms.ID
                 AND ( (bi.meta_value <= %d AND bo.meta_value >= %d)
-                OR (bi.meta_value >= %d AND bi.meta_value <= %d)
+                OR (bi.meta_value >= %d AND bi.meta_value < %d)
                 OR (bo.meta_value > %d AND bo.meta_value <= %d) )
+                AND {$booking_status} IN ( %s, %s, %s )
         )
     ", '_hb_id', '_hb_check_in_date', '_hb_check_out_date', '_hb_booking_id', 'hb_booking_item',
-		$check_in_date_to_time, $check_out_date_to_time,
-		$check_in_date_to_time, $check_out_date_to_time,
-		$check_in_date_to_time, $check_out_date_to_time,
-		'hb-pending', 'hb-processing', 'hb-completed'
-	);
+        $check_in_date_to_time, $check_out_date_to_time,
+        $check_in_date_to_time, $check_out_date_to_time,
+        $check_in_date_to_time, $check_out_date_to_time,
+        'hb-pending', 'hb-processing', 'hb-completed'
+    );
 
-	/**
-	 * merge query select room
-	 */
-	$query = $wpdb->prepare( "
+    /**
+     * merge query select room
+     */
+    $query = $wpdb->prepare("
         SELECT rooms.*, {$query_count_available} - {$query_count_not_available} as available_rooms
         FROM {$wpdb->posts} rooms
         INNER JOIN {$wpdb->postmeta} pm ON pm.post_id = rooms.ID AND pm.meta_key = %s
@@ -922,68 +934,71 @@ function hb_search_rooms( $args = array() ) {
         HAVING available_rooms > 0
     ", '_hb_max_child_per_room', '_hb_max_adults_per_room', 'hb_room', 'publish', $max_child, $adults );
 
-	$query = apply_filters( 'hb_search_query', $query, array(
-		'check_in'  => $check_in_date_to_time,
-		'check_out' => $check_out_date_to_time,
-		'adults'    => $adults,
-		'child'     => $max_child
-	), 99 );
+    $query = apply_filters( 'hb_search_query', $query, array(
+            'check_in'      => $check_in_date_to_time,
+            'check_out'     => $check_out_date_to_time,
+            'adults'        => $adults,
+            'child'         => $max_child
+        ), 99);
 
-	if ( $search = $wpdb->get_results( $query ) ) {
-		foreach ( $search as $k => $p ) {
-			$room        = HB_Room::instance( $p, array(
-				'check_in_date'  => $args['check_in_date'],
-				'check_out_date' => $args['check_out_date'],
-				'quantity'       => 1
-			) );
-			$results[$k] = $room;
-		}
-	}
+    if( $search = $wpdb->get_results( $query ) ){
+        foreach( $search as $k => $p ){
+            $room = HB_Room::instance( $p, array(
+                    'check_in_date'     => $args['check_in_date'],
+                    'check_out_date'    => $args['check_out_date'],
+                    'quantity'          => 1
+                ) );
+            $results[ $k ] = $room;
+        }
+    }
 
-	if ( isset( $_SESSION['hb_cart' . HB_BLOG_ID], $_SESSION['hb_cart' . HB_BLOG_ID]['products'] ) ) {
-		$products = $_SESSION['hb_cart' . HB_BLOG_ID]['products'];
-		foreach ( $products as $date => $items ) {
-			$date = explode( '_', $date ); // can not use list function
-			if ( isset( $date[0], $date[1] ) ) {
-				$in  = $date[0];
-				$out = $date[1];
-			}
-			foreach ( $results as $key => $room ) {
-				$room_id = $room->post->ID;
-				if ( !array_key_exists( $room_id, $items ) )
-					continue;
+    if( isset( $_SESSION['hb_cart'.HB_BLOG_ID], $_SESSION['hb_cart'.HB_BLOG_ID]['products'] ) )
+    {
+        $products = $_SESSION['hb_cart'.HB_BLOG_ID]['products'];
+        foreach ($products as $date => $items) {
+            $date = explode('_', $date); // can not use list function
+            if( isset($date[0], $date[1]) )
+            {
+                $in = $date[0];
+                $out = $date[1];
+            }
+            foreach ($results as $key => $room) {
+                $room_id = $room->post->ID;
+                if( ! array_key_exists( $room_id, $items ) )
+                    continue;
 
-				if (
-					( $in < strtotime( $args['check_in_date'] ) && strtotime( $args['check_in_date'] ) < $out )
-					|| ( $in < strtotime( $args['check_out_date'] ) && strtotime( $args['check_out_date'] ) < $out )
-				) {
-					$total                                = $results[$key]->post->available_rooms;
-					$results[$key]->post->available_rooms = (int) $total - (int) $items[$room_id]['quantity'];
-				}
+                if(
+                    ($in < strtotime($args['check_in_date']) && strtotime($args['check_in_date']) < $out)
+                    || ($in < strtotime($args['check_out_date']) && strtotime($args['check_out_date']) < $out)
+                )
+                {
+                    $total = $results[ $key ]->post->available_rooms;
+                    $results[ $key ]->post->available_rooms = (int)$total - (int)$items[$room_id]['quantity'];
+                }
 
-			}
-		}
-	}
+            }
+        }
+    }
 
-	global $hb_settings;
-	$total          = count( $results );
-	$posts_per_page = (int) apply_filters( 'hb_number_search_results', $hb_settings->get( 'posts_per_page', 1 ) );
-	$page           = isset( $_GET['hb_page'] ) ? abs( (int) $_GET['hb_page'] ) : 1;
-	$offset         = ( $page * $posts_per_page ) - $posts_per_page;
-	$max_num_pages  = ceil( $total / $posts_per_page );
+    global $hb_settings;
+    $total = count($results);
+    $posts_per_page = (int)apply_filters( 'hb_number_search_results', $hb_settings->get( 'posts_per_page', 1 ) );
+    $page = isset( $_GET['hb_page'] ) ? abs( (int) $_GET['hb_page'] ) : 1;
+    $offset = ( $page * $posts_per_page ) - $posts_per_page;
+    $max_num_pages = ceil($total / $posts_per_page);
 
-	$data = array_slice( $results, $offset, $posts_per_page );
+    $data = array_slice( $results, $offset, $posts_per_page);
 
-	$GLOBALS['hb_search_rooms'] = array(
-		'max_num_pages'  => $max_num_pages,
-		'data'           => $max_num_pages > 1 ? array_slice( $results, $offset, $posts_per_page ) : $results,
-		'total'          => $total,
-		'posts_per_page' => $posts_per_page,
-		'offset'         => $offset,
-		'page'           => $page,
-	);
+    $GLOBALS['hb_search_rooms'] = array(
+            'max_num_pages'         => $max_num_pages,
+            'data'                  => $max_num_pages > 1 ? array_slice( $results, $offset, $posts_per_page) : $results,
+            'total'                 => $total,
+            'posts_per_page'        => $posts_per_page,
+            'offset'                => $offset,
+            'page'                  => $page,
+        );
 
-	return apply_filters( 'hb_search_results', $GLOBALS['hb_search_rooms'], $args );
+    return apply_filters( 'hb_search_results', $GLOBALS['hb_search_rooms'], $args );
 }
 
 function hb_get_payment_gateways( $args = array() ) {

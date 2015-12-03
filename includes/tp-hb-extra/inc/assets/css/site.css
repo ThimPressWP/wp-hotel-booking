@@ -145,7 +145,7 @@
     font-weight: 400;
     line-height: 30px;
 }
-.hb_mini_cart_price_packages .hb_package_title span{
+.hb_mini_cart_price_packages .hb_package_title > span{
 	float: right;
 }
 

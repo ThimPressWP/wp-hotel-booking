@@ -28,7 +28,7 @@ class HB_SW_Curreny
 		 * if is multi currency is true
 		 * do all action in frontend
 		 */
-		add_filter( 'hb_currency', array( $this, 'switch_currencies' ) );
+		add_filter( 'hb_currency', array( $this, 'switch_currencies' ), 99 );
 		add_filter( 'tp_hotel_booking_price_switcher', array( $this, 'switch_price' ) );
 		add_filter( 'tp_hotel_booking_currency_aggregator', array( $this, 'aggregator' ) );
 
