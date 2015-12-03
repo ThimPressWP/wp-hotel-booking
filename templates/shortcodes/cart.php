@@ -23,7 +23,7 @@ global $hb_settings;
                             if( ( $num_of_rooms = (int)$room->quantity ) == 0 ) continue;
                         ?>
                         <tr class="hb_checkout_item" data-date="<?php echo $room->in_to_out; ?>" data-id="<?php echo $room->ID ?>">
-                            <td<?php echo defined( 'TP_HB_EXTRA' ) ? ' rowspan="'. (count( $room->extra_packages ) + 1).'"' : ''  ?>>
+                            <td<?php echo defined( 'TP_HB_EXTRA' ) && $room->extra_packages ? ' rowspan="'. ( count( $room->extra_packages ) + 1 ) .'"' : ''  ?>>
                                 <a href="javascript:void(0)" class="hb_remove_cart_item" data-date="<?php echo $room->in_to_out; ?>" data-id="<?php echo $room->ID ?>">
                                     <i class="fa fa-times"></i>
                                 </a>
@@ -35,14 +35,14 @@ global $hb_settings;
                             <td class="hb_check_out"><?php echo $room->check_out_date ?></td>
                             <td class="hb_night"><?php echo hb_count_nights_two_dates( $room->check_out_date, $room->check_in_date) ?></td>
                             <td class="hb_gross_total">
-                                <?php echo hb_format_price( $room->total );?>
+                                <?php echo hb_format_price( $room->total ); ?>
                             </td>
                         </tr>
                         <?php do_action( 'hotel_booking_cart_after_item', $room ); ?>
                 <?php endforeach; ?>
             <?php endif; ?>
 
-                <?php if( $hb_settings->get( 'enable_coupon' ) ){?>
+                <?php if( $hb_settings->get( 'enable_coupon' ) ){ ?>
                     <?php
                         if( $coupon = get_transient( 'hb_user_coupon_' . session_id() ) ){
                             $coupon = HB_Coupon::instance( $coupon );
