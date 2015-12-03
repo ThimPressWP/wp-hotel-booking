@@ -108,9 +108,24 @@
 				e.preventDefault();
 				var _self = $(this),
 					package_id = _self.attr( 'data-package' ),
-					_parents = _self.parents('.hb_mini_cart_item:first'),
-					room_id = _parents.attr( 'data-id' ),
-					time_key = _parents.attr( 'data-search-key' );
+					_parents = _self.parents('.hb_mini_cart_item:first');
+
+					if( typeof _parents === 'undefined' || _parents.length === 0 )
+					{
+						_parents = _self.parents('.hb_checkout_item.package:first');
+					}
+
+				var room_id = _parents.attr( 'data-id' );
+					if( typeof room_id === 'undefined' )
+					{
+						room_id = _parents.attr( 'data-room-id' );
+					}
+				var time_key = _parents.attr( 'data-search-key' );
+
+					if( typeof time_key === 'undefined' )
+					{
+						time_key = _parents.attr( 'data-time-key' );
+					}
 				$.ajax({
 					url: hotel_settings.ajax,
 					method: 'POST',
@@ -126,7 +141,6 @@
 					}
 				}).done( function( res ){
 					res = TPHB_Extra_Site.parseJSON(res);
-					// console.debug(res); //return;
 					if( typeof res.status !== 'undefined' && res.status == 'success' )
 					{
 						HB_Booking_Cart.hb_add_to_cart_callback( res, function(){
@@ -144,7 +158,25 @@
 				                    	_roomID = _tr.attr('data-room-id');
 				                    if( _date === res.search_key && _roomID === res.id && _package_id == res.package_id )
 				                    {
-				                    	_tr.remove();
+
+				                    	var _packages = $('tr.hb_checkout_item.package[data-time-key="'+_date+'"][data-room-id="'+_roomID+'"]'),
+				                    		_additon_package = $('tr.hb_addition_services_title[data-room-id="'+_roomID+'"][data-time-key="'+_date+'"]'),
+				                    		_tr_room = $('.hb_checkout_item:not(.package)[data-date="'+_date+'"][data-id="'+_roomID+'"]'),
+				                    		_packages_length = _packages.length;
+
+				                    	if( _packages_length === 1 )
+				                    	{
+				                    		_tr.remove();
+				                    		_additon_package.remove();
+				                    		_tr_room.find('td:first').removeAttr('rowspan');
+				                    	}
+				                    	else
+				                    	{
+				                    		var _rowspan = _tr_room.find('td:first').attr('rowspan');
+				                    		_tr.remove();
+				                    		_tr_room.find('td:first').attr('rowspan', _rowspan - 1 );
+				                    	}
+
 				                    	break;
 				                    }
 				                }

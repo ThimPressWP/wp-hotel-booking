@@ -10,12 +10,12 @@
 
 	<td colspan="<?php echo is_hb_cart() ? 2 : 1 ?>">
 		<?php if( is_hb_cart() ): ?>
-			<a href="#" class="hb_package_cart_remove" data-package="<?php echo esc_attr( $package->ID ) ?>"><i class="fa fa-times"></i></a>
+			<a href="#" class="hb_package_remove" data-package="<?php echo esc_attr( $package->ID ) ?>"><i class="fa fa-times"></i></a>
 		<?php endif; ?>
 	</td>
 
 	<td>
-		<?php if( $input = apply_filters( 'tp_hb_extra_cart_input', $package->respondent ) && $page === 'cart' ): ?>
+		<?php if( $input = apply_filters( 'tp_hb_extra_cart_input', $package->respondent ) ): ?>
 			<input type="number" min="1" value="<?php echo esc_attr( $package->quantity ); ?>" name="hotel_booking_cart_package[<?php echo esc_attr( $room->search_key ); ?>][<?php echo esc_attr( $room->ID ); ?>][<?php echo esc_attr( $package->ID ); ?>]"/>
 		<?php else: ?>
 			<?php printf( '%s', $package->quantity ) ?>

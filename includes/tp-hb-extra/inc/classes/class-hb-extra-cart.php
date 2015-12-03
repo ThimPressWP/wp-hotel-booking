@@ -365,7 +365,7 @@ class HB_Extra_Cart
 			$page = 'cart';
 		}
 
-		tp_hb_extra_get_template( 'loop/addition-services-title.php', array( 'page' => $page ) );
+		tp_hb_extra_get_template( 'loop/addition-services-title.php', array( 'page' => $page, 'room' => $room ) );
 		foreach ( $room->extra_packages as $package_id => $quantity )
 		{
 			$package = HB_Extra_Package::instance( $package_id, $room->check_in_date, $room->check_out_date, $room->quantity, (int)$quantity );
@@ -375,7 +375,7 @@ class HB_Extra_Cart
 
 	function check_respondent( $respondent )
 	{
-		remove_filter( 'tp_hb_extra_cart_input', array( $this, 'check_respondent' ) );
+		// remove_filter( 'tp_hb_extra_cart_input', array( $this, 'check_respondent' ) );
 		if( is_page( hb_get_page_id( 'checkout' ) ) || hb_get_request( 'hotel-booking' ) === 'checkout' )
 			return false;
 
@@ -384,7 +384,7 @@ class HB_Extra_Cart
 			if( $respondent === 'trip' )
 				return false;
 		}
-		add_filter( 'tp_hb_extra_cart_input', array( $this, 'check_respondent' ) );
+		// add_filter( 'tp_hb_extra_cart_input', array( $this, 'check_respondent' ) );
 		return $respondent;
 	}
 
