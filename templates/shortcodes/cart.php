@@ -23,7 +23,7 @@ global $hb_settings;
                             if( ( $num_of_rooms = (int)$room->quantity ) == 0 ) continue;
                         ?>
                         <tr class="hb_checkout_item" data-date="<?php echo $room->in_to_out; ?>" data-id="<?php echo $room->ID ?>">
-                            <td<?php echo defined( 'TP_HB_EXTRA' ) && $room->extra_packages ? ' rowspan="'. ( count( $room->extra_packages ) + 1 ) .'"' : ''  ?>>
+                            <td<?php echo defined( 'TP_HB_EXTRA' ) && $room->extra_packages ? ' rowspan="'. ( count( $room->extra_packages ) + 2 ) .'"' : ''  ?>>
                                 <a href="javascript:void(0)" class="hb_remove_cart_item" data-date="<?php echo $room->in_to_out; ?>" data-id="<?php echo $room->ID ?>">
                                     <i class="fa fa-times"></i>
                                 </a>

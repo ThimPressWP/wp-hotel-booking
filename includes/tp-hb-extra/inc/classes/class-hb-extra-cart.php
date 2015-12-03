@@ -27,7 +27,7 @@ class HB_Extra_Cart
 		/**
 		 * after mini cart item loop
 		 */
-		add_action( 'hotel_booking_after_mini_cart_loop', array( $this, 'mini_cart_loop' ), 10, 1 );
+		add_action( 'hotel_booking_before_mini_cart_loop', array( $this, 'mini_cart_loop' ), 10, 1 );
 
 		/**
 		 * profilter ro0m item price in minicart
@@ -352,17 +352,20 @@ class HB_Extra_Cart
 		if( ! $room->extra_packages )
 			return;
 
+		if( is_hb_checkout() )
+		{
+			$page = 'checkout';
+		}
+		else
+		{
+			$page = 'cart';
+		}
+
+		tp_hb_extra_get_template( 'loop/addition-services-title.php', array( 'page' => $page ) );
 		foreach ( $room->extra_packages as $package_id => $quantity )
 		{
 			$package = HB_Extra_Package::instance( $package_id, $room->check_in_date, $room->check_out_date, $room->quantity, (int)$quantity );
-			if( is_page( hb_get_page_id( 'checkout' ) ) || hb_get_request( 'hotel-booking' ) === 'checkout' )
-			{
-				tp_hb_extra_get_template( 'loop/checkout-extra-package.php', array( 'package' => $package, 'room' => $room ) );
-			}
-			else
-			{
-				tp_hb_extra_get_template( 'loop/cart-extra-package.php', array( 'package' => $package, 'room' => $room ) );
-			}
+			tp_hb_extra_get_template( 'loop/cart-extra-package.php', array( 'package' => $package, 'room' => $room, 'page' => $page ) );
 		}
 	}
 

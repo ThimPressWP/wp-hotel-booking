@@ -10,6 +10,7 @@
 <?php if ( $extra_packages ) : ?>
 
 	<div class="hb_mini_cart_price_packages">
+		<label><?php _e( 'Addition Services:', 'tp-hotel-booking' ) ?></label>
 		<ul>
 			<?php foreach ( $extra_packages as $package_id => $package_quantity ) : ?>
 				<?php $package = HB_Extra_Package::instance( $package_id, $check_in, $check_out, $room_quantity, $package_quantity ); ?>

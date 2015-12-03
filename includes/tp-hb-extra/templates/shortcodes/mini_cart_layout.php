@@ -15,15 +15,9 @@
 
         </div>
 
-        <div class="hb_mini_cart_price">
-
-            <label><?php _e( 'Price: ', 'tp-hotel-booking' ); ?></label>
-            <span>{{{ data.total }}}</span>
-
-        </div>
-
         <# if ( typeof data.extra_packages !== 'undefined' && data.extra_packages.length > 0 ) { #>
             <div class="hb_mini_cart_price_packages">
+                <label><?php _e( 'Addition Services:', 'tp-hotel-booking' ) ?></label>
                 <ul>
                     <#  for ( var i = 0; i < data.extra_packages.length; i++ ) { #>
                             <# var pack = data.extra_packages[i] #>
@@ -41,6 +35,13 @@
             </div>
         <# } #>
 
+        <div class="hb_mini_cart_price">
+
+            <label><?php _e( 'Price: ', 'tp-hotel-booking' ); ?></label>
+            <span>{{{ data.total }}}</span>
+
+        </div>
+
     </div>
 </script>
 <script type="text/html" id="tmpl-hb-minicart-footer">
@@ -53,26 +54,4 @@
 </script>
 <script type="text/html" id="tmpl-hb-minicart-empty">
     <p class="hb_mini_cart_empty"><?php _e( 'Your cart is empty!', 'tp-hotel-booking' ); ?></p>
-</script>
-
-<script type="text/javascript">
-    // if( typeof data.extra_packages != 'undefined' && data.extra_packages )
-    // {
-    //     <div class="hb_mini_cart_price_packages">
-    //         <ul>
-    //             for ( var i = 0; i < data.extra_packages.length; i++ )
-    //             {
-    //                 <li>
-    //                     <h5 class="hb_package_title">
-    //                         <a href="#">{{{ data.package_title }}}</a>
-    //                         <span>
-    //                             ( {{ data.package_quantity }} ?>)
-    //                             <a href="#" class="hb_package_remove" data-package="{{ data.package_id }}"><i class="fa fa-times"></i></a>
-    //                         </span>
-    //                     </h5>
-    //                 </li>
-    //             }
-    //         </ul>
-    //     </div>
-    // }
 </script>
