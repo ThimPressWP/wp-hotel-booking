@@ -1,8 +1,5 @@
 <?php
-$email = '';
-if( isset( $customer ) && $customer->data ) {
-    extract($customer->data);
-}
+$email = get_transient( 'hotel_booking_customer_email_' . HB_BLOG_ID );
 ?>
 <div class="hb-order-existing-customer" data-label="-Or-">
     <div class="hb-col-padding hb-col-border">
