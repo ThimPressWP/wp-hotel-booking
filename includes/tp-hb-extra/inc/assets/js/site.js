@@ -126,7 +126,7 @@
 					}
 				}).done( function( res ){
 					res = TPHB_Extra_Site.parseJSON(res);
-					console.debug(res); //return;
+					// console.debug(res); //return;
 					if( typeof res.status !== 'undefined' && res.status == 'success' )
 					{
 						HB_Booking_Cart.hb_add_to_cart_callback( res, function(){
