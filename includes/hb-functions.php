@@ -867,27 +867,40 @@ function hb_search_rooms( $args = array() ){
         )
     ", '_hb_num_of_rooms');
 
+    $booking_status = $wpdb->prepare("
+            (
+                SELECT booked.post_status
+                FROM {$wpdb->posts} booked
+                WHERE
+                    booked.post_type = %s
+                    AND bk.meta_value = booked.ID
+            )
+        ", 'hb_booking');
+
     /**
      * Count booked rooms
      */
     $query_count_not_available = $wpdb->prepare("
         (
-            SELECT count(booking.ID)
-            FROM {$wpdb->posts} booking
-            INNER JOIN {$wpdb->postmeta} bm ON bm.post_id = booking.ID AND bm.meta_key = %s
-            INNER JOIN {$wpdb->postmeta} bi ON bi.post_id = booking.ID AND bi.meta_key = %s
-            INNER JOIN {$wpdb->postmeta} bo ON bo.post_id = booking.ID AND bo.meta_key = %s
+            SELECT count(book_item.ID)
+            FROM {$wpdb->posts} book_item
+            INNER JOIN {$wpdb->postmeta} bm ON bm.post_id = book_item.ID AND bm.meta_key = %s
+            INNER JOIN {$wpdb->postmeta} bi ON bi.post_id = book_item.ID AND bi.meta_key = %s
+            INNER JOIN {$wpdb->postmeta} bo ON bo.post_id = book_item.ID AND bo.meta_key = %s
+            INNER JOIN {$wpdb->postmeta} bk ON bk.post_id = book_item.ID AND bk.meta_key = %s
             WHERE
-                booking.post_type = %s
+                book_item.post_type = %s
                 AND bm.meta_value = rooms.ID
                 AND ( (bi.meta_value <= %d AND bo.meta_value >= %d)
-                OR (bi.meta_value >= %d AND bi.meta_value <= %d)
+                OR (bi.meta_value >= %d AND bi.meta_value < %d)
                 OR (bo.meta_value > %d AND bo.meta_value <= %d) )
+                AND {$booking_status} IN ( %s, %s, %s )
         )
-    ", '_hb_id', '_hb_check_in_date', '_hb_check_out_date', 'hb_booking_item',
+    ", '_hb_id', '_hb_check_in_date', '_hb_check_out_date', '_hb_booking_id', 'hb_booking_item',
         $check_in_date_to_time, $check_out_date_to_time,
         $check_in_date_to_time, $check_out_date_to_time,
-        $check_in_date_to_time, $check_out_date_to_time
+        $check_in_date_to_time, $check_out_date_to_time,
+        'hb-pending', 'hb-processing', 'hb-completed'
     );
 
     /**
