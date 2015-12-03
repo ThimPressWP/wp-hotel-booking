@@ -115,3 +115,7 @@
 	font: 400 21px/1 dashicons;
 	margin: -6px 0 0 0px;
 }
+.hb_checkout_item.package td {
+    padding: 5px 5px !important;
+    font-size: 12px;
+}

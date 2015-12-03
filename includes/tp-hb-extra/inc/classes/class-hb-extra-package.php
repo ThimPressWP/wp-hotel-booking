@@ -56,7 +56,13 @@ class HB_Extra_Package
 		if( ! $this->_check_out )
 			$this->_check_out = time();
 
+		if( ! $room_quantity )
+			$room_quantity = 1;
+
 		$this->_room_quantity = $room_quantity;
+
+		if( ! $package_quantity )
+			$package_quantity = 1;
 
 		$this->_package_quantity = $package_quantity;
 
@@ -84,13 +90,21 @@ class HB_Extra_Package
 				break;
 			case 'regular_price':
 				# code...
-				$return = get_post_meta( $this->_post->ID, 'tp_hb_extra_room_price', true );
+				$return = $this->get_regular_price();
+				break;
+			case 'regular_price_tax':
+				# code...
+				$return = $this->get_regular_price( true );
 				break;
 			case 'quantity':
 				# code...
 				$return = $this->_package_quantity;
 				break;
 			case 'price':
+				# code...
+				$return = $this->get_price_package( false );
+				break;
+			case 'price_tax':
 				# code...
 				$return = $this->get_price_package();
 				break;
@@ -116,14 +130,23 @@ class HB_Extra_Package
 	 * get price of package
 	 * @return float price of package
 	 */
-	function get_price_package()
+	function get_price_package( $tax = true )
 	{
 		$price = (float)$this->regular_price;// * (int)$this->_room_quantity;
-		if( $this->respondent === 'number' )
-		{
-			$price = $price * $this->_package_quantity * $this->night;
-		}
 
+		return apply_filters( 'tp_hb_extra_package_price', $price, $this->respondent, $this->_package_quantity, $this->night, $tax );
+
+	}
+
+	function get_regular_price( $tax = false )
+	{
+
+		$price = get_post_meta( $this->_post->ID, 'tp_hb_extra_room_price', true );
+
+		if( $tax && hb_price_including_tax() )
+		{
+			return $price + $price * hb_get_tax_settings();
+		}
 		return $price;
 
 	}
@@ -146,8 +169,8 @@ class HB_Extra_Package
 
 			if( $package->_check_in === $checkIn &&
 				$package->_check_out === $checkOut &&
-				$package->_room_quantity === $room_quantity &&
-				$package->_package_quantity === $package_quantity
+				$package->_room_quantity == $room_quantity &&
+				$package->_package_quantity == $package_quantity
 			)
 			{
 				return $package;

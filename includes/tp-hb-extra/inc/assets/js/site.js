@@ -39,9 +39,10 @@
 				var _self = $(this),
 					_form = _self.parents( '.hb-search-room-results' ),
 					_exta_area = _form.find('.hb_addition_package_extra'),
-					_toggle = _exta_area.find( '.hb_addition_packages' );
+					_toggle = _exta_area.find( '.hb_addition_packages' ),
+					_val = _self.val();
 
-				if( _self.val() !== '' )
+				if( _val !== '' )
 				{
 					$( '.hb_addition_packages' ).removeClass('active').slideUp();
 					_toggle.addClass('active');
@@ -51,7 +52,11 @@
 				{
 					_toggle.removeClass('active');
 					_exta_area.slideUp();
+					_val = 1;
 				}
+
+				_form.find( '.hb_optional_quantity' ).val( _val );
+
 				TPHB_Extra_Site.optional_toggle( _toggle );
 
 			});
@@ -121,6 +126,7 @@
 					}
 				}).done( function( res ){
 					res = TPHB_Extra_Site.parseJSON(res);
+					// console.debug(res); //return;
 					if( typeof res.status !== 'undefined' && res.status == 'success' )
 					{
 						HB_Booking_Cart.hb_add_to_cart_callback( res, function(){
@@ -129,17 +135,17 @@
 				            for( var i = 0; i < cart_table.length; i++ )
 				            {
 				                var _table = $(cart_table[i]);
-				                var tr = _table.find('table').find('.hb_checkout_item');
+				                var tr = _table.find('table').find('.hb_checkout_item.package');
 				                for ( var y = 0; y < tr.length; y++ )
 				                {
-				                    var _tr = $(tr[y]);
-				                    var _date = _tr.attr( 'data-date' );
-				                    var _roomID = _tr.attr('data-id');
-				                    if( _date === res.search_key && _roomID === res.id )
+				                    var _tr = $(tr[y]),
+				                    	_date = _tr.attr( 'data-time-key' ),
+				                    	_package_id = _tr.attr( 'data-package-id' ),
+				                    	_roomID = _tr.attr('data-room-id');
+				                    if( _date === res.search_key && _roomID === res.id && _package_id == res.package_id )
 				                    {
-				                        if( typeof res.item_total !== 'undefined' )
-				                    		_tr.find('.hb_gross_total').html( res.item_total );
-				                        break;
+				                    	_tr.remove();
+				                    	break;
 				                    }
 				                }
 

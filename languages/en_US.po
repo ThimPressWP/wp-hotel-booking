@@ -1,0 +1,1784 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"X-Generator: Poedit 1.8.6\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: en_US\n"
+
+#. Text in function
+#: includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:1
+msgid " This transaction is being held for review."
+msgstr ""
+
+#. Text in function
+#: templates/shortcodes/order-pay.php:32
+msgid "%s was pay completed"
+msgstr ""
+
+#. Text in echo
+#: templates/results/loop.php:38
+msgid "(View price breakdown)"
+msgstr ""
+
+#. Text in function
+#: templates/shortcodes/checkout.php:77 templates/shortcodes/cart.php:84
+msgid "(price including tax)"
+msgstr ""
+
+#. Text in echo
+#: templates/results/booking-room-details.php:26
+msgid "* vat is included"
+msgstr ""
+
+#. Text in echo
+#: templates/results/booking-room-details.php:26
+msgid "* vat is not included yet"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/hb-admin-functions.php:566
+msgid "---Filter By---"
+msgstr ""
+
+#. Text in function
+#: includes/admin/views/settings/general.php:24
+msgid "---Select page---"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "<br />(<small class=\"hb_advance_payment\">Charged %s = %s</small>)"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "<br />(<small>%s</small>)"
+msgstr ""
+
+#. Text in echo
+#: includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:1
+msgid "<br />(<small>Pay on arrival</small>)"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/authorize-sim.php:32
+msgid "API Login ID"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/pricing-table.php:96
+#: includes/admin/views/pricing-table.php:153
+msgid "Add Plan"
+msgstr ""
+
+#. Text in function
+#: templates/single-room-reviews.php:59
+msgid "Add a review"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+#: templates/shortcodes/addition-information.php:3
+#: includes/admin/views/booking-details.php:275
+msgid "Addition Information"
+msgstr ""
+
+#. Text in function
+#: templates/single-room/details.php:1
+msgid "Additional Information"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+#: includes/admin/hb-admin-functions.php:609
+#: includes/admin/views/settings/hotel-info.php:12
+#: templates/customer/new.php:35 templates/customer/new.php:37
+msgid "Address"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/booking-details.php:42
+msgid "Address "
+msgstr ""
+
+#. Text in function
+#: templates/shortcodes/search-room.php:52
+msgid "Adults"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/general.php:100
+msgid "Advance Payment"
+msgstr ""
+
+#. Text in function
+#: templates/shortcodes/checkout.php:93 templates/shortcodes/cart.php:99
+msgid "Advance Payment (%s%% of Grand Total)"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/order-pay.php:25
+msgid "Advance Payment: "
+msgstr ""
+
+#. Text in echo
+#: includes/admin/hb-admin-functions.php:575
+msgid "All Check-in Date "
+msgstr ""
+
+#. Text in echo
+#: includes/admin/hb-admin-functions.php:595
+msgid "All Check-out Date "
+msgstr ""
+
+#. Text in echo
+#: templates/customer/existing.php:18
+msgid "Apply"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/checkout.php:59 templates/shortcodes/cart.php:66
+msgid "Apply Coupon"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Are you sure you want to remove this pricing table?"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/search-room.php:23
+msgid "Arrival Date"
+msgstr ""
+
+#. Text in function
+#: includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:1
+msgid "Authorize"
+msgstr ""
+
+#. Text in function
+#: includes/class-hb-post-types.php:472
+msgid "Average Rating"
+msgstr ""
+
+#. Text in function
+#: templates/single-room-reviews.php:59
+msgid "Be the first to review"
+msgstr ""
+
+#. Text in function
+#: templates/emails/admin-new-booking.php:35
+msgid "Booking %s"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Booking Date"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/booking-details.php:78
+msgid "Booking Details"
+msgstr ""
+
+#. Text in function
+#: templates/emails/admin-new-booking.php:43
+#: includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:99
+msgid "Booking Details %s"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/booking-details.php:5
+msgid "Booking Details: "
+msgstr ""
+
+#. Text in function
+#: templates/shortcodes/order-pay.php:7
+msgid "Booking ID: %s"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Booking Info"
+msgstr ""
+
+#. Text in function
+#: includes/admin/views/report.php:57
+msgid "Booking Price"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/checkout.php:8
+#: templates/emails/admin-new-booking.php:72
+#: includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:118
+msgid "Booking Rooms"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Booking date"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/booking-details.php:262
+msgid "Booking status"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:609
+msgid "Bookings"
+msgstr ""
+
+#. Text in function
+#: includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:1
+msgid "Cancel Payment"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/checkout.php:12
+#: templates/emails/admin-new-booking.php:78
+#: includes/admin/views/pricing-table.php:122 templates/shortcodes/cart.php:14
+#: includes/admin/views/booking-details.php:86
+#: includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:124
+msgid "Capacity"
+msgstr ""
+
+#. Text in echo
+#: templates/results/loop.php:27
+msgid "Capacity:"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/cart.php:9
+msgid "Cart"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Cart % discount"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Cart discount"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/room.php:22
+msgid "Catalog images size"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/room.php:4
+msgid "Catalog settings"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/room.php:6
+msgid ""
+"Catalog settings display column number and image size used in room list "
+"( archive page, related room )"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/checkout.php:14 templates/shortcodes/cart.php:16
+#: includes/admin/views/booking-details.php:92
+msgid "Check - in"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/checkout.php:15 templates/shortcodes/cart.php:17
+#: includes/admin/views/booking-details.php:95
+msgid "Check - out"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/search-room.php:72
+msgid "Check Availability"
+msgstr ""
+
+#. Text in echo
+#: templates/emails/admin-new-booking.php:55
+msgid "Check In Date"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/mini_cart_layout.php:29
+#: templates/shortcodes/mini_cart.php:15 templates/shortcodes/cart.php:110
+#: includes/tp-hb-extra/templates/shortcodes/mini_cart_layout.php:49
+msgid "Check Out"
+msgstr ""
+
+#. Text in echo
+#: templates/emails/admin-new-booking.php:59
+msgid "Check Out Date"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/checkout.php:126
+msgid "Check out"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Check-in date"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Check-out date"
+msgstr ""
+
+#. Text in function
+#: templates/shortcodes/search-room.php:52
+msgid "Children"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+#: includes/admin/views/settings/hotel-info.php:18
+#: templates/customer/new.php:41 templates/customer/new.php:43
+msgid "City"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/booking-details.php:46
+msgid "City "
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/reports/canvas-price.php:19
+msgid "Click and drag in the plot area to zoom in"
+msgstr ""
+
+#. Text in function
+#: includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:1
+msgid "Click here to return our homepage"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/pricing-table.php:51
+#: includes/admin/views/pricing-table.php:114
+#: includes/admin/views/pricing-table.php:167
+#: includes/admin/views/pricing-table.php:168
+msgid "Clone"
+msgstr ""
+
+#. Text in function
+#: includes/tp-hb-currencies/settings/settings.php:54
+msgid "Cookie"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+#: includes/admin/views/settings/hotel-info.php:30
+#: templates/customer/new.php:61 templates/customer/new.php:63
+#: templates/customer/new.php:64
+msgid "Country"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/booking-details.php:54
+msgid "Country "
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/checkout.php:58 templates/shortcodes/cart.php:65
+msgid "Coupon"
+msgstr ""
+
+#. Text in function
+#: includes/admin/views/booking-details.php:201
+msgid "Coupon Applied (%s)"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Coupon Settings"
+msgstr ""
+
+#. Text in function
+#: templates/shortcodes/checkout.php:49 templates/shortcodes/cart.php:56
+msgid "Coupon applied: %s"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/general.php:37
+msgid "Currency"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/general.php:47
+msgid "Currency Position"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/booking-details.php:227
+msgid "Currency Rate"
+msgstr ""
+
+#. Text in echo
+#: includes/tp-hb-currencies/settings/settings.php:42
+msgid "Currency aggregator"
+msgstr ""
+
+#. Text in echo
+#: includes/tp-hb-currencies/settings/settings.php:18
+msgid "Currency settings"
+msgstr ""
+
+#. Text in echo
+#: includes/tp-hb-currencies/settings/settings.php:20
+msgid "Currency settings extension"
+msgstr ""
+
+#. Text in echo
+#: includes/tp-hb-currencies/settings/settings.php:53
+msgid "Currency storage"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:609
+msgid "Cus. Name"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/customer.php:1
+msgid "Customer Details"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Customer ID"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Customer Info"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+#: templates/emails/admin-new-booking.php:50
+#: includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:104
+msgid "Customer Name"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/booking-details.php:28
+msgid "Customer information"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/hb-admin-functions.php:562
+#: includes/admin/views/pricing-table.php:108
+#: includes/admin/views/pricing-table.php:162
+msgid "Date Range"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/general.php:64
+msgid "Decimals Separator"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/booking-details.php:218
+msgid "Default Currency"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/search-room.php:29
+msgid "Departure Date"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+#: templates/single-room/details.php:1
+msgid "Description"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Discount type"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Discount value"
+msgstr ""
+
+#. Text in function
+#: includes/widgets/class-hb-widget-mini-cart.php:1
+msgid "Display order of customer"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/room.php:63
+msgid "Display pricing plans"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/room.php:31
+msgid "Display rating"
+msgstr ""
+
+#. Text in function
+#: includes/widgets/class-hb-widget-best-reviews.php:1
+msgid "Display rooms have best reviews"
+msgstr ""
+
+#. Text in function
+#: includes/widgets/class-hb-widget-lastest-reviews.php:1
+msgid "Display rooms have lastest reviews"
+msgstr ""
+
+#. Text in function
+#: includes/widgets/class-hb-widget-room-carousel.php:1
+msgid "Display rooms slider"
+msgstr ""
+
+#. Text in function
+#: includes/widgets/class-hb-widget-search.php:1
+msgid "Display the form for search rooms."
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Dr."
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/email-general.php:11
+msgid "E.g: John Smith"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/email-general.php:17
+msgid "E.g: yourmail@yourdomain.com"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/pricing-table.php:50
+#: includes/admin/views/pricing-table.php:113
+msgid "Edit"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+#: includes/admin/hb-admin-functions.php:609 templates/customer/existing.php:12
+#: includes/admin/views/settings/hotel-info.php:54
+#: templates/single-room-reviews.php:59 templates/customer/new.php:74
+msgid "Email"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/booking-details.php:70
+msgid "Email "
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/offline-payment.php:30
+msgid "Email Content"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/email-new-booking.php:37
+msgid "Email Format"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/email-new-booking.php:30
+msgid "Email Heading"
+msgstr ""
+
+#. Text in function
+#: includes/admin/views/settings/emails.php:1
+msgid "Email Options"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/email-general.php:5
+msgid "Email Sender"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/offline-payment.php:24
+msgid "Email Subject"
+msgstr ""
+
+#. Text in echo
+#: templates/customer/new.php:76
+msgid "Email address"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Emails"
+msgstr ""
+
+#. Text in echo
+#: includes/tp-hb-currencies/settings/settings.php:24
+#: includes/admin/views/settings/offline-payment.php:17
+#: includes/admin/views/settings/paypal.php:18
+#: includes/admin/views/settings/authorize-sim.php:18
+#: includes/admin/views/settings/stripe.php:20
+#: includes/admin/views/settings/email-new-booking.php:9
+msgid "Enable"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/general.php:106
+msgid "Enable Coupon"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/room.php:92
+msgid "Enable gallery lightbox"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/room.php:74
+msgid "Enable ratings on reviews"
+msgstr ""
+
+#. Text in function
+#: includes/admin/views/settings/email-new-booking.php:19
+msgid ""
+"Enter recipients (comma separated) for this email. Defaults to <code>%s</"
+"code>."
+msgstr ""
+
+#. Text in echo
+#: templates/customer/existing.php:9
+msgid "Existing customer?"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/report.php:79
+msgid "Export"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/report.php:66
+msgid "Export CSV"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/booking-details.php:158
+msgid "Extra Package"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+#: includes/admin/views/settings/hotel-info.php:48
+#: templates/customer/new.php:80 templates/customer/new.php:82
+msgid "Fax"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/booking-details.php:66
+msgid "Fax "
+msgstr ""
+
+#. Text in echo
+#: templates/confirm.php:6
+msgid "Finish"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "First Name"
+msgstr ""
+
+#. Text in echo
+#: templates/customer/new.php:30
+msgid "First name"
+msgstr ""
+
+#. Text in echo
+#: includes/class-hb-post-types.php:1
+msgid "Fixed cart"
+msgstr ""
+
+#. Text in function
+#: includes/admin/views/pricing-table.php:1
+msgid "Fri"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/hb-admin-functions.php:563
+msgid "From"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/email-general.php:15
+msgid "From Email"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/email-general.php:9
+msgid "From Name"
+msgstr ""
+
+#. Text in echo
+#: includes/class-hb-post-types.php:310
+msgid "Gallery"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Gallery Settings"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/room.php:89
+msgid "Gallery images"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "General"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/general.php:4
+msgid "General Settings"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/report.php:102
+msgid "Go"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/checkout.php:86
+#: templates/emails/admin-new-booking.php:130 templates/shortcodes/cart.php:92
+#: includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:174
+msgid "Grand Total"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/checkout.php:17 templates/shortcodes/cart.php:19
+msgid "Gross Total"
+msgstr ""
+
+#. Text in function
+#: includes/tp-hb-currencies/widgets/class-hb-widget-currency-switch.php:1
+msgid "HB Currency Switcher"
+msgstr ""
+
+#. Text in function
+#: includes/widgets/class-hb-widget-best-reviews.php:1
+msgid "HB Rooms Best Reviews"
+msgstr ""
+
+#. Text in function
+#: includes/widgets/class-hb-widget-room-carousel.php:1
+msgid "HB Rooms Carousel"
+msgstr ""
+
+#. Text in function
+#: includes/widgets/class-hb-widget-lastest-reviews.php:1
+msgid "HB Rooms Lastest Reviews"
+msgstr ""
+
+#. Text in function
+#: includes/widgets/class-hb-widget-search.php:1
+msgid "HB Search Rooms"
+msgstr ""
+
+#. Text in function
+#: includes/widgets/class-hb-widget-mini-cart.php:1
+msgid "HB Widget Mini Cart"
+msgstr ""
+
+#. Text in function
+#: includes/admin/views/settings/email-new-booking.php:39
+msgid "HTML"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Hotel Information"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/hotel-info.php:6
+msgid "Hotel Name"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "How many times this coupon can be used before it is void."
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/checkout.php:102
+msgid "I want to pay all"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "ID"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/booking-details.php:6
+msgid "Invalid booking"
+msgstr ""
+
+#. Text in echo
+#: includes/tp-hb-currencies/settings/settings.php:33
+msgid "Is multiple allowed"
+msgstr ""
+
+#. Text in function
+#: includes/admin/views/report.php:57
+msgid "Last 7 Days"
+msgstr ""
+
+#. Text in function
+#: includes/admin/views/report.php:57
+msgid "Last Month"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Last Name"
+msgstr ""
+
+#. Text in echo
+#: templates/customer/new.php:31
+msgid "Last name"
+msgstr ""
+
+#. Text in function
+#: templates/single-room-reviews.php:59
+msgid "Leave a Reply to %s"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/general.php:50
+msgid "Left ( $69.99 )"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/general.php:52
+msgid "Left with space ( $ 69.99 )"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+#: includes/admin/views/settings/lightbox.php:15
+msgid "Lightbox"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/stripe.php:52
+msgid "Live Publishable Key"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/stripe.php:46
+msgid "Live Secret Key"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/general.php:93
+msgid "Max"
+msgstr ""
+
+#. Text in function
+#: includes/class-hb-post-types.php:472
+msgid "Max Child"
+msgstr ""
+
+#. Text in echo
+#: templates/results/loop.php:31
+msgid "Max Child:"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Max child per room"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Maximum spend"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/general.php:92
+msgid "Min"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/general.php:94
+msgid "Min to Max"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Minimum spend"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Miss."
+msgstr ""
+
+#. Text in function
+#: includes/admin/views/pricing-table.php:1
+msgid "Mon"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Mr."
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Mrs."
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Ms."
+msgstr ""
+
+#. Text in function
+#: templates/single-room-reviews.php:59
+#: includes/admin/views/booking-details.php:33
+#: includes/admin/views/booking-details.php:156 templates/customer/new.php:28
+msgid "Name"
+msgstr ""
+
+#. Text in function
+#: includes/admin/views/settings/emails.php:1
+#: includes/admin/views/settings/email-new-booking.php:5
+msgid "New Booking"
+msgstr ""
+
+#. Text in echo
+#: templates/customer/new.php:19
+msgid "New Customer"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/email-new-booking.php:6
+msgid "New booking emails are sent when a booking is received."
+msgstr ""
+
+#. Text in function
+#: templates/pagination.php:22
+msgid "Next"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/checkout.php:16 templates/loop/price.php:44
+#: templates/shortcodes/cart.php:18 includes/admin/views/booking-details.php:98
+#: templates/results/booking-room-details.php:12
+msgid "Night"
+msgstr ""
+
+#. Text in echo
+#: includes/tp-hb-currencies/settings/settings.php:28
+#: includes/tp-hb-currencies/settings/settings.php:37
+#: includes/widgets/class-hb-widget-room-carousel.php:79
+#: includes/widgets/class-hb-widget-room-carousel.php:88
+#: includes/admin/views/booking-details.php:211
+msgid "No"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/pricing-table.php:148
+msgid "No addition plans"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/pricing-table.php:84
+#: includes/admin/views/pricing-table.php:141
+#: includes/admin/views/pricing-table.php:192
+msgid "No capacities found"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/results.php:10
+msgid "No room found"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/lightbox.php:18
+msgid "None"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Number of adults"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/room.php:10
+msgid "Number of column display catalog page"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/general.php:70
+msgid "Number of decimal"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/room.php:16
+msgid "Number of post display in page"
+msgstr ""
+
+#. Text in echo
+#: templates/emails/admin-new-booking.php:77
+#: includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:123
+msgid "Number of rooms"
+msgstr ""
+
+#. Text in function
+#: includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:1
+msgid "Offline Payment"
+msgstr ""
+
+#. Text in echo
+#: templates/single-room-reviews.php:90
+msgid ""
+"Only logged in customers who have purchased this product may leave a review."
+msgstr ""
+
+#. Text in echo
+#: includes/class-hb-post-types.php:464
+msgid "Ordering"
+msgstr ""
+
+#. Text in echo
+#: templates/single-room/related-room.php:19
+msgid "Other Rooms"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/pricing-table.php:92
+msgid "Other plan"
+msgstr ""
+
+#. Text in function
+#: includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:1
+#: includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:265
+msgid "Pay with Authorize.net"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/booking-details.php:222
+msgid "Payment Currency"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/booking-details.php:247
+msgid "Payment Details"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/booking-details.php:254
+msgid "Payment Gateway"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/payment-method.php:6
+msgid "Payment Method"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/order-pay.php:17
+msgid "Payment Method: "
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Payments"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/paypal.php:25
+msgid "Paypal email"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/paypal.php:38
+msgid "Paypal sandbox email"
+msgstr ""
+
+#. Text in echo
+#: includes/class-hb-post-types.php:1
+msgid "Percent cart"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835 templates/customer/new.php:68
+msgid "Phone"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/booking-details.php:62
+msgid "Phone "
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:609
+#: includes/admin/views/settings/hotel-info.php:42
+#: templates/customer/new.php:70
+msgid "Phone Number"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/reports/canvas-price.php:19
+msgid "Pinch the chart to zoom in"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/offline-payment.php:34
+msgid "Place holder: "
+msgstr ""
+
+#. Text in function
+#: includes/admin/views/settings/email-new-booking.php:39
+msgid "Plain Text"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Please select date range and filter type"
+msgstr ""
+
+#. Text in function
+#: includes/language_js.php:1
+msgid "Please select room number"
+msgstr ""
+
+#. Text in function
+#: includes/language_js.php:1
+msgid "Plesae try again!"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835 templates/customer/new.php:55
+msgid "Postal Code"
+msgstr ""
+
+#. Text in echo
+#: templates/customer/new.php:57
+msgid "Postal code"
+msgstr ""
+
+#. Text in function
+#: templates/pagination.php:22
+msgid "Previous"
+msgstr ""
+
+#. Text in echo
+#: templates/loop/price.php:26 includes/class-hb-post-types.php:472
+msgid "Price"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Price Including Tax"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/general.php:89
+msgid "Price display"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/general.php:82
+#: includes/admin/views/booking-details.php:210
+msgid "Price including tax"
+msgstr ""
+
+#. Text in echo
+#: templates/results/loop.php:35
+msgid "Price:"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/mini_cart_layout.php:20
+#: includes/tp-hb-extra/templates/shortcodes/mini_cart_layout.php:20
+#: templates/loop/mini-cart-loop.php:29
+msgid "Price: "
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/pricing-table.php:39
+msgid "Pricing Plans"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Prof."
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/checkout.php:13
+#: includes/admin/hb-admin-functions.php:835 templates/shortcodes/cart.php:15
+#: includes/admin/views/booking-details.php:89
+#: includes/admin/views/booking-details.php:159
+msgid "Quantity"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/mini_cart_layout.php:13
+#: includes/tp-hb-extra/templates/shortcodes/mini_cart_layout.php:13
+#: templates/results/loop.php:43 templates/loop/mini-cart-loop.php:22
+msgid "Quantity: "
+msgstr ""
+
+#. Text in function
+#: templates/single-room/review.php:29 includes/class-hb-post-types.php:472
+#: templates/loop/rating.php:20
+msgid "Rated %d out of 5"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/room.php:81
+msgid "Ratings are required to leave a review"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/email-new-booking.php:16
+msgid "Recipient(s)"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/pricing-table.php:45
+msgid "Regular price"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/pricing-table.php:52
+#: includes/admin/views/pricing-table.php:115
+#: includes/admin/views/pricing-table.php:169 templates/shortcodes/cart.php:29
+msgid "Remove"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/hb-admin-functions.php:805
+#: includes/admin/hb-admin-functions.php:832
+#: includes/class-hb-post-types.php:328 includes/meta-box/gallery.php:18
+msgid "Remove this image"
+msgstr ""
+
+#. Text in echo
+#: templates/single-room-reviews.php:24
+msgid "Reviews"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/general.php:51
+msgid "Right ( 69.99$ )"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/general.php:53
+msgid "Right with space ( 69.99 $ )"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Room"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/booking-details.php:152
+msgid "Room Details"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/booking-details.php:83
+msgid "Room Name"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/room.php:71
+msgid "Room Ratings"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Room Settings"
+msgstr ""
+
+#. Text in function
+#: includes/class-hb-post-types.php:472
+msgid "Room Type"
+msgstr ""
+
+#. Text in function
+#: includes/admin/views/report.php:57
+msgid "Room availability"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/room.php:45
+msgid "Room images size gallery"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/room.php:54
+msgid "Room images thumbnail"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/room.php:39
+msgid "Room settings"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/room.php:41
+msgid ""
+"Room settings display column number and image size used in gallery single "
+"page"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/checkout.php:11
+#: templates/emails/admin-new-booking.php:76 templates/shortcodes/cart.php:13
+#: includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:122
+msgid "Room type"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/reports/sidebar-room.php:9
+msgid "Rooms Search"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/paypal.php:31
+#: includes/admin/views/settings/authorize-sim.php:25
+msgid "Sandbox Mode"
+msgstr ""
+
+#. Text in function
+#: includes/admin/views/pricing-table.php:1
+msgid "Sat"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/general.php:7
+msgid "Search Page"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/results.php:12
+msgid "Search again!"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/results.php:6
+msgid "Search results"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/search-room.php:16
+msgid "Search your room"
+msgstr ""
+
+#. Text in function
+#: templates/results/loop.php:45
+msgid "Select"
+msgstr ""
+
+#. Text in echo
+#: includes/tp-hb-currencies/widgets/class-hb-widget-currency-switch.php:61
+msgid "Select Currencies:"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Select end date for plan"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/pricing-table.php:41
+msgid "Select name of room"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Select start date for plan"
+msgstr ""
+
+#. Text in echo
+#: templates/results/loop.php:58
+msgid "Select this room"
+msgstr ""
+
+#. Text in function
+#: includes/tp-hb-currencies/settings/settings.php:54
+msgid "Session"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/reports/sidebar-room.php:30
+msgid "Show"
+msgstr ""
+
+#. Text in echo
+#: includes/widgets/class-hb-widget-search.php:73
+msgid "Show label search form"
+msgstr ""
+
+#. Text in echo
+#: includes/widgets/class-hb-widget-search.php:68
+msgid "Show title search form"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+#: includes/admin/views/settings/hotel-info.php:24
+#: templates/customer/new.php:47 templates/customer/new.php:49
+msgid "State"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/booking-details.php:50
+msgid "State "
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/checkout.php:66
+#: includes/admin/hb-admin-functions.php:835
+#: templates/emails/admin-new-booking.php:122 templates/shortcodes/cart.php:73
+#: includes/admin/views/booking-details.php:206
+#: includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:166
+msgid "Sub Total"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/booking-details.php:160
+msgid "Sub total"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/email-new-booking.php:23
+msgid "Subject"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/email-new-booking.php:26
+msgid ""
+"Subject for email. Leave blank to use the default: <code>[{site_title}] New "
+"customer booking ({booking_number}) - {booking_date}</code>."
+msgstr ""
+
+#. Text in function
+#: templates/single-room-reviews.php:59
+msgid "Submit"
+msgstr ""
+
+#. Text in function
+#: includes/admin/views/pricing-table.php:1
+msgid "Sun"
+msgstr ""
+
+#. Text in function
+#: includes/tp-hb-currencies/widgets/class-hb-widget-currency-switch.php:1
+msgid "Switch currency"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings.php:11
+msgid "TP Hotel Booking"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/checkout.php:75
+#: includes/admin/hb-admin-functions.php:835
+#: templates/emails/admin-new-booking.php:126
+#: includes/admin/views/settings/general.php:76
+#: templates/shortcodes/cart.php:82
+#: includes/admin/views/booking-details.php:214
+#: includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:170
+msgid "Tax"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/general.php:22
+msgid "Terms and Conditions Page"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/stripe.php:27
+msgid "Test Mode Enable"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/stripe.php:40
+msgid "Test Publishable Key"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/stripe.php:34
+msgid "Test Secret Key"
+msgstr ""
+
+#. Text in echo
+#: includes/widgets/class-hb-widget-room-carousel.php:91
+msgid "Text Link"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/email-new-booking.php:33
+msgid ""
+"The main heading displays in the top of email. Default heading: <code>New "
+"customer booking</code>."
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/email-general.php:6
+msgid "The name and email address of the sender displays in email"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "The number of rooms"
+msgstr ""
+
+#. Text in echo
+#: templates/single-room-reviews.php:50
+msgid "There are no reviews yet."
+msgstr ""
+
+#. Text in function
+#: includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:1
+msgid "There has been an error processing this transaction."
+msgstr ""
+
+#. Text in function
+#: includes/admin/views/report.php:57
+msgid "This Month"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid ""
+"This field allows you to set the maximum subtotal allowed when using the "
+"coupon."
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid ""
+"This field allows you to set the minimum subtotal needed to use the coupon."
+msgstr ""
+
+#. Text in function
+#: includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:1
+msgid "This transaction has been approved."
+msgstr ""
+
+#. Text in function
+#: includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:1
+msgid "This transaction has been declined."
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/general.php:58
+msgid "Thousands Separator"
+msgstr ""
+
+#. Text in function
+#: includes/admin/views/pricing-table.php:1
+msgid "Thu"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835 templates/customer/new.php:22
+msgid "Title"
+msgstr ""
+
+#. Text in echo
+#: includes/tp-hb-currencies/widgets/class-hb-widget-currency-switch.php:57
+#: includes/widgets/class-hb-widget-search.php:61
+msgid "Title:"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/hb-admin-functions.php:564
+msgid "To"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+#: templates/emails/admin-new-booking.php:79
+#: includes/admin/views/reports/canvas-price.php:35
+#: includes/admin/views/booking-details.php:233
+#: includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:125
+#: templates/results/booking-room-details.php:23
+msgid "Total"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+#: templates/emails/admin-new-booking.php:63
+#: includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:109
+msgid "Total Nights"
+msgstr ""
+
+#. Text in echo
+#: templates/emails/admin-new-booking.php:67
+#: includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:113
+msgid "Total Rooms"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/order-pay.php:21
+msgid "Total: "
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/authorize-sim.php:38
+msgid "Transaction Key"
+msgstr ""
+
+#. Text in function
+#: includes/tp-hb-currencies/settings/settings.php:54
+msgid "Transient"
+msgstr ""
+
+#. Text in function
+#: includes/admin/views/pricing-table.php:1
+msgid "Tue"
+msgstr ""
+
+#. Text in function
+#: includes/class-hb-post-types.php:1
+#: includes/admin/views/booking-details.php:157
+msgid "Type"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/pricing-table.php:97
+#: includes/admin/views/pricing-table.php:154 templates/shortcodes/cart.php:111
+#: includes/admin/views/settings.php:24
+msgid "Update"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Usage limit per coupon"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Used"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Validate from"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "Validate until"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "View"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:609
+msgid "View Booking"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/mini_cart_layout.php:30
+#: templates/shortcodes/mini_cart.php:16
+#: includes/tp-hb-extra/templates/shortcodes/mini_cart_layout.php:50
+msgid "View Cart"
+msgstr ""
+
+#. Text in function
+#: includes/admin/hb-admin-functions.php:835
+msgid "View Details"
+msgstr ""
+
+#. Text in function
+#: includes/class-hb-post-types.php:472
+msgid "View Price"
+msgstr ""
+
+#. Text in function
+#: includes/admin/views/pricing-table.php:1
+msgid "Wed"
+msgstr ""
+
+#. Text in function
+#: includes/admin/views/report.php:57
+msgid "Year"
+msgstr ""
+
+#. Text in echo
+#: includes/tp-hb-currencies/settings/settings.php:27
+#: includes/tp-hb-currencies/settings/settings.php:36
+#: includes/widgets/class-hb-widget-room-carousel.php:77
+#: includes/widgets/class-hb-widget-room-carousel.php:85
+#: includes/admin/views/booking-details.php:211
+msgid "Yes"
+msgstr ""
+
+#. Text in echo
+#: includes/class-hb-shortcodes.php:215
+msgid "You cart is empty."
+msgstr ""
+
+#. Text in function
+#: templates/single-room-reviews.php:59
+msgid "Your Rating"
+msgstr ""
+
+#. Text in function
+#: templates/single-room-reviews.php:59
+msgid "Your Review"
+msgstr ""
+
+#. Text in echo
+#: templates/shortcodes/mini_cart_layout.php:35
+#: templates/shortcodes/mini_cart.php:22
+#: includes/tp-hb-extra/templates/shortcodes/mini_cart_layout.php:55
+msgid "Your cart is empty!"
+msgstr ""
+
+#. Text in echo
+#: templates/single-room/review.php:37
+msgid "Your comment is awaiting approval"
+msgstr ""
+
+#. Text in echo
+#: templates/customer/existing.php:14
+msgid "Your email here"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/settings/hotel-info.php:36
+msgid "Zip / Postal Code"
+msgstr ""
+
+#. Text in echo
+#: includes/admin/views/booking-details.php:58
+msgid "Zip/ Post Code "
+msgstr ""

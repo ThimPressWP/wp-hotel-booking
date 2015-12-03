@@ -164,7 +164,7 @@ class HB_Cart{
         if( $rooms = $this->get_rooms() )
         {
             foreach( $rooms as $room_id => $room ) {
-                $sub_total += $room->get_total( $room->check_in_date, $room->check_out_date, $room->num_of_rooms, false );
+                $sub_total += $room->get_total( $room->check_in_date, $room->check_out_date, $room->num_of_rooms, false, true );
             }
         }
         return apply_filters( 'hb_cart_sub_total', $sub_total );
@@ -312,6 +312,7 @@ class HB_Cart{
 
     function hotel_booking_cart_update()
     {
+        // var_dump($_POST); die();
         if( ! isset( $_POST ) )
             return;
 
@@ -323,7 +324,7 @@ class HB_Cart{
 
         $cart_number = $_POST['hotel_booking_cart'];
 
-        if( ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'] ) )
+        if( ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'] ) || empty( $_SESSION['hb_cart'.HB_BLOG_ID]['products'] ) )
             return;
 
         $products = $_SESSION['hb_cart'.HB_BLOG_ID]['products'];
@@ -345,11 +346,13 @@ class HB_Cart{
                 else
                 {
                     $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key][ $id ]['quantity'] = $quantity;
+                    $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key][ $id ] = apply_filters( 'hotel_booking_update_cart', $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key][ $id ], $_POST, $search_key, $id );
+                    // var_dump($_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key][ $id ]); die();
                 }
             }
         }
+
         return;
-        // var_dump($_SESSION['hb_cart'.HB_BLOG_ID]['products']); die();
     }
 
     /**

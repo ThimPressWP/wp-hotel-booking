@@ -4,14 +4,14 @@
     Plugin URI: http://thimpress.com/learnpress
     Description: [Description here]
     Author: ThimPress
-    Version: 1.0
+    Version: 1.0.1
     Author URI: http://thimpress.com
 */
 
 define( 'HB_FILE', __FILE__ );
 define( 'HB_PLUGIN_PATH', dirname( __FILE__ ) );
 define( 'HB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
-define( 'HB_VERSION', '1.0' );
+define( 'HB_VERSION', '1.0.1' );
 define( 'HB_BLOG_ID', get_current_blog_id() );
 /**
  * Class TP_Hotel_Booking
@@ -56,7 +56,11 @@ class TP_Hotel_Booking{
     }
 
     function install(){
-        $this->_include( 'includes/hb-functions.php' );
+        if( ! function_exists( 'hb_create_page' ) )
+        {
+            $this->_include( 'includes/admin/hb-admin-functions.php' );
+            $this->_include( 'includes/hb-functions.php' );
+        }
         $this->_include( 'includes/install.php' );
     }
 
@@ -167,7 +171,7 @@ class TP_Hotel_Booking{
     function load_text_domain(){
         $locale = get_locale();
         $dir    = $this->plugin_path( 'languages' );
-        $mofile = "{$dir}{$locale}.mo";
+        $mofile = "{$dir}/{$locale}.mo";
 
         // In themes/plugins/mu-plugins directory
         load_textdomain( 'tp-hotel-booking', $mofile );

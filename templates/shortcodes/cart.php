@@ -1,7 +1,6 @@
 <?php
 $cart = HB_Cart::instance();
 global $hb_settings;
-// var_dump($cart->get_rooms()); return;
 ?>
 <div id="hotel-booking-cart">
 
@@ -24,9 +23,8 @@ global $hb_settings;
                             if( ( $num_of_rooms = (int)$room->quantity ) == 0 ) continue;
                         ?>
                         <tr class="hb_checkout_item" data-date="<?php echo $room->in_to_out; ?>" data-id="<?php echo $room->ID ?>">
-                            <td>
+                            <td<?php echo defined( 'TP_HB_EXTRA' ) ? ' rowspan="'. (count( $room->extra_packages ) + 1).'"' : ''  ?>>
                                 <a href="javascript:void(0)" class="hb_remove_cart_item" data-date="<?php echo $room->in_to_out; ?>" data-id="<?php echo $room->ID ?>">
-                                    <?php //_e( 'Remove', 'tp-hotel-booking' ); ?>
                                     <i class="fa fa-times"></i>
                                 </a>
                             </td>
@@ -40,6 +38,7 @@ global $hb_settings;
                                 <?php echo hb_format_price( $room->total );?>
                             </td>
                         </tr>
+                        <?php do_action( 'hotel_booking_cart_after_item', $room ); ?>
                 <?php endforeach; ?>
             <?php endif; ?>
 
@@ -107,7 +106,7 @@ global $hb_settings;
                 </tr>
         </table>
         <p>
-            <a href="<?php echo hb_get_url(array( 'hotel-booking' => 'checkout')) ?>" class="hb_button hb_checkout"><?php _e( 'Check Out', 'tp-hotel-booking' );?></a>
+            <a href="<?php echo hb_get_checkout_url() ?>" class="hb_button hb_checkout"><?php _e( 'Check Out', 'tp-hotel-booking' );?></a>
             <button type="submit" class="hb_button update"><?php _e( 'Update', 'tp-hotel-booking' ); ?></button>
         </p>
     </form>

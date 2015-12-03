@@ -98,7 +98,7 @@ class HB_Extra_Factory
 			wp_enqueue_style( 'tp-hb-extra-css', TP_HB_EXTRA_URI . '/inc/assets/css/site.css', array(), HB_VERSION );
 		}
 
-		wp_localize_script( 'tp-hb-extra-js', 'TPHB_Extra_Lang', apply_filters( 'tp-hb-extra-l10n', array() ) );
+		wp_localize_script( 'tp-hb-extra-js', 'TPHB_Extra_Lang', apply_filters( 'tp_hb_extra_l10n', array() ) );
 		wp_enqueue_script( 'tp-hb-extra-js' );
 	}
 

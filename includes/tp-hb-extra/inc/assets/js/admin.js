@@ -13,7 +13,7 @@
 			$( document ).on( 'click', '.tp_extra_add_item', function(e){
 				e.preventDefault();
 				var current_package = $('.tp_extra_form_fields:last'),
-					new_package_id = 0,
+					new_package_id = new Date().getTime(),
 					tmpl = wp.template( 'tp-hb-extra-room' );
 				tmpl = tmpl({ id: new_package_id });
 
@@ -35,12 +35,6 @@
 				var _self = $(this),
 					package_id = _self.attr('data-id'),
 					exta = _self.parents( '.tp_extra_form_fields' );
-
-				if( package_id == 0 )
-				{
-					exta.remove();
-					return;
-				}
 
 				$.ajax({
 					url: hotel_settings.ajax,

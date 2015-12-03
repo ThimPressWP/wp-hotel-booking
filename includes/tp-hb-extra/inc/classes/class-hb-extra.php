@@ -37,7 +37,7 @@ class HB_Extra_Field
 	{
 		$fields[] = array(
 				'name'		=> 'room_extra',
-				'label'		=> __( 'Extra Room', 'tp-hb-extra' ),
+				'label'		=> __( 'Addition Package', 'tp-hb-extra' ),
 				'type'		=> 'select',
 				'options'	=> $this->extra_fields(),
 				'multiple'	=> true,
