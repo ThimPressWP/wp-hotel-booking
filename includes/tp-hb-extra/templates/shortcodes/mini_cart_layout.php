@@ -22,13 +22,13 @@
                     <#  for ( var i = 0; i < data.extra_packages.length; i++ ) { #>
                             <# var pack = data.extra_packages[i] #>
                             <li>
-                                <h5 class="hb_package_title">
+                                <div class="hb_package_title">
                                     <a href="#">{{{ pack.package_title }}}</a>
                                     <span>
                                         ( {{{ pack.package_quantity }}} )
                                         <a href="#" class="hb_package_remove" data-package="{{ pack.package_id }}"><i class="fa fa-times"></i></a>
                                     </span>
-                                </h5>
+                                </div>
                             </li>
                      <# } #>
                 </ul>

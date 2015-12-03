@@ -26,9 +26,9 @@ $room_extra = $room_extra->get_extra();
 						</div>
 						<div class="hb_extra_optional_left">
 							<div class="hb_extra_title">
-								<h6 class="hb_package_title">
+								<div class="hb_package_title">
 									<label for="<?php echo esc_attr( 'hb-ex-room-' . $post_id . '-' .$key ) ?>"><?php printf( '%s', $extra->title ) ?></label>
-								</h6>
+								</div>
 								<p><?php printf( '%s', $extra->description ) ?></p>
 							</div>
 							<div class="hb_extra_detail_price">
