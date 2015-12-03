@@ -27,7 +27,7 @@ class HB_Extra_Cart
 		/**
 		 * after mini cart item loop
 		 */
-		add_action( 'hotel_booking_before_mini_cart_loop', array( $this, 'mini_cart_loop' ), 10, 1 );
+		add_action( 'hotel_booking_before_mini_cart_loop_price', array( $this, 'mini_cart_loop' ), 10, 1 );
 
 		/**
 		 * profilter ro0m item price in minicart
@@ -187,6 +187,8 @@ class HB_Extra_Cart
 	{
 		if( ! $room ) return;
 
+		ob_start();
+
 		tp_hb_extra_get_template( 'loop/mini-cart-extra.php',
 			array(
 				'extra_packages' 	=> $room->extra_packages,
@@ -194,6 +196,8 @@ class HB_Extra_Cart
 				'check_out'			=> $room->check_out_date,
 				'room_quantity' 	=> $room->quantity
 		) );
+
+		echo ob_get_clean();
 	}
 
 	/**

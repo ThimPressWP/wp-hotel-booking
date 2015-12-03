@@ -24,7 +24,7 @@
 
 	</div>
 
-	<?php do_action( 'hotel_booking_before_mini_cart_loop', $room ); ?>
+	<?php do_action( 'hotel_booking_before_mini_cart_loop_price', $room ); ?>
 
 	<div class="hb_mini_cart_price">
 
