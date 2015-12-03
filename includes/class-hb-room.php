@@ -88,7 +88,7 @@ class HB_Room{
      * @return bool
      */
     function get_data( $key ){
-        return ! empty( $this->_external_data[ $key ] ) ? $this->_external_data[ $key ] : false;
+        return ! empty( $this->_external_data[ $key ] ) ? $this->_external_data[ $key ] : ( $key === false ? $this->_external_data : false );
     }
 
     /**
