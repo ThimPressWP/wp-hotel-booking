@@ -38,7 +38,7 @@ class HB_Admin_Settings_Hook extends HB_Settings {
 				'content' => '[' . apply_filters( 'hotel_booking_checkout_shortcode_tag', 'hotel_booking_checkout' ) . ']'
 			);
 		}
-
+// is_singular('hb_room') || is_page('search-room') || is_page('room-checkout') || is_page('my-rooms')
 		$pages = apply_filters( 'hotel_booking_create_pages', $pages );
 
 		if( empty( $pages ) )
