@@ -44,9 +44,9 @@
 
 				if( _val !== '' )
 				{
-					$( '.hb_addition_packages' ).removeClass('active').slideUp();
 					_toggle.addClass('active');
 					_exta_area.slideDown();
+					_form.parent().siblings().find('.hb_addition_packages').removeClass('active').slideUp();
 				}
 				else
 				{
