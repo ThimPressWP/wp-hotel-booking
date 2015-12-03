@@ -42,12 +42,10 @@
 					_toggle = _exta_area.find( '.hb_addition_packages' ),
 					_val = _self.val();
 
-				_form.parent().siblings().find('.hb_addition_packages').removeClass('active').removeAttr('style');
-				_toggle.removeClass('active').removeAttr('style');
 				if( _val !== '' )
 				{
 					_form.parent().siblings().find('.hb_addition_packages').removeClass('active').slideUp();
-					_toggle.addClass('active');
+					_toggle.removeAttr('style').addClass('active');
 					_exta_area.removeAttr('style').slideDown();
 				}
 				else
