@@ -5,3 +5,4 @@
 2. Add language file en_US
 3. Add Extra Package
 4. Update, Fix Query search ( customer's feedback: http://thimpress.com/forums/topic/calendar-availabality-room/#post-42595 )
+5. Query search booking_pricing( Admin panel )

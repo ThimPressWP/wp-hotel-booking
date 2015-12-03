@@ -17,6 +17,7 @@ $capacitiyID = get_post_meta( $room_id, '_hb_room_capacity', true );
 $pricing_plans = get_posts(
     array(
         'post_type'         => 'hb_pricing_plan',
+        'post_status'       => 'publish',
         'posts_per_page'    => 9999,
         'meta_query' => array(
             array(

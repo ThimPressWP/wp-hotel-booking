@@ -90,7 +90,7 @@ function hb_dropdown_room_types( $args = array() ) {
 function hb_dropdown_rooms( $args = array( 'selected' => '' ) ) {
 	global $wpdb;
 	$posts = $wpdb->get_results( $wpdb->prepare(
-		"SELECT ID, post_title FROM {$wpdb->posts} WHERE `post_type` = %s", 'hb_room'
+		"SELECT ID, post_title FROM {$wpdb->posts} WHERE `post_type` = %s AND `post_status` = %s", 'hb_room', 'publish'
 	), OBJECT );
 
 	$output                    = '<select name="hb-room" id="hb-room-select">';
