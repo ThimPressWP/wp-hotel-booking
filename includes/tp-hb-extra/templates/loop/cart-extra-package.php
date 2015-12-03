@@ -10,7 +10,7 @@
 
 	<td colspan="<?php echo is_hb_cart() ? 2 : 1 ?>">
 		<?php if( is_hb_cart() ): ?>
-			<a href="#" class="hb_package_cart_remove" data-package="<?php echo esc_attr( $package->ID ) ?>"><i class="fa fa-times"></i></a>
+			<a href="#" class="hb_package_remove" data-package="<?php echo esc_attr( $package->ID ) ?>"><i class="fa fa-times"></i></a>
 		<?php endif; ?>
 	</td>
 

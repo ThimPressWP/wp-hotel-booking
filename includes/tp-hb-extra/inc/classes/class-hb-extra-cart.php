@@ -365,7 +365,7 @@ class HB_Extra_Cart
 			$page = 'cart';
 		}
 
-		tp_hb_extra_get_template( 'loop/addition-services-title.php', array( 'page' => $page ) );
+		tp_hb_extra_get_template( 'loop/addition-services-title.php', array( 'page' => $page, 'room' => $room ) );
 		foreach ( $room->extra_packages as $package_id => $quantity )
 		{
 			$package = HB_Extra_Package::instance( $package_id, $room->check_in_date, $room->check_out_date, $room->quantity, (int)$quantity );
