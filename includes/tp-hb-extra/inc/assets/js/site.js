@@ -42,22 +42,23 @@
 					_toggle = _exta_area.find( '.hb_addition_packages' ),
 					_val = _self.val();
 
+				_form.parent().siblings().find('.hb_addition_packages').removeClass('active').removeAttr('style');
+				_toggle.removeClass('active').removeAttr('style');
 				if( _val !== '' )
 				{
-					_toggle.addClass('active');
-					_exta_area.slideDown();
 					_form.parent().siblings().find('.hb_addition_packages').removeClass('active').slideUp();
+					_toggle.addClass('active');
+					_exta_area.removeAttr('style').slideDown();
 				}
 				else
 				{
-					_toggle.removeClass('active');
 					_exta_area.slideUp();
 					_val = 1;
 				}
 
 				_form.find( '.hb_optional_quantity' ).val( _val );
 
-				TPHB_Extra_Site.optional_toggle( _toggle );
+				// TPHB_Extra_Site.optional_toggle( _toggle );
 
 			});
 
