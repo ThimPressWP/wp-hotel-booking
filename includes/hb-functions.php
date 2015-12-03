@@ -997,7 +997,8 @@ function hb_get_payment_gateways( $args = array() ){
     if( $args['enable'] ){
         $gateways = array();
         foreach( $payment_gateways as $k => $gateway ){
-            if( $gateway->is_enable() ){
+            $is_enable = is_callable( array( $gateway, 'is_enable') ) && $gateway->is_enable();
+            if( apply_filters( 'hb_payment_gateway_enable', $is_enable, $gateway ) ){
                 $gateways[ $k ] = $gateway;
             }
         }
