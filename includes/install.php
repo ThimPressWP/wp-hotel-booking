@@ -48,7 +48,7 @@ Thank for booking',
 
 global $hb_settings;
 $pages = array();
-if( ! hb_get_page_id( 'my-rooms' ) )
+if( ! hb_get_page_id( 'my-rooms' ) || ! get_post( hb_get_page_id( 'my-rooms' ) ) )
 {
     $pages['my-rooms'] = array(
         'name'    => _x( 'my-rooms', 'Page slug', 'tp-hotel-booking' ),
@@ -57,7 +57,7 @@ if( ! hb_get_page_id( 'my-rooms' ) )
     );
 }
 
-if( ! hb_get_page_id( 'checkout' ) )
+if( ! hb_get_page_id( 'checkout' ) || ! get_post( hb_get_page_id( 'checkout' ) ) )
 {
     $pages['checkout'] = array(
         'name'    => _x( 'room-checkout', 'Page slug', 'tp-hotel-booking' ),
