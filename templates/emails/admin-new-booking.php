@@ -95,7 +95,7 @@ foreach( $_rooms as $id ){
                                         $room_types[] = $term->name;
                                     }
                                     // if( $term ) echo " (", $term->name, ")";
-                                    if( $term ) echo " (", implode(', ', $room_types), ")";
+                                    if( $terms ) echo " (", implode(', ', $room_types), ")";
                                 ?>
                             </td>
                             <td style="text-align: right;"><?php echo $room->quantity;?></td>
