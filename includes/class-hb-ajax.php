@@ -250,8 +250,7 @@ class HB_Ajax {
 		if ( !isset( $_SESSION['hb_cart' . HB_BLOG_ID] ) || !isset( $_SESSION['hb_cart' . HB_BLOG_ID]['products'] ) )
 			return;
 
-		if ( isset( $_SESSION['hb_cart' . HB_BLOG_ID]['products'][$time_key], $_SESSION['hb_cart' . HB_BLOG_ID]['products'][$time_key][$room_id] ) )
-			unset( $_SESSION['hb_cart' . HB_BLOG_ID]['products'][$time_key][$room_id] );
+		HB_Cart::instance()->remove_cart_item( $room_id, $time_key );
 
 		$cart = HB_Cart::instance();
 

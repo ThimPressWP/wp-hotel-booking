@@ -286,6 +286,30 @@ class HB_Cart{
     }
 
     /**
+     * remove cart item
+     * @param  [type] $room_id  [description]
+     * @param  [type] $time_key [description]
+     * @return [type]           [description]
+     */
+    function remove_cart_item( $room_id, $time_key )
+    {
+
+        if( ! isset( $_SESSION['hb_cart' . HB_BLOG_ID]['products'][$time_key] ) )
+            return;
+
+        if( ! isset( $_SESSION['hb_cart' . HB_BLOG_ID]['products'][$time_key][$room_id] ) )
+            return;
+
+        list( $check_in_date, $check_out_date ) = explode( '_', $time_key);
+        $check_in_date = date( 'm/d/Y', $check_in_date );
+        $check_out_date = date( 'm/d/Y', $check_out_date );
+
+        unset( $_SESSION['hb_cart' . HB_BLOG_ID]['products'][$time_key][$room_id] );
+
+        do_action( 'tp_hotel_booking_remove_cart_item', $room_id, $time_key, $check_in_date, $check_out_date );
+    }
+
+    /**
      * Clear all rooms from cart
      *
      * @return $this
