@@ -119,8 +119,8 @@ class TP_Hotel_Booking{
         $this->_include( 'includes/widgets/class-hb-widget-mini-cart.php' );
         $this->_include( 'includes/class-hb-post-types.php' );
         // addon
-        $this->_include( 'includes/tp-hb-currencies/tp-hb-currencies.php' );
-        $this->_include( 'includes/tp-hb-extra/tp-hb-extra.php' );
+        $this->_include( 'includes/plugins/tp-hb-currencies/tp-hb-currencies.php' );
+        $this->_include( 'includes/plugins/tp-hb-extra/tp-hb-extra.php' );
         // end addon
         $this->_include( 'includes/hb-functions.php' );
         $this->_include( 'includes/class-hb-cart.php' );
