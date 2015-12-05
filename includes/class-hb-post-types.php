@@ -559,7 +559,7 @@ class HB_Post_Types{
             'query_var'          => true,
             'publicly_queryable' => true,
             'show_ui'            => true,
-            'has_archive'        => 'rooms',
+            'has_archive'        => true,
             //'capability_type'    => 'post',
             'map_meta_cap'       => true,
             'show_in_menu'       => 'tp_hotel_booking',
