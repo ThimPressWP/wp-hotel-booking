@@ -231,7 +231,9 @@ class HB_Cart{
     {
         if( $selected = $this->get_products() ){
             if( isset( $selected[ $time_key ], $selected[ $time_key ][ $id ] ) )
+            {
                 return HB_Room::instance( $id, $selected[ $time_key ][ $id ] );
+            }
         }
     }
 
@@ -275,7 +277,16 @@ class HB_Cart{
 
             do_action( 'tp_hotel_booking_add_to_cart', $session_cart_id, $posts );
 
-            $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$date][$room_id] = $session_cart_id;
+            $session_cart_id = apply_filters( 'tp_hb_session_cart_id_appended', $session_cart_id, $this->get_products(), $posts );
+
+            if( ! isset( $session_cart_id['quantity'] ) || $session_cart_id['quantity'] == 0 )
+            {
+                $this->remove_cart_item( $date, $room_id );
+            }
+            else
+            {
+                $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$date][$room_id] = $session_cart_id;
+            }
         // }
         // else
         // {

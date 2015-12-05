@@ -670,7 +670,11 @@ class HB_Room{
             }
         }
 
-        $results['data']['regular']['price'] = get_post_meta($regular_plan->ID, '_hb_pricing_plan_prices', true);
+        if( $regular_plan )
+            $results['data']['regular']['price'] = get_post_meta($regular_plan->ID, '_hb_pricing_plan_prices', true);
+        else
+            $results['data']['regular']['price'] = get_post_meta(null, '_hb_pricing_plan_prices', true);
+
         $results['capacity']    = get_post_meta( $room_id, '_hb_room_capacity', true );
 
         return apply_filters( 'hb_booking_pricing_plans', $results );;

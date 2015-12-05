@@ -117,7 +117,7 @@ class HB_Extra_Package
 				$return = get_post_meta( $this->_post->ID, 'tp_hb_extra_room_respondent_name', true );
 				break;
 			case 'night':
-				$return = hb_count_nights_two_dates( $this->_check_out, $this->_check_in );;
+				$return = hb_count_nights_two_dates( $this->_check_out, $this->_check_in );
 				break;
 			default:
 				$return = null;

@@ -97,7 +97,7 @@ class HB_Extra_Cart
 	 */
 	public function add_extra_to_cart( $posts )
 	{
-		if( ! defined( 'DOING_AJAX' ) ) return $posts;
+		// if( ! defined( 'DOING_AJAX' ) ) return $posts;
 
 		if( ! isset( $_POST ) || empty( $_POST ) ) return $posts;
 
