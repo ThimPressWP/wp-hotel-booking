@@ -67,10 +67,10 @@ class TP_Hotel_Booking_Woocommerce {
 			 * hook to tp-hotel-booking core
 			 * create cart item
 			 * remove cart item
+			 * price woo format
 			 */
 			add_action( 'tp_hotel_booking_add_to_cart', array( $this, 'hotel_add_to_cart' ), 10, 3 );
 			add_action( 'tp_hotel_booking_remove_cart_item', array( $this, 'hotel_remove_cart_item' ), 10, 4 );
-			// add_action( 'tp_hb_session_cart_id_appended', array( $this, 'hotel_update_cart_package_item' ), 10, 3 );
 
 			/**
 			 * Woocommerce hook
@@ -137,7 +137,7 @@ class TP_Hotel_Booking_Woocommerce {
 				$package_cart_item_data = array(
 						'cart_room_id'		=> $cart_item_id,
 						'room_id'			=> $session['id'],
-						'room_quantity'		=> $session['quantity'],
+						// 'room_quantity'		=> $session['quantity'],
 						'check_in_date'		=> $session['check_in_date'],
 						'check_out_date' 	=> $session['check_out_date']
 					);
