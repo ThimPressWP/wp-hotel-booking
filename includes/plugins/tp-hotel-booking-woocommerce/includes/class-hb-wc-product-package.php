@@ -20,6 +20,9 @@ class HB_WC_Product_Package extends WC_Product_Simple{
 	 */
 	function get_price()
 	{
+		if( ! isset( $this->data['cart_room_id'] ) )
+			return;
+
 		global $woocommerce;
 		$room = $woocommerce->cart->get_cart_item( $this->data['cart_room_id'] );
 		$this->package = HB_Extra_Package::instance( $this->post, $this->data['check_in_date'], $this->data['check_out_date'], $room['quantity'], 1 );
