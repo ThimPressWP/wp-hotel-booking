@@ -99,8 +99,6 @@ class HB_Checkout{
             '_hb_advance_payment'           => $transaction_object->advance_payment,
             '_hb_advance_payment_setting'   => $hb_settings->get( 'advance_payment', 50 ),
             '_hb_currency'                  => $transaction_object->currency,
-            // '_hb_payment_currency'          => $transaction_object->payment_currency,
-            // '_hb_payment_currency_rate'     => $transaction_object->payment_currency_rate,
             '_hb_customer_id'               => $customer_id,
             '_hb_method'                    => $this->payment_method->slug,
             '_hb_method_title'              => $this->payment_method->title,
@@ -170,9 +168,9 @@ class HB_Checkout{
                 if (HB_Cart::instance()->needs_payment()) {
                     if( ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['booking_id']) )
                         $_SESSION['hb_cart'.HB_BLOG_ID]['booking_id'] = $booking_id;
-                    $result = $payment_method->process_checkout( $booking_id , $customer_id );
+                    $result = $payment_method->process_checkout( $booking_id, $customer_id );
                 } else {
-                    if (empty($booking)) {
+                    if ( empty($booking) ) {
                         $booking = HB_Booking::instance($booking_id);
                     }
                     // No payment was required for order

@@ -599,7 +599,7 @@ function hb_update_customer_info( $data ) {
 		}
 	}
 
-	if ( !$customer_id ) {
+	if ( ! $customer_id ) {
 		$is_new      = true;
 		$customer_id = wp_insert_post(
 			array(
@@ -1690,10 +1690,11 @@ if ( !function_exists( 'hb_get_cart_url' ) ) {
 		global $hb_settings;
 		$id = hb_get_page_id( 'my-rooms' );
 		if ( $id && $hb_settings->get( 'my-rooms' ) ) {
-			return get_the_permalink( $id );
+			$url = get_the_permalink( $id );
 		} else {
-			return hb_get_url( array( 'hotel-booking' => 'cart' ) );
+			$url = hb_get_url( array( 'hotel-booking' => 'cart' ) );
 		}
+		return apply_filters( 'hb_cart_url', $url );
 	}
 }
 
@@ -1703,10 +1704,11 @@ if ( !function_exists( 'hb_get_checkout_url' ) ) {
 		$id = hb_get_page_id( 'checkout' );
 
 		if ( $id && $hb_settings->get( 'checkout' ) ) {
-			return get_the_permalink( $id );
+			$url = get_the_permalink( $id );
 		} else {
-			return hb_get_url( array( 'hotel-booking' => 'checkout' ) );
+			$url = hb_get_url( array( 'hotel-booking' => 'checkout' ) );
 		}
+		return apply_filters( 'hb_checkout_url', $url );
 	}
 }
 

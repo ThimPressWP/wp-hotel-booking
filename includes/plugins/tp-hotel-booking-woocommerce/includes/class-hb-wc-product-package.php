@@ -30,6 +30,26 @@ class HB_WC_Product_Package extends WC_Product_Simple{
 	}
 
 	/**
+	 * is_sold_individually input type
+	 * @return boolean
+	 */
+	function is_sold_individually()
+	{
+		if( ! class_exists( 'HB_Extra_Package' ) )
+			return parent::is_sold_individually();
+
+		$package = HB_Extra_Package::instance( $this->post );
+
+		if( ! $package->respondent )
+			return parent::is_sold_individually();
+
+		if( $package->respondent === 'trip' )
+			return true;
+
+		return false;
+	}
+
+	/**
 	 * Check if a product is purchasable
 	 */
 	function is_purchasable(){

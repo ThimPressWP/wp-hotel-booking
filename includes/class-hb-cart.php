@@ -476,7 +476,7 @@ function hb_get_return_url(){
  * @return stdClass
  */
 // function hb_generate_transaction_object( $customer_id ){
-function hb_generate_transaction_object( ){
+function hb_generate_transaction_object( $order = null ){
     $cart = HB_Cart::instance();
     if( $cart->is_empty() ) return false;
     $rooms = array();
@@ -496,6 +496,8 @@ function hb_generate_transaction_object( ){
 
     if( ! $rooms )
         return;
+
+    $rooms = apply_filters( 'hb_transaction_rooms', $rooms );
 
     global $hb_settings;
     $default_curreny = $hb_settings->get( 'currency', 'USD' );
@@ -525,7 +527,7 @@ function hb_generate_transaction_object( ){
         );
     }
 
-    $transaction_object = apply_filters( 'hb_generate_transaction_object', $transaction_object );
+    $transaction_object = apply_filters( 'hb_generate_transaction_object', $transaction_object, $order );
 
     return $transaction_object;
 }
@@ -599,7 +601,7 @@ function hb_delete_transient_transaction( $method, $temp_id ) {
  * @param array $args
  * @return mixed|WP_Error
  */
-function hb_create_booking( $args = array() ){
+function hb_create_booking( $args = array(), $transaction_object = null ){
     $default_args = array(
         'status'        => '',
         'customer_id'   => null,
@@ -614,7 +616,8 @@ function hb_create_booking( $args = array() ){
 
     TP_Hotel_Booking::instance()->_include( 'includes/class-hb-room.php' );
 
-    $transaction_object = hb_generate_transaction_object(); // hb_generate_transaction_object( $args['customer_id'] );
+    if( ! $transaction_object )
+        $transaction_object = hb_generate_transaction_object();
 
     $tax                    = $transaction_object->tax;
     $price_including_tax    = $transaction_object->price_including_tax;
@@ -622,7 +625,7 @@ function hb_create_booking( $args = array() ){
 
     $booking = HB_Booking::instance( $args['booking_id'] );
     $booking->post->post_title      = sprintf( __( 'Booking ', 'tp-hotel-booking' ) );
-    $booking->post->post_content    = $transaction_object->addition_information;
+    $booking->post->post_content    = $transaction_object->addition_information ? $transaction_object->addition_information : __( 'Empty Booking Notes', 'tp-hotel-booking' ) ;
     $booking->post->post_status     = 'hb-' . apply_filters( 'hb_default_order_status', 'pending' );
 
     if ( $args['status'] ) {

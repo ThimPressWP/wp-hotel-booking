@@ -127,6 +127,8 @@ class HB_Booking{
         $post_data = get_object_vars($this->post);
         // ensure the post_type is correct
         $post_data['post_type']     = 'hb_booking';
+        $post_data['post_content_filtered']     = $post_data['post_content'];
+        $post_data['post_excerpt']     = $post_data['post_content'];
         if ($this->post->ID) {
             $booking_id = wp_update_post($post_data);
         } else {

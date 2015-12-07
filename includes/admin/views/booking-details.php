@@ -212,7 +212,17 @@ $booking_id = hb_get_request( 'id' );
             </tr>
             <tr>
                 <th colspan="4" align="left"><?php _e( 'Tax', 'tp-hotel-booking' ); ?></th>
-                <td align="right"><?php echo get_post_meta( $booking_id, '_hb_tax', true ) * 100; ?>%</td>
+                <td align="right">
+                    <?php
+                        $html = '';
+                        if( $tax = get_post_meta( $booking_id, '_hb_tax', true ) )
+                        {
+                            if( is_string($tax) )
+                                $html = get_post_meta( $booking_id, '_hb_tax', true ) * 100 .'%' ;
+                        }
+                        echo sprintf( '%s', apply_filters( 'hotel_booking_admin_book_details', $html, $booking_id ) );
+                    ?>
+                </td>
             </tr>
             <tr>
                 <th colspan="4" align="left"><?php _e( 'Default Currency', 'tp-hotel-booking' ); ?></th>

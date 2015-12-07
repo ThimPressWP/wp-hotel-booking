@@ -454,18 +454,19 @@ add_filter('manage_hb_booking_posts_columns', 'hb_booking_table_head');
  * @return mixed
  */
 function hb_manage_booking_column( $column_name, $post_id ) {
+    $echo = array();
     $status = get_post_status( $post_id );
     switch ( $column_name ){
         case 'booking_id':
             $booking_id = $post_id;
-            echo hb_format_order_number( $booking_id );
+            $echo[] = hb_format_order_number( $booking_id );
             break;
         case 'customer_name':
             $customer_id = get_post_meta( $post_id, '_hb_customer_id', true );
             $title = hb_get_title_by_slug( get_post_meta( $customer_id, '_hb_title', true ) );
             $first_name = get_post_meta( $customer_id, '_hb_first_name', true );
             $last_name = get_post_meta( $customer_id, '_hb_last_name', true );
-            printf( '%s %s %s', $title ? $title : 'Cus.', $first_name, $last_name );
+            $echo[] = sprintf( '%s %s %s', $title ? $title : 'Cus.', $first_name, $last_name );
             break;
         case 'total':
             global $hb_settings;
@@ -474,9 +475,10 @@ function hb_manage_booking_column( $column_name, $post_id ) {
             if( ! $currency )
                 $currency = get_post_meta( $post_id, '_hb_currency', true );
             $total_with_currency = hb_format_price( $total, hb_get_currency_symbol( $currency ) );
-            echo $total_with_currency;
+
+            $echo[] = $total_with_currency;
             if( $method = hb_get_user_payment_method( get_post_meta( $post_id, '_hb_method', true ) ) ) {
-                printf( __( '<br />(<small>%s</small>)', 'tp-hotel-booking' ), $method->description );
+                $echo[] = sprintf( __( '<br />(<small>%s</small>)', 'tp-hotel-booking' ), $method->description );
             }
             // display paid
             if( $status === 'hb-processing' )
@@ -486,7 +488,7 @@ function hb_manage_booking_column( $column_name, $post_id ) {
                 if( ! $advance_settings )
                     $advance_settings = $hb_settings->get( 'advance_payment', 50 );
 
-                printf(
+                $echo[] = sprintf(
                     __( '<br />(<small class="hb_advance_payment">Charged %s = %s</small>)', 'tp-hotel-booking' ),
                     $advance_settings . '%',
                     hb_format_price( $advance_payment, hb_get_currency_symbol( $currency ) )
@@ -499,9 +501,10 @@ function hb_manage_booking_column( $column_name, $post_id ) {
             echo date( 'F d, Y', strtotime( get_post_field( 'post_date', $post_id ) ) );
             break;
         case 'details':
-            echo '<a href="'. admin_url('admin.php?page=hb_booking_details&id='. $post_id) . '">' . __( 'View', 'tp-hotel-booking' ) . '</a><br />';
-            echo '<span class="hb-booking-status ' . $status . '">' . hb_get_booking_status_label( $post_id ) . '</span>';
+            $echo[] = '<a href="'. admin_url('admin.php?page=hb_booking_details&id='. $post_id) . '">' . __( 'View', 'tp-hotel-booking' ) . '</a><br />';
+            $echo[] = '<span class="hb-booking-status ' . $status . '">' . hb_get_booking_status_label( $post_id ) . '</span>';
     }
+    echo apply_filters( 'hotel_booking_booking_total', sprintf( '%s', implode('', $echo) ), $column_name, $post_id );
 }
 add_action('manage_hb_booking_posts_custom_column', 'hb_manage_booking_column', 10, 2);
 
@@ -857,8 +860,13 @@ function hb_meta_box_field_datetime( $value ){
     return date( 'l, m/d/Y', $value );
 }
 function hb_meta_box_field_tax( $value ){
+    if( ! $value  )
+        return;
 
-    return ( $value * 100 ) . '%';
+    if( is_string($value) )
+        $value = ( $value * 100 ) . '%';
+
+    return apply_filters( 'hotel_booking_label_details', $value );
 }
 function hb_meta_box_field_sub_total( $value ){
     return hb_format_price( $value );

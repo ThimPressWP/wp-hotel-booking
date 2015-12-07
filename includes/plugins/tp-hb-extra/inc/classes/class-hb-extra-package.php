@@ -71,6 +71,8 @@ class HB_Extra_Package
         }elseif( $post instanceof WP_Post || is_object( $post ) ){
             $this->_post = $post;
         }
+
+        if( ! $this->_post ) return;
 	}
 
 	public function __get( $key )
@@ -141,6 +143,7 @@ class HB_Extra_Package
 	function get_regular_price( $tax = false )
 	{
 
+		if( ! $this->_post ) return;
 		$price = get_post_meta( $this->_post->ID, 'tp_hb_extra_room_price', true );
 
 		if( $tax && hb_price_including_tax() )
