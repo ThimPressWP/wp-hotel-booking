@@ -41,7 +41,7 @@
 	margin-bottom: -30px;
 	margin-top: 15px;
 }
-.hb_addition_packages input[type=radio], 
+.hb_addition_packages input[type=radio],
 .hb_addition_packages input[type=checkbox]{
 	border: 1px solid #333;
 	margin-top: 3px;
@@ -149,8 +149,8 @@
 	float: right;
 }
 
-.hb_mini_cart_price_packages input[type="checkbox"]:checked:before{
-	content: '\2713' !important;
+.hb_addition_package_extra input[type="checkbox"]:checked:before{
+	content: '\2714' !important;
 	font: 400 21px/1 dashicons;
 	margin: -6px 0 0 0px;
 }
