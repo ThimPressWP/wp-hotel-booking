@@ -159,6 +159,37 @@ class HB_Extra_Cart
 		return $session_cart_id;
 	}
 
+	public function add_room_package ( $search_key, $room_id, $package, $qty )
+	{
+		if( ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'] )
+			|| ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key] )
+			|| ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key][$room_id] )
+			)
+				return;
+
+		if( ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key][$room_id]['extra_packages'] ) )
+			$_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key][$room_id]['extra_packages'] = array();
+
+		if( $qty == 0 )
+			return $this->remove_package_item( $search_key, $room_id, $package );
+
+		return $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key][$room_id]['extra_packages'][$package] = $qty;
+	}
+
+	public function remove_package_item( $search_key, $room_id, $package )
+	{
+		if( ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'] )
+			|| ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key] )
+			|| ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key][$room_id] )
+			|| ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key][$room_id]['extra_packages'] )
+			|| ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key][$room_id]['extra_packages'][$package] )
+			)
+				return;
+
+		unset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key][$room_id]['extra_packages'][$package] );
+
+	}
+
 	/**
 	 * wp.template hook template
 	 * @param  [type] $located       [description]

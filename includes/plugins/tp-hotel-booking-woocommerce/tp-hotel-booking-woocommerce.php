@@ -138,6 +138,7 @@ class TP_Hotel_Booking_Woocommerce {
 						'cart_room_id'		=> $cart_item_id,
 						'room_id'			=> $session['id'],
 						// 'room_quantity'		=> $session['quantity'],
+						'search_key'		=> $session['search_key'],
 						'check_in_date'		=> $session['check_in_date'],
 						'check_out_date' 	=> $session['check_out_date']
 					);
@@ -200,14 +201,35 @@ class TP_Hotel_Booking_Woocommerce {
 	 */
 	public function woocommerce_remove_cart_item( $cart_item_key, $cart )
 	{
-		remove_action( 'woocommerce_remove_cart_item', array( $this, 'woocommerce_remove_cart_item') );
+		remove_action( 'woocommerce_remove_cart_item', array( $this, 'woocommerce_remove_cart_item'), 10, 2 );
 		if( $cart_item = $cart->get_cart_item( $cart_item_key ) )
 		{
-			$room_id 		= $cart_item['product_id'];
+			if( ! isset( $cart_item['check_in_date'] ) && ! isset( $cart_item['check_out_date'] ) )
+				return;
+
+			$product_id 	= $cart_item['product_id'];
 			$search_key 	= $cart_item['search_key'];
 
 			add_action( 'woocommerce_remove_cart_item', array( $this, 'woocommerce_remove_cart_item' ), 10, 2 );
-			return HB_Cart::instance()->remove_cart_item( $room_id, $search_key );
+
+			if( ! isset( $cart_item['cart_room_id'] ) )
+			{
+				HB_Cart::instance()->remove_cart_item( $product_id, $search_key );
+
+				$cart_items = $cart->get_cart();
+
+				foreach ( $cart_items as $cart_id => $item ) {
+					if( isset( $item[ 'cart_room_id' ], $item[ 'room_id' ] ) && isset( $item[ 'check_in_date' ], $item[ 'check_out_date' ] ) )
+					{
+						$cart->remove_cart_item( $cart_id );
+					}
+				}
+			}
+			else
+			{
+				$room_id 	= $cart_item['room_id'];
+				return HB_Extra_Cart::instance()->remove_package_item( $search_key, $room_id, $product_id );
+			}
 		}
 	}
 
@@ -224,18 +246,27 @@ class TP_Hotel_Booking_Woocommerce {
 		global $woocommerce;
 		if( $cart_item = $woocommerce->cart->get_cart_item( $cart_item_key ) )
 		{
+			if( ! isset( $cart_item['check_in_date'] ) && ! isset( $cart_item['check_out_date'] ) )
+				return $return;
 
-			if( isset( $cart_item['search_key'] ) || ! isset( $cart_item['cart_room_id'] ) ) return;
+			if( ! isset( $cart_item['room_id'] ) && ! isset( $cart_item['cart_room_id'] ) )
+			{
+				$room_id 		= $cart_item[ 'product_id' ];
+				$quantity 		= $quantity;
+				$check_in_date 	= $cart_item[ 'check_in_date' ];
+				$check_out_date	= $cart_item[ 'check_out_date' ];
 
-			$room_id 		= $cart_item[ 'product_id' ];
-			$quantity 		= $quantity;
-			$check_in_date 	= $cart_item[ 'check_in_date' ];
-			$check_out_date	= $cart_item[ 'check_out_date' ];
-
-			HB_Cart::instance()->add_to_cart( $room_id, $quantity, $check_in_date, $check_out_date );
+				HB_Cart::instance()->add_to_cart( $room_id, $quantity, $check_in_date, $check_out_date );
+			}
+			else if( isset( $cart_item[ 'room_id' ] ) )
+			{
+				HB_Extra_Cart::instance()->add_room_package( $cart_item[ 'search_key' ], $cart_item[ 'room_id' ], $cart_item[ 'product_id' ], $quantity );
+			}
 		}
 
-		return $return;
+		do_action( 'hb_wc_update_cart', $return, $cart_item_key, $values, $quantity );
+
+		return apply_filters( 'hb_wc_update_cart_return', $return, $cart_item_key, $values, $quantity );
 	}
 
 	/**
@@ -246,8 +277,39 @@ class TP_Hotel_Booking_Woocommerce {
 	 */
 	public function woocommerce_restore_cart_item( $cart_item_id, $cart )
 	{
-		$hb_cart = HB_Cart::instance();
-		// var_dump($cart_item_id, $cart); die();
+		if( ! $cart_item = $cart->get_cart_item( $cart_item_id ) )
+			return;
+
+		if( ! isset( $cart_item[ 'check_in_date' ] ) || ! isset( $cart_item[ 'check_out_date' ] ) || ! isset( $cart_item[ 'search_key' ] ) ) return;
+
+		do_action( 'hb_wc_restore_cart_item', $cart_item_id, $cart );
+
+		if( ! isset( $cart_item[ 'cart_room_id' ] ) && ! isset( $cart_item[ 'room_id' ] ) )
+		{
+			/**
+			 * room restore
+			 * @var
+			 */
+			$hb_cart = HB_Cart::instance();
+
+			$results = $hb_cart->add_to_cart( $cart_item['product_id'], $cart_item['quantity'], $cart_item[ 'check_in_date' ], $cart_item[ 'check_out_date' ] );
+
+			// $rooms = $results->get_products();
+
+			// if( ! isset( $rooms[ $cart_item[ 'search_key' ] ] )
+			// 	|| ! isset( $cart_item[ 'search_key' ][ $cart_item['product_id'] ] )
+			// 	|| ! isset( $cart_item[ 'search_key' ][ $cart_item['product_id'] ] )
+				// ) return;
+
+
+		}
+		else
+		{
+			$package = HB_Extra_Cart::instance();
+			return $package->add_room_package( $cart_item[ 'search_key' ], $cart_item[ 'room_id' ], $cart_item[ 'product_id' ], $cart_item[ 'quantity' ] );
+		}
+
+		do_action( 'hb_wc_restored_cart_item', $cart_item_id, $cart );
 		return true;
 	}
 
