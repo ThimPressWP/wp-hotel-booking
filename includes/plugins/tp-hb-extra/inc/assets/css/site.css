@@ -150,9 +150,9 @@
 }
 
 .hb_addition_package_extra input[type="checkbox"]:checked:before{
-	content: '\2714' !important;
-	font: 400 21px/1 dashicons;
-	margin: -6px 0 0 0px;
+    content: '\2714' !important;
+    font: 400 18px/1 dashicons;
+    margin: -4px 0 0 0px;
 }
 .hb_checkout_item.package td {
     padding: 5px 5px !important;
