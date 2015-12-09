@@ -982,7 +982,7 @@ function hb_search_rooms( $args = array() ){
 
     global $hb_settings;
     $total = count($results);
-    $posts_per_page = (int)apply_filters( 'hb_number_search_results', $hb_settings->get( 'posts_per_page', 1 ) );
+    $posts_per_page = (int)apply_filters( 'hb_number_search_results', $hb_settings->get( 'posts_per_page', 8 ) );
     $page = isset( $_GET['hb_page'] ) ? abs( (int) $_GET['hb_page'] ) : 1;
     $offset = ( $page * $posts_per_page ) - $posts_per_page;
     $max_num_pages = ceil($total / $posts_per_page);
