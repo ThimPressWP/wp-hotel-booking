@@ -61,6 +61,7 @@ class TP_Hotel_Booking_Woocommerce {
 			 * woommerce currency
 			 */
 			add_filter( 'hb_currency', array( $this, 'woocommerce_currency' ), 50 );
+			add_filter( 'tp_hotel_booking_payment_current_currency', array( $this, 'woocommerce_currency' ), 50 );
 			add_filter( 'hb_currency_symbol', array( $this, 'woocommerce_currency_symbol' ), 50, 2 );
 			add_filter( 'hb_price_format', array( $this, 'woocommerce_price_format' ), 50, 3 );
 			/**
