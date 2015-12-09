@@ -86,7 +86,7 @@ class HB_Extra_Field
 			<ul>
 				<?php foreach ( $packages as $id => $package ): ?>
 					<li>
-						<span><?php printf( '%s (x%s)', $package['package_title'], $package['package_quantity'] ) ?></span>
+						<small><?php printf( '%s (x%s)', $package['package_title'], $package['package_quantity'] ) ?></small>
 					</li>
 				<?php endforeach ?>
 			</ul>
