@@ -64,6 +64,12 @@ class TP_Hotel_Booking_Woocommerce {
 			add_filter( 'tp_hotel_booking_payment_current_currency', array( $this, 'woocommerce_currency' ), 50 );
 			add_filter( 'hb_currency_symbol', array( $this, 'woocommerce_currency_symbol' ), 50, 2 );
 			add_filter( 'hb_price_format', array( $this, 'woocommerce_price_format' ), 50, 3 );
+			/*
+			 * filter price
+			 */
+			add_filter( 'hotel_booking_room_total_price', array( $this, 'price_filter' ), 1, 4 );
+			add_filter( 'tp_hb_extra_package_regular_price', array( $this, 'price_extra_filter' ), 10, 3 ); // extra package
+
 			/**
 			 * hook to tp-hotel-booking core
 			 * create cart item
@@ -569,6 +575,46 @@ class TP_Hotel_Booking_Woocommerce {
 	public function woocommerce_price_format( $price_format, $price, $with_currency )
 	{
 		return wc_price( $price );
+	}
+
+	/**
+	 * room price filter search
+	 * @param  [type] $total
+	 * @param  [type] $room
+	 * @param  [type] $including_tax
+	 * @param  [type] $singular
+	 * @return [type]
+	 */
+	public function price_filter( $total, $room, $including_tax, $singular )
+	{
+		remove_filter( 'hotel_booking_room_total_price', array( $this, 'price_filter' ) );
+		if( $including_tax && $singular )
+		{
+			$product = new WC_Product( $room->post->ID );
+			$price = $room->get_total( $room->check_in_date, $room->check_out_date, 1, false );
+			$total = $product->get_display_price( $price, $room->quantity );
+		}
+		add_filter( 'hotel_booking_room_total_price', array( $this, 'price_filter' ), 10, 4 );
+		return $total;
+	}
+
+	/**
+	 * extra price filter
+	 * @return $total
+	 */
+	public function price_extra_filter( $price, $package, $tax )
+	{
+		remove_filter( 'hotel_booking_extra_package_price', array( $this, 'price_extra_filter' ), 10, 3 );
+
+		if( $tax )
+		{
+			$product = new WC_Product( $package->ID );
+			$price = $package->get_regular_price();
+			$price = $product->get_display_price( $price, $package->_package_quantity );
+		}
+
+		add_filter( 'hotel_booking_extra_package_price', array( $this, 'price_extra_filter' ), 10, 3 );
+		return $price;
 	}
 }
 

@@ -368,15 +368,15 @@ class HB_Room{
             $to_time = (int)$this->check_out_date;
             $from_time = (int)$this->check_in_date;
         }else {
-            if (!is_numeric($from)) {
-                $from_time = strtotime($from);
+            if ( ! is_numeric( $from ) ) {
+                $from_time = strtotime( $from );
             } else {
                 $from_time = $from;
             }
-            if ( !is_numeric($to) ) {
-                $to_time = strtotime($to);
+            if ( ! is_numeric( $to ) ) {
+                $to_time = strtotime( $to );
             } else {
-                if ($to >= DAY_IN_SECONDS) {
+                if ( $to >= DAY_IN_SECONDS ) {
                     $to_time = $to;
                 } else {
                     $nights = $to;

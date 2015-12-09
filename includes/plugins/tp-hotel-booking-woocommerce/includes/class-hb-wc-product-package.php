@@ -7,7 +7,7 @@ class HB_WC_Product_Package extends WC_Product_Simple{
 
 	public $package = null;
 
-	function __construct( $the_product, $args ){
+	function __construct( $the_product, $args = null ){
 		parent::__construct( $the_product, $args );
 
 		if( ! class_exists( 'HB_Extra_Package' ) )
@@ -26,7 +26,7 @@ class HB_WC_Product_Package extends WC_Product_Simple{
 		global $woocommerce;
 		$room = $woocommerce->cart->get_cart_item( $this->data['cart_room_id'] );
 		$this->package = HB_Extra_Package::instance( $this->post, $this->data['check_in_date'], $this->data['check_out_date'], $room['quantity'], 1 );
-		return $this->package->price;
+		return $this->package->get_price_package( false );
 	}
 
 	/**

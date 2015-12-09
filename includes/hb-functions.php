@@ -525,7 +525,7 @@ function hb_get_tax_settings() {
 
 function hb_price_including_tax() {
 	$settings = HB_Settings::instance();
-	return $settings->get( 'price_including_tax' );
+	return apply_filters( 'hb_price_including_tax', $settings->get( 'price_including_tax' ) );
 }
 
 function hb_dropdown_numbers( $args = array() ) {

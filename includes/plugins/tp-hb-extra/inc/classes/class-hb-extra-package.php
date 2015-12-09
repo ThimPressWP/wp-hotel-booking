@@ -36,13 +36,13 @@ class HB_Extra_Package
 	 * room quantity
 	 * @var null
 	 */
-	protected $_room_quantity = null;
+	public $_room_quantity = null;
 
 	/**
 	 * package quantity
 	 * @var null
 	 */
-	protected $_package_quantity = null;
+	public $_package_quantity = null;
 
 	function __construct( $post, $checkIn = null, $checkOut = null, $room_quantity, $package_quantity )
 	{
@@ -148,9 +148,9 @@ class HB_Extra_Package
 
 		if( $tax && hb_price_including_tax() )
 		{
-			return $price + $price * hb_get_tax_settings();
+			$price = $price + $price * hb_get_tax_settings();
 		}
-		return $price;
+		return apply_filters( 'tp_hb_extra_package_regular_price', $price, $this, $tax );
 
 	}
 

@@ -5,7 +5,7 @@ class HB_WC_Product_Room extends WC_Product_Simple{
 	public $data = null;
 	public $total;
 
-	function __construct( $the_product, $args ){
+	function __construct( $the_product, $args = null ){
 		parent::__construct( $the_product, $args );
 	}
 
