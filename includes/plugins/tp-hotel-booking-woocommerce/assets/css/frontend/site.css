@@ -1,0 +1,6 @@
+.hb_wc_cart_package_item td {
+    padding: 8px !important;
+}
+.woocommerce .hb_wc_cart_package_item td img {
+    width: 40px !important;
+}
