@@ -32,7 +32,7 @@ class HB_Extra_Cart
 		/**
 		 * profilter ro0m item price in minicart
 		 */
-		add_filter( 'hotel_booking_room_total_price', array( $this, 'filter_price' ), 10, 4 );
+		add_filter( 'hotel_booking_room_total_price_extentions', array( $this, 'extra_price' ), 10, 3 );
 
 		/**
 		 * add filter add to cart results array
@@ -60,35 +60,8 @@ class HB_Extra_Cart
 
 		add_filter( 'hotel_booking_update_cart', array( $this, 'update_cart_package' ), 10, 4 );
 
-
-		/**
-		 * filter price by extra package type. For ex: number, trip type
-		 */
-		add_filter( 'tp_hb_extra_package_price', array( $this, 'addition_package_price' ), 10, 5 );
 	}
 
-	/**
-	 * [addition_package_price description]
-	 * @param  [float] $price
-	 * @param  [text] $respondent
-	 * @param  [int] $quantity
-	 * @param  [int] $night
-	 * @param  [boolean] $tax
-	 * @return [float]
-	 */
-	function addition_package_price( $price, $respondent, $quantity, $night, $tax )
-	{
-		if( $respondent === 'number' )
-		{
-			$price = $price * $quantity * $night;
-		}
-
-		if( $tax && hb_price_including_tax() )
-		{
-			return $price + $price * hb_get_tax_settings();
-		}
-		return $price;
-	}
 
 	/**
 	 * $_POST
@@ -231,35 +204,26 @@ class HB_Extra_Cart
 		echo ob_get_clean();
 	}
 
-	/**
-	 * filter price in minicart
-	 * @param  [type] $price [description]
-	 * @param  [type] $room  [description]
-	 * @return [type]        [description]
-	 */
-	public function filter_price( $price, $room, $tax, $singular )
+	function extra_price( $total, $room, $tax )
 	{
-		remove_filter( 'hotel_booking_room_total_price', array( $this, 'filter_price' ), 10, 4 );
+		// remove_filter( 'hotel_booking_room_total_price_extentions', array( $this, 'extra_price' ) );
+		if( ! $room->extra_packages )
+			return $total;
 
-		if( $room->extra_packages )
-		{
-			foreach ( $room->extra_packages as $package_id => $quanity ) {
-				if( ! $singular )
-					continue;
+		$price = 0;
+		foreach ( $room->extra_packages as $package_id => $quanity ) {
 
-				$package = HB_Extra_Package::instance( $package_id, $room->check_in_date, $room->check_out_date, $room->quantity, $quanity );
-				if( $tax )
-				{
-					$price = $price + $package->price_tax;
-				}
-				else
-				{
-					$price = $price + $package->price;
-				}
+			$package = HB_Extra_Package::instance( $package_id, $room->check_in_date, $room->check_out_date, $room->quantity, $quanity );
+			if( $tax )
+			{
+				$price = $price + $package->price_tax;
+			}
+			else
+			{
+				$price = $price + $package->price;
 			}
 		}
-
-		add_filter( 'hotel_booking_room_total_price', array( $this, 'filter_price' ), 10, 4 );
+		// add_filter( 'hotel_booking_room_total_price_extentions', array( $this, 'extra_price' ), 10, 3 );
 		return $price;
 	}
 

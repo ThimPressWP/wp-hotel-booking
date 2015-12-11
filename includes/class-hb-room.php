@@ -195,14 +195,7 @@ class HB_Room{
                 $return = $this->get_total($this->check_in_date, $this->check_out_date, $this->get_data( 'num_of_rooms' ), true, false);
                 break;
             case 'total_price':
-                    if( hb_price_including_tax() )
-                    {
-                        $return = $this->get_total($this->check_in_date, $this->check_out_date, $this->get_data( 'num_of_rooms' ));
-                    }
-                    else
-                    {
-                        $return = $this->get_total($this->check_in_date, $this->check_out_date, $this->get_data( 'num_of_rooms' ));
-                    }
+                $return = $this->get_total($this->check_in_date, $this->check_out_date, $this->get_data( 'num_of_rooms' ));
                 break;
             case 'search_key':
                 $return = $this->get_data('search_key');
@@ -392,10 +385,31 @@ class HB_Room{
         }
         $from = mktime( 0, 0, 0, date( 'm', $from_time ), date( 'd', $from_time ), date( 'Y', $from_time ) );
         for( $i = 0; $i < $nights; $i++ ){
-            $total_per_night = $this->get_price( $from + $i * DAY_IN_SECONDS, $including_tax );
+            $total_per_night = $this->get_price( $from + $i * DAY_IN_SECONDS, false );
             $total += $total_per_night * $num_of_rooms;
         }
-        return apply_filters( 'hotel_booking_room_total_price', $total, $this, $including_tax, $singular );
+
+        $total = apply_filters( 'hotel_booking_room_total_price_excl_tax', $total, $this );
+        $settings = HB_Settings::instance();
+        // room price include tax
+        if( $including_tax )
+        {
+            $tax_enbale = apply_filters( 'hotel_booking_extra_tax_enable', hb_price_including_tax() );
+            if( $tax_enbale )
+            {
+                $tax_price = $total * hb_get_tax_settings();
+                $tax_price = apply_filters( 'hotel_booking_room_total_price_incl_tax', $tax_price, $this );
+                $total = $total + $tax_price;
+            }
+        }
+
+        // room price include extra packages
+        if( $singular )
+        {
+            $extentions = apply_filters( 'hotel_booking_room_total_price_extentions', 0, $this, $including_tax );
+            $total = $total + $extentions;
+        }
+        return $total;
     }
 
     /**

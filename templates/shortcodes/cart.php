@@ -82,7 +82,7 @@ global $hb_settings;
                         <?php if( $tax < 0 ){?>
                             <span><?php printf( __( '(price including tax)', 'tp-hotel-booking' ) );?></span>
                         <?php }?>
-                        <span class="hb-align-right"><?php echo abs( $tax * 100 );?>%</span>
+                        <span class="hb-align-right"><?php echo apply_filters( 'hotel_booking_cart_tax_display', abs( $tax * 100 ) . '%' ); ?></span>
                     </td>
                 </tr>
                 <?php }?>

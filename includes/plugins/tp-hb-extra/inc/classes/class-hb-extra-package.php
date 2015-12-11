@@ -134,10 +134,24 @@ class HB_Extra_Package
 	 */
 	function get_price_package( $tax = true )
 	{
-		$price = (float)$this->regular_price;// * (int)$this->_room_quantity;
+		if( $tax )
+		{
+			$regular_price = (float)$this->regular_price_tax;// * (int)$this->_room_quantity;
+		}
+		else
+		{
+			$regular_price = (float)$this->regular_price;// * (int)$this->_room_quantity;
+		}
 
-		return apply_filters( 'tp_hb_extra_package_price', $price, $this->respondent, $this->_package_quantity, $this->night, $tax );
+		$price = $regular_price;
+		if( $this->respondent === 'number' )
+		{
+			$price = $price * $this->_package_quantity * $this->night;
+		}
 
+		$price = apply_filters( 'hotel_booking_regular_extra_price', $price, $regular_price, $this, $tax );
+
+		return $price;
 	}
 
 	function get_regular_price( $tax = false )
@@ -146,11 +160,14 @@ class HB_Extra_Package
 		if( ! $this->_post ) return;
 		$price = get_post_meta( $this->_post->ID, 'tp_hb_extra_room_price', true );
 
-		if( $tax && hb_price_including_tax() )
+		$tax_enbale = apply_filters( 'hotel_booking_extra_tax_enable', hb_price_including_tax() );
+		if( $tax && $tax_enbale )
 		{
-			$price = $price + $price * hb_get_tax_settings();
+			$tax_price = apply_filters( 'tp_hb_extra_package_regular_price_tax', $price * hb_get_tax_settings(), $price, $this );
+			$price = $price + $tax_price;
 		}
-		return apply_filters( 'tp_hb_extra_package_regular_price', $price, $this, $tax );
+
+		return $price;
 
 	}
 
