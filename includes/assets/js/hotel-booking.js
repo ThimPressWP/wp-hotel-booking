@@ -4,9 +4,11 @@
 
 	if (Date.prototype.compareWith == undefined) {
 		Date.prototype.compareWith = function (d) {
-			if (typeof d == 'string') {
+			if (typeof d == 'string')
+			{
 				d = new Date(d);
 			}
+
 			var thisTime = parseInt(this.getTime() / 1000),
 				compareTime = parseInt(d.getTime() / 1000);
 			if (thisTime > compareTime) {
@@ -17,12 +19,35 @@
 			return 0;
 		}
 	}
+
+	// convert dd-mm-yy => mm-dd-yy
+	function formatDate( date )
+	{
+		var dateFormat = date.match( /\-/gi ); // '19-12-2015'
+		if( dateFormat && dateFormat.length == 2 )
+		{
+			var from = date.split('-');
+			return from[1] + '/' + from[0] + '/' + from[2];
+		}
+		return date;
+	}
+
 	function isEmail(email) {
 		return new RegExp('^[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+@[-!#$%&\'*+\\/0-9=?A-Z^_`a-z{|}~]+\.[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+$').test(email);
 	}
 
 	function isDate(date) {
-		date = new Date(date);
+		var dateFormat = date.match( /\-/gi ); // '19-12-2015'
+		if( dateFormat && dateFormat.length == 2 )
+		{
+			var from = date.split('-');
+			date = new Date( from[2], from[1] - 1, from[0] );
+		}
+		else
+		{
+			date = new Date(date);
+		}
+
 		return !isNaN(date.getTime());
 	}
 
@@ -657,8 +682,8 @@
 				return false;
 			}
 
-			var check_in = new Date($check_in.val()),
-				check_out = new Date($check_out.val()),
+			var check_in = new Date( formatDate( $check_in.val() ) ),
+				check_out = new Date( formatDate( $check_out.val() ) ),
 				current = new Date();
 			if (check_in.compareWith(current) == -1) {
 				alert(hotel_booking_l18n.check_in_date_must_be_greater);

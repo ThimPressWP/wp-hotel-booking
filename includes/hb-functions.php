@@ -852,7 +852,7 @@ function hb_format_price( $price, $with_currency = true ) {
 function hb_search_rooms( $args = array() ){
     global $wpdb;
     $adults = hb_get_request( 'adults' ) ? hb_get_request( 'adults' ) : 1;
-    $max_child = hb_get_request('max_child') ? hb_get_request('max_child') : 1;
+    $max_child = hb_get_request('max_child') ? hb_get_request('max_child') : 0;
     $args = wp_parse_args(
         $args,
         array(
