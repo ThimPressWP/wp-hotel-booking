@@ -736,7 +736,8 @@ class HB_Room{
 
             if( isset($options['check_in_date'], $options['check_out_date'])
                 && ( ($options['check_in_date'] !== $room->check_in_date) || ($options['check_out_date'] !== $room->check_out_date) )
-                || $room->quantity === false || $room->quantity != $options['quantity'] || ( isset($options['extra_packages']) && $options['extra_packages'] != $room->extra_packages )
+                || $room->quantity === false || ( ! isset($options['quantity']) || $room->quantity != $options['quantity'] )
+                || ( ! isset($options['extra_packages']) || $options['extra_packages'] != $room->extra_packages )
             )
             {
                 return new self( $post, $options );
