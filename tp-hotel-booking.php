@@ -1,7 +1,7 @@
 <?php
 /*
     Plugin Name: TP Hotel Booking
-    Plugin URI: http://thimpress.com/learnpress
+    Plugin URI: http://thimpress.com/
     Description: [Description here]
     Author: ThimPress
     Version: 1.0.1

@@ -119,6 +119,9 @@ class HB_Room{
                 $return = get_the_title( $this->post->ID );
                 break;
             case 'capacity':
+                $term_id = get_post_meta( $this->post->ID, '_hb_room_capacity', true );
+                $return = get_option( 'hb_taxonomy_capacity_' . $term_id );
+                break;
             case 'capacity_title':
                 $term_id = get_post_meta( $this->post->ID, '_hb_room_capacity', true );
                 if( $key == 'capacity_title' ) {
@@ -310,7 +313,8 @@ class HB_Room{
         //echo "[get_price=" . date( 'w', $date ) . "]";
 
         $plans = $this->get_pricing_plans();
-        if( ! $plans ) $return = '';
+        // var_dump($plans);
+        $return = 0;
         if( sizeof( $plans ) == 1 ){
             $regular_plan = $plans[0];
         }else{
@@ -336,7 +340,7 @@ class HB_Room{
 
         if( $selected_plan ){
             $prices = get_post_meta( $selected_plan->ID, '_hb_pricing_plan_prices', true );
-            if( $prices ){
+            if( $prices && isset( $prices[ $this->capacity_id ] ) ){
                 $return = $prices[ $this->capacity_id ][ date( 'w', $date ) ];
                 $return = $return + $return * $tax;
             }
