@@ -122,12 +122,15 @@ $booking_id = hb_get_request( 'id' );
                                             <?php
                                                 $cap_id = get_post_meta( $id, '_hb_room_capacity', true );
                                                 $term = get_term( $cap_id, 'hb_room_capacity' );
-                                                if( ! is_wp_error( $term  ) ){
-                                                    printf( '%s (%d)', $term->name, get_option( 'hb_taxonomy_capacity_' . $cap_id ) );
-                                                }
-                                                else
+                                                if( $term )
                                                 {
-                                                    printf( '%s', $term->name );
+                                                    if( ! is_wp_error( $term  ) ){
+                                                        printf( '%s (%d)', $term->name, get_option( 'hb_taxonomy_capacity_' . $cap_id ) );
+                                                    }
+                                                    else
+                                                    {
+                                                        printf( '%s', $term->name );
+                                                    }
                                                 }
                                             ?>
                                         </td>
