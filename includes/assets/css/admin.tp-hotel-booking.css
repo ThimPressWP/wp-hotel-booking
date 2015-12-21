@@ -369,7 +369,8 @@ th.column-room_type{
     float: left;
 }
 #tp-hotel-booking-report h3 {
-    padding: 0!important;
+    padding: 0 !important;
+    margin: 0;
     border-bottom-color: #dfdfdf;
     float: left;
     width: 100%;

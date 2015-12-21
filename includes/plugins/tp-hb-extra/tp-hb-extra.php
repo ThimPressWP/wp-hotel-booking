@@ -89,13 +89,13 @@ class HB_Extra_Factory
 	{
 		if( is_admin() )
 		{
-			wp_register_script( 'tp-hb-extra-js', TP_HB_EXTRA_URI . '/inc/assets/js/admin.js', array(), HB_VERSION, true );
-			wp_enqueue_style( 'tp-hb-extra-css', TP_HB_EXTRA_URI . '/inc/assets/css/admin.css', array(), HB_VERSION );
+			wp_register_script( 'tp-hb-extra-js', TP_HB_EXTRA_URI . '/inc/assets/js/admin.min.js', array(), HB_VERSION, true );
+			wp_enqueue_style( 'tp-hb-extra-css', TP_HB_EXTRA_URI . '/inc/assets/css/admin.min.css', array(), HB_VERSION );
 		}
 		else
 		{
-			wp_register_script( 'tp-hb-extra-js', TP_HB_EXTRA_URI . '/inc/assets/js/site.js', array(), HB_VERSION, true );
-			wp_enqueue_style( 'tp-hb-extra-css', TP_HB_EXTRA_URI . '/inc/assets/css/site.css', array(), HB_VERSION );
+			wp_register_script( 'tp-hb-extra-js', TP_HB_EXTRA_URI . '/inc/assets/js/site.min.js', array(), HB_VERSION, true );
+			wp_enqueue_style( 'tp-hb-extra-css', TP_HB_EXTRA_URI . '/inc/assets/css/site.min.css', array(), HB_VERSION );
 		}
 
 		wp_localize_script( 'tp-hb-extra-js', 'TPHB_Extra_Lang', apply_filters( 'tp_hb_extra_l10n', array() ) );

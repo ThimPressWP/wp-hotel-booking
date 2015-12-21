@@ -37,8 +37,8 @@ class HB_SW_Factory
 	 */
 	public function enqueue()
 	{
-		wp_enqueue_script( 'tp-hb-currencies', TP_HB_CURRENCY_URI . '/assets/js/tp-hb-currencies.js', 'jquery', HB_VERSION, true );
-		wp_enqueue_style( 'tp-hb-currencies', TP_HB_CURRENCY_URI . '/assets/css/tp-hb-currencies.css');
+		wp_enqueue_script( 'tp-hb-currencies', TP_HB_CURRENCY_URI . '/assets/js/tp-hb-currencies.min.js', 'jquery', HB_VERSION, true );
+		// wp_enqueue_style( 'tp-hb-currencies', TP_HB_CURRENCY_URI . '/assets/css/tp-hb-currencies.min.css');
 	}
 
 }
