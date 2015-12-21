@@ -291,9 +291,9 @@ class HB_Post_Types{
     function enqueue_scripts(){
         if( in_array( hb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) ){
             wp_enqueue_media();
-            wp_enqueue_script('hb-media-selector', TP_Hotel_Booking::instance()->plugin_url('includes/assets/js/media-selector.js'));
-            wp_enqueue_style( 'hb-edit-tags', TP_Hotel_Booking::instance()->plugin_url( 'includes/assets/css/edit-tags.css' ) );
-            wp_enqueue_script( 'hb-edit-tags', TP_Hotel_Booking::instance()->plugin_url( 'includes/assets/js/edit-tags.js' ), array( 'jquery', 'jquery-ui-sortable' ) );
+            wp_enqueue_script('hb-media-selector', TP_Hotel_Booking::instance()->plugin_url('includes/assets/js/media-selector.min.js'));
+            wp_enqueue_style( 'hb-edit-tags', TP_Hotel_Booking::instance()->plugin_url( 'includes/assets/css/edit-tags.min.css' ) );
+            wp_enqueue_script( 'hb-edit-tags', TP_Hotel_Booking::instance()->plugin_url( 'includes/assets/js/edit-tags.min.js' ), array( 'jquery', 'jquery-ui-sortable' ) );
         }
     }
 
