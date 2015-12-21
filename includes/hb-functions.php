@@ -879,6 +879,7 @@ function hb_search_rooms( $args = array() ){
             FROM {$wpdb->postmeta} ra
             INNER JOIN {$wpdb->posts} r ON ra.post_id = r.ID AND ra.meta_key = %s
                 WHERE r.ID=rooms.ID
+            GROUP BY ra.post_id
         )
     ", '_hb_num_of_rooms');
 
@@ -939,7 +940,7 @@ function hb_search_rooms( $args = array() ){
             'check_out'     => $check_out_date_to_time,
             'adults'        => $adults,
             'child'         => $max_child
-        ), 99);
+        ));
 
     if( $search = $wpdb->get_results( $query ) ){
         foreach( $search as $k => $p ){
