@@ -215,8 +215,8 @@
 
 	function stripeSubmit(form) {
 		var pl_key = 'pk_test_HHukcwWCsD7qDFWKKpKdJeOT';
-		if (typeof TPBooking_Payment_Paypal)
-			pl_key = TPBooking_Payment_Paypal.stripe_publish;
+		if (typeof TPBooking_Payment_Stripe)
+			pl_key = TPBooking_Payment_Stripe.stripe_publish;
 
 		var handler = StripeCheckout.configure({
 			key   : pl_key,

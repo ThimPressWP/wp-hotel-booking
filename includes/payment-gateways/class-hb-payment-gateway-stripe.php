@@ -156,7 +156,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
             'body'          => $request,
             'timeout'       => 70,
             'sslverify'     => false,
-            'user-agent'    => 'Thim BoockTicket ' . HB_VERSION
+            'user-agent'    => 'TP Hotel Booking ' . HB_VERSION
         ));
         if ( is_wp_error($response) )
             return new WP_Error( 'stripe_error', __('There was a problem connecting to the payment gateway.', 'tp-hotel-booking') );
@@ -177,9 +177,9 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
     public function global_js()
     {
         echo '<script type="text/javascript">
-            TPBooking_Payment_Paypal = {};
-            TPBooking_Payment_Paypal.stripe_secret = "'.$this->_stripe_secret.'";
-            TPBooking_Payment_Paypal.stripe_publish = "'.$this->_stripe_publish.'";
+            TPBooking_Payment_Stripe = {};
+            TPBooking_Payment_Stripe.stripe_secret = "'.$this->_stripe_secret.'";
+            TPBooking_Payment_Stripe.stripe_publish = "'.$this->_stripe_publish.'";
         </script>';
     }
 
