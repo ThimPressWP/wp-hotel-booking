@@ -151,12 +151,12 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
         $response = wp_remote_post( $this->_api_endpoint . '/' . $api, array(
                 'method'        => 'POST',
                 'headers' => array(
-                'Authorization' => 'Basic ' . base64_encode( $this->_stripe_secret . ':' )
-            ),
-            'body'          => $request,
-            'timeout'       => 70,
-            'sslverify'     => false,
-            'user-agent'    => 'TP Hotel Booking ' . HB_VERSION
+                    'Authorization' => 'Basic ' . base64_encode( $this->_stripe_secret . ':' )
+                ),
+                'body'          => $request,
+                'timeout'       => 70,
+                'sslverify'     => false,
+                'user-agent'    => 'TP Hotel Booking ' . HB_VERSION
         ));
         if ( is_wp_error($response) )
             return new WP_Error( 'stripe_error', __('There was a problem connecting to the payment gateway.', 'tp-hotel-booking') );

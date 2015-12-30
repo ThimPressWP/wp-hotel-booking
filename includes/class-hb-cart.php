@@ -619,6 +619,9 @@ function hb_create_booking( $args = array(), $transaction_object = null ){
     if( ! $transaction_object )
         $transaction_object = hb_generate_transaction_object();
 
+    if( ! $transaction_object )
+        return;
+
     $tax                    = $transaction_object->tax;
     $price_including_tax    = $transaction_object->price_including_tax;
     $rooms                  = $transaction_object->rooms;
