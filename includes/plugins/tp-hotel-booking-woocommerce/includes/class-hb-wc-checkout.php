@@ -71,7 +71,18 @@ class HB_WC_Checkout extends HB_Checkout
 
 		$order = wc_get_order( $order_id );
 
-		if( $customer_id = $this->create_customer( $order ) )
+		$cart_contents = wc()->cart->cart_contents;
+
+		$create = true;
+		foreach ( $cart_contents as $cart_key => $cart_content ) {
+			if( get_post_type( $cart_content['product_id'] ) !== 'hb_room' )
+			{
+				$create = false;
+				break;
+			}
+		}
+
+		if( $create === true && $customer_id = $this->create_customer( $order ) )
 		{
 			if( $booking = $this->create_booking( $order ) )
 			{

@@ -20,4 +20,5 @@ class HB_WC_Product_Room extends WC_Product_Simple{
 	function is_purchasable(){
 		return true;
 	}
+
 }

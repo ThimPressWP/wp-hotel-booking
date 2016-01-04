@@ -4,14 +4,14 @@
     Plugin URI: http://thimpress.com/
     Description: [Description here]
     Author: ThimPress
-    Version: 1.0.1
+    Version: 1.0.2
     Author URI: http://thimpress.com
 */
 
 define( 'HB_FILE', __FILE__ );
 define( 'HB_PLUGIN_PATH', dirname( __FILE__ ) );
 define( 'HB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
-define( 'HB_VERSION', '1.0.1' );
+define( 'HB_VERSION', '1.0.2' );
 define( 'HB_BLOG_ID', get_current_blog_id() );
 /**
  * Class TP_Hotel_Booking
