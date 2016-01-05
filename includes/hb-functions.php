@@ -932,6 +932,7 @@ function hb_search_rooms( $args = array() ){
             AND rooms.post_status = %s
             AND pm.meta_value >= %d
             AND pm2.meta_value >= %d
+        GROUP BY rooms.ID
         HAVING available_rooms > 0
     ", '_hb_max_child_per_room', '_hb_max_adults_per_room', 'hb_room', 'publish', $max_child, $adults );
 

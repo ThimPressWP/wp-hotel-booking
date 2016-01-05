@@ -10,3 +10,4 @@
 
 = 1.0.2 =
 # Update Woocommerce addon
+# Search rooms. Import demo data more than once. post_meta not unique.

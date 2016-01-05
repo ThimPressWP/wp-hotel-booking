@@ -570,14 +570,14 @@ class HB_Post_Types{
             'hierarchical'       => false,
             'rewrite'            => array( 'slug' => 'rooms', 'with_front' => false, 'feeds' => true )
         );
+
+        $args = apply_filters( 'hotel_booking_register_post_type_room_arg', $args );
         register_post_type( 'hb_room', $args );
 
         /**
          * Register room type taxonomy
          */
-        register_taxonomy( 'hb_room_type',
-            array( 'hb_room' ),
-            array(
+        $args = array(
                 'hierarchical'          => true,
                 'label'                 => __( 'Room Type', 'tp-hotel-booking' ),
                 'labels' => array(
@@ -597,15 +597,17 @@ class HB_Post_Types{
                 'show_ui'               => true,
                 'query_var'             => true,
                 'rewrite'               => true
-            )
+            );
+        $args = apply_filters( 'hotel_booking_register_tax_room_type_arg', $args );
+        register_taxonomy( 'hb_room_type',
+            array( 'hb_room' ),
+            $args
         );
 
         /**
          * Register room capacity taxonomy
          */
-        register_taxonomy( 'hb_room_capacity',
-            array( 'hb_room' ),
-            array(
+        $args = array(
                 'hierarchical'          => false,
                 // 'update_count_callback' => '_wc_term_recount',
                 'label'                 => __( 'Room Capacity', 'tp-hotel-booking' ),
@@ -629,7 +631,11 @@ class HB_Post_Types{
                     'with_front'   => false,
                     'hierarchical' => true,
                 )
-            )
+            );
+        $args = apply_filters( 'hotel_booking_register_tax_capacity_arg', $args );
+        register_taxonomy( 'hb_room_capacity',
+            array( 'hb_room' ),
+            $args
         );
 
         /**
@@ -667,6 +673,7 @@ class HB_Post_Types{
                 'create_posts'  => 'do_not_allow'
             )
         );
+        $args = apply_filters( 'hotel_booking_register_post_type_booking_arg', $args );
         register_post_type( 'hb_booking', $args );
 
         /**
@@ -704,6 +711,7 @@ class HB_Post_Types{
                 'create_posts'  => 'do_not_allow'
             )
         );
+        $args = apply_filters( 'hotel_booking_register_post_type_customer_arg', $args );
         register_post_type( 'hb_customer', $args );
 
         /**
@@ -738,7 +746,7 @@ class HB_Post_Types{
             'supports'           => array( 'title', 'author' ),
             'hierarchical'       => false
         );
-
+        $args = apply_filters( 'hotel_booking_register_post_type_pricing_arg', $args );
         register_post_type( 'hb_pricing_plan', $args );
 
         // coupon
@@ -774,6 +782,7 @@ class HB_Post_Types{
             'supports'           => array( 'title' ),
             'hierarchical'       => false
         );
+        $args = apply_filters( 'hotel_booking_register_post_type_coupon_arg', $args );
         register_post_type( 'hb_coupon', $args );
 
         /**
@@ -793,7 +802,7 @@ class HB_Post_Types{
             'supports'           => array( 'title', 'author' ),
             'hierarchical'       => false
         );
-
+        $args = apply_filters( 'hotel_booking_register_post_type_booking_item_arg', $args );
         register_post_type( 'hb_booking_item', $args );
 
         if( is_admin() ){
@@ -805,30 +814,35 @@ class HB_Post_Types{
      * Registers custom post statues
      */
     function register_post_statues(){
-        register_post_status( 'hb-pending', array(
+        $args = array(
             'label'                     => _x( 'Pending Payment', 'Booking status', 'tp-hotel-booking' ),
             'public'                    => false,
             'exclude_from_search'       => false,
             'show_in_admin_all_list'    => true,
             'show_in_admin_status_list' => true,
             'label_count'               => _n_noop( 'Pending Payment <span class="count">(%s)</span>', 'Pending Payment <span class="count">(%s)</span>', 'tp-hotel-booking' )
-        ) );
-        register_post_status( 'hb-processing', array(
+        );
+        register_post_status( 'hb-pending', $args );
+
+        $args = array(
             'label'                     => _x( 'Processing', 'Booking status', 'tp-hotel-booking' ),
             'public'                    => false,
             'exclude_from_search'       => false,
             'show_in_admin_all_list'    => true,
             'show_in_admin_status_list' => true,
             'label_count'               => _n_noop( 'Processing <span class="count">(%s)</span>', 'Processing <span class="count">(%s)</span>', 'tp-hotel-booking' )
-        ) );
-        register_post_status( 'hb-completed', array(
+        );
+        register_post_status( 'hb-processing', $args );
+
+        $args = array(
             'label'                     => _x( 'Completed', 'Booking status', 'tp-hotel-booking' ),
             'public'                    => false,
             'exclude_from_search'       => false,
             'show_in_admin_all_list'    => true,
             'show_in_admin_status_list' => true,
             'label_count'               => _n_noop( 'Completed <span class="count">(%s)</span>', 'Completed <span class="count">(%s)</span>', 'tp-hotel-booking' )
-        ) );
+        );
+        register_post_status( 'hb-completed', $args );
     }
 
     /**
