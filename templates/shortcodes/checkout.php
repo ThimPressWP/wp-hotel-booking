@@ -116,6 +116,7 @@ global $hb_settings;
         <input type="hidden" name="action" value="hotel_booking_place_order" />
         <input type="hidden" name="total_advance" value="<?php echo $cart->advance_payment ? $cart->advance_payment : $cart->total ?>" />
         <input type="hidden" name="total_price" value="<?php echo $cart->total ?>" />
+        <input type="hidden" name="currency" value="<?php echo esc_attr( hb_get_currency() ) ?>">
         <?php if( $tos_page_id = hb_get_page_id( 'terms' ) ){?>
         <p>
             <label>

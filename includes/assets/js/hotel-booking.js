@@ -232,7 +232,7 @@
 		var first_name = form.find('input[name="first_name"]').val().trim();
 		var last_name = form.find('input[name="last_name"]').val().trim();
 		var email = form.find('input[name="email"]').val().trim();
-
+		var currency = form.find('input[name="currency"]').val().trim();
 		var price = 0;
 		if (form.find('input[name="pay_all"]').is(':checked')) {
 			price = form.find('input[name="total_price"]').val();
@@ -244,9 +244,10 @@
 		// Open Checkout with further options
 
 		handler.open({
-			name       : first_name + ' ' + last_name,
-			description: email,
-			amount     : price * 100
+			name       	: first_name + ' ' + last_name,
+			description	: email,
+			currency	: currency,
+			amount     	: price * 100
 		});
 	}
 

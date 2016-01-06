@@ -51,8 +51,8 @@ $pages = array();
 if( ! hb_get_page_id( 'my-rooms' ) || ! get_post( hb_get_page_id( 'my-rooms' ) ) )
 {
     $pages['my-rooms'] = array(
-        'name'    => _x( 'my-rooms', 'Page slug', 'tp-hotel-booking' ),
-        'title'   => _x( 'My Rooms', 'Page title', 'tp-hotel-booking' ),
+        'name'    => _x( 'my-rooms', 'my-rooms', 'tp-hotel-booking' ),
+        'title'   => _x( 'My Rooms', 'My Rooms', 'tp-hotel-booking' ),
         'content' => '[' . apply_filters( 'hotel_booking_cart_shortcode_tag', 'hotel_booking_cart' ) . ']'
     );
 }
@@ -60,8 +60,8 @@ if( ! hb_get_page_id( 'my-rooms' ) || ! get_post( hb_get_page_id( 'my-rooms' ) )
 if( ! hb_get_page_id( 'checkout' ) || ! get_post( hb_get_page_id( 'checkout' ) ) )
 {
     $pages['checkout'] = array(
-        'name'    => _x( 'room-checkout', 'Page slug', 'tp-hotel-booking' ),
-        'title'   => _x( 'Checkout', 'Page title', 'tp-hotel-booking' ),
+        'name'    => _x( 'room-checkout', 'room-checkout', 'tp-hotel-booking' ),
+        'title'   => _x( 'Checkout', 'Checkout', 'tp-hotel-booking' ),
         'content' => '[' . apply_filters( 'hotel_booking_checkout_shortcode_tag', 'hotel_booking_checkout' ) . ']'
     );
 }
