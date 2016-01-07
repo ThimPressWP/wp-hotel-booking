@@ -541,8 +541,8 @@ class HB_Post_Types{
          */
         $args = array(
             'labels'             => array(
-                'name'               => _x( 'Rooms', 'Post Type General Name', 'tp-hotel-booking' ),
-                'singular_name'      => _x( 'Room', 'Post Type Singular Name', 'tp-hotel-booking' ),
+                'name'               => _x( 'Rooms', 'Rooms', 'tp-hotel-booking' ),
+                'singular_name'      => _x( 'Room', 'Room', 'tp-hotel-booking' ),
                 'menu_name'          => __( 'Rooms', 'tp-hotel-booking' ),
                 'parent_item_colon'  => __( 'Parent Item:', 'tp-hotel-booking' ),
                 'all_items'          => __( 'Rooms', 'tp-hotel-booking' ),
@@ -583,7 +583,7 @@ class HB_Post_Types{
                 'labels' => array(
                     'name'              => __( 'Room Types', 'tp-hotel-booking' ),
                     'singular_name'     => __( 'Room Type', 'tp-hotel-booking' ),
-                    'menu_name'         => _x( 'Types', 'Admin menu name', 'tp-hotel-booking' ),
+                    'menu_name'         => _x( 'Types', 'Room Types', 'tp-hotel-booking' ),
                     'search_items'      => __( 'Search Room Types', 'tp-hotel-booking' ),
                     'all_items'         => __( 'All Room Types', 'tp-hotel-booking' ),
                     'parent_item'       => __( 'Parent Room Type', 'tp-hotel-booking' ),
@@ -614,7 +614,7 @@ class HB_Post_Types{
                 'labels' => array(
                     'name'              => __( 'Room Capacities', 'tp-hotel-booking' ),
                     'singular_name'     => __( 'Room Capacity', 'tp-hotel-booking' ),
-                    'menu_name'         => _x( 'Types', 'Admin menu name', 'tp-hotel-booking' ),
+                    'menu_name'         => _x( 'Types', 'Room Capacities', 'tp-hotel-booking' ),
                     'search_items'      => __( 'Search Room Capacities', 'tp-hotel-booking' ),
                     'all_items'         => __( 'All Room Capacity', 'tp-hotel-booking' ),
                     'parent_item'       => __( 'Parent Room Capacity', 'tp-hotel-booking' ),
@@ -643,8 +643,8 @@ class HB_Post_Types{
          */
         $args = array(
             'labels'             => array(
-                'name'               => _x( 'Bookings', 'Post Type General Name', 'tp-hotel-booking' ),
-                'singular_name'      => _x( 'Booking', 'Post Type Singular Name', 'tp-hotel-booking' ),
+                'name'               => _x( 'Bookings', 'Bookings', 'tp-hotel-booking' ),
+                'singular_name'      => _x( 'Booking', 'Booking', 'tp-hotel-booking' ),
                 'menu_name'          => __( 'Bookings', 'tp-hotel-booking' ),
                 'parent_item_colon'  => __( 'Parent Item:', 'tp-hotel-booking' ),
                 'all_items'          => __( 'Bookings', 'tp-hotel-booking' ),
@@ -681,8 +681,8 @@ class HB_Post_Types{
          */
         $args = array(
             'labels'             => array(
-                'name'               => _x( 'Customers', 'Post Type General Name', 'tp-hotel-booking' ),
-                'singular_name'      => _x( 'Customer', 'Post Type Singular Name', 'tp-hotel-booking' ),
+                'name'               => _x( 'Customers', 'Customers', 'tp-hotel-booking' ),
+                'singular_name'      => _x( 'Customer', 'Customer', 'tp-hotel-booking' ),
                 'menu_name'          => __( 'Customers', 'tp-hotel-booking' ),
                 'parent_item_colon'  => __( 'Parent Item:', 'tp-hotel-booking' ),
                 'all_items'          => __( 'Customers', 'tp-hotel-booking' ),
@@ -755,8 +755,8 @@ class HB_Post_Types{
          */
         $args = array(
             'labels'             => array(
-                'name'               => _x( 'Coupons', 'Post Type General Name', 'tp-hotel-coupon' ),
-                'singular_name'      => _x( 'Coupon', 'Post Type Singular Name', 'tp-hotel-coupon' ),
+                'name'               => _x( 'Coupons', 'Coupons', 'tp-hotel-coupon' ),
+                'singular_name'      => _x( 'Coupon', 'Coupon', 'tp-hotel-coupon' ),
                 'menu_name'          => __( 'Coupons', 'tp-hotel-coupon' ),
                 'parent_item_colon'  => __( 'Parent Item:', 'tp-hotel-coupon' ),
                 'all_items'          => __( 'Coupons', 'tp-hotel-coupon' ),
