@@ -148,3 +148,28 @@ abstract class HB_Report
 	}
 
 }
+
+add_filter( 'tp_hotel_booking_menu_items', 'hotel_report_menu' );
+if( ! function_exists( 'hotel_report_menu' ) )
+{
+	function hotel_report_menu( $menus )
+	{
+		$menus[ 'reports' ] = array(
+                'tp_hotel_booking',
+                __( 'Reports', 'tp-hotel-booking' ),
+                __( 'Reports', 'tp-hotel-booking' ),
+                'manage_options',
+                'tp_hotel_booking_report',
+                'hotel_create_report_page'
+            );
+		return $menus;
+	}
+}
+
+if( ! function_exists( 'hotel_create_report_page' ) )
+{
+    function hotel_create_report_page()
+    {
+        TP_Hotel_Booking::instance()->_include( 'includes/admin/views/report.php' );
+    }
+}

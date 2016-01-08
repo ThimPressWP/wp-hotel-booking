@@ -73,14 +73,6 @@ class HB_Admin_Menu{
                 'manage_options',
                 'tp_hotel_booking_pricing',
                 array( $this, 'pricing_table' )
-            ),
-            'reports'   => array(
-                'tp_hotel_booking',
-                __( 'Reports', 'tp-hotel-booking' ),
-                __( 'Reports', 'tp-hotel-booking' ),
-                'manage_options',
-                'tp_hotel_booking_report',
-                array( $this, 'report_page' )
             )
         );
 
@@ -125,11 +117,6 @@ class HB_Admin_Menu{
     function pricing_table(){
         wp_enqueue_script( 'wp-util' );
         TP_Hotel_Booking::instance()->_include( 'includes/admin/views/pricing-table.php' );
-    }
-
-    function report_page()
-    {
-        TP_Hotel_Booking::instance()->_include( 'includes/admin/views/report.php' );
     }
 
     function other_settings()

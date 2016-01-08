@@ -373,16 +373,3 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         return ! empty( $this->_settings['enable'] ) && $this->_settings['enable'] == 'on';
     }
 }
-
-add_filter( 'hb_payment_gateways', 'hotel_booking_payment_paypal' );
-if( ! function_exists( 'hotel_booking_payment_paypal' ) )
-{
-    function hotel_booking_payment_paypal( $payments )
-    {
-        if( array_key_exists( 'paypal', $payments ) )
-            return $payments;
-
-        $payments[ 'paypal' ] = new HB_Payment_Gateway_Paypal();
-        return $payments;
-    }
-}

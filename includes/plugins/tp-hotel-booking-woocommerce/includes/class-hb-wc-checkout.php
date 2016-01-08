@@ -1,5 +1,8 @@
 <?php
 
+if( ! class_exists( 'HB_Checkout' ) )
+	return;
+
 class HB_WC_Checkout extends HB_Checkout
 {
 

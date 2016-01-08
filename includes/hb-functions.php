@@ -1005,12 +1005,9 @@ function hb_search_rooms( $args = array() ){
 
 function hb_get_payment_gateways( $args = array() ) {
 	static $payment_gateways = array();
-	if ( !$payment_gateways ) {
+	if ( ! $payment_gateways ) {
 		$defaults         = array(
-			'paypal'          => new HB_Payment_Gateway_Paypal(),
-			'offline-payment' => new HB_Payment_Gateway_Offline_Payment(),
-			'stripe'          => new HB_Payment_Gateway_Stripe(),
-			'authorize'       => new HB_Payment_Gateway_Authorize_Sim()
+			'offline-payment' => new HB_Payment_Gateway_Offline_Payment()
 		);
 		$payment_gateways = apply_filters( 'hb_payment_gateways', $defaults );
 	}
@@ -1021,6 +1018,7 @@ function hb_get_payment_gateways( $args = array() ) {
 			'enable' => false
 		)
 	);
+
 	if ( $args['enable'] ) {
 		$gateways = array();
 		foreach ( $payment_gateways as $k => $gateway ) {

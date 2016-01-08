@@ -34,9 +34,9 @@ class TP_Hotel_Booking_Woocommerce {
 	 */
 	function __construct() {
 		$this->_defines();
-		$this->_includes();
 
 		if( self::wc_enable() ) {
+			$this->_includes();
 			/**
 			 * define plugin enable
 			 */
@@ -596,7 +596,7 @@ class TP_Hotel_Booking_Woocommerce {
 	 * @return null|TP_Hotel_Booking_Woocommerce
 	 */
 	public static function instance() {
-		if ( !self::$_instance ) {
+		if ( ! self::$_instance ) {
 			self::$_instance = new self();
 		}
 		return self::$_instance;
@@ -604,23 +604,38 @@ class TP_Hotel_Booking_Woocommerce {
 
 	public static function load(){
 
-		if (!function_exists('is_plugin_active')) {
-			include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 		}
-		if( class_exists('WC_Install') && is_plugin_active('woocommerce/woocommerce.php') ){
+
+		if( class_exists( 'TP_Hotel_Booking' ) && is_plugin_active( 'tp-hotel-booking/tp-hotel-booking.php' ) )
+		{
 			self::$_wc_loaded = true;
 		}
+
+		if( self::$_wc_loaded === TRUE && class_exists('WC_Install') && is_plugin_active('woocommerce/woocommerce.php') ){
+			self::$_wc_loaded = true;
+		}
+		else
+		{
+			self::$_wc_loaded = false;
+		}
+
 		TP_Hotel_Booking_Woocommerce::instance();
-		if( !self::$_wc_loaded ) {
+		if( ! self::$_wc_loaded ) {
 			add_action( 'admin_notices', array( __CLASS__, 'admin_notice' ) );
 		}
 	}
 
 	public static function admin_notice(){
+		if( ! class_exists( 'HB_Settings' ) )
+			return;
 		hb_wc_admin_view( 'wc-is-not-installed' );
 	}
 
 	public static function wc_enable(){
+		if( ! class_exists( 'HB_Settings' ) )
+			return;
 		return self::$_wc_loaded && HB_Settings::instance()->get('wc_enable') == 'yes';
 	}
 
@@ -641,6 +656,8 @@ class TP_Hotel_Booking_Woocommerce {
 	 * Including library files
 	 */
 	private function _includes() {
+		if( ! class_exists( 'HB_Settings' ) ) return;
+
 		require_once "includes/functions.php";
 		require_once "includes/class-hb-wc-settings.php";
 		require_once "includes/class-hb-wc-product-room.php";
