@@ -1,5 +1,8 @@
 <?php
 
+if( ! class_exists( 'WC_Product_Simple' ) )
+	return;
+
 class HB_WC_Product_Package extends WC_Product_Simple{
 
 	public $data = null;

@@ -126,16 +126,29 @@ class TP_Hotel_Booking{
         $this->_include( 'includes/class-hb-cart.php' );
         $this->_include( 'includes/class-hb-resizer.php' );
         $this->_include( 'includes/class-hb-booking.php' );
-        // $this->_include( 'includes/class-hb-booking.php' );
-        $this->_include( 'includes/payment-gateways/class-hb-payment-gateway-base.php' );
-        $this->_include( 'includes/payment-gateways/class-hb-payment-gateway-paypal.php' );
-        $this->_include( 'includes/payment-gateways/class-hb-payment-gateway-stripe.php' );
-        $this->_include( 'includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php' );
+
+        // load payments addons
+        $this->load_payments();
         $this->_include( 'includes/hb-webhooks.php' );
 
         if( ! class_exists( 'Aq_Resize' ) )
         {
             $this->_include( 'includes/aq_resizer.php' );
+        }
+    }
+
+    // load all payment gateways support
+    function load_payments()
+    {
+        $this->_include( 'includes/payment-gateways/class-hb-payment-gateway-base.php' );
+
+        $payments_path = HB_PLUGIN_PATH . '/includes/payment-gateways';
+        foreach ( glob( $payments_path . '/class-hb-payment-gateway-*.php' ) as $key => $file ) {
+            $file_name = basename( $file );
+            if( $file_name === 'class-hb-payment-gateway-base.php' )
+                continue;
+
+            $this->_include( 'includes/payment-gateways/' . $file_name );
         }
     }
 

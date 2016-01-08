@@ -4,7 +4,7 @@ $payment_gateways = hb_get_payment_gateways();
 ?>
 <div class="hb-payment-gateways">
     <?php if( $count = sizeof( $payment_gateways ) ):?>
-        <?php $i = 0;?>
+        <?php $i = 0; ?>
     <ul class="hb-admin-sub-tab subsubsub">
         <?php foreach( $payment_gateways as $gateway ){ ?>
         <li<?php echo $i++ == 0 ? ' class="current"' : '';?>>
