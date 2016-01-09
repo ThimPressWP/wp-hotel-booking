@@ -47,8 +47,8 @@
 
             switch( action ){
                 case 'clone':
-                    if( $('.hb-pricing-table').length>= 2 )
-                        return;
+                    // if( $('.hb-pricing-table').length>= 2 )
+                    //     return;
                     var $cloned = $(wp.template('hb-pricing-table')({})),
                         $inputs = $cloned.find('.hb-pricing-price');
                     $cloned.hide().css("background-color", "#00A0D2").css("transition", "background-color 0.5s");
