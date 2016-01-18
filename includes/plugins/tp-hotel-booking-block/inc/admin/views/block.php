@@ -67,7 +67,6 @@ $rooms = $wpdb->get_results( $wpdb->prepare(
 			// add new calendar
 			$scope.add_calendar = function()
 			{
-				console.debug( $scope.calendars );
 				$scope.message = '';
 				var unique_time = moment().valueOf(),
 					new_calendar = {
@@ -76,7 +75,6 @@ $rooms = $wpdb->get_results( $wpdb->prepare(
 						selected: []
 					}
 				$scope.calendars[ unique_time ] = new_calendar;
-				console.debug( $scope.calendars );
 			};
 
 			// save form
