@@ -7,7 +7,7 @@ if( ! defined( 'HB_PLUGIN_PATH' ) )
 	return;
 
 if( ! defined( 'TP_HB_EXTRA' ) )
-	define( 'TP_HB_EXTRA', __DIR__ );
+	define( 'TP_HB_EXTRA', dirname( __FILE__ ) );
 
 if( ! defined( 'TP_HB_EXTRA_URI' ) )
 	define( 'TP_HB_EXTRA_URI', HB_PLUGIN_URL . '/includes/plugins/tp-hb-extra' );

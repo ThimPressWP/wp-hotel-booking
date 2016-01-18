@@ -9,9 +9,9 @@
 6. Woocommerce Payment( Addon )
 
 = 1.0.2 =
-# Update Woocommerce addon
-# Search rooms. Import demo data more than once. post_meta not unique.
+1. Update Woocommerce addon
+2. Search rooms. Import demo data more than once. post_meta not unique.
 
 = 1.0.3 =
-# Update, Add hook ajax search url result. 'hotel_booking_parse_search_param', 'hotel_booking_ajax_remove_cart_item'
-# Addon Block Special Date
+1. Update, Add hook ajax search url result. 'hotel_booking_parse_search_param', 'hotel_booking_ajax_remove_cart_item'
+2. Addon Block Special Date( Angularjs, ajax )

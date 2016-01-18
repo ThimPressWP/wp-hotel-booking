@@ -1441,7 +1441,7 @@ function hb_get_customer_fullname( $customer_id, $with_title = false ) {
 	return sprintf( '%s%s %s', $title ? $title . ' ' : '', $first_name, $last_name );
 }
 
-if ( !function_exists( 'is_room_category' ) ) {
+if ( ! function_exists( 'is_room_category' ) ) {
 
 	/**
 	 * is_room_category - Returns true when viewing a room category.
@@ -1454,7 +1454,7 @@ if ( !function_exists( 'is_room_category' ) ) {
 		return is_tax( 'hb_room', $term );
 	}
 }
-if ( !function_exists( 'is_room_taxonomy' ) ) {
+if ( ! function_exists( 'is_room_taxonomy' ) ) {
 
 	/**
 	 * Returns true when viewing a room taxonomy archive.
@@ -1465,7 +1465,7 @@ if ( !function_exists( 'is_room_taxonomy' ) ) {
 	}
 }
 
-if ( !function_exists( 'hb_render_label_shortcode' ) ) {
+if ( ! function_exists( 'hb_render_label_shortcode' ) ) {
 	/**
 	 * Returns html label shortcode search.
 	 * @return html
@@ -1481,7 +1481,7 @@ if ( !function_exists( 'hb_render_label_shortcode' ) ) {
 	}
 }
 
-if ( !function_exists( 'hb_get_price_plan_room' ) ) {
+if ( ! function_exists( 'hb_get_price_plan_room' ) ) {
 	/**
 	 * Returns array price of room.
 	 * @return array
@@ -1515,7 +1515,7 @@ if ( !function_exists( 'hb_get_price_plan_room' ) ) {
 	}
 }
 
-if ( !function_exists( 'hb_before_generate_price' ) ) {
+if ( ! function_exists( 'hb_before_generate_price' ) ) {
 	function hb_before_generate_price( $price_plans ) {
 		$tax      = 0;
 		$settings = HB_Settings::instance();
@@ -1658,7 +1658,7 @@ function hb_date_format() {
 	return apply_filters( 'hb_date_format', 'd M Y' );
 }
 
-if ( !function_exists( 'is_room_taxonomy' ) ) {
+if ( ! function_exists( 'is_room_taxonomy' ) ) {
 
 	/**
 	 * @return bool
@@ -1668,7 +1668,7 @@ if ( !function_exists( 'is_room_taxonomy' ) ) {
 	}
 }
 
-if ( !function_exists( 'is_room' ) ) {
+if ( ! function_exists( 'is_room' ) ) {
 
 	/**
 	 * @return bool
@@ -1678,14 +1678,14 @@ if ( !function_exists( 'is_room' ) ) {
 	}
 }
 
-if ( !function_exists( 'get_cart_url' ) ) {
+if ( ! function_exists( 'get_cart_url' ) ) {
 	function hb_get_url( $params = array() ) {
 		global $hb_settings;
 		return get_the_permalink( $hb_settings->get( 'search_page_id' ) ) . '?hotel-booking-params=' . base64_encode( serialize( $params ) );
 	}
 }
 
-if ( !function_exists( 'hb_get_cart_url' ) ) {
+if ( ! function_exists( 'hb_get_cart_url' ) ) {
 	function hb_get_cart_url() {
 		global $hb_settings;
 		$id = hb_get_page_id( 'my-rooms' );
@@ -1698,7 +1698,7 @@ if ( !function_exists( 'hb_get_cart_url' ) ) {
 	}
 }
 
-if ( !function_exists( 'hb_get_checkout_url' ) ) {
+if ( ! function_exists( 'hb_get_checkout_url' ) ) {
 	function hb_get_checkout_url() {
 		global $hb_settings;
 		$id = hb_get_page_id( 'checkout' );
@@ -1712,7 +1712,7 @@ if ( !function_exists( 'hb_get_checkout_url' ) ) {
 	}
 }
 
-if ( !function_exists( 'hb_random_color_part' ) ) {
+if ( ! function_exists( 'hb_random_color_part' ) ) {
 	function hb_random_color_part() {
 		return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT );
 	}

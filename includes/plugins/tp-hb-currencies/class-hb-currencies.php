@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . '/class-hb-currencies-settings.php';
-require_once __DIR__ . '/class-hb-currencies-storage.php';
+require_once dirname( __FILE__ ) . '/class-hb-currencies-settings.php';
+require_once dirname( __FILE__ ) . '/class-hb-currencies-storage.php';
 
 /**
  * class switch currency.
@@ -112,10 +112,10 @@ class HB_SW_Curreny
 
 	public function includes()
 	{
-		require_once __DIR__ . '/functions.php' ;
-		require_once __DIR__ . '/class-hb-abstract-shortcode.php' ;
-		require_once __DIR__ . '/shortcodes/class-hb-shortcode-currency-switcher.php' ;
-		require_once __DIR__ . '/widgets/class-hb-widget-currency-switch.php' ;
+		require_once dirname( __FILE__ ) . '/functions.php' ;
+		require_once dirname( __FILE__ ) . '/class-hb-abstract-shortcode.php' ;
+		require_once dirname( __FILE__ ) . '/shortcodes/class-hb-shortcode-currency-switcher.php' ;
+		require_once dirname( __FILE__ ) . '/widgets/class-hb-widget-currency-switch.php' ;
 	}
 
 	/**
@@ -214,7 +214,7 @@ class HB_SW_Curreny
 	function admin_settings()
 	{
 		// TP_Hotel_Booking::instance()->_include( 'includes/currencies/views/settings.php' );
-		require_once __DIR__ . '/settings/settings.php' ;
+		require_once dirname( __FILE__ ) . '/settings/settings.php' ;
 	}
 
 }
