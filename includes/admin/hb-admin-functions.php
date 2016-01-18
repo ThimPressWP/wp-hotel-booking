@@ -97,9 +97,10 @@ function hb_add_meta_boxes(){
     HB_Meta_Box::instance(
         'room_settings',
         array(
-            'title' => __( 'Room Settings', 'tp-hotel-booking' ),
-            'post_type' => 'hb_room',
-            'meta_key_prefix' => '_hb_'
+            'title'             => __( 'Room Settings', 'tp-hotel-booking' ),
+            'post_type'         => 'hb_room',
+            'meta_key_prefix'   => '_hb_',
+            'priority'          => 'low'
         ),
         array()
     )->add_field(
@@ -146,11 +147,11 @@ function hb_add_meta_boxes(){
     HB_Meta_Box::instance(
         'coupon_settings',
         array(
-            'title' => __( 'Coupon Settings', 'tp-hotel-booking' ),
-            'post_type' => 'hb_coupon',
-            'meta_key_prefix' => '_hb_',
-            'context' => 'normal',
-            'priority' => 'high'
+            'title'             => __( 'Coupon Settings', 'tp-hotel-booking' ),
+            'post_type'         => 'hb_coupon',
+            'meta_key_prefix'   => '_hb_',
+            'context'           => 'normal',
+            'priority'          => 'high'
         ),
         array()
     )->add_field(
@@ -224,9 +225,10 @@ function hb_add_meta_boxes(){
     HB_Meta_Box::instance(
         'gallery_settings',
         array(
-            'title' => __( 'Gallery Settings', 'tp-hotel-booking' ),
-            'post_type' => 'hb_room',
-            'meta_key_prefix' => '_hb_', // meta key prefix
+            'title'             => __( 'Gallery Settings', 'tp-hotel-booking' ),
+            'post_type'         => 'hb_room',
+            'meta_key_prefix'   => '_hb_', // meta key prefix,
+            'priority'          => 'low'
             // 'callback'  => 'hb_add_meta_boxes_gallery_setings' // callback arg render meta form
         ),
         array()

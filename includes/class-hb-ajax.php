@@ -119,12 +119,12 @@ class HB_Ajax {
 			'adults'         => $adults_capacity,
 			'max_child'      => $max_child
 		);
-		hb_send_json(
-			array(
+
+		$return = apply_filters( 'hotel_booking_parse_search_param', array(
 				'success' => 1,
 				'sig'     => base64_encode( serialize( $params ) )
-			)
-		);
+			) );
+		hb_send_json( $return );
 	}
 
 	static function apply_coupon() {
@@ -250,19 +250,21 @@ class HB_Ajax {
 		$time_key = $_POST['time'];
 		$room_id  = $_POST['room'];
 
-		if ( !isset( $_SESSION['hb_cart' . HB_BLOG_ID] ) || !isset( $_SESSION['hb_cart' . HB_BLOG_ID]['products'] ) )
+		if ( ! isset( $_SESSION['hb_cart' . HB_BLOG_ID] ) || ! isset( $_SESSION['hb_cart' . HB_BLOG_ID]['products'] ) )
 			return;
 
 		HB_Cart::instance()->remove_cart_item( $room_id, $time_key );
 
 		$cart = HB_Cart::instance();
 
-		hb_send_json( array(
+		$return = apply_filters( 'hotel_booking_ajax_remove_cart_item', array(
 			'status'          => 'success',
 			'sub_total'       => hb_format_price( $cart->sub_total ),
 			'grand_total'     => hb_format_price( $cart->total ),
 			'advance_payment' => hb_format_price( $cart->advance_payment )
 		) );
+
+		hb_send_json( $return );
 	}
 
 }
