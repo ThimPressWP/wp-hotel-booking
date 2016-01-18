@@ -247,44 +247,61 @@
 }
 .tp-hotel-booking .star-rating:before,
 .tp-hotel-booking .star-rating span:before{
-    content: "\e601\e601\e601\e601\e601";
-    color: #ffb606;
-    float: left;
-    top: 0;
-    left: 0;
-    position: absolute;
-    font-family: hotel-booking-star;
+  content: "\e601\e601\e601\e601\e601";
+  color: #ffb606;
+  float: left;
+  top: 0;
+  left: 0;
+  position: absolute;
+  font-family: hotel-booking-star;
 }
 .tp-hotel-booking .star-rating span:before{
-    content: "\e600\e600\e600\e600\e600";
+  content: "\e600\e600\e600\e600\e600";
 }
 .tp-hotel-booking .star-rating span{
-    overflow: hidden;
-    position: relative;
-    display: inline-block;
-    height: 18px;
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+  height: 18px;
 }
 .tp-hotel-booking #reviews .commentlist > li:after{
-    overflow: hidden;
-    float: left;
-    position: relative;
-    left: 0;
-    height: 18px;
+  overflow: hidden;
+  float: left;
+  position: relative;
+  left: 0;
+  height: 18px;
 }
 .comment-form-rating{
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 .hb-rating-input{
-    margin-bottom: 20px;
+  margin-bottom: 20px;
+  width: 75px;
 }
 .rating-input{
-    width: 95px;
-    height: 18px;
-    display: inline-block;
-    position: relative;
-    line-height: 1;
+  width: 20%;
+  height: 18px;
+  display: inline-block;
+  position: relative;
+  line-height: 1;
 }
-.rating-input:before,
+.rating-input:hover{
+  cursor: pointer;
+}
+.rating-input:before{
+  content: "\e601";
+  color: #ffb606;
+  float: left;
+  top: 0;
+  left: 0;
+  position: absolute;
+  font-family: hotel-booking-star;
+}
+.rating-input.high-light:before
+{
+  content: "\e600";
+}
+/*.rating-input:before,
 .rating-input span:before{
     content: "\e601\e601\e601\e601\e601";
     color: #ffb606;
@@ -293,16 +310,16 @@
     left: 0;
     position: absolute;
     font-family: hotel-booking-star;
-}
+}*/
 .rating-input span{
     display: inline-block;
     height: 18px;
     overflow: hidden;
     position: relative;
 }
-.rating-input span:before{
+/*.rating-input span:before{
     content: "\e600\e600\e600\e600\e600";
-}
+}*/
 .rating-input.mousedown span:before{
     color: #000;
 }

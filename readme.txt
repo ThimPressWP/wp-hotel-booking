@@ -15,3 +15,4 @@
 = 1.0.3 =
 1. Update, Add hook ajax search url result. 'hotel_booking_parse_search_param', 'hotel_booking_ajax_remove_cart_item'
 2. Addon Block Special Date( Angularjs, ajax )
+3. Update Rating
