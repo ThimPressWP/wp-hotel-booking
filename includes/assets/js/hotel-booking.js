@@ -830,39 +830,139 @@
 		$('.hb-rating-input').rating();
 
 		$('#commentform').submit(function () {
+			var rate = $( '#rating' ),
+				val = rate.val();
+			if( rate.length === 1 && typeof val !== 'undefined' && val === '' )
+			{
+				window.alert(hotel_booking_l18n.review_rating_required);
+				return false;
+			}
+			$(this).submit();
 		});
 	});
 
 	// rating single room
+	// $.fn.rating = function () {
+	// 	return $.each(this, function () {
+	// 		var $el = $(this);
+	// 		var starWidth = 15;
+	// 		$el.html('<div class="rating-input"><span><input name="rating" id="rating" type="hidden" value="" /></span></div>');
+	// 		$('.rating-input', $el).mousemove(function (e) {
+	// 			var parentOffset = $(this).parent().offset(),
+	// 				relX = e.pageX - parentOffset.left,
+	// 				w = relX - ( relX % starWidth ) + starWidth,
+	// 				rating = w / starWidth;
+
+	// 			$(this).find('span').width(w).attr('rating', rating);
+	// 		}).mouseout(function () {
+	// 			var rating = $('input', this).val();
+	// 			$(this).find('span').width(rating * starWidth);
+	// 		}).mousedown(function () {
+	// 			$('input', $(this)).attr('value', $('> span', this).attr('rating'));
+	// 			$(this).addClass('mousedown');
+	// 		}).mouseup(function () {
+	// 			$(this).removeClass('mousedown');
+	// 		});
+	// 		$(document.body).on('click', '#respond #submit', function () {
+	// 			var $rating = $(this).closest('#respond').find('#rating'),
+	// 				rating = $rating.val();
+	// 			if ($rating.size() > 0 && !rating && hotel_settings.settings.review_rating_required === '1') {
+	// 				window.alert(hotel_booking_l18n.review_rating_required);
+	// 				return false;
+	// 			}
+	// 		});
+	// 	});
+	// }
+
+	// rating single room
 	$.fn.rating = function () {
-		return $.each(this, function () {
-			var $el = $(this);
-			var starWidth = 15;
-			$el.html('<div class="rating-input"><span><input name="rating" id="rating" type="hidden" value="" /></span></div>');
-			$('.rating-input', $el).mousemove(function (e) {
-				var parentOffset = $(this).parent().offset(),
+		var ratings = this,
+			legnth = this.length;
+
+		for( var i = 0; i < legnth; i++ )
+		{
+			var rating = $( ratings[i] ),
+				html = [];
+
+			html.push( '<span class="rating-input" data-rating="1"></span>' );
+			html.push( '<span class="rating-input" data-rating="2"></span>' );
+			html.push( '<span class="rating-input" data-rating="3"></span>' );
+			html.push( '<span class="rating-input" data-rating="4"></span>' );
+			html.push( '<span class="rating-input" data-rating="5"></span>' );
+			html.push( '<input name="rating" id="rating" type="hidden" value="" />' );
+			rating.html( html.join('') );
+
+			rating.mousemove( function( e ){
+				e.preventDefault();
+				var parentOffset = ratings.offset(),
 					relX = e.pageX - parentOffset.left,
-					w = relX - ( relX % starWidth ) + starWidth,
-					rating = w / starWidth;
-				$(this).find('span').width(w).attr('rating', rating);
-			}).mouseout(function () {
-				var rating = $('input', this).val();
-				$(this).find('span').width(rating * starWidth);
-			}).mousedown(function () {
-				$('input', $(this)).attr('value', $('>span', this).attr('rating'))
-				$(this).addClass('mousedown');
-			}).mouseup(function () {
-				$(this).removeClass('mousedown');
-			});
-			$(document.body).on('click', '#respond #submit', function () {
-				var $rating = $(this).closest('#respond').find('#rating'),
-					rating = $rating.val();
-				if ($rating.size() > 0 && !rating && hotel_settings.settings.review_rating_required === '1') {
-					window.alert(hotel_booking_l18n.review_rating_required);
-					return false;
+					star = $(this).find( '.rating-input' ),
+					star_width = star.width(),
+					rate = Math.ceil( relX / star_width );
+
+				for( var y = 0; y < star.length; y++ )
+				{
+					var st = $( star[y] ),
+						_data_star = parseInt( st.attr( 'data-rating' ) );
+					if( _data_star <= rate )
+					{
+						st.addClass( 'high-light' );
+					}
 				}
-			});
-		})
+			}).mouseout( function( e ){
+				var parentOffset = ratings.offset(),
+					relX = e.pageX - parentOffset.left,
+					star = $(this).find( '.rating-input' ),
+					star_width = star.width(),
+					rate = $(this).find( '.rating-input.selected' );
+
+				if( rate.length === 0 )
+				{
+					star.removeClass( 'high-light' );
+				}
+				else
+				{
+					for( var y = 0; y < star.length; y++ )
+					{
+						var st = $( star[y] ),
+							_data_star = parseInt( st.attr( 'data-rating' ) );
+
+						if( _data_star <= parseInt( rate.attr( 'data-rating' ) ) )
+						{
+							st.addClass( 'high-light' );
+						}
+						else
+						{
+							st.removeClass( 'high-light' );
+						}
+					}
+				}
+			}).mousedown( function( e ){
+				var parentOffset = ratings.offset(),
+					relX = e.pageX - parentOffset.left,
+					star = $(this).find( '.rating-input' ),
+					star_width = star.width(),
+					rate = Math.ceil( relX / star_width );
+				star.removeClass( 'selected' ).removeClass( 'high-light' );
+				for( var y = 0; y < star.length; y++ )
+				{
+					var st = $( star[y] ),
+						_data_star = parseInt( st.attr( 'data-rating' ) );
+					if( _data_star === rate )
+					{
+						st.addClass( 'selected' ).addClass( 'high-light' );
+						break;
+					}
+					else
+					{
+						st.addClass( 'high-light' );
+					}
+				}
+				rating.find( 'input[name="rating"]' ).val( rate );
+			} );
+
+		}
+
 	}
 
 	// overlay before ajax

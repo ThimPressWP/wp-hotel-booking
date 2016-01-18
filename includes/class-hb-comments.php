@@ -11,12 +11,12 @@ class HB_Comments{
      * Constructor
      */
     function __construct(){
-        add_action( 'comment_post', array( __CLASS__, 'add_comment_rating' ), 1 );
+        add_action( 'comment_post', array( __CLASS__, 'add_comment_rating' ), 10, 2 );
         add_action( 'hotel_booking_single_room_before_tabs_content_hb_room_reviews', 'comments_template' );
         add_filter( 'comments_template', array( __CLASS__, 'load_comments_template' ) );
         // details title tab
         add_action( 'hotel_booking_single_room_after_tabs_hb_room_reviews', array( __CLASS__, 'comments_count' ) );
-        add_filter('hotel_booking_single_room_infomation_tabs', array( __CLASS__, 'addTabReviews' ));
+        add_filter( 'hotel_booking_single_room_infomation_tabs', array( __CLASS__, 'addTabReviews' ) );
 
         add_filter( 'manage_edit-comments_columns', array( $this, 'comments_column' ), 10, 2 );
         add_filter( 'manage_comments_custom_column', array( $this, 'comments_custom_column' ), 10, 2 );
@@ -67,6 +67,7 @@ class HB_Comments{
             if ( ! $_POST['rating'] || $_POST['rating'] > 5 || $_POST['rating'] < 0 ) {
                 return;
             }
+
             // save comment rating
             add_comment_meta( $comment_id, 'rating', (int) esc_attr( $_POST['rating'] ), true );
 
