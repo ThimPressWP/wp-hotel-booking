@@ -7,7 +7,7 @@ if( ! defined( 'HB_PLUGIN_PATH' ) )
 	return;
 
 if( ! defined( 'TP_HB_CURRENCY' ) )
-	define( 'TP_HB_CURRENCY', __DIR__ );
+	define( 'TP_HB_CURRENCY', dirname( __FILE__ ) );
 
 if( ! defined( 'TP_HB_CURRENCY_URI' ) )
 	define( 'TP_HB_CURRENCY_URI', HB_PLUGIN_URL . '/includes/plugins/tp-hb-currencies' );
