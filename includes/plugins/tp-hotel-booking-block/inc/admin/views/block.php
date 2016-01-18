@@ -67,6 +67,8 @@ $rooms = $wpdb->get_results( $wpdb->prepare(
 			// add new calendar
 			$scope.add_calendar = function()
 			{
+				console.debug( $scope.calendars );
+				$scope.message = '';
 				var unique_time = moment().valueOf(),
 					new_calendar = {
 						id: unique_time,
@@ -74,6 +76,7 @@ $rooms = $wpdb->get_results( $wpdb->prepare(
 						selected: []
 					}
 				$scope.calendars[ unique_time ] = new_calendar;
+				console.debug( $scope.calendars );
 			};
 
 			// save form
@@ -98,7 +101,7 @@ $rooms = $wpdb->get_results( $wpdb->prepare(
 						if( typeof data.data !== 'undefined' )
 						{
 							status_ajax = 'success';
-							$scope.add_calendar = data.data;
+							$scope.add_calendars = data.data;
 							if( typeof data.message !== 'undefined' )
 							{
 								$scope.message = data.message;
