@@ -99,7 +99,8 @@ function hb_add_meta_boxes(){
         array(
             'title' => __( 'Room Settings', 'tp-hotel-booking' ),
             'post_type' => 'hb_room',
-            'meta_key_prefix' => '_hb_'
+            'meta_key_prefix' => '_hb_',
+            'priority' => 'low'
         ),
         array()
     )->add_field(

@@ -706,10 +706,17 @@
 				beforeSend: function () {
 					button.addClass('hb_loading');
 				},
-				success   : function (response) {
-					response = parseJSON(response)
-					if (response.success && response.sig) {
+				success   : function ( response ) {
+					response = parseJSON(response);
+					if( typeof response.success === 'undefined' || ! response.success ) {
+						return;
+					}
 
+					if( typeof response.url !== 'undefined' )
+					{
+						window.location.href = response.url;
+					}
+					else if ( response.sig ) {
 						window.location.href = action.replace(/\?.*/, '') + '?hotel-booking-params=' + response.sig;
 					}
 					button.removeClass('hb_loading');
@@ -718,7 +725,7 @@
 			return false;
 		});
 
-		$('form#hb-payment-form').submit(function (e) {
+		$('form#hb-payment-form').submit( function (e) {
 			e.preventDefault();
 			var _self = $(this);
 			var _method = _self.find('input[name="hb-payment-method"]:checked').val();
