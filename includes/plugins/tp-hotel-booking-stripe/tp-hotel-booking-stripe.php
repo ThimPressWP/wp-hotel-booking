@@ -46,7 +46,7 @@ class TP_Hotel_Booking_Payment_Stripe
 		{
 			// add payment
 			add_filter( 'hb_payment_gateways', array( $this, 'add_payment_classes' ) );
-			if( $this->is_hotel_active && ! class_exists( 'HB_Payment_Gateway_Stripe' ) )
+			if( $this->is_hotel_active )
 			{
 				require_once TP_HB_STRIPE_DIR . '/inc/class-hb-payment-gateway-stripe.php';
 			}

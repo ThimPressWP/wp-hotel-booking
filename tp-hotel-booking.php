@@ -46,6 +46,7 @@ class TP_Hotel_Booking{
         $this->includes();
         $this->load_text_domain();
 
+        add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
         add_action( 'wp_print_scripts', array( $this, 'global_js' ) );
@@ -127,8 +128,6 @@ class TP_Hotel_Booking{
         $this->_include( 'includes/class-hb-resizer.php' );
         $this->_include( 'includes/class-hb-booking.php' );
 
-        // load payments addons
-        $this->load_payments();
         $this->_include( 'includes/hb-webhooks.php' );
 
         if( ! class_exists( 'Aq_Resize' ) )
@@ -137,18 +136,35 @@ class TP_Hotel_Booking{
         }
     }
 
+    // load payments addons
+    function plugins_loaded()
+    {
+        $this->load_payments();
+    }
+
     // load all payment gateways support
     function load_payments()
     {
+        if ( ! function_exists( 'is_plugin_active' ) ) {
+            include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+        }
         $this->_include( 'includes/payment-gateways/class-hb-payment-gateway-base.php' );
 
+        $plugins = get_plugins();
         $payments_path = HB_PLUGIN_PATH . '/includes/payment-gateways';
         foreach ( glob( $payments_path . '/class-hb-payment-gateway-*.php' ) as $key => $file ) {
             $file_name = basename( $file );
             if( $file_name === 'class-hb-payment-gateway-base.php' )
                 continue;
 
-            $this->_include( 'includes/payment-gateways/' . $file_name );
+            $name = str_replace( 'class-hb-payment-gateway-', 'tp-hotel-booking-', $file_name );
+            $plugin_dir = str_replace( '.php', '', $name );
+            $plugin_file = $plugin_dir . '/' . $name;
+
+            if( ! array_key_exists( $plugin_file, $plugins ) || ! is_plugin_active( $plugin_file ) )
+            {
+                $this->_include( 'includes/payment-gateways/' . $file_name );
+            }
         }
     }
 

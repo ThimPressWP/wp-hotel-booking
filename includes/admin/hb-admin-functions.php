@@ -121,7 +121,7 @@ function hb_add_meta_boxes(){
                 array(
                     'map_fields' => array(
                         'term_id'   => 'value',
-                        'name' => 'text'
+                        'name'      => 'text'
                     )
                 )
             )
