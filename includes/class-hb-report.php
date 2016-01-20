@@ -14,6 +14,7 @@ abstract class HB_Report
 	public $_end_in;
 
 	public $chart_groupby;
+	public $chart_groupby_title;
 
 	public $_range_start;
 	public $_range_end;
@@ -30,7 +31,6 @@ abstract class HB_Report
 
 		if( isset( $_GET['tab'] ) && $_GET['tab'] )
 			$this->_chart_type = sanitize_text_field( $_GET['tab'] );
-
 	}
 
 	protected function calculate_current_range( $current_range = '7day' )
@@ -108,13 +108,15 @@ abstract class HB_Report
 
 		if( $this->chart_groupby === 'day' )
 		{
-			$this->_range_start 	= date( 'z', strtotime($this->_start_in) );
-			$this->_range_end 	= date( 'z', strtotime($this->_end_in) );
+			$this->_range_start 	= date( 'z', strtotime( $this->_start_in ) );
+			$this->_range_end 	= date( 'z', strtotime( $this->_end_in ) );
+			$this->chart_groupby_title = __( 'Day', 'tp-hotel-booking' );
 		}
 		else
 		{
-			$this->_range_start 	= date( 'm', strtotime($this->_start_in) );
-			$this->_range_end 	= date( 'm', strtotime($this->_end_in) );
+			$this->_range_start 	= date( 'm', strtotime( $this->_start_in ) );
+			$this->_range_end 	= date( 'm', strtotime( $this->_end_in ) );
+			$this->chart_groupby_title = __( 'Month', 'tp-hotel-booking' );
 		}
 
 	}
@@ -134,7 +136,7 @@ abstract class HB_Report
 		return true;
 	}
 
-	protected function parseData( $results )
+	protected function parseData( )
 	{
 		return true;
 	}
@@ -172,4 +174,45 @@ if( ! function_exists( 'hotel_create_report_page' ) )
     {
         TP_Hotel_Booking::instance()->_include( 'includes/admin/views/report.php' );
     }
+}
+
+
+add_action( 'tp_hotel_booking_chart_sidebar', 'tp_hotel_core_report_sidebar', 10, 2 );
+add_action( 'tp_hotel_booking_chart_canvas', 'tp_hotel__core_report_canvas', 10, 2 );
+
+
+/**
+ * @param $tab, $range
+ * @return file if file exists
+ */
+function tp_hotel_core_report_sidebar( $tab = '', $range = '' )
+{
+	if( ! $tab || ! $range )
+		return;
+
+	$file = apply_filters( "tp_hotel_booking_chart_sidebar_{$tab}_{$range}", '', $tab, $range );
+
+	if( ! $file || ! file_exists( $file ) )
+		$file = apply_filters( "tp_hotel_booking_chart_sidebar_layout", '', $tab, $range );
+
+	if( file_exists( $file ) )
+		require $file;
+}
+
+/**
+ * @param $tab, $range
+ * @return html file canvas
+ */
+function tp_hotel__core_report_canvas( $tab = '', $range = '' )
+{
+	if( ! $tab || ! $range )
+		return;
+
+	$file = apply_filters( "tp_hotel_booking_chart_{$tab}_{$range}_canvas", '', $tab, $range );
+
+	if( ! $file || ! file_exists( $file ) )
+		$file = apply_filters( "tp_hotel_booking_chart_layout_canvas", '', $tab, $range );
+
+	if( file_exists( $file ) )
+		require $file;
 }

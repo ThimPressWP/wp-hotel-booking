@@ -79,7 +79,11 @@ class TP_Hotel_Booking{
         if( is_array( $args ) ){
             extract( $args );
         }
-        require_once $file;
+
+        if( file_exists( $file ) )
+        {
+            require_once $file;
+        }
     }
 
     /**
@@ -104,9 +108,6 @@ class TP_Hotel_Booking{
             $this->_include( 'includes/class-hb-meta-box.php' );
             $this->_include( 'includes/admin/hb-admin-functions.php' );
             $this->_include( 'includes/admin/class-hb-admin-settings-hook.php' );
-            $this->_include( 'includes/class-hb-report.php' );
-            $this->_include( 'includes/class-hb-report-price.php' );
-            $this->_include( 'includes/class-hb-report-room.php' );
         }
         $this->_include( 'includes/class-hb-comments.php' );
         $this->_include( 'includes/hb-template-hooks.php' );
@@ -139,15 +140,19 @@ class TP_Hotel_Booking{
     // load payments addons
     function plugins_loaded()
     {
+        if ( ! function_exists( 'is_plugin_active' ) ) {
+            include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+        }
+        // load payment gateways
         $this->load_payments();
+
+        // load reports
+        $this->load_reports();
     }
 
     // load all payment gateways support
     function load_payments()
     {
-        if ( ! function_exists( 'is_plugin_active' ) ) {
-            include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-        }
         $this->_include( 'includes/payment-gateways/class-hb-payment-gateway-base.php' );
 
         $plugins = get_plugins();
@@ -166,6 +171,13 @@ class TP_Hotel_Booking{
                 $this->_include( 'includes/payment-gateways/' . $file_name );
             }
         }
+    }
+
+    function load_reports()
+    {
+        $this->_include( 'includes/class-hb-report.php' );
+        $this->_include( 'includes/class-hb-report-price.php' );
+        $this->_include( 'includes/class-hb-report-room.php' );
     }
 
     /**
@@ -231,6 +243,7 @@ class TP_Hotel_Booking{
             wp_localize_script( 'tp-admin-hotel-booking', 'hotel_booking_l18n', hb_admin_l18n() );
             //report
             wp_register_script( 'tp-admin-hotel-booking-report', $this->plugin_url( 'includes/assets/js/report.min.js' ) );
+            wp_register_script( 'tp-admin-hotel-booking-chartjs', $this->plugin_url( 'includes/assets/js/Chart.min.js' ) );
             // wp_register_script( 'tp-admin-hotel-booking-highcharts', $this->plugin_url( 'includes/assets/js/highcharts.js' ) );
             // wp_register_script( 'tp-admin-hotel-booking-tokenize-js', $this->plugin_url( 'includes/assets/js/jquery.tokenize.js' ) );
             // wp_register_style( 'tp-admin-hotel-booking-tokenize-css', $this->plugin_url( 'includes/assets/css/jquery.tokenize.css' ) );
@@ -260,6 +273,7 @@ class TP_Hotel_Booking{
             wp_enqueue_script( 'jquery-ui-autocomplete' );
             // report
             wp_enqueue_script( 'tp-admin-hotel-booking-report' );
+            wp_enqueue_script( 'tp-admin-hotel-booking-chartjs' );
             // wp_enqueue_script( 'tp-admin-hotel-booking-highcharts' );
             // wp_enqueue_script( 'tp-admin-hotel-booking-tokenize-js' );
             // wp_enqueue_style( 'tp-admin-hotel-booking-tokenize-css' );

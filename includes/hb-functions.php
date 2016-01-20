@@ -353,7 +353,7 @@ function hb_get_request( $name, $default = null, $var = '' ) {
 		default:
 			$var = $_REQUEST;
 	}
-	if ( !empty( $var[$name] ) ) {
+	if ( ! empty( $var[$name] ) ) {
 		$return = $var[$name];
 	}
 	return $return;
