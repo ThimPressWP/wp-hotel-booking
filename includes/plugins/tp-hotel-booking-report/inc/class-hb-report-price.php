@@ -399,7 +399,7 @@ class HB_Report_Price extends HB_Report
 		if( ! empty( self::$_instance[ $range ] ) )
 			return self::$_instance[ $range ];
 
-		return new self( $range );
+		return self::$_instance[ $range ] = new self( $range );
 	}
 
 }

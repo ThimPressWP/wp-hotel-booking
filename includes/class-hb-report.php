@@ -177,7 +177,6 @@ if( ! function_exists( 'hotel_create_report_page' ) )
     }
 }
 
-
 add_action( 'tp_hotel_booking_chart_sidebar', 'tp_hotel_core_report_sidebar', 10, 2 );
 
 /**
@@ -192,7 +191,9 @@ function tp_hotel_core_report_sidebar( $tab = '', $range = '' )
 	$file = apply_filters( "tp_hotel_booking_chart_sidebar_{$tab}_{$range}", '', $tab, $range );
 
 	if( ! $file || ! file_exists( $file ) )
+	{
 		$file = apply_filters( "tp_hotel_booking_chart_sidebar_layout", '', $tab, $range );
+	}
 
 	if( file_exists( $file ) )
 		require $file;
