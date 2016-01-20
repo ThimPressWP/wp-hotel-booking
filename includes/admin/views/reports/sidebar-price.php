@@ -1,5 +1,5 @@
 <?php
-	global $hb_report;
+	$hb_report = HB_Report_Price::instance();
 	$sidebarInfo = apply_filters( 'tp_hotel_booking_sidebar_price_info', array() );
 ?>
 <ul class="chart-legend">

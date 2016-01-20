@@ -176,10 +176,8 @@ if( ! function_exists( 'hotel_create_report_page' ) )
     }
 }
 
-
 add_action( 'tp_hotel_booking_chart_sidebar', 'tp_hotel_core_report_sidebar', 10, 2 );
-add_action( 'tp_hotel_booking_chart_canvas', 'tp_hotel__core_report_canvas', 10, 2 );
-
+add_action( 'tp_hotel_booking_chart_canvas', 'tp_hotel_core_report_canvas', 10, 2 );
 
 /**
  * @param $tab, $range
@@ -203,7 +201,7 @@ function tp_hotel_core_report_sidebar( $tab = '', $range = '' )
  * @param $tab, $range
  * @return html file canvas
  */
-function tp_hotel__core_report_canvas( $tab = '', $range = '' )
+function tp_hotel_core_report_canvas( $tab = '', $range = '' )
 {
 	if( ! $tab || ! $range )
 		return;
