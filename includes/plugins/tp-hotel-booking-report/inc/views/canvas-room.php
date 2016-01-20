@@ -1,5 +1,5 @@
 <?php
-	$hb_report = HB_Report_Room::instance();
+	global $hb_report;
 ?>
 <h3 class="chart_title"><?php _e( 'Report Chart Room Unavailable', 'tp-hotel-booking' ) ?></h3>
 <canvas id="hotel_canvas_report_room"></canvas>

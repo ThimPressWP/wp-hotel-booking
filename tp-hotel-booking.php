@@ -173,11 +173,17 @@ class TP_Hotel_Booking{
         }
     }
 
+    // load report
     function load_reports()
     {
-        $this->_include( 'includes/class-hb-report.php' );
-        $this->_include( 'includes/class-hb-report-price.php' );
-        $this->_include( 'includes/class-hb-report-room.php' );
+        $plugins = get_plugins();
+        $report = 'tp-hotel-booking-report/tp-hotel-booking-report.php';
+        if( ! array_key_exists( $report, $plugins ) || ! is_plugin_active( $report ) )
+        {
+            $this->_include( 'includes/class-hb-report.php' );
+            $this->_include( 'includes/class-hb-report-price.php' );
+            $this->_include( 'includes/class-hb-report-room.php' );
+        }
     }
 
     /**

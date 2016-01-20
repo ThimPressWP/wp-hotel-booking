@@ -990,38 +990,6 @@ if ( ! function_exists( 'hb_get_rooms' ) )
         return get_posts( $args );
     }
 }
-
-add_filter( 'tp_hotel_booking_chart_sidebar_layout', 'hb_report_sidebar_layout', 10, 3 );
-
-if ( ! function_exists( 'hb_report_sidebar_layout' ) )
-{
-    function hb_report_sidebar_layout( $file, $tab, $range )
-    {
-        $tab_range = HB_PLUGIN_PATH . '/includes/admin/views/reports/sidebar-'.$tab.'-'.$range.'.php';
-        $tab = HB_PLUGIN_PATH . '/includes/admin/views/reports/sidebar-'.$tab.'.php';
-        if( file_exists( $tab_range ) )
-        {
-            return $tab_range;
-        }
-        else if( file_exists($tab) )
-        {
-            return $tab;
-        }
-
-        return HB_PLUGIN_PATH . '/includes/admin/views/reports/sidebar.php';
-    }
-}
-
-add_filter( 'tp_hotel_booking_chart_layout_canvas', 'hb_report_layout_canvas', 10, 3  );
-if( ! function_exists( 'hb_report_layout_canvas' ) )
-{
-    function hb_report_layout_canvas( $file, $tab, $range )
-    {
-        $file = HB_PLUGIN_PATH . '/includes/admin/views/reports/canvas-'.strtolower($tab).'.php';
-        if( file_exists($file) )
-            return $file;
-    }
-}
 add_action( 'save_post', 'hb_update_meta_box_booking_status' );
 if ( ! function_exists( 'hb_update_meta_box_booking_status' ) )
 {
