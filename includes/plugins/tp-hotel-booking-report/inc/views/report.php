@@ -4,11 +4,11 @@
 	$report_tabs = apply_filters( 'tp_hotel_booking_report_tab', array(
 		array(
 				'id'		=> 'price',
-				'title'		=> __( 'Booking Price', 'tp-hotel-booking' ),
+				'title'		=> __( 'Booking Price', 'tp-hotel-booking-report' ),
 			),
 		array(
 				'id'		=> 'room',
-				'title'		=> __( 'Room availability', 'tp-hotel-booking' ),
+				'title'		=> __( 'Room availability', 'tp-hotel-booking-report' ),
 			)
 	));
 
@@ -37,19 +37,19 @@
 	$date = apply_filters( 'tp_hotel_booking_report_date', array(
 		array(
 				'id'	=> 'year',
-				'title'	=> __('Year', 'tp-hotel-booking')
+				'title'	=> __('Year', 'tp-hotel-booking-report')
 			),
 		array(
 				'id'	=> 'last_month',
-				'title'	=> __('Last Month', 'tp-hotel-booking')
+				'title'	=> __('Last Month', 'tp-hotel-booking-report')
 			),
 		array(
 				'id'	=> 'current_month',
-				'title'	=> __('This Month', 'tp-hotel-booking')
+				'title'	=> __('This Month', 'tp-hotel-booking-report')
 			),
 		array(
 				'id'	=> '7day',
-				'title'	=> __('Last 7 Days', 'tp-hotel-booking')
+				'title'	=> __('Last 7 Days', 'tp-hotel-booking-report')
 			)
 	));
 
@@ -64,7 +64,7 @@
 
 	<div id="poststuff">
 		<h3>
-			<!-- <a href="<?php //echo admin_url( 'admin.php?page=tp_hotel_booking_report&action=export' ) ?>" class="export_csv"><?php //_e( 'Export CSV', 'tp-hotel-booking' ) ?></a> -->
+			<!-- <a href="<?php //echo admin_url( 'admin.php?page=tp_hotel_booking_report&action=export' ) ?>" class="export_csv"><?php //_e( 'Export CSV', 'tp-hotel-booking-report' ) ?></a> -->
 			<!--export-->
 			<form id="tp-hotel-booking-export" method="POST">
 				<input type="hidden" name="page" value="<?php echo isset($_REQUEST['page']) ? esc_attr($_REQUEST['page']) : '' ?>" >
@@ -77,7 +77,7 @@
 					<input type="hidden" name="report_out" value="<?php echo isset($_REQUEST['report_out']) ? esc_attr($_REQUEST['report_out']) : '' ?>" >
 				<?php endif; ?>
 				<?php wp_nonce_field( 'tp-hotel-booking-report-export', 'tp-hotel-booking-report-export' ) ?>
-				<button type="submit"><?php _e( 'Export', 'tp-hotel-booking' ) ?></button>
+				<button type="submit"><?php _e( 'Export', 'tp-hotel-booking-report' ) ?></button>
 			</form>
 			<ul>
 				<?php foreach( $date as $key => $d ): ?>
@@ -100,7 +100,7 @@
 							<?php endforeach; ?>
 						<?php endif; ?>
 						<?php wp_nonce_field( 'tp-hotel-booking-report', 'tp-hotel-booking-report' ); ?>
-						<button type="submit"><?php _e( 'Go', 'tp-hotel-booking' ) ?></button>
+						<button type="submit"><?php _e( 'Go', 'tp-hotel-booking-report' ) ?></button>
 					</form>
 				</li>
 			</ul>

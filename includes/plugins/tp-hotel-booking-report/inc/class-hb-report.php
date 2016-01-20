@@ -110,13 +110,13 @@ abstract class HB_Report
 		{
 			$this->_range_start 	= date( 'z', strtotime( $this->_start_in ) );
 			$this->_range_end 	= date( 'z', strtotime( $this->_end_in ) );
-			$this->chart_groupby_title = __( 'Day', 'tp-hotel-booking' );
+			$this->chart_groupby_title = __( 'Day', 'tp-hotel-booking-report' );
 		}
 		else
 		{
 			$this->_range_start 	= date( 'm', strtotime( $this->_start_in ) );
 			$this->_range_end 	= date( 'm', strtotime( $this->_end_in ) );
-			$this->chart_groupby_title = __( 'Month', 'tp-hotel-booking' );
+			$this->chart_groupby_title = __( 'Month', 'tp-hotel-booking-report' );
 		}
 
 	}

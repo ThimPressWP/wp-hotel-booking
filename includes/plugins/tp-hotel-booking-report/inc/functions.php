@@ -8,8 +8,8 @@ if( ! function_exists( 'hotel_report_menu' ) )
 	{
 		$menus[ 'reports' ] = array(
                 'tp_hotel_booking',
-                __( 'Reports', 'tp-hotel-booking' ),
-                __( 'Reports', 'tp-hotel-booking' ),
+                __( 'Reports', 'tp-hotel-booking-report' ),
+                __( 'Reports', 'tp-hotel-booking-report' ),
                 'manage_options',
                 'tp_hotel_booking_report',
                 'hotel_create_report_page'

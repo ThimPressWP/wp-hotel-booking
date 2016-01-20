@@ -47,7 +47,7 @@ class HB_Report_Room extends HB_Report
 
 		$this->calculate_current_range( $this->_range );
 
-		$this->_title = sprintf( __( 'Chart in %s to %s', 'tp-hotel-booking' ), $this->_start_in, $this->_end_in );
+		$this->_title = sprintf( __( 'Chart in %s to %s', 'tp-hotel-booking-report' ), $this->_start_in, $this->_end_in );
 
 		$this->_query_results = $this->getOrdersItems();
 		add_action( 'admin_init', array( $this, 'export_csv' ) );
@@ -309,7 +309,7 @@ class HB_Report_Room extends HB_Report
 			if( ! isset( $series[ $id ] ) )
 			{
 				$prepare = array(
-						'name'	=> sprintf( __( '%s unavaiable', 'tp-hotel-booking' ), get_the_title( $id ) ),
+						'name'	=> sprintf( __( '%s unavaiable', 'tp-hotel-booking-report' ), get_the_title( $id ) ),
 						'data'	=> array(),
 						'stack' => $id
 					);
@@ -317,7 +317,7 @@ class HB_Report_Room extends HB_Report
 				if( $this->chart_groupby === 'day' )
 				{
 					$unavaiable = array(
-							'name'	=> sprintf( __( '%s avaiable', 'tp-hotel-booking' ), get_the_title( $id ) ),
+							'name'	=> sprintf( __( '%s avaiable', 'tp-hotel-booking-report' ), get_the_title( $id ) ),
 							'data'	=> array(),
 							'stack' => $id
 						);
@@ -325,7 +325,7 @@ class HB_Report_Room extends HB_Report
 				else
 				{
 					$unavaiable = array(
-							'name'	=> sprintf( __( '%s quantity of room', 'tp-hotel-booking' ), get_the_title( $id ) ),
+							'name'	=> sprintf( __( '%s quantity of room', 'tp-hotel-booking-report' ), get_the_title( $id ) ),
 							'data'	=> array(),
 							'stack' => $id
 						);
@@ -438,7 +438,7 @@ class HB_Report_Room extends HB_Report
 			fputcsv( $output, array( sprintf( '%s', get_the_title( $id ) ) ) );
 
 			$column = array(
-					__( 'Date/Time', 'tp-hotel-booking' )
+					__( 'Date/Time', 'tp-hotel-booking-report' )
 				);
 
 			$avaiable_data = false;
@@ -448,7 +448,7 @@ class HB_Report_Room extends HB_Report
 				$avaiables = $params[0];
 
 				$avaiable_data = array(
-						__( 'Unavaiable', 'tp-hotel-booking' )
+						__( 'Unavaiable', 'tp-hotel-booking-report' )
 					);
 				foreach ($avaiables['data'] as $key => $avai) {
 					if( (int)$avai[1] === 0 )
@@ -489,13 +489,13 @@ class HB_Report_Room extends HB_Report
 				if( $this->chart_groupby === 'day' )
 				{
 					$unavaiable_data = array(
-							__( 'Avaiable', 'tp-hotel-booking' )
+							__( 'Avaiable', 'tp-hotel-booking-report' )
 						);
 				}
 				else
 				{
 					$unavaiable_data = array(
-							__( 'Room Quantity', 'tp-hotel-booking' )
+							__( 'Room Quantity', 'tp-hotel-booking-report' )
 						);
 				}
 				foreach ($unavaiable['data'] as $key => $avai) {
