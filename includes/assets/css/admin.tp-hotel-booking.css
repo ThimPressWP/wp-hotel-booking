@@ -423,15 +423,18 @@ th.column-room_type{
     color: #777;
 }
 #tp-hotel-booking-report-main{
-    min-height: 400px;
-    height: auto;
-    float: left;
-}
-#tp-hotel-booking-report-main{
     padding: 12px;
     margin: 0!important;
     float: left;
     width: 100%;
+    min-height: 400px;
+    height: auto;
+    float: left;
+}
+#tp-hotel-booking-report-main h3.chart_title{
+    background-color: transparent;
+    text-align: center;
+    font-size: 24px;
 }
 #tp-hotel-booking-report-main #chart-sidebar{
     width: 10%;

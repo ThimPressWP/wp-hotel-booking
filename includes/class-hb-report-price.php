@@ -146,13 +146,8 @@ class HB_Report_Price extends HB_Report
 		$transient_name = 'tp_hotel_booking_charts_' . $this->_chart_type . '_' . $this->chart_groupby . '_' . $this->_range . '_' . $this->_start_in . '_' . $this->_end_in;
 
 		if ( false === ( $chart_results = get_transient( $transient_name ) ) ) {
-			$default = new stdClass;
-			$default->name = '';
-			$default->type = 'area';
 
-			$default->data = $this->parseData( $this->_query_results );
-
-			$chart_results = array( $default );
+			$chart_results = $this->js_data();
 
 			set_transient( $transient_name, $chart_results, 12 * HOUR_IN_SECONDS );
 		}
@@ -160,11 +155,88 @@ class HB_Report_Price extends HB_Report
 		return apply_filters( 'tp_hotel_booking_charts', $chart_results );
 	}
 
-	public function parseData( $results )
+	/**
+	 * render label x for canvas charts
+	 * @return array
+	 */
+	function js_data()
+	{
+		$results = $this->_query_results;
+
+		$label = array();
+		$excerpts = array();
+		$datasets = array();
+		foreach ( $results as $key => $item )
+		{
+			if( $this->chart_groupby === 'day' )
+			{
+				$excerpts[ (int)date("z", strtotime($item->completed_date)) ] = $item->completed_date;
+				$keyr = strtotime($item->completed_date); // timestamp
+				/**
+				 * compare 2015-10-30 19:50:50 => 2015-10-30. not use time
+				 */
+				$label[ $keyr ] = date( 'M.d', strtotime($item->completed_date) );
+				$datasets[ $keyr ] = (float)$item->total;
+			}
+			else
+			{
+				$keyr = strtotime( date( 'Y-m-1', strtotime($item->completed_date) ) ); // timestamp of first day month in the loop
+				$excerpts[ (int)date("m", strtotime($item->completed_date)) ] = date( 'Y-m-d', $keyr );
+				$label[ $keyr ] = date( 'M.Y', strtotime($item->completed_date) );
+				$datasets[ $keyr ] = (float)$item->total;
+			}
+		}
+
+		$range = $this->_range_end - $this->_range_start;
+		$cache = $this->_start_in;
+		for( $i = 0; $i <= $range; $i++ )
+		{
+			$reg = $this->_range_start + $i;
+
+			if( ! array_key_exists( $reg, $excerpts) )
+			{
+				if( $this->chart_groupby === 'day' )
+				{
+					$key = strtotime( $this->_start_in ) + 24 * 60 * 60 * $i;
+					$label[ $key ] = date( 'M.d', $key );
+					$datasets[ $key ] = 0;
+				}
+				else
+				{
+					$cache = date( "Y-$reg-01", strtotime( $cache ) ); // cache current month in the loop
+					$label[ strtotime($cache) ] = date( 'M.Y', strtotime($cache) );
+					$datasets[ strtotime($cache) ] = 0;
+				}
+			}
+		}
+
+		ksort( $label );
+		ksort( $datasets );
+
+		$results = new stdClass;
+		$results->labels = array_values( $label );
+		$results->datasets = array();
+
+		$data = new stdClass();
+		$data->fillColor = "rgba(220,220,220,0.2)";
+        $data->strokeColor = "rgba(220,220,220,1)";
+        $data->pointColor = "rgba(220,220,220,1)";
+        $data->pointStrokeColor = "#fff";
+        $data->pointHighlightFill = "#fff";
+        $data->pointHighlightStroke = "rgba(220,220,220,1)";
+		$data->data = array_values( $datasets );
+	    $results->datasets = array();
+	    $results->datasets[] = $data;
+		return $results;
+	}
+
+	// old for heightchartjs( license )
+	public function parseData()
 	{
 		$data = array();
 		$excerpts = array();
 
+		$results = $this->_query_results;
 		foreach ( $results as $key => $item ) {
 
 			if( $this->chart_groupby === 'day' )
@@ -191,7 +263,6 @@ class HB_Report_Price extends HB_Report
 		}
 
 		$range = $this->_range_end - $this->_range_start;
-
 		$cache = $this->_start_in;
 		for( $i = 0; $i <= $range; $i++ )
 		{
@@ -241,8 +312,6 @@ class HB_Report_Price extends HB_Report
 
 		if( ! isset( $_POST['tab'] ) || sanitize_file_name( $_POST['tab'] ) !== $this->_chart_type )
 			return;
-
-		// var_dump($this->_query_results); die();
 
 		$filename = 'tp_hotel_export_'.$this->_chart_type.'_'.$this->_start_in.'_to_'. $this->_end_in . '.csv';
 		header('Content-Type: application/csv; charset=utf-8');

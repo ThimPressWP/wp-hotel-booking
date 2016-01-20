@@ -7,8 +7,6 @@ class HB_Admin_Settings_Hook extends HB_Settings {
 		parent::__construct();
 		add_action( 'hb_update_settings_my-rooms', array( $this, 'create_pages' ), 10, 2 );
 		add_action( 'hb_update_settings_checkout', array( $this, 'create_pages' ), 10, 2 );
-		add_action( 'tp_hotel_booking_chart_sidebar', array($this, 'report_sidebar' ), 10, 2 );
-		add_action( 'tp_hotel_booking_chart_canvas', array($this, 'report_canvas' ), 10, 2 );
 	}
 
 	/**
@@ -49,43 +47,6 @@ class HB_Admin_Settings_Hook extends HB_Settings {
 			$this->set( $key.'_page_id', $pageId );
 		}
 	}
-
-	/**
-	 * @param $tab, $range
-	 * @return file if file exists
-	 */
-	function report_sidebar( $tab = '', $range = '' )
-	{
-		if( ! $tab || ! $range )
-			return;
-
-		$file = apply_filters( "tp_hotel_booking_chart_sidebar_{$tab}_{$range}", '', $tab, $range );
-
-		if( ! $file || ! file_exists( $file ) )
-			$file = apply_filters( "tp_hotel_booking_chart_sidebar_layout", '', $tab, $range );
-
-		if( file_exists( $file ) )
-			require $file;
-	}
-
-	/**
-	 * @param $tab, $range
-	 * @return html file canvas
-	 */
-	function report_canvas( $tab = '', $range = '' )
-	{
-		if( ! $tab || ! $range )
-			return;
-
-		$file = apply_filters( "tp_hotel_booking_chart_{$tab}_{$range}_canvas", '', $tab, $range );
-
-		if( ! $file || ! file_exists( $file ) )
-			$file = apply_filters( "tp_hotel_booking_chart_layout_canvas", '', $tab, $range );
-
-		if( file_exists( $file ) )
-			require $file;
-	}
-
 }
 
 new HB_Admin_Settings_Hook();

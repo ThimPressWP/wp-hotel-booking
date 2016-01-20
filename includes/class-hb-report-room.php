@@ -51,6 +51,14 @@ class HB_Report_Room extends HB_Report
 
 		$this->_query_results = $this->getOrdersItems();
 		add_action( 'admin_init', array( $this, 'export_csv' ) );
+
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
+
+	}
+
+	function enqueue()
+	{
+		wp_enqueue_script( 'jquery-ui-datepicker' );
 	}
 
 	public function get_rooms()
@@ -93,10 +101,10 @@ class HB_Report_Room extends HB_Report
 				    ", '_hb_num_of_rooms');
 
 				$sub_query = array();
-				foreach ($this->_rooms as $key => $id) {
+				foreach ( $this->_rooms as $key => $id ) {
 					$sub_query[] = ' room_ID = ' . $id;
 				}
-				$sub_query = implode( ' OR' , $sub_query);
+				$sub_query = implode( ' OR', $sub_query);
 
 				$query = $wpdb->prepare("
 						SELECT booked.ID AS book_item_ID,
@@ -178,17 +186,108 @@ class HB_Report_Room extends HB_Report
 			return;
 
 		$transient_name = 'tp_hotel_booking_charts_' . $this->_chart_type . '_' . $this->chart_groupby . '_' . $this->_range . '_' . $this->_start_in . '_' . $this->_end_in;
-
+		delete_transient( $transient_name );
 		if ( false === ( $chart_results = get_transient( $transient_name ) ) )
 		{
-			$chart_results = $this->parseData( $this->_query_results );
+			// $chart_results = $this->parseData( $this->_query_results );
+			$chart_results = $this->js_data();
 			set_transient( $transient_name, $chart_results, 12 * HOUR_IN_SECONDS );
 		}
 		return apply_filters( 'tp_hotel_booking_charts', $chart_results );
 	}
 
-	public function parseData( $results )
+	// new chartjs
+	function js_data()
 	{
+		$results = $this->_query_results;
+		$series = array();
+		$series['labels'] = array();
+		$series['datasets'] = array();
+
+		$ids = array();
+		if( ! $results )
+			return $series;
+
+		foreach ( $results as $key => $value ) {
+			if( ! isset( $ids[ $value->room_ID ] ) )
+				$ids[$value->room_ID] = $value->total;
+		}
+
+		$label = array();
+		foreach( $ids as $id => $total )
+		{
+			$serie = new stdClass();
+			if( ! isset( $series[ $id ] ) )
+			{
+				$data= new stdCLass();
+			}
+
+			$range = $this->_range_end - $this->_range_start;
+			$cache = $this->_start_in;
+			$data_recode = array();
+			for( $i = 0; $i <= $range; $i++ )
+			{
+				$unavaiable = 0;
+				if( $this->chart_groupby === 'day' )
+				{
+					$current_time = strtotime( $this->_start_in ) + 24 * 60 * 60 * $i;
+					$label[ $current_time ] = date( 'M.d', $current_time );
+				}
+				else
+				{
+					$reg = $this->_range_start + $i;
+					$cache = date( "Y-$reg-01", strtotime( $cache ) );
+					$current_time = strtotime( date( "Y-$reg-01", strtotime( $cache ) ) );
+					$label[ $current_time ] = date( 'M.Y', $current_time );
+				}
+
+				foreach ( $results as $k => $v )
+				{
+
+					if( (int)$v->room_ID !== (int)$id )
+						continue;
+
+					if( $this->chart_groupby === 'day' )
+					{
+						$_in = strtotime( date( 'Y-m-d', $v->checkindate ) );
+						$_out = strtotime( date( 'Y-m-d', $v->checkoutdate ) );
+
+						if( $current_time >= $_in && $current_time < $_out )
+						{
+							$unavaiable++;
+						}
+					}
+					else
+					{
+						$_in = strtotime( date( 'Y-m-1', $v->checkindate ) );
+						$_out = strtotime( date( 'Y-m-1', $v->checkoutdate ) );
+
+						if( $current_time >= $_in && $current_time <= $_out )
+						{
+							$unavaiable++;
+						}
+					}
+
+				}
+
+				$data_recode[ $current_time ] = $unavaiable;
+
+			}
+
+			ksort( $data_recode );
+			$data->data = array_values( $data_recode );
+			$series['datasets'][] = $data;
+		}
+		ksort( $label );
+		$series['labels'] = array_values( $label );
+
+		return $series;
+	}
+
+	// old
+	public function parseData( )
+	{
+		$results = $this->_query_results;
 		$series = array();
 		$ids = array();
 		foreach ($results as $key => $value) {
@@ -237,7 +336,7 @@ class HB_Report_Room extends HB_Report
 				{
 					$reg = $this->_range_start + $i;
 					$cache = date( "Y-$reg-01", strtotime( $cache ) );
-					$current_time = strtotime( date( "Y-$reg-01", strtotime( $cache ) ) ) ;
+					$current_time = strtotime( date( "Y-$reg-01", strtotime( $cache ) ) );
 				}
 
 				foreach ( $results as $k => $v ) {

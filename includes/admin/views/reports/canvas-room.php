@@ -1,74 +1,37 @@
 <?php
 	global $hb_report;
-	$series = $hb_report->series();
+	$hb_report->series();
 ?>
-<div id="tp-hotel-booking-chart-container">
-	<div id="tp-hotel-booking-canvas-chart"></div>
-</div>
-<script type="text/javascript">
+<h3 class="chart_title"><?php _e( 'Report Chart Room Unavailable', 'tp-hotel-booking' ) ?></h3>
+<canvas id="hotel_canvas_report_room"></canvas>
+<script>
 	(function($){
-		var options = {
-	        chart: {
-	            type: 'column'
-	        },
-
-	        title: {
-	            text: '<?php echo esc_js( $hb_report->_title ) ?>'
-	        },
-
-	        xAxis: {
-	        	type: 'datetime'
-	        },
-
-	        yAxis: {
-	            allowDecimals: false,
-	            min: 0,
-	            title: {
-	                text: '<?php echo esc_js( "Number of rooms" ) ?>'
-	            }
-	        },
-
-	        plotOptions: {
-	            column: {
-	                stacking: 'normal'
-	            }
-	        },
-
-	        series: <?php echo json_encode( $series ) ?>
+	    var randomScalingFactor = function() {
+	        return Math.round(Math.random() * 100);
 	    };
 
-	    <?php if( ! $hb_report->_rooms ): ?>
+		window.onload = function(){
+			var ctx = document.getElementById( 'hotel_canvas_report_room' ).getContext( '2d' );
+			window.myBar = new Chart(ctx).Bar( <?php echo json_encode( $hb_report->js_data() ) ?>, {
+				responsive : true,
+				scaleGridLineColor : "rgba(0,0,0,.05)"
+			});
+		}
 
-        	options.subtitle = {
-                text: "<?php echo esc_js( 'Please select room to display report chart' ) ?>"
+		$.datepicker.setDefaults({ dateFormat: 'yy/mm/dd'});
+        $('#tp-hotel-report-checkin').datepicker({
+            onSelect: function(){
+                var date = $(this).datepicker('getDate');
+
+                $("#tp-hotel-report-checkout").datepicker( 'option', 'minDate', date)
             }
-
-        <?php elseif( ! $series ): ?>
-
-	        options.subtitle = {
-	                text: "<?php echo esc_js( 'No results, room search have no order. Try with other rooms.' ) ?>"
-	            }
-
-        <?php endif; ?>
-
-        <?php if( $hb_report->chart_groupby === 'day' ) : ?>
-
-	        options.tooltip = {
-	            formatter: function () {
-	                return '<b>'+this.series.name+'</b>' + ': ' + this.y + '<br/>' +
-	                    '<b><?php echo esc_js( "Total: " ) ?></b> ' + this.point.stackTotal;
-	            }
-	        }
-
-        <?php else: ?>
-
-        	options.tooltip = {
-	            formatter: function () {
-	                return '<b>'+this.series.name+'</b>' + ': ' + this.y + '<br/>';
-	            }
-	        }
-
-        <?php endif; ?>
-		$('#tp-hotel-booking-canvas-chart').highcharts(options);
+        });
+        $('#tp-hotel-report-checkout').datepicker({
+            onSelect: function(){
+                var date = $(this).datepicker('getDate');
+                $("#tp-hotel-report-checkin").datepicker( 'option', 'maxDate', date)
+            }
+        });
 	})(jQuery);
+
 </script>

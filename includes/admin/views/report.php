@@ -54,6 +54,7 @@
 	));
 
 ?>
+
 <?php
 	$currentRang = '7day';
 	if( isset($_REQUEST['range']) && $_REQUEST['range'] )
@@ -119,22 +120,3 @@
 	</div>
 
 </div>
-
-<script type="text/javascript">
-	(function($){
-		$.datepicker.setDefaults({ dateFormat: 'yy/mm/dd'});
-        $('#tp-hotel-report-checkin').datepicker({
-            onSelect: function(){
-                var date = jQuery(this).datepicker('getDate');
-
-                $("#tp-hotel-report-checkout").datepicker("option","minDate", date)
-            }
-        });
-        $('#tp-hotel-report-checkout').datepicker({
-            onSelect: function(){
-                var date = jQuery(this).datepicker('getDate');
-                $("#tp-hotel-report-checkin").datepicker("option","maxDate", date)
-            }
-        });
-	})(jQuery);
-</script>
