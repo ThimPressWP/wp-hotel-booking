@@ -66,6 +66,24 @@ if( ! hb_get_page_id( 'checkout' ) || ! get_post( hb_get_page_id( 'checkout' ) )
     );
 }
 
+if( ! hb_get_page_id( 'search' ) || ! get_post( hb_get_page_id( 'search' ) ) )
+{
+    $pages['search'] = array(
+        'name'    => _x( 'hotel-booking', 'hotel-booking', 'tp-hotel-booking' ),
+        'title'   => _x( 'Hotel Booking', 'Hotel Booking', 'tp-hotel-booking' ),
+        'content' => '[' . apply_filters( 'hotel_booking_search_shortcode_tag', 'hotel_booking' ) . ']'
+    );
+}
+
+if( ! hb_get_page_id( 'terms' ) || ! get_post( hb_get_page_id( 'terms' ) ) )
+{
+    $pages['terms'] = array(
+        'name'    => _x( 'term-condition', 'term-condition', 'tp-hotel-booking' ),
+        'title'   => _x( 'Terms and Conditions ', 'Terms and Conditions', 'tp-hotel-booking' ),
+        'content' => apply_filters( 'hotel_booking_terms_content', 'Something notices' )
+    );
+}
+
 if( $pages && function_exists( 'hb_create_page' ) )
 {
     foreach ( $pages as $key => $page ) {
