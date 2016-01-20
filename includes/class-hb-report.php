@@ -177,7 +177,6 @@ if( ! function_exists( 'hotel_create_report_page' ) )
     }
 }
 
-
 add_action( 'tp_hotel_booking_chart_sidebar', 'tp_hotel_core_report_sidebar', 10, 2 );
 
 /**
