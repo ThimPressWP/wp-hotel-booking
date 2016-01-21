@@ -35,6 +35,8 @@ class TP_Hotel_Booking_Woocommerce {
 	function __construct() {
 		$this->_defines();
 
+		require_once "includes/functions.php";
+		require_once "includes/class-hb-wc-settings.php";
 		if( self::wc_enable() ) {
 			$this->_includes();
 			/**
@@ -662,8 +664,6 @@ class TP_Hotel_Booking_Woocommerce {
 	private function _includes() {
 		if( ! class_exists( 'HB_Settings' ) ) return;
 
-		require_once "includes/functions.php";
-		require_once "includes/class-hb-wc-settings.php";
 		require_once "includes/class-hb-wc-product-room.php";
 		require_once "includes/class-hb-wc-product-package.php";
 		require_once "includes/class-hb-wc-checkout.php";
