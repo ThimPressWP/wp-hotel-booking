@@ -630,7 +630,11 @@ class TP_Hotel_Booking_Woocommerce {
 	public static function admin_notice(){
 		if( ! class_exists( 'HB_Settings' ) )
 			return;
-		hb_wc_admin_view( 'wc-is-not-installed' );
+
+		if( function_exists( 'hb_wc_admin_view' ) )
+		{
+			hb_wc_admin_view( 'wc-is-not-installed' );
+		}
 	}
 
 	public static function wc_enable(){
