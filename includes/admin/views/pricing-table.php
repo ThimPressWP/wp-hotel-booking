@@ -166,7 +166,11 @@ $count_plants = count( $pricing_plans );
         </h3>
         <div class="hb-pricing-controls">
             <a href="" class="dashicons dashicons-edit" data-action="edit" title="<?php _e( 'Clone', 'tp-hotel-booking' );?>"></a>
-            <a href="" class="dashicons dashicons-admin-page" data-action="clone" title="<?php _e( 'Clone', 'tp-hotel-booking' );?>"></a>
+
+            <# if( typeof data.clone !== 'undefined' && data.clone === true ) { #>
+                <a href="" class="dashicons dashicons-admin-page" data-action="clone" title="<?php _e( 'Clone', 'tp-hotel-booking' );?>"></a>
+            <# } #>
+
             <a href="" class="dashicons dashicons-trash" data-action="remove" title="<?php _e( 'Remove', 'tp-hotel-booking' );?>"></a>
         </div>
 

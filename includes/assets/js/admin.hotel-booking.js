@@ -47,9 +47,12 @@
 
             switch( action ){
                 case 'clone':
-                    if( $('.hb-pricing-table').length>= 2 )
-                        return;
-                    var $cloned = $(wp.template('hb-pricing-table')({})),
+                    var clone_allow = false;
+                    if( $('.hb-pricing-table').length < 1 )
+                    {
+                        clone_allow = true;
+                    }
+                    var $cloned = $( wp.template('hb-pricing-table')({ clone: clone_allow }) ),
                         $inputs = $cloned.find('.hb-pricing-price');
                     $cloned.hide().css("background-color", "#00A0D2").css("transition", "background-color 0.5s");
                     init_pricing_plan( $cloned );
