@@ -530,6 +530,10 @@
 							if (typeof code.status !== 'undefined' && code.status === 'success') {
 								// add message successfully
 								hotel_settings_cart = true;
+								if( typeof code.redirect !== 'undefined' )
+								{
+									window.location.href = code.redirect;
+								}
 							}
 							else {
 								alert(code.message);
