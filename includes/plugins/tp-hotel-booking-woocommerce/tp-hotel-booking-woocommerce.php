@@ -4,7 +4,7 @@ Plugin Name: TP Booking WooCommerce
 Plugin URI: http://thimpress.com/
 Description: Support paying for a booking with the payment methods provided by woocommerce
 Author: ThimPress
-Version: 0.9
+Version: 1.0
 Author URI: http://thimpress.com
 Requires at least: 3.5
 Tested up to: 4.3
