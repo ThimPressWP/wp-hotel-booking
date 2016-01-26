@@ -268,7 +268,7 @@ class TP_Hotel_Booking{
             wp_register_script( 'tp-admin-hotel-booking', $this->plugin_url( 'includes/assets/js/admin.hotel-booking.min.js' ), $dependencies );
             wp_localize_script( 'tp-admin-hotel-booking', 'hotel_booking_l18n', hb_admin_l18n() );
             //report
-            wp_register_script( 'tp-admin-hotel-booking-report', $this->plugin_url( 'includes/assets/js/report.min.js' ) );
+            // wp_register_script( 'tp-admin-hotel-booking-report', $this->plugin_url( 'includes/assets/js/report.min.js' ) );
             wp_register_script( 'tp-admin-hotel-booking-chartjs', $this->plugin_url( 'includes/assets/js/Chart.min.js' ) );
             // wp_register_script( 'tp-admin-hotel-booking-highcharts', $this->plugin_url( 'includes/assets/js/highcharts.js' ) );
             // wp_register_script( 'tp-admin-hotel-booking-tokenize-js', $this->plugin_url( 'includes/assets/js/jquery.tokenize.js' ) );
