@@ -4,7 +4,7 @@
     Plugin URI: http://thimpress.com/
     Description: Full of professional features for a booking room system.
     Author: ThimPress
-    Version: 1.0.3
+    Version: 1.1
     Author URI: http://thimpress.com
 */
 
@@ -38,6 +38,8 @@ class TP_Hotel_Booking{
      */
     protected $_plugin_url = null;
 
+    public $cart = null;
+
     /**
      * Construction
      */
@@ -53,7 +55,7 @@ class TP_Hotel_Booking{
         add_action( 'template_redirect', 'hb_handle_purchase_request', 999 );
         add_action( 'widgets_init', array( $this, 'register_widgets' ) );
         register_activation_hook( __FILE__, array( $this, 'install' ) );
-        $this->install();
+        // $this->install();
     }
 
     function install(){
@@ -112,7 +114,16 @@ class TP_Hotel_Booking{
         $this->_include( 'includes/class-hb-comments.php' );
         $this->_include( 'includes/hb-template-hooks.php' );
         $this->_include( 'includes/hb-template-functions.php' );
+
+        // shortcodes
         $this->_include( 'includes/class-hb-shortcodes.php' );
+        $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-cart.php' );
+        $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-checkout.php' );
+        $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-lastest-reviews.php' );
+        $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-mini-cart.php' );
+        $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-slider.php' );
+        $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking.php' );
+        // end shortcodes
 
         $this->_include( 'includes/widgets/class-hb-widget-search.php' );
         $this->_include( 'includes/widgets/class-hb-widget-room-carousel.php' );
@@ -120,14 +131,22 @@ class TP_Hotel_Booking{
         $this->_include( 'includes/widgets/class-hb-widget-lastest-reviews.php' );
         $this->_include( 'includes/widgets/class-hb-widget-mini-cart.php' );
         $this->_include( 'includes/class-hb-post-types.php' );
-        // addon
-        $this->_include( 'includes/plugins/tp-hb-currencies/tp-hb-currencies.php' );
-        $this->_include( 'includes/plugins/tp-hb-extra/tp-hb-extra.php' );
-        // end addon
+
         $this->_include( 'includes/hb-functions.php' );
-        $this->_include( 'includes/class-hb-cart.php' );
         $this->_include( 'includes/class-hb-resizer.php' );
         $this->_include( 'includes/class-hb-booking.php' );
+
+        // products
+        $this->_include( 'includes/products/class-hb-abstract-product.php' );
+        $this->_include( 'includes/products/class-hb-product-room.php' );
+        // // addon
+        $this->_include( 'includes/plugins/tp-hb-currencies/tp-hb-currencies.php' );
+        $this->_include( 'includes/plugins/tp-hb-extra/tp-hb-extra.php' );
+        // // end addon
+        $this->_include( 'includes/products/class-hb-room.php' );
+        // end products
+        $this->_include( 'includes/class-hb-cart.php' );
+        // // $this->_include( 'includes/class-hb-settings.php' );
 
         $this->_include( 'includes/hb-webhooks.php' );
 
@@ -145,9 +164,10 @@ class TP_Hotel_Booking{
         }
         // load payment gateways
         $this->load_payments();
-
         // load reports
         $this->load_reports();
+        // cart
+        $this->cart = HB_Cart::instance();
     }
 
     // load all payment gateways support
@@ -255,7 +275,7 @@ class TP_Hotel_Booking{
             // wp_register_style( 'tp-admin-hotel-booking-tokenize-css', $this->plugin_url( 'includes/assets/css/jquery.tokenize.css' ) );
         }else{
             wp_register_style( 'tp-hotel-booking', $this->plugin_url( 'includes/assets/css/hotel-booking.min.css' ) );
-            wp_register_script( 'tp-hotel-booking', $this->plugin_url( 'includes/assets/js/hotel-booking.min.js' ), $dependencies );
+            wp_register_script( 'tp-hotel-booking', $this->plugin_url( 'includes/assets/js/hotel-booking.js' ), $dependencies );
 
             // stripe assets
             wp_register_script( 'tp-hotel-booking-stripe-js', $this->plugin_url( 'includes/assets/js/stripe.js' ), $dependencies );
@@ -319,8 +339,8 @@ class TP_Hotel_Booking{
     ?>
         <script type="text/javascript">
             var hotel_settings = {
-                ajax: '<?php echo admin_url( 'admin-ajax.php' );?>',
-                settings: <?php echo HB_Settings::instance()->toJson( apply_filters( 'hb_settings_fields', array( 'review_rating_required' ) ) );?>,
+                ajax: '<?php echo admin_url( 'admin-ajax.php' ); ?>',
+                settings: <?php echo HB_Settings::instance()->toJson( apply_filters( 'hb_settings_fields', array( 'review_rating_required' ) ) ); ?>,
                 upload_base_url: '<?php echo esc_js($upload_base_url) ?>',
                 meta_key: {
                     prefix: '_hb_'

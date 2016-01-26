@@ -381,49 +381,42 @@
 			var template = wp.template('hb-minicart-item');
 			template = template(data);
 
-			if (length === 0)
+			if ( length === 0 )
 				return;
 
-			for (var i = 0; i < length; i++) {
-				var cart = $(mini_cart[i]);
+			for ( var i = 0; i < length; i++ ) {
+				var cart = $(mini_cart[i]),
+					cart_item = $(mini_cart[i]).find('.hb_mini_cart_item'),
+					insert = false,
+					empty = cart.find('.hb_mini_cart_empty'),
+					footer_ele = cart.find('.hb_mini_cart_footer'),
+					items_length = cart_item.length;
 
-				var cart_item = $(mini_cart[i]).find('.hb_mini_cart_item');
-				var insert = false;
-				var empty = cart.find('.hb_mini_cart_empty');
-				var footer_ele = cart.find('.hb_mini_cart_footer');
-
-				var items_length = cart_item.length;
-
-				if (items_length === 0) {
+				if ( items_length === 0 ) {
 					var footer = wp.template('hb-minicart-footer');
 					var ele = footer_ele;
-					if (empty.length === 1) {
+					if ( empty.length === 1 ) {
 						empty.after(footer({}));
 						empty.before(template);
-					}
-					else {
+					} else {
 						footer_ele.before(template);
 					}
 					insert = true;
 					break;
-				}
-				else {
-					for (var y = 0; y < items_length; y++) {
-						var item = $(cart_item[y]);
-						var searchId = item.attr('data-search-key');
-						var roomId = item.attr('data-id');
-						if (data.search_key !== searchId)
-							continue;
+				} else {
+					for ( var y = 0; y < items_length; y++ ) {
+						var item = $(cart_item[y]),
+							cart_id = item.attr( 'data-cart-id' );
 
-						if (data.id == parseInt(roomId)) {
-							item.replaceWith(template);
+						if ( data.cart_id === cart_id ) {
+							item.replaceWith( template );
 							insert = true;
 							break;
 						}
 					}
 
-					if (insert === false) {
-						footer_ele.before(template);
+					if ( insert === false ) {
+						footer_ele.before( template );
 					}
 				}
 			}
@@ -432,24 +425,23 @@
 			var timeout = setTimeout(function () {
 				$('.hb_mini_cart_item').removeClass('active');
 				clearTimeout(timeout);
-			}, 3000);
+			}, 3500);
 
-			if (typeof callback !== 'undefined') {
+			if ( typeof callback !== 'undefined' ) {
 				callback();
 			}
 		},
 
-		hb_remove_cart_item_callback: function (dateID, roomID, res) {
+		hb_remove_cart_item_callback: function ( cart_id, res ) {
 			var minicart = $('.hotel_booking_mini_cart');
 			for (var i = 0; i < minicart.length; i++) {
 				var cart = $(minicart[i]);
 				var items = cart.find('.hb_mini_cart_item');
 
 				for (var y = 0; y < items.length; y++) {
-					var _item = $(items[y]);
-					var _item_dateID = _item.attr('data-search-key');
-					var _item_roomID = _item.attr('data-id');
-					if (dateID === _item_dateID && roomID === _item_roomID) {
+					var _item = $(items[y]),
+						cart_item_id = _item.attr( 'data-cart-id' );
+					if ( cart_id === cart_item_id ) {
 						_item.remove();
 						break;
 					}
@@ -460,34 +452,34 @@
 				if (items.length === 0) {
 					var empty = wp.template('hb-minicart-empty');
 					cart.find('.hb_mini_cart_footer').remove();
-					cart.append(empty({}));
+					cart.append( empty({}) );
 					break;
 				}
 			}
 
 			var cart_table = $('#hotel-booking-payment, #hotel-booking-cart');
 
-			for (var i = 0; i < cart_table.length; i++) {
+			for ( var i = 0; i < cart_table.length; i++ ) {
 				var _table = $(cart_table[i]);
-				var tr = _table.find('table').find('.hb_checkout_item');
+				var tr = _table.find('table').find('.hb_checkout_item, .hb_addition_services_title');
 				for (var y = 0; y < tr.length; y++) {
-					var _tr = $(tr[y]);
-					var _date = _tr.attr('data-date');
-					var _roomID = _tr.attr('data-id');
-					if (_date === dateID && _roomID === roomID) {
+					var _tr = $( tr[y] );
+						cart_item_id = _tr.attr( 'data-cart-id' ),
+						parent_item_id = _tr.attr( 'data-parent-id' );
+					if ( cart_id === cart_item_id || cart_id === parent_item_id ) {
 						_tr.remove();
-						break;
+						continue;
 					}
 				}
 
-				if (typeof res.sub_total !== 'undefined')
-					_table.find('span.hb_sub_total_value').html(res.sub_total);
+				if ( typeof res.sub_total !== 'undefined' )
+					_table.find('span.hb_sub_total_value').html( res.sub_total );
 
-				if (typeof res.grand_total !== 'undefined')
-					_table.find('span.hb_grand_total_value').html(res.grand_total);
+				if ( typeof res.grand_total !== 'undefined' )
+					_table.find('span.hb_grand_total_value').html( res.grand_total );
 
-				if (typeof res.advance_payment !== 'undefined')
-					_table.find('span.hb_advance_payment_value').html(res.advance_payment);
+				if ( typeof res.advance_payment !== 'undefined' )
+					_table.find('span.hb_advance_payment_value').html( res.advance_payment );
 
 			}
 		},
@@ -535,7 +527,7 @@
 								alert(code.message);
 							}
 
-							if (typeof code.id !== 'undefined' && typeof code.search_key !== 'undefined')
+							if ( typeof code.id !== 'undefined' )
 								HB_Booking_Cart.hb_add_to_cart_callback(code);
 							button.removeClass('hb_loading');
 						},
@@ -555,15 +547,13 @@
 			$(document).on('click', '.hb_remove_cart_item', function (e) {
 				e.preventDefault();
 
-				var tr = $(this).parents('tr');
-				var dateID = $(this).attr('data-date');
-				var roomID = $(this).attr('data-id');
+				var tr = $(this).parents('tr'),
+					cart_item = $(this).attr('data-cart-id');
 				$.ajax({
 					url       : hotel_settings.ajax,
 					type      : 'POST',
 					data      : {
-						time  : dateID,
-						room  : roomID,
+						cart_id  : cart_item,
 						nonce : hotel_settings.nonce,
 						action: 'hotel_booking_ajax_remove_item_cart'
 					},
@@ -586,7 +576,7 @@
 						$('span.hb_advance_payment_value').html(res.advance_payment);
 					tr.hb_overlay_ajax_stop();
 					tr.remove();
-					HB_Booking_Cart.HB_Booking_Cart.hb_remove_cart_item_callback(dateID, roomID);
+					HB_Booking_Cart.hb_remove_cart_item_callback( cart_item, res );
 				});
 			});
 
@@ -595,17 +585,15 @@
 				event.preventDefault();
 				var minicart = $('.hotel_booking_mini_cart');
 				var item = $(this).parents('.hb_mini_cart_item');
-				var dateID = item.attr('data-search-key');
-				var roomID = item.attr('data-id');
+				var cart_id = item.attr( 'data-cart-id' );
 
 				$.ajax({
 					url       : hotel_settings.ajax,
 					type      : 'POST',
 					data      : {
-						time  : dateID,
-						room  : roomID,
-						nonce : hotel_settings.nonce,
-						action: 'hotel_booking_ajax_remove_item_cart'
+						cart_id  	: cart_id,
+						nonce 		: hotel_settings.nonce,
+						action		: 'hotel_booking_ajax_remove_item_cart'
 					},
 					dataType  : 'html',
 					beforeSend: function () {
@@ -618,7 +606,7 @@
 						return;
 					}
 
-					HB_Booking_Cart.hb_remove_cart_item_callback(dateID, roomID, res);
+					HB_Booking_Cart.hb_remove_cart_item_callback( cart_id, res );
 				});
 			});
 		},

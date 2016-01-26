@@ -36,7 +36,7 @@ class HB_Room_Extra extends HB_Room
                 $ext->ID                    = (int)$post_id;
                 $ext->title                 = $package->title;
                 $ext->description           = $package->description;
-                $ext->price                 = (float)$package->regular_price_tax;
+                $ext->price                 = (float)$package->amount_singular();
                 $ext->respondent            = $package->respondent;
                 $ext->respondent_name       = $package->respondent_name;
                 $ext->selected              = get_post_meta( $post_id, 'tp_hb_extra_room_selected', true );
@@ -60,7 +60,7 @@ class HB_Room_Extra extends HB_Room
                 $ext->ID                    = (int)$post->ID;
                 $ext->title                 = $package->title;
                 $ext->description           = $package->description;
-                $ext->price                 = (float)$package->regular_price_tax;
+                $ext->price                 = (float)$package->amount_singular();
                 $ext->respondent            = $package->respondent;
                 $ext->respondent_name       = $package->respondent_name;
                 $ext->selected              = get_post_meta( $post->ID, 'tp_hb_extra_room_selected', true );

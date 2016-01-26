@@ -11,29 +11,9 @@ class HB_Extra_Cart
 	function __construct( $cart_id = null )
 	{
 		/**
-		 * cart add more somethings
+		 * new script
 		 */
-		add_filter( 'tp_hotel_booking_append_cart_data', array( $this, 'add_extra_to_cart' ), 10, 1 );
-		/**
-		 * return session cart
-		 */
-		add_filter( 'tp_hb_session_cart_id', array( $this, 'append_session' ), 10, 3 );
-
-		/**
-		 * wp.template layout filter
-		 */
-		add_filter( 'hb_get_template', array( $this, 'mini_cart_layout' ), 10, 5 );
-
-		/**
-		 * after mini cart item loop
-		 */
-		add_action( 'hotel_booking_before_mini_cart_loop_price', array( $this, 'mini_cart_loop' ), 10, 1 );
-
-		/**
-		 * profilter ro0m item price in minicart
-		 */
-		add_filter( 'hotel_booking_room_total_price_extentions', array( $this, 'extra_price' ), 10, 3 );
-
+		add_action( 'hotel_booking_added_cart', array( $this, 'ajax_added_cart' ), 10, 2 );
 		/**
 		 * add filter add to cart results array
 		 * render object build mini cart
@@ -41,126 +21,80 @@ class HB_Extra_Cart
 		add_filter( 'tp_hb_add_to_cart_results', array( $this, 'add_to_cart_results' ), 10, 2 );
 
 		/**
-		 * booking params save _hb_booking_params
+		 * after mini cart item loop
 		 */
-		add_filter( 'hotel_booking_booking_params', array( $this, 'booking_info' ) );
-
+		add_action( 'hotel_booking_before_mini_cart_loop_price', array( $this, 'mini_cart_loop' ), 10, 2 );
 		/**
-		 * ajax remove packages
+		 * wp.template layout filter
 		 */
+		add_filter( 'hb_get_template', array( $this, 'mini_cart_layout' ), 10, 5 );
+		/**
+		 * end new script
+		 */
+
+		// /**
+		//  * profilter ro0m item price in minicart
+		//  */
+		// add_filter( 'hotel_booking_room_total_price_extentions', array( $this, 'extra_price' ), 10, 3 );
+
+		add_filter( 'hotel_booking_cart_room_item_amount', array( $this, 'add_price_to_room' ), 10, 2 );
+
+		// /**
+		//  * ajax remove packages
+		//  */
 		add_action( 'wp_ajax_tp_hotel_booking_remove_package', array( $this, 'remove_package' ) );
 		add_action( 'wp_ajax_nopriv_tp_hotel_booking_remove_package', array( $this, 'remove_package' ) );
 
 		/**
 		 * append package into cart
 		 */
-		add_action( 'hotel_booking_cart_after_item', array( $this, 'cart_package_after_item' ) );
+		add_action( 'hotel_booking_cart_after_item', array( $this, 'cart_package_after_item' ), 10, 2 );
 
 		add_filter( 'tp_hb_extra_cart_input', array( $this, 'check_respondent' ) );
 
-		add_filter( 'hotel_booking_update_cart', array( $this, 'update_cart_package' ), 10, 4 );
-
 	}
 
-
-	/**
-	 * $_POST
-	 * @param $posts
-	 * @return  $posts
-	 */
-	public function add_extra_to_cart( $posts )
+	// add extra
+	function ajax_added_cart( $cart_id, $cart_parent_param )
 	{
-		// if( ! defined( 'DOING_AJAX' ) ) return $posts;
+		remove_filter( 'hotel_booking_added_cart', array( $this, 'ajax_added_cart' ), 10, 2 );
 
-		if( ! isset( $_POST ) || empty( $_POST ) ) return $posts;
+		if( empty( $_POST[ 'hb_optional_quantity_selected' ] ) || empty( $_POST[ 'hb_optional_quantity' ] ) ) {
+			return $cart_id;
+		}
 
-		if( isset( $_POST['action'] ) && $_POST['action'] === 'hotel_booking_ajax_add_to_cart' )
+		if( $_POST['hb_optional_quantity_selected'] )
 		{
-			foreach ( $_POST as $key => $_post ) {
-				$posts[ $key ] = $_post;
+			$selected_quantity = $_POST['hb_optional_quantity'];
+			$turn_on = $_POST['hb_optional_quantity_selected'];
+
+			foreach ( $selected_quantity as $extra_id => $qty ) {
+				if ( array_key_exists( $extra_id, $turn_on ) ) {
+					$param = array(
+							'product_id'		=> $extra_id,
+							'parent_id'			=> $cart_id,
+							'check_in_date'		=> $cart_parent_param['check_in_date'],
+							'check_out_date'	=> $cart_parent_param['check_out_date']
+						);
+
+					$extra_cart_item_id = TP_Hotel_Booking::instance()->cart->add_to_cart( $extra_id, $param, $qty );
+				}
+				else
+				{
+					$param = array(
+							'product_id'		=> $extra_id,
+							'parent_id'			=> $cart_id,
+							'check_in_date'		=> $cart_parent_param['check_in_date'],
+							'check_out_date'	=> $cart_parent_param['check_out_date']
+						);
+					$extra_cart_item_id = TP_Hotel_Booking::instance()->cart->generate_cart_id( $param );
+					TP_Hotel_Booking::instance()->cart->remove_cart_item( $extra_cart_item_id );
+				}
 			}
 		}
 
-		return $posts;
-	}
-
-	/**
-	 * append session cart item id
-	 * @param  array $sessions session storage
-	 * @param  array $posts    $_POST param
-	 * @return array session
-	 */
-	public function append_session( $session_cart_id, $sessions, $posts )
-	{
-		if( ! isset( $posts['hb_optional_quantity_selected'] ) || empty( $posts['hb_optional_quantity_selected'] ) )
-		{
-			$search_key = isset( $session_cart_id[ 'search_key' ] ) ? $session_cart_id[ 'search_key' ] : false;
-			$room_id = isset( $session_cart_id[ 'id' ] ) ? $session_cart_id[ 'id' ] : false;
-
-			if( ! $search_key || ! array_key_exists( $search_key , $sessions ) )
-				return $session_cart_id;
-
-			if( ! $room_id || ! array_key_exists( $room_id, $sessions[ $search_key ] ) )
-				return $session_cart_id;
-
-			if( ! isset( $sessions[ $search_key ][$room_id]['extra_packages'] ) )
-				return $session_cart_id;
-
-			$session_cart_id[ 'extra_packages' ] = $sessions[ $search_key ][$room_id]['extra_packages'];
-
-			return $session_cart_id;
-		}
-		else
-		{
-			if( ! isset( $posts['hb_optional_quantity'] ) || empty( $posts['hb_optional_quantity'] ) )
-				return $session_cart_id;
-
-			$extras = array();
-			foreach ( $posts['hb_optional_quantity'] as $extra_id => $quantity ) {
-				if( ! array_key_exists( $extra_id, $posts['hb_optional_quantity_selected'] ) )
-					continue;
-
-				unset( $session_cart_id[ 'extra_packages' ][ $extra_id  ] );
-				$extras[ $extra_id ] = $quantity;
-			}
-
-			if( ! empty( $extras ) )
-				$session_cart_id[ 'extra_packages' ] = $extras;
-
-			return $session_cart_id;
-		}
-		return $session_cart_id;
-	}
-
-	public function add_room_package ( $search_key, $room_id, $package, $qty )
-	{
-		if( ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'] )
-			|| ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key] )
-			|| ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key][$room_id] )
-			)
-				return;
-
-		if( ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key][$room_id]['extra_packages'] ) )
-			$_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key][$room_id]['extra_packages'] = array();
-
-		if( $qty == 0 )
-			return $this->remove_package_item( $search_key, $room_id, $package );
-
-		return $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key][$room_id]['extra_packages'][$package] = $qty;
-	}
-
-	public function remove_package_item( $search_key, $room_id, $package )
-	{
-		if( ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'] )
-			|| ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key] )
-			|| ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key][$room_id] )
-			|| ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key][$room_id]['extra_packages'] )
-			|| ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key][$room_id]['extra_packages'][$package] )
-			)
-				return;
-
-		unset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$search_key][$room_id]['extra_packages'][$package] );
-
+		add_action( 'hotel_booking_added_cart', array( $this, 'ajax_added_cart' ), 10, 2 );
+		return $cart_id;
 	}
 
 	/**
@@ -184,29 +118,63 @@ class HB_Extra_Cart
 
 	/**
 	 * extra package each cart item
-	 * @param  [type] $room [description]
-	 * @return [type]       [description]
+	 * @param
+	 * @return
 	 */
-	public function mini_cart_loop( $room )
+	public function mini_cart_loop( $room, $cart_id )
 	{
-		if( ! $room ) return;
+		$cart_item = TP_Hotel_Booking::instance()->cart->get_cart_item( $cart_id );
+		if( ! $cart_item ) return;
+
+		$extra_packages = array();
+		foreach ( TP_Hotel_Booking::instance()->cart->cart_contents as $id => $cart_item ) {
+			if( isset( $cart_item->parent_id ) && $cart_item->parent_id === $cart_id )
+			{
+				$extra_packages[] = array(
+						'package_id'	=> $cart_item->product_id,
+						'quantity'		=> $cart_item->quantity,
+						'cart_id'		=> $id
+					);
+			}
+		}
 
 		ob_start();
-
 		tp_hb_extra_get_template( 'loop/mini-cart-extra.php',
 			array(
-				'extra_packages' 	=> $room->extra_packages,
-				'check_in'			=> $room->check_in_date,
-				'check_out'			=> $room->check_out_date,
-				'room_quantity' 	=> $room->quantity
-		) );
-
+				'extra_packages' 	=> $extra_packages,
+				'check_in'			=> $cart_item->check_in_date,
+				'check_out'			=> $cart_item->check_out_date,
+				'room_quantity' 	=> $cart_item->quantity
+		));
 		echo ob_get_clean();
+	}
+
+	// add extra price
+	function add_price_to_room( $total, $room )
+	{
+		remove_filter( 'hotel_booking_cart_room_item_amount', array( $this, 'add_price_to_room' ) );
+		$cart_param = array(
+				'product_id'		=> $room->ID,
+				'check_in_date'		=> $room->get_data('check_in_date'),
+				'check_out_date'	=> $room->get_data('check_out_date')
+			);
+		$cart_id = HB_Cart::instance()->generate_cart_id( $cart_param );
+
+		if( ! empty( HB_Cart::instance()->cart_contents ) )
+		{
+			foreach ( HB_Cart::instance()->cart_contents as $id => $cart_item ) {
+				if ( isset( $cart_item->parent_id ) && $cart_item->parent_id === $cart_id ) {
+					$total = $total + $cart_item->amount;
+				}
+			}
+		}
+		add_filter( 'hotel_booking_cart_room_item_amount', array( $this, 'add_price_to_room' ), 10, 2 );
+		return $total;
 	}
 
 	function extra_price( $total, $room, $tax )
 	{
-		// remove_filter( 'hotel_booking_room_total_price_extentions', array( $this, 'extra_price' ) );
+		remove_filter( 'hotel_booking_room_total_price_extentions', array( $this, 'extra_price' ) );
 		if( ! $room->extra_packages )
 			return $total;
 
@@ -223,7 +191,7 @@ class HB_Extra_Cart
 				$price = $price + $package->price;
 			}
 		}
-		// add_filter( 'hotel_booking_room_total_price_extentions', array( $this, 'extra_price' ), 10, 3 );
+		add_filter( 'hotel_booking_room_total_price_extentions', array( $this, 'extra_price' ), 10, 3 );
 		return $price;
 	}
 
@@ -232,63 +200,54 @@ class HB_Extra_Cart
 		if( ! isset( $_POST ) || ! defined( 'HB_BLOG_ID' ) )
 			return;
 
-		if( ! isset( $_POST['room_id'] ) || ! isset( $_POST['package_id'] ) || ! isset( $_POST['time_key'] ) )
-			return;
-
-		$room_id = $_POST['room_id'];
-		$time_key = $_POST['time_key'];
-		$package_id = $_POST['package_id'];
-
-		if( ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$time_key] ) || ! isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$time_key][$room_id] ) )
-			return;
-
-		if( isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$time_key][$room_id]['extra_packages'] )
-			&& isset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$time_key][$room_id]['extra_packages'][ $package_id ] )
-		)
-		{
-			unset( $_SESSION['hb_cart'.HB_BLOG_ID]['products'][$time_key][$room_id]['extra_packages'][ $package_id ] );
-
-			do_action( 'hb_extra_remove_package', $package_id, $room_id, $time_key );
+		if( ! isset( $_POST['cart_id'] ) ) {
+			wp_send_json( array( 'status' => 'success', 'message' => __( 'Cart ID is not exists.', 'tp-hotel-booking' ) ) );
 		}
 
-		$hb_cart = HB_Cart::instance();
+		$cart_id = sanitize_text_field( $_POST['cart_id'] );
 
-		$room = $hb_cart->get_room( $room_id, $time_key );
+		// cart item is exists
+		if ( $package_item = TP_Hotel_Booking::instance()->cart->get_cart_item( $cart_id ) ) {
+			if ( TP_Hotel_Booking::instance()->cart->remove_cart_item( $cart_id ) ) {
+				// room cart item id
+				$room = TP_Hotel_Booking::instance()->cart->get_cart_item( $package_item->parent_id );
+				$results =  array(
+		                    'status'    		=> 'success',
+		                    'cart_id'        	=> $package_item->parent_id,
+		                    'permalink' 		=> get_permalink( $room->product_id ),
+		                    'name'      		=> sprintf( '%s', $room->product_data->name ) . ( $room->product_data->capacity_title ? sprintf( '(%s)', $room->product_data->capacity_title) : '' ),
+		                    'quantity'  		=> $room->quantity,
+		                    'total'     		=> hb_format_price( $room->amount ),
+		                    // use to cart table
+		                    'package_id'		=> $cart_id,
+		                    'item_total'		=> hb_format_price( $room->amount_include_tax ),
+		                    'sub_total'  		=> hb_format_price( TP_Hotel_Booking::instance()->cart->sub_total ),
+			                'grand_total'   	=> hb_format_price( TP_Hotel_Booking::instance()->cart->total ),
+			                'advance_payment' 	=> hb_format_price( TP_Hotel_Booking::instance()->cart->advance_payment )
+		            );
 
-		$results =  array(
-                    'status'    		=> 'success',
-                    'id'        		=> $room_id,
-                    'permalink' 		=> get_permalink( $room_id ),
-                    'search_key'		=> $time_key,
-                    'name'      		=> sprintf( '%s (%s)', $room->name, $room->capacity_title ),
-                    'quantity'  		=> $room->quantity,
-                    'total'     		=> hb_format_price( $room->total_price ),
-                    // use to cart table
-                    'package_id'		=> $package_id,
-                    'item_total'		=> hb_format_price( $room->total ),
-                    'sub_total'  		=> hb_format_price( $hb_cart->sub_total ),
-	                'grand_total'   	=> hb_format_price( $hb_cart->total ),
-	                'advance_payment' 	=> hb_format_price( $hb_cart->advance_payment )
-            );
+				$extraRoom = TP_Hotel_Booking::instance()->cart->get_extra_packages( $package_item->parent_id );
+				$extra_packages = array();
+				if( $extraRoom ) {
+					foreach ( $extraRoom as $cart_id => $cart_item ) {
+						$extra = HB_Extra_Package::instance( $cart_item->product_id );
+						$extra_packages[] = array(
+								'package_title'				=> sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->regular_price_tax ) ),
+								'cart_id'					=> $cart_id,
+								'package_quantity'			=> sprintf( 'x%s', $cart_item->quantity ),
+								'package_respondent'		=> $extra->respondent
+							);
+					}
+				}
+				$results['extra_packages'] = $extra_packages;
 
-		$extraRoom = $room->extra_packages;
-		$extra_packages = array();
-		if( $extraRoom )
-		{
-			foreach ( $extraRoom as $id => $quantt ) {
-				$extra = HB_Extra_Package::instance( $id );
-				$extra_packages[] = array(
-						'package_title'				=> sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->regular_price_tax ) ),
-						'package_id'				=> $extra->ID,
-						'package_quantity'			=> sprintf( 'x%s', $quantt ),
-						'package_respondent'		=> $extra->respondent
-					);
+				$results = apply_filters( 'hb_remove_package_results', $results, $package_item );
+		        hb_send_json( $results );
 			}
-		}
-		$results['extra_packages'] = $extra_packages;
 
-		$results = apply_filters( 'hb_remove_package_results', $results, $room_id );
-        hb_send_json( $results );
+		} else {
+			wp_send_json( array( 'status' => 'success', 'message' => __( 'Cart item is not exists.', 'tp-hotel-booking' ) ) );
+		}
 	}
 
 	/**
@@ -298,75 +257,49 @@ class HB_Extra_Cart
 	 */
 	function add_to_cart_results( $results, $room )
 	{
-		if( $extraRoom = $room->extra_packages )
-		{
-			if( empty( $extraRoom ) )
-				return $results;
+		if( ! isset( $results[ 'cart_id' ] ) ) return $results;
 
+		$cart_id = $results[ 'cart_id' ];
+		$cart_contents = TP_Hotel_Booking::instance()->cart->cart_contents;
+
+		if ( $cart_contents ) {
 			$extra_packages = array();
-			foreach ( $extraRoom as $id => $quantt ) {
-				$extra = HB_Extra_Package::instance( $id );
-				$extra_packages[] = array(
-						'package_title'		=> sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->regular_price_tax ) ),
-						'package_id'		=> $extra->ID,
-						'package_quantity'	=> sprintf( 'x%s', $quantt )
-					);
+			foreach ( $cart_contents as $cart_item_id => $cart_item ) {
+				if ( isset( $cart_item->parent_id ) && $cart_item->parent_id === $cart_id ) {
+					// extra class
+					$extra = HB_Extra_Package::instance( $cart_item->product_id );
+					$extra_packages[] = array(
+							'package_title'		=> sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->regular_price_tax ) ),
+							'package_id'		=> $extra->ID,
+							'cart_id'			=> $cart_item_id,
+							'package_quantity'	=> sprintf( 'x%s', $cart_item->quantity )
+						);
+				}
 			}
-			$results['extra_packages'] = $extra_packages;
+			$results[ 'extra_packages' ] = $extra_packages;
 		}
+
 		return $results;
 	}
 
-	/**
-	 * generate room info
-	 * @param  [type] $room_info [description]
-	 * @param  [type] $room      [description]
-	 * @return [type]            [description]
-	 */
-	function booking_info( $params )
+	function cart_package_after_item( $room, $cart_id )
 	{
-		foreach ( $params as $key => $rooms ) {
-			foreach ( $rooms as $room_id => $room_param ) {
-				if( isset( $room_param['extra_packages'] ) && ! empty( $room_param['extra_packages'] ) )
-				{
-					foreach ( $room_param['extra_packages'] as $id => $quantt ) {
-						$extra = HB_Extra_Package::instance( $id );
-						if( ! isset( $params[ $key ][ $room_id ][ 'extra_packages_details' ] ) )
-							$params[ $key ][ $room_id ][ 'extra_packages_details' ] = array();
+		$extra_packages = TP_Hotel_Booking::instance()->cart->get_extra_packages( $cart_id );
 
-						$params[ $key ][ $room_id ][ 'extra_packages_details' ][ $id ] = array(
-								'package_title'			=> sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->regular_price_tax ) ),
-								'package_id'			=> $extra->ID,
-								'package_desciprition'	=> $extra->description,
-								'package_quantity'		=> $quantt
-							);
-					}
-				}
+		if( $extra_packages ) {
+			if( is_hb_checkout() ) {
+				$page = 'checkout';
 			}
-		}
+			else {
+				$page = 'cart';
+			}
 
-		return $params;
-	}
-
-	function cart_package_after_item( $room )
-	{
-		if( ! $room->extra_packages )
-			return;
-
-		if( is_hb_checkout() )
-		{
-			$page = 'checkout';
-		}
-		else
-		{
-			$page = 'cart';
-		}
-
-		tp_hb_extra_get_template( 'loop/addition-services-title.php', array( 'page' => $page, 'room' => $room ) );
-		foreach ( $room->extra_packages as $package_id => $quantity )
-		{
-			$package = HB_Extra_Package::instance( $package_id, $room->check_in_date, $room->check_out_date, $room->quantity, (int)$quantity );
-			tp_hb_extra_get_template( 'loop/cart-extra-package.php', array( 'package' => $package, 'room' => $room, 'page' => $page ) );
+			tp_hb_extra_get_template( 'loop/addition-services-title.php', array( 'page' => $page, 'room' => $room, 'cart_id' => $cart_id ) );
+			foreach ( $extra_packages as $package_cart_id => $cart_item )
+			{
+				$package = HB_Extra_Package::instance( $cart_item->product_id, $cart_item->check_in_date, $cart_item->check_out_date, $room->quantity, (int)$cart_item->quantity );
+				tp_hb_extra_get_template( 'loop/cart-extra-package.php', array( 'package' => $package, 'room' => $room, 'page' => $page, 'cart_id' => $package_cart_id, 'parent_id' => $cart_id ) );
+			}
 		}
 	}
 
@@ -381,31 +314,8 @@ class HB_Extra_Cart
 			if( $respondent === 'trip' )
 				return false;
 		}
-		// add_filter( 'tp_hb_extra_cart_input', array( $this, 'check_respondent' ) );
+		add_filter( 'tp_hb_extra_cart_input', array( $this, 'check_respondent' ) );
 		return $respondent;
-	}
-
-	/**
-	 * submit update package in the cart page
-	 * @param  [array] $sessions $_SESSION
-	 * @param  [type] $posts    [description]
-	 * @return [array]           $_SESSION processed
-	 */
-	function update_cart_package( $sessions, $posts, $search_key, $room_id )
-	{
-
-		if( ! isset( $posts['hotel_booking_cart_package'] ) || empty( $posts['hotel_booking_cart_package'] ) )
-			return $sessions;
-
-		if( ! isset( $posts['hotel_booking_cart_package'][ $search_key ] ) )
-			return $sessions;
-
-		if( ! isset( $posts['hotel_booking_cart_package'][ $search_key ][ $room_id ] ) )
-			return $sessions;
-
-		$sessions['extra_packages'] = $posts['hotel_booking_cart_package'][ $search_key ][ $room_id ];
-
-		return $sessions;
 	}
 
 	/**

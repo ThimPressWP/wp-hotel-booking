@@ -47,16 +47,16 @@ class HB_Booking{
      * @param $post
      */
     function __construct( $post ){
-        if( is_numeric( $post ) && $post && get_post_type( $post ) == 'hb_booking') {
+        if ( is_numeric( $post ) && $post && get_post_type( $post ) == 'hb_booking') {
             $this->post = get_post( $post );
-        }elseif( $post instanceof WP_Post || is_object( $post ) ){
+        } else if( $post instanceof WP_Post || is_object( $post ) ){
             $this->post = $post;
         }
-        if( empty( $this->post ) ){
+        if ( empty( $this->post ) ){
             $this->post = hb_create_empty_post( array( 'post_status' => 'hb-pending' ) );
         }
 
-        if( ! empty( $this->post->ID ) ){
+        if ( ! empty( $this->post->ID ) ) {
             $this->load_customer();
         }
         $this->id = $this->post->ID;
@@ -89,16 +89,16 @@ class HB_Booking{
      * @param $customer
      * @return null|object|stdClass
      */
-    function set_customer( $customer ){
-        if( empty( $this->_customer ) ){
+    function set_customer( $customer ) {
+        if ( empty( $this->_customer ) ) {
             $this->_customer = hb_create_empty_post();
         }
-        if( is_numeric( $customer ) ){
+        if ( is_numeric( $customer ) ) {
             $this->_customer = get_post( intval( $customer ) );
-        }else{
-            if( func_num_args() > 1 ){
+        } else {
+            if ( func_num_args() > 1 ){
                 $this->_customer->{$customer} = func_get_arg(1);
-            }else {
+            } else {
                 $this->_customer = (object)$customer;
             }
         }
@@ -126,10 +126,10 @@ class HB_Booking{
     function update(){
         $post_data = get_object_vars($this->post);
         // ensure the post_type is correct
-        $post_data['post_type']     = 'hb_booking';
+        $post_data['post_type']                 = 'hb_booking';
         $post_data['post_content_filtered']     = $post_data['post_content'];
-        $post_data['post_excerpt']     = $post_data['post_content'];
-        if ($this->post->ID) {
+        $post_data['post_excerpt']              = $post_data['post_content'];
+        if ( $this->post->ID ) {
             $booking_id = wp_update_post($post_data);
         } else {
             $booking_id = wp_insert_post($post_data, true);
@@ -146,10 +146,11 @@ class HB_Booking{
         return $this->post->ID;
     }
 
+    // room book item
     function save_room( $params = array(), $booking_id )
     {
         $itemOfOrderId = wp_insert_post( array(
-                    'post_title'    => sprintf( 'Room order in %1$s to %2$s', $params['check_in_date'], $params['check_out_date']),
+                    'post_title'    => sprintf( 'Room order in %1$s to %2$s', $params['_hb_check_in_date'], $params['_hb_check_out_date']),
                     'post_content'  => '',
                     'post_status'   => 'publish',
                     'post_type'     => 'hb_booking_item'
@@ -157,14 +158,6 @@ class HB_Booking{
 
         add_post_meta( $itemOfOrderId, '_hb_booking_id', $booking_id );
 
-        $check_in_time = strtotime( $params['check_in_date'] );
-        $check_out_time = strtotime( $params['check_out_date'] );
-
-        add_post_meta( $itemOfOrderId, '_hb_check_in_date', $check_in_time );
-        add_post_meta( $itemOfOrderId, '_hb_check_out_date', $check_out_time );
-
-        unset($params['check_in_date']);
-        unset($params['check_out_date']);
         foreach ($params as $key => $value) {
             add_post_meta( $itemOfOrderId, '_hb_' . $key, $value );
         }
@@ -280,6 +273,16 @@ class HB_Booking{
             $booking_id = $this->id;
 
         return get_post_meta( $booking_id, '_hb_booking_params', true );
+    }
+
+    /**
+     * get_cart_params
+     * @return cart object
+     * @since  1.0.4
+     */
+    function get_cart_params()
+    {
+        return get_post_meta( $this->id, '_hb_booking_cart_params', true );
     }
 
     /**

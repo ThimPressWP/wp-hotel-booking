@@ -134,9 +134,9 @@ $booking_id = hb_get_request( 'id' );
                                                 }
                                             ?>
                                         </td>
-                                        <td style="text-align: right;" colspan="4"><?php echo $room->quantity;?></td>
-                                        <td style="text-align: right;" colspan="4"><?php echo $room->check_in_date;?></td>
-                                        <td style="text-align: right;" colspan="4"><?php echo $room->check_out_date;?></td>
+                                        <td style="text-align: right;" colspan="4"><?php echo $room->quantity; ?></td>
+                                        <td style="text-align: right;" colspan="4"><?php echo $room->check_in_date; ?></td>
+                                        <td style="text-align: right;" colspan="4"><?php echo $room->check_out_date; ?></td>
                                         <td style="text-align: right;" colspan="4">
                                             <?php
                                                 echo hb_count_nights_two_dates( $room->check_out_date, $room->check_in_date);
@@ -157,7 +157,7 @@ $booking_id = hb_get_request( 'id' );
             </tr>
             <tr>
                 <th align="left"><?php _e( 'Name', 'tp-hotel-booking' ); ?></th>
-                <th align="left"><?php _e( 'Type', 'tp-hotel-booking' );?></th>
+                <th align="left"><?php _e( 'Type', 'tp-hotel-booking' ); ?></th>
                 <th align="left"><?php _e( 'Extra Package', 'tp-hotel-booking' ); ?></th>
                 <th align="right"><?php _e( 'Quantity', 'tp-hotel-booking' ); ?></th>
                 <th align="right"><?php _e( 'Sub total', 'tp-hotel-booking' ); ?></th>
@@ -193,7 +193,7 @@ $booking_id = hb_get_request( 'id' );
                                     <td align="right">
                                         <?php echo $room->quantity ?>
                                     </td>
-                                    <td align="right"><?php echo hb_format_price( $room->total, $currency_symbol );?></td>
+                                    <td align="right"><?php echo hb_format_price( $room->total, $currency_symbol ); ?></td>
                                 </tr>
                             <?php endforeach; ?>
 
@@ -264,18 +264,18 @@ $booking_id = hb_get_request( 'id' );
         <tbody>
             <tr>
                 <th>
-                    <?php _e( 'Payment Gateway', 'tp-hotel-booking' );?>
+                    <?php _e( 'Payment Gateway', 'tp-hotel-booking' ); ?>
                 </th>
                 <td>
-                    <?php echo get_post_meta( $booking_id, '_hb_method_title', true );?>
+                    <?php echo get_post_meta( $booking_id, '_hb_method_title', true ); ?>
                 </td>
             </tr>
             <tr>
                 <th>
-                    <?php _e( 'Booking status', 'tp-hotel-booking' );?>
+                    <?php _e( 'Booking status', 'tp-hotel-booking' ); ?>
                 </th>
                 <td>
-                    <span class="hb-booking-status <?php echo get_post_status( $booking_id );?>"><?php echo hb_get_booking_status_label( $booking_id );?></span>
+                    <span class="hb-booking-status <?php echo get_post_status( $booking_id ); ?>"><?php echo hb_get_booking_status_label( $booking_id ); ?></span>
                 </td>
             </tr>
         </tbody>

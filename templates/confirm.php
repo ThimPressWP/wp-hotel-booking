@@ -3,7 +3,7 @@
     <form name="hb-search-form">
         <input type="hidden" name="hotel-booking" value="complete">
         <p>
-            <button type="submit"><?php _e( 'Finish', 'tp-hotel-booking' );?></button>
+            <button type="submit"><?php _e( 'Finish', 'tp-hotel-booking' ); ?></button>
         </p>
     </form>
 </div>

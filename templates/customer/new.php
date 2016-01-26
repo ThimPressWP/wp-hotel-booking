@@ -12,7 +12,8 @@ $fax                  = '';
 $email                = '';
 $addition_information = '';
 
-if ( $email = get_transient( 'hotel_booking_customer_email_' . HB_BLOG_ID, $email ) ) {
+// if ( $email = get_transient( 'hotel_booking_customer_email_' . HB_BLOG_ID, $email ) ) {
+if ( $email = TP_Hotel_Booking::instance()->cart->customer_email ) {
 	$query_args = array(
 		'post_type'  => 'hb_customer',
 		'meta_query' => array(
@@ -23,7 +24,8 @@ if ( $email = get_transient( 'hotel_booking_customer_email_' . HB_BLOG_ID, $emai
 			),
 		)
 	);
-	set_transient( 'hotel_booking_customer_email_' . HB_BLOG_ID, $email, DAY_IN_SECONDS );
+	// set_transient( 'hotel_booking_customer_email_' . HB_BLOG_ID, $email, DAY_IN_SECONDS );
+	TP_Hotel_Booking::instance()->cart->set_customer( 'customer_email', $email );
 	if ( $posts = get_posts( $query_args ) ) {
 		$customer       = $posts[0];
 		$customer->data = array();

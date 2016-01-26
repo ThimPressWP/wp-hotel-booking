@@ -32,6 +32,7 @@ class HB_Extra_Factory
 		// enqueue
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
+		add_filter( 'hotel_booking_cart_product_class', array( $this, 'product_class' ), 10, 3 );
 	}
 
 	/**
@@ -81,6 +82,20 @@ class HB_Extra_Factory
 		}
 	}
 
+	function product_class( $product, $cart_item, $cart )
+	{
+		if( get_post_type( $cart_item->product_id ) === 'hb_extra_room' ) {
+			if( isset( $cart_item->parent_id  ) )
+			{
+				$parent = $cart->get_cart_item( $cart_item->parent_id );
+				if( $parent ) {
+					$product = new HB_Extra_Package( $cart_item->product_id, $cart_item->check_in_date, $cart_item->check_out_date, $parent->quantity, $cart_item->quantity );
+				}
+			}
+		}
+		return $product;
+	}
+
 	/**
 	 * enqueue script, style
 	 * @return null
@@ -94,7 +109,7 @@ class HB_Extra_Factory
 		}
 		else
 		{
-			wp_register_script( 'tp-hb-extra-js', TP_HB_EXTRA_URI . '/inc/assets/js/site.min.js', array(), HB_VERSION, true );
+			wp_register_script( 'tp-hb-extra-js', TP_HB_EXTRA_URI . '/inc/assets/js/site.js', array(), HB_VERSION, true );
 			wp_enqueue_style( 'tp-hb-extra-css', TP_HB_EXTRA_URI . '/inc/assets/css/site.min.css', array(), HB_VERSION );
 		}
 

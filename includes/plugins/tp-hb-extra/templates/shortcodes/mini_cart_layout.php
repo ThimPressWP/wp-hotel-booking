@@ -1,5 +1,5 @@
 <script type="text/html" id="tmpl-hb-minicart-item">
-    <div class="hb_mini_cart_item active" data-search-key="{{ data.search_key }}" data-id="{{ data.id }}">
+    <div class="hb_mini_cart_item active" data-cart-id="{{ data.cart_id }}">
 
         <div class="hb_mini_cart_top">
 
@@ -15,18 +15,18 @@
 
         </div>
 
-        <# if ( typeof data.extra_packages !== 'undefined' && data.extra_packages.length > 0 ) { #>
+        <# if ( typeof data.extra_packages !== 'undefined' && Object.keys( data.extra_packages ).length > 0 ) { #>
             <div class="hb_mini_cart_price_packages">
                 <label><?php _e( 'Addition Services:', 'tp-hotel-booking' ) ?></label>
                 <ul>
-                    <#  for ( var i = 0; i < data.extra_packages.length; i++ ) { #>
-                            <# var pack = data.extra_packages[i] #>
+                    <#  for ( var i = 0; i < Object.keys( data.extra_packages ).length; i++ ) { #>
+                            <# var pack = data.extra_packages[i]; #>
                             <li>
                                 <div class="hb_package_title">
                                     <a href="#">{{{ pack.package_title }}}</a>
                                     <span>
                                         ( {{{ pack.package_quantity }}} )
-                                        <a href="#" class="hb_package_remove" data-package="{{ pack.package_id }}"><i class="fa fa-times"></i></a>
+                                        <a href="#" class="hb_package_remove" data-cart-id="{{ pack.cart_id }}"><i class="fa fa-times"></i></a>
                                     </span>
                                 </div>
                             </li>
@@ -47,8 +47,8 @@
 <script type="text/html" id="tmpl-hb-minicart-footer">
     <div class="hb_mini_cart_footer">
 
-        <a href="<?php echo hb_get_checkout_url() ?>" class="hb_button hb_checkout"><?php _e( 'Check Out', 'tp-hotel-booking' );?></a>
-        <a href="<?php echo hb_get_cart_url() ?>" class="hb_button hb_view_cart"><?php _e( 'View Cart', 'tp-hotel-booking' );?></a>
+        <a href="<?php echo hb_get_checkout_url() ?>" class="hb_button hb_checkout"><?php _e( 'Check Out', 'tp-hotel-booking' ); ?></a>
+        <a href="<?php echo hb_get_cart_url() ?>" class="hb_button hb_view_cart"><?php _e( 'View Cart', 'tp-hotel-booking' ); ?></a>
 
     </div>
 </script>

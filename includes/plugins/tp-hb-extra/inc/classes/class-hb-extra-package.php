@@ -110,6 +110,10 @@ class HB_Extra_Package
 				# code...
 				$return = $this->get_price_package();
 				break;
+			case 'amount_regular':
+				# code...
+				$return = $this->amount_regular();
+				break;
 			case 'respondent':
 				# code...
 				$return = get_post_meta( $this->_post->ID, 'tp_hb_extra_room_respondent', true );
@@ -160,16 +164,46 @@ class HB_Extra_Package
 		if( ! $this->_post ) return;
 		$price = get_post_meta( $this->_post->ID, 'tp_hb_extra_room_price', true );
 
-		$tax_enbale = apply_filters( 'hotel_booking_extra_tax_enable', hb_price_including_tax() );
-		if( $tax && $tax_enbale )
+		if( $tax )
 		{
 			$tax_price = apply_filters( 'tp_hb_extra_package_regular_price_tax', $price * hb_get_tax_settings(), $price, $this );
 			$price = $price + $tax_price;
 		}
 
 		return $price;
-
 	}
+
+	function amount_regular( $from = null, $to = null ) {
+		return hb_price_including_tax() ? $this->get_regular_price( true ) : $this->get_regular_price( false );
+	}
+
+	function amount_include_tax( $qty = 0 ) {
+        return $this->price_tax;
+    }
+
+	function amount_exclude_tax( $qty = 0 ) {
+        return $this->price;
+    }
+
+	function amount( $qty = 0 ) {
+        return hb_price_including_tax() ? $this->get_price_package() : $this->get_price_package( false );
+    }
+
+    function amount_singular_exclude_tax()
+    {
+        return apply_filters( 'hotel_booking_package_singular_total_exclude_tax', $this->get_regular_price( false ), $this );
+    }
+
+    function amount_singular_include_tax()
+    {
+        return apply_filters( 'hotel_booking_package_singular_total_include_tax', $this->get_regular_price( true ), $this );
+    }
+
+    function amount_singular()
+    {
+        $amount = hb_price_including_tax() ? $this->amount_singular_include_tax() : $this->amount_singular_exclude_tax();
+        return apply_filters( 'hotel_booking_package_amount_singular', $amount, $this );
+    }
 
 	/**
 	 * return instance variable instead of new class

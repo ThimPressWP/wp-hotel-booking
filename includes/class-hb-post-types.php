@@ -306,7 +306,7 @@ class HB_Post_Types{
     function room_type_more_fields( $term, $term_name ) {
         $attachment_ids = get_option( 'hb_taxonomy_thumbnail_' . $term->term_id );
         ?>
-        <tr class="form-field" id="room-gallery-<?php echo $term->term_id;?>">
+        <tr class="form-field" id="room-gallery-<?php echo $term->term_id; ?>">
             <th scope="row" valign="top"><label for="term_meta[custom_term_meta]"><?php _e( 'Gallery', 'tp-hotel-booking' ); ?></label></th>
             <td>
                 <div class="hb-room-gallery">
@@ -320,15 +320,15 @@ class HB_Post_Types{
                             <div class="attachment-preview">
                                 <div class="thumbnail">
                                     <div class="centered">
-                                        <img src="<?php echo $attachment[0];?>" alt="">
-                                        <input type="hidden" name="hb-gallery[<?php echo $term->term_id;?>][gallery][]" value="<?php echo $attachment_id;?>" />
+                                        <img src="<?php echo $attachment[0]; ?>" alt="">
+                                        <input type="hidden" name="hb-gallery[<?php echo $term->term_id; ?>][gallery][]" value="<?php echo $attachment_id; ?>" />
                                     </div>
                                 </div>
                             </div>
-                            <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'tp-hotel-booking' );?>"></a>
+                            <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'tp-hotel-booking' ); ?>"></a>
                         </li>
                         <?php }?>
-                        <?php endif;?>
+                        <?php endif; ?>
                         <li class="attachment add-new">
                             <div class="attachment-preview">
                                 <div class="thumbnail">

@@ -73,7 +73,7 @@ class TP_Hotel_Booking_Payment_Stripe
 	{
 		?>
 			<div class="error">
-				<p><?php _e( 'The <strong>TP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>TP Hotel Booking Stripe</strong> add-on');?></p>
+				<p><?php _e( 'The <strong>TP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>TP Hotel Booking Stripe</strong> add-on'); ?></p>
 			</div>
 		<?php
 	}

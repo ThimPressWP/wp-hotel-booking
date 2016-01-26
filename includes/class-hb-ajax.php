@@ -57,7 +57,8 @@ class HB_Ajax {
 				),
 			)
 		);
-		set_transient( 'hotel_booking_customer_email_' . HB_BLOG_ID, $email, DAY_IN_SECONDS );
+		// set_transient( 'hotel_booking_customer_email_' . HB_BLOG_ID, $email, DAY_IN_SECONDS );
+		TP_Hotel_Booking::instance()->cart->set_customer( 'customer_email', $email );
 		if ( $posts = get_posts( $query_args ) ) {
 			$customer       = $posts[0];
 			$customer->data = array();
@@ -128,7 +129,7 @@ class HB_Ajax {
 	}
 
 	static function apply_coupon() {
-		!session_id() && session_start();
+		! session_id() && session_start();
 		$code = hb_get_request( 'code' );
 		ob_start();
 		$today    = strtotime( date( 'm/d/Y' ) );
@@ -145,7 +146,8 @@ class HB_Ajax {
 				if ( !session_id() ) {
 					session_start();
 				}
-				set_transient( 'hb_user_coupon_' . session_id(), $coupon, HOUR_IN_SECONDS );
+				// set_transient( 'hb_user_coupon_' . session_id(), $coupon, HOUR_IN_SECONDS );
+				TP_Hotel_Booking::instance()->cart->set_customer( 'coupon', $coupon );
 				hb_add_message( __( 'Coupon code applied', 'tp-hotel-booking' ) );
 			}
 		} else {
@@ -157,8 +159,9 @@ class HB_Ajax {
 	}
 
 	static function remove_coupon() {
-		!session_id() && session_start();
-		delete_transient( 'hb_user_coupon_' . session_id() );
+		! session_id() && session_start();
+		// delete_transient( 'hb_user_coupon_' . session_id() );
+		TP_Hotel_Booking::instance()->cart->set_customer( 'coupon', null );
 		hb_add_message( __( 'Coupon code removed', 'tp-hotel-booking' ) );
 		hb_send_json(
 			array(
@@ -196,75 +199,92 @@ class HB_Ajax {
 	}
 
 	static function ajax_add_to_cart() {
-		if ( !check_ajax_referer( 'hb_booking_nonce_action', 'nonce' ) )
+		if ( ! check_ajax_referer( 'hb_booking_nonce_action', 'nonce' ) )
 			return;
 
-		if ( !isset( $_POST['room-id'] ) || !isset( $_POST['hb-num-of-rooms'] ) )
+		if ( ! isset( $_POST['room-id'] ) || !isset( $_POST['hb-num-of-rooms'] ) )
+			hb_send_json( array( 'status' => 'warning', 'message' => __( 'Room ID is not exists.', 'tp-hotel-booking' ) ) );
+
+		if ( ! isset( $_POST['check_in_date'] ) || ! isset( $_POST['check_out_date'] ) )
 			return;
 
-		if ( !isset( $_POST['check_in_date'] ) || !isset( $_POST['check_out_date'] ) )
-			return;
+		$product_id = (int) sanitize_text_field( $_POST['room-id'] );
+		$param = array();
+		$param[ 'product_id' ] = sanitize_text_field( $product_id );
+		if( ! isset( $_POST['hb-num-of-rooms'] ) )
+		{
+			hb_send_json( array( 'status' => 'warning', 'message' => __( 'Can not select zero room.', 'tp-hotel-booking' ) ) );
+		}
+		else
+		{
+			$qty = (int) sanitize_text_field( $_POST['hb-num-of-rooms'] );
+		}
 
-		// if( ! is_user_logged_in() )
-		//     hb_send_json( array( 'status' => 'warning', 'message' => __('Please login system to select this room', 'tp-hotel-booking') ) );
+		// validate checkin, checkout date
+		if( ! isset( $_POST['check_in_date'] ) || ! isset( $_POST['check_in_date'] ) )
+		{
+			hb_send_json( array( 'status' => 'warning', 'message' => __( 'Checkin date, checkout date is invalid.', 'tp-hotel-booking' ) ) );
+		}
+		else
+		{
+			$param[ 'check_in_date' ] = sanitize_text_field( $_POST['check_in_date'] );
+			$param[ 'check_out_date' ] = sanitize_text_field( $_POST['check_out_date'] );
+		}
 
-		$room_id     = (int) $_POST['room-id'];
-		$number_room = (int) $_POST['hb-num-of-rooms'];
-		$start_date  = $_POST['check_in_date'];
-		$end_date    = $_POST['check_out_date'];
-
-		$cart = HB_Cart::instance();
-
+		$param = apply_filters( 'tp_hotel_booking_ajax_add_cart_params', $param );
 		do_action( 'tp_hotel_booking_before_add_to_cart', $_POST );
+		// add to cart
+		$cart_item_id = TP_Hotel_Booking::instance()->cart->add_to_cart( $product_id, $param, $qty );
 
-		if ( $cart->add_to_cart( $room_id, $number_room, $start_date, $end_date ) ) {
-			$search_key = strtotime( $start_date ) . '_' . strtotime( $end_date );
-			$room       = $cart->get_room( $room_id, $search_key );
+		if ( ! is_wp_error( $cart_item_id ) )
+		{
+			$room = TP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id )->product_data;
 
-			$add_to_cart_results = array(
+			do_action( 'tp_hotel_booking_ajax_added_cart', $cart_item_id, $_POST );
+			$results = array(
 				'status'     => 'success',
 				'message'    => sprintf( '<label class="hb_success_message">%1$s</label>', __( 'Added successfully.', 'tp-hotel-booking' ) ),
-				'id'         => $room_id,
-				'permalink'  => get_permalink( $room_id ),
-				'search_key' => $search_key,
-				'name'       => sprintf( '%s (%s)', $room->name, $room->capacity_title ),
-				'quantity'   => $number_room,
-				'total'      => hb_format_price( $room->total_price )
+				'id'         => $product_id,
+				'permalink'  => get_permalink( $product_id ),
+				'name'       => sprintf( '%s', $room->name ) . ( $room->capacity_title ? sprintf( '(%s)', $room->capacity_title ) : '' ),
+				'quantity'   => $qty,
+				'cart_id'	 => $cart_item_id,
+				'total'      => hb_format_price( TP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id )->amount )
 			);
 
-			$add_to_cart_results = apply_filters( 'tp_hb_add_to_cart_results', $add_to_cart_results, $room );
+			$results = apply_filters( 'tp_hb_add_to_cart_results', $results, $room );
 
-			hb_send_json( $add_to_cart_results );
-		} else {
+			hb_send_json( $results );
+		}
+		else
+		{
 			hb_send_json( array( 'status' => 'warning', 'message' => __( 'Room selected. Please View Cart to change order', 'tp-hotel-booking' ) ) );
 		}
+
 	}
 
+	// remove cart item
 	static function ajax_remove_item_cart() {
-		if ( !check_ajax_referer( 'hb_booking_nonce_action', 'nonce' ) )
+		if ( ! check_ajax_referer( 'hb_booking_nonce_action', 'nonce' ) )
 			return;
 
-		if ( !isset( $_POST['time'] ) || !isset( $_POST['room'] ) )
-			return;
+		$cart = TP_Hotel_Booking::instance()->cart;
+		if( $cart->cart_contents && ! isset( $_POST['cart_id'] ) || ! array_key_exists( $_POST['cart_id'], $cart->cart_contents ) )
+		{
+			hb_send_json( array( 'status' => 'warning', 'message' => __( 'Cart item is not exists.', 'tp-hotel-booking' ) ) );
+		}
 
-		$time_key = $_POST['time'];
-		$room_id  = $_POST['room'];
+		if( $cart->remove_cart_item( $_POST['cart_id'] ) )
+		{
+			$return = apply_filters( 'hotel_booking_ajax_remove_cart_item', array(
+				'status'          => 'success',
+				'sub_total'       => hb_format_price( $cart->sub_total ),
+				'grand_total'     => hb_format_price( $cart->total ),
+				'advance_payment' => hb_format_price( $cart->advance_payment )
+			) );
 
-		if ( ! isset( $_SESSION['hb_cart' . HB_BLOG_ID] ) || ! isset( $_SESSION['hb_cart' . HB_BLOG_ID]['products'] ) )
-			return;
-
-		HB_Cart::instance()->remove_cart_item( $room_id, $time_key );
-
-		$cart = HB_Cart::instance();
-
-		$return = apply_filters( 'hotel_booking_ajax_remove_cart_item', array(
-			'status'          => 'success',
-			'sub_total'       => hb_format_price( $cart->sub_total ),
-			'grand_total'     => hb_format_price( $cart->total ),
-			'advance_payment' => hb_format_price( $cart->advance_payment )
-		) );
-
-		hb_send_json( $return );
+			hb_send_json( $return );
+		}
 	}
 
 }

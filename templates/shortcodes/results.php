@@ -1,17 +1,17 @@
-<?php do_action( 'hb_before_search_result' );?>
+<?php do_action( 'hb_before_search_result' ); ?>
 <?php
     global $hb_search_rooms;
 ?>
 <div id="hotel-booking-results">
-    <h3><?php _e( 'Search results', 'tp-hotel-booking' );?></h3>
+    <h3><?php _e( 'Search results', 'tp-hotel-booking' ); ?></h3>
     <?php if( $results ):?>
-        <?php hb_get_template( 'results/list.php', array( 'results' => $hb_search_rooms['data'], 'atts' => $atts ) );?>
+        <?php hb_get_template( 'results/list.php', array( 'results' => $hb_search_rooms['data'], 'atts' => $atts ) ); ?>
     <?php else: ?>
-        <p><?php _e( 'No room found', 'tp-hotel-booking' );?></p>
+        <p><?php _e( 'No room found', 'tp-hotel-booking' ); ?></p>
         <p>
-            <a href="<?php echo get_cart_url( array('hotel-booking' => 'cart') );?>"><?php _e( 'Search again!', 'tp-hotel-booking' );?></a>
+            <a href="<?php echo get_cart_url( array('hotel-booking' => 'cart') ); ?>"><?php _e( 'Search again!', 'tp-hotel-booking' ); ?></a>
         </p>
-    <?php endif;?>
+    <?php endif; ?>
     <nav class="rooms-pagination">
         <?php
             echo paginate_links( apply_filters( 'hb_pagination_args', array(

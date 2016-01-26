@@ -591,10 +591,10 @@ function hb_update_customer_info( $data ) {
 	$is_new = false;
 
 	$customer_id = false;
-	if ( !empty( $data['ID'] ) ) {
+	if ( ! empty( $data['ID'] ) ) {
 		$customer_id = absint( $data['ID'] );
 		$customer    = get_post( $customer_id );
-		if ( !$customer || ( get_post_meta( $customer_id, '_hb_email', true ) != $data['email'] ) ) {
+		if ( ! $customer || ( get_post_meta( $customer_id, '_hb_email', true ) != $data['email'] ) ) {
 			$customer_id = 0;
 		}
 	}
@@ -612,7 +612,7 @@ function hb_update_customer_info( $data ) {
 	if ( $customer_id ) {
 		foreach ( $data as $k => $v ) {
 			if ( $k == 'ID' ) continue;
-			if ( !$is_new && $k == 'email' ) continue;
+			if ( ! $is_new && $k == 'email' ) continue;
 			update_post_meta( $customer_id, "_hb_{$k}", $v );
 		}
 	}
@@ -650,7 +650,6 @@ function hb_get_customer( $customer_id ) {
  * @throws Exception
  */
 function hb_customer_place_order() {
-
 	HB_Checkout::instance()->process_checkout();
 	exit();
 }
@@ -950,36 +949,34 @@ function hb_search_rooms( $args = array() ){
                     'check_out_date'    => $args['check_out_date'],
                     'quantity'          => 1
                 ) );
+            $room->post->available_rooms = (int)$p->available_rooms;
             $results[ $k ] = $room;
         }
     }
 
-    if( isset( $_SESSION['hb_cart'.HB_BLOG_ID], $_SESSION['hb_cart'.HB_BLOG_ID]['products'] ) )
+    if( TP_Hotel_Booking::instance()->cart->cart_contents && $search )
     {
-        $products = $_SESSION['hb_cart'.HB_BLOG_ID]['products'];
-        foreach ($products as $date => $items) {
-            $date = explode('_', $date); // can not use list function
-            if( isset($date[0], $date[1]) )
-            {
-                $in = $date[0];
-                $out = $date[1];
-            }
-            foreach ($results as $key => $room) {
-                $room_id = $room->post->ID;
-                if( ! array_key_exists( $room_id, $items ) )
-                    continue;
+    	$selected_id = array();
+    	foreach ( TP_Hotel_Booking::instance()->cart->cart_contents as $k => $cart ) {
+    		$selected_id[ $cart->product_id ] = $cart->quantity;
+    	}
 
-                if(
-                    ($in < strtotime($args['check_in_date']) && strtotime($args['check_in_date']) < $out)
-                    || ($in < strtotime($args['check_out_date']) && strtotime($args['check_out_date']) < $out)
+    	foreach ( $results as $k => $room ) {
+    		if( array_key_exists( $room->post->ID, $selected_id ) )
+    		{
+    			$in = $room->check_in_date;
+    			$out = $room->check_out_date;
+    			if(
+                    ( $in < $check_in_date_to_time && $check_out_date_to_time < $out )
+                    || ( $in < $check_in_date_to_time && $check_out_date_to_time < $out )
                 )
-                {
-                    $total = $results[ $key ]->post->available_rooms;
-                    $results[ $key ]->post->available_rooms = (int)$total - (int)$items[$room_id]['quantity'];
-                }
+    			{
+	    			$total = $search[ $k ]->available_rooms;
+	    			$results[ $k ]->post->available_rooms = (int)$total - (int)$selected_id[ $room->post->ID ];
+    			}
+    		}
+    	}
 
-            }
-        }
     }
 
     global $hb_settings;
@@ -1579,7 +1576,7 @@ function hb_new_booking_email( $booking_id ) {
 	$subject       = $settings->get( 'email_new_booking_subject' );
 	$email_heading = $settings->get( 'email_new_booking_heading' );
 	$format        = $settings->get( 'email_new_booking_format' );
-	if ( !$subject ) {
+	if ( ! $subject ) {
 		$subject = '[{site_title}] New customer booking ({order_number}) - {order_date}';
 	}
 
@@ -1597,28 +1594,38 @@ function hb_new_booking_email( $booking_id ) {
 
 	$subject = str_replace( $find, $replace, $subject );
 
-	if ( !$email_heading ) {
+	if ( ! $email_heading ) {
 		$email_heading = __( 'New customer booking', 'tp-hotel-booking' );
 	}
-	$body = hb_get_template_content( 'emails/admin-new-booking.php', array(
-		'email_heading' => $email_heading,
-		'booking'       => HB_Booking::instance( $booking_id )
-	) );
 
-	// get CSS styles
-	ob_start();
-	hb_get_template( 'emails/email-styles.php' );
-	$css = apply_filters( 'hb_email_styles', ob_get_clean() );
-	$css = preg_replace( '!</?style>!', '', $css );
-	print_r( $css );
-	try {
-		TP_Hotel_Booking::instance()->_include( 'includes/libraries/class-emogrifier.php' );
-		// apply CSS styles inline for picky email clients
-		$emogrifier = new Emogrifier( $body, $css );
-		$body       = $emogrifier->emogrify();
+	// old version 1.0.3
+	if ( get_post_meta( $booking_id, '_hb_booking_params' , true ) )
+	{
+		$body = hb_get_template_content( 'emails/admin-new-booking.php', array(
+			'email_heading' => $email_heading,
+			'booking'       => HB_Booking::instance( $booking_id )
+		) );
 
-	} catch ( Exception $e ) {
+		// get CSS styles
+		ob_start();
+		hb_get_template( 'emails/email-styles.php' );
+		$css = apply_filters( 'hb_email_styles', ob_get_clean() );
+		$css = preg_replace( '!</?style>!', '', $css );
+		print_r( $css );
+		try {
+			TP_Hotel_Booking::instance()->_include( 'includes/libraries/class-emogrifier.php' );
+			// apply CSS styles inline for picky email clients
+			$emogrifier = new Emogrifier( $body, $css );
+			$body       = $emogrifier->emogrify();
 
+		} catch ( Exception $e ) {
+
+		}
+	} else if( get_post_meta( $booking_id, '_hb_booking_cart_params' , true ) ) {
+		$body = hb_get_template_content( 'emails/email-booking.php', array(
+			'email_heading' => $email_heading,
+			'booking'       => HB_Booking::instance( $booking_id )
+		) );
 	}
 
 	$headers = "Content-Type: " . ( $format == 'html' ? 'text/html' : 'text/plain' ) . "\r\n";
@@ -1721,3 +1728,5 @@ if ( ! function_exists( 'hb_random_color_part' ) ) {
 		return '#' . hb_random_color_part() . hb_random_color_part() . hb_random_color_part();
 	}
 }
+
+// var_dump(hb_settings()->set( 'search' ) );die();

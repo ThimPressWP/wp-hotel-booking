@@ -1,5 +1,5 @@
 <script type="text/html" id="tmpl-hb-minicart-item">
-    <div class="hb_mini_cart_item active" data-search-key="{{ data.search_key }}" data-id="{{ data.id }}">
+    <div class="hb_mini_cart_item active" data-cart-id="{{ data.cart_id }}">
 
         <div class="hb_mini_cart_top">
 
@@ -26,8 +26,8 @@
 <script type="text/html" id="tmpl-hb-minicart-footer">
     <div class="hb_mini_cart_footer">
 
-        <a href="<?php echo hb_get_checkout_url() ?>" class="hb_button hb_checkout"><?php _e( 'Check Out', 'tp-hotel-booking' );?></a>
-        <a href="<?php echo hb_get_cart_url(); ?>" class="hb_button hb_view_cart"><?php _e( 'View Cart', 'tp-hotel-booking' );?></a>
+        <a href="<?php echo hb_get_checkout_url() ?>" class="hb_button hb_checkout"><?php _e( 'Check Out', 'tp-hotel-booking' ); ?></a>
+        <a href="<?php echo hb_get_cart_url(); ?>" class="hb_button hb_view_cart"><?php _e( 'View Cart', 'tp-hotel-booking' ); ?></a>
 
     </div>
 </script>

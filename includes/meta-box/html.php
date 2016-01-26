@@ -1,1 +1,1 @@
-<?php echo $field['content'];?>
+<?php echo $field['content']; ?>

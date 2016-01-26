@@ -11,11 +11,11 @@
                     <div class="thumbnail">
                         <div class="centered">
                         	<?php echo wp_get_attachment_image( $id, 'thumbnail' ); ?>
-                            <input type="hidden" name="<?php echo $field['name'] ?>[]" value="<?php echo esc_attr($id);?>" />
+                            <input type="hidden" name="<?php echo $field['name'] ?>[]" value="<?php echo esc_attr($id); ?>" />
                         </div>
                     </div>
                 </div>
-                <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'tp-hotel-booking' );?>"></a>
+                <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'tp-hotel-booking' ); ?>"></a>
             </li>
         <?php endforeach; endif; ?>
         <li class="attachment add-new">

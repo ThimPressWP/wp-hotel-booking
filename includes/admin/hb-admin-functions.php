@@ -564,13 +564,13 @@ function hb_booking_restrict_manage_posts(){
         );
 
         ?>
-        <span><?php _e( 'Date Range', 'tp-hotel-booking' );?></span>
-        <input type="text" id="hb-booking-date-from" class="hb-date-field" value="<?php echo $from;?>" name="date-from" readonly placeholder="<?php _e( 'From', 'tp-hotel-booking' );?>" />
-        <input type="text" id="hb-booking-date-to" class="hb-date-field" value="<?php echo $to;?>" name="date-to" readonly placeholder="<?php _e( 'To', 'tp-hotel-booking' );?>" />
+        <span><?php _e( 'Date Range', 'tp-hotel-booking' ); ?></span>
+        <input type="text" id="hb-booking-date-from" class="hb-date-field" value="<?php echo $from; ?>" name="date-from" readonly placeholder="<?php _e( 'From', 'tp-hotel-booking' ); ?>" />
+        <input type="text" id="hb-booking-date-to" class="hb-date-field" value="<?php echo $to; ?>" name="date-to" readonly placeholder="<?php _e( 'To', 'tp-hotel-booking' ); ?>" />
         <select name="filter-type">
-            <option value=""><?php _e( '---Filter By---', 'tp-hotel-booking' );?></option>
+            <option value=""><?php _e( '---Filter By---', 'tp-hotel-booking' ); ?></option>
             <?php foreach( $filter_types as $slug => $text ){?>
-            <option value="<?php echo $slug;?>" <?php selected( $slug == $filter_type );?>><?php echo $text;?></option>
+            <option value="<?php echo $slug; ?>" <?php selected( $slug == $filter_type ); ?>><?php echo $text; ?></option>
             <?php }?>
         </select>
         <?php
@@ -807,7 +807,7 @@ function hb_admin_js_template(){
                                 </div>
                             </div>
                         </div>
-                        <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'tp-hotel-booking' );?>"></a>
+                        <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'tp-hotel-booking' ); ?>"></a>
                     </li>
                 <# }); #>
                 <li class="attachment add-new">
@@ -834,28 +834,23 @@ function hb_admin_js_template(){
                 </div>
             </div>
         </div>
-        <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'tp-hotel-booking' );?>"></a>
+        <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'tp-hotel-booking' ); ?>"></a>
     </li>
 </script>
 <?php
 }
 add_action( 'admin_print_scripts', 'hb_admin_js_template');
 
-
-function hb_booking_detail_page_register() {
-
-}
-add_action( 'admin_menu', 'hb_booking_detail_page_register' );
-
 function hb_booking_detail_page() {
     if( is_admin() && hb_get_request( 'page' ) == 'hb_booking_details' ) {
-        TP_Hotel_Booking::instance()->_include( 'includes/admin/views/booking-details.php' );
+        $booking_id = hb_get_request( 'id' );
+        // old version
+        if( get_post_meta( $booking_id, '_hb_booking_params', true ) ) {
+            TP_Hotel_Booking::instance()->_include( 'includes/admin/views/booking-details.php' );
+        } else if( get_post_meta( $booking_id, '_hb_booking_cart_params', true ) ) {
+            TP_Hotel_Booking::instance()->_include( 'includes/admin/views/update/booking-details.php' );
+        }
     }
-}
-
-function hb_booking_load_detail_page( $booking_id )
-{
-    TP_Hotel_Booking::instance()->_include( 'includes/admin/views/booking-details.php' );
 }
 
 function hb_meta_box_field_datetime( $value ){
