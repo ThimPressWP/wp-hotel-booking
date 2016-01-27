@@ -80,8 +80,12 @@ class HB_Settings{
      * @return array
      */
     function set( $name, $value ){
+        // update option
+        update_option( $this->_option_prefix . $name, $value );
         $this->_options[ $name ] = $value;
-        do_action( 'hb_update_settings_'.$name, $name, $value );
+
+        // allow hook
+        do_action( 'hb_update_settings_' . $name, $name, $value );
         return $this->_options;
     }
 

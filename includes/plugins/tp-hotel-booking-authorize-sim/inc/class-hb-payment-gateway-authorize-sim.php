@@ -127,32 +127,24 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base{
         if( isset($_POST['x_amount']) )
             $amout = (float)$_POST['x_amount'];
 
-        if( !isset( $_POST['x_invoice_num'] ) )
+        if( ! isset( $_POST['x_invoice_num'] ) )
             return;
 
         $id = (int)$_POST['x_invoice_num'];
         $book = HB_Booking::instance( $id );
 
-        if( $code === 1 )
-        {
+        if( $code === 1 ) {
             if( (float)$book->total === (float)$amout )
                 $status = 'completed';
             else
                 $status = 'processing';
-        }
-        else
-        {
+        } else {
             $status = 'pending';
         }
 
         $book->update_status( $status );
-        if( in_array( $status, array( 'completed', 'processing' ) ) )
-        {
-            global $hb_cart;
-            $hb_cart->empty_cart();
-        }
-        ob_end_clean();
-        return;
+        TP_Hotel_Booking::instance()->cart->empty_cart();
+        wp_redirect( hb_get_checkout_url() ); exit();
     }
 
     function checkout_order_pay( $tpl )
@@ -201,7 +193,7 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base{
         $book_id = absint( $_GET['hb-order-pay'] );
         $book = HB_Booking::instance( $book_id );
 
-        $customer = $book->_customer->data;
+        $customer = HB_Customer::instance( TP_Hotel_Booking::instance()->cart->customer_id );//$book->_customer->data;
         $time = time();
         $nonce = wp_create_nonce( 'replay-pay-nonce' );
 
@@ -235,15 +227,15 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base{
             'x_show_form'              => 'PAYMENT_FORM',
             'x_version'                => '3.1',
             'x_fp_timestamp'           => $time,
-            'x_first_name'             => isset( $customer['_hb_first_name'] ) ? $customer['_hb_first_name'][0] : '',
-            'x_last_name'              => isset( $customer['_hb_last_name'] ) ? $customer['_hb_last_name'][0] : '',
-            'x_address'                => isset( $customer['_hb_address'] ) ? $customer['_hb_address'][0] : '',
-            'x_country'                => isset( $customer['_hb_country'] ) ? $customer['_hb_country'][0] : '',
-            'x_state'                  => isset( $customer['_hb_state'] ) ? $customer['_hb_state'][0] : '',
-            'x_city'                   => isset( $customer['_hb_city'] ) ? $customer['_hb_city'][0] : '',
-            'x_zip'                    => isset( $customer['_hb_postal_code'] ) ? $customer['_hb_postal_code'][0] : '',
-            'x_phone'                  => isset( $customer['_hb_phone'] ) ? $customer['_hb_phone'][0] : '',
-            'x_email'                  => isset( $customer['_hb_email'] ) ? $customer['_hb_email'][0] : '',
+            'x_first_name'             => $customer->first_name,
+            'x_last_name'              => $customer->last_name,
+            'x_address'                => $customer->address,
+            'x_country'                => $customer->country,
+            'x_state'                  => $customer->state,
+            'x_city'                   => $customer->city,
+            'x_zip'                    => $customer->postal_code,
+            'x_phone'                  => $customer->phone,
+            'x_email'                  => $customer->email,
             'x_type'                   => 'AUTH_CAPTURE',
             'x_cancel_url'             => hb_get_page_permalink( 'checkout' ),
             'x_email_customer'         => 'TRUE',
@@ -330,18 +322,5 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base{
      */
     function is_enable(){
         return empty( $this->_settings['enable'] ) || $this->_settings['enable'] == 'on';
-    }
-}
-
-add_filter( 'hb_payment_gateways', 'hotel_booking_payment_authorize' );
-if( ! function_exists( 'hotel_booking_payment_authorize' ) )
-{
-    function hotel_booking_payment_authorize( $payments )
-    {
-        if( array_key_exists( 'authorize', $payments ) )
-            return $payments;
-
-        $payments[ 'authorize' ] = new HB_Payment_Gateway_Authorize_Sim();
-        return $payments;
     }
 }

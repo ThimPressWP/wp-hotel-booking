@@ -1,6 +1,5 @@
 <?php
-if( ! session_id() )
-{
+if( ! session_id() ) {
     session_start();
 }
 
@@ -46,12 +45,9 @@ class HB_Sessions
 	 */
 	function load()
 	{
-		if( isset( $_SESSION[ $this->prefix ] ) )
-		{
+		if( isset( $_SESSION[ $this->prefix ] ) ) {
 			return $_SESSION[ $this->prefix ];
-		}
-		else if( $this->remember && isset( $_COOKIE[ $this->prefix ] ) )
-		{
+		} else if( $this->remember && isset( $_COOKIE[ $this->prefix ] ) ) {
 			return maybe_unserialize( $_COOKIE[ $this->prefix ] );
 		}
 
@@ -78,29 +74,26 @@ class HB_Sessions
 	 * @param $key
 	 * @param $value
 	 */
-	function set( $name = '', $value = null )
+	function set( $name = null, $value = null )
 	{
-		if( ! $name )
-			return;
+		if( ! $name ) return;
 
 		$time = time();
-		if( ! $value )
-		{
+		if( ! $value ) {
 			unset( $this->session[ $name ] );
-			$time = time() - $this->live_item;
-		}
-		else
-		{
+			$time = $time - $this->live_item;
+		} else {
 			$this->session[ $name ] = $value;
-			$time = time() + $this->live_item;
+			$time = $time + $this->live_item;
 		}
 
 		// save session
 		$_SESSION[ $this->prefix ] = $this->session;
 
 		// save cookie
-		setcookie( $this->prefix, maybe_serialize( $this->session ), $time );
-
+		if ( $this->remember ) {
+			setcookie( $this->prefix, maybe_serialize( $this->session ), $time );
+		}
 	}
 
 	/**

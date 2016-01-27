@@ -215,8 +215,9 @@
 
 	function stripeSubmit(form) {
 		var pl_key = 'pk_test_HHukcwWCsD7qDFWKKpKdJeOT';
-		if (typeof TPBooking_Payment_Stripe)
+		if ( typeof TPBooking_Payment_Stripe !== 'undefined' ) {
 			pl_key = TPBooking_Payment_Stripe.stripe_publish;
+		}
 
 		var handler = StripeCheckout.configure({
 			key   : pl_key,
@@ -242,7 +243,6 @@
 		}
 
 		// Open Checkout with further options
-
 		handler.open({
 			name       	: first_name + ' ' + last_name,
 			description	: email,

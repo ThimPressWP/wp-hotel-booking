@@ -16,3 +16,10 @@
 1. Update, Add hook ajax search url result. 'hotel_booking_parse_search_param', 'hotel_booking_ajax_remove_cart_item'
 2. Addon Block Special Date( Angularjs, ajax )
 3. Update Rating
+
+= 1.1 =
+1. Add Sessions Class, Update Cart Class
+2. Optimize process checkout.
+3. Remove data saving booking if it not usesful.( postmeta )
+4. Optimize Payment Stripe process
+5. Admin booking details

@@ -809,7 +809,7 @@ function hb_format_price( $price, $with_currency = true ) {
 	$price_thousands_separator = $settings->get( 'price_thousands_separator' );
 	$price_decimals_separator  = $settings->get( 'price_decimals_separator' );
 	$price_number_of_decimal   = $settings->get( 'price_number_of_decimal' );
-	if ( !is_numeric( $price ) )
+	if ( ! is_numeric( $price ) )
 		$price = 0;
 
 	$price  = apply_filters( 'tp_hotel_booking_price_switcher', $price );
@@ -1080,10 +1080,15 @@ function hb_do_transaction( $method, $transaction = false ) {
  * Process purchase request
  */
 function hb_handle_purchase_request() {
-	hb_get_payment_gateways();
-	$method_var                   = 'hb-transaction-method';
-	$requested_transaction_method = empty( $_REQUEST[$method_var] ) ? false : $_REQUEST[$method_var];
-	hb_do_transaction( $requested_transaction_method );
+	$method_var = 'hb-transaction-method';
+	if( ! empty( $_REQUEST[$method_var] ) ) {
+		hb_get_payment_gateways();
+		$requested_transaction_method = $_REQUEST[$method_var];
+		hb_do_transaction( $requested_transaction_method );
+	}
+	else if( is_page( hb_get_page_id( 'checkout' ) ) && TP_Hotel_Booking::instance()->cart->cart_items_count === 0 ){
+		wp_redirect( hb_get_cart_url() ); exit();
+	}
 }
 
 function hb_get_bookings( $args = array() ) {
@@ -1428,14 +1433,14 @@ function hb_add_message( $message, $type = 'message' ) {
 }
 
 function hb_get_customer_fullname( $customer_id, $with_title = false ) {
+	$customer = HB_Customer::instance( $customer_id );
 	if ( $with_title ) {
-		$title = hb_get_title_by_slug( get_post_meta( $customer_id, '_hb_title', true ) );
+		$title = hb_get_title_by_slug( $customer->title );
 	} else {
 		$title = '';
 	}
-	$first_name = get_post_meta( $customer_id, '_hb_first_name', true );
-	$last_name  = get_post_meta( $customer_id, '_hb_last_name', true );
-	return sprintf( '%s%s %s', $title ? $title . ' ' : '', $first_name, $last_name );
+
+	return sprintf( '%s%s %s', $title ? $title . ' ' : '', $customer->first_name, $customer->last_name );
 }
 
 if ( ! function_exists( 'is_room_category' ) ) {
@@ -1451,6 +1456,7 @@ if ( ! function_exists( 'is_room_category' ) ) {
 		return is_tax( 'hb_room', $term );
 	}
 }
+
 if ( ! function_exists( 'is_room_taxonomy' ) ) {
 
 	/**
@@ -1653,7 +1659,7 @@ function hb_get_booking_status_label( $booking_id ) {
 	} else {
 		$status = $booking_id;
 	}
-	return !empty( $statuses[$status] ) ? $statuses[$status] : __( 'Pending', 'tp-hotel-booking' );
+	return ! empty( $statuses[$status] ) ? $statuses[$status] : __( 'Pending', 'tp-hotel-booking' );
 }
 
 /**

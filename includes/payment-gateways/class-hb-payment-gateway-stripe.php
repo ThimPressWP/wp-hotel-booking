@@ -54,14 +54,15 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
     }
 
     function init(){
+        // admin settings
         add_action( 'hb_payment_gateway_settings_' . $this->slug, array( $this, 'admin_settings' ) );
-        // add_action( 'hb_payment_gateway_settings_stripe', array( $this, 'admin_settings' ) );
+
         add_action( 'hb_payment_gateway_form_' . $this->slug, array( $this, 'form' ) );
 
         if( ! class_exists( 'Stripe' ) )
             require_once HB_PLUGIN_PATH . '/includes/libraries/stripe-php/init.php' ;
 
-        \Stripe\Stripe::setApiKey( $this->_stripe_secret );
+        // \Stripe\Stripe::setApiKey( $this->_stripe_secret );
     }
 
     function admin_settings( $gateway ){
@@ -132,10 +133,16 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
         {
             try
             {
-                $response = \Stripe\Customer::create(array(
-                    "description" => sprintf( "Customer for %s", get_post_meta($customer, '_hb_email', true) ),
-                    "source" => $_POST['id'] // token get by stripe.js
-                ));
+                $params = array(
+                    'description'   => sprintf( "Customer for %s", get_post_meta( $customer, '_hb_email', true) ),
+                    'source'        => $_POST['id'] // token get by stripe.js
+                );
+                $response = $this->stripe_request( 'customers', $params );
+
+                // $response = \Stripe\Customer::create(array(
+                //     "description" => sprintf( "Customer for %s", get_post_meta( $customer, '_hb_email', true) ),
+                //     "source" => $_POST['id'] // token get by stripe.js
+                // ));
 
                 add_post_meta( $customer, 'tp-hotel-booking-stripe-id', $response->id );
                 return $response->id;

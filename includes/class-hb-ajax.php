@@ -1,8 +1,4 @@
 <?php
-if( ! session_id() )
-{
-    session_start();
-}
 
 /**
  * Class HB_Ajax

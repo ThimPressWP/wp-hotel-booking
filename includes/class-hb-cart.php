@@ -74,10 +74,6 @@ class HB_Cart
     			$return = $this->cart_total_include_tax();
     			break;
 
-    		case 'cart_total':
-    			$return = $this->get_cart_contents();
-    			break;
-
     		case 'cart_total_exclude_tax':
     			$return = $this->cart_total_exclude_tax();
     			break;
@@ -93,10 +89,10 @@ class HB_Cart
             case 'total_nights':
                 $return = $this->get_total_nights();
                 break;
-            case 'check_in_date':
-            case 'check_out_date':
-                $return = $this->get_option( $key );
-                break;
+            // case 'check_in_date':
+            // case 'check_out_date':
+            //     $return = $this->get_option( $key );
+            //     break;
             case 'sub_total':
                 $return = $this->get_sub_total();
                 break;
@@ -105,6 +101,7 @@ class HB_Cart
                 break;
             case 'advance_payment':
                 $return = $this->get_advance_payment();
+                break;
             // end old
     		default:
     			$return = '';
@@ -244,6 +241,7 @@ class HB_Cart
     	// set session cart
     	$this->sessions->set( $cart_item_id, $params );
 
+        // do action
         do_action( 'hotel_booking_added_cart', $cart_item_id, $params );
 
     	// refresh cart
@@ -257,10 +255,10 @@ class HB_Cart
     {
 		do_action( 'hotel_booking_remove_cart_item', $cart_item_id );
 
-		if( isset( $this->cart_contents[ $cart_item_id ] ) )
-		{
+		if( isset( $this->cart_contents[ $cart_item_id ] ) ){
 			unset( $this->cart_contents[ $cart_item_id ] );
 		}
+        // set null
 		$this->sessions->set( $cart_item_id, null );
 
         if ( ! empty( $this->cart_contents ) )
@@ -273,7 +271,7 @@ class HB_Cart
                 }
             }
         }
-
+        // hook
 		do_action( 'hotel_booking_removed_cart_item', $cart_item_id );
 
         // refresh cart

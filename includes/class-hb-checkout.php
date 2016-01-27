@@ -50,7 +50,7 @@ class HB_Checkout{
         // set transient for current customer in one hour
         // set_transient( 'hb_current_customer_' . session_id(), $customer_id, HOUR_IN_SECONDS );
         // set cart customer
-        TP_Hotel_Booking::instance()->cart->set_customer( $customer_id );
+        TP_Hotel_Booking::instance()->cart->set_customer( 'customer_id', $customer_id );
         return $this->_customer = $customer_id;
     }
 

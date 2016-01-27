@@ -45,7 +45,7 @@ $settings = hb_settings();
             <select name="<?php echo $settings->get_field_name('email_new_booking_format'); ?>">
                 <?php foreach( $template_formats as $k => $v ){?>
                 <option value="<?php echo $k; ?>" <?php selected( $k == $settings->get('email_new_booking_format') ); ?>><?php echo $v; ?></option>
-                <?php }?>
+                <?php } ?>
             </select>
         </td>
     </tr>

@@ -78,7 +78,7 @@ global $hb_settings;
                     <?php _e( 'Tax', 'tp-hotel-booking' ); ?>
                     <?php if( $tax < 0 ){?>
                         <span><?php printf( __( '(price including tax)', 'tp-hotel-booking' ) ); ?></span>
-                    <?php }?>
+                    <?php } ?>
                     <span class="hb-align-right"><?php echo apply_filters( 'hotel_booking_cart_tax_display', abs( $tax * 100 ) . '%' ); ?></span>
                 </td>
             </tr>
@@ -98,14 +98,14 @@ global $hb_settings;
                     </td>
                 </tr>
                 <?php if( hb_get_advance_payment() < 100 ) { ?>
-                <tr class="hb_payment_all">
-                    <td colspan="8" class="hb-align-right">
-                        <label class="hb-align-right">
-                            <input type="checkbox" name="pay_all" />
-                            <?php _e( 'I want to pay all', 'tp-hotel-booking' ); ?>
-                        </label>
-                    </td>
-                </tr>
+                    <tr class="hb_payment_all">
+                        <td colspan="8" class="hb-align-right">
+                            <label class="hb-align-right">
+                                <input type="checkbox" name="pay_all" />
+                                <?php _e( 'I want to pay all', 'tp-hotel-booking' ); ?>
+                            </label>
+                        </td>
+                    </tr>
                 <?php } ?>
             <?php } ?>
 

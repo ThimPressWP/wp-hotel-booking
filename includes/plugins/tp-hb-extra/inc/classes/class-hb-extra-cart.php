@@ -50,6 +50,14 @@ class HB_Extra_Cart
 		 */
 		add_action( 'hotel_booking_cart_after_item', array( $this, 'cart_package_after_item' ), 10, 2 );
 
+		/**
+		 * append package into cart admin
+		 */
+		add_action( 'hotel_booking_admin_cart_after_item', array( $this, 'admin_cart_package_after_item' ), 10, 3 );
+
+		// email new booking hook
+		add_action( 'hotel_booking_email_new_booking', array( $this, 'email_new_booking' ), 10, 3 );
+
 		add_filter( 'tp_hb_extra_cart_input', array( $this, 'check_respondent' ) );
 
 	}
@@ -282,6 +290,7 @@ class HB_Extra_Cart
 		return $results;
 	}
 
+	// cart fontend
 	function cart_package_after_item( $room, $cart_id )
 	{
 		$extra_packages = TP_Hotel_Booking::instance()->cart->get_extra_packages( $cart_id );
@@ -299,6 +308,58 @@ class HB_Extra_Cart
 			{
 				$package = HB_Extra_Package::instance( $cart_item->product_id, $cart_item->check_in_date, $cart_item->check_out_date, $room->quantity, (int)$cart_item->quantity );
 				tp_hb_extra_get_template( 'loop/cart-extra-package.php', array( 'package' => $package, 'room' => $room, 'page' => $page, 'cart_id' => $package_cart_id, 'parent_id' => $cart_id ) );
+			}
+		}
+	}
+
+	// cart admin
+	function admin_cart_package_after_item( $cart_params, $cart_id, $booking )
+	{
+		$html = array();
+		ob_start();
+		TP_Hotel_Booking::instance()->_include( 'includes/admin/views/update/admin-addition-services-title.php', true, array( 'room' => $cart_params[ $cart_id ], 'cart_id' => $cart_id ) );
+		$html[] = ob_get_clean();
+		foreach ( $cart_params as $id => $cart_item ) {
+			if ( isset( $cart_item->parent_id ) && $cart_item->parent_id === $cart_id ) {
+				ob_start();
+				TP_Hotel_Booking::instance()->_include( 'includes/admin/views/update/admin-cart-extra-package.php', true, array( 'package' => $cart_item, 'booking' => $booking ), false );
+				$html[] = ob_get_clean();
+			}
+		}
+		echo implode( '', $html );
+	}
+
+	// email new booking
+	function email_new_booking( $cart_params, $cart_id, $booking ) {
+	?>
+		<tr class="hb_addition_services_title hb_table_center">
+			<td style="text-align: center;" colspan="7">
+				<?php _e( 'Addition Services', 'tp-hotel-booking' ); ?>
+			</td>
+		</tr>
+	<?php
+		foreach ( $cart_params as $id => $cart_item ) {
+			if ( isset( $cart_item->parent_id ) && $cart_item->parent_id === $cart_id ) {
+				?>
+					<tr style="background-color: #FFFFFF;">
+
+						<td></td>
+
+						<td>
+							<?php echo $cart_item->quantity; ?>
+						</td>
+
+						<td colspan="3">
+							<?php printf( '%s', $cart_item->product_data->title ) ?>
+						</td>
+
+						<td>
+							<?php echo hb_format_price( $cart_item->amount_singular_exclude_tax, hb_get_currency_symbol( $booking->currency ) ) ?>
+						</td>
+
+					</tr>
+
+				<?php
 			}
 		}
 	}

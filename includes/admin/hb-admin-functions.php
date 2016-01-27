@@ -273,13 +273,6 @@ function hb_bookings_meta_boxes() {
             'attr'  => 'readonly="readonly"'
         ),
         array(
-            'name'  => 'total_nights',
-            'label' => __('Total Nights', 'tp-hotel-booking'),
-            'type'  => 'label',
-            'std'   => '1',
-            'attr'  => 'readonly="readonly"'
-        ),
-        array(
             'name'  => 'tax',
             'label' => __('Tax', 'tp-hotel-booking'),
             'type'  => 'label',
@@ -571,7 +564,7 @@ function hb_booking_restrict_manage_posts(){
             <option value=""><?php _e( '---Filter By---', 'tp-hotel-booking' ); ?></option>
             <?php foreach( $filter_types as $slug => $text ){?>
             <option value="<?php echo $slug; ?>" <?php selected( $slug == $filter_type ); ?>><?php echo $text; ?></option>
-            <?php }?>
+            <?php } ?>
         </select>
         <?php
         return;
@@ -844,11 +837,13 @@ add_action( 'admin_print_scripts', 'hb_admin_js_template');
 function hb_booking_detail_page() {
     if( is_admin() && hb_get_request( 'page' ) == 'hb_booking_details' ) {
         $booking_id = hb_get_request( 'id' );
-        // old version
-        if( get_post_meta( $booking_id, '_hb_booking_params', true ) ) {
+        $booking = HB_Booking::instance( $booking_id );
+
+        // new version @version 1.1
+        if( $booking->get_cart_params() ) {
+            TP_Hotel_Booking::instance()->_include( 'includes/admin/views/update/booking-details.php', true, array( 'booking' => $booking ) );
+        } else { // $booking->get_booking_rooms_params() // old ver
             TP_Hotel_Booking::instance()->_include( 'includes/admin/views/booking-details.php' );
-        } else if( get_post_meta( $booking_id, '_hb_booking_cart_params', true ) ) {
-            TP_Hotel_Booking::instance()->_include( 'includes/admin/views/update/booking-details.php' );
         }
     }
 }

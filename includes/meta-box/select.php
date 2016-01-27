@@ -40,5 +40,5 @@ if( isset( $field['multiple'] ) &&  $field['multiple'] === true )
         <?php else: ?>
             <option value="<?php echo $option['value']; ?>"<?php echo is_array($value) && in_array( $option['value'], $value) ? ' selected' : '' ?>><?php echo $option['text']; ?></option>
         <?php endif; ?>
-    <?php }?>
+    <?php } ?>
 </select>
