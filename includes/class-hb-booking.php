@@ -56,10 +56,10 @@ class HB_Booking{
             $this->post = hb_create_empty_post( array( 'post_status' => 'hb-pending' ) );
         }
 
-        if ( ! empty( $this->post->ID ) ) {
-            $this->load_customer();
-        }
         $this->id = $this->post->ID;
+        if ( $this->id ) {
+            $this->_customer = $this->load_customer();
+        }
     }
 
     function __get( $key ){
@@ -74,35 +74,9 @@ class HB_Booking{
      * @access private
      */
     private function load_customer(){
-        $customer_id = get_post_meta( $this->post->ID, '_hb_customer_id', true );
-        $this->_customer = get_post( $customer_id );
-        if( $this->_customer && $this->_customer->ID ){
-            $customer_data = get_post_meta( $this->_customer->ID );
-            $this->_customer->data = $customer_data;
-            return $customer_data;
-        }
-    }
+        $customer_id = get_post_meta( $this->id, '_hb_customer_id', true );
+        return $customer_id ? HB_Customer::instance( $customer_id ) : null;
 
-    /**
-     * Set customer meta data
-     *
-     * @param $customer
-     * @return null|object|stdClass
-     */
-    function set_customer( $customer ) {
-        if ( empty( $this->_customer ) ) {
-            $this->_customer = hb_create_empty_post();
-        }
-        if ( is_numeric( $customer ) ) {
-            $this->_customer = get_post( intval( $customer ) );
-        } else {
-            if ( func_num_args() > 1 ){
-                $this->_customer->{$customer} = func_get_arg(1);
-            } else {
-                $this->_customer = (object)$customer;
-            }
-        }
-        return $this->_customer;
     }
 
     /**
@@ -144,6 +118,14 @@ class HB_Booking{
         }
         $this->id = $this->post->ID;
         return $this->post->ID;
+    }
+
+    function get_post_meta( $meta_key = null, $val = null, $unique = true ) {
+        if ( ! $this->post->ID || ! $meta_key ) {
+            return $val;
+        }
+
+        return get_post_meta( $this->post->ID, $meta_key, $unique );
     }
 
     // room book item
@@ -261,8 +243,6 @@ class HB_Booking{
      * @return mixed
      */
     public function get_checkout_booking_received_url() {
-        // $received_url = hb_get_endpoint_url( 'booking-received', $this->id, hb_get_page_permalink( 'search' ) );
-        // $received_url = add_query_arg( 'key', $this->booking_key, $received_url );
         $received_url = hb_get_page_permalink( 'search' );
         return apply_filters( 'hb_get_checkout_booking_received_url', $received_url, $this );
     }
@@ -291,15 +271,16 @@ class HB_Booking{
      * @param $booking
      * @return HB_Booking
      */
-    static function instance( $booking ){
+    static function instance( $booking ) {
         $post = $booking;
         if( $booking instanceof WP_Post ){
             $id = $booking->ID;
-        }elseif( is_object( $booking ) && isset( $booking->ID ) ){
+        } elseif( is_object( $booking ) && isset( $booking->ID ) ){
             $id = $booking->ID;
-        }else{
+        } else {
             $id = $booking;
         }
+
         if( empty( self::$_instance[ $id ] ) ){
             self::$_instance[ $id ] = new self( $post );
         }

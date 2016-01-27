@@ -24,14 +24,14 @@ $email_options = apply_filters(
                     <a href="#hb-email-<?php echo $slug; ?>-settings"><?php echo $name; ?></a>
                 </li>
                 <?php echo $i < $count ? '&nbsp;|&nbsp;' : ''; ?>
-            <?php }?>
+            <?php } ?>
         </ul>
         <div class="clearfix"></div>
         <?php $i = 0; foreach( $email_options as $slug => $name ){?>
             <div id="hb-email-<?php echo $slug; ?>-settings" class="hb-sub-tab-content hb-email-settings<?php echo $i++ == 0 ? ' current' : ''; ?>">
                 <?php do_action( 'hb_email_' . $slug . '_settings' ); ?>
             </div>
-        <?php }?>
+        <?php } ?>
     <?php endif; ?>
 </div>
 </table>

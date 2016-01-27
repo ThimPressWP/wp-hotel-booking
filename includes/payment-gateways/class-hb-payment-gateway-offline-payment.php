@@ -74,28 +74,40 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
      * @param $booking_id
      * @return string
      */
-    function booking_details( $booking_id ){
-        $customer_id = get_post_meta( $booking_id, '_hb_customer_id', true );
-        $title = hb_get_title_by_slug(get_post_meta($customer_id, '_hb_title', true));
-        $first_name = get_post_meta($customer_id, '_hb_first_name', true);
-        $last_name = get_post_meta($customer_id, '_hb_last_name', true);
-        $customer_name = sprintf('%s %s %s', $title ? $title : 'Cus.', $first_name, $last_name);
+    function booking_details( $booking_id ) {
+        $booking = HB_Booking::instance( $booking_id );
+        $customer = HB_Customer::instance( $booking->customer_id );
+        // cart params
+        $cart_params = apply_filters( 'hotel_booking_admin_cart_params', $booking->get_cart_params() );
 
-        $currency = hb_get_currency_symbol( get_post_meta( $booking_id, '_hb_currency', true ) );
-        $_rooms = get_post_meta( $booking_id, '_hb_room_id' );
+        $title = hb_get_title_by_slug( $customer->get( '_hb_title' ) );
+        $first_name = $customer->get( '_hb_first_name' );
+        $last_name = $customer->get( '_hb_last_name' );
+        $customer_name = sprintf( '%s %s %s', $title ? $title : 'Cus.', $first_name, $last_name );
+
+        $currency = hb_get_currency_symbol( $booking->currency );
+
         $rooms = array();
-        foreach( $_rooms as $id ){
-            if( empty( $rooms[ $id ] ) ){
-                $rooms[ $id ] = 0;
+        $child = array();
+        foreach ( $cart_params as $key => $cart_item ) {
+            if ( $cart_item->product_data->post && $cart_item->product_data->post->post_type === 'hb_room' ) {
+                $rooms[ $key ] = $cart_item->product_data;
             }
-            $rooms[ $id ] ++;
+
+            if ( isset( $cart_item->parent_id ) ) {
+                if ( ! array_key_exists( $cart_item->parent_id, $child ) ) {
+                    $child[ $cart_item->parent_id ] = array();
+                }
+                $child[ $cart_item->parent_id ][] = $key;
+            }
         }
+
         ob_start();
     ?>
         <table style="color: #444444;background-color: #DDD;font-family: verdana, arial, sans-serif; font-size: 14px; min-width: 800px;" cellpadding="5" cellspacing="1">
             <tbody>
                 <tr style="background-color: #F5F5F5;">
-                    <td colspan="4">
+                    <td colspan="7">
                         <h3 style="margin: 5px 0;"><?php printf( __( 'Booking Details %s', 'tp-hotel-booking' ), hb_format_order_number( $booking_id ) ); ?></h3>
                     </td>
                 </tr>
@@ -103,76 +115,56 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
                     <td style="font-weight: bold;">
                         <?php _e( 'Customer Name', 'tp-hotel-booking' ); ?>
                     </td>
-                    <td colspan="3" ><?php echo $customer_name; ?></td>
-                </tr>
-                <tr style="background-color: #FFFFFF;">
-                    <td style="font-weight: bold;"><?php _e( 'Total Nights', 'tp-hotel-booking' ); ?></td>
-                    <td colspan="3"><?php echo get_post_meta( $booking_id, '_hb_total_nights', true ) ; ?></td>
-                </tr>
-                <tr style="background-color: #FFFFFF;">
-                    <td style="font-weight: bold;"><?php _e( 'Total Rooms', 'tp-hotel-booking' ); ?></td>
-                    <td colspan="3"><?php echo count($_rooms); ?></td>
+                    <td colspan="6" ><?php echo $customer_name; ?></td>
                 </tr>
                 <tr style="background-color: #F5F5F5;">
-                    <td colspan="4">
+                    <td colspan="7">
                         <h3 style="margin: 5px 0;"><?php _e( 'Booking Rooms', 'tp-hotel-booking' ) ; ?></h3>
                     </td>
                 </tr>
                 <tr style="background-color: #FFFFFF;">
                     <td style="font-weight: bold;"><?php _e( 'Room type', 'tp-hotel-booking' ); ?></td>
-                    <td style="font-weight: bold; text-align: right;"><?php _e( 'Number of rooms', 'tp-hotel-booking' ); ?></td>
                     <td style="font-weight: bold; text-align: right;"><?php _e( 'Capacity', 'tp-hotel-booking' ); ?></td>
+                    <td style="font-weight: bold; text-align: right;"><?php _e( 'Quantity', 'tp-hotel-booking' ); ?></td>
+                    <td style="font-weight: bold; text-align: right;"><?php _e( 'Check in', 'tp-hotel-booking' ); ?></td>
+                    <td style="font-weight: bold; text-align: right;"><?php _e( 'Check out', 'tp-hotel-booking' ); ?></td>
+                    <td style="font-weight: bold; text-align: right;"><?php _e( 'Night', 'tp-hotel-booking' ); ?></td>
                     <td style="font-weight: bold;text-align: right;"><?php _e( 'Total', 'tp-hotel-booking' ); ?></td>
                 </tr>
-                <?php $booking_rooms_params = get_post_meta( $booking_id, '_hb_booking_params', true ); ?>
-                <?php if( $booking_rooms_params ): ?>
-                    <?php foreach ($booking_rooms_params as $search_key => $rooms): ?>
+                <?php if( $cart_params ): ?>
+                    <?php foreach ( $rooms as $cart_id => $room ): ?>
 
-                            <?php foreach ($rooms as $id => $room_param) : ?>
-                                <tr style="background-color: #FFFFFF;">
-                                    <td>
-                                        <?php
-                                            $room = HB_Room::instance( $id, $room_param );
-                                            echo get_the_title( $id );
-                                            $terms = wp_get_post_terms( $id, 'hb_room_type' );
-                                            $room_types = array();
-                                            foreach ($terms as $key => $term) {
-                                                $room_types[] = $term->name;
-                                            }
-                                            if( ! is_wp_error( $term ) && ! empty( $room_types ) ) echo " (", implode(', ', $room_types), ")";
-                                        ?>
-                                    </td>
-                                    <td style="text-align: right;"><?php echo $room->quantity; ?></td>
-                                    <td style="text-align: right;">
-                                        <?php
-                                            $cap_id = get_post_meta( $id, '_hb_room_capacity', true );
-                                            $term = get_term( $cap_id, 'hb_room_capacity' );
-                                            if( ! is_wp_error( $term ) ){
-                                                printf( '%s (%d)', $term->name, get_option( 'hb_taxonomy_capacity_' . $cap_id ) );
-                                            }
-                                        ?>
-                                    </td>
-                                    <td style="text-align: right;">
-                                        <?php
-                                            echo hb_format_price( $room->get_total( $room->check_in_date, $room->check_out_date, $room->quantity, false ), $currency );
-                                        ?>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
+                            <tr style="background-color: #FFFFFF;">
+                                <td style="text-align: center;" rowspan="<?php echo array_key_exists( $cart_id, $child ) ? count( $child[ $cart_id ] ) + 2 : 1 ?>">
+                                    <a href="<?php echo get_edit_post_link( $room->ID ); ?>"><?php echo $room->name; ?><?php printf( '%s', $room->capacity_title ? ' ('.$room->capacity_title.')' : '' ); ?></a>
+                                </td>
+                                <td style="text-align: right;"><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'tp-hotel-booking' ), $room->capacity ); ?> </td>
+                                <td style="text-align: right;"><?php echo $room->quantity; ?></td>
+                                <td style="text-align: right;"><?php echo $room->get_data( 'check_in_date' ) ?></td>
+                                <td style="text-align: right;"><?php echo $room->get_data( 'check_out_date' ) ?></td>
+                                <td style="text-align: right;"><?php echo hb_count_nights_two_dates( $room->get_data( 'check_out_date' ), $room->get_data( 'check_in_date' ) ) ?></td>
+                                <td style="text-align: right;">
+                                    <?php echo hb_format_price( $rooms[ $cart_id ]->amount_singular_exclude_tax, hb_get_currency_symbol( $booking->currency ) ); ?>
+                                </td>
+                            </tr>
+
+                            <?php do_action( 'hotel_booking_email_new_booking', $cart_params, $cart_id, $booking ); ?>
 
                     <?php endforeach; ?>
                 <?php endif; ?>
                 <tr style="background-color: #FFFFFF;">
-                    <td colspan="3" style="font-weight: bold;"><?php _e( 'Sub Total', 'tp-hotel-booking' ); ?></td>
-                    <td style=" text-align: right;"><?php echo hb_format_price( get_post_meta( $booking_id, '_hb_sub_total', true ), $currency ); ?></td>
+                    <td colspan="6" style="font-weight: bold;"><?php _e( 'Sub Total', 'tp-hotel-booking' ); ?></td>
+                    <td style=" text-align: right;"><?php echo hb_format_price( $booking->sub_total, $currency ); ?></td>
                 </tr>
+                <?php if ( $booking->tax ) : ?>
+                    <tr style="background-color: #FFFFFF;">
+                        <td colspan="6" style="font-weight: bold;"><?php _e( 'Tax', 'tp-hotel-booking' ); ?></td>
+                        <td style="text-align: right;"><?php echo abs( $booking->tax * 100 ) . '%' ?></td>
+                    </tr>
+                <?php endif; ?>
                 <tr style="background-color: #FFFFFF;">
-                    <td colspan="3" style="font-weight: bold;"><?php _e( 'Tax', 'tp-hotel-booking' ); ?></td>
-                    <td style="text-align: right;"><?php echo get_post_meta( $booking_id, '_hb_tax', true ) * 100; ?>%</td>
-                </tr>
-                <tr style="background-color: #FFFFFF;">
-                    <td colspan="3" style="font-weight: bold;"><?php _e( 'Grand Total', 'tp-hotel-booking' ); ?></td>
-                    <td style="text-align: right;"><?php echo hb_format_price( get_post_meta( $booking_id, '_hb_total', true ), $currency ); ?></td>
+                    <td colspan="6" style="font-weight: bold;"><?php _e( 'Grand Total', 'tp-hotel-booking' ); ?></td>
+                    <td style="text-align: right;"><?php echo hb_format_price( $booking->total, $currency ); ?></td>
                 </tr>
             </tbody>
         </table>
@@ -201,23 +193,13 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
             $booking->update_status( 'processing' );
         }
 
-        // HB_Cart::instance()->empty_cart();
-
-        // return array(
-        //     'result'    => 'success',
-        //     'redirect'  => '?hotel-booking-offline-payment=1'
-        // );
-
-        $booking    = hb_generate_transaction_object( );
-
         $settings = HB_Settings::instance()->get('offline-payment');
         $email_subject = ! empty( $settings['email_subject'] ) ? $settings['email_subject'] : false;
         $email_content = ! empty( $settings['email_content'] ) ? $settings['email_content'] : false;
 
         if( ! $email_subject || ! $email_content ) {
             return array(
-                'result'    => 'fail',
-                //'redirect'  => '?hotel-booking-offline-payment=1'
+                'result'    => 'fail'
             );
         } else {
             if( function_exists( 'wpautop' ) ) {
@@ -230,19 +212,21 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
                 $email_content = preg_replace( '!\{\{site_name\}\}!', get_bloginfo( 'name' ), $email_content );
             }
             if ( preg_match( '!{{booking_details}}!', $email_content ) ) {
-                // $booking_details = $this->booking_details( $transaction );
+                // email template
                 $booking_details = $this->booking_details( $booking_id );
                 $email_content = preg_replace( '!\{\{booking_details\}\}!', $booking_details, $email_content );
             }
 
-            $headers[]       = 'Content-Type: text/html; charset=UTF-8';
+            $headers[] = 'Content-Type: text/html; charset=UTF-8';
             add_filter('wp_mail_content_type', array($this, 'set_html_content_type'));
             $to = get_post_meta($customer_id, '_hb_email', true);
             $return = wp_mail($to, $email_subject, stripslashes( $email_content ), $headers );
+
             remove_filter('wp_mail_content_type', array($this, 'set_html_content_type'));
 
             hb_add_message( sprintf( __( 'Thank you! Your booking has been placed. Please check your email %s to view booking details', 'tp-hotel-booking' ), $to ) );
-            HB_Cart::instance()->empty_cart();
+            // empty cart
+            TP_Hotel_Booking::instance()->cart->empty_cart();
             return array(
                 'result'    => 'success',
                 'r'         => $return,

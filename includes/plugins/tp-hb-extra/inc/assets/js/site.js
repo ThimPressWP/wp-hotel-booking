@@ -105,7 +105,8 @@
 				e.preventDefault();
 				var _self = $(this),
 					_cart_id = _self.attr( 'data-cart-id' ),
-					_parents = _self.parents('.hb_mini_cart_item:first');
+					_parents = _self.parents('.hb_mini_cart_item:first'),
+					_overlay = _self.parents( '.hb_mini_cart_item:first, tr' );
 
 				if( typeof _parents === 'undefined' || _parents.length === 0 )
 				{
@@ -121,7 +122,8 @@
 					},
 					dataType: 'html',
 					beforeSend: function() {
-
+						// ajax start effect
+						_overlay.hb_overlay_ajax_start();
 					}
 				}).done( function( res ) {
 					res = TPHB_Extra_Site.parseJSON(res);
@@ -175,6 +177,8 @@
 				            }
 						});
 					}
+					// ajax stop effect
+					_overlay.hb_overlay_ajax_stop();
 				} );
 			});
 		},

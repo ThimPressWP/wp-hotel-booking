@@ -18,6 +18,6 @@ $payment_gateways = hb_get_payment_gateways();
     <div id="hb-payment-gateway-<?php echo $gateway->slug; ?>" class="hb-sub-tab-content hb-payment-gateway-settings<?php echo $i++ == 0 ? ' current' : ''; ?>">
         <?php do_action( 'hb_payment_gateway_settings_' . $gateway->slug ); ?>
     </div>
-    <?php }?>
+    <?php } ?>
     <?php endif; ?>
 </div>

@@ -39,7 +39,7 @@ if ( $email = TP_Hotel_Booking::instance()->cart->customer_email ) {
 		$customer = null;
 	}
 }
-//extract( $customer->data );
+
 ?>
 <div class="hb-order-new-customer" id="hb-order-new-customer">
 	<div class="hb-col-padding hb-col-border">
@@ -102,7 +102,7 @@ if ( $email = TP_Hotel_Booking::instance()->cart->customer_email ) {
 
 				<div class="hb-form-field-input">
 					<?php hb_dropdown_countries( array( 'name' => 'country', 'show_option_none' => __( 'Country', 'tp-hotel-booking' ), 'selected' => $country ) ); ?>
-					<!-- <input type="text" name="country" value="<?php echo $country; ?>" placeholder="<?php _e( 'Country', 'tp-hotel-booking' ); ?>" />-->
+					<!-- <input type="text" name="country" value="<?php //echo $country; ?>" placeholder="<?php //_e( 'Country', 'tp-hotel-booking' ); ?>" />-->
 				</div>
 			</li>
 			<li class="hb-form-field">

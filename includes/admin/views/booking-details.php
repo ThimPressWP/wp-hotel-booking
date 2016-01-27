@@ -1,4 +1,10 @@
 <?php
+/**
+ * Template Booking Details
+ * @since  1.0.3
+ */
+?>
+<?php
 $booking_id = hb_get_request( 'id' );
 ?>
 <div class="wrap">
@@ -135,11 +141,11 @@ $booking_id = hb_get_request( 'id' );
                                             ?>
                                         </td>
                                         <td style="text-align: right;" colspan="4"><?php echo $room->quantity; ?></td>
-                                        <td style="text-align: right;" colspan="4"><?php echo $room->check_in_date; ?></td>
-                                        <td style="text-align: right;" colspan="4"><?php echo $room->check_out_date; ?></td>
+                                        <td style="text-align: right;" colspan="4"><?php echo $room->get_data( 'check_in_date' ); ?></td>
+                                        <td style="text-align: right;" colspan="4"><?php echo $room->get_data( 'check_out_date' ); ?></td>
                                         <td style="text-align: right;" colspan="4">
                                             <?php
-                                                echo hb_count_nights_two_dates( $room->check_out_date, $room->check_in_date);
+                                                echo hb_count_nights_two_dates( $room->get_data( 'check_out_date' ), $room->get_data( 'check_in_date' ) );
                                             ?>
                                         </td>
                                     </tr>
@@ -280,7 +286,7 @@ $booking_id = hb_get_request( 'id' );
             </tr>
         </tbody>
     </table>
-    <?php if( $addition_information = get_post_field( 'post_content', $booking_id ) ){?>
+    <?php if( $addition_information = get_post_field( 'post_content', $booking_id ) ) { ?>
     <table class="hb-booking-table">
         <thead>
         <tr>

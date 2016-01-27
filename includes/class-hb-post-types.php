@@ -327,7 +327,7 @@ class HB_Post_Types{
                             </div>
                             <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'tp-hotel-booking' ); ?>"></a>
                         </li>
-                        <?php }?>
+                        <?php } ?>
                         <?php endif; ?>
                         <li class="attachment add-new">
                             <div class="attachment-preview">

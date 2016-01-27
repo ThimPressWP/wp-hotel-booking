@@ -74,10 +74,6 @@ class HB_Cart
     			$return = $this->cart_total_include_tax();
     			break;
 
-    		case 'cart_total':
-    			$return = $this->get_cart_contents();
-    			break;
-
     		case 'cart_total_exclude_tax':
     			$return = $this->cart_total_exclude_tax();
     			break;
@@ -93,10 +89,10 @@ class HB_Cart
             case 'total_nights':
                 $return = $this->get_total_nights();
                 break;
-            case 'check_in_date':
-            case 'check_out_date':
-                $return = $this->get_option( $key );
-                break;
+            // case 'check_in_date':
+            // case 'check_out_date':
+            //     $return = $this->get_option( $key );
+            //     break;
             case 'sub_total':
                 $return = $this->get_sub_total();
                 break;
@@ -105,6 +101,7 @@ class HB_Cart
                 break;
             case 'advance_payment':
                 $return = $this->get_advance_payment();
+                break;
             // end old
     		default:
     			$return = '';

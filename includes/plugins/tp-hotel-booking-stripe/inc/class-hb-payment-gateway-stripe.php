@@ -65,8 +65,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
     }
 
     function admin_settings( $gateway ){
-        $template = TP_Hotel_Booking::instance()->locate( 'includes/admin/views/settings/stripe.php' );
-        include_once $template;
+        include_once TP_HB_STRIPE_DIR . '/inc/views/strip-settings.php';
     }
 
     function is_enable(){

@@ -79,7 +79,7 @@ $count_plants = count( $pricing_plans );
                                     ?>
                                     <input class="hb-pricing-price" type="text" name="price[<?php echo $regular_plan ? $regular_plan->ID : '__INDEX__'; ?>][<?php echo $capacitiyID; ?>][<?php echo $i; ?>]" value="<?php echo $price; ?>" size="10" readonly="readonly" />
                                 </td>
-                            <?php }?>
+                            <?php } ?>
                         </tr>
                         <?php else:?>
                         <tr><td colspan="7"><?php _e( 'No capacities found', 'tp-hotel-booking' ); ?></td></tr>
@@ -136,7 +136,7 @@ $count_plants = count( $pricing_plans );
                                         <?php $price = ! empty( $plan_prices[ $capacitiyID ] ) ? ( array_key_exists( $i, $plan_prices[ $capacitiyID ] ) ? $plan_prices[ $capacitiyID ][ $i ] : '' ) : ''; ?>
                                         <input class="hb-pricing-price" type="text" name="price[<?php echo $plan->ID; ?>][<?php echo $capacitiyID; ?>][<?php echo $i; ?>]" value="<?php echo $price; ?>" size="10" readonly="readonly" />
                                     </td>
-                                <?php }?>
+                                <?php } ?>
                             </tr>
                         <?php else:?>
                             <tr><td colspan="7"><?php _e( 'No capacities found', 'tp-hotel-booking' ); ?></td></tr>
@@ -154,7 +154,7 @@ $count_plants = count( $pricing_plans );
             <button type="button" class="button hb-add-new-plan"><?php //_e( 'Add Plan', 'tp-hotel-booking' ); ?></button>
             <button class="button button-primary"><?php //_e( 'Update', 'tp-hotel-booking' ); ?></button>
         </p> -->
-        <?php }?>
+        <?php } ?>
     </form>
 </div>
 <script type="text/html" id="tmpl-hb-pricing-table">
@@ -191,7 +191,7 @@ $count_plants = count( $pricing_plans );
                             <td>
                                 <input class="hb-pricing-price" type="text" name="price[__INDEX__][<?php echo $capacitiyID; ?>][<?php echo $i; ?>]" value="" size="10" readonly="readonly" />
                             </td>
-                        <?php }?>
+                        <?php } ?>
                     </tr>
                 <?php else:?>
                     <tr><td colspan="7"><?php _e( 'No capacities found', 'tp-hotel-booking' ); ?></td></tr>

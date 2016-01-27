@@ -189,7 +189,6 @@ th.column-room_type{
     text-align: left;
     width: 30%;
 }
-
 .tablenav.top select[name="filter-type"]{
     float: none;
     vertical-align: top;
@@ -205,7 +204,17 @@ th.column-room_type{
 .negative-price{
     color: #FF0000;
 }
-
+.hb-table-width30{
+    width: 30%;
+    float: left;
+    clear: left;
+}
+.hb-table-width70{
+    width: 70%;
+}
+.hb_table_center{
+    text-align: center;
+}
 /*gallerry settings meta box*/
 /*
 #gallery_settings{
