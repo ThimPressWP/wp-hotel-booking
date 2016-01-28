@@ -125,6 +125,13 @@ class HB_Extra_Package
 			case 'night':
 				$return = hb_count_nights_two_dates( $this->_check_out, $this->_check_in );
 				break;
+			case 'amount_singular_exclude_tax':
+				# code...
+				$return = $this->amount_singular_exclude_tax();
+				break;
+            case 'amount_singular_include_tax':
+                $return = $this->amount_singular_include_tax();
+                break;
 			default:
 				$return = null;
 				break;
@@ -155,7 +162,7 @@ class HB_Extra_Package
 
 		$price = apply_filters( 'hotel_booking_regular_extra_price', $price, $regular_price, $this, $tax );
 
-		return $price;
+		return (float)$price;
 	}
 
 	function get_regular_price( $tax = false )
@@ -170,7 +177,7 @@ class HB_Extra_Package
 			$price = $price + $tax_price;
 		}
 
-		return $price;
+		return (float)$price;
 	}
 
 	function amount_regular( $from = null, $to = null ) {

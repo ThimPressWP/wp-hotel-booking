@@ -220,8 +220,7 @@ class HB_Cart
     	}
 
     	// cart item is exist
-    	if ( isset( $this->cart_contents[ $cart_item_id ] ) )
-    	{
+    	if ( isset( $this->cart_contents[ $cart_item_id ] ) ) {
     		if( $asc === true ) {
     			$cart_item = $this->get_cart_item( $cart_item_id );
     			$qty = $cart_item->quantity + $qty;
@@ -250,14 +249,51 @@ class HB_Cart
         return $cart_item_id;
     }
 
+    // update cart item
+    function update_cart_item( $cart_id = null, $qty = 0, $asc = false ) {
+        if ( ! $cart_id ) return;
+
+        if ( ! empty( $this->cart_contents[ $cart_id ] ) && $cart_item = $this->get_cart_item_param( $cart_id ) ) {
+            if ( $qty === 0 ) {
+                $this->remove_cart_item( $cart_id );
+            }
+
+            if ( $asc === true ) {
+                $qty = $qty + $this->cart_contents[ $cart_id ]->quantity;
+            }
+
+            $cart_item[ 'quantity' ] = $qty;
+
+            $this->sessions->set( $cart_id, $cart_item );
+
+            do_action( 'hotel_booking_updated_cart_item', $cart_id, $cart_item );
+            // refresh cart
+            $this->refresh();
+        }
+    }
+
     // remove cart item by id
     function remove_cart_item( $cart_item_id = null )
     {
-		do_action( 'hotel_booking_remove_cart_item', $cart_item_id );
-
+        $remove_params = array();
 		if( isset( $this->cart_contents[ $cart_item_id ] ) ){
-			unset( $this->cart_contents[ $cart_item_id ] );
+            $item = $this->cart_contents[ $cart_item_id ];
+
+            // param generate cart id
+            $remove_params = array(
+                    'product_id'        => $item->product_id,
+                    'check_in_date'     => $item->check_in_date,
+                    'check_out_date'    => $item->check_out_date
+                );
+            if ( isset( $item->parent_id ) ) {
+                $remove_params['parent_id'] = $item->parent_id;
+            }
+            // hook
+            do_action( 'hotel_booking_remove_cart_item', $cart_item_id, $remove_params );
+            // unset
+            unset( $this->cart_contents[ $cart_item_id ] );
 		}
+
         // set null
 		$this->sessions->set( $cart_item_id, null );
 
@@ -266,13 +302,30 @@ class HB_Cart
             foreach ( $this->cart_contents as $cart_id => $cart_item ) {
                 if ( isset( $cart_item->parent_id ) && $cart_item->parent_id === $cart_item_id )
                 {
+                    $item = $this->cart_contents[ $cart_id ];
+                    // unset
                     unset( $this->cart_contents[ $cart_id ] );
+                    // param generate cart id
+                    $param = array(
+                            'product_id'        => $item->product_id,
+                            'check_in_date'     => $item->check_in_date,
+                            'check_out_date'    => $item->check_out_date
+                        );
+                    if ( isset( $item->parent_id ) ) {
+                        $param['parent_id'] = $item->parent_id;
+                    }
+
+                    // hook
+                    do_action( 'hotel_booking_remove_cart_sub_item', $cart_item_id, $param );
+                    // set session, cookie
                     $this->sessions->set( $cart_id, null );
+                    // hook
+                    do_action( 'hotel_booking_removed_cart_sub_item', $cart_item_id, $param );
                 }
             }
         }
         // hook
-		do_action( 'hotel_booking_removed_cart_item', $cart_item_id );
+		do_action( 'hotel_booking_removed_cart_item', $cart_item_id, $remove_params );
 
         // refresh cart
         $this->refresh();
@@ -351,6 +404,24 @@ class HB_Cart
     	}
 
     	return null;
+    }
+
+    // get cart item params
+    function get_cart_item_param( $cart_item_id = null )
+    {
+        $params = array();
+        $cart_item = $this->get_cart_item( $cart_item_id );
+        if ( $cart_item ) {
+            $params = array(
+                    'product_id'        => $cart_item->product_id,
+                    'check_in_date'     => $cart_item->check_in_date,
+                    'check_out_date'    => $cart_item->check_out_date,
+                );
+            if ( isset( $cart_item->parent_id ) ) {
+                $params['parent_id'] = $cart_item->parent_id;
+            }
+        }
+        return apply_filters( 'hotel_booking_cart_item_atributes', $params );
     }
 
     // set customer object
@@ -449,11 +520,11 @@ class HB_Cart
             else
             {
                 $param = array();
-                $param[ 'product_id' ] = $cart_item->product_id;
-                $param[ 'check_in_date' ] = $cart_item->check_in_date;
-                $param[ 'check_out_date' ] = $cart_item->check_out_date;
+                $param[ 'product_id' ]      = $cart_item->product_id;
+                $param[ 'check_in_date' ]   = $cart_item->check_in_date;
+                $param[ 'check_out_date' ]  = $cart_item->check_out_date;
                 if( isset( $cart_item->parent_id ) ) {
-                    $param[ 'parent_id' ] = $cart_item->parent_id;
+                    $param[ 'parent_id' ]   = $cart_item->parent_id;
                 }
                 // update
                 $param = apply_filters( 'tp_hotel_booking_ajax_update_cart_item_cart_params', $param, $cart_item );
@@ -586,7 +657,7 @@ class HB_Cart
         }
 
         $trasnsaction->rooms = $_rooms;
-        return apply_filters( 'hb_generate_transaction_object', $trasnsaction );
+        return apply_filters( 'hb_generate_transaction_object', $trasnsaction, $payment_method );
     }
 
     /**

@@ -103,7 +103,7 @@ foreach ( $cart_params as $key => $cart_item ) {
                     <?php } ?>
                 </td>
                 <td colspan="4">
-                    <?php echo apply_filters( 'hotel_booking_cart_tax_display', abs( $booking->tax * 100 ) . '%' ); ?>
+                    <?php echo apply_filters( 'hotel_booking_admin_book_tax_display', abs( $booking->tax * 100 ) . '%', $booking ); ?>
                 </td>
             </tr>
         <?php endif; ?>

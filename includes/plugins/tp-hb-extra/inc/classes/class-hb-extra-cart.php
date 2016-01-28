@@ -250,6 +250,8 @@ class HB_Extra_Cart
 				$results['extra_packages'] = $extra_packages;
 
 				$results = apply_filters( 'hb_remove_package_results', $results, $package_item );
+
+				do_action( 'hb_extra_removed_package', $package_item );
 		        hb_send_json( $results );
 			}
 
@@ -317,7 +319,7 @@ class HB_Extra_Cart
 	{
 		$html = array();
 		ob_start();
-		TP_Hotel_Booking::instance()->_include( 'includes/admin/views/update/admin-addition-services-title.php', true, array( 'room' => $cart_params[ $cart_id ], 'cart_id' => $cart_id ) );
+		TP_Hotel_Booking::instance()->_include( 'includes/admin/views/update/admin-addition-services-title.php', true, array( 'room' => $cart_params[ $cart_id ], 'cart_id' => $cart_id ), false );
 		$html[] = ob_get_clean();
 		foreach ( $cart_params as $id => $cart_item ) {
 			if ( isset( $cart_item->parent_id ) && $cart_item->parent_id === $cart_id ) {

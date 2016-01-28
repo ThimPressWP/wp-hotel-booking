@@ -48,7 +48,6 @@ class HB_Checkout{
         $customer_id = hb_update_customer_info( $customer_info );
 
         // set transient for current customer in one hour
-        // set_transient( 'hb_current_customer_' . session_id(), $customer_id, HOUR_IN_SECONDS );
         // set cart customer
         TP_Hotel_Booking::instance()->cart->set_customer( 'customer_id', $customer_id );
         return $this->_customer = $customer_id;
@@ -60,8 +59,11 @@ class HB_Checkout{
      * @return mixed|WP_Error
      * @throws Exception
      */
-    function create_booking(){
+    function create_booking( $order = null ){
         global $hb_settings;
+        if ( ! $order ) {
+            $order = $this->payment_method;
+        }
         // $customer_id = get_transient( 'hb_current_customer_' . session_id() );
         $customer_id = TP_Hotel_Booking::instance()->cart->customer_id;
         if( ! $customer_id ) {
@@ -91,7 +93,7 @@ class HB_Checkout{
         }
 
         // generate transaction
-        $transaction = TP_Hotel_Booking::instance()->cart->generate_transaction( $customer_id, $this->payment_method );
+        $transaction = TP_Hotel_Booking::instance()->cart->generate_transaction( $customer_id, $order );
 
         // booking meta data
         $booking_info = array();
