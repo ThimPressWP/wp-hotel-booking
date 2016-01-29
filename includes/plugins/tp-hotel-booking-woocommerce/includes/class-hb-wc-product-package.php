@@ -23,16 +23,16 @@ class HB_WC_Product_Package extends WC_Product_Simple{
 	 */
 	function get_price()
 	{
-		if( ! isset( $this->data['parent_id'] ) )
-			return;
-
-		global $woocommerce;
-		$room = TP_Hotel_Booking::instance()->cart->get_cart_item( $this->data['parent_id'] );
-		if ( ! $room ) {
-			return;
+		$qty = 1;
+		if( ! isset( $this->data['parent_id'] ) ) {
+			$parent = TP_Hotel_Booking::instance()->cart->get_cart_item( $this->data['parent_id'] );
+			$qty = $parent->quantity;
+		} else if ( isset( $this->data['woo_cart_id'] ) ) {
+			$parent = WC()->cart->get_cart_item( $this->data['woo_cart_id'] );
+			$qty = $parent['quantity'];
 		}
 
-		$this->package = HB_Extra_Package::instance( $this->post, $this->data['check_in_date'], $this->data['check_out_date'], $room->quantity, 1 );
+		$this->package = HB_Extra_Package::instance( $this->post, $this->data['check_in_date'], $this->data['check_out_date'], $qty, 1 );
 		return $this->package->amount_singular_exclude_tax();
 	}
 

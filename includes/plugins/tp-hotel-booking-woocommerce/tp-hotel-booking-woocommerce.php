@@ -47,20 +47,20 @@ class TP_Hotel_Booking_Woocommerce {
 
 			add_filter( 'woocommerce_product_class', array( $this, 'product_class' ), 10, 4 );
 			add_filter( 'woocommerce_get_cart_item_from_session', array( $this, 'get_cart_item_from_session' ), 10, 3 );
-
-			// tax enable
+			add_filter( 'woocommerce_add_cart_item', array( $this, 'add_cart_item' ), 10, 2 );
+			// // tax enable
 			add_filter( 'hotel_booking_extra_tax_enable', array( $this, 'tax_enable' ) );
-			/**
-			 * woommerce currency
-			 */
-			// currency hotel booking as WC currency
+			// /**
+			//  * woommerce currency
+			//  */
+			// // currency hotel booking as WC currency
 			add_filter( 'hb_currency', array( $this, 'woocommerce_currency' ), 50 );
 			add_filter( 'tp_hotel_booking_payment_current_currency', array( $this, 'woocommerce_currency' ), 50 );
 			add_filter( 'hb_currency_symbol', array( $this, 'woocommerce_currency_symbol' ), 50, 2 );
 			add_filter( 'hb_price_format', array( $this, 'woocommerce_price_format' ), 50, 3 );
-			/*
-			 * filter price
-			 */
+			// /*
+			//  * filter price
+			//  */
 			add_filter( 'hotel_booking_room_total_price_incl_tax', array( $this, 'room_price_tax' ), 10, 2 );
 			add_filter( 'tp_hb_extra_package_regular_price_tax', array( $this, 'packages_regular_price_tax' ), 10, 3 ); // extra package regular
 
@@ -139,8 +139,8 @@ class TP_Hotel_Booking_Woocommerce {
 		if ( array_key_exists( $woo_cart_id, $cart_items ) ) {
 			$woocommerce->cart->set_quantity( $woo_cart_id, $params['quantity'] );
 		} else {
-			WC()->cart->add_to_cart( $woo_cart_param['product_id'], $params['quantity'] );
-			// $woo_cart_id = $woocommerce->cart->add_to_cart( $woo_cart_param['product_id'], $params['quantity'], null, array(), $woo_cart_param );
+			// WC()->cart->add_to_cart( $woo_cart_param['product_id'], $params['quantity'] );
+			$woo_cart_id = $woocommerce->cart->add_to_cart( $woo_cart_param['product_id'], $params['quantity'], null, array(), $woo_cart_param );
 		}
 
 		// add_action( 'hotel_booking_added_cart', array( $this, 'hotel_add_to_cart' ), 10, 2 );
@@ -361,6 +361,7 @@ class TP_Hotel_Booking_Woocommerce {
 		return $url;
 	}
 
+	// woo product class process
 	function product_class( $classname, $product_type, $post_type, $product_id ){
 		if( 'hb_room' == $post_type ){
 			$classname = 'HB_WC_Product_Room';
@@ -383,6 +384,24 @@ class TP_Hotel_Booking_Woocommerce {
 			}
 		}
 		return $request;
+	}
+
+	// add product class param
+	function add_cart_item( $cart_item, $cart_id ){
+		if( in_array( $cart_item['data']->post->post_type, array( 'hb_room', 'hb_extra_room' ) ) ) {
+			$cart_item['data']->data = array(
+				'product_id'	 => $cart_item['product_id'],
+				'check_in_date'  => $cart_item['check_in_date'],
+				'check_out_date' => $cart_item['check_out_date'],
+				'woo_cart_id'	 => $cart_id
+			);
+			if( $cart_item['data']->post->post_type === 'hb_extra_room' ) {
+				$cart_item['data']->data['parent_id'] = $cart_item['parent_id'];
+			}
+
+		}
+
+		return $cart_item;
 	}
 
 	/**

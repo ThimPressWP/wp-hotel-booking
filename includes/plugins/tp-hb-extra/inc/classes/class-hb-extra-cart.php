@@ -13,7 +13,7 @@ class HB_Extra_Cart
 		/**
 		 * new script
 		 */
-		add_action( 'hotel_booking_added_cart_completed', array( $this, 'ajax_added_cart' ), 10, 2 );
+		add_action( 'hotel_booking_added_cart', array( $this, 'ajax_added_cart' ), 10, 2 );
 		/**
 		 * add filter add to cart results array
 		 * render object build mini cart
@@ -60,12 +60,15 @@ class HB_Extra_Cart
 
 		add_filter( 'tp_hb_extra_cart_input', array( $this, 'check_respondent' ) );
 
+		// add parent quanity to extra package cart item
+		add_filter( 'hotel_booking_add_to_cart_params', array( $this, 'hotel_booking_add_to_cart_params' ), 10, 2 );
+
 	}
 
 	// add extra
 	function ajax_added_cart( $cart_id, $cart_item )
 	{
-		// remove_action( 'hotel_booking_added_cart_completed', array( $this, 'ajax_added_cart' ), 10, 2 );
+		remove_action( 'hotel_booking_added_cart', array( $this, 'ajax_added_cart' ), 10, 2 );
 
 		if( empty( $_POST[ 'hb_optional_quantity_selected' ] ) || empty( $_POST[ 'hb_optional_quantity' ] ) ) {
 			return $cart_id;
@@ -77,32 +80,39 @@ class HB_Extra_Cart
 			$turn_on = $_POST['hb_optional_quantity_selected'];
 
 			foreach ( $selected_quantity as $extra_id => $qty ) {
+				// param
+				$param = array(
+						'product_id'		=> $extra_id,
+						'parent_id'			=> $cart_id,
+						'check_in_date'		=> $cart_item['check_in_date'],
+						'check_out_date'	=> $cart_item['check_out_date']
+					);
 				if ( array_key_exists( $extra_id, $turn_on ) ) {
-					$param = array(
-							'product_id'		=> $extra_id,
-							'parent_id'			=> $cart_id,
-							'check_in_date'		=> $cart_item->check_in_date,
-							'check_out_date'	=> $cart_item->check_out_date
-						);
 
 					$extra_cart_item_id = TP_Hotel_Booking::instance()->cart->add_to_cart( $extra_id, $param, $qty );
 				}
 				else
 				{
-					$param = array(
-							'product_id'		=> $extra_id,
-							'parent_id'			=> $cart_id,
-							'check_in_date'		=> $cart_item->check_in_date,
-							'check_out_date'	=> $cart_item->check_out_date
-						);
 					$extra_cart_item_id = TP_Hotel_Booking::instance()->cart->generate_cart_id( $param );
 					TP_Hotel_Booking::instance()->cart->remove_cart_item( $extra_cart_item_id );
 				}
 			}
 		}
 
-		// add_action( 'hotel_booking_added_cart_completed', array( $this, 'ajax_added_cart' ), 10, 2 );
+		add_action( 'hotel_booking_added_cart', array( $this, 'ajax_added_cart' ), 10, 2 );
 		return $cart_id;
+	}
+
+	// add cart attributes
+	function hotel_booking_add_to_cart_params( $param, $post_id ) {
+		if ( isset( $param['parent_id'] ) && get_post_type( $post_id ) === 'hb_extra_room' ) {
+			$parent_cart = TP_Hotel_Booking::instance()->cart->get_cart_item( $param['parent_id'] );
+			if ( $parent_cart ) {
+				$param['parent_quantity'] = $parent_cart->quantity;
+			}
+		}
+
+		return $param;
 	}
 
 	/**

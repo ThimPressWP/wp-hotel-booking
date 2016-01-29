@@ -225,7 +225,8 @@ class HB_Cart
         // set params quantity
         $params[ 'quantity' ] = $qty;
 
-        $params = apply_filters( 'tp_hotel_booking_add_to_cart_params', $params );
+        $params = apply_filters( 'hotel_booking_add_to_cart_params', $params, $post_id );
+
         // cart item is exist
     	if ( isset( $this->cart_contents[ $cart_item_id ] ) ) {
             $this->update_cart_item( $cart_item_id, $qty, $asc, false );
