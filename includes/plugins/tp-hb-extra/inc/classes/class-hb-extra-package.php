@@ -167,7 +167,6 @@ class HB_Extra_Package
 
 	function get_regular_price( $tax = false )
 	{
-
 		if( ! $this->_post ) return;
 		$price = get_post_meta( $this->_post->ID, 'tp_hb_extra_room_price', true );
 

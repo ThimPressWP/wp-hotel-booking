@@ -219,29 +219,26 @@ class HB_Cart
     		return $this->remove_cart_item( $cart_item_id );
     	}
 
-    	// cart item is exist
-    	if ( isset( $this->cart_contents[ $cart_item_id ] ) ) {
-    		if( $asc === true ) {
-    			$cart_item = $this->get_cart_item( $cart_item_id );
-    			$qty = $cart_item->quantity + $qty;
-    		}
-    		else {
-    			$this->remove_cart_item( $cart_item_id );
-    		}
-    	}
+        // set params product_id
+        $params[ 'product_id' ] = $post_id;
 
-    	// set params product_id
-    	$params[ 'product_id' ] = $post_id;
-
-    	// set params quantity
-    	$params[ 'quantity' ] = $qty;
+        // set params quantity
+        $params[ 'quantity' ] = $qty;
 
         $params = apply_filters( 'tp_hotel_booking_add_to_cart_params', $params );
-    	// set session cart
-    	$this->sessions->set( $cart_item_id, $params );
+        // cart item is exist
+    	if ( isset( $this->cart_contents[ $cart_item_id ] ) ) {
+            $this->update_cart_item( $cart_item_id, $qty, $asc, false );
+    	} else {
+            // set session cart
+            $this->sessions->set( $cart_item_id, $params );
+        }
 
         // do action
         do_action( 'hotel_booking_added_cart', $cart_item_id, $params );
+
+        // do action woocommerce
+        $cart_item_id = apply_filters( 'hotel_booking_added_cart_results', $cart_item_id, $params );
 
     	// refresh cart
     	$this->refresh();
@@ -250,7 +247,7 @@ class HB_Cart
     }
 
     // update cart item
-    function update_cart_item( $cart_id = null, $qty = 0, $asc = false ) {
+    function update_cart_item( $cart_id = null, $qty = 0, $asc = false, $refresh = true ) {
         if ( ! $cart_id ) return;
 
         if ( ! empty( $this->cart_contents[ $cart_id ] ) && $cart_item = $this->get_cart_item_param( $cart_id ) ) {
@@ -267,8 +264,11 @@ class HB_Cart
             $this->sessions->set( $cart_id, $cart_item );
 
             do_action( 'hotel_booking_updated_cart_item', $cart_id, $cart_item );
+
             // refresh cart
-            $this->refresh();
+            if ( $refresh ) {
+                $this->refresh();
+            }
         }
     }
 

@@ -13,12 +13,12 @@ class HB_Extra_Cart
 		/**
 		 * new script
 		 */
-		add_action( 'hotel_booking_added_cart', array( $this, 'ajax_added_cart' ), 10, 2 );
+		add_action( 'hotel_booking_added_cart_completed', array( $this, 'ajax_added_cart' ), 10, 2 );
 		/**
 		 * add filter add to cart results array
 		 * render object build mini cart
 		 */
-		add_filter( 'tp_hb_add_to_cart_results', array( $this, 'add_to_cart_results' ), 10, 2 );
+		add_filter( 'hotel_booking_add_to_cart_results', array( $this, 'add_to_cart_results' ), 10, 2 );
 
 		/**
 		 * after mini cart item loop
@@ -63,9 +63,9 @@ class HB_Extra_Cart
 	}
 
 	// add extra
-	function ajax_added_cart( $cart_id, $cart_parent_param )
+	function ajax_added_cart( $cart_id, $cart_item )
 	{
-		remove_filter( 'hotel_booking_added_cart', array( $this, 'ajax_added_cart' ), 10, 2 );
+		// remove_action( 'hotel_booking_added_cart_completed', array( $this, 'ajax_added_cart' ), 10, 2 );
 
 		if( empty( $_POST[ 'hb_optional_quantity_selected' ] ) || empty( $_POST[ 'hb_optional_quantity' ] ) ) {
 			return $cart_id;
@@ -81,8 +81,8 @@ class HB_Extra_Cart
 					$param = array(
 							'product_id'		=> $extra_id,
 							'parent_id'			=> $cart_id,
-							'check_in_date'		=> $cart_parent_param['check_in_date'],
-							'check_out_date'	=> $cart_parent_param['check_out_date']
+							'check_in_date'		=> $cart_item->check_in_date,
+							'check_out_date'	=> $cart_item->check_out_date
 						);
 
 					$extra_cart_item_id = TP_Hotel_Booking::instance()->cart->add_to_cart( $extra_id, $param, $qty );
@@ -92,8 +92,8 @@ class HB_Extra_Cart
 					$param = array(
 							'product_id'		=> $extra_id,
 							'parent_id'			=> $cart_id,
-							'check_in_date'		=> $cart_parent_param['check_in_date'],
-							'check_out_date'	=> $cart_parent_param['check_out_date']
+							'check_in_date'		=> $cart_item->check_in_date,
+							'check_out_date'	=> $cart_item->check_out_date
 						);
 					$extra_cart_item_id = TP_Hotel_Booking::instance()->cart->generate_cart_id( $param );
 					TP_Hotel_Booking::instance()->cart->remove_cart_item( $extra_cart_item_id );
@@ -101,7 +101,7 @@ class HB_Extra_Cart
 			}
 		}
 
-		add_action( 'hotel_booking_added_cart', array( $this, 'ajax_added_cart' ), 10, 2 );
+		// add_action( 'hotel_booking_added_cart_completed', array( $this, 'ajax_added_cart' ), 10, 2 );
 		return $cart_id;
 	}
 
@@ -240,7 +240,7 @@ class HB_Extra_Cart
 					foreach ( $extraRoom as $cart_id => $cart_item ) {
 						$extra = HB_Extra_Package::instance( $cart_item->product_id );
 						$extra_packages[] = array(
-								'package_title'				=> sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->regular_price_tax ) ),
+								'package_title'				=> sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->amount_regular ) ),
 								'cart_id'					=> $cart_id,
 								'package_quantity'			=> sprintf( 'x%s', $cart_item->quantity ),
 								'package_respondent'		=> $extra->respondent
@@ -279,7 +279,7 @@ class HB_Extra_Cart
 					// extra class
 					$extra = HB_Extra_Package::instance( $cart_item->product_id );
 					$extra_packages[] = array(
-							'package_title'		=> sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->regular_price_tax ) ),
+							'package_title'		=> sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->amount_regular ) ),
 							'package_id'		=> $extra->ID,
 							'cart_id'			=> $cart_item_id,
 							'package_quantity'	=> sprintf( 'x%s', $cart_item->quantity )

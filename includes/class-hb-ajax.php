@@ -227,16 +227,18 @@ class HB_Ajax {
 			$param[ 'check_out_date' ] = sanitize_text_field( $_POST['check_out_date'] );
 		}
 
-		$param = apply_filters( 'tp_hotel_booking_ajax_add_cart_params', $param );
+		$param = apply_filters( 'tp_hotel_booking_add_cart_params', $param );
 		do_action( 'tp_hotel_booking_before_add_to_cart', $_POST );
 		// add to cart
 		$cart_item_id = TP_Hotel_Booking::instance()->cart->add_to_cart( $product_id, $param, $qty );
 
 		if ( ! is_wp_error( $cart_item_id ) )
 		{
-			$room = TP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id )->product_data;
+			$cart_item = TP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id );
+			$room = $cart_item->product_data;
 
-			do_action( 'tp_hotel_booking_ajax_added_cart', $cart_item_id, $_POST );
+			do_action( 'hotel_booking_added_cart_completed', $cart_item_id, $cart_item );
+
 			$results = array(
 				'status'     => 'success',
 				'message'    => sprintf( '<label class="hb_success_message">%1$s</label>', __( 'Added successfully.', 'tp-hotel-booking' ) ),
@@ -248,7 +250,7 @@ class HB_Ajax {
 				'total'      => hb_format_price( TP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id )->amount )
 			);
 
-			$results = apply_filters( 'tp_hb_add_to_cart_results', $results, $room );
+			$results = apply_filters( 'hotel_booking_add_to_cart_results', $results, $room );
 
 			hb_send_json( $results );
 		}

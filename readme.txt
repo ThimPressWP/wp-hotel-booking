@@ -19,7 +19,7 @@
 
 = 1.1 =
 1. Add Sessions Class, Update Cart Class
-2. Optimize process checkout.
-3. Remove data saving booking if it not usesful.( postmeta )
+2. Optimize process checkout
+3. Remove data saving booking if it not usesful( postmeta )
 4. Optimize Payment Stripe process
 5. Admin booking details
