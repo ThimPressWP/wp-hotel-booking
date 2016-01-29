@@ -14,7 +14,7 @@ class HB_WC_Product_Room extends WC_Product_Simple{
 
 	function get_price(){
 		$room = HB_Room::instance( $this->post, $this->data );
-		return $room->get_total( $room->get_data('check_in_date'), $room->get_data('check_out_date'), 1, false );
+		return $room->amount_singular_exclude_tax;
 	}
 
 	/**
