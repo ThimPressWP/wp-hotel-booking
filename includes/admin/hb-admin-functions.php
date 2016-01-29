@@ -314,7 +314,7 @@ function hb_bookings_meta_boxes() {
         ),
         array(
             'name'  => 'advance_payment',
-            'label' => 'Advance Payment (50% of Grand Total)',
+            'label' => 'Advance Payment',
             'std'   => '',
             'type'  => 'label',
             'filter' => 'hb_meta_box_field_sub_total'
