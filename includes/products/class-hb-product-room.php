@@ -186,19 +186,16 @@ class HB_Product_Room_Base extends HB_Product_Abstract
                 $return = $this->get_data('quantity');
                 break;
             case 'total':
-                $return = $this->get_total( $this->get_data('check_in_date'), $this->get_data('check_out_date'), $this->get_data( 'quantity' ), false, false );
+                $return = $this->get_total( $this->get_data('check_in_date'), $this->get_data('check_out_date'), $this->get_data( 'quantity' ), false );
                 break;
             case 'total_tax':
-                $return = $this->get_total( $this->get_data('check_in_date'), $this->get_data('check_out_date'), $this->get_data( 'quantity' ), true, false );
-                break;
-            case 'total_price':
-                $return = $this->get_total( $this->get_data('check_in_date'), $this->get_data('check_out_date'), $this->get_data( 'quantity' ) );
+                $return = $this->get_total( $this->get_data('check_in_date'), $this->get_data('check_out_date'), $this->get_data( 'quantity' ), true );
                 break;
             case 'amount_singular_exclude_tax':
-                $return = $this->get_total( $this->get_data('check_in_date'), $this->get_data('check_out_date'), 1, false, false );
+                $return = $this->get_total( $this->get_data('check_in_date'), $this->get_data('check_out_date'), 1, false );
                 break;
             case 'amount_singular_include_tax':
-                $return = $this->get_total( $this->get_data('check_in_date'), $this->get_data('check_out_date'), 1, true, false );
+                $return = $this->get_total( $this->get_data('check_in_date'), $this->get_data('check_out_date'), 1, true );
                 break;
             case 'amount_singular':
                 $return = $this->amount_singular();
@@ -364,7 +361,7 @@ class HB_Product_Room_Base extends HB_Product_Abstract
      * @param bool $including_tax
      * @return float|int
      */
-    function get_total( $from = null, $to = null, $num_of_rooms = 1, $including_tax = true, $singular = true ) {
+    function get_total( $from = null, $to = null, $num_of_rooms = 1, $including_tax = true ) {
         $nights = 0;
         $total = 0;
         if( is_null( $from ) && is_null( $to ) ){
@@ -388,7 +385,7 @@ class HB_Product_Room_Base extends HB_Product_Abstract
         }
 
         if ( ! $num_of_rooms ) {
-            $num_of_rooms = intval( $this->quantity );
+            $num_of_rooms = intval( $this->get_data( 'quantity' ) );
         }
 
         if ( ! $nights ) {
@@ -413,17 +410,8 @@ class HB_Product_Room_Base extends HB_Product_Abstract
                 $total = $total + $tax_price;
             // }
         }
-
-        // room price include extra packages
-        if( $singular )
-        {
-            $extentions = apply_filters( 'hotel_booking_room_total_price_extentions', 0, $this, $including_tax );
-            $total = $total + $extentions;
-        }
         return $total;
     }
-
-    function amount_singular() { return 0; }
 
     /**
      * Get list of pricing plan of this room type
@@ -721,17 +709,34 @@ class HB_Product_Room_Base extends HB_Product_Abstract
 		}
 	}
 
-	function amount_regular( $from = null, $to = null ) {}
-
-	function amount_include_tax( $qty = 0 ) {
-        return $this->total_tax;
+    // total include tax
+    function amount_include_tax() {
+        return apply_filters( 'hotel_booking_room_item_total_include_tax', $this->total_tax, $this );
     }
 
-	function amount_exclude_tax( $qty = 0 ) {
-        return $this->total;
+    // total exclude tax
+    function amount_exclude_tax() {
+        return apply_filters( 'hotel_booking_room_item_total_exclude_tax', $this->total, $this );
     }
 
-	function amount( $qty = 0 ) {
-        return hb_price_including_tax() ? $this->amount_include_tax() : $this->amount_exclude_tax();
+    function amount( $cart = false ) {
+        $amount = hb_price_including_tax( $cart ) ? $this->amount_include_tax() : $this->amount_exclude_tax();
+        return apply_filters( 'hotel_booking_room_item_amount', $amount, $this );
+    }
+
+    function amount_singular_exclude_tax()
+    {
+        return apply_filters( 'hotel_booking_room_singular_total_exclude_tax', $this->amount_singular_exclude_tax, $this );
+    }
+
+    function amount_singular_include_tax()
+    {
+        return apply_filters( 'hotel_booking_room_singular_total_include_tax', $this->amount_singular_include_tax, $this );
+    }
+
+    function amount_singular( $cart = false )
+    {
+        $amount = hb_price_including_tax( $cart ) ? $this->amount_singular_include_tax() : $this->amount_singular_exclude_tax();
+        return apply_filters( 'hotel_booking_room_amount_singular', $amount, $this );
     }
 }

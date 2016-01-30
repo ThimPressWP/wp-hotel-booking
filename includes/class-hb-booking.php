@@ -141,7 +141,7 @@ class HB_Booking{
         add_post_meta( $itemOfOrderId, '_hb_booking_id', $booking_id );
 
         foreach ($params as $key => $value) {
-            add_post_meta( $itemOfOrderId, '_hb_' . $key, $value );
+            add_post_meta( $itemOfOrderId, $key, $value );
         }
     }
 

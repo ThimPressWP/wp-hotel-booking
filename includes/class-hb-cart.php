@@ -12,7 +12,7 @@ class HB_Cart
      * $sessions object
      * @var null
      */
-    private $sessions = null;
+    public $sessions = null;
 
     /**
      * $customer_sessions object
@@ -89,10 +89,6 @@ class HB_Cart
             case 'total_nights':
                 $return = $this->get_total_nights();
                 break;
-            // case 'check_in_date':
-            // case 'check_out_date':
-            //     $return = $this->get_option( $key );
-            //     break;
             case 'sub_total':
                 $return = $this->get_sub_total();
                 break;
@@ -138,25 +134,25 @@ class HB_Cart
                         // set product data
                         $cart_item->product_data = $product;
                         // amount item include tax
-                        $cart_item->amount_include_tax = $product->amount_include_tax();
+                        $cart_item->amount_include_tax = apply_filters( 'hotel_booking_cart_item_amount_incl_tax', $product->amount_include_tax(), $cart_id, $cart_item, $product );
 
                         // amount item exclude tax
-                        $cart_item->amount_exclude_tax = $product->amount_exclude_tax();
+                        $cart_item->amount_exclude_tax = apply_filters( 'hotel_booking_cart_item_amount_excl_tax', $product->amount_exclude_tax(), $cart_id, $cart_item, $product );
 
                         // amount item exclude tax
-                        $cart_item->amount = $product->amount();
+                        $cart_item->amount = apply_filters( 'hotel_booking_cart_item_total_amount', $product->amount( true ), $cart_id, $cart_item, $product );
 
                         // amount tax
                         $cart_item->amount_tax = $cart_item->amount_include_tax - $cart_item->amount_exclude_tax;
 
                         // singular include tax
-                        $cart_item->amount_singular_include_tax = $product->amount_singular_include_tax();
+                        $cart_item->amount_singular_include_tax = apply_filters( 'hotel_booking_cart_item_amount_singular_incl_tax', $product->amount_singular_include_tax(), $cart_id, $cart_item, $product );
 
                         // singular exclude tax
-                        $cart_item->amount_singular_exclude_tax = $product->amount_singular_exclude_tax();
+                        $cart_item->amount_singular_exclude_tax = apply_filters( 'hotel_booking_cart_item_amount_singular_incl_tax', $product->amount_singular_exclude_tax(), $cart_id, $cart_item, $product );
 
                         // singular
-                        $cart_item->amount_singular = $product->amount_singular();
+                        $cart_item->amount_singular = apply_filters( 'hotel_booking_cart_item_amount_singular', $product->amount_singular( true ), $cart_id, $cart_item, $product );
                     }
 
                     $this->cart_contents[ $cart_id ] = $cart_item;
@@ -214,6 +210,8 @@ class HB_Cart
     		return new WP_Error( 'hotel_booking_add_to_cart_error', __( 'Can not add to cart, product is not exist.', 'tp-hotel-booking' ) );
     	}
 
+        $post_id = absint( $post_id );
+
     	$cart_item_id = $this->generate_cart_id( $params );
     	if ( $qty == 0 ) {
     		return $this->remove_cart_item( $cart_item_id );
@@ -227,6 +225,10 @@ class HB_Cart
 
         $params = apply_filters( 'hotel_booking_add_to_cart_params', $params, $post_id );
 
+        if ( ! isset( $params['quantity'] ) ) {
+            return;
+        }
+
         // cart item is exist
     	if ( isset( $this->cart_contents[ $cart_item_id ] ) ) {
             $this->update_cart_item( $cart_item_id, $qty, $asc, false );
@@ -236,10 +238,10 @@ class HB_Cart
         }
 
         // do action
-        do_action( 'hotel_booking_added_cart', $cart_item_id, $params );
+        do_action( 'hotel_booking_added_cart', $cart_item_id, $params, $_POST );
 
         // do action woocommerce
-        $cart_item_id = apply_filters( 'hotel_booking_added_cart_results', $cart_item_id, $params );
+        $cart_item_id = apply_filters( 'hotel_booking_added_cart_results', $cart_item_id, $params, $_POST );
 
     	// refresh cart
     	$this->refresh();
@@ -650,9 +652,9 @@ class HB_Cart
         foreach ( $rooms as $k => $room ) {
             $_rooms[] = apply_filters( 'hb_generate_transaction_object_room', array(
                     '_hb_id'                => $room->ID,
-                    '_hb_quantity'          => $room->quantity,
-                    '_hb_check_in_date'     => strtotime( $room->check_in_date ),
-                    '_hb_check_out_date'    => strtotime( $room->check_out_date ),
+                    '_hb_quantity'          => $room->get_data( 'quantity' ),
+                    '_hb_check_in_date'     => strtotime( $room->get_data( 'check_in_date' ) ),
+                    '_hb_check_out_date'    => strtotime( $room->get_data( 'check_out_date' ) ),
                     '_hb_sub_total'         => $room->amount_exclude_tax
                 ), $room );
         }
@@ -755,69 +757,6 @@ function hb_get_cart_description(){
 function hb_get_return_url(){
     $url = get_site_url();
     return apply_filters( 'hb_return_url', $url );
-}
-
-/**
- * Generate transaction object to store after the order placed
- *
- * @param $customer_id
- * @return stdClass
- */
-function hb_generate_transaction_object( $order = null ){
-    $cart = HB_Cart::instance();
-    if( $cart->is_empty() ) return false;
-    $rooms = array();
-    if( $_rooms = $cart->get_rooms() ){
-        foreach( $_rooms as $key => $room ) {
-            $rooms[ $key ] = apply_filters( 'hb_generate_transaction_object_room', array(
-                'id'                => $room->post->ID,
-                'base_price'        => $room->get_price(),
-                'quantity'          => $room->quantity,
-                'name'              => $room->name,
-                'check_in_date'     => $room->check_in_date,
-                'check_out_date'    => $room->check_out_date,
-                'sub_total'         => $room->get_total( $room->check_in_date, $room->check_out_date, $room->num_of_rooms, false )
-            ), $room);
-        }
-    }
-
-    if( ! $rooms )
-        return;
-
-    $rooms = apply_filters( 'hb_transaction_rooms', $rooms );
-
-    global $hb_settings;
-    $default_curreny = $hb_settings->get( 'currency', 'USD' );
-
-    $transaction_object = new stdClass();
-    $transaction_object->cart_id                = $cart->get_cart_id();
-    $transaction_object->total                  = round( $cart->get_total(), 2 );
-    $transaction_object->sub_total              = $cart->get_sub_total();
-    $transaction_object->advance_payment        = hb_get_cart_total( ! hb_get_request( 'pay_all' ) );
-    // currency of default
-    $transaction_object->currency               = apply_filters( 'tp_hotel_booking_payment_currency', $default_curreny );
-    $transaction_object->description            = hb_get_cart_description();
-    $transaction_object->rooms                  = $rooms;
-    $transaction_object->coupons                = '';
-    $transaction_object->coupons_total_discount = '';
-    $transaction_object->tax                    = hb_get_tax_settings();
-    $transaction_object->price_including_tax    = hb_price_including_tax();
-    $transaction_object->addition_information   = hb_get_request( 'addition_information' );
-    $transaction_object->total_nights           = $cart->total_nights;
-
-    // if( HB_Settings::instance()->get( 'enable_coupon' ) && $coupon = get_transient( 'hb_user_coupon_' . session_id() ) ){
-    if( HB_Settings::instance()->get( 'enable_coupon' ) && $coupon = TP_Hotel_Booking::instance()->cart->coupon ){
-        $coupon = HB_Coupon::instance( $coupon );
-        $transaction_object->coupon = array(
-            'id'        => $coupon->ID,
-            'code'      => $coupon->coupon_code,
-            'value'     => $coupon->discount_value
-        );
-    }
-
-    $transaction_object = apply_filters( 'hb_generate_transaction_object', $transaction_object, $order );
-
-    return $transaction_object;
 }
 
 /**

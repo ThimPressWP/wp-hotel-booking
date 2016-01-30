@@ -204,7 +204,7 @@ class HB_Ajax {
 		if ( ! isset( $_POST['check_in_date'] ) || ! isset( $_POST['check_out_date'] ) )
 			return;
 
-		$product_id = (int) sanitize_text_field( $_POST['room-id'] );
+		$product_id = absint( $_POST['room-id'] );
 		$param = array();
 		$param[ 'product_id' ] = sanitize_text_field( $product_id );
 		if( ! isset( $_POST['hb-num-of-rooms'] ) )
@@ -237,7 +237,7 @@ class HB_Ajax {
 			$cart_item = TP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id );
 			$room = $cart_item->product_data;
 
-			do_action( 'hotel_booking_added_cart_completed', $cart_item_id, $cart_item );
+			do_action( 'hotel_booking_added_cart_completed', $cart_item_id, $cart_item, $_POST );
 
 			$results = array(
 				'status'     => 'success',

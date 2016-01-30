@@ -523,9 +523,9 @@ function hb_get_tax_settings() {
 	return $tax;
 }
 
-function hb_price_including_tax() {
+function hb_price_including_tax( $cart = false ) {
 	$settings = HB_Settings::instance();
-	return apply_filters( 'hb_price_including_tax', $settings->get( 'price_including_tax' ) );
+	return apply_filters( 'hb_price_including_tax', $settings->get( 'price_including_tax' ), $cart );
 }
 
 function hb_dropdown_numbers( $args = array() ) {

@@ -51,14 +51,6 @@ foreach( $_rooms as $id ){
             </td>
             <td colspan="5" ><?php echo $customer_name; ?></td>
         </tr>
-        <!-- <tr class="booking-table-row">
-            <td class="bold-text"><?php //_e( 'Check In Date', 'tp-hotel-booking' ); ?></td>
-            <td colspan="3"><?php //echo date( 'l d M Y', $check_in ); ?></td>
-        </tr>
-        <tr class="booking-table-row">
-            <td class="bold-text"><?php //_e( 'Check Out Date', 'tp-hotel-booking' ); ?></td>
-            <td colspan="3"><?php //echo date( 'l d M Y', $check_out ); ?></td>
-        </tr> -->
         <tr class="booking-table-row">
             <td class="bold-text"><?php _e( 'Total Nights', 'tp-hotel-booking' ); ?></td>
             <td colspan="5"><?php echo get_post_meta( $booking_id, '_hb_total_nights', true ) ; ?></td>

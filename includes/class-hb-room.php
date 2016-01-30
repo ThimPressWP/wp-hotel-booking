@@ -61,37 +61,6 @@ class HB_Room extends HB_Product_Room_Base
         return $GLOBALS['hb_room'] = HB_Room::instance($post);
     }
 
-    // total include tax
-    function amount_include_tax( $qty = 0 ) {
-        return apply_filters( 'hotel_booking_cart_room_item_total_include_tax', $this->total_tax, $this );
-    }
-
-    // total exclude tax
-    function amount_exclude_tax( $qty = 0 ) {
-        return apply_filters( 'hotel_booking_cart_room_item_total_exclude_tax', $this->total, $this );
-    }
-
-    function amount( $qty = 0 ) {
-        $amount = hb_price_including_tax() ? $this->amount_include_tax( $qty ) : $this->amount_exclude_tax( $qty );
-        return apply_filters( 'hotel_booking_cart_room_item_amount', $amount, $this );
-    }
-
-    function amount_singular_exclude_tax()
-    {
-        return apply_filters( 'hotel_booking_room_singular_total_exclude_tax', $this->amount_singular_exclude_tax, $this );
-    }
-
-    function amount_singular_include_tax()
-    {
-        return apply_filters( 'hotel_booking_room_singular_total_include_tax', $this->amount_singular_include_tax, $this );
-    }
-
-    function amount_singular()
-    {
-        $amount = hb_price_including_tax() ? $this->amount_singular_include_tax() : $this->amount_singular_exclude_tax();
-        return apply_filters( 'hotel_booking_room_amount_singular', $amount, $this );
-    }
-
     /**
      * Get unique instance of HB_Room
      *
@@ -116,7 +85,7 @@ class HB_Room extends HB_Product_Room_Base
             $room = self::$_instance[ $id ];
 
             if( isset($options['check_in_date'], $options['check_out_date'])
-                && ( ($options['check_in_date'] !== $room->check_in_date) || ($options['check_out_date'] !== $room->check_out_date) )
+                && ( ($options['check_in_date'] !== $room->get_data('check_in_date')) || ($options['check_out_date'] !== $room->get_data('check_out_date')) )
                 || $room->quantity === false || ( ! isset($options['quantity']) || $room->quantity != $options['quantity'] )
                 || ( ! isset($options['extra_packages']) || $options['extra_packages'] != $room->extra_packages )
             )

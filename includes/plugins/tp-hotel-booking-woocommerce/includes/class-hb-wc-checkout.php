@@ -79,7 +79,7 @@ class HB_WC_Checkout extends HB_Checkout
 
 		$create = false;
 		foreach ( $cart_contents as $cart_key => $cart_content ) {
-			if( get_post_type( $cart_content['product_id'] ) !== 'hb_room' )
+			if( get_post_type( $cart_content['product_id'] ) === 'hb_room' )
 			{
 				$create = true;
 				break;

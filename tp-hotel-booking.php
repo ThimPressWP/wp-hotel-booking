@@ -55,7 +55,15 @@ class TP_Hotel_Booking{
         add_action( 'template_redirect', 'hb_handle_purchase_request', 999 );
         add_action( 'widgets_init', array( $this, 'register_widgets' ) );
         register_activation_hook( __FILE__, array( $this, 'install' ) );
+        add_action( 'init', array( $this, 'init' ), 20 );
         // $this->install();
+    }
+
+    function init() {
+        // cart
+        $this->cart = HB_Cart::instance();
+        // var_dump($this->cart->cart_contents); die();
+        // var_dump($this->cart->empty_cart()); die();
     }
 
     function install(){
@@ -172,8 +180,6 @@ class TP_Hotel_Booking{
         $this->load_payments();
         // load reports
         $this->load_reports();
-        // cart
-        $this->cart = HB_Cart::instance();
     }
 
     // load all payment gateways support
