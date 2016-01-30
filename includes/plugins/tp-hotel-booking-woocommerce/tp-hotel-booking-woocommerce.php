@@ -61,9 +61,16 @@ class TP_Hotel_Booking_Woocommerce {
 			// /*
 			//  * filter price
 			//  */
+			// room price
 			add_filter( 'hotel_booking_room_total_price_incl_tax', array( $this, 'room_price_tax' ), 10, 2 );
-			add_filter( 'tp_hb_extra_package_regular_price_tax', array( $this, 'packages_regular_price_tax' ), 10, 3 ); // extra package regular
+			 // extra package price
+			add_filter( 'hotel_booking_extra_package_regular_price_incl_tax', array( $this, 'packages_regular_price_tax' ), 10, 3 );
+			 // cart amount(item total price)
+			add_filter( 'hotel_booking_cart_item_total_amount', array( $this, 'hotel_booking_cart_item_total_amount' ), 10, 4 );
+			// add_filter( 'hotel_booking_cart_item_amount_singular', array( $this, 'hotel_booking_cart_item_amount_singular' ), 10, 4 );
 
+			// tax enable
+			add_filter( 'hb_price_including_tax', array( $this, 'hb_price_including_tax' ), 10, 2 );
 			/**
 			 * hook to tp-hotel-booking core
 			 * create cart item
@@ -128,12 +135,14 @@ class TP_Hotel_Booking_Woocommerce {
 		$woo_cart_param = array(
 				'product_id'	=> $params['product_id'],
 				'check_in_date'	=> $params['check_in_date'],
-				'check_out_date'	=> $params['check_out_date']
+				'check_out_date'=> $params['check_out_date']
 			);
 
 		if ( isset( $params['parent_id'] ) ) {
 			$woo_cart_param['parent_id'] = $params['parent_id'];
 		}
+
+		$woo_cart_param = apply_filters( 'hotel_booking_wc_cart_params', $woo_cart_param, $cart_item_id );
 
 		$woo_cart_id = $woocommerce->cart->generate_cart_id( $woo_cart_param['product_id'], null, array(), $woo_cart_param );
 		if ( array_key_exists( $woo_cart_id, $cart_items ) ) {
@@ -525,12 +534,14 @@ class TP_Hotel_Booking_Woocommerce {
 	 */
 	function room_price_tax( $tax_price, $room )
 	{
+		remove_filter( 'hotel_booking_room_total_price_incl_tax', array( $this, 'room_price_tax' ), 10, 2 );
 		// woo get price
 		$product = new WC_Product( $room->post->ID );
-		$price = $room->get_total( $room->check_in_date, $room->check_out_date, 1, false, false );
 
-		$price_incl_tax = $product->get_price_including_tax( $price, $room->quantity );
-		$price_excl_tax = $product->get_price_excluding_tax( $price, $room->quantity );
+		add_filter( 'hotel_booking_room_total_price_incl_tax', array( $this, 'room_price_tax' ), 10, 2 );
+
+		$price_incl_tax = $product->get_price_including_tax( $room->get_data('quantity'), $room->amount_singular_exclude_tax );
+		$price_excl_tax = $product->get_price_excluding_tax( $room->get_data('quantity'), $room->amount_singular_exclude_tax );
 
 		return $price_incl_tax - $price_excl_tax;
 	}
@@ -547,10 +558,40 @@ class TP_Hotel_Booking_Woocommerce {
 		$product = new WC_Product( $package->ID );
 		$price = $package->amount_singular_exclude_tax();
 		// $price = $product->get_price();
-		$price_incl_tax = $product->get_price_including_tax( $price, 1 );
-		$price_excl_tax = $product->get_price_excluding_tax( $price, 1 );
+		$price_incl_tax = $product->get_price_including_tax( 1, $price );
+		$price_excl_tax = $product->get_price_excluding_tax( 1, $price );
 
 		return $price_incl_tax - $price_excl_tax;
+	}
+
+	function hb_price_including_tax( $tax, $cart ) {
+		if ( ! $cart ) {
+			return $tax;
+		}
+		if ( wc_tax_enabled() && get_option( 'woocommerce_tax_display_cart' ) === 'incl' ) {
+			$tax = true;
+		}
+		return $tax;
+	}
+
+	/*
+	| Cart item total amount
+	 */
+	function hotel_booking_cart_item_total_amount( $amount, $cart_id, $cart_item, $product ) {
+		return $amount;
+	}
+
+	function hotel_booking_cart_item_amount_singular( $amount, $cart_id, $cart_item, $product ) {
+		if ( wc_tax_enabled() && get_option( 'woocommerce_tax_display_cart' ) === 'incl' ) {
+			// woo get price
+			if ( get_post_type( $cart_item->product_id ) === 'hb_room' ) {
+				$woo_product = new WC_Product( $cart_item->product_id );
+				$price = $product->get_total( $cart_item->check_in_date , $product->check_out_date, $cart_item->quantity, false, false );
+
+				$amount = $woo_product->get_price_including_tax( $price, $product->quantity );
+			}
+		}
+		return $amount;
 	}
 
 	/**

@@ -110,10 +110,6 @@ class HB_Extra_Package
 				# code...
 				$return = $this->get_price_package();
 				break;
-			case 'amount_regular':
-				# code...
-				$return = $this->amount_regular();
-				break;
 			case 'respondent':
 				# code...
 				$return = get_post_meta( $this->_post->ID, 'tp_hb_extra_room_respondent', true );
@@ -125,6 +121,9 @@ class HB_Extra_Package
 			case 'night':
 				$return = hb_count_nights_two_dates( $this->_check_out, $this->_check_in );
 				break;
+			case 'amount_singular':
+                $return = $this->amount_singular();
+                break;
 			case 'amount_singular_exclude_tax':
 				# code...
 				$return = $this->amount_singular_exclude_tax();
@@ -172,26 +171,22 @@ class HB_Extra_Package
 
 		if( $tax )
 		{
-			$tax_price = apply_filters( 'tp_hb_extra_package_regular_price_tax', $price * hb_get_tax_settings(), $price, $this );
+			$tax_price = apply_filters( 'hotel_booking_extra_package_regular_price_incl_tax', $price * hb_get_tax_settings(), $price, $this );
 			$price = $price + $tax_price;
 		}
 
 		return (float)$price;
 	}
 
-	function amount_regular( $from = null, $to = null ) {
-		return hb_price_including_tax() ? $this->get_regular_price( true ) : $this->get_regular_price( false );
-	}
-
-	function amount_include_tax( $qty = 0 ) {
+	function amount_include_tax() {
         return $this->price_tax;
     }
 
-	function amount_exclude_tax( $qty = 0 ) {
+	function amount_exclude_tax() {
         return $this->price;
     }
 
-	function amount( $qty = 0 ) {
+	function amount( $cart = false ) {
         return hb_price_including_tax() ? $this->get_price_package() : $this->get_price_package( false );
     }
 

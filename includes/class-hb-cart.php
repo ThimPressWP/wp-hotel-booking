@@ -12,7 +12,7 @@ class HB_Cart
      * $sessions object
      * @var null
      */
-    private $sessions = null;
+    public $sessions = null;
 
     /**
      * $customer_sessions object
@@ -89,10 +89,6 @@ class HB_Cart
             case 'total_nights':
                 $return = $this->get_total_nights();
                 break;
-            // case 'check_in_date':
-            // case 'check_out_date':
-            //     $return = $this->get_option( $key );
-            //     break;
             case 'sub_total':
                 $return = $this->get_sub_total();
                 break;
@@ -138,25 +134,25 @@ class HB_Cart
                         // set product data
                         $cart_item->product_data = $product;
                         // amount item include tax
-                        $cart_item->amount_include_tax = $product->amount_include_tax();
+                        $cart_item->amount_include_tax = apply_filters( 'hotel_booking_cart_item_amount_incl_tax', $product->amount_include_tax(), $cart_id, $cart_item, $product );
 
                         // amount item exclude tax
-                        $cart_item->amount_exclude_tax = $product->amount_exclude_tax();
+                        $cart_item->amount_exclude_tax = apply_filters( 'hotel_booking_cart_item_amount_excl_tax', $product->amount_exclude_tax(), $cart_id, $cart_item, $product );
 
                         // amount item exclude tax
-                        $cart_item->amount = $product->amount();
+                        $cart_item->amount = apply_filters( 'hotel_booking_cart_item_total_amount', $product->amount( true ), $cart_id, $cart_item, $product );
 
                         // amount tax
                         $cart_item->amount_tax = $cart_item->amount_include_tax - $cart_item->amount_exclude_tax;
 
                         // singular include tax
-                        $cart_item->amount_singular_include_tax = $product->amount_singular_include_tax();
+                        $cart_item->amount_singular_include_tax = apply_filters( 'hotel_booking_cart_item_amount_singular_incl_tax', $product->amount_singular_include_tax(), $cart_id, $cart_item, $product );
 
                         // singular exclude tax
-                        $cart_item->amount_singular_exclude_tax = $product->amount_singular_exclude_tax();
+                        $cart_item->amount_singular_exclude_tax = apply_filters( 'hotel_booking_cart_item_amount_singular_incl_tax', $product->amount_singular_exclude_tax(), $cart_id, $cart_item, $product );
 
                         // singular
-                        $cart_item->amount_singular = $product->amount_singular();
+                        $cart_item->amount_singular = apply_filters( 'hotel_booking_cart_item_amount_singular', $product->amount_singular( true ), $cart_id, $cart_item, $product );
                     }
 
                     $this->cart_contents[ $cart_id ] = $cart_item;
@@ -214,6 +210,8 @@ class HB_Cart
     		return new WP_Error( 'hotel_booking_add_to_cart_error', __( 'Can not add to cart, product is not exist.', 'tp-hotel-booking' ) );
     	}
 
+        $post_id = absint( $post_id );
+
     	$cart_item_id = $this->generate_cart_id( $params );
     	if ( $qty == 0 ) {
     		return $this->remove_cart_item( $cart_item_id );
@@ -227,6 +225,10 @@ class HB_Cart
 
         $params = apply_filters( 'hotel_booking_add_to_cart_params', $params, $post_id );
 
+        if ( ! isset( $params['quantity'] ) ) {
+            return;
+        }
+
         // cart item is exist
     	if ( isset( $this->cart_contents[ $cart_item_id ] ) ) {
             $this->update_cart_item( $cart_item_id, $qty, $asc, false );
@@ -236,10 +238,10 @@ class HB_Cart
         }
 
         // do action
-        do_action( 'hotel_booking_added_cart', $cart_item_id, $params );
+        do_action( 'hotel_booking_added_cart', $cart_item_id, $params, $_POST );
 
         // do action woocommerce
-        $cart_item_id = apply_filters( 'hotel_booking_added_cart_results', $cart_item_id, $params );
+        $cart_item_id = apply_filters( 'hotel_booking_added_cart_results', $cart_item_id, $params, $_POST );
 
     	// refresh cart
     	$this->refresh();
