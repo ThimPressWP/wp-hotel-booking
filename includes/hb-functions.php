@@ -501,7 +501,11 @@ function hb_l18n() {
 		'check_out_date_must_be_greater' => __( 'Check out date must be greater than the check in', 'tp-hotel-booking' ),
 
 		'enter_coupon_code'              => __( 'Please enter coupon code', 'tp-hotel-booking' ),
-		'review_rating_required'         => __( 'Please select a rating', 'tp-hotel-booking' )
+		'review_rating_required'         => __( 'Please select a rating', 'tp-hotel-booking' ),
+		'waring'						 => array(
+												'room_select'	=> __( 'Please select room number', 'tp-hotel-booking' ),
+												'try_again'		=> __( 'Plesae try again!', 'tp-hotel-booking' )
+										)
 	);
 	return apply_filters( 'hb_l18n', $translation );
 }
@@ -600,15 +604,21 @@ function hb_update_customer_info( $data ) {
 	}
 
 	if ( ! $customer_id ) {
-		$is_new      = true;
-		$customer_id = wp_insert_post(
-			array(
-				'post_type'   => 'hb_customer',
-				'post_status' => 'publish',
-				'post_title'  => __( 'Hotel Booking Customer', 'tp-hotel-booking' )
-			)
-		);
+		$cus_id = hb_get_post_id_meta( '_hb_email', $data['email'] );
+		if ( get_post( $cus_id ) ) {
+			$customer_id = $cus_id;
+		} else {
+			$is_new      = true;
+			$customer_id = wp_insert_post(
+				array(
+					'post_type'   => 'hb_customer',
+					'post_status' => 'publish',
+					'post_title'  => __( 'Hotel Booking Customer', 'tp-hotel-booking' )
+				)
+			);
+		}
 	}
+
 	if ( $customer_id ) {
 		foreach ( $data as $k => $v ) {
 			if ( $k == 'ID' ) continue;
@@ -1433,14 +1443,16 @@ function hb_add_message( $message, $type = 'message' ) {
 }
 
 function hb_get_customer_fullname( $customer_id, $with_title = false ) {
-	$customer = HB_Customer::instance( $customer_id );
-	if ( $with_title ) {
-		$title = hb_get_title_by_slug( $customer->title );
-	} else {
-		$title = '';
-	}
+	if ( $customer_id ) {
+		$customer = HB_Customer::instance( $customer_id );
+		if ( $with_title ) {
+			$title = hb_get_title_by_slug( $customer->title );
+		} else {
+			$title = '';
+		}
 
-	return sprintf( '%s%s %s', $title ? $title . ' ' : '', $customer->first_name, $customer->last_name );
+		return sprintf( '%s%s %s', $title ? $title . ' ' : '', $customer->first_name, $customer->last_name );
+	}
 }
 
 if ( ! function_exists( 'is_room_category' ) ) {
@@ -1549,7 +1561,6 @@ function hb_customer_booked_room( $customer_email, $room_id ) {
 /**
  * filter email from
  */
-add_filter( 'wp_mail_from', 'hb_wp_mail_from' );
 function hb_wp_mail_from( $email ) {
 	global $hb_settings;
 	if ( $email = $hb_settings->get( 'email_general_from_email', get_option( 'admin_email' ) ) ) {
@@ -1559,8 +1570,6 @@ function hb_wp_mail_from( $email ) {
 	}
 	return $email;
 }
-
-add_filter( 'wp_mail_from_name', 'hb_wp_mail_from_name' );
 function hb_wp_mail_from_name( $name ) {
 	global $hb_settings;
 	if ( $name = $hb_settings->get( 'email_general_from_name' ) ) {
@@ -1604,34 +1613,35 @@ function hb_new_booking_email( $booking_id ) {
 		$email_heading = __( 'New customer booking', 'tp-hotel-booking' );
 	}
 
-	// old version 1.0.3
-	if ( get_post_meta( $booking_id, '_hb_booking_params' , true ) )
-	{
-		$body = hb_get_template_content( 'emails/admin-new-booking.php', array(
-			'email_heading' => $email_heading,
-			'booking'       => HB_Booking::instance( $booking_id )
-		) );
-
-		// get CSS styles
-		ob_start();
-		hb_get_template( 'emails/email-styles.php' );
-		$css = apply_filters( 'hb_email_styles', ob_get_clean() );
-		$css = preg_replace( '!</?style>!', '', $css );
-		print_r( $css );
-		try {
-			TP_Hotel_Booking::instance()->_include( 'includes/libraries/class-emogrifier.php' );
-			// apply CSS styles inline for picky email clients
-			$emogrifier = new Emogrifier( $body, $css );
-			$body       = $emogrifier->emogrify();
-
-		} catch ( Exception $e ) {
-
-		}
-	} else if( get_post_meta( $booking_id, '_hb_booking_cart_params' , true ) ) {
+	// new version 1.1
+	if( get_post_meta( $booking_id, '_hb_booking_cart_params' , true ) ) {
 		$body = hb_get_template_content( 'emails/email-booking.php', array(
 			'email_heading' => $email_heading,
 			'booking'       => HB_Booking::instance( $booking_id )
 		) );
+	} else if ( get_post_meta( $booking_id, '_hb_booking_params' , true ) ) {
+		$body = hb_get_template_content( 'emails/admin-new-booking.php', array(
+			'email_heading' => $email_heading,
+			'booking'       => HB_Booking::instance( $booking_id )
+		) );
+	}
+
+	// get CSS styles
+	ob_start();
+	hb_get_template( 'emails/email-styles.php' );
+	$css = apply_filters( 'hb_email_styles', ob_get_clean() );
+	$css = preg_replace( '!</?style>!', '', $css );
+	print_r( $css );
+	try {
+		if ( ! class_exists( 'Emogrifier') ) {
+			TP_Hotel_Booking::instance()->_include( 'includes/libraries/class-emogrifier.php' );
+		}
+		// apply CSS styles inline for picky email clients
+		$emogrifier = new Emogrifier( $body, $css );
+		$body       = $emogrifier->emogrify();
+
+	} catch ( Exception $e ) {
+
 	}
 
 	$headers = "Content-Type: " . ( $format == 'html' ? 'text/html' : 'text/plain' ) . "\r\n";
@@ -1733,5 +1743,22 @@ if ( ! function_exists( 'hb_random_color_part' ) ) {
 
 	function hb_random_color() {
 		return '#' . hb_random_color_part() . hb_random_color_part() . hb_random_color_part();
+	}
+}
+
+if ( ! function_exists( 'hb_get_post_id_meta' ) ) {
+
+	function hb_get_post_id_meta( $key, $value ) {
+		global $wpdb;
+		$meta = $wpdb->get_results("SELECT * FROM `".$wpdb->postmeta."` WHERE meta_key='".esc_sql( $key )."' AND meta_value='".esc_sql( $value )."'");
+		if ( is_array( $meta ) && ! empty( $meta ) && isset( $meta[0] ) ) {
+			$meta = $meta[0];
+		}
+		if ( is_object($meta) ) {
+			return $meta->post_id;
+		}
+		else {
+			return false;
+		}
 	}
 }

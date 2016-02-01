@@ -347,7 +347,6 @@ class TP_Hotel_Booking{
             }
         </script>
     <?php
-        $this->_include( 'includes/language_js.php' );
     }
 
     /**

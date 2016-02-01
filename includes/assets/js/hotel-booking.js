@@ -375,7 +375,7 @@
 			this.remove_cart();
 		},
 
-		hb_add_to_cart_callback: function (data, callback) {
+		hb_add_to_cart_callback: function ( data, callback ) {
 			var mini_cart = $('.hotel_booking_mini_cart');
 			var length = mini_cart.length;
 			var template = wp.template('hb-minicart-item');
@@ -494,7 +494,7 @@
 					var button = _form.find('.hb_add_to_cart');
 					var number_room_select = $(this).find('.number_room_select').val();
 					if (typeof number_room_select === 'undefined' || number_room_select === '') {
-						alert(hotel_settings_language.waring.room_select);
+						alert(hotel_booking_l18n.waring.room_select);
 						return false;
 					}
 					var data = $(this).serializeArray();
@@ -521,7 +521,6 @@
 
 							if (typeof code.status !== 'undefined' && code.status === 'success') {
 								// add message successfully
-								hotel_settings_cart = true;
 								if( typeof code.redirect !== 'undefined' )
 								{
 									window.location.href = code.redirect;
@@ -531,14 +530,15 @@
 								alert(code.message);
 							}
 
-							if ( typeof code.id !== 'undefined' )
+							if ( typeof code.id !== 'undefined' ) {
 								HB_Booking_Cart.hb_add_to_cart_callback(code);
+							}
 							button.removeClass('hb_loading');
 						},
 						error     : function () {
 							// searchResult.hb_overlay_ajax_stop();
 							button.removeClass('hb_loading');
-							alert(hotel_settings_language.waring.try_again);
+							alert(hotel_booking_l18n.waring.try_again);
 						}
 					});
 					return false;
@@ -568,7 +568,7 @@
 				}).done(function (res) {
 					res = parseJSON(res);
 					if (typeof res.status === 'undefined' || res.status !== 'success')
-						alert(hotel_settings_language.waring.try_again);
+						alert(hotel_booking_l18n.waring.try_again);
 
 					if (typeof res.sub_total !== 'undefined')
 						$('span.hb_sub_total_value').html(res.sub_total);
@@ -602,15 +602,17 @@
 					dataType  : 'html',
 					beforeSend: function () {
 						item.addClass('before_remove');
+						item.hb_overlay_ajax_start();
 					}
 				}).done(function (res) {
 					res = parseJSON(res);
 					if (typeof res.status === 'undefined' || res.status !== 'success') {
-						alert(hotel_settings_language.waring.try_again);
+						alert(hotel_booking_l18n.waring.try_again);
 						return;
 					}
 
 					HB_Booking_Cart.hb_remove_cart_item_callback( cart_id, res );
+					item.hb_overlay_ajax_stop();
 				});
 			});
 		},

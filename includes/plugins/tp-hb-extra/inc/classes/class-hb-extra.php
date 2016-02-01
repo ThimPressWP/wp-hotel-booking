@@ -7,7 +7,6 @@ class HB_Extra_Field
 
 	function __construct()
 	{
-		add_filter( 'tp-hb-extra-l10n', array( $this, 'language_js' ) );
 		add_filter( 'tp_hb_metabox_room_settings', array( $this, 'meta_fields' ) );
 		add_action( 'tp_hotel_booking_loop_after_item', array( $this, 'render_extra' ), 10, 1 );
 
@@ -15,17 +14,6 @@ class HB_Extra_Field
 		 * add package details booking
 		 */
 		add_action( 'hotel_booking_room_details_quantity', array( $this, 'admin_booking_room_details' ), 10, 3 );
-	}
-
-	/**
-	 * script language
-	 * @param  [type] $l10n [description]
-	 * @return [type]       [description]
-	 */
-	public function language_js( $l10n )
-	{
-		$l10n[ 'remove_confirm' ] = __( 'Remove package. Are you sure?', 'tp-hb-extra' );
-		return $l10n;
 	}
 
 	/**

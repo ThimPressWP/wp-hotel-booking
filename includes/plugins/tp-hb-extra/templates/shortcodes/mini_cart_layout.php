@@ -25,7 +25,7 @@
                                 <div class="hb_package_title">
                                     <a href="#">{{{ pack.package_title }}}</a>
                                     <span>
-                                        ( {{{ pack.package_quantity }}} )
+                                        ({{{ pack.package_quantity }}})
                                         <a href="#" class="hb_package_remove" data-cart-id="{{ pack.cart_id }}"><i class="fa fa-times"></i></a>
                                     </span>
                                 </div>

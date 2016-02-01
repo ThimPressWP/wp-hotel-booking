@@ -324,7 +324,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
             'item_name'     => hb_get_cart_description(),
             'return'        => add_query_arg( array( 'hb-transaction-method' => 'paypal-standard', 'paypal-nonce' => $nonce ), hb_get_return_url() ),
             'currency_code' => hb_get_currency(),
-            'notify_url'    => get_site_url() . '/?' . hb_get_web_hook( 'paypal-standard' ) . '=1',//get_site_url() . '/?learn-press-transaction-method=paypal-standard',
+            'notify_url'    => get_site_url() . '/?' . hb_get_web_hook( 'paypal-standard' ) . '=1',
             'no_note'       => '1',
             'shipping'      => '0',
             'email'         => $customer->data['email'],
@@ -350,10 +350,9 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      * @return array
      */
     function process_checkout( $booking_id = null ){
-        // unset($_SESSION['hb_cart'.HB_BLOG_ID]);
         return array(
             'result'    => 'success',
-            'redirect'  => $this->_get_paypal_basic_checkout_url(  $booking_id  )
+            'redirect'  => $this->_get_paypal_basic_checkout_url( $booking_id  )
         );
     }
 

@@ -75,20 +75,17 @@ foreach( $_rooms as $id ){
         <?php $booking_rooms_params = get_post_meta( $booking_id, '_hb_booking_params', true ); ?>
         <?php if( $booking_rooms_params ): ?>
             <?php foreach ($booking_rooms_params as $search_key => $rooms): ?>
-
                     <?php foreach ($rooms as $id => $room_param) : ?>
                         <tr style="background-color: #FFFFFF;">
                             <td>
                                 <?php
                                     $room = HB_Room::instance( $id, $room_param );
                                     echo get_the_title( $id );
-                                    // $term = get_term( get_post_meta( $id, '_hb_room_type', true ), 'hb_room_type' );
                                     $terms = wp_get_post_terms( $id, 'hb_room_type' );
                                     $room_types = array();
                                     foreach ($terms as $key => $term) {
                                         $room_types[] = $term->name;
                                     }
-                                    // if( $term ) echo " (", $term->name, ")";
                                     if( $terms ) echo " (", implode(', ', $room_types), ")";
                                 ?>
                             </td>

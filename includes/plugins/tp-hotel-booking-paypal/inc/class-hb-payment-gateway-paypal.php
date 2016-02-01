@@ -300,8 +300,6 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
 
         $paypal = HB_Settings::instance()->get( 'paypal' );
 
-        //$user = hb_get_current_user();
-        // $customer = hb_get_customer( get_transient('hb_current_customer_' . session_id ()) );
         $customer = hb_get_customer( TP_Hotel_Booking::instance()->cart->customer_id );
         $paypal_args = array (
             'cmd'      => '_xclick',
@@ -324,7 +322,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
             'item_name'     => hb_get_cart_description(),
             'return'        => add_query_arg( array( 'hb-transaction-method' => 'paypal-standard', 'paypal-nonce' => $nonce ), hb_get_return_url() ),
             'currency_code' => hb_get_currency(),
-            'notify_url'    => get_site_url() . '/?' . hb_get_web_hook( 'paypal-standard' ) . '=1',//get_site_url() . '/?learn-press-transaction-method=paypal-standard',
+            'notify_url'    => get_site_url() . '/?' . hb_get_web_hook( 'paypal-standard' ) . '=1',
             'no_note'       => '1',
             'shipping'      => '0',
             'email'         => $customer->data['email'],
@@ -350,7 +348,6 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      * @return array
      */
     function process_checkout( $booking_id = null ){
-        // unset($_SESSION['hb_cart'.HB_BLOG_ID]);
         return array(
             'result'    => 'success',
             'redirect'  => $this->_get_paypal_basic_checkout_url(  $booking_id  )
