@@ -220,7 +220,7 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base{
             'x_relay_response'         => 'FALSE',
             'x_relay_url'              => add_query_arg(
                 array('replay-pay' => $book_id, 'replay-pay-nonce' => $nonce ),
-                hb_get_page_permalink( 'checkout' )
+                hb_get_return_url()
             ),
             'x_fp_sequence'            => $book_id,
             'x_fp_hash'                => $fingerprint,
@@ -237,12 +237,12 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base{
             'x_phone'                  => $customer->phone,
             'x_email'                  => $customer->email,
             'x_type'                   => 'AUTH_CAPTURE',
-            'x_cancel_url'             => hb_get_page_permalink( 'checkout' ),
+            'x_cancel_url'             => hb_get_return_url(),
             'x_email_customer'         => 'TRUE',
             'x_cancel_url_text'        => __( 'Cancel Payment', 'tp-hotel-booking' ),
             'x_receipt_link_method'    => 'POST',
             'x_receipt_link_text'      => __( 'Click here to return our homepage', 'tp-hotel-booking' ),
-            'x_receipt_link_URL'       => hb_get_page_permalink( 'checkout' ),
+            'x_receipt_link_URL'       => hb_get_return_url(),
         );
 
         if( $this->_settings['sandbox'] === 'on' )

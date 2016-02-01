@@ -76,7 +76,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
         $advance_pay = (float)$cart->get_advance_payment();
 
         $request = array(
-                'amount'        => round( $advance_pay * 100 ),
+                'amount'        => round( $advance_pay * 100, 2 ),
                 'currency'      => hb_get_currency(),
                 'customer'      => $customer_id,
                 'description'   => sprintf(
@@ -165,7 +165,6 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
         $parsed_response = json_decode( $response['body'] );
         // Handle response
         if ( ! empty( $parsed_response->error ) ) {
-            var_dump($parsed_response); die();
             return new WP_Error( 'stripe_error', $parsed_response->error->message );
         } elseif ( empty( $parsed_response->id ) ) {
             return new WP_Error( 'stripe_error', __('Invalid response.', 'tp-hotel-booking') );
