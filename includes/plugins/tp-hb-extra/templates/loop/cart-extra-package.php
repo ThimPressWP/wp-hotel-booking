@@ -27,7 +27,7 @@
 		<?php printf( '%s', $package->product_data->title ) ?>
 	</td>
 
-	<td class="hb_gross_total">
+	<td class="hb_gross_total" style="text-align: right;">
 		<?php echo hb_format_price( $package->amount_exclude_tax ) ?>
 	</td>
 

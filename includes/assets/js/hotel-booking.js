@@ -274,7 +274,7 @@
 			button.removeClass('hb_loading');
 			res = parseJSON(res);
 
-			if (typeof res.result !== 'undefined' && res.result == 'success') {
+			if ( typeof res.result !== 'undefined' && res.result == 'success' ) {
 				if (typeof res.redirect !== 'undefined')
 					window.location.href = res.redirect;
 			}

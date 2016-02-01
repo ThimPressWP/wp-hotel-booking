@@ -141,7 +141,7 @@ class HB_Product_Room_Base extends HB_Product_Abstract
                         $attachment_id = array_shift($gallery);
                         $return = wp_get_attachment_image( $attachment_id, 'thumbnail' );
                     } else {
-                        $return = '<img src="'.HB_PLUGIN_URL . '/includes/carousel/default.png'.'" alt="'.$this->post->post_title.'"/>';
+                        $return = '<img src="'.HB_PLUGIN_URL . '/includes/libraries/carousel/default.png'.'" alt="'.$this->post->post_title.'"/>';
                     }
                 }
                 break;
