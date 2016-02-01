@@ -122,7 +122,7 @@ class HB_Product_Room_Base extends HB_Product_Abstract
                     $term = get_term( $term_id, 'hb_room_capacity' );
                     if( isset( $term->name ) )
                         $return = $term->name;
-                }else{
+                } else {
                     $return = get_option( 'hb_taxonomy_capacity_' . $term_id );
                 }
                 break;
@@ -137,13 +137,10 @@ class HB_Product_Room_Base extends HB_Product_Abstract
                     $return = get_the_post_thumbnail( $this->post->ID, 'thumbnail' );
                 }else{
                     $gallery = get_post_meta( $this->post->ID, '_hb_gallery', true );
-                    if( $gallery )
-                    {
+                    if( $gallery ) {
                         $attachment_id = array_shift($gallery);
                         $return = wp_get_attachment_image( $attachment_id, 'thumbnail' );
-                    }
-                    else
-                    {
+                    } else {
                         $return = '<img src="'.HB_PLUGIN_URL . '/includes/carousel/default.png'.'" alt="'.$this->post->post_title.'"/>';
                     }
                 }

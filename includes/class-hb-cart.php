@@ -492,7 +492,6 @@ class HB_Cart
     // update cart
     function hotel_booking_cart_update()
     {
-
         if( ! isset( $_POST ) || empty( $_POST['hotel_booking_cart'] ) )
             return;
 
@@ -522,16 +521,7 @@ class HB_Cart
             }
             else
             {
-                $param = array();
-                $param[ 'product_id' ]      = $cart_item->product_id;
-                $param[ 'check_in_date' ]   = $cart_item->check_in_date;
-                $param[ 'check_out_date' ]  = $cart_item->check_out_date;
-                if( isset( $cart_item->parent_id ) ) {
-                    $param[ 'parent_id' ]   = $cart_item->parent_id;
-                }
-                // update
-                $param = apply_filters( 'tp_hotel_booking_ajax_update_cart_item_cart_params', $param, $cart_item );
-                $this->add_to_cart( $cart_item->product_id, $param, (int)$qty );
+                $this->update_cart_item( $cart_id, $qty );
             }
         }
 
@@ -690,6 +680,10 @@ class HB_Cart
     }
 
 
+}
+
+if ( ! is_admin() ) {
+    $GLOBALS['hb_cart'] = hb_get_cart();
 }
 
 // generate cart item id
