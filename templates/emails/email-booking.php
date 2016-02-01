@@ -7,8 +7,8 @@
 if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
-
-$customer_name = sprintf( '%s %s %s', $booking->title ? $booking->title : 'Cus.', $booking->first_name, $booking->last_name );
+$customer = HB_Customer::instance( $booking->customer_id );
+$customer_name = sprintf( '%s %s %s', $customer->title ? $customer->title : 'Cus.', $customer->first_name, $customer->last_name );
 $cart_params = $booking->booking_cart_params;
 $cart_params = apply_filters( 'hotel_booking_admin_cart_params', $cart_params );
 
@@ -61,9 +61,9 @@ foreach ( $cart_params as $key => $cart_item ) {
             <td class="bold-text"><?php _e( 'Room', 'tp-hotel-booking' ); ?></td>
             <td class="text-align-right bold-text"><?php _e( 'Quantity', 'tp-hotel-booking' ); ?></td>
             <td class="text-align-right bold-text"><?php _e( 'Capacity', 'tp-hotel-booking' ); ?></td>
-            <td class="bold-text"><?php _e( 'Check In Date', 'tp-hotel-booking' ); ?></td>
-            <td class="bold-text"><?php _e( 'Check Out Date', 'tp-hotel-booking' ); ?></td>
-	        <td class="bold-text"><?php _e( 'Night', 'tp-hotel-booking') ?></td>
+            <td class="text-align-right bold-text"><?php _e( 'Check In Date', 'tp-hotel-booking' ); ?></td>
+            <td class="text-align-right bold-text"><?php _e( 'Check Out Date', 'tp-hotel-booking' ); ?></td>
+	        <td class="text-align-right bold-text"><?php _e( 'Night', 'tp-hotel-booking') ?></td>
             <td class="text-align-right bold-text"><?php _e( 'Total', 'tp-hotel-booking' ); ?></td>
         </tr>
         <!--Cart item-->
@@ -101,23 +101,23 @@ foreach ( $cart_params as $key => $cart_item ) {
         <?php endif; ?>
         <!--Subtotal-->
         <tr class="booking-table-row">
-            <td class="bold-text">
+            <td colspan="6" class="bold-text">
                 <?php _e( 'Sub Total', 'tp-hotel-booking' ); ?>
             </td>
-            <td colspan="6" style="text-align: right;">
+            <td style="text-align: right;">
                 <?php echo hb_format_price( $booking->sub_total, hb_get_currency_symbol( $booking->currency ) ); ?>
             </td>
         </tr>
         <!--Tax-->
         <?php if ( $booking->tax ) : ?>
             <tr class="booking-table-row">
-                <td>
+                <td colspan="6">
                     <?php _e( 'Tax', 'tp-hotel-booking' ); ?>
                     <?php if( $booking->tax < 0 ) { ?>
                         <span><?php printf( __( '(price including tax)', 'tp-hotel-booking' ) ); ?></span>
                     <?php } ?>
                 </td>
-                <td colspan="6" style="text-align: right;">
+                <td style="text-align: right;">
                     <?php echo apply_filters( 'hotel_booking_admin_book_details', abs( $booking->tax * 100 ) . '%', $booking ); ?>
                 </td>
             </tr>

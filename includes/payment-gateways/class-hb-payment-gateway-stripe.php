@@ -54,20 +54,12 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
     }
 
     function init(){
-        // admin settings
         add_action( 'hb_payment_gateway_settings_' . $this->slug, array( $this, 'admin_settings' ) );
-
         add_action( 'hb_payment_gateway_form_' . $this->slug, array( $this, 'form' ) );
-
-        if( ! class_exists( 'Stripe' ) )
-            require_once HB_PLUGIN_PATH . '/includes/libraries/stripe-php/init.php' ;
-
-        // \Stripe\Stripe::setApiKey( $this->_stripe_secret );
     }
 
     function admin_settings( $gateway ){
-        $template = TP_Hotel_Booking::instance()->locate( 'includes/admin/views/settings/stripe.php' );
-        include_once $template;
+        include_once TP_HB_STRIPE_DIR . '/inc/views/strip-settings.php';
     }
 
     function is_enable(){
@@ -84,7 +76,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
         $advance_pay = (float)$cart->get_advance_payment();
 
         $request = array(
-                'amount'        => $advance_pay * 100,
+                'amount'        => round( $advance_pay * 100 ),
                 'currency'      => hb_get_currency(),
                 'customer'      => $customer_id,
                 'description'   => sprintf(
@@ -98,24 +90,25 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
 
         if( is_wp_error( $response ) )
         {
-            return array( 'result' => 'error', 'message' => sprintf( __( '%s. Please try again', 'tp-hotel-booking' ), $response->get_error_message() ) );
-        }
-
-        if( $response->id )
-        {
-            if( (float)$advance_pay === (float)$book->total )
-                $book->update_status( 'completed' );
+            $return = array( 'result' => 'error', 'message' => sprintf( __( '%s. Please try again', 'tp-hotel-booking' ), $response->get_error_message() ) );
+        } else {
+            if( $response->id )
+            {
+                if( (float)$advance_pay === (float)$book->total ) {
+                    $book->update_status( 'completed' );
+                } else {
+                    $book->update_status( 'processing' );
+                }
+                TP_Hotel_Booking::instance()->cart->empty_cart();
+                $return = array(
+                    'result'    => 'success',
+                    'redirect'  => hb_get_return_url()
+                );
+            }
             else
-                $book->update_status( 'processing' );
-            HB_Cart::instance()->empty_cart();
-            $return = array(
-                'result'    => 'success',
-                'redirect'  => hb_get_return_url()
-            );
-        }
-        else
-        {
-            $return = array( 'result' => 'error', 'message' => __( 'Please try again', 'tp-hotel-booking' ) );
+            {
+                $return = array( 'result' => 'error', 'message' => __( 'Please try again', 'tp-hotel-booking' ) );
+            }
         }
 
         return $return;
@@ -131,18 +124,14 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
         }
         else
         {
+            // create customer
             try
             {
                 $params = array(
-                    'description'   => sprintf( "Customer for %s", get_post_meta( $customer, '_hb_email', true) ),
-                    'source'        => $_POST['id'] // token get by stripe.js
-                );
-                $response = $this->stripe_request( 'customers', $params );
-
-                // $response = \Stripe\Customer::create(array(
-                //     "description" => sprintf( "Customer for %s", get_post_meta( $customer, '_hb_email', true) ),
-                //     "source" => $_POST['id'] // token get by stripe.js
-                // ));
+                        'description'   => sprintf( '%s %s', __( 'Donor for', 'tp-donate' ), get_post_meta( $customer, '_hb_email', true ) ),
+                        'source'        => $_POST['id'] // token get by stripe.js
+                    );
+                $response = $this->stripe_request( $params, 'customers' );
 
                 add_post_meta( $customer, 'tp-hotel-booking-stripe-id', $response->id );
                 return $response->id;
@@ -165,14 +154,18 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
                 'sslverify'     => false,
                 'user-agent'    => 'TP Hotel Booking ' . HB_VERSION
         ));
-        if ( is_wp_error($response) )
+
+        if ( is_wp_error($response) ) {
             return new WP_Error( 'stripe_error', __('There was a problem connecting to the payment gateway.', 'tp-hotel-booking') );
-        if( empty($response['body']) )
+        }
+        if( empty($response['body']) ) {
             return new WP_Error( 'stripe_error', __('Empty response.', 'tp-hotel-booking') );
+        }
 
         $parsed_response = json_decode( $response['body'] );
         // Handle response
         if ( ! empty( $parsed_response->error ) ) {
+            var_dump($parsed_response); die();
             return new WP_Error( 'stripe_error', $parsed_response->error->message );
         } elseif ( empty( $parsed_response->id ) ) {
             return new WP_Error( 'stripe_error', __('Invalid response.', 'tp-hotel-booking') );
@@ -194,8 +187,6 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
         echo _e( 'Pay with Credit card');
     }
 }
-
-
 
 add_filter( 'hb_payment_gateways', 'hotel_booking_payment_stripe' );
 if( ! function_exists( 'hotel_booking_payment_stripe' ) )

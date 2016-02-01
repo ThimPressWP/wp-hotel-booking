@@ -80,9 +80,9 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
         // cart params
         $cart_params = apply_filters( 'hotel_booking_admin_cart_params', $booking->get_cart_params() );
 
-        $title = hb_get_title_by_slug( $customer->get( '_hb_title' ) );
-        $first_name = $customer->get( '_hb_first_name' );
-        $last_name = $customer->get( '_hb_last_name' );
+        $title = hb_get_title_by_slug( $customer->title );
+        $first_name = $customer->first_name;
+        $last_name = $customer->last_name;
         $customer_name = sprintf( '%s %s %s', $title ? $title : 'Cus.', $first_name, $last_name );
 
         $currency = hb_get_currency_symbol( $booking->currency );
