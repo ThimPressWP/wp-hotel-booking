@@ -59,7 +59,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
     }
 
     function admin_settings( $gateway ){
-        include_once TP_HB_STRIPE_DIR . '/inc/views/strip-settings.php';
+        include_once TP_Hotel_Booking::instance()->locate( 'includes/admin/views/settings/stripe.php' );;
     }
 
     function is_enable(){
@@ -165,6 +165,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
         $parsed_response = json_decode( $response['body'] );
         // Handle response
         if ( ! empty( $parsed_response->error ) ) {
+            var_dump($parsed_response); die();
             return new WP_Error( 'stripe_error', $parsed_response->error->message );
         } elseif ( empty( $parsed_response->id ) ) {
             return new WP_Error( 'stripe_error', __('Invalid response.', 'tp-hotel-booking') );
