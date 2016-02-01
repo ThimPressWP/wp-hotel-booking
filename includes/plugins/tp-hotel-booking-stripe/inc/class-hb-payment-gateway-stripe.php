@@ -165,6 +165,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
         $parsed_response = json_decode( $response['body'] );
         // Handle response
         if ( ! empty( $parsed_response->error ) ) {
+            var_dump($parsed_response); die();
             return new WP_Error( 'stripe_error', $parsed_response->error->message );
         } elseif ( empty( $parsed_response->id ) ) {
             return new WP_Error( 'stripe_error', __('Invalid response.', 'tp-hotel-booking') );
