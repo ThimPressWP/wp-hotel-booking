@@ -281,7 +281,7 @@ class TP_Hotel_Booking{
             wp_register_style( 'tp-admin-hotel-booking-tokenize-css', $this->plugin_url( 'includes/assets/css/jquery.tokenize.css' ) );
         }else{
             wp_register_style( 'tp-hotel-booking', $this->plugin_url( 'includes/assets/css/hotel-booking.min.css' ) );
-            wp_register_script( 'tp-hotel-booking', $this->plugin_url( 'includes/assets/js/hotel-booking.js' ), $dependencies );
+            wp_register_script( 'tp-hotel-booking', $this->plugin_url( 'includes/assets/js/hotel-booking.min.js' ), $dependencies );
 
             // stripe assets
             wp_register_script( 'tp-hotel-booking-stripe-js', $this->plugin_url( 'includes/assets/js/stripe.js' ), $dependencies );
@@ -347,7 +347,6 @@ class TP_Hotel_Booking{
             }
         </script>
     <?php
-        $this->_include( 'includes/language_js.php' );
     }
 
     /**

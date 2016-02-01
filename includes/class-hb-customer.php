@@ -43,7 +43,9 @@ class HB_Customer{
             $this->post = $post;
         }
 
-        $this->id = $this->post->ID;
+        if ( $this->post ) {
+            $this->id = $this->post->ID;
+        }
     }
 
     function __get( $key ){

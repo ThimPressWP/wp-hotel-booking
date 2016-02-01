@@ -65,20 +65,3 @@ function hb_wc_payment_gateways( $gateways ){
 	}
 	return $gateways;
 }
-
-if ( !function_exists( 'hb_wc_get_post_id_meta' ) ) {
-
-	function hb_wc_get_post_id_meta( $key, $value ) {
-		global $wpdb;
-		$meta = $wpdb->get_results("SELECT * FROM `".$wpdb->postmeta."` WHERE meta_key='".esc_sql( $key )."' AND meta_value='".esc_sql( $value )."'");
-		if ( is_array( $meta ) && ! empty( $meta ) && isset( $meta[0] ) ) {
-			$meta = $meta[0];
-		}
-		if ( is_object($meta) ) {
-			return $meta->post_id;
-		}
-		else {
-			return false;
-		}
-	}
-}

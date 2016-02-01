@@ -123,13 +123,13 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
                     </td>
                 </tr>
                 <tr style="background-color: #FFFFFF;">
-                    <td style="font-weight: bold;"><?php _e( 'Room type', 'tp-hotel-booking' ); ?></td>
+                    <td style="font-weight: bold;"><?php _e( 'Room', 'tp-hotel-booking' ); ?></td>
                     <td style="font-weight: bold; text-align: right;"><?php _e( 'Capacity', 'tp-hotel-booking' ); ?></td>
                     <td style="font-weight: bold; text-align: right;"><?php _e( 'Quantity', 'tp-hotel-booking' ); ?></td>
                     <td style="font-weight: bold; text-align: right;"><?php _e( 'Check in', 'tp-hotel-booking' ); ?></td>
                     <td style="font-weight: bold; text-align: right;"><?php _e( 'Check out', 'tp-hotel-booking' ); ?></td>
                     <td style="font-weight: bold; text-align: right;"><?php _e( 'Night', 'tp-hotel-booking' ); ?></td>
-                    <td style="font-weight: bold;text-align: right;"><?php _e( 'Total', 'tp-hotel-booking' ); ?></td>
+                    <td style="font-weight: bold; text-align: right;"><?php _e( 'Total', 'tp-hotel-booking' ); ?></td>
                 </tr>
                 <?php if( $cart_params ): ?>
                     <?php foreach ( $rooms as $cart_id => $room ): ?>
@@ -218,6 +218,10 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
             }
 
             $headers[] = 'Content-Type: text/html; charset=UTF-8';
+            // set mail from email
+            add_filter( 'wp_mail_from', 'hb_wp_mail_from' );
+            // set mail from name
+            add_filter( 'wp_mail_from_name', 'hb_wp_mail_from_name' );
             add_filter('wp_mail_content_type', array($this, 'set_html_content_type'));
             $to = get_post_meta($customer_id, '_hb_email', true);
             $return = wp_mail($to, $email_subject, stripslashes( $email_content ), $headers );

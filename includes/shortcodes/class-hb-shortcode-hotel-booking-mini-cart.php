@@ -21,13 +21,13 @@ class HB_Shortcode_Hotel_Booking_Mini_Cart extends HB_Shortcodes
 
             <?php endif; ?>
 
-            <?php if ( isset( $_SESSION['hb_cart'.HB_BLOG_ID], $_SESSION['hb_cart'.HB_BLOG_ID]['products'] ) || empty( $_SESSION['hb_cart'.HB_BLOG_ID]['products'] ) ): ?>
+            <?php if ( ! empty( TP_Hotel_Booking::instance()->cart->cart_contents ) ): ?>
 
                 <?php hb_get_template( 'shortcodes/mini_cart.php' ); ?>
 
             <?php else: ?>
 
-                <p class="hotel_booking_mini_cart_description"><?php _e( 'You cart is empty.', 'tp-hotel-booking' ) ?></p>
+                <p class="hb_mini_cart_empty"><?php _e( 'You cart is empty.', 'tp-hotel-booking' ) ?></p>
 
             <?php endif; ?>
         </div>

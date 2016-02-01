@@ -87,7 +87,7 @@ global $hb_settings;
             <tr class="hb_advance_grand_total">
                 <td colspan="8">
                     <?php _e( 'Grand Total', 'tp-hotel-booking' ); ?>
-                    <span class="hb-align-right hb_grand_total_value"><?php echo hb_format_price( $cart->total ); ?></span>
+                    <span class="hb-align-right hb_grand_total_value"><?php echo hb_format_price( $cart->cart_total_include_tax ); ?></span>
                 </td>
             </tr>
             <?php if( $advance_payment = $cart->advance_payment ) { ?>

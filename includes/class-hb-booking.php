@@ -232,7 +232,7 @@ class HB_Booking{
             }
 
             do_action( 'hb_payment_complete', $this->id );
-        }else{
+        } else {
             do_action( 'hb_payment_complete_order_status_' . $this->get_status(), $this->id );
         }
     }

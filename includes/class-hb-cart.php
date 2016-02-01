@@ -624,7 +624,7 @@ class HB_Cart
                 '_hb_tax'                       => hb_get_tax_settings(),
                 '_hb_sub_total'                 => $this->sub_total,
                 '_hb_total'                     => round( $this->get_total(), 2 ),
-                '_hb_advance_payment'           => $this->hb_get_cart_total( ! hb_get_request( 'pay_all' ) ),
+                '_hb_advance_payment'           => $this->hb_get_cart_total( hb_get_request( 'pay_all' ) ),
                 '_hb_advance_payment_setting'   => hb_settings()->get( 'advance_payment', 50 ),
                 '_hb_currency'                  => apply_filters( 'tp_hotel_booking_payment_currency', hb_get_currency() ),
                 '_hb_customer_id'               => $customer_id,
@@ -634,7 +634,7 @@ class HB_Cart
             );
 
         // use coupon
-        if( HB_Settings::instance()->get( 'enable_coupon' ) && $coupon = TP_Hotel_Booking::instance()->cart->coupon ){
+        if( HB_Settings::instance()->get( 'enable_coupon' ) && $coupon = TP_Hotel_Booking::instance()->cart->coupon ) {
             $coupon = HB_Coupon::instance( $coupon );
             $booking_info[ '_hb_coupon' ] = array(
                 'id'        => $coupon->ID,
@@ -669,10 +669,10 @@ class HB_Cart
      * @param bool $pre_paid
      * @return float|int|mixed
      */
-    function hb_get_cart_total( $pre_paid = false ){
-        if( $pre_paid ){
+    function hb_get_cart_total( $pre_paid = false ) {
+        if ( $pre_paid ) {
             $total = $this->get_advance_payment();
-        }else{
+        } else {
             $total = $this->total;
         }
         return $total;
@@ -691,10 +691,6 @@ class HB_Cart
 
 
 }
-
-// if( ! is_admin() ) {
-//     $GLOBALS['hb_cart'] = HB_Cart::instance();
-// }
 
 // generate cart item id
 function hb_generate_cart_item_id( $params = array() )
@@ -755,7 +751,7 @@ function hb_get_cart_description(){
  * @return mixed
  */
 function hb_get_return_url(){
-    $url = get_site_url();
+    $url = hb_get_checkout_url();
     return apply_filters( 'hb_return_url', $url );
 }
 
@@ -879,7 +875,6 @@ function hb_create_booking() {
     TP_Hotel_Booking::instance()->cart->set_booking( 'booking_id', $booking_id );
     return $booking_id;
 }
-
 
 /**
  * Gets all statuses that room supported

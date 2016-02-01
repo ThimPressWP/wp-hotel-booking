@@ -568,7 +568,7 @@ class HB_Post_Types{
             'taxonomies'         => array( 'room_category', 'room_tag' ),
             'supports'           => array( 'title', 'editor', 'thumbnail', 'revisions', 'comments', 'author' ),
             'hierarchical'       => false,
-            'rewrite'            => array( 'slug' => 'rooms', 'with_front' => false, 'feeds' => true )
+            'rewrite'            => array( 'slug' => _x( 'rooms', 'URL slug', 'tp-hotel-booking' ), 'with_front' => false, 'feeds' => true )
         );
 
         $args = apply_filters( 'hotel_booking_register_post_type_room_arg', $args );
@@ -861,11 +861,26 @@ class HB_Post_Types{
         if( ! in_array( $post_type, $hb_post_type_delete ) )
             return;
 
-        if( $post_type === 'hb_room' )
-            return;
-
         if( $post_type === 'hb_booking' )
         {
+            // new script
+            global $wpdb;
+            $query = $wpdb->prepare("
+                    SELECT * FROM `$wpdb->postmeta`
+                        WHERE meta_key = %s
+                        AND meta_value = %s
+                ", '_hb_booking_id', $postID );
+            $metas = $wpdb->get_results( $query );
+            if ( $metas ) {
+                foreach ( $metas as $key => $meta ) {
+                    wp_delete_post( $meta->post_id );
+                    delete_post_meta( $meta->post_id, $meta->meta_key );
+                }
+            }
+
+            delete_post_meta( $postID, '_hb_booking_cart_params' );
+
+            // end new script
             delete_post_meta( $postID, '_hb_method_id' );
             delete_post_meta( $postID, '_hb_check_in_date' );
             delete_post_meta( $postID, '_hb_check_out_date' );
@@ -887,6 +902,7 @@ class HB_Post_Types{
             delete_post_meta( $postID, '_hb_max_child_per_room' );
             delete_post_meta( $postID, '_hb_room_addition_information' );
             delete_post_meta( $postID, '_hb_gallery' );
+            delete_post_meta( $postID, '_hb_room_extra' );
         }
 
     }

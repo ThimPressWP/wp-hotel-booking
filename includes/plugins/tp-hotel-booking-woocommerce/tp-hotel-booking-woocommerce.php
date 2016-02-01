@@ -81,8 +81,9 @@ class TP_Hotel_Booking_Woocommerce {
 			add_filter( 'hb_checkout_url', array( $this, 'hotel_checkout_url' ) );
 			// display tax price
 			add_filter( 'hotel_booking_cart_tax_display', array( $this, 'cart_tax_display' ) );
-			add_filter( 'hotel_booking_get_cart_total', array( $this, 'cart_result_display' ) );
+			add_filter( 'hotel_booking_get_cart_total', array( $this, 'cart_total_result_display' ) );
 			add_action( 'hb_booking_status_changed', array( $this, 'hb_booking_status_changed' ), 10, 3 );
+			add_action( 'template_redirect', array( $this, 'template_redirect' ), 50 );
 			/**
 			 * Woocommerce hook
 			 * woocommerce_remove_cart_item remove
@@ -342,7 +343,7 @@ class TP_Hotel_Booking_Woocommerce {
 
 	// woo change status
 	function woocommerce_order_status_changed( $order_id, $old_status, $new_status ) {
-		if ( $booking_id = hb_wc_get_post_id_meta( '_hb_woo_order_id', $order_id ) ) {
+		if ( $booking_id = hb_get_post_id_meta( '_hb_woo_order_id', $order_id ) ) {
 			if ( in_array( $new_status, array( 'completed', 'pending', 'processing' ) ) ) {
 				HB_Booking::instance( $booking_id )->update_status( $new_status );
 			} else {
@@ -621,12 +622,13 @@ class TP_Hotel_Booking_Woocommerce {
 	 * @param  [type] $display [description]
 	 * @return [type]          [description]
 	 */
-	function cart_result_display( $display )
+	function cart_total_result_display( $display )
 	{
 		global $woocommerce;
-		return wc_price( $woocommerce->cart->subtotal );
+		return wc_price( $woocommerce->cart->total );
 	}
 
+	// change status booking order
 	function hb_booking_status_changed( $booking_id, $old_status, $new_status ) {
 		remove_action( 'hb_booking_status_changed', array( $this, 'hb_booking_status_changed' ), 10, 3 );
 
@@ -644,6 +646,19 @@ class TP_Hotel_Booking_Woocommerce {
 		}
 
 		add_action( 'hb_booking_status_changed', array( $this, 'hb_booking_status_changed' ), 10, 3 );
+	}
+
+	// redỉrect room-checkout, my-rooms => cart, checkout woocommerce page
+	function template_redirect() {
+		global $post;
+		if ( ! $post ) {
+			return;
+		}
+		if ( $post->ID == hb_get_page_id( 'my-rooms' ) ) {
+			wp_redirect( WC()->cart->get_cart_url() ); exit();
+		} else if ( $post->ID == hb_get_page_id( 'checkout' ) ) {
+			wp_redirect( WC()->cart->get_checkout_url() ); exit();
+		}
 	}
 
 	/**

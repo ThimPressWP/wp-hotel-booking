@@ -33,6 +33,18 @@ class HB_Extra_Factory
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
 		add_filter( 'hotel_booking_cart_product_class', array( $this, 'product_class' ), 10, 3 );
+		add_filter( 'hb_admin_l18n', array( $this, 'language_js' ) );
+	}
+
+	/**
+	 * script language
+	 * @param  [type] $l10n [description]
+	 * @return [type]       [description]
+	 */
+	public function language_js( $l10n )
+	{
+		$l10n[ 'remove_confirm' ] = __( 'Remove package. Are you sure?', 'tp-hb-extra' );
+		return $l10n;
 	}
 
 	/**
