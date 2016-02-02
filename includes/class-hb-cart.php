@@ -614,7 +614,7 @@ class HB_Cart
                 '_hb_tax'                       => hb_get_tax_settings(),
                 '_hb_sub_total'                 => $this->sub_total,
                 '_hb_total'                     => round( $this->get_total(), 2 ),
-                '_hb_advance_payment'           => $this->hb_get_cart_total( hb_get_request( 'pay_all' ) ),
+                '_hb_advance_payment'           => $this->hb_get_cart_total( ! hb_get_request( 'pay_all' ) ),
                 '_hb_advance_payment_setting'   => hb_settings()->get( 'advance_payment', 50 ),
                 '_hb_currency'                  => apply_filters( 'tp_hotel_booking_payment_currency', hb_get_currency() ),
                 '_hb_customer_id'               => $customer_id,

@@ -270,7 +270,7 @@
 			beforeSend: function () {
 				button.addClass('hb_loading');
 			}
-		}).done(function (res) {console.debug(res);
+		}).done(function (res) {
 			button.removeClass('hb_loading');
 			res = parseJSON(res);
 
