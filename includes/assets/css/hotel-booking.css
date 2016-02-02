@@ -1449,6 +1449,10 @@
   position: relative;
   border-bottom: 1px solid #eee;
   padding-bottom: 20px;
+  overflow: hidden;
+}
+.hotel_booking_mini_cart .hb_mini_cart_item .hb_mini_cart_top{
+  position: relative;
 }
 .hotel_booking_mini_cart .hb_mini_cart_item .hb_title {
   font-size: 18px;
