@@ -679,7 +679,7 @@ function hb_get_currency() {
 }
 
 function hb_get_currency_symbol( $currency = '' ) {
-	if ( !$currency ) {
+	if ( ! $currency ) {
 		$currency = hb_get_currency();
 	}
 

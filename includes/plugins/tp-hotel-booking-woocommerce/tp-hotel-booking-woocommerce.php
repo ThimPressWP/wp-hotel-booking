@@ -522,7 +522,7 @@ class TP_Hotel_Booking_Woocommerce {
 	 */
 	public function woocommerce_currency_symbol( $symbol, $currency )
 	{
-		return get_woocommerce_currency_symbol();
+		return get_woocommerce_currency_symbol( $currency );
 	}
 
 	/**
