@@ -129,7 +129,7 @@ class HB_Cart
                             $product = 'HB_Room';
                         }
                         $product = apply_filters( 'hotel_booking_cart_product_class_name', $product, $cart_item );
-                        $product = new $product( $cart_item->product_id, $param ) ;
+                        $product = new $product( $cart_item->product_id, $param );
                         $product = apply_filters( 'hotel_booking_cart_product_class', $product, $cart_item, $this );
                         // set product data
                         $cart_item->product_data = $product;

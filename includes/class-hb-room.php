@@ -26,9 +26,9 @@ class HB_Room extends HB_Product_Room_Base
      * @param $post
      */
     function __construct( $post, $options = null ) {
-        if( is_numeric( $post ) && $post && get_post_type( $post ) == 'hb_room' ) {
+        if ( is_numeric( $post ) && $post && get_post_type( $post ) == 'hb_room' ) {
             $this->post = get_post( $post );
-        }else if ( $post instanceof WP_Post || is_object( $post ) ){
+        } else if ( $post instanceof WP_Post || is_object( $post ) ){
             $this->post = $post;
         }
         if ( empty( $this->post ) ) {
@@ -41,7 +41,7 @@ class HB_Room extends HB_Product_Room_Base
         if( $options )
             $this->set_data( $options );
 
-        parent::__construct( $this->post->ID, $options );
+        parent::__construct( $this->post, $options );
 
     }
 

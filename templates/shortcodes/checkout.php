@@ -1,5 +1,5 @@
 <?php
-$cart = HB_Cart::instance();
+$cart = TP_Hotel_Booking::instance()->cart;
 global $hb_settings;
 ?>
 <div id="hotel-booking-payment">
