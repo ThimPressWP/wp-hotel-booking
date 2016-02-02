@@ -21,5 +21,6 @@
 1. Add Sessions Class, Update Cart Class
 2. Optimize process checkout
 3. Remove data saving booking if it not usesful( postmeta )
-4. Optimize Payment Stripe process
+4. Optimize Payment Stripe process( remove stripe sdk, use REST API )
 5. Admin booking details
+6. Update hook processs addon
