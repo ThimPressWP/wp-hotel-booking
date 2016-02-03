@@ -504,7 +504,7 @@ function hb_l18n() {
 		'review_rating_required'         => __( 'Please select a rating', 'tp-hotel-booking' ),
 		'waring'						 => array(
 												'room_select'	=> __( 'Please select room number', 'tp-hotel-booking' ),
-												'try_again'		=> __( 'Plesae try again!', 'tp-hotel-booking' )
+												'try_again'		=> __( 'Please try again!', 'tp-hotel-booking' )
 										)
 	);
 	return apply_filters( 'hb_l18n', $translation );
