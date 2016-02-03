@@ -372,13 +372,17 @@ class HB_Cart
     // set empty cart
     function empty_cart()
     {
-		// remove
-		$this->cart_contents = array();
+        // remove
+        $this->cart_contents = array();
 
-        // reset all sessions
-		$this->sessions->remove();
+        if ( $this->sessions ){
+            // reset all sessions
+            $this->sessions = $this->sessions->remove();
+        }
 
-        $this->booking_sessions->remove();
+        if ( $this->booking_sessions ) {
+            $this->booking_sessions = $this->booking_sessions->remove();
+        }
 
         $this->set_customer( 'coupon', null );
 

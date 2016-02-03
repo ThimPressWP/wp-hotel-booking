@@ -155,7 +155,7 @@ class HB_Checkout{
             $booking_id = $this->create_booking();
             if( $booking_id ) {
                 // if total > 0
-                if ( HB_Cart::instance()->needs_payment() ) {
+                if ( TP_Hotel_Booking::instance()->cart->needs_payment() ) {
                     $result = $payment_method->process_checkout( $booking_id, $customer_id );
                 } else {
                     if ( empty($booking) ) {
@@ -163,12 +163,11 @@ class HB_Checkout{
                     }
                     // No payment was required for order
                     $booking->payment_complete();
-                    TP_Hotel_Booking::instance()->cart->empty_cart();
                     $return_url = $booking->get_checkout_booking_received_url();
-                    hb_send_json( array(
-                        'result' 	=> 'success',
+                    $result = array(
+                        'result'    => 'success',
                         'redirect'  => apply_filters( 'hb_checkout_no_payment_needed_redirect', $return_url, $booking )
-                    ) );
+                    );
                 }
             }else{
                 die( __('can not create booking', 'tp-hotel-booking') );
@@ -176,6 +175,7 @@ class HB_Checkout{
         }
 
         if ( ! empty( $result['result'] ) && $result['result'] == 'success' ) {
+            TP_Hotel_Booking::instance()->cart->empty_cart();
 
             $result = apply_filters( 'hb_payment_successful_result', $result );
 

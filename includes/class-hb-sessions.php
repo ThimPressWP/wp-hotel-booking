@@ -64,9 +64,11 @@ class HB_Sessions
 
 		if( $this->remember && isset( $_COOKIE[ $this->prefix ] ) )
 		{
-			setcookie( $this->prefix, '', time() - $this->live_item );
 			unset( $_COOKIE[$this->prefix] );
+			setcookie( $this->prefix, '', time() - $this->live_item );
 		}
+
+		return $this->session = null;
 	}
 
 	/**
