@@ -232,12 +232,15 @@ class HB_Product_Room_Base extends HB_Product_Abstract
             $h = $this->_settings->get('room_thumbnail_height', 150);
 
             $size = apply_filters( 'hotel_booking_room_thumbnail_size', array( 'width' => $w, 'height' => $h ) );
-            $thumb = $this->renderImage( $thumb_id, $size);
+            $thumb_src = wp_get_attachment_image_src( $thumb_id, 'thumbnail' );
+            $thumb = $this->renderImage( $thumb_id, $size ) ? $this->renderImage( $thumb_id, $size ) : $thumb_src[0];
 
             $w = $this->_settings->get('room_image_gallery_width', 1000);
             $h = $this->_settings->get('room_image_gallery_height', 667);
             $size = apply_filters( 'hotel_booking_room_gallery_size', array( 'width' => $w, 'height' => $h ) );
-            $full = $this->renderImage( $thumb_id, $size);;
+
+            $full_src = wp_get_attachment_image_src( $thumb_id, 'full' );
+            $full = $this->renderImage( $thumb_id, $size ) ? $this->renderImage( $thumb_id, $size ) : $full_src[0];
             $alt = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
             $gallery[] = array(
                 'id'    => $thumb_id,
