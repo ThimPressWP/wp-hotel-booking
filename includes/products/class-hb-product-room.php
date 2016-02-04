@@ -232,15 +232,21 @@ class HB_Product_Room_Base extends HB_Product_Abstract
             $h = $this->_settings->get('room_thumbnail_height', 150);
 
             $size = apply_filters( 'hotel_booking_room_thumbnail_size', array( 'width' => $w, 'height' => $h ) );
-            $thumb_src = wp_get_attachment_image_src( $thumb_id, 'thumbnail' );
-            $thumb = $this->renderImage( $thumb_id, $size ) ? $this->renderImage( $thumb_id, $size ) : $thumb_src[0];
+            $thumb = $this->renderImage( $thumb_id, $size, true, 'thumbnail' );
+            if ( ! $thumb ) {
+                $thumb_src = wp_get_attachment_image_src( $thumb_id, 'thumbnail' );
+                $thumb = $thumb_src[0];
+            }
 
             $w = $this->_settings->get('room_image_gallery_width', 1000);
             $h = $this->_settings->get('room_image_gallery_height', 667);
             $size = apply_filters( 'hotel_booking_room_gallery_size', array( 'width' => $w, 'height' => $h ) );
 
-            $full_src = wp_get_attachment_image_src( $thumb_id, 'full' );
-            $full = $this->renderImage( $thumb_id, $size ) ? $this->renderImage( $thumb_id, $size ) : $full_src[0];
+            $full = $this->renderImage( $thumb_id, $size, true, 'full' );
+            if ( ! $full ) {
+                $full_src = wp_get_attachment_image_src( $thumb_id, 'full' );
+                $full = $full_src[0];
+            }
             $alt = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
             $gallery[] = array(
                 'id'    => $thumb_id,
@@ -556,7 +562,8 @@ class HB_Product_Room_Base extends HB_Product_Abstract
             $attachID = get_post_thumbnail_id( $this->post->ID );
 
         $alt = get_post_meta($attachID, '_wp_attachment_image_alt', true );
-        $image = $this->renderImage( $attachID, $size, false );
+        $image = $this->renderImage( $attachID, $size, false, 'thumbnail' );
+        // default thumbnail
 
         if( $echo && $image )
         {
@@ -587,7 +594,7 @@ class HB_Product_Room_Base extends HB_Product_Abstract
 
         $alt = get_post_meta($attachID, '_wp_attachment_image_alt', true );
 
-        $image = $this->renderImage( $attachID, $size, false );
+        $image = $this->renderImage( $attachID, $size, false, 'large' );
 
         if( $echo && $image )
         {
@@ -606,15 +613,25 @@ class HB_Product_Room_Base extends HB_Product_Abstract
         }
     }
 
-    function renderImage( $attachID = null, $size = array(), $src = true )
+    function renderImage( $attachID = null, $size = array(), $src = true, $default = 'thumbnail' )
     {
         $resizer = HB_Reizer::getInstance();
 
-        return $image = $resizer->process(
-                $attachID,
-                $size,
-                $src
-            );
+        $image = $resizer->process( $attachID, $size, $src );
+        if ( $image ) {
+            return $image;
+        } else {
+            $image = wp_get_attachment_image_src( $attachID, $default );
+            if ( $src ) {
+                return $image[0];
+            } else {
+                return array(
+                        $image[0],
+                        $image[1],
+                        $image[2]
+                    );
+            }
+        }
     }
 
     function pricing_plan()

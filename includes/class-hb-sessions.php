@@ -48,7 +48,7 @@ class HB_Sessions
 		if( isset( $_SESSION[ $this->prefix ] ) ) {
 			return $_SESSION[ $this->prefix ];
 		} else if( $this->remember && isset( $_COOKIE[ $this->prefix ] ) ) {
-			return maybe_unserialize( $_COOKIE[ $this->prefix ] );
+			return $_SESSION[ $this->prefix ] = maybe_unserialize( $_COOKIE[ $this->prefix ] );
 		}
 
 		return array();
@@ -65,7 +65,7 @@ class HB_Sessions
 		if( $this->remember && isset( $_COOKIE[ $this->prefix ] ) )
 		{
 			unset( $_COOKIE[$this->prefix] );
-			setcookie( $this->prefix, '', time() - $this->live_item );
+			setcookie( $this->prefix, '', time() - $this->live_item, '/' );
 		}
 
 		return $this->session = null;
@@ -94,7 +94,7 @@ class HB_Sessions
 
 		// save cookie
 		if ( $this->remember ) {
-			setcookie( $this->prefix, maybe_serialize( $this->session ), $time );
+			setcookie( $this->prefix, maybe_serialize( $this->session ), $time, '/' );
 		}
 	}
 

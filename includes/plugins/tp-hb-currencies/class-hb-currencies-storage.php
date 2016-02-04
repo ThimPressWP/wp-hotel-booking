@@ -214,7 +214,7 @@ class HB_SW_Curreny_Storage
 
 				default:
 					# code...
-					setcookie( $this->_storage_name . '[' . $name . ']', $value, time() + 60 * 60 * 24 );
+					setcookie( $this->_storage_name . '[' . $name . ']', $value, time() + 60 * 60 * 24, '/' );
 					break;
 			}
 		}

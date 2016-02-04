@@ -24,3 +24,7 @@
 4. Optimize Payment Stripe process( remove stripe sdk, use REST API )
 5. Admin booking details
 6. Update hook processs addon
+
+= 1.1.1 =
+1. Update Resize image, gallery, archive rooms
+2. Update Session class
