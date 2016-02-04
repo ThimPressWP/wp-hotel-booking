@@ -36,41 +36,25 @@ $related = $room->get_related_rooms();
 	    (function($){
 	        "use strict";
 	        $(document).ready(function(){
-	            $('.hb_related_other_room ul.rooms').carouFredSel({
-	                responsive: true,
-	                items: {
-	                    height: 'auto',
-	                    visible: {
-	                        min: 1,
-	                        max: 4
-	                    }
-	                },
-	                prev: {
-	                    button: '.hb_related_other_room .navigation .prev'
-	                },
-	                next: {
-	                    button: '.hb_related_other_room .navigation .next'
-	                },
-	                mousewheel: false,
-	                pauseOnHover: true,
-	                auto: false,
-	                onCreate: function()
-	                {
-
-	                },
-	                swipe: {
-	                    onTouch: true,
-	                    onMouse: true
-	                },
-	                scroll : {
-	                    items           : 1,
-	                    easing          : "swing",
-	                    duration        : 700,
-	                    pauseOnHover    : true
-	                }
+	            var thimpress_hotel_booking_carousel_related = $('.hb_related_other_room ul.rooms');
+	            thimpress_hotel_booking_carousel_related.owlCarousel({
+	                navigation: false,
+	                pagination: false,
+	                items: 3,
+	                paginationSpeed: 600,
+	                slideSpeed: 600,
+	                autoPlay: true,
+	                stopOnHover: true
+	            });
+	            // next
+	            $('.hb_related_other_room .navigation .next').click(function(){
+	                thimpress_hotel_booking_carousel_related.trigger('owl.next');
+	            });
+	            // prev
+	            $('.hb_related_other_room .navigation .prev').click(function(){
+	                thimpress_hotel_booking_carousel_related.trigger('owl.prev');
 	            });
 	        });
 	    })(jQuery);
 	</script>
-
 <?php endif; ?>

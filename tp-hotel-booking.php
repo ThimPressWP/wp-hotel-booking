@@ -288,8 +288,10 @@ class TP_Hotel_Booking{
             wp_localize_script( 'tp-hotel-booking', 'hotel_booking_l18n', hb_l18n() );
 
             // rooms slider widget
-            wp_register_script( 'tp-hotel-booking-carousel', $this->plugin_url( 'includes/libraries/carousel/carousel.min.js' ), $dependencies );
             wp_register_script( 'tp-hotel-booking-gallery', $this->plugin_url( 'includes/libraries/camera/js/gallery.min.js' ), $dependencies );
+
+            // owl carousel
+            wp_register_script( 'tp-hotel-booking-owl-carousel', $this->plugin_url( 'includes/libraries/owl-carousel/owl.carousel.min.js' ), $dependencies );
         }
 
         if( is_admin() ) {
@@ -316,7 +318,7 @@ class TP_Hotel_Booking{
             }
 
             // rooms slider widget
-            wp_enqueue_script( 'tp-hotel-booking-carousel' );
+            wp_enqueue_script( 'tp-hotel-booking-owl-carousel' );
 
             // room galleria
             wp_enqueue_script( 'tp-hotel-booking-gallery' );
