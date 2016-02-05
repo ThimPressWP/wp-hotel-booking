@@ -1680,16 +1680,6 @@ function hb_date_format() {
 	return apply_filters( 'hb_date_format', 'd M Y' );
 }
 
-if ( ! function_exists( 'is_room_taxonomy' ) ) {
-
-	/**
-	 * @return bool
-	 */
-	function is_room_taxonomy() {
-		return is_tax( get_object_taxonomies( 'hb_room' ) );
-	}
-}
-
 if ( ! function_exists( 'is_room' ) ) {
 
 	/**
