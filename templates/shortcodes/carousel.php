@@ -7,7 +7,7 @@ $items = isset($atts['number']) ? (int)$atts['number'] : 4;
         <h3><?php echo $atts['title'] ?></h3>
     <?php endif; ?>
     <!--navigation-->
-    <?php if( ! isset($atts['navigation']) || $atts['navigation'] ): ?>
+    <?php if( ( ! isset($atts['navigation']) || $atts['navigation'] ) && count( $query->posts ) > $items ): ?>
         <div class="navigation owl-buttons">
             <div class="prev"><span class="pe-7s-angle-left"></span></div>
             <div class="next"><span class="pe-7s-angle-right"></span></div>
