@@ -28,3 +28,4 @@
 = 1.1.1 =
 1. Update Resize image, gallery, archive rooms
 2. Update Session class
+3. Support Loco Translation & Mulilanguages
