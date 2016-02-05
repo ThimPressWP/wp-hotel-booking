@@ -100,7 +100,7 @@ function hb_add_meta_boxes(){
             'title'             => __( 'Room Settings', 'tp-hotel-booking' ),
             'post_type'         => 'hb_room',
             'meta_key_prefix'   => '_hb_',
-            'priority'          => 'low'
+            'priority'          => 'high'
         ),
         array()
     )->add_field(
@@ -228,7 +228,7 @@ function hb_add_meta_boxes(){
             'title'             => __( 'Gallery Settings', 'tp-hotel-booking' ),
             'post_type'         => 'hb_room',
             'meta_key_prefix'   => '_hb_', // meta key prefix,
-            'priority'          => 'low'
+            'priority'          => 'high'
             // 'callback'  => 'hb_add_meta_boxes_gallery_setings' // callback arg render meta form
         ),
         array()
