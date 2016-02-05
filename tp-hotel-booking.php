@@ -46,7 +46,6 @@ class TP_Hotel_Booking{
     function __construct(){
         if( self::$_instance ) return;
         $this->includes();
-        $this->load_text_domain();
 
         add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
@@ -171,6 +170,9 @@ class TP_Hotel_Booking{
     // load payments addons
     function plugins_loaded()
     {
+        // load text domain
+        $this->load_text_domain();
+
         if ( ! function_exists( 'is_plugin_active' ) ) {
             include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
         }
@@ -246,12 +248,25 @@ class TP_Hotel_Booking{
      * Load language for the plugin
      */
     function load_text_domain(){
+        // prefix
+        $prefix = basename( dirname( plugin_basename( __FILE__ ) ) );
         $locale = get_locale();
         $dir    = $this->plugin_path( 'languages' );
-        $mofile = "{$dir}/{$locale}.mo";
+        $mofile = false;
 
-        // In themes/plugins/mu-plugins directory
-        load_textdomain( 'tp-hotel-booking', $mofile );
+        $globalFile = WP_LANG_DIR . '/plugins/' . $prefix . '-' . $locale . '.mo';
+        $pluginFile = $dir . '/' . $prefix . '-' . $locale . '.mo';
+
+        if ( file_exists( $globalFile ) ) {
+            $mofile = $globalFile;
+        } else if ( file_exists( $pluginFile ) ) {
+            $mofile = $pluginFile;
+        }
+
+        if ( $mofile ) {
+            // In themes/plugins/mu-plugins directory
+            load_textdomain( 'tp-hotel-booking', $mofile );
+        }
     }
 
     /**
