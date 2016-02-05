@@ -123,6 +123,7 @@ class TP_Hotel_Booking{
             $this->_include( 'includes/admin/class-hb-admin-settings-hook.php' );
             $this->_include( 'includes/admin/class-hb-customer.php' );
         }
+        $this->_include( 'includes/class-hb-settings.php' );
         $this->_include( 'includes/class-hb-comments.php' );
         $this->_include( 'includes/hb-template-hooks.php' );
         $this->_include( 'includes/hb-template-functions.php' );
@@ -159,7 +160,6 @@ class TP_Hotel_Booking{
         // end products
         $this->_include( 'includes/class-hb-sessions.php' );
         $this->_include( 'includes/class-hb-cart.php' );
-        // // $this->_include( 'includes/class-hb-settings.php' );
 
         $this->_include( 'includes/hb-webhooks.php' );
 
