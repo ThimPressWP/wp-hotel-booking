@@ -1725,10 +1725,14 @@ if ( ! function_exists( 'is_room' ) ) {
 	}
 }
 
-if ( ! function_exists( 'get_cart_url' ) ) {
+if ( ! function_exists( 'hb_get_url' ) ) {
 	function hb_get_url( $params = array() ) {
 		global $hb_settings;
-		return get_the_permalink( $hb_settings->get( 'search_page_id' ) ) . '?hotel-booking-params=' . base64_encode( serialize( $params ) );
+		$query_str = '';
+		if ( ! empty( $params ) ) {
+			$query_str = '?hotel-booking-params=' . base64_encode( serialize( $params ) );
+		}
+		return get_the_permalink( $hb_settings->get( 'search_page_id' ) ) . $query_str ;
 	}
 }
 

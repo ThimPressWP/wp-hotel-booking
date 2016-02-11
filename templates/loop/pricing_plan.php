@@ -19,10 +19,10 @@ unset($pricings['capacity']);
 	<h4 class="hb_room_pricing_plan_data">
 		<?php if ( isset($prices['plans']) && count($prices['plans']) > 1 ): ?>
 				<?php printf( '%1$s', $prices['plans']['start'] ) ?>
-				<span><?php _e( 'to', 'Tp-hotel-booking' ) ?></span>
+				<span><?php _e( 'to', 'tp-hotel-booking' ) ?></span>
 				<?php printf( '%1$s', $prices['plans']['end'] ) ?>
 		<?php else: ?>
-			<?php _e( 'Regular plan', 'Tp-hotel-booking' ) ?>
+			<?php _e( 'Regular plan', 'tp-hotel-booking' ) ?>
 		<?php endif; ?>
 	</h4>
 
