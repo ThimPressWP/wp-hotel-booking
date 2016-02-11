@@ -66,7 +66,7 @@ class HB_TemplateLoader {
             $find[] = hb_template_path() . '/' . $file;
             $hb_template = untrailingslashit(HB_PLUGIN_PATH) . '/templates/' . $file;
             $template = locate_template( array_unique( $find ) );
-                var_dump( $find );
+
             if( ! $template && file_exists( $hb_template ) )
             {
                 $template = $hb_template;

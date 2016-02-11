@@ -32,6 +32,8 @@
 
     function init_pricing_plan( plan ){
         $(plan).find('.datepicker').datepicker({
+            monthNames    : hotel_booking_l18n.monthNames,
+            monthNamesShort: hotel_booking_l18n.monthNamesShort,
             onSelect: function(date){
 
             }
@@ -153,6 +155,8 @@
 
         $.datepicker.setDefaults({ dateFormat: 'mm/dd/yy'});
         $(".datetime-picker-metabox").datepicker({
+            monthNames    : hotel_booking_l18n.monthNames,
+            monthNamesShort: hotel_booking_l18n.monthNamesShort,
             minDate: 0,
             maxDate: "+365D",
             numberOfMonths: 2,
@@ -187,6 +191,8 @@
         });
 
         $('#hb-booking-date-from').datepicker({
+            monthNames    : hotel_booking_l18n.monthNames,
+            monthNamesShort: hotel_booking_l18n.monthNamesShort,
             onSelect: function(){
                 var date = jQuery(this).datepicker('getDate');
 

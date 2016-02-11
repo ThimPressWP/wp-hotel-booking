@@ -596,7 +596,7 @@ class HB_Post_Types{
                 'public'                => true,
                 'show_ui'               => true,
                 'query_var'             => true,
-                'rewrite'               => true
+                'rewrite'               => array( 'slug' => _x( 'room-type', 'URL slug', 'tp-hotel-booking' ) )
             );
         $args = apply_filters( 'hotel_booking_register_tax_room_type_arg', $args );
         register_taxonomy( 'hb_room_type',
@@ -627,7 +627,7 @@ class HB_Post_Types{
                 'show_ui'               => true,
                 'query_var'             => true,
                 'rewrite'               => array(
-                    'slug'         => 'hb_room_capacity',
+                    'slug'         => _x( 'room-capacity', 'URL slug', 'tp-hotel-booking' ),
                     'with_front'   => false,
                     'hierarchical' => true,
                 )

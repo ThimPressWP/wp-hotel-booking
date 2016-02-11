@@ -505,11 +505,46 @@ function hb_l18n() {
 		'waring'						 => array(
 												'room_select'	=> __( 'Please select room number', 'tp-hotel-booking' ),
 												'try_again'		=> __( 'Please try again!', 'tp-hotel-booking' )
-										)
+										),
+		'monthNames'					=> hb_month_name_js(),
+		'monthNamesShort'				=> hb_month_name_short_js()
 	);
 	return apply_filters( 'hb_l18n', $translation );
 }
 
+function hb_month_name_js() {
+	return apply_filters( 'hotel_booking_month_name_js', array(
+			__( 'January', 'tp-hotel-booking' ),
+			__( 'February', 'tp-hotel-booking' ),
+			__( 'March', 'tp-hotel-booking' ),
+			__( 'April', 'tp-hotel-booking' ),
+			__( 'May', 'tp-hotel-booking' ),
+			__( 'June', 'tp-hotel-booking' ),
+			__( 'July', 'tp-hotel-booking' ),
+			__( 'August', 'tp-hotel-booking' ),
+			__( 'September', 'tp-hotel-booking' ),
+			__( 'October', 'tp-hotel-booking' ),
+			__( 'November', 'tp-hotel-booking' ),
+			__( 'December', 'tp-hotel-booking' )
+		) );
+}
+
+function hb_month_name_short_js() {
+	return apply_filters( 'hotel_booking_month_name_short_js', array(
+			__( 'Jan', 'tp-hotel-booking' ),
+			__( 'Feb', 'tp-hotel-booking' ),
+			__( 'Mar', 'tp-hotel-booking' ),
+			__( 'Apr', 'tp-hotel-booking' ),
+			__( 'Maj', 'tp-hotel-booking' ),
+			__( 'Jun', 'tp-hotel-booking' ),
+			__( 'Jul', 'tp-hotel-booking' ),
+			__( 'Aug', 'tp-hotel-booking' ),
+			__( 'Sep', 'tp-hotel-booking' ),
+			__( 'Oct', 'tp-hotel-booking' ),
+			__( 'Nov', 'tp-hotel-booking' ),
+			__( 'Dec', 'tp-hotel-booking' )
+		) );
+}
 /**
  * Get tax setting
  *

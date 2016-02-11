@@ -29,3 +29,7 @@
 1. Update Resize image, gallery, archive rooms
 2. Update Session class
 3. Support Loco Translation & Mulilanguages
+
+= 1.1.2 =
+1. Add template taxonomy room type
+2. Translate calendar search widget

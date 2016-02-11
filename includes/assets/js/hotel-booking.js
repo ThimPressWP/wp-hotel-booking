@@ -627,6 +627,8 @@
 		tomorrow.setDate(today.getDate() + 1);
 
 		$('input[id^="check_in_date"]').datepicker({
+			monthNames 	  : hotel_booking_l18n.monthNames,
+			monthNamesShort: hotel_booking_l18n.monthNamesShort,
 			minDate       : tomorrow,
 			maxDate       : "+365D",
 			numberOfMonths: 1,
@@ -642,6 +644,8 @@
 		});
 
 		$('input[id^="check_out_date"]').datepicker({
+			monthNames 	  : hotel_booking_l18n.monthNames,
+			monthNamesShort: hotel_booking_l18n.monthNamesShort,
 			minDate       : tomorrow,
 			maxDate       : "+365D",
 			numberOfMonths: 1,
