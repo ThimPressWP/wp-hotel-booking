@@ -506,10 +506,60 @@ function hb_l18n() {
 												'room_select'	=> __( 'Please select room number', 'tp-hotel-booking' ),
 												'try_again'		=> __( 'Please try again!', 'tp-hotel-booking' )
 										),
+		'date_time_format'				=> hb_date_time_format_js(),
 		'monthNames'					=> hb_month_name_js(),
 		'monthNamesShort'				=> hb_month_name_short_js()
 	);
 	return apply_filters( 'hb_l18n', $translation );
+}
+
+// date time format
+function hb_date_time_format_js() {
+	// set detault datetime format datepicker
+    $dateFormat = get_option( 'date_format' );
+
+    $dateCustomFormat = get_option( 'date_format_custom' );
+    if ( ! $dateFormat && $dateCustomFormat ) {
+    	$dateFormat = $dateCustomFormat;
+    }
+
+    switch ( $dateFormat ) {
+    	case 'Y-m-d':
+    		$return = 'yy-mm-dd';
+    		break;
+
+    	//
+    	case 'Y/m/d':
+    		$return = 'yy/mm/dd';
+    		break;
+
+    	case 'd/m/Y':
+    		$return = 'dd/mm/yy';
+    		break;
+
+    	//
+    	case 'd-m-Y':
+    		$return = 'dd-mm-yy';
+    		break;
+
+    	case 'm/d/Y':
+    		$return = 'mm/dd/yy';
+    		break;
+
+    	//
+    	case 'm-d-Y':
+    		$return = 'mm-dd-yy';
+    		break;
+
+    	case 'F j, Y':
+    		$return = 'MM dd, yy';
+    		break;
+
+    	default:
+    		$return = 'mm/dd/yy';
+    		break;
+    }
+    return $return;
 }
 
 function hb_month_name_js() {
@@ -893,10 +943,21 @@ function hb_format_price( $price, $with_currency = true ) {
 	return apply_filters( 'hb_price_format', $price_format, $price, $with_currency );
 }
 
-function hb_search_rooms( $args = array() ){
+function hb_search_rooms( $args = array() ) {
     global $wpdb;
     $adults = hb_get_request( 'adults' ) ? hb_get_request( 'adults' ) : 1;
     $max_child = hb_get_request('max_child') ? hb_get_request('max_child') : 0;
+
+    $dateTime_format = get_option( 'date_format' );
+    $dateCustomFormat = get_option( 'date_format_custom' );
+    if ( ! $dateTime_format && $dateCustomFormat ) {
+    	$dateTime_format = $dateCustomFormat;
+    }
+
+    if ( ! $dateTime_format ) {
+    	$dateTime_format = 'm/d/Y';
+    }
+
     $args = wp_parse_args(
         $args,
         array(
@@ -907,10 +968,10 @@ function hb_search_rooms( $args = array() ){
         )
     );
 
-    $check_in_time = strtotime( $args['check_in_date'] );
-    $check_out_time = strtotime( $args['check_out_date'] );
+    $check_in_time = DateTime::createFromFormat( $dateTime_format, $args['check_in_date'] )->getTimestamp();
+    $check_out_time = DateTime::createFromFormat( $dateTime_format, $args['check_out_date'] )->getTimestamp();
     $check_in_date_to_time = mktime( 0, 0, 0, date( 'm', $check_in_time ), date( 'd', $check_in_time ), date( 'Y', $check_in_time ) );
-    $check_out_date_to_time = mktime( 0, 0, 0, date( 'm', $check_out_time ), (int)date( 'd', $check_out_time ), date( 'Y', $check_out_time ) );
+    $check_out_date_to_time = mktime( 0, 0, 0, date( 'm', $check_out_time ), date( 'd', $check_out_time ), date( 'Y', $check_out_time ) );
 
     $results = array();
 
@@ -990,8 +1051,8 @@ function hb_search_rooms( $args = array() ){
     if( $search = $wpdb->get_results( $query ) ){
         foreach( $search as $k => $p ){
             $room = HB_Room::instance( $p, array(
-                    'check_in_date'     => $args['check_in_date'],
-                    'check_out_date'    => $args['check_out_date'],
+                    'check_in_date'     => date( 'm/d/Y', $check_in_time ),
+                    'check_out_date'    => date( 'm/d/Y', $check_out_time ),
                     'quantity'          => 1
                 ) );
             $room->post->available_rooms = (int)$p->available_rooms;
@@ -1007,10 +1068,9 @@ function hb_search_rooms( $args = array() ){
     	}
 
     	foreach ( $results as $k => $room ) {
-    		if( array_key_exists( $room->post->ID, $selected_id ) )
-    		{
-    			$in = $room->check_in_date;
-    			$out = $room->check_out_date;
+    		if( array_key_exists( $room->post->ID, $selected_id ) ) {
+    			$in = $room->get_data( 'check_in_date' );
+    			$out = $room->get_data( 'check_out_date' );
     			if(
                     ( $in < $check_in_date_to_time && $check_out_date_to_time < $out )
                     || ( $in < $check_in_date_to_time && $check_out_date_to_time < $out )
@@ -1021,7 +1081,6 @@ function hb_search_rooms( $args = array() ){
     			}
     		}
     	}
-
     }
 
     global $hb_settings;

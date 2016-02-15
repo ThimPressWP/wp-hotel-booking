@@ -36,7 +36,7 @@ $featured = $gallery ? array_shift( $gallery ) : false;
                         <span class="hb_search_item_price"><?php echo hb_format_price( $room->amount_singular ); ?></span>
                         <div class="hb_view_price">
                             <a href="" class="hb-view-booking-room-details"><?php _e( '(View price breakdown)', 'tp-hotel-booking' ); ?></a>
-                            <?php hb_get_template( 'results/booking-room-details.php', array( 'room' => $room ) ); ?>
+                            <?php //hb_get_template( 'results/booking-room-details.php', array( 'room' => $room ) ); ?>
                         </div>
                     </li>
                     <li class="hb_search_quantity">

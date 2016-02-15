@@ -35,11 +35,13 @@ class HB_Room extends HB_Product_Room_Base
             $this->post = hb_create_empty_post();
         }
         global $hb_settings;
-        if( ! $this->_settings )
+        if( ! $this->_settings ) {
             $this->_settings = $hb_settings;
+        }
 
-        if( $options )
+        if( $options ) {
             $this->set_data( $options );
+        }
 
         parent::__construct( $this->post, $options );
 

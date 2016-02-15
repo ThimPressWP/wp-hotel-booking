@@ -89,6 +89,7 @@ function hb_admin_l18n(){
         'empty_pricing_plan_start_date' => __( 'Select start date for plan', 'tp-hotel-booking'),
         'empty_pricing_plan_start_end'  => __( 'Select end date for plan', 'tp-hotel-booking'),
         'filter_error'                  => __( 'Please select date range and filter type', 'tp-hotel-booking' ),
+        'date_time_format'              => hb_date_time_format_js(),
         'monthNames'                    => hb_month_name_js(),
         'monthNamesShort'               => hb_month_name_short_js()
     );

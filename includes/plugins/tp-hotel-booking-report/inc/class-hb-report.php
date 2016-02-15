@@ -29,8 +29,9 @@ abstract class HB_Report
 
 		$this->_range = $range;
 
-		if( isset( $_GET['tab'] ) && $_GET['tab'] )
+		if( isset( $_GET['tab'] ) && $_GET['tab'] ) {
 			$this->_chart_type = sanitize_text_field( $_GET['tab'] );
+		}
 	}
 
 	protected function calculate_current_range( $current_range = '7day' )
@@ -38,19 +39,24 @@ abstract class HB_Report
 		switch ( $current_range ) {
 
 			case 'custom':
-				if( ! isset($_GET['tp-hotel-booking-report'])  )
+				if( ! isset( $_GET['tp-hotel-booking-report'] ) ) {
 					return;
+				}
 
 				if( isset( $_GET, $_GET['report_in'] ) && $_GET['report_in'] )
 				{
-					$this->_start_in = strtotime( sanitize_text_field( $_GET['report_in'] ) );
+				    $dateTime_format = get_option( 'date_format' );
+				    $dateCustomFormat = get_option( 'date_format_custom' );
+				    if ( ! $dateTime_format && $dateCustomFormat ) {
+				    	$dateTime_format = $dateCustomFormat;
+				    }
+
+					$this->_start_in = DateTime::createFromFormat( $dateTime_format, $_GET['report_in'] )->getTimestamp();
 
 					if( isset($_GET['report_out']) && $_GET['report_out'] )
 					{
-						$this->_end_in = strtotime( 'midnight', strtotime( sanitize_text_field( $_GET['report_out'] ) ) );
-					}
-					else
-					{
+						$this->_end_in = strtotime( 'midnight', DateTime::createFromFormat( $dateTime_format, $_GET['report_in'] )->getTimestamp() );
+					} else {
 						$this->_end_in = strtotime( 'midnight', current_time( 'timestamp' ) );
 					}
 

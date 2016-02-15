@@ -52,8 +52,8 @@ class HB_Shortcode_Hotel_Booking extends HB_Shortcodes
         }
         $template_args['search_page'] = $search_permalink;
         /**
-        *  Add argument use in shortcode display
-        */
+         * Add argument use in shortcode display
+         */
         $template_args['atts']         = $atts;
 
         /**
@@ -82,13 +82,13 @@ class HB_Shortcode_Hotel_Booking extends HB_Shortcodes
             case 'checkout':
                 if( ! isset( $atts['page'] ) || $atts['page'] !== 'checkout' )
                     break;
-                if( is_user_logged_in() ){
+                if( is_user_logged_in() ) {
                     global $current_user;
                     get_currentuserinfo();
 
                     $template_args['customer'] = hb_get_customer( $current_user->user_email );
 
-                }else{
+                } else {
                     $template_args['customer'] = hb_create_empty_post();
                     $template_args['customer']->data = array(
                         'title'             => '',
@@ -123,11 +123,12 @@ class HB_Shortcode_Hotel_Booking extends HB_Shortcodes
         $template = apply_filters( 'tp_hotel_booking_shortcode_tpl', $template );
         ob_start();
         do_action( 'hb_wrapper_start' );
-        hb_get_template( 'shortcodes/'.$template, $template_args );
+        hb_get_template( 'shortcodes/' . $template, $template_args );
         do_action( 'hb_wrapper_end' );
         $output = ob_get_clean();
         return $output;
 	}
 
 }
+
 new HB_Shortcode_Hotel_Booking();

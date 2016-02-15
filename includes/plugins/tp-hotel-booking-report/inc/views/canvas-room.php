@@ -17,8 +17,11 @@
 			});
 		}
 
-		$.datepicker.setDefaults({ dateFormat: 'yy/mm/dd'});
+		$.datepicker.setDefaults({ dateFormat: hotel_booking_l18n.date_time_format });
         $('#tp-hotel-report-checkin').datepicker({
+        	dateFormat		: hotel_booking_l18n.date_time_format,
+			monthNames 	  	: hotel_booking_l18n.monthNames,
+			monthNamesShort	: hotel_booking_l18n.monthNamesShort,
             onSelect: function(){
                 var date = $(this).datepicker('getDate');
 
@@ -26,6 +29,9 @@
             }
         });
         $('#tp-hotel-report-checkout').datepicker({
+        	dateFormat		: hotel_booking_l18n.date_time_format,
+			monthNames 	  	: hotel_booking_l18n.monthNames,
+			monthNamesShort	: hotel_booking_l18n.monthNamesShort,
             onSelect: function(){
                 var date = $(this).datepicker('getDate');
                 $("#tp-hotel-report-checkin").datepicker( 'option', 'maxDate', date)

@@ -9,7 +9,7 @@
     $tabsInfo[] = array(
             'id'        => 'hb_room_additinal',
             'title'     => __( 'Additional Information', 'tp-hotel-booking' ),
-            'content'   => $room->__get('addition_information')
+            'content'   => $room->addition_information
         );
     $tabs = apply_filters( 'hotel_booking_single_room_infomation_tabs', $tabsInfo );
     // prepend after li tabs single
