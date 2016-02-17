@@ -442,9 +442,11 @@ class HB_Post_Types{
             if( ! empty( $_POST[ "{$taxonomy}_capacity" ] ) ){
                 foreach( $_POST[ "{$taxonomy}_capacity" ] as $term_id => $capacity ) {
                     if( $capacity ) {
-                        update_option( 'hb_taxonomy_capacity_' . $term_id, $capacity );
-                    }else{
-                        delete_option( 'hb_taxonomy_capacity_' . $term_id );
+                        // update_option( 'hb_taxonomy_capacity_' . $term_id, $capacity );
+                        update_term_meta( $term_id, 'hb_max_number_of_adults', $capacity );
+                    } else {
+                        // delete_option( 'hb_taxonomy_capacity_' . $term_id );
+                        delete_term_meta( $term_id, 'hb_max_number_of_adults' );
                     }
                 }
             }
@@ -453,7 +455,7 @@ class HB_Post_Types{
 
     }
 
-    function delete_term_data( $term_id ){
+    function delete_term_data( $term_id ) {
         delete_option( 'hb_taxonomy_thumbnail_' . $term_id );
     }
 
@@ -504,7 +506,10 @@ class HB_Post_Types{
                 $content = sprintf( '<input class="hb-number-field" type="number" name="%s_ordering[%d]" value="%d" size="3" />', $taxonomy, $term_id, $term->term_group );
                 break;
             case 'capacity':
-                $capacity = get_option( 'hb_taxonomy_capacity_' . $term_id );
+                $capacity = get_term_meta( $term_id, 'hb_max_number_of_adults', true);
+                if ( ! $capacity ) {
+                    $capacity = get_option( 'hb_taxonomy_capacity_' . $term_id );
+                }
                 $content = '<input class="hb-number-field" type="number" name="' . $taxonomy . '_capacity[' . $term_id . ']" value="' . $capacity .'" size="2" />';
                 break;
             default:

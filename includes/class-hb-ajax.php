@@ -103,18 +103,14 @@ class HB_Ajax {
 			hb_send_json( array( 'success' => 0, 'message' => __( 'Invalid request', 'tp-hotel-booking' ) ) );
 		}*/
 		check_ajax_referer( 'hb_search_nonce_action', 'nonce' );
-
-		$check_in        = hb_get_request( 'check_in_date' );
-		$check_out       = hb_get_request( 'check_out_date' );
-		$adults_capacity = hb_get_request( 'adults_capacity' );
-		$max_child       = hb_get_request( 'max_child' );
-
 		$params = array(
-			'hotel-booking'  => hb_get_request( 'hotel-booking' ),
-			'check_in_date'  => $check_in,
-			'check_out_date' => $check_out,
-			'adults'         => $adults_capacity,
-			'max_child'      => $max_child
+			'hotel-booking'  	=> hb_get_request( 'hotel-booking' ),
+			'check_in_date'  	=> hb_get_request( 'check_in_date' ),
+			'check_out_date' 	=> hb_get_request( 'check_out_date' ),
+			'hb_check_in_date'	=> hb_get_request( 'hb_check_in_date' ),
+			'hb_check_out_date'	=> hb_get_request( 'hb_check_out_date' ),
+			'adults'         	=> hb_get_request( 'adults_capacity' ),
+			'max_child'      	=> hb_get_request( 'max_child' )
 		);
 
 		$return = apply_filters( 'hotel_booking_parse_search_param', array(

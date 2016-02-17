@@ -36,7 +36,7 @@ $featured = $gallery ? array_shift( $gallery ) : false;
                         <span class="hb_search_item_price"><?php echo hb_format_price( $room->amount_singular ); ?></span>
                         <div class="hb_view_price">
                             <a href="" class="hb-view-booking-room-details"><?php _e( '(View price breakdown)', 'tp-hotel-booking' ); ?></a>
-                            <?php //hb_get_template( 'results/booking-room-details.php', array( 'room' => $room ) ); ?>
+                            <?php hb_get_template( 'results/booking-room-details.php', array( 'room' => $room ) ); ?>
                         </div>
                     </li>
                     <li class="hb_search_quantity">
@@ -61,8 +61,8 @@ $featured = $gallery ? array_shift( $gallery ) : false;
         </div>
 
         <?php wp_nonce_field( 'hb_booking_nonce_action', 'nonce' ); ?>
-        <input type="hidden" name="check_in_date" value="<?php echo hb_get_request( 'check_in_date' ); ?>" />
-        <input type="hidden" name="check_out_date" value="<?php echo hb_get_request( 'check_out_date' ); ?>">
+        <input type="hidden" name="check_in_date" value="<?php echo date( 'm/d/Y', hb_get_request( 'hb_check_in_date' ) ); ?>" />
+        <input type="hidden" name="check_out_date" value="<?php echo date( 'm/d/Y', hb_get_request( 'hb_check_out_date' ) ); ?>">
         <input type="hidden" name="room-id" value="<?php echo esc_attr( $room->post->ID ); ?>">
         <input type="hidden" name="hotel-booking" value="cart">
         <input type="hidden" name="action" value="hotel_booking_ajax_add_to_cart" />

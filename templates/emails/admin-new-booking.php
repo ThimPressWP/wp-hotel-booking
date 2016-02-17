@@ -94,8 +94,12 @@ foreach( $_rooms as $id ){
                                 <?php
                                     $cap_id = get_post_meta( $id, '_hb_room_capacity', true );
                                     $term = get_term( $cap_id, 'hb_room_capacity' );
+                                    $qty = get_term_meta( $cap_id, 'hb_max_number_of_adults', true );
+                                    if ( ! $qty ) {
+                                        $qty = get_option( 'hb_taxonomy_capacity_' . $cap_id );
+                                    }
                                     if( $term ){
-                                        printf( '%s (%d)', $term->name, get_option( 'hb_taxonomy_capacity_' . $cap_id ) );
+                                        printf( '%s (%d)', $term->name, $qty );
                                     }
                                 ?>
                             </td>

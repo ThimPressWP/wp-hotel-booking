@@ -33,3 +33,9 @@
 = 1.1.2 =
 1. Add template taxonomy room type
 2. Translate calendar search widget
+3. Update calendar format(frontend)
+4. Update capacity( customer feedback )
+	+ remove option
+	+ add term meta
+	+ search query
+	+ admin update capacity

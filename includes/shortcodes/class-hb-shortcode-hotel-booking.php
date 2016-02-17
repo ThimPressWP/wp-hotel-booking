@@ -15,18 +15,26 @@ class HB_Shortcode_Hotel_Booking extends HB_Shortcodes
 		if( ! class_exists( 'HB_Room' ) ){
             TP_Hotel_Booking::instance()->_include( 'includes/class-hb-room.php' );
         }
-        $start_date     = hb_get_request( 'check_in_date' );
-        $end_date       = hb_get_request( 'check_out_date' );
-        $adults         = hb_get_request( 'adults' );
-        $max_child      = hb_get_request( 'max_child' );
+
+        $start_date = hb_get_request( 'hb_check_in_date' );
+        if ( $start_date ) {
+            $start_date = date( 'm/d/Y', $start_date + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
+        }
+
+        $end_date = hb_get_request( 'hb_check_out_date' );
+        if ( $end_date ) {
+            $end_date = date( 'm/d/Y', $end_date + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
+        }
+        $adults         = hb_get_request( 'adults', 1 );
+        $max_child      = hb_get_request( 'max_child', 0 );
 
         $atts = wp_parse_args(
             $atts,
             array(
                 'check_in_date'     => $start_date,
                 'check_out_date'    => $end_date,
-                'adults'            => hb_get_request( 'adults' ),
-                'max_child'         => hb_get_request( 'max_child' ),
+                'adults'            => $adults,
+                'max_child'         => $max_child,
                 'search_page'       => null
             )
         );
@@ -38,15 +46,15 @@ class HB_Shortcode_Hotel_Booking extends HB_Shortcodes
 
         // find the url for form action
         $search_permalink = '';
-        if( $search_page = $atts['search_page'] ){
+        if( $search_page = $atts['search_page'] ) {
             if( is_numeric( $search_page ) ){
                 $search_permalink = get_the_permalink( $search_page );
-            }else{
+            } else {
                 $search_permalink = $search_page;
             }
-        }else{
+        } else {
             global $post;
-            if( $post && ( $post_id = get_the_ID() ) && is_page( $post_id ) ){
+            if ( $post && ( $post_id = get_the_ID() ) && is_page( $post_id ) ) {
                 $search_permalink = get_the_permalink( $post_id );
             }
         }
@@ -74,53 +82,12 @@ class HB_Shortcode_Hotel_Booking extends HB_Shortcodes
                     )
                 );
                 break;
-            case 'cart':
-                if( ! isset( $atts['page'] ) || $atts['page'] !== 'cart' )
-                    break;
-                $template = 'cart.php';
-                break;
-            case 'checkout':
-                if( ! isset( $atts['page'] ) || $atts['page'] !== 'checkout' )
-                    break;
-                if( is_user_logged_in() ) {
-                    global $current_user;
-                    get_currentuserinfo();
-
-                    $template_args['customer'] = hb_get_customer( $current_user->user_email );
-
-                } else {
-                    $template_args['customer'] = hb_create_empty_post();
-                    $template_args['customer']->data = array(
-                        'title'             => '',
-                        'first_name'        => '',
-                        'last_name'         => '',
-                        'address'           => '',
-                        'city'              => '',
-                        'state'             => '',
-                        'postal_code'       => '',
-                        'country'           => '',
-                        'phone'             => '',
-                        'fax'               => ''
-                    );
-                }
-                $template = 'checkout.php';
-                break;
-            case 'confirm':
-                if( ! isset( $atts['page'] ) || $atts['page'] !== 'confirm' )
-                    break;
-                $template = 'confirm.php';
-                break;
-            case 'complete':
-                if( ! isset( $atts['page'] ) || $atts['page'] !== 'complete' )
-                    break;
-                $template = 'message.php';
-                break;
             default:
                 $template = 'search-room.php';
                 break;
         }
 
-        $template = apply_filters( 'tp_hotel_booking_shortcode_tpl', $template );
+        $template = apply_filters( 'tp_hotel_booking_shortcode_template', $template );
         ob_start();
         do_action( 'hb_wrapper_start' );
         hb_get_template( 'shortcodes/' . $template, $template_args );

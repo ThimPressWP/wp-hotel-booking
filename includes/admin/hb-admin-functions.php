@@ -252,11 +252,11 @@ function hb_meta_box_coupon_settings_update_meta_value( $meta_value, $field_name
 }
 add_filter( 'hb_meta_box_update_meta_value', 'hb_meta_box_coupon_settings_update_meta_value', 10, 4 );
 
-function hb_update_meta_box_room_settings( $post_id ){
-    $adults = get_option( 'hb_taxonomy_capacity_' . $_POST['_hb_room_capacity'] );
-    update_post_meta( $post_id, '_hb_max_adults_per_room', intval( $adults ) );
-}
-add_action( 'hb_update_meta_box_room_settings', 'hb_update_meta_box_room_settings' );
+// function hb_update_meta_box_room_settings( $post_id ){
+//     $adults = get_option( 'hb_taxonomy_capacity_' . $_POST['_hb_room_capacity'] );
+//     update_post_meta( $post_id, '_hb_max_adults_per_room', intval( $adults ) );
+// }
+// add_action( 'hb_update_meta_box_room_settings', 'hb_update_meta_box_room_settings' );
 
 function hb_bookings_meta_boxes() {
     HB_Meta_Box::instance(
@@ -880,7 +880,7 @@ function hb_meta_box_coupon_date( $value, $field_name, $meta_box_name ){
     }
     return $value;
 }
-add_action( 'hb_meta_box_update_meta_value', 'hb_meta_box_coupon_date', 10, 3 );
+add_filter( 'hb_meta_box_update_meta_value', 'hb_meta_box_coupon_date', 10, 3 );
 
 function hb_meta_box_field_coupon_date( $value ){
     if( intval( $value ) ) {

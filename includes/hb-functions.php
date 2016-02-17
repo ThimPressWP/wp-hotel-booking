@@ -2,16 +2,48 @@
 
 function hb_get_max_capacity_of_rooms() {
 	static $max = null;
-	if ( !is_null( $max ) ) {
+	if ( ! is_null( $max ) ) {
 		return $max;
 	}
 	$terms = get_terms( 'hb_room_capacity', array( 'hide_empty' => false ) );
 	if ( $terms ) foreach ( $terms as $term ) {
-		if ( ( $cap = get_option( "hb_taxonomy_capacity_{$term->term_id}" ) ) && ( intval( $cap ) > $max ) ) {
+		$cap = get_term_meta( $term->term_id, 'hb_max_number_of_adults', true );
+		/**
+		 * @since  1.1.2
+		 * use term meta
+		 */
+		if ( ! $cap ) {
+			$cap = get_option( "hb_taxonomy_capacity_{$term->term_id}" );
+		}
+		if ( intval( $cap ) > $max ) {
 			$max = $cap;
 		}
 	}
 	return $max;
+}
+
+// get array search
+function hb_get_capacity_of_rooms() {
+	$terms = get_terms( 'hb_room_capacity', array( 'hide_empty' => false ) );
+	$return = array();
+	if ( $terms ) {
+		foreach ( $terms as $term ) {
+			$qty = get_term_meta( $term->term_id, 'hb_max_number_of_adults', true );
+			/**
+			 * @since  1.1.2
+			 * use term meta
+			 */
+			if ( ! $qty ) {
+				get_option( 'hb_taxonomy_capacity_' . $term->term_id );
+			}
+			$return[$qty] = array(
+					'value'	=> $term->term_id,
+					'text'	=> $qty
+				);
+		}
+	}
+	ksort( $return );
+	return $return;
 }
 
 /**
@@ -159,13 +191,13 @@ function hb_get_room_capacities( $args = array() ) {
 			'map_fields' => null
 		)
 	);
-	$terms = (array) get_terms( "hb_room_capacity", $args );
+	$terms = (array) get_terms( 'hb_room_capacity', $args );
 	if ( is_array( $args['map_fields'] ) ) {
 		$types = array();
 		foreach ( $terms as $term ) {
 			$type = new stdClass();
 			foreach ( $args['map_fields'] as $from => $to ) {
-				if ( !empty( $term->{$from} ) ) {
+				if ( ! empty( $term->{$from} ) ) {
 					$type->{$to} = $term->{$from};
 				} else {
 					$type->{$to} = null;
@@ -508,7 +540,10 @@ function hb_l18n() {
 										),
 		'date_time_format'				=> hb_date_time_format_js(),
 		'monthNames'					=> hb_month_name_js(),
-		'monthNamesShort'				=> hb_month_name_short_js()
+		'monthNamesShort'				=> hb_month_name_short_js(),
+		'dayNames'						=> hb_day_name_js(),
+		'dayNamesShort'					=> hb_day_name_short_js(),
+		'dayNamesMin '					=> hb_day_name_min_js(),
 	);
 	return apply_filters( 'hb_l18n', $translation );
 }
@@ -595,6 +630,41 @@ function hb_month_name_short_js() {
 			__( 'Dec', 'tp-hotel-booking' )
 		) );
 }
+
+function hb_day_name_js() {
+	return apply_filters( 'hotel_booking_day_name_js', array(
+			__( 'Sunday', 'tp-hotel-booking' ),
+			__( 'Monday', 'tp-hotel-booking' ),
+			__( 'Tuesday', 'tp-hotel-booking' ),
+			__( 'Wednesday', 'tp-hotel-booking' ),
+			__( 'Thursday', 'tp-hotel-booking' ),
+			__( 'Friday', 'tp-hotel-booking' ),
+			__( 'Saturday', 'tp-hotel-booking' )
+		) );
+}
+
+function hb_day_name_short_js() {
+	return apply_filters( 'hotel_booking_day_name_short_js', array(
+			__( 'Sun', 'tp-hotel-booking' ),
+			__( 'Mon', 'tp-hotel-booking' ),
+			__( 'Tue', 'tp-hotel-booking' ),
+			__( 'Wed', 'tp-hotel-booking' ),
+			__( 'Thur', 'tp-hotel-booking' ),
+			__( 'Fri', 'tp-hotel-booking' ),
+			__( 'Sat', 'tp-hotel-booking' )
+		) );
+}
+function hb_day_name_min_js(){
+	return apply_filters( 'hotel_booking_day_name_min_js', array(
+			__( 'Su', 'tp-hotel-booking' ),
+			__( 'Mo', 'tp-hotel-booking' ),
+			__( 'Tu', 'tp-hotel-booking' ),
+			__( 'We', 'tp-hotel-booking' ),
+			__( 'Thu', 'tp-hotel-booking' ),
+			__( 'Fr', 'tp-hotel-booking' ),
+			__( 'Sa', 'tp-hotel-booking' )
+		) );
+}
 /**
  * Get tax setting
  *
@@ -628,7 +698,8 @@ function hb_dropdown_numbers( $args = array() ) {
 			'class'             => '',
 			'echo'              => true,
 			'show_option_none'  => '',
-			'option_none_value' => ''
+			'option_none_value' => '',
+			'options'			=> array()
 		)
 	);
 	$min               = 0;
@@ -643,14 +714,22 @@ function hb_dropdown_numbers( $args = array() ) {
 
 	extract( $args );
 
-	$id     = !empty( $id ) ? $id : '';
+	$id     = ! empty( $id ) ? $id : '';
 	$output = '<select name="' . $name . '" ' . ( $id ? 'id="' . $id . '"' : '' ) . '' . ( $class ? ' class="' . $class . '"' : '' ) . '>';
 	if ( $show_option_none ) {
 		$output .= '<option value="' . $option_none_value . '">' . $show_option_none . '</option>';
 	}
-	for ( $i = $min; $i <= $max; $i ++ ) {
-		$output .= sprintf( '<option value="%1$d"%2$s>%1$d</option>', $i, $selected == $i ? ' selected="selected"' : '' );
+
+	if ( empty( $options ) ) {
+		for ( $i = $min; $i <= $max; $i ++ ) {
+			$output .= sprintf( '<option value="%1$d"%2$s>%1$d</option>', $i, $selected == $i ? ' selected="selected"' : '' );
+		}
+	} else {
+		foreach ( $options as $option ) {
+			$output .= sprintf( '<option value="%1$d"%2$s>%3$d</option>', $option['value'], $selected == $option['value'] ? ' selected="selected"' : '', $option['text'] );
+		}
 	}
+
 	$output .= '</select>';
 	if ( $echo ) {
 		echo $output;
@@ -945,18 +1024,12 @@ function hb_format_price( $price, $with_currency = true ) {
 
 function hb_search_rooms( $args = array() ) {
     global $wpdb;
-    $adults = hb_get_request( 'adults' ) ? hb_get_request( 'adults' ) : 1;
-    $max_child = hb_get_request('max_child') ? hb_get_request('max_child') : 0;
-
-    $dateTime_format = get_option( 'date_format' );
-    $dateCustomFormat = get_option( 'date_format_custom' );
-    if ( ! $dateTime_format && $dateCustomFormat ) {
-    	$dateTime_format = $dateCustomFormat;
+    $adults_term = hb_get_request( 'adults', 0 );
+    $adults = $adults_term ? get_term_meta( $adults_term, 'hb_max_number_of_adults', true) : 0;
+    if ( ! $adults ) {
+    	$adults = $adults_term ? (int)get_option( 'hb_taxonomy_capacity_' . $adults_term ) : 0;
     }
-
-    if ( ! $dateTime_format ) {
-    	$dateTime_format = 'm/d/Y';
-    }
+    $max_child = hb_get_request( 'max_child', 0 );
 
     $args = wp_parse_args(
         $args,
@@ -968,8 +1041,8 @@ function hb_search_rooms( $args = array() ) {
         )
     );
 
-    $check_in_time = DateTime::createFromFormat( $dateTime_format, $args['check_in_date'] )->getTimestamp();
-    $check_out_time = DateTime::createFromFormat( $dateTime_format, $args['check_out_date'] )->getTimestamp();
+    $check_in_time = strtotime( $args['check_in_date'] );
+    $check_out_time = strtotime( $args['check_out_date'] );
     $check_in_date_to_time = mktime( 0, 0, 0, date( 'm', $check_in_time ), date( 'd', $check_in_time ), date( 'Y', $check_in_time ) );
     $check_out_date_to_time = mktime( 0, 0, 0, date( 'm', $check_out_time ), date( 'd', $check_out_time ), date( 'Y', $check_out_time ) );
 
@@ -1012,9 +1085,11 @@ function hb_search_rooms( $args = array() ) {
             WHERE
                 book_item.post_type = %s
                 AND bm.meta_value = rooms.ID
-                AND ( (bi.meta_value <= %d AND bo.meta_value >= %d)
-                OR (bi.meta_value >= %d AND bi.meta_value < %d)
-                OR (bo.meta_value > %d AND bo.meta_value <= %d) )
+                AND (
+	                ( bi.meta_value <= %d AND bo.meta_value >= %d )
+	                OR ( bi.meta_value >= %d AND bi.meta_value < %d )
+	                OR ( bo.meta_value > %d AND bo.meta_value <= %d )
+                )
                 AND {$booking_status} IN ( %s, %s, %s )
         )
     ", '_hb_id', '_hb_check_in_date', '_hb_check_out_date', '_hb_booking_id', 'hb_booking_item',
@@ -1032,14 +1107,16 @@ function hb_search_rooms( $args = array() ) {
         FROM {$wpdb->posts} rooms
         INNER JOIN {$wpdb->postmeta} pm ON pm.post_id = rooms.ID AND pm.meta_key = %s
         INNER JOIN {$wpdb->postmeta} pm2 ON pm2.post_id = rooms.ID AND pm2.meta_key = %s
+        INNER JOIN {$wpdb->postmeta} pm3 ON pm3.post_id = rooms.ID AND pm3.meta_key = %s
+        INNER JOIN {$wpdb->termmeta} term_cap ON term_cap.term_id = pm3.meta_value AND term_cap.meta_key = %s
         WHERE
             rooms.post_type = %s
             AND rooms.post_status = %s
             AND pm.meta_value >= %d
-            AND pm2.meta_value >= %d
+            AND ( term_cap.meta_value >= %d OR pm2.meta_value >= %d )
         GROUP BY rooms.ID
         HAVING available_rooms > 0
-    ", '_hb_max_child_per_room', '_hb_max_adults_per_room', 'hb_room', 'publish', $max_child, $adults );
+    ", '_hb_max_child_per_room', '_hb_max_adults_per_room', '_hb_room_capacity', 'hb_max_number_of_adults', 'hb_room', 'publish', $max_child, $adults, $adults );
 
     $query = apply_filters( 'hb_search_query', $query, array(
             'check_in'      => $check_in_date_to_time,
