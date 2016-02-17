@@ -635,7 +635,6 @@ function hb_booking_filter( $query ){
     }
 }
 
-
 function hb_customer_posts_columns( $default ) {
     unset($default['author']);
     unset($default['date']);
