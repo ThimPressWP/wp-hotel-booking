@@ -73,9 +73,11 @@
 				<?php if( isset($_REQUEST['report_in']) ): ?>
 					<input type="hidden" name="report_in" value="<?php echo isset($_REQUEST['report_in']) ? esc_attr($_REQUEST['report_in']) : '' ?>" >
 				<?php endif; ?>
+				<input type="hidden" name="report_in_timestamp" value="<?php echo isset($_REQUEST['report_in_timestamp']) ? esc_attr($_REQUEST['report_in_timestamp']) : '' ?>" >
 				<?php if( isset($_REQUEST['report_out']) ): ?>
 					<input type="hidden" name="report_out" value="<?php echo isset($_REQUEST['report_out']) ? esc_attr($_REQUEST['report_out']) : '' ?>" >
 				<?php endif; ?>
+				<input type="hidden" name="report_out_timestamp" value="<?php echo isset($_REQUEST['report_out_timestamp']) ? esc_attr($_REQUEST['report_out_timestamp']) : '' ?>" >
 				<?php wp_nonce_field( 'tp-hotel-booking-report-export', 'tp-hotel-booking-report-export' ) ?>
 				<button type="submit"><?php _e( 'Export', 'tp-hotel-booking-report' ) ?></button>
 			</form>
@@ -93,7 +95,9 @@
 						<input type="hidden" name="tab" value="<?php echo isset($_REQUEST['tab']) ? $_REQUEST['tab'] : 'price' ?>" />
 						<input type="hidden" name="range" value="custom" />
 						<input type="text" id="tp-hotel-report-checkin" name="report_in" value="<?php echo isset( $_REQUEST['report_in'] ) ? esc_attr($_REQUEST['report_in'] ) : ''; ?>" />
+						<input type="hidden" name="report_in_timestamp" value="<?php echo isset( $_REQUEST['report_in_timestamp'] ) ? esc_attr($_REQUEST['report_in_timestamp'] ) : ''; ?>" />
 						<input type="text" id="tp-hotel-report-checkout" name="report_out" value="<?php echo isset( $_REQUEST['report_out'] ) ? esc_attr($_REQUEST['report_out'] ) : ''; ?>" />
+						<input type="hidden" name="report_out_timestamp" value="<?php echo isset( $_REQUEST['report_out_timestamp'] ) ? esc_attr($_REQUEST['report_out_timestamp'] ) : ''; ?>" />
 						<?php if( isset($_GET['room_id']) && $_GET['room_id'] ): ?>
 							<?php foreach( $_GET['room_id'] as $key => $room ): ?>
 								<input type="hidden" name="room_id[]" value="<?php echo esc_attr( $room ) ?>">

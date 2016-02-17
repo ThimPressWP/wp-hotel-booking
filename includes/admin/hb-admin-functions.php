@@ -497,7 +497,7 @@ function hb_manage_booking_column( $column_name, $post_id ) {
             do_action( 'hb_manage_booing_column_total', $post_id, $total, $total_with_currency );
             break;
         case 'booking_date':
-            echo date( 'F d, Y', strtotime( get_post_field( 'post_date', $post_id ) ) );
+            echo date( hb_get_date_format(), strtotime( get_post_field( 'post_date', $post_id ) ) );
             break;
         case 'details':
             $echo[] = '<a href="'. admin_url('admin.php?page=hb_booking_details&id='. $post_id) . '">' . __( 'View', 'tp-hotel-booking' ) . '</a><br />';
@@ -544,11 +544,10 @@ function hb_booking_restrict_manage_posts(){
     if ('hb_booking' == $type){
         //change this to the list of values you want to show
         //in 'label' => 'value' format
-        $values = array(
-            'Today check-in' => date('m/d/Y'),
-        );
         $from           = hb_get_request( 'date-from' );
+        $from_timestamp = hb_get_request( 'date-from-timestamp' ) + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS );
         $to             = hb_get_request( 'date-to' );
+        $to_timestamp   = hb_get_request( 'date-to-timestamp' ) + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS );
         $filter_type    = hb_get_request( 'filter-type' );
 
         $filter_types = apply_filters(
@@ -563,7 +562,9 @@ function hb_booking_restrict_manage_posts(){
         ?>
         <span><?php _e( 'Date Range', 'tp-hotel-booking' ); ?></span>
         <input type="text" id="hb-booking-date-from" class="hb-date-field" value="<?php echo $from; ?>" name="date-from" readonly placeholder="<?php _e( 'From', 'tp-hotel-booking' ); ?>" />
+        <input type="hidden" value="<?php echo $from_timestamp; ?>" name="date-from-timestamp" />
         <input type="text" id="hb-booking-date-to" class="hb-date-field" value="<?php echo $to; ?>" name="date-to" readonly placeholder="<?php _e( 'To', 'tp-hotel-booking' ); ?>" />
+        <input type="hidden" value="<?php echo $to_timestamp; ?>" name="date-to-timestamp" />
         <select name="filter-type">
             <option value=""><?php _e( '---Filter By---', 'tp-hotel-booking' ); ?></option>
             <?php foreach( $filter_types as $slug => $text ){?>
@@ -571,45 +572,8 @@ function hb_booking_restrict_manage_posts(){
             <?php } ?>
         </select>
         <?php
-        return;
-        ?>
-        <select name="filter_by_checkin_date">
-        <option value=""><?php _e('All Check-in Date ', 'tp-hotel-booking'); ?></option>
-        <?php
-            $current_v = isset($_GET['filter_by_checkin_date'])? $_GET['filter_by_checkin_date']:'';
-            foreach ($values as $label => $value) {
-                printf(
-                        '<option value="%s"%s>%s</option>',
-                        $value,
-                        $value == $current_v? ' selected="selected"':'',
-                        $label
-                    );
-                }
-        ?>
-        </select>
-        <?php
-        $values = array(
-            'Today check-out' => date('m/d/Y'),
-        );
-        ?>
-        <select name="filter_by_checkout_date">
-        <option value=""><?php _e('All Check-out Date ', 'tp-hotel-booking'); ?></option>
-        <?php
-            $current_v = isset($_GET['filter_by_checkout_date'])? $_GET['filter_by_checkout_date']:'';
-            foreach ($values as $label => $value) {
-                printf(
-                        '<option value="%s"%s>%s</option>',
-                        $value,
-                        $value == $current_v? ' selected="selected"':'',
-                        $label
-                    );
-                }
-        ?>
-        </select>
-        <?php
     }
 }
-
 
 add_filter( 'parse_query', 'hb_booking_filter' );
 /**
@@ -625,7 +589,7 @@ function hb_booking_filter( $query ){
     if (isset($_GET['post_type'])) {
         $type = $_GET['post_type'];
     }
-    if ( 'hb_booking' == $type && is_admin() && $pagenow=='edit.php' && isset($_GET['filter_by_checkin_date']) && $_GET['filter_by_checkin_date'] != '') {
+    if ( 'hb_booking' == $type && is_admin() && $pagenow =='edit.php' && isset($_GET['filter_by_checkin_date']) && $_GET['filter_by_checkin_date'] != '') {
         $query->query_vars['meta_key'] = '_hb_check_in_date';
         $query->query_vars['meta_value'] = $_GET['filter_by_checkin_date'];
     }
@@ -762,6 +726,13 @@ function hb_update_pricing_plan(){
                 update_post_meta( $post_id, '_hb_pricing_plan_end', $end );
                 update_post_meta( $post_id, '_hb_pricing_plan_prices', $prices );
                 update_post_meta( $post_id, '_hb_pricing_plan_room', $_POST['hb-room'] );
+
+                if ( ! empty( $_POST['date-start-timestamp'] ) && isset( $_POST['date-start-timestamp'][$t] ) ) {
+                    update_post_meta( $post_id, '_hb_pricing_plan_start_timestamp', $_POST['date-start-timestamp'][$t] + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
+                }
+                if ( ! empty( $_POST['date-end-timestamp'] ) && isset( $_POST['date-end-timestamp'][$t] ) ) {
+                    update_post_meta( $post_id, '_hb_pricing_plan_end_timestamp', $_POST['date-end-timestamp'][$t] + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
+                }
             }
             $post_ids[] = $post_id;
             $loop++;
@@ -774,7 +745,7 @@ function hb_update_pricing_plan(){
                 'meta_query' => array(
                     array(
                         'key'     => '_hb_pricing_plan_room',
-                        'value'   => $_POST['hb-room']
+                        'value'   => absint( $_POST['hb-room'] )
                     )
                 )
             )
@@ -882,7 +853,7 @@ add_filter( 'hb_meta_box_update_meta_value', 'hb_meta_box_coupon_date', 10, 3 );
 
 function hb_meta_box_field_coupon_date( $value ){
     if( intval( $value ) ) {
-        return date('m/d/Y', $value);
+        return date( hb_get_date_format(), $value);
     }
     return $value;
 }

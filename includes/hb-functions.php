@@ -551,12 +551,7 @@ function hb_l18n() {
 // date time format
 function hb_date_time_format_js() {
 	// set detault datetime format datepicker
-    $dateFormat = get_option( 'date_format' );
-
-    $dateCustomFormat = get_option( 'date_format_custom' );
-    if ( ! $dateFormat && $dateCustomFormat ) {
-    	$dateFormat = $dateCustomFormat;
-    }
+    $dateFormat = hb_get_date_format();
 
     switch ( $dateFormat ) {
     	case 'Y-m-d':
@@ -1917,5 +1912,18 @@ if ( ! function_exists( 'hb_get_post_id_meta' ) ) {
 		else {
 			return false;
 		}
+	}
+}
+
+if ( ! function_exists( 'hb_get_date_format' ) ) {
+	function hb_get_date_format(){
+	    $dateFormat = get_option( 'date_format' );
+
+	    $dateCustomFormat = get_option( 'date_format_custom' );
+	    if ( ! $dateFormat && $dateCustomFormat ) {
+	    	$dateFormat = $dateCustomFormat;
+	    }
+
+	    return $dateFormat;
 	}
 }

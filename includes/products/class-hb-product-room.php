@@ -338,10 +338,16 @@ class HB_Product_Room_Base extends HB_Product_Abstract
             $selected_plan = null;
             if( $plans ){
                 foreach( $plans as $plan ){
-                    $start_plan = get_post_meta( $plan->ID, '_hb_pricing_plan_start', true );
-                    $end_plan = get_post_meta( $plan->ID, '_hb_pricing_plan_end', true );
-                    $start_time_plan = @strtotime( $start_plan );
-                    $end_time_plan = @strtotime( $end_plan );
+                    $start_plan = $start_time_plan = get_post_meta( $plan->ID, '_hb_pricing_plan_start_timestamp', true );
+                    if ( ! $start_plan ) {
+                        $start_plan = get_post_meta( $plan->ID, '_hb_pricing_plan_start', true );
+                        $start_time_plan = @strtotime( $start_plan );
+                    }
+                    $end_plan = $end_time_plan = get_post_meta( $plan->ID, '_hb_pricing_plan_end_timestamp', true );
+                    if ( ! $end_plan ) {
+                        $end_plan = get_post_meta( $plan->ID, '_hb_pricing_plan_end', true );
+                        $end_time_plan = @strtotime( $end_plan );
+                    }
                     if( $date >= $start_time_plan && $date <= $end_time_plan ){
                         $selected_plan = $plan;
                         break;
@@ -687,23 +693,23 @@ class HB_Product_Room_Base extends HB_Product_Abstract
 
         $results = array();
 
-        $results['week'] = array(
-            __( 'Sun', 'tp-hotel-booking' ),
-            __( 'Mon', 'tp-hotel-booking' ),
-            __( 'Tue', 'tp-hotel-booking' ),
-            __( 'Wed', 'tp-hotel-booking' ),
-            __( 'Thu', 'tp-hotel-booking' ),
-            __( 'Fri', 'tp-hotel-booking' ),
-            __( 'Sat', 'tp-hotel-booking' )
-        );
+        $results['week'] = hb_date_names();
 
         $count_plants = count( $pricing_plans );
         if( $count_plants )
         {
             foreach ( $pricing_plans as $ID => $post ) {
-                $end = get_post_meta($post->ID, '_hb_pricing_plan_end', true);
-                $start = get_post_meta($post->ID, '_hb_pricing_plan_start', true);
-                if( strtotime($end) > time() )
+                $end = get_post_meta($post->ID, '_hb_pricing_plan_end_timestamp', true);
+                if ( ! $end ) {
+                    $end = get_post_meta($post->ID, '_hb_pricing_plan_end', true);
+                    $end = strtotime($end);
+                }
+
+                $start = get_post_meta($post->ID, '_hb_pricing_plan_start_timestamp', true);
+                if ( ! $start ) {
+                    $start = get_post_meta($post->ID, '_hb_pricing_plan_start', true);
+                }
+                if( $end > time() )
                 {
                     $results['data'][$post->ID] = array();
                     $results['data'][$post->ID]['price'] = get_post_meta($post->ID, '_hb_pricing_plan_prices', true);

@@ -43,19 +43,14 @@ abstract class HB_Report
 					return;
 				}
 
-				if( isset( $_GET, $_GET['report_in'] ) && $_GET['report_in'] )
+				if( isset( $_GET['report_in'], $_GET['report_in_timestamp'] ) && $_GET['report_in'] )
 				{
-				    // $dateTime_format = get_option( 'date_format' );
-				    // $dateCustomFormat = get_option( 'date_format_custom' );
-				    // if ( ! $dateTime_format && $dateCustomFormat ) {
-				    // 	$dateTime_format = $dateCustomFormat;
-				    // }
 
-					$this->_start_in = DateTime::createFromFormat( 'm/d/Y', $_GET['report_in'] )->getTimestamp();
+					$this->_start_in = absint( $_GET['report_in_timestamp'] ) + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS );
 
-					if( isset($_GET['report_out']) && $_GET['report_out'] )
+					if( isset($_GET['report_in_timestamp']) && $_GET['report_in_timestamp'] )
 					{
-						$this->_end_in = strtotime( 'midnight', DateTime::createFromFormat( 'm/d/Y', $_GET['report_in'] )->getTimestamp() );
+						$this->_end_in = strtotime( 'midnight', absint( $_GET['report_in_timestamp'] ) + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
 					} else {
 						$this->_end_in = strtotime( 'midnight', current_time( 'timestamp' ) );
 					}

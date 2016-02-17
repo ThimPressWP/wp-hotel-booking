@@ -38,8 +38,10 @@ $count_plants = count( $pricing_plans );
             <h3 class="hb-pricing-table-title">
                 <span><?php _e( 'Regular price', 'tp-hotel-booking' ); ?></span>
                 <input type="text" class="datepicker" name="date-start[<?php echo $regular_plan ? $regular_plan->ID : '__INDEX__'; ?>]" size="10" readonly="readonly" />
+                <input type="hidden" name="date-start-timestamp[<?php echo $regular_plan ? $regular_plan->ID : '__INDEX__'; ?>]"/>
 
                 <input type="text" class="datepicker" name="date-end[<?php echo $regular_plan ? $regular_plan->ID : '__INDEX__'; ?>]" size="10" readonly="readonly" />
+                <input type="hidden" name="date-end-timestamp[<?php echo $regular_plan ? $regular_plan->ID : '__INDEX__'; ?>]"/>
             </h3>
             <div class="hb-pricing-controls">
                 <a href="" class="dashicons dashicons-edit" data-action="edit" title="<?php _e( 'Edit', 'tp-hotel-booking' ); ?>"></a>
@@ -92,13 +94,18 @@ $count_plants = count( $pricing_plans );
             <?php
                 $plan_prices = get_post_meta($plan->ID, '_hb_pricing_plan_prices', true);
                 $start_date = get_post_meta($plan->ID, '_hb_pricing_plan_start', true);
+                $start_date_timestamp = get_post_meta( $plan->ID, '_hb_pricing_plan_start_timestamp', true );
                 $end_date = get_post_meta($plan->ID, '_hb_pricing_plan_end', true);
+                $end_date_timestamp = get_post_meta( $plan->ID, '_hb_pricing_plan_end_timestamp', true );
             ?>
             <div class="hb-pricing-table">
                 <h3 class="hb-pricing-table-title">
                     <span><?php _e( 'Date Range', 'tp-hotel-booking' ); ?></span>
                     <input type="text" class="datepicker" name="date-start[<?php echo $plan->ID; ?>]" size="10" value="<?php echo $start_date; ?>" readonly="readonly" />
+                    <input type="hidden" name="date-start-timestamp[<?php echo $plan->ID; ?>]" value="<?php echo $start_date_timestamp; ?>" />
+
                     <input type="text" class="datepicker" name="date-end[<?php echo $plan->ID; ?>]" size="10" value="<?php echo $end_date; ?>" readonly="readonly" />
+                    <input type="hidden" name="date-end-timestamp[<?php echo $plan->ID; ?>]" value="<?php echo $end_date_timestamp; ?>" />
                 </h3>
                 <div class="hb-pricing-controls">
                     <a href="" class="dashicons dashicons-edit" data-action="edit" title="<?php _e( 'Edit', 'tp-hotel-booking' ); ?>"></a>
@@ -156,7 +163,9 @@ $count_plants = count( $pricing_plans );
         <h3 class="hb-pricing-table-title">
             <span><?php _e( 'Date Range', 'tp-hotel-booking' ); ?></span>
             <input type="text" class="datepicker" name="date-start[__INDEX__]" size="10" readonly="readonly" />
+            <input type="hidden" name="date-start-timestamp[__INDEX__]" />
             <input type="text" class="datepicker" name="date-end[__INDEX__]" size="10" readonly="readonly" />
+            <input type="hidden" name="date-end-timestamp[__INDEX__]" />
         </h3>
         <div class="hb-pricing-controls">
             <a href="" class="dashicons dashicons-edit" data-action="edit" title="<?php _e( 'Clone', 'tp-hotel-booking' ); ?>"></a>

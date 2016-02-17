@@ -15,9 +15,15 @@
 	<?php if( isset($_GET['report_in']) && $_GET['report_in'] ): ?>
 		<input type="hidden" name="report_in" value="<?php echo esc_attr( $_GET['report_in'] ) ?>">
 	<?php endif; ?>
+	<?php if( isset($_GET['report_in_timestamp']) ): ?>
+		<input type="hidden" name="report_in_timestamp" value="<?php echo isset($_GET['report_in_timestamp']) ? esc_attr($_GET['report_in_timestamp']) : '' ?>" >
+	<?php endif; ?>
 
 	<?php if( isset($_GET['report_out']) && $_GET['report_out'] ): ?>
 		<input type="hidden" name="report_out" value="<?php echo esc_attr( $_GET['report_out'] ) ?>" />
+	<?php endif; ?>
+	<?php if( isset($_GET['report_out_timestamp']) ): ?>
+		<input type="hidden" name="report_out_timestamp" value="<?php echo isset($_GET['report_out_timestamp']) ? esc_attr($_GET['report_out_timestamp']) : '' ?>" >
 	<?php endif; ?>
 
 	<?php $rooms = $hb_report_room->get_rooms(); ?>

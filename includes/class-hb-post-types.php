@@ -84,7 +84,7 @@ class HB_Post_Types{
             case 'from':
             case 'to':
                 if( $from = get_post_meta( $post->ID, '_hb_coupon_date_' . $column, true ) ) {
-                    echo date('m/d/Y', $from );
+                    echo date( hb_get_date_format(), $from );
                 }else{
                     echo '-';
                 }
