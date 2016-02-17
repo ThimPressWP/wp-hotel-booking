@@ -1106,8 +1106,9 @@ function hb_search_rooms( $args = array() ) {
             AND rooms.post_status = %s
             AND pm.meta_value >= %d
             AND ( term_cap.meta_value >= %d OR pm2.meta_value >= %d )
-        GROUP BY rooms.ID
+        GROUP BY rooms.post_name, rooms.ID
         HAVING available_rooms > 0
+        ORDER BY term_cap.meta_value DESC
     ", '_hb_max_child_per_room', '_hb_max_adults_per_room', '_hb_room_capacity', 'hb_max_number_of_adults', 'hb_room', 'publish', $max_child, $adults, $adults );
 
     $query = apply_filters( 'hb_search_query', $query, array(
