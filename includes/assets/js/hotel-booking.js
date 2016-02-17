@@ -584,7 +584,7 @@
 					}
 				}).done(function (res) {
 					res = parseJSON(res);
-					if (typeof res.status === 'undefined' || res.status !== 'success') {
+					if ( typeof res.status === 'undefined' || res.status !== 'success' ) {
 						alert(hotel_booking_l18n.waring.try_again);
 						return;
 					}
@@ -609,6 +609,9 @@
 			dateFormat 		: hotel_booking_l18n.date_time_format,
 			monthNames 	  	: hotel_booking_l18n.monthNames,
 			monthNamesShort	: hotel_booking_l18n.monthNamesShort,
+			dayNames 		: hotel_booking_l18n.dayNames,
+			dayNamesShort 	: hotel_booking_l18n.dayNamesShort,
+			dayNamesMin		: hotel_booking_l18n.dayNamesMin,
 			minDate       	: tomorrow,
 			maxDate       	: '+365D',
 			numberOfMonths	: 1,
@@ -627,6 +630,9 @@
 			dateFormat 		: hotel_booking_l18n.date_time_format,
 			monthNames 	  	: hotel_booking_l18n.monthNames,
 			monthNamesShort	: hotel_booking_l18n.monthNamesShort,
+			dayNames 		: hotel_booking_l18n.dayNames,
+			dayNamesShort 	: hotel_booking_l18n.dayNamesShort,
+			dayNamesMin		: hotel_booking_l18n.dayNamesMin,
 			minDate       	: tomorrow,
 			maxDate       	: '+365D',
 			numberOfMonths	: 1,
@@ -645,7 +651,8 @@
 			$('#txtToDate').datepicker('show');
 		});
 
-		$('form[class^="hb-search-form"]').submit( function () {
+		$('form[class^="hb-search-form"]').submit( function ( e ) {
+			e.preventDefault();
 			var unique = $(this).attr('class');
 			var button = $(this).find('buton[type="submit"]');
 			unique = unique.replace('hb-search-form-', '');
@@ -672,6 +679,7 @@
 				$check_in.focus();
 				return false;
 			}
+
 			if ( check_in.compareWith( check_out ) >= 0 ) {
 				alert( hotel_booking_l18n.check_out_date_must_be_greater );
 				$check_out.focus();
@@ -679,11 +687,23 @@
 			}
 
 			var action = $(this).attr('action') || window.location.href;
+			var data = $(this).serializeArray();
+			for ( var i = 0; i < data.length; i++ ) {
+				var input = data[i];
+				if ( input.name === 'check_in_date' || input.name === 'check_out_date' ) {
+					var time = $(this).find( 'input[name="'+input.name+'"]' ).datepicker('getDate');
+					time = new Date( time );
+					data.push({
+						name: 'hb_' + input.name,
+						value: time.getTime() / 1000 - ( time.getTimezoneOffset() * 60 )
+					})
+				}
+			}
 			$.ajax({
 				url       : hotel_settings.ajax,
 				type      : 'post',
 				dataType  : 'html',
-				data      : $(this).serialize(),
+				data      : data,
 				beforeSend: function () {
 					button.addClass('hb_loading');
 				},
@@ -822,39 +842,6 @@
 			$(this).submit();
 		});
 	});
-
-	// rating single room
-	// $.fn.rating = function () {
-	// 	return $.each(this, function () {
-	// 		var $el = $(this);
-	// 		var starWidth = 15;
-	// 		$el.html('<div class="rating-input"><span><input name="rating" id="rating" type="hidden" value="" /></span></div>');
-	// 		$('.rating-input', $el).mousemove(function (e) {
-	// 			var parentOffset = $(this).parent().offset(),
-	// 				relX = e.pageX - parentOffset.left,
-	// 				w = relX - ( relX % starWidth ) + starWidth,
-	// 				rating = w / starWidth;
-
-	// 			$(this).find('span').width(w).attr('rating', rating);
-	// 		}).mouseout(function () {
-	// 			var rating = $('input', this).val();
-	// 			$(this).find('span').width(rating * starWidth);
-	// 		}).mousedown(function () {
-	// 			$('input', $(this)).attr('value', $('> span', this).attr('rating'));
-	// 			$(this).addClass('mousedown');
-	// 		}).mouseup(function () {
-	// 			$(this).removeClass('mousedown');
-	// 		});
-	// 		$(document.body).on('click', '#respond #submit', function () {
-	// 			var $rating = $(this).closest('#respond').find('#rating'),
-	// 				rating = $rating.val();
-	// 			if ($rating.size() > 0 && !rating && hotel_settings.settings.review_rating_required === '1') {
-	// 				window.alert(hotel_booking_l18n.review_rating_required);
-	// 				return false;
-	// 			}
-	// 		});
-	// 	});
-	// }
 
 	// rating single room
 	$.fn.rating = function () {

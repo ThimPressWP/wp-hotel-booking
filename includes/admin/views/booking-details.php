@@ -131,7 +131,8 @@ $booking_id = hb_get_request( 'id' );
                                                 if( $term )
                                                 {
                                                     if( ! is_wp_error( $term  ) ){
-                                                        printf( '%s (%d)', $term->name, get_option( 'hb_taxonomy_capacity_' . $cap_id ) );
+                                                        $qty = get_term_meta( $cap_id, 'hb_max_number_of_adults', true );
+                                                        printf( '%s (%d)', $term->name, $qty ? $qty : (int)get_option( 'hb_taxonomy_capacity_' . $cap_id ) );
                                                     }
                                                     else
                                                     {

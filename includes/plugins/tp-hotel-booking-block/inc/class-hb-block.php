@@ -285,7 +285,7 @@ class Hotel_Booking_Block
 		{
 			if( get_post( $calendar_id ) && wp_delete_post( $calendar_id ) )
 			{
-				wp_send_json( array( 'status' => 'success', 'data' => $this->get_blocked(  ), 'message' => __( 'Remove completed!', 'tp-hotel-booking-block' ) ) );
+				wp_send_json( array( 'status' => 'success', 'data' => $this->get_blocked(), 'message' => __( 'Remove completed!', 'tp-hotel-booking-block' ) ) );
 			}
 		}
 
@@ -352,6 +352,10 @@ class Hotel_Booking_Block
 	        'hb-pending', 'hb-processing', 'hb-completed'
 	    );
 
+	    /**
+	     * blocked
+	     * @var
+	     */
 		$blocked = $wpdb->prepare( "
 				SELECT COUNT( blocked_time.meta_value )
 				FROM $wpdb->postmeta AS blocked_post
@@ -370,19 +374,21 @@ class Hotel_Booking_Block
 	    /**
 	     * merge query select room
 	     */
-	    $query = $wpdb->prepare( "
-	        SELECT rooms.*, {$query_count_available} - {$query_count_not_available} AS available_rooms, ($blocked) AS blocked
+	    $query = $wpdb->prepare("
+	        SELECT rooms.*, {$query_count_available} - {$query_count_not_available} as available_rooms, ($blocked) AS blocked
 	        FROM {$wpdb->posts} rooms
-	        INNER JOIN {$wpdb->postmeta} AS pm ON pm.post_id = rooms.ID AND pm.meta_key = %s
-	        INNER JOIN {$wpdb->postmeta} AS pm2 ON pm2.post_id = rooms.ID AND pm2.meta_key = %s
+	        INNER JOIN {$wpdb->postmeta} pm ON pm.post_id = rooms.ID AND pm.meta_key = %s
+	        INNER JOIN {$wpdb->postmeta} pm2 ON pm2.post_id = rooms.ID AND pm2.meta_key = %s
+	        INNER JOIN {$wpdb->postmeta} pm3 ON pm3.post_id = rooms.ID AND pm3.meta_key = %s
+	        INNER JOIN {$wpdb->termmeta} term_cap ON term_cap.term_id = pm3.meta_value AND term_cap.meta_key = %s
 	        WHERE
 	            rooms.post_type = %s
 	            AND rooms.post_status = %s
 	            AND pm.meta_value >= %d
-	            AND pm2.meta_value >= %d
+            	AND ( term_cap.meta_value >= %d OR pm2.meta_value >= %d )
 	        GROUP BY rooms.ID
 	        HAVING ( available_rooms > 0 AND blocked = 0 )
-	    ", '_hb_max_child_per_room', '_hb_max_adults_per_room', 'hb_room', 'publish', $child, $adults );
+	    ", '_hb_max_child_per_room', '_hb_max_adults_per_room', 'hb_room', 'publish', $max_child, $adults );
 
 		return $query;
 	}

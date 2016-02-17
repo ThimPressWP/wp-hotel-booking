@@ -188,6 +188,7 @@ class HB_Meta_Box{
      * @param $post_id
      */
     static function update_meta_boxes( $post_id ){
+        if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
         if( 'post' != strtolower( $_SERVER['REQUEST_METHOD'] ) ) return;
 
         if( ! ( $meta_boxes = self::$_meta_boxes ) ) return;

@@ -1,9 +1,10 @@
 <?php
 $check_in_date = hb_get_request( 'check_in_date' );
 $check_out_date = hb_get_request( 'check_out_date' );
-$adults = hb_get_request( 'adults' ) ? hb_get_request( 'adults' ) : 0;
-$max_child = hb_get_request( 'max_child' ) ? hb_get_request( 'max_child' ) : 0;
+$adults = hb_get_request( 'adults', 0 );
+$max_child = hb_get_request( 'max_child', 0 );
 $uniqid = uniqid();
+
 ?>
 <div id="hotel-booking-search-<?php echo uniqid(); ?>" class="hotel-booking-search">
 <?php
@@ -40,7 +41,8 @@ $uniqid = uniqid();
                                 'max'       => hb_get_max_capacity_of_rooms(),
                                 'show_option_none'  => __( 'Adults', 'tp-hotel-booking' ),
                                 'selected'  => $adults,
-                                'option_none_value' => 0
+                                'option_none_value' => 0,
+                                'options'   => hb_get_capacity_of_rooms()
                             )
                         );
                     ?>

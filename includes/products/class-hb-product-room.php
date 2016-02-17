@@ -114,16 +114,23 @@ class HB_Product_Room_Base extends HB_Product_Abstract
                 break;
             case 'capacity':
                 $term_id = get_post_meta( $this->post->ID, '_hb_room_capacity', true );
-                $return = get_option( 'hb_taxonomy_capacity_' . $term_id );
+                $return = get_term_meta( $term_id, 'hb_max_number_of_adults', true );
+                if ( ! $return ) {
+                    $return = (int)get_option( 'hb_taxonomy_capacity_' . $term_id );
+                }
                 break;
             case 'capacity_title':
                 $term_id = get_post_meta( $this->post->ID, '_hb_room_capacity', true );
                 if( $key == 'capacity_title' ) {
                     $term = get_term( $term_id, 'hb_room_capacity' );
-                    if( isset( $term->name ) )
+                    if( isset( $term->name ) ) {
                         $return = $term->name;
+                    }
                 } else {
-                    $return = get_option( 'hb_taxonomy_capacity_' . $term_id );
+                    $return = get_term_meta( $term_id, 'hb_max_number_of_adults', true );
+                    if ( ! $return ) {
+                        $return = (int)get_option( 'hb_taxonomy_capacity_' . $term_id );
+                    }
                 }
                 break;
             case 'capacity_id':
@@ -446,7 +453,13 @@ class HB_Product_Room_Base extends HB_Product_Abstract
     {
         $room_types = get_the_terms( $this->post->ID, 'hb_room_type' );
         $room_capacity = (int)get_post_meta( $this->post->ID, '_hb_room_capacity', true );
-        $max_adults_per_room = (int)get_post_meta( $this->post->ID, '_hb_max_adults_per_room', true );
+        $max_adults_per_room = get_term_meta( $room_capacity, 'hb_max_number_of_adults', true );
+        if ( ! $max_adults_per_room ) {
+            $max_adults_per_room = (int)get_option( 'hb_taxonomy_capacity_' . $room_capacity );
+        }
+        if ( ! $max_adults_per_room ) {
+            $max_adults_per_room = (int)get_post_meta( $this->post->ID, '_hb_max_adults_per_room', true );
+        }
         $max_child_per_room = (int)get_post_meta( $this->post->ID, '_hb_max_child_per_room', true );
 
         $taxonomis = array();
@@ -459,7 +472,7 @@ class HB_Product_Room_Base extends HB_Product_Abstract
         else
         {
             $terms = get_terms( 'hb_room_type' );
-            foreach ($terms as $key => $term) {
+            foreach ( $terms as $key => $term ) {
                 $taxonomis[] = $term->term_id;
             }
         }

@@ -207,7 +207,7 @@ class HB_Settings{
 
         $tabs[] = array(
                 'id'        => 'hb_room_pricing_plans',
-                'title'     => __( 'Pricing Plans' ),
+                'title'     => __( 'Pricing Plans', 'tp-hotel-booking' ),
                 'content'   => ''
             );
         return $tabs;

@@ -4,14 +4,14 @@
     Plugin URI: http://thimpress.com/
     Description: Full of professional features for a booking room system.
     Author: ThimPress
-    Version: 1.1.1
+    Version: 1.1.2
     Author URI: http://thimpress.com
 */
 
 define( 'HB_FILE', __FILE__ );
 define( 'HB_PLUGIN_PATH', dirname( __FILE__ ) );
 define( 'HB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
-define( 'HB_VERSION', '1.1.1' );
+define( 'HB_VERSION', '1.1.2' );
 define( 'HB_BLOG_ID', get_current_blog_id() );
 /**
  * Class TP_Hotel_Booking
@@ -58,7 +58,7 @@ class TP_Hotel_Booking{
         // $this->install();
     }
 
-    function init() {
+    function init(){
         // cart
         $this->cart = HB_Cart::instance();
     }
@@ -294,7 +294,7 @@ class TP_Hotel_Booking{
             wp_register_style( 'tp-admin-hotel-booking-tokenize-css', $this->plugin_url( 'includes/assets/css/jquery.tokenize.css' ) );
         } else {
             wp_register_style( 'tp-hotel-booking', $this->plugin_url( 'includes/assets/css/hotel-booking.min.css' ) );
-            wp_register_script( 'tp-hotel-booking', $this->plugin_url( 'includes/assets/js/hotel-booking.js' ), $dependencies );
+            wp_register_script( 'tp-hotel-booking', $this->plugin_url( 'includes/assets/js/hotel-booking.min.js' ), $dependencies );
 
             // stripe and checkout assets
             wp_register_script( 'tp-hotel-booking-stripe-js', $this->plugin_url( 'includes/assets/js/stripe.js' ), $dependencies );
