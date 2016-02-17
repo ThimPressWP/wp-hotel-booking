@@ -578,8 +578,7 @@ function hb_booking_restrict_manage_posts(){
         <?php
             $current_v = isset($_GET['filter_by_checkin_date'])? $_GET['filter_by_checkin_date']:'';
             foreach ($values as $label => $value) {
-                printf
-                    (
+                printf(
                         '<option value="%s"%s>%s</option>',
                         $value,
                         $value == $current_v? ' selected="selected"':'',
@@ -598,8 +597,7 @@ function hb_booking_restrict_manage_posts(){
         <?php
             $current_v = isset($_GET['filter_by_checkout_date'])? $_GET['filter_by_checkout_date']:'';
             foreach ($values as $label => $value) {
-                printf
-                    (
+                printf(
                         '<option value="%s"%s>%s</option>',
                         $value,
                         $value == $current_v? ' selected="selected"':'',
@@ -737,10 +735,13 @@ function hb_delete_pricing_plan( $ids ){
         $wpdb->query( $delete_query );
     }
 }
-function hb_update_pricing_plan( ){
+
+function hb_update_pricing_plan(){
     if ( ! isset( $_POST['hb-update-pricing-plan-field'] ) || ! wp_verify_nonce( $_POST['hb-update-pricing-plan-field'], 'hb-update-pricing-plan' ) ){
         return;
     }
+    echo '<pre>';
+    print_r($_POST); die();
     if( ! empty( $_POST['price'] ) ){
         $loop = 0;
         $post_ids = array();
@@ -748,9 +749,9 @@ function hb_update_pricing_plan( ){
             $start  = $_POST['date-start'][ $t ];
             $end    = $_POST['date-end'][ $t ];
             $prices = $_POST['price'][ $t ];
-            if( $t > 0 ){
+            if( $t > 0 ) {
                 $post_id = intval( $t );
-            }else{
+            } else {
                 $post_id = wp_insert_post(
                     array(
                         'post_title'    => $loop == 0 ? 'Regular Price' : "Date Range[{$start} to {$end}]",

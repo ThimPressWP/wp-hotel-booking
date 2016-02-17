@@ -644,15 +644,7 @@ function hb_day_name_js() {
 }
 
 function hb_day_name_short_js() {
-	return apply_filters( 'hotel_booking_day_name_short_js', array(
-			__( 'Sun', 'tp-hotel-booking' ),
-			__( 'Mon', 'tp-hotel-booking' ),
-			__( 'Tue', 'tp-hotel-booking' ),
-			__( 'Wed', 'tp-hotel-booking' ),
-			__( 'Thur', 'tp-hotel-booking' ),
-			__( 'Fri', 'tp-hotel-booking' ),
-			__( 'Sat', 'tp-hotel-booking' )
-		) );
+	return apply_filters( 'hotel_booking_day_name_short_js', hb_date_names() );
 }
 function hb_day_name_min_js(){
 	return apply_filters( 'hotel_booking_day_name_min_js', array(

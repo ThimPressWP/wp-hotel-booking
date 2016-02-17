@@ -1,14 +1,6 @@
 <?php
 
-$week_names = array(
-    __( 'Sun', 'tp-hotel-booking' ),
-    __( 'Mon', 'tp-hotel-booking' ),
-    __( 'Tue', 'tp-hotel-booking' ),
-    __( 'Wed', 'tp-hotel-booking' ),
-    __( 'Thu', 'tp-hotel-booking' ),
-    __( 'Fri', 'tp-hotel-booking' ),
-    __( 'Sat', 'tp-hotel-booking' )
-);
+$week_names = hb_date_names();
 
 $room_id = intval( hb_get_request( 'hb-room' ) );
 
@@ -30,10 +22,11 @@ $pricing_plans = get_posts(
 
 if( $pricing_plans ) {
     $regular_plan = array_pop($pricing_plans);
-}else{
+} else {
     $regular_plan = null;
 }
 $count_plants = count( $pricing_plans );
+
 ?>
 
 <div class="wrap" id="tp_hotel_booking_pricing">
@@ -45,6 +38,7 @@ $count_plants = count( $pricing_plans );
             <h3 class="hb-pricing-table-title">
                 <span><?php _e( 'Regular price', 'tp-hotel-booking' ); ?></span>
                 <input type="text" class="datepicker" name="date-start[<?php echo $regular_plan ? $regular_plan->ID : '__INDEX__'; ?>]" size="10" readonly="readonly" />
+
                 <input type="text" class="datepicker" name="date-end[<?php echo $regular_plan ? $regular_plan->ID : '__INDEX__'; ?>]" size="10" readonly="readonly" />
             </h3>
             <div class="hb-pricing-controls">
@@ -55,7 +49,7 @@ $count_plants = count( $pricing_plans );
             <?php
                 if( $regular_plan ) {
                     $regular_prices = get_post_meta($regular_plan->ID, '_hb_pricing_plan_prices', true);
-                }else{
+                } else {
                     $regular_prices = array();
                 }
             ?>
@@ -93,10 +87,6 @@ $count_plants = count( $pricing_plans );
             <?php _e( 'Other plan', 'tp-hotel-booking' ); ?>
             <span class="count"><?php printf( _n( '(%d plan)', '(%d plans)', $count_plants, 'tp-hotel-booking' ), $count_plants ); ?></span>
         </h3>
-        <p>
-            <button class="button hb-add-new-plan" type="button"><?php _e( 'Add Plan', 'tp-hotel-booking' ); ?></button>
-            <button class="button button-primary"><?php _e( 'Update', 'tp-hotel-booking'); ?></button>
-        </p>
         <div id="hb-pricing-plan-list">
         <?php if( $pricing_plans ): foreach( $pricing_plans as $plan ){?>
             <?php
@@ -149,6 +139,10 @@ $count_plants = count( $pricing_plans );
             <p id="hb-no-plan-message"> <?php _e( 'No addition plans', 'tp-hotel-booking' ); ?></p>
         <?php endif; ?>
         </div>
+        <p>
+            <button class="button hb-add-new-plan" type="button"><?php _e( 'Add Plan', 'tp-hotel-booking' ); ?></button>
+            <button class="button button-primary"><?php _e( 'Update', 'tp-hotel-booking'); ?></button>
+        </p>
         <?php wp_nonce_field( 'hb-update-pricing-plan', 'hb-update-pricing-plan-field' ); ?>
         <!-- <p>
             <button type="button" class="button hb-add-new-plan"><?php //_e( 'Add Plan', 'tp-hotel-booking' ); ?></button>
