@@ -635,7 +635,6 @@ function hb_booking_filter( $query ){
     }
 }
 
-
 function hb_customer_posts_columns( $default ) {
     unset($default['author']);
     unset($default['date']);
@@ -740,8 +739,6 @@ function hb_update_pricing_plan(){
     if ( ! isset( $_POST['hb-update-pricing-plan-field'] ) || ! wp_verify_nonce( $_POST['hb-update-pricing-plan-field'], 'hb-update-pricing-plan' ) ){
         return;
     }
-    echo '<pre>';
-    print_r($_POST); die();
     if( ! empty( $_POST['price'] ) ){
         $loop = 0;
         $post_ids = array();
