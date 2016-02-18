@@ -460,6 +460,22 @@ class TP_Hotel_Booking_Woocommerce {
 		if( ! self::$_wc_loaded ) {
 			add_action( 'admin_notices', array( __CLASS__, 'admin_notice' ) );
 		}
+
+		self::load_text_domain();
+	}
+
+	public static function load_text_domain() {
+		$default = WP_LANG_DIR . '/plugins/tp-hotel-booking-woocommerce-' . get_locale() . '.mo';
+		$plugin_file = HB_WC_PLUGIN_PATH . '/languages/tp-hotel-booking-woocommerce-' . get_locale() . '.mo';
+		$file = false;
+		if ( file_exists( $default ) ) {
+			$file = $default;
+		} else {
+			$file = $plugin_file;
+		}
+		if ( $file ) {
+			load_textdomain( 'tp-hotel-booking-woocommerce', $file );
+		}
 	}
 
 	public static function admin_notice(){

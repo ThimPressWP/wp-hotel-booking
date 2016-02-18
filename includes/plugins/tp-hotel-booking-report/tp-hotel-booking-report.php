@@ -18,10 +18,6 @@ class TP_Hotel_Booking_Report
 	function __construct()
 	{
 		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
-		/**
-		 * text-domain
-		 */
-		$this->load_textdomain();
 	}
 
 	/**
@@ -30,7 +26,17 @@ class TP_Hotel_Booking_Report
 	 */
 	public function load_textdomain()
 	{
-		load_textdomain( 'tp-hotel-booking-report', TP_HB_REPORT_DIR . '/languages/' . get_locale() . '.mo' );
+		$default = WP_LANG_DIR . '/plugins/tp-hotel-booking-report-' . get_locale() . '.mo';
+		$plugin_file = TP_HB_REPORT_DIR . '/languages/tp-hotel-booking-report-' . get_locale() . '.mo';
+		$file = false;
+		if ( file_exists( $default ) ) {
+			$file = $default;
+		} else {
+			$file = $plugin_file;
+		}
+		if ( $file ) {
+			load_textdomain( 'tp-hotel-booking-report', $file );
+		}
 	}
 
 	/**
@@ -61,6 +67,10 @@ class TP_Hotel_Booking_Report
 				require_once TP_HB_REPORT_DIR . '/inc/class-hb-report-room.php';
 			}
 		}
+		/**
+		 * text-domain
+		 */
+		$this->load_textdomain();
 	}
 
 	/**
