@@ -180,6 +180,8 @@ class TP_Hotel_Booking{
         $this->load_payments();
         // load reports
         $this->load_reports();
+        // load coupon
+        $this->load_coupon();
     }
 
     // load all payment gateways support
@@ -215,6 +217,17 @@ class TP_Hotel_Booking{
             $this->_include( 'includes/class-hb-report.php' );
             $this->_include( 'includes/class-hb-report-price.php' );
             $this->_include( 'includes/class-hb-report-room.php' );
+        }
+    }
+
+    // load_coupon
+    function load_coupon()
+    {
+        $plugins = get_plugins();
+        $coupon = 'tp-hotel-booking-coupon/tp-hotel-booking-coupon.php';
+        if( ! array_key_exists( $coupon, $plugins ) || ! is_plugin_active( $coupon ) )
+        {
+            $this->_include( 'includes/class-hb-coupon.php' );
         }
     }
 

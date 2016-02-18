@@ -45,32 +45,7 @@ global $hb_settings;
 
                 <?php endif; ?>
 
-                    <?php if( $hb_settings->get( 'enable_coupon' ) ) : ?>
-                        <?php
-                            // if( $coupon = get_transient( 'hb_user_coupon_' . session_id() ) ) {
-                            if( $coupon = TP_Hotel_Booking::instance()->cart->coupon ) {
-                                $coupon = HB_Coupon::instance( $coupon );
-                            ?>
-                                <tr class="hb_coupon">
-                                    <td class="hb_coupon_remove" colspan="8">
-                                        <p class="hb-remove-coupon" align="right">
-                                            <a href="" id="hb-remove-coupon"><i class="fa fa-times"></i></a>
-                                        </p>
-                                        <span class="hb-remove-coupon_code"><?php printf( __( 'Coupon applied: %s', 'tp-hotel-booking' ), $coupon->coupon_code ); ?></span>
-                                        <span class="hb-align-right">
-                                            -<?php echo hb_format_price( $coupon->discount_value ); ?>
-                                        </span>
-                                    </td>
-                                </tr>
-                            <?php } else { ?>
-                                <tr class="hb_coupon">
-                                    <td colspan="8" class="hb-align-center" >
-                                        <input type="text" name="hb-coupon-code" value="" placeholder="<?php _e( 'Coupon', 'tp-hotel-booking' ); ?>" style="width: 150px; vertical-align: top;" />
-                                        <button type="button" id="hb-apply-coupon" class="hb_button"><?php _e( 'Apply Coupon', 'tp-hotel-booking' ); ?></button>
-                                    </td>
-                                </tr>
-                        <?php } ?>
-                    <?php endif; ?>
+                    <?php do_action( 'hotel_booking_before_cart_total' ); ?>
 
                     <tr class="hb_sub_total">
                         <td colspan="8"><?php _e( 'Sub Total', 'tp-hotel-booking' ); ?>

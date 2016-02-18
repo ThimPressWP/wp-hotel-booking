@@ -28,8 +28,8 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
 
     function __construct(){
         parent::__construct();
-        $this->_title = __( 'Stripe', 'tp-hotel-booking' );
-        $this->_description = __( 'Pay with Stripe', 'tp-hotel-booking' );
+        $this->_title = __( 'Stripe', 'tp-hotel-booking-stripe' );
+        $this->_description = __( 'Pay with Stripe', 'tp-hotel-booking-stripe' );
         $this->_settings = maybe_unserialize(HB_Settings::instance()->get('stripe'));
 
         $debug = ( ! isset($this->_settings['test_mode']) || $this->_settings['test_mode'] === 'on' ) ? true : false;
@@ -80,7 +80,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
                 'currency'      => hb_get_currency(),
                 'customer'      => $customer_id,
                 'description'   => sprintf(
-                    __( '%s - Order %s', 'tp-hotel-booking' ),
+                    __( '%s - Order %s', 'tp-hotel-booking-stripe' ),
                     esc_html( get_bloginfo( 'name' ) ),
                     $book->get_booking_number()
                 )
@@ -90,7 +90,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
 
         if( is_wp_error( $response ) )
         {
-            $return = array( 'result' => 'error', 'message' => sprintf( __( '%s. Please try again', 'tp-hotel-booking' ), $response->get_error_message() ) );
+            $return = array( 'result' => 'error', 'message' => sprintf( __( '%s. Please try again', 'tp-hotel-booking-stripe' ), $response->get_error_message() ) );
         } else {
             if( $response->id )
             {
@@ -107,7 +107,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
             }
             else
             {
-                $return = array( 'result' => 'error', 'message' => __( 'Please try again', 'tp-hotel-booking' ) );
+                $return = array( 'result' => 'error', 'message' => __( 'Please try again', 'tp-hotel-booking-stripe' ) );
             }
         }
 
@@ -156,10 +156,10 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
         ));
 
         if ( is_wp_error($response) ) {
-            return new WP_Error( 'stripe_error', __('There was a problem connecting to the payment gateway.', 'tp-hotel-booking') );
+            return new WP_Error( 'stripe_error', __('There was a problem connecting to the payment gateway.', 'tp-hotel-booking-stripe') );
         }
         if( empty($response['body']) ) {
-            return new WP_Error( 'stripe_error', __('Empty response.', 'tp-hotel-booking') );
+            return new WP_Error( 'stripe_error', __('Empty response.', 'tp-hotel-booking-stripe') );
         }
 
         $parsed_response = json_decode( $response['body'] );
@@ -167,7 +167,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
         if ( ! empty( $parsed_response->error ) ) {
             return new WP_Error( 'stripe_error', $parsed_response->error->message );
         } elseif ( empty( $parsed_response->id ) ) {
-            return new WP_Error( 'stripe_error', __('Invalid response.', 'tp-hotel-booking') );
+            return new WP_Error( 'stripe_error', __('Invalid response.', 'tp-hotel-booking-stripe') );
         }
 
         return $parsed_response;

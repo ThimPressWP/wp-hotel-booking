@@ -51,6 +51,22 @@ class TP_Hotel_Booking_Payment_PayPal
 				require_once TP_HB_PAYPAL_DIR . '/inc/class-hb-payment-gateway-paypal.php';
 			}
 		}
+
+		$this->load_text_domain();
+	}
+
+	function load_text_domain() {
+		$default = WP_LANG_DIR . '/plugins/tp-hotel-booking-paypal-' . get_locale() . '.mo';
+		$plugin_file = TP_HB_PAYPAL_DIR . '/languages/tp-hotel-booking-paypal-' . get_locale() . '.mo';
+		$file = false;
+		if ( file_exists( $default ) ) {
+			$file = $default;
+		} else {
+			$file = $plugin_file;
+		}
+		if ( $file ) {
+			load_textdomain( 'tp-hotel-booking-paypal', $file );
+		}
 	}
 
 	/**

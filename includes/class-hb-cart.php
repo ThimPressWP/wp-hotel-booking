@@ -434,11 +434,13 @@ class HB_Cart
     // set customer object
     function set_customer( $name = null, $val = null )
     {
-        if( ! $name || ! $val )
+        if( ! $name )
             return;
         // set session cart
         $this->customer_sessions->set( $name, $val );
-
+        if ( isset( $this->customer_sessions->session[$name] ) ) {
+            $this->customer_sessions->session[$name] = $val;
+        }
         // refresh
         $this->load_customer();
     }

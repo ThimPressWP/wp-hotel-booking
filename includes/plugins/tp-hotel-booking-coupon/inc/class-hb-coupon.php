@@ -1,5 +1,4 @@
 <?php
-
 if ( ! defined( 'TP_HOTEL_COUPON' ) ) {
     define( 'TP_HOTEL_COUPON', true );
 }
@@ -124,6 +123,9 @@ class HB_Coupon{
             }
         }
 
+        /*if( $return['is_valid'] &&  ! empty( $this->_settings['limit_per_customer' ] ) && ( $limit_per_customer = intval( $this->_settings['limit_per_customer'] ) > 0 ) ){
+            //$return['is_valid'] = $this->get_cart_sub_total() <= $maximum_spend;
+        }*/
         return $return;
     }
 
@@ -151,77 +153,3 @@ class HB_Coupon{
     }
 }
 
-add_action( 'hotel_booking_before_cart_total', 'hotel_booking_before_cart_total' );
-if ( ! function_exists( 'hotel_booking_before_cart_total' ) ) {
-    function hotel_booking_before_cart_total() {
-        $settings = hb_settings();
-        if( defined( 'TP_HOTEL_COUPON' ) && TP_HOTEL_COUPON && $settings->get( 'enable_coupon' ) ) { ?>
-            <?php
-            // if( $coupon = get_transient( 'hb_user_coupon_' . session_id() ) ) {
-            if( $coupon = TP_Hotel_Booking::instance()->cart->coupon ) {
-                $coupon = HB_Coupon::instance( $coupon );
-                ?>
-                <tr class="hb_coupon">
-                    <td class="hb_coupon_remove" colspan="8">
-                        <p class="hb-remove-coupon" align="right">
-                            <a href="" id="hb-remove-coupon"><i class="fa fa-times"></i></a>
-                        </p>
-                        <span class="hb-remove-coupon_code"><?php printf( __( 'Coupon applied: %s', 'tp-hotel-booking' ), $coupon->coupon_code ); ?></span>
-                        <span class="hb-align-right">
-                            -<?php echo hb_format_price( $coupon->discount_value ); ?>
-                        </span>
-                    </td>
-                </tr>
-            <?php } else { ?>
-                <tr class="hb_coupon">
-                    <td colspan="8" class="hb-align-center" >
-                        <input type="text" name="hb-coupon-code" value="" placeholder="<?php _e( 'Coupon', 'tp-hotel-booking' ); ?>" style="width: 150px; vertical-align: top;" />
-                        <button type="button" id="hb-apply-coupon"><?php _e( 'Apply Coupon', 'tp-hotel-booking' ); ?></button>
-                    </td>
-                </tr>
-            <?php } ?>
-        <?php }
-    }
-}
-
-add_action( 'init', 'register_post_types_coupon' );
-
-if ( ! function_exists( 'register_post_types_coupon' ) ) {
-
-    function register_post_types_coupon() {
-        /**
-         * Register custom post type for booking
-         */
-        $args = array(
-            'labels'             => array(
-                'name'               => _x( 'Coupons', 'Coupons', 'tp-hotel-coupon' ),
-                'singular_name'      => _x( 'Coupon', 'Coupon', 'tp-hotel-coupon' ),
-                'menu_name'          => __( 'Coupons', 'tp-hotel-coupon' ),
-                'parent_item_colon'  => __( 'Parent Item:', 'tp-hotel-coupon' ),
-                'all_items'          => __( 'Coupons', 'tp-hotel-coupon' ),
-                'view_item'          => __( 'View Coupon', 'tp-hotel-coupon' ),
-                'add_new_item'       => __( 'Add New Coupon', 'tp-hotel-coupon' ),
-                'add_new'            => __( 'Add New', 'tp-hotel-coupon' ),
-                'edit_item'          => __( 'Edit Coupon', 'tp-hotel-coupon' ),
-                'update_item'        => __( 'Update Coupon', 'tp-hotel-coupon' ),
-                'search_items'       => __( 'Search Coupon', 'tp-hotel-coupon' ),
-                'not_found'          => __( 'No coupon found', 'tp-hotel-coupon' ),
-                'not_found_in_trash' => __( 'No coupon found in Trash', 'tp-hotel-coupon' ),
-            ),
-            'public'             => false,
-            'query_var'          => true,
-            'publicly_queryable' => false,
-            'show_ui'            => true,
-            'has_archive'        => false,
-            'capability_type'    => 'post',
-            'map_meta_cap'       => true,
-            'show_in_menu'       => 'tp_hotel_booking',
-            'show_in_admin_bar'  => true,
-            'show_in_nav_menus'  => true,
-            'supports'           => array( 'title' ),
-            'hierarchical'       => false
-        );
-        $args = apply_filters( 'hotel_booking_register_post_type_coupon_arg', $args );
-        register_post_type( 'hb_coupon', $args );
-    }
-}

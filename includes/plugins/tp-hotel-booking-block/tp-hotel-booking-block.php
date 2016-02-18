@@ -20,10 +20,6 @@ class TP_Hotel_Booking_Block
 	function __construct()
 	{
 		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
-		/**
-		 * text-domain
-		 */
-		$this->load_textdomain();
 	}
 
 	/**
@@ -32,7 +28,17 @@ class TP_Hotel_Booking_Block
 	 */
 	public function load_textdomain()
 	{
-		load_textdomain( 'tp-hotel-booking-block', TP_HB_BLOCK_DIR . '/languages/' . get_locale() . '.mo' );
+		$default = WP_LANG_DIR . '/plugins/tp-hotel-booking-block-' . get_locale() . '.mo';
+		$plugin_file = TP_HB_BLOCK_DIR . '/languages/tp-hotel-booking-block-' . get_locale() . '.mo';
+		$file = false;
+		if ( file_exists( $default ) ) {
+			$file = $default;
+		} else {
+			$file = $plugin_file;
+		}
+		if ( $file ) {
+			load_textdomain( 'tp-hotel-booking-paypal', $file );
+		}
 	}
 
 	/**
@@ -61,6 +67,10 @@ class TP_Hotel_Booking_Block
 				require_once TP_HB_BLOCK_DIR . '/inc/class-hb-block.php';
 			}
 		}
+		/**
+		 * text-domain
+		 */
+		$this->load_textdomain();
 	}
 
 	/**

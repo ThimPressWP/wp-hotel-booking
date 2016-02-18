@@ -51,6 +51,22 @@ class TP_Hotel_Booking_Payment_Authorize
 				require_once TP_HB_AUTHORIZE_DIR . '/inc/class-hb-payment-gateway-authorize-sim.php';
 			}
 		}
+
+		$this->load_text_domain();
+	}
+
+	function load_text_domain(){
+		$default = WP_LANG_DIR . '/plugins/tp-hotel-booking-authorize-sim-' . get_locale() . '.mo';
+		$plugin_file = TP_HB_AUTHORIZE_DIR . '/languages/tp-hotel-booking-authorize-sim-' . get_locale() . '.mo';
+		$file = false;
+		if ( file_exists( $default ) ) {
+			$file = $default;
+		} else {
+			$file = $plugin_file;
+		}
+		if ( $file ) {
+			load_textdomain( 'tp-hotel-booking-authorize-sim', $file );
+		}
 	}
 
 	/**
