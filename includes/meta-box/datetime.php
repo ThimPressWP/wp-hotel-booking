@@ -28,6 +28,3 @@ printf('<input type="text" class="datetime-picker-metabox" id="%s" name="%s" val
     $value,
     $field_attr
 );
-printf('<input type="hidden" class="datetime-picker-metabox-timestamp" name="%s"/>',
-    $field['name'] . '-timestamp'
-);

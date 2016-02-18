@@ -904,12 +904,12 @@ function hb_get_coupons_active( $date, $code = false ){
                 'relation' => 'AND',
                 array(
                     'value' => $date,
-                    'key'   => '_hb_coupon_date_from',
+                    'key'   => '_hb_coupon_date_from_timestamp',
                     'compare' => '<='
                 ),
                 array(
                     'value' => $date,
-                    'key'   => '_hb_coupon_date_to',
+                    'key'   => '_hb_coupon_date_to_timestamp',
                     'compare' => '>='
                 )
             )

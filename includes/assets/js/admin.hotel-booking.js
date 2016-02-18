@@ -189,8 +189,8 @@
                     timestamp = new Date( date ).getTime() / 1000 - ( new Date().getTimezoneOffset() * 60 );
                 if( date ){
                     date.setDate(date.getDate() + 1);
-                }console.debug(_self.parent().find( 'input[name="'+name+'-timestamp"]' ));
-                _self.parent().find( 'input[name="'+name+'-timestamp"]' ).val( timestamp );
+                }
+                $( 'input[name="'+name+'_timestamp"]' ).val( timestamp );
                 // $("#check_out_date").datepicker("option","minDate", date)
             }
         });

@@ -189,10 +189,20 @@ function hb_add_meta_boxes(){
             'filter' => 'hb_meta_box_field_coupon_date'
         ),
         array(
+            'name'      => 'coupon_date_from_timestamp',
+            'label'     => '',
+            'type'      => 'hidden'
+        ),
+        array(
             'name'      => 'coupon_date_to',
             'label'     => __( 'Validate until', 'tp-hotel-booking' ),
             'type'      => 'datetime',
             'filter' => 'hb_meta_box_field_coupon_date'
+        ),
+        array(
+            'name'      => 'coupon_date_to_timestamp',
+            'label'     => '',
+            'type'      => 'hidden'
         ),
         array(
             'name'      => 'minimum_spend',
