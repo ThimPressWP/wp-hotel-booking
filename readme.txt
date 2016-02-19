@@ -38,13 +38,13 @@ A complete hotel booking plugin for WordPress.
 
 == Frequently Asked Questions ==
 
-= A question that someone might have =
+= How many payment gateways does this hotel booking plugin offer? =
 
-An answer to that question.
+Paypal, Stripe, Offline payment, Authorize.net
 
-= What about foo bar? =
+= Can it has add-ons for hotel booking such as Pool, Airport? =
 
-Answer to foo bar dilemma.
+Yes.
 
 == Screenshots ==
 
