@@ -8,10 +8,6 @@
     Author URI: http://thimpress.com
 */
 
-if ( class_exists( 'TP_Hotel_Booking' ) ) {
-    return;
-}
-
 define( 'HB_FILE', __FILE__ );
 define( 'HB_PLUGIN_PATH', dirname( __FILE__ ) );
 define( 'HB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
