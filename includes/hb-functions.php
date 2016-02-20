@@ -1093,7 +1093,7 @@ function hb_search_rooms( $args = array() ) {
         SELECT rooms.*, {$query_count_available} - {$query_count_not_available} as available_rooms
         FROM {$wpdb->posts} rooms
         INNER JOIN {$wpdb->postmeta} pm ON pm.post_id = rooms.ID AND pm.meta_key = %s
-        INNER JOIN {$wpdb->postmeta} pm2 ON pm2.post_id = rooms.ID AND pm2.meta_key = %s
+        LEFT JOIN {$wpdb->postmeta} pm2 ON pm2.post_id = rooms.ID AND pm2.meta_key = %s
         INNER JOIN {$wpdb->postmeta} pm3 ON pm3.post_id = rooms.ID AND pm3.meta_key = %s
         INNER JOIN {$wpdb->termmeta} term_cap ON term_cap.term_id = pm3.meta_value AND term_cap.meta_key = %s
         WHERE

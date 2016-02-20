@@ -15,7 +15,7 @@ class HB_Post_Types{
     function __construct(){
         add_action( 'init', array( $this, 'register_post_types' ) );
         add_action( 'init', array( $this, 'register_post_statues' ) );
-        add_action( 'init', array( $this, 'update_taxonomy' ) );
+        add_action( 'admin_init', array( $this, 'update_taxonomy' ) );
 
         add_action( 'admin_menu' , array( $this, 'remove_meta_boxes' ) );
         add_action( 'admin_head-edit-tags.php', array( $this, 'fix_menu_parent_file' ) );
@@ -57,7 +57,7 @@ class HB_Post_Types{
         add_filter( 'manage_hb_coupon_posts_columns' , array( $this, 'custom_coupon_columns' ) );
         add_action( 'manage_hb_coupon_posts_custom_column', array( $this, 'custom_coupon_columns_filter' ) );
 
-        add_action( 'delete_post', array( $this, 'delete_post_type' ) );
+        add_action( 'deleted_post', array( $this, 'delete_post_type' ) );
     }
 
     function custom_coupon_columns( $columns ){
@@ -851,13 +851,11 @@ class HB_Post_Types{
     }
 
     /**
-    *
-    */
+     *
+     **/
     function delete_post_type( $postID )
     {
-
-        global $post_type;
-
+        $post_type = get_post_type( $postID );
         $hb_post_type_delete = array(
                 'hb_room',
                 'hb_booking'
