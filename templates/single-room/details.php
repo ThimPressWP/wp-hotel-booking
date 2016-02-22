@@ -1,10 +1,14 @@
 <?php
     $room = HB_Room::instance(get_the_ID());
+    ob_start();
+    the_content();
+    $content = ob_get_clean();
+
     $tabsInfo = array();
     $tabsInfo[] = array(
             'id'        => 'hb_room_description',
             'title'     => __( 'Description', 'tp-hotel-booking' ),
-            'content'   => get_the_content()
+            'content'   => $content
         );
     $tabsInfo[] = array(
             'id'        => 'hb_room_additinal',
