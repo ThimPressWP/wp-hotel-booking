@@ -89,6 +89,11 @@ Yes.
 * Update calendar format
 * Update capacity( customer feedback ) + remove option + add term meta + search query + admin update capacity
 
+= 1.1.3 =
+* Update check-in, check-out filter
+* Query search
+* Update report customer delete post
+
 == Upgrade Notice ==
 
 = 1.0 =
