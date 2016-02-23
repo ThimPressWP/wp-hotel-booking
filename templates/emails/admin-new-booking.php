@@ -103,8 +103,8 @@ foreach( $_rooms as $id ){
                                     }
                                 ?>
                             </td>
-                            <td style="text-align: right;"><?php echo $room->check_in_date; ?></td>
-                            <td style="text-align: right;"><?php echo $room->check_out_date; ?></td>
+                            <td style="text-align: right;"><?php echo date_i18n( hb_get_date_format(), strtotime( $room->check_in_date ) ); ?></td>
+                            <td style="text-align: right;"><?php echo date_i18n( hb_get_date_format(), strtotime( $room->check_out_date ) ); ?></td>
                             <td style="text-align: right;">
                                 <?php
                                     echo hb_format_price( $room->get_total( $room->check_in_date, $room->check_out_date, $room->quantity, false ), $currency );

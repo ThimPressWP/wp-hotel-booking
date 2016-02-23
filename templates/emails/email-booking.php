@@ -75,8 +75,8 @@ foreach ( $cart_params as $key => $cart_item ) {
                 </td>
                 <td style="text-align: right;"><?php echo $room->quantity; ?></td>
                 <td style="text-align: right;"><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'tp-hotel-booking' ), $room->capacity ); ?> </td>
-                <td style="text-align: right;"><?php echo $room->get_data( 'check_in_date' ) ?></td>
-                <td style="text-align: right;"><?php echo $room->get_data( 'check_out_date' ) ?></td>
+                <td style="text-align: right;"><?php echo date_i18n( hb_date_format(), strtotime( $room->get_data( 'check_in_date' ) ) ) ?></td>
+                <td style="text-align: right;"><?php echo date_i18n( hb_date_format(), strtotime( $room->get_data( 'check_out_date' ) ) ) ?></td>
                 <td style="text-align: right;"><?php echo hb_count_nights_two_dates( $room->get_data( 'check_out_date' ), $room->get_data( 'check_in_date' ) ) ?></td>
                 <td style="text-align: right;">
                     <?php echo hb_format_price( $rooms[ $cart_id ]->amount_singular_exclude_tax, hb_get_currency_symbol( $booking->currency ) ); ?>

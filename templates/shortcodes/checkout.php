@@ -27,8 +27,8 @@ global $hb_settings;
                             <td class="hb_room_type"<?php echo defined( 'TP_HB_EXTRA' ) && $cart_extra ? ' rowspan="'. ( count( $cart_extra ) + 2 ) .'"' : ''  ?>><a href="<?php echo get_permalink( $room->ID ); ?>"><?php echo $room->name; ?><?php printf( '%s', $room->capacity_title ? ' ('.$room->capacity_title.')' : '' ); ?></a></td>
                             <td class="hb_capacity"><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'tp-hotel-booking' ), $room->capacity ); ?> </td>
                             <td class="hb_quantity"><?php echo $num_of_rooms; ?></td>
-                            <td class="hb_check_in"><?php echo $room->get_data( 'check_in_date' ) ?></td>
-                            <td class="hb_check_out"><?php echo $room->get_data( 'check_out_date' ) ?></td>
+                            <td class="hb_check_in"><?php echo date_i18n( hb_get_date_format(), strtotime( $room->get_data( 'check_in_date' ) ) ) ?></td>
+                            <td class="hb_check_out"><?php echo date_i18n( hb_get_date_format(), strtotime( $room->get_data( 'check_out_date' ) ) ) ?></td>
                             <td class="hb_night"><?php echo hb_count_nights_two_dates( $room->get_data( 'check_out_date' ), $room->get_data( 'check_in_date' ) ) ?></td>
                             <td class="hb_gross_total">
                                 <?php echo hb_format_price( $room->total ); ?>
