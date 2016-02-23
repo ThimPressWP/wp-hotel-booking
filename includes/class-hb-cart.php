@@ -626,7 +626,9 @@ class HB_Cart
                 '_hb_customer_id'               => $customer_id,
                 '_hb_method'                    => $payment_method->slug,
                 '_hb_method_title'              => $payment_method->title,
-                '_hb_method_id'                 => $payment_method->method_id
+                '_hb_method_id'                 => $payment_method->method_id,
+                '_hb_check_in_date'             => 0,
+                '_hb_check_out_date'            => 0,
             );
 
         // use coupon
@@ -646,13 +648,26 @@ class HB_Cart
         $rooms = $this->get_rooms();
         $_rooms = array();
         foreach ( $rooms as $k => $room ) {
+            $check_in = strtotime( $room->get_data( 'check_in_date' ) );
+            $check_out = strtotime( $room->get_data( 'check_out_date' ) );
             $_rooms[] = apply_filters( 'hb_generate_transaction_object_room', array(
                     '_hb_id'                => $room->ID,
                     '_hb_quantity'          => $room->get_data( 'quantity' ),
-                    '_hb_check_in_date'     => strtotime( $room->get_data( 'check_in_date' ) ),
-                    '_hb_check_out_date'    => strtotime( $room->get_data( 'check_out_date' ) ),
+                    '_hb_check_in_date'     => $check_in,
+                    '_hb_check_out_date'    => $check_out,
                     '_hb_sub_total'         => $room->amount_exclude_tax
                 ), $room );
+            if ( ! $trasnsaction->booking_info['_hb_check_in_date'] ) {
+                $trasnsaction->booking_info['_hb_check_in_date'] = $check_in;
+            } else if( $trasnsaction->booking_info['_hb_check_in_date'] < $check_in ) {
+                $trasnsaction->booking_info['_hb_check_in_date'] = $check_in;
+            }
+
+            if ( ! $trasnsaction->booking_info['_hb_check_out_date'] ) {
+                $trasnsaction->booking_info['_hb_check_out_date'] = $check_out;
+            } else if( $trasnsaction->booking_info['_hb_check_out_date'] > $check_out ) {
+                $trasnsaction->booking_info['_hb_check_out_date'] = $check_out;
+            }
         }
 
         $trasnsaction->rooms = $_rooms;

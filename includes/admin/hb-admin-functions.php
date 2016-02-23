@@ -444,8 +444,9 @@ function hb_booking_table_head( $default ) {
     unset($default['author']);
     unset($default['date']);
     $default['customer_name']   = __( 'Customer Name', 'tp-hotel-booking' );
-
     $default['booking_date']    = __( 'Booking Date', 'tp-hotel-booking' );
+    $default['check_in_date']    = __( 'Check in', 'tp-hotel-booking' );
+    $default['check_out_date']    = __( 'Check out', 'tp-hotel-booking' );
     $default['total']           = __( 'Total', 'tp-hotel-booking' );
     $default['title']           = __( 'ID', 'tp-hotel-booking' );
     $default['details']         = __( 'View Details', 'tp-hotel-booking' );
@@ -508,6 +509,16 @@ function hb_manage_booking_column( $column_name, $post_id ) {
             break;
         case 'booking_date':
             echo date( hb_get_date_format(), strtotime( get_post_field( 'post_date', $post_id ) ) );
+            break;
+        case 'check_in_date':
+            if ( $booking->check_in_date ) {
+                echo date( hb_get_date_format(), $booking->check_in_date );
+            }
+            break;
+        case 'check_out_date':
+            if( $booking->check_out_date ) {
+                echo date( hb_get_date_format(), $booking->check_out_date );
+            }
             break;
         case 'details':
             $echo[] = '<a href="'. admin_url('admin.php?page=hb_booking_details&id='. $post_id) . '">' . __( 'View', 'tp-hotel-booking' ) . '</a><br />';

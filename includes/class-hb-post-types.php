@@ -129,8 +129,8 @@ class HB_Post_Types{
 
     function posts_fields( $fields ){
         if( hb_get_request( 'post_type' ) == 'hb_booking' ) {
-            $from       = hb_get_request('date-from');
-            $to         = hb_get_request('date-to');
+            $from       = hb_get_request('date-from-timestamp');
+            $to         = hb_get_request('date-to-timestamp');
             $filter     = hb_get_request('filter-type');
             if( $from && $to && $filter == 'booking-date' ) {
                 $fields .= ", DATE_FORMAT(`post_date`,'%Y%m%d') AS post_date_timestamp";
@@ -169,8 +169,8 @@ class HB_Post_Types{
         }
 
         if( hb_get_request( 'post_type' ) == 'hb_booking' ){
-            $from   = hb_get_request( 'date-from' );
-            $to     = hb_get_request( 'date-to' );
+            $from   = hb_get_request( 'date-from-timestamp' );
+            $to     = hb_get_request( 'date-to-timestamp' );
             $filter = hb_get_request( 'filter-type' );
             if( $from && $to & $filter ){
                 switch( $filter ){
@@ -222,12 +222,12 @@ class HB_Post_Types{
         }
 
         if( hb_get_request( 'post_type' ) == 'hb_booking' ){
-            $from   = hb_get_request( 'date-from' );
-            $to     = hb_get_request( 'date-to' );
+            $from   = hb_get_request( 'date-from-timestamp' );
+            $to     = hb_get_request( 'date-to-timestamp' );
             $filter = hb_get_request( 'filter-type' );
             if( $from && $to & $filter ){
-                $from   = strtotime( $from );
-                $to     = strtotime( $to );
+                $from   = absint( $from );
+                $to     = absint( $to );
                 switch( $filter ){
                     case 'booking-date':
                         $from   = date( 'Ymd', $from );
@@ -261,14 +261,14 @@ class HB_Post_Types{
 
     function posts_orderby( $orderby ){
         if( hb_get_request( 'post_type' ) == 'hb_booking' ) {
-            $from = hb_get_request('date-from');
-            $to = hb_get_request('date-to');
+            $from = hb_get_request('date-from-timestamp');
+            $to = hb_get_request('date-to-timestamp');
             $filter = hb_get_request('filter-type');
             if ($from && $to & $filter) {
                 switch ($filter) {
                     case 'booking-date':
-                        $from = strtotime( $from );
-                        $to = strtotime( $to );
+                        $from = absint( $from );
+                        $to = absint( $to );
                         $orderby = "HAVING post_date_timestamp >= {$from} AND post_date_timestamp <= {$to} " . $orderby;
                 }
             }

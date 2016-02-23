@@ -242,7 +242,7 @@
                 var _self = $(this),
                     date = _self.datepicker( 'getDate' ),
                     timestamp = new Date( date ).getTime() / 1000 - ( new Date().getTimezoneOffset() * 60 );
-                _self.parent().find('input[name="date-from-timestamp"]').val( timestamp );
+                _self.parent().find('input[name="date-to-timestamp"]').val( timestamp );
                 $('#hb-booking-date-from').datepicker('option', 'maxDate', date)
             }
         });
