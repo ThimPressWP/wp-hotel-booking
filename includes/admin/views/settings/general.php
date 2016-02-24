@@ -99,7 +99,7 @@ $settings = hb_settings();
     <tr>
         <th><?php _e( 'Advance Payment', 'tp-hotel-booking' ); ?></th>
         <td>
-            <input type="number" class="regular-text" name="<?php echo $settings->get_field_name('advance_payment'); ?>" value="<?php echo $settings->get('advance_payment'); ?>" />%
+            <input type="number" class="regular-text" name="<?php echo $settings->get_field_name('advance_payment'); ?>" value="<?php echo (int)$settings->get('advance_payment'); ?>" />%
         </td>
     </tr>
     <?php do_action( 'hotel_booking_admin_setting_general' ) ?>
