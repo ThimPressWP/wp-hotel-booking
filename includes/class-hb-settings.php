@@ -144,7 +144,10 @@ class HB_Settings{
             if( preg_match( '!^' . $this->_option_prefix . '!', $k ) ) {
                 $option_key = preg_replace( '!^' . $this->_option_prefix . '!', '', $k );
                 if( ! $option_key ) continue;
-                $this->set( $option_key, $_POST[ $k ]);
+                if ( is_string( $v ) ) {
+                    $_POST[ $k ] = sanitize_text_field( $v );
+                }
+                $this->set( $option_key, $_POST[ $k ] );
             }
 
         }

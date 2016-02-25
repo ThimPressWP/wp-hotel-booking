@@ -158,7 +158,7 @@ class HB_Extra_Cart
 		if( ! isset( $_POST ) || ! defined( 'HB_BLOG_ID' ) )
 			return;
 
-		if( ! isset( $_POST['cart_id'] ) ) {
+		if( ! isset( $_POST['cart_id'] ) || ! $_POST['cart_id'] ) {
 			wp_send_json( array( 'status' => 'success', 'message' => __( 'Cart ID is not exists.', 'tp-hotel-booking' ) ) );
 		}
 

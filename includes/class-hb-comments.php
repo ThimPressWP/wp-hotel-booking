@@ -71,14 +71,14 @@ class HB_Comments{
             $rating = absint( sanitize_text_field( $_POST['rating'] ) );
             if ( $rating && $rating <= 5 && $rating > 0 ) {
                 // save comment rating
-                add_comment_meta( $comment_id, 'rating', absint( sanitize_text_field( $_POST['rating'] ) ), true );
+                add_comment_meta( $comment_id, 'rating', $rating, true );
 
                 if( $approved === 1 )
                 {
                     // save post meta arveger_rating
                     $comment = get_comment( $comment_id );
 
-                    $postID = $comment->comment_post_ID;
+                    $postID = absint( $comment->comment_post_ID );
 
                     $room = HB_Room::instance( $postID );
                     $averger_rating = $room->average_rating();
