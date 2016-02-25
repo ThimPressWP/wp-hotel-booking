@@ -377,10 +377,10 @@ class Hotel_Booking_Block
 	    $query = $wpdb->prepare("
 	        SELECT rooms.*, {$query_count_available} - {$query_count_not_available} as available_rooms, ($blocked) AS blocked
 	        FROM {$wpdb->posts} rooms
-	        INNER JOIN {$wpdb->postmeta} pm ON pm.post_id = rooms.ID AND pm.meta_key = %s
-	        INNER JOIN {$wpdb->postmeta} pm2 ON pm2.post_id = rooms.ID AND pm2.meta_key = %s
-	        INNER JOIN {$wpdb->postmeta} pm3 ON pm3.post_id = rooms.ID AND pm3.meta_key = %s
-	        INNER JOIN {$wpdb->termmeta} term_cap ON term_cap.term_id = pm3.meta_value AND term_cap.meta_key = %s
+	        LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = rooms.ID AND pm.meta_key = %s
+	        LEFT JOIN {$wpdb->postmeta} pm2 ON pm2.post_id = rooms.ID AND pm2.meta_key = %s
+	        LEFT JOIN {$wpdb->postmeta} pm3 ON pm3.post_id = rooms.ID AND pm3.meta_key = %s
+	        LEFT JOIN {$wpdb->termmeta} term_cap ON term_cap.term_id = pm3.meta_value AND term_cap.meta_key = %s
 	        WHERE
 	            rooms.post_type = %s
 	            AND rooms.post_status = %s
@@ -388,7 +388,8 @@ class Hotel_Booking_Block
             	AND ( term_cap.meta_value >= %d OR pm2.meta_value >= %d )
 	        GROUP BY rooms.ID
 	        HAVING ( available_rooms > 0 AND blocked = 0 )
-	    ", '_hb_max_child_per_room', '_hb_max_adults_per_room', 'hb_room', 'publish', $child, $adults );
+        	ORDER BY term_cap.meta_value DESC
+	    ", '_hb_max_child_per_room', '_hb_max_adults_per_room', '_hb_room_capacity', 'hb_max_number_of_adults', 'hb_room', 'publish', $child, $adults, $adults );
 
 		return $query;
 	}
