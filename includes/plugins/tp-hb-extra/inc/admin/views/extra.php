@@ -46,8 +46,8 @@ foreach ( $extra_types as $key => $value ) {
                     </div>
                     <div class="rooms">
                         <h4><?php _e( 'All Rooms', 'tp-hb-extra' ); ?></h4>
-                        <input type="hidden" name="<?php echo esc_attr( $field_name ); ?>[<?php echo $post->ID ?>][selected]" value="0"/>
-                        <input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>[<?php echo $post->ID ?>][selected]" value="1"<?php echo get_post_meta( $post->ID, 'tp_hb_extra_room_selected', true ) == 1 ? ' checked' : ''  ?>/>
+                        <input type="hidden" name="<?php echo esc_attr( $field_name ); ?>[<?php echo esc_attr( $post->ID ); ?>][selected]" value="0"/>
+                        <input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>[<?php echo esc_attr( $post->ID ) ?>][selected]" value="1"<?php echo get_post_meta( $post->ID, 'tp_hb_extra_room_selected', true ) == 1 ? ' checked' : ''  ?>/>
                     </div>
                     <div class="remove">
                         <a data-id="<?php echo esc_attr( $post->ID ); ?>" class="button remove_button"><?php esc_attr_e( 'Remove', 'tp-hb-extra' ); ?></a>

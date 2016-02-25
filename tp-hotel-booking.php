@@ -8,6 +8,10 @@
     Author URI: http://thimpress.com
 */
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
 define( 'HB_FILE', __FILE__ );
 define( 'HB_PLUGIN_PATH', dirname( __FILE__ ) );
 define( 'HB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
@@ -44,7 +48,9 @@ class TP_Hotel_Booking{
      * Construction
      */
     function __construct(){
-        if( self::$_instance ) return;
+        if( self::$_instance ) {
+            return self::$_instance;
+        }
         $this->includes();
 
         add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
@@ -53,7 +59,7 @@ class TP_Hotel_Booking{
         add_action( 'wp_print_scripts', array( $this, 'global_js' ) );
         add_action( 'template_redirect', 'hb_handle_purchase_request', 999 );
         add_action( 'widgets_init', array( $this, 'register_widgets' ) );
-        register_activation_hook( __FILE__, array( $this, 'install' ) );
+        register_activation_hook( plugin_basename( __FILE__ ), array( $this, 'install' ) );
         add_action( 'init', array( $this, 'init' ), 20 );
         // $this->install();
     }

@@ -13,9 +13,9 @@
 	<tr>
 		<th><?php _e( 'Enable', 'tp-hotel-booking-woocommerce' );?></th>
 		<td>
-			<input type="hidden" name="<?php echo $this->get_field_name( 'wc_enable' );?>" value="no" />
+			<input type="hidden" name="<?php echo esc_attr( $this->get_field_name( 'wc_enable' ) ); ?>" value="no" />
 			<label>
-				<input type="checkbox" name="<?php echo $this->get_field_name( 'wc_enable' );?>" <?php checked( HB_Settings::instance()->get( 'wc_enable' ) == 'yes' );?> value="yes" />
+				<input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'wc_enable' ) ); ?>" <?php checked( HB_Settings::instance()->get( 'wc_enable' ) == 'yes' );?> value="yes" />
 			</label>
 			<p class="description"><?php _e( 'Check this option to enable make booking payments via WooCommerce', 'tp-hotel-booking-woocommerce' );?></p>
 		</td>

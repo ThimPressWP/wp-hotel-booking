@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 $settings = apply_filters( 'tp_hotel_booking_addon_menus', array() );
 ?>
 

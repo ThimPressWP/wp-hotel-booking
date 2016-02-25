@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 class HB_Admin_Settings_Hook extends HB_Settings {
 
 	public function __construct()

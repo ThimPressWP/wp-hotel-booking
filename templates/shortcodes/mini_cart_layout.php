@@ -1,3 +1,10 @@
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
+?>
 <script type="text/html" id="tmpl-hb-minicart-item">
     <div class="hb_mini_cart_item active" data-cart-id="{{ data.cart_id }}">
 

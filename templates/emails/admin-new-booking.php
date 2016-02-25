@@ -49,7 +49,7 @@ foreach( $_rooms as $id ){
             <td class="bold-text">
                 <?php _e( 'Customer Name', 'tp-hotel-booking' ); ?>
             </td>
-            <td colspan="5" ><?php echo $customer_name; ?></td>
+            <td colspan="5" ><?php echo esc_html( $customer_name ); ?></td>
         </tr>
         <tr class="booking-table-row">
             <td class="bold-text"><?php _e( 'Total Nights', 'tp-hotel-booking' ); ?></td>
@@ -89,7 +89,7 @@ foreach( $_rooms as $id ){
                                     if( $terms ) echo " (", implode(', ', $room_types), ")";
                                 ?>
                             </td>
-                            <td style="text-align: right;"><?php echo $room->quantity; ?></td>
+                            <td style="text-align: right;"><?php echo esc_html( $room->quantity ); ?></td>
                             <td style="text-align: right;">
                                 <?php
                                     $cap_id = get_post_meta( $id, '_hb_room_capacity', true );

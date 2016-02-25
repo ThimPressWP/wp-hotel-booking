@@ -1,4 +1,11 @@
-<?php do_action( 'hb_before_search_result' ); ?>
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
+do_action( 'hb_before_search_result' );
+?>
 <?php
     global $hb_search_rooms;
 ?>

@@ -50,7 +50,7 @@ foreach ( $cart_params as $key => $cart_item ) {
             <td class="bold-text">
                 <?php _e( 'Customer Name', 'tp-hotel-booking' ); ?>
             </td>
-            <td colspan="6" ><?php echo $customer_name; ?></td>
+            <td colspan="6" ><?php echo esc_html( $customer_name ); ?></td>
         </tr>
         <tr class="booking-table-head">
             <td colspan="7">
@@ -71,9 +71,9 @@ foreach ( $cart_params as $key => $cart_item ) {
 
             <tr style="background-color: #FFFFFF;">
                 <td class="bold-text" rowspan="<?php echo array_key_exists( $cart_id, $child ) ? count( $child[ $cart_id ] ) + 2 : 1 ?>">
-                    <a href="<?php echo get_edit_post_link( $room->ID ); ?>"><?php echo $room->name; ?><?php printf( '%s', $room->capacity_title ? ' ('.$room->capacity_title.')' : '' ); ?></a>
+                    <a href="<?php echo get_edit_post_link( $room->ID ); ?>"><?php echo esc_html( $room->name ); ?><?php printf( '%s', $room->capacity_title ? ' ('.$room->capacity_title.')' : '' ); ?></a>
                 </td>
-                <td style="text-align: right;"><?php echo $room->quantity; ?></td>
+                <td style="text-align: right;"><?php echo esc_html( $room->quantity ); ?></td>
                 <td style="text-align: right;"><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'tp-hotel-booking' ), $room->capacity ); ?> </td>
                 <td style="text-align: right;"><?php echo date_i18n( hb_date_format(), strtotime( $room->get_data( 'check_in_date' ) ) ) ?></td>
                 <td style="text-align: right;"><?php echo date_i18n( hb_date_format(), strtotime( $room->get_data( 'check_out_date' ) ) ) ?></td>

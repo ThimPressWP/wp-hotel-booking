@@ -1,3 +1,10 @@
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
+?>
 <div class="hb-booking-room-details">
     <span class="hb_search_room_item_detail_price_close">
         <i class="fa fa-times"></i>

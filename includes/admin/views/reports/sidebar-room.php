@@ -1,4 +1,10 @@
-<?php $hb_report_room = HB_Report_Room::instance(); ?>
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
+$hb_report_room = HB_Report_Room::instance();
+?>
 <?php
 	$selected = array();
 	if( isset($_GET['room_id']) )

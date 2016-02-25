@@ -1,3 +1,10 @@
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
+?>
 <ul class="hb-search-results">
 	<?php
 		foreach( $results as $room ){

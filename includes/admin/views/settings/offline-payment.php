@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 $settings = HB_Settings::instance();
 $payment = $settings->get('offline-payment');
 $payment = wp_parse_args(
@@ -16,14 +20,14 @@ $field_name = $settings->get_field_name('offline-payment');
     <tr>
         <th><?php _e( 'Enable', 'tp-hotel-booking' ); ?></th>
         <td>
-            <input type="hidden" name="<?php echo $field_name; ?>[enable]" value="off" />
-            <input type="checkbox" name="<?php echo $field_name; ?>[enable]" <?php checked( $payment['enable'] == 'on' ? 1 : 0, 1 ); ?> value="on" />
+            <input type="hidden" name="<?php echo esc_attr( $field_name ); ?>[enable]" value="off" />
+            <input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>[enable]" <?php checked( $payment['enable'] == 'on' ? 1 : 0, 1 ); ?> value="on" />
         </td>
     </tr>
     <tr>
         <th><?php _e( 'Email Subject', 'tp-hotel-booking' ); ?></th>
         <td>
-            <input type="text" class="regular-text" name="<?php echo $field_name; ?>[email_subject]" value="<?php echo esc_attr( $payment['email_subject'] ); ?>" />
+            <input type="text" class="regular-text" name="<?php echo esc_attr( $field_name ); ?>[email_subject]" value="<?php echo esc_attr( $payment['email_subject'] ); ?>" />
         </td>
     </tr>
     <tr>
@@ -34,7 +38,7 @@ $field_name = $settings->get_field_name('offline-payment');
                 <?php _e( 'Place holder: ', 'tp-hotel-booking' ); ?>
                 {{site_name}}, {{customer_name}}, {{booking_details}}
             </p>
-        <textarea style="display: none;" name="<?php echo $field_name; ?>[email_content]"><?php echo $payment['email_content']; ?></textarea>
+        <textarea style="display: none;" name="<?php echo esc_attr( $field_name ); ?>[email_content]"><?php echo sprintf( '%s', $payment['email_content'] ); ?></textarea>
         </td>
     </tr>
 </table>

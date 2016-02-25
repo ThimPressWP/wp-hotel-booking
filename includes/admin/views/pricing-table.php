@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 $week_names = hb_date_names();
 
 $room_id = intval( hb_get_request( 'hb-room' ) );
@@ -37,11 +41,11 @@ $count_plants = count( $pricing_plans );
         <div class="hb-pricing-table regular-price clearfix">
             <h3 class="hb-pricing-table-title">
                 <span><?php _e( 'Regular price', 'tp-hotel-booking' ); ?></span>
-                <input type="text" class="datepicker" name="date-start[<?php echo $regular_plan ? $regular_plan->ID : '__INDEX__'; ?>]" size="10" readonly="readonly" />
-                <input type="hidden" name="date-start-timestamp[<?php echo $regular_plan ? $regular_plan->ID : '__INDEX__'; ?>]"/>
+                <input type="text" class="datepicker" name="date-start[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]" size="10" readonly="readonly" />
+                <input type="hidden" name="date-start-timestamp[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"/>
 
-                <input type="text" class="datepicker" name="date-end[<?php echo $regular_plan ? $regular_plan->ID : '__INDEX__'; ?>]" size="10" readonly="readonly" />
-                <input type="hidden" name="date-end-timestamp[<?php echo $regular_plan ? $regular_plan->ID : '__INDEX__'; ?>]"/>
+                <input type="text" class="datepicker" name="date-end[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]" size="10" readonly="readonly" />
+                <input type="hidden" name="date-end-timestamp[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"/>
             </h3>
             <div class="hb-pricing-controls">
                 <a href="" class="dashicons dashicons-edit" data-action="edit" title="<?php _e( 'Edit', 'tp-hotel-booking' ); ?>"></a>
@@ -60,20 +64,19 @@ $count_plants = count( $pricing_plans );
                     <thead>
                         <tr>
                             <?php for( $i = 0; $i < 7; $i++ ){?>
-                            <th><?php echo $week_names[ $i ]; ?></th>
+                            <th><?php echo esc_html( $week_names[ $i ] ); ?></th>
                             <?php } ?>
                         </tr>
                     </thead>
                     <tbody>
                         <?php if( $capacitiyID ):?>
                         <tr>
-                            <!-- <th><?php //echo $capacity->name; ?></th> -->
                             <?php for( $i = 0; $i < 7; $i++ ){?>
                                 <td>
                                     <?php
                                     $price = ! empty( $regular_prices[ $capacitiyID ][ $i ] ) ? $regular_prices[ $capacitiyID ][ $i ] : '';
                                     ?>
-                                    <input class="hb-pricing-price" type="text" name="price[<?php echo $regular_plan ? $regular_plan->ID : '__INDEX__'; ?>][<?php echo $capacitiyID; ?>][<?php echo $i; ?>]" value="<?php echo $price; ?>" size="10" readonly="readonly" />
+                                    <input class="hb-pricing-price" type="text" name="price[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>][<?php echo esc_attr( $capacitiyID ); ?>][<?php echo esc_attr( $i ); ?>]" value="<?php echo esc_attr( $price ); ?>" size="10" readonly="readonly" />
                                 </td>
                             <?php } ?>
                         </tr>
@@ -101,11 +104,11 @@ $count_plants = count( $pricing_plans );
             <div class="hb-pricing-table">
                 <h3 class="hb-pricing-table-title">
                     <span><?php _e( 'Date Range', 'tp-hotel-booking' ); ?></span>
-                    <input type="text" class="datepicker" name="date-start[<?php echo $plan->ID; ?>]" size="10" value="<?php echo $start_date; ?>" readonly="readonly" />
-                    <input type="hidden" name="date-start-timestamp[<?php echo $plan->ID; ?>]" value="<?php echo $start_date_timestamp; ?>" />
+                    <input type="text" class="datepicker" name="date-start[<?php echo esc_attr( $plan->ID ); ?>]" size="10" value="<?php echo esc_attr( $start_date ); ?>" readonly="readonly" />
+                    <input type="hidden" name="date-start-timestamp[<?php echo esc_attr( $plan->ID ); ?>]" value="<?php echo esc_attr( $start_date_timestamp ); ?>" />
 
-                    <input type="text" class="datepicker" name="date-end[<?php echo $plan->ID; ?>]" size="10" value="<?php echo $end_date; ?>" readonly="readonly" />
-                    <input type="hidden" name="date-end-timestamp[<?php echo $plan->ID; ?>]" value="<?php echo $end_date_timestamp; ?>" />
+                    <input type="text" class="datepicker" name="date-end[<?php echo esc_attr( $plan->ID ); ?>]" size="10" value="<?php echo esc_attr( $end_date ); ?>" readonly="readonly" />
+                    <input type="hidden" name="date-end-timestamp[<?php echo esc_attr( $plan->ID ); ?>]" value="<?php echo esc_attr( $end_date_timestamp ); ?>" />
                 </h3>
                 <div class="hb-pricing-controls">
                     <a href="" class="dashicons dashicons-edit" data-action="edit" title="<?php _e( 'Edit', 'tp-hotel-booking' ); ?>"></a>
@@ -117,9 +120,8 @@ $count_plants = count( $pricing_plans );
                     <table>
                         <thead>
                         <tr>
-                            <!-- <th><?php //_e( 'Capacity', 'tp-hotel-booking' ); ?></th> -->
                             <?php for( $i = 0; $i < 7; $i++ ){?>
-                                <th><?php echo $week_names[ $i ]; ?></th>
+                                <th><?php echo esc_html( $week_names[ $i ] ); ?></th>
                             <?php } ?>
                         </tr>
                         </thead>
@@ -127,11 +129,10 @@ $count_plants = count( $pricing_plans );
                         <?php if( $capacitiyID ):?>
                         <?php $capacity = get_term( $capacitiyID, 'hb_room_capacity' ) ?>
                             <tr>
-                                <!-- <th><?php //echo $capacity->name; ?></th> -->
                                 <?php for( $i = 0; $i < 7; $i++ ){?>
                                     <td>
                                         <?php $price = ! empty( $plan_prices[ $capacitiyID ] ) ? ( array_key_exists( $i, $plan_prices[ $capacitiyID ] ) ? $plan_prices[ $capacitiyID ][ $i ] : '' ) : ''; ?>
-                                        <input class="hb-pricing-price" type="text" name="price[<?php echo $plan->ID; ?>][<?php echo $capacitiyID; ?>][<?php echo $i; ?>]" value="<?php echo $price; ?>" size="10" readonly="readonly" />
+                                        <input class="hb-pricing-price" type="text" name="price[<?php echo esc_attr( $plan->ID ); ?>][<?php echo esc_attr( $capacitiyID ); ?>][<?php echo esc_attr( $i ); ?>]" value="<?php echo esc_attr( $price ); ?>" size="10" readonly="readonly" />
                                     </td>
                                 <?php } ?>
                             </tr>
@@ -182,7 +183,7 @@ $count_plants = count( $pricing_plans );
                 <thead>
                 <tr>
                     <?php for( $i = 0; $i < 7; $i++ ){?>
-                        <th><?php echo $week_names[ $i ]; ?></th>
+                        <th><?php echo esc_html( $week_names[ $i ] ); ?></th>
                     <?php } ?>
                 </tr>
                 </thead>
@@ -192,7 +193,7 @@ $count_plants = count( $pricing_plans );
                     <tr>
                         <?php for( $i = 0; $i < 7; $i++ ){?>
                             <td>
-                                <input class="hb-pricing-price" type="text" name="price[__INDEX__][<?php echo $capacitiyID; ?>][<?php echo $i; ?>]" value="" size="10" readonly="readonly" />
+                                <input class="hb-pricing-price" type="text" name="price[__INDEX__][<?php echo esc_attr( $capacitiyID ); ?>][<?php echo esc_attr( $i ); ?>]" value="" size="10" readonly="readonly" />
                             </td>
                         <?php } ?>
                     </tr>

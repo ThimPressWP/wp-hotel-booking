@@ -3,6 +3,10 @@
  * template extra admin cart
  * @since  1.1
  */
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 ?>
 <table class="hb-booking-table hb-table-width30">
     <thead>
@@ -18,7 +22,7 @@
                 <?php _e( 'Payment Gateway', 'tp-hotel-booking' ); ?>
             </th>
             <td>
-                <?php echo $booking->method_title; ?>
+                <?php echo esc_html( $booking->method_title ); ?>
             </td>
         </tr>
         <tr>

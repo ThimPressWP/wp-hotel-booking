@@ -93,8 +93,8 @@ class TP_Hotel_Booking_Coupon
 		    <tr>
 		        <th><?php _e( 'Enable Coupon', 'tp-hotel-booking' ); ?></th>
 		        <td>
-		            <input type="hidden" name="<?php echo $settings->get_field_name('enable_coupon'); ?>" value="0" />
-		            <input type="checkbox" name="<?php echo $settings->get_field_name('enable_coupon'); ?>" <?php checked( $settings->get('enable_coupon') ? 1 : 0, 1 ); ?> value="1" />
+		            <input type="hidden" name="<?php echo esc_attr( $settings->get_field_name('enable_coupon') ); ?>" value="0" />
+		            <input type="checkbox" name="<?php echo esc_attr( $settings->get_field_name('enable_coupon') ); ?>" <?php checked( $settings->get('enable_coupon') ? 1 : 0, 1 ); ?> value="1" />
 		        </td>
 		    </tr>
 	<?php

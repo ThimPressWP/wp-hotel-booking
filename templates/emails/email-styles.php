@@ -1,3 +1,10 @@
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
+?>
 <style>
     .booking-table{
         color: #444444;

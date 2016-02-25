@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 $tabs = hb_admin_settings_tabs();
 $selected_tab = ! empty( $_REQUEST['tab'] ) ? $_REQUEST['tab'] : '';
 
@@ -11,7 +15,7 @@ if( ! array_key_exists( $selected_tab, $tabs ) ){
     <h2><?php _e( 'TP Hotel Booking', 'tp-hotel-booking' ); ?></h2>
     <h2 class="nav-tab-wrapper">
     <?php if( $tabs ): foreach( $tabs as $slug => $title){?>
-        <a class="nav-tab<?php echo $selected_tab == $slug ? ' nav-tab-active' : ''; ?>" href="?page=tp_hotel_booking_settings&tab=<?php echo $slug; ?>"><?php echo $title; ?></a>
+        <a class="nav-tab<?php echo sprintf( '%s', $selected_tab == $slug ? ' nav-tab-active' : '' ); ?>" href="?page=tp_hotel_booking_settings&tab=<?php echo esc_attr( $slug ); ?>"><?php echo esc_html( $title ); ?></a>
     <?php } endif; ?>
     </h2>
     <form method="post" action="" enctype="multipart/form-data" name="hb-admin-settings-form">

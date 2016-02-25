@@ -1,3 +1,10 @@
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
+?>
 <div class="hb-order-existing-customer" data-label="-Or-">
     <div class="hb-col-padding hb-col-border">
         <h4><?php _e( 'Existing customer?', 'tp-hotel-booking' ); ?></h4>

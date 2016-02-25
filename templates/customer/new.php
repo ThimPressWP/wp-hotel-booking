@@ -1,4 +1,9 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
 $title                = '';
 $first_name           = '';
 $last_name            = '';
@@ -58,8 +63,8 @@ if ( $email = TP_Hotel_Booking::instance()->cart->customer_email ) {
 					<span class="hb-required">*</span></label>
 
 				<div class="hb-form-field-input">
-					<input type="text" name="first_name" value="<?php echo $first_name; ?>" placeholder="<?php _e( 'First name', 'tp-hotel-booking' ); ?>" />
-					<input type="text" name="last_name" value="<?php echo $last_name; ?>" placeholder="<?php _e( 'Last name', 'tp-hotel-booking' ); ?>" />
+					<input type="text" name="first_name" value="<?php echo esc_attr( $first_name ); ?>" placeholder="<?php _e( 'First name', 'tp-hotel-booking' ); ?>" />
+					<input type="text" name="last_name" value="<?php echo esc_attr( $last_name ); ?>" placeholder="<?php _e( 'Last name', 'tp-hotel-booking' ); ?>" />
 				</div>
 			</li>
 			<li class="hb-form-field">
@@ -67,7 +72,7 @@ if ( $email = TP_Hotel_Booking::instance()->cart->customer_email ) {
 					<span class="hb-required">*</span></label>
 
 				<div class="hb-form-field-input">
-					<input type="text" name="address" value="<?php echo $address; ?>" placeholder="<?php _e( 'Address', 'tp-hotel-booking' ); ?>" />
+					<input type="text" name="address" value="<?php echo esc_attr( $address ); ?>" placeholder="<?php _e( 'Address', 'tp-hotel-booking' ); ?>" />
 				</div>
 			</li>
 			<li class="hb-form-field">
@@ -75,7 +80,7 @@ if ( $email = TP_Hotel_Booking::instance()->cart->customer_email ) {
 					<span class="hb-required">*</span></label>
 
 				<div class="hb-form-field-input">
-					<input type="text" name="city" value="<?php echo $city; ?>" placeholder="<?php _e( 'City', 'tp-hotel-booking' ); ?>" />
+					<input type="text" name="city" value="<?php echo esc_attr( $city ); ?>" placeholder="<?php _e( 'City', 'tp-hotel-booking' ); ?>" />
 				</div>
 			</li>
 			<li class="hb-form-field">
@@ -83,7 +88,7 @@ if ( $email = TP_Hotel_Booking::instance()->cart->customer_email ) {
 					<span class="hb-required">*</span></label>
 
 				<div class="hb-form-field-input">
-					<input type="text" name="state" value="<?php echo $state; ?>" placeholder="<?php _e( 'State', 'tp-hotel-booking' ); ?>" />
+					<input type="text" name="state" value="<?php echo esc_attr( $state ); ?>" placeholder="<?php _e( 'State', 'tp-hotel-booking' ); ?>" />
 				</div>
 			</li>
 		</ul>
@@ -93,7 +98,7 @@ if ( $email = TP_Hotel_Booking::instance()->cart->customer_email ) {
 					<span class="hb-required">*</span></label>
 
 				<div class="hb-form-field-input">
-					<input type="text" name="postal_code" value="<?php echo $postal_code; ?>" placeholder="<?php _e( 'Postal code', 'tp-hotel-booking' ); ?>" />
+					<input type="text" name="postal_code" value="<?php echo esc_attr( $postal_code ); ?>" placeholder="<?php _e( 'Postal code', 'tp-hotel-booking' ); ?>" />
 				</div>
 			</li>
 			<li class="hb-form-field">
@@ -102,7 +107,6 @@ if ( $email = TP_Hotel_Booking::instance()->cart->customer_email ) {
 
 				<div class="hb-form-field-input">
 					<?php hb_dropdown_countries( array( 'name' => 'country', 'show_option_none' => __( 'Country', 'tp-hotel-booking' ), 'selected' => $country ) ); ?>
-					<!-- <input type="text" name="country" value="<?php //echo $country; ?>" placeholder="<?php //_e( 'Country', 'tp-hotel-booking' ); ?>" />-->
 				</div>
 			</li>
 			<li class="hb-form-field">
@@ -110,7 +114,7 @@ if ( $email = TP_Hotel_Booking::instance()->cart->customer_email ) {
 					<span class="hb-required">*</span></label>
 
 				<div class="hb-form-field-input">
-					<input type="text" name="phone" value="<?php echo $phone; ?>" placeholder="<?php _e( 'Phone Number', 'tp-hotel-booking' ); ?>" />
+					<input type="text" name="phone" value="<?php echo esc_attr( $phone ); ?>" placeholder="<?php _e( 'Phone Number', 'tp-hotel-booking' ); ?>" />
 				</div>
 			</li>
 			<li class="hb-form-field">
@@ -118,14 +122,14 @@ if ( $email = TP_Hotel_Booking::instance()->cart->customer_email ) {
 					<span class="hb-required">*</span></label>
 
 				<div class="hb-form-field-input">
-					<input type="email" name="email" value="<?php echo $email; ?>" placeholder="<?php _e( 'Email address', 'tp-hotel-booking' ); ?>" />
+					<input type="email" name="email" value="<?php echo esc_attr( $email ); ?>" placeholder="<?php _e( 'Email address', 'tp-hotel-booking' ); ?>" />
 				</div>
 			</li>
 			<li class="hb-form-field">
 				<label class="hb-form-field-label"><?php _e( 'Fax', 'tp-hotel-booking' ); ?></label>
 
 				<div class="hb-form-field-input">
-					<input type="text" name="fax" value="<?php echo $fax; ?>" placeholder="<?php _e( 'Fax', 'tp-hotel-booking' ); ?>" />
+					<input type="text" name="fax" value="<?php echo esc_attr( $fax ); ?>" placeholder="<?php _e( 'Fax', 'tp-hotel-booking' ); ?>" />
 				</div>
 			</li>
 		</ul>

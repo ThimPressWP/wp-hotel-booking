@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 /**
  * Class HB_Comments
  *
@@ -144,7 +148,7 @@ class HB_Comments{
                 {
                     $html = __( 'No rating', 'tp-hotel-booking' );
                 }
-                echo $html;
+                echo sprintf( '%s', $html );
             break;
         }
     }

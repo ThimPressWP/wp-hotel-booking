@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 if ( ! defined( 'TP_HOTEL_COUPON' ) ) {
     define( 'TP_HOTEL_COUPON', true );
 }

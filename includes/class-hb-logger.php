@@ -1,14 +1,19 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 /**
  * Allows log files to be written to for debugging purposes.
  *
- * @class 		WC_Logger
+ * @class 		HB_Logger
  * @version		0.9
  * @package		WooCommerce/Classes
  * @category	Class
  * @author 		WooThemes
  */
-class WC_Logger {
+class HB_Logger {
 
     /**
      * @var array Stores open file _handles.
@@ -46,7 +51,7 @@ class WC_Logger {
             return true;
         }
 
-        if ( $this->_handles[ $handle ] = @fopen( wc_get_log_file_path( $handle ), 'a' ) ) {
+        if ( $this->_handles[ $handle ] = @fopen( hb_get_log_file_path( $handle ), 'a' ) ) {
             return true;
         }
 
@@ -66,7 +71,7 @@ class WC_Logger {
             @fwrite( $this->_handles[ $handle ], $time . " " . $message . "\n" );
         }
 
-        do_action( 'woocommerce_log_add', $handle, $message );
+        do_action( 'hotel_booking_log_add', $handle, $message );
     }
 
 
@@ -80,7 +85,7 @@ class WC_Logger {
             @ftruncate( $this->_handles[ $handle ], 0 );
         }
 
-        do_action( 'woocommerce_log_clear', $handle );
+        do_action( 'hotel_booking_log_clear', $handle );
     }
 
 }

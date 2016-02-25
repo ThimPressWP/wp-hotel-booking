@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 class HB_Admin_Menu{
     function __construct(){
         add_action( 'admin_menu', array( $this, 'register' ) );

@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 $settings = HB_Settings::instance();
 $field_name = $settings->get_field_name('lightbox');
 $lightbox = $settings->get('lightbox');
@@ -14,10 +18,10 @@ $lightboxs = hb_get_support_lightboxs();
     <tr>
         <th><?php _e( 'Lightbox', 'tp-hotel-booking' ); ?></th>
         <td>
-            <select name="<?php echo $field_name; ?>[lightbox]">
+            <select name="<?php echo esc_attr( $field_name ); ?>[lightbox]">
                 <option value=""><?php _e( 'None', 'tp-hotel-booking' ); ?></option>
                 <?php if( $lightboxs ): foreach( $lightboxs as $slug => $name ){?>
-                <option value="<?php echo $slug; ?>" <?php selected( $slug == $lightbox['lightbox']); ?>><?php echo $name; ?></option>
+                <option value="<?php echo esc_attr( $slug ); ?>" <?php selected( $slug == $lightbox['lightbox']); ?>><?php echo esc_html( $name ); ?></option>
                 <?php } endif; ?>
             </select>
         </td>

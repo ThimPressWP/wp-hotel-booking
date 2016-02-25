@@ -30,7 +30,7 @@ class HB_Widget_Cart extends WP_Widget{
      */
     public function widget( $args, $instance )
     {
-        echo $args['before_widget'];
+        echo sprintf( '%s', $args['before_widget'] );
         $html = array();
         if( $instance )
         {
@@ -43,7 +43,7 @@ class HB_Widget_Cart extends WP_Widget{
             $html[] = '][/hotel_booking_mini_cart]';
         }
         echo do_shortcode( implode(' ', $html) );
-        echo $args['after_widget'];
+        echo sprintf( '%s', $args['after_widget'] );
     }
 
     /**
@@ -56,8 +56,8 @@ class HB_Widget_Cart extends WP_Widget{
         $number = ! empty( $instance['number'] ) ? $instance['number'] : 5;
         ?>
         <p>
-            <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'tp-hotel-booking' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+            <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Title:', 'tp-hotel-booking' ); ?></label>
+            <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
         </p>
         <?php
     }

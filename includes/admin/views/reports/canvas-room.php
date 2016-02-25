@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit; // Exit if accessed directly
+    }
+
 	$hb_report = HB_Report_Room::instance();
 ?>
 <h3 class="chart_title"><?php _e( 'Report Chart Room Unavailable', 'tp-hotel-booking' ) ?></h3>

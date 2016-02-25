@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 class HB_Product_Room_Base extends HB_Product_Abstract
 {
 	public $quantity = 1;
