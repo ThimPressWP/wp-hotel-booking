@@ -103,9 +103,6 @@ class HB_Ajax {
 	 * Catch variables via post method and build a request param
 	 */
 	static function parse_search_params() {
-		/*if ( ! hb_get_request( 'nonce', $_POST ) || ! wp_verify_nonce( hb_get_request( 'nonce', $_POST ), 'hb_search_nonce_action' ) ) {
-			hb_send_json( array( 'success' => 0, 'message' => __( 'Invalid request', 'tp-hotel-booking' ) ) );
-		}*/
 		check_ajax_referer( 'hb_search_nonce_action', 'nonce' );
 		$params = array(
 			'hotel-booking'  	=> hb_get_request( 'hotel-booking' ),
@@ -168,9 +165,6 @@ class HB_Ajax {
 	}
 
 	static function parse_booking_params() {
-		/*if ( ! hb_get_request( 'nonce', $_POST ) || ! wp_verify_nonce( hb_get_request( 'nonce', $_POST ), 'hb_booking_nonce_action' ) ) {
-			hb_send_json( array( 'success' => 0, 'message' => __( 'Invalid request', 'tp-hotel-booking' ) ) );
-		}*/
 
 		check_ajax_referer( 'hb_booking_nonce_action', 'nonce' );
 
@@ -198,7 +192,7 @@ class HB_Ajax {
 		if ( ! check_ajax_referer( 'hb_booking_nonce_action', 'nonce' ) )
 			return;
 
-		if ( ! isset( $_POST['room-id'] ) || !isset( $_POST['hb-num-of-rooms'] ) )
+		if ( ! isset( $_POST['room-id'] ) || ! isset( $_POST['hb-num-of-rooms'] ) )
 			hb_send_json( array( 'status' => 'warning', 'message' => __( 'Room ID is not exists.', 'tp-hotel-booking' ) ) );
 
 		if ( ! isset( $_POST['check_in_date'] ) || ! isset( $_POST['check_out_date'] ) )
@@ -207,13 +201,13 @@ class HB_Ajax {
 		$product_id = absint( $_POST['room-id'] );
 		$param = array();
 		$param[ 'product_id' ] = sanitize_text_field( $product_id );
-		if( ! isset( $_POST['hb-num-of-rooms'] ) )
+		if( ! isset( $_POST['hb-num-of-rooms'] ) || ! absint( sanitize_text_field( $_POST['hb-num-of-rooms'] ) ) )
 		{
 			hb_send_json( array( 'status' => 'warning', 'message' => __( 'Can not select zero room.', 'tp-hotel-booking' ) ) );
 		}
 		else
 		{
-			$qty = (int) sanitize_text_field( $_POST['hb-num-of-rooms'] );
+			$qty = absint( sanitize_text_field( sanitize_text_field( $_POST['hb-num-of-rooms'] ) ) );
 		}
 
 		// validate checkin, checkout date
@@ -267,12 +261,12 @@ class HB_Ajax {
 			return;
 
 		$cart = TP_Hotel_Booking::instance()->cart;
-		if( $cart->cart_contents && ! isset( $_POST['cart_id'] ) || ! array_key_exists( $_POST['cart_id'], $cart->cart_contents ) )
+		if( $cart->cart_contents && ! isset( $_POST['cart_id'] ) || ! array_key_exists( sanitize_text_field( $_POST['cart_id'] ), $cart->cart_contents ) )
 		{
 			hb_send_json( array( 'status' => 'warning', 'message' => __( 'Cart item is not exists.', 'tp-hotel-booking' ) ) );
 		}
 
-		if( $cart->remove_cart_item( $_POST['cart_id'] ) )
+		if( $cart->remove_cart_item( sanitize_text_field( $_POST['cart_id'] ) ) )
 		{
 			$return = apply_filters( 'hotel_booking_ajax_remove_cart_item', array(
 				'status'          => 'success',

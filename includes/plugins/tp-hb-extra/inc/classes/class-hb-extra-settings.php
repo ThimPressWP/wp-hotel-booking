@@ -45,7 +45,7 @@ class HB_Extra_Settings
 
 		$post_type = HB_Extra_Post_Type::instance();
 
-		foreach ( $_POST[ TP_HB_OPTION_NAME ] as $post_id => $post) {
+		foreach ( (array)$_POST[ TP_HB_OPTION_NAME ] as $post_id => $post) {
 			$post_type->add_extra( $post_id, $post );
 		}
 

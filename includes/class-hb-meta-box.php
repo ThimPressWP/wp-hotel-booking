@@ -172,11 +172,11 @@ class HB_Meta_Box{
      * @param int
      */
     function update( $post_id ){
-        if ( ! isset( $_POST[ $this->get_nonce_field_name() ] ) || ! wp_verify_nonce( $_POST[ $this->get_nonce_field_name() ], $this->get_nonce_field_action() ) ) return;
+        if ( ! isset( $_POST[ $this->get_nonce_field_name() ] ) || ! wp_verify_nonce( sanitize_text_field( $_POST[ $this->get_nonce_field_name() ] ), $this->get_nonce_field_action() ) ) return;
         if( ! $this->_fields ) return;
 
         foreach( $this->_fields as $field ){
-            if( array_key_exists( $this->_args['meta_key_prefix'] . $field['name'], $_POST ) ) {
+            if( array_key_exists( $this->_args['meta_key_prefix'] . $field['name'], (array)$_POST ) ) {
                 $meta_value = $_POST[$this->_args['meta_key_prefix'] . $field['name']];
                 $meta_value = apply_filters( 'hb_meta_box_update_meta_value', $meta_value, $field['name'], $this->_args['name'], $post_id );
                 update_post_meta($post_id, $this->_args['meta_key_prefix'] . $field['name'], $meta_value );

@@ -606,15 +606,15 @@ function hb_booking_filter( $query ){
     global $pagenow;
     $type = 'post';
     if (isset($_GET['post_type'])) {
-        $type = $_GET['post_type'];
+        $type = sanitize_text_field( $_GET['post_type'] );
     }
     if ( 'hb_booking' == $type && is_admin() && $pagenow =='edit.php' && isset($_GET['filter_by_checkin_date']) && $_GET['filter_by_checkin_date'] != '') {
         $query->query_vars['meta_key'] = '_hb_check_in_date';
-        $query->query_vars['meta_value'] = $_GET['filter_by_checkin_date'];
+        $query->query_vars['meta_value'] = sanitize_text_field( $_GET['filter_by_checkin_date'] );
     }
     if ( 'hb_booking' == $type && is_admin() && $pagenow=='edit.php' && isset($_GET['filter_by_checkout_date']) && $_GET['filter_by_checkout_date'] != '') {
         //$query->query_vars['meta_key'] = '_hb_check_out_date';
-        //$query->query_vars['meta_value'] = $_GET['filter_by_checkout_date'];
+        //$query->query_vars['meta_value'] = sanitize_text_field( $_GET['filter_by_checkout_date'] );
     }
 }
 
@@ -694,7 +694,7 @@ function hb_booking_custormer_filter( $query ){
     global $pagenow;
     if ( isset( $_GET['post_type']) && 'hb_booking' == $_GET['post_type'] && is_admin() && $pagenow=='edit.php' && isset($_GET['customer_id']) && $_GET['customer_id'] != '') {
         $query->query_vars['meta_key'] = '_hb_customer_id';
-        $query->query_vars['meta_value'] = $_GET['customer_id'];
+        $query->query_vars['meta_value'] = absint( sanitize_text_field( $_GET['customer_id'] ) );
     }
 }
 
@@ -719,16 +719,16 @@ function hb_delete_pricing_plan( $ids ){
 }
 
 function hb_update_pricing_plan(){
-    if ( ! isset( $_POST['hb-update-pricing-plan-field'] ) || ! wp_verify_nonce( $_POST['hb-update-pricing-plan-field'], 'hb-update-pricing-plan' ) ){
+    if ( ! isset( $_POST['hb-update-pricing-plan-field'] ) || ! wp_verify_nonce( sanitize_text_field( $_POST['hb-update-pricing-plan-field'] ), 'hb-update-pricing-plan' ) ){
         return;
     }
     if( ! empty( $_POST['price'] ) ){
         $loop = 0;
         $post_ids = array();
-        foreach( $_POST['price'] as $t => $v ){
-            $start  = $_POST['date-start'][ $t ];
-            $end    = $_POST['date-end'][ $t ];
-            $prices = $_POST['price'][ $t ];
+        foreach( (array)$_POST['price'] as $t => $v ){
+            $start  = sanitize_text_field( $_POST['date-start'][ $t ] );
+            $end    = sanitize_text_field( $_POST['date-end'][ $t ] );
+            $prices = sanitize_text_field( $_POST['price'][ $t ] );
             if( $t > 0 ) {
                 $post_id = intval( $t );
             } else {
@@ -747,10 +747,10 @@ function hb_update_pricing_plan(){
                 update_post_meta( $post_id, '_hb_pricing_plan_room', $_POST['hb-room'] );
 
                 if ( ! empty( $_POST['date-start-timestamp'] ) && isset( $_POST['date-start-timestamp'][$t] ) ) {
-                    update_post_meta( $post_id, '_hb_pricing_plan_start_timestamp', $_POST['date-start-timestamp'][$t] + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
+                    update_post_meta( $post_id, '_hb_pricing_plan_start_timestamp', absint( sanitize_text_field( $_POST['date-start-timestamp'][$t] ) ) + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
                 }
                 if ( ! empty( $_POST['date-end-timestamp'] ) && isset( $_POST['date-end-timestamp'][$t] ) ) {
-                    update_post_meta( $post_id, '_hb_pricing_plan_end_timestamp', $_POST['date-end-timestamp'][$t] + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
+                    update_post_meta( $post_id, '_hb_pricing_plan_end_timestamp', absint( sanitize_text_field( $_POST['date-end-timestamp'][$t] ) ) + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
                 }
             }
             $post_ids[] = $post_id;
@@ -989,12 +989,12 @@ if ( ! function_exists( 'hb_update_meta_box_booking_status' ) )
         if( ! isset($_POST['_hb_booking_status']) || ! $_POST['_hb_booking_status'] )
             return;
 
-        $status = $_POST['_hb_booking_status'];
+        $status = sanitize_text_field( $_POST['_hb_booking_status'] );
 
         remove_action( 'save_post', 'hb_update_meta_box_booking_status' );
 
         $book = HB_Booking::instance( $post );
-        $book->update_status( $_POST['_hb_booking_status'] );
+        $book->update_status( $status );
 
         add_action( 'save_post', 'hb_update_meta_box_booking_status' );
     }

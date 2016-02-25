@@ -152,7 +152,7 @@ class HB_Product_Room_Base extends HB_Product_Abstract
                         $attachment_id = array_shift($gallery);
                         $return = wp_get_attachment_image( $attachment_id, 'thumbnail' );
                     } else {
-                        $return = '<img src="'.HB_PLUGIN_URL . '/includes/libraries/carousel/default.png'.'" alt="'.$this->post->post_title.'"/>';
+                        $return = '<img src="'.esc_url( HB_PLUGIN_URL . '/includes/libraries/carousel/default.png' ).'" alt="'.$this->post->post_title.'"/>';
                     }
                 }
                 break;
@@ -592,11 +592,11 @@ class HB_Product_Room_Base extends HB_Product_Abstract
         {
             if( is_array($image) )
             {
-                echo sprintf('<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', $image[0], $image[1], $image[2], $alt);
+                echo sprintf('<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', esc_url( $image[0] ), esc_attr( $image[1] ), esc_attr( $image[2] ), esc_attr( $alt ) );
             }
             else
             {
-                sprintf('<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', $image, $w, $h, $alt);
+                sprintf('<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', esc_url( $image ), esc_attr( $w ), esc_attr( $h ), esc_attr( $alt ) );
             }
         }
         else
@@ -623,11 +623,11 @@ class HB_Product_Room_Base extends HB_Product_Abstract
         {
             if( is_array($image) )
             {
-                echo sprintf('<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', $image[0], $image[1], $image[2], $alt);
+                echo sprintf('<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', esc_url( $image[0] ), esc_attr( $image[1] ), esc_attr( $image[2] ), esc_attr( $alt ) );
             }
             else
             {
-                sprintf('<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', $image, $w, $h, $alt);
+                sprintf('<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', esc_url( $image ), esc_attr( $w ), esc_attr( $h ), esc_attr( $alt ) );
             }
         }
         else

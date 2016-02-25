@@ -155,7 +155,7 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base{
     {
         if( ! empty( $_GET['hb-order-pay'] ) &&
             ! empty( $_GET['hb-order-pay-nonce'] ) &&
-            wp_verify_nonce( $_GET['hb-order-pay-nonce'], 'hb-order-pay-nonce' ) )
+            wp_verify_nonce( sanitize_text_field( $_GET['hb-order-pay-nonce'] ), 'hb-order-pay-nonce' ) )
         {
             $tpl = 'order-pay.php';
         }
@@ -175,7 +175,7 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base{
     {
         if( ! empty( $_GET['hb-order-pay'] ) &&
             ! empty( $_GET['hb-order-pay-nonce'] ) &&
-            wp_verify_nonce( $_GET['hb-order-pay-nonce'], 'hb-order-pay-nonce' ) )
+            wp_verify_nonce( sanitize_text_field( $_GET['hb-order-pay-nonce'] ), 'hb-order-pay-nonce' ) )
         {
             $args = array( 'booking_id' => absint( $_GET['hb-order-pay'] ) );
         }
@@ -191,7 +191,7 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base{
     {
         if( empty( $_GET['hb-order-pay'] ) ||
             empty( $_GET['hb-order-pay-nonce'] ) ||
-            ! wp_verify_nonce( $_GET['hb-order-pay-nonce'], 'hb-order-pay-nonce' ) )
+            ! wp_verify_nonce( sanitize_text_field( $_GET['hb-order-pay-nonce'] ), 'hb-order-pay-nonce' ) )
             return;
 
         $book_id = absint( $_GET['hb-order-pay'] );

@@ -24,26 +24,16 @@ class HB_Post_Types{
         add_action( 'admin_menu' , array( $this, 'remove_meta_boxes' ) );
         add_action( 'admin_head-edit-tags.php', array( $this, 'fix_menu_parent_file' ) );
 
-        //add_action( 'hb_room_type_edit_form_fields', array( $this, 'taxonomy_custom_fields' ), 10, 2 );
-        //add_action( 'hb_room_capacity_edit_form_fields', array( $this, 'taxonomy_custom_fields' ), 10, 2 );
-
         // add_filter( 'manage_edit-hb_room_type_columns', array( $this, 'taxonomy_columns' ) );
         add_filter( 'manage_edit-hb_room_capacity_columns', array( $this, 'taxonomy_columns' ) );
 
         // add_filter( 'manage_hb_room_type_custom_column', array( $this, 'taxonomy_column_content' ), 10, 3 );
         add_filter( 'manage_hb_room_capacity_custom_column', array( $this, 'taxonomy_column_content' ), 10, 3 );
 
-        // unknow
-        // add_action( 'edited_hb_room_type', array( $this, 'update_taxonomy_custom_fields' ), 10 );
-        // add_action( 'edited_hb_room_capacity', array( $this, 'update_taxonomy_custom_fields' ), 10 );
-
         add_action( 'delete_term_taxonomy', array( $this, 'delete_term_data' ) );
 
         add_filter( 'manage_hb_room_posts_columns', array( $this, 'custom_room_columns' ) );
         add_action( 'manage_hb_room_posts_custom_column', array( $this, 'custom_room_columns_filter' ) );
-
-        //add_action( 'hb_room_type_add_form_fields', array( $this, 'room_type_more_fields' ), 10, 2 );
-        // add_action( 'hb_room_type_edit_form_fields', array( $this, 'room_type_more_fields' ), 10, 2 );
 
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
@@ -51,9 +41,7 @@ class HB_Post_Types{
 
         add_filter( 'posts_fields', array( $this, 'posts_fields' ) );
         add_filter( 'posts_join_paged', array( $this, 'posts_join_paged' ) );
-        //add_filter( 'posts_where_paged', array( $this, 'posts_where_paged' ) );
         add_filter( 'posts_where' , array( $this, 'posts_where_paged' ), 999 );
-        //add_filter( 'posts_orderby' , array( $this, 'posts_orderby' ) );
 
         add_filter( 'get_terms_orderby', array( $this, 'terms_orderby' ), 100, 3 );
         add_filter( 'get_terms_args', array( $this, 'terms_args' ), 100, 2 );
@@ -263,23 +251,6 @@ class HB_Post_Types{
         return $where;
     }
 
-    function posts_orderby( $orderby ){
-        if( hb_get_request( 'post_type' ) == 'hb_booking' ) {
-            $from = hb_get_request('date-from-timestamp');
-            $to = hb_get_request('date-to-timestamp');
-            $filter = hb_get_request('filter-type');
-            if ($from && $to & $filter) {
-                switch ($filter) {
-                    case 'booking-date':
-                        $from = absint( $from );
-                        $to = absint( $to );
-                        $orderby = "HAVING post_date_timestamp >= {$from} AND post_date_timestamp <= {$to} " . $orderby;
-                }
-            }
-        }
-        return $orderby;
-    }
-
     function is_search( $type ){
         global $post_type;
         if( $post_type == "hb_{$type}" && $s = hb_get_request( 's' ) ){
@@ -299,53 +270,6 @@ class HB_Post_Types{
             wp_enqueue_style( 'hb-edit-tags', TP_Hotel_Booking::instance()->plugin_url( 'includes/assets/css/edit-tags.min.css' ) );
             wp_enqueue_script( 'hb-edit-tags', TP_Hotel_Booking::instance()->plugin_url( 'includes/assets/js/edit-tags.min.js' ), array( 'jquery', 'jquery-ui-sortable' ) );
         }
-    }
-
-    /**
-     * Add more fields to taxonomy screen
-     *
-     * @param $term
-     * @param $term_name
-     */
-    function room_type_more_fields( $term, $term_name ) {
-        $attachment_ids = get_option( 'hb_taxonomy_thumbnail_' . $term->term_id );
-        ?>
-        <tr class="form-field" id="room-gallery-<?php echo esc_attr( $term->term_id ); ?>">
-            <th scope="row" valign="top"><label for="term_meta[custom_term_meta]"><?php _e( 'Gallery', 'tp-hotel-booking' ); ?></label></th>
-            <td>
-                <div class="hb-room-gallery">
-                    <ul>
-                        <?php if( $attachment_ids ): foreach( $attachment_ids as $attachment_id ){?>
-                        <?php
-                            $attachment = wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
-                            if( ! $attachment ) continue;
-                            ?>
-                        <li class="attachment">
-                            <div class="attachment-preview">
-                                <div class="thumbnail">
-                                    <div class="centered">
-                                        <img src="<?php echo esc_attr( $attachment[0] ); ?>" alt="">
-                                        <input type="hidden" name="hb-gallery[<?php echo esc_attr( $term->term_id ); ?>][gallery][]" value="<?php echo esc_attr( $attachment_id ); ?>" />
-                                    </div>
-                                </div>
-                            </div>
-                            <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'tp-hotel-booking' ); ?>"></a>
-                        </li>
-                        <?php } ?>
-                        <?php endif; ?>
-                        <li class="attachment add-new">
-                            <div class="attachment-preview">
-                                <div class="thumbnail">
-                                    <div class="dashicons-plus dashicons">
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </td>
-        </tr>
-    <?php
     }
 
     /**
@@ -430,7 +354,7 @@ class HB_Post_Types{
                 $ids = array();
                 foreach( $_POST[ "{$taxonomy}_ordering" ] as $term_id => $ordering ){
                     $when[] = "WHEN term_id = {$term_id} THEN {$ordering}";
-                    $ids[] = $term_id;
+                    $ids[] = absint( $term_id );
                 }
 
                 $query = sprintf("
@@ -444,10 +368,10 @@ class HB_Post_Types{
             }
 
             if( ! empty( $_POST[ "{$taxonomy}_capacity" ] ) ){
-                foreach( $_POST[ "{$taxonomy}_capacity" ] as $term_id => $capacity ) {
+                foreach( (array)$_POST[ "{$taxonomy}_capacity" ] as $term_id => $capacity ) {
                     if( $capacity ) {
                         // update_option( 'hb_taxonomy_capacity_' . $term_id, $capacity );
-                        update_term_meta( $term_id, 'hb_max_number_of_adults', $capacity );
+                        update_term_meta( $term_id, 'hb_max_number_of_adults', absint( sanitize_text_field( $capacity ) ) );
                     } else {
                         // delete_option( 'hb_taxonomy_capacity_' . $term_id );
                         delete_term_meta( $term_id, 'hb_max_number_of_adults' );
@@ -461,29 +385,6 @@ class HB_Post_Types{
 
     function delete_term_data( $term_id ) {
         delete_option( 'hb_taxonomy_thumbnail_' . $term_id );
-    }
-
-    function taxonomy_custom_fields( $term ) {
-        ?>
-        <tr class="form-field">
-            <th scope="row" valign="top">
-                <?php _e( 'Ordering', 'tp-hotel-booking' ); ?>
-            </th>
-            <td>
-                <input type="text" class="regular-text" name="tp_hotel_booking[ordering]" value="<?php echo esc_attr( $term->term_order ? $term->term_order : '' ); ?>" />
-                <p></p>
-            </td>
-        </tr>
-
-    <?php
-    }
-
-    function update_taxonomy_custom_fields( $term_id ) {
-        if ( isset( $_POST['tp_hotel_booking'] ) ) {
-            foreach ( $_POST['tp_hotel_booking'] as $key => $term_meta ){
-                //update_option("hb_room_type_{$term_id}_{$key}", $term_meta);
-            }
-        }
     }
 
     function taxonomy_columns( $columns ){

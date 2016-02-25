@@ -15,8 +15,8 @@ $gallery = $room->gallery;
 ?>
 <div class="hb-room-type-gallery">
     <?php if( $gallery ): foreach( $gallery as $image ){?>
-        <a  class="hb-room-gallery" data-fancybox-group="hb-room-gallery-<?php echo esc_attr( $room->post->ID ); ?>" data-lightbox="hb-room-gallery[<?php echo esc_attr( $room->post->ID ); ?>]" data-title="<?php echo esc_attr( $image['alt'] ); ?>" href="<?php echo esc_attr( $image['src'] ); ?>">
-            <img src="<?php echo esc_attr( $image['thumb'] ); ?>" alt="<?php echo esc_attr( $image['alt'] ); ?>" data-id="<?php echo esc_attr( $image['id'] ); ?>" />
+        <a  class="hb-room-gallery" data-fancybox-group="hb-room-gallery-<?php echo esc_attr( $room->post->ID ); ?>" data-lightbox="hb-room-gallery[<?php echo esc_attr( $room->post->ID ); ?>]" data-title="<?php echo esc_attr( $image['alt'] ); ?>" href="<?php echo esc_url( $image['src'] ); ?>">
+            <img src="<?php echo esc_url( $image['thumb'] ); ?>" alt="<?php echo esc_attr( $image['alt'] ); ?>" data-id="<?php echo esc_attr( $image['id'] ); ?>" />
         </a>
     <?php } endif; ?>
 </div>

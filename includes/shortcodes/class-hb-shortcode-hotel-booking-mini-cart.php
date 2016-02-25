@@ -21,7 +21,7 @@ class HB_Shortcode_Hotel_Booking_Mini_Cart extends HB_Shortcodes
         <div id="hotel_booking_mini_cart_<?php echo uniqid() ?>" class="hotel_booking_mini_cart">
             <?php if( isset($atts['title']) && $atts['title'] ): ?>
 
-                <h3><?php echo $atts['title'] ?></h3>
+                <h3><?php echo esc_html( $atts['title'] ); ?></h3>
 
             <?php endif; ?>
 

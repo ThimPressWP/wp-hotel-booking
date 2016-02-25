@@ -12,7 +12,7 @@ $payment_gateways = hb_get_payment_gateways();
     <ul class="hb-admin-sub-tab subsubsub">
         <?php foreach( $payment_gateways as $gateway ){ ?>
         <li<?php echo sprintf( '%s', $i++ == 0 ? ' class="current"' : '' ); ?>>
-            <a href="#hb-payment-gateway-<?php echo $gateway->slug; ?>"><?php echo esc_html( $gateway->title ); ?></a>
+            <a href="#hb-payment-gateway-<?php echo esc_attr( $gateway->slug ); ?>"><?php echo esc_html( $gateway->title ); ?></a>
         </li>
             <?php echo sprintf( '%s', $i < $count ? '&nbsp;|&nbsp;' : '' ); ?>
         <?php } ?>

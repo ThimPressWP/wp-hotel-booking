@@ -508,10 +508,10 @@ class HB_Cart
         if( ! isset( $_POST['hotel_booking_cart'] ) )
             return;
 
-        if( ! isset($_POST['hb_cart_field']) || ! wp_verify_nonce( $_POST['hb_cart_field'], 'hb_cart_field' ) )
+        if( ! isset($_POST['hb_cart_field']) || ! wp_verify_nonce( sanitize_text_field( $_POST['hb_cart_field'] ), 'hb_cart_field' ) )
             return;
 
-        $cart_number = $_POST['hotel_booking_cart'];
+        $cart_number = (array)$_POST['hotel_booking_cart'];
         $cart_contents = $this->cart_contents;
         foreach ( $cart_number as $cart_id => $qty ) {
             // if not in array keys $cart_contents
@@ -535,7 +535,7 @@ class HB_Cart
             }
         }
 
-        do_action( 'hotel_booking_cart_update', $_POST );
+        do_action( 'hotel_booking_cart_update', (array)$_POST );
         //refresh
         $this->refresh();
         return;

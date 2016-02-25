@@ -50,7 +50,7 @@ class HB_SW_Curreny
 		$storage = HB_SW_Curreny_Storage::instance();
 
 		if( isset( $_GET['currency'] ) && $_GET['currency'] )
-			$storage->set( 'currency', $_GET['currency'] );
+			$storage->set( 'currency', sanitize_text_field( $_GET['currency'] ) );
 	}
 
 	/**

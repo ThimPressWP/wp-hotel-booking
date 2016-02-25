@@ -25,7 +25,7 @@ $email_options = apply_filters(
         <ul class="hb-admin-sub-tab subsubsub">
             <?php foreach( $email_options as $slug => $name ){ ?>
                 <li<?php echo sprintf( '%s', $i++ == 0 ? ' class="current"' : '' ); ?>>
-                    <a href="#hb-email-<?php echo esc_attr( $slug ); ?>-settings"><?php echo $name; ?></a>
+                    <a href="#hb-email-<?php echo esc_attr( $slug ); ?>-settings"><?php echo esc_html( $name ); ?></a>
                 </li>
                 <?php echo sprintf( '%s', $i < $count ? '&nbsp;|&nbsp;' : '' ); ?>
             <?php } ?>

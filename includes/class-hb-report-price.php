@@ -314,7 +314,7 @@ class HB_Report_Price extends HB_Report
 			return;
 
 		if( ! isset( $_POST['tp-hotel-booking-report-export'] ) ||
-			! wp_verify_nonce( $_POST['tp-hotel-booking-report-export'], 'tp-hotel-booking-report-export' ) )
+			! wp_verify_nonce( sanitize_text_field( $_POST['tp-hotel-booking-report-export'] ), 'tp-hotel-booking-report-export' ) )
 			return;
 
 		if( ! isset( $_POST['tab'] ) || sanitize_file_name( $_POST['tab'] ) !== $this->_chart_type )
@@ -398,7 +398,7 @@ class HB_Report_Price extends HB_Report
 			$range = '7day';
 
 		if( ! $range && isset( $_GET['range'] ) )
-			$range = $_GET['range'];
+			$range = sanitize_text_field( $_GET['range'] );
 
 		if( ! empty( self::$_instance[ $range ] ) )
 			return self::$_instance[ $range ];

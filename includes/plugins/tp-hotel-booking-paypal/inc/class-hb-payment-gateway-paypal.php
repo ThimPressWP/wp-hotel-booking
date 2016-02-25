@@ -114,7 +114,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
             exit();
             // if we have a paypal-nonce in $_REQUEST that meaning user has clicked go back to our site after finished the transaction
             // so, create a new order
-            if( ! empty( $_REQUEST['paypal-nonce'] ) && wp_verify_nonce( $_REQUEST['paypal-nonce'], 'hb-paypal-nonce' )  ) {
+            if( ! empty( $_REQUEST['paypal-nonce'] ) && wp_verify_nonce( sanitize_text_field( $_REQUEST['paypal-nonce'] ), 'hb-paypal-nonce' )  ) {
                 if ( !empty( $_REQUEST['tx'] ) ) //if PDT is enabled
                     $transaction_id = $_REQUEST['tx'];
                 else if ( !empty( $_REQUEST['txn_id'] ) ) //if PDT is not enabled
