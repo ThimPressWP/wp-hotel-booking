@@ -99,7 +99,7 @@
 						<input type="text" id="tp-hotel-report-checkout" name="report_out" value="<?php echo isset( $_REQUEST['report_out'] ) ? esc_attr($_REQUEST['report_out'] ) : ''; ?>" />
 						<input type="hidden" name="report_out_timestamp" value="<?php echo isset( $_REQUEST['report_out_timestamp'] ) ? esc_attr($_REQUEST['report_out_timestamp'] ) : ''; ?>" />
 						<?php if( isset($_GET['room_id']) && $_GET['room_id'] ): ?>
-							<?php foreach( $_GET['room_id'] as $key => $room ): ?>
+							<?php foreach( (array)$_GET['room_id'] as $key => $room ): ?>
 								<input type="hidden" name="room_id[]" value="<?php echo esc_attr( $room ) ?>">
 							<?php endforeach; ?>
 						<?php endif; ?>

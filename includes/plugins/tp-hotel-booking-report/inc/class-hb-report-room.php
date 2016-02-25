@@ -40,7 +40,7 @@ class HB_Report_Room extends HB_Report
 			$this->_chart_type = sanitize_text_field( $_GET['tab'] );
 
 		if( isset( $_GET['room_id'] ) && $_GET['room_id'] )
-			$this->_rooms = $_GET['room_id'];
+			$this->_rooms = (array)$_GET['room_id'];
 
 		if( ! $this->_rooms )
 			return;
@@ -408,7 +408,7 @@ class HB_Report_Room extends HB_Report
 		if( ! isset( $_POST ) ) return;
 
 		if( ! isset( $_POST['tp-hotel-booking-report-export'] ) ||
-			! wp_verify_nonce( $_POST['tp-hotel-booking-report-export'], 'tp-hotel-booking-report-export' ) )
+			! wp_verify_nonce( sanitize_text_field( $_POST['tp-hotel-booking-report-export'] ), 'tp-hotel-booking-report-export' ) )
 			return;
 
 		if( ! isset( $_POST['tab'] ) || sanitize_file_name( $_POST['tab'] ) !== $this->_chart_type )
@@ -535,7 +535,7 @@ class HB_Report_Room extends HB_Report
 			$range = '7day';
 
 		if( ! $range && isset( $_GET['range'] ) )
-			$range = $_GET['range'];
+			$range = sanitize_text_field( $_GET['range'] );
 
 		if( ! empty( self::$_instance[ $range ] ) )
 			return self::$_instance[ $range ];

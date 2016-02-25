@@ -14,7 +14,7 @@ class HB_Admin_Menu{
 
     function parent_file( $parent_file ){
         global $submenu_file;
-        if (isset($_GET['page']) && $_GET['page'] == 'hb_booking_details') $submenu_file = 'edit.php?post_type=hb_booking';
+        if ( isset($_GET['page']) && sanitize_text_field( $_GET['page'] ) == 'hb_booking_details') $submenu_file = 'edit.php?post_type=hb_booking';
 
         return $parent_file;
     }

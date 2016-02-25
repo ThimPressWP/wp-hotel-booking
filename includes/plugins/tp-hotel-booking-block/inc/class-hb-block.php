@@ -388,7 +388,7 @@ class Hotel_Booking_Block
             	AND ( term_cap.meta_value >= %d OR pm2.meta_value >= %d )
 	        GROUP BY rooms.ID
 	        HAVING ( available_rooms > 0 AND blocked = 0 )
-	    ", '_hb_max_child_per_room', '_hb_max_adults_per_room', 'hb_room', 'publish', $max_child, $adults );
+	    ", '_hb_max_child_per_room', '_hb_max_adults_per_room', 'hb_room', 'publish', $child, $adults );
 
 		return $query;
 	}

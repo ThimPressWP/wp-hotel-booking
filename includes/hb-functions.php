@@ -40,10 +40,12 @@ function hb_get_capacity_of_rooms() {
 			if ( ! $qty ) {
 				get_option( 'hb_taxonomy_capacity_' . $term->term_id );
 			}
-			$return[$qty] = array(
-					'value'	=> $term->term_id,
-					'text'	=> $qty
-				);
+			if ( $qty ) {
+				$return[$qty] = array(
+						'value'	=> $term->term_id,
+						'text'	=> $qty
+					);
+			}
 		}
 	}
 	ksort( $return );
@@ -241,8 +243,10 @@ function hb_get_child_per_room() {
  */
 function hb_get_max_child_of_rooms() {
 	$rows = hb_get_child_per_room();
-	sort($rows);
-	return $rows ? end( $rows ) : - 1;
+	if ( $rows ) {
+		sort($rows);
+		return $rows ? end( $rows ) : - 1;
+	}
 }
 
 /**
@@ -290,9 +294,9 @@ function hb_parse_request() {
 		$params = maybe_unserialize( base64_decode( $params ) );
 		if ( $params ) {
 			foreach ( $params as $k => $v ) {
-				$_GET[$k]     = $v;
-				$_POST[$k]    = $v;
-				$_REQUEST[$k] = $v;
+				$_GET[$k]     = sanitize_text_field( $v );
+				$_POST[$k]    = sanitize_text_field( $v );
+				$_REQUEST[$k] = sanitize_text_field( $v );
 			}
 		}
 		if ( isset( $_GET['hotel-booking-params'] ) ) unset( $_GET['hotel-booking-params'] );
@@ -392,6 +396,9 @@ function hb_get_request( $name, $default = null, $var = '' ) {
 	}
 	if ( ! empty( $var[$name] ) ) {
 		$return = $var[$name];
+	}
+	if ( is_string( $return ) ) {
+		$return = sanitize_text_field( $return );
 	}
 	return $return;
 }
@@ -1156,7 +1163,7 @@ function hb_search_rooms( $args = array() ) {
     global $hb_settings;
     $total = count($results);
     $posts_per_page = (int)apply_filters( 'hb_number_search_results', $hb_settings->get( 'posts_per_page', 8 ) );
-    $page = isset( $_GET['hb_page'] ) ? abs( (int) $_GET['hb_page'] ) : 1;
+    $page = isset( $_GET['hb_page'] ) ? absint( $_GET['hb_page'] ) : 1;
     $offset = ( $page * $posts_per_page ) - $posts_per_page;
     $max_num_pages = ceil($total / $posts_per_page);
 

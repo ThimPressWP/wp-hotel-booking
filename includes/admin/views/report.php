@@ -71,17 +71,17 @@
 			<!-- <a href="<?php //echo admin_url( 'admin.php?page=tp_hotel_booking_report&action=export' ) ?>" class="export_csv"><?php //_e( 'Export CSV', 'tp-hotel-booking' ) ?></a> -->
 			<!--export-->
 			<form id="tp-hotel-booking-export" method="POST">
-				<input type="hidden" name="page" value="<?php echo isset($_REQUEST['page']) ? esc_attr($_REQUEST['page']) : '' ?>" >
-				<input type="hidden" name="range" value="<?php echo isset($_REQUEST['range']) ? esc_attr($_REQUEST['range']) : '7day' ?>" >
+				<input type="hidden" name="page" value="<?php echo isset($_REQUEST['page']) ? esc_attr( sanitize_text_field( $_REQUEST['page'] ) ) : '' ?>" >
+				<input type="hidden" name="range" value="<?php echo isset($_REQUEST['range']) ? esc_attr( sanitize_text_field( $_REQUEST['range'] ) ) : '7day' ?>" >
 				<input type="hidden" name="tab" value="<?php echo isset($_REQUEST['tab']) ? esc_attr($_REQUEST['tab']) : 'price' ?>" >
 				<?php if( isset($_REQUEST['report_in']) ): ?>
-					<input type="hidden" name="report_in" value="<?php echo isset($_REQUEST['report_in']) ? esc_attr($_REQUEST['report_in']) : '' ?>" >
+					<input type="hidden" name="report_in" value="<?php echo isset($_REQUEST['report_in']) ? esc_attr( sanitize_text_field( $_REQUEST['report_in'] ) ) : '' ?>" >
 				<?php endif; ?>
-				<input type="hidden" name="report_in_timestamp" value="<?php echo isset($_REQUEST['report_in_timestamp']) ? esc_attr($_REQUEST['report_in_timestamp']) : '' ?>" >
+				<input type="hidden" name="report_in_timestamp" value="<?php echo isset($_REQUEST['report_in_timestamp']) ? esc_attr( sanitize_text_field( $_REQUEST['report_in_timestamp'] ) ) : '' ?>" >
 				<?php if( isset($_REQUEST['report_out']) ): ?>
-					<input type="hidden" name="report_out" value="<?php echo isset($_REQUEST['report_out']) ? esc_attr($_REQUEST['report_out']) : '' ?>" >
+					<input type="hidden" name="report_out" value="<?php echo isset($_REQUEST['report_out']) ? esc_attr( sanitize_text_field( $_REQUEST['report_out'] ) ) : '' ?>" >
 				<?php endif; ?>
-				<input type="hidden" name="report_out_timestamp" value="<?php echo isset($_REQUEST['report_out_timestamp']) ? esc_attr($_REQUEST['report_out_timestamp']) : '' ?>" >
+				<input type="hidden" name="report_out_timestamp" value="<?php echo isset($_REQUEST['report_out_timestamp']) ? esc_attr( sanitize_text_field( $_REQUEST['report_out_timestamp'] ) ) : '' ?>" >
 				<?php wp_nonce_field( 'tp-hotel-booking-report-export', 'tp-hotel-booking-report-export' ) ?>
 				<button type="submit"><?php _e( 'Export', 'tp-hotel-booking' ) ?></button>
 			</form>
@@ -96,15 +96,15 @@
 				<li>
 					<form method="GET">
 						<input type="hidden" name="page" value="<?php echo esc_attr( $_REQUEST['page'] ); ?>" />
-						<input type="hidden" name="tab" value="<?php echo sprintf( '%s', isset($_REQUEST['tab']) ? $_REQUEST['tab'] : 'price' ) ?>" />
+						<input type="hidden" name="tab" value="<?php echo sprintf( '%s', isset($_REQUEST['tab']) ? sanitize_text_field( $_REQUEST['tab'] ) : 'price' ) ?>" />
 						<input type="hidden" name="range" value="custom" />
-						<input type="text" id="tp-hotel-report-checkin" name="report_in" value="<?php echo isset( $_REQUEST['report_in'] ) ? esc_attr($_REQUEST['report_in'] ) : ''; ?>" />
-						<input type="text" id="tp-hotel-report-checkout" name="report_out" value="<?php echo isset( $_REQUEST['report_out'] ) ? esc_attr($_REQUEST['report_out'] ) : ''; ?>" />
-						<input type="hidden" name="report_in_timestamp" value="<?php echo isset($_REQUEST['report_in_timestamp']) ? esc_attr($_REQUEST['report_in_timestamp']) : '' ?>" >
-						<input type="hidden" name="report_out_timestamp" value="<?php echo isset($_REQUEST['report_out_timestamp']) ? esc_attr($_REQUEST['report_out_timestamp']) : '' ?>" >
-						<?php if( isset($_GET['room_id']) && $_GET['room_id'] ): ?>
+						<input type="text" id="tp-hotel-report-checkin" name="report_in" value="<?php echo isset( $_REQUEST['report_in'] ) ? esc_attr( sanitize_text_field( $_REQUEST['report_in'] ) ) : ''; ?>" />
+						<input type="text" id="tp-hotel-report-checkout" name="report_out" value="<?php echo isset( $_REQUEST['report_out'] ) ? esc_attr( sanitize_text_field( $_REQUEST['report_out'] ) ) : ''; ?>" />
+						<input type="hidden" name="report_in_timestamp" value="<?php echo isset($_REQUEST['report_in_timestamp']) ? esc_attr( sanitize_text_field( $_REQUEST['report_in_timestamp'] ) ) : '' ?>" >
+						<input type="hidden" name="report_out_timestamp" value="<?php echo isset($_REQUEST['report_out_timestamp']) ? esc_attr( sanitize_text_field( $_REQUEST['report_out_timestamp'] ) ) : '' ?>" >
+						<?php if( isset( $_GET['room_id'] ) && $_GET['room_id'] ): ?>
 							<?php foreach( $_GET['room_id'] as $key => $room ): ?>
-								<input type="hidden" name="room_id[]" value="<?php echo esc_attr( $room ) ?>">
+								<input type="hidden" name="room_id[]" value="<?php echo esc_attr( sanitize_text_field( $room ) ) ?>">
 							<?php endforeach; ?>
 						<?php endif; ?>
 						<?php wp_nonce_field( 'tp-hotel-booking-report', 'tp-hotel-booking-report' ); ?>

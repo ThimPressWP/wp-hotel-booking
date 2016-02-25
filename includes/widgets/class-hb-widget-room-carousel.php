@@ -88,7 +88,7 @@ class HB_Widget_Room_Carousel extends WP_Widget{
             <label for="<?php echo esc_attr( $this->get_field_id( 'pagination' ) ); ?>0"><?php _e('No', 'tp-hotel-booking') ?></label>
         </p>
         <p>
-            <label for="<?php echo $this->get_field_id( 'text_link' ); ?>"><?php _e('Text Link', 'tp-hotel-booking') ?></label>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'text_link' ) ); ?>"><?php _e('Text Link', 'tp-hotel-booking') ?></label>
             <input id="<?php echo esc_attr( $this->get_field_id( 'text_link' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'text_link' ) ); ?>" type="text" value="<?php echo esc_attr($text_link); ?>">
         </p>
         <?php

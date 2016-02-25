@@ -133,7 +133,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
             {
                 $params = array(
                         'description'   => sprintf( '%s %s', __( 'Donor for', 'tp-donate' ), get_post_meta( $customer, '_hb_email', true ) ),
-                        'source'        => $_POST['id'] // token get by stripe.js
+                        'source'        => sanitize_text_field( $_POST['id'] ) // token get by stripe.js
                     );
                 $response = $this->stripe_request( $params, 'customers' );
 
