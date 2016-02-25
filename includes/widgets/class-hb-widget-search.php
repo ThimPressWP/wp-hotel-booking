@@ -29,9 +29,9 @@ class HB_Widget_Search extends WP_Widget{
      * @return void
      */
     public function widget( $args, $instance ) {
-        echo $args['before_widget'];
+        echo sprintf( '%s', $args['before_widget'] );
         if ( $title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base ) ) {
-            echo $args['before_title'] . $title . $args['after_title'];
+            echo sprintf( '%s', $args['before_title'] . $title . $args['after_title'] );
         }
         $search = hb_get_page_permalink( 'search' );
 
@@ -41,10 +41,11 @@ class HB_Widget_Search extends WP_Widget{
             $show_title = $instance['show_title'];
         // check show label search form
         $show_label = 'true';
-        if( isset($instance['show_label']) )
+        if( isset($instance['show_label']) ) {
             $show_label = $instance['show_label'];
+        }
         echo do_shortcode('[hotel_booking search_page="' . $search . '" show_title="'.$show_title.'" show_label="'.$show_label.'"]');
-        echo $args['after_widget'];
+        echo sprintf( '%s', $args['after_widget'] );
     }
 
     /**
@@ -59,17 +60,17 @@ class HB_Widget_Search extends WP_Widget{
         <p>
             <?php $title_id = $this->get_field_id( 'title' ); ?>
             <label for="<?php echo esc_attr($title_id); ?>"><?php _e( 'Title:', 'tp-hotel-booking' ); ?></label>
-            <input class="widefat" id="<?php echo esc_attr($title_id); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+            <input class="widefat" id="<?php echo esc_attr($title_id); ?>" name="<?php echo esc_html( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
         </p>
         <!--show title, label form-->
         <p>
             <?php $title_id = $this->get_field_id( 'show_title' ); ?>
-            <input type="checkbox" id="<?php echo esc_attr($title_id); ?>" name="<?php echo esc_attr($this->get_field_name( 'show_title' )); ?>" value="true"<?php echo $checked_title; ?>>
+            <input type="checkbox" id="<?php echo esc_attr($title_id); ?>" name="<?php echo esc_attr($this->get_field_name( 'show_title' )); ?>" value="true"<?php printf( '%s', $checked_title ); ?>>
             <label for="<?php echo esc_attr($title_id); ?>"><?php _e( 'Show title search form', 'tp-hotel-booking' ) ?></label>
         </p>
         <p>
             <?php $label_id = $this->get_field_id( 'show_label' ); ?>
-            <input type="checkbox" id="<?php echo esc_attr($label_id); ?>" name="<?php echo esc_attr($this->get_field_name( 'show_label' )); ?>" value="true"<?php echo $checked_label; ?>>
+            <input type="checkbox" id="<?php echo esc_attr($label_id); ?>" name="<?php echo esc_attr($this->get_field_name( 'show_label' )); ?>" value="true"<?php printf( '%s', $checked_label ); ?>>
             <label for="<?php echo esc_attr($label_id); ?>"><?php _e( 'Show label search form', 'tp-hotel-booking' ) ?></label>
         </p>
         <?php

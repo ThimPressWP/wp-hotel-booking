@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 function hb_get_max_capacity_of_rooms() {
 	static $max = null;
 	if ( ! is_null( $max ) ) {
@@ -73,7 +77,7 @@ function hb_dropdown_room_capacities( $args = array() ) {
 
 	$output = ob_get_clean();
 	if ( $args['echo'] ) {
-		echo $output;
+		echo sprintf( '%s', $output );
 	}
 	return $output;
 }
@@ -107,7 +111,7 @@ function hb_dropdown_room_types( $args = array() ) {
 	$output = ob_get_clean();
 
 	if ( $args['echo'] ) {
-		echo $output;
+		echo sprintf( '%s', $output );
 	}
 	return $output;
 }
@@ -263,7 +267,7 @@ function hb_dropdown_child_per_room( $args = array() ) {
 		}
 	}
 	$output .= '</select>';
-	echo $output;
+	echo sprintf( '%s', $output );
 }
 
 /**
@@ -474,7 +478,7 @@ function hb_dropdown_titles( $args = array() ) {
 	}
 	$output .= '</select>';
 	if ( $echo ) {
-		echo $output;
+		echo sprintf( '%s', $output );
 	}
 	return $output;
 }
@@ -720,7 +724,7 @@ function hb_dropdown_numbers( $args = array() ) {
 
 	$output .= '</select>';
 	if ( $echo ) {
-		echo $output;
+		echo sprintf( '%s', $output );
 	}
 	return $output;
 }
@@ -1305,8 +1309,9 @@ function hb_format_order_number( $order_number ) {
 
 function hb_get_support_lightboxs() {
 	$lightboxs = array(
-		'lightbox2' => 'Lightbox 2',
-		'fancyBox'  => 'fancyBox'
+		'lightbox2' => 'Lightbox 2'
+		// ,
+		// 'fancyBox'  => 'fancyBox'
 	);
 	return apply_filters( 'hb_lightboxs', $lightboxs );
 }

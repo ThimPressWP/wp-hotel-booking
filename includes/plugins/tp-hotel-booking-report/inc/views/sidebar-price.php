@@ -4,9 +4,9 @@
 ?>
 <ul class="chart-legend">
 	<?php foreach ( $sidebarInfo as $key => $mote ): ?>
-		<li style="border-color: <?php echo hb_random_color() ?>">
-			<span><b><?php echo $mote['title'] ?></b></span>
-			<p class="amount"><?php echo $mote['descr'] ?></p>
+		<li style="border-color: <?php echo esc_attr( hb_random_color() ); ?>">
+			<span><b><?php echo esc_html( $mote['title'] ); ?></b></span>
+			<p class="amount"><?php echo sprintf( '%s', $mote['descr'] ) ?></p>
 		</li>
 	<?php endforeach; ?>
 </ul>

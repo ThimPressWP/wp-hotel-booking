@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 $field = wp_parse_args(
     $field,
     array(
@@ -36,9 +40,9 @@ if( isset( $field['multiple'] ) &&  $field['multiple'] === true )
         }
     ?>
         <?php if( $multiple == false ): ?>
-            <option value="<?php echo $option['value']; ?>" <?php selected( ! empty( $value ) && $value == $option['value'] ? 1 : 0, 1); ?>><?php echo $option['text']; ?></option>
+            <option value="<?php echo esc_attr( $option['value'] ); ?>" <?php selected( ! empty( $value ) && $value == $option['value'] ? 1 : 0, 1); ?>><?php echo esc_html( $option['text'] ); ?></option>
         <?php else: ?>
-            <option value="<?php echo $option['value']; ?>"<?php echo is_array($value) && in_array( $option['value'], $value) ? ' selected' : '' ?>><?php echo $option['text']; ?></option>
+            <option value="<?php echo esc_attr( $option['value'] ); ?>"<?php echo is_array($value) && in_array( $option['value'], $value) ? ' selected' : '' ?>><?php echo esc_html( $option['text'] ); ?></option>
         <?php endif; ?>
     <?php } ?>
 </select>

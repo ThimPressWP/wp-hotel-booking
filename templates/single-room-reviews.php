@@ -6,13 +6,13 @@
  * @package 	tp-hotel-booking/templates
  * @version     2.3.2
  */
-
-global $hb_room;
-global $hb_settings;
-
 if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
+
+
+global $hb_room;
+global $hb_settings;
 
 if ( ! comments_open() ) {
     return;

@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 function hb_template_path(){
     return apply_filters( 'hb_template_path', 'tp-hotel-booking' );
 }
@@ -192,7 +196,7 @@ if ( ! function_exists( 'hotel_booking_page_title' ) ) {
         $page_title = apply_filters( 'hotel_booking_page_title', $page_title );
 
         if ( $echo )
-            echo $page_title;
+            echo sprintf( '%s', $page_title );
         else
             return $page_title;
     }

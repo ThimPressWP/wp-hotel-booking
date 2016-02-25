@@ -1,4 +1,9 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
 $cart = TP_Hotel_Booking::instance()->cart;
 global $hb_settings;
 ?>
@@ -24,9 +29,9 @@ global $hb_settings;
                             $sub_total = $room->get_total( $room->check_in_date, $room->check_out_date, $num_of_rooms, false );
                         ?>
                         <tr class="hb_checkout_item" data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
-                            <td class="hb_room_type"<?php echo defined( 'TP_HB_EXTRA' ) && $cart_extra ? ' rowspan="'. ( count( $cart_extra ) + 2 ) .'"' : ''  ?>><a href="<?php echo get_permalink( $room->ID ); ?>"><?php echo $room->name; ?><?php printf( '%s', $room->capacity_title ? ' ('.$room->capacity_title.')' : '' ); ?></a></td>
+                            <td class="hb_room_type"<?php echo defined( 'TP_HB_EXTRA' ) && $cart_extra ? ' rowspan="'. ( count( $cart_extra ) + 2 ) .'"' : ''  ?>><a href="<?php echo esc_url( get_permalink( $room->ID ) ); ?>"><?php echo esc_html( $room->name ); ?><?php printf( '%s', $room->capacity_title ? ' ('.$room->capacity_title.')' : '' ); ?></a></td>
                             <td class="hb_capacity"><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'tp-hotel-booking' ), $room->capacity ); ?> </td>
-                            <td class="hb_quantity"><?php echo $num_of_rooms; ?></td>
+                            <td class="hb_quantity"><?php printf( '%s', $num_of_rooms ); ?></td>
                             <td class="hb_check_in"><?php echo date_i18n( hb_get_date_format(), strtotime( $room->get_data( 'check_in_date' ) ) ) ?></td>
                             <td class="hb_check_out"><?php echo date_i18n( hb_get_date_format(), strtotime( $room->get_data( 'check_out_date' ) ) ) ?></td>
                             <td class="hb_night"><?php echo hb_count_nights_two_dates( $room->get_data( 'check_out_date' ), $room->get_data( 'check_in_date' ) ) ?></td>
@@ -91,8 +96,8 @@ global $hb_settings;
         <?php wp_nonce_field( 'hb_customer_place_order', 'hb_customer_place_order_field' ); ?>
         <input type="hidden" name="hotel-booking" value="place_order" />
         <input type="hidden" name="action" value="hotel_booking_place_order" />
-        <input type="hidden" name="total_advance" value="<?php echo $cart->advance_payment ? $cart->advance_payment : $cart->total ?>" />
-        <input type="hidden" name="total_price" value="<?php echo $cart->total ?>" />
+        <input type="hidden" name="total_advance" value="<?php echo esc_attr( $cart->advance_payment ? $cart->advance_payment : $cart->total ); ?>" />
+        <input type="hidden" name="total_price" value="<?php echo esc_attr( $cart->total ); ?>" />
         <input type="hidden" name="currency" value="<?php echo esc_attr( hb_get_currency() ) ?>">
         <?php if( $tos_page_id = hb_get_page_id( 'terms' ) ) { ?>
         <p>

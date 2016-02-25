@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 /**
  * Class HB_Payment_Gateway_Stripe
  */
@@ -115,7 +119,7 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
                     <td style="font-weight: bold;">
                         <?php _e( 'Customer Name', 'tp-hotel-booking' ); ?>
                     </td>
-                    <td colspan="6" ><?php echo $customer_name; ?></td>
+                    <td colspan="6" ><?php echo esc_html( $customer_name ); ?></td>
                 </tr>
                 <tr style="background-color: #F5F5F5;">
                     <td colspan="7">
@@ -136,15 +140,15 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
 
                             <tr style="background-color: #FFFFFF;">
                                 <td style="text-align: center;" rowspan="<?php echo array_key_exists( $cart_id, $child ) ? count( $child[ $cart_id ] ) + 2 : 1 ?>">
-                                    <a href="<?php echo get_edit_post_link( $room->ID ); ?>"><?php echo $room->name; ?><?php printf( '%s', $room->capacity_title ? ' ('.$room->capacity_title.')' : '' ); ?></a>
+                                    <a href="<?php echo get_edit_post_link( $room->ID ); ?>"><?php echo esc_html( $room->name ); ?><?php printf( '%s', $room->capacity_title ? ' ('.$room->capacity_title.')' : '' ); ?></a>
                                 </td>
                                 <td style="text-align: right;"><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'tp-hotel-booking' ), $room->capacity ); ?> </td>
-                                <td style="text-align: right;"><?php echo $room->quantity; ?></td>
-                                <td style="text-align: right;"><?php echo $room->get_data( 'check_in_date' ) ?></td>
-                                <td style="text-align: right;"><?php echo $room->get_data( 'check_out_date' ) ?></td>
+                                <td style="text-align: right;"><?php echo esc_html( $room->quantity ); ?></td>
+                                <td style="text-align: right;"><?php echo esc_html( date_i18n( hb_get_date_format(), strtotime( $room->get_data( 'check_in_date' ) ) ) ); ?></td>
+                                <td style="text-align: right;"><?php echo esc_html( date_i18n( hb_get_date_format(), strtotime( $room->get_data( 'check_out_date' ) ) ) ); ?></td>
                                 <td style="text-align: right;"><?php echo hb_count_nights_two_dates( $room->get_data( 'check_out_date' ), $room->get_data( 'check_in_date' ) ) ?></td>
                                 <td style="text-align: right;">
-                                    <?php echo hb_format_price( $rooms[ $cart_id ]->amount_singular_exclude_tax, hb_get_currency_symbol( $booking->currency ) ); ?>
+                                    <?php echo sprintf( '%s', hb_format_price( $rooms[ $cart_id ]->amount_singular_exclude_tax, hb_get_currency_symbol( $booking->currency ) ) ); ?>
                                 </td>
                             </tr>
 
@@ -164,7 +168,7 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
                 <?php endif; ?>
                 <tr style="background-color: #FFFFFF;">
                     <td colspan="6" style="font-weight: bold;"><?php _e( 'Grand Total', 'tp-hotel-booking' ); ?></td>
-                    <td style="text-align: right;"><?php echo hb_format_price( $booking->total, $currency ); ?></td>
+                    <td style="text-align: right;"><?php echo sprintf( '%s', hb_format_price( $booking->total, $currency ) ); ?></td>
                 </tr>
             </tbody>
         </table>

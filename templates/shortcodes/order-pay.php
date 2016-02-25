@@ -1,3 +1,10 @@
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
+?>
 <?php $book = HB_Booking::instance( $booking_id ); ?>
 
 <?php $currency_symbol = hb_get_currency_symbol( get_post_meta( $booking_id, '_hb_currency', true ) ); ?>

@@ -30,7 +30,7 @@ class HB_Widget_Room_Carousel extends WP_Widget{
      */
     public function widget( $args, $instance )
     {
-        echo $args['before_widget'];
+        echo sprintf( '%s', $args['before_widget'] );
         $html = array();
         if( $instance )
         {
@@ -43,7 +43,7 @@ class HB_Widget_Room_Carousel extends WP_Widget{
             $html[] = '][/hotel_booking_slider]';
         }
         echo do_shortcode( implode(' ', $html) );
-        echo $args['after_widget'];
+        echo sprintf( '%s', $args['after_widget'] );
     }
 
     /**
@@ -60,36 +60,36 @@ class HB_Widget_Room_Carousel extends WP_Widget{
         $price = isset($instance['price']) ? $instance['price'] : 'min';
         ?>
         <p>
-            <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+            <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Title:' ); ?></label>
+            <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
         </p>
         <p>
-            <label for="<?php echo $this->get_field_id( 'rooms' ); ?>"><?php _e( 'Number of rooms to show:' ); ?></label>
-            <input id="<?php echo $this->get_field_id( 'rooms' ); ?>" name="<?php echo $this->get_field_name( 'rooms' ); ?>" type="number" value="<?php echo esc_attr( $rooms ); ?>" min="1">
+            <label for="<?php echo esc_attr( $this->get_field_id( 'rooms' ) ); ?>"><?php _e( 'Number of rooms to show:' ); ?></label>
+            <input id="<?php echo esc_attr( $this->get_field_id( 'rooms' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'rooms' ) ); ?>" type="number" value="<?php echo esc_attr( $rooms ); ?>" min="1">
         </p>
         <p>
-            <label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of items:' ); ?></label>
-            <input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" value="<?php echo esc_attr( $number ); ?>" min="1">
+            <label for="<?php echo esc_attr( $this->get_field_id( 'number' ) ); ?>"><?php _e( 'Number of items:' ); ?></label>
+            <input id="<?php echo esc_attr( $this->get_field_id( 'number' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'number' ) ); ?>" type="number" value="<?php echo esc_attr( $number ); ?>" min="1">
         </p>
         <p>
             <label><?php _e( 'Navigation:' ); ?></label>
-            <input id="<?php echo $this->get_field_id( 'nav' ); ?>1" name="<?php echo $this->get_field_name( 'nav' ); ?>" type="radio" value="1"<?php echo (!isset($instance['nav']) || $instance['nav']) ? 'checked' : ''; ?>>
-            <label for="<?php echo $this->get_field_id( 'nav' ); ?>1"><?php _e('Yes', 'tp-hotel-booking') ?></label>
-            <input id="<?php echo $this->get_field_id( 'nav' ); ?>0" name="<?php echo $this->get_field_name( 'nav' ); ?>" type="radio" value="0"<?php echo (isset($instance['nav']) && !$instance['nav']) ? 'checked' : ''; ?>>
-            <label for="<?php echo $this->get_field_id( 'nav' ); ?>0"><?php _e('No', 'tp-hotel-booking') ?></label>
+            <input id="<?php echo esc_attr( $this->get_field_id( 'nav' ) ); ?>1" name="<?php echo esc_attr( $this->get_field_name( 'nav' ) ); ?>" type="radio" value="1"<?php echo sprintf( '%s', (!isset($instance['nav']) || $instance['nav']) ? 'checked' : '' ); ?>>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'nav' ) ); ?>1"><?php _e('Yes', 'tp-hotel-booking') ?></label>
+            <input id="<?php echo esc_attr( $this->get_field_id( 'nav' ) ); ?>0" name="<?php echo esc_attr( $this->get_field_name( 'nav' ) ); ?>" type="radio" value="0"<?php echo sprintf( '%s', (isset($instance['nav']) && !$instance['nav']) ? 'checked' : '' ); ?>>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'nav' ) ); ?>0"><?php _e('No', 'tp-hotel-booking') ?></label>
         </p>
         <p>
             <label><?php _e( 'Pagination:' ); ?></label>
             <!--yes-->
-            <input id="<?php echo $this->get_field_id( 'pagination' ); ?>1" name="<?php echo $this->get_field_name( 'pagination' ); ?>" type="radio" value="1"<?php echo (!isset($instance['pagination']) || $instance['pagination']) ? 'checked' : ''; ?>>
-            <label for="<?php echo $this->get_field_id( 'pagination' ); ?>1"><?php _e('Yes', 'tp-hotel-booking') ?></label>
+            <input id="<?php echo esc_attr( $this->get_field_id( 'pagination' ) ); ?>1" name="<?php echo esc_attr( $this->get_field_name( 'pagination' ) ); ?>" type="radio" value="1"<?php echo sprintf( '%s', (!isset($instance['pagination']) || $instance['pagination']) ? 'checked' : '' ); ?>>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'pagination' ) ); ?>1"><?php _e('Yes', 'tp-hotel-booking') ?></label>
             <!--no-->
-            <input id="<?php echo $this->get_field_id( 'pagination' ); ?>0" name="<?php echo $this->get_field_name( 'pagination' ); ?>" type="radio" value="0"<?php echo (isset($instance['pagination']) && !$instance['pagination']) ? 'checked' : ''; ?>>
-            <label for="<?php echo $this->get_field_id( 'pagination' ); ?>0"><?php _e('No', 'tp-hotel-booking') ?></label>
+            <input id="<?php echo esc_attr( $this->get_field_id( 'pagination' ) ); ?>0" name="<?php echo esc_attr( $this->get_field_name( 'pagination' ) ); ?>" type="radio" value="0"<?php echo sprintf( '%s', (isset($instance['pagination']) && !$instance['pagination']) ? 'checked' : '' ); ?>>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'pagination' ) ); ?>0"><?php _e('No', 'tp-hotel-booking') ?></label>
         </p>
         <p>
             <label for="<?php echo $this->get_field_id( 'text_link' ); ?>"><?php _e('Text Link', 'tp-hotel-booking') ?></label>
-            <input id="<?php echo $this->get_field_id( 'text_link' ); ?>" name="<?php echo $this->get_field_name( 'text_link' ); ?>" type="text" value="<?php echo esc_attr($text_link); ?>">
+            <input id="<?php echo esc_attr( $this->get_field_id( 'text_link' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'text_link' ) ); ?>" type="text" value="<?php echo esc_attr($text_link); ?>">
         </p>
         <?php
     }

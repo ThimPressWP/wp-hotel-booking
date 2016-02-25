@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 /**
  * Class HB_Post_Types
  */
@@ -84,7 +88,7 @@ class HB_Post_Types{
             case 'from':
             case 'to':
                 if( $from = get_post_meta( $post->ID, '_hb_coupon_date_' . $column, true ) ) {
-                    echo date( hb_get_date_format(), $from );
+                    echo date_i18n( hb_get_date_format(), $from );
                 }else{
                     echo '-';
                 }
@@ -95,7 +99,7 @@ class HB_Post_Types{
                     if( get_post_meta( $post->ID, '_hb_coupon_discount_type', true ) == 'fixed_cart' ) {
                         echo hb_format_price( $value );
                     }else{
-                        echo $value . '%';
+                        echo sprintf( '%s', $value . '%' );
                     }
                 }else{
                     echo '-';
@@ -104,7 +108,7 @@ class HB_Post_Types{
             case 'limit_per_coupon':
             case 'usage_count':
                 if( $value = get_post_meta( $post->ID, '_hb_' . $column, true ) ) {
-                    echo $value;
+                    echo sprintf( '%s', $value );
                 }else{
                     echo '-';
                 }
@@ -306,7 +310,7 @@ class HB_Post_Types{
     function room_type_more_fields( $term, $term_name ) {
         $attachment_ids = get_option( 'hb_taxonomy_thumbnail_' . $term->term_id );
         ?>
-        <tr class="form-field" id="room-gallery-<?php echo $term->term_id; ?>">
+        <tr class="form-field" id="room-gallery-<?php echo esc_attr( $term->term_id ); ?>">
             <th scope="row" valign="top"><label for="term_meta[custom_term_meta]"><?php _e( 'Gallery', 'tp-hotel-booking' ); ?></label></th>
             <td>
                 <div class="hb-room-gallery">
@@ -320,8 +324,8 @@ class HB_Post_Types{
                             <div class="attachment-preview">
                                 <div class="thumbnail">
                                     <div class="centered">
-                                        <img src="<?php echo $attachment[0]; ?>" alt="">
-                                        <input type="hidden" name="hb-gallery[<?php echo $term->term_id; ?>][gallery][]" value="<?php echo $attachment_id; ?>" />
+                                        <img src="<?php echo esc_attr( $attachment[0] ); ?>" alt="">
+                                        <input type="hidden" name="hb-gallery[<?php echo esc_attr( $term->term_id ); ?>][gallery][]" value="<?php echo esc_attr( $attachment_id ); ?>" />
                                     </div>
                                 </div>
                             </div>
@@ -466,7 +470,7 @@ class HB_Post_Types{
                 <?php _e( 'Ordering', 'tp-hotel-booking' ); ?>
             </th>
             <td>
-                <input type="text" class="regular-text" name="tp_hotel_booking[ordering]" value="<?php echo $term->term_order ? $term->term_order : ''; ?>" />
+                <input type="text" class="regular-text" name="tp_hotel_booking[ordering]" value="<?php echo esc_attr( $term->term_order ? $term->term_order : '' ); ?>" />
                 <p></p>
             </td>
         </tr>

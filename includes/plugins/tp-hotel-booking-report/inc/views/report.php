@@ -83,7 +83,7 @@
 			</form>
 			<ul>
 				<?php foreach( $date as $key => $d ): ?>
-					<li <?php echo $d['id'] === $currentRang ? 'class="active"' : '' ?>>
+					<li <?php echo sprintf( '%s', $d['id'] === $currentRang ? 'class="active"' : '' ) ?>>
 						<a href="<?php echo admin_url( 'admin.php?page=tp_hotel_booking_report&tab='.$currenttab.'&range='.$d['id'] ) ?>">
 							<?php printf( '%s', $d['title'] ) ?>
 						</a>
@@ -91,7 +91,7 @@
 				<?php endforeach; ?>
 				<li>
 					<form method="GET">
-						<input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>" />
+						<input type="hidden" name="page" value="<?php echo esc_attr( $_REQUEST['page'] ); ?>" />
 						<input type="hidden" name="tab" value="<?php echo isset($_REQUEST['tab']) ? $_REQUEST['tab'] : 'price' ?>" />
 						<input type="hidden" name="range" value="custom" />
 						<input type="text" id="tp-hotel-report-checkin" name="report_in" value="<?php echo isset( $_REQUEST['report_in'] ) ? esc_attr($_REQUEST['report_in'] ) : ''; ?>" />

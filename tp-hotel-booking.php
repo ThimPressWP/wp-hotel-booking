@@ -8,6 +8,10 @@
     Author URI: http://thimpress.com
 */
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
 define( 'HB_FILE', __FILE__ );
 define( 'HB_PLUGIN_PATH', dirname( __FILE__ ) );
 define( 'HB_PLUGIN_URL', plugins_url( '', __FILE__ ) );

@@ -1,4 +1,9 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 function hb_register_web_hook( $key, $param ) {
     if ( !$key ) {
         return;

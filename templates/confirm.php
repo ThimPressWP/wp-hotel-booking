@@ -1,3 +1,8 @@
+<?php
+	if ( ! defined( 'ABSPATH' ) ) {
+	    exit();
+	}
+?>
 <div id="hotel-booking-confirm">
     Confirm
     <form name="hb-search-form">

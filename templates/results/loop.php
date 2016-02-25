@@ -1,4 +1,9 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
 global $hb_settings;
 $gallery = $room->gallery;
 $featured = $gallery ? array_shift( $gallery ) : false;
@@ -10,7 +15,7 @@ $featured = $gallery ? array_shift( $gallery ) : false;
         <div class="hb-room-content">
             <div class="hb-room-thumbnail">
                 <?php if( $featured ):?>
-                    <a class="hb-room-gallery" data-fancybox-group="hb-room-gallery-<?php echo $room->post->ID; ?>" data-lightbox="hb-room-gallery[<?php echo $room->post->ID; ?>]" data-title="<?php echo $featured['alt']; ?>" href="<?php echo $featured['src']; ?>">
+                    <a class="hb-room-gallery" data-fancybox-group="hb-room-gallery-<?php echo esc_attr( $room->post->ID ); ?>" data-lightbox="hb-room-gallery[<?php echo esc_attr( $room->post->ID ); ?>]" data-title="<?php echo esc_attr( $featured['alt'] ); ?>" href="<?php echo esc_attr( $featured['src'] ); ?>">
                         <?php $room->getImage('catalog'); ?>
                     </a>
                 <?php endif; ?>
@@ -19,17 +24,17 @@ $featured = $gallery ? array_shift( $gallery ) : false;
             <div class="hb-room-info">
                 <h4 class="hb-room-name">
                     <a href="<?php echo get_the_permalink($room->post->ID) ?>">
-                        <?php echo $room->name; ?> <?php $room->capacity_title ? printf( '(%s)', $room->capacity_title ) : '' ; ?>
+                        <?php echo esc_html( $room->name ); ?> <?php $room->capacity_title ? printf( '(%s)', $room->capacity_title ) : '' ; ?>
                     </a>
                 </h4>
                 <ul class="hb-room-meta">
                     <li class="hb_search_capacity">
                         <label><?php _e( 'Capacity:', 'tp-hotel-booking' ); ?></label>
-                        <div class=""><?php echo $room->capacity; ?></div>
+                        <div class=""><?php echo esc_html( $room->capacity ); ?></div>
                     </li>
                     <li class="hb_search_max_child">
                         <label><?php _e( 'Max Child:', 'tp-hotel-booking' ); ?></label>
-                        <div><?php echo $room->max_child; ?></div>
+                        <div><?php echo esc_html( $room->max_child ); ?></div>
                     </li>
                     <li class="hb_search_price">
                         <label><?php _e( 'Price:', 'tp-hotel-booking' ); ?></label>

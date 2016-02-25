@@ -1,4 +1,9 @@
 <?php
+
+	if ( ! defined( 'ABSPATH' ) ) {
+	    exit();
+	}
+
 	$rooms = TP_Hotel_Booking::instance()->cart->get_rooms();
 ?>
 <?php if( $rooms ): ?>

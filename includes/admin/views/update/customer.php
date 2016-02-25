@@ -3,6 +3,10 @@
  * Template Customer
  * @since  1.1
  */
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 ?>
 <table class="hb-booking-table customer-information hb-table-width30">
     <thead>
@@ -24,35 +28,35 @@
         </tr>
         <tr>
             <th> <?php _e( 'Address ', 'tp-hotel-booking'); ?> </th>
-            <td><?php echo $customer->get( '_hb_address' ); ?></td>
+            <td><?php echo esc_html( $customer->get( '_hb_address' ) ); ?></td>
         </tr>
         <tr>
             <th> <?php _e( 'City ', 'tp-hotel-booking' ); ?> </th>
-            <td><?php echo $customer->get( '_hb_city' ) ?></td>
+            <td><?php echo esc_html( $customer->get( '_hb_city' ) ) ?></td>
         </tr>
         <tr>
             <th><?php _e( 'State ', 'tp-hotel-booking' ); ?></th>
-            <td><?php echo $customer->get( '_hb_state' ) ?></td>
+            <td><?php echo esc_html( $customer->get( '_hb_state' ) ) ?></td>
         </tr>
         <tr>
             <th><?php _e( 'Country ', 'tp-hotel-booking' ); ?></th>
-            <td><?php echo $customer->get( '_hb_country' ) ?></td>
+            <td><?php echo esc_html( $customer->get( '_hb_country' ) ) ?></td>
         </tr>
         <tr>
             <th><?php _e( 'Zip/ Post Code ','tp-hotel-booking' ); ?></th>
-            <td><?php echo $customer->get( '_hb_postal_code' ) ?></td>
+            <td><?php echo esc_html( $customer->get( '_hb_postal_code' ) ) ?></td>
         </tr>
         <tr>
             <th><?php _e( 'Phone ', 'tp-hotel-booking' ); ?></th>
-            <td><?php echo $customer->get( '_hb_phone' ) ?></td>
+            <td><?php echo esc_html( $customer->get( '_hb_phone' ) ) ?></td>
         </tr>
         <tr>
             <th><?php _e( 'Fax ', 'tp-hotel-booking' ); ?></th>
-            <td><?php echo $customer->get( '_hb_fax' ) ?></td>
+            <td><?php echo esc_html( $customer->get( '_hb_fax' ) ) ?></td>
         </tr>
         <tr>
             <th><?php _e( 'Email ', 'tp-hotel-booking' ); ?></th>
-            <td><?php echo $customer->get( '_hb_email' ) ?></td>
+            <td><?php echo esc_html( $customer->get( '_hb_email' ) ); ?></td>
         </tr>
     </tbody>
 </table>

@@ -7,6 +7,10 @@
  * @version     0.9
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
 global $hb_room;
 $pricings = $hb_room->pricing_plans_data();
 $week_names = $pricings['week'];
@@ -30,7 +34,7 @@ unset($pricings['capacity']);
 		<thead>
 			<tr>
 	            <?php for( $i = 0; $i < 7; $i++ ){?>
-	                <th><?php echo $week_names[ $i ]; ?></th>
+	                <th><?php echo esc_html( $week_names[ $i ] ); ?></th>
 	            <?php } ?>
 	        </tr>
 		</thead>

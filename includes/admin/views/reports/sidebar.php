@@ -1,3 +1,10 @@
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
+?>
 <ul class="chart-legend">
 	<li style="border-color: #b1d4ea" class="highlight_series tips" data-series="5">
 		<strong><span class="amount">£0.00</span></strong> gross sales in this period

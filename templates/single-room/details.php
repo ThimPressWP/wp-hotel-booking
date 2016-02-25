@@ -1,4 +1,8 @@
 <?php
+    if ( ! defined( 'ABSPATH' ) ) {
+        exit();
+    }
+
     $room = HB_Room::instance(get_the_ID());
     ob_start();
     the_content();
@@ -46,7 +50,7 @@
                 <div id="<?php echo esc_attr( $tab['id'] ) ?>" class="hb_single_room_tab_details">
                     <?php do_action( 'hotel_booking_single_room_before_tabs_content_' . $tab['id'] );  ?>
 
-                    <?php echo $tab['content']; ?>
+                    <?php printf( '%s', $tab['content'] ); ?>
 
                     <?php do_action( 'hotel_booking_single_room_after_tabs_content_' . $tab['id'] );  ?>
                 </div>

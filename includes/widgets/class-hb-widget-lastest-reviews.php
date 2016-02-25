@@ -30,7 +30,7 @@ class HB_Widget_Room_Lastest_Reviews extends WP_Widget{
      */
     public function widget( $args, $instance )
     {
-        echo $args['before_widget'];
+        echo sprintf( '%s', $args['before_widget'] );
         $html = array();
         if( $instance )
         {
@@ -43,7 +43,7 @@ class HB_Widget_Room_Lastest_Reviews extends WP_Widget{
             $html[] = '][/hotel_booking_lastest_reviews]';
         }
         echo do_shortcode( implode(' ', $html) );
-        echo $args['after_widget'];
+        echo sprintf( '%s', $args['after_widget'] );
     }
 
     /**
@@ -57,11 +57,11 @@ class HB_Widget_Room_Lastest_Reviews extends WP_Widget{
         ?>
         <p>
             <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+            <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
         </p>
         <p>
-            <label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of items:' ); ?></label>
-            <input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" value="<?php echo esc_attr( $number ); ?>" min="1">
+            <label for="<?php echo esc_attr( $this->get_field_id( 'number' ) ); ?>"><?php _e( 'Number of items:' ); ?></label>
+            <input id="<?php echo esc_attr( $this->get_field_id( 'number' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'number' ) ); ?>" type="number" value="<?php echo esc_attr( $number ); ?>" min="1">
         </p>
         <?php
     }

@@ -23,7 +23,7 @@ class HB_Widget_Currency_Switch extends WP_Widget
      */
     public function widget( $args, $instance )
     {
-        echo $args['before_widget'];
+        echo sprintf( '%s', $args['before_widget'] );
         $html = array();
         if( $instance )
         {
@@ -40,7 +40,7 @@ class HB_Widget_Currency_Switch extends WP_Widget
         }
 
         echo do_shortcode( implode(' ', $html) );
-        echo $args['after_widget'];
+        echo sprintf( '%s', $args['after_widget'] );
     }
 
     /**
@@ -54,13 +54,13 @@ class HB_Widget_Currency_Switch extends WP_Widget
         $id = uniqid();
     ?>
         <p>
-            <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'tp-hotel-booking' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+            <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Title:', 'tp-hotel-booking' ); ?></label>
+            <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
         </p>
         <p>
-            <label for="<?php echo $this->get_field_id( 'currencies' ); ?>"><?php _e( 'Select Currencies:', 'tp-hotel-booking' ); ?></label>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'currencies' ) ); ?>"><?php _e( 'Select Currencies:', 'tp-hotel-booking' ); ?></label>
             <br />
-            <select name="<?php echo $this->get_field_name( 'currencies' ); ?>[]" id="tp_hb_currencies_select_<?php echo esc_attr($id) ?>" class="tokenize-sample widefat" multiple="multiple" >
+            <select name="<?php echo esc_attr( $this->get_field_name( 'currencies' ) ); ?>[]" id="tp_hb_currencies_select_<?php echo esc_attr($id) ?>" class="tokenize-sample widefat" multiple="multiple" >
                 <?php foreach( hb_payment_currencies() as $k => $cur ) : ?>
                     <option value="<?php echo esc_attr( $k ); ?>"<?php echo in_array( $k, $currencies ) ? ' selected' : '' ?>>
                         <?php printf( '%s', $cur ) ?>
@@ -72,7 +72,7 @@ class HB_Widget_Currency_Switch extends WP_Widget
         <script type="text/javascript">
             (function($){
                 $(document).ready(function(){
-                    $('#tp_hb_currencies_select_<?php echo $id ?>').tokenize();
+                    $('#tp_hb_currencies_select_<?php echo esc_js( $id ) ?>').tokenize();
                 });
             })(jQuery);
         </script>

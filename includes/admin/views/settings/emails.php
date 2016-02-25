@@ -4,6 +4,10 @@
  *
  * @since 0.9.1
  */
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 $settings = hb_settings();
 
 // put to filter later
@@ -20,15 +24,15 @@ $email_options = apply_filters(
         <?php $i = 0; ?>
         <ul class="hb-admin-sub-tab subsubsub">
             <?php foreach( $email_options as $slug => $name ){ ?>
-                <li<?php echo $i++ == 0 ? ' class="current"' : ''; ?>>
-                    <a href="#hb-email-<?php echo $slug; ?>-settings"><?php echo $name; ?></a>
+                <li<?php echo sprintf( '%s', $i++ == 0 ? ' class="current"' : '' ); ?>>
+                    <a href="#hb-email-<?php echo esc_attr( $slug ); ?>-settings"><?php echo $name; ?></a>
                 </li>
-                <?php echo $i < $count ? '&nbsp;|&nbsp;' : ''; ?>
+                <?php echo sprintf( '%s', $i < $count ? '&nbsp;|&nbsp;' : '' ); ?>
             <?php } ?>
         </ul>
         <div class="clearfix"></div>
         <?php $i = 0; foreach( $email_options as $slug => $name ){?>
-            <div id="hb-email-<?php echo $slug; ?>-settings" class="hb-sub-tab-content hb-email-settings<?php echo $i++ == 0 ? ' current' : ''; ?>">
+            <div id="hb-email-<?php echo esc_attr( $slug ); ?>-settings" class="hb-sub-tab-content hb-email-settings<?php echo sprintf( '%s', $i++ == 0 ? ' current' : '' ); ?>">
                 <?php do_action( 'hb_email_' . $slug . '_settings' ); ?>
             </div>
         <?php } ?>

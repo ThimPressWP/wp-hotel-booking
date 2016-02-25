@@ -7,6 +7,10 @@
  * @version 0.9
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
 global $hb_settings;
 global $hb_room;
 $rating = $hb_room->average_rating();

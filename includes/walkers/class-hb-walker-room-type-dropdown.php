@@ -1,4 +1,9 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 class HB_Walker_Room_Type_Dropdown extends Walker_CategoryDropdown {
     function start_el(&$output, $category, $depth = 0, $args = array(), $id = 0) {
         $pad = str_repeat('&nbsp;', $depth * 3);

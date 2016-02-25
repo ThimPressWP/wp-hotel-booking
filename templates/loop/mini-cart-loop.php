@@ -6,6 +6,10 @@
  * @package 	Tp-hotel-booking/Templates
  * @version     0.9
  */
+if ( ! defined( 'ABSPATH' ) ) {
+    exit();
+}
+
 ?>
 <div class="hb_mini_cart_item" data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
 

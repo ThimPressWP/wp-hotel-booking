@@ -44,7 +44,7 @@ function hb_wc_payment_gateway_form(){
 		if( $wc_payment_gateways = WC()->payment_gateways()->get_available_payment_gateways() ){
 			foreach( $wc_payment_gateways as $gateway ){
 				if( $gateway->id == $parts[1] ){
-					echo $gateway->description;
+					echo esc_html( $gateway->description );
 					return;
 				}
 			}

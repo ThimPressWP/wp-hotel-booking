@@ -1,4 +1,9 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 if( ! get_option( 'tp_hotel_booking_ready' ) ){
     $options = array(
         'tp_hotel_booking_advance_payment' => '50',

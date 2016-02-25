@@ -297,7 +297,7 @@ class HB_Extra_Cart
 						<td></td>
 
 						<td>
-							<?php echo $cart_item->quantity; ?>
+							<?php echo esc_html( $cart_item->quantity ); ?>
 						</td>
 
 						<td colspan="3">

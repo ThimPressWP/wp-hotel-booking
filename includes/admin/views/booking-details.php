@@ -3,12 +3,16 @@
  * Template Booking Details
  * @since  1.0.3
  */
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 ?>
 <?php
 $booking_id = hb_get_request( 'id' );
 ?>
 <div class="wrap">
-    <h2><?php _e( 'Booking Details: ','tp-hotel-booking' ); echo hb_format_order_number( $booking_id );  ?></h2>
+    <h2><?php _e( 'Booking Details: ','tp-hotel-booking' ); echo sprintf( '%s', hb_format_order_number( $booking_id ) );  ?></h2>
 <?php
     $booking = HB_Booking::instance( $booking_id );
     if( ! $booking->post->ID ){
@@ -46,35 +50,35 @@ $booking_id = hb_get_request( 'id' );
             </tr>
             <tr>
                 <th> <?php _e( 'Address ', 'tp-hotel-booking'); ?> </th>
-                <td><?php echo get_post_meta( $customer_id, '_hb_address', true ); ?></td>
+                <td><?php echo esc_html( get_post_meta( $customer_id, '_hb_address', true ) ); ?></td>
             </tr>
             <tr>
                 <th> <?php _e( 'City ', 'tp-hotel-booking' ); ?> </th>
-                <td><?php echo get_post_meta( $customer_id, '_hb_city', true ) ?></td>
+                <td><?php echo esc_html( get_post_meta( $customer_id, '_hb_city', true ) ) ?></td>
             </tr>
             <tr>
                 <th><?php _e( 'State ', 'tp-hotel-booking' ); ?></th>
-                <td><?php echo get_post_meta( $customer_id, '_hb_state', true ) ?></td>
+                <td><?php echo esc_html( get_post_meta( $customer_id, '_hb_state', true ) ) ?></td>
             </tr>
             <tr>
                 <th><?php _e( 'Country ', 'tp-hotel-booking' ); ?></th>
-                <td><?php echo get_post_meta( $customer_id, '_hb_country', true ) ?></td>
+                <td><?php echo esc_html( get_post_meta( $customer_id, '_hb_country', true ) ) ?></td>
             </tr>
             <tr>
                 <th><?php _e( 'Zip/ Post Code ','tp-hotel-booking' ); ?></th>
-                <td><?php echo get_post_meta( $customer_id, '_hb_postal_code', true ) ?></td>
+                <td><?php echo esc_html( get_post_meta( $customer_id, '_hb_postal_code', true ) ) ?></td>
             </tr>
             <tr>
                 <th><?php _e( 'Phone ', 'tp-hotel-booking' ); ?></th>
-                <td><?php echo get_post_meta( $customer_id, '_hb_phone', true ) ?></td>
+                <td><?php echo esc_html( get_post_meta( $customer_id, '_hb_phone', true ) ) ?></td>
             </tr>
             <tr>
                 <th><?php _e( 'Fax ', 'tp-hotel-booking' ); ?></th>
-                <td><?php echo get_post_meta( $customer_id, '_hb_fax', true) ?></td>
+                <td><?php echo esc_html( get_post_meta( $customer_id, '_hb_fax', true) ) ?></td>
             </tr>
             <tr>
                 <th><?php _e( 'Email ', 'tp-hotel-booking' ); ?></th>
-                <td><?php echo get_post_meta( $customer_id, '_hb_email', true ) ?></td>
+                <td><?php echo esc_html( get_post_meta( $customer_id, '_hb_email', true ) ); ?></td>
             </tr>
         </tbody>
     </table>
@@ -115,7 +119,7 @@ $booking_id = hb_get_request( 'id' );
                                         <td colspan="4">
                                             <?php
                                                 $room = HB_Room::instance( $id, $room_param );
-                                                echo get_the_title( $id );
+                                                echo esc_html( get_the_title( $id ) );
                                                 $terms = wp_get_post_terms( $id, 'hb_room_type' );
                                                 $room_types = array();
                                                 foreach ($terms as $key => $term) {
@@ -141,12 +145,12 @@ $booking_id = hb_get_request( 'id' );
                                                 }
                                             ?>
                                         </td>
-                                        <td style="text-align: right;" colspan="4"><?php echo $room->quantity; ?></td>
-                                        <td style="text-align: right;" colspan="4"><?php echo $room->get_data( 'check_in_date' ); ?></td>
-                                        <td style="text-align: right;" colspan="4"><?php echo $room->get_data( 'check_out_date' ); ?></td>
+                                        <td style="text-align: right;" colspan="4"><?php echo esc_html( $room->quantity ); ?></td>
+                                        <td style="text-align: right;" colspan="4"><?php echo date_i18n( hb_get_date_format(), strtotime( $room->get_data( 'check_in_date' ) ) ); ?></td>
+                                        <td style="text-align: right;" colspan="4"><?php echo date_i18n( hb_get_date_format(), strtotime( $room->get_data( 'check_out_date' ) ) ); ?></td>
                                         <td style="text-align: right;" colspan="4">
                                             <?php
-                                                echo hb_count_nights_two_dates( $room->get_data( 'check_out_date' ), $room->get_data( 'check_in_date' ) );
+                                                echo sprintf( '%s', hb_count_nights_two_dates( $room->get_data( 'check_out_date' ), $room->get_data( 'check_in_date' ) ) );
                                             ?>
                                         </td>
                                     </tr>
@@ -198,7 +202,7 @@ $booking_id = hb_get_request( 'id' );
                                         <?php do_action( 'hotel_booking_room_details_quantity', $booking_rooms_params, $search_key, $id ); ?>
                                     </td>
                                     <td align="right">
-                                        <?php echo $room->quantity ?>
+                                        <?php echo esc_html( $room->quantity ); ?>
                                     </td>
                                     <td align="right"><?php echo hb_format_price( $room->total, $currency_symbol ); ?></td>
                                 </tr>
@@ -236,11 +240,11 @@ $booking_id = hb_get_request( 'id' );
             </tr>
             <tr>
                 <th colspan="4" align="left"><?php _e( 'Default Currency', 'tp-hotel-booking' ); ?></th>
-                <td align="right"><?php echo $default_currency; ?></td>
+                <td align="right"><?php echo sprintf( '%s', $default_currency ); ?></td>
             </tr>
             <tr>
                 <th colspan="4" align="left"><?php _e( 'Payment Currency', 'tp-hotel-booking' ); ?></th>
-                <td align="right"><?php echo $payment_currency; ?></td>
+                <td align="right"><?php echo sprintf( '%s', $payment_currency ); ?></td>
             </tr>
             <tr>
                 <th colspan="4" align="left">
@@ -274,7 +278,7 @@ $booking_id = hb_get_request( 'id' );
                     <?php _e( 'Payment Gateway', 'tp-hotel-booking' ); ?>
                 </th>
                 <td>
-                    <?php echo get_post_meta( $booking_id, '_hb_method_title', true ); ?>
+                    <?php echo sprintf( '%s', get_post_meta( $booking_id, '_hb_method_title', true ) ); ?>
                 </td>
             </tr>
             <tr>
@@ -282,7 +286,7 @@ $booking_id = hb_get_request( 'id' );
                     <?php _e( 'Booking status', 'tp-hotel-booking' ); ?>
                 </th>
                 <td>
-                    <span class="hb-booking-status <?php echo get_post_status( $booking_id ); ?>"><?php echo hb_get_booking_status_label( $booking_id ); ?></span>
+                    <span class="hb-booking-status <?php echo esc_attr( get_post_status( $booking_id ) ); ?>"><?php echo sprintf( '%s', hb_get_booking_status_label( $booking_id ) ); ?></span>
                 </td>
             </tr>
         </tbody>
@@ -299,7 +303,7 @@ $booking_id = hb_get_request( 'id' );
         <tbody>
         <tr>
             <td colspan="2">
-                <?php echo $addition_information; ?>
+                <?php echo sprintf( '%s', esc_html( $addition_information ) ); ?>
             </td>
         </tr>
         </tbody>

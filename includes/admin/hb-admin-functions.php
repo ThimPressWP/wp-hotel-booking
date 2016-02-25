@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 /**
  * Common function for admin side
  */
@@ -261,12 +265,6 @@ function hb_meta_box_coupon_settings_update_meta_value( $meta_value, $field_name
     return $meta_value;
 }
 add_filter( 'hb_meta_box_update_meta_value', 'hb_meta_box_coupon_settings_update_meta_value', 10, 4 );
-
-// function hb_update_meta_box_room_settings( $post_id ){
-//     $adults = get_option( 'hb_taxonomy_capacity_' . $_POST['_hb_room_capacity'] );
-//     update_post_meta( $post_id, '_hb_max_adults_per_room', intval( $adults ) );
-// }
-// add_action( 'hb_update_meta_box_room_settings', 'hb_update_meta_box_room_settings' );
 
 function hb_bookings_meta_boxes() {
     HB_Meta_Box::instance(
@@ -582,14 +580,14 @@ function hb_booking_restrict_manage_posts(){
 
         ?>
         <span><?php _e( 'Date Range', 'tp-hotel-booking' ); ?></span>
-        <input type="text" id="hb-booking-date-from" class="hb-date-field" value="<?php echo $from; ?>" name="date-from" readonly placeholder="<?php _e( 'From', 'tp-hotel-booking' ); ?>" />
-        <input type="hidden" value="<?php echo $from_timestamp; ?>" name="date-from-timestamp" />
-        <input type="text" id="hb-booking-date-to" class="hb-date-field" value="<?php echo $to; ?>" name="date-to" readonly placeholder="<?php _e( 'To', 'tp-hotel-booking' ); ?>" />
-        <input type="hidden" value="<?php echo $to_timestamp; ?>" name="date-to-timestamp" />
+        <input type="text" id="hb-booking-date-from" class="hb-date-field" value="<?php echo esc_attr( $from ); ?>" name="date-from" readonly placeholder="<?php _e( 'From', 'tp-hotel-booking' ); ?>" />
+        <input type="hidden" value="<?php echo esc_attr( $from_timestamp ); ?>" name="date-from-timestamp" />
+        <input type="text" id="hb-booking-date-to" class="hb-date-field" value="<?php echo esc_attr( $to ); ?>" name="date-to" readonly placeholder="<?php _e( 'To', 'tp-hotel-booking' ); ?>" />
+        <input type="hidden" value="<?php echo esc_attr( $to_timestamp ); ?>" name="date-to-timestamp" />
         <select name="filter-type">
             <option value=""><?php _e( '---Filter By---', 'tp-hotel-booking' ); ?></option>
             <?php foreach( $filter_types as $slug => $text ){?>
-            <option value="<?php echo $slug; ?>" <?php selected( $slug == $filter_type ); ?>><?php echo $text; ?></option>
+            <option value="<?php echo esc_attr( $slug ); ?>" <?php selected( $slug == $filter_type ); ?>><?php echo esc_html( $text ); ?></option>
             <?php } ?>
         </select>
         <?php
@@ -658,19 +656,19 @@ function hb_manage_customer_column( $column_name, $post_id ) {
             $first_name =  get_post_meta( $post_id, '_hb_first_name', true );
             $last_name = get_post_meta( $post_id, '_hb_last_name', true );
             $customer_name = sprintf( '%s %s %s', $title ? $title : 'Cus.', $first_name, $last_name );
-            echo $customer_name;
+            echo esc_html( $customer_name );
             break;
         case 'customer_address':
             $customer_address = get_post_meta( $post_id, '_hb_address', true );
-            echo $customer_address;
+            echo esc_html( $customer_address );
             break;
         case 'phone_number':
             $phone = get_post_meta( $post_id, '_hb_phone', true );
-            echo $phone;
+            echo esc_html( $phone );
             break;
         case 'email':
             $email = get_post_meta( $post_id, '_hb_email', true );
-            echo $email;
+            echo esc_html( $email );
             break;
         case 'bookings':
             printf(
