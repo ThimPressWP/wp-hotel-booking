@@ -58,4 +58,5 @@ class HB_Payment_Gateway_Base{
             'result' => ''
         );
     }
+
 }

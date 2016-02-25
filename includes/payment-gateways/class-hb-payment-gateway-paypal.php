@@ -100,7 +100,6 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         }
     }
 
-
     function form(){
         echo _e( 'Pay with Paypal', 'tp-hotel-booking');
     }
@@ -139,6 +138,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
                     $transaction_status = sanitize_text_field( $_REQUEST['payment_status'] );
                 else
                     $transaction_status = NULL;
+
                 if ( ! empty( $transaction_id ) && ! empty( $transient_transaction_id ) && ! empty( $transaction_status ) ) {
 
                     try {
@@ -356,7 +356,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
     function process_checkout( $booking_id = null ){
         return array(
             'result'    => 'success',
-            'redirect'  => $this->_get_paypal_basic_checkout_url( $booking_id  )
+            'redirect'  => $this->_get_paypal_basic_checkout_url( $booking_id )
         );
     }
 
