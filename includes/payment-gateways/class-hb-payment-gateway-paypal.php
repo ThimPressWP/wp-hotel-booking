@@ -110,7 +110,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      */
     function process_booking_paypal_standard(){
         //return;
-        if( ! empty( $_REQUEST['hb-transaction-method'] ) && ( 'paypal-standard' == $_REQUEST['hb-transaction-method'] ) ) {
+        if( ! empty( $_REQUEST['hb-transaction-method'] ) && ( 'paypal-standard' == sanitize_text_field( $_REQUEST['hb-transaction-method'] ) ) ) {
             $cart = HB_Cart::instance();
             $cart->empty_cart();
 
@@ -120,23 +120,23 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
             // so, create a new order
             if( ! empty( $_REQUEST['paypal-nonce'] ) && wp_verify_nonce( sanitize_text_field( $_REQUEST['paypal-nonce'] ), 'hb-paypal-nonce' )  ) {
                 if ( !empty( $_REQUEST['tx'] ) ) //if PDT is enabled
-                    $transaction_id = $_REQUEST['tx'];
+                    $transaction_id = sanitize_text_field( $_REQUEST['tx'] );
                 else if ( !empty( $_REQUEST['txn_id'] ) ) //if PDT is not enabled
-                    $transaction_id = $_REQUEST['txn_id'];
+                    $transaction_id = sanitize_text_field( $_REQUEST['txn_id'] );
                 else
                     $transaction_id = NULL;
 
                 if ( !empty( $_REQUEST['cm'] ) )
-                    $transient_transaction_id = $_REQUEST['cm'];
+                    $transient_transaction_id = sanitize_text_field( $_REQUEST['cm'] );
                 else if ( !empty( $_REQUEST['custom'] ) )
-                    $transient_transaction_id = $_REQUEST['custom'];
+                    $transient_transaction_id = sanitize_text_field( $_REQUEST['custom'] );
                 else
                     $transient_transaction_id = NULL;
 
                 if ( !empty( $_REQUEST['st'] ) ) //if PDT is enabled
-                    $transaction_status = $_REQUEST['st'];
+                    $transaction_status = sanitize_text_field( $_REQUEST['st'] );
                 else if ( !empty( $_REQUEST['payment_status'] ) ) //if PDT is not enabled
-                    $transaction_status = $_REQUEST['payment_status'];
+                    $transaction_status = sanitize_text_field( $_REQUEST['payment_status'] );
                 else
                     $transaction_status = NULL;
                 if ( ! empty( $transaction_id ) && ! empty( $transient_transaction_id ) && ! empty( $transaction_status ) ) {

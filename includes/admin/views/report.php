@@ -73,7 +73,7 @@
 			<form id="tp-hotel-booking-export" method="POST">
 				<input type="hidden" name="page" value="<?php echo isset($_REQUEST['page']) ? esc_attr( sanitize_text_field( $_REQUEST['page'] ) ) : '' ?>" >
 				<input type="hidden" name="range" value="<?php echo isset($_REQUEST['range']) ? esc_attr( sanitize_text_field( $_REQUEST['range'] ) ) : '7day' ?>" >
-				<input type="hidden" name="tab" value="<?php echo isset($_REQUEST['tab']) ? esc_attr($_REQUEST['tab']) : 'price' ?>" >
+				<input type="hidden" name="tab" value="<?php echo isset($_REQUEST['tab']) ? esc_attr( sanitize_text_field( $_REQUEST['tab'] ) ) : 'price' ?>" >
 				<?php if( isset($_REQUEST['report_in']) ): ?>
 					<input type="hidden" name="report_in" value="<?php echo isset($_REQUEST['report_in']) ? esc_attr( sanitize_text_field( $_REQUEST['report_in'] ) ) : '' ?>" >
 				<?php endif; ?>

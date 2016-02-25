@@ -117,7 +117,7 @@ class Hotel_Booking_Block
 
 	function hotel_block_update()
 	{
-		if( ! isset( $_REQUEST[ 'schema' ] ) || $_REQUEST[ 'schema' ] !== 'hotel-block' )
+		if( ! isset( $_REQUEST[ 'schema' ] ) || sanitize_text_field( $_REQUEST[ 'schema' ] ) !== 'hotel-block' )
 		{
 			wp_send_json( array( 'status' => 'failed', 'message' => __( 'Something went wrong.', 'tp-hotel-booking-block' ) ) );
 		}
@@ -275,7 +275,7 @@ class Hotel_Booking_Block
 
 	function wp_ajax_hotel_block_delete_post_type()
 	{
-		if( ! isset( $_REQUEST[ 'schema' ] ) || $_REQUEST[ 'schema' ] !== 'hotel-block' )
+		if( ! isset( $_REQUEST[ 'schema' ] ) || sanitize_text_field( $_REQUEST[ 'schema' ] ) !== 'hotel-block' )
 		{
 			wp_send_json( array( 'status' => 'failed', 'message' => __( 'Something went wrong. Please try again!', 'tp-hotel-booking-block' ) ) );
 		}

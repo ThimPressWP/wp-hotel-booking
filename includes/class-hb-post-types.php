@@ -347,7 +347,7 @@ class HB_Post_Types{
     function update_taxonomy(){
 
         if( ! empty( $_REQUEST['action'] ) && in_array( hb_get_request( 'taxonomy'), array( 'hb_room_type', 'hb_room_capacity' ) ) ){
-            $taxonomy = ! empty( $_REQUEST['taxonomy'] ) ? $_REQUEST['taxonomy'] : '';
+            $taxonomy = ! empty( $_REQUEST['taxonomy'] ) ? sanitize_text_field( $_REQUEST['taxonomy'] ) : '';
             global $wpdb;
             if( ! empty( $_POST[ "{$taxonomy}_ordering" ] ) ){
                 $when = array();
@@ -388,7 +388,7 @@ class HB_Post_Types{
     }
 
     function taxonomy_columns( $columns ){
-        if( 'hb_room_type' == $_REQUEST['taxonomy'] ){
+        if( 'hb_room_type' == sanitize_text_field( $_REQUEST['taxonomy'] ) ){
             $columns['thumbnail'] = __( 'Gallery', 'tp-hotel-booking' );
         }else{
             $columns['capacity'] = __( 'Capacity', 'tp-hotel-booking' );
@@ -404,7 +404,7 @@ class HB_Post_Types{
     }
 
     function taxonomy_column_content( $content, $column_name, $term_id ){
-        $taxonomy = $_REQUEST['taxonomy'];
+        $taxonomy = sanitize_text_field( $_REQUEST['taxonomy'] );
         $term = get_term( $term_id, $taxonomy );
         switch ($column_name) {
             case 'ordering':

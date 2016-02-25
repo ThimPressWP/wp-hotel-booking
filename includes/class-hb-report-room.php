@@ -549,7 +549,7 @@ class HB_Report_Room extends HB_Report
 
 }
 
-if( isset($_REQUEST['tab']) && $_REQUEST['tab'] === 'room' )
+if( isset($_REQUEST['tab']) && sanitize_text_field( $_REQUEST['tab'] ) === 'room' )
 {
 	$GLOBALS['hb_report'] = HB_Report_Room::instance();
 }

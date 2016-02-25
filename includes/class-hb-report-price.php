@@ -408,7 +408,7 @@ class HB_Report_Price extends HB_Report
 
 }
 
-if( ! isset($_REQUEST['tab']) || $_REQUEST['tab'] === 'price' )
+if( ! isset($_REQUEST['tab']) || sanitize_text_field( $_REQUEST['tab'] ) === 'price' )
 {
 	$GLOBALS['hb_report'] = HB_Report_Price::instance();
 }

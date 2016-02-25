@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $tabs = hb_admin_settings_tabs();
-$selected_tab = ! empty( $_REQUEST['tab'] ) ? $_REQUEST['tab'] : '';
+$selected_tab = ! empty( $_REQUEST['tab'] ) ? sanitize_text_field( $_REQUEST['tab'] ) : '';
 
 if( ! array_key_exists( $selected_tab, $tabs ) ){
     $tab_keys = array_keys( $tabs );

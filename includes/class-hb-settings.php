@@ -54,7 +54,7 @@ class HB_Settings{
     }
 
     function test_email(){
-        $test = ! empty( $_REQUEST['test-email'] ) ? $_REQUEST['test-email'] : '';
+        $test = ! empty( $_REQUEST['test-email'] ) ? sanitize_text_field( $_REQUEST['test-email'] ) : '';
         if( ! $test ) return;
         switch( $test ){
             case 'new-booking':
