@@ -550,3 +550,13 @@ th.column-room_type{
     display: block;
 }
 /*END OTHER SETTINGS*/
+
+/*****Tags*****/
+.wp-list-table .column-thumbnail{
+    width: 120px;
+}
+.wp-list-table .column-ordering,
+.wp-list-table .column-capacity{
+    width: 80px;
+}
+/*****End Tags*****/

@@ -135,8 +135,8 @@ function hb_enqueue_lightbox_assets(){
 }
 
 function hb_lightbox_assets_lightbox2(){
-    wp_enqueue_script( 'lightbox2', TP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/lightbox2/src/js/lightbox.js' ) );
-    wp_enqueue_style( 'lightbox2', TP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/lightbox2/src/css/lightbox.css' ) );
+    wp_enqueue_script( 'lightbox2', TP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/lightbox2/js/lightbox.min.js' ) );
+    wp_enqueue_style( 'lightbox2', TP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/lightbox2/css/lightbox.min.css' ) );
     ?>
     <script type="text/javascript">
     jQuery(function(){
