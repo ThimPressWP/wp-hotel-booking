@@ -653,42 +653,6 @@ class HB_Post_Types{
         $args = apply_filters( 'hotel_booking_register_post_type_pricing_arg', $args );
         register_post_type( 'hb_pricing_plan', $args );
 
-        // coupon
-        /**
-         * Register custom post type for booking
-         */
-        $args = array(
-            'labels'             => array(
-                'name'               => _x( 'Coupons', 'Coupons', 'tp-hotel-coupon' ),
-                'singular_name'      => _x( 'Coupon', 'Coupon', 'tp-hotel-coupon' ),
-                'menu_name'          => __( 'Coupons', 'tp-hotel-coupon' ),
-                'parent_item_colon'  => __( 'Parent Item:', 'tp-hotel-coupon' ),
-                'all_items'          => __( 'Coupons', 'tp-hotel-coupon' ),
-                'view_item'          => __( 'View Coupon', 'tp-hotel-coupon' ),
-                'add_new_item'       => __( 'Add New Coupon', 'tp-hotel-coupon' ),
-                'add_new'            => __( 'Add New', 'tp-hotel-coupon' ),
-                'edit_item'          => __( 'Edit Coupon', 'tp-hotel-coupon' ),
-                'update_item'        => __( 'Update Coupon', 'tp-hotel-coupon' ),
-                'search_items'       => __( 'Search Coupon', 'tp-hotel-coupon' ),
-                'not_found'          => __( 'No coupon found', 'tp-hotel-coupon' ),
-                'not_found_in_trash' => __( 'No coupon found in Trash', 'tp-hotel-coupon' ),
-            ),
-            'public'             => false,
-            'query_var'          => true,
-            'publicly_queryable' => false,
-            'show_ui'            => true,
-            'has_archive'        => false,
-            'capability_type'    => 'post',
-            'map_meta_cap'       => true,
-            'show_in_menu'       => 'tp_hotel_booking',
-            'show_in_admin_bar'  => true,
-            'show_in_nav_menus'  => true,
-            'supports'           => array( 'title' ),
-            'hierarchical'       => false
-        );
-        $args = apply_filters( 'hotel_booking_register_post_type_coupon_arg', $args );
-        register_post_type( 'hb_coupon', $args );
-
         /**
          * Register custom post type for hb_booking_item
          */
