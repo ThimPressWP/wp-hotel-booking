@@ -1980,10 +1980,6 @@ function hb_new_customer_booking_email( $booking_id = null ) {
         $return = wp_mail( $to, $email_subject, stripslashes( $email_content ), $headers );
 
         remove_filter('wp_mail_content_type', 'hb_set_html_content_type');
-        if( $fo = fopen( HB_PLUGIN_PATH . '/email_' . get_post_status( $booking_id ) . HB_Booking::instance( $booking_id )->method_title . '.html' , 'w+') ) {
-        	fwrite( $fo, $email_content );
-        	fclose($fo);
-        };
     }
 
     return $return;

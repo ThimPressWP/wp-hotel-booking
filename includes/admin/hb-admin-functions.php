@@ -726,8 +726,8 @@ function hb_update_pricing_plan(){
         $loop = 0;
         $post_ids = array();
         foreach( (array)$_POST['price'] as $t => $v ){
-            $start  = absint( sanitize_text_field( $_POST['date-start'][ $t ] ) );
-            $end    = absint( sanitize_text_field( $_POST['date-end'][ $t ] ) );
+            $start  = sanitize_text_field( $_POST['date-start'][ $t ] );
+            $end    = sanitize_text_field( $_POST['date-end'][ $t ] );
             $prices = (array)$_POST['price'][ $t ];
             if( $t > 0 ) {
                 $post_id = intval( $t );
@@ -998,4 +998,16 @@ if ( ! function_exists( 'hb_update_meta_box_booking_status' ) )
 
         add_action( 'save_post', 'hb_update_meta_box_booking_status' );
     }
+}
+
+if ( is_admin() ) {
+    function hb_remove_revolution_slider_meta_boxes() {
+
+        remove_meta_box( 'mymetabox_revslider_0', 'hb_room', 'normal' );
+        remove_meta_box( 'mymetabox_revslider_0', 'hb_booking', 'normal' );
+        remove_meta_box( 'mymetabox_revslider_0', 'hb_customer', 'normal' );
+        remove_meta_box( 'mymetabox_revslider_0', 'hb_coupon', 'normal' );
+    }
+
+    add_action( 'do_meta_boxes', 'hb_remove_revolution_slider_meta_boxes' );
 }
