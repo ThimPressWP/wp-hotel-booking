@@ -726,9 +726,9 @@ function hb_update_pricing_plan(){
         $loop = 0;
         $post_ids = array();
         foreach( (array)$_POST['price'] as $t => $v ){
-            $start  = sanitize_text_field( $_POST['date-start'][ $t ] );
-            $end    = sanitize_text_field( $_POST['date-end'][ $t ] );
-            $prices = sanitize_text_field( $_POST['price'][ $t ] );
+            $start  = absint( sanitize_text_field( $_POST['date-start'][ $t ] ) );
+            $end    = absint( sanitize_text_field( $_POST['date-end'][ $t ] ) );
+            $prices = (array)$_POST['price'][ $t ];
             if( $t > 0 ) {
                 $post_id = intval( $t );
             } else {
