@@ -115,8 +115,9 @@ class HB_Ajax {
 		);
 
 		$return = apply_filters( 'hotel_booking_parse_search_param', array(
-				'success' => 1,
-				'sig'     => base64_encode( serialize( $params ) )
+				'success' 	=> 1,
+				'sig'     	=> base64_encode( serialize( $params ) ),
+				'params'  	=> $params
 			) );
 		hb_send_json( $return );
 	}
