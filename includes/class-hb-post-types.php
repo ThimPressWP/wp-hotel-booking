@@ -485,8 +485,8 @@ class HB_Post_Types{
                 'hierarchical'          => true,
                 'label'                 => __( 'Room Type', 'tp-hotel-booking' ),
                 'labels' => array(
-                    'name'              => __( 'Room Types', 'tp-hotel-booking' ),
-                    'singular_name'     => __( 'Room Type', 'tp-hotel-booking' ),
+                    'name'              => _x( 'Room Types', 'taxonomy general name', 'tp-hotel-booking' ),
+                    'singular_name'     => _x( 'Room Type', 'taxonomy general name', 'tp-hotel-booking' ),
                     'menu_name'         => _x( 'Types', 'Room Types', 'tp-hotel-booking' ),
                     'search_items'      => __( 'Search Room Types', 'tp-hotel-booking' ),
                     'all_items'         => __( 'All Room Types', 'tp-hotel-booking' ),
