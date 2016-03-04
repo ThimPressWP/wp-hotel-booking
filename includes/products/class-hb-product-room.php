@@ -491,11 +491,11 @@ class HB_Product_Room_Base extends HB_Product_Abstract
                 'post_type'     => 'hb_room',
                 'status'        => 'publish',
                 'meta_query'    => array(
-                        array(
-                            'key'       => '_hb_max_adults_per_room',
-                            'value'     => $max_adults_per_room,
-                            'compare'   => '>=',
-                        ),
+                        // array(
+                        //     'key'       => '_hb_max_adults_per_room',
+                        //     'value'     => $max_adults_per_room,
+                        //     'compare'   => '>=',
+                        // ),
                         array(
                             'key'       => '_hb_max_child_per_room',
                             'value'     => $max_child_per_room,
