@@ -1000,6 +1000,17 @@ if ( ! function_exists( 'hb_update_meta_box_booking_status' ) )
     }
 }
 
+add_action( 'hb_update_meta_box_gallery_settings', 'hb_update_meta_box_gallery' );
+if ( ! function_exists( 'hb_update_meta_box_gallery' ) ) {
+    function hb_update_meta_box_gallery( $post_id ) {
+        if( get_post_type() !== 'hb_room' )
+            return;
+
+        if ( empty( $_POST['_hb_gallery'] ) ) {
+            update_post_meta( $post_id, '_hb_gallery', array() );
+        }
+    }
+}
 if ( is_admin() ) {
     function hb_remove_revolution_slider_meta_boxes() {
 

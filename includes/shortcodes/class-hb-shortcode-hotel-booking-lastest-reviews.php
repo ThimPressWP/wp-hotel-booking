@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class HB_Shortcode_Hotel_Booking_Lastest_Reviews extends HB_Shortcodes
 {
 
-	public $shortcode = 'hotel_booking_slider';
+	public $shortcode = 'hotel_booking_lastest_reviews';
 
 	public function __construct()
 	{
