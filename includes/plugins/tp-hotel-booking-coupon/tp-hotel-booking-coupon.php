@@ -61,7 +61,7 @@ class TP_Hotel_Booking_Coupon
 		}
 		else
 		{
-			if( $this->is_hotel_active && ! class_exists( 'HB_Coupon' ) )
+			if( $this->is_hotel_active )
 			{
 				require_once TP_HB_COUPON_DIR . '/inc/class-hb-coupon.php';
 				add_action( 'hotel_booking_admin_setting_general', array( $this, 'admin_settings' ) );

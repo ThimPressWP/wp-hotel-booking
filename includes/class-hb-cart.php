@@ -915,27 +915,30 @@ function hb_get_booking_statuses() {
  * @return bool
  */
 function hb_get_coupons_active( $date, $code = false ){
+
     $coupons = false;
     $enable = HB_Settings::instance()->get( 'enable_coupon' );
-    if( $enable ) {
+
+    if( $enable && $code ) {
         $args = array(
             'post_type' => 'hb_coupon',
             'posts_per_page' => 999,
             'meta_query' => array(
                 'relation' => 'AND',
                 array(
-                    'value' => $date,
-                    'key'   => '_hb_coupon_date_from_timestamp',
-                    'compare' => '<='
+                    'key'       => '_hb_coupon_date_from_timestamp',
+                    'compare'   => '<=',
+                    'value'     => $date
                 ),
                 array(
-                    'value' => $date,
                     'key'   => '_hb_coupon_date_to_timestamp',
-                    'compare' => '>='
+                    'compare' => '>=',
+                    'value' => $date
                 )
             )
         );
-        if( ( $coupons = get_posts( $args ) ) && $code ){
+
+        if(  $coupons = get_posts( $args ) ){
             $found = false;
             foreach( $coupons as $coupon ){
                 if( strcmp( $coupon->post_title, $code ) == 0 ){
@@ -951,3 +954,5 @@ function hb_get_coupons_active( $date, $code = false ){
     }
     return $coupons;
 }
+
+// var_dump(HB_Cart::instance()->empty_cart()); die();

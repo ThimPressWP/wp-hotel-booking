@@ -9,7 +9,7 @@ class HB_Coupon{
     /**
      * @var array
      */
-    static protected $_instance = array();
+    static $_instance = null;
 
     /**
      * @var bool
@@ -108,14 +108,14 @@ class HB_Coupon{
             }
         }
 
-        if( $return['is_valid'] &&  ! empty( $this->_settings['maximum_spend' ] ) && ( $maximum_spend = intval( $this->_settings['maximum_spend'] ) > 0 ) ){
+        if( $return['is_valid'] && ! empty( $this->_settings['maximum_spend' ] ) && ( $maximum_spend = intval( $this->_settings['maximum_spend'] ) > 0 ) ){
             $return['is_valid'] = $this->get_cart_sub_total() <= $maximum_spend;
             if( ! $return['is_valid'] ) {
                 $return['message'] = sprintf(__('The maximum spend for this coupon is %s.', 'tp-hotel-booking'), $maximum_spend);
             }
         }
 
-        if( $return['is_valid'] &&  ! empty( $this->_settings['limit_per_coupon' ] ) && ( $limit_per_coupon = intval( $this->_settings['limit_per_coupon'] ) ) > 0 ){
+        if( $return['is_valid'] && ! empty( $this->_settings['limit_per_coupon' ] ) && ( $limit_per_coupon = intval( $this->_settings['limit_per_coupon'] ) ) > 0 ){
             $usage_count = ! empty( $this->_settings['usage_count'] ) ? intval( $this->_settings['usage_count'] ) : 0;
             $return['is_valid'] = $limit_per_coupon > $usage_count;
             if( ! $return['is_valid'] ) {
@@ -123,7 +123,7 @@ class HB_Coupon{
             }
         }
 
-        /*if( $return['is_valid'] &&  ! empty( $this->_settings['limit_per_customer' ] ) && ( $limit_per_customer = intval( $this->_settings['limit_per_customer'] ) > 0 ) ){
+        /*if( $return['is_valid'] && ! empty( $this->_settings['limit_per_customer' ] ) && ( $limit_per_customer = intval( $this->_settings['limit_per_customer'] ) > 0 ) ){
             //$return['is_valid'] = $this->get_cart_sub_total() <= $maximum_spend;
         }*/
         return $return;
@@ -137,19 +137,22 @@ class HB_Coupon{
      */
     static function instance( $coupon ){
         $post = $coupon;
+
+        $id = null;
         if( $coupon instanceof WP_Post ){
             $id = $coupon->ID;
         }elseif( is_object( $coupon ) && isset( $coupon->ID ) ){
             $id = $coupon->ID;
         }elseif( $coupon instanceof HB_Coupon ) {
             $id = $coupon->post->ID;
-        }else{
+        }else {
             $id = $coupon;
         }
-        if( empty( self::$_instance[ $id ] ) ){
-            self::$_instance[ $id ] = new self( $post );
+
+        if( isset( self::$_instance[ $id ] ) ){
+            return self::$_instance[ $id ];
         }
-        return self::$_instance[ $id ];
+
+        return self::$_instance[ $id ] = new self( $post );
     }
 }
-

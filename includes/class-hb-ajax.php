@@ -128,6 +128,7 @@ class HB_Ajax {
 		ob_start();
 		$today    = strtotime( date( 'm/d/Y' ) );
 		$coupon   = hb_get_coupons_active( $today, $code );
+
 		$output   = ob_get_clean();
 		$response = array();
 		if ( $coupon ) {
@@ -141,7 +142,7 @@ class HB_Ajax {
 					session_start();
 				}
 				// set_transient( 'hb_user_coupon_' . session_id(), $coupon, HOUR_IN_SECONDS );
-				TP_Hotel_Booking::instance()->cart->set_customer( 'coupon', $coupon );
+				TP_Hotel_Booking::instance()->cart->set_customer( 'coupon', $coupon->post->ID );
 				hb_add_message( __( 'Coupon code applied', 'tp-hotel-booking' ) );
 			}
 		} else {
