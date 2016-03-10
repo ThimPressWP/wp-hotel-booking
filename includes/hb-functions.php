@@ -1113,7 +1113,7 @@ function hb_search_rooms( $args = array() ) {
             AND rooms.post_status = %s
             AND pm.meta_value >= %d
             AND ( term_cap.meta_value >= %d OR pm2.meta_value >= %d )
-        GROUP BY rooms.post_name, rooms.ID
+        GROUP BY rooms.post_name
         HAVING available_rooms > 0
         ORDER BY term_cap.meta_value DESC
     ", '_hb_max_child_per_room', '_hb_max_adults_per_room', '_hb_room_capacity', 'hb_max_number_of_adults', 'hb_room', 'publish', $max_child, $adults, $adults );
@@ -2075,7 +2075,7 @@ if ( ! function_exists( 'hb_get_post_id_meta' ) ) {
 
 	function hb_get_post_id_meta( $key, $value ) {
 		global $wpdb;
-		$meta = $wpdb->get_results("SELECT * FROM `".$wpdb->postmeta."` WHERE meta_key='".esc_sql( $key )."' AND meta_value='".esc_sql( $value )."'");
+		$meta = $wpdb->get_results( "SELECT * FROM `".$wpdb->postmeta."` WHERE meta_key='".esc_sql( $key )."' AND meta_value='".esc_sql( $value )."'" );
 		if ( is_array( $meta ) && ! empty( $meta ) && isset( $meta[0] ) ) {
 			$meta = $meta[0];
 		}
