@@ -135,7 +135,15 @@ foreach( $_rooms as $id ){
         </tr>
         <tr class="booking-table-row">
             <td colspan="5" class="bold-text"><?php _e( 'Grand Total', 'tp-hotel-booking' ); ?></td>
-            <td class="text-align-right"><?php echo hb_format_price( get_post_meta( $booking_id, '_hb_total', true ), $currency ); ?></td>
+            <td class="text-align-right"><?php echo hb_format_price( $booking->total, $currency ); ?></td>
+        </tr>
+        <tr class="booking-table-row">
+            <td colspan="5" class="bold-text">
+                <?php _e( 'Advance Payment', 'tp-hotel-booking' ); ?>
+            </td>
+            <td class="text-align-right">
+                <?php echo hb_format_price( $booking->advance_payment, hb_get_currency_symbol( $booking->currency ) ) ?>
+            </td>
         </tr>
     </tbody>
 </table>

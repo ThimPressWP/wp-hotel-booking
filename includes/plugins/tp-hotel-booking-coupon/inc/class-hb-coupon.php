@@ -135,7 +135,7 @@ class HB_Coupon{
      * @param $coupon
      * @return mixed
      */
-    static function instance( $coupon ){
+    static function instance( $coupon = null ){
         $post = $coupon;
 
         $id = null;

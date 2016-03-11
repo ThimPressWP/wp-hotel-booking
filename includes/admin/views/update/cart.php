@@ -120,5 +120,13 @@ foreach ( $cart_params as $key => $cart_item ) {
                 <?php echo hb_format_price( $booking->total, hb_get_currency_symbol( $booking->currency ) ) ?>
             </td>
         </tr>
+        <tr class="hb_advance_payment">
+            <td colspan="6">
+                <?php _e( 'Advance Payment', 'tp-hotel-booking' ); ?>
+            </td>
+            <td colspan="1">
+                <?php echo hb_format_price( $booking->advance_payment, hb_get_currency_symbol( $booking->currency ) ) ?>
+            </td>
+        </tr>
     </tbody>
 </table>
