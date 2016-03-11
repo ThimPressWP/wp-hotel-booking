@@ -11,7 +11,7 @@
 
 		window.onload = function(){
 			var ctx = document.getElementById( 'hotel_canvas_report_room' ).getContext( '2d' );
-			window.myBar = new Chart(ctx).Bar( <?php echo json_encode( $hb_report->js_data() ) ?>, {
+			window.myBar = new Chart(ctx).Bar( <?php echo json_encode( $hb_report->series() ) ?>, {
 				responsive : true,
 				scaleGridLineColor : "rgba(0,0,0,.05)"
 			});

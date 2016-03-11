@@ -47,10 +47,9 @@ abstract class HB_Report
 				{
 
 					$this->_start_in = absint( $_GET['report_in_timestamp'] ) + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS );
-
-					if( isset($_GET['report_in_timestamp']) && sanitize_text_field( $_GET['report_in_timestamp'] ) )
+					if( isset($_GET['report_out_timestamp']) && sanitize_text_field( $_GET['report_out_timestamp'] ) )
 					{
-						$this->_end_in = strtotime( 'midnight', absint( sanitize_text_field( $_GET['report_in_timestamp'] ) ) + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
+						$this->_end_in = strtotime( 'midnight', absint( sanitize_text_field( $_GET['report_out_timestamp'] ) ) + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
 					} else {
 						$this->_end_in = strtotime( 'midnight', current_time( 'timestamp' ) );
 					}
@@ -80,7 +79,7 @@ abstract class HB_Report
 
 			case 'year' :
 				$this->_start_in    = date( 'Y-01-01', current_time('timestamp') );
-				$this->_end_in        = date('Y-12-31', current_time('timestamp')); // date( 'Y-m-d', current_time( 'timestamp' ) );
+				$this->_end_in       = date('Y-12-31', current_time('timestamp')); // date( 'Y-m-d', current_time( 'timestamp' ) );
 				$this->chart_groupby = 'month';
 			break;
 
@@ -119,7 +118,6 @@ abstract class HB_Report
 			$this->_range_end 	= date( 'm', strtotime( $this->_end_in ) );
 			$this->chart_groupby_title = __( 'Month', 'tp-hotel-booking-report' );
 		}
-
 	}
 
 	/**
