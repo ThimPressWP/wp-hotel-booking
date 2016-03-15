@@ -468,15 +468,24 @@
 			searchResult.each(function () {
 				$(this).submit(function (event) {
 					event.preventDefault();
-					var _form = $(this);
-					var button = _form.find('.hb_add_to_cart');
-					var number_room_select = $(this).find('.number_room_select').val();
-					if (typeof number_room_select === 'undefined' || number_room_select === '') {
-						alert(hotel_booking_l18n.waring.room_select);
+					var _form = $(this),
+						button = _form.find('.hb_add_to_cart'),
+						select = _form.find('.number_room_select'),
+						number_room_select = _form.find( '.number_room_select option:selected' ).val(),
+						room_title = _form.find('.hb-room-name');
+
+					$('.number_room_select').removeClass('hotel_booking_invalid_quantity');
+					if ( typeof number_room_select === 'undefined' || number_room_select === '' ) {
+						select.addClass( 'hotel_booking_invalid_quantity' );
+						//message
+						room_title.find('.hb_success_message').remove();
+						room_title.append( '<label class="hb_success_message">' + hotel_booking_l18n.waring.room_select + '</label>' );
+						var timeOut = setTimeout(function () {
+							room_title.find('.hb_success_message').remove();
+						}, 2000);
 						return false;
 					}
 					var data = $(this).serializeArray();
-					var room_title = $(this).find('.hb-room-name');
 					$.ajax({
 						url       : hotel_settings.ajax,
 						type      : 'POST',
@@ -489,7 +498,8 @@
 						success   : function (code) {
 							_form.hb_overlay_ajax_stop();
 							code = parseJSON(code);
-							if (typeof code.message !== 'undefined') {
+							if ( typeof code.message !== 'undefined' ) {
+								//message
 								room_title.find('.hb_success_message').remove();
 								room_title.append(code.message);
 								var timeOut = setTimeout(function () {
@@ -497,14 +507,12 @@
 								}, 3000);
 							}
 
-							if (typeof code.status !== 'undefined' && code.status === 'success') {
+							if ( typeof code.status !== 'undefined' && code.status === 'success' ) {
 								// add message successfully
-								if( typeof code.redirect !== 'undefined' )
-								{
+								if( typeof code.redirect !== 'undefined' ) {
 									window.location.href = code.redirect;
 								}
-							}
-							else {
+							} else {
 								alert(code.message);
 							}
 
