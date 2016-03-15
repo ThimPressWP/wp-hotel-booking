@@ -4,13 +4,13 @@
     Plugin URI: http://thimpress.com/
     Description: Payment Stripe TP Hotel Booking Addon
     Author: ThimPress
-    Version: 1.0
+    Version: 1.0.1
     Author URI: http://thimpress.com
 */
 
 define( 'TP_HB_STRIPE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TP_HB_STRIPE_URI', plugins_url( '', __FILE__ ) );
-define( 'TP_HB_STRIPE_VER', 1.0 );
+define( 'TP_HB_STRIPE_VER', '1.0.1' );
 
 class TP_Hotel_Booking_Payment_Stripe
 {

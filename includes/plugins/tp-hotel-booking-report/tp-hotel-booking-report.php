@@ -4,11 +4,11 @@
     Plugin URI: http://thimpress.com/
     Description: TP Hotel Booking Report Addon
     Author: ThimPress
-    Version: 1.0
+    Version: 1.0.1
 */
 define( 'TP_HB_REPORT_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TP_HB_REPORT_URI', plugin_dir_url( __FILE__ ) );
-define( 'TP_HB_REPORT_VER', 1.0 );
+define( 'TP_HB_REPORT_VER', '1.0.1' );
 
 class TP_Hotel_Booking_Report
 {
