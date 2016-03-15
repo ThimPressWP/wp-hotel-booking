@@ -83,8 +83,6 @@ class HB_Report_Room extends HB_Report
 	 */
 	public function getOrdersItems()
 	{
-		$transient_name = 'tp_hotel_booking_charts_query' . $this->_chart_type . '_' . $this->chart_groupby . '_' . $this->_range . '_' . $this->_start_in . '_' . $this->_end_in;
-
 		global $wpdb;
 
 		if( $this->chart_groupby === 'day' )
