@@ -94,6 +94,11 @@ Yes.
 * Query search
 * Update report customer delete post
 
+= 1.1.4 =
+* Coupon update
+* Report update
+* Select room search
+
 == Upgrade Notice ==
 
 = 1.0 =
