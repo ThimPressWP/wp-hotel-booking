@@ -784,60 +784,8 @@ function hb_get_return_url(){
  * @param string
  */
 function hb_update_booking_status( $booking_id, $status ){
-    $old_status = get_post_meta( $booking_id, '_hb_booking_status', true );
-
-    if( strcasecmp( $old_status, $status ) != 0 ) {
-        update_post_meta($booking_id, '_hb_booking_status', $status);
-        if ($coupon = get_post_meta($booking_id, '_hb_coupon', true)) {
-            $usage_count = get_post_meta($coupon['id'], '_hb_usage_count', true);
-            if (strcasecmp($status, 'complete') == 0) {
-                $usage_count++;
-            } else {
-                if ($usage_count > 0) {
-                    $usage_count--;
-                }else{
-                    $usage_count = 0;
-                }
-            }
-            update_post_meta( $coupon['id'], '_hb_usage_count', $usage_count );
-        }
-        do_action( 'hb_update_booking_status', $status, $old_status, $booking_id );
-    }
-}
-
-/**
- * Set booking data to cache
- *
- * @param $method
- * @param $temp_id
- * @param $customer_id
- * @param $transaction
- */
-function hb_set_transient_transaction( $method, $temp_id, $customer_id, $transaction ){
-    // store booking info in a day
-    set_transient( $method . '-' . $temp_id, array( 'customer_id' => $customer_id, 'transaction_object' => $transaction ), 60 * 60 * 24 );
-}
-
-/**
- * Get booking data from cache
- *
- * @param $method
- * @param $temp_id
- * @return mixed
- */
-function hb_get_transient_transaction( $method, $temp_id ){
-    return get_transient( $method . '-' . $temp_id );
-}
-
-/**
- * Delete booking data from cache
- *
- * @param $method
- * @param $temp_id
- * @return mixed
- */
-function hb_delete_transient_transaction( $method, $temp_id ) {
-    return delete_transient( $method . '-' . $temp_id );
+    $booking = HB_Booking::instance( $booking_id );
+    return $booking->update_status( $status );
 }
 
 /**
@@ -957,5 +905,3 @@ function hb_get_coupons_active( $date, $code = false ){
     }
     return $coupons;
 }
-
-// var_dump(HB_Cart::instance()->empty_cart()); die();

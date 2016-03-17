@@ -258,13 +258,24 @@ function hb_add_meta_boxes(){
 }
 add_action( 'init', 'hb_add_meta_boxes', 50 );
 
-function hb_meta_box_coupon_settings_update_meta_value( $meta_value, $field_name, $meta_box_name, $post_id  ){
-    if( $field_name == 'booking_status' ){
-        hb_update_booking_status( $post_id, $meta_value );
+add_action( 'hb_booking_status_changed', 'hb_booking_status_completed_action', 10, 3 );
+if ( ! function_exists( 'hb_booking_status_completed_action' ) ) {
+    function hb_booking_status_completed_action( $booking_id, $old_status, $new_status ) {
+        if ( $coupon = get_post_meta( $booking_id, '_hb_coupon', true ) ) {
+            $usage_count = get_post_meta( $coupon['id'], '_hb_usage_count', true );
+            if ( strpos( $new_status, 'completed' ) == 0 ) {
+                $usage_count++;
+            } else {
+                if ($usage_count > 0) {
+                    $usage_count--;
+                }else{
+                    $usage_count = 0;
+                }
+            }
+            update_post_meta( $coupon['id'], '_hb_usage_count', $usage_count );
+        }
     }
-    return $meta_value;
 }
-add_filter( 'hb_meta_box_update_meta_value', 'hb_meta_box_coupon_settings_update_meta_value', 10, 4 );
 
 function hb_bookings_meta_boxes() {
     HB_Meta_Box::instance(
