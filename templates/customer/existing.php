@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <?php if ( ! TP_Hotel_Booking::instance()->cart->customer_id ) : ?>
 
-    <div class="hb-order-existing-customer" data-label="-Or-">
+    <div class="hb-order-existing-customer" data-label="<?php esc_attr_e( '-Or-', 'tp-hotel-booking' ); ?>">
         <div class="hb-col-padding hb-col-border">
             <h4><?php _e( 'Existing customer?', 'tp-hotel-booking' ); ?></h4>
             <ul class="hb-form-table">
