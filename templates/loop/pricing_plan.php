@@ -4,7 +4,7 @@
  *
  * @author 		ThimPress
  * @package 	Tp-hotel-booking/Templates
- * @version     0.9
+ * @version     1.1.4
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -15,8 +15,7 @@ global $hb_room;
 $pricings = $hb_room->pricing_plans_data();
 $week_names = $pricings['week'];
 $capacitiyID = $pricings['capacity'];
-unset($pricings['week']);
-unset($pricings['capacity']);
+
 ?>
 
 <?php foreach ($pricings['data'] as $key => $prices): ?>
@@ -44,7 +43,7 @@ unset($pricings['capacity']);
 				<?php for( $i = 0; $i < 7; $i++ ){?>
                     <td>
                         <?php $price = ! empty( $prices[ $capacitiyID ] ) ? ( array_key_exists( $i, $prices[ $capacitiyID ] ) ? $prices[ $capacitiyID ][ $i ] : '' ) : ''; ?>
-                        <?php printf( '%1$s%2$s', hb_get_currency_symbol(), $price ) ?>
+                        <?php printf( '%s', hb_format_price( $price ) ) ?>
                     </td>
                 <?php } ?>
 			</tr>

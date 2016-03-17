@@ -86,7 +86,7 @@ class HB_Coupon{
 
     function apply_sub_total_discount( $sub_total ){
         $discount = $this->get_discount_value();
-        return $sub_total - $discount;
+        return $discount < $sub_total ? $sub_total - $discount : 0;
     }
 
     function get_cart_sub_total(){

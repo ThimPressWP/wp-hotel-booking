@@ -6,7 +6,7 @@
  *
  * @author 		ThimPress
  * @package 	tp-hotel-booking/templates
- * @version     0.9
+ * @version     1.1.4
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -98,6 +98,7 @@ Yes.
 * Coupon update
 * Report update
 * Select room search
+* Pricing plan
 
 == Upgrade Notice ==
 

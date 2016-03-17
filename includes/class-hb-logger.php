@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Allows log files to be written to for debugging purposes.
  *
  * @class 		HB_Logger
- * @version		0.9
+ * @version		1.1.4
  * @package		WooCommerce/Classes
  * @category	Class
  * @author 		WooThemes

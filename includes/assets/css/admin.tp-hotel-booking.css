@@ -37,6 +37,9 @@ form[name="hb-admin-settings-form"] input[type="text"]{
     overflow: hidden;
     clear: both;
 }
+.hb-pricing-table input[type="number"] {
+    width: 100px;
+}
 .hb-pricing-table{
     border: 1px solid #DDD;
     position: relative;
@@ -77,6 +80,10 @@ form[name="hb-admin-settings-form"] input[type="text"]{
 .hb-pricing-table.regular-price .hb-pricing-table-title input,
 .hb-pricing-table.regular-price .hb-pricing-controls .dashicons-trash{
     display: none;
+}
+.hb-pricing-table-title input{
+    min-width: 150px;
+    width: auto;
 }
 th.column-room_capacity,
 th.column-room_type{

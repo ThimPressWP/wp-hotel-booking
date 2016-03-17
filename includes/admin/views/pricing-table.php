@@ -20,15 +20,22 @@ $pricing_plans = get_posts(
                 'key'     => '_hb_pricing_plan_room',
                 'value'   => $room_id
             )
-        )
+        ),
+        'orderby'           => 'ID',
+        'order'             => 'DESC'
     )
 );
 
+$regular_plan = null;
 if( $pricing_plans ) {
-    $regular_plan = array_pop($pricing_plans);
-} else {
-    $regular_plan = null;
+    foreach( $pricing_plans as $k => $plan ) {
+        if ( ! $other_plan = get_post_meta( $plan->ID, '_hb_pricing_plan_start', true  ) ) {
+            $regular_plan = $plan;
+            unset( $pricing_plans[$k] );
+        }
+    }
 }
+
 $count_plants = count( $pricing_plans );
 
 ?>
@@ -76,7 +83,7 @@ $count_plants = count( $pricing_plans );
                                     <?php
                                     $price = ! empty( $regular_prices[ $capacitiyID ][ $i ] ) ? $regular_prices[ $capacitiyID ][ $i ] : '';
                                     ?>
-                                    <input class="hb-pricing-price" type="text" name="price[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>][<?php echo esc_attr( $capacitiyID ); ?>][<?php echo esc_attr( $i ); ?>]" value="<?php echo esc_attr( $price ); ?>" size="10" readonly="readonly" />
+                                    <input class="hb-pricing-price" type="number" min="0" step="0.1" name="price[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>][<?php echo esc_attr( $capacitiyID ); ?>][<?php echo esc_attr( $i ); ?>]" value="<?php echo esc_attr( $price ); ?>" size="10" readonly="readonly" />
                                 </td>
                             <?php } ?>
                         </tr>
@@ -132,7 +139,7 @@ $count_plants = count( $pricing_plans );
                                 <?php for( $i = 0; $i < 7; $i++ ){?>
                                     <td>
                                         <?php $price = ! empty( $plan_prices[ $capacitiyID ] ) ? ( array_key_exists( $i, $plan_prices[ $capacitiyID ] ) ? $plan_prices[ $capacitiyID ][ $i ] : '' ) : ''; ?>
-                                        <input class="hb-pricing-price" type="text" name="price[<?php echo esc_attr( $plan->ID ); ?>][<?php echo esc_attr( $capacitiyID ); ?>][<?php echo esc_attr( $i ); ?>]" value="<?php echo esc_attr( $price ); ?>" size="10" readonly="readonly" />
+                                        <input class="hb-pricing-price" type="number" min="0" step="0.1" name="price[<?php echo esc_attr( $plan->ID ); ?>][<?php echo esc_attr( $capacitiyID ); ?>][<?php echo esc_attr( $i ); ?>]" value="<?php echo esc_attr( $price ); ?>" size="10" readonly="readonly" />
                                     </td>
                                 <?php } ?>
                             </tr>
@@ -193,7 +200,7 @@ $count_plants = count( $pricing_plans );
                     <tr>
                         <?php for( $i = 0; $i < 7; $i++ ){?>
                             <td>
-                                <input class="hb-pricing-price" type="text" name="price[__INDEX__][<?php echo esc_attr( $capacitiyID ); ?>][<?php echo esc_attr( $i ); ?>]" value="" size="10" readonly="readonly" />
+                                <input class="hb-pricing-price" type="number" min="0" step="0.1" name="price[__INDEX__][<?php echo esc_attr( $capacitiyID ); ?>][<?php echo esc_attr( $i ); ?>]" value="" size="10" readonly="readonly" />
                             </td>
                         <?php } ?>
                     </tr>

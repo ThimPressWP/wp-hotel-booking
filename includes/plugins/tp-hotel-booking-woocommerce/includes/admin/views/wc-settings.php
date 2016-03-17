@@ -4,7 +4,7 @@
  *
  * @author  ThimPress
  * @package Views
- * @version 0.9
+ * @version 1.1.4
  */
 ?>
 <h3><?php _e( 'WooCommerce', 'tp-hotel-booking-woocommerce');?></h3>

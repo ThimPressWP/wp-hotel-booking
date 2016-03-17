@@ -129,7 +129,7 @@
                 var $table = $(this),
                     $start = $table.find('input[name^="date-start"]'),
                     $end = $table.find('input[name^="date-end"]');
-                if(! $table.hasClass( 'regular-price')) {
+                if( ! $table.hasClass( 'regular-price') ) {
                     if ( ! isDate( $start.datepicker( 'getDate' ) ) ) {
                         alert(hotel_booking_l18n.empty_pricing_plan_start_date );
                         $start.focus();
@@ -142,7 +142,7 @@
 
                     if ( ! can_submit ) return false;
                 }
-                $table.find('input[type="text"], input[type="hidden"]').each(function(){
+                $table.find('input[type="text"], input[type="number"], input[type="hidden"]').each(function(){
                     var $input = $(this),
                         name = $input.attr('name');
                     name = name.replace(/__INDEX__/, i - 1000);
