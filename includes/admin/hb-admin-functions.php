@@ -725,10 +725,12 @@ function hb_update_pricing_plan(){
     if( ! empty( $_POST['price'] ) ){
         $loop = 0;
         $post_ids = array();
-        foreach( (array)$_POST['price'] as $t => $v ){
-            $start  = sanitize_text_field( $_POST['date-start'][ $t ] );
-            $end    = sanitize_text_field( $_POST['date-end'][ $t ] );
+
+        foreach ( (array)$_POST['price'] as $t => $v ) {
+            $start  = isset( $_POST['date-start'][ $t ] ) ? sanitize_text_field( $_POST['date-start'][ $t ] ) : '';
+            $end    = isset( $_POST['date-end'][ $t ] ) ? sanitize_text_field( $_POST['date-end'][ $t ] ) : '';
             $prices = (array)$_POST['price'][ $t ];
+
             if( $t > 0 ) {
                 $post_id = intval( $t );
             } else {
@@ -759,7 +761,7 @@ function hb_update_pricing_plan(){
         $existing_ids = get_posts(
             array(
                 'post_type'         => 'hb_pricing_plan',
-                'posts_per_page'    => 9999,
+                'posts_per_page'    => -1,
                 'fields'            => 'ids',
                 'meta_query' => array(
                     array(

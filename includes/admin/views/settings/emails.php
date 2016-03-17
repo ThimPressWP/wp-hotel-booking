@@ -2,7 +2,7 @@
 /**
  * Template for displaying email settings
  *
- * @since 0.9.1
+ * @since 1.1.3
  */
 if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
