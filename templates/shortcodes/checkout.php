@@ -6,6 +6,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $cart = TP_Hotel_Booking::instance()->cart;
 global $hb_settings;
+
+do_action( 'hotel_booking_before_checkout_form' );
 ?>
 <div id="hotel-booking-payment">
 
@@ -110,3 +112,5 @@ global $hb_settings;
         <p><button type="submit" class="hb_button"><?php _e( 'Check out', 'tp-hotel-booking' ); ?></button></p>
     </form>
 </div>
+
+<?php do_action( 'hotel_booking_after_checkout_form' ); ?>
