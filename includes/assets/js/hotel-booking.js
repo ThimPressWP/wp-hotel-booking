@@ -630,7 +630,7 @@
 				if (date) {
 					date.setDate(date.getDate() + 1);
 				}
-				$( '#check_out_date_' + unique).datepicker( 'option', 'minDate', date)
+				$( '#check_out_date_' + unique).datepicker( 'option', 'minDate', date);
 			}
 		});
 

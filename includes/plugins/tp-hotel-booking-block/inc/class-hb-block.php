@@ -385,7 +385,7 @@ class Hotel_Booking_Block
 	            rooms.post_type = %s
 	            AND rooms.post_status = %s
 	            AND pm.meta_value >= %d
-            	AND ( term_cap.meta_value >= %d OR pm2.meta_value >= %d )
+            	AND ( term_cap.meta_value <= %d OR pm2.meta_value <= %d )
 	        GROUP BY rooms.ID
 	        HAVING ( available_rooms > 0 AND blocked = 0 )
         	ORDER BY term_cap.meta_value DESC
