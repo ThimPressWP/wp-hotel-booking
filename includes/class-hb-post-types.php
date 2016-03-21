@@ -682,6 +682,17 @@ class HB_Post_Types{
      * Registers custom post statues
      */
     function register_post_statues(){
+
+        $args = array(
+            'label'                     => _x( 'Cancelled Payment', 'Booking status', 'tp-hotel-booking' ),
+            'public'                    => false,
+            'exclude_from_search'       => false,
+            'show_in_admin_all_list'    => true,
+            'show_in_admin_status_list' => true,
+            'label_count'               => _n_noop( 'Cancelled Payment <span class="count">(%s)</span>', 'Cancelled Payment <span class="count">(%s)</span>', 'tp-hotel-booking' )
+        );
+        register_post_status( 'hb-cancelled', $args );
+
         $args = array(
             'label'                     => _x( 'Pending Payment', 'Booking status', 'tp-hotel-booking' ),
             'public'                    => false,

@@ -173,7 +173,7 @@ class HB_Product_Room_Base extends HB_Product_Abstract
                 $return .= '</select>';
                 break;
             case 'num_of_rooms':
-                $return = $this->get_data( 'num_of_rooms' );
+                $return = get_post_meta( $this->post->ID, '_hb_num_of_rooms', true );
                 break;
             case 'room_details_total':
                 $return = $this->_room_details_total;

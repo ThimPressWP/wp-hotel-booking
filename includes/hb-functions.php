@@ -522,32 +522,32 @@ function hb_create_empty_post( $args = array() ) {
  */
 function hb_l18n() {
 	$translation = array(
-		'invalid_email'                  => __( 'Your email address is invalid', 'tp-hotel-booking' ),
-		'no_payment_method_selected'     => __( 'Please select your payment method ', 'tp-hotel-booking' ),
-		'confirm_tos'                    => __( 'Please accept our Terms and Conditions ', 'tp-hotel-booking' ),
-		'no_rooms_selected'              => __( 'Please select at least one the room', 'tp-hotel-booking' ),
-		'empty_customer_title'           => __( 'Please select your title', 'tp-hotel-booking' ),
-		'empty_customer_first_name'      => __( 'Please enter your first name', 'tp-hotel-booking' ),
-		'empty_customer_last_name'       => __( 'Please enter your last name', 'tp-hotel-booking' ),
+		'invalid_email'                  => __( 'Your email address is invalid.', 'tp-hotel-booking' ),
+		'no_payment_method_selected'     => __( 'Please select your payment method.', 'tp-hotel-booking' ),
+		'confirm_tos'                    => __( 'Please accept our Terms and Conditions.', 'tp-hotel-booking' ),
+		'no_rooms_selected'              => __( 'Please select at least one the room.', 'tp-hotel-booking' ),
+		'empty_customer_title'           => __( 'Please select your title.', 'tp-hotel-booking' ),
+		'empty_customer_first_name'      => __( 'Please enter your first name.', 'tp-hotel-booking' ),
+		'empty_customer_last_name'       => __( 'Please enter your last name.', 'tp-hotel-booking' ),
 
-		'empty_customer_address'         => __( 'Please enter your address', 'tp-hotel-booking' ),
-		'empty_customer_city'            => __( 'Please enter your city name', 'tp-hotel-booking' ),
-		'empty_customer_state'           => __( 'Please enter your state', 'tp-hotel-booking' ),
-		'empty_customer_postal_code'     => __( 'Please enter your postal code', 'tp-hotel-booking' ),
-		'empty_customer_country'         => __( 'Please select your country', 'tp-hotel-booking' ),
-		'empty_customer_phone'           => __( 'Please enter your phone number', 'tp-hotel-booking' ),
-		'customer_email_invalid'         => __( 'Your email is invalid', 'tp-hotel-booking' ),
-		'customer_email_not_match'       => __( 'Your email does not match with existing email! Ok to create a new customer information', 'tp-hotel-booking' ),
+		'empty_customer_address'         => __( 'Please enter your address.', 'tp-hotel-booking' ),
+		'empty_customer_city'            => __( 'Please enter your city name.', 'tp-hotel-booking' ),
+		'empty_customer_state'           => __( 'Please enter your state.', 'tp-hotel-booking' ),
+		'empty_customer_postal_code'     => __( 'Please enter your postal code.', 'tp-hotel-booking' ),
+		'empty_customer_country'         => __( 'Please select your country.', 'tp-hotel-booking' ),
+		'empty_customer_phone'           => __( 'Please enter your phone number.', 'tp-hotel-booking' ),
+		'customer_email_invalid'         => __( 'Your email is invalid.', 'tp-hotel-booking' ),
+		'customer_email_not_match'       => __( 'Your email does not match with existing email! Ok to create a new customer information.', 'tp-hotel-booking' ),
 
-		'empty_check_in_date'            => __( 'Please select check in date', 'tp-hotel-booking' ),
-		'empty_check_out_date'           => __( 'Please select check out date', 'tp-hotel-booking' ),
-		'check_in_date_must_be_greater'  => __( 'Check in date must be greater than the current', 'tp-hotel-booking' ),
-		'check_out_date_must_be_greater' => __( 'Check out date must be greater than the check in', 'tp-hotel-booking' ),
+		'empty_check_in_date'            => __( 'Please select check in date.', 'tp-hotel-booking' ),
+		'empty_check_out_date'           => __( 'Please select check out date.', 'tp-hotel-booking' ),
+		'check_in_date_must_be_greater'  => __( 'Check in date must be greater than the current.', 'tp-hotel-booking' ),
+		'check_out_date_must_be_greater' => __( 'Check out date must be greater than the check in.', 'tp-hotel-booking' ),
 
-		'enter_coupon_code'              => __( 'Please enter coupon code', 'tp-hotel-booking' ),
-		'review_rating_required'         => __( 'Please select a rating', 'tp-hotel-booking' ),
+		'enter_coupon_code'              => __( 'Please enter coupon code.', 'tp-hotel-booking' ),
+		'review_rating_required'         => __( 'Please select a rating.', 'tp-hotel-booking' ),
 		'waring'						 => array(
-												'room_select'	=> __( 'Please select room number', 'tp-hotel-booking' ),
+												'room_select'	=> __( 'Please select room number.', 'tp-hotel-booking' ),
 												'try_again'		=> __( 'Please try again!', 'tp-hotel-booking' )
 										),
 		'date_time_format'				=> hb_date_time_format_js(),
@@ -1024,7 +1024,7 @@ function hb_format_price( $price, $with_currency = true ) {
 function hb_search_rooms( $args = array() ) {
     global $wpdb;
     $adults_term = hb_get_request( 'adults', 0 );
-    $adults = $adults_term ? get_term_meta( $adults_term, 'hb_max_number_of_adults', true) : 0;
+    $adults = $adults_term ? get_term_meta( $adults_term, 'hb_max_number_of_adults', true) : 1;
     if ( ! $adults ) {
     	$adults = $adults_term ? (int)get_option( 'hb_taxonomy_capacity_' . $adults_term ) : 0;
     }
@@ -1112,7 +1112,7 @@ function hb_search_rooms( $args = array() ) {
             rooms.post_type = %s
             AND rooms.post_status = %s
             AND pm.meta_value >= %d
-            AND ( term_cap.meta_value >= %d OR pm2.meta_value >= %d )
+            AND ( term_cap.meta_value <= %d OR pm2.meta_value <= %d )
         GROUP BY rooms.post_name
         HAVING available_rooms > 0
         ORDER BY term_cap.meta_value DESC

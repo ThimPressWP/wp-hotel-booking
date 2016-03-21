@@ -843,6 +843,9 @@ function hb_create_booking() {
 
     // set session booking id
     TP_Hotel_Booking::instance()->cart->set_booking( 'booking_id', $booking_id );
+
+    // do action
+    do_action( 'hotel_booking_create_booking', $booking_id );
     return $booking_id;
 }
 
@@ -904,4 +907,24 @@ function hb_get_coupons_active( $date, $code = false ){
         }
     }
     return $coupons;
+}
+/**
+ * Hook
+ */
+add_action( 'hotel_booking_create_booking', 'hotel_booking_create_booking' );
+if ( ! function_exists( 'hotel_booking_create_booking' ) ) {
+    function hotel_booking_create_booking( $booking_id ) {
+
+        wp_clear_scheduled_hook( 'hotel_booking_change_cancel_booking_status' );
+        $time = 12 * HOUR_IN_SECONDS;
+        wp_schedule_single_event( time() + $time, 'hotel_booking_change_cancel_booking_status' );
+    }
+}
+
+// change booking status pending => status
+add_action( 'hotel_booking_change_cancel_booking_status', 'hotel_booking_change_cancel_booking_status' );
+if ( ! function_exists( 'hotel_booking_change_cancel_booking_status' ) ) {
+    function hotel_booking_change_cancel_booking_status() {
+        
+    }
 }
