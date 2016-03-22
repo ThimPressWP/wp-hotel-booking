@@ -1311,7 +1311,7 @@ function hb_init() {
 add_action( 'init', 'hb_init' );
 
 function hb_format_order_number( $order_number ) {
-	return '#' . sprintf( "%'.010d", $order_number );
+	return '#' . sprintf( "%d", $order_number );
 }
 
 function hb_get_support_lightboxs() {

@@ -49,16 +49,16 @@ class HB_Cart
     // booking id
     public $booking_id = null;
 
-    function __construct()
+    function __construct( $appfix = null )
     {
     	// session class
-    	$this->sessions = HB_Sessions::instance( 'thimpress_hotel_booking_' . HB_BLOG_ID , true );
+    	$this->sessions = HB_Sessions::instance( 'thimpress_hotel_booking_' . HB_BLOG_ID . $appfix , true );
 
         // session customer object
-        $this->customer_sessions = HB_Sessions::instance( 'thimpress_hotel_booking_customer_' . HB_BLOG_ID , true );
+        $this->customer_sessions = HB_Sessions::instance( 'thimpress_hotel_booking_customer_' . HB_BLOG_ID . $appfix, true );
 
         // session booking object
-        $this->booking_sessions = HB_Sessions::instance( 'thimpress_hotel_booking_info_' . HB_BLOG_ID , true );
+        $this->booking_sessions = HB_Sessions::instance( 'thimpress_hotel_booking_info_' . HB_BLOG_ID . $appfix, true );
 
         // refresh cart session
     	$this->refresh();
@@ -696,17 +696,20 @@ class HB_Cart
         return $total;
     }
 
-    // instance instead of new Class
-    static function instance()
-    {
-    	if( empty( self::$instance ) )
-    	{
-    		return self::$instance = new self();
-    	}
-
-    	return self::$instance;
+    function load_cart() {
+        
     }
 
+    // instance instead of new Class
+    static function instance( $appfix = null )
+    {
+    	if( empty( self::$instance[ $appfix ] ) )
+    	{
+    		return self::$instance[ $appfix ] = new self( $appfix );
+    	}
+
+    	return self::$instance[ $appfix ];
+    }
 
 }
 

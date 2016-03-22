@@ -272,6 +272,29 @@ class HB_Booking{
     }
 
     /**
+     * [get_cart_post_type description]
+     * @param  [type] $post_type string
+     * @return array
+     */
+    function get_cart_post_type( $post_type = null ) {
+        if ( ! $this->id || ! $post_type ) {
+            return null;
+        }
+
+        $cart_params = get_post_meta( $this->id, '_hb_booking_cart_params', true );
+        $return = array();
+        if ( $cart_params ) {
+            foreach( $cart_params as $cart_id => $cart_item ) {
+                if ( get_post_type( $cart_item->product_id ) === $post_type ) {
+                    $return[ $cart_id ] = $cart_item;
+                }
+            }
+        }
+
+        return $return;
+    }
+
+    /**
      * Get an instance of HB_Booking by post ID or WP_Post object
      *
      * @param $booking

@@ -294,6 +294,7 @@
         });
 
         $('form[name="hb-admin-settings-form"] select').select2();
+        $('#hb-booking-details select').select2();
 
         $('input[name="tp_hotel_booking_email_new_booking_enable"]').on('change _change', function(){
             var $siblings = $(this).closest('tr').siblings('.' + $(this).attr('name'));
@@ -330,4 +331,67 @@
     }
 
     $doc.ready( _ready );
+
+    // process booking items, post type 'hb_booking'
+    Hotel_Booking_Order = {
+
+        init: function(){
+            var _doc = $( document ),
+                _self = this;
+
+            // add room
+            _doc.on( 'click', '#add_room_item', _self.add_room_item )
+            // add coupon
+            .on( 'click', '#add_coupon', _self.add_coupon )
+            // sync
+            .on( 'click', '#action_sync', _self.action_sync )
+            // edit
+            .on( 'click', '#booking_items .actions .edit', _self.edit_room )
+            // remove room item
+            .on( 'click', '#booking_items .actions .remove', _self.remove_room );
+        },
+
+        add_room_item: function( e ) {
+            e.preventDefault();
+console.debug(2);
+
+            return false;
+        },
+
+        add_coupon: function( e ) {
+            e.preventDefault();
+
+
+            return false;
+        },
+
+        action_sync: function( e ) {
+            e.preventDefault();
+
+
+            return false;
+        },
+
+        edit_room: function( e ) {
+            e.preventDefault();
+
+
+            return false;
+        },
+
+        remove_room: function( e ) {
+            e.preventDefault();
+
+
+            return false;
+        }
+
+    };
+
+    $( document ).ready( function(){
+        // admin order initialize
+        Hotel_Booking_Order.init();
+    });
+    // end process booking items, post type 'hb_booking'
+
 })(jQuery);

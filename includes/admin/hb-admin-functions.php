@@ -344,12 +344,23 @@ function hb_bookings_meta_boxes() {
     );
 }
 add_action( 'init', 'hb_bookings_meta_boxes', 50 );
+add_action( 'init', 'hb_admin_booking_init_metaboxes' );
+if ( ! function_exists( 'hb_admin_booking_init_metaboxes' ) ) {
+    function hb_admin_booking_init_metaboxes() {
+        $metaboxes = array(
+                new HB_Admin_Metabox_Booking_Details(), // booking details
+                new HB_Admin_Metabox_Booking_Items(), // booking items
+                new HB_Admin_Metabox_Booking_Actions() // booking actions
+            );
+        return apply_filters( 'hb_admin_booking_init_metaboxes', $metaboxes );
+    }
+}
 
 function hb_customer_meta_box() {
     HB_Meta_Box::instance(
         'customer_info',
         array(
-            'title'             => __('Customer Info','tp-hotel-booking'),
+            'title'             => __( 'Customer Info','tp-hotel-booking' ),
             'post_type'         => 'hb_customer',
             'meta_key_prefix'   => '_hb_'
         ),
@@ -1016,14 +1027,16 @@ if ( ! function_exists( 'hb_update_meta_box_booking_status' ) )
 add_action( 'hb_update_meta_box_gallery_settings', 'hb_update_meta_box_gallery' );
 if ( ! function_exists( 'hb_update_meta_box_gallery' ) ) {
     function hb_update_meta_box_gallery( $post_id ) {
-        if( get_post_type() !== 'hb_room' )
+        if( get_post_type() !== 'hb_room' ) {
             return;
+        }
 
         if ( empty( $_POST['_hb_gallery'] ) ) {
             update_post_meta( $post_id, '_hb_gallery', array() );
         }
     }
 }
+
 if ( is_admin() ) {
     function hb_remove_revolution_slider_meta_boxes() {
 
@@ -1031,7 +1044,22 @@ if ( is_admin() ) {
         remove_meta_box( 'mymetabox_revslider_0', 'hb_booking', 'normal' );
         remove_meta_box( 'mymetabox_revslider_0', 'hb_customer', 'normal' );
         remove_meta_box( 'mymetabox_revslider_0', 'hb_coupon', 'normal' );
+        remove_meta_box( 'submitdiv', 'hb_booking', 'side' );
     }
 
     add_action( 'do_meta_boxes', 'hb_remove_revolution_slider_meta_boxes' );
+}
+
+if ( ! function_exists( 'hb_get_customers' ) ) {
+
+    function hb_get_customers() {
+        global $wpdb;
+
+        $query = $wpdb->prepare("
+                SELECT * FROM $wpdb->posts WHERE post_type = %s AND post_status = %s
+            ", 'hb_customer', 'publish' );
+
+        return apply_filters( 'hotel_booking_customers', $wpdb->get_results( $query ) );
+    }
+
 }

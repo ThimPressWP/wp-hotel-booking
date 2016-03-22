@@ -139,9 +139,9 @@ function hb_lightbox_assets_lightbox2(){
     wp_enqueue_style( 'lightbox2', TP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/lightbox2/css/lightbox.min.css' ) );
     ?>
     <script type="text/javascript">
-    jQuery(function(){
+        jQuery(function(){
 
-    });
+        });
     </script>
     <?php
 }

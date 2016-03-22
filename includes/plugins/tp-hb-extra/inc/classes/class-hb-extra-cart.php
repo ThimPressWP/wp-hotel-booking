@@ -55,6 +55,8 @@ class HB_Extra_Cart
 
 		add_filter( 'tp_hb_extra_cart_input', array( $this, 'check_respondent' ) );
 
+		add_action( 'hotel_booking_after_room_item', array( $this, 'booking_post_type_extra_item' ), 10, 3 );
+
 	}
 
 	// add extra
@@ -328,6 +330,38 @@ class HB_Extra_Cart
 		}
 		add_filter( 'tp_hb_extra_cart_input', array( $this, 'check_respondent' ) );
 		return $respondent;
+	}
+
+	function booking_post_type_extra_item( $cart_id, $room, $hb_booking ) {
+
+		$packages = $hb_booking->get_cart_post_type( 'hb_extra_room' );
+		if ( ! $packages ) {
+			return;
+		}
+
+		$html = array();
+		foreach ( $packages as $package_id => $package ) {
+			if ( isset( $package->parent_id ) && $package->parent_id === $cart_id ) {
+				$html[] = '<tr>';
+
+				$html[] = sprintf( '<td class="center"><input type="checkbox" name="book_item[]" value="%s" /></td>', $package_id );
+
+				$html[] = sprintf( '<td class="name" colspan="3">%s</td>', $package->product_data->title );
+
+				$html[] = sprintf( '<td class="qty">%s</td>', $package->quantity );
+
+				$html[] = sprintf( '<td class="total">%s</td>', hb_format_price( $package->amount_exclude_tax, hb_get_currency_symbol( $hb_booking->currency ) ) );
+
+				$html[] = '<td class="actions">
+						<a href="#" class="edit"><i class="fa fa-pencil"></i></a>
+						<a href="#" class="remove"><i class="fa fa-times-circle"></i></a>
+					</td>';
+
+				$html[] = '</tr>';
+			}
+		}
+
+		printf( '%s', implode( '', $html ) );
 	}
 
 	/**

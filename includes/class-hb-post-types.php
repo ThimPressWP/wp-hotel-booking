@@ -571,10 +571,10 @@ class HB_Post_Types{
             'show_in_menu'       => 'tp_hotel_booking',
             'show_in_admin_bar'  => true,
             'show_in_nav_menus'  => true,
-            'supports'           => array( 'title', 'author' ),
+            'supports'           => array( 'title' ),
             'hierarchical'       => false,
             'capabilities'       => array(
-                'create_posts'  => 'do_not_allow'
+                // 'create_posts'  => 'do_not_allow'
             )
         );
         $args = apply_filters( 'hotel_booking_register_post_type_booking_arg', $args );

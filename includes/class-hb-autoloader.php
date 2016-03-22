@@ -61,6 +61,9 @@ class HB_Autoloader {
         if ( strpos( $class, 'hb_payment_gateway_' ) === 0 ) {
             $path = $this->include_path . 'payment-gateways/';// . substr( str_replace( '_', '-', $class ), 26 );
         }
+        if ( strpos( $class, 'hb_admin_metabox_' ) === 0 ) {
+            $path = $this->include_path . 'admin/metaboxes/';// . substr( str_replace( '_', '-', $class ), 26 );
+        }
                 //if ( empty( $path ) || ( ! $this->load_file( $path . $file ) && strpos( $class, 'lpr_' ) === 0 ) ) {
         $this->load_file( $path . $file );
         //}

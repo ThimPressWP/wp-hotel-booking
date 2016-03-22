@@ -581,3 +581,110 @@ th.column-room_type{
     width: 40px;
 }
 /*****End Tags*****/
+/******META BOX******/
+.postbox .inside .hb_meta_title{
+    font-weight: 600;
+    font-size: 18px !important;
+    color: #776C6C;
+}
+#booking_details{
+    padding: 8px 12px;
+    color: #776C6C;
+    overflow: hidden;
+}
+#booking_details h1,
+#booking_details h2,
+#booking_details h3,
+#booking_details h4,
+#booking_details h5,
+#booking_details h6{
+    margin: 0px;
+    padding: 8px 12px 8px 0px;
+}
+#booking_details ul{
+    margin: 0;
+}
+#booking_details_section label{
+    display: block;
+    padding: 5px 0;
+}
+#booking_details_section select{
+    width: 100%;
+}
+#booking_details_section .section {
+    width: 30%;
+    float: left;
+    margin: 0px 10px;
+}
+#booking_items table{
+    width: 100%;
+    border: 3px solid #f8f8f8;
+}
+#booking_items table th{
+    background: #f8f8f8;
+}
+#booking_items table td,
+#booking_items table th{
+    padding: 8px;
+    font-size: 11px;
+    text-align: center;
+    color: #555;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+#booking_items table tr th:first-child,
+#booking_items table tr td:first-child{
+    width: 1%;
+}
+#booking_items table .actions{
+    width: 15%;
+}
+#booking_items .booking_item_table_cost tr th:first-child,
+#booking_items .booking_item_table_cost tr td:first-child{
+    width: 90%;
+}
+#booking_items .booking_item_table_cost tr td:first-child{
+    font-weight: 600;
+    font-size: 12px;
+}
+#booking_items table tr td{
+    border-bottom: 2px dotted #f8f8f8;
+}
+#booking_items table .name{
+    min-width: 200px;
+}
+#booking_items table .left{
+    text-align: left;
+}
+#booking_items table .right{
+    text-align: right;
+}
+#booking_items table .center{
+    text-align: center;
+}
+#booking_items table .actions a{
+    font-size: 14px;
+    color: #9E9393;
+    padding: 0px 5px;
+}
+#booking_items table .actions a:hover{
+    color: #555;
+}
+
+#booking_items table .actions a.remove:hover{
+    color: #de5555;
+}
+#booking_items select{
+    font-size: 12px;
+    font-weight: 400;
+    color: #666;
+}
+/*Submit metabox*/
+#hb-booking-actions .submitbox{
+    overflow: hidden;
+}
+/******META BOX******/
