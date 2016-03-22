@@ -684,22 +684,22 @@ class HB_Post_Types{
     function register_post_statues(){
 
         $args = array(
-            'label'                     => _x( 'Cancelled Payment', 'Booking status', 'tp-hotel-booking' ),
+            'label'                     => _x( 'Cancelled', 'Booking status', 'tp-hotel-booking' ),
             'public'                    => false,
             'exclude_from_search'       => false,
             'show_in_admin_all_list'    => true,
             'show_in_admin_status_list' => true,
-            'label_count'               => _n_noop( 'Cancelled Payment <span class="count">(%s)</span>', 'Cancelled Payment <span class="count">(%s)</span>', 'tp-hotel-booking' )
+            'label_count'               => _n_noop( 'Cancelled <span class="count">(%s)</span>', 'Cancelled <span class="count">(%s)</span>', 'tp-hotel-booking' )
         );
         register_post_status( 'hb-cancelled', $args );
 
         $args = array(
-            'label'                     => _x( 'Pending Payment', 'Booking status', 'tp-hotel-booking' ),
+            'label'                     => _x( 'Pending', 'Booking status', 'tp-hotel-booking' ),
             'public'                    => false,
             'exclude_from_search'       => false,
             'show_in_admin_all_list'    => true,
             'show_in_admin_status_list' => true,
-            'label_count'               => _n_noop( 'Pending Payment <span class="count">(%s)</span>', 'Pending Payment <span class="count">(%s)</span>', 'tp-hotel-booking' )
+            'label_count'               => _n_noop( 'Pending <span class="count">(%s)</span>', 'Pending <span class="count">(%s)</span>', 'tp-hotel-booking' )
         );
         register_post_status( 'hb-pending', $args );
 

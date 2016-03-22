@@ -2,7 +2,7 @@
 * @Author: ducnvtt
 * @Date:   2016-03-21 08:50:48
 * @Last Modified by:   ducnvtt
-* @Last Modified time: 2016-03-21 14:58:38
+* @Last Modified time: 2016-03-22 15:38:53
 */
 
 'use strict';
@@ -14,6 +14,8 @@
 			// datepicker init
 			this.datepicker_init();
 
+			// step
+			this.book_steps.init();
 			// check avibility
 			this.check_avibility();
 		},
@@ -67,6 +69,68 @@
 			});
 		},
 
+		book_steps: {
+			steps: false,
+			current_step_active: false,
+			current_step: 0,
+			current_step_content: 0,
+
+			init: function () {
+				this.steps = $('#hbr-nav a'),
+				this.current_step_active = $('#hbr-nav a.active'),
+				this.current_step = this.current_step_active.index();
+				this.current_step_content = $( $(this.current_step).attr( 'href' ) );
+
+				if( this.current_step_active.length != 1 ) {
+					this.steps.removeClass( 'active' );
+					this.current_step_active = this.steps.first().addClass( 'active' );
+
+					this.current_step = 0;
+
+					this.current_step_content = $( this.current_step_active.attr( 'href' ) ).addClass('active');
+				}
+
+				this.steps.on( 'click', function(e) {
+					e.preventDefault();
+					var _self = $(this),
+						_self_step = _self.index();
+
+					if ( Hotel_Booking_Room_Addon.book_steps.current_step === _self_step || Hotel_Booking_Room_Addon.book_steps.current_step <= _self_step  ) {
+						return false;
+					}
+
+					Hotel_Booking_Room_Addon.book_steps.switch_step( _self );
+					return false;
+				});
+			},
+
+			switch_step: function ( st ) {
+
+				// reset
+				Hotel_Booking_Room_Addon.book_steps.reset_step();
+
+				this.current_step_active = st.addClass('active' ),
+				this.current_step = this.current_step_active.index();
+				this.current_step_content = $( $(this.current_step_active).attr( 'href' ) ).addClass( 'active' );
+			},
+
+			next_step: function () {
+				Hotel_Booking_Room_Addon.book_steps.reset_step();
+				// new
+				this.current_step_active = this.current_step_active.next();
+				this.current_step = this.current_step_active.index();
+				this.current_step_active.addClass( 'active' );
+
+				this.current_step_content = $( $(this.current_step_active).attr( 'href' ) ).addClass( 'active' );
+			},
+
+			reset_step: function(){
+				// reset
+				this.steps.removeClass( 'active' );
+				this.current_step_content.removeClass( 'active' );
+			},
+		},
+
 		beforeAjax: function() {
 			$('.hotel_booking_room_overflow').addClass('active');
 		},
@@ -76,11 +140,11 @@
 		},
 
 		check_avibility: function() {
-			$( document ).on( 'click', '#hotel_booking_room_check_avibility', function(e) {
+			$( document ).on( 'submit', '.hotel_booking_room_check_available', function(e) {
 				e.preventDefault();
 
-				var _form = $(this).parents('.hotel_booking_add_room_to_cart'),
-					sanitize = Hotel_Booking_Room_Addon.sanitize()
+				var _form = $(this),
+					sanitize = Hotel_Booking_Room_Addon.sanitize();
 
 				if ( sanitize === false ) {
 					return;
@@ -99,9 +163,16 @@
 						return;
 					}
 					if ( res.status === false && typeof res.message !== 'undefined' ) {
-						_form.prepend( '<div class="hotel_booking_room_errors">' + res.message + '</div>' );
+						_form.find('#hbr-nav').after( '<div class="hotel_booking_room_errors">' + res.message + '</div>' );
 					} else if( typeof res.qty !== 'undefined' ) {
-						console.debug( res.qty );
+						var template = wp.template( 'hotel-booking-select-qty' );
+						template = template( res );
+						$('#hbr-quantity ul').prepend( template );
+
+						if( typeof window.Dropkick !== 'undefined' ) {
+							$('select[name="hotel_booking_room_qty"]').dropkick();
+						}
+						Hotel_Booking_Room_Addon.book_steps.next_step();
 					}
 				}).fail( function() {
 					Hotel_Booking_Room_Addon.afterAjax();
@@ -114,7 +185,7 @@
 			$('.hotel_booking_room_errors').slideUp( 300, function() {
 				$(this).remove();
 			});
-			var _form = $('.hotel_booking_add_room_to_cart'),
+			var _form = $('.hotel_booking_room_check_available'),
 				checkin = $( 'input[name="hotel_booking_room_check_in"]' ).datepicker( 'getDate' ),
 				check_out = $( 'input[name="hotel_booking_room_check_out"]' ).datepicker( 'getDate' ),
 				errors = [];
@@ -128,7 +199,7 @@
 			}
 
 			if ( errors.length > 0 ) {
-				_form.prepend( '<div class="hotel_booking_room_errors">' + errors.join( '' ) + '</div>' );
+				_form.find('#hbr-nav').after( '<div class="hotel_booking_room_errors">' + errors.join( '' ) + '</div>' );
 				return false;
 			}
 

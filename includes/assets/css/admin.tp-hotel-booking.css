@@ -320,21 +320,32 @@ th.column-room_type{
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
-    padding: 3px 8px;
     color: #F5F5F5;
 }
-.hb-booking-status.hb-completed{
+.hb-booking-status a{
+    text-decoration: none;
+}
+.hb-booking-status.hb-completed a{
     background-color: #2eb0d1;
 }
-.hb-booking-status.hb-pending{
+.hb-booking-status.hb-pending a{
     background-color: #cccccc;
 }
-.hb-booking-status.hb-processing{
+.hb-booking-status.hb-processing a{
     background-color: #ffb316;
 }
-.column-details .hb-booking-status{
+.hb-booking-status.hb-cancelled a{
+    background-color: #b55b5b;
+}
+.hb-booking-status a{
     font-size: 10px;
-
+    display: inline-block;
+    background-color: #FFF;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    padding: 3px 8px;
+    color: #F5F5F5;
 }
 .hb_advance_payment{
     color: #dd6464;

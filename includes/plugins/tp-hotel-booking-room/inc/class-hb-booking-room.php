@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-18 15:32:51
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-03-21 16:47:20
+ * @Last Modified time: 2016-03-22 16:05:13
  */
 
 if( ! defined( 'ABSPATH' ) ) {
@@ -18,10 +18,12 @@ if ( ! class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
 			// enqueue script
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
 
-			add_filter( 'hotel_booking_single_room_infomation_tabs', array( $this, 'filter_tabs' ) );
+			add_filter( 'hotel_booking_single_room_gallery', array( $this, 'booking_form' ) );
 
 			add_action( 'wp_ajax_check_room_availabel', array( $this, 'check_room_availabel' ) );
 			add_action( 'wp_ajax_nopriv_check_room_availabel', array( $this, 'check_room_availabel' ) );
+
+			add_filter( 'hotel_booking_add_to_cart_results', array( $this, 'add_to_cart_redirect' ), 10, 2 );
 		}
 
 		// enqueue script
@@ -34,7 +36,7 @@ if ( ! class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
 
 		function check_room_availabel() {
 			// ajax referer
-			if ( ! isset( $_POST['check-room-availabel-nonce'] ) || ! check_ajax_referer( 'check_room_availabel_nonce', 'check-room-availabel-nonce' ) ) {echo 2; die();
+			if ( ! isset( $_POST['check-room-availabel-nonce'] ) || ! check_ajax_referer( 'check_room_availabel_nonce', 'check-room-availabel-nonce' ) ) {
 				return;
 			}
 
@@ -54,22 +56,12 @@ if ( ! class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
 			$available = hotel_booking_get_qty( $args );
 
 			if ( ! is_wp_error( $available ) ) {
-				wp_send_json( array( 'status' => true, 'qty' => $available ) ); die();
+				wp_send_json( array( 'status' => true, 'qty' => $available, 'check_in_date' => date( 'm/d/Y', $check_in_date ), 'check_out_date' => date( 'm/d/Y', $check_out_date ) ) ); die();
 			} else {
 				wp_send_json( array( 'status' => false, 'message' => $available->get_error_message() ) ); die();
 			}
 
 			wp_send_json( array( 'status' => false, 'message' => __( 'No room found.', 'tp-hotel-booking-room' ) ) ); die();
-		}
-
-		// add single tab
-		function filter_tabs( $tabs ) {
-			$tabs[] = array(
-				'id'        => 'hb_room_book',
-	            'title'     => __( 'Book this room', 'tp-hotel-booking-room' ),
-	            'content'   => $this->booking_form()
-            );
-			return $tabs;
 		}
 
 		// book room layout
@@ -78,30 +70,42 @@ if ( ! class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
 			global $hb_room;
 			$qty = $hb_room->num_of_rooms;
 		?>
-			<form name="hotel_booking_add_room_to_cart" method="POST" class="hotel_booking_add_room_to_cart">
-				<ul>
+			<div class="hotel_booking_room_detail">
+				<h3 id="hbr-nav">
+					<a href="#hbr-check-date"><?php _e( 'Step 1: Check in - Check out date', 'tp-hotel-booking-room' ); ?></a>
+					<a href="#hbr-quantity"><?php _e( 'Step 2: Quantity', 'tp-hotel-booking-room' ); ?></a>
+				</h3>
+				<form name="hotel_booking_room_check_available" method="POST" class="hbr-add-to-cart-step hotel_booking_room_check_available" id="hbr-check-date">
+					<ul>
 
-					<li>
-						<input type="text" name="hotel_booking_room_check_in" class="hotel_booking_room_check_in" placeholder="<?php esc_attr_e( 'Checkin', 'tp-hotel-booking-room' ); ?>" />
-						<input type="hidden" name="hotel_booking_room_check_in_timestamp" class="hotel_booking_room_check_in_timestamp" />
-					</li>
+						<li>
+							<input type="text" name="hotel_booking_room_check_in" class="hotel_booking_room_check_in" placeholder="<?php esc_attr_e( 'Checkin', 'tp-hotel-booking-room' ); ?>" />
+							<input type="hidden" name="hotel_booking_room_check_in_timestamp" class="hotel_booking_room_check_in_timestamp" />
+						</li>
 
-					<li>
-						<input type="text" name="hotel_booking_room_check_out" class="hotel_booking_room_check_out" placeholder="<?php esc_attr_e( 'Checkout', 'tp-hotel-booking-room' ); ?>"  />
-						<input type="hidden" name="hotel_booking_room_check_out_timestamp" class="hotel_booking_room_check_out_timestamp" />
-					</li>
+						<li>
+							<input type="text" name="hotel_booking_room_check_out" class="hotel_booking_room_check_out" placeholder="<?php esc_attr_e( 'Checkout', 'tp-hotel-booking-room' ); ?>"  />
+							<input type="hidden" name="hotel_booking_room_check_out_timestamp" class="hotel_booking_room_check_out_timestamp" />
+						</li>
 
-					<li>
-						<a href="#" id="hotel_booking_room_check_avibility" class="hotel_booking_room_button"><?php _e( 'Check Available', 'tp-hotel-booking-room' ); ?></a>
-					</li>
-
-					<li>
-						<input type="hidden" name="hotel_booking_room_id" value="<?php printf( '%s', $hb_room->ID ) ?>" />
-						<input type="hidden" name="action" value="check_room_availabel"/>
-						<?php wp_nonce_field( 'check_room_availabel_nonce', 'check-room-availabel-nonce' ); ?>
-						<button type="submit" form="hotel_booking_add_room_to_cart" class="hotel_booking_room_button"><?php _e( 'Select this room', 'tp-hotel-booking-room' ); ?></button>
-					</li>
-				</ul>
+						<li>
+							<input type="hidden" name="hotel_booking_room_id" value="<?php printf( '%s', $hb_room->ID ) ?>" />
+							<input type="hidden" name="action" value="check_room_availabel"/>
+							<?php wp_nonce_field( 'check_room_availabel_nonce', 'check-room-availabel-nonce' ); ?>
+							<button type="submit" id="hotel_booking_room_check_avibility" class="hotel_booking_room_button"><?php _e( 'Check Available', 'tp-hotel-booking-room' ); ?></button>
+						</li>
+					</ul>
+				</form>
+				<form name="hb-search-results" class="hbr-add-to-cart-step hb-search-room-results" id="hbr-quantity">
+					<ul>
+						<li>
+							<input type="hidden" name="room-id" value="<?php printf( '%s', $hb_room->ID ) ?>" />
+							<input type="hidden" name="action" value="hotel_booking_ajax_add_to_cart"/>
+							<?php wp_nonce_field( 'hb_booking_nonce_action', 'nonce' ); ?>
+							<button type="submit" class="hotel_booking_room_button hb_add_to_cart"><?php _e( 'Select this room', 'tp-hotel-booking-room' ); ?></button>
+						</li>
+					</ul>
+				</form>
 				<div class="hotel_booking_room_overflow">
 					<div class="hotel_booking_room_overflow_spinner">
 						<div class="hbr_spinner_ball hbr_spinner_ball-1"></div>
@@ -110,20 +114,37 @@ if ( ! class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
 						<div class="hbr_spinner_ball hbr_spinner_ball-4"></div>
 					</div>
 				</div>
-			</form>
+			</div>
 
-			<script type="text/html" id="tmpl-hote-booking-select-qty">
-				<select name="hotel_booking_room_qty">
-					<option value="0"><?php _e( '---Quantity---', 'tp-hotel-booking-room' ); ?></option>
-					<# for( var i = 1; i <= data.qty; i++ ) { #>
-						<# var qty = data.qty[i-1]; #>
-						<option value="{{ qty }}">{{ qty }}</option>
-					<# } #>
-				</select>
+			<script type="text/html" id="tmpl-hotel-booking-select-qty">
+				<li>
+					<label for="hb-num-of-rooms"><?php _e( 'Quantity:' ); ?></label>
+					<select name="hb-num-of-rooms" id="hotel_booking_room_qty" class="number_room_select">
+						<option value=""><?php _e( '--- Quantity ---', 'tp-hotel-booking-room' ); ?></option>
+						<# for( var i = 1; i <= data.qty; i++ ) { #>
+							<option value="{{ i }}">{{ i }}</option>
+						<# } #>
+					</select>
+				</li>
+				<li>
+					<input type="hidden" name="check_in_date" value="{{ data.check_in_date }}" />
+					<input type="hidden" name="check_out_date" value="{{ data.check_out_date }}" />
+				</li>
+				<li>
+					<?php do_action( 'hotel_booking_after_add_room_to_cart_form', $hb_room->ID ); ?>
+				</li>
 			</script>
 		<?php
 
-			return ob_get_clean();
+			echo ob_get_clean();
+		}
+
+		function add_to_cart_redirect( $param, $room ) {
+			if( isset( $param['status'] ) && $param['status'] === 'success' ) {
+				$param['redirect']	= hb_get_cart_url();
+			}
+
+			return $param;
 		}
 
 	}

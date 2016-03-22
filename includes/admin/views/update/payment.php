@@ -30,7 +30,9 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <?php _e( 'Booking status', 'tp-hotel-booking' ); ?>
             </th>
             <td>
-                <span class="hb-booking-status <?php echo get_post_status( $booking->id ); ?>"><?php echo hb_get_booking_status_label( $booking->id ); ?></span>
+                <span class="hb-booking-status <?php echo get_post_status( $booking->id ); ?>">
+                    <a href="javascript:void(0)"><?php echo hb_get_booking_status_label( $booking->id ); ?></a>
+                </span>
             </td>
         </tr>
     </tbody>

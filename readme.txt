@@ -100,6 +100,10 @@ Yes.
 * Select room search
 * Pricing plan
 
+= 1.1.4.1 =
+* Auto cancel payment
+* Booking insite single room detail
+
 == Upgrade Notice ==
 
 = 1.0 =

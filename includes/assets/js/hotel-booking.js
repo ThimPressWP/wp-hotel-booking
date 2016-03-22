@@ -465,8 +465,8 @@
 		add_to_cart: function () {
 			var searchResult = $('form.hb-search-room-results');
 
-			searchResult.each(function () {
-				$(this).submit(function (event) {
+			// searchResult.each(function () {
+				$( document ).on( 'submit', 'form.hb-search-room-results', function (event) {
 					event.preventDefault();
 					var _form = $(this),
 						button = _form.find('.hb_add_to_cart'),
@@ -529,7 +529,7 @@
 					});
 					return false;
 				});
-			});
+			// });
 		},
 
 		remove_cart: function () {
@@ -630,7 +630,7 @@
 				if (date) {
 					date.setDate(date.getDate() + 1);
 				}
-				$( '#check_out_date_' + unique).datepicker( 'option', 'minDate', date);
+				$( '#check_out_date_' + unique).datepicker( 'option', 'minDate', date );
 			}
 		});
 
@@ -647,7 +647,7 @@
 			onSelect      : function (selected) {
 				var unique = $(this).attr('id');
 				unique = unique.replace('check_out_date_', '');
-				$( '#check_in_date_' + unique).datepicker( 'option', 'maxDate', selected);
+				$( '#check_in_date_' + unique).datepicker( 'option', 'maxDate', selected );
 			}
 		});
 

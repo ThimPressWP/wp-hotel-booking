@@ -73,13 +73,13 @@ $settings = hb_settings();
     <tr>
         <th><?php _e( 'Number of decimal', 'tp-hotel-booking' ); ?></th>
         <td>
-            <input type="text" class="regular-text" name="<?php echo esc_attr( $settings->get_field_name('price_number_of_decimal') ); ?>" value="<?php echo esc_attr( $settings->get('price_number_of_decimal') ); ?>" />
+            <input type="text" class="regular-text" name="<?php echo esc_attr( $settings->get_field_name('price_number_of_decimal') ); ?>" value="<?php echo esc_attr( $settings->get('price_number_of_decimal') ); ?>" min="0" />
         </td>
     </tr>
     <tr>
         <th><?php _e( 'Tax', 'tp-hotel-booking' ); ?></th>
         <td>
-            <input type="number" class="regular-text" name="<?php echo esc_attr( $settings->get_field_name('tax') ); ?>" value="<?php echo esc_attr( floatval( $settings->get('tax') ) ); ?>" />%
+            <input type="number" class="regular-text" name="<?php echo esc_attr( $settings->get_field_name('tax') ); ?>" value="<?php echo esc_attr( floatval( $settings->get('tax') ) ); ?>" min="0" />%
         </td>
     </tr>
     <tr>
@@ -99,11 +99,18 @@ $settings = hb_settings();
             </select>
         </td>
     </tr>
-
     <tr>
         <th><?php _e( 'Advance Payment', 'tp-hotel-booking' ); ?></th>
         <td>
-            <input type="number" class="regular-text" name="<?php echo esc_attr( $settings->get_field_name('advance_payment') ); ?>" value="<?php echo esc_attr( floatval( $settings->get('advance_payment') )  ); ?>" />%
+            <input type="number" class="regular-text" name="<?php echo esc_attr( $settings->get_field_name('advance_payment') ); ?>" value="<?php echo esc_attr( floatval( $settings->get('advance_payment') )  ); ?>" min="0" />%
+        </td>
+    </tr>
+
+    <tr>
+        <th><?php _e( 'Cancel Payment', 'tp-hotel-booking' ); ?></th>
+        <td>
+            <input type="number" class="regular-text" name="<?php echo esc_attr( $settings->get_field_name('cancel_payment') ); ?>" value="<?php echo esc_attr( floatval( $settings->get( 'cancel_payment', 12 ) )  ); ?>" min="0" />
+            <span class="description"><?php _e( 'Cancel Payment after hour(s)', 'tp-hotel-booking' ) ?></span>
         </td>
     </tr>
     <?php do_action( 'hotel_booking_admin_setting_general' ) ?>

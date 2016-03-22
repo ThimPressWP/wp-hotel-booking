@@ -191,14 +191,17 @@ class HB_Ajax {
 	}
 
 	static function ajax_add_to_cart() {
-		if ( ! check_ajax_referer( 'hb_booking_nonce_action', 'nonce' ) )
+		if ( ! check_ajax_referer( 'hb_booking_nonce_action', 'nonce' ) ) {
 			return;
+		}
 
-		if ( ! isset( $_POST['room-id'] ) || ! isset( $_POST['hb-num-of-rooms'] ) )
+		if ( ! isset( $_POST['room-id'] ) || ! isset( $_POST['hb-num-of-rooms'] ) ) {
 			hb_send_json( array( 'status' => 'warning', 'message' => __( 'Room ID is not exists.', 'tp-hotel-booking' ) ) );
+		}
 
-		if ( ! isset( $_POST['check_in_date'] ) || ! isset( $_POST['check_out_date'] ) )
+		if ( ! isset( $_POST['check_in_date'] ) || ! isset( $_POST['check_out_date'] ) ) {
 			return;
+		}
 
 		$product_id = absint( $_POST['room-id'] );
 		$param = array();
@@ -206,19 +209,14 @@ class HB_Ajax {
 		if( ! isset( $_POST['hb-num-of-rooms'] ) || ! absint( sanitize_text_field( $_POST['hb-num-of-rooms'] ) ) )
 		{
 			hb_send_json( array( 'status' => 'warning', 'message' => __( 'Can not select zero room.', 'tp-hotel-booking' ) ) );
-		}
-		else
-		{
+		} else {
 			$qty = absint( sanitize_text_field( sanitize_text_field( $_POST['hb-num-of-rooms'] ) ) );
 		}
 
 		// validate checkin, checkout date
-		if( ! isset( $_POST['check_in_date'] ) || ! isset( $_POST['check_in_date'] ) )
-		{
+		if( ! isset( $_POST['check_in_date'] ) || ! isset( $_POST['check_in_date'] ) ) {
 			hb_send_json( array( 'status' => 'warning', 'message' => __( 'Checkin date, checkout date is invalid.', 'tp-hotel-booking' ) ) );
-		}
-		else
-		{
+		} else {
 			$param[ 'check_in_date' ] = sanitize_text_field( $_POST['check_in_date'] );
 			$param[ 'check_out_date' ] = sanitize_text_field( $_POST['check_out_date'] );
 		}
@@ -249,9 +247,7 @@ class HB_Ajax {
 			$results = apply_filters( 'hotel_booking_add_to_cart_results', $results, $room );
 
 			hb_send_json( $results );
-		}
-		else
-		{
+		} else {
 			hb_send_json( array( 'status' => 'warning', 'message' => __( 'Room selected. Please View Cart to change order', 'tp-hotel-booking' ) ) );
 		}
 

@@ -2000,7 +2000,7 @@ function hb_get_booking_status_label( $booking_id ) {
 	} else {
 		$status = $booking_id;
 	}
-	return ! empty( $statuses[$status] ) ? $statuses[$status] : __( 'Pending', 'tp-hotel-booking' );
+	return ! empty( $statuses[$status] ) ? $statuses[$status] : __( 'Cancelled', 'tp-hotel-booking' );
 }
 
 /**
