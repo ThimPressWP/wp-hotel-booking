@@ -102,7 +102,7 @@ Yes.
 
 = 1.1.4.1 =
 * Auto cancel payment
-* Booking insite single room detail
+* Booking inside single room detail
 
 == Upgrade Notice ==
 
