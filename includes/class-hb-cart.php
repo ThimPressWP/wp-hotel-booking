@@ -857,7 +857,7 @@ function hb_create_booking() {
 function hb_get_booking_statuses() {
     $booking_statuses = array(
         'hb-cancelled'  => _x( 'Cancelled', 'Booking status', 'tp-hotel-booking' ),
-        'hb-pending'    => _x( 'Pending Payment', 'Booking status', 'tp-hotel-booking' ),
+        'hb-pending'    => _x( 'Pending', 'Booking status', 'tp-hotel-booking' ),
         'hb-processing' => _x( 'Processing', 'Booking status', 'tp-hotel-booking' ),
         'hb-completed'  => _x( 'Completed', 'Booking status', 'tp-hotel-booking' ),
     );
@@ -909,33 +909,32 @@ function hb_get_coupons_active( $date, $code = false ){
     }
     return $coupons;
 }
+
 /**
  * Hook
  */
-add_action( 'hotel_booking_create_booking', 'hotel_booking_create_booking' );
+add_action( 'hotel_booking_create_booking', 'hotel_booking_create_booking', 10, 1 );
+add_action( 'hb_booking_status_changed', 'hotel_booking_create_booking', 10, 1 );
 if ( ! function_exists( 'hotel_booking_create_booking' ) ) {
     function hotel_booking_create_booking( $booking_id ) {
 
-        wp_clear_scheduled_hook( 'hotel_booking_change_cancel_booking_status' );
-        $time = 12 * HOUR_IN_SECONDS;
-        wp_schedule_single_event( time() + $time, 'hotel_booking_change_cancel_booking_status' );
+        wp_clear_scheduled_hook( 'hotel_booking_change_cancel_booking_status', array( $booking_id ) );
+        $time = hb_settings()->get( 'cancel_payment', 12 ) * HOUR_IN_SECONDS;
+        wp_schedule_single_event( time() + $time, 'hotel_booking_change_cancel_booking_status', array( $booking_id ) );
     }
 }
 
 // change booking status pending => status
-add_action( 'hotel_booking_change_cancel_booking_status', 'hotel_booking_change_cancel_booking_status' );
+add_action( 'hotel_booking_change_cancel_booking_status', 'hotel_booking_change_cancel_booking_status', 10, 1 );
 if ( ! function_exists( 'hotel_booking_change_cancel_booking_status' ) ) {
-    function hotel_booking_change_cancel_booking_status() {
+    function hotel_booking_change_cancel_booking_status( $booking_id ) {
         global $wpdb;
 
-        $wpdb->update(
-            $wpdb->posts,
-            array(
-                'post_type'     => 'hb_booking',
-                'post_status'   => 'hb-cancelled'
-            ),
-            array( 'post_status' => 'hb-pending' ),
-            array( '%s', '%s' )
-        );
+        if ( get_post_status( $booking_id ) === 'hb-pending' ) {
+            wp_update_post( array(
+                    'ID'                => $booking_id,
+                    'post_status'       => 'hb-cancelled'
+                ) );
+        }
     }
 }

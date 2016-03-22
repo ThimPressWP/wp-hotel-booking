@@ -286,7 +286,11 @@ $booking_id = hb_get_request( 'id' );
                     <?php _e( 'Booking status', 'tp-hotel-booking' ); ?>
                 </th>
                 <td>
-                    <span class="hb-booking-status <?php echo esc_attr( get_post_status( $booking_id ) ); ?>"><?php echo sprintf( '%s', hb_get_booking_status_label( $booking_id ) ); ?></span>
+                    <span class="hb-booking-status <?php echo esc_attr( get_post_status( $booking_id ) ); ?>">
+                        <a href="javascript:void(0)">
+                            <?php echo sprintf( '%s', hb_get_booking_status_label( $booking_id ) ); ?>
+                        </a>
+                    </span>
                 </td>
             </tr>
         </tbody>
