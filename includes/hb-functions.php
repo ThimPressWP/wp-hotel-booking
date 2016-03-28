@@ -1185,7 +1185,8 @@ function hb_get_payment_gateways( $args = array() ) {
 	static $payment_gateways = array();
 	if ( ! $payment_gateways ) {
 		$defaults         = array(
-			'offline-payment' => new HB_Payment_Gateway_Offline_Payment()
+			'offline-payment' 	=> new HB_Payment_Gateway_Offline_Payment(),
+			'paypal' 			=> new HB_Payment_Gateway_Paypal()
 		);
 		$payment_gateways = apply_filters( 'hb_payment_gateways', $defaults );
 	}

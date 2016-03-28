@@ -326,7 +326,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      * @param $gateway
      */
     function admin_settings( $gateway ){
-        $template = TP_Hotel_Booking::instance()->locate( 'includes/admin/views/settings/paypal.php' );
+        $template = TP_Hotel_Booking::instance()->locate( 'includes/payment-gateways/paypal/views/settings.php' );
         include_once $template;
     }
 

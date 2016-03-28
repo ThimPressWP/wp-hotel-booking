@@ -63,7 +63,6 @@ class TP_Hotel_Booking {
         add_action( 'widgets_init', array( $this, 'register_widgets' ) );
         register_activation_hook( plugin_basename( __FILE__ ), array( $this, 'install' ) );
         add_action( 'init', array( $this, 'init' ), 20 );
-        // $this->install();
     }
 
     function init(){
@@ -124,26 +123,16 @@ class TP_Hotel_Booking {
         $this->_include( 'includes/class-hb-booking-template-loader.php' );
         $this->_include( 'includes/class-hb-ajax.php' );
         if( is_admin() ) {
-            $this->_include( 'includes/admin/class-hb-admin-menu.php' );
-            $this->_include( 'includes/class-hb-meta-box.php' );
-            $this->_include( 'includes/admin/hb-admin-functions.php' );
-            $this->_include( 'includes/admin/class-hb-admin-admin-metaboxes.php' );
-            $this->_include( 'includes/admin/class-hb-customer.php' );
+            $this->admin_includes();
         }
         $this->_include( 'includes/class-hb-settings.php' );
         $this->_include( 'includes/class-hb-comments.php' );
         $this->_include( 'includes/hb-template-hooks.php' );
         $this->_include( 'includes/hb-template-functions.php' );
 
-        // shortcodes
-        $this->_include( 'includes/class-hb-shortcodes.php' );
-        $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-cart.php' );
-        $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-checkout.php' );
-        $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-lastest-reviews.php' );
-        $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-mini-cart.php' );
-        $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-slider.php' );
-        $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking.php' );
-        // end shortcodes
+        if ( ! is_admin() ) {
+            $this->frontend_includes();
+        }
 
         $this->_include( 'includes/widgets/class-hb-widget-search.php' );
         $this->_include( 'includes/widgets/class-hb-widget-room-carousel.php' );
@@ -167,12 +156,33 @@ class TP_Hotel_Booking {
         // end products
         $this->_include( 'includes/class-hb-sessions.php' );
         $this->_include( 'includes/class-hb-cart.php' );
+        $this->_include( 'includes/payment-gateways/class-hb-payment-gateway-base.php' );
 
         $this->_include( 'includes/hb-webhooks.php' );
+    }
+
+    function frontend_includes() {
+        // shortcodes
+        $this->_include( 'includes/class-hb-shortcodes.php' );
+        $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-cart.php' );
+        $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-checkout.php' );
+        $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-lastest-reviews.php' );
+        $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-mini-cart.php' );
+        $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-slider.php' );
+        $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking.php' );
+        // end shortcodes
 
         if( ! class_exists( 'Aq_Resize' ) ) {
             $this->_include( 'includes/aq_resizer.php' );
         }
+    }
+
+    function admin_includes() {
+        $this->_include( 'includes/admin/class-hb-admin-menu.php' );
+        $this->_include( 'includes/class-hb-meta-box.php' );
+        $this->_include( 'includes/admin/hb-admin-functions.php' );
+        $this->_include( 'includes/admin/class-hb-admin-admin-metaboxes.php' );
+        $this->_include( 'includes/admin/class-hb-customer.php' );
     }
 
     // load payments addons
@@ -183,59 +193,6 @@ class TP_Hotel_Booking {
 
         if ( ! function_exists( 'is_plugin_active' ) ) {
             include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-        }
-        // load payment gateways
-        $this->load_payments();
-        // load reports
-        $this->load_reports();
-        // load coupon
-        $this->load_coupon();
-    }
-
-    // load all payment gateways support
-    function load_payments()
-    {
-        $this->_include( 'includes/payment-gateways/class-hb-payment-gateway-base.php' );
-
-        $plugins = get_plugins();
-        $payments_path = HB_PLUGIN_PATH . '/includes/payment-gateways';
-        foreach ( glob( $payments_path . '/class-hb-payment-gateway-*.php' ) as $key => $file ) {
-            $file_name = basename( $file );
-            if( $file_name === 'class-hb-payment-gateway-base.php' )
-                continue;
-
-            $name = str_replace( 'class-hb-payment-gateway-', 'tp-hotel-booking-', $file_name );
-            $plugin_dir = str_replace( '.php', '', $name );
-            $plugin_file = $plugin_dir . '/' . $name;
-
-            if( ! array_key_exists( $plugin_file, $plugins ) || ! is_plugin_active( $plugin_file ) )
-            {
-                $this->_include( 'includes/payment-gateways/' . $file_name );
-            }
-        }
-    }
-
-    // load report
-    function load_reports()
-    {
-        $plugins = get_plugins();
-        $report = 'tp-hotel-booking-report/tp-hotel-booking-report.php';
-        if( ! array_key_exists( $report, $plugins ) || ! is_plugin_active( $report ) )
-        {
-            $this->_include( 'includes/class-hb-report.php' );
-            $this->_include( 'includes/class-hb-report-price.php' );
-            $this->_include( 'includes/class-hb-report-room.php' );
-        }
-    }
-
-    // load_coupon
-    function load_coupon()
-    {
-        $plugins = get_plugins();
-        $coupon = 'tp-hotel-booking-coupon/tp-hotel-booking-coupon.php';
-        if( ! array_key_exists( $coupon, $plugins ) || ! is_plugin_active( $coupon ) )
-        {
-            $this->_include( 'includes/class-hb-coupon.php' );
         }
     }
 

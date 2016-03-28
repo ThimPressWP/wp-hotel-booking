@@ -1,4 +1,11 @@
 <?php
+/**
+ * @Author: ducnvtt
+ * @Date:   2016-03-29 09:12:34
+ * @Last Modified by:   ducnvtt
+ * @Last Modified time: 2016-03-29 09:12:50
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
@@ -45,3 +52,4 @@ $field_name = $settings->get_field_name('paypal');
         </td>
     </tr>
 </table>
+
