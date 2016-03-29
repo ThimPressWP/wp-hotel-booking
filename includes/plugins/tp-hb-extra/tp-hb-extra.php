@@ -33,7 +33,7 @@ class HB_Extra_Factory
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
 		add_filter( 'hotel_booking_cart_product_class', array( $this, 'product_class' ), 10, 3 );
-		add_filter( 'hb_admin_l18n', array( $this, 'language_js' ) );
+		add_filter( 'hb_admin_i18n', array( $this, 'language_js' ) );
 	}
 
 	/**

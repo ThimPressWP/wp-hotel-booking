@@ -21,8 +21,7 @@ class HB_Shortcode_Hotel_Booking_Cart extends HB_Shortcodes
         do_action( 'hb_wrapper_start' );
         hb_get_template( 'shortcodes/'.$template, $atts );
         do_action( 'hb_wrapper_end' );
-        $output = ob_get_clean();
-        return $output;
+        return ob_get_clean();
 	}
 
 }

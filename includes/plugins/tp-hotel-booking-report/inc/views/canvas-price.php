@@ -14,14 +14,14 @@
 			});
 		}
 
-        // $.datepicker.setDefaults({ dateFormat: hotel_booking_l18n.date_time_format });
+        // $.datepicker.setDefaults({ dateFormat: hotel_booking_i18n.date_time_format });
         $('#tp-hotel-report-checkin').datepicker({
-            dateFormat      : hotel_booking_l18n.date_time_format,
-            monthNames      : hotel_booking_l18n.monthNames,
-            monthNamesShort : hotel_booking_l18n.monthNamesShort,
-            dayNames        : hotel_booking_l18n.dayNames,
-            dayNamesShort   : hotel_booking_l18n.dayNamesShort,
-            dayNamesMin     : hotel_booking_l18n.dayNamesMin,
+            dateFormat      : hotel_booking_i18n.date_time_format,
+            monthNames      : hotel_booking_i18n.monthNames,
+            monthNamesShort : hotel_booking_i18n.monthNamesShort,
+            dayNames        : hotel_booking_i18n.dayNames,
+            dayNamesShort   : hotel_booking_i18n.dayNamesShort,
+            dayNamesMin     : hotel_booking_i18n.dayNamesMin,
             onSelect: function(){
                 var _self = $(this),
                     date = $(this).datepicker('getDate'),
@@ -32,12 +32,12 @@
             }
         });
         $('#tp-hotel-report-checkout').datepicker({
-            dateFormat      : hotel_booking_l18n.date_time_format,
-            monthNames      : hotel_booking_l18n.monthNames,
-            monthNamesShort : hotel_booking_l18n.monthNamesShort,
-            dayNames        : hotel_booking_l18n.dayNames,
-            dayNamesShort   : hotel_booking_l18n.dayNamesShort,
-            dayNamesMin     : hotel_booking_l18n.dayNamesMin,
+            dateFormat      : hotel_booking_i18n.date_time_format,
+            monthNames      : hotel_booking_i18n.monthNames,
+            monthNamesShort : hotel_booking_i18n.monthNamesShort,
+            dayNames        : hotel_booking_i18n.dayNames,
+            dayNamesShort   : hotel_booking_i18n.dayNamesShort,
+            dayNamesMin     : hotel_booking_i18n.dayNamesMin,
             onSelect: function(){
                 var _self = $(this),
                     date = $(this).datepicker('getDate'),

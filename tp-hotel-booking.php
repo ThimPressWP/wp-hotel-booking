@@ -121,6 +121,7 @@ class TP_Hotel_Booking {
         $this->_include( 'includes/class-hb-autoloader.php' );
         $this->_include( 'includes/class-hb-booking-template-loader.php' );
         $this->_include( 'includes/class-hb-ajax.php' );
+
         if( is_admin() ) {
             $this->admin_includes();
         }
@@ -254,7 +255,7 @@ class TP_Hotel_Booking {
         if( is_admin() ){
             wp_register_style( 'tp-admin-hotel-booking', $this->plugin_url( 'includes/assets/css/admin.tp-hotel-booking.min.css' ) );
             wp_register_script( 'tp-admin-hotel-booking', $this->plugin_url( 'includes/assets/js/admin.hotel-booking.js' ), $dependencies );
-            wp_localize_script( 'tp-admin-hotel-booking', 'hotel_booking_l18n', hb_admin_l18n() );
+            wp_localize_script( 'tp-admin-hotel-booking', 'hotel_booking_i18n', hb_admin_i18n() );
             //report
             wp_register_script( 'tp-admin-hotel-booking-chartjs', $this->plugin_url( 'includes/assets/js/Chart.min.js' ) );
             wp_register_script( 'tp-admin-hotel-booking-tokenize-js', $this->plugin_url( 'includes/assets/js/jquery.tokenize.min.js' ) );
@@ -267,7 +268,7 @@ class TP_Hotel_Booking {
             wp_register_script( 'tp-hotel-booking-stripe-js', $this->plugin_url( 'includes/assets/js/stripe.js' ), $dependencies );
             wp_register_script( 'tp-hotel-booking-stripe-checkout-js', $this->plugin_url( 'includes/assets/js/checkout.js' ), $dependencies );
 
-            wp_localize_script( 'tp-hotel-booking', 'hotel_booking_l18n', hb_l18n() );
+            wp_localize_script( 'tp-hotel-booking', 'hotel_booking_i18n', hb_i18n() );
 
             // rooms slider widget
             wp_register_script( 'tp-hotel-booking-gallery', $this->plugin_url( 'includes/libraries/camera/js/gallery.min.js' ), $dependencies );
@@ -288,7 +289,7 @@ class TP_Hotel_Booking {
             wp_enqueue_script( 'tp-admin-hotel-booking-chartjs' );
             wp_enqueue_script( 'tp-admin-hotel-booking-tokenize-js' );
             wp_enqueue_style( 'tp-admin-hotel-booking-tokenize-css' );
-        }else{
+        } else {
             wp_enqueue_style( 'tp-hotel-booking' );
             wp_enqueue_script( 'tp-hotel-booking' );
             $setting = HB_Settings::instance()->get('stripe');

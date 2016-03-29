@@ -520,7 +520,7 @@ function hb_create_empty_post( $args = array() ) {
  *
  * @return mixed
  */
-function hb_l18n() {
+function hb_i18n() {
 	$translation = array(
 		'invalid_email'                  => __( 'Your email address is invalid.', 'tp-hotel-booking' ),
 		'no_payment_method_selected'     => __( 'Please select your payment method.', 'tp-hotel-booking' ),
@@ -557,7 +557,7 @@ function hb_l18n() {
 		'dayNamesShort'					=> hb_day_name_short_js(),
 		'dayNamesMin '					=> hb_day_name_min_js(),
 	);
-	return apply_filters( 'hb_l18n', $translation );
+	return apply_filters( 'hb_i18n', $translation );
 }
 
 // date time format

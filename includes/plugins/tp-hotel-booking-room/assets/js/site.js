@@ -2,7 +2,7 @@
 * @Author: ducnvtt
 * @Date:   2016-03-21 08:50:48
 * @Last Modified by:   ducnvtt
-* @Last Modified time: 2016-03-22 15:38:53
+* @Last Modified time: 2016-03-29 11:17:11
 */
 
 'use strict';
@@ -31,12 +31,12 @@
 			tomorrow.setDate( today.getDate() + 1 );
 
 			checkin.datepicker({
-				dateFormat 		: hotel_booking_l18n.date_time_format,
-				monthNames 	  	: hotel_booking_l18n.monthNames,
-				monthNamesShort	: hotel_booking_l18n.monthNamesShort,
-				dayNames 		: hotel_booking_l18n.dayNames,
-				dayNamesShort 	: hotel_booking_l18n.dayNamesShort,
-				dayNamesMin		: hotel_booking_l18n.dayNamesMin,
+				dateFormat 		: hotel_booking_i18n.date_time_format,
+				monthNames 	  	: hotel_booking_i18n.monthNames,
+				monthNamesShort	: hotel_booking_i18n.monthNamesShort,
+				dayNames 		: hotel_booking_i18n.dayNames,
+				dayNamesShort 	: hotel_booking_i18n.dayNamesShort,
+				dayNamesMin		: hotel_booking_i18n.dayNamesMin,
 				minDate       	: tomorrow,
 				maxDate       	: '+365D',
 				onSelect: function( selected ){
@@ -50,12 +50,12 @@
 			});
 
 			checkout.datepicker({
-				dateFormat 		: hotel_booking_l18n.date_time_format,
-				monthNames 	  	: hotel_booking_l18n.monthNames,
-				monthNamesShort	: hotel_booking_l18n.monthNamesShort,
-				dayNames 		: hotel_booking_l18n.dayNames,
-				dayNamesShort 	: hotel_booking_l18n.dayNamesShort,
-				dayNamesMin		: hotel_booking_l18n.dayNamesMin,
+				dateFormat 		: hotel_booking_i18n.date_time_format,
+				monthNames 	  	: hotel_booking_i18n.monthNames,
+				monthNamesShort	: hotel_booking_i18n.monthNamesShort,
+				dayNames 		: hotel_booking_i18n.dayNames,
+				dayNamesShort 	: hotel_booking_i18n.dayNamesShort,
+				dayNamesMin		: hotel_booking_i18n.dayNamesMin,
 				minDate       	: tomorrow,
 				maxDate       	: '+365D',
 				onSelect: function( selected ){
@@ -191,11 +191,11 @@
 				errors = [];
 
 			if ( checkin === null ) {
-				errors.push( '<p>' + hotel_booking_l18n.empty_check_in_date + '</p>' );
+				errors.push( '<p>' + hotel_booking_i18n.empty_check_in_date + '</p>' );
 			}
 
 			if ( check_out === null ) {
-				errors.push( '<p>' + hotel_booking_l18n.empty_check_out_date + '</p>' );
+				errors.push( '<p>' + hotel_booking_i18n.empty_check_out_date + '</p>' );
 			}
 
 			if ( errors.length > 0 ) {

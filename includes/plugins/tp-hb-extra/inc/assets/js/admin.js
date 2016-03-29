@@ -29,7 +29,7 @@
 			$( document ).on( 'click', '.tp_extra_form_fields .remove_button', function(e){
 				e.preventDefault();
 
-				if( ! confirm( hotel_booking_l18n.remove_confirm ) )
+				if( ! confirm( hotel_booking_i18n.remove_confirm ) )
 					return;
 
 				var _self = $(this),

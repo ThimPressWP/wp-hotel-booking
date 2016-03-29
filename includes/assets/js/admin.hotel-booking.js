@@ -32,12 +32,12 @@
 
     function init_pricing_plan( plan ){
         $(plan).find('.datepicker').datepicker({
-            dateFormat      : hotel_booking_l18n.date_time_format,
-            monthNames      : hotel_booking_l18n.monthNames,
-            monthNamesShort : hotel_booking_l18n.monthNamesShort,
-            dayNames        : hotel_booking_l18n.dayNames,
-            dayNamesShort   : hotel_booking_l18n.dayNamesShort,
-            dayNamesMin     : hotel_booking_l18n.dayNamesMin,
+            dateFormat      : hotel_booking_i18n.date_time_format,
+            monthNames      : hotel_booking_i18n.monthNames,
+            monthNamesShort : hotel_booking_i18n.monthNamesShort,
+            dayNames        : hotel_booking_i18n.dayNames,
+            dayNamesShort   : hotel_booking_i18n.dayNamesShort,
+            dayNamesMin     : hotel_booking_i18n.dayNamesMin,
             onSelect: function( date ){
                 var _self = $( this ),
                     _date = _self.datepicker( 'getDate' ),
@@ -104,7 +104,7 @@
                     }
                     break;
                 case 'remove':
-                    if( confirm( hotel_booking_l18n.confirm_remove_pricing_table ) ) {
+                    if( confirm( hotel_booking_i18n.confirm_remove_pricing_table ) ) {
                         if( $table.siblings('.hb-pricing-table').length == 0){
                             $('#hb-no-plan-message').show();
                         }
@@ -131,11 +131,11 @@
                     $end = $table.find('input[name^="date-end"]');
                 if( ! $table.hasClass( 'regular-price') ) {
                     if ( ! isDate( $start.datepicker( 'getDate' ) ) ) {
-                        alert(hotel_booking_l18n.empty_pricing_plan_start_date );
+                        alert(hotel_booking_i18n.empty_pricing_plan_start_date );
                         $start.focus();
                         can_submit = false;
                     } else if ( ! isDate( $end.datepicker( 'getDate' ) ) ) {
-                        alert(hotel_booking_l18n.empty_pricing_plan_start_date);
+                        alert(hotel_booking_i18n.empty_pricing_plan_start_date);
                         $end.focus();
                         can_submit = false;
                     }
@@ -170,15 +170,15 @@
             return false;
         }).filter('[href*="'+window.location.hash+'"]').trigger('click');
 
-        // $.datepicker.setDefaults({ dateFormat: hotel_booking_l18n.date_time_format });
+        // $.datepicker.setDefaults({ dateFormat: hotel_booking_i18n.date_time_format });
         // $.datepicker.setDefaults({ dateFormat: 'mm/dd/yy' });
         $(".datetime-picker-metabox").datepicker({
-            dateFormat      : hotel_booking_l18n.date_time_format,
-            monthNames      : hotel_booking_l18n.monthNames,
-            monthNamesShort : hotel_booking_l18n.monthNamesShort,
-            dayNames        : hotel_booking_l18n.dayNames,
-            dayNamesShort   : hotel_booking_l18n.dayNamesShort,
-            dayNamesMin     : hotel_booking_l18n.dayNamesMin,
+            dateFormat      : hotel_booking_i18n.date_time_format,
+            monthNames      : hotel_booking_i18n.monthNames,
+            monthNamesShort : hotel_booking_i18n.monthNamesShort,
+            dayNames        : hotel_booking_i18n.dayNames,
+            dayNamesShort   : hotel_booking_i18n.dayNamesShort,
+            dayNamesMin     : hotel_booking_i18n.dayNamesMin,
             minDate         : 0,
             maxDate         : '+365D',
             numberOfMonths  : 2,
@@ -217,12 +217,12 @@
         });
 
         $('#hb-booking-date-from').datepicker({
-            dateFormat      : hotel_booking_l18n.date_time_format,
-            monthNames      : hotel_booking_l18n.monthNames,
-            monthNamesShort : hotel_booking_l18n.monthNamesShort,
-            dayNames        : hotel_booking_l18n.dayNames,
-            dayNamesShort   : hotel_booking_l18n.dayNamesShort,
-            dayNamesMin     : hotel_booking_l18n.dayNamesMin,
+            dateFormat      : hotel_booking_i18n.date_time_format,
+            monthNames      : hotel_booking_i18n.monthNames,
+            monthNamesShort : hotel_booking_i18n.monthNamesShort,
+            dayNames        : hotel_booking_i18n.dayNames,
+            dayNamesShort   : hotel_booking_i18n.dayNamesShort,
+            dayNamesMin     : hotel_booking_i18n.dayNamesMin,
             onSelect: function(){
                 var _self = $(this),
                     date = _self.datepicker( 'getDate' ),
@@ -232,12 +232,12 @@
             }
         });
         $('#hb-booking-date-to').datepicker({
-            dateFormat      : hotel_booking_l18n.date_time_format,
-            monthNames      : hotel_booking_l18n.monthNames,
-            monthNamesShort : hotel_booking_l18n.monthNamesShort,
-            dayNames        : hotel_booking_l18n.dayNames,
-            dayNamesShort   : hotel_booking_l18n.dayNamesShort,
-            dayNamesMin     : hotel_booking_l18n.dayNamesMin,
+            dateFormat      : hotel_booking_i18n.date_time_format,
+            monthNames      : hotel_booking_i18n.monthNames,
+            monthNamesShort : hotel_booking_i18n.monthNamesShort,
+            dayNames        : hotel_booking_i18n.dayNames,
+            dayNamesShort   : hotel_booking_i18n.dayNamesShort,
+            dayNamesMin     : hotel_booking_i18n.dayNamesMin,
             onSelect: function(){
                 var _self = $(this),
                     date = _self.datepicker( 'getDate' ),
@@ -253,7 +253,7 @@
                 if( $(this).val() ) counter++;
             });
             if( counter > 0 && counter < 3 ){
-                alert( hotel_booking_l18n.filter_error );
+                alert( hotel_booking_i18n.filter_error );
                 return false;
             }
         });

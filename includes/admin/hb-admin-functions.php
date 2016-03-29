@@ -87,8 +87,8 @@ add_action( 'hb_email_new_booking_settings', 'hb_admin_settings_tab_email_new_bo
  * Admin translation text
  * @return mixed
  */
-function hb_admin_l18n(){
-    $l18n = array(
+function hb_admin_i18n(){
+    $i18n = array(
         'confirm_remove_pricing_table'  => __( 'Are you sure you want to remove this pricing table?', 'tp-hotel-booking' ),
         'empty_pricing_plan_start_date' => __( 'Select start date for plan', 'tp-hotel-booking'),
         'empty_pricing_plan_start_end'  => __( 'Select end date for plan', 'tp-hotel-booking'),
@@ -97,7 +97,7 @@ function hb_admin_l18n(){
         'monthNames'                    => hb_month_name_js(),
         'monthNamesShort'               => hb_month_name_short_js()
     );
-    return apply_filters( 'hb_admin_l18n', $l18n );
+    return apply_filters( 'hb_admin_i18n', $i18n );
 }
 
 function hb_add_meta_boxes(){

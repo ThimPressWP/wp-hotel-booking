@@ -62,6 +62,7 @@ class HB_Autoloader {
             $path = $this->include_path . 'payment-gateways/' . substr( str_replace( '_', '-', $class), 19 ) . '/';
         }
 
+        // widgets
         if ( stripos( $class, 'hb_widget_' ) === 0 ) {
             $path = $this->include_path . '/widgets/';
         }
