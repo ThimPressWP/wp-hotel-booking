@@ -60,7 +60,6 @@ class TP_Hotel_Booking {
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
         add_action( 'wp_print_scripts', array( $this, 'global_js' ) );
         add_action( 'template_redirect', 'hb_handle_purchase_request', 999 );
-        add_action( 'widgets_init', array( $this, 'register_widgets' ) );
         register_activation_hook( plugin_basename( __FILE__ ), array( $this, 'install' ) );
         add_action( 'init', array( $this, 'init' ), 20 );
     }
@@ -129,16 +128,11 @@ class TP_Hotel_Booking {
         $this->_include( 'includes/class-hb-comments.php' );
         $this->_include( 'includes/hb-template-hooks.php' );
         $this->_include( 'includes/hb-template-functions.php' );
+        $this->_include( 'includes/hb-widget-functions.php' );
 
         if ( ! is_admin() ) {
             $this->frontend_includes();
         }
-
-        $this->_include( 'includes/widgets/class-hb-widget-search.php' );
-        $this->_include( 'includes/widgets/class-hb-widget-room-carousel.php' );
-        $this->_include( 'includes/widgets/class-hb-widget-best-reviews.php' );
-        $this->_include( 'includes/widgets/class-hb-widget-lastest-reviews.php' );
-        $this->_include( 'includes/widgets/class-hb-widget-mini-cart.php' );
         $this->_include( 'includes/class-hb-post-types.php' );
 
         $this->_include( 'includes/hb-functions.php' );
@@ -190,10 +184,6 @@ class TP_Hotel_Booking {
     {
         // load text domain
         $this->load_text_domain();
-
-        if ( ! function_exists( 'is_plugin_active' ) ) {
-            include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-        }
     }
 
     /**
@@ -341,17 +331,6 @@ class TP_Hotel_Booking {
             }
         </script>
     <?php
-    }
-
-    /**
-     * Register widgets
-     */
-    function register_widgets() {
-        register_widget( 'HB_Widget_Search' );
-        register_widget( 'HB_Widget_Room_Carousel' );
-        register_widget( 'HB_Widget_Room_Best_Reviews' );
-        register_widget( 'HB_Widget_Room_Lastest_Reviews' );
-        register_widget( 'HB_Widget_Cart' );
     }
 
     /**

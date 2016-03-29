@@ -48,7 +48,7 @@ class HB_Autoloader {
     }
 
     /**
-     * Auto-load WC classes on demand to reduce memory consumption.
+     * Auto-load HB classes on demand to reduce memory consumption.
      *
      * @param string $class
      */
@@ -61,6 +61,12 @@ class HB_Autoloader {
         if ( strpos( $class, 'hb_payment_gateway_' ) === 0 ) {
             $path = $this->include_path . 'payment-gateways/' . substr( str_replace( '_', '-', $class), 19 ) . '/';
         }
+
+        if ( stripos( $class, 'hb_widget_' ) === 0 ) {
+            $path = $this->include_path . '/widgets/';
+        }
+
+        // admin metaboxs
         if ( strpos( $class, 'hb_admin_metabox_' ) === 0 ) {
             $path = $this->include_path . 'admin/metaboxes/';
         }

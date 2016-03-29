@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-25 12:01:51
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-03-28 14:58:45
+ * @Last Modified time: 2016-03-29 10:14:17
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -145,7 +145,7 @@ $rooms = $hb_booking->get_cart_post_type( 'hb_room' );
 	</table>
 
 </div>
-<?php $hb_booking->load_cart(); ?>
+
 <!--Template JS-->
 <script type="text/html" id="tmpl-room-item">
 	<tr>
