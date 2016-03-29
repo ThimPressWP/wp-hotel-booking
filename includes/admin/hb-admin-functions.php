@@ -343,8 +343,9 @@ function hb_bookings_meta_boxes() {
         )
     );
 }
-add_action( 'init', 'hb_bookings_meta_boxes', 50 );
-add_action( 'init', 'hb_admin_booking_init_metaboxes' );
+// add_action( 'init', 'hb_bookings_meta_boxes', 50 );
+
+add_action( 'admin_init', 'hb_admin_booking_init_metaboxes' );
 if ( ! function_exists( 'hb_admin_booking_init_metaboxes' ) ) {
     function hb_admin_booking_init_metaboxes() {
         $metaboxes = array(

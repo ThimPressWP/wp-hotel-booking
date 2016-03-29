@@ -173,11 +173,7 @@ class TP_Hotel_Booking {
     }
 
     function admin_includes() {
-        $this->_include( 'includes/admin/class-hb-admin-menu.php' );
-        $this->_include( 'includes/class-hb-meta-box.php' );
-        $this->_include( 'includes/admin/hb-admin-functions.php' );
-        $this->_include( 'includes/admin/class-hb-admin-admin-metaboxes.php' );
-        $this->_include( 'includes/admin/class-hb-customer.php' );
+        $this->_include( 'includes/admin/class-hb-admin.php' );
     }
 
     // load payments addons

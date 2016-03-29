@@ -18,7 +18,7 @@ $payment_gateways = hb_get_payment_gateways();
         <?php } ?>
     </ul>
     <div class="clearfix"></div>
-    <?php $i = 0; foreach( $payment_gateways as $gateway ){?>
+    <?php $i = 0; foreach( $payment_gateways as $gateway ) { ?>
     <div id="hb-payment-gateway-<?php echo esc_attr( $gateway->slug ); ?>" class="hb-sub-tab-content hb-payment-gateway-settings<?php echo sprintf( '%s', $i++ == 0 ? ' current' : '' ); ?>">
         <?php do_action( 'hb_payment_gateway_settings_' . $gateway->slug ); ?>
     </div>

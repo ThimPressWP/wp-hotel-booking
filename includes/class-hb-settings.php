@@ -53,16 +53,6 @@ class HB_Settings{
         add_action( 'hotel_booking_single_room_before_tabs_content_hb_room_pricing_plans', array($this, 'show_pricing') );
     }
 
-    function test_email(){
-        $test = ! empty( $_REQUEST['test-email'] ) ? sanitize_text_field( $_REQUEST['test-email'] ) : '';
-        if( ! $test ) return;
-        switch( $test ){
-            case 'new-booking':
-
-        }
-
-    }
-
     /**
      * Get an option
      *
@@ -152,8 +142,6 @@ class HB_Settings{
 
         }
         $this->update();
-
-        $this->test_email();
     }
 
     /**

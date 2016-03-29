@@ -115,7 +115,8 @@ class HB_Admin_Menu{
     }
 
     function settings_page(){
-        TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings.php' );
+        HB_Admin_Settings::output();
+        // TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings.php' );
     }
 
     function pricing_table(){
