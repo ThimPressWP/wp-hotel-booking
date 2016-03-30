@@ -70,12 +70,7 @@ class TP_Hotel_Booking {
     }
 
     function install(){
-        if( ! function_exists( 'hb_create_page' ) )
-        {
-            $this->_include( 'includes/admin/hb-admin-functions.php' );
-            $this->_include( 'includes/hb-functions.php' );
-        }
-        $this->_include( 'includes/install.php' );
+        return HB_Install::install();
     }
 
     /**

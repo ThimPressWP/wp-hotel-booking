@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-29 15:07:16
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-03-30 16:13:43
+ * @Last Modified time: 2016-03-30 17:24:57
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -14,14 +14,16 @@ class HB_Admin_Settings {
 
 	public static function get_settings_pages() {
 
-		$tabs[] = TP_Hotel_Booking::instance()->_include( 'includes/admin/class-hb-admin-setting-page.php' );
+		TP_Hotel_Booking::instance()->_include( 'includes/admin/class-hb-admin-setting-page.php' );
 		$tabs = array();
-		$tabs[] = TP_Hotel_Booking::instance()->_include( 'includes/admin/settings/class-hb-admin-setting-general.php' );
-		$tabs[] = TP_Hotel_Booking::instance()->_include( 'includes/admin/settings/class-hb-admin-setting-hotel-info.php' );
-		$tabs[] = TP_Hotel_Booking::instance()->_include( 'includes/admin/settings/class-hb-admin-setting-lightboxs.php' );
-		$tabs[] = TP_Hotel_Booking::instance()->_include( 'includes/admin/settings/class-hb-admin-setting-emails.php' );
-		$tabs[] = TP_Hotel_Booking::instance()->_include( 'includes/admin/settings/class-hb-admin-setting-payments.php' );
-		$tabs[] = TP_Hotel_Booking::instance()->_include( 'includes/admin/settings/class-hb-admin-setting-room.php' );
+
+		// use TP_Hotel_Booking::instance() return null active hook
+		$tabs[] = include( 'settings/class-hb-admin-setting-general.php' );
+		$tabs[] = include( 'settings/class-hb-admin-setting-hotel-info.php' );
+		$tabs[] = include( 'settings/class-hb-admin-setting-lightboxs.php' );
+		$tabs[] = include( 'settings/class-hb-admin-setting-emails.php' );
+		$tabs[] = include( 'settings/class-hb-admin-setting-payments.php' );
+		$tabs[] = include( 'settings/class-hb-admin-setting-room.php' );
 
 		return apply_filters( 'hotel_booking_admin_setting_pages', $tabs );
 	}
