@@ -60,6 +60,9 @@ class HB_Settings{
      * @return mixed
      */
     function get( $name, $default = false ){
+        if ( strpos( $name, 'tp_hotel_booking_' ) === 0 ) {
+            $name = str_replace( 'tp_hotel_booking_', '', $name );
+        }
         if( ! empty( $this->_options[ $name ] ) ){
             return $this->_options[ $name ];
         }

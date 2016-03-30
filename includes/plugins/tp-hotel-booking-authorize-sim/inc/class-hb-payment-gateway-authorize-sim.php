@@ -102,7 +102,6 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base{
         /**
          * settings form, frontend payment select form
          */
-        add_action( 'hb_payment_gateway_settings_' . $this->slug, array( $this, 'admin_settings' ) );
         add_action( 'hb_payment_gateway_form_' . $this->slug, array( $this, 'form' ) );
         $this->payment_callback();
     }
@@ -312,8 +311,8 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base{
      *
      * @param $gateway
      */
-    function admin_settings( $gateway ){
-        $template = TP_Hotel_Booking::instance()->locate( 'includes/admin/views/settings/authorize-sim.php' );
+    function admin_settings( ){
+        $template = TP_HB_AUTHORIZE_DIR . '/inc/views/authorize-sim-settings.php';
         include_once $template;
     }
 

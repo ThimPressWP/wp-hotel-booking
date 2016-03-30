@@ -104,7 +104,7 @@ class HB_SW_Curreny
 		 */
 		if( is_admin() )
 		{
-			add_filter( 'hb_admin_settings_tabs', array( $this, 'setting_tab' ) );
+			add_filter( 'hb_admin_settings_tabs', array( $this, 'setting_tab' ), 100 );
 			add_action( 'hb_admin_settings_tab_currencies', array( $this, 'admin_settings' ) );
 
 		}
@@ -213,7 +213,6 @@ class HB_SW_Curreny
 	 */
 	function admin_settings()
 	{
-		// TP_Hotel_Booking::instance()->_include( 'includes/currencies/views/settings.php' );
 		require_once dirname( __FILE__ ) . '/settings/settings.php' ;
 	}
 

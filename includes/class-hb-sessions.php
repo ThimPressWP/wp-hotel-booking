@@ -1,10 +1,11 @@
 <?php
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
 if( ! session_id() ) {
-    session_start();
+    @session_start();
 }
 
 class HB_Sessions
