@@ -156,19 +156,19 @@
             init_pricing_plan(this);
         });
 
-        var $tabClicked = $('.hb-admin-sub-tab li a').click(function(e){
-            e.preventDefault();
-            var id = $(this).attr('href'),
-                $div = $(id),
-                $parent = $(this).parent();
-            $parent.addClass('current').siblings().removeClass('current');
+        // var $tabClicked = $('.hb-admin-sub-tab li a').click(function(e){
+        //     e.preventDefault();
+        //     var id = $(this).attr('href'),
+        //         $div = $(id),
+        //         $parent = $(this).parent();
+        //     $parent.addClass('current').siblings().removeClass('current');
 
-            $div.show().css('opacity', 1).siblings('.hb-sub-tab-content').hide();
+        //     $div.show().css('opacity', 1).siblings('.hb-sub-tab-content').hide();
 
-            history.pushState({}, '', window.location.href.replace(/#?.*/, '') + id);
+        //     history.pushState({}, '', window.location.href.replace(/#?.*/, '') + id);
 
-            return false;
-        }).filter('[href*="'+window.location.hash+'"]').trigger('click');
+        //     return false;
+        // }).filter('[href*="'+window.location.hash+'"]').trigger('click');
 
         // $.datepicker.setDefaults({ dateFormat: hotel_booking_i18n.date_time_format });
         // $.datepicker.setDefaults({ dateFormat: 'mm/dd/yy' });

@@ -67,7 +67,6 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      * Init hooks
      */
     function init(){
-        add_action( 'hb_payment_gateway_settings_' . $this->slug, array( $this, 'admin_settings' ) );
         add_action( 'hb_payment_gateway_form_' . $this->slug, array( $this, 'form' ) );
         add_action( 'hb_do_checkout_' . $this->_slug, array( $this, 'process_checkout' ) );
         add_action( 'hb_do_transaction_paypal-standard', array( $this, 'process_booking_paypal_standard' ) );
@@ -325,7 +324,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      *
      * @param $gateway
      */
-    function admin_settings( $gateway ){
+    function admin_settings( ){
         $template = TP_Hotel_Booking::instance()->locate( 'includes/payment-gateways/paypal/views/settings.php' );
         include_once $template;
     }

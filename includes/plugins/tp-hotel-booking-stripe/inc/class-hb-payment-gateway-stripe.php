@@ -54,11 +54,10 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
     }
 
     function init(){
-        add_action( 'hb_payment_gateway_settings_' . $this->slug, array( $this, 'admin_settings' ) );
         add_action( 'hb_payment_gateway_form_' . $this->slug, array( $this, 'form' ) );
     }
 
-    function admin_settings( $gateway ){
+    function admin_settings(){
         include_once TP_HB_STRIPE_DIR . '/inc/views/strip-settings.php';
     }
 

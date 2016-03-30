@@ -26,7 +26,6 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
      * Init hooks
      */
     function init(){
-        add_action( 'hb_payment_gateway_settings_' . $this->slug, array( $this, 'admin_settings' ) );
         add_action( 'hb_payment_gateway_form_' . $this->slug, array( $this, 'form' ) );
         add_filter( 'hb_payment_method_title_offline-payment', array( $this, 'payment_method_title' ) );
     }
@@ -58,7 +57,7 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
      *
      * @param $gateway
      */
-    function admin_settings( $gateway ){
+    function admin_settings(){
         $template = TP_Hotel_Booking::instance()->locate( 'includes/payment-gateways/offline-payment/views/settings.php' );
         include_once $template;
     }

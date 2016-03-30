@@ -1024,11 +1024,11 @@ function hb_format_price( $price, $with_currency = true ) {
 function hb_search_rooms( $args = array() ) {
     global $wpdb;
     $adults_term = hb_get_request( 'adults', 0 );
-    $adults = $adults_term ? get_term_meta( $adults_term, 'hb_max_number_of_adults', true) : 1;
+    $adults = $adults_term ? get_term_meta( $adults_term, 'hb_max_number_of_adults', true) : hb_get_max_capacity_of_rooms();
     if ( ! $adults ) {
     	$adults = $adults_term ? (int)get_option( 'hb_taxonomy_capacity_' . $adults_term ) : 0;
     }
-    $max_child = hb_get_request( 'max_child', 0 );
+    $max_child = hb_get_request( 'max_child', hb_get_max_child_of_rooms() );
 
     $args = wp_parse_args(
         $args,

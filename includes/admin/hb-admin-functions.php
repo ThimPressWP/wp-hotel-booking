@@ -12,76 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return mixed
  */
 function hb_admin_settings_tabs(){
-    $tabs = array(
-        'general'       => __( 'General', 'tp-hotel-booking' ),
-        'hotel_info'    => __( 'Hotel Information', 'tp-hotel-booking' ),
-        'payments'      => __( 'Payments', 'tp-hotel-booking' ),
-        'emails'        => __( 'Emails', 'tp-hotel-booking' ),
-        'lightbox'      => __( 'Lightbox', 'tp-hotel-booking' ),
-        'room'          => __( 'Room', 'tp-hotel-booking' )
-    );
-    return apply_filters( 'hb_admin_settings_tabs', $tabs );
+    return apply_filters( 'hb_admin_settings_tabs', array() );
 }
-
-/**
- * Callback handler for Hotel Information tab content
- */
-function hb_admin_settings_tab_hotel_info(){
-    TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings/hotel-info.php' );
-}
-
-/**
- * Callback handler for Hotel Information tab content
- */
-function hb_admin_settings_tab_payments(){
-    TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings/payments.php' );
-}
-
-/**
- * Callback handler for Hotel Information tab content
- */
-function hb_admin_settings_tab_general(){
-    TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings/general.php' );
-}
-
-/**
- * Callback handler for Hotel Information tab content
- */
-function hb_admin_settings_tab_lightbox(){
-    TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings/lightbox.php' );
-}
-
-/**
- * Callback handler for Emails tab content
- */
-function hb_admin_settings_tab_emails(){
-    TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings/emails.php' );
-}
-
-/**
- * @param $selected
- */
-function hb_admin_settings_tab_content( $selected ){
-    if( is_callable( "hb_admin_settings_tab_{$selected}" ) ) {
-        call_user_func_array( "hb_admin_settings_tab_{$selected}", array() );
-    }
-}
-add_action( 'hb_admin_settings_tab_before', 'hb_admin_settings_tab_content' );
-
-function hb_admin_settings_tab_email_general(){
-    TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings/email-general.php' );
-}
-add_action( 'hb_email_general_settings', 'hb_admin_settings_tab_email_general' );
-
-function hb_admin_settings_tab_email_new_booking(){
-    TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings/email-new-booking.php' );
-}
-add_action( 'hb_email_new_booking_settings', 'hb_admin_settings_tab_email_new_booking' );
-
-function hb_admin_settings_tab_room(){
-    TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings/room.php' );
-}
-add_action( 'hb_email_new_booking_settings', 'hb_admin_settings_tab_email_new_booking' );
 
 /**
  * Admin translation text
