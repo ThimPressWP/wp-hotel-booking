@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-28 16:31:22
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-03-30 17:12:24
+ * @Last Modified time: 2016-03-31 10:35:14
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -14,9 +14,21 @@ class HB_Install {
 
 	// install hook
 	static function install() {
+		// ob_start();
+
+		// create pages
+		self::create_pages();
 
 		// create update options
 		self::create_options();
+
+		// create term default. Eg: Room Capacities
+		self::create_terms();
+
+		// upgrade database
+		self::upgrade_database();
+
+		// ob_end_flush();
 	}
 
 	// upgrade database
@@ -49,8 +61,8 @@ class HB_Install {
 	// create page. Eg: room-checkout, my-rooms
 	static function create_pages() {
 		if( ! function_exists( 'hb_create_page' ) ){
-            $this->_include( 'includes/admin/hb-admin-functions.php' );
-            $this->_include( 'includes/hb-functions.php' );
+            TP_Hotel_Booking::instance()->_include( 'includes/admin/hb-admin-functions.php' );
+            TP_Hotel_Booking::instance()->_include( 'includes/hb-functions.php' );
         }
 
 		$pages = array();
@@ -94,16 +106,51 @@ class HB_Install {
 		{
 		    foreach ( $pages as $key => $page ) {
 		        $pageId = hb_create_page( esc_sql( $page['name'] ), 'hotel_booking_' . $key . '_page_id', $page['title'], $page['content'], ! empty( $page['parent'] ) ? hb_get_page_id( $page['parent'] ) : '' );
-		        $hb_settings->set( $key.'_page_id', $pageId );
+		        hb_settings()->set( $key.'_page_id', $pageId );
 		    }
 		}
 
+	}
+
+	// create terms default for system
+	static function create_terms() {
+		if ( ! class_exists( 'HB_Post_Types' ) ) {
+			TP_Hotel_Booking::instance()->_include( 'includes/class-hb-post-types.php' );
+		}
+
+		HB_Post_Types::register_taxonomies();
+
+		$taxonomies = array(
+				'hb_room_capacity'	=> array(
+						'double'	=> array(
+								'hb_max_number_of_adults'	=> 2
+							),
+						'single'	=> array(
+								'hb_max_number_of_adults'	=> 1,
+								'alias_of'					=> 2
+							)
+					)
+			);
+
+		// insert term
+		foreach ( $taxonomies as $taxonomy => $terms ) {
+			foreach ( $terms as $term => $term_op ) {
+				if ( ! get_term_by( 'slug', sanitize_title( $term ), $taxonomy ) ) {
+					$term = wp_insert_term( $term, $taxonomy, array() );
+
+					if ( ! is_wp_error( $term ) ) {
+						foreach ( $term_op as $k => $v ) {
+							add_term_meta( $term['term_id'], $k, $v, true );
+						}
+					}
+				}
+			}
+		}
 	}
 
 	// create tables. Eg: booking_items
 	static function create_tables() {
 
 	}
-
 
 }
