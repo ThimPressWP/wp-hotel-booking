@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-28 16:31:22
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-03-31 11:36:45
+ * @Last Modified time: 2016-03-31 14:02:53
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -23,6 +23,9 @@ class HB_Install {
 
 		// create term default. Eg: Room Capacities
 		self::create_terms();
+
+		// create tables
+		self::create_tables();
 
 		// upgrade database
 		self::upgrade_database();
@@ -116,6 +119,7 @@ class HB_Install {
 			TP_Hotel_Booking::instance()->_include( 'includes/class-hb-post-types.php' );
 		}
 
+		// register taxonomies
 		HB_Post_Types::register_taxonomies();
 
 		$taxonomies = array(
@@ -147,7 +151,7 @@ class HB_Install {
 	}
 
 	// create tables. Eg: booking_items
-	static function create_tables( $network_wide ) {
+	static function create_tables( $network_wide = false ) {
 		global $wpdb;
 		if ( is_multisite() && $network_wide ) {
 	        // store the current blog id
@@ -174,6 +178,29 @@ class HB_Install {
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
 		$charset_collate = $wpdb->get_charset_collate();
+
+		$sql = "
+			CREATE TABLE {$wpdb->prefix}hotel_booking_order_items (
+				order_item_id bigint(20) NOT NULL AUTO_INCREMENT,
+				order_item_name longtext NOT NULL,
+				order_item_type varchar(255) NOT NULL,
+				order_id bigint(20) NOT NULL,
+				UNIQUE KEY order_item_id (order_item_id),
+				PRIMARY KEY  (order_item_id)
+			) $charset_collate;
+			CREATE TABLE {$wpdb->prefix}hotel_booking_order_itemmeta (
+				meta_id bigint(20) NOT NULL AUTO_INCREMENT,
+				order_item_id bigint(20) NOT NULL,
+				meta_key varchar(255) NULL,
+				meta_value longtext NULL,
+				UNIQUE KEY meta_id (meta_id),
+				PRIMARY KEY  (meta_id),
+				KEY order_item_id(order_item_id),
+				KEY meta_key(meta_key)
+			) $charset_collate;
+		";
+
+		return dbDelta( $sql );
 
 	}
 

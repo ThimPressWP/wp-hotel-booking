@@ -59,7 +59,7 @@ class HB_Autoloader {
 
         // payment gateways
         if ( strpos( $class, 'hb_payment_gateway_' ) === 0 ) {
-            $path = $this->include_path . 'payment-gateways/' . substr( str_replace( '_', '-', $class), 19 ) . '/';
+            $path = $this->include_path . 'gateways/' . substr( str_replace( '_', '-', $class), 19 ) . '/';
         }
 
         // widgets

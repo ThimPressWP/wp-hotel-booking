@@ -3175,15 +3175,15 @@ msgid "Customer Information"
 msgstr ""
 
 #. Text in function
-#: ../includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:62 ..
+#: ../includes/gateways/class-hb-payment-gateway-authorize-sim.php:62 ..
 #: /includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-
 #: authorize-sim.php:58
 msgid "Authorize"
 msgstr ""
 
 #. Text in function
-#: ../includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:63 ..
-#: /includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:261 ..
+#: ../includes/gateways/class-hb-payment-gateway-authorize-sim.php:63 ..
+#: /includes/gateways/class-hb-payment-gateway-authorize-sim.php:261 ..
 #: /includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-
 #: authorize-sim.php:59 ../includes/plugins/tp-hotel-booking-authorize-
 #: sim/inc/class-hb-payment-gateway-authorize-sim.php:257
@@ -3191,168 +3191,168 @@ msgid "Pay with Authorize.net"
 msgstr ""
 
 #. Text in function
-#: ../includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:79 ..
+#: ../includes/gateways/class-hb-payment-gateway-authorize-sim.php:79 ..
 #: /includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-
 #: authorize-sim.php:75
 msgid "This transaction has been approved."
 msgstr ""
 
 #. Text in function
-#: ../includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:80 ..
+#: ../includes/gateways/class-hb-payment-gateway-authorize-sim.php:80 ..
 #: /includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-
 #: authorize-sim.php:76
 msgid "This transaction has been declined."
 msgstr ""
 
 #. Text in function
-#: ../includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:81 ..
+#: ../includes/gateways/class-hb-payment-gateway-authorize-sim.php:81 ..
 #: /includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-
 #: authorize-sim.php:77
 msgid "There has been an error processing this transaction."
 msgstr ""
 
 #. Text in function
-#: ../includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:82 ..
+#: ../includes/gateways/class-hb-payment-gateway-authorize-sim.php:82 ..
 #: /includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-
 #: authorize-sim.php:78
 msgid " This transaction is being held for review."
 msgstr ""
 
 #. Text in function
-#: ../includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:248 ..
+#: ../includes/gateways/class-hb-payment-gateway-authorize-sim.php:248 ..
 #: /includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-
 #: authorize-sim.php:244
 msgid "Click here to return our homepage"
 msgstr ""
 
-#: ../includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:285 ..
+#: ../includes/gateways/class-hb-payment-gateway-authorize-sim.php:285 ..
 #: /includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-
 #: authorize-sim.php:281
 msgid "Pay with Authorize"
 msgstr ""
 
 #. Text in function
-#: ../includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:19
+#: ../includes/gateways/class-hb-payment-gateway-offline-payment.php:19
 msgid "Offline Payment"
 msgstr ""
 
-#: ../includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:20
+#: ../includes/gateways/class-hb-payment-gateway-offline-payment.php:20
 msgid "Pay on arrival"
 msgstr ""
 
 #. Text in echo
-#: ../includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:52
+#: ../includes/gateways/class-hb-payment-gateway-offline-payment.php:52
 msgid "<br />(<small>Pay on arrival</small>)"
 msgstr ""
 
-#: ../includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:100
+#: ../includes/gateways/class-hb-payment-gateway-offline-payment.php:100
 #, php-format
 msgid ""
 "Thank you! Your booking has been placed. Please check your email %s to view "
 "booking details"
 msgstr ""
 
-#: ../includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:110
+#: ../includes/gateways/class-hb-payment-gateway-offline-payment.php:110
 msgid " Pay on Arrival"
 msgstr ""
 
-#: ../includes/payment-gateways/class-hb-payment-gateway-paypal.php:52 ..
+#: ../includes/gateways/class-hb-payment-gateway-paypal.php:52 ..
 #: /includes/plugins/tp-hotel-booking-paypal/inc/class-hb-payment-gateway-paypal.
 #: php:48
 msgid "Paypal"
 msgstr ""
 
-#: ../includes/payment-gateways/class-hb-payment-gateway-paypal.php:53 ..
-#: /includes/payment-gateways/class-hb-payment-gateway-paypal.php:104 ..
+#: ../includes/gateways/class-hb-payment-gateway-paypal.php:53 ..
+#: /includes/gateways/class-hb-payment-gateway-paypal.php:104 ..
 #: /includes/plugins/tp-hotel-booking-paypal/inc/class-hb-payment-gateway-paypal.
 #: php:49 ../includes/plugins/tp-hotel-booking-paypal/inc/class-hb-payment-
 #: gateway-paypal.php:101
 msgid "Pay with Paypal"
 msgstr ""
 
-#: ../includes/payment-gateways/class-hb-payment-gateway-paypal.php:99 ..
+#: ../includes/gateways/class-hb-payment-gateway-paypal.php:99 ..
 #: /includes/plugins/tp-hotel-booking-paypal/inc/class-hb-payment-gateway-paypal.
 #: php:95
 #, php-format
 msgid "<br /><small>(Paid %s%% of %s via %s)</small>"
 msgstr ""
 
-#: ../includes/payment-gateways/class-hb-payment-gateway-paypal.php:169 ..
+#: ../includes/gateways/class-hb-payment-gateway-paypal.php:169 ..
 #: /includes/plugins/tp-hotel-booking-paypal/inc/class-hb-payment-gateway-paypal.
 #: php:166
 msgid "Error: Booking ID and key were not found in \"custom\"."
 msgstr ""
 
-#: ../includes/payment-gateways/class-hb-payment-gateway-paypal.php:179 ..
+#: ../includes/gateways/class-hb-payment-gateway-paypal.php:179 ..
 #: /includes/plugins/tp-hotel-booking-paypal/inc/class-hb-payment-gateway-paypal.
 #: php:176
 #, php-format
 msgid "Error: Booking Keys do not match %s and %s."
 msgstr ""
 
-#: ../includes/payment-gateways/class-hb-payment-gateway-paypal.php:200 ..
+#: ../includes/gateways/class-hb-payment-gateway-paypal.php:200 ..
 #: /includes/plugins/tp-hotel-booking-paypal/inc/class-hb-payment-gateway-paypal.
 #: php:197
 msgid "IPN payment completed"
 msgstr ""
 
-#: ../includes/payment-gateways/class-hb-payment-gateway-stripe.php:35 ..
+#: ../includes/gateways/class-hb-payment-gateway-stripe.php:35 ..
 #: /includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-stripe.
 #: php:31
 msgid "Stripe"
 msgstr ""
 
-#: ../includes/payment-gateways/class-hb-payment-gateway-stripe.php:36 ..
+#: ../includes/gateways/class-hb-payment-gateway-stripe.php:36 ..
 #: /includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-stripe.
 #: php:32
 msgid "Pay with Stripe"
 msgstr ""
 
-#: ../includes/payment-gateways/class-hb-payment-gateway-stripe.php:87 ..
+#: ../includes/gateways/class-hb-payment-gateway-stripe.php:87 ..
 #: /includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-stripe.
 #: php:83
 #, php-format
 msgid "%s - Order %s"
 msgstr ""
 
-#: ../includes/payment-gateways/class-hb-payment-gateway-stripe.php:97 ..
+#: ../includes/gateways/class-hb-payment-gateway-stripe.php:97 ..
 #: /includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-stripe.
 #: php:93
 #, php-format
 msgid "%s. Please try again"
 msgstr ""
 
-#: ../includes/payment-gateways/class-hb-payment-gateway-stripe.php:114 ..
+#: ../includes/gateways/class-hb-payment-gateway-stripe.php:114 ..
 #: /includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-stripe.
 #: php:110
 msgid "Please try again"
 msgstr ""
 
-#: ../includes/payment-gateways/class-hb-payment-gateway-stripe.php:135 ..
+#: ../includes/gateways/class-hb-payment-gateway-stripe.php:135 ..
 #: /includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-stripe.
 #: php:131
 msgid "Donor for"
 msgstr ""
 
-#: ../includes/payment-gateways/class-hb-payment-gateway-stripe.php:163 ..
+#: ../includes/gateways/class-hb-payment-gateway-stripe.php:163 ..
 #: /includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-stripe.
 #: php:159
 msgid "There was a problem connecting to the payment gateway."
 msgstr ""
 
-#: ../includes/payment-gateways/class-hb-payment-gateway-stripe.php:166 ..
+#: ../includes/gateways/class-hb-payment-gateway-stripe.php:166 ..
 #: /includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-stripe.
 #: php:162
 msgid "Empty response."
 msgstr ""
 
-#: ../includes/payment-gateways/class-hb-payment-gateway-stripe.php:174 ..
+#: ../includes/gateways/class-hb-payment-gateway-stripe.php:174 ..
 #: /includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-stripe.
 #: php:170
 msgid "Invalid response."
 msgstr ""
 
-#: ../includes/payment-gateways/class-hb-payment-gateway-stripe.php:190 ..
+#: ../includes/gateways/class-hb-payment-gateway-stripe.php:190 ..
 #: /includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-stripe.
 #: php:186
 msgid "Pay with Credit card"

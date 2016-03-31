@@ -513,7 +513,7 @@
 									window.location.href = code.redirect;
 								}
 							} else {
-								alert(code.message);
+								alert( code.message );
 							}
 
 							if ( typeof code.id !== 'undefined' ) {

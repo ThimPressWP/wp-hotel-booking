@@ -265,7 +265,7 @@ class HB_Post_Types{
      */
     function enqueue_scripts(){
         if( in_array( hb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) ){
-            wp_enqueue_script( 'hb-edit-tags', TP_Hotel_Booking::instance()->plugin_url( 'includes/assets/js/edit-tags.min.js' ), array( 'jquery', 'jquery-ui-sortable' ) );
+            wp_enqueue_script( 'hb-edit-tags', TP_Hotel_Booking::instance()->plugin_url( 'assets/js/edit-tags.min.js' ), array( 'jquery', 'jquery-ui-sortable' ) );
         }
     }
 

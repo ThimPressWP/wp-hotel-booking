@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-29 15:07:16
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-03-30 17:24:57
+ * @Last Modified time: 2016-03-31 13:14:11
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -319,9 +319,7 @@ class HB_Admin_Settings {
 		}
 
 		?>
-
 			<div class="wrap">
-			    <h2><?php _e( 'TP Hotel Booking', 'tp-hotel-booking' ); ?></h2>
 			    <h2 class="nav-tab-wrapper">
 			        <?php if( $tabs ) :
 				        foreach( $tabs as $slug => $title) { ?>

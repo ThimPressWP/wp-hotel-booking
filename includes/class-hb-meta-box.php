@@ -134,7 +134,7 @@ class HB_Meta_Box{
                 }
                 echo '<div class="hb-form-field-input">';
                 echo '<div class="hb-form-field-input-inner">';
-                $tmpl = TP_Hotel_Booking::instance()->locate( "includes/meta-box/{$field['type']}.php" );
+                $tmpl = TP_Hotel_Booking::instance()->locate( "includes/admin/metaboxes/views/fields/{$field['type']}.php" );
                 require $tmpl;
                 if( ! empty( $field['desc'] ) ){
                     printf( '<p class="description">%s</p>', $field['desc'] );
