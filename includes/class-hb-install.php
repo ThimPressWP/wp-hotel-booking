@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-28 16:31:22
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-03-31 10:35:14
+ * @Last Modified time: 2016-03-31 11:36:45
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -14,7 +14,6 @@ class HB_Install {
 
 	// install hook
 	static function install() {
-		// ob_start();
 
 		// create pages
 		self::create_pages();
@@ -28,7 +27,6 @@ class HB_Install {
 		// upgrade database
 		self::upgrade_database();
 
-		// ob_end_flush();
 	}
 
 	// upgrade database
@@ -149,8 +147,55 @@ class HB_Install {
 	}
 
 	// create tables. Eg: booking_items
-	static function create_tables() {
+	static function create_tables( $network_wide ) {
+		global $wpdb;
+		if ( is_multisite() && $network_wide ) {
+	        // store the current blog id
+	        $current_blog = $wpdb->blogid;
+	        // Get all blogs in the network and activate plugin on each one
+	        $blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+	        foreach ( $blog_ids as $blog_id ) {
+	        	// each blog
+	            switch_to_blog( $blog_id );
 
+	            self::schema();
+
+	            // restore
+	            restore_current_blog();
+	        }
+	    } else {
+	        self::schema();
+	    }
+	}
+
+	// do create table
+	static function schema() {
+		global $wpdb;
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+
+		$charset_collate = $wpdb->get_charset_collate();
+
+	}
+
+	// delete table when delete blog
+	static function delete_tables( $tables ) {
+		global $wpdb;
+   		$tables[] = $wpdb->prefix . 'table_name';
+		return $tables;
+	}
+
+	// create new table when create new blog multisite
+	static function create_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
+		$plugin = basename( HB_PLUGIN_PATH ) . '/' . basename( HB_PLUGIN_PATH ) . '.php';
+		if ( is_plugin_active_for_network( $plugin ) ) {
+			// switch to current blog
+	        switch_to_blog( $blog_id );
+
+	        self::create_tables( true );
+
+	        // restore
+	        restore_current_blog();
+	    }
 	}
 
 }

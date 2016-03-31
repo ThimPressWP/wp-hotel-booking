@@ -49,7 +49,7 @@ class TP_Hotel_Booking {
     /**
      * Construction
      */
-    function __construct(){
+    public function __construct(){
         if( self::$_instance ) {
             return self::$_instance;
         }
@@ -62,15 +62,31 @@ class TP_Hotel_Booking {
         add_action( 'template_redirect', 'hb_handle_purchase_request', 999 );
         register_activation_hook( plugin_basename( __FILE__ ), array( $this, 'install' ) );
         add_action( 'init', array( $this, 'init' ), 20 );
+
+        // create new blog in multisite
+        add_action( 'wpmu_new_blog', array( $this,'create_new_blog' ), 10, 6 );
+        // multisite delete table in multisite
+        add_filter( 'wpmu_drop_tables', array( $this, 'delete_blog_table' ) );
     }
 
-    function init(){
+    public function init(){
         // cart
         $this->cart = HB_Cart::instance();
     }
 
-    function install(){
+    // install hook
+    public function install(){
         return HB_Install::install();
+    }
+
+    // create new blog table
+    public function create_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
+        return HB_Install::create_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta );
+    }
+
+    // delete table when delete blog, multisite
+    public function delete_blog_table( $tables ) {
+        return HB_Install::delete_tables( $tables );
     }
 
     /**
@@ -80,7 +96,7 @@ class TP_Hotel_Booking {
      * @param bool
      * @param array
      */
-    function _include( $file, $root = true, $args = array(), $unique = true ) {
+    public function _include( $file, $root = true, $args = array(), $unique = true ) {
         if( $root ){
             $file = $this->plugin_path( $file );
         }
@@ -105,14 +121,14 @@ class TP_Hotel_Booking {
      * @param string
      * @return string
      */
-    function locate( $file ){
+    public function locate( $file ){
         return $this->_plugin_path . '/' . $file;
     }
 
     /**
      * Includes common files and libraries
      */
-    function includes(){
+    public function includes(){
         $this->_include( 'includes/class-hb-autoloader.php' );
         $this->_include( 'includes/class-hb-booking-template-loader.php' );
         $this->_include( 'includes/class-hb-ajax.php' );
@@ -151,7 +167,7 @@ class TP_Hotel_Booking {
         $this->_include( 'includes/hb-webhooks.php' );
     }
 
-    function frontend_includes() {
+    public function frontend_includes() {
         // shortcodes
         $this->_include( 'includes/class-hb-shortcodes.php' );
         $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-cart.php' );
@@ -167,12 +183,12 @@ class TP_Hotel_Booking {
         }
     }
 
-    function admin_includes() {
+    public function admin_includes() {
         $this->_include( 'includes/admin/class-hb-admin.php' );
     }
 
     // load payments addons
-    function plugins_loaded()
+    public function plugins_loaded()
     {
         // load text domain
         $this->load_text_domain();
@@ -184,7 +200,7 @@ class TP_Hotel_Booking {
      * @param string $sub
      * @return string
      */
-    function plugin_path( $sub = '' ){
+    public function plugin_path( $sub = '' ){
         if( ! $this->_plugin_path ) {
             $this->_plugin_path = untrailingslashit( plugin_dir_path( __FILE__ ) );
         }
@@ -197,7 +213,7 @@ class TP_Hotel_Booking {
      * @param string $sub
      * @return string
      */
-    function plugin_url( $sub = '' ){
+    public function plugin_url( $sub = '' ){
         if( ! $this->_plugin_url ) {
             $this->_plugin_url = untrailingslashit( plugins_url( '/', __FILE__ ) );
         }
@@ -207,7 +223,7 @@ class TP_Hotel_Booking {
     /**
      * Load language for the plugin
      */
-    function load_text_domain(){
+    public function load_text_domain(){
         // prefix
         $prefix = basename( dirname( plugin_basename( __FILE__ ) ) );
         $locale = get_locale();
@@ -232,7 +248,7 @@ class TP_Hotel_Booking {
     /**
      * Enqueue assets for the plugin
      */
-    function enqueue_assets(){
+    public function enqueue_assets(){
         $dependencies = array(
             'jquery',
             'jquery-ui-sortable',
@@ -306,7 +322,7 @@ class TP_Hotel_Booking {
     /**
      * Output global js settings
      */
-    function global_js(){
+    public function global_js(){
         $upload_dir = wp_upload_dir();
         $upload_base_url = $upload_dir['baseurl'];
     ?>
