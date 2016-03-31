@@ -77,7 +77,7 @@ class HB_Checkout{
         if( TP_Hotel_Booking::instance()->cart->cart_items_count === 0 ) {
             hb_send_json( array(
                     'result'        => 'fail',
-                    'message'       => __( 'Your cart is empty', 'tp-hotel-booking' )
+                    'message'       => __( 'Your cart is empty.', 'tp-hotel-booking' )
                 ) );
             throw new Exception( sprintf( __( 'Sorry, your session has expired. <a href="%s">Return to homepage</a>', 'tp-hotel-booking' ), home_url() ) );
         }
@@ -115,7 +115,7 @@ class HB_Checkout{
             delete_post_meta( $booking_id, '_hb_room_id' );
             if( $transaction->rooms )
             {
-                foreach( $transaction->rooms as $room_options ){
+                foreach( $transaction->rooms as $room_options ) {
                     $num_of_rooms = $room_options['_hb_quantity'];
                     // insert multiple meta value
                     for( $i = 0; $i < $num_of_rooms; $i ++ ) {

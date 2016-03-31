@@ -5,7 +5,7 @@ msgstr ""
 
 #. Text in function
 #: tp-hotel-booking/includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-authorize-sim.php:1
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:1
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-authorize-sim.php:1
 msgid " This transaction is being held for review."
 msgstr ""
 
@@ -58,7 +58,7 @@ msgid "<br />(<small>%s</small>)"
 msgstr ""
 
 #. Text in echo
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:1
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-offline-payment.php:1
 msgid "<br />(<small>Pay on arrival</small>)"
 msgstr ""
 
@@ -176,7 +176,7 @@ msgstr ""
 
 #. Text in function
 #: tp-hotel-booking/includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-authorize-sim.php:1
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:1
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-authorize-sim.php:1
 msgid "Authorize"
 msgstr ""
 
@@ -208,7 +208,7 @@ msgid "Booking Details"
 msgstr ""
 
 #. Text in function
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:111
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-offline-payment.php:111
 #: tp-hotel-booking/templates/emails/email-booking.php:44
 #: tp-hotel-booking/templates/emails/admin-new-booking.php:43
 msgid "Booking Details %s"
@@ -235,7 +235,7 @@ msgid "Booking Price"
 msgstr ""
 
 #. Text in echo
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:122
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-offline-payment.php:122
 #: tp-hotel-booking/templates/shortcodes/checkout.php:8
 #: tp-hotel-booking/templates/emails/email-booking.php:57
 #: tp-hotel-booking/templates/emails/admin-new-booking.php:64
@@ -260,13 +260,13 @@ msgstr ""
 
 #. Text in function
 #: tp-hotel-booking/includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-authorize-sim.php:1
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:1
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-authorize-sim.php:1
 msgid "Cancel Payment"
 msgstr ""
 
 #. Text in echo
 #: tp-hotel-booking/includes/admin/views/pricing-table.php:123
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:127
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-offline-payment.php:127
 #: tp-hotel-booking/templates/shortcodes/cart.php:14
 #: tp-hotel-booking/templates/shortcodes/checkout.php:12
 #: tp-hotel-booking/includes/admin/views/update/cart.php:36
@@ -363,12 +363,12 @@ msgid "Check Out Date"
 msgstr ""
 
 #. Text in echo
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:129
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-offline-payment.php:129
 msgid "Check in"
 msgstr ""
 
 #. Text in echo
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:130
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-offline-payment.php:130
 #: tp-hotel-booking/templates/shortcodes/checkout.php:130
 msgid "Check out"
 msgstr ""
@@ -405,7 +405,7 @@ msgstr ""
 
 #. Text in function
 #: tp-hotel-booking/includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-authorize-sim.php:1
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:1
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-authorize-sim.php:1
 msgid "Click here to return our homepage"
 msgstr ""
 
@@ -521,7 +521,7 @@ msgid "Customer Information"
 msgstr ""
 
 #. Text in echo
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:116
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-offline-payment.php:116
 #: tp-hotel-booking/includes/admin/hb-admin-functions.php:836
 #: tp-hotel-booking/templates/emails/email-booking.php:51
 #: tp-hotel-booking/templates/emails/admin-new-booking.php:50
@@ -822,7 +822,7 @@ msgid "Go"
 msgstr ""
 
 #. Text in echo
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:166
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-offline-payment.php:166
 #: tp-hotel-booking/templates/shortcodes/cart.php:95
 #: tp-hotel-booking/templates/shortcodes/checkout.php:89
 #: tp-hotel-booking/includes/admin/views/update/cart.php:113
@@ -1057,7 +1057,7 @@ msgid "Next"
 msgstr ""
 
 #. Text in echo
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:131
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-offline-payment.php:131
 #: tp-hotel-booking/templates/shortcodes/cart.php:18
 #: tp-hotel-booking/templates/shortcodes/checkout.php:16
 #: tp-hotel-booking/templates/results/booking-room-details.php:12
@@ -1125,7 +1125,7 @@ msgid "Number of rooms"
 msgstr ""
 
 #. Text in function
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:1
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-offline-payment.php:1
 msgid "Offline Payment"
 msgstr ""
 
@@ -1152,8 +1152,8 @@ msgstr ""
 #. Text in function
 #: tp-hotel-booking/includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-authorize-sim.php:1
 #: tp-hotel-booking/includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-authorize-sim.php:257
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:1
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:257
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-authorize-sim.php:1
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-authorize-sim.php:257
 msgid "Pay with Authorize.net"
 msgstr ""
 
@@ -1301,7 +1301,7 @@ msgid "Prof."
 msgstr ""
 
 #. Text in echo
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:128
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-offline-payment.php:128
 #: tp-hotel-booking/templates/shortcodes/cart.php:15
 #: tp-hotel-booking/templates/shortcodes/checkout.php:13
 #: tp-hotel-booking/includes/admin/hb-admin-functions.php:836
@@ -1383,7 +1383,7 @@ msgid "Right with space ( 69.99 $ )"
 msgstr ""
 
 #. Text in echo
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:126
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-offline-payment.php:126
 #: tp-hotel-booking/includes/admin/hb-admin-functions.php:836
 #: tp-hotel-booking/includes/admin/views/update/cart.php:33
 #: tp-hotel-booking/templates/emails/email-booking.php:61
@@ -1550,7 +1550,7 @@ msgid "State "
 msgstr ""
 
 #. Text in echo
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:156
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-offline-payment.php:156
 #: tp-hotel-booking/templates/shortcodes/cart.php:76
 #: tp-hotel-booking/templates/shortcodes/checkout.php:69
 #: tp-hotel-booking/includes/admin/hb-admin-functions.php:836
@@ -1597,7 +1597,7 @@ msgid "TP Hotel Booking"
 msgstr ""
 
 #. Text in echo
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:161
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-offline-payment.php:161
 #: tp-hotel-booking/templates/shortcodes/cart.php:85
 #: tp-hotel-booking/templates/shortcodes/checkout.php:78
 #: tp-hotel-booking/includes/admin/hb-admin-functions.php:836
@@ -1659,7 +1659,7 @@ msgstr ""
 
 #. Text in function
 #: tp-hotel-booking/includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-authorize-sim.php:1
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:1
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-authorize-sim.php:1
 msgid "There has been an error processing this transaction."
 msgstr ""
 
@@ -1680,13 +1680,13 @@ msgstr ""
 
 #. Text in function
 #: tp-hotel-booking/includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-authorize-sim.php:1
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:1
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-authorize-sim.php:1
 msgid "This transaction has been approved."
 msgstr ""
 
 #. Text in function
 #: tp-hotel-booking/includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-authorize-sim.php:1
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-authorize-sim.php:1
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-authorize-sim.php:1
 msgid "This transaction has been declined."
 msgstr ""
 
@@ -1719,7 +1719,7 @@ msgid "To"
 msgstr ""
 
 #. Text in echo
-#: tp-hotel-booking/includes/payment-gateways/class-hb-payment-gateway-offline-payment.php:132
+#: tp-hotel-booking/includes/gateways/class-hb-payment-gateway-offline-payment.php:132
 #: tp-hotel-booking/includes/admin/hb-admin-functions.php:836
 #: tp-hotel-booking/templates/results/booking-room-details.php:23
 #: tp-hotel-booking/includes/admin/views/booking-details.php:252
