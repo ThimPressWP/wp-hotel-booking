@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-28 16:31:22
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-03-31 16:50:58
+ * @Last Modified time: 2016-04-01 15:24:04
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -17,7 +17,11 @@ class HB_Install {
 	// install hook
 	static function install() {
 
-		self::$upgrade = apply_filters( 'hotel_booking_upgrade_file_vesion' array(
+		if ( ! defined( 'HB_INSTALLING' ) ) {
+			define( 'HB_INSTALLING', true );
+		}
+
+		self::$upgrade = apply_filters( 'hotel_booking_upgrade_file_vesion', array(
 				'1.1.4.2'	=> 'admin/update/hotel_booking-upgrade_1.1.4.2.php'
 			) );
 
@@ -40,8 +44,9 @@ class HB_Install {
 
 	// upgrade database
 	static function upgrade_database() {
+		hotel_booking_set_table_name();
 		foreach ( self::$upgrade as $ver => $update ) {
-			if ( version_compare( HB_VERSION, $ver, '<' ) ) ) {
+			if ( version_compare( HB_VERSION, $ver, '<' ) ) {
 				include_once $update;
 			}
 		}
@@ -163,55 +168,65 @@ class HB_Install {
 	// create tables. Eg: booking_items
 	static function create_tables( $network_wide = false ) {
 		global $wpdb;
-		if ( is_multisite() && $network_wide ) {
-	        // store the current blog id
-	        $current_blog = $wpdb->blogid;
-	        // Get all blogs in the network and activate plugin on each one
-	        $blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
-	        foreach ( $blog_ids as $blog_id ) {
-	        	// each blog
-	            switch_to_blog( $blog_id );
+		$table = $wpdb->prefix . 'hotel_booking_order_items';
+		if ( $wpdb->get_var( "SHOW TABLES LIKE '{$table}'" ) != $table ) {
 
-	            self::schema();
+			if ( is_multisite() && $network_wide ) {
+		        // store the current blog id
+		        $current_blog = $wpdb->blogid;
+		        // Get all blogs in the network and activate plugin on each one
+		        $blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+		        foreach ( $blog_ids as $blog_id ) {
+		        	// each blog
+		            switch_to_blog( $blog_id );
 
-	            // restore
-	            restore_current_blog();
-	        }
-	    } else {
-	        self::schema();
-	    }
+		            self::schema();
+
+		            // restore
+		            restore_current_blog();
+		        }
+		    } else {
+		        self::schema();
+		    }
+
+		}
 	}
 
 	// do create table
 	static function schema() {
 		global $wpdb;
-		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		$charset_collate = $wpdb->get_charset_collate();
 
 		$sql = "
-			CREATE TABLE {$wpdb->prefix}hotel_booking_order_items (
+			CREATE TABLE IF NOT EXISTS {$wpdb->prefix}hotel_booking_order_items (
 				order_item_id bigint(20) NOT NULL AUTO_INCREMENT,
 				order_item_name longtext NOT NULL,
 				order_item_type varchar(255) NOT NULL,
+				order_item_parent bigint(20) NULL,
 				order_id bigint(20) NOT NULL,
 				UNIQUE KEY order_item_id (order_item_id),
 				PRIMARY KEY  (order_item_id)
 			) $charset_collate;
-			CREATE TABLE {$wpdb->prefix}hotel_booking_order_itemmeta (
+		";
+
+		dbDelta( $sql );
+
+		$sql = "
+			CREATE TABLE IF NOT EXISTS {$wpdb->prefix}hotel_booking_order_itemmeta (
 				meta_id bigint(20) NOT NULL AUTO_INCREMENT,
-				order_item_id bigint(20) NOT NULL,
+				hotel_booking_order_item_id bigint(20) NOT NULL,
 				meta_key varchar(255) NULL,
 				meta_value longtext NULL,
 				UNIQUE KEY meta_id (meta_id),
 				PRIMARY KEY  (meta_id),
-				KEY order_item_id(order_item_id),
+				KEY hotel_booking_order_item_id(hotel_booking_order_item_id),
 				KEY meta_key(meta_key)
 			) $charset_collate;
 		";
 
-		return dbDelta( $sql );
-
+		dbDelta( $sql );
 	}
 
 	// delete table when delete blog

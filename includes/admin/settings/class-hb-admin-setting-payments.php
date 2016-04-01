@@ -3,84 +3,87 @@
  * @Author: ducnvtt
  * @Date:   2016-03-29 17:13:06
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-03-30 15:31:12
+ * @Last Modified time: 2016-04-01 13:39:22
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-class HB_Admin_Setting_Payments extends HB_Admin_Setting_Page {
+if ( ! class_exists( 'HB_Admin_Setting_Payments' ) ) {
 
-	public $id = 'payments';
+	class HB_Admin_Setting_Payments extends HB_Admin_Setting_Page {
 
-	public $title = null;
+		public $id = 'payments';
 
-	function __construct() {
+		public $title = null;
 
-		$this->title = __( 'Payments', 'tp-hotel-booking' );
+		function __construct() {
 
-		parent::__construct();
-	}
+			$this->title = __( 'Payments', 'tp-hotel-booking' );
 
-	public function get_settings() {
-		return apply_filters( 'hotel_booking_admin_setting_fields_' . $this->id, array(
-
-				array(
-						'type'		=> 'section_start',
-						'id'		=> 'payment_general_setting',
-						'title'		=> __( 'Payment General Options', 'tp-hotel-booking' ),
-						'desc'		=> __( 'Payment General options for system.', 'tp-hotel-booking' )
-					),
-
-				array(
-						'type'		=> 'number',
-						'id'		=> 'tp_hotel_booking_cancel_payment',
-						'title'		=> __( 'Cancel Payment', 'tp-hotel-booking' ),
-						'desc'		=> __( 'Cancel Payment after hour(s)', 'tp-hotel-booking' ),
-						'default'	=> 12,
-						'min'		=> 1,
-					),
-
-				array(
-						'type'		=> 'section_end',
-						'id'		=> 'payment_general_setting'
-					)
-
-			) );
-	}
-
-	public function output() {
-		$current_section = null;
-
-		if ( isset( $_REQUEST['section'] ) ) {
-			$current_section = sanitize_text_field( $_REQUEST['section'] );
+			parent::__construct();
 		}
 
-		$payments = hb_get_payment_gateways();
-		if ( $current_section && $current_section !== 'general' ) {
-			foreach ( $payments as $payment ) {
-				if ( $payment->slug === $current_section ) {
-					$payment->admin_settings();
-					break;
-				}
+		public function get_settings() {
+			return apply_filters( 'hotel_booking_admin_setting_fields_' . $this->id, array(
+
+					array(
+							'type'		=> 'section_start',
+							'id'		=> 'payment_general_setting',
+							'title'		=> __( 'Payment General Options', 'tp-hotel-booking' ),
+							'desc'		=> __( 'Payment General options for system.', 'tp-hotel-booking' )
+						),
+
+					array(
+							'type'		=> 'number',
+							'id'		=> 'tp_hotel_booking_cancel_payment',
+							'title'		=> __( 'Cancel Payment', 'tp-hotel-booking' ),
+							'desc'		=> __( 'Cancel Payment after hour(s)', 'tp-hotel-booking' ),
+							'default'	=> 12,
+							'min'		=> 1,
+						),
+
+					array(
+							'type'		=> 'section_end',
+							'id'		=> 'payment_general_setting'
+						)
+
+				) );
+		}
+
+		public function output() {
+			$current_section = null;
+
+			if ( isset( $_REQUEST['section'] ) ) {
+				$current_section = sanitize_text_field( $_REQUEST['section'] );
 			}
-		} else {
-			parent::output();
-		}
-	}
 
-	public function get_sections() {
-		$sections = array();
-		$sections['general'] = __( 'General' );
-
-		$payments = hb_get_payment_gateways();
-		foreach( $payments as $payment ) {
-			$sections[$payment->slug] = $payment->title;
+			$payments = hb_get_payment_gateways();
+			if ( $current_section && $current_section !== 'general' ) {
+				foreach ( $payments as $payment ) {
+					if ( $payment->slug === $current_section ) {
+						$payment->admin_settings();
+						break;
+					}
+				}
+			} else {
+				parent::output();
+			}
 		}
-		return apply_filters( 'hotel_booking_admin_setting_sections_' . $this->id, $sections );
+
+		public function get_sections() {
+			$sections = array();
+			$sections['general'] = __( 'General' );
+
+			$payments = hb_get_payment_gateways();
+			foreach( $payments as $payment ) {
+				$sections[$payment->slug] = $payment->title;
+			}
+			return apply_filters( 'hotel_booking_admin_setting_sections_' . $this->id, $sections );
+		}
+
 	}
 
 }
-
 return new HB_Admin_Setting_Payments();

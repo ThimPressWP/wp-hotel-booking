@@ -55,7 +55,7 @@ class HB_Extra_Cart
 
 		add_filter( 'tp_hb_extra_cart_input', array( $this, 'check_respondent' ) );
 
-		add_action( 'hotel_booking_after_room_item', array( $this, 'booking_post_type_extra_item' ), 10, 3 );
+		add_action( 'hotel_booking_after_room_item', array( $this, 'booking_post_type_extra_item' ), 10, 2 );
 
 	}
 
@@ -332,33 +332,31 @@ class HB_Extra_Cart
 		return $respondent;
 	}
 
-	function booking_post_type_extra_item( $cart_id, $room, $hb_booking ) {
+	function booking_post_type_extra_item( $room, $hb_booking ) {
+		$packages = hb_get_order_items( $hb_booking->id, 'sub_item', $room->order_item_id );
 
-		$packages = $hb_booking->get_cart_post_type( 'hb_extra_room' );
 		if ( ! $packages ) {
 			return;
 		}
 
 		$html = array();
-		foreach ( $packages as $package_id => $package ) {
-			if ( isset( $package->parent_id ) && $package->parent_id === $cart_id ) {
-				$html[] = '<tr>';
+		foreach ( $packages as $k => $package ) {
+			$html[] = '<tr>';
 
-				$html[] = sprintf( '<td class="center"><input type="checkbox" name="book_item[]" value="%s" /></td>', $package_id );
+			$html[] = sprintf( '<td class="center"><input type="checkbox" name="book_item[]" value="%s" /></td>', $package->order_item_id );
 
-				$html[] = sprintf( '<td class="name" colspan="3">%s</td>', $package->product_data->title );
+			$html[] = sprintf( '<td class="name" colspan="3">%s</td>', $package->order_item_name );
 
-				$html[] = sprintf( '<td class="qty">%s</td>', $package->quantity );
+			$html[] = sprintf( '<td class="qty">%s</td>', hb_get_order_item_meta( $package->order_item_id, 'qty', true ) );
 
-				$html[] = sprintf( '<td class="total">%s</td>', hb_format_price( $package->amount_exclude_tax, hb_get_currency_symbol( $hb_booking->currency ) ) );
+			$html[] = sprintf( '<td class="total">%s</td>', hb_format_price( hb_get_order_item_meta( $package->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $hb_booking->currency ) ) );
 
-				$html[] = '<td class="actions">
-						<a href="#" class="edit"><i class="fa fa-pencil"></i></a>
-						<a href="#" class="remove"><i class="fa fa-times-circle"></i></a>
-					</td>';
+			$html[] = '<td class="actions">
+					<a href="#" class="edit"><i class="fa fa-pencil"></i></a>
+					<a href="#" class="remove"><i class="fa fa-times-circle"></i></a>
+				</td>';
 
-				$html[] = '</tr>';
-			}
+			$html[] = '</tr>';
 		}
 
 		printf( '%s', implode( '', $html ) );

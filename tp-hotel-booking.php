@@ -135,7 +135,7 @@ class TP_Hotel_Booking {
      */
     public function includes(){
         $this->_include( 'includes/class-hb-autoloader.php' );
-        $this->_include( 'includes/class-hb-booking-template-loader.php' );
+        $this->_include( 'includes/class-hb-template-loader.php' );
         $this->_include( 'includes/class-hb-ajax.php' );
 
         if( is_admin() ) {
@@ -152,6 +152,7 @@ class TP_Hotel_Booking {
         }
         $this->_include( 'includes/class-hb-post-types.php' );
 
+        $this->_include( 'includes/hb-core-functions.php' );
         $this->_include( 'includes/hb-functions.php' );
         $this->_include( 'includes/class-hb-resizer.php' );
 
@@ -372,5 +373,3 @@ class TP_Hotel_Booking {
 }
 
 $GLOBALS['tp_hotel_booking'] = TP_Hotel_Booking::instance();
-
-var_dump(get_post_meta( 2858, '_hb_booking_params' )[0]['1453075200_1453248000']); die();

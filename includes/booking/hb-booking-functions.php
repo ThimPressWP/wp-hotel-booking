@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-31 14:42:40
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-03-31 15:37:21
+ * @Last Modified time: 2016-04-01 16:18:12
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -102,4 +102,114 @@ function hb_get_booking_statuses() {
         'hb-completed'  => _x( 'Completed', 'Booking status', 'tp-hotel-booking' ),
     );
     return apply_filters( 'hb_booking_statuses', $booking_statuses );
+}
+
+if ( ! function_exists( 'hb_get_booking_meta' ) ) {
+    function hb_get_booking_meta( $booking_id = null, $meta_key = null, $uniqid = false ) {
+        return get_post_meta( $booking_id, $meta_key, $uniqid );
+    }
+}
+
+if ( ! function_exists( 'hb_get_order_item' ) ) {
+    function hb_get_order_items( $order_id = null, $item_type = 'line_item', $parent = null ) {
+        global $wpdb;
+
+        if ( ! $parent ) {
+            $query = $wpdb->prepare("
+                    SELECT booking.* FROM $wpdb->hotel_booking_order_items AS booking
+                        RIGHT JOIN $wpdb->posts AS post ON booking.order_id = post.ID
+                    WHERE post.ID = %d
+                        AND booking.order_item_type = %s
+                ", $order_id, $item_type );
+        } else {
+            $query = $wpdb->prepare("
+                    SELECT booking.* FROM $wpdb->hotel_booking_order_items AS booking
+                        RIGHT JOIN $wpdb->posts AS post ON booking.order_id = post.ID
+                    WHERE post.ID = %d
+                        AND booking.order_item_type = %s
+                        AND booking.order_item_parent = %d
+                ", $order_id, $item_type, $parent );
+        }
+
+        return $wpdb->get_results( $query );
+    }
+}
+
+// insert order item
+if ( ! function_exists( 'hb_add_order_item' ) ) {
+    function hb_add_order_item( $booking_id = null, $param = array() ) {
+        global $wpdb;
+
+        $booking_id = absint( $booking_id );
+
+        if ( ! $booking_id )
+            return false;
+
+        $defaults = array(
+            'order_item_name'       => '',
+            'order_item_type'       => 'line_item',
+        );
+
+        $param = wp_parse_args( $param, $defaults );
+
+        $wpdb->insert(
+            $wpdb->prefix . 'hotel_booking_order_items',
+            array(
+                'order_item_name'       => $param['order_item_name'],
+                'order_item_type'       => $param['order_item_type'],
+                'order_item_parent'     => isset( $param['order_item_parent'] ) ? $param['order_item_parent'] : null,
+                'order_id'              => $booking_id
+            ),
+            array(
+                '%s', '%s', '%d', '%d'
+            )
+        );
+
+        $item_id = absint( $wpdb->insert_id );
+
+        do_action( 'hotel_booking_new_order_item', $item_id, $param, $booking_id );
+
+        return $item_id;
+    }
+}
+
+// update order item
+if ( ! function_exists( 'hb_update_order_item' ) ) {
+    function hb_update_order_item( $item_id = null, $param = array() ) {
+        global $wpdb;
+
+        $update = $wpdb->update( $wpdb->prefix . 'hotel_booking_order_items', $param, array( 'order_item_id' => $item_id ) );
+
+        if ( false === $update ) {
+            return false;
+        }
+
+        do_action( 'hotel_booking_update_order_item', $item_id, $args );
+
+        return true;
+    }
+}
+
+// add order item meta
+if ( ! function_exists( 'hb_add_order_item_meta' ) ) {
+    function hb_add_order_item_meta( $item_id = null, $meta_key = null, $meta_value = null, $unique = false ) {
+        return add_metadata( 'hotel_booking_order_item', $item_id, $meta_key, $meta_value, $unique );
+    }
+}
+
+// update order item meta
+if ( ! function_exists( 'hb_update_order_item_meta' ) ) {
+    function hb_update_order_item_meta( $item_id = null, $meta_key = null, $meta_value = null, $prev_value = false ) {
+        return update_metadata( 'hotel_booking_order_item', $item_id, $meta_key, $meta_value, $prev_value );
+    }
+}
+
+// get order item meta
+function hb_get_order_item_meta( $item_id = null, $key = nul, $single = true ) {
+    return get_metadata( 'hotel_booking_order_item', $item_id, $key, $single );
+}
+
+// delete order item meta
+function hb_delete_order_item_meta( $item_id = null, $meta_key = null, $meta_value = '', $delete_all = false ) {
+    return delete_metadata( 'hotel_booking_order_item', $item_id, $meta_key, $meta_value, $delete_all );
 }
