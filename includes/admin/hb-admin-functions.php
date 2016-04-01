@@ -474,7 +474,8 @@ function hb_manage_booking_column( $column_name, $post_id ) {
             }
             break;
         case 'details':
-            $link = '<a href="'. admin_url('admin.php?page=hb_booking_details&id='. $post_id) . '">' . hb_get_booking_status_label( $post_id ) . '</a>';
+            $link = '<a href="'. get_edit_post_link( $post_id ) . '">' . hb_get_booking_status_label( $post_id ) . '</a>';
+            // $link = '<a href="'. admin_url('admin.php?page=hb_booking_details&id='. $post_id) . '">' . hb_get_booking_status_label( $post_id ) . '</a>';
             $echo[] = '<span class="hb-booking-status ' . $status . '">' . $link . '</span>';
     }
     echo apply_filters( 'hotel_booking_booking_total', sprintf( '%s', implode('', $echo) ), $column_name, $post_id );

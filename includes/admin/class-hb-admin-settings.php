@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-29 15:07:16
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-03-31 13:14:11
+ * @Last Modified time: 2016-04-01 13:54:30
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,12 +18,12 @@ class HB_Admin_Settings {
 		$tabs = array();
 
 		// use TP_Hotel_Booking::instance() return null active hook
-		$tabs[] = include( 'settings/class-hb-admin-setting-general.php' );
-		$tabs[] = include( 'settings/class-hb-admin-setting-hotel-info.php' );
-		$tabs[] = include( 'settings/class-hb-admin-setting-lightboxs.php' );
-		$tabs[] = include( 'settings/class-hb-admin-setting-emails.php' );
-		$tabs[] = include( 'settings/class-hb-admin-setting-payments.php' );
-		$tabs[] = include( 'settings/class-hb-admin-setting-room.php' );
+		$tabs[] = include 'settings/class-hb-admin-setting-general.php';
+		$tabs[] = include 'settings/class-hb-admin-setting-hotel-info.php';
+		$tabs[] = include 'settings/class-hb-admin-setting-lightboxs.php';
+		$tabs[] = include 'settings/class-hb-admin-setting-emails.php';
+		$tabs[] = include 'settings/class-hb-admin-setting-payments.php';
+		$tabs[] = include 'settings/class-hb-admin-setting-room.php';
 
 		return apply_filters( 'hotel_booking_admin_setting_pages', $tabs );
 	}

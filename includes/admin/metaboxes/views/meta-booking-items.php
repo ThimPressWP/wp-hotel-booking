@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-25 12:01:51
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-03-29 10:14:17
+ * @Last Modified time: 2016-04-01 16:30:33
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $post;
 $hb_booking = HB_Booking::instance( $post->ID );
 $rooms = $hb_booking->get_cart_post_type( 'hb_room' );
+$rooms = hb_get_order_items( $post->ID );
 ?>
 <style type="text/css">
 	#hb-booking-items .inside{
@@ -48,28 +49,27 @@ $rooms = $hb_booking->get_cart_post_type( 'hb_room' );
 			</tr>
 		</thead>
 		<tbody>
-			<?php foreach ( $rooms as $cart_id => $room ) : ?>
-				<?php $room_data = $room->product_data; ?>
-				<?php do_action( 'hotel_booking_before_room_item', $cart_id, $room_data, $hb_booking ); ?>
+			<?php foreach ( $rooms as $k => $room ) : ?>
+				<?php do_action( 'hotel_booking_before_room_item', $room, $hb_booking ); ?>
 
 				<tr>
 					<td class="center">
-						<input type="checkbox" name="book_item[]" value="<?php echo esc_attr( $cart_id ) ?>" />
+						<input type="checkbox" name="book_item[]" value="<?php echo esc_attr( $room->order_item_id ) ?>" />
 					</td>
 					<td class="name left">
-						<?php printf( '<a href="%s">%s</a>', get_edit_post_link( $room->product_id ), $room_data->name . ( $room_data->capacity_title ? $room_data->capacity_title : '' ) ) ?>
+						<?php printf( '<a href="%s">%s</a>', get_edit_post_link( hb_get_order_item_meta( $room->order_item_id, 'product_id', true ) ), $room->order_item_name ) ?>
 					</td>
 					<td class="checkin_checkout center">
-						<?php printf( '%s - %s', date_i18n( hb_get_date_format(), strtotime( $room_data->get_data( 'check_in_date' ) ) ), date_i18n( hb_get_date_format(), strtotime( $room_data->get_data( 'check_out_date' ) ) ) ) ?>
+						<?php printf( '%s - %s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_in_date', true ) ), date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_out_date', true ) ) ) ?>
 					</td>
 					<td class="night center">
-						<?php printf( '%d', hb_count_nights_two_dates( $room_data->get_data( 'check_out_date' ), $room_data->get_data( 'check_in_date' ) ) ) ?>
+						<?php printf( '%d', hb_count_nights_two_dates( hb_get_order_item_meta( $room->order_item_id, 'check_out_date', true ), hb_get_order_item_meta( $room->order_item_id, 'check_in_date', true )) ) ?>
 					</td>
 					<td class="qty center">
-						<?php printf( '%s', $room->quantity ) ?>
+						<?php printf( '%s', hb_get_order_item_meta( $room->order_item_id, 'qty', true ) ) ?>
 					</td>
 					<td class="total center">
-						<?php printf( '%s', hb_format_price( $room->amount_exclude_tax, hb_get_currency_symbol( $hb_booking->currency ) ) ); ?>
+						<?php printf( '%s', hb_format_price( hb_get_order_item_meta( $room->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $hb_booking->currency ) ) ); ?>
 					</td>
 					<td class="actions">
 						<a href="#" class="edit"><i class="fa fa-pencil"></i></a>
@@ -77,7 +77,7 @@ $rooms = $hb_booking->get_cart_post_type( 'hb_room' );
 					</td>
 				</tr>
 
-				<?php do_action( 'hotel_booking_after_room_item', $cart_id, $room_data, $hb_booking ); ?>
+				<?php do_action( 'hotel_booking_after_room_item', $room, $hb_booking ); ?>
 
 			<?php endforeach; ?>
 		</tbody>

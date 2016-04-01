@@ -99,7 +99,7 @@ class HB_Sessions
 
 		// save cookie
 		if ( $this->remember ) {
-			setcookie( $this->prefix, maybe_serialize( $this->session ), $time, COOKIEPATH, COOKIE_DOMAIN );
+			@setcookie( $this->prefix, maybe_serialize( $this->session ), $time, COOKIEPATH, COOKIE_DOMAIN );
 		}
 	}
 

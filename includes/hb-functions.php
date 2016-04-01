@@ -412,11 +412,17 @@ function hb_get_request( $name, $default = null, $var = '' ) {
  * @return float
  */
 function hb_count_nights_two_dates( $end = null, $start ) {
-	if ( !$end ) $end = time();
-	else if ( is_string( $end ) ) {
+	if ( ! $end ) {
+		$end = time();
+	} else if( is_numeric( $end ) ) {
+		$end = $end;
+	} else if ( is_string( $end ) ) {
 		$end = @strtotime( $end );
 	}
-	if ( is_string( $start ) ) {
+
+	if ( is_numeric( $start ) ) {
+		$start = $start;
+	} else if ( is_string( $start ) ) {
 		$start = strtotime( $start );
 	}
 	$datediff = $end - $start;
