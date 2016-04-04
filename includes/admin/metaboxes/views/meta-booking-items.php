@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-25 12:01:51
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-04 10:07:35
+ * @Last Modified time: 2016-04-04 13:20:26
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 global $post;
 $hb_booking = HB_Booking::instance( $post->ID );
-$rooms = $hb_booking->get_cart_post_type( 'hb_room' );
+// $rooms = $hb_booking->get_cart_post_type( 'hb_room' );
 $rooms = hb_get_order_items( $post->ID );
 ?>
 <style type="text/css">
@@ -72,8 +72,8 @@ $rooms = hb_get_order_items( $post->ID );
 						<?php printf( '%s', hb_format_price( hb_get_order_item_meta( $room->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $hb_booking->currency ) ) ); ?>
 					</td>
 					<td class="actions">
-						<a href="#" class="edit"><i class="fa fa-pencil"></i></a>
-						<a href="#" class="remove"><i class="fa fa-times-circle"></i></a>
+						<a href="#" class="edit" data-id="<?php echo esc_attr( $room->order_item_id ) ?>"><i class="fa fa-pencil"></i></a>
+						<a href="#" class="remove" data-id="<?php echo esc_attr( $room->order_item_id ) ?>"><i class="fa fa-times-circle"></i></a>
 					</td>
 				</tr>
 

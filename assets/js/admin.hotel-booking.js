@@ -339,6 +339,7 @@
             var _doc = $( document ),
                 _self = this;
 
+            _self.select2();
             // add room
             _doc.on( 'click', '#add_room_item', _self.add_room_item )
             // add coupon
@@ -351,9 +352,39 @@
             .on( 'click', '#booking_items .actions .remove', _self.remove_room );
         },
 
+        select2: function () {
+            $( '#booking_details_section #_hb_user_id' ).select2({
+                placeholder: hotel_booking_i18n.select_user,
+                minimumInputLength: 3,
+                ajax: {
+                    url: ajaxurl,
+                    dataType: 'json',
+                    type: 'POST',
+                    quietMillis: 50,
+                    data: function ( user_name ) {
+                        return {
+                            user_name: user_name.term,
+                            action: 'hotel_booking_load_order_user',
+                            nonce: hotel_settings.nonce
+                        };
+                    },
+                    processResults: function ( data ) {
+                        return {
+                            results: $.map( data, function ( item ) {
+                                return {
+                                    text: item.user_login + '( #' + item.ID + ' ' + item.user_email + ' )' ,
+                                    id: item.ID
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+        },
+
         add_room_item: function( e ) {
             e.preventDefault();
-console.debug(2);
 
             return false;
         },

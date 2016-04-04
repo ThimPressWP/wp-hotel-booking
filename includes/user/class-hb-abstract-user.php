@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-31 14:55:56
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-03-31 15:07:06
+ * @Last Modified time: 2016-04-04 14:07:23
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -33,6 +33,12 @@ abstract class HB_User_Abstract {
 
 		if ( ! $this->id ) {
 			throw new Exception( sprintf( __( 'User %s is not exists.', 'tp-hotel-booking' ), $user ) );
+		}
+	}
+
+	function __get( $key ) {
+		if ( ! isset( $this->{$key} ) || ! method_exists( $this, $key ) ) {
+			return get_user_meta( $this->id, '_hb_' . $key, true );
 		}
 	}
 

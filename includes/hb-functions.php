@@ -1620,16 +1620,25 @@ function hb_add_message( $message, $type = 'message' ) {
 	set_transient( 'hb_message_' . session_id(), $messages, MINUTE_IN_SECONDS * 3 );
 }
 
-function hb_get_customer_fullname( $customer_id, $with_title = false ) {
-	if ( $customer_id ) {
-		$customer = HB_Customer::instance( $customer_id );
+function hb_get_customer_fullname( $booking_id = null, $with_title = false ) {
+	if ( $booking_id ) {
+		$booking = HB_Booking::instance( $booking_id );
+		if ( $booking->user_id ) {
+			$user = HB_User::instance();
+			$first_name = $user->first_name;
+			$last_name = $user->last_name;
+		} else {
+			$first_name = $booking->customer_first_name;
+			$last_name = $booking->customer_last_name;
+		}
+
 		if ( $with_title ) {
-			$title = hb_get_title_by_slug( $customer->title );
+			$title = hb_get_title_by_slug( $booking->customer_title );
 		} else {
 			$title = '';
 		}
 
-		return sprintf( '%s%s %s', $title ? $title . ' ' : '', $customer->first_name, $customer->last_name );
+		return sprintf( '%s%s %s', $title ? $title . ' ' : '', $first_name, $last_name );
 	}
 }
 

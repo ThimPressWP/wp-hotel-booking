@@ -616,6 +616,12 @@ th.column-room_type{
     float: left;
     margin: 0px 10px;
 }
+#booking_details_section .section h4 a{
+    font-size: 14px;
+    color: #9E9393;
+    padding: 0 5px;
+    float: right;
+}
 #booking_items table{
     width: 100%;
     border: 3px solid #f8f8f8;
