@@ -553,7 +553,7 @@ class HB_Post_Types{
             )
         );
         $args = apply_filters( 'hotel_booking_register_post_type_customer_arg', $args );
-        register_post_type( 'hb_customer', $args );
+        // register_post_type( 'hb_customer', $args );
 
         /**
          * Register custom post type for pricing plan

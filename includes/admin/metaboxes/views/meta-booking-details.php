@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-25 09:32:53
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-01 17:18:54
+ * @Last Modified time: 2016-04-04 17:25:25
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -55,25 +55,60 @@ $customers = hb_get_customers();
 				</li>
 				<li>
 					<label><?php _e( 'Customer:', 'tp-hotel-booking' ); ?></label>
-					<select name="_hb_customer_id">
-						<option value=""><?php _e( '---None---', 'tp-hotel-booking' ); ?></option>
-						<?php foreach ( $customers as $cus ) : ?>
-							<option value="<?php echo esc_attr( $cus->ID ) ?>" <?php selected( $booking->customer_id, $cus->ID ); ?>><?php printf( '%s', hb_get_customer_fullname( $cus->ID ) ) ?></option>
-						<?php endforeach; ?>
-					</select>
+					<div class="customer_details">
+						<select name="_hb_user_id" id="_hb_user_id"></select>
+					</div>
 				</li>
 			</ul>
 		</div>
 
 		<div class="section">
 
-			<h4><?php _e( 'Customer\'s Details', 'tp-hotel-booking' ); ?></h4>
+			<h4>
+				<?php _e( 'Customer\'s Details', 'tp-hotel-booking' ); ?>
+				<a href="#" class="edit" data-id="30"><i class="fa fa-pencil"></i></a>
+			</h4>
 			<div class="customer_details">
-				<strong></strong>
+				<div class="address">
+					<strong><?php _e( 'Address', 'tp-hotel-booking' ); ?></strong>
+					<br />
+					<small><?php printf( '%s', hb_get_customer_fullname( $post->ID, true ) ); ?></small>
+					<br />
+					<small><?php printf( '%s', $booking->customer_address ) ?></small>
+					<br />
+					<small><?php printf( '%s', $booking->customer_city ) ?></small>
+					<br />
+					<small><?php printf( '%s', $booking->customer_state ) ?></small>
+					<br />
+					<small><?php printf( '%s', $booking->customer_postal_code ) ?></small>
+					<br />
+					<?php $customer_email = $booking->user_id ? HB_User::instance( $booking->user_id )->user_email : $booking->customer_email; ?>
+					<strong><?php _e( 'Email', 'tp-hotel-booking' ) ?></strong>
+					<br />
+					<a href="mailto:<?php echo esc_attr( $customer_email ) ?>"><?php printf( '%s', $customer_email ) ?></a>
+					<br />
+					<strong><?php _e( 'Phone', 'tp-hotel-booking' ) ?></strong>
+					<br />
+					<small><?php printf( '%s', $booking->customer_phone ) ?></small>
+				</div>
+				<div class="edit_address">
+
+				</div>
 			</div>
 
 		</div>
 
+		<div class="section">
+
+			<h4>
+				<?php _e( 'Customer\'s Notes', 'tp-hotel-booking' ); ?>
+				<a href="#" class="edit" data-id="30"><i class="fa fa-pencil"></i></a>
+			</h4>
+			<div class="customer_details">
+				<p><?php printf( '%s', $post->post_content ) ?></p>
+			</div>
+
+		</div>
 	</div>
 
 </div>

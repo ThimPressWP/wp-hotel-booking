@@ -27,7 +27,8 @@ function hb_admin_i18n(){
         'filter_error'                  => __( 'Please select date range and filter type', 'tp-hotel-booking' ),
         'date_time_format'              => hb_date_time_format_js(),
         'monthNames'                    => hb_month_name_js(),
-        'monthNamesShort'               => hb_month_name_short_js()
+        'monthNamesShort'               => hb_month_name_short_js(),
+        'select_user'                   => __( 'Enter user login.', 'tp-hotel-booking' )
     );
     return apply_filters( 'hb_admin_i18n', $i18n );
 }
@@ -396,17 +397,16 @@ add_action( 'init', 'hb_customer_meta_box', 50 );
 function hb_booking_table_head( $default ) {
     unset($default['author']);
     unset($default['date']);
-    $default['customer_name']   = __( 'Customer Name', 'tp-hotel-booking' );
-    $default['booking_date']    = __( 'Booking Date', 'tp-hotel-booking' );
-    $default['check_in_date']    = __( 'Check in', 'tp-hotel-booking' );
-    $default['check_out_date']    = __( 'Check out', 'tp-hotel-booking' );
-    $default['total']           = __( 'Total', 'tp-hotel-booking' );
-    $default['title']           = __( 'ID', 'tp-hotel-booking' );
-    $default['details']         = __( 'View Details', 'tp-hotel-booking' );
+    $default['customer']            = __( 'Customer', 'tp-hotel-booking' );
+    $default['booking_date']        = __( 'Booking Date', 'tp-hotel-booking' );
+    $default['check_in_date']       = __( 'Check in', 'tp-hotel-booking' );
+    $default['check_out_date']      = __( 'Check out', 'tp-hotel-booking' );
+    $default['total']               = __( 'Total', 'tp-hotel-booking' );
+    $default['title']               = __( 'ID', 'tp-hotel-booking' );
+    $default['details']             = __( 'View Details', 'tp-hotel-booking' );
     return $default;
 }
 add_filter('manage_hb_booking_posts_columns', 'hb_booking_table_head');
-
 
 /**
  * Retrieve information for listing in booking list
@@ -423,9 +423,9 @@ function hb_manage_booking_column( $column_name, $post_id ) {
         case 'booking_id':
             $echo[] = hb_format_order_number( $post_id );
             break;
-        case 'customer_name':
-            $customer_id = $booking->customer_id;
-            $echo[] = hb_get_customer_fullname( $customer_id, true);
+        case 'customer':
+            $echo[] = hb_get_customer_fullname( $post_id, true );
+            $echo[] = $booking->user_id && ( $user = get_userdata( $booking->user_id ) ) ? sprintf( '<small><a href="%s">%s</a></small>', get_user_edit_link( $booking->user_id ), $user->user_login ) : '';
             break;
         case 'total':
             global $hb_settings;
@@ -480,7 +480,7 @@ function hb_manage_booking_column( $column_name, $post_id ) {
     }
     echo apply_filters( 'hotel_booking_booking_total', sprintf( '%s', implode('', $echo) ), $column_name, $post_id );
 }
-add_action('manage_hb_booking_posts_custom_column', 'hb_manage_booking_column', 10, 2);
+add_action( 'manage_hb_booking_posts_custom_column', 'hb_manage_booking_column', 10, 2 );
 
 function hb_request_query( $vars = array() ){
     global $typenow, $wp_query, $wp_post_statuses;
@@ -574,17 +574,17 @@ function hb_booking_filter( $query ){
     }
 }
 
-function hb_customer_posts_columns( $default ) {
-    unset($default['author']);
-    unset($default['date']);
-    $default['customer_address']    = __( 'Address', 'tp-hotel-booking' );
-    $default['phone_number']        = __( 'Phone Number', 'tp-hotel-booking' );
-    $default['email']               = __( 'Email', 'tp-hotel-booking' );
-    $default['bookings']            = __( 'Bookings', 'tp-hotel-booking' );
-    $default['title']               = __( 'Cus. Name', 'tp-hotel-booking' );
-    return $default;
-}
-add_filter('manage_hb_customer_posts_columns', 'hb_customer_posts_columns');
+// function hb_customer_posts_columns( $default ) {
+//     unset($default['author']);
+//     unset($default['date']);
+//     $default['customer_address']    = __( 'Address', 'tp-hotel-booking' );
+//     $default['phone_number']        = __( 'Phone Number', 'tp-hotel-booking' );
+//     $default['email']               = __( 'Email', 'tp-hotel-booking' );
+//     $default['bookings']            = __( 'Bookings', 'tp-hotel-booking' );
+//     $default['title']               = __( 'Cus. Name', 'tp-hotel-booking' );
+//     return $default;
+// }
+// add_filter('manage_hb_customer_posts_columns', 'hb_customer_posts_columns');
 
 function hb_edit_post_change_title_in_list() {
     add_filter( 'the_title', 'hb_edit_post_new_title_in_list', 100, 2 );
@@ -594,7 +594,7 @@ add_action( 'admin_head-edit.php', 'hb_edit_post_change_title_in_list' );
 function hb_edit_post_new_title_in_list( $title, $post_id ){
     global $post_type;
     if( $post_type == 'hb_customer' ) {
-        $title = hb_get_title_by_slug(get_post_meta($post_id, '_hb_title', true));
+        $title = hb_get_title_by_slug( get_post_meta( $post_id, '_hb_title', true ) );
         $first_name = get_post_meta($post_id, '_hb_first_name', true);
         $last_name = get_post_meta($post_id, '_hb_last_name', true);
         $customer_name = sprintf('%s %s %s', $title ? $title : 'Cus.', $first_name, $last_name);
@@ -605,54 +605,53 @@ function hb_edit_post_new_title_in_list( $title, $post_id ){
     return $title;
 }
 
-function hb_manage_customer_column( $column_name, $post_id ) {
-    switch ( $column_name ){
-        case 'customer_name':
-            $title = hb_get_title_by_slug ( get_post_meta( $post_id, '_hb_title', true ) );
-            $first_name =  get_post_meta( $post_id, '_hb_first_name', true );
-            $last_name = get_post_meta( $post_id, '_hb_last_name', true );
-            $customer_name = sprintf( '%s %s %s', $title ? $title : 'Cus.', $first_name, $last_name );
-            echo esc_html( $customer_name );
-            break;
-        case 'customer_address':
-            $customer_address = get_post_meta( $post_id, '_hb_address', true );
-            echo esc_html( $customer_address );
-            break;
-        case 'phone_number':
-            $phone = get_post_meta( $post_id, '_hb_phone', true );
-            echo esc_html( $phone );
-            break;
-        case 'email':
-            $email = get_post_meta( $post_id, '_hb_email', true );
-            echo esc_html( $email );
-            break;
-        case 'bookings':
-            printf(
-                '<a href="%sedit.php?post_type=hb_booking&customer_id=%d">%s</a>',
-                get_admin_url(),
-                $post_id,
-                __( 'View Booking', 'tp-hotel-booking' )
-            );
-    }
-}
-add_action('manage_hb_customer_posts_custom_column', 'hb_manage_customer_column', 10, 2);
+// function hb_manage_customer_column( $column_name, $post_id ) {
+//     switch ( $column_name ){
+//         case 'customer_name':
+//             $title = hb_get_title_by_slug ( get_post_meta( $post_id, '_hb_title', true ) );
+//             $first_name =  get_post_meta( $post_id, '_hb_first_name', true );
+//             $last_name = get_post_meta( $post_id, '_hb_last_name', true );
+//             $customer_name = sprintf( '%s %s %s', $title ? $title : 'Cus.', $first_name, $last_name );
+//             echo esc_html( $customer_name );
+//             break;
+//         case 'customer_address':
+//             $customer_address = get_post_meta( $post_id, '_hb_address', true );
+//             echo esc_html( $customer_address );
+//             break;
+//         case 'phone_number':
+//             $phone = get_post_meta( $post_id, '_hb_phone', true );
+//             echo esc_html( $phone );
+//             break;
+//         case 'email':
+//             $email = get_post_meta( $post_id, '_hb_email', true );
+//             echo esc_html( $email );
+//             break;
+//         case 'bookings':
+//             printf(
+//                 '<a href="%sedit.php?post_type=hb_booking&customer_id=%d">%s</a>',
+//                 get_admin_url(),
+//                 $post_id,
+//                 __( 'View Booking', 'tp-hotel-booking' )
+//             );
+//     }
+// }
+// add_action('manage_hb_customer_posts_custom_column', 'hb_manage_customer_column', 10, 2);
 
-
-add_filter( 'parse_query', 'hb_booking_custormer_filter' );
-/**
- * if submitted filter by post meta
- *
- * @param  (wp_query object) $query
- *
- * @return Void
- */
-function hb_booking_custormer_filter( $query ){
-    global $pagenow;
-    if ( isset( $_GET['post_type']) && 'hb_booking' == $_GET['post_type'] && is_admin() && $pagenow=='edit.php' && isset($_GET['customer_id']) && $_GET['customer_id'] != '') {
-        $query->query_vars['meta_key'] = '_hb_customer_id';
-        $query->query_vars['meta_value'] = absint( sanitize_text_field( $_GET['customer_id'] ) );
-    }
-}
+// add_filter( 'parse_query', 'hb_booking_custormer_filter' );
+// /**
+//  * if submitted filter by post meta
+//  *
+//  * @param  (wp_query object) $query
+//  *
+//  * @return Void
+//  */
+// function hb_booking_custormer_filter( $query ){
+//     global $pagenow;
+//     if ( isset( $_GET['post_type']) && 'hb_booking' == $_GET['post_type'] && is_admin() && $pagenow=='edit.php' && isset($_GET['customer_id']) && $_GET['customer_id'] != '') {
+//         $query->query_vars['meta_key'] = '_hb_customer_id';
+//         $query->query_vars['meta_value'] = absint( sanitize_text_field( $_GET['customer_id'] ) );
+//     }
+// }
 
 function hb_delete_pricing_plan( $ids ){
     global $wpdb;

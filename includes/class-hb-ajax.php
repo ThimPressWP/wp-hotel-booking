@@ -29,7 +29,8 @@ class HB_Ajax {
 			'apply_coupon'          => true,
 			'remove_coupon'         => true,
 			'ajax_add_to_cart'      => true,
-			'ajax_remove_item_cart' => true
+			'ajax_remove_item_cart' => true,
+			'load_order_user'		=> false
 		);
 
 		foreach ( $ajax_actions as $action => $priv ) {
@@ -275,6 +276,23 @@ class HB_Ajax {
 
 			hb_send_json( $return );
 		}
+	}
+
+	static function load_order_user() {
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) || ! isset( $_POST['user_name'] ) ) {
+			return;
+		}
+
+		$user_name = sanitize_text_field( $_POST['user_name'] );
+		global $wpdb;
+		$sql = $wpdb->prepare("
+				SELECT user.ID, user.user_email, user.user_login FROM $wpdb->users AS user
+				WHERE
+					user.user_login LIKE %s
+			", '%' . $wpdb->esc_like( $user_name ) . '%' );
+
+		$users = $wpdb->get_results( $sql );
+		wp_send_json( $users ); die();
 	}
 
 }

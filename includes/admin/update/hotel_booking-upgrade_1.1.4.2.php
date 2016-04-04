@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-31 16:44:29
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-04 12:00:07
+ * @Last Modified time: 2016-04-04 13:11:19
  */
 
 if ( ! defined( 'ABSPATH' ) || ! defined( 'HB_INSTALLING' ) || HB_INSTALLING !== true ) {
@@ -118,8 +118,6 @@ if ( $params ) {
 /**
  * Upgrade customer
  */
-
-global $wpdb;
 $sql = $wpdb->prepare("
         SELECT customer.ID AS cus_ID, bookmeta.post_id as book_ID FROM $wpdb->posts AS customer
             LEFT JOIN $wpdb->postmeta AS meta ON customer.ID = meta.post_id
@@ -159,8 +157,9 @@ if ( $customers ) {
 
     }
     $query .= implode( ',', $insert );
+    // execute query
+    $wpdb->query( $query );
 }
-$wpdb->query( $query );
 /**
  * End upgrade customer
  */
