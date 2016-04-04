@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-25 12:01:51
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-01 16:30:33
+ * @Last Modified time: 2016-04-04 10:07:35
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -122,7 +122,7 @@ $rooms = hb_get_order_items( $post->ID );
 					<?php _e( 'Sub Total', 'tp-hotel-booking' ) ?>
 				</td>
 				<td class="subtotal">
-					<?php printf( '%s', hb_format_price( $hb_booking->sub_total, hb_get_currency_symbol( $hb_booking->currency ) ) ); ?>
+					<?php printf( '%s', hb_format_price( hb_booking_subtotal( $hb_booking->id ), hb_get_currency_symbol( $hb_booking->currency ) ) ); ?>
 				</td>
 			</tr>
 			<tr>
@@ -130,7 +130,8 @@ $rooms = hb_get_order_items( $post->ID );
 					<?php _e( 'Tax', 'tp-hotel-booking' ) ?>
 				</td>
 				<td class="tax">
-					<?php printf( '%s', apply_filters( 'hotel_booking_admin_book_details', abs( $hb_booking->tax * 100 ) . '%', $hb_booking ) ); ?>
+					<?php //printf( '%s', apply_filters( 'hotel_booking_admin_book_details', abs( $hb_booking->tax * 100 ) . '%', $hb_booking ) ); ?>
+					<?php printf( '%s', apply_filters( 'hotel_booking_admin_book_details', hb_format_price( hb_booking_tax_total( $hb_booking->id ), hb_get_currency_symbol( $hb_booking->currency ) ), $hb_booking ) ); ?>
 				</td>
 			</tr>
 			<tr>
@@ -138,7 +139,7 @@ $rooms = hb_get_order_items( $post->ID );
 					<?php _e( 'Grand Total', 'tp-hotel-booking' ) ?>
 				</td>
 				<td class="grand_total">
-					<?php printf( '%s', hb_format_price( $hb_booking->total, hb_get_currency_symbol( $hb_booking->currency ) ) ) ?>
+					<?php printf( '%s', hb_format_price( hb_booking_total( $hb_booking->id ), hb_get_currency_symbol( $hb_booking->currency ) ) ) ?>
 				</td>
 			</tr>
 		</tbody>

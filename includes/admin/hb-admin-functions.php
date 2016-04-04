@@ -429,7 +429,7 @@ function hb_manage_booking_column( $column_name, $post_id ) {
             break;
         case 'total':
             global $hb_settings;
-            $total      = $booking->total;
+            $total      = $booking->total();
             $currency   = $booking->payment_currency;
             if( ! $currency ) {
                 $currency = $booking->currency;

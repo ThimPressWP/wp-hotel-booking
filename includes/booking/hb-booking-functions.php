@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-31 14:42:40
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-01 16:18:12
+ * @Last Modified time: 2016-04-04 10:06:55
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -212,4 +212,32 @@ function hb_get_order_item_meta( $item_id = null, $key = nul, $single = true ) {
 // delete order item meta
 function hb_delete_order_item_meta( $item_id = null, $meta_key = null, $meta_value = '', $delete_all = false ) {
     return delete_metadata( 'hotel_booking_order_item', $item_id, $meta_key, $meta_value, $delete_all );
+}
+
+// get sub total booking
+function hb_booking_subtotal( $booking_id = null ) {
+    if ( ! $booking_id ) {
+        throw new Exception( __( 'Booking is not found.', 'tp-hotel-booking' ) );
+    }
+    $booking = HB_Booking::instance( $booking_id );
+
+    return $booking->sub_total();
+}
+// get total booking
+function hb_booking_total( $booking_id = null ) {
+    if ( ! $booking_id ) {
+        throw new Exception( __( 'Booking is not found.', 'tp-hotel-booking' ) );
+    }
+    $booking = HB_Booking::instance( $booking_id );
+
+    return $booking->total();
+}
+// get total booking
+function hb_booking_tax_total( $booking_id = null ) {
+    if ( ! $booking_id ) {
+        throw new Exception( __( 'Booking is not found.', 'tp-hotel-booking' ) );
+    }
+    $booking = HB_Booking::instance( $booking_id );
+
+    return $booking->tax_total();
 }

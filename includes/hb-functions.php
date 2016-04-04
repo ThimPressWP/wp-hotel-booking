@@ -2049,7 +2049,6 @@ if ( ! function_exists( 'hb_get_cart_url' ) ) {
 		} else {
 			$url = hb_get_url( array( 'hotel-booking' => 'cart' ) );
 		}
-		// var_dump($url);
 		return apply_filters( 'hb_cart_url', $url );
 	}
 }

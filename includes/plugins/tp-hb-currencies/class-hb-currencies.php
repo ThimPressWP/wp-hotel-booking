@@ -20,26 +20,43 @@ class HB_SW_Curreny
 	 */
 	public function __construct( )
 	{
-		// include file
-		$this->includes();
-		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
+		add_action( 'admin_init', array( $this, 'init' ) );
 
-		/**
-		 * if is multi currency is true
-		 * do all action in frontend
-		 */
-		add_filter( 'hb_currency', array( $this, 'switch_currencies' ), 99 );
-		add_filter( 'tp_hotel_booking_price_switcher', array( $this, 'switch_price' ) );
-		add_filter( 'tp_hotel_booking_currency_aggregator', array( $this, 'aggregator' ) );
+		$settings = HB_SW_Curreny_Setting::instance();
+		if ( $settings->get( 'enable' ) ) {
+			// include file
+			$this->includes();
+			add_action( 'widgets_init', array( $this, 'register_widgets' ) );
 
-		add_action( 'plugins_loaded', array( $this, 'set_currency' ) );
-		add_action( 'qtranslate_init_language', array( $this, 'qtranslate' ) );
-		// cookie check wpml;
-		add_filter( 'icl_current_language', array( $this, 'wpml_switcher' ) );
+			/**
+			 * if is multi currency is true
+			 * do all action in frontend
+			 */
+			add_filter( 'hb_currency', array( $this, 'switch_currencies' ), 99 );
+			add_filter( 'tp_hotel_booking_price_switcher', array( $this, 'switch_price' ) );
+			add_filter( 'tp_hotel_booking_currency_aggregator', array( $this, 'aggregator' ) );
 
-		// transaction object
-		add_filter( 'tp_hotel_booking_checkout_booking_info', array( $this, 'generate_booking_info' ) );
-		add_action( 'init', array( $this, 'init' ) );
+			add_action( 'plugins_loaded', array( $this, 'set_currency' ) );
+			add_action( 'qtranslate_init_language', array( $this, 'qtranslate' ) );
+			// cookie check wpml;
+			add_filter( 'icl_current_language', array( $this, 'wpml_switcher' ) );
+
+			// transaction object
+			add_filter( 'tp_hotel_booking_checkout_booking_info', array( $this, 'generate_booking_info' ) );
+			/**
+			 * enqueue scripts
+			 */
+			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
+		}
+	}
+
+	/**
+	 * enqueue script
+	 * @return null
+	 */
+	public function enqueue()
+	{
+		wp_enqueue_script( 'tp-hb-currencies', TP_HB_CURRENCY_URI . '/assets/js/tp-hb-currencies.min.js', 'jquery', HB_VERSION, true );
 	}
 
 	/**
@@ -49,8 +66,9 @@ class HB_SW_Curreny
 	{
 		$storage = HB_SW_Curreny_Storage::instance();
 
-		if( isset( $_GET['currency'] ) && $_GET['currency'] )
+		if( isset( $_GET['currency'] ) && $_GET['currency'] ) {
 			$storage->set( 'currency', sanitize_text_field( $_GET['currency'] ) );
+		}
 	}
 
 	/**

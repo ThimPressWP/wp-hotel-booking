@@ -78,7 +78,7 @@ class TP_Hotel_Booking_Woocommerce {
 			// return cart url
 			add_filter( 'hb_cart_url', array( $this, 'hotel_cart_url' ) );
 			// return checkout url
-			add_filter( 'hb_checkout_url', array( $this, 'hotel_checkout_url' ) );
+			add_filter( 'hb_checkout_url', array( $this, 'hotel_checkout_url' ), 999 );
 			// display tax price
 			add_filter( 'hotel_booking_cart_tax_display', array( $this, 'cart_tax_display' ) );
 			add_filter( 'hotel_booking_get_cart_total', array( $this, 'cart_total_result_display' ) );

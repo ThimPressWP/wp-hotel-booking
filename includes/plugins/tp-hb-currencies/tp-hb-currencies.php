@@ -19,26 +19,12 @@ class HB_SW_Factory
 {
 	public function __construct()
 	{
-		/**
-		 * enqueue scripts
-		 */
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
 		$this->init();
 	}
 
 	function init()
 	{
 		require_once TP_HB_CURRENCY . '/class-hb-currencies.php';
-	}
-
-	/**
-	 * enqueue script
-	 * @return null
-	 */
-	public function enqueue()
-	{
-		wp_enqueue_script( 'tp-hb-currencies', TP_HB_CURRENCY_URI . '/assets/js/tp-hb-currencies.min.js', 'jquery', HB_VERSION, true );
-		// wp_enqueue_style( 'tp-hb-currencies', TP_HB_CURRENCY_URI . '/assets/css/tp-hb-currencies.min.css');
 	}
 
 }

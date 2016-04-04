@@ -32,6 +32,13 @@ class HB_Booking{
     private $_booking_info = array();
 
     /**
+     * @var int
+     */
+    public $total = 0;
+    public $sub_total = 0;
+    public $tax_total = 0;
+
+    /**
      * Order id
      *
      * @var int
@@ -67,9 +74,58 @@ class HB_Booking{
     }
 
     function __get( $key ){
-        if( ! isset( $this->{$key} ) ){
+        if( ! isset( $this->{$key} ) || ! method_exists( $this, $key ) ){
             return get_post_meta( $this->id, '_hb_' . $key, true );
         }
+    }
+
+    public function total() {
+        if ( ! $this->id ) {
+            return;
+        }
+        global $wpdb;
+        $query = $wpdb->prepare("
+                    SELECT SUM( meta.meta_value ) FROM $wpdb->hotel_booking_order_items AS booking
+                        RIGHT JOIN $wpdb->posts AS post ON booking.order_id = post.ID
+                        INNER JOIN $wpdb->hotel_booking_order_itemmeta AS meta ON meta.hotel_booking_order_item_id = booking.order_item_id
+                    WHERE post.ID = %d
+                        AND meta.meta_key = %s
+                ", $this->id, 'total' );
+
+        return $this->total = $wpdb->get_var( $query );
+    }
+
+    public function sub_total() {
+        if ( ! $this->id ) {
+            return;
+        }
+        global $wpdb;
+        $query = $wpdb->prepare("
+                    SELECT SUM( meta.meta_value ) FROM $wpdb->hotel_booking_order_items AS booking
+                        RIGHT JOIN $wpdb->posts AS post ON booking.order_id = post.ID
+                        INNER JOIN $wpdb->hotel_booking_order_itemmeta AS meta ON meta.hotel_booking_order_item_id = booking.order_item_id
+                    WHERE post.ID = %d
+                        AND meta.meta_key = %s
+                ", $this->id, 'subtotal' );
+
+        return $this->sub_total = $wpdb->get_var( $query );
+    }
+
+    public function tax_total() {
+        if ( ! $this->id ) {
+            return;
+        }
+        global $wpdb;
+        $query = $wpdb->prepare("
+                    SELECT SUM( meta.meta_value ) FROM $wpdb->hotel_booking_order_items AS booking
+                        RIGHT JOIN $wpdb->posts AS post ON booking.order_id = post.ID
+                        INNER JOIN $wpdb->hotel_booking_order_itemmeta AS meta ON meta.hotel_booking_order_item_id = booking.order_item_id
+                    WHERE post.ID = %d
+                        AND booking.order_item_type IN ( %s, %s )
+                        AND meta.meta_key = %s
+                ", $this->id, 'line_item', 'sub_item', 'tax_total' );
+
+        return $this->sub_total = $wpdb->get_var( $query );
     }
 
     /**

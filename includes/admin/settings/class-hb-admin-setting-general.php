@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-29 17:13:06
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-01 13:54:52
+ * @Last Modified time: 2016-04-04 10:34:08
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -94,7 +94,7 @@ if ( ! class_exists( 'HB_Admin_Setting_General' ) ) {
 					array(
 							'type'		=> 'number',
 							'id'		=> 'tp_hotel_booking_tax',
-							'title'		=> __( 'Number of decimal', 'tp-hotel-booking' ),
+							'title'		=> __( 'Tax', 'tp-hotel-booking' ),
 							'default'	=> 10,
 							'min'		=> 0
 						),

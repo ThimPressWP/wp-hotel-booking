@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-25 09:32:53
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-03-25 13:28:47
+ * @Last Modified time: 2016-04-01 17:18:54
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -22,7 +22,6 @@ $customers = hb_get_customers();
 	}
 </style>
 <div id="booking_details">
-
 	<h2 class="hb_meta_title">
 		<?php printf( __( 'Book ID %s', 'tp-hotel-booking' ), hb_format_order_number( $post->ID ) ) ?>
 	</h2>
@@ -32,6 +31,17 @@ $customers = hb_get_customers();
 		<div class="section">
 			<h4><?php _e( 'General', 'tp-hotel-booking' ); ?></h4>
 			<ul>
+				<li>
+					<label><?php _e( 'Payment Method:', 'tp-hotel-booking' ); ?></label>
+					<select name="_hb_method">
+						<?php $methods = hb_get_payment_gateways( array( 'enable' => true ) ); ?>
+						<?php foreach ( $methods as $id => $method ) : ?>
+
+							<option value="<?php echo esc_attr( $id ) ?>" <?php selected( $post->method, $id ); ?>><?php printf( '%s(%s)', $method->title, $method->description ) ?></option>
+
+						<?php endforeach; ?>
+					</select>
+				</li>
 				<li>
 					<label><?php _e( 'Booking Status:', 'tp-hotel-booking' ); ?></label>
 					<select name="_hb_booking_status">
@@ -46,6 +56,7 @@ $customers = hb_get_customers();
 				<li>
 					<label><?php _e( 'Customer:', 'tp-hotel-booking' ); ?></label>
 					<select name="_hb_customer_id">
+						<option value=""><?php _e( '---None---', 'tp-hotel-booking' ); ?></option>
 						<?php foreach ( $customers as $cus ) : ?>
 							<option value="<?php echo esc_attr( $cus->ID ) ?>" <?php selected( $booking->customer_id, $cus->ID ); ?>><?php printf( '%s', hb_get_customer_fullname( $cus->ID ) ) ?></option>
 						<?php endforeach; ?>
