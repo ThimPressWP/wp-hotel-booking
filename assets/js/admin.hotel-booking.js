@@ -340,6 +340,10 @@
                 _self = this;
 
             _self.select2();
+
+            _doc.on( 'click', '.section h4 .edit', _self.edit_customer )
+
+            _doc.on( 'change', '#booking-item-checkall', _self.toggle_checkbox )
             // add room
             _doc.on( 'click', '#add_room_item', _self.add_room_item )
             // add coupon
@@ -350,6 +354,32 @@
             .on( 'click', '#booking_items .actions .edit', _self.edit_room )
             // remove room item
             .on( 'click', '#booking_items .actions .remove', _self.remove_room );
+        },
+
+        edit_customer: function( e ) {
+            e.preventDefault();
+            var _self = $(this),
+                _section = _self.parents( '.section:first' ),
+                _details = _section.find( '.details' ),
+                _edit_input = _section.find('.edit_details');
+
+                if ( ! _edit_input.hasClass( 'active' ) ) {
+                    _self.hide();
+                    _details.hide();
+                    _edit_input.addClass( 'active' );
+                }
+        },
+
+        toggle_checkbox: function( e ) {
+            e.preventDefault();
+            var _self = $(this),
+                _checkox = $( '#booking_items input[name*="book_item"]' );
+
+            if ( _self.is(':checked') ) {
+                _checkox.attr( 'checked', true );
+            } else {
+                _checkox.attr( 'checked', false );
+            }
         },
 
         select2: function () {
@@ -372,7 +402,7 @@
                         return {
                             results: $.map( data, function ( item ) {
                                 return {
-                                    text: item.user_login + '( #' + item.ID + ' ' + item.user_email + ' )' ,
+                                    text: item.user_login + '(#' + item.ID + ' ' + item.user_email + ')' ,
                                     id: item.ID
                                 }
                             })

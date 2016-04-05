@@ -597,9 +597,13 @@ th.column-room_type{
 #booking_details h3,
 #booking_details h4,
 #booking_details h5,
-#booking_details h6{
-    margin: 0px;
-    padding: 8px 12px 8px 0px;
+#booking_details h6,
+#booking_details input,
+#booking_details select,
+#booking_details textarea{
+    margin: 3px;
+    padding: 3px;
+    width: 90%;
 }
 #booking_details ul{
     margin: 0;
@@ -608,19 +612,26 @@ th.column-room_type{
     display: block;
     padding: 5px 0;
 }
-#booking_details_section select{
-    width: 100%;
-}
 #booking_details_section .section {
-    width: 30%;
+    width: 32%;
     float: left;
-    margin: 0px 10px;
+    margin: 0 5px;
 }
 #booking_details_section .section h4 a{
     font-size: 14px;
     color: #9E9393;
     padding: 0 5px;
     float: right;
+}
+#booking_details_section .section .edit_details{
+    display: none
+}
+#booking_details_section .section .edit_details.active{
+    display: block;
+}
+#booking_details_section .section .edit_col{
+    width: 50%;
+    float: left;
 }
 #booking_items table{
     width: 100%;
