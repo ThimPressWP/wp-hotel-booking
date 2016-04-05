@@ -358,11 +358,40 @@
             // on open trigger
             .on( 'hb_modal_open', this.openCallback )
 
+            // room available
+            .on( 'hb_check_available_action', this.check_available )
+
             // on save action
             .on( 'hb_before_update_action', this.save_action );
         },
 
         edit_customer: function( e, target, data ) {
+            e.preventDefault();
+            var _self = $(this),
+                _section = _self.parents( '.section:first' ),
+                _details = _section.find( '.details' ),
+                _edit_input = _section.find('.edit_details');
+
+                if ( ! _edit_input.hasClass( 'active' ) ) {
+                    _self.hide();
+                    _details.hide();
+                    _edit_input.addClass( 'active' );
+                }
+        },
+
+        toggle_checkbox: function( e ) {
+            e.preventDefault();
+            var _self = $(this),
+                _checkox = $( '#booking_items input[name*="book_item"]' );
+
+            if ( _self.is(':checked') ) {
+                _checkox.attr( 'checked', true );
+            } else {
+                _checkox.attr( 'checked', false );
+            }
+        },
+
+        edit_customer: function( e ) {
             e.preventDefault();
             var _self = $(this),
                 _section = _self.parents( '.section:first' ),
@@ -445,6 +474,28 @@
         edit_room: function( e ) {
             e.preventDefault();
 
+            var _self = $(this),
+                _order_item_id = _self.attr( 'data-id' ),
+                _icon = _self.find( '.fa' );
+
+            $.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                data: {
+                    order_item_id   : _order_item_id,
+                    action          : 'hotel_booking_load_order_item',
+                    nonce           : hotel_settings.nonce
+                },
+                beforeSend: function(){
+                    _icon.addClass( 'fa-spin' );
+                }
+            }).done( function( res ){
+                _icon.removeClass( 'fa-spin' );
+                _self.hb_modal_box({
+                    tmpl: 'hb-add-room',
+                    settings: res
+                });
+            });
 
             return false;
         },
@@ -452,6 +503,14 @@
         remove_room: function( e ) {
             e.preventDefault();
 
+            var _self = $( this );
+            _self.hb_modal_box({
+                    tmpl: 'hb-confirm',
+                    settings: {
+                        order_item_id: _self.attr( 'data-id' ),
+                        action: 'hotel_booking_remove_order_item'
+                    }
+                });
 
             return false;
         },
@@ -494,7 +553,7 @@
                     }
                 });
 
-                // datepicker
+                // date picker
                 _check_in.datepicker({
                     dateFormat      : hotel_booking_i18n.date_time_format,
                     monthNames      : hotel_booking_i18n.monthNames,
@@ -508,7 +567,6 @@
                             timestamp = new Date( date ).getTime() / 1000 - ( new Date().getTimezoneOffset() * 60 );
                         _self.parent().find('input[name="check_in_date_timestamp"]').val( timestamp );
 
-                        date = date.setDate( date.getDate() );
                         _check_out.datepicker( 'option', 'minDate', date );
                     }
                 });
@@ -524,11 +582,41 @@
                             date = _self.datepicker( 'getDate' ),
                             timestamp = new Date( date ).getTime() / 1000 - ( new Date().getTimezoneOffset() * 60 );
                         _self.parent().find('input[name="check_out_date_timestamp"]').val( timestamp );
+
                         _check_in.datepicker( 'option', 'maxDate', date );
                     }
                 });
 
             }
+        },
+
+        check_available: function( e, target, form ) {
+            e.preventDefault();
+
+            var _button = $( '.form_footer .check_available' );
+                form.push({
+                name: 'action',
+                value: 'hotel_booking_check_room_available'
+            });
+
+            $.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                data: form,
+                beforeSend: function() {
+                    _button.append( '<i class="fa fa-spinner fa-spin"></i>' );
+                    $( 'select[name="qty"]' ).remove();
+                }
+            }).done( function( res ){
+                _button.find( '.fa' ).remove();
+                if ( typeof res.status === 'undefined' ) {
+                    return;
+                }
+                if ( res.status === false ) {
+                    alert( res.message ); return;
+                }
+                $( '#hb_modal_dialog .section:last-child' ).append( wp.template( 'hb-qty' )( res ) );
+            } );
         },
 
         save_action: function( e, target, form ) {
@@ -573,7 +661,8 @@
                 events  : {
                     'click .hb_modal_close'     : 'close',
                     'click .hb_modal_overlay'   : 'close',
-                    'click .hb_form_submit'     : 'submit'
+                    'click .hb_form_submit'     : 'submit',
+                    'click .check_available'    : 'check_available'
                 },
 
                 // initialize
@@ -623,6 +712,11 @@
 
                     this.$el.remove();
 
+                    return false;
+                },
+
+                check_available: function( e ){
+                    $( document ).trigger( 'hb_check_available_action', [ this.target, this.form_data() ] );
                     return false;
                 },
 

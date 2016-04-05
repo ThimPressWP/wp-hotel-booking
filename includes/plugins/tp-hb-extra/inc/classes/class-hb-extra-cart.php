@@ -352,8 +352,8 @@ class HB_Extra_Cart
 			$html[] = sprintf( '<td class="total">%s</td>', hb_format_price( hb_get_order_item_meta( $package->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $hb_booking->currency ) ) );
 
 			$html[] = '<td class="actions">
-					<a href="#" class="edit"><i class="fa fa-pencil"></i></a>
-					<a href="#" class="remove"><i class="fa fa-times-circle"></i></a>
+					<a href="#" class="edit" data-id="'.esc_attr( $package->order_item_id ).'"><i class="fa fa-pencil"></i></a>
+					<a href="#" class="remove" data-id="'.esc_attr( $package->order_item_id ).'"><i class="fa fa-times-circle"></i></a>
 				</td>';
 
 			$html[] = '</tr>';

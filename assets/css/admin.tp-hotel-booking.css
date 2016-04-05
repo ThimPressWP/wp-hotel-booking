@@ -742,6 +742,12 @@ th.column-room_type{
     float: right;
     margin: 0px 5px;
 }
+#hb_modal_dialog .hb_modal .form_footer.center{
+    text-align: center;
+}
+#hb_modal_dialog .hb_modal .form_footer.center button{
+    float: initial;
+}
 #hb_modal_dialog .hb_modal .form_head h1{
     margin: 0;
     font-size: 18px;

@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-25 12:01:51
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-05 17:26:50
+ * @Last Modified time: 2016-04-06 14:40:19
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -147,6 +147,7 @@ $rooms = hb_get_order_items( $post->ID );
 </div>
 
 <!--Template JS-->
+<!-- Room order item layout -->
 <script type="text/html" id="tmpl-hb-room-item">
 	<div class="hb_modal">
 		<tr>
@@ -193,7 +194,9 @@ $rooms = hb_get_order_items( $post->ID );
 	</div>
 	<div class="hb_modal_overlay"></div>
 </script>
+<!-- Room order item layout -->
 
+<!--Footer cost booking order item-->
 <script type="text/html" id="tmpl-hb-room-table-cost">
 	<div class="hb_modal">
 		<table class="booking_item_table_cost">
@@ -237,7 +240,9 @@ $rooms = hb_get_order_items( $post->ID );
 	</div>
 	<div class="hb_modal_overlay"></div>
 </script>
+<!--Footer cost booking order item-->
 
+<!--Add new or edit oder item-->
 <script type="text/html" id="tmpl-hb-add-room">
 	<div class="hb_modal">
 		<form name="booking-room-item" class="booking-room-item">
@@ -248,34 +253,43 @@ $rooms = hb_get_order_items( $post->ID );
 						{{{ data.modal_title }}}
 
 					<# } else { #>
+
 						<?php _e( 'Add new item', 'tp-hotel-booking' ) ?>
+
 					<# } #>
 				</h1>
 				<button class="hb_modal_close dashicons dashicons-no-alt"></button>
 			</div>
 
 			<div class="section_line">
-				<div class="section">
-					<select name="room_id" class="booking_search_room_items">
-						<# if ( typeof data.room !== 'undefined' ) { #>
+				<# if ( typeof data.post_type === 'undefined' || data.post_type === 'hb_room' ) { #>
+					<div class="section">
+						<select name="room_id" class="booking_search_room_items">
+							<# if ( typeof data.room !== 'undefined' ) { #>
 
-							<option value="{{ data.room.ID }}" selected>{{ data.room.post_title }}</option>
+								<option value="{{ data.room.ID }}" selected>{{ data.room.post_title }}</option>
 
-						<# } #>
-					</select>
-				</div>
-				<div class="section">
-					<input type="text" name="check_in_date" class="check_in_date" value="{{ data.check_in_date }}" placeholder="<?php esc_attr_e( 'Check in', 'tp-hotel-booking' ); ?>" />
-					<input type="hidden" name="check_in_date_timestamp" value="{{ data.check_in_date_timestamp }}" />
-					<input type="text" name="check_out_date" class="check_out_date" value="{{ data.check_out_date }}" placeholder="<?php esc_attr_e( 'Check out', 'tp-hotel-booking' ); ?>" />
-					<input type="hidden" name="check_out_date_timestamp" value="{{ data.check_out_date_timestamp }}" />
-				</div>
+							<# } #>
+						</select>
+					</div>
+					<div class="section">
+						<input type="text" name="check_in_date" class="check_in_date" value="{{ data.check_in_date }}" placeholder="<?php esc_attr_e( 'Check in', 'tp-hotel-booking' ); ?>" />
+						<input type="hidden" name="check_in_date_timestamp" value="{{ data.check_in_date_timestamp }}" />
+						<input type="text" name="check_out_date" class="check_out_date" value="{{ data.check_out_date }}" placeholder="<?php esc_attr_e( 'Check out', 'tp-hotel-booking' ); ?>" />
+						<input type="hidden" name="check_out_date_timestamp" value="{{ data.check_out_date_timestamp }}" />
+					</div>
+				<# } #>
 				<div class="section">
 					<# if ( typeof data.qty !== 'undefined' ) { #>
-						<select>
+						<select name="qty">
+							<option value="0"><?php _e( 'Quantity' ) ?></option>
 							<# for ( var i = 1; i <= data.qty; i++ ) { #>
 
-								<option value="{{ i }}">{{ i }}</option>
+								<# if ( data.qty_selected == i ) { #>
+									<option value="{{ i }}" selected>{{ i }}</option>
+								<# } else { #>
+									<option value="{{ i }}">{{ i }}</option>
+								<# } #>
 
 							<# } #>
 						</select>
@@ -286,12 +300,17 @@ $rooms = hb_get_order_items( $post->ID );
 			<# if ( typeof data.extras !== 'undefined' && Object.keys( data.extras ).length() != 0 ) { #>
 
 				<div class="section_line">
+
 					<# console.debug( data.extras ) #>
+
 				</div>
 
 			<# } #>
 
 			<div class="form_footer">
+				<?php wp_nonce_field( 'hotel_admin_check_room_available', 'hotel-admin-check-room-available' ); ?>
+				<input type="hidden" name="order_item_id" value="{{ data.order_item_id }}" />
+				<a href="#" class="button check_available{{ data.class }}"><?php _e( 'Check Available', 'tp-hotel-booking' ); ?></a>
 				<button type="reset" class="button hb_modal_close"><?php _e( 'Close', 'tp-hotel-booking' ) ?></button>
 				<button type="submit" class="button button-primary hb_form_submit"><?php _e( 'Add', 'tp-hotel-booking' ); ?></button>
 			</div>
@@ -299,8 +318,45 @@ $rooms = hb_get_order_items( $post->ID );
 	</div>
 	<div class="hb_modal_overlay"></div>
 </script>
-<!--End Template JS-->
-<!-- <div id="hb_modal_dialog">
-	<div class="hb_modal"></div>
+<!--Add new or edit oder item-->
+
+<!--Confirm-->
+<script type="text/html" id="tmpl-hb-confirm">
+	<div class="hb_modal">
+		<form>
+			<div class="form_head">
+				<h1>
+					<?php _e( 'Do you want to do this?', 'tp-hotel-booking' ); ?>
+				</h1>
+				<button class="hb_modal_close dashicons dashicons-no-alt"></button>
+			</div>
+			<div class="form_footer center">
+				<input type="hidden" name="order_item_id" value="{{ data.order_item_id }}" />
+				<input type="hidden" name="action" value="{{ data.action }}">
+				<button type="reset" class="button hb_modal_close"><?php _e( 'No', 'tp-hotel-booking' ) ?></button>
+				<button type="submit" class="button button-primary hb_form_submit"><?php _e( 'Yes', 'tp-hotel-booking' ); ?></button>
+			</div>
+		</form>
+	</div>
 	<div class="hb_modal_overlay"></div>
-</div> -->
+</script>
+<!--Confirm-->
+
+<!--Qty-->
+<script type="text/html" id="tmpl-hb-qty">
+	<# if ( typeof data.qty !== 'undefined' ) { #>
+		<select name="qty">
+			<option value="0"><?php _e( 'Quantity' ) ?></option>
+			<# for ( var i = 1; i <= data.qty; i++ ) { #>
+
+				<# if ( data.qty_selected == i ) { #>
+					<option value="{{ i }}" selected>{{ i }}</option>
+				<# } else { #>
+					<option value="{{ i }}">{{ i }}</option>
+				<# } #>
+
+			<# } #>
+		</select>
+	<# } #>
+</script>
+<!--Qty-->

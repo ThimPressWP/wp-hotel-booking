@@ -31,7 +31,9 @@ class HB_Ajax {
 			'ajax_add_to_cart'      => true,
 			'ajax_remove_item_cart' => true,
 			'load_order_user'		=> false,
-			'load_room_ajax'		=> false
+			'load_room_ajax'		=> false,
+			'check_room_available'	=> false,
+			'load_order_item'		=> false
 		);
 
 		foreach ( $ajax_actions as $action => $priv ) {
@@ -313,6 +315,85 @@ class HB_Ajax {
 
 		$users = $wpdb->get_results( $sql );
 		wp_send_json( $users ); die();
+	}
+
+	// ajax check available room in booking details
+	static function check_room_available() {
+
+		if ( ! isset( $_POST[ 'hotel-admin-check-room-available' ] ) || ! wp_verify_nonce( $_POST['hotel-admin-check-room-available'], 'hotel_admin_check_room_available' ) ) {
+			return;
+		}
+
+		//hotel_booking_get_room_available
+		if ( ! isset( $_POST[ 'room_id' ] ) || ! $_POST[ 'room_id' ] ) {
+			wp_send_json( array(
+					'status'	=> false,
+					'message'	=> __( 'Room not found.', 'tp-hotel-booking' )
+				) );
+		}
+
+		if ( ! isset( $_POST['check_in_date_timestamp'] ) || ! isset( $_POST['check_out_date_timestamp'] ) ) {
+			wp_send_json( array(
+					'status'	=> false,
+					'message'	=> __( 'Please select check in date and checkout date.', 'tp-hotel-booking' )
+				) );
+		}
+
+		$qty = hotel_booking_get_room_available( absint( $_POST['room_id'] ), array(
+				'check_in_date'			=> sanitize_text_field( $_POST['check_in_date_timestamp'] ),
+				'check_out_date'		=> sanitize_text_field( $_POST['check_out_date_timestamp'] )
+			) );
+
+		if ( $qty || ! is_wp_error( $qty ) ) {
+			wp_send_json( array(
+					'status'		=> true,
+					'qty'			=> $qty,
+					'qty_selected'	=> isset( $_POST['order_item_id'] ) ? hb_get_order_item_meta( $_POST['order_item_id'], 'qty', true ) : 0
+				) );
+		} else {
+			wp_send_json( array(
+					'status'			=> false,
+					'message'			=> $qty->get_error_message()
+				) );
+		}
+
+	}
+
+	// ajax load oder item to edit
+	static function load_order_item() {
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) ) {
+			return;
+		}
+
+		if ( ! isset( $_POST['order_item_id'] ) ) {
+			wp_send_json( array(
+
+				) );
+		}
+
+		$order_item_id = absint( $_POST['order_item_id'] );
+		$product_id = hb_get_order_item_meta( $order_item_id, 'product_id', true );
+		$checkin = hb_get_order_item_meta( $order_item_id, 'check_in_date', true );
+		$checkout = hb_get_order_item_meta( $order_item_id, 'check_out_date', true );
+		wp_send_json( array(
+				'status'			=> true,
+				'modal_title'		=> __( 'Edit order item', 'tp-hotel-booking' ),
+				'order_item_id'		=> $order_item_id,
+				'room' 				=> array(
+							'ID'				=> $product_id,
+							'post_title'		=> get_the_title( hb_get_order_item_meta( $order_item_id, 'product_id', true ) )
+						),
+				'check_in_date'			=> date_i18n( hb_get_date_format(), $checkin ),
+				'check_out_date'		=> date_i18n( hb_get_date_format(), $checkout ),
+				'check_in_date_timestamp'	=> $checkin,
+				'check_out_date_timestamp'	=> $checkout,
+				'qty'				=> hotel_booking_get_room_available( $product_id, array(
+							'check_in_date'			=> $checkin,
+							'check_out_date'		=> $checkout
+					) ),
+				'qty_selected'		=> hb_get_order_item_meta( $order_item_id, 'qty', true ),
+				'post_type'		=> get_post_type( $product_id )
+			) );
 	}
 
 }
