@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-24 16:36:36
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-03-25 09:38:52
+ * @Last Modified time: 2016-04-05 09:06:13
  */
 
 class HB_Admin_Metabox_Booking_Details {
@@ -25,7 +25,7 @@ class HB_Admin_Metabox_Booking_Details {
 		$this->title = __( 'Booking Details', 'tp-hotel-booking' );
 
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ), 10, 2 );
-		add_action( 'save_post', array( $this, 'update' ) );
+		add_action( 'save_post', array( __CLASS__ , 'update' ) );
 	}
 
 	public function add_meta_box( $post_type, $post ) {
@@ -36,9 +36,23 @@ class HB_Admin_Metabox_Booking_Details {
 		require_once HB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-details.php';
 	}
 
-	public function update( $post_id ) {
+	public static function update( $post_id ) {
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 			return;
+		}
+
+		if ( ! isset( $_POST['hotel_booking_metabox_booking_details_nonce'] ) || ! wp_verify_nonce( $_POST['hotel_booking_metabox_booking_details_nonce'], 'hotel-booking-metabox-booking-details' ) ) {
+			return;
+		}
+
+		foreach ( $_POST as $k => $vl ) {
+			if ( strpos( $k, '_hb_' ) !== 0 ) {
+				continue;
+			}
+
+			update_post_meta( $post_id, $k, sanitize_text_field( $vl ) );
+			do_action( 'hb_booking_detail_update_meta_box_' . $k, $vl, $post_id );
+			do_action( 'hb_booking_detail_update_meta_box', $k, $vl, $post_id );
 		}
 	}
 

@@ -276,7 +276,8 @@ class TP_Hotel_Booking {
         // select2
         wp_register_script( 'tp-admin-hotel-booking-select2', $this->plugin_url( 'assets/js/select2.min.js' ) );
         if( is_admin() ){
-            wp_register_style( 'tp-admin-hotel-booking', $this->plugin_url( 'assets/css/admin.tp-hotel-booking.min.css' ) );
+            $dependencies = array_merge( $dependencies, array( 'backbone' ) );
+            wp_register_style( 'tp-admin-hotel-booking', $this->plugin_url( 'assets/css/admin.tp-hotel-booking.css' ) );
             wp_register_script( 'tp-admin-hotel-booking', $this->plugin_url( 'assets/js/admin.hotel-booking.js' ), $dependencies );
             wp_localize_script( 'tp-admin-hotel-booking', 'hotel_booking_i18n', hb_admin_i18n() );
             //report
@@ -303,6 +304,7 @@ class TP_Hotel_Booking {
         if( is_admin() ) {
             wp_enqueue_style( 'tp-admin-hotel-booking' );
             wp_enqueue_script( 'tp-admin-hotel-booking' );
+            wp_enqueue_script( 'backbone' );
 
             // report
             wp_enqueue_script( 'jquery' );

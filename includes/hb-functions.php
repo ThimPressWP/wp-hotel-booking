@@ -1623,13 +1623,14 @@ function hb_add_message( $message, $type = 'message' ) {
 function hb_get_customer_fullname( $booking_id = null, $with_title = false ) {
 	if ( $booking_id ) {
 		$booking = HB_Booking::instance( $booking_id );
-		if ( $booking->user_id ) {
-			$user = HB_User::instance();
-			$first_name = $user->first_name;
-			$last_name = $user->last_name;
-		} else {
+
+		if ( $booking->customer_first_name ){
 			$first_name = $booking->customer_first_name;
 			$last_name = $booking->customer_last_name;
+		} else if ( $booking->user_id ) {
+			$user = HB_User::get_user( $booking->user_id );
+			$first_name = $user->first_name;
+			$last_name = $user->last_name;
 		}
 
 		if ( $with_title ) {
@@ -1800,6 +1801,7 @@ function hb_new_booking_email( $booking_id ) {
 		$email_heading = __( 'New customer booking', 'tp-hotel-booking' );
 	}
 
+	$body = null;
 	// new version 1.1
 	if( get_post_meta( $booking_id, '_hb_booking_cart_params' , true ) ) {
 		$body = hb_get_template_content( 'emails/email-booking.php', array(
@@ -1813,6 +1815,9 @@ function hb_new_booking_email( $booking_id ) {
 		) );
 	}
 
+	if ( ! $body ) {
+		return;
+	}
 	// get CSS styles
 	ob_start();
 	hb_get_template( 'emails/email-styles.php' );
@@ -1837,9 +1842,7 @@ function hb_new_booking_email( $booking_id ) {
 }
 
 add_action( 'hb_booking_status_pending_to_processing', 'hb_new_booking_email' );
-add_action( 'hb_booking_status_publish_to_processing', 'hb_new_booking_email' );
 add_action( 'hb_booking_status_pending_to_completed', 'hb_new_booking_email' );
-add_action( 'hb_booking_status_publish_to_completed', 'hb_new_booking_email' );
 
 /**
  * Filter content type to text/html for email

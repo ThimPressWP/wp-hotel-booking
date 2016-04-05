@@ -30,7 +30,8 @@ class HB_Ajax {
 			'remove_coupon'         => true,
 			'ajax_add_to_cart'      => true,
 			'ajax_remove_item_cart' => true,
-			'load_order_user'		=> false
+			'load_order_user'		=> false,
+			'load_room_ajax'		=> false
 		);
 
 		foreach ( $ajax_actions as $action => $priv ) {
@@ -260,8 +261,7 @@ class HB_Ajax {
 			return;
 
 		$cart = TP_Hotel_Booking::instance()->cart;
-		if( $cart->cart_contents && ! isset( $_POST['cart_id'] ) || ! array_key_exists( sanitize_text_field( $_POST['cart_id'] ), $cart->cart_contents ) )
-		{
+		if( $cart->cart_contents && ! isset( $_POST['cart_id'] ) || ! array_key_exists( sanitize_text_field( $_POST['cart_id'] ), $cart->cart_contents ) ) {
 			hb_send_json( array( 'status' => 'warning', 'message' => __( 'Cart item is not exists.', 'tp-hotel-booking' ) ) );
 		}
 
@@ -278,6 +278,7 @@ class HB_Ajax {
 		}
 	}
 
+	// ajax load user in booking details
 	static function load_order_user() {
 		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) || ! isset( $_POST['user_name'] ) ) {
 			return;
@@ -290,6 +291,25 @@ class HB_Ajax {
 				WHERE
 					user.user_login LIKE %s
 			", '%' . $wpdb->esc_like( $user_name ) . '%' );
+
+		$users = $wpdb->get_results( $sql );
+		wp_send_json( $users ); die();
+	}
+
+	// ajax load room in booking details
+	static function load_room_ajax() {
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) || ! isset( $_POST['room'] ) ) {
+			return;
+		}
+
+		$title = sanitize_text_field( $_POST['room'] );
+		global $wpdb;
+		$sql = $wpdb->prepare("
+				SELECT room.ID AS ID, room.post_title AS post_title FROM $wpdb->posts AS room
+				WHERE
+					room.post_title LIKE %s
+					GROUP BY room.post_name
+			", '%' . $wpdb->esc_like( $title ) . '%' );
 
 		$users = $wpdb->get_results( $sql );
 		wp_send_json( $users ); die();

@@ -340,6 +340,10 @@
                 _self = this;
 
             _self.select2();
+
+            _doc.on( 'click', '.section h4 .edit', _self.edit_customer )
+
+            _doc.on( 'change', '#booking-item-checkall', _self.toggle_checkbox )
             // add room
             _doc.on( 'click', '#add_room_item', _self.add_room_item )
             // add coupon
@@ -349,7 +353,39 @@
             // edit
             .on( 'click', '#booking_items .actions .edit', _self.edit_room )
             // remove room item
-            .on( 'click', '#booking_items .actions .remove', _self.remove_room );
+            .on( 'click', '#booking_items .actions .remove', _self.remove_room )
+
+            // on open trigger
+            .on( 'hb_modal_open', this.openCallback )
+
+            // on save action
+            .on( 'hb_before_update_action', this.save_action );
+        },
+
+        edit_customer: function( e, target, data ) {
+            e.preventDefault();
+            var _self = $(this),
+                _section = _self.parents( '.section:first' ),
+                _details = _section.find( '.details' ),
+                _edit_input = _section.find('.edit_details');
+
+                if ( ! _edit_input.hasClass( 'active' ) ) {
+                    _self.hide();
+                    _details.hide();
+                    _edit_input.addClass( 'active' );
+                }
+        },
+
+        toggle_checkbox: function( e ) {
+            e.preventDefault();
+            var _self = $(this),
+                _checkox = $( '#booking_items input[name*="book_item"]' );
+
+            if ( _self.is(':checked') ) {
+                _checkox.attr( 'checked', true );
+            } else {
+                _checkox.attr( 'checked', false );
+            }
         },
 
         select2: function () {
@@ -372,7 +408,7 @@
                         return {
                             results: $.map( data, function ( item ) {
                                 return {
-                                    text: item.user_login + '( #' + item.ID + ' ' + item.user_email + ' )' ,
+                                    text: item.user_login + '(#' + item.ID + ' ' + item.user_email + ')' ,
                                     id: item.ID
                                 }
                             })
@@ -385,11 +421,14 @@
 
         add_room_item: function( e ) {
             e.preventDefault();
-
+            $(this).hb_modal_box({
+                tmpl: 'hb-add-room',
+                settings: {}
+            });
             return false;
         },
 
-        add_coupon: function( e ) {
+        add_coupon: function( e, target, data ) {
             e.preventDefault();
 
 
@@ -415,7 +454,86 @@
 
 
             return false;
-        }
+        },
+
+        openCallback: function( e, target, form ) {
+            e.preventDefault();
+            if ( target === 'hb-add-room' ) {
+                var _check_in = form.find('.check_in_date'),
+                    _check_out = form.find('.check_out_date'),
+                    _select = form.find('.booking_search_room_items');
+
+                // select2
+                _select.select2({
+                    placeholder: hotel_booking_i18n.select_room,
+                    minimumInputLength: 3,
+                    // z-index: 10000,
+                    ajax: {
+                        url: ajaxurl,
+                        dataType: 'json',
+                        type: 'POST',
+                        quietMillis: 50,
+                        data: function ( room ) {
+                            return {
+                                room: room.term,
+                                action: 'hotel_booking_load_room_ajax',
+                                nonce: hotel_settings.nonce
+                            };
+                        },
+                        processResults: function ( data ) {
+                            return {
+                                results: $.map( data, function ( item ) {
+                                    return {
+                                        text    : item.post_title,
+                                        id      : item.ID
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    }
+                });
+
+                // datepicker
+                _check_in.datepicker({
+                    dateFormat      : hotel_booking_i18n.date_time_format,
+                    monthNames      : hotel_booking_i18n.monthNames,
+                    monthNamesShort : hotel_booking_i18n.monthNamesShort,
+                    dayNames        : hotel_booking_i18n.dayNames,
+                    dayNamesShort   : hotel_booking_i18n.dayNamesShort,
+                    dayNamesMin     : hotel_booking_i18n.dayNamesMin,
+                    onSelect: function(){
+                        var _self = $(this),
+                            date = _self.datepicker( 'getDate' ),
+                            timestamp = new Date( date ).getTime() / 1000 - ( new Date().getTimezoneOffset() * 60 );
+                        _self.parent().find('input[name="check_in_date_timestamp"]').val( timestamp );
+
+                        date = date.setDate( date.getDate() );
+                        _check_out.datepicker( 'option', 'minDate', date );
+                    }
+                });
+                _check_out.datepicker({
+                    dateFormat      : hotel_booking_i18n.date_time_format,
+                    monthNames      : hotel_booking_i18n.monthNames,
+                    monthNamesShort : hotel_booking_i18n.monthNamesShort,
+                    dayNames        : hotel_booking_i18n.dayNames,
+                    dayNamesShort   : hotel_booking_i18n.dayNamesShort,
+                    dayNamesMin     : hotel_booking_i18n.dayNamesMin,
+                    onSelect: function(){
+                        var _self = $(this),
+                            date = _self.datepicker( 'getDate' ),
+                            timestamp = new Date( date ).getTime() / 1000 - ( new Date().getTimezoneOffset() * 60 );
+                        _self.parent().find('input[name="check_out_date_timestamp"]').val( timestamp );
+                        _check_in.datepicker( 'option', 'maxDate', date );
+                    }
+                });
+
+            }
+        },
+
+        save_action: function( e, target, form ) {
+            console.debug( target, form );
+        },
 
     };
 
@@ -426,3 +544,99 @@
     // end process booking items, post type 'hb_booking'
 
 })(jQuery);
+
+// modal box
+( function( $, Backbone, _ ){
+
+    $.fn.hb_modal_box = function( options ){
+
+        var options = $.extend( {}, {
+                tmpl        : '',
+                settings    : {}
+            }, options );
+
+        if ( options.tmpl ) {
+            new HotelModal.view( options.tmpl, options.settings );
+        }
+    };
+
+    var HotelModal = {
+
+        view: function( target, options ){
+            var view = Backbone.View.extend({
+
+                id      : 'hb_modal_dialog',
+                options : options,
+                target  : target,
+
+                // events handles
+                events  : {
+                    'click .hb_modal_close'     : 'close',
+                    'click .hb_modal_overlay'   : 'close',
+                    'click .hb_form_submit'     : 'submit'
+                },
+
+                // initialize
+                initialize: function( data ){
+                    this.render();
+                },
+
+                // render
+                render: function(){
+                    var template = wp.template( this.target );
+
+                    template = template( this.options );
+
+                    $( 'body' ).append( this.$el.html( template ) );
+
+                    var _content = $( '.hb_modal' ),
+                        _content_width = _content.outerWidth(),
+                        _content_height = _content.outerHeight(),
+                        _window_width = $(window).width(),
+                        _window_height = $(window).height(),
+                        _adminbar_height = $('#wpadminbar').innerWidth();
+
+                    _content.css({
+                        'margin-top'    : '-' + _content_height / 2 + 'px',
+                        'margin-left'   : '-' + _content_width / 2 + 'px'
+                    });
+
+                    $( document ).trigger( 'hb_modal_open', [ this.target, _content.find( 'form' ) ] );
+                },
+
+                // submit
+                submit: function(){
+                    $( document ).trigger( 'hb_before_update_action', [ this.target, this.form_data() ] );
+
+                    // close
+                    this.close();
+
+                    $( document ).trigger( 'hb_before_updated_action', [ this.target, this.form_data() ] );
+
+                    return false;
+                },
+
+                // close
+                close: function() {
+
+                    $( document ).trigger( 'hb_before_close_action', [ this.target, this.form_data() ] );
+
+                    this.$el.remove();
+
+                    return false;
+                },
+
+                // form data
+                form_data: function(){
+                    return $( this.$el ).find( 'form:first-child' ).serializeArray();
+                }
+
+            });
+
+            return new view( options );
+        },
+
+    };
+
+} )( jQuery, Backbone, _ );
+// end modal box

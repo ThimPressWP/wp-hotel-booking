@@ -28,7 +28,8 @@ function hb_admin_i18n(){
         'date_time_format'              => hb_date_time_format_js(),
         'monthNames'                    => hb_month_name_js(),
         'monthNamesShort'               => hb_month_name_short_js(),
-        'select_user'                   => __( 'Enter user login.', 'tp-hotel-booking' )
+        'select_user'                   => __( 'Enter user login.', 'tp-hotel-booking' ),
+        'select_room'                   => __( 'Enter room name.', 'tp-hotel-booking' ),
     );
     return apply_filters( 'hb_admin_i18n', $i18n );
 }
@@ -398,12 +399,12 @@ function hb_booking_table_head( $default ) {
     unset($default['author']);
     unset($default['date']);
     $default['customer']            = __( 'Customer', 'tp-hotel-booking' );
-    $default['booking_date']        = __( 'Booking Date', 'tp-hotel-booking' );
+    $default['booking_date']        = __( 'Date', 'tp-hotel-booking' );
     $default['check_in_date']       = __( 'Check in', 'tp-hotel-booking' );
     $default['check_out_date']      = __( 'Check out', 'tp-hotel-booking' );
     $default['total']               = __( 'Total', 'tp-hotel-booking' );
-    $default['title']               = __( 'ID', 'tp-hotel-booking' );
-    $default['details']             = __( 'View Details', 'tp-hotel-booking' );
+    $default['title']               = __( 'Booking Order', 'tp-hotel-booking' );
+    $default['status']              = __( 'Status', 'tp-hotel-booking' );
     return $default;
 }
 add_filter('manage_hb_booking_posts_columns', 'hb_booking_table_head');
@@ -425,7 +426,7 @@ function hb_manage_booking_column( $column_name, $post_id ) {
             break;
         case 'customer':
             $echo[] = hb_get_customer_fullname( $post_id, true );
-            $echo[] = $booking->user_id && ( $user = get_userdata( $booking->user_id ) ) ? sprintf( '<small><a href="%s">%s</a></small>', get_user_edit_link( $booking->user_id ), $user->user_login ) : '';
+            $echo[] = $booking->user_id && ( $user = get_userdata( $booking->user_id ) ) ? sprintf( '<br /><strong><small><a href="%s">%s</a></small></strong>', get_edit_user_link( $booking->user_id ), $user->user_login ) : '';
             break;
         case 'total':
             global $hb_settings;
@@ -473,8 +474,8 @@ function hb_manage_booking_column( $column_name, $post_id ) {
                 echo date( hb_get_date_format(), $booking->check_out_date );
             }
             break;
-        case 'details':
-            $link = '<a href="'. get_edit_post_link( $post_id ) . '">' . hb_get_booking_status_label( $post_id ) . '</a>';
+        case 'status':
+            $link = '<a href="'. esc_attr( get_edit_post_link( $post_id ) ) . '">' . hb_get_booking_status_label( $post_id ) . '</a>';
             // $link = '<a href="'. admin_url('admin.php?page=hb_booking_details&id='. $post_id) . '">' . hb_get_booking_status_label( $post_id ) . '</a>';
             $echo[] = '<span class="hb-booking-status ' . $status . '">' . $link . '</span>';
     }
@@ -929,32 +930,24 @@ if ( ! function_exists( 'hb_get_rooms' ) )
         return get_posts( $args );
     }
 }
-add_action( 'save_post', 'hb_update_meta_box_booking_status' );
-if ( ! function_exists( 'hb_update_meta_box_booking_status' ) )
-{
-    /**
-     * update status booking
-     */
-    function hb_update_meta_box_booking_status( $post )
-    {
-        if( get_post_type() !== 'hb_booking' )
-            return;
 
-        if( ! isset($_POST) )
-            return;
+add_action( 'hb_booking_detail_update_meta_box', 'hb_booking_detail_update_meta_box', 10, 3 );
+function hb_booking_detail_update_meta_box( $k, $vl, $post_id ) {
+    if( get_post_type( $post_id ) !== 'hb_booking' )
+        return;
 
-        if( ! isset($_POST['_hb_booking_status']) || ! $_POST['_hb_booking_status'] )
-            return;
-
-        $status = sanitize_text_field( $_POST['_hb_booking_status'] );
-
-        remove_action( 'save_post', 'hb_update_meta_box_booking_status' );
-
-        $book = HB_Booking::instance( $post );
-        $book->update_status( $status );
-
-        add_action( 'save_post', 'hb_update_meta_box_booking_status' );
+    if ( $k !== '_hb_booking_status' ) {
+        return;
     }
+
+    $status = sanitize_text_field( $vl );
+
+    remove_action( 'save_post', array( 'HB_Admin_Metabox_Booking_Details', 'update' ) );
+
+    $book = HB_Booking::instance( $post_id );
+    $book->update_status( $status );
+
+    add_action( 'save_post', array( 'HB_Admin_Metabox_Booking_Details', 'update' ) );
 }
 
 add_action( 'hb_update_meta_box_gallery_settings', 'hb_update_meta_box_gallery' );
