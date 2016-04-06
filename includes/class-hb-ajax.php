@@ -33,7 +33,8 @@ class HB_Ajax {
 			'load_order_user'		=> false,
 			'load_room_ajax'		=> false,
 			'check_room_available'	=> false,
-			'load_order_item'		=> false
+			'load_order_item'		=> false,
+			'load_coupon_ajax'		=> false
 		);
 
 		foreach ( $ajax_actions as $action => $priv ) {
@@ -310,11 +311,13 @@ class HB_Ajax {
 				SELECT room.ID AS ID, room.post_title AS post_title FROM $wpdb->posts AS room
 				WHERE
 					room.post_title LIKE %s
+					AND room.post_type = %s
+					AND room.post_status = %s
 					GROUP BY room.post_name
-			", '%' . $wpdb->esc_like( $title ) . '%' );
+			", '%' . $wpdb->esc_like( $title ) . '%', 'hb_room', 'publish' );
 
-		$users = $wpdb->get_results( $sql );
-		wp_send_json( $users ); die();
+		$rooms = $wpdb->get_results( $sql );
+		wp_send_json( $rooms ); die();
 	}
 
 	// ajax check available room in booking details
@@ -394,6 +397,34 @@ class HB_Ajax {
 				'qty_selected'		=> hb_get_order_item_meta( $order_item_id, 'qty', true ),
 				'post_type'		=> get_post_type( $product_id )
 			) );
+	}
+
+	// ajax load coupons code
+	static function load_coupon_ajax() {
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) ) {
+			return;
+		}
+
+		$code = sanitize_text_field( $_POST['coupon'] );
+		$time = time();
+
+		global $wpdb;
+		$sql = $wpdb->prepare("
+				SELECT coupon.ID, coupon.post_title FROM $wpdb->posts AS coupon
+					INNER JOIN $wpdb->postmeta AS start ON start.post_id = coupon.ID
+					INNER JOIN $wpdb->postmeta AS end ON end.post_id = coupon.ID
+				WHERE
+					coupon.post_type = %s
+					AND coupon.post_title LIKE %s
+					AND coupon.post_status = %s
+					AND start.meta_key = %s
+					AND end.meta_key = %s
+					AND ( start.meta_value <= %d AND end.meta_value >= %d )
+			", 'hb_coupon', '%' . $wpdb->esc_like( $code ) . '%', 'publish', '_hb_coupon_date_from_timestamp', '_hb_coupon_date_to_timestamp',
+				$time, $time
+			);
+
+		wp_send_json( apply_filters( 'hotel_admin_get_coupons', $wpdb->get_results( $sql ) ) );
 	}
 
 }

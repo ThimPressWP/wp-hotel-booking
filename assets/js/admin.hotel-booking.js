@@ -460,6 +460,10 @@
         add_coupon: function( e, target, data ) {
             e.preventDefault();
 
+            $( this ).hb_modal_box({
+                tmpl: 'hb-coupons',
+                settings: {}
+            });
 
             return false;
         },
@@ -587,6 +591,38 @@
                     }
                 });
 
+            } else if ( target === 'hb-coupons' ) {
+                var _select = form.find('.booking_coupon_code');
+                // select2
+                _select.select2({
+                    placeholder: hotel_booking_i18n.select_coupon,
+                    minimumInputLength: 3,
+                    ajax: {
+                        url: ajaxurl,
+                        dataType: 'json',
+                        type: 'POST',
+                        quietMillis: 50,
+                        data: function ( coupon ) {
+                            return {
+                                coupon: coupon.term,
+                                action: 'hotel_booking_load_coupon_ajax',
+                                nonce: hotel_settings.nonce
+                            };
+                        },
+                        processResults: function ( data ) {
+                            return {
+                                results: $.map( data, function ( item ) {
+                                    return {
+                                        text    : item.post_title,
+                                        id      : item.ID
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    }
+                });
+
             }
         },
 
@@ -612,7 +648,7 @@
                 if ( typeof res.status === 'undefined' ) {
                     return;
                 }
-                if ( res.status === false ) {
+                if ( res.status === false || res.qty == 0 ) {
                     alert( res.message ); return;
                 }
                 $( '#hb_modal_dialog .section:last-child' ).append( wp.template( 'hb-qty' )( res ) );
@@ -620,7 +656,20 @@
         },
 
         save_action: function( e, target, form ) {
-            console.debug( target, form );
+            var _form_element = $( '#hb-booking-items' ),
+                _form_overlay = _form_element.find( '.hb_overlay' );
+            $.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                beforeSend: function(){
+                    _form_overlay.addClass( 'active' );
+                }
+            }).done( function( res ){
+                _form_overlay.removeClass( 'active' );
+                if ( typeof res.status !== 'undefined' && res.status === true ) {
+                    $( '#hb-booking-items' ).html( res.html );
+                }
+            } );
         },
 
     };
@@ -715,6 +764,7 @@
                     return false;
                 },
 
+                // check available
                 check_available: function( e ){
                     $( document ).trigger( 'hb_check_available_action', [ this.target, this.form_data() ] );
                     return false;
@@ -722,7 +772,7 @@
 
                 // form data
                 form_data: function(){
-                    return $( this.$el ).find( 'form:first-child' ).serializeArray();
+                    return _form = $( this.$el ).find( 'form:first-child' ).serializeArray();
                 }
 
             });

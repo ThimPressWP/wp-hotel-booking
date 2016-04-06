@@ -633,6 +633,15 @@ th.column-room_type{
     width: 50%;
     float: left;
 }
+#booking_items .hb_overlay.active{
+    position: absolute;
+    background-color: #fff;
+    opacity: 0.8;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
 #booking_items table{
     width: 100%;
     border: 3px solid #f8f8f8;

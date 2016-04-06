@@ -341,7 +341,7 @@ class HB_Extra_Cart
 
 		$html = array();
 		foreach ( $packages as $k => $package ) {
-			$html[] = '<tr>';
+			$html[] = '<tr data-order-parent="'.esc_attr( $room->order_item_id ).'">';
 
 			$html[] = sprintf( '<td class="center"><input type="checkbox" name="book_item[]" value="%s" /></td>', $package->order_item_id );
 

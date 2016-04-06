@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-31 14:42:40
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-04 10:06:55
+ * @Last Modified time: 2016-04-06 15:12:06
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -240,4 +240,9 @@ function hb_booking_tax_total( $booking_id = null ) {
     $booking = HB_Booking::instance( $booking_id );
 
     return $booking->tax_total();
+}
+
+// get coupon
+function hb_booking_get_coupons_available() {
+    
 }

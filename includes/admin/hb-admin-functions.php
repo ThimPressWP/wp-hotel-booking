@@ -30,6 +30,7 @@ function hb_admin_i18n(){
         'monthNamesShort'               => hb_month_name_short_js(),
         'select_user'                   => __( 'Enter user login.', 'tp-hotel-booking' ),
         'select_room'                   => __( 'Enter room name.', 'tp-hotel-booking' ),
+        'select_coupon'                 => __( 'Enter coupon code.', 'tp-hotel-booking' ),
     );
     return apply_filters( 'hb_admin_i18n', $i18n );
 }
