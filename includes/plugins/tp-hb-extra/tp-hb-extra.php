@@ -32,7 +32,7 @@ class HB_Extra_Factory
 		// enqueue
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
-		add_filter( 'hotel_booking_cart_product_class', array( $this, 'product_class' ), 10, 3 );
+		add_filter( 'hotel_booking_get_product_class', array( $this, 'product_class' ), 10, 3 );
 		add_filter( 'hb_admin_i18n', array( $this, 'language_js' ) );
 	}
 
@@ -94,18 +94,41 @@ class HB_Extra_Factory
 		}
 	}
 
-	function product_class( $product, $cart_item, $cart )
-	{
-		if( get_post_type( $cart_item->product_id ) === 'hb_extra_room' ) {
-			if( isset( $cart_item->parent_id  ) )
-			{
-				$parent = $cart->get_cart_item( $cart_item->parent_id );
-				if( $parent ) {
-					$product = new HB_Extra_Package( $cart_item->product_id, $cart_item->check_in_date, $cart_item->check_out_date, $parent->quantity, $cart_item->quantity );
-				}
-			}
+	// function product_class( $product, $cart_item, $cart )
+	// {
+	// 	if( get_post_type( $cart_item->product_id ) === 'hb_extra_room' ) {
+	// 		if( isset( $cart_item->parent_id  ) )
+	// 		{
+	// 			$parent = $cart->get_cart_item( $cart_item->parent_id );
+	// 			if( $parent ) {
+	// 				$product = new HB_Extra_Package( $cart_item->product_id, array(
+	// 						'check_in_date' 	=> $cart_item->check_in_date,
+	// 						'check_out_date' 	=> $cart_item->check_out_date,
+	// 						'room_quantity' 	=> $parent->quantity,
+	// 						'quantity'			=> $cart_item->quantity
+	// 					) );
+	// 			}
+	// 		}
+	// 	}
+	// 	return $product;
+	// }
+
+	public function product_class( $product = null, $product_id = null, $params = array() ) {
+		if ( ! $product_id || get_post_type( $product_id ) !== 'hb_extra_room' ) {
+			return $product;
 		}
-		return $product;
+		if ( isset( $params['order_item_id'] ) ) {
+			$parent_quantity = hb_get_order_item_meta( hb_get_parent_order_item( $params['order_item_id'] ), 'quantity', true );
+		} else if ( ! is_admin() && isset( $params['parent_id']  ) ) {
+			$parent = TP_Hotel_Booking::instance()->cart->get_cart_item( $params['parent_id'] );
+			$parent_quantity = $parent->quantity;
+		}
+		return new HB_Extra_Package( $product_id, array(
+						'check_in_date' 	=> $params['check_in_date'],
+						'check_out_date' 	=> $params['check_out_date'],
+						'room_quantity' 	=> $parent_quantity,
+						'quantity'			=> $params['quantity']
+					) );
 	}
 
 	/**

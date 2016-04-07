@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-06 16:40:46
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-06 16:46:38
+ * @Last Modified time: 2016-04-07 08:56:19
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="section_line">
 				<# if ( typeof data.post_type === 'undefined' || data.post_type === 'hb_room' ) { #>
 					<div class="section">
-						<select name="room_id" class="booking_search_room_items">
+						<select name="product_id" class="booking_search_room_items">
 							<# if ( typeof data.room !== 'undefined' ) { #>
 
 								<option value="{{ data.room.ID }}" selected>{{ data.room.post_title }}</option>
@@ -80,10 +80,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<div class="form_footer">
 				<?php wp_nonce_field( 'hotel_admin_check_room_available', 'hotel-admin-check-room-available' ); ?>
-					<input type="hidden" name="order_item_id" value="{{ data.order_item_id }}" />
-						<# if ( typeof data.post_type === 'undefined' || data.post_type === 'hb_room' ) { #>
+				<input type="hidden" name="order_id" value="{{ data.order_id }}" />
+				<input type="hidden" name="order_item_id" value="{{ data.order_item_id }}" />
+				<# if ( typeof data.post_type === 'undefined' || data.post_type === 'hb_room' ) { #>
 					<a href="#" class="button check_available{{ data.class }}"><?php _e( 'Check Available', 'tp-hotel-booking' ); ?></a>
 				<# } #>
+				<input type="hidden" name="order_item_type" value="{{ data.order_item_type }}" />
 				<input type="hidden" name="action" value="hotel_booking_admin_add_order_item" />
 				<button type="reset" class="button hb_modal_close"><?php _e( 'Close', 'tp-hotel-booking' ) ?></button>
 				<button type="submit" class="button button-primary hb_form_submit"><?php _e( 'Add', 'tp-hotel-booking' ); ?></button>

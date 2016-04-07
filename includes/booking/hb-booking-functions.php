@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-31 14:42:40
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-06 15:12:06
+ * @Last Modified time: 2016-04-07 10:17:22
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -190,6 +190,35 @@ if ( ! function_exists( 'hb_update_order_item' ) ) {
     }
 }
 
+if ( ! function_exists( 'hb_remove_order_item' ) ) {
+    function hb_remove_order_item( $order_item_id = null ) {
+        global $wpdb;
+
+        $wpdb->delete( $wpdb->hotel_booking_order_items, array(
+                'order_item_id'     => $order_item_id
+            ), array( '%d' ) );
+
+
+        $wpdb->delete( $wpdb->hotel_booking_order_itemmeta, array(
+                'hotel_booking_order_item_id'     => $order_item_id
+            ), array( '%d' ) );
+
+        do_action( 'hotel_booking_remove_order_item', $order_item_id );
+    }
+}
+if ( ! function_exists( 'hb_get_parent_order_item' ) ) {
+    function hb_get_parent_order_item( $order_item_id = null ) {
+        global $wpdb;
+        $query = $wpdb->prepare("
+                SELECT order_item.order_item_parent FROM $wpdb->hotel_booking_order_items AS order_item
+                WHERE
+                    order_item.order_item_id = %d
+                    LIMIT 1
+            ", $order_item_id );
+
+        return $wpdb->get_var( $query );
+    }
+}
 // add order item meta
 if ( ! function_exists( 'hb_add_order_item_meta' ) ) {
     function hb_add_order_item_meta( $item_id = null, $meta_key = null, $meta_value = null, $unique = false ) {
@@ -223,6 +252,7 @@ function hb_booking_subtotal( $booking_id = null ) {
 
     return $booking->sub_total();
 }
+
 // get total booking
 function hb_booking_total( $booking_id = null ) {
     if ( ! $booking_id ) {
@@ -232,6 +262,7 @@ function hb_booking_total( $booking_id = null ) {
 
     return $booking->total();
 }
+
 // get total booking
 function hb_booking_tax_total( $booking_id = null ) {
     if ( ! $booking_id ) {
@@ -240,9 +271,4 @@ function hb_booking_tax_total( $booking_id = null ) {
     $booking = HB_Booking::instance( $booking_id );
 
     return $booking->tax_total();
-}
-
-// get coupon
-function hb_booking_get_coupons_available() {
-    
 }

@@ -44,27 +44,27 @@ class HB_Extra_Package
 	 */
 	public $_package_quantity = null;
 
-	function __construct( $post, $checkIn = null, $checkOut = null, $room_quantity, $package_quantity )
+	function __construct( $post, $params = array() )
 	{
-		$this->_check_in = $checkIn;
+		$params = wp_parse_args( $params, array(
+ 				'check_in_date' 	=> '',
+ 				'check_out_date' 	=> '',
+ 				'room_quantity'		=> 1,
+ 				'quantity' 			=> 1
+			) );
+		$this->_check_in = $params['check_in_date'];
 
 		if( ! $this->_check_in )
 			$this->_check_in = time();
 
-		$this->_check_out = $checkOut;
+		$this->_check_out = $params['check_out_date'];
 
 		if( ! $this->_check_out )
 			$this->_check_out = time();
 
-		if( ! $room_quantity )
-			$room_quantity = 1;
+		$this->_room_quantity = $params['room_quantity'];
 
-		$this->_room_quantity = $room_quantity;
-
-		if( ! $package_quantity )
-			$package_quantity = 1;
-
-		$this->_package_quantity = $package_quantity;
+		$this->_package_quantity = $params['quantity'];
 
 		if( is_numeric( $post ) && $post && get_post_type( $post ) == 'hb_extra_room') {
             $this->_post = get_post( $post );
@@ -215,24 +215,30 @@ class HB_Extra_Package
 	 * @param  integer $package_quantity 	number of package
 	 * @return object                   	object
 	 */
-	static function instance( $id, $checkIn = null, $checkOut = null, $room_quantity = null, $package_quantity = null )
+	static function instance( $id, $params = array() )
 	{
-		$in_out = strtotime( $checkIn ) . '_' . strtotime( $checkOut );
+		$params = wp_parse_args( $params, array(
+ 				'check_in_date' 	=> '',
+ 				'check_out_date' 	=> '',
+ 				'room_quantity'		=> 1,
+ 				'quantity' 			=> 1
+			) );
+
 		if( ! empty( self::$_instance[ $id ] ) )
 		{
 			$package = self::$_instance[ $id ];
 
-			if( $package->_check_in === $checkIn &&
-				$package->_check_out === $checkOut &&
-				$package->_room_quantity == $room_quantity &&
-				$package->_package_quantity == $package_quantity
+			if( $package->_check_in === $params['check_in_date'] &&
+				$package->_check_out === $params['check_out_date'] &&
+				$package->_room_quantity == $params['room_quantity'] &&
+				$package->_package_quantity == $params['quantity']
 			)
 			{
 				return $package;
 			}
 		}
 
-		return new self( $id, $checkIn, $checkOut, $room_quantity, $package_quantity );
+		return new self( $id, $params );
 	}
 
 }

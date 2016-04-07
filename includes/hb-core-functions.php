@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-01 09:45:55
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-06 12:03:50
+ * @Last Modified time: 2016-04-07 10:20:39
  */
 
 /**
@@ -109,4 +109,25 @@ if ( ! function_exists( 'hotel_booking_get_room_available' ) ) {
 			return $qty;
 		}
 	}
+}
+
+// product class process
+if ( ! function_exists( 'hotel_booking_get_product_class' ) ) {
+
+	function hotel_booking_get_product_class( $product_id = null, $params = array() ) {
+
+        $post_type = get_post_type( $product_id );
+
+        $product = 'HB_Product_' . implode( '_', array_map( 'ucfirst', explode( '_', $post_type ) ) );
+        if( ! class_exists( $product ) ) {
+            $product = 'HB_Room';
+        }
+
+        $product = apply_filters( 'hotel_booking_cart_product_class_name', $product, $product_id );
+        $product = new $product( $product_id, $params );
+
+        return apply_filters( 'hotel_booking_get_product_class', $product, $product_id, $params );
+
+	}
+
 }

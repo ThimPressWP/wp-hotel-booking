@@ -352,8 +352,12 @@ class HB_Extra_Cart
 			$html[] = sprintf( '<td class="total">%s</td>', hb_format_price( hb_get_order_item_meta( $package->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $hb_booking->currency ) ) );
 
 			$html[] = '<td class="actions">
-					<a href="#" class="edit" data-id="'.esc_attr( $package->order_item_id ).'"><i class="fa fa-pencil"></i></a>
-					<a href="#" class="remove" data-id="'.esc_attr( $package->order_item_id ).'"><i class="fa fa-times-circle"></i></a>
+					<a href="#" class="edit" data-order-id="'.esc_attr( $hb_booking->id ).'" data-order-item-id="'.esc_attr( $package->order_item_id ).'" data-order-item-type="sub_item" data-order-item-parent="'.$package->order_item_parent.'">
+						<i class="fa fa-pencil"></i>
+					</a>
+					<a href="#" class="remove" data-order-id="'.esc_attr( $hb_booking->id ).'" data-order-item-id="'.esc_attr( $package->order_item_id ).'" data-order-item-type="sub_item" data-order-item-parent="'.$package->order_item_parent.'">
+						<i class="fa fa-times-circle"></i>
+					</a>
 				</td>';
 
 			$html[] = '</tr>';

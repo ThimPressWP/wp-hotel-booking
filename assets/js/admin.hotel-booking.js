@@ -479,14 +479,19 @@
             e.preventDefault();
 
             var _self = $(this),
-                _order_item_id = _self.attr( 'data-id' ),
+                _order_id = _self.attr( 'data-order-id' ),
+                _order_item_id = _self.attr( 'data-order-item-id' ),
+                _order_item_type = _self.attr( 'data-order-item-type' ),
+                _order_item_parent = _self.attr( 'data-order-item-parent' ),
                 _icon = _self.find( '.fa' );
 
             $.ajax({
                 url: ajaxurl,
                 type: 'POST',
                 data: {
+                    order_id        : _order_id,
                     order_item_id   : _order_item_id,
+                    order_item_type : _order_item_type,
                     action          : 'hotel_booking_load_order_item',
                     nonce           : hotel_settings.nonce
                 },
@@ -511,7 +516,7 @@
             _self.hb_modal_box({
                     tmpl: 'hb-confirm',
                     settings: {
-                        order_item_id: _self.attr( 'data-id' ),
+                        order_item_id: _self.attr( 'data-order-item-id' ),
                         action: 'hotel_booking_remove_order_item'
                     }
                 });
@@ -661,6 +666,7 @@
             $.ajax({
                 url: ajaxurl,
                 type: 'POST',
+                data: form,
                 beforeSend: function(){
                     _form_overlay.addClass( 'active' );
                 }

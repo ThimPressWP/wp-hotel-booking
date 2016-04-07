@@ -32,7 +32,12 @@ class HB_WC_Product_Package extends WC_Product_Simple{
 			$qty = $parent['quantity'];
 		}
 
-		$this->package = HB_Extra_Package::instance( $this->post, $this->data['check_in_date'], $this->data['check_out_date'], $qty, 1 );
+		$this->package = HB_Extra_Package::instance( $this->post, array(
+				'check_in_date' => $this->data['check_in_date'],
+				'check_out_date' => $this->data['check_out_date'],
+				'room_quantity' => $qty,
+				'quantity' => 1
+			) );
 		return $this->package->amount_singular_exclude_tax();
 	}
 

@@ -126,15 +126,8 @@ class HB_Cart
                     }
 
                     if ( $cart_item->product_id ) {
-                        $post_type = get_post_type( $cart_item->product_id );
-
-                        $product = 'HB_Product_' . implode( '_', array_map( 'ucfirst', explode( '_', $post_type ) ) );
-                        if( ! class_exists( $product ) ) {
-                            $product = 'HB_Room';
-                        }
-                        $product = apply_filters( 'hotel_booking_cart_product_class_name', $product, $cart_item );
-                        $product = new $product( $cart_item->product_id, $param );
-                        $product = apply_filters( 'hotel_booking_cart_product_class', $product, $cart_item, $this );
+                        // product class
+                        $product = hotel_booking_get_product_class( $cart_item->product_id, $param );
                         // set product data
                         $cart_item->product_data = $product;
                         // amount item include tax

@@ -34,7 +34,8 @@ class HB_Ajax {
 			'load_room_ajax'		=> false,
 			'check_room_available'	=> false,
 			'load_order_item'		=> false,
-			'load_coupon_ajax'		=> false
+			'load_coupon_ajax'		=> false,
+			'admin_add_order_item'	=> false
 		);
 
 		foreach ( $ajax_actions as $action => $priv ) {
@@ -425,6 +426,66 @@ class HB_Ajax {
 			);
 
 		wp_send_json( apply_filters( 'hotel_admin_get_coupons', $wpdb->get_results( $sql ) ) );
+	}
+
+	// book mamunal add order item
+	static function admin_add_order_item() {
+		if ( ! isset( $_POST['hotel-admin-check-room-available'] ) && ! wp_verify_nonce( $_POST['hotel-admin-check-room-available'], 'hotel_admin_check_room_available' ) ) {
+			return;
+		}
+
+		$errors = new WP_Error();
+		$order_id = isset( $_POST['order_id'] ) ? absint( isset( $_POST['order_id'] ) ) : 0;
+		$product_id = isset( $_POST['product_id'] ) ? $_POST['product_id'] : 0;
+		$qty = isset( $_POST['qty'] ) ? absint( $_POST['qty'] ) : 1;
+		$order_item_id = 0;
+		$return = true;
+		if ( isset( $_POST['order_item_id'] ) && $_POST['order_item_id'] ) {
+			$order_item_id = absint( $_POST['order_item_id'] );
+		}
+
+		if ( isset( $_POST[ 'check_in_date_timestamp' ] ) ) {
+			$check_in_date = absint( $_POST[ 'check_in_date_timestamp' ] );
+		} else {
+			$return = false;
+			$errors->add( 'check_in_date_invalid', __( 'Check in date is invalid', 'tp-hotel-booking' ) );
+		}
+
+		if ( isset( $_POST[ 'check_out_date_timestamp' ] ) ) {
+			$check_out_date = absint( $_POST[ 'check_out_date_timestamp' ] );
+		} else {
+			$return = false;
+			$errors->add( 'check_out_date_invalid', __( 'Check in date is invalid', 'tp-hotel-booking' ) );
+		}
+
+		if ( $return === false ) {
+			return $errors;
+		}
+
+		if ( ! $order_item_id ) {
+			// add new order item
+			$order_item_id = hb_add_order_item( $order_id, array(
+					'order_item_name'		=> get_the_title( $product_id ),
+					'order_item_type'		=> isset( $_POST['order_item_type'] ) ? sanitize_title( $_POST['order_item_type'] ) : 'line_item',
+					'order_item_parent'		=> isset( $_POST['order_item_parent'] ) && $_POST['order_item_parent'] ? absint( $_POST['order_item_parent'] ) : null
+				) );
+		}
+
+		// update order item meta
+		hb_update_order_item_meta( $order_item_id, 'check_in_date', $check_in_date );
+		hb_update_order_item_meta( $order_item_id, 'check_out_date', $check_out_date );
+		// product_id
+		hb_update_order_item_meta( $order_item_id, 'product_id', $product_id );
+		hb_update_order_item_meta( $order_item_id, 'qty', $qty );
+
+		$params = array(
+				'check_in_date'		=> $check_in_date,
+				'check_out_date'	=> $check_out_date,
+				'quantity'			=> $qty,
+				'order_item_id'			=> $order_item_id
+			);
+		$product_class = hotel_booking_get_product_class( $product_id, $params );
+
 	}
 
 }

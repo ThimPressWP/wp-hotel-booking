@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-31 16:44:29
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-04 13:11:19
+ * @Last Modified time: 2016-04-07 09:19:44
  */
 
 if ( ! defined( 'ABSPATH' ) || ! defined( 'HB_INSTALLING' ) || HB_INSTALLING !== true ) {
@@ -71,7 +71,12 @@ if ( $params ) {
                                 hb_add_order_item_meta( $order_package_item_id, 'check_out_date', strtotime( $meta['check_out_date'] ) );
 
                                 if ( class_exists( 'HB_Extra_Package' ) ) {
-                                    $package = HB_Extra_Package::instance( $package_id, $meta['check_in_date'], $meta['check_out_date'], $meta['quantity'], $qty );
+                                    $package = HB_Extra_Package::instance( $package_id, array(
+                                            'check_in_date'     => $meta['check_in_date'],
+                                            'check_out_date'    => $meta['check_out_date'],
+                                            'room_quantity'     => $meta['quantity'],
+                                            'quantity'          => $qty
+                                        ) );
                                     // new meta
                                     $subtotal = $package->amount_exclude_tax();
                                     $total = $package->amount_include_tax();

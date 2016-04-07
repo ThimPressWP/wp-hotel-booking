@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-25 12:01:51
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-06 17:10:15
+ * @Last Modified time: 2016-04-07 08:57:20
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -71,8 +71,12 @@ $rooms = hb_get_order_items( $post->ID );
 						<?php printf( '%s', hb_format_price( hb_get_order_item_meta( $room->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $hb_booking->currency ) ) ); ?>
 					</td>
 					<td class="actions">
-						<a href="#" class="edit" data-id="<?php echo esc_attr( $room->order_item_id ) ?>"><i class="fa fa-pencil"></i></a>
-						<a href="#" class="remove" data-id="<?php echo esc_attr( $room->order_item_id ) ?>"><i class="fa fa-times-circle"></i></a>
+						<a href="#" class="edit" data-order-id="<?php echo esc_attr( $hb_booking->id ); ?>" data-order-item-id="<?php echo esc_attr( $room->order_item_id ) ?>" data-order-item-type="line_item">
+							<i class="fa fa-pencil"></i>
+						</a>
+						<a href="#" class="remove" data-order-id="<?php echo esc_attr( $hb_booking->id ); ?>" data-order-item-id="<?php echo esc_attr( $room->order_item_id ) ?>" data-order-item-type="line_item">
+							<i class="fa fa-times-circle"></i>
+						</a>
 					</td>
 				</tr>
 
@@ -91,11 +95,11 @@ $rooms = hb_get_order_items( $post->ID );
 				<th class="right" colspan="4">
 					<?php if ( ! $hb_booking->coupon ) : ?>
 
-						<a href="#" class="button" id="add_coupon" data-book-id="<?php $hb_booking->id ?>"><?php _e( 'Add Coupon', 'tp-hotel-booking' ); ?></a>
+						<a href="#" class="button" id="add_coupon" data-order-id="<?php $hb_booking->id ?>"><?php _e( 'Add Coupon', 'tp-hotel-booking' ); ?></a>
 
 					<?php else: ?>
 
-						<a href="#" class="button" id="remove_coupon" data-book-id="<?php $hb_booking->id ?>"  data-coupon-id="<?php $hb_booking->coupon['ID'] ?>"><?php _e( 'Remove Coupon', 'tp-hotel-booking' ); ?></a>
+						<a href="#" class="button" id="remove_coupon" data-order-id="<?php $hb_booking->id ?>"  data-coupon-id="<?php $hb_booking->coupon['ID'] ?>"><?php _e( 'Remove Coupon', 'tp-hotel-booking' ); ?></a>
 
 					<?php endif; ?>
 					<a href="#" class="button" id="add_room_item"><?php _e( 'Add Room Item', 'tp-hotel-booking' ); ?></a>
