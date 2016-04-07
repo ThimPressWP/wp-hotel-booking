@@ -1117,7 +1117,7 @@ function hb_search_rooms( $args = array() ) {
         WHERE
             rooms.post_type = %s
             AND rooms.post_status = %s
-            AND pm.meta_value >= %d
+            AND pm.meta_value <= %d
             AND ( term_cap.meta_value <= %d OR pm2.meta_value <= %d )
         GROUP BY rooms.post_name
         HAVING available_rooms > 0
@@ -1624,6 +1624,7 @@ function hb_get_customer_fullname( $booking_id = null, $with_title = false ) {
 	if ( $booking_id ) {
 		$booking = HB_Booking::instance( $booking_id );
 
+		$first_name = $last_name = '';
 		if ( $booking->customer_first_name ){
 			$first_name = $booking->customer_first_name;
 			$last_name = $booking->customer_last_name;

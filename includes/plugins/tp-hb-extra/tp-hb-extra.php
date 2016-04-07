@@ -117,17 +117,19 @@ class HB_Extra_Factory
 		if ( ! $product_id || get_post_type( $product_id ) !== 'hb_extra_room' ) {
 			return $product;
 		}
+		$parent_quantity = 1;
 		if ( isset( $params['order_item_id'] ) ) {
 			$parent_quantity = hb_get_order_item_meta( hb_get_parent_order_item( $params['order_item_id'] ), 'quantity', true );
 		} else if ( ! is_admin() && isset( $params['parent_id']  ) ) {
 			$parent = TP_Hotel_Booking::instance()->cart->get_cart_item( $params['parent_id'] );
 			$parent_quantity = $parent->quantity;
 		}
+
 		return new HB_Extra_Package( $product_id, array(
-						'check_in_date' 	=> $params['check_in_date'],
-						'check_out_date' 	=> $params['check_out_date'],
+						'check_in_date' 	=> isset( $params['check_in_date'] ) ? $params['check_in_date'] : '',
+						'check_out_date' 	=> isset( $params['check_out_date'] ) ? $params['check_out_date']: '',
 						'room_quantity' 	=> $parent_quantity,
-						'quantity'			=> $params['quantity']
+						'quantity'			=> isset( $params['quantity'] ) ? $params['quantity'] : 1
 					) );
 	}
 
@@ -154,8 +156,9 @@ class HB_Extra_Factory
 
 	static function instance()
 	{
-		if( self::$_self )
+		if( self::$_self ) {
 			return self::$_self;
+		}
 
 		return new self();
 	}

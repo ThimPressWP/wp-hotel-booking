@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-25 09:32:53
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-05 11:07:03
+ * @Last Modified time: 2016-04-08 08:28:01
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -36,7 +36,7 @@ $customers = hb_get_customers();
 					<label><?php _e( 'Payment Method:', 'tp-hotel-booking' ); ?></label>
 					<?php $methods = hb_get_payment_gateways(); ?>
 					<select name="_hb_method">
-						<?php if ( ! array_key_exists( $booking->method, $methods ) ) : ?>
+						<?php if ( $booking->method && ! array_key_exists( $booking->method, $methods ) ) : ?>
 							<option value="<?php echo esc_attr( $booking->method ) ?>" selected><?php printf( __( '%s is not available', 'tp-hotel-booking' ), $booking->method_title ) ?></option>
 						<?php endif; ?>
 						<?php foreach ( $methods as $id => $method ) : ?>

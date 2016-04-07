@@ -79,23 +79,14 @@ class HB_Booking{
         }
     }
 
-    public function total() {
+    public function total( $with_coupon = true ) {
         if ( ! $this->id ) {
             return;
         }
-        global $wpdb;
-        $query = $wpdb->prepare("
-                    SELECT SUM( meta.meta_value ) FROM $wpdb->hotel_booking_order_items AS booking
-                        RIGHT JOIN $wpdb->posts AS post ON booking.order_id = post.ID
-                        INNER JOIN $wpdb->hotel_booking_order_itemmeta AS meta ON meta.hotel_booking_order_item_id = booking.order_item_id
-                    WHERE post.ID = %d
-                        AND meta.meta_key = %s
-                ", $this->id, 'total' );
-
-        return $this->total = $wpdb->get_var( $query );
+        return $this->total = $this->sub_total( $with_coupon ) + $this->tax_total( $with_coupon );
     }
 
-    public function sub_total() {
+    public function sub_total( $with_coupon = true ) {
         if ( ! $this->id ) {
             return;
         }
@@ -108,10 +99,15 @@ class HB_Booking{
                         AND meta.meta_key = %s
                 ", $this->id, 'subtotal' );
 
-        return $this->sub_total = $wpdb->get_var( $query );
+        $this->sub_total = $wpdb->get_var( $query );
+        if ( $with_coupon ) {
+            $this->sub_total = $this->sub_total - $this->coupon_value;
+        }
+
+        return $this->sub_total;
     }
 
-    public function tax_total() {
+    public function tax_total( $with_coupon = true ) {
         if ( ! $this->id ) {
             return;
         }
@@ -125,7 +121,15 @@ class HB_Booking{
                         AND meta.meta_key = %s
                 ", $this->id, 'line_item', 'sub_item', 'tax_total' );
 
-        return $this->sub_total = $wpdb->get_var( $query );
+        $this->tax_total = $wpdb->get_var( $query );
+        if ( $with_coupon ) {
+            $subtotal_without_coupon = $this->sub_total( false );
+            if ( $subtotal_without_coupon > 0 ) {
+                $this->tax_total = ( ( $subtotal_without_coupon - $this->coupon_value ) * $this->tax_total ) / $subtotal_without_coupon;
+            }
+        }
+
+        return $this->tax_total;
     }
 
     /**

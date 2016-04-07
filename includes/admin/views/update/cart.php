@@ -76,13 +76,13 @@ foreach ( $cart_params as $key => $cart_item ) {
             <?php do_action( 'hotel_booking_admin_cart_after_item', $cart_params, $cart_id, $booking ); ?>
         <?php endforeach; ?>
         <!--Coupon-->
-        <?php if ( $booking->coupon ) : ?>
+        <?php if ( $booking->coupon_id ) : ?>
 
             <tr class="hb_coupon">
                 <td class="hb_coupon_remove" colspan="28">
-                    <span class="hb-remove-coupon_code"><?php printf( __( 'Coupon applied: %s', 'tp-hotel-booking' ), $booking->coupon['code'] ); ?></span>
+                    <span class="hb-remove-coupon_code"><?php printf( __( 'Coupon applied: %s', 'tp-hotel-booking' ), $booking->coupon_code ); ?></span>
                     <span class="hb-align-right">
-                        -<?php echo hb_format_price( $booking->coupon['value'], hb_get_currency_symbol( $booking->currency ) ); ?>
+                        -<?php echo hb_format_price( $booking->coupon_value, hb_get_currency_symbol( $booking->currency ) ); ?>
                     </span>
                 </td>
             </tr>

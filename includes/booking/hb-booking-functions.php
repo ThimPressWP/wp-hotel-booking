@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-31 14:42:40
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-07 10:17:22
+ * @Last Modified time: 2016-04-07 17:28:01
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -184,7 +184,7 @@ if ( ! function_exists( 'hb_update_order_item' ) ) {
             return false;
         }
 
-        do_action( 'hotel_booking_update_order_item', $item_id, $args );
+        do_action( 'hotel_booking_update_order_item', $item_id, $param );
 
         return true;
     }
@@ -206,6 +206,7 @@ if ( ! function_exists( 'hb_remove_order_item' ) ) {
         do_action( 'hotel_booking_remove_order_item', $order_item_id );
     }
 }
+
 if ( ! function_exists( 'hb_get_parent_order_item' ) ) {
     function hb_get_parent_order_item( $order_item_id = null ) {
         global $wpdb;
@@ -219,6 +220,7 @@ if ( ! function_exists( 'hb_get_parent_order_item' ) ) {
         return $wpdb->get_var( $query );
     }
 }
+
 // add order item meta
 if ( ! function_exists( 'hb_add_order_item_meta' ) ) {
     function hb_add_order_item_meta( $item_id = null, $meta_key = null, $meta_value = null, $unique = false ) {

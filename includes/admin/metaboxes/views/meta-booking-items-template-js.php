@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-06 16:40:46
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-07 08:56:19
+ * @Last Modified time: 2016-04-07 17:29:09
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -68,11 +68,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</div>
 			</div>
 
-			<# if ( typeof data.extras !== 'undefined' && Object.keys( data.extras ).length() != 0 ) { #>
+			<# if ( typeof data.childs !== 'undefined' && Object.keys( data.childs ).length() != 0 ) { #>
 
 				<div class="section_line">
 
-					<# console.debug( data.extras ) #>
+					<# console.debug( data.childs ) #>
 
 				</div>
 
@@ -111,8 +111,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<button class="hb_modal_close dashicons dashicons-no-alt"></button>
 			</div>
 			<div class="form_footer center">
-				<input type="hidden" name="order_item_id" value="{{ data.order_item_id }}" />
+				<input type="hidden" name="order_id" value="{{ data.order_id }}" />
+				<# if ( typeof data.order_item_id === 'object' ) { #>
+					<# for( var i = 0; i < Object.keys( data.order_item_id ).length; i++ ) { #>
+
+						<input type="hidden" name="order_item_id[]" value="{{ data.order_item_id[i] }}" />
+
+					<# } #>
+				<# } else { #>
+					<input type="hidden" name="order_item_id" value="{{ data.order_item_id }}" />
+				<# } #>
 				<input type="hidden" name="action" value="{{ data.action }}">
+				<input type="hidden" name="coupon_id" value="{{ data.coupon_id }}" />
+				<?php wp_nonce_field( 'hotel-booking-confirm', 'hotel_booking_confirm' ); ?>
 				<button type="reset" class="button hb_modal_close"><?php _e( 'No', 'tp-hotel-booking' ) ?></button>
 				<button type="submit" class="button button-primary hb_form_submit"><?php _e( 'Yes', 'tp-hotel-booking' ); ?></button>
 			</div>
@@ -186,8 +197,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<div class="form_footer">
 				<?php wp_nonce_field( 'hotel_admin_get_coupon_available', 'hotel-admin-get-coupon-available' ); ?>
-				<input type="hidden" name="order_item_id" value="{{ data.order_item_id }}" />
-				<input type="hidden" name="coupon_id" value="{{ data.coupon_id }}" />
+				<input type="hidden" name="order_id" value="{{ data.order_id }}" />
+				<!-- <input type="hidden" name="coupon_id" value="{{ data.coupon_id }}" /> -->
 				<input type="hidden" name="action" value="hotel_booking_add_coupon_to_order" />
 				<button type="reset" class="button hb_modal_close"><?php _e( 'Close', 'tp-hotel-booking' ) ?></button>
 				<button type="submit" class="button button-primary hb_form_submit"><?php _e( 'Add', 'tp-hotel-booking' ); ?></button>
