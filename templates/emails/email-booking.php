@@ -87,13 +87,13 @@ foreach ( $cart_params as $key => $cart_item ) {
 
         <?php endforeach; ?>
         <!--Coupon-->
-        <?php if ( $booking->coupon ) : ?>
+        <?php if ( $booking->coupon_id ) : ?>
 
             <tr class="booking-table-row">
                 <td class="bold-text">
-                    <span class="bold-text"><?php printf( __( 'Coupon applied: %s', 'tp-hotel-booking' ), $booking->coupon['code'] ); ?></span>
+                    <span class="bold-text"><?php printf( __( 'Coupon applied: %s', 'tp-hotel-booking' ), $booking->coupon_code ); ?></span>
                     <span class="text-align-right bold-text">
-                        -<?php echo hb_format_price( $booking->coupon['value'], hb_get_currency_symbol( $booking->currency ) ); ?>
+                        -<?php echo hb_format_price( $booking->coupon_value, hb_get_currency_symbol( $booking->currency ) ); ?>
                     </span>
                 </td>
             </tr>

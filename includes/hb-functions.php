@@ -1117,7 +1117,7 @@ function hb_search_rooms( $args = array() ) {
         WHERE
             rooms.post_type = %s
             AND rooms.post_status = %s
-            AND pm.meta_value >= %d
+            AND pm.meta_value <= %d
             AND ( term_cap.meta_value <= %d OR pm2.meta_value <= %d )
         GROUP BY rooms.post_name
         HAVING available_rooms > 0

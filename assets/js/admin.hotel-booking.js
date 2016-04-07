@@ -348,6 +348,8 @@
             _doc.on( 'click', '#add_room_item', _self.add_room_item )
             // add coupon
             .on( 'click', '#add_coupon', _self.add_coupon )
+            //remove coupon
+            .on( 'click', '#remove_coupon', _self.remove_coupon )
             // sync
             .on( 'click', '#action_sync', _self.action_sync )
             // edit
@@ -450,19 +452,43 @@
 
         add_room_item: function( e ) {
             e.preventDefault();
+            var _self = $(this),
+                _order_id = _self.attr( 'data-order-id' );
             $(this).hb_modal_box({
                 tmpl: 'hb-add-room',
-                settings: {}
+                settings: {
+                    'order_id'  : _order_id
+                }
             });
             return false;
         },
 
         add_coupon: function( e, target, data ) {
             e.preventDefault();
-
+            var _self = $(this),
+                _order_id = _self.attr( 'data-order-id' );
             $( this ).hb_modal_box({
                 tmpl: 'hb-coupons',
-                settings: {}
+                settings: {
+                    order_id : _order_id
+                }
+            });
+
+            return false;
+        },
+
+        remove_coupon: function( e, target, data  ){
+            e.preventDefault();
+            var _self = $(this),
+                _order_id = _self.attr( 'data-order-id' ),
+                _coupon_id = _self.attr( 'data-coupon-id' )
+            $( this ).hb_modal_box({
+                tmpl: 'hb-confirm',
+                settings: {
+                    order_id : _order_id,
+                    coupon_id: _coupon_id,
+                    action: 'hotel_booking_remove_coupon_on_order'
+                }
             });
 
             return false;
@@ -471,6 +497,31 @@
         action_sync: function( e ) {
             e.preventDefault();
 
+            var _self = $(this),
+                _form_element = $( '#hb-booking-items' ),
+                _form_overlay = _form_element.find( '.hb_overlay' ),
+                _checked = $('input[name*="book_item"]:checked'),
+                _data = {};
+                _do_process = false;
+
+            if ( _checked.length > 0 ) {
+                _do_process = true;
+
+                for ( var i = 0; i < _checked.length; i++ ) {
+                    _data[i] = $( _checked[i] ).val();
+                }
+            }
+
+            if ( _do_process ) {
+                _self.hb_modal_box({
+                        tmpl: 'hb-confirm',
+                        settings: {
+                            order_id : _self.attr( 'data-order-id' ),
+                            order_item_id: _data,
+                            action: 'hotel_booking_admin_remove_order_items'
+                        }
+                    });
+            }
 
             return false;
         },
@@ -516,8 +567,9 @@
             _self.hb_modal_box({
                     tmpl: 'hb-confirm',
                     settings: {
+                        order_id : _self.attr( 'data-order-id' ),
                         order_item_id: _self.attr( 'data-order-item-id' ),
-                        action: 'hotel_booking_remove_order_item'
+                        action: 'hotel_booking_admin_remove_order_item'
                     }
                 });
 
@@ -653,7 +705,7 @@
                 if ( typeof res.status === 'undefined' ) {
                     return;
                 }
-                if ( res.status === false || res.qty == 0 ) {
+                if ( res.status === false && typeof res.message !== 'undefined' ) {
                     alert( res.message ); return;
                 }
                 $( '#hb_modal_dialog .section:last-child' ).append( wp.template( 'hb-qty' )( res ) );
@@ -672,8 +724,12 @@
                 }
             }).done( function( res ){
                 _form_overlay.removeClass( 'active' );
-                if ( typeof res.status !== 'undefined' && res.status === true ) {
-                    $( '#hb-booking-items' ).html( res.html );
+                if ( typeof res.status !== 'undefined' ) {
+                    if ( res.status === true ) {
+                        $( '#hb-booking-items' ).html( res.html );
+                    } else if( typeof res.message !== 'undefined' ) {
+                        alert( res.message );
+                    }
                 }
             } );
         },

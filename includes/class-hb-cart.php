@@ -618,27 +618,32 @@ class HB_Cart
         // use coupon
         if( HB_Settings::instance()->get( 'enable_coupon' ) && $coupon = TP_Hotel_Booking::instance()->cart->coupon ) {
             $coupon = HB_Coupon::instance( $coupon );
-            $booking_info[ '_hb_coupon' ] = array(
-                'id'        => $coupon->ID,
-                'code'      => $coupon->coupon_code,
-                'value'     => $coupon->discount_value
-            );
+            // $booking_info[ '_hb_coupon' ] = array(
+            //     'id'        => $coupon->ID,
+            //     'code'      => $coupon->coupon_code,
+            //     'value'     => $coupon->discount_value
+            // );
+
+            $booking_info[ '_hb_coupon_id' ] = $coupon->ID;
+            $booking_info[ '_hb_coupon_code' ] = $coupon->coupon_code;
+            $booking_info[ '_hb_coupon_value' ] = $coupon->discount_value;
         }
 
         // booking info array param
         $booking_info = array_merge( $booking_info, array(
                 '_hb_tax'                       => hb_get_tax_settings(),
-                '_hb_sub_total'                 => $this->sub_total,
-                '_hb_total'                     => round( $this->total, 2 ),
+                // '_hb_sub_total'                 => $this->sub_total,
+                // '_hb_total'                     => round( $this->total, 2 ),
                 '_hb_advance_payment'           => $this->hb_get_cart_total( ! hb_get_request( 'pay_all' ) ),
                 '_hb_advance_payment_setting'   => hb_settings()->get( 'advance_payment', 50 ),
                 '_hb_currency'                  => apply_filters( 'tp_hotel_booking_payment_currency', hb_get_currency() ),
                 '_hb_customer_id'               => $customer_id,
+                '_hb_user_id'                   => get_current_blog_id(),
                 '_hb_method'                    => $payment_method->slug,
                 '_hb_method_title'              => $payment_method->title,
                 '_hb_method_id'                 => $payment_method->method_id,
-                '_hb_check_in_date'             => 0,
-                '_hb_check_out_date'            => 0,
+                // '_hb_check_in_date'             => 0,
+                // '_hb_check_out_date'            => 0,
             ));
 
         // set booking info
@@ -687,10 +692,6 @@ class HB_Cart
             $total = $this->total;
         }
         return $total;
-    }
-
-    function load_cart() {
-        
     }
 
     // instance instead of new Class

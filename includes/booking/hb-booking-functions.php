@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-31 14:42:40
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-07 10:17:22
+ * @Last Modified time: 2016-04-07 16:07:03
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -184,7 +184,7 @@ if ( ! function_exists( 'hb_update_order_item' ) ) {
             return false;
         }
 
-        do_action( 'hotel_booking_update_order_item', $item_id, $args );
+        do_action( 'hotel_booking_update_order_item', $item_id, $param );
 
         return true;
     }

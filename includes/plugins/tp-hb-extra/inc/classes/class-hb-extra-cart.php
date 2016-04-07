@@ -341,6 +341,8 @@ class HB_Extra_Cart
 
 		$html = array();
 		foreach ( $packages as $k => $package ) {
+			$extra = hotel_booking_get_product_class( hb_get_order_item_meta( $package->order_item_id, 'product_id', true ) );
+			// $extra->respondent === 'number'
 			$html[] = '<tr data-order-parent="'.esc_attr( $room->order_item_id ).'">';
 
 			$html[] = sprintf( '<td class="center"><input type="checkbox" name="book_item[]" value="%s" /></td>', $package->order_item_id );
@@ -351,11 +353,14 @@ class HB_Extra_Cart
 
 			$html[] = sprintf( '<td class="total">%s</td>', hb_format_price( hb_get_order_item_meta( $package->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $hb_booking->currency ) ) );
 
-			$html[] = '<td class="actions">
-					<a href="#" class="edit" data-order-id="'.esc_attr( $hb_booking->id ).'" data-order-item-id="'.esc_attr( $package->order_item_id ).'" data-order-item-type="sub_item" data-order-item-parent="'.$package->order_item_parent.'">
-						<i class="fa fa-pencil"></i>
-					</a>
-					<a href="#" class="remove" data-order-id="'.esc_attr( $hb_booking->id ).'" data-order-item-id="'.esc_attr( $package->order_item_id ).'" data-order-item-type="sub_item" data-order-item-parent="'.$package->order_item_parent.'">
+			$html[] = '<td class="actions">';
+
+			if ( $extra->respondent === 'number' ) {
+				$html[] ='<a href="#" class="edit" data-order-id="'.esc_attr( $hb_booking->id ).'" data-order-item-id="'.esc_attr( $package->order_item_id ).'" data-order-item-type="sub_item" data-order-item-parent="'.$package->order_item_parent.'">
+							<i class="fa fa-pencil"></i>
+						</a>';
+			}
+			$html[] = '<a href="#" class="remove" data-order-id="'.esc_attr( $hb_booking->id ).'" data-order-item-id="'.esc_attr( $package->order_item_id ).'" data-order-item-type="sub_item" data-order-item-parent="'.$package->order_item_parent.'">
 						<i class="fa fa-times-circle"></i>
 					</a>
 				</td>';

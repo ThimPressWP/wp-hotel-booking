@@ -3,13 +3,13 @@
  * @Author: ducnvtt
  * @Date:   2016-03-25 12:01:51
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-07 08:57:20
+ * @Last Modified time: 2016-04-07 14:12:17
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
-global $post;
+
 $hb_booking = HB_Booking::instance( $post->ID );
 $rooms = hb_get_order_items( $post->ID );
 ?>
@@ -90,19 +90,19 @@ $rooms = hb_get_order_items( $post->ID );
 					<select id="actions">
 						<option><?php _e( 'Delete select item(s)', 'tp-hotel-booking' ); ?></option>
 					</select>
-					<a href="#" class="button button-primary" id="action_sync"><?php _e( 'Sync', 'tp-hotel-booking' ); ?></a>
+					<a href="#" class="button button-primary" id="action_sync" data-order-id="<?php echo esc_attr( $hb_booking->id ) ?>"><?php _e( 'Sync', 'tp-hotel-booking' ); ?></a>
 				</th>
 				<th class="right" colspan="4">
-					<?php if ( ! $hb_booking->coupon ) : ?>
+					<?php if ( ! $hb_booking->coupon_id ) : ?>
 
-						<a href="#" class="button" id="add_coupon" data-order-id="<?php $hb_booking->id ?>"><?php _e( 'Add Coupon', 'tp-hotel-booking' ); ?></a>
+						<a href="#" class="button" id="add_coupon" data-order-id="<?php echo esc_attr( $hb_booking->id ) ?>"><?php _e( 'Add Coupon', 'tp-hotel-booking' ); ?></a>
 
 					<?php else: ?>
 
-						<a href="#" class="button" id="remove_coupon" data-order-id="<?php $hb_booking->id ?>"  data-coupon-id="<?php $hb_booking->coupon['ID'] ?>"><?php _e( 'Remove Coupon', 'tp-hotel-booking' ); ?></a>
+						<a href="#" class="button" id="remove_coupon" data-order-id="<?php echo esc_attr( $hb_booking->id ) ?>"  data-coupon-id="<?php echo esc_attr( $hb_booking->coupon_id ) ?>"><?php _e( 'Remove Coupon', 'tp-hotel-booking' ); ?></a>
 
 					<?php endif; ?>
-					<a href="#" class="button" id="add_room_item"><?php _e( 'Add Room Item', 'tp-hotel-booking' ); ?></a>
+					<a href="#" class="button" id="add_room_item" data-order-id="<?php echo esc_attr( $hb_booking->id ) ?>"><?php _e( 'Add Room Item', 'tp-hotel-booking' ); ?></a>
 				</th>
 			</tr>
 		</tfoot>
@@ -110,13 +110,13 @@ $rooms = hb_get_order_items( $post->ID );
 
 	<table class="booking_item_table_cost">
 		<tbody>
-			<?php if ( $hb_booking->coupon ) : ?>
+			<?php if ( $hb_booking->coupon_id ) : ?>
 				<tr class="coupon">
 					<td class="center">
-						<?php printf( __( 'Coupon(<a href="%s">%s</a>)', 'tp-hotel-booking' ), get_edit_post_link( $hb_booking->coupon['id'] ), $hb_booking->coupon['code'] ) ?>
+						<?php printf( __( 'Coupon(<a href="%s">%s</a>)', 'tp-hotel-booking' ), get_edit_post_link( $hb_booking->coupon_id ), $hb_booking->coupon_code ) ?>
 					</td>
 					<td class="coupon_discount">
-						<?php printf( '-%s', hb_format_price( $hb_booking->coupon['value'], hb_get_currency_symbol( $hb_booking->currency ) ) ); ?>
+						<?php printf( '-%s', hb_format_price( $hb_booking->coupon_value, hb_get_currency_symbol( $hb_booking->currency ) ) ); ?>
 					</td>
 				</tr>
 			<?php endif; ?>
