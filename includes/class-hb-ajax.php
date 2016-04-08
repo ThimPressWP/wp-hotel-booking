@@ -347,7 +347,8 @@ class HB_Ajax {
 				) );
 		}
 
-		$qty = hotel_booking_get_room_available( absint( $_POST['product_id'] ), array(
+		$product_id = absint( $_POST['product_id'] );
+		$qty = hotel_booking_get_room_available( $product_id, array(
 				'check_in_date'			=> sanitize_text_field( $_POST['check_in_date_timestamp'] ),
 				'check_out_date'		=> sanitize_text_field( $_POST['check_out_date_timestamp'] ),
 				'excerpt'				=> array(
@@ -356,11 +357,14 @@ class HB_Ajax {
 			) );
 
 		if ( $qty && ! is_wp_error( $qty ) ) {
-			wp_send_json( array(
+
+			$args = apply_filters( 'hotel_booking_check_room_available', array(
 					'status'		=> true,
 					'qty'			=> $qty,
-					'qty_selected'	=> isset( $_POST['order_item_id'] ) ? hb_get_order_item_meta( $_POST['order_item_id'], 'qty', true ) : 0
+					'qty_selected'	=> isset( $_POST['order_item_id'] ) ? hb_get_order_item_meta( $_POST['order_item_id'], 'qty', true ) : 0,
+					'product_id' 	=> $product_id
 				) );
+			wp_send_json( $args );
 		} else {
 			wp_send_json( array(
 					'status'			=> false,
@@ -388,11 +392,13 @@ class HB_Ajax {
 		$checkin = hb_get_order_item_meta( $order_item_id, 'check_in_date', true );
 		$checkout = hb_get_order_item_meta( $order_item_id, 'check_out_date', true );
 
-		wp_send_json( array(
+		// extra hook
+		$args = apply_filters( 'hotel_booking_admin_load_order_item', array(
 				'status'			=> true,
 				'modal_title'		=> __( 'Edit order item', 'tp-hotel-booking' ),
 				'order_id'			=> $order_id,
 				'order_item_id'		=> $order_item_id,
+				'product_id'		=> $product_id,
 				'room' 				=> array(
 							'ID'				=> $product_id,
 							'post_title'		=> get_the_title( hb_get_order_item_meta( $order_item_id, 'product_id', true ) )
@@ -409,6 +415,7 @@ class HB_Ajax {
 				'qty_selected'		=> hb_get_order_item_meta( $order_item_id, 'qty', true ),
 				'post_type'			=> get_post_type( $product_id )
 			) );
+		wp_send_json( $args );
 	}
 
 	// ajax load coupons code
@@ -505,7 +512,7 @@ class HB_Ajax {
 				'check_in_date'		=> $check_in_date,
 				'check_out_date'	=> $check_out_date,
 				'quantity'			=> $qty,
-				'order_item_id'			=> $order_item_id
+				'order_item_id'		=> $order_item_id
 			);
 		$product_class = hotel_booking_get_product_class( $product_id, $params );
 
@@ -515,6 +522,9 @@ class HB_Ajax {
 		hb_update_order_item_meta( $order_item_id, 'subtotal', $subtotal );
 		hb_update_order_item_meta( $order_item_id, 'total', $total );
 		hb_update_order_item_meta( $order_item_id, 'tax_total', $total - $subtotal );
+
+		// allow hook
+		do_action( 'hotel_booking_updated_order_item', $order_id, $order_item_id );
 
 		$post = get_post( $order_id );
 		ob_start();

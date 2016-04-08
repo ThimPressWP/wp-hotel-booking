@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-29 17:13:06
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-01 13:39:22
+ * @Last Modified time: 2016-04-08 16:23:55
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,7 +20,7 @@ if ( ! class_exists( 'HB_Admin_Setting_Payments' ) ) {
 
 		function __construct() {
 
-			$this->title = __( 'Payments', 'tp-hotel-booking' );
+			$this->title = __( 'Checkout', 'tp-hotel-booking' );
 
 			parent::__construct();
 		}
@@ -42,6 +42,14 @@ if ( ! class_exists( 'HB_Admin_Setting_Payments' ) ) {
 							'desc'		=> __( 'Cancel Payment after hour(s)', 'tp-hotel-booking' ),
 							'default'	=> 12,
 							'min'		=> 1,
+						),
+
+					array(
+							'type'		=> 'checkbox',
+							'id'		=> 'tp_hotel_booking_guest_checkout',
+							'title'		=> __( 'Process', 'tp-hotel-booking' ),
+							'desc'		=> __( 'Allows customers to checkout without creating an account.', 'tp-hotel-booking' ),
+							'default'	=> 1
 						),
 
 					array(

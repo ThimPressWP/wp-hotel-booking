@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-31 14:42:40
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-07 17:28:01
+ * @Last Modified time: 2016-04-08 17:06:01
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -34,8 +34,30 @@ function hb_update_booking_status( $booking_id, $status ){
  * @param array $args
  * @return mixed|WP_Error
  */
-function hb_create_booking() {
+function hb_create_booking( $booking_info = array() ) {
 
+    $booking_info = wp_parse_args( $booking_info, array(
+            '_hb_tax'                       => '',
+            '_hb_advance_payment'           => '',
+            '_hb_advance_payment_setting'   => '',
+            '_hb_currency'                  => '',
+            '_hb_user_id'                   => get_current_blog_id(),
+            '_hb_method'                    => '',
+            '_hb_method_title'              => '',
+            '_hb_method_id'                 => '',
+            // customer
+            '_hb_customer_title'         => '',
+            '_hb_customer_firt_name'     => '',
+            '_hb_customer_last_name'     => '',
+            '_hb_customer_address'       => '',
+            '_hb_customer_city'          => '',
+            '_hb_customer_state'         => '',
+            '_hb_customer_postal_code'   => '',
+            '_hb_customer_country'       => '',
+            '_hb_customer_phone'         => '',
+            '_hb_customer_email'         => '',
+            '_hb_customer_fax'           => ''
+        ) );
     // return WP_Error if cart is empty
     if( TP_Hotel_Booking::instance()->cart->cart_items_count === 0 ){
         return new WP_Error( 'hotel_booking_cart_empty', __( 'Your cart is empty.', 'tp-hotel-booking' ) );
@@ -43,15 +65,11 @@ function hb_create_booking() {
 
     $args = array(
         'status'        => '',
-        'customer_id'   => null,
+        'user_id'   => get_current_user_id(),
         'customer_note' => null,
         'booking_id'    => 0,
         'parent'        => 0
     );
-
-    if( TP_Hotel_Booking::instance()->cart->customer_id ){
-        $args['customer_id'] = absint( TP_Hotel_Booking::instance()->cart->customer_id );
-    }
 
     TP_Hotel_Booking::instance()->_include( 'includes/class-hb-room.php' );
 
@@ -218,6 +236,19 @@ if ( ! function_exists( 'hb_get_parent_order_item' ) ) {
             ", $order_item_id );
 
         return $wpdb->get_var( $query );
+    }
+}
+
+if ( ! function_exists( 'hb_get_sub_item_order_item_id' ) ) {
+    function hb_get_sub_item_order_item_id( $order_item_id = null ) {
+        global $wpdb;
+        $query = $wpdb->prepare("
+                SELECT order_item.order_item_id FROM $wpdb->hotel_booking_order_items AS order_item
+                WHERE
+                    order_item.order_item_parent = %d
+            ", $order_item_id );
+
+        return $wpdb->get_col( $query );
     }
 }
 

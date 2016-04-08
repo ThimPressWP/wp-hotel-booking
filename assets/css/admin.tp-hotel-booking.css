@@ -768,6 +768,9 @@ th.column-room_type{
     margin: 5px;
     overflow: hidden;
 }
+#hb_modal_dialog .hb_modal .section_line h4{
+    margin: 0;
+}
 #hb_modal_dialog .hb_modal .section_line .section{
     float: left;
     width: auto;
@@ -778,6 +781,11 @@ th.column-room_type{
 }
 #hb_modal_dialog .hb_modal select{
     width: 100%
+}
+#hb_modal_dialog .hb_modal .section_line li {
+    display: inline-block;
+    float: left;
+    clear: both;
 }
 #hb_modal_dialog .hb_modal .form_head .hb_modal_close{
     cursor: pointer;

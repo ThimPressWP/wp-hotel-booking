@@ -528,6 +528,7 @@
 
         edit_room: function( e ) {
             e.preventDefault();
+            e.stopPropagation();
 
             var _self = $(this),
                 _order_id = _self.attr( 'data-order-id' ),
@@ -685,8 +686,10 @@
 
         check_available: function( e, target, form ) {
             e.preventDefault();
+            e.stopPropagation();
 
-            var _button = $( '.form_footer .check_available' );
+            var _self = $(this),
+                _button = $( '.form_footer .check_available' );
                 form.push({
                 name: 'action',
                 value: 'hotel_booking_check_room_available'

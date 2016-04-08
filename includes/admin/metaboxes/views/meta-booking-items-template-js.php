@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-06 16:40:46
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-07 17:29:09
+ * @Last Modified time: 2016-04-08 13:27:40
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -68,11 +68,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</div>
 			</div>
 
-			<# if ( typeof data.childs !== 'undefined' && Object.keys( data.childs ).length() != 0 ) { #>
+			<# if ( typeof data.sub_items !== 'undefined' ) { #>
 
 				<div class="section_line">
-
-					<# console.debug( data.childs ) #>
+					<h4><?php _e( 'Extra Packages', 'tp-hotel-booking' ); ?></h4>
+					<ul>
+						<# var sub_items_length = data.sub_items.length; #>
+						<# for ( var i = 0; i < sub_items_length; i++ ) { #>
+							<# var item = data.sub_items[i]; #>
+							<li>
+								<div class="section">
+									<label>
+										<# if ( item.selected === true ) { #>
+											<input type="checkbox" name="sub_items[{{ item.ID }}][checked]" checked />
+											<input type="hidden" name="sub_items[{{ item.ID }}][order_item_id]" value="{{ item.order_item_id }}" />
+										<# } else { #>
+											<input type="checkbox" name="sub_items[{{ item.ID }}][checked]" />
+										<# } #>
+										{{ item.title }}
+									</label>
+								</div>
+								<# if ( item.respondent === 'number' ) { #>
+									<div class="section">
+										<?php _e( 'Quantity', 'tp-hotel-booking' ); ?>
+										<input name="sub_items[{{ item.ID }}][qty]" type="number" step="1" min="0" value="{{ item.qty }}" />
+									</div>
+								<# } else { #>
+									<input name="sub_items[{{ item.ID }}][qty]" type="hidden" value="{{ item.qty }}" />
+								<# } #>
+							</li>
+						<# } #>
+					</ul>
 
 				</div>
 

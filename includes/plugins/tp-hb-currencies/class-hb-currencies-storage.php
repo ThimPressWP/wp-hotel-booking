@@ -34,8 +34,8 @@ class HB_SW_Curreny_Storage
 	{
 		$this->_storage_name = TP_HB_STORAGE_NAME;
 
-		add_action( 'tp_hb_currencies_switcher', array( $this, 'switcher' ) );
-		add_filter( 'tp_hotel_booking_payment_currency_rate', array( $this, 'get_rate' ), 10, 3 );
+		add_action( 'hb_currencies_switcher', array( $this, 'switcher' ) );
+		add_filter( 'hotel_booking_payment_currency_rate', array( $this, 'get_rate' ), 10, 3 );
 	}
 
 	/**

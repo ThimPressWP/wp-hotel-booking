@@ -604,7 +604,7 @@ class HB_Cart
      * generate transaction object payment
      * @return object
      */
-    function generate_transaction( $customer_id = null, $payment_method = null )
+    function generate_transaction( $payment_method = null )
     {
         if ( $this->is_empty ) {
             return new WP_Error( 'hotel_booking_transaction_error', __( 'Your cart is empty.', 'tp-hotel-booking' ) );
@@ -636,12 +636,24 @@ class HB_Cart
                 // '_hb_total'                     => round( $this->total, 2 ),
                 '_hb_advance_payment'           => $this->hb_get_cart_total( ! hb_get_request( 'pay_all' ) ),
                 '_hb_advance_payment_setting'   => hb_settings()->get( 'advance_payment', 50 ),
-                '_hb_currency'                  => apply_filters( 'tp_hotel_booking_payment_currency', hb_get_currency() ),
-                '_hb_customer_id'               => $customer_id,
+                '_hb_currency'                  => apply_filters( 'hotel_booking_payment_currency', hb_get_currency() ),
+                // '_hb_customer_id'               => $customer_id,
                 '_hb_user_id'                   => get_current_blog_id(),
                 '_hb_method'                    => $payment_method->slug,
                 '_hb_method_title'              => $payment_method->title,
                 '_hb_method_id'                 => $payment_method->method_id,
+                // customer
+                '_hb_customer_title'         => hb_get_request( 'title' ),
+                '_hb_customer_firt_name'    => hb_get_request( 'first_name' ),
+                '_hb_customer_last_name'     => hb_get_request( 'last_name' ),
+                '_hb_customer_address'       => hb_get_request( 'address' ),
+                '_hb_customer_city'          => hb_get_request( 'city' ),
+                '_hb_customer_state'         => hb_get_request( 'state' ),
+                '_hb_customer_postal_code'   => hb_get_request( 'postal_code' ),
+                '_hb_customer_country'       => hb_get_request( 'country' ),
+                '_hb_customer_phone'         => hb_get_request( 'phone' ),
+                '_hb_customer_email'         => hb_get_request( 'email' ),
+                '_hb_customer_fax'           => hb_get_request( 'fax' ),
                 // '_hb_check_in_date'             => 0,
                 // '_hb_check_out_date'            => 0,
             ));
@@ -655,27 +667,36 @@ class HB_Cart
         foreach ( $rooms as $k => $room ) {
             $check_in = strtotime( $room->get_data( 'check_in_date' ) );
             $check_out = strtotime( $room->get_data( 'check_out_date' ) );
-            $_rooms[] = apply_filters( 'hb_generate_transaction_object_room', array(
-                    '_hb_id'                => $room->ID,
-                    '_hb_quantity'          => $room->get_data( 'quantity' ),
-                    '_hb_check_in_date'     => $check_in,
-                    '_hb_check_out_date'    => $check_out,
-                    '_hb_sub_total'         => $room->amount_exclude_tax
-                ), $room );
-            if ( ! $transaction->booking_info['_hb_check_in_date'] ) {
-                $transaction->booking_info['_hb_check_in_date'] = $check_in;
-            } else if( $transaction->booking_info['_hb_check_in_date'] < $check_in ) {
-                $transaction->booking_info['_hb_check_in_date'] = $check_in;
-            }
+            // $_rooms[] = apply_filters( 'hb_generate_transaction_object_room', array(
+            //         '_hb_id'                => $room->ID,
+            //         '_hb_quantity'          => $room->get_data( 'quantity' ),
+            //         '_hb_check_in_date'     => $check_in,
+            //         '_hb_check_out_date'    => $check_out,
+            //         '_hb_sub_total'         => $room->amount_exclude_tax
+            //     ), $room );
 
-            if ( ! $transaction->booking_info['_hb_check_out_date'] ) {
-                $transaction->booking_info['_hb_check_out_date'] = $check_out;
-            } else if( $transaction->booking_info['_hb_check_out_date'] > $check_out ) {
-                $transaction->booking_info['_hb_check_out_date'] = $check_out;
-            }
+            $_rooms[] = apply_filters( 'hb_generate_transaction_object_room', array(
+                    'product_id'        => $room->ID,
+                    'qty'               => $room->get_data( 'quantity' ),
+                    'check_in_date'     => $check_in,
+                    'check_out_date'    => $check_out,
+                    'subtotal'          => $room->amount_exclude_tax,
+                    'total'             => $room->amount_include_tax
+                ), $room );
+            // if ( ! $transaction->booking_info['_hb_check_in_date'] ) {
+            //     $transaction->booking_info['_hb_check_in_date'] = $check_in;
+            // } else if( $transaction->booking_info['_hb_check_in_date'] < $check_in ) {
+            //     $transaction->booking_info['_hb_check_in_date'] = $check_in;
+            // }
+
+            // if ( ! $transaction->booking_info['_hb_check_out_date'] ) {
+            //     $transaction->booking_info['_hb_check_out_date'] = $check_out;
+            // } else if( $transaction->booking_info['_hb_check_out_date'] > $check_out ) {
+            //     $transaction->booking_info['_hb_check_out_date'] = $check_out;
+            // }
         }
 
-        $transaction->rooms = $_rooms;
+        $transaction->order_items = $_rooms;
         return apply_filters( 'hb_generate_transaction_object', $transaction, $payment_method );
     }
 

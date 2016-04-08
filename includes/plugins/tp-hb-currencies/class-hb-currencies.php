@@ -42,7 +42,7 @@ class HB_SW_Curreny
 			add_filter( 'icl_current_language', array( $this, 'wpml_switcher' ) );
 
 			// transaction object
-			add_filter( 'tp_hotel_booking_checkout_booking_info', array( $this, 'generate_booking_info' ) );
+			add_filter( 'hotel_booking_checkout_booking_info', array( $this, 'generate_booking_info' ) );
 			/**
 			 * enqueue scripts
 			 */
@@ -156,11 +156,11 @@ class HB_SW_Curreny
 		$storage = HB_SW_Curreny_Storage::instance();
 		if( $this->_is_multi = $settings->get('is_multi_currency', false) )
 		{
-			do_action( 'tp_hb_before_currencies_switcher' );
+			do_action( 'hb_before_currencies_switcher' );
 
-			$currency = apply_filters( 'tp_hb_currencies_switcher', $storage->get( 'currency' ) );
+			$currency = apply_filters( 'hb_currencies_switcher', $storage->get( 'currency' ) );
 
-			do_action( 'tp_hb_after_currencies_switcher' );
+			do_action( 'hb_after_currencies_switcher' );
 		}
 		return $currency;
 	}
@@ -196,7 +196,7 @@ class HB_SW_Curreny
 	    $payment_currency = hb_get_currency();
 		// booking meta data
         $booking_info['_hb_payment_currency'] 		= apply_filters( 'tp_hotel_booking_payment_current_currency', $payment_currency );
-        $booking_info['_hb_payment_currency_rate'] 	= (float)apply_filters( 'tp_hotel_booking_payment_currency_rate', $default_curreny, $payment_currency );
+        $booking_info['_hb_payment_currency_rate'] 	= (float)apply_filters( 'hotel_booking_payment_currency_rate', $default_curreny, $payment_currency );
 
         return $booking_info;
 	}

@@ -57,6 +57,13 @@ class HB_Extra_Cart
 
 		add_action( 'hotel_booking_after_room_item', array( $this, 'booking_post_type_extra_item' ), 10, 2 );
 
+
+		// admin process
+		add_filter( 'hotel_booking_check_room_available', array( $this, 'admin_load_package' ) );
+		add_filter( 'hotel_booking_admin_load_order_item', array( $this, 'admin_load_package' ) );
+
+		add_action( 'hotel_booking_updated_order_item', array( $this, 'admin_add_package_order' ), 10, 2 );
+
 	}
 
 	// add extra
@@ -371,6 +378,112 @@ class HB_Extra_Cart
 		printf( '%s', implode( '', $html ) );
 	}
 
+	// load package in edit room
+	public function admin_load_package( $args ) {
+
+		if ( ! isset( $args[ 'product_id' ] ) ) {
+			return $args;
+		}
+
+		$product_id = absint( $args['product_id'] );
+		if ( get_post_type( $product_id ) !== 'hb_room' ) {
+			return $args;
+		}
+
+		$room_extra = HB_Room_Extra::instance( $product_id );
+		$room_extra = $room_extra->get_extra();
+
+		$order_child_id = array();
+		$order_subs = array();
+		if ( isset( $args['order_id'], $args['order_item_id'] ) ) {
+			$sub_items = hb_get_sub_item_order_item_id( $args['order_item_id'] );
+			if ( $sub_items ) {
+				foreach ( $sub_items as $it_id ) {
+					$order_child_id[ hb_get_order_item_meta( $it_id, 'product_id', true ) ] = hb_get_order_item_meta( $it_id, 'qty', true );
+					$order_subs[ hb_get_order_item_meta( $it_id, 'product_id', true ) ] = $it_id;
+				}
+			}
+		}
+
+		if ( $room_extra ) {
+			$args['sub_items'] = array();
+			foreach ( $room_extra as $k => $extra ) {
+				$param = array(
+						'ID'			=> $extra->ID,
+						'title'			=> $extra->title,
+						'respondent' 	=> $extra->respondent,
+						'selected'		=> array_key_exists( $extra->ID, $order_child_id ) ? true : false,
+						'qty'			=> array_key_exists( $extra->ID, $order_child_id ) ? $order_child_id[ $extra->ID ] : 1
+					);
+				if ( isset( $order_subs[ $extra->ID ] ) ) {
+					$param[ 'order_item_id' ] = $order_subs[ $extra->ID ];
+				}
+				$args['sub_items'][] = $param;
+			}
+		}
+
+		return $args;
+	}
+
+	public function admin_add_package_order( $order_id, $order_item_id ) {
+		if ( ! isset( $_POST ) ) {
+			return;
+		}
+
+		if ( ! isset( $_POST['sub_items'] ) ) {
+			return;
+		}
+
+		$sub_items = $_POST['sub_items'];
+		$check_in_date = isset( $_POST['check_in_date_timestamp'] ) ? $_POST['check_in_date_timestamp'] : '';
+		$check_out_date = isset( $_POST['check_out_date_timestamp'] ) ? $_POST['check_out_date_timestamp'] : '';
+
+		foreach ( $sub_items as $product_id => $optional ) {
+			if ( isset( $optional['checked'] ) && $optional['checked'] === 'on' ) {
+				$qty = isset( $optional['qty'] ) ? $optional['qty'] : 0;
+				$param = array(
+							'order_item_name'	=> get_the_title( $product_id ),
+							'order_item_type'	=> 'sub_item',
+							'order_item_parent'	=> $order_item_id,
+							'order_id'			=> $order_id
+						);
+
+				$product = hotel_booking_get_product_class( $product_id, array(
+						'check_in_date' 	=> $check_in_date,
+						'check_out_date'	=> $check_out_date,
+						'room_quantity'		=> hb_get_order_item_meta( $order_item_id, 'qty', true ),
+						'quantity'			=> isset( $optional['qty'] ) ? $optional['qty'] : 0
+					) );
+
+				if ( isset( $optional['order_item_id'] ) ) {
+					$sub_order_item_id = absint( $optional['order_item_id'] );
+					if ( $qty === 0 ) {
+						hb_remove_order_item( $sub_order_item_id );
+					} else {
+						hb_update_order_item( $sub_order_item_id, $param );
+					}
+				} else {
+					$sub_order_item_id = hb_add_order_item( $order_id, $param );
+				}
+
+				if ( $qty ) {
+					hb_update_order_item_meta( $sub_order_item_id, 'product_id', $product_id );
+					hb_update_order_item_meta( $sub_order_item_id, 'qty', $qty );
+					hb_update_order_item_meta( $sub_order_item_id, 'check_in_date', $check_in_date );
+					hb_update_order_item_meta( $sub_order_item_id, 'check_out_date', $check_out_date );
+					hb_update_order_item_meta( $sub_order_item_id, 'subtotal', $product->price );
+					hb_update_order_item_meta( $sub_order_item_id, 'total', $product->price_tax );
+					hb_update_order_item_meta( $sub_order_item_id, 'tax_total', $product->price_tax - $product->price );
+				}
+
+			} else {
+				if ( isset( $optional['order_item_id'] ) ) {
+					hb_remove_order_item( $optional['order_item_id'] );
+				}
+			}
+		}
+	}
+
 	/**
 	 * instead of new class. quickly, helpfully
 	 * @param $cart_id [description]
@@ -378,8 +491,9 @@ class HB_Extra_Cart
 	 */
 	static function instance( $cart_id = null )
 	{
-		if( ! empty( self::$_instance[ $cart_id ] ) )
+		if( ! empty( self::$_instance[ $cart_id ] ) ) {
 			return self::$_instance[ $cart_id ];
+		}
 
 		return new self();
 	}
