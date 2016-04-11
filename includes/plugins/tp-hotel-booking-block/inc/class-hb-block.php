@@ -103,8 +103,8 @@ class Hotel_Booking_Block
 		wp_enqueue_style( 'tp_hotel_booking_block_lib_datepicker', TP_HB_BLOCK_URI . 'inc/libraries/multidatespicker/multiple-date-picker.css' );
 		wp_enqueue_script( 'wp-util' );
 
-		wp_enqueue_script( 'tp_hotel_booking_block', TP_HB_BLOCK_URI . 'inc/assets/js/admin.js', array(), TP_HB_BLOCK_VER );
-		wp_enqueue_style( 'tp_hotel_booking_block', TP_HB_BLOCK_URI . 'inc/assets/css/admin.css' );
+		wp_enqueue_script( 'tp_hotel_booking_block', TP_HB_BLOCK_URI . 'assets/js/admin.js', array(), TP_HB_BLOCK_VER );
+		wp_enqueue_style( 'tp_hotel_booking_block', TP_HB_BLOCK_URI . 'assets/css/admin.css' );
 
 		$l10n = apply_filters( 'hote_booking_block_l10n', array(
 				'ajaxurl'		=> admin_url( 'admin-ajax.php?schema=hotel-block' ),

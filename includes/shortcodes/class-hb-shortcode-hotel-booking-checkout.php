@@ -38,11 +38,11 @@ class HB_Shortcode_Hotel_Booking_Checkout extends HB_Shortcodes
             );
         }
 
-        $template = apply_filters( 'tp_hotel_booking_checkout_tpl', 'checkout.php' );
-        $template_args = apply_filters( 'tp_hotel_booking_checkout_tpl_template_args', $template_args );
+        $template = apply_filters( 'hotel_booking_checkout_tpl', 'checkout/checkout.php' );
+        $template_args = apply_filters( 'hotel_booking_checkout_tpl_template_args', $template_args );
         ob_start();
         do_action( 'hb_wrapper_start' );
-        hb_get_template( 'shortcodes/'.$template, $template_args );
+        hb_get_template( $template, $template_args );
         do_action( 'hb_wrapper_end' );
         return ob_get_clean();
 	}

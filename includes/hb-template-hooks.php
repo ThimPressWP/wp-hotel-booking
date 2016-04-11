@@ -33,10 +33,9 @@ add_action('hotel_booking_single_room_infomation', 'hotel_booking_single_room_in
 // room rating
 add_action( 'hotel_booking_loop_room_rating', 'hotel_booking_loop_room_rating' );
 add_filter( 'body_class', 'hb_body_class' );
-//add_filter( 'post_class', 'wc_product_post_class', 20, 3 );
 
 add_action( 'pre_get_posts', 'hotel_booking_num_room_archive', 999 );
 
 add_action( 'the_post', array( 'HB_Room', 'hb_setup_room_data' ) );
-// add_filter( 'sidebars_widgets', 'hotel_booking_remove_widget_search' );
-// add_action( 'hotel_booking_after_loop_room_item', 'hotel_booking_after_loop_room_item' );
+
+add_filter( 'the_content', 'hb_setup_shortcode_page_content' );

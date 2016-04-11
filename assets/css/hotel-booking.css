@@ -841,6 +841,13 @@
   text-align: center;
   padding: 10px;
 }
+/******Account page*****/
+.hb_booking_table th,
+.hb_booking_table td{
+  padding: 20px 12px;
+  text-align: center;
+  font-size: 13px;
+}
 @media (max-width: 1024px) {
   .hb_single_room .hb_room_gallery .camera_thumbs .camera_thumbs_cont ul {
     max-height: 106px;

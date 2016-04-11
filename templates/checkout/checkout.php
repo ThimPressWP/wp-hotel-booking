@@ -54,6 +54,7 @@ do_action( 'hotel_booking_before_checkout_form' );
                     </span>
                 </td>
             </tr>
+
             <?php if( $tax = hb_get_tax_settings() ) { ?>
             <tr class="hb_advance_tax">
                 <td colspan="8">
@@ -61,7 +62,7 @@ do_action( 'hotel_booking_before_checkout_form' );
                     <?php if( $tax < 0 ){?>
                         <span><?php printf( __( '(price including tax)', 'tp-hotel-booking' ) ); ?></span>
                     <?php } ?>
-                    <span class="hb-align-right"><?php echo apply_filters( 'hotel_booking_cart_tax_display', abs( $tax * 100 ) . '%' ); ?></span>
+                    <span class="hb-align-right"><?php echo apply_filters( 'hotel_booking_cart_tax_display', hb_format_price( $cart->total - $cart->sub_total ) ); // abs( $tax * 100 ) . '%' ?></span>
                 </td>
             </tr>
             <?php } ?>
@@ -92,24 +93,34 @@ do_action( 'hotel_booking_before_checkout_form' );
             <?php } ?>
 
         </table>
-        <?php hb_get_template( 'shortcodes/customer.php', array( 'customer' => $customer ) ); ?>
-        <?php hb_get_template( 'shortcodes/payment-method.php', array( 'customer' => $customer ) ); ?>
-        <?php hb_get_template( 'shortcodes/addition-information.php' ); ?>
-        <?php wp_nonce_field( 'hb_customer_place_order', 'hb_customer_place_order_field' ); ?>
-        <input type="hidden" name="hotel-booking" value="place_order" />
-        <input type="hidden" name="action" value="hotel_booking_place_order" />
-        <input type="hidden" name="total_advance" value="<?php echo esc_attr( $cart->advance_payment ? $cart->advance_payment : $cart->total ); ?>" />
-        <input type="hidden" name="total_price" value="<?php echo esc_attr( $cart->total ); ?>" />
-        <input type="hidden" name="currency" value="<?php echo esc_attr( hb_get_currency() ) ?>">
-        <?php if( $tos_page_id = hb_get_page_id( 'terms' ) ) { ?>
-        <p>
-            <label>
-                <input type="checkbox" name="tos" value="1" />
-                <?php printf( __( 'I agree with <a href="%s" target="_blank">%s</a>' ), get_permalink( $tos_page_id ), get_the_title( $tos_page_id ) ); ?>
-            </label>
-        </p>
-        <?php } ?>
-        <p><button type="submit" class="hb_button"><?php _e( 'Check out', 'tp-hotel-booking' ); ?></button></p>
+
+        <?php if ( ! is_user_logged_in() && hb_settings()->get( 'guest_checkout' ) && get_option( 'users_can_register' ) ) : ?>
+
+            <?php printf( __( 'You have to <strong><a href="%s">login</a></strong> or <strong><a href="%s">register</a></strong> to checkout.', 'tp-hotel-booking' ), wp_login_url( hb_get_checkout_url() ), wp_registration_url() ) ?>
+
+        <?php else : ?>
+
+            <?php hb_get_template( 'checkout/customer.php', array( 'customer' => $customer ) ); ?>
+            <?php hb_get_template( 'checkout/payment-method.php', array( 'customer' => $customer ) ); ?>
+            <?php hb_get_template( 'checkout/addition-information.php' ); ?>
+            <?php wp_nonce_field( 'hb_customer_place_order', 'hb_customer_place_order_field' ); ?>
+
+            <input type="hidden" name="hotel-booking" value="place_order" />
+            <input type="hidden" name="action" value="hotel_booking_place_order" />
+            <input type="hidden" name="total_advance" value="<?php echo esc_attr( $cart->advance_payment ? $cart->advance_payment : $cart->total ); ?>" />
+            <input type="hidden" name="total_price" value="<?php echo esc_attr( $cart->total ); ?>" />
+            <input type="hidden" name="currency" value="<?php echo esc_attr( hb_get_currency() ) ?>">
+            <?php if( $tos_page_id = hb_get_page_id( 'terms' ) ) { ?>
+                <p>
+                    <label>
+                        <input type="checkbox" name="tos" value="1" />
+                        <?php printf( __( 'I agree with <a href="%s" target="_blank">%s</a>' ), get_permalink( $tos_page_id ), get_the_title( $tos_page_id ) ); ?>
+                    </label>
+                </p>
+            <?php } ?>
+            <p><button type="submit" class="hb_button"><?php _e( 'Check out', 'tp-hotel-booking' ); ?></button></p>
+
+        <?php endif; ?>
     </form>
 </div>
 

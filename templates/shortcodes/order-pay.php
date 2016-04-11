@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<strong><?php _e( 'Advance Payment: ', 'tp-hotel-booking' ) ?></strong>
 		<?php printf( '%s', hb_format_price( get_post_meta( $booking_id, '_hb_advance_payment', true ), $currency_symbol ) ) ?>
 	</p>
-	<?php do_action( 'tp_hotel_booking_order_pay_after' ); ?>
+	<?php do_action( 'hotel_booking_order_pay_after' ); ?>
 <!--_hb_advance_payment-->
 <?php else: ?>
 

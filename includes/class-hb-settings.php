@@ -239,39 +239,8 @@ class HB_Settings{
         return self::$_instances[ $prefix ];
     }
 }
-$GLOBALS['hb_settings'] = HB_Settings::instance(
-    '',
-    array(
-        'overwrite_templates'           => 'on',
-        'currency'                      => 'USD',
-        'price_currency_position'       => 'before',
-        'price_thousands_separator'     => ',',
-        'price_decimals_separator'      => '.',
-        'price_number_of_decimal'       => '2',
-        'price_display'         => 'min',
-        'hotel_name'            => 'Hanoi Daewoo Hotel',
-        'hotel_address'         => 'Số 360, Phố Kim Mã, Quận Ba Đình, Quận Ba Đình, Hà Nội, Việt Nam',
-        'hotel_city'            => 'Hà Nội',
-        'hotel_state'           => '',
-        'hotel_country'         => 'Việt Nam',
-        'hotel_zip_code'        => '1000',
-        'hotel_phone_number'    => '0123.456.789',
-        'hotel_fax_number'      => '',
-        'hotel_email_address'   => 'daewoo_hotel@gmail.com',
-        'tax'                   => 0,
-        'price_including_tax'   => 0,
-        'display_pricing_plans' => 0,
-        'enable_gallery_lightbox' => 1,
-        'catalog_display_rating'=> 1,
-        'checkout'              => 1,
-        'my-rooms'              => 1,
-        'test_mode'             => 'on',
-        'test_secret_key'       => 'sk_test_NRayUQ1DIth4X091iEH9qzaq',
-        'test_publish_key'      => 'pk_test_HHukcwWCsD7qDFWKKpKdJeOT',
-        'live_secret_key'       => 'sk_live_zrGPtvqgV6cTaH1G4K2AIVCK ',
-        'live_publish_key'      => 'pk_live_n5AVJxHj8XSFV4HsPIaiFgo3'
-    )
-);
+
+$GLOBALS['hb_settings'] = HB_Settings::instance();
 
 function hb_settings(){
     return HB_Settings::instance();

@@ -1,13 +1,19 @@
 <?php
+/**
+ * @Author: ducnvtt
+ * @Date:   2016-04-11 13:49:45
+ * @Last Modified by:   ducnvtt
+ * @Last Modified time: 2016-04-11 14:14:51
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class HB_Shortcode_Hotel_Booking_Cart extends HB_Shortcodes
+class HB_Shortcode_Hotel_Booking_Account extends HB_Shortcodes
 {
 
-	public $shortcode = 'hotel_booking_cart';
+	public $shortcode = 'hotel_booking_account';
 
 	public function __construct()
 	{
@@ -16,7 +22,7 @@ class HB_Shortcode_Hotel_Booking_Cart extends HB_Shortcodes
 
 	function add_shortcode( $atts, $content = null )
 	{
-        $template = apply_filters( 'hotel_booking_cart_template', 'cart/cart.php' );
+        $template = apply_filters( 'hotel_booking_account_template', 'account/account.php' );
         ob_start();
         do_action( 'hb_wrapper_start' );
         hb_get_template( $template, $atts );
@@ -26,4 +32,4 @@ class HB_Shortcode_Hotel_Booking_Cart extends HB_Shortcodes
 
 }
 
-new HB_Shortcode_Hotel_Booking_Cart();
+new HB_Shortcode_Hotel_Booking_Account();

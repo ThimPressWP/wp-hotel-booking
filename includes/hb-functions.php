@@ -2050,12 +2050,13 @@ if ( ! function_exists( 'hb_get_url' ) ) {
 if ( ! function_exists( 'hb_get_cart_url' ) ) {
 	function hb_get_cart_url() {
 		global $hb_settings;
-		$id = hb_get_page_id( 'my-rooms' );
-		if ( $id && $hb_settings->get( 'my-rooms' ) ) {
+		$id = hb_get_page_id( 'cart' );
+
+		$url = home_url();
+		if ( $id && $hb_settings->get( 'cart' ) ) {
 			$url = get_the_permalink( $id );
-		} else {
-			$url = hb_get_url( array( 'hotel-booking' => 'cart' ) );
 		}
+
 		return apply_filters( 'hb_cart_url', $url );
 	}
 }
@@ -2065,12 +2066,25 @@ if ( ! function_exists( 'hb_get_checkout_url' ) ) {
 		global $hb_settings;
 		$id = hb_get_page_id( 'checkout' );
 
+		$url = home_url();
 		if ( $id && $hb_settings->get( 'checkout' ) ) {
 			$url = get_the_permalink( $id );
-		} else {
-			$url = hb_get_url( array( 'hotel-booking' => 'checkout' ) );
 		}
+
 		return apply_filters( 'hb_checkout_url', $url );
+	}
+}
+
+if ( ! function_exists( 'hb_get_account_url' ) ) {
+	function hb_get_account_url() {
+		global $hb_settings;
+		$id = hb_get_page_id( 'account' );
+
+		$url = home_url();
+		if ( $id && $hb_settings->get( 'account' ) ) {
+			$url = get_the_permalink( $id );
+		}
+		return apply_filters( 'hb_account_url', $url );
 	}
 }
 

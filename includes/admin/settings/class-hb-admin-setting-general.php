@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-29 17:13:06
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-11 11:15:37
+ * @Last Modified time: 2016-04-11 13:21:30
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -39,6 +39,24 @@ if ( ! class_exists( 'HB_Admin_Setting_General' ) ) {
 							'type'		=> 'select_page',
 							'id'		=> 'tp_hotel_booking_search_page_id',
 							'title'		=> __( 'Search Page', 'tp-hotel-booking' )
+						),
+
+					array(
+							'type'		=> 'select_page',
+							'id'		=> 'tp_hotel_booking_checkout_page_id',
+							'title'		=> __( 'Checkout Page', 'tp-hotel-booking' )
+						),
+
+					array(
+							'type'		=> 'select_page',
+							'id'		=> 'tp_hotel_booking_cart_page_id',
+							'title'		=> __( 'Cart Page', 'tp-hotel-booking' )
+						),
+
+					array(
+							'type'		=> 'select_page',
+							'id'		=> 'tp_hotel_booking_account_page_id',
+							'title'		=> __( 'Account Page', 'tp-hotel-booking' )
 						),
 
 					array(

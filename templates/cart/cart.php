@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $cart = TP_Hotel_Booking::instance()->cart;
 global $hb_settings;
+
 ?>
 <?php if ( TP_Hotel_Booking::instance()->cart->cart_items_count != 0  ) : ?>
     <div id="hotel-booking-cart">

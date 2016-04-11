@@ -61,6 +61,7 @@ class TP_Hotel_Booking_Report
 		{
 			if( $this->is_hotel_active )
 			{
+				add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 				require_once TP_HB_REPORT_DIR . '/inc/functions.php';
 				require_once TP_HB_REPORT_DIR . '/inc/class-hb-report.php';
 				require_once TP_HB_REPORT_DIR . '/inc/class-hb-report-price.php';
@@ -83,6 +84,18 @@ class TP_Hotel_Booking_Report
 				<p><?php _e( 'The <strong>TP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>TP Hotel Booking Report</strong> add-on.'); ?></p>
 			</div>
 		<?php
+	}
+
+	function enqueue_scripts() {
+
+        wp_register_script( 'tp-admin-hotel-booking-chartjs', TP_HB_REPORT_URI . 'assets/js/Chart.min.js' );
+        wp_register_script( 'tp-admin-hotel-booking-tokenize-js', TP_HB_REPORT_URI . 'assets/js/jquery.tokenize.min.js' );
+        wp_register_style( 'tp-admin-hotel-booking-tokenize-css', TP_HB_REPORT_URI . 'assets/css/jquery.tokenize.min.css' );
+
+
+        wp_enqueue_script( 'tp-admin-hotel-booking-chartjs' );
+        wp_enqueue_script( 'tp-admin-hotel-booking-tokenize-js' );
+        wp_enqueue_style( 'tp-admin-hotel-booking-tokenize-css' );
 	}
 
 }

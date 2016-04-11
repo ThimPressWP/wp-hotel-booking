@@ -82,17 +82,17 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base{
         /**
          * checkout authorize hook template.
          */
-        add_filter( 'tp_hotel_booking_checkout_tpl', array( $this, 'checkout_order_pay' ) );
+        add_filter( 'hotel_booking_checkout_tpl', array( $this, 'checkout_order_pay' ) );
 
         /**
          * template args hook
          */
-        add_filter( 'tp_hotel_booking_checkout_tpl_template_args', array( $this, 'checkout_order_pay_args' ) );
+        add_filter( 'hotel_booking_checkout_tpl_template_args', array( $this, 'checkout_order_pay_args' ) );
 
         /**
          * order-pay confirm. only authorize
          */
-        add_action( 'tp_hotel_booking_order_pay_after', array( $this, 'authorize_form' ) );
+        add_action( 'hotel_booking_order_pay_after', array( $this, 'authorize_form' ) );
     }
 
     /**

@@ -12,7 +12,7 @@ do_action( 'hb_before_search_result' );
 <div id="hotel-booking-results">
     <?php if( $results && ! empty( $hb_search_rooms['data'] ) ): ?>
         <h3><?php _e( 'Search results', 'tp-hotel-booking' ); ?></h3>
-        <?php hb_get_template( 'results/list.php', array( 'results' => $hb_search_rooms['data'], 'atts' => $atts ) ); ?>
+        <?php hb_get_template( 'search/list.php', array( 'results' => $hb_search_rooms['data'], 'atts' => $atts ) ); ?>
         <nav class="rooms-pagination">
             <?php
                 echo paginate_links( apply_filters( 'hb_pagination_args', array(

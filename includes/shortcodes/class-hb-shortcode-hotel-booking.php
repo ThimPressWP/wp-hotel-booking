@@ -45,7 +45,7 @@ class HB_Shortcode_Hotel_Booking extends HB_Shortcodes
 
         $page = hb_get_request( 'hotel-booking' );
 
-        $template = 'search-room.php';
+        $template = 'search/search.php';
         $template_args = array();
 
         // find the url for form action
@@ -76,7 +76,7 @@ class HB_Shortcode_Hotel_Booking extends HB_Shortcodes
                 if( ! isset( $atts['page'] ) || $atts['page'] !== 'results' )
                     break;
 
-                $template = 'results.php';
+                $template = 'search/results.php';
                 $template_args['results']   = hb_search_rooms(
                     array(
                         'check_in_date'     => $start_date,
@@ -87,14 +87,14 @@ class HB_Shortcode_Hotel_Booking extends HB_Shortcodes
                 );
                 break;
             default:
-                $template = 'search-room.php';
+                $template = 'search/search.php';
                 break;
         }
 
         $template = apply_filters( 'tp_hotel_booking_shortcode_template', $template );
         ob_start();
         do_action( 'hb_wrapper_start' );
-        hb_get_template( 'shortcodes/' . $template, $template_args );
+        hb_get_template( $template, $template_args );
         do_action( 'hb_wrapper_end' );
         return ob_get_clean();
 	}

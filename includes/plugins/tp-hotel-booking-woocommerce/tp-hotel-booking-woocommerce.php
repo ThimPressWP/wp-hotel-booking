@@ -670,7 +670,7 @@ class TP_Hotel_Booking_Woocommerce {
 		if ( ! $post ) {
 			return;
 		}
-		if ( $post->ID == hb_get_page_id( 'my-rooms' ) ) {
+		if ( $post->ID == hb_get_page_id( 'cart' ) ) {
 			wp_redirect( WC()->cart->get_cart_url() ); exit();
 		} else if ( $post->ID == hb_get_page_id( 'checkout' ) ) {
 			wp_redirect( WC()->cart->get_checkout_url() ); exit();

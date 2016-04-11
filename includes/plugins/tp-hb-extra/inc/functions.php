@@ -194,6 +194,6 @@ if( ! function_exists( 'is_hb_cart' ) )
 
     function is_hb_cart()
     {
-        return ( is_page( hb_get_page_id( 'my-rooms' ) ) || hb_get_request( 'hotel-booking' ) === 'cart' );
+        return ( is_page( hb_get_page_id( 'cart' ) ) || hb_get_request( 'hotel-booking' ) === 'cart' );
     }
 }

@@ -19,9 +19,10 @@ class TP_Hotel_Booking_Payment_Stripe
 
 	public $slug = 'stripe';
 
-	function __construct()
-	{
+	function __construct() {
 		add_action( 'plugins_loaded', array( $this, 'is_hotel_active' ) );
+
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 	}
 
 	/**
@@ -46,8 +47,7 @@ class TP_Hotel_Booking_Payment_Stripe
 		{
 			// add payment
 			add_filter( 'hb_payment_gateways', array( $this, 'add_payment_classes' ) );
-			if( $this->is_hotel_active )
-			{
+			if( $this->is_hotel_active ) {
 				require_once TP_HB_STRIPE_DIR . '/inc/class-hb-payment-gateway-stripe.php';
 			}
 		}
@@ -92,6 +92,20 @@ class TP_Hotel_Booking_Payment_Stripe
 				<p><?php _e( 'The <strong>TP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>TP Hotel Booking Stripe</strong> add-on'); ?></p>
 			</div>
 		<?php
+	}
+
+	function enqueue_scripts(){
+        // stripe and checkout assets
+        wp_register_script( 'tp-hotel-booking-stripe-js', TP_HB_STRIPE_URI . '/assets/js/stripe.js', array() );
+        wp_register_script( 'tp-hotel-booking-stripe-checkout-js', TP_HB_STRIPE_URI . '/assets/js/checkout.js', array() );
+
+        $setting = HB_Settings::instance()->get('stripe');
+
+        if( ! empty( $setting['enable'] ) && $setting['enable'] == 'on' ) {
+            // stripe
+            wp_enqueue_script( 'tp-hotel-booking-stripe-js' );
+            wp_enqueue_script( 'tp-hotel-booking-stripe-checkout-js' );
+        }
 	}
 
 }

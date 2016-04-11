@@ -330,7 +330,7 @@ class HB_Extra_Cart
 		if( is_page( hb_get_page_id( 'checkout' ) ) || hb_get_request( 'hotel-booking' ) === 'checkout' )
 			return false;
 
-		if( is_page( hb_get_page_id( 'my-rooms' ) ) || hb_get_request( 'hotel-booking' ) === 'cart' )
+		if( is_page( hb_get_page_id( 'cart' ) ) || hb_get_request( 'hotel-booking' ) === 'cart' )
 		{
 			if( $respondent === 'trip' )
 				return false;

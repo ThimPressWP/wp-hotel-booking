@@ -27,7 +27,7 @@ class HB_Shortcode_Hotel_Booking_Mini_Cart extends HB_Shortcodes
 
             <?php if ( ! empty( TP_Hotel_Booking::instance()->cart->cart_contents ) ): ?>
 
-                <?php hb_get_template( 'shortcodes/mini_cart.php' ); ?>
+                <?php hb_get_template( 'cart/mini_cart.php' ); ?>
 
             <?php else: ?>
 
@@ -40,7 +40,7 @@ class HB_Shortcode_Hotel_Booking_Mini_Cart extends HB_Shortcodes
 
     function mini_cart()
     {
-        echo hb_get_template_content( 'shortcodes/mini_cart_layout.php' );
+        echo hb_get_template_content( 'cart/mini_cart_layout.php' );
     }
 
     function utils()

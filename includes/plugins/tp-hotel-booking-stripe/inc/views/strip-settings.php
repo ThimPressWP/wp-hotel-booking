@@ -15,6 +15,7 @@ $stripe = wp_parse_args(
 
 $field_name = $settings->get_field_name('stripe');
 ?>
+
 <table class="form-table">
     <tr>
         <th><?php _e( 'Enable', 'tp-hotel-booking-stripe' ); ?></th>

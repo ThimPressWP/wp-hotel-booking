@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-28 16:31:22
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-01 15:24:04
+ * @Last Modified time: 2016-04-11 13:47:19
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -74,7 +74,7 @@ class HB_Install {
 		update_option( 'hotel_booking_version', HB_VERSION );
 	}
 
-	// create page. Eg: room-checkout, my-rooms
+	// create page. Eg: hotel-checkout, hotel-cart
 	static function create_pages() {
 		if( ! function_exists( 'hb_create_page' ) ){
             TP_Hotel_Booking::instance()->_include( 'includes/admin/hb-admin-functions.php' );
@@ -82,11 +82,11 @@ class HB_Install {
         }
 
 		$pages = array();
-		if( ! hb_get_page_id( 'my-rooms' ) || ! get_post( hb_get_page_id( 'my-rooms' ) ) )
+		if( ! hb_get_page_id( 'cart' ) || ! get_post( hb_get_page_id( 'cart' ) ) )
 		{
-		    $pages['my-rooms'] = array(
-		        'name'    => _x( 'my-rooms', 'my-rooms', 'tp-hotel-booking' ),
-		        'title'   => _x( 'My Rooms', 'My Rooms', 'tp-hotel-booking' ),
+		    $pages['cart'] = array(
+		        'name'    => _x( 'hotel-cart', 'Page Slug', 'tp-hotel-booking' ),
+		        'title'   => _x( 'Hotel Cart', 'Page Title', 'tp-hotel-booking' ),
 		        'content' => '[' . apply_filters( 'hotel_booking_cart_shortcode_tag', 'hotel_booking_cart' ) . ']'
 		    );
 		}
@@ -94,8 +94,8 @@ class HB_Install {
 		if( ! hb_get_page_id( 'checkout' ) || ! get_post( hb_get_page_id( 'checkout' ) ) )
 		{
 		    $pages['checkout'] = array(
-		        'name'    => _x( 'room-checkout', 'room-checkout', 'tp-hotel-booking' ),
-		        'title'   => _x( 'Checkout', 'Checkout', 'tp-hotel-booking' ),
+		        'name'    => _x( 'hotel-checkout', 'Page Slug', 'tp-hotel-booking' ),
+		        'title'   => _x( 'Hotel Checkout', 'Page Title', 'tp-hotel-booking' ),
 		        'content' => '[' . apply_filters( 'hotel_booking_checkout_shortcode_tag', 'hotel_booking_checkout' ) . ']'
 		    );
 		}
@@ -103,17 +103,26 @@ class HB_Install {
 		if( ! hb_get_page_id( 'search' ) || ! get_post( hb_get_page_id( 'search' ) ) )
 		{
 		    $pages['search'] = array(
-		        'name'    => _x( 'hotel-booking', 'hotel-booking', 'tp-hotel-booking' ),
-		        'title'   => _x( 'Hotel Booking', 'Hotel Booking', 'tp-hotel-booking' ),
+		        'name'    => _x( 'hotel-search', 'Page Slug', 'tp-hotel-booking' ),
+		        'title'   => _x( 'Hotel Booking Search', 'Page Title', 'tp-hotel-booking' ),
 		        'content' => '[' . apply_filters( 'hotel_booking_search_shortcode_tag', 'hotel_booking' ) . ']'
+		    );
+		}
+
+		if( ! hb_get_page_id( 'account' ) || ! get_post( hb_get_page_id( 'account' ) ) )
+		{
+		    $pages['account'] = array(
+		        'name'    => _x( 'hotel-account', 'Page Slug', 'tp-hotel-booking' ),
+		        'title'   => _x( 'Hotel Account', 'Page Title', 'tp-hotel-booking' ),
+		        'content' => '[' . apply_filters( 'hotel_booking_account_shortcode_tag', 'hotel_booking_account' ) . ']'
 		    );
 		}
 
 		if( ! hb_get_page_id( 'terms' ) || ! get_post( hb_get_page_id( 'terms' ) ) )
 		{
 		    $pages['terms'] = array(
-		        'name'    => _x( 'term-condition', 'term-condition', 'tp-hotel-booking' ),
-		        'title'   => _x( 'Terms and Conditions ', 'Terms and Conditions', 'tp-hotel-booking' ),
+		        'name'    => _x( 'hotel-term-condition', 'Page Slug', 'tp-hotel-booking' ),
+		        'title'   => _x( 'Terms and Conditions ', 'Page Title', 'tp-hotel-booking' ),
 		        'content' => apply_filters( 'hotel_booking_terms_content', 'Something notices' )
 		    );
 		}

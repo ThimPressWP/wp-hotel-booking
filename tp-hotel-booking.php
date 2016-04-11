@@ -189,6 +189,7 @@ class TP_Hotel_Booking {
         // shortcodes
         $this->_include( 'includes/class-hb-shortcodes.php' );
         $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-cart.php' );
+        $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-account.php' );
         $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-checkout.php' );
         $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-lastest-reviews.php' );
         $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-mini-cart.php' );
@@ -279,20 +280,12 @@ class TP_Hotel_Booking {
         wp_register_script( 'tp-admin-hotel-booking-select2', $this->plugin_url( 'assets/js/select2.min.js' ) );
         if( is_admin() ){
             $dependencies = array_merge( $dependencies, array( 'backbone' ) );
-            wp_register_style( 'tp-admin-hotel-booking', $this->plugin_url( 'assets/css/admin.tp-hotel-booking.css' ) );
-            wp_register_script( 'tp-admin-hotel-booking', $this->plugin_url( 'assets/js/admin.hotel-booking.js' ), $dependencies );
+            wp_register_style( 'tp-admin-hotel-booking', $this->plugin_url( 'assets/css/admin.tp-hotel-booking.min.css' ) );
+            wp_register_script( 'tp-admin-hotel-booking', $this->plugin_url( 'assets/js/admin.hotel-booking.min.js' ), $dependencies );
             wp_localize_script( 'tp-admin-hotel-booking', 'hotel_booking_i18n', hb_admin_i18n() );
-            //report
-            wp_register_script( 'tp-admin-hotel-booking-chartjs', $this->plugin_url( 'assets/js/Chart.min.js' ) );
-            wp_register_script( 'tp-admin-hotel-booking-tokenize-js', $this->plugin_url( 'assets/js/jquery.tokenize.min.js' ) );
-            wp_register_style( 'tp-admin-hotel-booking-tokenize-css', $this->plugin_url( 'assets/css/jquery.tokenize.min.css' ) );
         } else {
             wp_register_style( 'tp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.min.css' ) );
             wp_register_script( 'tp-hotel-booking', $this->plugin_url( 'assets/js/hotel-booking.min.js' ), $dependencies );
-
-            // stripe and checkout assets
-            wp_register_script( 'tp-hotel-booking-stripe-js', $this->plugin_url( 'assets/js/stripe.js' ), $dependencies );
-            wp_register_script( 'tp-hotel-booking-stripe-checkout-js', $this->plugin_url( 'assets/js/checkout.js' ), $dependencies );
 
             wp_localize_script( 'tp-hotel-booking', 'hotel_booking_i18n', hb_i18n() );
 
@@ -312,20 +305,9 @@ class TP_Hotel_Booking {
             wp_enqueue_script( 'jquery' );
             wp_enqueue_script( 'jquery-ui-core' );
             wp_enqueue_script( 'jquery-ui-autocomplete' );
-            // report
-            wp_enqueue_script( 'tp-admin-hotel-booking-chartjs' );
-            wp_enqueue_script( 'tp-admin-hotel-booking-tokenize-js' );
-            wp_enqueue_style( 'tp-admin-hotel-booking-tokenize-css' );
         } else {
             wp_enqueue_style( 'tp-hotel-booking' );
             wp_enqueue_script( 'tp-hotel-booking' );
-            $setting = HB_Settings::instance()->get('stripe');
-
-            if( ! empty( $setting['enable'] ) && $setting['enable'] == 'on' ) {
-                // stripe
-                wp_enqueue_script( 'tp-hotel-booking-stripe-js' );
-                wp_enqueue_script( 'tp-hotel-booking-stripe-checkout-js' );
-            }
 
             // rooms slider widget
             wp_enqueue_script( 'tp-hotel-booking-owl-carousel' );

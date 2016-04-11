@@ -22,11 +22,6 @@ class HB_Booking{
     public $post = null;
 
     /**
-     * @var null
-     */
-    public $_customer = null;
-
-    /**
      * @var array
      */
     private $_booking_info = array();
@@ -68,9 +63,6 @@ class HB_Booking{
         }
 
         $this->id = $this->post->ID;
-        if ( $this->id ) {
-            $this->_customer = $this->load_customer();
-        }
     }
 
     function __get( $key ){
@@ -133,17 +125,6 @@ class HB_Booking{
     }
 
     /**
-     * Load customer meta data
-     *
-     * @access private
-     */
-    private function load_customer(){
-        $customer_id = get_post_meta( $this->id, '_hb_customer_id', true );
-        return $customer_id ? HB_Customer::instance( $customer_id ) : null;
-
-    }
-
-    /**
      * Set booking information
      *
      * @param $info
@@ -168,13 +149,12 @@ class HB_Booking{
         $post_data['post_content_filtered']     = $post_data['post_content'];
         $post_data['post_excerpt']              = $post_data['post_content'];
         if ( $this->post->ID ) {
-            $booking_id = wp_update_post($post_data);
+            $booking_id = wp_update_post( $post_data );
         } else {
             $booking_id = wp_insert_post($post_data, true);
             $this->post->ID = $booking_id;
         }
         if( $booking_id ){
-            //update_post_meta( $booking_id, '_hb_customer_id', $customer_id );
             foreach( $this->_booking_info as $meta_key => $v ){
                 if ( strpos( $meta_key, '_hb_' ) === 0 ) {
                     update_post_meta( $booking_id, $meta_key, $v );
@@ -196,23 +176,6 @@ class HB_Booking{
         }
 
         return get_post_meta( $this->post->ID, $meta_key, $unique );
-    }
-
-    // room book item
-    function save_room( $params = array(), $booking_id )
-    {
-        $itemOfOrderId = wp_insert_post( array(
-                    'post_title'    => sprintf( 'Room order in %1$s to %2$s', $params['_hb_check_in_date'], $params['_hb_check_out_date']),
-                    'post_content'  => '',
-                    'post_status'   => 'publish',
-                    'post_type'     => 'hb_booking_item'
-            ) );
-
-        add_post_meta( $itemOfOrderId, '_hb_booking_id', $booking_id );
-
-        foreach ($params as $key => $value) {
-            add_post_meta( $itemOfOrderId, $key, $value );
-        }
     }
 
     /**
@@ -280,7 +243,7 @@ class HB_Booking{
      * @return string
      */
     function get_booking_number(){
-        return '#' . sprintf( "%'.010d", $this->id );
+        return hb_format_order_number( $this->id );
     }
 
     /**
@@ -317,14 +280,6 @@ class HB_Booking{
     public function get_checkout_booking_received_url() {
         $received_url = hb_get_page_permalink( 'search' );
         return apply_filters( 'hb_get_checkout_booking_received_url', $received_url, $this );
-    }
-
-    function get_booking_rooms_params( $booking_id = null )
-    {
-        if( $booking_id == null )
-            $booking_id = $this->id;
-
-        return get_post_meta( $booking_id, '_hb_booking_params', true );
     }
 
     function add_order_items( $order_items = array() ) {
