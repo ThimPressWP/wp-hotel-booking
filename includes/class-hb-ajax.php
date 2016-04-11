@@ -148,10 +148,10 @@ class HB_Ajax {
 				$response['result'] = 'success';
 				$response['type']   = get_post_meta( $coupon->ID, '_hb_coupon_discount_type', true );
 				$response['value']  = get_post_meta( $coupon->ID, '_hb_coupon_discount_value', true );
-				if ( !session_id() ) {
+				if ( ! session_id() ) {
 					session_start();
 				}
-				// set_transient( 'hb_user_coupon_' . session_id(), $coupon, HOUR_IN_SECONDS );
+				// set session
 				TP_Hotel_Booking::instance()->cart->set_customer( 'coupon', $coupon->post->ID );
 				hb_add_message( __( 'Coupon code applied', 'tp-hotel-booking' ) );
 			}
@@ -231,8 +231,8 @@ class HB_Ajax {
 			$param[ 'check_out_date' ] = sanitize_text_field( $_POST['check_out_date'] );
 		}
 
-		$param = apply_filters( 'tp_hotel_booking_add_cart_params', $param );
-		do_action( 'tp_hotel_booking_before_add_to_cart', $_POST );
+		$param = apply_filters( 'hotel_booking_add_cart_params', $param );
+		do_action( 'hotel_booking_before_add_to_cart', $_POST );
 		// add to cart
 		$cart_item_id = TP_Hotel_Booking::instance()->cart->add_to_cart( $product_id, $param, $qty );
 

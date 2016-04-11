@@ -161,7 +161,7 @@ class HB_Booking{
      *
      * @return mixed
      */
-    function update(){
+    function update( $order_items = array() ){
         $post_data = get_object_vars($this->post);
         // ensure the post_type is correct
         $post_data['post_type']                 = 'hb_booking';
@@ -176,11 +176,17 @@ class HB_Booking{
         if( $booking_id ){
             //update_post_meta( $booking_id, '_hb_customer_id', $customer_id );
             foreach( $this->_booking_info as $meta_key => $v ){
-                update_post_meta( $booking_id, $meta_key, $v );
+                if ( strpos( $meta_key, '_hb_' ) === 0 ) {
+                    update_post_meta( $booking_id, $meta_key, $v );
+                }
             }
 
         }
         $this->id = $this->post->ID;
+
+        if ( ! empty( $order_items ) ) {
+            $this->add_order_items( $order_items );
+        }
         return $this->post->ID;
     }
 
@@ -321,14 +327,50 @@ class HB_Booking{
         return get_post_meta( $booking_id, '_hb_booking_params', true );
     }
 
-    /**
-     * get_cart_params
-     * @return cart object
-     * @since  1.0.4
-     */
-    function get_cart_params()
-    {
-        return get_post_meta( $this->id, '_hb_booking_cart_params', true );
+    function add_order_items( $order_items = array() ) {
+        // clean order item
+        if ( $this->id ) {
+            hb_empty_booking_order_items( $this->id );
+        }
+        if ( ! empty( $order_items ) ) {
+            $parents = array();
+            // insert line_item
+            foreach ( $order_items AS $k => $order_item ) {
+                if ( ! isset( $order_item['parent_id'] ) || ! $order_item['parent_id'] ) {
+                    $product_id = $order_item['product_id'];
+                    $order_item_id = hb_add_order_item( $this->id, array(
+                            'order_item_name'       => get_the_title( $product_id ),
+                            'order_item_type'       => 'line_item'
+                        ) );
+                    $parents[$k] = $order_item_id;
+
+                    // add order items meta
+                    foreach ( $order_item as $meta_key => $meta_value ) {
+                        if ( $meta_key !== 'parent_id' ) {
+                            hb_add_order_item_meta( $order_item_id, $meta_key, $meta_value );
+                        }
+                    }
+                }
+            }
+
+            // insert sub_item
+            foreach ( $order_items AS $k => $order_item ) {
+                if ( isset( $order_item['parent_id'] ) && array_key_exists( $order_item['parent_id'], $parents ) ) {
+                    $product_id = $order_item['product_id'];
+                    $order_item_id = hb_add_order_item( $this->id, array(
+                            'order_item_name'       => get_the_title( $product_id ),
+                            'order_item_type'       => 'sub_item',
+                            'order_item_parent'     => $parents[ $order_item['parent_id'] ]
+                        ) );
+                    // add order items meta
+                    foreach ( $order_item as $meta_key => $meta_value ) {
+                        if ( $meta_key !== 'parent_id' ) {
+                            hb_add_order_item_meta( $order_item_id, $meta_key, $meta_value );
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**

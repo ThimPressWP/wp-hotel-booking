@@ -333,6 +333,24 @@ class HB_Cart
 		return $cart_item_id;
     }
 
+    function get_products() {
+
+        $products = array();
+        if( ! $this->cart_contents )
+        {
+            return $products;
+        }
+
+        foreach ( $this->cart_contents as $cart_item_id => $cart_item ) {
+            $products[ $cart_item_id ] = $cart_item->product_data;
+            if ( isset( $cart_item->parent_id ) ) {
+                $products[ $cart_item_id ]->parent_id = $cart_item->parent_id;
+            }
+        }
+
+        return $products;
+    }
+
     // get rooms of cart_contents
     function get_rooms()
     {
@@ -610,7 +628,7 @@ class HB_Cart
             return new WP_Error( 'hotel_booking_transaction_error', __( 'Your cart is empty.', 'tp-hotel-booking' ) );
         }
 
-        // HB_Coupon::instance( $this->coupon );
+
         // initialize object
         $transaction = new stdClass();
         $booking_info = array();
@@ -618,11 +636,6 @@ class HB_Cart
         // use coupon
         if( HB_Settings::instance()->get( 'enable_coupon' ) && $coupon = TP_Hotel_Booking::instance()->cart->coupon ) {
             $coupon = HB_Coupon::instance( $coupon );
-            // $booking_info[ '_hb_coupon' ] = array(
-            //     'id'        => $coupon->ID,
-            //     'code'      => $coupon->coupon_code,
-            //     'value'     => $coupon->discount_value
-            // );
 
             $booking_info[ '_hb_coupon_id' ] = $coupon->ID;
             $booking_info[ '_hb_coupon_code' ] = $coupon->coupon_code;
@@ -631,9 +644,7 @@ class HB_Cart
 
         // booking info array param
         $booking_info = array_merge( $booking_info, array(
-                '_hb_tax'                       => hb_get_tax_settings(),
-                // '_hb_sub_total'                 => $this->sub_total,
-                // '_hb_total'                     => round( $this->total, 2 ),
+                '_hb_tax'                       => $this->cart_total_include_tax - $this->cart_total_exclude_tax,
                 '_hb_advance_payment'           => $this->hb_get_cart_total( ! hb_get_request( 'pay_all' ) ),
                 '_hb_advance_payment_setting'   => hb_settings()->get( 'advance_payment', 50 ),
                 '_hb_currency'                  => apply_filters( 'hotel_booking_payment_currency', hb_get_currency() ),
@@ -643,60 +654,44 @@ class HB_Cart
                 '_hb_method_title'              => $payment_method->title,
                 '_hb_method_id'                 => $payment_method->method_id,
                 // customer
-                '_hb_customer_title'         => hb_get_request( 'title' ),
-                '_hb_customer_firt_name'    => hb_get_request( 'first_name' ),
-                '_hb_customer_last_name'     => hb_get_request( 'last_name' ),
-                '_hb_customer_address'       => hb_get_request( 'address' ),
-                '_hb_customer_city'          => hb_get_request( 'city' ),
-                '_hb_customer_state'         => hb_get_request( 'state' ),
-                '_hb_customer_postal_code'   => hb_get_request( 'postal_code' ),
-                '_hb_customer_country'       => hb_get_request( 'country' ),
-                '_hb_customer_phone'         => hb_get_request( 'phone' ),
-                '_hb_customer_email'         => hb_get_request( 'email' ),
-                '_hb_customer_fax'           => hb_get_request( 'fax' ),
-                // '_hb_check_in_date'             => 0,
-                // '_hb_check_out_date'            => 0,
+                '_hb_customer_title'            => hb_get_request( 'title' ),
+                '_hb_customer_firt_name'        => hb_get_request( 'first_name' ),
+                '_hb_customer_last_name'        => hb_get_request( 'last_name' ),
+                '_hb_customer_address'          => hb_get_request( 'address' ),
+                '_hb_customer_city'             => hb_get_request( 'city' ),
+                '_hb_customer_state'            => hb_get_request( 'state' ),
+                '_hb_customer_postal_code'      => hb_get_request( 'postal_code' ),
+                '_hb_customer_country'          => hb_get_request( 'country' ),
+                '_hb_customer_phone'            => hb_get_request( 'phone' ),
+                '_hb_customer_email'            => hb_get_request( 'email' ),
+                '_hb_customer_fax'              => hb_get_request( 'fax' )
             ));
 
         // set booking info
         $transaction->booking_info = $booking_info;
 
         // get rooms
-        $rooms = $this->get_rooms();
-        $_rooms = array();
-        foreach ( $rooms as $k => $room ) {
-            $check_in = strtotime( $room->get_data( 'check_in_date' ) );
-            $check_out = strtotime( $room->get_data( 'check_out_date' ) );
-            // $_rooms[] = apply_filters( 'hb_generate_transaction_object_room', array(
-            //         '_hb_id'                => $room->ID,
-            //         '_hb_quantity'          => $room->get_data( 'quantity' ),
-            //         '_hb_check_in_date'     => $check_in,
-            //         '_hb_check_out_date'    => $check_out,
-            //         '_hb_sub_total'         => $room->amount_exclude_tax
-            //     ), $room );
+        $products = $this->get_products();
+        $_products = array();
+        foreach ( $products as $k => $product ) {
+            $check_in = strtotime( $product->get_data( 'check_in_date' ) );
+            $check_out = strtotime( $product->get_data( 'check_out_date' ) );
+            $total = $product->amount_include_tax();
+            $sub_total = $product->amount_exclude_tax();
 
-            $_rooms[] = apply_filters( 'hb_generate_transaction_object_room', array(
-                    'product_id'        => $room->ID,
-                    'qty'               => $room->get_data( 'quantity' ),
+            $_products[ $k ] = apply_filters( 'hb_generate_transaction_object_room', array(
+                    'parent_id'         => isset( $product->parent_id ) ? $product->parent_id : null,
+                    'product_id'        => $product->ID,
+                    'qty'               => $product->get_data( 'quantity' ),
                     'check_in_date'     => $check_in,
                     'check_out_date'    => $check_out,
-                    'subtotal'          => $room->amount_exclude_tax,
-                    'total'             => $room->amount_include_tax
-                ), $room );
-            // if ( ! $transaction->booking_info['_hb_check_in_date'] ) {
-            //     $transaction->booking_info['_hb_check_in_date'] = $check_in;
-            // } else if( $transaction->booking_info['_hb_check_in_date'] < $check_in ) {
-            //     $transaction->booking_info['_hb_check_in_date'] = $check_in;
-            // }
-
-            // if ( ! $transaction->booking_info['_hb_check_out_date'] ) {
-            //     $transaction->booking_info['_hb_check_out_date'] = $check_out;
-            // } else if( $transaction->booking_info['_hb_check_out_date'] > $check_out ) {
-            //     $transaction->booking_info['_hb_check_out_date'] = $check_out;
-            // }
+                    'subtotal'          => $sub_total,
+                    'total'             => $total,
+                    'tax_total'         => $total - $sub_total
+                ), $product );
         }
 
-        $transaction->order_items = $_rooms;
+        $transaction->order_items = $_products;
         return apply_filters( 'hb_generate_transaction_object', $transaction, $payment_method );
     }
 
@@ -730,113 +725,4 @@ class HB_Cart
 
 if ( ! is_admin() ) {
     $GLOBALS['hb_cart'] = hb_get_cart();
-}
-
-// generate cart item id
-function hb_generate_cart_item_id( $params = array() )
-{
-	$cart_id = array();
-	foreach ( $params as $key => $param ) {
-		if( is_array( $param ) )
-		{
-			$cart_id[] = $key . hb_generate_cart_item_id( $param );
-		}
-		else
-		{
-			$cart_id[] = $key . $param;
-		}
-	}
-
-	return md5( implode( '', $cart_id ) );
-}
-
-
-/**
- * Get HB_Cart instance
- *
- * @param null $prop
- * @return bool|HB_Cart|mixed
- */
-function hb_get_cart( $prop = null ){
-    return HB_Cart::instance( $prop );
-}
-
-/**
- * Generate an unique string
- *
- * @return mixed
- */
-function hb_uniqid(){
-    $hash = str_replace( '.', '', microtime( true ) . uniqid() );
-    return apply_filters( 'hb_generate_unique_hash', $hash );
-}
-
-/**
- * Get cart description
- *
- * @return string
- */
-function hb_get_cart_description(){
-    $cart = HB_Cart::instance();
-    $description = array();
-    foreach( $cart->get_rooms() as $room ){
-        $description[] = sprintf( '%s (x %d)', $room->name, $room->quantity );
-    }
-    return join( ', ', $description );
-}
-
-/**
- * Get check out return URL
- *
- * @return mixed
- */
-function hb_get_return_url(){
-    $url = hb_get_checkout_url();
-    return apply_filters( 'hb_return_url', $url );
-}
-
-/**
- * @param $date
- * @param bool $code
- * @return bool
- */
-function hb_get_coupons_active( $date, $code = false ){
-
-    $coupons = false;
-    $enable = HB_Settings::instance()->get( 'enable_coupon' );
-
-    if( $enable && $code ) {
-        $args = array(
-            'post_type' => 'hb_coupon',
-            'posts_per_page' => 999,
-            'meta_query' => array(
-                'relation' => 'AND',
-                array(
-                    'key'       => '_hb_coupon_date_from_timestamp',
-                    'compare'   => '<=',
-                    'value'     => $date
-                ),
-                array(
-                    'key'   => '_hb_coupon_date_to_timestamp',
-                    'compare' => '>=',
-                    'value' => $date
-                )
-            )
-        );
-
-        if(  $coupons = get_posts( $args ) ){
-            $found = false;
-            foreach( $coupons as $coupon ){
-                if( strcmp( $coupon->post_title, $code ) == 0 ){
-                    $coupons = $coupon;
-                    $found = true;
-                    break;
-                }
-            }
-            if( ! $found ){
-                $coupons = false;
-            }
-        }
-    }
-    return $coupons;
 }

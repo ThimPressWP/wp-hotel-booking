@@ -71,8 +71,8 @@ class HB_Coupon{
         $discount = 0;
         switch( $this->_settings['coupon_discount_type'] ){
             case 'percent_cart':
-                // $cart = HB_Cart::instance();
-                // $cart_sub_total = $cart->get_sub_total();
+                $cart = HB_Cart::instance();
+                $subtotal = $cart->get_sub_total();
                 $discount = $subtotal * $this->_settings['coupon_discount_value'] / 100;
                 break;
             case 'fixed_cart':
@@ -85,7 +85,7 @@ class HB_Coupon{
     }
 
     function apply_sub_total_discount( $sub_total ){
-        $discount = $this->get_discount_value();
+        $discount = $this->get_discount_value( $sub_total );
         return $discount < $sub_total ? $sub_total - $discount : 0;
     }
 
@@ -123,9 +123,6 @@ class HB_Coupon{
             }
         }
 
-        /*if( $return['is_valid'] && ! empty( $this->_settings['limit_per_customer' ] ) && ( $limit_per_customer = intval( $this->_settings['limit_per_customer'] ) > 0 ) ){
-            //$return['is_valid'] = $this->get_cart_sub_total() <= $maximum_spend;
-        }*/
         return $return;
     }
 

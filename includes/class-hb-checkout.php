@@ -59,43 +59,18 @@ class HB_Checkout{
         $booking_id = TP_Hotel_Booking::instance()->cart->booking_id;
 
         // Resume the unpaid order if its pending
-        if ( $booking_id && ( $booking = HB_Booking::instance( $booking_id ) ) && $booking->post->ID && $booking->has_status( array( 'pending', 'failed' ) ) ) {
-            $booking_data['ID'] = $booking_id;
-            $booking_data['post_content'] = hb_get_request( 'addition_information' );
-            $booking->set_booking_info( $booking_data );
+        if ( $booking_id && ( $booking = HB_Booking::instance( $booking_id ) ) && $booking->post->ID && $booking->has_status( array( 'pending', 'cancelled' ) ) ) {
+            $booking_info['ID'] = $booking_id;
+            $booking_info['post_content'] = hb_get_request( 'addition_information' );
+            $booking->set_booking_info( $booking_info );
             // update booking info meta post
-            $booking_id = $booking->update();
+            $booking_id = $booking->update( $order_items );
         } else {
-            $booking_id = hb_create_booking( $booking_info );
+            $booking_id = hb_create_booking( $booking_info, $order_items );
             // initialize Booking object
             $booking = HB_Booking::instance( $booking_id );
         }
 
-        // // add order item
-        // if ( $booking_id ) {
-
-        // }
-        // if ( $booking_id ) {
-        //     delete_post_meta( $booking_id, '_hb_room_id' );
-        //     if( $transaction->rooms )
-        //     {
-        //         foreach( $transaction->rooms as $room_options ) {
-        //             $num_of_rooms = $room_options['_hb_quantity'];
-        //             // insert multiple meta value
-        //             for( $i = 0; $i < $num_of_rooms; $i ++ ) {
-        //                 add_post_meta( $booking_id, '_hb_room_id', $room_options['_hb_id'] );
-        //                 // create post save item of order
-        //                 $booking->save_room( $room_options, $booking_id );
-        //             }
-
-        //         }
-        //     }
-
-        //     // cart_contents
-        //     $booking_params = apply_filters( 'hotel_booking_booking_params', TP_Hotel_Booking::instance()->cart->cart_contents );
-        //     // add_post_meta( $booking_id, '_hb_booking_params', $booking_params ); // old version 1.0.3 or less
-        //     add_post_meta( $booking_id, '_hb_booking_cart_params', $booking_params );
-        // }
         do_action( 'hb_new_booking', $booking_id );
         return $booking_id;
     }
@@ -114,6 +89,7 @@ class HB_Checkout{
             throw new Exception( __( 'You have to Login to process checkout.', 'tp-hotel-booking' ) );
         }
 
+        // payment method
         $payment_method = hb_get_user_payment_method( hb_get_request( 'hb-payment-method' ) );
 
         if( ! $payment_method ){
@@ -127,8 +103,8 @@ class HB_Checkout{
             if ( TP_Hotel_Booking::instance()->cart->needs_payment() ) {
                 $result = $payment_method->process_checkout( $booking_id );
             } else {
-                if ( empty($booking) ) {
-                    $booking = HB_Booking::instance($booking_id);
+                if ( empty( $booking ) ) {
+                    $booking = HB_Booking::instance( $booking_id );
                 }
                 // No payment was required for order
                 $booking->payment_complete();

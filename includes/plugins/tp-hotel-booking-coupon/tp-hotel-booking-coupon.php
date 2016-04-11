@@ -64,7 +64,7 @@ class TP_Hotel_Booking_Coupon
 			if( $this->is_hotel_active )
 			{
 				require_once TP_HB_COUPON_DIR . '/inc/class-hb-coupon.php';
-				add_action( 'hotel_booking_admin_setting_general', array( $this, 'admin_settings' ) );
+				add_action( 'hb_admin_settings_tab_after', array( $this, 'admin_settings' ) );
 				add_action( 'hotel_booking_before_cart_total', array( $this, 'hotel_booking_before_cart_total' ) );
 				add_action( 'init', array( $this, 'register_post_types_coupon' ) );
 			}
@@ -87,9 +87,13 @@ class TP_Hotel_Booking_Coupon
 		<?php
 	}
 
-	function admin_settings(){
+	function admin_settings( $settings ){
+		if ( $settings !== 'general' ) {
+			return;
+		}
 		$settings = hb_settings();
 	?>
+		<table class="form-table">
 		    <tr>
 		        <th><?php _e( 'Enable Coupon', 'tp-hotel-booking' ); ?></th>
 		        <td>
@@ -97,6 +101,7 @@ class TP_Hotel_Booking_Coupon
 		            <input type="checkbox" name="<?php echo esc_attr( $settings->get_field_name('enable_coupon') ); ?>" <?php checked( $settings->get('enable_coupon') ? 1 : 0, 1 ); ?> value="1" />
 		        </td>
 		    </tr>
+		</table>
 	<?php
 	}
 

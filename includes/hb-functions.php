@@ -1964,13 +1964,7 @@ add_action( 'hb_booking_status_changed', 'hb_new_customer_booking_email' );
 function hb_new_customer_booking_email( $booking_id = null ) {
     $return = null;
     if ( $booking_id ) {
-        $customer_id = HB_Booking::instance( $booking_id )->customer_id;
-        $customer = null;
-        if( $customer_id ) {
-            $customer = HB_Customer::instance( $customer_id );
-        } else {
-            throw new Exception( __( 'Customer is not exists!', 'tp-hotel-booking' ) ); die();
-        }
+        $booking = HB_Booking::instance( $booking_id );
         $settings = HB_Settings::instance()->get('offline-payment');
         $email_subject = ! empty( $settings['email_subject'] ) ? $settings['email_subject'] : false;
         $email_content = ! empty( $settings['email_content'] ) ? $settings['email_content'] : false;
@@ -1979,7 +1973,7 @@ function hb_new_customer_booking_email( $booking_id = null ) {
             $email_content = wpautop( $email_content );
         }
         if ( preg_match( '!{{customer_name}}!', $email_content ) ) {
-            $email_content = preg_replace( '!\{\{customer_name\}\}!', hb_get_customer_fullname( $customer_id, true ), $email_content );
+            $email_content = preg_replace( '!\{\{customer_name\}\}!', hb_get_customer_fullname( $booking_id, true ), $email_content );
         }
         if ( preg_match( '!{{site_name}}!', $email_content ) ) {
             $email_content = preg_replace( '!\{\{site_name\}\}!', get_bloginfo( 'name' ), $email_content );
@@ -1996,7 +1990,7 @@ function hb_new_customer_booking_email( $booking_id = null ) {
         // set mail from name
         add_filter( 'wp_mail_from_name', 'hb_wp_mail_from_name' );
         add_filter('wp_mail_content_type', 'hb_set_html_content_type' );
-        $to = $customer->email;
+        $to = $booking->customer_email;
         $return = wp_mail( $to, $email_subject, stripslashes( $email_content ), $headers );
 
         remove_filter('wp_mail_content_type', 'hb_set_html_content_type');

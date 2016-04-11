@@ -195,7 +195,7 @@ class HB_SW_Curreny
 	    $default_curreny = $hb_settings->get( 'currency', 'USD' );
 	    $payment_currency = hb_get_currency();
 		// booking meta data
-        $booking_info['_hb_payment_currency'] 		= apply_filters( 'tp_hotel_booking_payment_current_currency', $payment_currency );
+        $booking_info['_hb_payment_currency'] 		= apply_filters( 'hotel_booking_payment_current_currency', $payment_currency );
         $booking_info['_hb_payment_currency_rate'] 	= (float)apply_filters( 'hotel_booking_payment_currency_rate', $default_curreny, $payment_currency );
 
         return $booking_info;

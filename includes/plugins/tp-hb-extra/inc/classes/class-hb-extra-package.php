@@ -24,25 +24,25 @@ class HB_Extra_Package
 	 * checkin room
 	 * @var null
 	 */
-	protected $_check_in = null;
+	protected $check_in_date = null;
 
 	/**
 	 * checkout room
 	 * @var null
 	 */
-	protected $_check_out = null;
+	protected $check_out_date = null;
 
 	/**
 	 * room quantity
 	 * @var null
 	 */
-	public $_room_quantity = null;
+	public $parent_quantity = null;
 
 	/**
 	 * package quantity
 	 * @var null
 	 */
-	public $_package_quantity = null;
+	public $quantity = null;
 
 	function __construct( $post, $params = array() )
 	{
@@ -52,19 +52,19 @@ class HB_Extra_Package
  				'room_quantity'		=> 1,
  				'quantity' 			=> 1
 			) );
-		$this->_check_in = $params['check_in_date'];
+		$this->check_in_date = $params['check_in_date'];
 
-		if( ! $this->_check_in )
-			$this->_check_in = time();
+		if( ! $this->check_in_date )
+			$this->check_in_date = time();
 
-		$this->_check_out = $params['check_out_date'];
+		$this->check_out_date = $params['check_out_date'];
 
-		if( ! $this->_check_out )
-			$this->_check_out = time();
+		if( ! $this->check_out_date )
+			$this->check_out_date = time();
 
-		$this->_room_quantity = $params['room_quantity'];
+		$this->parent_quantity = $params['room_quantity'];
 
-		$this->_package_quantity = $params['quantity'];
+		$this->quantity = $params['quantity'];
 
 		if( is_numeric( $post ) && $post && get_post_type( $post ) == 'hb_extra_room') {
             $this->_post = get_post( $post );
@@ -100,7 +100,7 @@ class HB_Extra_Package
 				break;
 			case 'quantity':
 				# code...
-				$return = $this->_package_quantity;
+				$return = $this->quantity;
 				break;
 			case 'price':
 				# code...
@@ -119,7 +119,7 @@ class HB_Extra_Package
 				$return = get_post_meta( $this->_post->ID, 'tp_hb_extra_room_respondent_name', true );
 				break;
 			case 'night':
-				$return = hb_count_nights_two_dates( $this->_check_out, $this->_check_in );
+				$return = hb_count_nights_two_dates( $this->check_out_date, $this->check_in_date );
 				break;
 			case 'amount_singular':
                 $return = $this->amount_singular();
@@ -138,6 +138,16 @@ class HB_Extra_Package
 		return $return;
 	}
 
+	function get_data( $key = null ) {
+		if ( ! $key ) {
+			return;
+		}
+
+		if ( isset( $this->{$key} ) ) {
+			return $this->{$key};
+		}
+	}
+
 	/**
 	 * get price of package
 	 * @return float price of package
@@ -146,17 +156,17 @@ class HB_Extra_Package
 	{
 		if( $tax )
 		{
-			$regular_price = (float)$this->regular_price_tax;// * (int)$this->_room_quantity;
+			$regular_price = (float)$this->regular_price_tax;// * (int)$this->parent_quantity;
 		}
 		else
 		{
-			$regular_price = (float)$this->regular_price;// * (int)$this->_room_quantity;
+			$regular_price = (float)$this->regular_price;// * (int)$this->parent_quantity;
 		}
 
 		$price = $regular_price;
 		if( $this->respondent === 'number' )
 		{
-			$price = $price * $this->_package_quantity * $this->night;
+			$price = $price * $this->quantity * $this->night;
 		}
 
 		$price = apply_filters( 'hotel_booking_regular_extra_price', $price, $regular_price, $this, $tax );
@@ -228,10 +238,10 @@ class HB_Extra_Package
 		{
 			$package = self::$_instance[ $id ];
 
-			if( $package->_check_in === $params['check_in_date'] &&
-				$package->_check_out === $params['check_out_date'] &&
-				$package->_room_quantity == $params['room_quantity'] &&
-				$package->_package_quantity == $params['quantity']
+			if( $package->check_in_date === $params['check_in_date'] &&
+				$package->check_out_date === $params['check_out_date'] &&
+				$package->parent_quantity == $params['room_quantity'] &&
+				$package->quantity == $params['quantity']
 			)
 			{
 				return $package;

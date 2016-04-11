@@ -145,18 +145,18 @@ class HB_WC_Checkout extends HB_Checkout
 		if( ! $order )
 			return $transaction;
 
-	    $transaction->booking_info['_hb_total']                  = round( $woocommerce->cart->total, 2 );
-	    $transaction->booking_info['_hb_sub_total']              = $woocommerce->cart->subtotal_ex_tax;
-	    $transaction->booking_info['_hb_advance_payment']        = $woocommerce->cart->total;
+	    $transaction->booking_info['_hb_total']						= round( $woocommerce->cart->total, 2 );
+	    $transaction->booking_info['_hb_sub_total']					= $woocommerce->cart->subtotal_ex_tax;
+	    $transaction->booking_info['_hb_advance_payment']			= $woocommerce->cart->total;
 	    // currency of default
-	    $transaction->booking_info['_hb_currency']               = get_woocommerce_currency();
-	    $transaction->booking_info['_hb_description']            = $order->customer_message ? $order->customer_message : __( 'Empty Booking Notes', 'tp-hotel-booking-woocommerce' );
-	    $transaction->booking_info['_hb_coupons']                = '';
-	    $transaction->booking_info['_hb_coupons_total_discount'] = '';
-	    $transaction->booking_info['_hb_tax']    				 = $woocommerce->cart->get_taxes_total();
-	    $transaction->booking_info['_hb_woo_order_id']			 = $order->id;
-	    $transaction->booking_info['_hb_price_including_tax']    = wc_prices_include_tax() ? 1 : 0;
-	    $transaction->booking_info['_hb_addition_information']   = $order->customer_message ? $order->customer_message : __( 'Empty Booking Notes', 'tp-hotel-booking-woocommerce' );
+	    $transaction->booking_info['_hb_currency']					= get_woocommerce_currency();
+	    $transaction->booking_info['_hb_description']				= $order->customer_message ? $order->customer_message : __( 'Empty Booking Notes', 'tp-hotel-booking-woocommerce' );
+	    $transaction->booking_info['_hb_coupons']					= '';
+	    $transaction->booking_info['_hb_coupons_total_discount'] 	= '';
+	    $transaction->booking_info['_hb_tax']						= $woocommerce->cart->get_taxes_total();
+	    $transaction->booking_info['_hb_woo_order_id'] 				= $order->id;
+	    $transaction->booking_info['_hb_price_including_tax']		= wc_prices_include_tax() ? 1 : 0;
+	    $transaction->booking_info['_hb_addition_information']		= $order->customer_message ? $order->customer_message : __( 'Empty Booking Notes', 'tp-hotel-booking-woocommerce' );
 
 	    if( WC()->cart->coupons_enabled() ){
 	        $transaction->booking_info['coupon'] = WC()->cart->get_coupons();

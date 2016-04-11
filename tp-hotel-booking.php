@@ -177,7 +177,9 @@ class TP_Hotel_Booking {
         $this->_include( 'includes/products/class-hb-room.php' );
 
         $this->_include( 'includes/class-hb-sessions.php' );
-        $this->_include( 'includes/class-hb-cart.php' );
+        // cart
+        $this->_include( 'includes/cart/hb-cart-functions.php' );
+        $this->_include( 'includes/cart/class-hb-cart.php' );
         $this->_include( 'includes/gateways/class-hb-payment-gateway-base.php' );
 
         $this->_include( 'includes/hb-webhooks.php' );

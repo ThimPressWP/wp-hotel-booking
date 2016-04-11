@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-29 17:13:06
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-04 10:34:08
+ * @Last Modified time: 2016-04-11 11:15:37
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -57,7 +57,7 @@ if ( ! class_exists( 'HB_Admin_Setting_General' ) ) {
 
 					array(
 							'type'		=> 'select',
-							'id'		=> 'tp_hotel_booking_currency',
+							'id'		=> 'tp_hotel_booking_price_currency_position',
 							'title'		=> __( 'Currency Position', 'tp-hotel-booking' ),
 							'options'	=> array(
 									'left'		=> __('Left ( $69.99 )', 'tp-hotel-booking'),

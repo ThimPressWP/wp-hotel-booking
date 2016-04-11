@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-31 14:42:40
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-08 17:06:01
+ * @Last Modified time: 2016-04-11 10:51:53
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -34,7 +34,7 @@ function hb_update_booking_status( $booking_id, $status ){
  * @param array $args
  * @return mixed|WP_Error
  */
-function hb_create_booking( $booking_info = array() ) {
+function hb_create_booking( $booking_info = array(), $order_items = array() ) {
 
     $booking_info = wp_parse_args( $booking_info, array(
             '_hb_tax'                       => '',
@@ -65,7 +65,7 @@ function hb_create_booking( $booking_info = array() ) {
 
     $args = array(
         'status'        => '',
-        'user_id'   => get_current_user_id(),
+        'user_id'       => get_current_user_id(),
         'customer_note' => null,
         'booking_id'    => 0,
         'parent'        => 0
@@ -85,25 +85,26 @@ function hb_create_booking( $booking_info = array() ) {
         $booking->post->post_status  = 'hb-' . $args['status'];
     }
 
-    $booking_info = array(
-        '_hb_booking_key'              => apply_filters( 'hb_generate_booking_key', uniqid( 'booking' ) )
-    );
+    $booking_info['_hb_booking_key'] = apply_filters( 'hb_generate_booking_key', uniqid( 'booking' ) );
 
     if( TP_Hotel_Booking::instance()->cart->coupon ){
-        $booking_info['_hb_coupon'] = TP_Hotel_Booking::instance()->cart->coupon;
+        $booking_info['_hb_coupon_id'] = TP_Hotel_Booking::instance()->cart->coupon;
+        $coupon = HB_Coupon::instance( $booking_info['_hb_coupon_id'] );
+        $booking_info['_hb_coupon_code'] = $coupon->coupon_code;
+        $booking_info['_hb_coupon_value'] = $coupon->discount_value;
     }
 
     $booking->set_booking_info(
         $booking_info
     );
 
-    $booking_id = $booking->update();
+    $booking_id = $booking->update( $order_items );
 
     // set session booking id
     TP_Hotel_Booking::instance()->cart->set_booking( 'booking_id', $booking_id );
 
     // do action
-    do_action( 'hotel_booking_create_booking', $booking_id );
+    do_action( 'hotel_booking_create_booking', $booking_id, $booking_info, $order_items );
     return $booking_id;
 }
 
@@ -249,6 +250,22 @@ if ( ! function_exists( 'hb_get_sub_item_order_item_id' ) ) {
             ", $order_item_id );
 
         return $wpdb->get_col( $query );
+    }
+}
+
+if ( ! function_exists( 'hb_empty_booking_order_items' ) ) {
+    function hb_empty_booking_order_items( $booking_id = null ) {
+        global $wpdb;
+
+        $sql = $wpdb->prepare("
+                DELETE hb_order_item, hb_order_itemmeta
+                    FROM $wpdb->hotel_booking_order_items as hb_order_item
+                    LEFT JOIN $wpdb->hotel_booking_order_itemmeta as hb_order_itemmeta ON hb_order_item.order_item_id = hb_order_itemmeta.hotel_booking_order_item_id
+                WHERE
+                    hb_order_item.order_id = %d
+            ", $booking_id );
+
+        return $wpdb->query( $sql );
     }
 }
 
