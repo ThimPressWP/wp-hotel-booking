@@ -5,43 +5,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class HB_Admin_Menu{
+
     function __construct(){
         add_action( 'admin_menu', array( $this, 'register' ) );
-        add_action( 'init', array( $this, 'fix_parent_menu' ) );
-        add_filter( 'parent_file', array( $this, 'parent_file' ) );
 
-    }
-
-    function parent_file( $parent_file ){
-        global $submenu_file;
-        if ( isset($_GET['page']) && sanitize_text_field( $_GET['page'] ) == 'hb_booking_details') $submenu_file = 'edit.php?post_type=hb_booking';
-
-        return $parent_file;
-    }
-
-    function fix_parent_menu(){
-        if( hb_get_request( 'page' ) == 'hb_booking_details' ){
-            add_filter( 'tp_hotel_booking_menu_items', array( $this, 'add_booking_details_menu' ) );
-        ?>
-            <style type="text/css">
-                #adminmenu .toplevel_page_tp_hotel_booking ul.wp-submenu > li:last-child{
-                    display: none;
-                }
-            </style>
-        <?php
-        }
-    }
-
-    function add_booking_details_menu( $menu ){
-        $menu['booking_details'] = array(
-            'tp_hotel_booking',
-            __('Booking Details', 'tp-hotel-booking'),     // page title
-            '',     // menu title
-            'manage_options',   // capability
-            'hb_booking_details',     // menu slug
-            'hb_booking_detail_page' // callback function
-        );
-        return $menu;
     }
 
     function register(){
@@ -116,7 +83,6 @@ class HB_Admin_Menu{
 
     function settings_page(){
         HB_Admin_Settings::output();
-        // TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings.php' );
     }
 
     function pricing_table(){
@@ -131,5 +97,3 @@ class HB_Admin_Menu{
 }
 
 new HB_Admin_Menu();
-
-// trip, night, number

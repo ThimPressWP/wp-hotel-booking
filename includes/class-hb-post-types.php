@@ -406,10 +406,7 @@ class HB_Post_Types{
                 $content = sprintf( '<input class="hb-number-field" type="number" name="%s_ordering[%d]" value="%d" size="3" />', $taxonomy, $term_id, $term->term_group );
                 break;
             case 'capacity':
-                $capacity = get_term_meta( $term_id, 'hb_max_number_of_adults', true);
-                if ( ! $capacity ) {
-                    $capacity = get_option( 'hb_taxonomy_capacity_' . $term_id );
-                }
+                $capacity = get_term_meta( $term_id, 'hb_max_number_of_adults', true );
                 $content = '<input class="hb-number-field" type="number" name="' . $taxonomy . '_capacity[' . $term_id . ']" value="' . $capacity .'" size="2" />';
                 break;
             default:

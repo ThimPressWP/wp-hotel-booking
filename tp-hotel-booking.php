@@ -4,7 +4,7 @@
     Plugin URI: http://thimpress.com/
     Description: Full of professional features for a booking room system.
     Author: ThimPress
-    Version: 1.1.4.1
+    Version: 1.1.5.1
     Author URI: http://thimpress.com
 */
 
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'HB_FILE', __FILE__ );
 define( 'HB_PLUGIN_PATH', dirname( __FILE__ ) );
 define( 'HB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
-define( 'HB_VERSION', '1.1.4.1' );
+define( 'HB_VERSION', '1.1.5.1' );
 define( 'HB_BLOG_ID', get_current_blog_id() );
 
 /**
@@ -170,11 +170,12 @@ class TP_Hotel_Booking {
         $this->_include( 'includes/products/class-hb-product-room.php' );
         // end products
 
+        $this->_include( 'includes/room/hb-room-functions.php' );
+        $this->_include( 'includes/room/class-hb-room.php' );
         // // addon
         $this->_include( 'includes/plugins/tp-hb-currencies/tp-hb-currencies.php' );
         $this->_include( 'includes/plugins/tp-hb-extra/tp-hb-extra.php' );
         // // end addon
-        $this->_include( 'includes/products/class-hb-room.php' );
 
         $this->_include( 'includes/class-hb-sessions.php' );
         // cart
@@ -187,7 +188,7 @@ class TP_Hotel_Booking {
 
     public function frontend_includes() {
         // shortcodes
-        $this->_include( 'includes/class-hb-shortcodes.php' );
+        $this->_include( 'includes/shortcodes/class-hb-abstract-shortcodes.php' );
         $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-cart.php' );
         $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-account.php' );
         $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-checkout.php' );
@@ -270,7 +271,7 @@ class TP_Hotel_Booking {
     public function enqueue_assets(){
         $dependencies = array(
             'jquery',
-            'jquery-ui-sortable',
+            // 'jquery-ui-sortable',
             'jquery-ui-datepicker'
         );
 
@@ -285,7 +286,7 @@ class TP_Hotel_Booking {
             wp_localize_script( 'tp-admin-hotel-booking', 'hotel_booking_i18n', hb_admin_i18n() );
         } else {
             wp_register_style( 'tp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.min.css' ) );
-            wp_register_script( 'tp-hotel-booking', $this->plugin_url( 'assets/js/hotel-booking.min.js' ), $dependencies );
+            wp_register_script( 'tp-hotel-booking', $this->plugin_url( 'assets/js/hotel-booking.js' ), $dependencies );
 
             wp_localize_script( 'tp-hotel-booking', 'hotel_booking_i18n', hb_i18n() );
 
@@ -319,6 +320,7 @@ class TP_Hotel_Booking {
 
         // select2
         wp_enqueue_script( 'tp-admin-hotel-booking-select2' );
+        // wp_enqueue_script( 'colorpicker' );
     }
 
     /**

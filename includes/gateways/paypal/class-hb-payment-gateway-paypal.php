@@ -194,12 +194,9 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         }
 
         if ( 'completed' === $request['payment_status'] ) {
-            if( (float)$booking->total === (float)$request['payment_gross'] )
-            {
+            if( (float)$booking->total === (float)$request['payment_gross'] ) {
                 $this->payment_complete( $booking, ( ! empty( $request['txn_id'] ) ? $request['txn_id'] : '' ), __( 'IPN payment completed', 'tp-hotel-booking' ) );
-            }
-            else
-            {
+            } else {
                 $booking->update_status( 'processing' );
             }
             // save paypal fee
@@ -259,13 +256,10 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      * @param $booking_id
      * @return string
      */
-    protected function _get_paypal_basic_checkout_url(  $booking_id ){
+    protected function _get_paypal_basic_checkout_url(  $booking_id ) {
 
         $paypal = HB_Settings::instance()->get( 'paypal' );
 
-        //$user = hb_get_current_user();
-        // $customer = hb_get_customer( get_transient('hb_current_customer_' . session_id ()) );
-        $customer = hb_get_customer( TP_Hotel_Booking::instance()->cart->customer_id );
         $paypal_args = array (
             'cmd'      => '_xclick',
             'amount'   => round( TP_Hotel_Booking::instance()->cart->hb_get_cart_total( ! hb_get_request( 'pay_all' ) ), 2 ),
@@ -290,7 +284,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
             'notify_url'    => get_site_url() . '/?' . hb_get_web_hook( 'paypal-standard' ) . '=1',
             'no_note'       => '1',
             'shipping'      => '0',
-            'email'         => $customer->data['email'],
+            'email'         => $booking->customer_email,
             'rm'            => '2',
             'cancel_return' => hb_get_return_url(),
             'custom'        => json_encode( $custom ),

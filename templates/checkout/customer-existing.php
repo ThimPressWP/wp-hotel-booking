@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
-<?php if ( ! TP_Hotel_Booking::instance()->cart->customer_id ) : ?>
+<?php if ( ! is_user_logged_in() ) : ?>
 
     <div class="hb-order-existing-customer" data-label="<?php esc_attr_e( '-Or-', 'tp-hotel-booking' ); ?>">
         <div class="hb-col-padding hb-col-border">

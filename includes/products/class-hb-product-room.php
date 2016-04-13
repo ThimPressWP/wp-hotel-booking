@@ -282,8 +282,7 @@ class HB_Product_Room_Base extends HB_Product_Abstract
         $end_date_to_time = strtotime( $end_date );
 
         $tax = false;
-        if( hb_price_including_tax() )
-        {
+        if( hb_price_including_tax() ) {
             $tax = true;
         }
 
@@ -331,42 +330,32 @@ class HB_Product_Room_Base extends HB_Product_Abstract
         }
 
         $plans = $this->get_pricing_plans();
+        $return = 0;
         if( $plans )
         {
-            $return = 0;
-            if( sizeof( $plans ) == 1 ){
-                $regular_plan = $plans[0];
-            }else{
-                $regular_plan = array_pop( $plans );
-            }
+            $regular_plan = null;
             $selected_plan = null;
             if( $plans ){
                 foreach( $plans as $plan ){
-                    $start_plan = $start_time_plan = get_post_meta( $plan->ID, '_hb_pricing_plan_start_timestamp', true );
-                    if ( ! $start_plan ) {
-                        $start_plan = get_post_meta( $plan->ID, '_hb_pricing_plan_start', true );
-                        $start_time_plan = @strtotime( $start_plan );
-                    }
-                    $end_plan = $end_time_plan = get_post_meta( $plan->ID, '_hb_pricing_plan_end_timestamp', true );
-                    if ( ! $end_plan ) {
-                        $end_plan = get_post_meta( $plan->ID, '_hb_pricing_plan_end', true );
-                        $end_time_plan = @strtotime( $end_plan );
-                    }
-                    if( $date >= $start_time_plan && $date <= $end_time_plan ){
-                        $selected_plan = $plan;
-                        break;
+                    if ( $plan->start && $plan->end ) {
+                        $start = strtotime( $plan->start );
+                        $end = strtotime( $plan->end );
+
+                        if ( $date >= $start && $date <= $end ) {
+                            $selected_plan = $plan;
+                            break;
+                        }
+
+                    } else if ( ! $regular_plan ) {
+                        $selected_plan = $regular_plan = $plan;
                     }
                 }
             }
 
-            if ( ! $selected_plan ) {
-                $selected_plan = $regular_plan;
-            }
-
             if ( $selected_plan ) {
-                $prices = get_post_meta( $selected_plan->ID, '_hb_pricing_plan_prices', true );
-                if( $prices && isset( $prices[ $this->capacity_id ] ) ) {
-                    $return = $prices[ $this->capacity_id ][ date( 'w', $date ) ];
+                $prices = $selected_plan->prices;
+                if( $prices && isset( $prices[ date( 'w', $date ) ] ) ) {
+                    $return = $prices[ date( 'w', $date ) ];
                     $return = $return + $return * $tax;
                 }
             }
@@ -442,19 +431,7 @@ class HB_Product_Room_Base extends HB_Product_Abstract
      */
     function get_pricing_plans(){
         if( ! $this->_plans ) {
-            $plans = get_posts(
-                array(
-                    'post_type' => 'hb_pricing_plan',
-                    'posts_per_page' => 9999,
-                    'meta_query' => array(
-                        array(
-                            'key' => '_hb_pricing_plan_room',
-                            'value' => $this->post->ID
-                        )
-                    )
-                )
-            );
-            $this->_plans = $plans;
+            $this->_plans = hb_room_get_pricing_plans( $this->post->ID );
         }
         return $this->_plans;
     }

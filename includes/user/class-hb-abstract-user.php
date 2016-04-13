@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-31 14:55:56
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-11 15:18:01
+ * @Last Modified time: 2016-04-13 17:01:24
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -32,7 +32,7 @@ abstract class HB_User_Abstract {
 		}
 
 		if ( ! $this->id ) {
-			throw new Exception( sprintf( __( 'User %s is not exists.', 'tp-hotel-booking' ), $user ) );
+			// throw new Exception( sprintf( __( 'User %s is not exists.', 'tp-hotel-booking' ), $user ) );
 		}
 	}
 

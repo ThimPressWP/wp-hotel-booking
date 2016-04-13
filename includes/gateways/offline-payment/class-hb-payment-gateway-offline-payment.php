@@ -77,7 +77,7 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
      * @param null $booking_id
      * @return array
      */
-    function process_checkout( $booking_id = null, $customer_id = null ){
+    function process_checkout( $booking_id = null ){
         $booking = HB_Booking::instance( $booking_id );
         if( $booking ){
             $booking->update_status( 'processing' );
@@ -86,8 +86,6 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
         $settings = HB_Settings::instance()->get('offline-payment');
         $email_subject = ! empty( $settings['email_subject'] ) ? $settings['email_subject'] : false;
         $email_content = ! empty( $settings['email_content'] ) ? $settings['email_content'] : false;
-        $to = get_post_meta( $customer_id, '_hb_email', true );
-
         if( ! $email_subject || ! $email_content ) {
             return array(
                 'result'    => 'fail'
@@ -96,7 +94,7 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
             // empty cart
             TP_Hotel_Booking::instance()->cart->empty_cart();
 
-            hb_add_message( sprintf( __( 'Thank you! Your booking has been placed. Please check your email %s to view booking details', 'tp-hotel-booking' ), $to ) );
+            hb_add_message( sprintf( __( 'Thank you! Your booking has been placed. Please check your email %s to view booking details', 'tp-hotel-booking' ), $booking->customer_email ) );
             return array(
                 'result'    => 'success',
                 'redirect'  => '?hotel-booking-offline-payment=1'

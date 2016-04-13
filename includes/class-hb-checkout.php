@@ -101,7 +101,7 @@ class HB_Checkout{
         if( $booking_id ) {
             // if total > 0
             if ( TP_Hotel_Booking::instance()->cart->needs_payment() ) {
-                $result = $payment_method->process_checkout( $booking_id );
+                $result = $this->payment_method->process_checkout( $booking_id );
             } else {
                 if ( empty( $booking ) ) {
                     $booking = HB_Booking::instance( $booking_id );
@@ -115,7 +115,10 @@ class HB_Checkout{
                 );
             }
         } else {
-            die( __('can not create booking', 'tp-hotel-booking') );
+            hb_send_json( array(
+                    'result'    => 'success',
+                    'redirect'  => __('can not create booking', 'tp-hotel-booking')
+                ) );
         }
 
         if ( ! empty( $result['result'] ) && $result['result'] == 'success' ) {

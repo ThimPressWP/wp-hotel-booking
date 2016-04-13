@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-25 09:32:53
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-08 08:28:01
+ * @Last Modified time: 2016-04-13 13:47:55
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,7 +12,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $post;
 $booking = HB_Booking::instance( $post->ID );
-$customers = hb_get_customers();
 ?>
 
 <style type="text/css">

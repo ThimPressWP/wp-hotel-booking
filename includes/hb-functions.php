@@ -798,31 +798,6 @@ function hb_update_customer_info( $data ) {
 	return $customer_id;
 }
 
-function hb_get_customer( $customer_id ) {
-	if ( is_string( $customer_id ) && intval( $customer_id ) == 0 ) {
-		global $wpdb;
-		$query       = $wpdb->prepare( "
-            SELECT post_id
-            FROM {$wpdb->postmeta}
-            WHERE meta_key = %s
-            AND meta_value = %s
-        ", '_hb_email', $customer_id );
-		$customer_id = $wpdb->get_var( $query );
-	}
-	$customer = get_post( $customer_id );
-	if ( $customer && $customer->post_type == 'hb_customer' ) {
-		$customer->data = array();
-		$data           = get_post_meta( $customer->ID );
-		foreach ( $data as $k => $v ) {
-			$key_name                  = preg_replace( '!^_hb_!', '', $k );
-			$customer->data[$key_name] = $v[0];
-		}
-	} else {
-		$customer = null;
-	}
-	return $customer;
-}
-
 /**
  * Place order for a booking
  *
@@ -831,10 +806,6 @@ function hb_get_customer( $customer_id ) {
 function hb_customer_place_order() {
 	HB_Checkout::instance()->process_checkout();
 	exit();
-}
-
-function hb_get_current_user() {
-	return wp_get_current_user();
 }
 
 //add_action( 'init', 'hb_customer_place_order' );
@@ -1053,76 +1024,46 @@ function hb_search_rooms( $args = array() ) {
 
     $results = array();
 
-    /**
-     * Count available rooms
-     */
-    $query_count_available = $wpdb->prepare("
-        (
-            SELECT ra.meta_value
-            FROM {$wpdb->postmeta} ra
-            INNER JOIN {$wpdb->posts} r ON ra.post_id = r.ID AND ra.meta_key = %s
-                WHERE r.ID=rooms.ID
-            GROUP BY ra.post_id
-        )
-    ", '_hb_num_of_rooms');
+    $not = $wpdb->prepare("
+			(
+				SELECT COALESCE( SUM( meta.meta_value ), 0 ) FROM {$wpdb->hotel_booking_order_itemmeta} AS meta
+					LEFT JOIN {$wpdb->hotel_booking_order_items} AS order_item ON order_item.order_item_id = meta.hotel_booking_order_item_id AND meta.meta_key = %s
+					LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS itemmeta ON order_item.order_item_id = itemmeta.hotel_booking_order_item_id AND itemmeta.meta_key = %s
+					LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS checkin ON order_item.order_item_id = checkin.hotel_booking_order_item_id AND checkin.meta_key = %s
+					LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS checkout ON order_item.order_item_id = checkout.hotel_booking_order_item_id AND checkout.meta_key = %s
+					LEFT JOIN {$wpdb->posts} AS booking ON booking.ID = order_item.order_id
+				WHERE
+						itemmeta.meta_value = rooms.ID
+					AND (
+							( checkin.meta_value >= %d AND checkin.meta_value <= %d )
+						OR 	( checkout.meta_value >= %d AND checkout.meta_value <= %d )
+						OR 	( checkin.meta_value <= %d AND checkout.meta_value > %d )
+					)
+					AND booking.post_type = %s
+					AND booking.post_status IN ( %s, %s, %s )
+			)
+		", 'qty', 'product_id', 'check_in_date', 'check_out_date',
+			$check_in_date_to_time, $check_out_date_to_time,
+			$check_in_date_to_time, $check_out_date_to_time,
+			$check_in_date_to_time, $check_out_date_to_time,
+			'hb_booking', 'hb-completed', 'hb-processing', 'hb-pending'
+		);
 
-    $booking_status = $wpdb->prepare("
-            (
-                SELECT booked.post_status
-                FROM {$wpdb->posts} booked
-                WHERE
-                    booked.post_type = %s
-                    AND bk.meta_value = booked.ID
-            )
-        ", 'hb_booking');
-
-    /**
-     * Count booked rooms
-     */
-    $query_count_not_available = $wpdb->prepare("
-        (
-            SELECT count(book_item.ID)
-            FROM {$wpdb->posts} book_item
-            INNER JOIN {$wpdb->postmeta} bm ON bm.post_id = book_item.ID AND bm.meta_key = %s
-            INNER JOIN {$wpdb->postmeta} bi ON bi.post_id = book_item.ID AND bi.meta_key = %s
-            INNER JOIN {$wpdb->postmeta} bo ON bo.post_id = book_item.ID AND bo.meta_key = %s
-            INNER JOIN {$wpdb->postmeta} bk ON bk.post_id = book_item.ID AND bk.meta_key = %s
-            WHERE
-                book_item.post_type = %s
-                AND bm.meta_value = rooms.ID
-                AND (
-	                ( bi.meta_value <= %d AND bo.meta_value >= %d )
-	                OR ( bi.meta_value >= %d AND bi.meta_value < %d )
-	                OR ( bo.meta_value > %d AND bo.meta_value <= %d )
-                )
-                AND {$booking_status} IN ( %s, %s, %s )
-        )
-    ", '_hb_id', '_hb_check_in_date', '_hb_check_out_date', '_hb_booking_id', 'hb_booking_item',
-        $check_in_date_to_time, $check_out_date_to_time,
-        $check_in_date_to_time, $check_out_date_to_time,
-        $check_in_date_to_time, $check_out_date_to_time,
-        'hb-pending', 'hb-processing', 'hb-completed'
-    );
-
-    /**
-     * merge query select room
-     */
-    $query = $wpdb->prepare("
-        SELECT rooms.*, {$query_count_available} - {$query_count_not_available} as available_rooms
-        FROM {$wpdb->posts} rooms
-        LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = rooms.ID AND pm.meta_key = %s
-        LEFT JOIN {$wpdb->postmeta} pm2 ON pm2.post_id = rooms.ID AND pm2.meta_key = %s
-        LEFT JOIN {$wpdb->postmeta} pm3 ON pm3.post_id = rooms.ID AND pm3.meta_key = %s
-        LEFT JOIN {$wpdb->termmeta} term_cap ON term_cap.term_id = pm3.meta_value AND term_cap.meta_key = %s
-        WHERE
-            rooms.post_type = %s
-            AND rooms.post_status = %s
-            AND pm.meta_value <= %d
-            AND ( term_cap.meta_value <= %d OR pm2.meta_value <= %d )
-        GROUP BY rooms.post_name
-        HAVING available_rooms > 0
-        ORDER BY term_cap.meta_value DESC
-    ", '_hb_max_child_per_room', '_hb_max_adults_per_room', '_hb_room_capacity', 'hb_max_number_of_adults', 'hb_room', 'publish', $max_child, $adults, $adults );
+	$query = $wpdb->prepare("
+			SELECT rooms.*, ( number.meta_value - {$not} ) AS available_rooms FROM $wpdb->posts AS rooms
+				LEFT JOIN $wpdb->postmeta AS number ON rooms.ID = number.post_id AND number.meta_key = %s
+				LEFT JOIN {$wpdb->postmeta} pm1 ON pm1.post_id = rooms.ID AND pm1.meta_key = %s
+				LEFT JOIN {$wpdb->termmeta} term_cap ON term_cap.term_id = pm1.meta_value AND term_cap.meta_key = %s
+				LEFT JOIN {$wpdb->postmeta} pm2 ON pm2.post_id = rooms.ID AND pm2.meta_key = %s
+			WHERE
+				rooms.post_type = %s
+				AND rooms.post_status = %s
+				AND term_cap.meta_value <= %d
+				AND pm2.meta_value <= %d
+			GROUP BY rooms.post_name
+			HAVING available_rooms > 0
+			ORDER BY term_cap.meta_value DESC
+		", '_hb_num_of_rooms', '_hb_room_capacity', 'hb_max_number_of_adults', '_hb_max_child_per_room', 'hb_room', 'publish', $adults, $max_child );
 
     $query = apply_filters( 'hb_search_query', $query, array(
             'check_in'      => $check_in_date_to_time,
@@ -1134,8 +1075,8 @@ function hb_search_rooms( $args = array() ) {
     if( $search = $wpdb->get_results( $query ) ){
         foreach( $search as $k => $p ){
             $room = HB_Room::instance( $p, array(
-                    'check_in_date'     => date( 'm/d/Y', $check_in_time ),
-                    'check_out_date'    => date( 'm/d/Y', $check_out_time ),
+                    'check_in_date'     => date( 'm/d/Y', $check_in_date_to_time ),
+                    'check_out_date'    => date( 'm/d/Y', $check_out_date_to_time ),
                     'quantity'          => 1
                 ) );
             $room->post->available_rooms = (int)$p->available_rooms;
@@ -2049,11 +1990,10 @@ if ( ! function_exists( 'hb_get_url' ) ) {
 
 if ( ! function_exists( 'hb_get_cart_url' ) ) {
 	function hb_get_cart_url() {
-		global $hb_settings;
 		$id = hb_get_page_id( 'cart' );
 
 		$url = home_url();
-		if ( $id && $hb_settings->get( 'cart' ) ) {
+		if ( $id ) {
 			$url = get_the_permalink( $id );
 		}
 
@@ -2063,11 +2003,10 @@ if ( ! function_exists( 'hb_get_cart_url' ) ) {
 
 if ( ! function_exists( 'hb_get_checkout_url' ) ) {
 	function hb_get_checkout_url() {
-		global $hb_settings;
 		$id = hb_get_page_id( 'checkout' );
 
 		$url = home_url();
-		if ( $id && $hb_settings->get( 'checkout' ) ) {
+		if ( $id ) {
 			$url = get_the_permalink( $id );
 		}
 
@@ -2077,11 +2016,10 @@ if ( ! function_exists( 'hb_get_checkout_url' ) ) {
 
 if ( ! function_exists( 'hb_get_account_url' ) ) {
 	function hb_get_account_url() {
-		global $hb_settings;
 		$id = hb_get_page_id( 'account' );
 
 		$url = home_url();
-		if ( $id && $hb_settings->get( 'account' ) ) {
+		if ( $id ) {
 			$url = get_the_permalink( $id );
 		}
 		return apply_filters( 'hb_account_url', $url );

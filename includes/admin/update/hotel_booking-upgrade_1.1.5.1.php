@@ -3,14 +3,85 @@
  * @Author: ducnvtt
  * @Date:   2016-03-31 16:44:29
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-07 09:19:44
+ * @Last Modified time: 2016-04-13 13:18:52
  */
 
-if ( ! defined( 'ABSPATH' ) || ! defined( 'HB_INSTALLING' ) || HB_INSTALLING !== true ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
+if ( ! defined( 'HB_INSTALLING' ) || HB_INSTALLING !== true ) {
+    return;
+}
+
 global $wpdb;
+
+/**
+ * Upgrade pricing plans
+ */
+
+$sql = $wpdb->prepare("
+        SELECT
+            plan.ID AS plan_id, room.ID AS room_id, metaprice.meta_value AS prices
+        FROM $wpdb->posts AS plan
+            INNER JOIN $wpdb->postmeta AS metaprice ON metaprice.post_id = plan.ID AND metaprice.meta_key = %s
+            INNER JOIN $wpdb->postmeta AS metaroom ON metaroom.post_id = plan.ID AND metaroom.meta_key = %s
+            INNER JOIN $wpdb->posts AS room ON room.ID = metaroom.meta_value
+        WHERE
+            plan.post_type = %s
+            AND plan.post_status = %s
+            AND room.post_type = %s
+        GROUP BY plan_id
+    ",
+        '_hb_pricing_plan_prices', '_hb_pricing_plan_room',
+        'hb_pricing_plan', 'publish', 'hb_room'
+    );
+
+// execute query
+$results = $wpdb->get_results( $sql );
+
+if ( $results ) {
+    foreach ( $results as $k => $r ) {
+
+        if ( ! $r->room_id ) {
+            continue;
+        }
+
+        $plans = maybe_unserialize( $r->prices );
+        // plans
+        $capacity_id = get_post_meta( $r->room_id, '_hb_room_capacity', true );
+        $start = @strtotime( get_post_meta( $r->plan_id, '_hb_pricing_plan_start', true ) );
+        $end = @strtotime( get_post_meta( $r->plan_id, '_hb_pricing_plan_end', true ) );
+        if ( isset( $plans[ $capacity_id ] ) ) {
+            $plan = $plans[ $capacity_id ];
+        } else {
+            $plan = current( $plans );
+        }
+
+        $timestamp_start = get_post_meta( $r->plan_id, '_hb_pricing_plan_start_timestamp', true );
+        if ( $timestamp_start ) {
+            $start = $timestamp_start;
+        }
+
+        $timestamp_end = get_post_meta( $r->plan_id, '_hb_pricing_plan_end_timestamp', true );
+        if ( $timestamp_end ) {
+            $end = $timestamp_end;
+        }
+
+        // set pricing plan
+        hb_room_set_pricing_plan( array(
+                'start_time'        => $start ? absint( $start ) : null,
+                'end_time'          => $end ? absint( $end ) : null,
+                'pricing'           => $plan,
+                'room_id'           => $r->room_id
+            ) );
+
+    }
+}
+
+/**
+ * END upgrade pricing plans
+ */
 
 /**
  * Upgrade booking item
@@ -90,7 +161,7 @@ if ( $params ) {
                 }
             }
             // delete old meta data
-            delete_post_meta( $booking_id, '_hb_booking_params' );
+            // delete_post_meta( $booking_id, '_hb_booking_params' );
         } else if ( $param->meta_key === '_hb_booking_cart_params' ) {
             $parents = array();
             foreach ( $params as $cart_id => $param ) {
@@ -112,7 +183,7 @@ if ( $params ) {
                 hb_add_order_item_meta( $order_item_id, 'tax_total', $param->amount_tax );
             }
             // delete old meta data
-            delete_post_meta( $booking_id, '_hb_booking_cart_params' );
+            // delete_post_meta( $booking_id, '_hb_booking_cart_params' );
         }
     }
 }
@@ -167,4 +238,32 @@ if ( $customers ) {
 }
 /**
  * End upgrade customer
+ */
+
+/**
+ * Upgrade room capacities
+ * Move option capacity quantity adults => term meta
+ */
+
+$terms = get_terms( array( 'hb_room_capacity' ), array(
+            'taxonomy'   => 'hb_room_capacity',
+            'hide_empty' => 0,
+            'orderby'    => 'term_group',
+            'map_fields' => null
+        ) );
+
+if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+    foreach( $terms as $term ) {
+        $term_id = $term->term_id;
+        $capacity = get_term_meta( $term_id, 'hb_max_number_of_adults', true );
+
+        if ( ! $capacity ) {
+            $capacity = get_option( 'hb_taxonomy_capacity_' . $term_id );
+            update_term_meta( $term_id, 'hb_max_number_of_adults', $capacity );
+        }
+    }
+}
+
+/**
+ * End upgrade room capacities
  */

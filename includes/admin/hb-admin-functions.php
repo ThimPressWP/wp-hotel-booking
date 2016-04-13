@@ -191,7 +191,7 @@ function hb_add_meta_boxes(){
         )
     );
 }
-add_action( 'init', 'hb_add_meta_boxes', 50 );
+add_action( 'admin_init', 'hb_add_meta_boxes', 50 );
 
 add_action( 'hb_booking_status_changed', 'hb_booking_status_completed_action', 10, 3 );
 if ( ! function_exists( 'hb_booking_status_completed_action' ) ) {
@@ -212,182 +212,18 @@ if ( ! function_exists( 'hb_booking_status_completed_action' ) ) {
     }
 }
 
-function hb_bookings_meta_boxes() {
-    HB_Meta_Box::instance(
-        'booking_info',
-        array(
-            'title'             => __('Booking Info','tp-hotel-booking'),
-            'post_type'         => 'hb_booking',
-            'meta_key_prefix'   => '_hb_'
-        ),
-        array()
-    )->add_field(
-        array(
-            'name'  => 'customer_id',
-            'label' => __('Customer ID', 'tp-hotel-booking'),
-            'type'  => 'label',
-            'std'   => '',
-            'attr'  => 'readonly="readonly"'
-        ),
-        array(
-            'name'  => 'tax',
-            'label' => __('Tax', 'tp-hotel-booking'),
-            'type'  => 'label',
-            'std'   => '0',
-            'attr'  => 'readonly="readonly"',
-            'filter' => 'hb_meta_box_field_tax'
-        ),
-        array(
-            'name'  => 'price_including_tax',
-            'label' => __('Price Including Tax', 'tp-hotel-booking'),
-            'type'  => 'label',
-            'std'   => '0',
-            'attr'  => 'readonly="readonly"',
-            'filter' => 'hb_meta_box_field_price_including_tax'
-        ),
-        array(
-            'name'  => 'sub_total',
-            'label' => __('Sub Total', 'tp-hotel-booking'),
-            'type'  => 'label',
-            'std'   => '',
-            'attr'  => 'readonly="readonly"',
-            'filter' => 'hb_meta_box_field_sub_total'
-        ),
-        array(
-            'name'  => 'total',
-            'label' => __('Total', 'tp-hotel-booking'),
-            'type'  => 'label',
-            'std'   => '0',
-            'attr'  => 'readonly="readonly"',
-            'filter' => 'hb_meta_box_field_total'
-        ),
-        array(
-            'name'  => 'booking_status',
-            'label' => 'Status',
-            'std'   => 'hb-pending',
-            'type'  => 'select',
-            'filter' => 'hb_meta_box_field_booking_status',
-            'options' => hb_get_booking_statuses()
-        ),
-        array(
-            'name'  => 'advance_payment',
-            'label' => 'Advance Payment',
-            'std'   => '',
-            'type'  => 'label',
-            'filter' => 'hb_meta_box_field_sub_total'
-        )
-    );
-}
-// add_action( 'init', 'hb_bookings_meta_boxes', 50 );
-
 add_action( 'admin_init', 'hb_admin_booking_init_metaboxes' );
 if ( ! function_exists( 'hb_admin_booking_init_metaboxes' ) ) {
     function hb_admin_booking_init_metaboxes() {
         $metaboxes = array(
                 new HB_Admin_Metabox_Booking_Details(), // booking details
                 new HB_Admin_Metabox_Booking_Items(), // booking items
-                new HB_Admin_Metabox_Booking_Actions() // booking actions
+                new HB_Admin_Metabox_Booking_Actions(), // booking actions
+                new HB_Admin_Metabox_Room_Price() // room price
             );
         return apply_filters( 'hb_admin_booking_init_metaboxes', $metaboxes );
     }
 }
-
-function hb_customer_meta_box() {
-    HB_Meta_Box::instance(
-        'customer_info',
-        array(
-            'title'             => __( 'Customer Info','tp-hotel-booking' ),
-            'post_type'         => 'hb_customer',
-            'meta_key_prefix'   => '_hb_'
-        ),
-        array()
-    )->add_field(
-        array(
-            'name'      => 'title',
-            'label'     => __('Title', 'tp-hotel-booking'),
-            'type'      => 'select',
-            'options'   => apply_filters( 'hb_customer_titles', array(
-                            array(
-                                'value' => 'mr',
-                                'text'    => __( 'Mr.', 'tp-hotel-booking' )
-                            ),
-                            array(
-                                'value' => 'ms',
-                                'text'    => __( 'Ms.', 'tp-hotel-booking' )
-                            ),
-                            array(
-                                'value' => 'mrs',
-                                'text'    => __( 'Mrs.', 'tp-hotel-booking' )
-                            ),
-                            array(
-                                'value' => 'miss',
-                                'text'    => __( 'Miss.', 'tp-hotel-booking' )
-                            ),
-                            array(
-                                'value' => 'dr',
-                                'text'    => __( 'Dr.', 'tp-hotel-booking' )
-                            ),
-                            array(
-                                'value' => 'prof',
-                                'text'    => __( 'Prof.', 'tp-hotel-booking' )
-                            )
-                        )
-                    )
-        ),
-        array(
-            'name'  => 'first_name',
-            'label' => __('First Name', 'tp-hotel-booking'),
-            'type'  => 'text'
-        ),
-        array(
-            'name'  => 'last_name',
-            'label' => __('Last Name', 'tp-hotel-booking'),
-            'type'  => 'text'
-        ),
-        array(
-            'name'  => 'address',
-            'label' => __('Address', 'tp-hotel-booking'),
-            'type'  => 'text'
-        ),
-        array(
-            'name'  => 'city',
-            'label' => __('City', 'tp-hotel-booking'),
-            'type'  => 'text'
-        ),
-        array(
-            'name'  => 'state',
-            'label' => __('State', 'tp-hotel-booking'),
-            'type'  => 'text'
-        ),
-        array(
-            'name'  => 'postal_code',
-            'label' => __('Postal Code', 'tp-hotel-booking'),
-            'type'  => 'text'
-        ),
-        array(
-            'name'  => 'country',
-            'label' => __('Country', 'tp-hotel-booking'),
-            'type'  => 'country',
-        ),
-        array(
-            'name'  => 'phone',
-            'label' => __('Phone', 'tp-hotel-booking'),
-            'type'  => 'text'
-        ),
-        array(
-            'name'  => 'email',
-            'label' => __('Email', 'tp-hotel-booking'),
-            'type'  => 'text',
-            'attr'  => 'readonly="readonly"'
-        ),
-        array(
-            'name'  => 'fax',
-            'label' => __('Fax', 'tp-hotel-booking'),
-            'type'  => 'text'
-        )
-    );
-}
-add_action( 'init', 'hb_customer_meta_box', 50 );
 
 /**
  * Custom booking list in admin
@@ -576,18 +412,6 @@ function hb_booking_filter( $query ){
     }
 }
 
-// function hb_customer_posts_columns( $default ) {
-//     unset($default['author']);
-//     unset($default['date']);
-//     $default['customer_address']    = __( 'Address', 'tp-hotel-booking' );
-//     $default['phone_number']        = __( 'Phone Number', 'tp-hotel-booking' );
-//     $default['email']               = __( 'Email', 'tp-hotel-booking' );
-//     $default['bookings']            = __( 'Bookings', 'tp-hotel-booking' );
-//     $default['title']               = __( 'Cus. Name', 'tp-hotel-booking' );
-//     return $default;
-// }
-// add_filter('manage_hb_customer_posts_columns', 'hb_customer_posts_columns');
-
 function hb_edit_post_change_title_in_list() {
     add_filter( 'the_title', 'hb_edit_post_new_title_in_list', 100, 2 );
 }
@@ -607,219 +431,57 @@ function hb_edit_post_new_title_in_list( $title, $post_id ){
     return $title;
 }
 
-// function hb_manage_customer_column( $column_name, $post_id ) {
-//     switch ( $column_name ){
-//         case 'customer_name':
-//             $title = hb_get_title_by_slug ( get_post_meta( $post_id, '_hb_title', true ) );
-//             $first_name =  get_post_meta( $post_id, '_hb_first_name', true );
-//             $last_name = get_post_meta( $post_id, '_hb_last_name', true );
-//             $customer_name = sprintf( '%s %s %s', $title ? $title : 'Cus.', $first_name, $last_name );
-//             echo esc_html( $customer_name );
-//             break;
-//         case 'customer_address':
-//             $customer_address = get_post_meta( $post_id, '_hb_address', true );
-//             echo esc_html( $customer_address );
-//             break;
-//         case 'phone_number':
-//             $phone = get_post_meta( $post_id, '_hb_phone', true );
-//             echo esc_html( $phone );
-//             break;
-//         case 'email':
-//             $email = get_post_meta( $post_id, '_hb_email', true );
-//             echo esc_html( $email );
-//             break;
-//         case 'bookings':
-//             printf(
-//                 '<a href="%sedit.php?post_type=hb_booking&customer_id=%d">%s</a>',
-//                 get_admin_url(),
-//                 $post_id,
-//                 __( 'View Booking', 'tp-hotel-booking' )
-//             );
-//     }
-// }
-// add_action('manage_hb_customer_posts_custom_column', 'hb_manage_customer_column', 10, 2);
-
-// add_filter( 'parse_query', 'hb_booking_custormer_filter' );
-// /**
-//  * if submitted filter by post meta
-//  *
-//  * @param  (wp_query object) $query
-//  *
-//  * @return Void
-//  */
-// function hb_booking_custormer_filter( $query ){
-//     global $pagenow;
-//     if ( isset( $_GET['post_type']) && 'hb_booking' == $_GET['post_type'] && is_admin() && $pagenow=='edit.php' && isset($_GET['customer_id']) && $_GET['customer_id'] != '') {
-//         $query->query_vars['meta_key'] = '_hb_customer_id';
-//         $query->query_vars['meta_value'] = absint( sanitize_text_field( $_GET['customer_id'] ) );
-//     }
-// }
-
-function hb_delete_pricing_plan( $ids ){
-    global $wpdb;
-    if( $ids ) {
-        $query = $wpdb->prepare("
-            DELETE
-            FROM {$wpdb->posts}
-            WHERE post_type = %s
-            AND ID IN(" . ( is_array( $ids ) ? join(",", $ids) : $ids ) . ")
-        ", 'hb_pricing_plan');
-        $wpdb->query( $query );
-
-        $delete_query = $wpdb->prepare("
-            DELETE
-            FROM {$wpdb->postmeta}
-            WHERE post_id IN(%s)
-        ", ( is_array( $ids ) ? join(",", $ids) : $ids ) );
-        $wpdb->query( $delete_query );
-    }
-}
-
-function hb_update_pricing_plan(){
-    if ( ! isset( $_POST['hb-update-pricing-plan-field'] ) || ! wp_verify_nonce( sanitize_text_field( $_POST['hb-update-pricing-plan-field'] ), 'hb-update-pricing-plan' ) ){
-        return;
-    }
-    if( ! empty( $_POST['price'] ) ){
-        $loop = 0;
-        $post_ids = array();
-
-        foreach ( (array)$_POST['price'] as $t => $v ) {
-            $start  = isset( $_POST['date-start'][ $t ] ) ? sanitize_text_field( $_POST['date-start'][ $t ] ) : '';
-            $end    = isset( $_POST['date-end'][ $t ] ) ? sanitize_text_field( $_POST['date-end'][ $t ] ) : '';
-            $prices = (array)$_POST['price'][ $t ];
-
-            if( $t > 0 ) {
-                $post_id = intval( $t );
-            } else {
-                $post_id = wp_insert_post(
-                    array(
-                        'post_title'    => $loop == 0 ? 'Regular Price' : "Date Range[{$start} to {$end}]",
-                        'post_type'     => 'hb_pricing_plan',
-                        'post_status'   => 'publish'
-                    )
-                );
-            }
-            if( $post_id ){
-                update_post_meta( $post_id, '_hb_pricing_plan_start', $start );
-                update_post_meta( $post_id, '_hb_pricing_plan_end', $end );
-                update_post_meta( $post_id, '_hb_pricing_plan_prices', $prices );
-                update_post_meta( $post_id, '_hb_pricing_plan_room', $_POST['hb-room'] );
-
-                if ( ! empty( $_POST['date-start-timestamp'] ) && isset( $_POST['date-start-timestamp'][$t] ) ) {
-                    update_post_meta( $post_id, '_hb_pricing_plan_start_timestamp', absint( sanitize_text_field( $_POST['date-start-timestamp'][$t] ) ) + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
-                }
-                if ( ! empty( $_POST['date-end-timestamp'] ) && isset( $_POST['date-end-timestamp'][$t] ) ) {
-                    update_post_meta( $post_id, '_hb_pricing_plan_end_timestamp', absint( sanitize_text_field( $_POST['date-end-timestamp'][$t] ) ) + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
-                }
-            }
-            $post_ids[] = $post_id;
-            $loop++;
-        }
-        $existing_ids = get_posts(
-            array(
-                'post_type'         => 'hb_pricing_plan',
-                'posts_per_page'    => -1,
-                'fields'            => 'ids',
-                'meta_query' => array(
-                    array(
-                        'key'     => '_hb_pricing_plan_room',
-                        'value'   => absint( $_POST['hb-room'] )
-                    )
-                )
-            )
-        );
-        $delete_ids = array_diff( $existing_ids, $post_ids );
-        hb_delete_pricing_plan($delete_ids);
-    }
-}
-add_action( 'init', 'hb_update_pricing_plan' );
-
 function hb_admin_js_template(){
 ?>
-<script type="text/html" id="tmpl-room-type-gallery">
-<tr id="room-gallery-{{data.id}}" class="room-gallery">
-    <td colspan="{{data.colspan}}">
-        <div class="hb-room-gallery">
-            <ul>
-                <# jQuery.each(data.gallery, function(){ var attachment = this;#>
-                    <li class="attachment">
+    <script type="text/html" id="tmpl-room-type-gallery">
+    <tr id="room-gallery-{{data.id}}" class="room-gallery">
+        <td colspan="{{data.colspan}}">
+            <div class="hb-room-gallery">
+                <ul>
+                    <# jQuery.each(data.gallery, function(){ var attachment = this; #>
+                        <li class="attachment">
+                            <div class="attachment-preview">
+                                <div class="thumbnail">
+                                    <div class="centered">
+                                        <img src="{{attachment.src}}" alt="">
+                                        <input type="hidden" name="hb-gallery[{{data.id}}][gallery][]" value="{{attachment.id}}" />
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'tp-hotel-booking' ); ?>"></a>
+                        </li>
+                    <# }); #>
+                    <li class="attachment add-new">
                         <div class="attachment-preview">
                             <div class="thumbnail">
-                                <div class="centered">
-                                    <img src="{{attachment.src}}" alt="">
-                                    <input type="hidden" name="hb-gallery[{{data.id}}][gallery][]" value="{{attachment.id}}" />
+                                <div class="dashicons-plus dashicons">
                                 </div>
                             </div>
                         </div>
-                        <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'tp-hotel-booking' ); ?>"></a>
                     </li>
-                <# }); #>
-                <li class="attachment add-new">
-                    <div class="attachment-preview">
-                        <div class="thumbnail">
-                            <div class="dashicons-plus dashicons">
-                            </div>
-                        </div>
+                </ul>
+            </div>
+            <input type="hidden" name="hb-gallery[{{data.id}}][id]" value="{{data.id}}" />
+        </td>
+    </tr>
+    </script>
+    <script type="text/html" id="tmpl-room-type-attachment">
+        <li class="attachment">
+            <div class="attachment-preview">
+                <div class="thumbnail">
+                    <div class="centered">
+                        <img src="{{data.src}}" alt="">
+                        <input type="hidden" name="hb-gallery[{{data.gallery_id}}][gallery][]" value="{{data.id}}" />
                     </div>
-                </li>
-            </ul>
-        </div>
-        <input type="hidden" name="hb-gallery[{{data.id}}][id]" value="{{data.id}}" />
-    </td>
-</tr>
-</script>
-<script type="text/html" id="tmpl-room-type-attachment">
-    <li class="attachment">
-        <div class="attachment-preview">
-            <div class="thumbnail">
-                <div class="centered">
-                    <img src="{{data.src}}" alt="">
-                    <input type="hidden" name="hb-gallery[{{data.gallery_id}}][gallery][]" value="{{data.id}}" />
                 </div>
             </div>
-        </div>
-        <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'tp-hotel-booking' ); ?>"></a>
-    </li>
-</script>
+            <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'tp-hotel-booking' ); ?>"></a>
+        </li>
+    </script>
 <?php
 }
-add_action( 'admin_print_scripts', 'hb_admin_js_template');
 
-function hb_booking_detail_page() {
-    if( is_admin() && hb_get_request( 'page' ) == 'hb_booking_details' ) {
-        $booking_id = hb_get_request( 'id' );
-        $booking = HB_Booking::instance( $booking_id );
-
-        // new version @version 1.1
-        if( $booking->get_cart_params() ) {
-            TP_Hotel_Booking::instance()->_include( 'includes/admin/views/update/booking-details.php', true, array( 'booking' => $booking ) );
-        } else { // $booking->get_booking_rooms_params() // old ver
-            TP_Hotel_Booking::instance()->_include( 'includes/admin/views/booking-details.php' );
-        }
-    }
-}
-
-function hb_meta_box_field_datetime( $value ){
-    return date( 'l, m/d/Y', $value );
-}
-function hb_meta_box_field_tax( $value ){
-    if( ! $value  )
-        return;
-
-    if( is_string($value) )
-        $value = ( $value * 100 ) . '%';
-
-    return apply_filters( 'hotel_booking_label_details', $value );
-}
-function hb_meta_box_field_sub_total( $value ){
-    return hb_format_price( $value );
-}
-function hb_meta_box_field_total( $value ){
-    return hb_format_price( $value );
-}
-function hb_meta_box_field_price_including_tax( $value ){
-    return $value == 'yes' ? __( 'Yes', 'tp-hotel-booking' ) : __( 'No', 'tp-hotel-booking' ) ;
-}
+add_action( 'admin_print_scripts', 'hb_admin_js_template' );
 
 function hb_meta_box_coupon_date( $value, $field_name, $meta_box_name ){
     if( in_array( $field_name, array( 'coupon_date_from', 'coupon_date_to' ) ) && $meta_box_name == 'coupon_settings' ){
@@ -836,82 +498,9 @@ function hb_meta_box_field_coupon_date( $value ){
     return $value;
 }
 
-function hb_meta_box_field_booking_status( $value ){
-    global $post;
-    return get_post_status( $post->ID );
-    // return get_post_meta( $post->ID, '_hb_booking_status', true );
-}
-
 function hb_meta_box_field_coupon_used( $value ){
     global $post;
     return intval( get_post_meta( $post->ID, '_hb_usage_count', true ) );
-}
-function hb_create_page( $slug, $option = '', $page_title = '', $page_content = '', $post_parent = 0 ) {
-    global $wpdb;
-
-    $option_value     = get_option( $option );
-
-    if ( $option_value > 0 ) {
-        $page_object = get_post( $option_value );
-
-        if ( $page_object && 'page' === $page_object->post_type && ! in_array( $page_object->post_status, array( 'pending', 'trash', 'future', 'auto-draft' ) ) ) {
-            // Valid page is already in place
-            return $page_object->ID;
-        }
-    }
-
-    if ( strlen( $page_content ) > 0 ) {
-        // Search for an existing page with the specified page content (typically a shortcode)
-        $valid_page_found = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type='page' AND post_status NOT IN ( 'pending', 'trash', 'future', 'auto-draft' ) AND post_content LIKE %s LIMIT 1;", "%{$page_content}%" ) );
-    } else {
-        // Search for an existing page with the specified page slug
-        $valid_page_found = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type='page' AND post_status NOT IN ( 'pending', 'trash', 'future', 'auto-draft' )  AND post_name = %s LIMIT 1;", $slug ) );
-    }
-
-    $valid_page_found = apply_filters( 'hotel_booking_create_page_id', $valid_page_found, $slug, $page_content );
-
-    if ( $valid_page_found ) {
-        if ( $option ) {
-            update_option( $option, $valid_page_found );
-        }
-        return $valid_page_found;
-    }
-
-    // Search for a matching valid trashed page
-    if ( strlen( $page_content ) > 0 ) {
-        // Search for an existing page with the specified page content (typically a shortcode)
-        $trashed_page_found = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type='page' AND post_status = 'trash' AND post_content LIKE %s LIMIT 1;", "%{$page_content}%" ) );
-    } else {
-        // Search for an existing page with the specified page slug
-        $trashed_page_found = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type='page' AND post_status = 'trash' AND post_name = %s LIMIT 1;", $slug ) );
-    }
-
-    if ( $trashed_page_found ) {
-        $page_id   = $trashed_page_found;
-        $page_data = array(
-            'ID'             => $page_id,
-            'post_status'    => 'publish',
-        );
-        wp_update_post( $page_data );
-    } else {
-        $page_data = array(
-            'post_status'    => 'publish',
-            'post_type'      => 'page',
-            'post_author'    => 1,
-            'post_name'      => $slug,
-            'post_title'     => $page_title,
-            'post_content'   => $page_content,
-            'post_parent'    => $post_parent,
-            'comment_status' => 'closed'
-        );
-        $page_id = wp_insert_post( $page_data );
-    }
-
-    if ( $option ) {
-        update_option( $option, $page_id );
-    }
-
-    return $page_id;
 }
 
 if ( ! function_exists( 'hb_get_rooms' ) )
@@ -934,8 +523,9 @@ if ( ! function_exists( 'hb_get_rooms' ) )
 
 add_action( 'hb_booking_detail_update_meta_box', 'hb_booking_detail_update_meta_box', 10, 3 );
 function hb_booking_detail_update_meta_box( $k, $vl, $post_id ) {
-    if( get_post_type( $post_id ) !== 'hb_booking' )
+    if( get_post_type( $post_id ) !== 'hb_booking' ) {
         return;
+    }
 
     if ( $k !== '_hb_booking_status' ) {
         return;
@@ -975,18 +565,4 @@ if ( is_admin() ) {
     }
 
     add_action( 'do_meta_boxes', 'hb_remove_revolution_slider_meta_boxes' );
-}
-
-if ( ! function_exists( 'hb_get_customers' ) ) {
-
-    function hb_get_customers() {
-        global $wpdb;
-
-        $query = $wpdb->prepare("
-                SELECT * FROM $wpdb->posts WHERE post_type = %s AND post_status = %s
-            ", 'hb_customer', 'publish' );
-
-        return apply_filters( 'hotel_booking_customers', $wpdb->get_results( $query ) );
-    }
-
 }

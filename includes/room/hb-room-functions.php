@@ -1,0 +1,138 @@
+<?php
+/**
+ * @Author: ducnvtt
+ * @Date:   2016-04-12 13:08:14
+ * @Last Modified by:   ducnvtt
+ * @Last Modified time: 2016-04-13 15:53:29
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit();
+}
+
+if ( ! function_exists( 'hb_room_get_pricing_plans' ) ) {
+	// get pricing plans
+	function hb_room_get_pricing_plans( $room_id = null ) {
+		if ( ! $room_id ) {
+			// throw new Exception( __( 'Room id is not exists.', 'tp-hotel-booking' ), 503 );
+		}
+
+		global $wpdb;
+
+		if ( ! isset( $wpdb->hotel_booking_plans ) ) {
+			hotel_booking_set_table_name();
+		}
+
+		$sql = $wpdb->prepare("
+				SELECT plans.* FROM $wpdb->hotel_booking_plans AS plans
+					INNER JOIN $wpdb->posts AS room ON room.ID = plans.room_id
+				WHERE
+					plans.room_id = %d
+					AND room.post_type = %s
+					AND room.post_status = %s
+			", $room_id, 'hb_room', 'publish' );
+
+		$cols = $wpdb->get_results( $sql );
+		$plans = array();
+
+		foreach ( $cols as $k => $plan ) {
+			$pl = new stdClass;
+
+			$pl->ID 		= $plan->plan_id;
+			$pl->start 		= $plan->start_time;
+			$pl->end 		= $plan->end_time;
+			$pl->prices 	= maybe_unserialize( $plan->pricing );
+
+			$plans[ $plan->plan_id ] = $pl;
+		}
+
+		return apply_filters( 'hb_room_get_pricing_plans', $plans );
+	}
+}
+
+if ( ! function_exists( 'hb_room_set_pricing_plan' ) ) {
+	/**
+	 * hb_room_set_pricing_plan set new pricing plans
+	 * @param  array  $args
+	 * @start_time
+	 * @end_time
+	 * @pricing param
+	 * @plan id if update
+	 * @return plan id
+	 */
+	function hb_room_set_pricing_plan( $args = array() ) {
+		$args = wp_parse_args( $args, array(
+				'start_time'		=> null,
+				'end_time'			=> null,
+				'pricing'			=> null,
+				'room_id'			=> null,
+				'plan_id'			=> null
+			) );
+
+		global $wpdb;
+
+		if ( $args['plan_id'] && $args['plan_id'] > 0 ) {
+			$wpdb->update(
+				$wpdb->hotel_booking_plans,
+				array(
+					'start_time'		=> $args['start_time'] ? date( 'Y-m-d H:i:s', $args['start_time'] ) : null,
+					'end_time'			=> $args['end_time'] ? date( 'Y-m-d H:i:s', $args['end_time'] ) : null,
+					'pricing'			=> maybe_serialize( $args['pricing'] )
+				),
+				array(
+						'plan_id'		=> $args['plan_id']
+					),
+				array(
+					'%s',
+					'%s',
+					'%s'
+				),
+				array( '%d' )
+			);
+			$plan_id = $args['plan_id'];
+		} else {
+			$wpdb->insert(
+					$wpdb->hotel_booking_plans,
+					array(
+							'start_time'		=> $args['start_time'] ? date( 'Y-m-d H:i:s', $args['start_time'] ) : null,
+							'end_time'			=> $args['end_time'] ? date( 'Y-m-d H:i:s', $args['end_time'] ) : null,
+							'pricing'			=> maybe_serialize( $args['pricing'] ),
+							'room_id'			=> $args['room_id']
+						),
+					array(
+							'%s',
+							'%s',
+							'%s',
+							'%d'
+						)
+				);
+
+			$plan_id = absint( $wpdb->insert_id );
+		}
+
+		do_action( 'hotel_booking_created_pricing_plan', $plan_id, $args );
+
+		return $plan_id;
+	}
+}
+
+if ( ! function_exists( 'hb_room_remove_pricing' ) ) {
+	/**
+	 * hb_room_remove_pricing
+	 * remove pricing plan by id of table $wpdb->hotel_booking_plans
+	 * @param  $plan_id integer
+	 * @return null if $plan_id invalid and plan id if valid
+	 */
+	function hb_room_remove_pricing( $plan_id = null ) {
+
+		if ( ! $plan_id ) {
+			return;
+		}
+
+		global $wpdb;
+		$wpdb->delete( $wpdb->hotel_booking_plans, array( 'plan_id' => $plan_id ), array( '%d' ) );
+
+		do_action( 'hb_room_remove_pricing', $plan_id );
+		return $plan_id;
+	}
+}

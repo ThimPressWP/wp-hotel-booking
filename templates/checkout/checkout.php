@@ -8,7 +8,9 @@ $cart = TP_Hotel_Booking::instance()->cart;
 global $hb_settings;
 
 do_action( 'hotel_booking_before_checkout_form' );
+
 ?>
+
 <div id="hotel-booking-payment">
 
     <form name="hb-payment-form" id="hb-payment-form" method="post" action="<?php echo isset( $search_page ) ? $search_page : ''; ?>">
