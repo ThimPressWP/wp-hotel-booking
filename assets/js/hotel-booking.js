@@ -120,101 +120,91 @@
 		if (-1 == $title.val()) {
 			// alert( hotel_booking_i18n.empty_customer_title );
 			mesgs.push( hotel_booking_i18n.empty_customer_title );
-			$title.addClass( 'error' );
-			$title.focus();
+			$title.parents('div:first-child').addClass( 'error' );
 		}
 
 		var $firstName = $('input[name="first_name"]', $form);
 		if ( ! $firstName.val() ) {
 			// alert(hotel_booking_i18n.empty_customer_first_name);
 			mesgs.push( hotel_booking_i18n.empty_customer_first_name );
-			$firstName.addClass( 'error' );
-			$firstName.focus();
+			$firstName.parents('div:first-child').addClass( 'error' );
 		}
 
 		var $lastName = $('input[name="last_name"]', $form);
 		if ( ! $lastName.val() ) {
 			// alert( hotel_booking_i18n.empty_customer_last_name );
 			mesgs.push( hotel_booking_i18n.empty_customer_last_name );
-			$lastName.addClass( 'error' );
-			$lastName.focus();
+			$lastName.parents('div:first-child').addClass( 'error' );
 		}
 
 		var $address = $('input[name="address"]', $form);
 		if ( ! $address.val()) {
 			// alert( hotel_booking_i18n.empty_customer_address );
 			mesgs.push( hotel_booking_i18n.empty_customer_address );
-			$address.addClass( 'error' );
-			$address.focus();
+			$address.parents('div:first-child').addClass( 'error' );
 		}
 
 		var $city = $('input[name="city"]', $form);
 		if ( ! $city.val() ) {
 			// alert(hotel_booking_i18n.empty_customer_city);
 			mesgs.push( hotel_booking_i18n.empty_customer_city );
-			$city.addClass( 'error' );
-			$city.focus();
+			$city.parents('div:first-child').addClass( 'error' );
 		}
 
 		var $state = $('input[name="state"]', $form);
 		if ( ! $state.val() ) {
 			// alert( hotel_booking_i18n.empty_customer_state );
 			mesgs.push( hotel_booking_i18n.empty_customer_state );
-			$state.addClass( 'error' );
-			$state.focus();
+			$state.parents('div:first-child').addClass( 'error' );
 		}
 
 		var $postalCode = $('input[name="postal_code"]', $form);
 		if ( ! $postalCode.val() ) {
 			// alert( hotel_booking_i18n.empty_customer_postal_code );
 			mesgs.push( hotel_booking_i18n.empty_customer_postal_code );
-			$postalCode.addClass( 'error' );
-			$postalCode.focus();
+			$postalCode.parents('div:first-child').addClass( 'error' );
 		}
 
 		var $country = $('select[name="country"]', $form);
 		if ( ! $country.val() ) {
 			// alert( hotel_booking_i18n.empty_customer_country );
 			mesgs.push( hotel_booking_i18n.empty_customer_country );
-			$country.addClass( 'error' );
-			$country.focus();
+			$country.parents('div:first-child').addClass( 'error' );
 		}
 
 		var $phone = $('input[name="phone"]', $form);
 		if ( ! $phone.val() ) {
 			// alert( hotel_booking_i18n.empty_customer_phone );
 			mesgs.push( hotel_booking_i18n.empty_customer_phone );
-			$phone.addClass( 'error' );
-			$phone.focus();
+			$phone.parents('div:first-child').addClass( 'error' );
 		}
 
 		var $email = $('input[name="email"]', $form);
 		if ( ! isEmail( $email.val() ) ) {
 			// alert( hotel_booking_i18n.customer_email_invalid );
 			mesgs.push( hotel_booking_i18n.customer_email_invalid );
-			$email.addClass( 'error' );
-			$email.focus();
+			$email.parents('div:first-child').addClass( 'error' );
 		}
 
 		var $payment_method = $('input[name="hb-payment-method"]:checked');
 		if ( $payment_method.length == 0 ) {
 			// alert( hotel_booking_i18n.no_payment_method_selected );
 			mesgs.push( hotel_booking_i18n.no_payment_method_selected );
-			$payment_method.addClass( 'error' );
+			$payment_method.parents('div:first-child').addClass( 'error' );
 		}
 
 		var $tos = $('input[name="tos"]');
 		if ( $tos.length && ! $tos.is(':checked') ) {
 			// alert(hotel_booking_i18n.confirm_tos);
 			mesgs.push( hotel_booking_i18n.confirm_tos );
-			$tos.addClass( 'error' );
+			$tos.parents('div:first-child').addClass( 'error' );
 		}
 		if ( $('input[name="existing-customer-id"]', $form).val() ) {
 			if ( $email.val() != $('input[name="existing-customer-email"]', $form).val() ) {
 				mesgs.push( hotel_booking_i18n.customer_email_not_match );
 			}
-			$email.addClass( 'error' );
-			$('input[name="existing-customer-id"]').addClass( 'error' );
+			$email.parents('div:first-child').addClass( 'error' );
+			$('input[name="existing-customer-id"]').parents('div:first-child').addClass( 'error' );
 		}
 
 		if ( mesgs.length > 0 ) {

@@ -360,8 +360,9 @@ class TP_Hotel_Booking_Woocommerce {
 	public function hotel_cart_url( $url )
 	{
 		global $woocommerce;
-		if( ! $woocommerce->cart )
+		if( ! $woocommerce->cart ) {
 			return $url;
+		}
 
 		$url = $woocommerce->cart->get_cart_url() ? $woocommerce->cart->get_cart_url() : $url;
 		return $url;

@@ -271,7 +271,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
 
         $nonce = wp_create_nonce( 'hb-paypal-nonce' );
         $paypal_email = $paypal['sandbox'] === 'on' ? $paypal['sandbox_email'] : $paypal['email'];
-        $custom = array( 'booking_id' => $booking->id, 'booking_key' => $booking->booking_key );
+        $custom = array( 'booking_id' => $booking_id, 'booking_key' => $booking->booking_key );
         if( $advance_payment && ! $pay_all ){
             $custom['advance_payment'] = $advance_payment;
         }

@@ -67,7 +67,23 @@ class HB_Booking{
 
     function __get( $key ){
         if( ! isset( $this->{$key} ) || ! method_exists( $this, $key ) ){
-            return get_post_meta( $this->id, '_hb_' . $key, true );
+            switch ( $key ) {
+                case 'coupon_value':
+                    $total = 0;
+                    $result = get_post_meta( $this->id, '_hb_' . $key );
+                    if ( $result ) {
+                        foreach ( $result as $r ) {
+                            $total = $total + $r;
+                        }
+                    }
+                    $result = $total;
+                    break;
+
+                default:
+                    $result = get_post_meta( $this->id, '_hb_' . $key, true );
+                    break;
+            }
+            return $result;
         }
     }
 
@@ -157,7 +173,14 @@ class HB_Booking{
         if( $booking_id ){
             foreach( $this->_booking_info as $meta_key => $v ){
                 if ( strpos( $meta_key, '_hb_' ) === 0 ) {
-                    update_post_meta( $booking_id, $meta_key, $v );
+                    if ( is_array( $v ) ) {
+                        delete_post_meta( $booking_id, $meta_key );
+                        foreach ( $v as $i ) {
+                            add_post_meta( $booking_id, $meta_key, $i );
+                        }
+                    } else {
+                        update_post_meta( $booking_id, $meta_key, $v );
+                    }
                 }
             }
 

@@ -86,7 +86,7 @@ class HB_WC_Checkout extends HB_Checkout
 			}
 		}
 
-		if( $create === true && $customer_id = $this->create_customer( $order ) )
+		if( $create === true )
 		{
 			if( $booking = $this->create_booking( $order ) )
 			{
@@ -122,14 +122,14 @@ class HB_WC_Checkout extends HB_Checkout
 	    {
 		    foreach( $_rooms as $key => $room ) {
 	            $rooms[ $key ] = apply_filters( 'hb_generate_transaction_object_room', array(
-	                '_hb_id'                => $room['product_id'],
-	                '_hb_base_price'        => $room['line_total'],
-	                '_hb_quantity'          => $room['quantity'],
-	                '_hb_name'              => $room['data']->post->post_title,
-	                '_hb_check_in_date'     => $room['check_in_date'],
-	                '_hb_check_out_date'    => $room['check_out_date'],
-	                '_hb_sub_total'         => $room['line_subtotal'],
-	                '_hb_tax_subtotal'		=> $room['line_subtotal_tax']
+	                'parent_id'         => isset( $room['parent_id'] ) ? $room['parent_id'] : null,
+                    'product_id'        => $room['product_id'],
+                    'qty'               => $room['quantity'],
+                    'check_in_date'     => strtotime( $room['check_in_date'] ),
+                    'check_out_date'    => strtotime( $room['check_out_date'] ),
+                    'subtotal'          => $room['line_subtotal'],
+                    'total'             => $room['line_subtotal_tax'],
+                    'tax_total'         => $room['line_subtotal_tax'] - $room['line_subtotal']
 	            ), $room);
 
 	        }
@@ -157,9 +157,27 @@ class HB_WC_Checkout extends HB_Checkout
 	    $transaction->booking_info['_hb_woo_order_id'] 				= $order->id;
 	    $transaction->booking_info['_hb_price_including_tax']		= wc_prices_include_tax() ? 1 : 0;
 	    $transaction->booking_info['_hb_addition_information']		= $order->customer_message ? $order->customer_message : __( 'Empty Booking Notes', 'tp-hotel-booking-woocommerce' );
-
+		$transaction->booking_info['_hb_customer_first_name']   		= $order->billing_first_name;
+        $transaction->booking_info['_hb_customer_last_name']     		= $order->billing_last_name;
+        $transaction->booking_info['_hb_customer_address']     			= $order->billing_address_1;
+        $transaction->booking_info['_hb_customer_city']     			= $order->billing_city;
+        $transaction->booking_info['_hb_customre_state']     			= $order->billing_state;
+        $transaction->booking_info['_hb_customer_postal_code']     		= $order->billing_postcode;
+        $transaction->booking_info['_hb_customer_country']     			= $woocommerce->countries->countries[ $order->billing_country ];
+        $transaction->booking_info['_hb_customer_email']     			= $order->billing_email;
+        $transaction->booking_info['_hb_customer_phone']     			= $order->billing_phone;
 	    if( WC()->cart->coupons_enabled() ){
-	        $transaction->booking_info['coupon'] = WC()->cart->get_coupons();
+	    	$coupons = WC()->cart->get_coupons();
+	    	if ( ! $coupons ) {
+	    		$transaction->booking_info['_hb_coupon'] = array();
+		        $transaction->booking_info['_hb_coupon_code'] = array();
+	            $transaction->booking_info['_hb_coupon_value'] = array();
+	    		foreach ( $coupons as $code => $coupon ) {
+		        	$transaction->booking_info['_hb_coupon'][] = $coupon->id;
+		        	$transaction->booking_info['_hb_coupon_code'][] = $code;
+	            	$transaction->booking_info['_hb_coupon_value'][] = WC()->cart->get_coupon_discount_amount( $coupon->code, WC()->cart->display_cart_ex_tax );
+	    		}
+	    	}
 	    }
 
 		return $transaction;
