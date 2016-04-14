@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-31 15:40:31
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-14 14:57:20
+ * @Last Modified time: 2016-04-14 15:22:45
  */
 
 /**
@@ -177,6 +177,6 @@ function hb_new_customer_booking_email( $booking_id = null ) {
 
     $email_content = hb_get_template_content( 'emails/customer-booking.php', array( 'booking' => $booking, 'options' => hb_settings() ) );
 
-    wp_mail( $to, $email_subject, stripslashes( $email_content ), $headers );
+    wp_mail( $booking->customer_email, $email_subject, stripslashes( $email_content ), $headers );
     remove_filter('wp_mail_content_type', 'hb_set_html_content_type');
 }
