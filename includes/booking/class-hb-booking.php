@@ -148,7 +148,7 @@ class HB_Booking{
     function set_booking_info( $info ){
         if( func_num_args() > 1 ){
             $this->_booking_info[ $info ] = func_get_arg(1);
-        }else {
+        } else {
             $this->_booking_info = array_merge( $this->_booking_info, (array)$info );
         }
     }
