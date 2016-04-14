@@ -65,19 +65,19 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
         return ! empty( $this->_settings['enable'] ) && $this->_settings['enable'] == 'on';
     }
 
-    function process_checkout( $booking_id = null, $customer_id = null )
+    function process_checkout( $booking_id = null )
     {
         $cart = HB_Cart::instance();
         $book = HB_Booking::instance( $booking_id );
 
-        $customer_id = $this->add_customer( $booking_id, $customer_id );
+        $cus_id = $this->add_customer( $booking_id );
 
         $advance_pay = (float)$cart->get_advance_payment();
 
         $request = array(
                 'amount'        => round( $advance_pay * 100 ),
                 'currency'      => hb_get_currency(),
-                'customer'      => $customer_id,
+                'customer'      => $cus_id,
                 'description'   => sprintf(
                     __( '%s - Order %s', 'tp-hotel-booking-stripe' ),
                     esc_html( get_bloginfo( 'name' ) ),
@@ -115,31 +115,50 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
 
     public function add_customer( $booking_id = null, $customer = null ) {
 
-        $customer_id = get_post_meta( $customer, 'tp-hotel-booking-stripe-id', true );
+        $booking = HB_Booking::instance( $booking_id );
 
-        if( $customer_id )
-        {
-            return $customer_id;
+        $user_id = $booking->user_id;
+        $cus_id = null;
+        if ( $user_id ) {
+            $cus_id =get_uer_meta( $user_id, 'tp-hotel-booking-stripe-id', true );
+        } else {
+            global $wpdb;
+            $sql = $wpdb->prepare("
+                    SELECT pm.meta_value FROM $wpdb->postmeta AS pm
+                        INNER JOIN $wpdb->postmeta AS pm2 ON pm2.post_id = pm.post_id
+                    WHERE
+                        pm.meta_key = %s
+                        AND pm.meta_value = %s
+                        LIMIT 1
+                ", 'tp-hotel-booking-stripe-id', $booking->customer_email );
+            $cus_id = $wpdb->get_var( $sql );
         }
-        else
-        {
+
+        if ( ! $cus_id ) {
             // create customer
             try
             {
                 $params = array(
-                        'description'   => sprintf( '%s %s', __( 'Donor for', 'tp-donate' ), get_post_meta( $customer, '_hb_email', true ) ),
+                        'description'   => sprintf( '%s %s', __( 'Donor for', 'tp-donate' ), $booking->customer_email ),
                         'source'        => sanitize_text_field( $_POST['id'] ) // token get by stripe.js
                     );
                 $response = $this->stripe_request( $params, 'customers' );
-
-                add_post_meta( $customer, 'tp-hotel-booking-stripe-id', $response->id );
-                return $response->id;
+                $cus_id = $response->id;
+                if ( $user_id ) {
+                    update_user_meta( $user_id, 'tp-hotel-booking-stripe-id', $cus_id  );
+                } else {
+                    update_post_meta( $booking_id, 'tp-hotel-booking-stripe-id', $cus_id );
+                }
+                add_post_meta( $customer, 'tp-hotel-booking-stripe-id', $cus_id );
+                return $cus_id;
             }
-            catch(Exception $e )
+            catch( Exception $e )
             {
                 return new WP_Error( 'tp-hotel-booking-stripe-error', sprintf( '%s', $e->getMessage() ) );
             }
         }
+
+        return $cus_id;
     }
 
     public function stripe_request( $request, $api = 'charges' ) {

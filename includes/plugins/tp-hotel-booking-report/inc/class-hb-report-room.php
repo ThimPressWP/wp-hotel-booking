@@ -188,7 +188,7 @@ class HB_Report_Room extends HB_Report
 			$chart_results = $this->js_data();
 			set_transient( $transient_name, $chart_results, 12 * HOUR_IN_SECONDS );
 		}
-		return apply_filters( 'tp_hotel_booking_charts', $chart_results );
+		return apply_filters( 'hotel_booking_charts', $chart_results );
 	}
 
 	// new chartjs

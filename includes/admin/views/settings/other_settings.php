@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-$settings = apply_filters( 'tp_hotel_booking_addon_menus', array() );
+$settings = apply_filters( 'hotel_booking_addon_menus', array() );
 ?>
 
 <div id="tp_hotel_booking_other_settings">

@@ -1,7 +1,7 @@
 <?php
 
 // report menu
-add_filter( 'tp_hotel_booking_menu_items', 'hotel_report_menu' );
+add_filter( 'hotel_booking_menu_items', 'hotel_report_menu' );
 if( ! function_exists( 'hotel_report_menu' ) )
 {
 	function hotel_report_menu( $menus )
@@ -27,7 +27,7 @@ if( ! function_exists( 'hotel_create_report_page' ) )
 }
 
 
-add_action( 'tp_hotel_booking_chart_sidebar', 'tp_hotel_core_report_sidebar', 10, 2 );
+add_action( 'hotel_booking_chart_sidebar', 'tp_hotel_core_report_sidebar', 10, 2 );
 
 /**
  * @param $tab, $range
@@ -41,13 +41,13 @@ function tp_hotel_core_report_sidebar( $tab = '', $range = '' )
 	$file = apply_filters( "tp_hotel_booking_chart_sidebar_{$tab}_{$range}", '', $tab, $range );
 
 	if( ! $file || ! file_exists( $file ) )
-		$file = apply_filters( "tp_hotel_booking_chart_sidebar_layout", '', $tab, $range );
+		$file = apply_filters( "hotel_booking_chart_sidebar_layout", '', $tab, $range );
 
 	if( file_exists( $file ) )
 		require $file;
 }
 
-add_action( 'tp_hotel_booking_chart_canvas', 'hotel_report_canvas', 10, 2 );
+add_action( 'hotel_booking_chart_canvas', 'hotel_report_canvas', 10, 2 );
 
 /**
  * @param $tab, $range
@@ -61,13 +61,13 @@ function hotel_report_canvas( $tab = '', $range = '' )
 	$file = apply_filters( "tp_hotel_booking_chart_{$tab}_{$range}_canvas", '', $tab, $range );
 
 	if( ! $file || ! file_exists( $file ) )
-		$file = apply_filters( "tp_hotel_booking_chart_layout_canvas", '', $tab, $range );
+		$file = apply_filters( "hotel_booking_chart_layout_canvas", '', $tab, $range );
 
 	if( file_exists( $file ) )
 		require $file;
 }
 
-add_filter( 'tp_hotel_booking_chart_sidebar_layout', 'hb_report_sidebar_layout', 10, 3 );
+add_filter( 'hotel_booking_chart_sidebar_layout', 'hb_report_sidebar_layout', 10, 3 );
 
 if ( ! function_exists( 'hb_report_sidebar_layout' ) )
 {
@@ -88,7 +88,7 @@ if ( ! function_exists( 'hb_report_sidebar_layout' ) )
     }
 }
 
-add_filter( 'tp_hotel_booking_chart_layout_canvas', 'hb_report_layout_canvas', 10, 3  );
+add_filter( 'hotel_booking_chart_layout_canvas', 'hb_report_layout_canvas', 10, 3  );
 if( ! function_exists( 'hb_report_layout_canvas' ) )
 {
     function hb_report_layout_canvas( $file, $tab, $range )

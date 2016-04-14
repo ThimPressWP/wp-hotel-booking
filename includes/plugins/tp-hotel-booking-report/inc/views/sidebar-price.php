@@ -1,6 +1,6 @@
 <?php
 	$hb_report = HB_Report_Price::instance();
-	$sidebarInfo = apply_filters( 'tp_hotel_booking_sidebar_price_info', array() );
+	$sidebarInfo = apply_filters( 'hotel_booking_sidebar_price_info', array() );
 ?>
 <ul class="chart-legend">
 	<?php foreach ( $sidebarInfo as $key => $mote ): ?>

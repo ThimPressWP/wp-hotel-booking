@@ -12,8 +12,8 @@ class HB_Extra_Admin
 		/**
 		 * tp_hotel_booking_addon_menus recive addon menus
 		 */
-		add_filter( 'tp_hotel_booking_addon_menus', array( $this, 'extra_settings' ) );
-		add_action( 'tp_hotel_booking_extra', array( $this, 'extra_settings_build' ) );
+		add_filter( 'hotel_booking_addon_menus', array( $this, 'extra_settings' ) );
+		add_action( 'hotel_booking_extra', array( $this, 'extra_settings_build' ) );
 	}
 
 	/**

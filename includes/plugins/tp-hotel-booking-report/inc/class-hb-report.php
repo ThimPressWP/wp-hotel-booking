@@ -103,8 +103,8 @@ abstract class HB_Report
 			break;
 		}
 
-		$this->_start_in = apply_filters( 'tp_hotel_booking_report_start_in', $this->_start_in );
-		$this->_end_in = apply_filters( 'tp_hotel_booking_report_end_in', $this->_end_in );
+		$this->_start_in = apply_filters( 'hotel_booking_report_start_in', $this->_start_in );
+		$this->_end_in = apply_filters( 'hotel_booking_report_end_in', $this->_end_in );
 
 		if( $this->chart_groupby === 'day' )
 		{

@@ -655,7 +655,7 @@ class HB_Cart
                 '_hb_method_id'                 => $payment_method->method_id,
                 // customer
                 '_hb_customer_title'            => hb_get_request( 'title' ),
-                '_hb_customer_firt_name'        => hb_get_request( 'first_name' ),
+                '_hb_customer_first_name'        => hb_get_request( 'first_name' ),
                 '_hb_customer_last_name'        => hb_get_request( 'last_name' ),
                 '_hb_customer_address'          => hb_get_request( 'address' ),
                 '_hb_customer_city'             => hb_get_request( 'city' ),

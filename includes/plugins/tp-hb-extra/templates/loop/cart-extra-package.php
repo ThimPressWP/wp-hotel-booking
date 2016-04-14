@@ -15,7 +15,7 @@
 	</td>
 
 	<td>
-		<?php if( $input = apply_filters( 'tp_hb_extra_cart_input', $package->product_data->respondent ) ): ?>
+		<?php if( $input = apply_filters( 'hb_extra_cart_input', $package->product_data->respondent ) ): ?>
 			<input type="number" min="1" value="<?php echo esc_attr( $package->quantity ); ?>" name="hotel_booking_cart[<?php echo esc_attr( $cart_id ); ?>]"/>
 		<?php else: ?>
 			<?php printf( '%s', $package->quantity ) ?>

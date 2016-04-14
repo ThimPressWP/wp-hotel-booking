@@ -53,7 +53,7 @@ class HB_Extra_Cart
 		// email new booking hook
 		add_action( 'hotel_booking_email_new_booking', array( $this, 'email_new_booking' ), 10, 3 );
 
-		add_filter( 'tp_hb_extra_cart_input', array( $this, 'check_respondent' ) );
+		add_filter( 'hb_extra_cart_input', array( $this, 'check_respondent' ) );
 
 		add_action( 'hotel_booking_after_room_item', array( $this, 'booking_post_type_extra_item' ), 10, 2 );
 
@@ -326,7 +326,7 @@ class HB_Extra_Cart
 
 	function check_respondent( $respondent )
 	{
-		// remove_filter( 'tp_hb_extra_cart_input', array( $this, 'check_respondent' ) );
+		// remove_filter( 'hb_extra_cart_input', array( $this, 'check_respondent' ) );
 		if( is_page( hb_get_page_id( 'checkout' ) ) || hb_get_request( 'hotel-booking' ) === 'checkout' )
 			return false;
 
@@ -335,7 +335,7 @@ class HB_Extra_Cart
 			if( $respondent === 'trip' )
 				return false;
 		}
-		add_filter( 'tp_hb_extra_cart_input', array( $this, 'check_respondent' ) );
+		add_filter( 'hb_extra_cart_input', array( $this, 'check_respondent' ) );
 		return $respondent;
 	}
 

@@ -83,7 +83,7 @@ class HB_Meta_Box{
             $this->_fields[] = (array)$f;
         }
         // metabox hook
-        $this->_fields = apply_filters( 'tp_hb_metabox_' . $this->_args['name'], $this->_fields );
+        $this->_fields = apply_filters( 'hb_metabox_' . $this->_args['name'], $this->_fields );
         return $this;
     }
 
