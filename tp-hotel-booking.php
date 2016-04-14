@@ -286,7 +286,7 @@ class TP_Hotel_Booking {
             wp_localize_script( 'tp-admin-hotel-booking', 'hotel_booking_i18n', hb_admin_i18n() );
         } else {
             wp_register_style( 'tp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.min.css' ) );
-            wp_register_script( 'tp-hotel-booking', $this->plugin_url( 'assets/js/hotel-booking.js' ), $dependencies );
+            wp_register_script( 'tp-hotel-booking', $this->plugin_url( 'assets/js/hotel-booking.min.js' ), $dependencies );
 
             wp_localize_script( 'tp-hotel-booking', 'hotel_booking_i18n', hb_i18n() );
 

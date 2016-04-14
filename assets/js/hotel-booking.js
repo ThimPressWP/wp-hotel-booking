@@ -694,16 +694,20 @@
 
 		$('form[class^="hb-search-form"]').submit( function ( e ) {
 			e.preventDefault();
-			var unique = $(this).attr('class');
-			var button = $(this).find('buton[type="submit"]');
+			var _self = $(this),
+				unique = _self.attr('class'),
+				button = _self.find('buton[type="submit"]'),
+				error = false;
 			unique = unique.replace('hb-search-form-', '');
 
+			_self.find( 'input, select' ).removeClass( 'error' );
 			var $check_in = $( '#check_in_date_' + unique );
 			if ( $check_in.val() === '' || ! isDate( $check_in.datepicker( 'getDate' ) ) ) {
 				// alert( hotel_booking_i18n.empty_check_in_date );
 				$check_in.addClass( 'error' );
 				$check_in.focus();
-				return false;
+
+				error = true;
 			}
 
 			var $check_out = $( '#check_out_date_' + unique );
@@ -711,7 +715,7 @@
 				// alert( hotel_booking_i18n.empty_check_out_date );
 				$check_out.addClass( 'error' );
 				$check_out.focus();
-				return false;
+				error = true;
 			}
 
 			var check_in = new Date( $check_in.datepicker( 'getDate' ) ),
@@ -722,13 +726,17 @@
 				$check_in.addClass( 'error' );
 				$check_out.addClass( 'error' );
 				$check_in.focus();
-				return false;
+				error = true;
 			}
 
 			if ( check_in.compareWith( check_out ) >= 0 ) {
 				// alert( hotel_booking_i18n.check_out_date_must_be_greater );
 				$check_in.addClass( 'error' );
 				$check_out.focus();
+				error = true;
+			}
+
+			if ( error ) {
 				return false;
 			}
 
@@ -780,6 +788,7 @@
 
 			var action = window.location.href.replace(/\?.*/, '');
 			_self.find( '.hotel_checkout_errors' ).slideUp().remove();
+			_self.find( 'input, select' ).removeClass('error');
 			try {
 
 				if ( _self.triggerHandler('hb_order_submit') === false ) {
