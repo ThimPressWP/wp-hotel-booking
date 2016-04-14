@@ -91,7 +91,7 @@ class HB_Shortcode_Hotel_Booking extends HB_Shortcodes
                 break;
         }
 
-        $template = apply_filters( 'tp_hotel_booking_shortcode_template', $template );
+        $template = apply_filters( 'hotel_booking_shortcode_template', $template );
         ob_start();
         do_action( 'hb_wrapper_start' );
         hb_get_template( $template, $template_args );

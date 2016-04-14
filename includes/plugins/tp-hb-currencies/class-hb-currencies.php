@@ -33,8 +33,8 @@ class HB_SW_Curreny
 			 * do all action in frontend
 			 */
 			add_filter( 'hb_currency', array( $this, 'switch_currencies' ), 99 );
-			add_filter( 'tp_hotel_booking_price_switcher', array( $this, 'switch_price' ) );
-			add_filter( 'tp_hotel_booking_currency_aggregator', array( $this, 'aggregator' ) );
+			add_filter( 'hotel_booking_price_switcher', array( $this, 'switch_price' ) );
+			add_filter( 'hotel_booking_currency_aggregator', array( $this, 'aggregator' ) );
 
 			add_action( 'plugins_loaded', array( $this, 'set_currency' ) );
 			add_action( 'qtranslate_init_language', array( $this, 'qtranslate' ) );

@@ -124,9 +124,9 @@ class HB_Checkout{
         if ( ! empty( $result['result'] ) && $result['result'] == 'success' ) {
             TP_Hotel_Booking::instance()->cart->empty_cart();
 
-            $result = apply_filters( 'hb_payment_successful_result', $result );
+            $result = apply_filters( 'hb_payment_successful_result', $result, $booking_id );
 
-            do_action( 'hb_place_order', $result );
+            do_action( 'hb_place_order', $result, $booking_id );
             if ( hb_is_ajax() ) {
                 hb_send_json( $result );
                 exit;

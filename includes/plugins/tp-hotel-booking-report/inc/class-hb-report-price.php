@@ -59,7 +59,7 @@ class HB_Report_Price extends HB_Report
 
 		$this->_query_results = $this->getOrdersItems();
 		add_action( 'admin_init', array( $this, 'export_csv' ) );
-		add_filter( 'tp_hotel_booking_sidebar_price_info', array( $this, 'total_ear' ) );
+		add_filter( 'hotel_booking_sidebar_price_info', array( $this, 'total_ear' ) );
 	}
 
 	/**
@@ -147,7 +147,7 @@ class HB_Report_Price extends HB_Report
 			set_transient( $transient_name, $chart_results, 12 * HOUR_IN_SECONDS );
 		}
 
-		return apply_filters( 'tp_hotel_booking_charts', $chart_results );
+		return apply_filters( 'hotel_booking_charts', $chart_results );
 	}
 
 	/**
@@ -330,7 +330,7 @@ class HB_Report_Price extends HB_Report
 
 		$column[] = __( 'Total Earning', 'tp-hotel-booking-report' );
 
-		$column = apply_filters( 'tp_hotel_booking_export_report_price_column', $column );
+		$column = apply_filters( 'hotel_booking_export_report_price_column', $column );
 
 		// output the column headings
 		fputcsv($output, $column);
@@ -347,7 +347,7 @@ class HB_Report_Price extends HB_Report
 			}
 			$data[] = number_format($item->total, 2, '.', ',') .' '. hb_get_currency();
 
-			$data = apply_filters( 'tp_hotel_booking_export_report_price_data', $data, $item );
+			$data = apply_filters( 'hotel_booking_export_report_price_data', $data, $item );
 
 			fputcsv( $output, $data );
 		}

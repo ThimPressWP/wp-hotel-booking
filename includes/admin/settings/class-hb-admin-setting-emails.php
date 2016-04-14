@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-29 17:13:06
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-01 13:39:01
+ * @Last Modified time: 2016-04-14 14:54:23
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -56,6 +56,14 @@ if ( ! class_exists( 'HB_Admin_Setting_Emails' ) ) {
 						),
 
 					array(
+							'type'		=> 'text',
+							'id'		=> 'tp_hotel_booking_email_general_subject',
+							'title'		=> __( 'Email subject', 'tp-hotel-booking' ),
+							'default'	=> __( 'Reservation', 'tp-hotel-booking' ),
+							'placeholder'	=> __( 'Reservation', 'tp-hotel-booking' )
+						),
+
+					array(
 							'type'		=> 'section_end',
 							'id'		=> 'email_options'
 						)
@@ -66,7 +74,7 @@ if ( ! class_exists( 'HB_Admin_Setting_Emails' ) ) {
 							'type'		=> 'section_start',
 							'id'		=> 'new_booking',
 							'title'		=> __( 'New Booking', 'tp-hotel-booking' ),
-							'desc'		=> __( 'New booking emails are sent when a booking is received.', 'tp-hotel-booking' )
+							'desc'		=> __( 'New booking emails are sent to user admin when a booking is received.', 'tp-hotel-booking' )
 						),
 
 					array(
@@ -101,6 +109,14 @@ if ( ! class_exists( 'HB_Admin_Setting_Emails' ) ) {
 							'desc'		=> __( 'The main heading displays in the top of email. Default heading: New customer booking', 'tp-hotel-booking' ),
 							'default'	=> 'New customer booking',
 							'placeholder'	=> 'New customer booking'
+						),
+
+					array(
+							'type'		=> 'text',
+							'id'		=> 'tp_hotel_booking_email_new_booking_heading_desc',
+							'title'		=> __( 'Email Heading Description', 'tp-hotel-booking' ),
+							'default'	=> __( 'Reservated', 'tp-hotel-booking' ),
+							'placeholder'	=> __( 'Reservated', 'tp-hotel-booking' )
 						),
 
 					array(

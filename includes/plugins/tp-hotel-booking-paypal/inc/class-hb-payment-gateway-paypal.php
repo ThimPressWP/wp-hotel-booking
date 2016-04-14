@@ -89,8 +89,9 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      * @param $total_with_currency
      */
     function column_total_content( $booking_id, $total, $total_with_currency ){
-        if( $total && get_post_meta( $booking_id, '_hb_method', true ) == 'paypal-standard' ) {
-            $advance_payment = get_post_meta($booking_id, '_hb_advance_payment', true);
+        $booking = HB_Booking::instance( $booking_id );
+        if( $total && $booking->method == 'paypal-standard' ) {
+            $advance_payment = $booking->advance_payment;
             printf(__('<br /><small>(Paid %s%% of %s via %s)</small>', 'tp-hotel-booking-paypal'), round( $advance_payment / $total, 2 ) * 100, $total_with_currency, 'Paypal' );
         }
     }

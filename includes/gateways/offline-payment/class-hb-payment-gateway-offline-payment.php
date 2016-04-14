@@ -47,7 +47,8 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
      * @param $total_with_currency
      */
     function column_total_content( $booking_id, $total, $total_with_currency ){
-        if( get_post_meta( $booking_id, '_hb_method', true ) == 'offline-payment' ) {
+        $booking = HB_Booking::instance( $booking_id );
+        if( $booking->method === 'offline-payment' ) {
             _e( '<br />(<small>Pay on arrival</small>)', 'tp-hotel-booking' );
         }
     }
@@ -83,23 +84,11 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
             $booking->update_status( 'processing' );
         }
 
-        $settings = HB_Settings::instance()->get('offline-payment');
-        $email_subject = ! empty( $settings['email_subject'] ) ? $settings['email_subject'] : false;
-        $email_content = ! empty( $settings['email_content'] ) ? $settings['email_content'] : false;
-        if( ! $email_subject || ! $email_content ) {
-            return array(
-                'result'    => 'fail'
-            );
-        } else {
-            // empty cart
-            TP_Hotel_Booking::instance()->cart->empty_cart();
-
-            hb_add_message( sprintf( __( 'Thank you! Your booking has been placed. Please check your email %s to view booking details', 'tp-hotel-booking' ), $booking->customer_email ) );
-            return array(
-                'result'    => 'success',
-                'redirect'  => '?hotel-booking-offline-payment=1'
-            );
-        }
+        hb_add_message( sprintf( __( 'Thank you! Your booking has been placed. Please check your email %s to view booking details', 'tp-hotel-booking' ), $booking->customer_email ) );
+        return array(
+            'result'    => 'success',
+            'redirect'  => '?hotel-booking-offline-payment=1'
+        );
 
     }
 

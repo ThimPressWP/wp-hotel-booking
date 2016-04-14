@@ -7,8 +7,8 @@ class HB_Extra_Field
 
 	function __construct()
 	{
-		add_filter( 'tp_hb_metabox_room_settings', array( $this, 'meta_fields' ) );
-		add_action( 'tp_hotel_booking_loop_after_item', array( $this, 'render_extra' ), 10, 1 );
+		add_filter( 'hb_metabox_room_settings', array( $this, 'meta_fields' ) );
+		add_action( 'hotel_booking_loop_after_item', array( $this, 'render_extra' ), 10, 1 );
 		add_action( 'hotel_booking_after_add_room_to_cart_form', array( $this, 'render_extra' ), 10, 1 );
 
 		/**

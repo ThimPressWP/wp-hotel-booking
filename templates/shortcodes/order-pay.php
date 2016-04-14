@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <?php $currency_symbol = hb_get_currency_symbol( get_post_meta( $booking_id, '_hb_currency', true ) ); ?>
 
 <?php if ( $book->get_status() !== 'completed' ): ?>
-	<?php do_action( 'tp_hotel_booking_order_pay_before' ); ?>
+	<?php do_action( 'hotel_booking_order_pay_before' ); ?>
 	<h3><?php printf( __( 'Booking ID: %s', 'tp-hotel-booking' ), hb_format_order_number($booking_id) ) ?></h3>
 	<p>
 		<strong><?php _e('Payment status: ') ?></strong>

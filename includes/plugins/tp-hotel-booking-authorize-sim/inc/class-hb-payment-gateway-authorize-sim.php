@@ -192,7 +192,7 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base{
         $book_id = absint( $_GET['hb-order-pay'] );
         $book = HB_Booking::instance( $book_id );
 
-        $customer = HB_Customer::instance( TP_Hotel_Booking::instance()->cart->customer_id );//$book->_customer->data;
+        // $customer = HB_Customer::instance( TP_Hotel_Booking::instance()->cart->customer_id );//$book->_customer->data;
         $time = time();
         $nonce = wp_create_nonce( 'replay-pay-nonce' );
 
@@ -226,15 +226,15 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base{
             'x_show_form'              => 'PAYMENT_FORM',
             'x_version'                => '3.1',
             'x_fp_timestamp'           => $time,
-            'x_first_name'             => $customer->first_name,
-            'x_last_name'              => $customer->last_name,
-            'x_address'                => $customer->address,
-            'x_country'                => $customer->country,
-            'x_state'                  => $customer->state,
-            'x_city'                   => $customer->city,
-            'x_zip'                    => $customer->postal_code,
-            'x_phone'                  => $customer->phone,
-            'x_email'                  => $customer->email,
+            'x_first_name'             => $book->customer_first_name,
+            'x_last_name'              => $book->customer_last_name,
+            'x_address'                => $book->customer_address,
+            'x_country'                => $book->customer_country,
+            'x_state'                  => $book->customer_state,
+            'x_city'                   => $book->customer_city,
+            'x_zip'                    => $book->customer_postal_code,
+            'x_phone'                  => $book->customer_phone,
+            'x_email'                  => $book->customer_email,
             'x_type'                   => 'AUTH_CAPTURE',
             'x_cancel_url'             => hb_get_return_url(),
             'x_email_customer'         => 'TRUE',

@@ -1,7 +1,7 @@
 <?php
 
 function tp_hb_extra_template_path(){
-    return apply_filters( 'tp_hb_extra_template_path', 'tp-hb-extra' );
+    return apply_filters( 'hb_extra_template_path', 'tp-hb-extra' );
 }
 /**
  * get template part
@@ -39,7 +39,7 @@ function tp_hb_extra_get_template_part( $slug, $name = '' ) {
 
     // Allow 3rd party plugin filter template file from their plugin
     if ( $template ) {
-        $template = apply_filters( 'tp_hb_extra_get_template_part', $template, $slug, $name );
+        $template = apply_filters( 'hb_extra_get_template_part', $template, $slug, $name );
     }
     if ( $template && file_exists( $template ) ) {
         load_template( $template, false );
@@ -70,13 +70,13 @@ function tp_hb_extra_get_template( $template_name, $args = array(), $template_pa
         return;
     }
     // Allow 3rd party plugin filter template file from their plugin
-    $located = apply_filters( 'tp_hb_extra_get_template', $located, $template_name, $args, $template_path, $default_path );
+    $located = apply_filters( 'hb_extra_get_template', $located, $template_name, $args, $template_path, $default_path );
 
-    do_action( 'tp_hb_extra_before_template_part', $template_name, $template_path, $located, $args );
+    do_action( 'hb_extra_before_template_part', $template_name, $template_path, $located, $args );
 
     include( $located );
 
-    do_action( 'tp_hb_extra_after_template_part', $template_name, $template_path, $located, $args );
+    do_action( 'hb_extra_after_template_part', $template_name, $template_path, $located, $args );
 }
 
 /**
@@ -121,7 +121,7 @@ function tp_hb_extra_locate_template( $template_name, $template_path = '', $defa
     }
 
     // Return what we found
-    return apply_filters( 'tp_hb_extra_locate_template', $template, $template_name, $template_path );
+    return apply_filters( 'hb_extra_locate_template', $template, $template_name, $template_path );
 }
 
 function tp_hb_extra_get_template_content( $template_name, $args = array(), $template_path = '', $default_path = '' ) {
@@ -135,7 +135,7 @@ if( ! function_exists( 'tp_hb_extra_type' ) )
 
 	function tp_hb_extra_type()
 	{
-		return apply_filters( 'tp_hb_extra_type', array(
+		return apply_filters( 'hb_extra_type', array(
 				'trip' 		=> __( 'Trip', 'tp-hb-extra' ),
 				'number'	=> __( 'Number', 'tp-hb-extra' )
 			)

@@ -14,7 +14,7 @@ class Hotel_Booking_Block
 	function __construct()
 	{
 		// admin menu
-		add_filter( 'tp_hotel_booking_menu_items', array( $this, 'block_menu' ) );
+		add_filter( 'hotel_booking_menu_items', array( $this, 'block_menu' ) );
 
 		// enqueue script
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );

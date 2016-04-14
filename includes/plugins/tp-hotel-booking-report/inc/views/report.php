@@ -1,7 +1,7 @@
 <?php
 	global $hb_report;
 	/* allow hook */
-	$report_tabs = apply_filters( 'tp_hotel_booking_report_tab', array(
+	$report_tabs = apply_filters( 'hotel_booking_report_tab', array(
 		array(
 				'id'		=> 'price',
 				'title'		=> __( 'Booking Price', 'tp-hotel-booking-report' ),
@@ -34,7 +34,7 @@
 
 <?php //$rooms = hb_get_rooms(); ?>
 <?php
-	$date = apply_filters( 'tp_hotel_booking_report_date', array(
+	$date = apply_filters( 'hotel_booking_report_date', array(
 		array(
 				'id'	=> 'year',
 				'title'	=> __('Year', 'tp-hotel-booking-report')
@@ -115,11 +115,11 @@
 	<!-- booking_page_tp_hotel_booking_report -->
 	<div id="tp-hotel-booking-report-main">
 		<div id="chart-sidebar">
-			<?php do_action( 'tp_hotel_booking_chart_sidebar', $currenttab, $currentRang ) ?>
+			<?php do_action( 'hotel_booking_chart_sidebar', $currenttab, $currentRang ) ?>
 		</div>
 
 		<div id="tp-hotel-booking-chart-content">
-			<?php do_action( 'tp_hotel_booking_chart_canvas', $currenttab, $currentRang ) ?>
+			<?php do_action( 'hotel_booking_chart_canvas', $currenttab, $currentRang ) ?>
 		</div>
 	</div>
 

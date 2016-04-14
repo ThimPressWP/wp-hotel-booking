@@ -40,7 +40,7 @@ $currencies = wp_parse_args(
     </tr>
     <tr>
         <th><?php _e( 'Currency aggregator', 'tp-hotel-booking' ); ?></th>
-        <?php $aggregators = apply_filters( 'tp_hotel_booking_currency_aggregator', array() ); ?>
+        <?php $aggregators = apply_filters( 'hotel_booking_currency_aggregator', array() ); ?>
         <td>
             <select name="<?php echo esc_attr( $settings->get_field_name('aggregator') ); ?>" tabindex="-1">
                 <?php foreach( $aggregators as $k => $agg ): ?>
@@ -52,7 +52,7 @@ $currencies = wp_parse_args(
     <tr>
         <th><?php _e( 'Currency storage', 'tp-hotel-booking' ); ?></th>
         <?php
-            $storages = apply_filters( 'tp_hotel_booking_currency_storage', array(
+            $storages = apply_filters( 'hotel_booking_currency_storage', array(
                     'session'       => __( 'Session', 'tp-hotel-booking' ),
                     // 'cookie'        => __( 'Cookie', 'tp-hotel-booking' ),
                     'transient'     => __( 'Transient', 'tp-hotel-booking' )

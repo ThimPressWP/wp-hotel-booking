@@ -107,7 +107,6 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      * @return bool
      */
     function process_booking_paypal_standard(){
-        //return;
         if( ! empty( $_REQUEST['hb-transaction-method'] ) && ( 'paypal-standard' == sanitize_text_field( $_REQUEST['hb-transaction-method'] ) ) ) {
             $cart = HB_Cart::instance();
             $cart->empty_cart();

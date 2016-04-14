@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-31 14:42:40
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-11 10:51:53
+ * @Last Modified time: 2016-04-14 08:52:13
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -47,7 +47,7 @@ function hb_create_booking( $booking_info = array(), $order_items = array() ) {
             '_hb_method_id'                 => '',
             // customer
             '_hb_customer_title'         => '',
-            '_hb_customer_firt_name'     => '',
+            '_hb_customer_first_name'     => '',
             '_hb_customer_last_name'     => '',
             '_hb_customer_address'       => '',
             '_hb_customer_city'          => '',
@@ -321,4 +321,34 @@ function hb_booking_tax_total( $booking_id = null ) {
     $booking = HB_Booking::instance( $booking_id );
 
     return $booking->tax_total();
+}
+
+/**
+ * Checks to see if a user is booked room
+ *
+ * @param string $customer_email
+ * @param int    $room_id
+ *
+ * @return bool
+ */
+function hb_customer_booked_room( $customer_email, $room_id ) {
+    return true;
+}
+
+function hb_get_booking_id_by_key( $booking_key ) {
+    global $wpdb;
+
+    $booking_id = $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM {$wpdb->prefix}postmeta WHERE meta_key = '_hb_booking_key' AND meta_value = %s", $booking_key ) );
+
+    return $booking_id;
+}
+
+function hb_get_booking_status_label( $booking_id ) {
+    $statuses = hb_get_booking_statuses();
+    if ( is_numeric( $booking_id ) ) {
+        $status = get_post_status( $booking_id );
+    } else {
+        $status = $booking_id;
+    }
+    return ! empty( $statuses[$status] ) ? $statuses[$status] : __( 'Cancelled', 'tp-hotel-booking' );
 }

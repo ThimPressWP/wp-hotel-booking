@@ -559,7 +559,7 @@ if ( is_admin() ) {
 
         remove_meta_box( 'mymetabox_revslider_0', 'hb_room', 'normal' );
         remove_meta_box( 'mymetabox_revslider_0', 'hb_booking', 'normal' );
-        remove_meta_box( 'mymetabox_revslider_0', 'hb_customer', 'normal' );
+        // remove_meta_box( 'mymetabox_revslider_0', 'hb_customer', 'normal' );
         remove_meta_box( 'mymetabox_revslider_0', 'hb_coupon', 'normal' );
         remove_meta_box( 'submitdiv', 'hb_booking', 'side' );
     }

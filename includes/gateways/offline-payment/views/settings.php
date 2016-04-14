@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-29 09:10:23
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-03-29 09:11:20
+ * @Last Modified time: 2016-04-14 14:50:51
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -31,29 +31,4 @@ $field_name = $settings->get_field_name('offline-payment');
             <input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>[enable]" <?php checked( $payment['enable'] == 'on' ? 1 : 0, 1 ); ?> value="on" />
         </td>
     </tr>
-    <tr>
-        <th><?php _e( 'Email Subject', 'tp-hotel-booking' ); ?></th>
-        <td>
-            <input type="text" class="regular-text" name="<?php echo esc_attr( $field_name ); ?>[email_subject]" value="<?php echo esc_attr( $payment['email_subject'] ); ?>" />
-        </td>
-    </tr>
-    <tr>
-        <th><?php _e( 'Email Content', 'tp-hotel-booking' ); ?></th>
-        <td>
-        <?php wp_editor( $payment['email_content'], "{$field_name}_email_content" ); ?>
-            <p class="description">
-                <?php _e( 'Place holder: ', 'tp-hotel-booking' ); ?>
-                {{site_name}}, {{customer_name}}, {{booking_details}}
-            </p>
-        <textarea style="display: none;" name="<?php echo esc_attr( $field_name ); ?>[email_content]"><?php echo sprintf( '%s', $payment['email_content'] ); ?></textarea>
-        </td>
-    </tr>
 </table>
-<script type="text/javascript">
-    jQuery(function($){
-        $('form[name="hb-admin-settings-form"]').submit(function(){
-            tinymce.triggerSave();
-            $('textarea[name^="tp_hotel_booking_offline-payment"]').val( $( '#tp_hotel_booking_offline-payment_email_content').val() );
-        });
-    })
-</script>

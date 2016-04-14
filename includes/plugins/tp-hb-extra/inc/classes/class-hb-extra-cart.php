@@ -53,9 +53,13 @@ class HB_Extra_Cart
 		// email new booking hook
 		add_action( 'hotel_booking_email_new_booking', array( $this, 'email_new_booking' ), 10, 3 );
 
-		add_filter( 'tp_hb_extra_cart_input', array( $this, 'check_respondent' ) );
+		add_filter( 'hb_extra_cart_input', array( $this, 'check_respondent' ) );
 
+		// room item in booking details
 		add_action( 'hotel_booking_after_room_item', array( $this, 'booking_post_type_extra_item' ), 10, 2 );
+
+		// room item in email
+		add_action( 'hotel_booking_email_after_room_item', array( $this, 'email_booking_post_type_extra_item' ), 10, 2 );
 
 
 		// admin process
@@ -112,7 +116,7 @@ class HB_Extra_Cart
 	 */
 	public function mini_cart_layout( $located, $template_name, $args, $template_path, $default_path )
 	{
-		if( $template_name === 'shortcodes/mini_cart_layout.php' )
+		if( $template_name === 'cart/mini_cart_layout.php' )
 		{
 			return tp_hb_extra_locate_template( 'shortcodes/mini_cart_layout.php' );
 		}
@@ -326,7 +330,7 @@ class HB_Extra_Cart
 
 	function check_respondent( $respondent )
 	{
-		// remove_filter( 'tp_hb_extra_cart_input', array( $this, 'check_respondent' ) );
+		// remove_filter( 'hb_extra_cart_input', array( $this, 'check_respondent' ) );
 		if( is_page( hb_get_page_id( 'checkout' ) ) || hb_get_request( 'hotel-booking' ) === 'checkout' )
 			return false;
 
@@ -335,7 +339,7 @@ class HB_Extra_Cart
 			if( $respondent === 'trip' )
 				return false;
 		}
-		add_filter( 'tp_hb_extra_cart_input', array( $this, 'check_respondent' ) );
+		add_filter( 'hb_extra_cart_input', array( $this, 'check_respondent' ) );
 		return $respondent;
 	}
 
@@ -371,6 +375,28 @@ class HB_Extra_Cart
 						<i class="fa fa-times-circle"></i>
 					</a>
 				</td>';
+
+			$html[] = '</tr>';
+		}
+
+		printf( '%s', implode( '', $html ) );
+	}
+
+	function email_booking_post_type_extra_item( $room, $hb_booking ) {
+		$packages = hb_get_order_items( $hb_booking->id, 'sub_item', $room->order_item_id );
+
+		if ( ! $packages ) {
+			return;
+		}
+
+		$html = array();
+		foreach ( $packages as $k => $package ) {
+			$html[] = '<tr>';
+
+			$html[] = '<td>' . sprintf( '%s', $package->order_item_name ) . '</td>';
+			$html[] = '<td>' . sprintf( '%s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $package->order_item_id, 'check_in_date', true ) ) ) . '</td>';
+			$html[] = '<td>' . sprintf( '%s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $package->order_item_id, 'check_out_date', true ) ) )  . '</td>';
+			$html[] = '<td>' . sprintf( '%s', hb_get_order_item_meta( $package->order_item_id, 'subtotal', true ) )  . '</td>';
 
 			$html[] = '</tr>';
 		}

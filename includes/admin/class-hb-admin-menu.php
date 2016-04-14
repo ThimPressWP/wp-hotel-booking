@@ -50,7 +50,7 @@ class HB_Admin_Menu{
         /**
          * recive all addons menu in settings Other settings menu
          */
-        $addon_menus = apply_filters( 'tp_hotel_booking_addon_menus', array() );
+        $addon_menus = apply_filters( 'hotel_booking_addon_menus', array() );
         if( $addon_menus )
         {
             $menu_items[] = array(
@@ -73,7 +73,7 @@ class HB_Admin_Menu{
             );
 
         // Third-party can be add more items
-        $menu_items = apply_filters( 'tp_hotel_booking_menu_items', $menu_items );
+        $menu_items = apply_filters( 'hotel_booking_menu_items', $menu_items );
 
         if ( $menu_items ) foreach ( $menu_items as $item ) {
             call_user_func_array( 'add_submenu_page', $item );
