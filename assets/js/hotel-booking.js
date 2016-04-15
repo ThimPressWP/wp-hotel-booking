@@ -697,7 +697,6 @@
 			if ( $check_in.val() === '' || ! isDate( $check_in.datepicker( 'getDate' ) ) ) {
 				// alert( hotel_booking_i18n.empty_check_in_date );
 				$check_in.addClass( 'error' );
-				$check_in.focus();
 
 				error = true;
 			}
@@ -706,7 +705,6 @@
 			if ( $check_out.val() === '' || ! isDate( $check_out.datepicker( 'getDate' ) ) ) {
 				// alert( hotel_booking_i18n.empty_check_out_date );
 				$check_out.addClass( 'error' );
-				$check_out.focus();
 				error = true;
 			}
 
@@ -717,14 +715,12 @@
 				// alert( hotel_booking_i18n.check_in_date_must_be_greater );
 				$check_in.addClass( 'error' );
 				$check_out.addClass( 'error' );
-				$check_in.focus();
 				error = true;
 			}
 
 			if ( check_in.compareWith( check_out ) >= 0 ) {
 				// alert( hotel_booking_i18n.check_out_date_must_be_greater );
 				$check_in.addClass( 'error' );
-				$check_out.focus();
 				error = true;
 			}
 
@@ -767,7 +763,7 @@
 					else if ( response.sig ) {
 						window.location.href = action.replace(/\?.*/, '') + '?hotel-booking-params=' + response.sig;
 					}
-					button.removeClass('hb_loading');
+					// button.removeClass('hb_loading');
 				}
 			});
 			return false;
@@ -800,7 +796,7 @@
 					orderSubmit( _self );
 				}
 
-			} catch (e) {
+			} catch ( e ) {
 				alert(e);
 			}
 		});
