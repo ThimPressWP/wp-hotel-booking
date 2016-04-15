@@ -496,4 +496,25 @@ if ( ! function_exists( 'hb_setup_shortcode_page_content' ) ){
         return do_shortcode( $content );
     }
 }
+if ( ! function_exists( 'hotel_display_pricing_plans' ) ) {
+    function hotel_display_pricing_plans( $tabs )
+    {
+        if( ! hb_settings()->get('display_pricing_plans') )
+            return $tabs;
+
+        $tabs[] = array(
+                'id'        => 'hb_room_pricing_plans',
+                'title'     => __( 'Pricing Plans', 'tp-hotel-booking' ),
+                'content'   => ''
+            );
+        return $tabs;
+    }
+}
+
+if ( ! function_exists( 'hotel_show_pricing' ) ) {
+    function hotel_show_pricing()
+    {
+        hb_get_template( 'loop/pricing_plan.php' );
+    }
+}
 /*=====  End of template hooks  ======*/

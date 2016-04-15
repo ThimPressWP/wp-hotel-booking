@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-13 13:10:23
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-13 13:31:32
+ * @Last Modified time: 2016-04-15 10:47:26
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -44,6 +44,31 @@ class HB_Admin_Metabox_Room_Price {
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 			return;
 		}
+
+		if ( ! isset( $_POST['hotel-booking-room-pricing-nonce'] ) || ! wp_verify_nonce( $_POST['hotel-booking-room-pricing-nonce'], 'hotel_booking_room_pricing_nocne' ) ) {
+			return;
+		}
+
+		if ( ! isset( $_POST['_hbpricing'] ) ) {
+			return;
+		}
+
+		$plan_ids = isset( $_POST['_hbpricing']['plan_id'] ) ? $_POST['_hbpricing']['plan_id'] : array();
+		$prices = isset( $_POST['_hbpricing']['prices'] ) ? $_POST['_hbpricing']['prices'] : array();
+		foreach( $plan_ids as $plan_id ) {
+			if ( array_key_exists( $plan_id, $prices ) ) {
+				hb_room_set_pricing_plan( array(
+						'start_time'		=> isset( $_POST['start_time'], $_POST['start_time'][$plan_id] ) ? $_POST['start_time'][$plan_id] : null,
+						'end_time'			=> isset( $_POST['end_time'], $_POST['end_time'][$plan_id] ) ? $_POST['end_time'][$plan_id] : null,
+						'pricing'			=> isset( $prices[ $plan_id ] ) ? $prices[ $plan_id ] : null,
+						'room_id'			=> $post_id,
+						'plan_id'			=> $plan_id
+					) );
+			} else {
+				hb_room_remove_pricing( $plan_id );
+			}
+		}
+
 	}
 
 }

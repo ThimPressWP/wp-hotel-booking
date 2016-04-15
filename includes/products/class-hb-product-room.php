@@ -331,37 +331,17 @@ class HB_Product_Room_Base extends HB_Product_Abstract
 
         $plans = $this->get_pricing_plans();
         $return = 0;
-        if( $plans )
-        {
-            $regular_plan = null;
-            $selected_plan = null;
-            if( $plans ){
-                foreach( $plans as $plan ){
-                    if ( $plan->start && $plan->end ) {
-                        $start = strtotime( $plan->start );
-                        $end = strtotime( $plan->end );
+        $selected_plan = hb_room_get_selected_plan( $this->post->ID, $date );
 
-                        if ( $date >= $start && $date <= $end ) {
-                            $selected_plan = $plan;
-                            break;
-                        }
-
-                    } else if ( ! $regular_plan ) {
-                        $selected_plan = $regular_plan = $plan;
-                    }
-                }
+        if ( $selected_plan ) {
+            $prices = $selected_plan->prices;
+            if( $prices && isset( $prices[ date( 'w', $date ) ] ) ) {
+                $return = $prices[ date( 'w', $date ) ];
+                $return = $return + $return * $tax;
             }
-
-            if ( $selected_plan ) {
-                $prices = $selected_plan->prices;
-                if( $prices && isset( $prices[ date( 'w', $date ) ] ) ) {
-                    $return = $prices[ date( 'w', $date ) ];
-                    $return = $return + $return * $tax;
-                }
-            }
-
-            return floatval( $return );
         }
+
+        return floatval( $return );
     }
 
     /**

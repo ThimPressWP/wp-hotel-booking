@@ -49,8 +49,6 @@ class HB_Settings{
             }
         }
         $this->_load_options();
-        add_filter( 'hotel_booking_single_room_infomation_tabs', array($this, 'display_pricing_plans') );
-        add_action( 'hotel_booking_single_room_before_tabs_content_hb_room_pricing_plans', array($this, 'show_pricing') );
     }
 
     /**
@@ -196,24 +194,6 @@ class HB_Settings{
             $return = json_encode( $this->_options );
         }
         return $return;
-    }
-
-    function display_pricing_plans( $tabs )
-    {
-        if( ! $this->get('display_pricing_plans') )
-            return $tabs;
-
-        $tabs[] = array(
-                'id'        => 'hb_room_pricing_plans',
-                'title'     => __( 'Pricing Plans', 'tp-hotel-booking' ),
-                'content'   => ''
-            );
-        return $tabs;
-    }
-
-    function show_pricing()
-    {
-        hb_get_template( 'loop/pricing_plan.php' );
     }
 
     function get_prefix()
