@@ -687,44 +687,44 @@
 			e.preventDefault();
 			var _self = $(this),
 				unique = _self.attr('class'),
-				button = _self.find('button[type="submit"]'),
-				error = false;
+				button = _self.find('button[type="submit"]');
 
 			unique = unique.replace('hb-search-form-', '');
 
 			_self.find( 'input, select' ).removeClass( 'error' );
 			var $check_in = $( '#check_in_date_' + unique );
 			if ( $check_in.val() === '' || ! isDate( $check_in.datepicker( 'getDate' ) ) ) {
-				// alert( hotel_booking_i18n.empty_check_in_date );
 				$check_in.addClass( 'error' );
-
-				error = true;
+				return false;
 			}
 
 			var $check_out = $( '#check_out_date_' + unique );
 			if ( $check_out.val() === '' || ! isDate( $check_out.datepicker( 'getDate' ) ) ) {
-				// alert( hotel_booking_i18n.empty_check_out_date );
 				$check_out.addClass( 'error' );
-				error = true;
+				return false;
+			}
+
+			if ( $check_in.datepicker( 'getDate' ) === null ) {
+				$check_in.addClass( 'error' );
+				return false;
+			}
+
+			if ( $check_out.datepicker( 'getDate' ) === null ) {
+				$check_out.addClass( 'error' );
+				return false;
 			}
 
 			var check_in = new Date( $check_in.datepicker( 'getDate' ) ),
 				check_out = new Date( $check_out.datepicker( 'getDate' ) ),
 				current = new Date();
 			if ( check_in.compareWith( current ) == -1 ) {
-				// alert( hotel_booking_i18n.check_in_date_must_be_greater );
 				$check_in.addClass( 'error' );
-				$check_out.addClass( 'error' );
-				error = true;
+				return false;
 			}
 
 			if ( check_in.compareWith( check_out ) >= 0 ) {
-				// alert( hotel_booking_i18n.check_out_date_must_be_greater );
 				$check_in.addClass( 'error' );
 				error = true;
-			}
-
-			if ( error ) {
 				return false;
 			}
 
@@ -741,6 +741,7 @@
 					})
 				}
 			}
+
 			$.ajax({
 				url       : hotel_settings.ajax,
 				type      : 'post',
