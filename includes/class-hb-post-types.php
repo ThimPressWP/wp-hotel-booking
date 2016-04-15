@@ -427,10 +427,8 @@ class HB_Post_Types{
      * Remove default meta boxes
      */
     function remove_meta_boxes() {
-        // remove_meta_box( 'hb_room_typediv', 'hb_room', 'side' );
         remove_meta_box( 'hb_room_capacitydiv', 'hb_room', 'side' );
 
-        // remove_meta_box( 'tagsdiv-hb_room_type', 'hb_room', 'side' );
         remove_meta_box( 'tagsdiv-hb_room_capacity', 'hb_room', 'side' );
     }
 
@@ -450,7 +448,7 @@ class HB_Post_Types{
                 'all_items'          => __( 'Rooms', 'tp-hotel-booking' ),
                 'view_item'          => __( 'View Room', 'tp-hotel-booking' ),
                 'add_new_item'       => __( 'Add New Room', 'tp-hotel-booking' ),
-                'add_new'            => __( 'Add New', 'tp-hotel-booking' ),
+                'add_new'            => __( 'Add New Room', 'tp-hotel-booking' ),
                 'edit_item'          => __( 'Edit Room', 'tp-hotel-booking' ),
                 'update_item'        => __( 'Update Room', 'tp-hotel-booking' ),
                 'search_items'       => __( 'Search Room', 'tp-hotel-booking' ),
@@ -464,13 +462,15 @@ class HB_Post_Types{
             'has_archive'        => true,
             //'capability_type'    => 'post',
             'map_meta_cap'       => true,
-            'show_in_menu'       => 'tp_hotel_booking',
+            'show_in_menu'       => true,
             'show_in_admin_bar'  => true,
             'show_in_nav_menus'  => true,
             'taxonomies'         => array( 'room_category', 'room_tag' ),
             'supports'           => array( 'title', 'editor', 'thumbnail', 'revisions', 'comments', 'author' ),
             'hierarchical'       => false,
-            'rewrite'            => array( 'slug' => _x( 'rooms', 'URL slug', 'tp-hotel-booking' ), 'with_front' => false, 'feeds' => true )
+            'rewrite'            => array( 'slug' => _x( 'rooms', 'URL slug', 'tp-hotel-booking' ), 'with_front' => false, 'feeds' => true ),
+            'menu_position'      => 3,
+            'menu_icon'          => 'dashicons-admin-home'
         );
 
         $args = apply_filters( 'hotel_booking_register_post_type_room_arg', $args );
@@ -514,99 +514,6 @@ class HB_Post_Types{
         $args = apply_filters( 'hotel_booking_register_post_type_booking_arg', $args );
         register_post_type( 'hb_booking', $args );
 
-        /**
-         * Register custom post type for customer
-         */
-        $args = array(
-            'labels'             => array(
-                'name'               => _x( 'Customers', 'post type general name', 'tp-hotel-booking' ),
-                'singular_name'      => _x( 'Customer', 'post type singular name', 'tp-hotel-booking' ),
-                'menu_name'          => __( 'Customers', 'tp-hotel-booking' ),
-                'parent_item_colon'  => __( 'Parent Item:', 'tp-hotel-booking' ),
-                'all_items'          => __( 'Customers', 'tp-hotel-booking' ),
-                'view_item'          => __( 'View Customer', 'tp-hotel-booking' ),
-                'add_new_item'       => __( 'Add New Customer', 'tp-hotel-booking' ),
-                'add_new'            => __( 'Add New', 'tp-hotel-booking' ),
-                'edit_item'          => __( 'Edit Customer', 'tp-hotel-booking' ),
-                'update_item'        => __( 'Update Customer', 'tp-hotel-booking' ),
-                'search_items'       => __( 'Search Customer', 'tp-hotel-booking' ),
-                'not_found'          => __( 'No customer found', 'tp-hotel-booking' ),
-                'not_found_in_trash' => __( 'No customer found in Trash', 'tp-hotel-booking' ),
-            ),
-            'public'             => false,
-            'query_var'          => true,
-            'publicly_queryable' => false,
-            'show_ui'            => true,
-            'has_archive'        => false,
-            'capability_type'    => 'post',
-            'map_meta_cap'       => true,
-            'show_in_menu'       => 'tp_hotel_booking',
-            'show_in_admin_bar'  => true,
-            'show_in_nav_menus'  => true,
-            'supports'           => array( '' ),
-            'hierarchical'       => false,
-            'capabilities'       => array(
-                'create_posts'  => 'do_not_allow'
-            )
-        );
-        $args = apply_filters( 'hotel_booking_register_post_type_customer_arg', $args );
-        // register_post_type( 'hb_customer', $args );
-
-        /**
-         * Register custom post type for pricing plan
-         */
-        $args = array(
-            'labels'             => array(
-                /*'name'               => _x( 'Bookings', 'post type general name', 'tp-hotel-booking' ),
-                'singular_name'      => _x( 'Booking', 'Post Type Singular Name', 'tp-hotel-booking' ),
-                'menu_name'          => __( 'Bookings', 'tp-hotel-booking' ),
-                'parent_item_colon'  => __( 'Parent Item:', 'tp-hotel-booking' ),
-                'all_items'          => __( 'Bookings', 'tp-hotel-booking' ),
-                'view_item'          => __( 'View Booking', 'tp-hotel-booking' ),
-                'add_new_item'       => __( 'Add New Booking', 'tp-hotel-booking' ),
-                'add_new'            => __( 'Add New', 'tp-hotel-booking' ),
-                'edit_item'          => __( 'Edit Booking', 'tp-hotel-booking' ),
-                'update_item'        => __( 'Update Booking', 'tp-hotel-booking' ),
-                'search_items'       => __( 'Search Booking', 'tp-hotel-booking' ),
-                'not_found'          => __( 'No booking found', 'tp-hotel-booking' ),
-                'not_found_in_trash' => __( 'No booking found in Trash', 'tp-hotel-booking' ),*/
-            ),
-            'public'             => false,
-            'query_var'          => false,
-            'publicly_queryable' => false,
-            'show_ui'            => false,
-            'has_archive'        => false,
-            //'capability_type'    => 'hb_booking',
-            'map_meta_cap'       => true,
-            'show_in_menu'       => false,
-            'show_in_admin_bar'  => false,
-            'show_in_nav_menus'  => false,
-            'supports'           => array( 'title', 'author' ),
-            'hierarchical'       => false
-        );
-        $args = apply_filters( 'hotel_booking_register_post_type_pricing_arg', $args );
-        register_post_type( 'hb_pricing_plan', $args );
-
-        /**
-         * Register custom post type for hb_booking_item
-         */
-        $args = array(
-            'labels'             => array(),
-            'public'             => false,
-            'query_var'          => false,
-            'publicly_queryable' => false,
-            'show_ui'            => false,
-            'has_archive'        => false,
-            'map_meta_cap'       => true,
-            'show_in_menu'       => false,
-            'show_in_admin_bar'  => false,
-            'show_in_nav_menus'  => false,
-            'supports'           => array( 'title', 'author' ),
-            'hierarchical'       => false
-        );
-        $args = apply_filters( 'hotel_booking_register_post_type_booking_item_arg', $args );
-        register_post_type( 'hb_booking_item', $args );
-
         if( is_admin() ){
             TP_Hotel_Booking::instance()->_include( 'includes/walkers/class-hb-walker-room-type-dropdown.php' );
         }
@@ -623,7 +530,7 @@ class HB_Post_Types{
                 'labels' => array(
                     'name'              => _x( 'Room Types', 'taxonomy general name', 'tp-hotel-booking' ),
                     'singular_name'     => _x( 'Room Type', 'taxonomy singular name', 'tp-hotel-booking' ),
-                    'menu_name'         => _x( 'Types', 'Room Types', 'tp-hotel-booking' ),
+                    'menu_name'         => _x( 'Room Types', 'Room Types', 'tp-hotel-booking' ),
                     'search_items'      => __( 'Search Room Types', 'tp-hotel-booking' ),
                     'all_items'         => __( 'All Room Types', 'tp-hotel-booking' ),
                     'parent_item'       => __( 'Parent Room Type', 'tp-hotel-booking' ),
@@ -654,7 +561,7 @@ class HB_Post_Types{
                 'labels' => array(
                     'name'              => __( 'Room Capacities', 'tp-hotel-booking' ),
                     'singular_name'     => __( 'Room Capacity', 'tp-hotel-booking' ),
-                    'menu_name'         => _x( 'Types', 'Room Capacities', 'tp-hotel-booking' ),
+                    'menu_name'         => _x( 'Room Capacities', 'Room Capacities', 'tp-hotel-booking' ),
                     'search_items'      => __( 'Search Room Capacities', 'tp-hotel-booking' ),
                     'all_items'         => __( 'All Room Capacity', 'tp-hotel-booking' ),
                     'parent_item'       => __( 'Parent Room Capacity', 'tp-hotel-booking' ),

@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-12 13:08:14
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-13 15:53:29
+ * @Last Modified time: 2016-04-15 10:19:46
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -113,6 +113,61 @@ if ( ! function_exists( 'hb_room_set_pricing_plan' ) ) {
 		do_action( 'hotel_booking_created_pricing_plan', $plan_id, $args );
 
 		return $plan_id;
+	}
+}
+
+if ( ! function_exists( 'hb_room_get_selected_plan' ) ) {
+	function hb_room_get_selected_plan( $room_id = null, $date = null ) {
+		if ( ! $room_id ) {
+			return;
+		}
+
+		if ( ! $date ) {
+			$date = time();
+		}
+		$regular_plan = null;
+        $selected_plan = null;
+
+        $plans = hb_room_get_pricing_plans( $room_id );
+        if( $plans ){
+            foreach( $plans as $plan ){
+                if ( $plan->start && $plan->end ) {
+                    $start = strtotime( $plan->start );
+                    $end = strtotime( $plan->end );
+
+                    if ( $date >= $start && $date <= $end ) {
+                        $selected_plan = $plan;
+                        break;
+                    }
+
+                } else if ( ! $regular_plan ) {
+                    $selected_plan = $regular_plan = $plan;
+                }
+            }
+        }
+
+        return apply_filters( 'hb_room_get_selected_plan', $selected_plan );
+	}
+}
+
+if ( ! function_exists( 'hb_room_get_regular_plan' ) ) {
+	function hb_room_get_regular_plan( $room_id = null ) {
+		if ( ! $room_id ) {
+			return null;
+		}
+
+		$plans = hb_room_get_pricing_plans( $room_id );
+		$regular_plan = $selected_plan = null;
+        if( $plans ){
+            foreach( $plans as $plan ){
+                if ( ! $plan->start && ! $plan->end ) {
+                    $regular_plan = $plan;
+
+                }
+            }
+        }
+
+        return apply_filters( 'hb_room_get_regular_plan', $regular_plan );
 	}
 }
 

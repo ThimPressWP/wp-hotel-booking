@@ -3,8 +3,12 @@
  * @Author: ducnvtt
  * @Date:   2016-03-25 16:11:00
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-03-25 16:13:02
+ * @Last Modified time: 2016-04-15 10:51:38
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit();
+}
 
 class HB_Admin_Metabox_Booking_Actions {
 

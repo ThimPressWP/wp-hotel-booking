@@ -14,7 +14,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $hb_settings;
 $price_display = apply_filters( 'hotel_booking_loop_room_price_display_style', $hb_settings->get('price_display') );
 
-$prices = hb_get_price_plan_room(get_the_ID());
+$prices = hb_room_get_selected_plan( get_the_ID() );
+
+$prices = $prices->prices;
+
 ?>
 <?php if( $prices ): ?>
 	<?php

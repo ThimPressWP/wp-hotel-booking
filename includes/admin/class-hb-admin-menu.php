@@ -23,20 +23,20 @@ class HB_Admin_Menu{
         );
 
         $menu_items = array(
-            'room_type' => array(
-                'tp_hotel_booking',
-                __( 'Room Types', 'tp-hotel-booking' ),
-                __( 'Room Types', 'tp-hotel-booking' ),
-                'manage_options',
-                'edit-tags.php?taxonomy=hb_room_type'
-            ),
-            'room_capacity' => array(
-                'tp_hotel_booking',
-                __( 'Room Capacities', 'tp-hotel-booking' ),
-                __( 'Room Capacities', 'tp-hotel-booking' ),
-                'manage_options',
-                'edit-tags.php?taxonomy=hb_room_capacity'
-            ),
+            // 'room_type' => array(
+            //     'tp_hotel_booking',
+            //     __( 'Room Types', 'tp-hotel-booking' ),
+            //     __( 'Room Types', 'tp-hotel-booking' ),
+            //     'manage_options',
+            //     'edit-tags.php?taxonomy=hb_room_type'
+            // ),
+            // 'room_capacity' => array(
+            //     'tp_hotel_booking',
+            //     __( 'Room Capacities', 'tp-hotel-booking' ),
+            //     __( 'Room Capacities', 'tp-hotel-booking' ),
+            //     'manage_options',
+            //     'edit-tags.php?taxonomy=hb_room_capacity'
+            // ),
             'pricing_table'   => array(
                 'tp_hotel_booking',
                 __( 'Pricing Plans', 'tp-hotel-booking' ),

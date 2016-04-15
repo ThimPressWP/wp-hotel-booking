@@ -39,3 +39,5 @@ add_action( 'pre_get_posts', 'hotel_booking_num_room_archive', 999 );
 add_action( 'the_post', array( 'HB_Room', 'hb_setup_room_data' ) );
 
 add_filter( 'the_content', 'hb_setup_shortcode_page_content' );
+add_filter( 'hotel_booking_single_room_infomation_tabs', 'hotel_display_pricing_plans' );
+add_action( 'hotel_booking_single_room_before_tabs_content_hb_room_pricing_plans', 'hotel_show_pricing' );

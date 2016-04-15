@@ -34,38 +34,6 @@ class HB_WC_Checkout extends HB_Checkout
 	}
 
 	/**
-	 * create customer for order
-	 * @param  integer $order_id
-	 * @return customer id
-	 */
-	function create_customer(  $order = null  )
-	{
-		if( ! $order )
-			return;
-		global $woocommerce;
-
-		$customer_info = array(
-            'ID'            => $order->get_user_id(),
-            'first_name'    => $order->billing_first_name,
-            'last_name'     => $order->billing_last_name,
-            'address'       => $order->billing_address_1,
-            'city'          => $order->billing_city,
-            'state'         => $order->billing_state,
-            'postal_code'   => $order->billing_postcode,
-            'country'       => $woocommerce->countries->countries[ $order->billing_country ],
-            'phone'         => $order->billing_phone,
-            'email'         => $order->billing_email
-        );
-
-		$customer_id = hb_update_customer_info( $customer_info );
-
-        // set transient for current customer in one hour
-        // set cart customer
-        TP_Hotel_Booking::instance()->cart->set_customer( 'customer_id', $customer_id );
-        return $this->_customer = $customer_id;
-	}
-
-	/**
 	 * woo_add_order WooCoommerce hook create new order
 	 * @param  [type] $order_id [description]
 	 * @return [type]           [description]
@@ -151,8 +119,8 @@ class HB_WC_Checkout extends HB_Checkout
 	    // currency of default
 	    $transaction->booking_info['_hb_currency']					= get_woocommerce_currency();
 	    $transaction->booking_info['_hb_description']				= $order->customer_message ? $order->customer_message : __( 'Empty Booking Notes', 'tp-hotel-booking-woocommerce' );
-	    $transaction->booking_info['_hb_coupons']					= '';
-	    $transaction->booking_info['_hb_coupons_total_discount'] 	= '';
+	    // $transaction->booking_info['_hb_coupons']					= '';
+	    // $transaction->booking_info['_hb_coupons_total_discount'] 	= '';
 	    $transaction->booking_info['_hb_tax']						= $woocommerce->cart->get_taxes_total();
 	    $transaction->booking_info['_hb_woo_order_id'] 				= $order->id;
 	    $transaction->booking_info['_hb_price_including_tax']		= wc_prices_include_tax() ? 1 : 0;
@@ -161,14 +129,14 @@ class HB_WC_Checkout extends HB_Checkout
         $transaction->booking_info['_hb_customer_last_name']     		= $order->billing_last_name;
         $transaction->booking_info['_hb_customer_address']     			= $order->billing_address_1;
         $transaction->booking_info['_hb_customer_city']     			= $order->billing_city;
-        $transaction->booking_info['_hb_customre_state']     			= $order->billing_state;
+        $transaction->booking_info['_hb_customer_state']     			= $order->billing_state;
         $transaction->booking_info['_hb_customer_postal_code']     		= $order->billing_postcode;
         $transaction->booking_info['_hb_customer_country']     			= $woocommerce->countries->countries[ $order->billing_country ];
         $transaction->booking_info['_hb_customer_email']     			= $order->billing_email;
         $transaction->booking_info['_hb_customer_phone']     			= $order->billing_phone;
 	    if( WC()->cart->coupons_enabled() ){
 	    	$coupons = WC()->cart->get_coupons();
-	    	if ( ! $coupons ) {
+	    	if ( ! empty( $coupons ) ) {
 	    		$transaction->booking_info['_hb_coupon'] = array();
 		        $transaction->booking_info['_hb_coupon_code'] = array();
 	            $transaction->booking_info['_hb_coupon_value'] = array();

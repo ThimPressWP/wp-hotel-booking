@@ -11,19 +11,17 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit();
 }
 
-global $hb_room;
-$pricings = $hb_room->pricing_plans_data();
-$week_names = $pricings['week'];
-$capacitiyID = $pricings['capacity'];
-
+$week_names = hb_date_names();
+$plans = hb_room_get_pricing_plans( get_the_ID() );
 ?>
 
-<?php foreach ($pricings['data'] as $key => $prices): ?>
+<?php foreach ( $plans as $plan ) : ?>
+
 	<h4 class="hb_room_pricing_plan_data">
-		<?php if ( isset($prices['plans']) && count($prices['plans']) > 1 ): ?>
-				<?php printf( '%1$s', date_i18n( hb_get_date_format(), $prices['plans']['start'] ) ) ?>
+		<?php if ( $plan->start && $plan->end ): ?>
+				<?php printf( '%1$s', date_i18n( hb_get_date_format(), $plan->start ) ) ?>
 				<span><?php _e( 'to', 'tp-hotel-booking' ) ?></span>
-				<?php printf( '%1$s', date_i18n( hb_get_date_format(), $prices['plans']['end'] ) ) ?>
+				<?php printf( '%1$s', date_i18n( hb_get_date_format(), $plan->end ) ) ?>
 		<?php else: ?>
 			<?php _e( 'Regular plan', 'tp-hotel-booking' ) ?>
 		<?php endif; ?>
@@ -39,10 +37,10 @@ $capacitiyID = $pricings['capacity'];
 		</thead>
 		<tbody>
 			<tr>
-				<?php $prices = $prices['price'] ?>
+				<?php $prices = $plan->prices ?>
 				<?php for( $i = 0; $i < 7; $i++ ){?>
                     <td>
-                        <?php $price = ! empty( $prices[ $capacitiyID ] ) ? ( array_key_exists( $i, $prices[ $capacitiyID ] ) ? $prices[ $capacitiyID ][ $i ] : '' ) : ''; ?>
+                        <?php $price = isset( $prices[ $i ] ) ? $prices[ $i ] : ''; ?>
                         <?php printf( '%s', hb_format_price( $price ) ) ?>
                     </td>
                 <?php } ?>

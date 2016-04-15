@@ -198,7 +198,7 @@
 		if ( $tos.length && ! $tos.is(':checked') ) {
 			// alert(hotel_booking_i18n.confirm_tos);
 			mesgs.push( hotel_booking_i18n.confirm_tos );
-			$tos.parents('div:first').addClass( 'error' );
+			$tos.addClass( 'error' );
 		}
 		if ( $('input[name="existing-customer-id"]').val() ) {
 			if ( $email.val() != $('input[name="existing-customer-email"]', $form).val() ) {
@@ -780,7 +780,7 @@
 
 			var action = window.location.href.replace(/\?.*/, '');
 			_self.find( '.hotel_checkout_errors' ).slideUp().remove();
-			_self.find( 'input, select' ).removeClass('error');
+			_self.find( 'input, select' ).parents( 'div:first-child' ).removeClass('error');
 			try {
 
 				if ( _self.triggerHandler('hb_order_submit') === false ) {

@@ -1588,56 +1588,6 @@ if ( ! function_exists( 'hb_render_label_shortcode' ) ) {
 	}
 }
 
-if ( ! function_exists( 'hb_get_price_plan_room' ) ) {
-	/**
-	 * Returns array price of room.
-	 * @return array
-	 */
-	function hb_get_price_plan_room( $post_id = null ) {
-		if ( $post_id === null )
-			return null;
-		$pricing_plans = get_posts(
-			array(
-				'post_type'      => 'hb_pricing_plan',
-				'posts_per_page' => 9999,
-				'meta_query'     => array(
-					array(
-						'key'   => '_hb_pricing_plan_room',
-						'value' => $post_id
-					)
-				)
-			)
-		);
-		if ( !$pricing_plans )
-			return null;
-		$pricing_plans = array_pop( $pricing_plans );
-		$prices        = get_post_meta( $pricing_plans->ID, '_hb_pricing_plan_prices', true );
-		$price_plans   = array();
-		if ( $pricing_plans && $prices ) {
-			foreach ( $prices as $key => $price ) {
-				$price_plans = array_merge( $price_plans, $price );
-			}
-		}
-		return array_map( 'hb_before_generate_price', $price_plans );
-	}
-}
-
-if ( ! function_exists( 'hb_before_generate_price' ) ) {
-	function hb_before_generate_price( $price_plans ) {
-		$tax      = 0;
-		$settings = HB_Settings::instance();
-		if ( $settings->get( 'price_including_tax' ) ) {
-			$tax = $settings->get( 'tax' );
-			$tax = (float) $tax / 100;
-		}
-
-		if ( hb_price_including_tax() ) {
-			$price_plans = $price_plans + $price_plans * $tax;
-		}
-		return $price_plans;
-	}
-}
-
 /**
  * Get date format
  *

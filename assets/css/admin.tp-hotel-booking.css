@@ -33,6 +33,14 @@ form[name="hb-admin-settings-form"] input[type="text"]{
 }
 
 /* pricing table */
+#hb-booking-items{
+    overflow: hidden;
+}
+#hb-booking-items .hb-pricing-list,
+#hb-booking-items .hb-pricing-table,
+#hb-booking-items table{
+    width: 100%;
+}
 #hb-pricing-plan-list{
     overflow: hidden;
     clear: both;

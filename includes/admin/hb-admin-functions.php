@@ -201,9 +201,9 @@ if ( ! function_exists( 'hb_booking_status_completed_action' ) ) {
             if ( strpos( $new_status, 'completed' ) == 0 ) {
                 $usage_count++;
             } else {
-                if ($usage_count > 0) {
+                if ( $usage_count > 0 ) {
                     $usage_count--;
-                }else{
+                } else {
                     $usage_count = 0;
                 }
             }
@@ -212,16 +212,16 @@ if ( ! function_exists( 'hb_booking_status_completed_action' ) ) {
     }
 }
 
-add_action( 'admin_init', 'hb_admin_booking_init_metaboxes' );
-if ( ! function_exists( 'hb_admin_booking_init_metaboxes' ) ) {
-    function hb_admin_booking_init_metaboxes() {
+add_action( 'admin_init', 'hb_admin_init_metaboxes', 50 );
+if ( ! function_exists( 'hb_admin_init_metaboxes' ) ) {
+    function hb_admin_init_metaboxes() {
         $metaboxes = array(
                 new HB_Admin_Metabox_Booking_Details(), // booking details
                 new HB_Admin_Metabox_Booking_Items(), // booking items
                 new HB_Admin_Metabox_Booking_Actions(), // booking actions
                 new HB_Admin_Metabox_Room_Price() // room price
             );
-        return apply_filters( 'hb_admin_booking_init_metaboxes', $metaboxes );
+        return apply_filters( 'hb_admin_init_metaboxes', $metaboxes );
     }
 }
 
