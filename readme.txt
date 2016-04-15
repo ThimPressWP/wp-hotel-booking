@@ -104,6 +104,12 @@ Yes.
 * Auto cancel payment
 * Booking inside single room detail
 
+= 1.1.5.1 =
+* Add book manually
+* User book
+* Update Pricing
+* Book in room addon ( Support book room without search room )
+
 == Upgrade Notice ==
 
 = 1.0 =
