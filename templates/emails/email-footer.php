@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-14 10:34:16
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-14 14:35:54
+ * @Last Modified time: 2016-04-15 16:42:42
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 										<table class="row footer text-center">
 											<tbody>
 												<tr>
-													<th class="small-12 large-3 columns first">
+													<th class="width-30 columns first">
 														<table>
 															<tr>
 																<th>
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 															</tr>
 														</table>
 													</th>
-													<th class="small-12 large-3 columns">
+													<th class="width-30 columns">
 														<table>
 															<?php $phone = $options->get( 'hotel_phone_number' ); ?>
 															<?php if ( $phone ) : ?>
@@ -41,7 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 															</tr>
 														</table>
 													</th>
-													<th class="small-12 large-3 columns last">
+													<th class="width-30 columns last">
 														<table>
 															<tr>
 																<th>

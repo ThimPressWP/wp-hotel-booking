@@ -4,11 +4,11 @@
     Plugin URI: http://thimpress.com/
     Description: TP Hotel Booking Report Addon
     Author: ThimPress
-    Version: 1.0.1
+    Version: 1.0.2.1
 */
 define( 'TP_HB_REPORT_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TP_HB_REPORT_URI', plugin_dir_url( __FILE__ ) );
-define( 'TP_HB_REPORT_VER', '1.0.1' );
+define( 'TP_HB_REPORT_VER', '1.0.2.1' );
 
 class TP_Hotel_Booking_Report
 {
@@ -61,17 +61,21 @@ class TP_Hotel_Booking_Report
 		{
 			if( $this->is_hotel_active )
 			{
-				add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 				require_once TP_HB_REPORT_DIR . '/inc/functions.php';
 				require_once TP_HB_REPORT_DIR . '/inc/class-hb-report.php';
-				require_once TP_HB_REPORT_DIR . '/inc/class-hb-report-price.php';
-				require_once TP_HB_REPORT_DIR . '/inc/class-hb-report-room.php';
+				add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+				add_action( 'admin_init', array( $this, 'init' ) );
 			}
 		}
 		/**
 		 * text-domain
 		 */
 		$this->load_textdomain();
+	}
+
+	function init() {
+		require_once TP_HB_REPORT_DIR . '/inc/class-hb-report-price.php';
+		require_once TP_HB_REPORT_DIR . '/inc/class-hb-report-room.php';
 	}
 
 	/**

@@ -4,7 +4,7 @@
     Plugin URI: http://thimpress.com/
     Description: Payment Authorize TP Hotel Booking Addon
     Author: ThimPress
-    Version: 1.0.1
+    Version: 1.0.2.1
     Author URI: http://thimpress.com
 */
 

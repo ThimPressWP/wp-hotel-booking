@@ -300,60 +300,10 @@ class Hotel_Booking_Block
 	{
 		$check_in = isset( $param[ 'check_in' ] ) ? $param[ 'check_in' ] : time();
 		$check_out = isset( $param[ 'check_out' ] ) ? $param[ 'check_out' ] : time();
-		$adults = isset( $param[ 'adults' ] ) ? (int)$param[ 'adults' ] : 0;
-		$child = isset( $param[ 'child' ] ) ? (int)$param[ 'child' ] : 0;
+		$adults = isset( $param[ 'adults' ] ) ? (int)$param[ 'adults' ] : hb_get_max_capacity_of_rooms();
+		$child = isset( $param[ 'child' ] ) ? (int)$param[ 'child' ] : hb_get_max_child_of_rooms();
 
 		global $wpdb;
-	    /**
-	     * Count available rooms
-	     */
-	    $query_count_available = $wpdb->prepare( "
-	        (
-	            SELECT ra.meta_value
-	            FROM {$wpdb->postmeta} ra
-	            INNER JOIN {$wpdb->posts} r ON ra.post_id = r.ID AND ra.meta_key = %s
-	                WHERE r.ID=rooms.ID
-	            GROUP BY ra.post_id
-	        )
-	    ", '_hb_num_of_rooms' );
-
-	    $booking_status = $wpdb->prepare( "
-	            (
-	                SELECT booked.post_status
-	                FROM {$wpdb->posts} booked
-	                WHERE
-	                    booked.post_type = %s
-	                    AND bk.meta_value = booked.ID
-	            )
-	        ", 'hb_booking' );
-
-	    /**
-	     * Count booked rooms
-	     */
-	    $query_count_not_available = $wpdb->prepare( "
-	        (
-	            SELECT count(book_item.ID)
-	            FROM {$wpdb->posts} book_item
-	            INNER JOIN {$wpdb->postmeta} bm ON bm.post_id = book_item.ID AND bm.meta_key = %s
-	            INNER JOIN {$wpdb->postmeta} bi ON bi.post_id = book_item.ID AND bi.meta_key = %s
-	            INNER JOIN {$wpdb->postmeta} bo ON bo.post_id = book_item.ID AND bo.meta_key = %s
-	            INNER JOIN {$wpdb->postmeta} bk ON bk.post_id = book_item.ID AND bk.meta_key = %s
-	            WHERE
-	                book_item.post_type = %s
-	                AND bm.meta_value = rooms.ID
-	                AND (
-	                		( bi.meta_value <= %d AND bo.meta_value >= %d )
-	                		OR ( bi.meta_value >= %d AND bi.meta_value < %d )
-	                		OR ( bo.meta_value > %d AND bo.meta_value <= %d )
-	                	)
-	                AND {$booking_status} IN ( %s, %s, %s )
-	        )
-	    ", '_hb_id', '_hb_check_in_date', '_hb_check_out_date', '_hb_booking_id', 'hb_booking_item',
-	        $check_in, $check_out,
-	        $check_in, $check_out,
-	        $check_in, $check_out,
-	        'hb-pending', 'hb-processing', 'hb-completed'
-	    );
 
 	    /**
 	     * blocked
@@ -374,25 +324,46 @@ class Hotel_Booking_Block
 					AND blocked_time.meta_value <= %d
 			", 'hb_blocked', 'publish', 'hb_blocked_id', 'hb_blocked_time', $check_in, $check_out );
 
-	    /**
-	     * merge query select room
-	     */
-	    $query = $wpdb->prepare("
-	        SELECT rooms.*, {$query_count_available} - {$query_count_not_available} as available_rooms, ($blocked) AS blocked
-	        FROM {$wpdb->posts} rooms
-	        LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = rooms.ID AND pm.meta_key = %s
-	        LEFT JOIN {$wpdb->postmeta} pm2 ON pm2.post_id = rooms.ID AND pm2.meta_key = %s
-	        LEFT JOIN {$wpdb->postmeta} pm3 ON pm3.post_id = rooms.ID AND pm3.meta_key = %s
-	        LEFT JOIN {$wpdb->termmeta} term_cap ON term_cap.term_id = pm3.meta_value AND term_cap.meta_key = %s
-	        WHERE
-	            rooms.post_type = %s
-	            AND rooms.post_status = %s
-	            AND pm.meta_value >= %d
-            	AND ( term_cap.meta_value <= %d OR pm2.meta_value <= %d )
-	        GROUP BY rooms.ID
-	        HAVING ( available_rooms > 0 AND blocked = 0 )
-        	ORDER BY term_cap.meta_value DESC
-	    ", '_hb_max_child_per_room', '_hb_max_adults_per_room', '_hb_room_capacity', 'hb_max_number_of_adults', 'hb_room', 'publish', $child, $adults, $adults );
+	    $not = $wpdb->prepare("
+			(
+				SELECT COALESCE( SUM( meta.meta_value ), 0 ) FROM {$wpdb->hotel_booking_order_itemmeta} AS meta
+					LEFT JOIN {$wpdb->hotel_booking_order_items} AS order_item ON order_item.order_item_id = meta.hotel_booking_order_item_id AND meta.meta_key = %s
+					LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS itemmeta ON order_item.order_item_id = itemmeta.hotel_booking_order_item_id AND itemmeta.meta_key = %s
+					LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS checkin ON order_item.order_item_id = checkin.hotel_booking_order_item_id AND checkin.meta_key = %s
+					LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS checkout ON order_item.order_item_id = checkout.hotel_booking_order_item_id AND checkout.meta_key = %s
+					LEFT JOIN {$wpdb->posts} AS booking ON booking.ID = order_item.order_id
+				WHERE
+						itemmeta.meta_value = rooms.ID
+					AND (
+							( checkin.meta_value >= %d AND checkin.meta_value <= %d )
+						OR 	( checkout.meta_value >= %d AND checkout.meta_value <= %d )
+						OR 	( checkin.meta_value <= %d AND checkout.meta_value > %d )
+					)
+					AND booking.post_type = %s
+					AND booking.post_status IN ( %s, %s, %s )
+			)
+		", 'qty', 'product_id', 'check_in_date', 'check_out_date',
+			$check_in, $check_out,
+			$check_in, $check_out,
+			$check_in, $check_out,
+			'hb_booking', 'hb-completed', 'hb-processing', 'hb-pending'
+		);
+
+		$query = $wpdb->prepare("
+				SELECT rooms.*, ( number.meta_value - {$not} ) AS available_rooms, ($blocked) AS blocked FROM $wpdb->posts AS rooms
+					LEFT JOIN $wpdb->postmeta AS number ON rooms.ID = number.post_id AND number.meta_key = %s
+					LEFT JOIN {$wpdb->postmeta} pm1 ON pm1.post_id = rooms.ID AND pm1.meta_key = %s
+					LEFT JOIN {$wpdb->termmeta} term_cap ON term_cap.term_id = pm1.meta_value AND term_cap.meta_key = %s
+					LEFT JOIN {$wpdb->postmeta} pm2 ON pm2.post_id = rooms.ID AND pm2.meta_key = %s
+				WHERE
+					rooms.post_type = %s
+					AND rooms.post_status = %s
+					AND term_cap.meta_value <= %d
+					AND pm2.meta_value <= %d
+				GROUP BY rooms.post_name
+				HAVING ( available_rooms > 0 AND blocked = 0 )
+				ORDER BY term_cap.meta_value DESC
+			", '_hb_num_of_rooms', '_hb_room_capacity', 'hb_max_number_of_adults', '_hb_max_child_per_room', 'hb_room', 'publish', $adults, $child );
 
 		return $query;
 	}

@@ -396,7 +396,8 @@ class HB_Extra_Cart
 			$html[] = '<td>' . sprintf( '%s', $package->order_item_name ) . '</td>';
 			$html[] = '<td>' . sprintf( '%s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $package->order_item_id, 'check_in_date', true ) ) ) . '</td>';
 			$html[] = '<td>' . sprintf( '%s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $package->order_item_id, 'check_out_date', true ) ) )  . '</td>';
-			$html[] = '<td>' . sprintf( '%s', hb_get_order_item_meta( $package->order_item_id, 'subtotal', true ) )  . '</td>';
+			$html[] = '<td>' . sprintf( '%s', hb_get_order_item_meta( $package->order_item_id, 'qty', true ) )  . '</td>';
+			$html[] = '<td>' . sprintf( '%s', hb_format_price( hb_get_order_item_meta( $package->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $hb_booking->currency ) ) )  . '</td>';
 
 			$html[] = '</tr>';
 		}

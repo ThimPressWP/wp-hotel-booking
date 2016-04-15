@@ -57,7 +57,6 @@ class HB_Report_Price extends HB_Report
 
 		$this->_title = sprintf( __( 'Chart in %s to %s', 'tp-hotel-booking-report' ), $this->_start_in, $this->_end_in );
 
-		$this->_query_results = $this->getOrdersItems();
 		add_action( 'admin_init', array( $this, 'export_csv' ) );
 		add_filter( 'hotel_booking_sidebar_price_info', array( $this, 'total_ear' ) );
 	}
@@ -77,69 +76,40 @@ class HB_Report_Price extends HB_Report
 		 */
 		if( $this->chart_groupby === 'day' )
 		{
-			$total = $wpdb->prepare("
-					(
-						SELECT SUM(ptt.meta_value) AS total FROM `$wpdb->posts` pb
-						INNER JOIN `$wpdb->postmeta` AS pbl ON pb.ID = pbl.post_id AND pbl.meta_key = %s
-						INNER JOIN `$wpdb->postmeta` AS ptt ON pb.ID = ptt.post_id AND ptt.meta_key = %s
-						WHERE pb.post_type = %s
-						AND DATE(pbl.meta_value) >= %s AND DATE(pbl.meta_value) <= %s
-						AND DATE(pbl.meta_value) = completed_date
-					)
-					", '_hb_booking_payment_completed', '_hb_total', 'hb_booking', $this->_start_in, $this->_end_in
-				);
 
 			$query = $wpdb->prepare("
-					(
-						SELECT DATE(pm.meta_value) AS completed_date,
-						{$total} AS total
-						FROM `$wpdb->posts` AS p
-						INNER JOIN `$wpdb->postmeta` AS pm ON p.ID = pm.post_id AND pm.meta_key = %s
-						WHERE p.post_type = %s
-						AND p.post_status = %s
-						AND DATE(pm.meta_value) >= %s AND DATE(pm.meta_value) <= %s
-						GROUP BY completed_date
-					)
-					", '_hb_booking_payment_completed', 'hb_booking', 'hb-completed', $this->_start_in, $this->_end_in
-				);
+                    SELECT ( SUM( meta.meta_value ) - COALESCE( SUM( coupon.meta_value ), 0 ) ) AS total, DATE( pm.meta_value ) AS completed_date FROM $wpdb->hotel_booking_order_items AS booking
+	                        INNER JOIN $wpdb->posts AS post ON booking.order_id = post.ID AND post.post_status = %s AND post.post_type = %s
+	                        INNER JOIN $wpdb->hotel_booking_order_itemmeta AS meta ON meta.hotel_booking_order_item_id = booking.order_item_id AND meta.meta_key = %s
+	                        INNER JOIN $wpdb->postmeta AS pm ON pm.post_id = post.ID AND pm.meta_key = %s
+	                        LEFT JOIN $wpdb->postmeta AS coupon ON coupon.post_id = booking.order_id AND coupon.meta_key = %s
+	                    WHERE
+	                        booking.order_item_type IN ( %s, %s )
+	                        AND DATE( pm.meta_value ) >= %s AND DATE( pm.meta_value ) <= %s
+                ", 'hb-completed', 'hb_booking', 'subtotal', '_hb_booking_payment_completed', '_hb_coupon_value', 'line_item', 'sub_item', $this->_start_in, $this->_end_in );
 		}
 		else
 		{
-			$total = $wpdb->prepare("
-					(
-						SELECT SUM(ptt.meta_value) AS total FROM `$wpdb->posts` pb
-						INNER JOIN `$wpdb->postmeta` AS pbl ON pb.ID = pbl.post_id AND pbl.meta_key = %s
-						INNER JOIN `$wpdb->postmeta` AS ptt ON pb.ID = ptt.post_id AND ptt.meta_key = %s
-						WHERE pb.post_type = %s
-						AND MONTH(pbl.meta_value) >= MONTH(%s) AND MONTH(pbl.meta_value) <= MONTH(%s)
-						AND MONTH(pbl.meta_value) = completed_month
-					)
-					", '_hb_booking_payment_completed', '_hb_total', 'hb_booking', $this->_start_in, $this->_end_in
-				);
-
 			$query = $wpdb->prepare("
-					(
-						SELECT MONTH(pm.meta_value) AS completed_month, DATE(pm.meta_value) AS completed_date,
-						{$total} AS total
-						FROM `$wpdb->posts` AS p
-						INNER JOIN `$wpdb->postmeta` AS pm ON p.ID = pm.post_id AND pm.meta_key = %s
-						WHERE p.post_type = %s
-						AND p.post_status = %s
-						AND MONTH(pm.meta_value) >= MONTH(%s) AND MONTH(pm.meta_value) <= MONTH(%s)
-						GROUP BY completed_month
-					)
-					", '_hb_booking_payment_completed', 'hb_booking', 'hb-completed', $this->_start_in, $this->_end_in
-				);
+                    SELECT ( SUM( meta.meta_value ) - COALESCE( SUM( coupon.meta_value ), 0 ) ) AS total, DATE( pm.meta_value ) AS completed_date, MONTH(pm.meta_value) AS completed_month
+                    FROM $wpdb->hotel_booking_order_items AS booking
+	                        INNER JOIN $wpdb->posts AS post ON booking.order_id = post.ID AND post.post_status = %s AND post.post_type = %s
+	                        INNER JOIN $wpdb->hotel_booking_order_itemmeta AS meta ON meta.hotel_booking_order_item_id = booking.order_item_id AND meta.meta_key = %s
+	                        INNER JOIN $wpdb->postmeta AS pm ON pm.post_id = post.ID AND pm.meta_key = %s
+	                        LEFT JOIN $wpdb->postmeta AS coupon ON coupon.post_id = post.ID AND coupon.meta_key = %s
+	                    WHERE
+	                        booking.order_item_type IN ( %s, %s )
+	                        AND pm.meta_value >= %s AND pm.meta_value <= %s
+                ", 'hb-completed', 'hb_booking', 'subtotal', '_hb_booking_payment_completed', '_hb_coupon_value', 'line_item', 'sub_item', $this->_start_in, $this->_end_in );
 		}
 
-		$results = $wpdb->get_results( $query );
-		return $results;
+		return $wpdb->get_results( $query );
 	}
 
 	public function series()
 	{
 		$transient_name = 'tp_hotel_booking_charts_' . $this->_chart_type . '_' . $this->chart_groupby . '_' . $this->_range . '_' . $this->_start_in . '_' . $this->_end_in;
-
+		// delete_transient( $transient_name );
 		if ( false === ( $chart_results = get_transient( $transient_name ) ) ) {
 
 			$chart_results = $this->js_data();
@@ -156,7 +126,10 @@ class HB_Report_Price extends HB_Report
 	 */
 	function js_data()
 	{
-		$results = $this->_query_results;
+		$results = $this->getOrdersItems();
+		if ( ! $results ) {
+			return;
+		}
 
 		$label = array();
 		$excerpts = array();
@@ -301,6 +274,7 @@ class HB_Report_Price extends HB_Report
 
 	public function export_csv()
 	{
+		$this->_query_results = $this->getOrdersItems();
 		if( ! isset( $_POST ) )
 			return;
 
@@ -372,13 +346,16 @@ class HB_Report_Price extends HB_Report
 	function total_ear( $sidebars )
 	{
 		$price = 0;
-		foreach ($this->_query_results as $key => $item) {
-			$price = $price + $item->total;
+		$this->_query_results = $this->getOrdersItems();
+		if ( $this->_query_results ) {
+			foreach ($this->_query_results as $key => $item) {
+				$price = $price + $item->total;
+			}
+			$sidebars[] = array(
+					'title'		=> sprintf( __( 'Total %s to %s', 'tp-hotel-booking-report' ), $this->_start_in, $this->_end_in ),
+					'descr'		=> hb_format_price( $price )
+				);
 		}
-		$sidebars[] = array(
-				'title'		=> sprintf( __( 'Total %s to %s', 'tp-hotel-booking-report' ), $this->_start_in, $this->_end_in ),
-				'descr'		=> hb_format_price($price)
-			);
 
 		return $sidebars;
 	}

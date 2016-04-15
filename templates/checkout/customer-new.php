@@ -18,11 +18,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</div>
 			</li>
 			<li class="hb-form-field">
-				<label class="hb-form-field-label"><?php _e( 'Name', 'tp-hotel-booking' ); ?>
+				<label class="hb-form-field-label"><?php _e( 'First name', 'tp-hotel-booking' ); ?>
 					<span class="hb-required">*</span></label>
 
 				<div class="hb-form-field-input">
 					<input type="text" name="first_name" value="<?php echo esc_attr( $customer->first_name ); ?>" placeholder="<?php _e( 'First name', 'tp-hotel-booking' ); ?>" />
+				</div>
+			</li>
+			<li class="hb-form-field">
+				<label class="hb-form-field-label"><?php _e( 'Last name', 'tp-hotel-booking' ); ?>
+					<span class="hb-required">*</span></label>
+
+				<div class="hb-form-field-input">
 					<input type="text" name="last_name" value="<?php echo esc_attr( $customer->last_name ); ?>" placeholder="<?php _e( 'Last name', 'tp-hotel-booking' ); ?>" />
 				</div>
 			</li>
