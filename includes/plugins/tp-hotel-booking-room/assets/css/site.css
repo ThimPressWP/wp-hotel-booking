@@ -2,9 +2,9 @@
 * @Author: ducnvtt
 * @Date:   2016-03-18 16:20:16
 * @Last Modified by:   ducnvtt
-* @Last Modified time: 2016-03-22 15:33:51
+* @Last Modified time: 2016-04-19 09:49:01
 */
-.hb_single_room .hb_room_gallery{
+/*.hb_single_room .hb_room_gallery{
 	width: 50%;
 	float: left;
 }
@@ -129,7 +129,7 @@
 /**
  * ajax effect
  */
-.hotel_booking_room_overflow_spinner {
+/*.hotel_booking_room_overflow_spinner {
   height: 20px;
   width: 20px;
   margin: 50px auto;
@@ -253,4 +253,4 @@
 	100% {
 		transform: translate(-50%, -50%) scale(0.6, 0.6);
 	}
-}
+}*/

@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-18 15:32:51
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-03-22 16:05:13
+ * @Last Modified time: 2016-04-19 10:09:25
  */
 
 if( ! defined( 'ABSPATH' ) ) {
@@ -15,15 +15,57 @@ if ( ! class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
 	class TP_Hotel_Booking_Room_Extenstion {
 
 		function __construct() {
+			add_action( 'hb_admin_settings_tab_after', array( $this, 'admin_settings' ) );
+
+			add_action( 'hotel_booking_single_room_title', array( $this, 'single_add_button' ) );
 			// enqueue script
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
 
-			add_filter( 'hotel_booking_single_room_gallery', array( $this, 'booking_form' ) );
+			// add_action( 'hotel_booking_single_room_gallery', array( $this, 'booking_form' ) );
 
 			add_action( 'wp_ajax_check_room_availabel', array( $this, 'check_room_availabel' ) );
 			add_action( 'wp_ajax_nopriv_check_room_availabel', array( $this, 'check_room_availabel' ) );
 
 			add_filter( 'hotel_booking_add_to_cart_results', array( $this, 'add_to_cart_redirect' ), 10, 2 );
+		}
+
+		// add admin setting
+		function admin_settings( $tab ) {
+			if ( $tab !== 'room' ) {
+				return;
+			}
+
+			$settings = hb_settings();
+			?>
+				<table class="form-table">
+				    <tr>
+				        <th><?php _e( 'Enable book in single room', 'tp-hotel-booking' ); ?></th>
+				        <td>
+				            <input type="hidden" name="<?php echo esc_attr( $settings->get_field_name('enable_single_book') ); ?>" value="0" />
+				            <input type="checkbox" name="<?php echo esc_attr( $settings->get_field_name('enable_single_book') ); ?>" <?php checked( $settings->get('enable_single_book') ? 1 : 0, 1 ); ?> value="1" />
+				        </td>
+				    </tr>
+				</table>
+			<?php
+		}
+
+		function single_add_button() {
+			if ( ! hb_settings()->get( 'enable_single_book', 0 ) ) {
+				return;
+			}
+
+			global $hb_room;
+
+			?>
+				<form>
+
+					<input type="hidden" name="room_id" value="<?php echo esc_attr( $hb_room->ID ) ?>" />
+
+					<div class="hb_book_room_form">
+						<button class="hb_buton hb_primary"><?php _e( 'Book this room' ); ?></button>
+					</div>
+				</form>
+			<?php
 		}
 
 		// enqueue script
@@ -68,7 +110,6 @@ if ( ! class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
 		function booking_form() {
 			ob_start();
 			global $hb_room;
-			$qty = $hb_room->num_of_rooms;
 		?>
 			<div class="hotel_booking_room_detail">
 				<h3 id="hbr-nav">
@@ -77,7 +118,6 @@ if ( ! class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
 				</h3>
 				<form name="hotel_booking_room_check_available" method="POST" class="hbr-add-to-cart-step hotel_booking_room_check_available" id="hbr-check-date">
 					<ul>
-
 						<li>
 							<input type="text" name="hotel_booking_room_check_in" class="hotel_booking_room_check_in" placeholder="<?php esc_attr_e( 'Checkin', 'tp-hotel-booking-room' ); ?>" />
 							<input type="hidden" name="hotel_booking_room_check_in_timestamp" class="hotel_booking_room_check_in_timestamp" />

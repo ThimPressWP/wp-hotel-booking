@@ -307,18 +307,19 @@ function hb_manage_booking_column( $column_name, $post_id ) {
             echo date( hb_get_date_format(), strtotime( get_post_field( 'post_date', $post_id ) ) );
             break;
         case 'check_in_date':
-            if ( $booking->check_in_date ) {
-                echo date( hb_get_date_format(), $booking->check_in_date );
+            $check_in_date = hb_booking_get_check_in_date( $post_id );
+            if ( $check_in_date ) {
+                echo date( hb_get_date_format(), $check_in_date );
             }
             break;
         case 'check_out_date':
-            if( $booking->check_out_date ) {
-                echo date( hb_get_date_format(), $booking->check_out_date );
+            $check_out_date = hb_booking_get_check_out_date( $post_id );
+            if ( $check_out_date ) {
+                echo date( hb_get_date_format(), $check_out_date );
             }
             break;
         case 'status':
             $link = '<a href="'. esc_attr( get_edit_post_link( $post_id ) ) . '">' . hb_get_booking_status_label( $post_id ) . '</a>';
-            // $link = '<a href="'. admin_url('admin.php?page=hb_booking_details&id='. $post_id) . '">' . hb_get_booking_status_label( $post_id ) . '</a>';
             $echo[] = '<span class="hb-booking-status ' . $status . '">' . $link . '</span>';
     }
     echo apply_filters( 'hotel_booking_booking_total', sprintf( '%s', implode('', $echo) ), $column_name, $post_id );
@@ -403,6 +404,7 @@ add_filter( 'parse_query', 'hb_booking_filter' );
  */
 function hb_booking_filter( $query ){
     global $pagenow;
+    // var_dump($query);die();
     $type = 'post';
     if (isset($_GET['post_type'])) {
         $type = sanitize_text_field( $_GET['post_type'] );
@@ -412,9 +414,21 @@ function hb_booking_filter( $query ){
         $query->query_vars['meta_value'] = sanitize_text_field( $_GET['filter_by_checkin_date'] );
     }
     if ( 'hb_booking' == $type && is_admin() && $pagenow=='edit.php' && isset($_GET['filter_by_checkout_date']) && $_GET['filter_by_checkout_date'] != '') {
-        //$query->query_vars['meta_key'] = '_hb_check_out_date';
-        //$query->query_vars['meta_value'] = sanitize_text_field( $_GET['filter_by_checkout_date'] );
+        $query->query_vars['meta_key'] = '_hb_check_out_date';
+        $query->query_vars['meta_value'] = sanitize_text_field( $_GET['filter_by_checkout_date'] );
     }
+}
+// add_filter('posts_join', 'AIOThemes_joinPOSTMETA_to_WPQuery');
+// Join for searching metadata
+function AIOThemes_joinPOSTMETA_to_WPQuery($join) {
+    global $wp_query, $wpdb;
+
+    if ( !empty( $wp_query->query_vars['s'] ) ) {
+        $join .= "LEFT JOIN $wpdb->hotel_booking_order_items ON $wpdb->hotel_booking_order_items.order_id = $wpdb->posts.ID ";
+        $join .= "LEFT JOIN $wpdb->hotel_booking_order_itemmeta ON $wpdb->hotel_booking_order_items.order_item_id = $wpdb->hotel_booking_order_itemmeta->hotel_booking_order_item_id ";
+    }
+
+    return $join;
 }
 
 function hb_edit_post_change_title_in_list() {

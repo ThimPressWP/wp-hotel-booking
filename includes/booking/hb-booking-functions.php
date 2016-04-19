@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-31 14:42:40
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-14 08:52:13
+ * @Last Modified time: 2016-04-19 10:39:32
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -331,8 +331,8 @@ function hb_booking_tax_total( $booking_id = null ) {
  *
  * @return bool
  */
-function hb_customer_booked_room( $customer_email, $room_id ) {
-    return true;
+function hb_customer_booked_room( $room_id ) {
+    return apply_filters( 'hb_customer_booked_room', true, $room_id );
 }
 
 function hb_get_booking_id_by_key( $booking_key ) {
@@ -351,4 +351,40 @@ function hb_get_booking_status_label( $booking_id ) {
         $status = $booking_id;
     }
     return ! empty( $statuses[$status] ) ? $statuses[$status] : __( 'Cancelled', 'tp-hotel-booking' );
+}
+
+if ( ! function_exists( 'hb_booking_get_check_in_date' ) ) {
+    // get min check in date of booking order
+    function hb_booking_get_check_in_date( $booking_id = null ) {
+        if ( ! $booking_id ) {
+            return;
+        }
+
+        $order_items = hb_get_order_items( $booking_id );
+        $data = array();
+        foreach ( $order_items as $item ) {
+            $data[] = hb_get_order_item_meta( $item->order_item_id, 'check_in_date', true );
+        }
+        sort( $data );
+        return array_shift( $data );
+
+    }
+}
+
+if ( ! function_exists( 'hb_booking_get_check_out_date' ) ) {
+    // get min check in date of booking order
+    function hb_booking_get_check_out_date( $booking_id = null ) {
+        if ( ! $booking_id ) {
+            return;
+        }
+
+        $order_items = hb_get_order_items( $booking_id );
+        $data = array();
+        foreach ( $order_items as $item ) {
+            $data[] = hb_get_order_item_meta( $item->order_item_id, 'check_in_date', true );
+        }
+        sort( $data );
+        return array_pop( $data );
+
+    }
 }

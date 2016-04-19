@@ -52,7 +52,7 @@ if ( ! comments_open() ) {
         <?php endif; ?>
     </div>
 
-    <?php if ( hb_customer_booked_room( '', $hb_room->id ) ) : ?>
+    <?php if ( hb_customer_booked_room( $hb_room->id ) ) : ?>
 
         <div id="review_form_wrapper">
             <div id="review_form">
