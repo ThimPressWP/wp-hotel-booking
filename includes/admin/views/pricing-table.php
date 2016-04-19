@@ -56,11 +56,14 @@ $count_plants = count( $plans );
                         </thead>
                         <tbody>
                             <tr>
-                                <?php $prices = $regular_plan->prices; ?>
+                                <?php
+                                    $prices = isset( $regular_plan->prices ) ? $regular_plan->prices : array();
+                                    $plan_id = isset( $regular_plan->ID ) ? $regular_plan->ID : 0;
+                                ?>
                                 <?php for( $i = 0; $i < 7; $i++ ){ ?>
                                     <td>
                                         <?php $price = ! empty( $prices[ $i ] ) ? $prices[ $i ] : ''; ?>
-                                        <input class="hb-pricing-price" type="number" min="0" step="any" name="price[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>][<?php echo esc_attr( $i ); ?>]" value="<?php echo esc_attr( $price ); ?>" size="10" readonly="readonly" />
+                                        <input class="hb-pricing-price" type="number" min="0" step="any" name="price[<?php echo sprintf( '%s', $plan_id ? $plan_id : '__INDEX__' ); ?>][<?php echo esc_attr( $i ); ?>]" value="<?php echo esc_attr( $price ); ?>" size="10" readonly="readonly" />
                                     </td>
                                 <?php } ?>
                             </tr>

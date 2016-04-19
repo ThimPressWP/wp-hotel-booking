@@ -43,6 +43,7 @@ class HB_Post_Types{
         add_filter( 'posts_fields', array( $this, 'posts_fields' ) );
         add_filter( 'posts_join_paged', array( $this, 'posts_join_paged' ) );
         add_filter( 'posts_where' , array( $this, 'posts_where_paged' ), 999 );
+        add_filter( 'posts_groupby', array( $this, 'posts_groupby' ), 999 );
 
         add_filter( 'get_terms_orderby', array( $this, 'terms_orderby' ), 100, 3 );
         add_filter( 'get_terms_args', array( $this, 'terms_args' ), 100, 2 );
@@ -121,7 +122,7 @@ class HB_Post_Types{
     }
 
     function posts_fields( $fields ){
-        if( hb_get_request( 'post_type' ) == 'hb_booking' ) {
+        if( is_admin() && hb_get_request( 'post_type' ) == 'hb_booking' ) {
             $from       = hb_get_request('date-from-timestamp');
             $to         = hb_get_request('date-to-timestamp');
             $filter     = hb_get_request('filter-type');
@@ -141,27 +142,13 @@ class HB_Post_Types{
     function posts_join_paged( $join ){
         global $wpdb;
 
-        if( $this->is_search( 'customer' ) ){
+        if( is_admin() && $this->is_search( 'booking' ) ){
             $join .= "
-                INNER JOIN {$wpdb->postmeta} pm1 ON {$wpdb->posts}.ID = pm1.post_id and pm1.meta_key='_hb_first_name'
-                INNER JOIN {$wpdb->postmeta} pm2 ON {$wpdb->posts}.ID = pm2.post_id and pm2.meta_key='_hb_last_name'
-                INNER JOIN {$wpdb->postmeta} pm3 ON {$wpdb->posts}.ID = pm3.post_id and pm3.meta_key='_hb_email'
-                INNER JOIN {$wpdb->postmeta} pm4 ON {$wpdb->posts}.ID = pm4.post_id and pm4.meta_key='_hb_phone'
-                INNER JOIN {$wpdb->postmeta} pm5 ON {$wpdb->posts}.ID = pm5.post_id and pm5.meta_key='_hb_address'
-            ";
-        }elseif( $this->is_search( 'booking' ) ){
-
-            $join .= "
-                INNER JOIN {$wpdb->postmeta} pm ON {$wpdb->posts}.ID=pm.post_id and pm.meta_key='_hb_customer_id'
-                INNER JOIN {$wpdb->postmeta} cus1 ON cus1.post_id = pm.meta_value and cus1.meta_key='_hb_first_name'
-                INNER JOIN {$wpdb->postmeta} cus2 ON cus2.post_id = pm.meta_value and cus2.meta_key='_hb_last_name'
-                INNER JOIN {$wpdb->postmeta} cus3 ON cus3.post_id = pm.meta_value and cus3.meta_key='_hb_email'
-                INNER JOIN {$wpdb->postmeta} cus4 ON cus4.post_id = pm.meta_value and cus4.meta_key='_hb_phone'
-                INNER JOIN {$wpdb->postmeta} cus5 ON cus5.post_id = pm.meta_value and cus5.meta_key='_hb_address'
+                INNER JOIN {$wpdb->hotel_booking_order_items} AS ord_item ON ord_item.order_id = {$wpdb->posts}.ID
             ";
         }
 
-        if( hb_get_request( 'post_type' ) == 'hb_booking' ){
+        if( is_admin() && hb_get_request( 'post_type' ) == 'hb_booking' ){
             $from   = hb_get_request( 'date-from-timestamp' );
             $to     = hb_get_request( 'date-to-timestamp' );
             $filter = hb_get_request( 'filter-type' );
@@ -171,12 +158,12 @@ class HB_Post_Types{
                         break;
                     case 'check-in-date':
                         $join .= "
-                            INNER JOIN {$wpdb->postmeta} pm_check_in ON {$wpdb->posts}.ID=pm_check_in.post_id and pm_check_in.meta_key='_hb_check_in_date'
+                            INNER JOIN {$wpdb->hotel_booking_order_itemmeta} AS pm_check_in ON ord_item.order_item_id = pm_check_in.hotel_booking_order_item_id and pm_check_in.meta_key='check_in_date'
                         ";
                         break;
                     case 'check-out-date':
                         $join .= "
-                            INNER JOIN {$wpdb->postmeta} pm_check_out ON {$wpdb->posts}.ID=pm_check_out.post_id and pm_check_out.meta_key='_hb_check_out_date'
+                            INNER JOIN {$wpdb->hotel_booking_order_itemmeta} AS pm_check_out ON ord_item.order_item_id = pm_check_out.hotel_booking_order_item_id and pm_check_out.meta_key='check_out_date'
                         ";
                         break;
                 }
@@ -192,29 +179,8 @@ class HB_Post_Types{
      * @return string
      */
     function posts_where_paged( $where ){
-        if( $s = $this->is_search( 'customer' ) ) {
-            $where .= "
-                OR (
-                    pm1.meta_value LIKE '%{$s}%'
-                    OR pm2.meta_value LIKE '%{$s}%'
-                    OR pm3.meta_value LIKE '%{$s}%'
-                    OR pm4.meta_value LIKE '%{$s}%'
-                    OR pm5.meta_value LIKE '%{$s}%'
-                )
-            ";
-        }elseif( $s = $this->is_search( 'booking' ) ) {
-            $where .= "
-                OR (
-                    cus1.meta_value LIKE '%{$s}%'
-                    OR cus2.meta_value LIKE '%{$s}%'
-                    OR cus3.meta_value LIKE '%{$s}%'
-                    OR cus4.meta_value LIKE '%{$s}%'
-                    OR cus5.meta_value LIKE '%{$s}%'
-                )
-            ";
-        }
 
-        if( hb_get_request( 'post_type' ) == 'hb_booking' ){
+        if( is_admin() && hb_get_request( 'post_type' ) == 'hb_booking' ){
             $from   = hb_get_request( 'date-from-timestamp' );
             $to     = hb_get_request( 'date-to-timestamp' );
             $filter = hb_get_request( 'filter-type' );
@@ -223,17 +189,6 @@ class HB_Post_Types{
                 $to     = absint( $to );
                 switch( $filter ){
                     case 'booking-date':
-                        $from   = date( 'Ymd', $from );
-                        $to     = date( 'Ymd', $to );
-                        if( $from == $to ){
-                            $where .= "
-                                HAVING post_date_timestamp = {$from}
-                            ";
-                        }else {
-                            $where .= "
-                                HAVING post_date_timestamp >= {$from} AND post_date_timestamp <= {$to}
-                            ";
-                        }
                         break;
                     case 'check-in-date':
                         $where .= "
@@ -252,10 +207,33 @@ class HB_Post_Types{
         return $where;
     }
 
+    // group by
+    function posts_groupby( $groupby ) {
+        if( is_admin() && hb_get_request( 'post_type' ) == 'hb_booking' ){
+            global $wpdb;
+            $groupby .= " {$wpdb->posts}.ID ";
+            $filter = hb_get_request( 'filter-type' );
+            if ( $filter === 'booking-date' ) {
+                $from   = date( 'Ymd', hb_get_request( 'date-from-timestamp' ) );
+                $to     = date( 'Ymd', hb_get_request( 'date-to-timestamp' ) );
+                if( $from == $to ){
+                    $groupby .= "
+                        HAVING post_date_timestamp = {$from}
+                    ";
+                } else {
+                    $groupby .= "
+                        HAVING post_date_timestamp >= {$from} AND post_date_timestamp <= {$to}
+                    ";
+                }
+            }
+        }
+        return $groupby;
+    }
+
     function is_search( $type ){
-        global $post_type;
-        if( $post_type == "hb_{$type}" && $s = hb_get_request( 's' ) ){
-            return $s;
+        $post_type = isset( $_GET['post_type'] ) ? $_GET['post_type'] : '';
+        if( is_admin() && $post_type === "hb_{$type}" ){
+            return true;
         }
         return false;
     }

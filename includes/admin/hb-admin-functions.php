@@ -364,9 +364,9 @@ function hb_booking_restrict_manage_posts(){
         //change this to the list of values you want to show
         //in 'label' => 'value' format
         $from           = hb_get_request( 'date-from' );
-        $from_timestamp = hb_get_request( 'date-from-timestamp' ) + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS );
+        $from_timestamp = hb_get_request( 'date-from-timestamp' );
         $to             = hb_get_request( 'date-to' );
-        $to_timestamp   = hb_get_request( 'date-to-timestamp' ) + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS );
+        $to_timestamp   = hb_get_request( 'date-to-timestamp' );
         $filter_type    = hb_get_request( 'filter-type' );
 
         $filter_types = apply_filters(
@@ -394,43 +394,6 @@ function hb_booking_restrict_manage_posts(){
     }
 }
 
-add_filter( 'parse_query', 'hb_booking_filter' );
-/**
- * if submitted filter by post meta
- *
- * @param  (wp_query object) $query
- *
- * @return Void
- */
-function hb_booking_filter( $query ){
-    global $pagenow;
-    // var_dump($query);die();
-    $type = 'post';
-    if (isset($_GET['post_type'])) {
-        $type = sanitize_text_field( $_GET['post_type'] );
-    }
-    if ( 'hb_booking' == $type && is_admin() && $pagenow =='edit.php' && isset($_GET['filter_by_checkin_date']) && $_GET['filter_by_checkin_date'] != '') {
-        $query->query_vars['meta_key'] = '_hb_check_in_date';
-        $query->query_vars['meta_value'] = sanitize_text_field( $_GET['filter_by_checkin_date'] );
-    }
-    if ( 'hb_booking' == $type && is_admin() && $pagenow=='edit.php' && isset($_GET['filter_by_checkout_date']) && $_GET['filter_by_checkout_date'] != '') {
-        $query->query_vars['meta_key'] = '_hb_check_out_date';
-        $query->query_vars['meta_value'] = sanitize_text_field( $_GET['filter_by_checkout_date'] );
-    }
-}
-// add_filter('posts_join', 'AIOThemes_joinPOSTMETA_to_WPQuery');
-// Join for searching metadata
-function AIOThemes_joinPOSTMETA_to_WPQuery($join) {
-    global $wp_query, $wpdb;
-
-    if ( !empty( $wp_query->query_vars['s'] ) ) {
-        $join .= "LEFT JOIN $wpdb->hotel_booking_order_items ON $wpdb->hotel_booking_order_items.order_id = $wpdb->posts.ID ";
-        $join .= "LEFT JOIN $wpdb->hotel_booking_order_itemmeta ON $wpdb->hotel_booking_order_items.order_item_id = $wpdb->hotel_booking_order_itemmeta->hotel_booking_order_item_id ";
-    }
-
-    return $join;
-}
-
 function hb_edit_post_change_title_in_list() {
     add_filter( 'the_title', 'hb_edit_post_new_title_in_list', 100, 2 );
 }
@@ -438,13 +401,7 @@ add_action( 'admin_head-edit.php', 'hb_edit_post_change_title_in_list' );
 
 function hb_edit_post_new_title_in_list( $title, $post_id ){
     global $post_type;
-    if( $post_type == 'hb_customer' ) {
-        $title = hb_get_title_by_slug( get_post_meta( $post_id, '_hb_title', true ) );
-        $first_name = get_post_meta($post_id, '_hb_first_name', true);
-        $last_name = get_post_meta($post_id, '_hb_last_name', true);
-        $customer_name = sprintf('%s %s %s', $title ? $title : 'Cus.', $first_name, $last_name);
-        $title = $customer_name;
-    }elseif( $post_type == 'hb_booking' ) {
+    if( $post_type == 'hb_booking' ) {
         $title = hb_format_order_number( $post_id );
     }
     return $title;
