@@ -1124,7 +1124,7 @@ function hb_get_payment_gateways( $args = array() ) {
 function hb_get_user_payment_method( $slug ) {
 	$methods = hb_get_payment_gateways( array( 'enable' => true ) );
 	$method  = false;
-	if ( $methods && !empty( $methods[$slug] ) ) {
+	if ( $methods && ! empty( $methods[$slug] ) ) {
 		$method = $methods[$slug];
 	}
 	return $method;

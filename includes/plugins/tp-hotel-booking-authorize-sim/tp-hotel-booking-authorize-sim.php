@@ -10,7 +10,7 @@
 
 define( 'TP_HB_AUTHORIZE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TP_HB_AUTHORIZE_URI', plugins_url( '', __FILE__ ) );
-define( 'TP_HB_AUTHORIZE_VER', '1.0.1' );
+define( 'TP_HB_AUTHORIZE_VER', '1.0.2.1' );
 
 class TP_Hotel_Booking_Payment_Authorize
 {
