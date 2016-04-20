@@ -2,7 +2,7 @@
 * @Author: ducnvtt
 * @Date:   2016-03-21 08:50:48
 * @Last Modified by:   ducnvtt
-* @Last Modified time: 2016-03-29 11:17:11
+* @Last Modified time: 2016-04-20 16:37:58
 */
 
 'use strict';
@@ -11,13 +11,12 @@
 	var Hotel_Booking_Room_Addon = {
 
 		init: function() {
-			// datepicker init
-			this.datepicker_init();
-
-			// step
-			this.book_steps.init();
+			// load add to cart form
+			var _self = this,
+				_doc = $( document );
+			_doc.on( 'click', '#hb_room_load_booking_form', _self.load_room_add_to_cart_form );
 			// check avibility
-			this.check_avibility();
+			_self.check_avibility();
 		},
 
 		datepicker_init: function() {
@@ -69,74 +68,21 @@
 			});
 		},
 
-		book_steps: {
-			steps: false,
-			current_step_active: false,
-			current_step: 0,
-			current_step_content: 0,
-
-			init: function () {
-				this.steps = $('#hbr-nav a'),
-				this.current_step_active = $('#hbr-nav a.active'),
-				this.current_step = this.current_step_active.index();
-				this.current_step_content = $( $(this.current_step).attr( 'href' ) );
-
-				if( this.current_step_active.length != 1 ) {
-					this.steps.removeClass( 'active' );
-					this.current_step_active = this.steps.first().addClass( 'active' );
-
-					this.current_step = 0;
-
-					this.current_step_content = $( this.current_step_active.attr( 'href' ) ).addClass('active');
-				}
-
-				this.steps.on( 'click', function(e) {
-					e.preventDefault();
-					var _self = $(this),
-						_self_step = _self.index();
-
-					if ( Hotel_Booking_Room_Addon.book_steps.current_step === _self_step || Hotel_Booking_Room_Addon.book_steps.current_step <= _self_step  ) {
-						return false;
-					}
-
-					Hotel_Booking_Room_Addon.book_steps.switch_step( _self );
-					return false;
-				});
-			},
-
-			switch_step: function ( st ) {
-
-				// reset
-				Hotel_Booking_Room_Addon.book_steps.reset_step();
-
-				this.current_step_active = st.addClass('active' ),
-				this.current_step = this.current_step_active.index();
-				this.current_step_content = $( $(this.current_step_active).attr( 'href' ) ).addClass( 'active' );
-			},
-
-			next_step: function () {
-				Hotel_Booking_Room_Addon.book_steps.reset_step();
-				// new
-				this.current_step_active = this.current_step_active.next();
-				this.current_step = this.current_step_active.index();
-				this.current_step_active.addClass( 'active' );
-
-				this.current_step_content = $( $(this.current_step_active).attr( 'href' ) ).addClass( 'active' );
-			},
-
-			reset_step: function(){
-				// reset
-				this.steps.removeClass( 'active' );
-				this.current_step_content.removeClass( 'active' );
-			},
-		},
-
 		beforeAjax: function() {
 			$('.hotel_booking_room_overflow').addClass('active');
 		},
 
 		afterAjax: function(){
 			$('.hotel_booking_room_overflow').removeClass('active');
+		},
+
+		load_room_add_to_cart_form: function( e ){
+			e.preventDefault();
+			var _self = $( this ),
+				_room_id = _self.attr( 'data-id' );
+
+
+			return false;
 		},
 
 		check_avibility: function() {

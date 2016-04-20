@@ -23,12 +23,12 @@ function hb_get_template_part( $slug, $name = '' ) {
     }
 
     // Get default slug-name.php
-    if ( !$template && $name && file_exists( HB_PLUGIN_PATH . "/templates/{$slug}-{$name}.php" ) ) {
+    if ( ! $template && $name && file_exists( HB_PLUGIN_PATH . "/templates/{$slug}-{$name}.php" ) ) {
         $template = HB_PLUGIN_PATH . "/templates/{$slug}-{$name}.php";
     }
 
     // If template file doesn't exist, look in yourtheme/slug.php and yourtheme/courses-manage/slug.php
-    if ( !$template ) {
+    if ( ! $template ) {
         $template = locate_template( array( "{$slug}.php", hb_template_path() . "{$slug}.php" ) );
     }
 
@@ -60,7 +60,7 @@ function hb_get_template( $template_name, $args = array(), $template_path = '', 
 
     $located = hb_locate_template( $template_name, $template_path, $default_path );
 
-    if ( !file_exists( $located ) ) {
+    if ( ! file_exists( $located ) ) {
         _doing_it_wrong( __FUNCTION__, sprintf( '<code>%s</code> does not exist.', $located ), '2.1' );
         return;
     }
@@ -93,11 +93,11 @@ function hb_get_template( $template_name, $args = array(), $template_path = '', 
  */
 function hb_locate_template( $template_name, $template_path = '', $default_path = '' ) {
 
-    if ( !$template_path ) {
+    if ( ! $template_path ) {
         $template_path = hb_template_path();
     }
 
-    if ( !$default_path ) {
+    if ( ! $default_path ) {
         $default_path = HB_PLUGIN_PATH . '/templates/';
     }
 
@@ -112,7 +112,7 @@ function hb_locate_template( $template_name, $template_path = '', $default_path 
         );
     }
     // Get default template
-    if ( !$template ) {
+    if ( ! $template ) {
         $template = $default_path . $template_name;
     }
 
