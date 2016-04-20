@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-18 15:32:51
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-20 16:37:28
+ * @Last Modified time: 2016-04-20 17:11:02
  */
 
 if( ! defined( 'ABSPATH' ) ) {
@@ -69,7 +69,7 @@ if ( ! class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
 					return;
 				}
 			?>
-
+				<div id="hotel_booking_room_hidden"></div>
 				<!--Single form-->
 				<script type="text/html" id="tmpl-hb-room-load-form">
 
@@ -95,11 +95,12 @@ if ( ! class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
 						</div>
 
 						<div class="hb-booking-room-form-footer">
+							<a href="#" class="hb_button" id="hb_room_check_available"><?php _e( 'Check Available', 'tp-hotel-booking-room' ); ?></a>
 							<input type="hidden" name="room-id" value="<?php printf( '%s', $post->ID ) ?>" />
 							<input type="hidden" name="action" value="hotel_booking_ajax_add_to_cart"/>
 							<input type="hidden" name="is_single" value="1"/>
 							<?php wp_nonce_field( 'hb_booking_nonce_action', 'nonce' ); ?>
-							<button type="submit" class="hotel_booking_room_button hb_add_to_cart"><?php _e( 'Select this room', 'tp-hotel-booking-room' ); ?></button>
+							<button type="submit" class="hotel_booking_room_button hb_add_to_cart hb_button"><?php _e( 'Add To Cart', 'tp-hotel-booking-room' ); ?></button>
 						</div>
 					</form>
 

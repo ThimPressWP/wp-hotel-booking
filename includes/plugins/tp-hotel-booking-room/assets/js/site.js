@@ -2,7 +2,7 @@
 * @Author: ducnvtt
 * @Date:   2016-03-21 08:50:48
 * @Last Modified by:   ducnvtt
-* @Last Modified time: 2016-04-20 16:37:58
+* @Last Modified time: 2016-04-20 16:58:25
 */
 
 'use strict';
@@ -79,9 +79,21 @@
 		load_room_add_to_cart_form: function( e ){
 			e.preventDefault();
 			var _self = $( this ),
-				_room_id = _self.attr( 'data-id' );
+				_room_id = _self.attr( 'data-id' ),
+				_doc = $( document );
 
-
+			$( '#hotel_booking_room_hidden' ).html( wp.template( 'hb-room-load-form' )({}) );
+			$.magnificPopup.open({
+				type: 'inline',
+				items: {
+					src: '#hotel_booking_room_hidden'
+				},
+				callbacks: {
+					open: function(){
+						_doc.trigger( 'load_room_add_to_cart_form_open', [ _self ] );
+					}
+				}
+	        });
 			return false;
 		},
 

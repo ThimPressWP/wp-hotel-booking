@@ -2,255 +2,42 @@
 * @Author: ducnvtt
 * @Date:   2016-03-18 16:20:16
 * @Last Modified by:   ducnvtt
-* @Last Modified time: 2016-04-19 09:49:01
+* @Last Modified time: 2016-04-20 17:10:37
 */
-/*.hb_single_room .hb_room_gallery{
-	width: 50%;
-	float: left;
-}
-.hb_single_room .hotel_booking_room_detail{
+#hotel_booking_room_hidden{
+    max-width: 1000px;
+    min-width: 500px;
+    background: #fff;
 	overflow: hidden;
-	position: relative;
-	padding: 20px;
-	width: 50%;
+}
+#hotel_booking_room_hidden *{
+	color: #777;
+}
+#hotel_booking_room_hidden .hb_button{
+	color: #fff;
+}
+#hotel_booking_room_hidden form > div{
+	padding: 10px;
+	overflow: hidden;
+}
+.hb-booking-room-form-head h2{
+	margin: 0;
+	padding: 10px;
+	text-transform: uppercase;
+	text-align: center;
+}
+.hb-search-results-form-container{
+	overflow: hidden;
+	border-bottom: 1px solid 1px solid rgba(216, 212, 213, 0.62);
+	border-top: 1px solid 1px solid rgba(216, 212, 213, 0.62);
+}
+.hb-search-results-form-container .hb-booking-room-form-group{
+	width: 30%;
 	float: left;
 }
-.hotel_booking_room_overflow{
-	display: none;
+.hb-booking-room-form-footer a{
+	float: left;
 }
-.hotel_booking_room_overflow.active{
-	display: block;
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	opacity: 0.8;
-	background-color: #fff;
+.hb-booking-room-form-footer button{
+	float: right;
 }
-.hotel_booking_room_detail ul {
-	list-style: none;
-	margin: 0;
-}
-.hotel_booking_room_check_available ul li{
-	margin: 0px 0px 20px 0px;
-}
-.hotel_booking_room_check_available input{
-    position: relative;
-    width: auto;
-    height: 40px;
-    min-width: 200px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    font-size: 15px;
-    color: #7a7a7a;
-    padding: 7px 8px;
-    line-height: 24px;
-    -webkit-box-shadow: inset 0 0 0 rgba(0,0,0,.075);
-    box-shadow: inset 0 0 0 rgba(0,0,0,.075);
-    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-}
-.hotel_booking_room_check_available .hotel_booking_before_select_qty{
-	display: none;
-}
-.hotel_booking_room_button{
-    text-decoration: none;
-    padding: 10px 25px;
-    line-height: 20px;
-    border: 0;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    background: #ffb606;
-    color: #2a2a2a;
-}
-.hotel_booking_room_button:hover{
-    background: #007acc;
-    color: #fff;
-}
-.hotel_booking_room_check_available .hotel_booking_room_errors p{
-	font-size: 12px;
-    margin-bottom: 10px;
-}
-#hbr-nav {
-	margin: 0px 0px 10px 20px;
-}
-#hbr-nav a{
-	display: inline-block;
-	position: relative;
-	font-size: 12px;
-	color: #fff;
-	background-color: #B43CFF;
-	padding: 5px 5px;
-	margin-right: 20px;
-}
-#hbr-nav a.active,
-#hbr-nav a:hover{
-	background-color: #007acc;
-}
-#hbr-nav a:hover:after,
-#hbr-nav a.active:after{
-	border-left: 20px solid #007acc;
-}
-#hbr-nav a:after{
-	content: "";
-	position: absolute;
-	top: 0;
-    border-top: 18px solid transparent;
-	border-bottom: 20px solid transparent;
-	border-left: 20px solid #B43CFF;
-	right: -20px;
-}
-#hbr-nav a:hover:before,
-#hbr-nav a.active:before{
-	border-color: #007acc #007acc #007acc transparent;
-}
-#hbr-nav a:before{
-	content: "";
-	position: absolute;
-	border-width: 18px 0 20px 20px;
-	border-style: solid;
-	border-color: #B43CFF #B43CFF #B43CFF transparent;
-	left: -20px;
-	top: 0;
-}
-.hbr-add-to-cart-step{
-	display: none;
-}
-.hbr-add-to-cart-step.active{
-	display: block;
-}
-.hbr-add-to-cart-step .hb_addition_packages{
-	margin-bottom: 30px;
-}
-/**
- * ajax effect
- */
-/*.hotel_booking_room_overflow_spinner {
-  height: 20px;
-  width: 20px;
-  margin: 50px auto;
-  position: relative;
-  animation: invert 2s infinite steps(2, end);
-}
-.hbr_spinner_ball {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  border-radius: 50%;
-  top: 0;
-  left: 0;
-  background: #B43CFF;
-}
-.hbr_spinner_ball-1 {
-  animation: hbr_ball1 1s infinite alternate linear;
-}
-.hbr_spinner_ball-2 {
-  animation: hbr_ball2 1s infinite alternate linear;
-}
-.hbr_spinner_ball-3 {
-  animation: hbr_ball3 1s infinite alternate linear;
-}
-.hbr_spinner_ball-4 {
-  animation: hbr_ball4 1s infinite alternate linear;
-}
-@keyframes invert {
-	100% {
-		transform: rotate(180deg);
-	}
-}
-@keyframes hbr_ball1 {
-	12% {
-		transform: none;
-	}
-	26% {
-		transform: translateX(25%) scale(1, 0.8);
-	}
-	40% {
-		transform: translateX(50%) scale(0.8, 0.8);
-	}
-	60% {
-		transform: translateX(50%) scale(0.8, 0.8);
-	}
-	74% {
-		transform: translate(50%, 25%) scale(0.6, 0.8);
-	}
-	88% {
-		transform: translate(50%, 50%) scale(0.6, 0.6);
-	}
-	100% {
-		transform: translate(50%, 50%) scale(0.6, 0.6);
-	}
-}
-@keyframes hbr_ball2 {
-	12% {
-		transform: none;
-	}
-	26% {
-		transform: translateX(25%) scale(1, 0.8);
-	}
-	40% {
-		transform: translateX(50%) scale(0.8, 0.8);
-	}
-	60% {
-		transform: translateX(50%) scale(0.8, 0.8);
-	}
-	74% {
-		transform: translate(50%, -25%) scale(0.6, 0.8);
-	}
-	88% {
-		transform: translate(50%, -50%) scale(0.6, 0.6);
-	}
-	100% {
-		transform: translate(50%, -50%) scale(0.6, 0.6);
-	}
-}
-@keyframes hbr_ball3 {
-	12% {
-		transform: none;
-	}
-	26% {
-		transform: translateX(-25%) scale(1, 0.8);
-	}
-	40% {
-		transform: translateX(-50%) scale(0.8, 0.8);
-	}
-	60% {
-		transform: translateX(-50%) scale(0.8, 0.8);
-	}
-	74% {
-		transform: translate(-50%, 25%) scale(0.6, 0.8);
-	}
-	88% {
-		transform: translate(-50%, 50%) scale(0.6, 0.6);
-	}
-	100% {
-		transform: translate(-50%, 50%) scale(0.6, 0.6);
-	}
-}
-@keyframes hbr_ball4 {
-	12% {
-		transform: none;
-	}
-	26% {
-		transform: translateX(-25%) scale(1, 0.8);
-	}
-	40% {
-		transform: translateX(-50%) scale(0.8, 0.8);
-	}
-	60% {
-		transform: translateX(-50%) scale(0.8, 0.8);
-	}
-	74% {
-		transform: translate(-50%, -25%) scale(0.6, 0.8);
-	}
-	88% {
-		transform: translate(-50%, -50%) scale(0.6, 0.6);
-	}
-	100% {
-		transform: translate(-50%, -50%) scale(0.6, 0.6);
-	}
-}*/
