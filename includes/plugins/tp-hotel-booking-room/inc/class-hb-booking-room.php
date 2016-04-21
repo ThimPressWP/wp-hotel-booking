@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-18 15:32:51
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-20 17:11:02
+ * @Last Modified time: 2016-04-21 16:33:24
  */
 
 if( ! defined( 'ABSPATH' ) ) {
@@ -54,74 +54,28 @@ if ( ! class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
 			add_action( 'wp_ajax_nopriv_check_room_availabel', array( $this, 'check_room_availabel' ) );
 
 			add_filter( 'hotel_booking_add_to_cart_results', array( $this, 'add_to_cart_redirect' ), 10, 2 );
+
+			add_action( 'wp_ajax_hotel_booking_single_check_room_available', array( $this, 'hotel_booking_single_check_room_available' ) );
+			add_action( 'wp_ajax_nopriv_hotel_booking_single_check_room_available', array( $this, 'hotel_booking_single_check_room_available' ) );
 		}
 
 		function single_add_button() {
-			global $hb_room;
-			?>
-				<a href="#" data-id="<?php echo esc_attr( $hb_room->ID ) ?>" class="hb_button hb_primary" id="hb_room_load_booking_form"><?php _e( 'Book this room', 'tp-hotel-booking-room' ); ?></a>
-			<?php
+			ob_start();
+			$this->get_template( 'single-search-button.php' );
+			$html = ob_get_clean();
+			echo $html;
 		}
 
 		function wp_footer() {
-				global $post;
-				if ( ! $post || ! is_single( $post->ID ) || get_post_type( $post->ID ) !== 'hb_room' ) {
-					return;
-				}
-			?>
-				<div id="hotel_booking_room_hidden"></div>
-				<!--Single form-->
-				<script type="text/html" id="tmpl-hb-room-load-form">
-
-					<form action="POST" name="hb-search-results" class="hb-search-room-results">
-
-						<div class="hb-booking-room-form-head">
-							<h2><?php printf( '%s', $post->post_title ) ?></h2>
-						</div>
-
-						<div class="hb-search-results-form-container">
-							<div class="hb-booking-room-form-group">
-								<label><?php _e( 'Arrival Date', 'tp-hotel-booking-room' ); ?></label>
-								<div class="hb-booking-room-form-field">
-									<input name="check_in_date" value="{{ data.check_in_date }}" placeholder="<?php _e( 'Select Check in Date', 'tp-hotel-booking-room' ); ?>" />
-								</div>
-							</div>
-							<div class="hb-booking-room-form-group">
-								<label><?php _e( 'Departure Date', 'tp-hotel-booking-room' ); ?></label>
-								<div class="hb-booking-room-form-field">
-									<input name="check_out_date" value="{{ data.check_out_date }}" placeholder="<?php _e( 'Select Check out Date', 'tp-hotel-booking-room' ); ?>" />
-								</div>
-							</div>
-						</div>
-
-						<div class="hb-booking-room-form-footer">
-							<a href="#" class="hb_button" id="hb_room_check_available"><?php _e( 'Check Available', 'tp-hotel-booking-room' ); ?></a>
-							<input type="hidden" name="room-id" value="<?php printf( '%s', $post->ID ) ?>" />
-							<input type="hidden" name="action" value="hotel_booking_ajax_add_to_cart"/>
-							<input type="hidden" name="is_single" value="1"/>
-							<?php wp_nonce_field( 'hb_booking_nonce_action', 'nonce' ); ?>
-							<button type="submit" class="hotel_booking_room_button hb_add_to_cart hb_button"><?php _e( 'Add To Cart', 'tp-hotel-booking-room' ); ?></button>
-						</div>
-					</form>
-
-				</script>
-
-				<!--Quanity select-->
-				<script type="text/html" id="tmpl-hb-room-load-qty">
-					<div class="hb-booking-room-form-group">
-						<label><?php _e( 'Quantity Available', 'tp-hotel-booking-room' ); ?></label>
-						<div class="hb-booking-room-form-field">
-							<select name="hb-num-of-rooms" id="hotel_booking_room_qty" class="number_room_select">
-								<option value=""><?php _e( '--- Quantity ---', 'tp-hotel-booking-room' ); ?></option>
-								<# for( var i = 1; i <= data.qty; i++ ) { #>
-									<option value="{{ i }}">{{ i }}</option>
-								<# } #>
-							</select>
-						</div>
-					</div>
-				</script>
-
-			<?php
+			$html = array();
+			$html[] = '<div id="hotel_booking_room_hidden"></div>';
+			ob_start();
+			// search form.
+			$this->get_template( 'single-search-available.php' );
+			// book form.
+			$this->get_template( 'single-book-room.php' );
+			$html[] = ob_get_clean();
+			echo implode( '', $html );
 		}
 
 		// enqueue script
@@ -168,11 +122,181 @@ if ( ! class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
 		}
 
 		function add_to_cart_redirect( $param, $room ) {
-			if( isset( $param['status'] ) && $param['status'] === 'success' ) {
+			if( isset( $param['status'] ) && $param['status'] === 'success' && isset( $_POST['is_single'] ) && $_POST['is_single'] ) {
 				$param['redirect']	= hb_get_cart_url();
 			}
 
 			return $param;
+		}
+
+		function template_path(){
+		    return apply_filters( 'hb_room_addon_template_path', 'tp-hotel-booking' );
+		}
+
+		/**
+		 * get template part
+		 *
+		 * @param   string $slug
+		 * @param   string $name
+		 *
+		 * @return  string
+		 */
+		function get_template_part( $slug, $name = '' ) {
+		    $template = '';
+
+		    // Look in yourtheme/slug-name.php and yourtheme/courses-manage/slug-name.php
+		    if ( $name ) {
+		        $template = locate_template( array( "{$slug}-{$name}.php", $this->template_path() . "/{$slug}-{$name}.php" ) );
+		    }
+
+		    // Get default slug-name.php
+		    if ( ! $template && $name && file_exists( TP_HB_BOOKING_ROOM_PATH . "/templates/{$slug}-{$name}.php" ) ) {
+		        $template = TP_HB_BOOKING_ROOM_PATH . "/templates/{$slug}-{$name}.php";
+		    }
+
+		    // If template file doesn't exist, look in yourtheme/slug.php and yourtheme/courses-manage/slug.php
+		    if ( ! $template ) {
+		        $template = locate_template( array( "{$slug}.php", $this->template_path() . "{$slug}.php" ) );
+		    }
+
+		    // Allow 3rd party plugin filter template file from their plugin
+		    if ( $template ) {
+		        $template = apply_filters( 'hb_room_addon_get_template_part', $template, $slug, $name );
+		    }
+		    if ( $template && file_exists( $template ) ) {
+		        load_template( $template, false );
+		    }
+
+		    return $template;
+		}
+
+		/**
+		 * Get other templates passing attributes and including the file.
+		 *
+		 * @param string $template_name
+		 * @param array  $args          (default: array())
+		 * @param string $template_path (default: '')
+		 * @param string $default_path  (default: '')
+		 *
+		 * @return void
+		 */
+		function get_template( $template_name, $args = array(), $template_path = '', $default_path = '' ) {
+		    if ( $args && is_array( $args ) ) {
+		        extract( $args );
+		    }
+
+		    $located = $this->locate_template( $template_name, $template_path, $default_path );
+
+		    if ( ! file_exists( $located ) ) {
+		        _doing_it_wrong( __FUNCTION__, sprintf( '<code>%s</code> does not exist.', $located ), '2.1' );
+		        return;
+		    }
+		    // Allow 3rd party plugin filter template file from their plugin
+		    $located = apply_filters( 'hb_room_addon_get_template', $located, $template_name, $args, $template_path, $default_path );
+
+		    do_action( 'hb_room_before_template_part', $template_name, $template_path, $located, $args );
+
+		    include( $located );
+
+		    do_action( 'hb_room_after_template_part', $template_name, $template_path, $located, $args );
+		}
+
+		/**
+		 * Locate a template and return the path for inclusion.
+		 *
+		 * This is the load order:
+		 *
+		 *        yourtheme        /    $template_path    /    $template_name
+		 *        yourtheme        /    $template_name
+		 *        $default_path    /    $template_name
+		 *
+		 * @access public
+		 *
+		 * @param string $template_name
+		 * @param string $template_path (default: '')
+		 * @param string $default_path  (default: '')
+		 *
+		 * @return string
+		 */
+		function locate_template( $template_name, $template_path = '', $default_path = '' ) {
+
+		    if ( ! $template_path ) {
+		        $template_path = $this->template_path();
+		    }
+
+		    if ( ! $default_path ) {
+		        $default_path = TP_HB_BOOKING_ROOM_PATH . '/templates/';
+		    }
+
+		    $template = null;
+		    // Look within passed path within the theme - this is priority
+		    $template = locate_template(
+	            array(
+	                trailingslashit($template_path) . $template_name,
+	                $template_name
+	            )
+	        );
+		    // Get default template
+		    if ( ! $template ) {
+		        $template = $default_path . $template_name;
+		    }
+
+		    // Return what we found
+		    return apply_filters( 'hb_room_locate_template', $template, $template_name, $template_path );
+		}
+
+		function hotel_booking_single_check_room_available() {
+			if ( ! isset( $_POST[ 'hb-booking-single-room-check-nonce-action' ] ) || ! wp_verify_nonce( $_POST[ 'hb-booking-single-room-check-nonce-action' ], 'hb_booking_single_room_check_nonce_action' ) ) {
+				return;
+			}
+
+			$errors = array();
+
+			if ( ! isset( $_POST['room-id'] ) || ! is_numeric( $_POST['check_in_date_timestamp'] ) ) {
+				$errors[] = __( 'Check in date is required.', 'tp-hotel-booking-room' );
+			} else {
+				$room_id = absint( $_POST['room-id'] );
+			}
+
+			if ( ! isset( $_POST['check_in_date'] ) || ! isset( $_POST['check_in_date_timestamp'] ) || ! is_numeric( $_POST['check_in_date_timestamp'] ) ) {
+				$errors[] = __( 'Check in date is required.', 'tp-hotel-booking-room' );
+			} else {
+				$checkindate_text = sanitize_text_field( $_POST['check_in_date'] );
+				$checkindate = absint( $_POST['check_in_date_timestamp'] );
+			}
+
+			if ( ! isset( $_POST['check_out_date_timestamp'] ) || ! is_numeric( $_POST['check_out_date_timestamp'] ) ) {
+				$errors[] = __( 'Check out date is required.', 'tp-hotel-booking-room' );
+			} else {
+				$checkoutdate_text = sanitize_text_field( $_POST['check_out_date'] );
+				$checkoutdate = absint( $_POST['check_out_date_timestamp'] );
+			}
+
+			// valid request and require field
+			if ( empty( $errors ) ) {
+				$qty = hotel_booking_get_room_available( $room_id, array(
+						'check_in_date'		=> $checkindate,
+						'check_out_date'	=> $checkoutdate
+					) );
+
+				if ( absint( $qty ) > 0 ) {
+
+					// room has been found
+					wp_send_json( array(
+										'status' 				=> true,
+										'check_in_date_text' 	=> $checkindate_text,
+										'check_in_date_text' 	=> $checkoutdate_text,
+										'check_in_date' 		=> date( 'm/d/Y', $checkindate ),
+										'check_out_date' 		=> date( 'm/d/Y', $checkoutdate ),
+										'qty'					=> $qty
+							));
+				} else {
+					$errors[] = sprintf( __( 'No room found in %s and %s', 'tp-hotel-booking-room' ), $checkindate_text, $checkoutdate_text );
+				}
+			}
+
+			// input is not pass validate, sanitize
+			wp_send_json( array( 'status' => false, 'messages' => $errors ) );
 		}
 
 	}

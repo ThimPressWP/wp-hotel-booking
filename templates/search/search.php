@@ -29,14 +29,16 @@ $uniqid = uniqid();
                     <input type="text" name="check_in_date" id="check_in_date_<?php echo esc_attr( $uniqid ); ?>" class="hb_input_date_check" value="<?php echo esc_attr( $check_in_date ); ?>" placeholder="<?php _e( 'Arrival Date', 'tp-hotel-booking' ); ?>" />
                 </div>
             </li>
+
             <li class="hb-form-field">
                 <?php hb_render_label_shortcode( $atts, 'show_label', __( 'Departure Date', 'tp-hotel-booking' ), 'true'); ?>
                 <div class="hb-form-field-input hb_input_field">
                     <input type="text" name="check_out_date" id="check_out_date_<?php echo esc_attr( $uniqid ) ?>" class="hb_input_date_check" value="<?php echo esc_attr( $check_out_date ); ?>" placeholder="<?php _e( 'Departure Date', 'tp-hotel-booking' ); ?>" />
                 </div>
             </li>
+
             <li class="hb-form-field">
-                <?php hb_render_label_shortcode( $atts, 'show_label', __( 'Adults', 'tp-hotel-booking' ), 'true'); ?>
+                <?php hb_render_label_shortcode( $atts, 'show_label', __( 'Adults', 'tp-hotel-booking' ), 'true' ); ?>
                 <div class="hb-form-field-input">
                     <?php
                         hb_dropdown_numbers(
@@ -53,6 +55,7 @@ $uniqid = uniqid();
                     ?>
                 </div>
             </li>
+
             <li class="hb-form-field">
                 <?php hb_render_label_shortcode( $atts, 'show_label', __( 'Children', 'tp-hotel-booking' ), 'true'); ?>
                 <div class="hb-form-field-input">

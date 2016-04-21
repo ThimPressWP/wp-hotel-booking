@@ -13,7 +13,7 @@ class HB_Extra_Admin
 		 * tp_hotel_booking_addon_menus recive addon menus
 		 */
 		add_filter( 'hotel_booking_addon_menus', array( $this, 'extra_settings' ) );
-		add_action( 'hotel_booking_extra', array( $this, 'extra_settings_build' ) );
+		add_action( 'hotel_booking_extra_settings', array( $this, 'extra_settings_build' ) );
 	}
 
 	/**
@@ -23,7 +23,7 @@ class HB_Extra_Admin
 	 */
 	function extra_settings( $settings )
 	{
-		$settings['tp_hotel_booking_extra'] = __( 'Extra Room Packages', 'tp-hb-extra' );
+		$settings['hotel_booking_extra_settings'] = __( 'Extra Room Packages', 'tp-hb-extra' );
 		return $settings;
 	}
 

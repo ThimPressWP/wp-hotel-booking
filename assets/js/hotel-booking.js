@@ -20,6 +20,10 @@
 		}
 	}
 
+	function isInteger( a ) {
+		return Number( a ) && ( a % 1 === 0 );
+	}
+
 	function isEmail( email ) {
 		return new RegExp('^[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+@[-!#$%&\'*+\\/0-9=?A-Z^_`a-z{|}~]+\.[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+$').test(email);
 	}
@@ -635,7 +639,13 @@
 		// $.datepicker.setDefaults({dateFormat: 'mm/dd/yy'});
 		var today = new Date();
 		var tomorrow = new Date();
-		tomorrow.setDate( today.getDate() + 1 );
+
+		var start_plus = $( document ).triggerHandler( 'hotel_booking_min_check_in_date', [ 1, today, tomorrow ] );
+		if ( ! isInteger( start_plus ) ) {
+			start_plus = 1;
+		}
+
+		tomorrow.setDate( today.getDate() + start_plus );
 
 		$('input[id^="check_in_date"]').datepicker({
 			dateFormat 		: hotel_booking_i18n.date_time_format,
@@ -647,14 +657,21 @@
 			minDate       	: tomorrow,
 			maxDate       	: '+365D',
 			numberOfMonths	: 1,
-			onSelect      : function (selected) {
+			onSelect      : function () {
 				var unique = $(this).attr('id');
 				unique = unique.replace('check_in_date_', '');
 				var date = $(this).datepicker('getDate');
-				if (date) {
-					date.setDate(date.getDate() + 1);
+
+				var check_in_range_check_out = $( document ).triggerHandler( 'hotel_booking_range_check_in_check_out', [ 1, today, tomorrow ] );
+				if ( ! isInteger( check_in_range_check_out ) ) {
+					check_in_range_check_out = 1;
 				}
-				$( '#check_out_date_' + unique).datepicker( 'option', 'minDate', date );
+				if ( date ) {
+					date.setDate( date.getDate() + check_in_range_check_out );
+				}
+
+				var checkout = $( '#check_out_date_' + unique);
+				checkout.datepicker( 'option', 'minDate', date );
 			}
 		});
 
@@ -668,10 +685,19 @@
 			minDate       	: tomorrow,
 			maxDate       	: '+365D',
 			numberOfMonths	: 1,
-			onSelect      : function (selected) {
+			onSelect      : function () {
 				var unique = $(this).attr('id');
 				unique = unique.replace('check_out_date_', '');
-				$( '#check_in_date_' + unique).datepicker( 'option', 'maxDate', selected );
+				var check_in = $( '#check_in_date_' + unique),
+					selected = $(this).datepicker('getDate');
+
+				var check_in_range_check_out = $( document ).triggerHandler( 'hotel_booking_range_check_in_check_out', [ 1, today, tomorrow ] );
+				if ( ! isInteger( check_in_range_check_out ) ) {
+					check_in_range_check_out = 1;
+				}
+				selected.setDate( selected.getDate() - check_in_range_check_out );
+
+				check_in.datepicker( 'option', 'maxDate', selected );
 			}
 		});
 

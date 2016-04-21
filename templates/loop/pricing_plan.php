@@ -19,9 +19,9 @@ $plans = hb_room_get_pricing_plans( get_the_ID() );
 
 	<h4 class="hb_room_pricing_plan_data">
 		<?php if ( $plan->start && $plan->end ): ?>
-				<?php printf( '%1$s', date_i18n( hb_get_date_format(), $plan->start ) ) ?>
+				<?php printf( '%1$s', date_i18n( hb_get_date_format(), strtotime( $plan->start ) ) ) ?>
 				<span><?php _e( 'to', 'tp-hotel-booking' ) ?></span>
-				<?php printf( '%1$s', date_i18n( hb_get_date_format(), $plan->end ) ) ?>
+				<?php printf( '%1$s', date_i18n( hb_get_date_format(), strtotime( $plan->end ) ) ) ?>
 		<?php else: ?>
 			<?php _e( 'Regular plan', 'tp-hotel-booking' ) ?>
 		<?php endif; ?>
