@@ -17,7 +17,7 @@ $price_display = apply_filters( 'hotel_booking_loop_room_price_display_style', $
 $prices = hb_room_get_selected_plan( get_the_ID() );
 
 $prices = isset( $prices->prices ) ? $prices->prices : array();
-
+sort( $prices );
 ?>
 <?php if( $prices ): ?>
 	<?php
