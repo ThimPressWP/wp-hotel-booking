@@ -2,7 +2,7 @@
 * @Author: ducnvtt
 * @Date:   2016-03-18 16:20:16
 * @Last Modified by:   ducnvtt
-* @Last Modified time: 2016-04-21 09:25:05
+* @Last Modified time: 2016-04-21 17:14:24
 */
 #hotel_booking_room_hidden{
     max-width: 1000px;
@@ -36,7 +36,6 @@
 }
 .hb-search-results-form-container .hb-booking-room-form-group{
 	width: 30%;
-	/*padding: 0px 10px;*/
 	float: left;
 }
 .hb-search-room-results.hotel-booking-search{
@@ -47,4 +46,10 @@
 }
 .hb-booking-room-form-footer button{
 	float: right;
+}
+#hotel_booking_room_hidden .hb_addition_package_extra{
+	display: block;
+    width: 60%;
+    float: left;
+    padding-top: 0;
 }

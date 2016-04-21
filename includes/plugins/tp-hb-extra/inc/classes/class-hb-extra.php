@@ -11,6 +11,8 @@ class HB_Extra_Field
 		add_action( 'hotel_booking_loop_after_item', array( $this, 'render_extra' ), 10, 1 );
 		add_action( 'hotel_booking_after_add_room_to_cart_form', array( $this, 'render_extra' ), 10, 1 );
 
+		// single room cart
+		add_action( 'hotel_booking_room_before_quantity', array( $this, 'single_room_cart' ) );
 		/**
 		 * add package details booking
 		 */
@@ -90,6 +92,19 @@ class HB_Extra_Field
 	function render_extra( $post_id )
 	{
 		tp_hb_extra_get_template( 'loop/extra-search-room.php', array( 'post_id' => $post_id ) );
+	}
+
+	/**
+	 * Extra single search room
+	 *
+	 * Add to cart
+	 * @param $post object
+	 * @return html
+	 */
+	function single_room_cart( $post ) {
+		ob_start();
+		tp_hb_extra_get_template( 'loop/extra-single-search-room.php', array( 'post' => $post ) );
+		echo ob_get_clean();
 	}
 
 }
