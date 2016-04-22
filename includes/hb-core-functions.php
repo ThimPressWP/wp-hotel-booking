@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-01 09:45:55
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-13 15:49:01
+ * @Last Modified time: 2016-04-25 16:15:38
  */
 
 /**
@@ -84,8 +84,8 @@ if ( ! function_exists( 'hotel_booking_get_room_available' ) ) {
 						AND checkin.meta_key = %s
 						AND checkout.meta_key = %s
 						AND (
-								( checkin.meta_value >= %d AND checkin.meta_value <= %d )
-							OR 	( checkout.meta_value >= %d AND checkout.meta_value <= %d )
+								( checkin.meta_value >= %d AND checkin.meta_value < %d )
+							OR 	( checkout.meta_value > %d AND checkout.meta_value <= %d )
 							OR 	( checkin.meta_value <= %d AND checkout.meta_value > %d )
 						)
 						AND booking.post_type = %s

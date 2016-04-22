@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-31 14:42:40
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-19 10:39:32
+ * @Last Modified time: 2016-04-25 16:27:58
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -381,7 +381,7 @@ if ( ! function_exists( 'hb_booking_get_check_out_date' ) ) {
         $order_items = hb_get_order_items( $booking_id );
         $data = array();
         foreach ( $order_items as $item ) {
-            $data[] = hb_get_order_item_meta( $item->order_item_id, 'check_in_date', true );
+            $data[] = hb_get_order_item_meta( $item->order_item_id, 'check_out_date', true );
         }
         sort( $data );
         return array_pop( $data );

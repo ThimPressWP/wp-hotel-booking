@@ -1042,7 +1042,11 @@ function hb_search_rooms( $args = array() ) {
                     'quantity'          => 1
                 ) );
             $room->post->available_rooms = (int)$p->available_rooms;
-            $results[ $k ] = $room;
+
+            $room = apply_filters( 'hotel_booking_query_seach_parser', $room );
+            if ( $room ) {
+            	$results[ $k ] = $room;
+            }
         }
     }
 
