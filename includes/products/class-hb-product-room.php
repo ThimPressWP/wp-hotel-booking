@@ -456,7 +456,7 @@ class HB_Product_Room_Base extends HB_Product_Abstract
                         array(
                             'key'       => '_hb_max_child_per_room',
                             'value'     => $max_child_per_room,
-                            'compare'   => '>='
+                            'compare'   => '<='
                         ),
                     ),
                 'tax_query' => array(
