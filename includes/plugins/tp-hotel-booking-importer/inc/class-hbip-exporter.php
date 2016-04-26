@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-25 11:26:10
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-26 15:02:14
+ * @Last Modified time: 2016-04-26 15:34:27
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -110,12 +110,14 @@ class HBIP_Exporter {
 		<?php foreach ( $term as $key => $val ) : if ( ! in_array( $key, array( 'count', 'filter' ) ) ) : ?>
 			<hb:term_<?php echo $key ?>><?php echo hbip_cdata( $val ) ?></hb:term_<?php echo $key ?>>
 		<?php endif; endforeach; ?>
+		<!-- term meta -->
 		<?php if ( $term_metas = hbip_get_term_metas( $term->term_id ) ) : foreach( $term_metas as $meta ) : ?>
 		<hb:meta>
 			<hb:meta_key><?php echo hbip_cdata( $meta->meta_key ) ?></hb:meta_key>
 			<hb:meta_value><?php echo hbip_cdata( $meta->meta_value ) ?></hb:meta_value>
 		</hb:meta>
 		<?php endforeach; endif; ?>
+		<!-- end term meta -->
 		</hb:term>
 	<?php endforeach; endif; unset( $taxonomies ); ?>
 	<!-- end terms -->
@@ -138,6 +140,44 @@ class HBIP_Exporter {
 	<?php endforeach; endif; unset( $rooms ); ?>
 	<!-- end rooms -->
 
+	<!-- extra rooms -->
+	<?php if ( $extras = hbip_get_extra_rooms() ) : foreach ( $extras as $extra ) : ?>
+		<hb:extra>
+		<?php foreach ( $extra as $k => $v ) : ?>
+			<hb:extra_<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:extra_<?php echo $k ?>>
+		<?php endforeach; ?>
+		<!-- extra meta -->
+		<?php if ( $metas = hbip_get_post_metas( $extra->ID ) ) : foreach ( $metas as $meta ) : ?>
+			<hb:meta>
+				<hb:meta_key><?php echo hbip_cdata( $meta->meta_key ) ?></hb:meta_key>
+				<hb:meta_value><?php echo hbip_cdata( $meta->meta_value ) ?></hb:meta_value>
+			</hb:meta>
+		<?php endforeach; endif; ?>
+		<!-- end extra meta -->
+		<!-- end extra rooms -->
+		</hb:extra>
+	<?php endforeach; endif; unset( $extras ); ?>
+	<!-- end rooms -->
+
+	<!-- blocked rooms -->
+	<?php if ( $blockeds = hbip_get_blocked_rooms() ) : foreach ( $blockeds as $blocked ) : ?>
+		<hb:blocked>
+		<?php foreach ( $blocked as $k => $v ) : ?>
+			<hb:blocked_<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:blocked_<?php echo $k ?>>
+		<?php endforeach; ?>
+		<!-- blocked meta -->
+		<?php if ( $metas = hbip_get_post_metas( $blocked->ID ) ) : foreach ( $metas as $meta ) : ?>
+			<hb:meta>
+				<hb:meta_key><?php echo hbip_cdata( $meta->meta_key ) ?></hb:meta_key>
+				<hb:meta_value><?php echo hbip_cdata( $meta->meta_value ) ?></hb:meta_value>
+			</hb:meta>
+		<?php endforeach; endif; ?>
+		<!-- end blocked meta -->
+		<!-- end blocked rooms -->
+		</hb:blocked>
+	<?php endforeach; endif; unset( $extras ); ?>
+	<!-- end rooms -->
+
 	<!-- bookings -->
 	<?php if ( $bookings = hbip_get_books() ) : foreach ( $bookings as $booking ) : ?>
 		<!-- loop single booking -->
@@ -152,6 +192,7 @@ class HBIP_Exporter {
 				<hb:meta_value><?php echo hbip_cdata( $meta->meta_value ) ?></hb:meta_value>
 			</hb:meta>
 		<?php endforeach; endif; ?>
+		<!-- end book meta -->
 		</hb:booking>
 		<!-- loop single booking -->
 	<?php endforeach; endif; unset( $bookings ); ?>
