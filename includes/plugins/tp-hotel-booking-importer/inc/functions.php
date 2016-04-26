@@ -3,9 +3,154 @@
  * @Author: ducnvtt
  * @Date:   2016-04-25 15:01:39
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-25 15:06:20
+ * @Last Modified time: 2016-04-26 15:01:37
  */
 
+/* get rooms */
+function hbip_get_rooms( $room_id = false ) {
+	/* global wpdb */
+	global $wpdb;
+	if ( $room_id ) {
+		$sql = $wpdb->prepare( "
+				SELECT ID FROM {$wpdb->posts} WHERE post_type = %s AND post_status != %s
+			", 'hb_room', 'auto-draft' );
+	} else {
+		$sql = $wpdb->prepare( "
+				SELECT * FROM {$wpdb->posts} WHERE post_type = %s AND post_status != %s
+			", 'hb_room', 'auto-draft' );
+	}
+	return $wpdb->get_results( $sql );
+}
+
+/* get booking */
+function hbip_get_books( $booking_ids = false ) {
+	global $wpdb;
+	if ( $booking_ids ) {
+		$sql = $wpdb->prepare( "
+				SELECT ID FROM {$wpdb->posts} WHERE post_type = %s AND post_status != %s
+			", 'hb_booking', 'auto-draft' );
+	} else {
+		$sql = $wpdb->prepare( "
+				SELECT * FROM {$wpdb->posts} WHERE post_type = %s AND post_status != %s
+			", 'hb_booking', 'auto-draft' );
+	}
+	return $wpdb->get_results( $sql );
+}
+
+/* get postmeta */
+function hbip_get_post_metas( $post_id = null ) {
+	global $wpdb;
+
+	$sql = $wpdb->prepare( "
+			SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id = %d
+		", absint( $post_id ) );
+
+	return $wpdb->get_results( $sql );
+}
+
+/* get users */
+function hbip_get_users( $room_ids = array(), $booking_ids = array() ) {
+	/* global wpdb */
+	global $wpdb;
+	$users = array();
+	if ( ! empty( $room_ids ) ) {
+		$sql = $wpdb->prepare( "
+				SELECT DISTINCT post_author FROM $wpdb->posts WHERE post_status != %s AND post_type = %s
+			", 'auto-draft', 'hb_room' );
+
+		$results = $wpdb->get_results( $sql );
+		foreach ( $results as $r ) {
+			$users[] = $r->post_author;
+		}
+		unset( $sql, $results );
+	}
+
+	if ( ! empty( $booking_ids ) ) {
+		$sql = $wpdb->prepare( "
+				SELECT DISTINCT bookmeta.meta_value FROM $wpdb->postmeta AS bookmeta
+					INNER JOIN $wpdb->posts AS book ON book.ID = bookmeta.post_id AND bookmeta.meta_key = %s
+				WHERE post_status != %s AND post_type = %s
+			", '_hb_user_id', 'auto-draft', 'hb_room' );
+
+		$results = $wpdb->get_results( $sql );
+		foreach ( $results as $r ) {
+			$users[] = $r->post_author;
+		}
+		unset( $sql, $results );
+
+		$sql = $wpdb->prepare( "
+				SELECT DISTINCT post_author FROM $wpdb->posts WHERE post_status != %s AND post_type = %s
+			", 'auto-draft', 'hb_booking' );
+
+		$results = $wpdb->get_results( $sql );
+		foreach ( $results as $r ) {
+			$users[] = $r->post_author;
+		}
+		unset( $sql, $results );
+	}
+
+	return array_unique( $users );
+}
+
+/* get user metas */
+function hbip_get_user_metas( $user_id = null ) {
+	global $wpdb;
+
+	$sql = $wpdb->prepare( "
+			SELECT meta_key, meta_value FROM $wpdb->usermeta WHERE user_id = %d
+		", absint( $user_id ) );
+
+	return $wpdb->get_results( $sql );
+}
+
+/* get room taxonomies */
+function hbip_get_room_taxonomies() {
+	$custom_terms = (array) get_terms( array( 'hb_room_type', 'hb_room_capacity' ), array( 'get' => 'all' ) );
+	return $custom_terms;
+}
+
+/* get postmeta */
+function hbip_get_term_metas( $term_id = null ) {
+	global $wpdb;
+
+	$sql = $wpdb->prepare( "
+			SELECT meta_key, meta_value FROM $wpdb->termmeta WHERE term_id = %d
+		", absint( $term_id ) );
+
+	return $wpdb->get_results( $sql );
+}
+
+/* get order items */
+function hbip_get_order_items( $order_item_id = false ) {
+	global $wpdb;
+
+	if ( $order_item_id ) {
+		$sql = "SELECT DISTINCT ID FROM $wpdb->hotel_booking_order_items";
+		return $wpdb->get_cols( $sql );
+	} else {
+		$sql = "SELECT * FROM $wpdb->hotel_booking_order_items";
+		return $wpdb->get_results( $sql );
+	}
+
+}
+
+/* get order item meta */
+function hbip_get_order_itemmetas( $order_item_id = null ) {
+	global $wpdb;
+
+	$sql = $wpdb->prepare( "
+			SELECT * FROM $wpdb->hotel_booking_order_itemmeta WHERE hotel_booking_order_item_id = %d
+		", $order_item_id );
+
+	return $wpdb->get_results( $sql );
+}
+
+/* get pricing plans */
+function hbip_get_pricings() {
+	global $wpdb;
+
+	return $wpdb->get_results( "SELECT * FROM $wpdb->hotel_booking_plans" );
+}
 /**
  * Wrap given string in XML CDATA tag.
  *
@@ -23,174 +168,3 @@ function hbip_cdata( $str ) {
 
 	return $str;
 }
-
-/**
- * Return the URL of the site
- *
- * @since 2.5.0
- *
- * @return string Site URL.
- */
-function hbip_site_url() {
-	// Multisite: the base URL.
-	if ( is_multisite() )
-		return network_home_url();
-	// WordPress (single site): the blog URL.
-	else
-		return get_bloginfo_rss( 'url' );
-}
-
-/**
- * Output a cat_name XML tag from a given category object
- *
- * @since 2.1.0
- *
- * @param object $category Category Object
- */
-function hbip_cat_name( $category ) {
-	if ( empty( $category->name ) )
-		return;
-
-	echo '<wp:cat_name>' . hbip_cdata( $category->name ) . '</wp:cat_name>';
-}
-
-/**
- * Output a category_description XML tag from a given category object
- *
- * @since 2.1.0
- *
- * @param object $category Category Object
- */
-function hbip_category_description( $category ) {
-	if ( empty( $category->description ) )
-		return;
-
-	echo '<wp:category_description>' . hbip_cdata( $category->description ) . '</wp:category_description>';
-}
-
-/**
- * Output a tag_name XML tag from a given tag object
- *
- * @since 2.3.0
- *
- * @param object $tag Tag Object
- */
-function hbip_tag_name( $tag ) {
-	if ( empty( $tag->name ) )
-		return;
-
-	echo '<wp:tag_name>' . hbip_cdata( $tag->name ) . '</wp:tag_name>';
-}
-
-/**
- * Output a tag_description XML tag from a given tag object
- *
- * @since 2.3.0
- *
- * @param object $tag Tag Object
- */
-function hbip_tag_description( $tag ) {
-	if ( empty( $tag->description ) )
-		return;
-
-	echo '<wp:tag_description>' . hbip_cdata( $tag->description ) . '</wp:tag_description>';
-}
-
-/**
- * Output a term_name XML tag from a given term object
- *
- * @since 2.9.0
- *
- * @param object $term Term Object
- */
-function hbip_term_name( $term ) {
-	if ( empty( $term->name ) )
-		return;
-
-	echo '<wp:term_name>' . hbip_cdata( $term->name ) . '</wp:term_name>';
-}
-
-/**
- * Output a term_description XML tag from a given term object
- *
- * @since 2.9.0
- *
- * @param object $term Term Object
- */
-function hbip_term_description( $term ) {
-	if ( empty( $term->description ) )
-		return;
-
-	echo '<wp:term_description>' . hbip_cdata( $term->description ) . '</wp:term_description>';
-}
-
-/**
- * Output list of authors with posts
- *
- * @since 3.1.0
- *
- * @global wpdb $wpdb WordPress database abstraction object.
- *
- * @param array $post_ids Array of post IDs to filter the query by. Optional.
- */
-function hbip_authors_list( array $post_ids = null ) {
-	global $wpdb;
-
-	if ( !empty( $post_ids ) ) {
-		$post_ids = array_map( 'absint', $post_ids );
-		$and = 'AND ID IN ( ' . implode( ', ', $post_ids ) . ')';
-	} else {
-		$and = '';
-	}
-
-	$authors = array();
-	$results = $wpdb->get_results( "SELECT DISTINCT post_author FROM $wpdb->posts WHERE post_status != 'auto-draft' $and" );
-	foreach ( (array) $results as $result )
-		$authors[] = get_userdata( $result->post_author );
-
-	$authors = array_filter( $authors );
-
-	foreach ( $authors as $author ) {
-		echo "\t<wp:author>";
-		echo '<wp:author_id>' . intval( $author->ID ) . '</wp:author_id>';
-		echo '<wp:author_login>' . hbip_cdata( $author->user_login ) . '</wp:author_login>';
-		echo '<wp:author_email>' . hbip_cdata( $author->user_email ) . '</wp:author_email>';
-		echo '<wp:author_display_name>' . hbip_cdata( $author->display_name ) . '</wp:author_display_name>';
-		echo '<wp:author_first_name>' . hbip_cdata( $author->first_name ) . '</wp:author_first_name>';
-		echo '<wp:author_last_name>' . hbip_cdata( $author->last_name ) . '</wp:author_last_name>';
-		echo "</wp:author>\n";
-	}
-}
-
-/**
- * Output list of taxonomy terms, in XML tag format, associated with a post
- *
- * @since 2.3.0
- */
-function hbip_post_taxonomy() {
-	$post = get_post();
-
-	$taxonomies = get_object_taxonomies( $post->post_type );
-	if ( empty( $taxonomies ) )
-		return;
-	$terms = wp_get_object_terms( $post->ID, $taxonomies );
-
-	foreach ( (array) $terms as $term ) {
-		echo "\t\t<category domain=\"{$term->taxonomy}\" nicename=\"{$term->slug}\">" . hbip_cdata( $term->name ) . "</category>\n";
-	}
-}
-
-/**
- *
- * @param bool   $return_me
- * @param string $meta_key
- * @return bool
- */
-function hbip_filter_postmeta( $return_me, $meta_key ) {
-	if ( '_edit_lock' == $meta_key )
-		$return_me = true;
-	return $return_me;
-}
-add_filter( 'hbip_export_skip_postmeta', 'hbip_filter_postmeta', 10, 2 );
-
-echo '<?xml version="1.0" encoding="' . get_bloginfo('charset') . "\" ?>\n";
