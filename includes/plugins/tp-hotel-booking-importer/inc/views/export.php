@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-25 13:36:54
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-25 15:20:52
+ * @Last Modified time: 2016-04-26 08:53:38
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</p>
 		<p>
 			<input type="radio" name="export" value="packages" id="packages" />
-			<label for="packages"><?php _e( 'All', 'tp-hotel-booking-importer' ) ?></label>
+			<label for="packages"><?php _e( 'Packages', 'tp-hotel-booking-importer' ) ?></label>
 		</p>
 	</fieldset>
 
