@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-25 15:01:39
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-26 15:01:37
+ * @Last Modified time: 2016-04-26 16:31:05
  */
 
 /* get rooms */
@@ -37,6 +37,20 @@ function hbip_get_books( $booking_ids = false ) {
 	return $wpdb->get_results( $sql );
 }
 
+/* get coupons */
+function hbip_get_coupons( $booking_ids = false ) {
+	global $wpdb;
+	if ( $booking_ids ) {
+		$sql = $wpdb->prepare( "
+				SELECT ID FROM {$wpdb->posts} WHERE post_type = %s AND post_status != %s
+			", 'hb_coupon', 'auto-draft' );
+	} else {
+		$sql = $wpdb->prepare( "
+				SELECT * FROM {$wpdb->posts} WHERE post_type = %s AND post_status != %s
+			", 'hb_coupon', 'auto-draft' );
+	}
+	return $wpdb->get_results( $sql );
+}
 /* get postmeta */
 function hbip_get_post_metas( $post_id = null ) {
 	global $wpdb;
@@ -151,6 +165,39 @@ function hbip_get_pricings() {
 
 	return $wpdb->get_results( "SELECT * FROM $wpdb->hotel_booking_plans" );
 }
+
+/* extra rooms */
+function hbip_get_extra_rooms() {
+	global $wpdb;
+	$sql = $wpdb->prepare("
+			SELECT * FROM $wpdb->posts
+			WHERE post_type = %s AND post_status = %s
+		", 'hb_extra_room', 'publish' );
+	return $wpdb->get_results( $sql );
+}
+
+/* extra meta */
+function hbip_get_extra_meta( $extra_id = null ) {
+	if ( ! $extra_id ) return;
+	global $wpdb;
+
+	$sql = $wpdb->prepare("
+			SELECT * FROM $wpdb->postmeta WHERE post_id = %d
+		", absint( $extra_id ) );
+
+	return $wpdb->get_results( $sql );
+}
+
+/* blocked rooms */
+function hbip_get_blocked_rooms() {
+	global $wpdb;
+	$sql = $wpdb->prepare("
+			SELECT * FROM $wpdb->posts
+			WHERE post_type = %s AND post_status = %s
+		", 'hb_blocked', 'publish' );
+	return $wpdb->get_results( $sql );
+}
+
 /**
  * Wrap given string in XML CDATA tag.
  *

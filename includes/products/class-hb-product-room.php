@@ -572,7 +572,7 @@ class HB_Product_Room_Base extends HB_Product_Abstract
         if( $attachID == false )
             $attachID = get_post_thumbnail_id( $this->post->ID );
 
-        $alt = get_post_meta($attachID, '_wp_attachment_image_alt', true );
+        $alt = get_post_meta( $attachID, '_wp_attachment_image_alt', true );
 
         $image = $this->renderImage( $attachID, $size, false, 'large' );
 
@@ -627,84 +627,6 @@ class HB_Product_Room_Base extends HB_Product_Abstract
 
         return $prices;
     }
-
-    function pricing_plans_data()
-    {
-        $room_id = $this->post->ID;
-        $capacitiyID = get_post_meta( $room_id, '_hb_room_capacity', true );
-
-        $pricing_plans = get_posts(
-            array(
-                'post_type'         => 'hb_pricing_plan',
-                'posts_per_page'    => 9999,
-                'meta_query' => array(
-                    array(
-                        'key'     => '_hb_pricing_plan_room',
-                        'value'   => $room_id
-                    )
-                )
-            )
-        );
-
-        if( $pricing_plans ) {
-            $regular_plan = array_pop($pricing_plans);
-        }else{
-            $regular_plan = null;
-        }
-
-        $results = array();
-
-        $results['week'] = hb_date_names();
-
-        $count_plants = count( $pricing_plans );
-        if( $count_plants )
-        {
-            foreach ( $pricing_plans as $ID => $post ) {
-                $end = get_post_meta($post->ID, '_hb_pricing_plan_end_timestamp', true);
-                if ( ! $end ) {
-                    $end = get_post_meta($post->ID, '_hb_pricing_plan_end', true);
-                    $end = strtotime($end);
-                }
-
-                $start = get_post_meta($post->ID, '_hb_pricing_plan_start_timestamp', true);
-                if ( ! $start ) {
-                    $start = get_post_meta($post->ID, '_hb_pricing_plan_start', true);
-                }
-                if( $end > time() )
-                {
-                    $results['data'][$post->ID] = array();
-                    $results['data'][$post->ID]['price'] = get_post_meta($post->ID, '_hb_pricing_plan_prices', true);
-                    $results['data'][$post->ID]['plans'] = array(
-                            'start'     => $start,
-                            'end'       => $end
-                        );
-                }
-            }
-        }
-
-        if( $regular_plan )
-            $results['data']['regular']['price'] = get_post_meta($regular_plan->ID, '_hb_pricing_plan_prices', true);
-        else
-            $results['data']['regular']['price'] = get_post_meta(null, '_hb_pricing_plan_prices', true);
-
-        $results['capacity']    = get_post_meta( $room_id, '_hb_room_capacity', true );
-
-        return apply_filters( 'hb_booking_pricing_plans', $results );;
-
-    }
-
-	function parse_param( $params )
-	{
-		foreach ( $params as $key => $value ) {
-			if( in_array( $key, array( 'check_in_date', 'check_out_date' ) ) )
-			{
-				if( ! is_numeric( $value ) ) {
-					$value = strtotime( $value );
-				}
-			}
-			$this->{$key} = $value;
-		}
-	}
 
     // total include tax
     function amount_include_tax() {

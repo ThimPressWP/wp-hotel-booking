@@ -344,7 +344,7 @@ if( ! function_exists( 'hotel_booking_room_title' ) )
 if( ! function_exists( 'hotel_booking_loop_room_price' ) )
 {
     function hotel_booking_loop_room_price()
-    {
+    {var_dump(1);
         hb_get_template('loop/price.php');
     }
 }

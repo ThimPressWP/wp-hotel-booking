@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-25 13:36:54
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-26 08:53:38
+ * @Last Modified time: 2016-04-26 15:48:36
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,34 +20,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<label for="all"><?php _e( 'All', 'tp-hotel-booking-importer' ) ?></label>
 		</p>
 		<p class="description"><?php _e( 'This will contain all of your rooms, bookings, coupons, users, pricing plan, block special date, additonal packages.', 'tp-hotel-booking-importer' ); ?></p>
-		<p>
-			<input type="radio" name="export" value="bookings" id="bookings" />
-			<label for="bookings"><?php _e( 'Bookings', 'tp-hotel-booking-importer' ) ?></label>
-		</p>
-		<p>
-			<input type="radio" name="export" value="rooms" id="rooms" />
-			<label for="rooms"><?php _e( 'Rooms', 'tp-hotel-booking-importer' ) ?></label>
-		</p>
-		<p>
-			<input type="radio" name="export" value="coupons" id="coupons" />
-			<label for="coupons"><?php _e( 'Coupons', 'tp-hotel-booking-importer' ) ?></label>
-		</p>
-		<p>
-			<input type="radio" name="export" value="users" id="users" />
-			<label for="users"><?php _e( 'Users', 'tp-hotel-booking-importer' ) ?></label>
-		</p>
-		<p>
-			<input type="radio" name="export" value="pricing" id="pricing" />
-			<label for="pricing"><?php _e( 'Pricing Plan', 'tp-hotel-booking-importer' ) ?></label>
-		</p>
-		<p>
-			<input type="radio" name="export" value="blocks" id="blocks" />
-			<label for="blocks"><?php _e( 'Block Date', 'tp-hotel-booking-importer' ) ?></label>
-		</p>
-		<p>
-			<input type="radio" name="export" value="packages" id="packages" />
-			<label for="packages"><?php _e( 'Packages', 'tp-hotel-booking-importer' ) ?></label>
-		</p>
 	</fieldset>
 
 	<p>
