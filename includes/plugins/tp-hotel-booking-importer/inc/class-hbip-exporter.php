@@ -148,12 +148,30 @@ class HBIP_Exporter {
 
 	<!-- rooms -->
 	<?php if ( in_array( $args['export'], array( 'all', 'rooms' ) ) && $rooms = hbip_get_rooms()  ) : foreach ( $rooms as $room ) : ?>
-		<hb:room>
+		<hb:attachment>
 		<?php foreach ( $room as $k => $v ) : ?>
 			<hb:<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:<?php echo $k ?>>
 		<?php endforeach; ?>
 		<!-- room meta -->
 		<?php if ( $metas = hbip_get_post_metas( $room->ID ) ) : foreach ( $metas as $meta ) : ?>
+			<hb:meta>
+				<hb:meta_key><?php echo hbip_cdata( $meta->meta_key ) ?></hb:meta_key>
+				<hb:meta_value><?php echo hbip_cdata( $meta->meta_value ) ?></hb:meta_value>
+			</hb:meta>
+		<?php endforeach; endif; ?>
+		<!-- end room meta -->
+		</hb:attachment>
+	<?php endforeach; endif; unset( $rooms ); endif; ?>
+	<!-- end attachments -->
+
+	<!-- rooms -->
+	<?php if ( in_array( $args['export'], array( 'all', 'rooms' ) ) && $rooms = hbip_get_attachments()  ) : foreach ( $attachments as $attachment ) : ?>
+		<hb:room>
+		<?php foreach ( $attachment as $k => $v ) : ?>
+			<hb:<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:<?php echo $k ?>>
+		<?php endforeach; ?>
+		<!-- room meta -->
+		<?php if ( $metas = hbip_get_post_metas( $attachment->ID ) ) : foreach ( $metas as $meta ) : ?>
 			<hb:meta>
 				<hb:meta_key><?php echo hbip_cdata( $meta->meta_key ) ?></hb:meta_key>
 				<hb:meta_value><?php echo hbip_cdata( $meta->meta_value ) ?></hb:meta_value>
