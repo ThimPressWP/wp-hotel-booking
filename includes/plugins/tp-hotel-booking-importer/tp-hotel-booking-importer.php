@@ -86,3 +86,7 @@ final class Hotel_Booking_Importer {
 }
 
 new Hotel_Booking_Importer();
+
+// $str = 'http://dev.foobla.com/hotel/wp-content/uploads/2013/06/demo_image-219.jpg';
+// $str = preg_match( '/[0-9]{4}\/[0-9]{2}\/[^.*]+\.[jpeg|jpg|png]*$/i', $str, $match );
+// var_dump($match); die();

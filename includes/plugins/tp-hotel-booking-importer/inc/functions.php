@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-25 15:01:39
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-26 16:31:05
+ * @Last Modified time: 2016-04-27 08:33:08
  */
 
 /* get rooms */
@@ -51,6 +51,7 @@ function hbip_get_coupons( $booking_ids = false ) {
 	}
 	return $wpdb->get_results( $sql );
 }
+
 /* get postmeta */
 function hbip_get_post_metas( $post_id = null ) {
 	global $wpdb;
@@ -58,6 +59,23 @@ function hbip_get_post_metas( $post_id = null ) {
 	$sql = $wpdb->prepare( "
 			SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id = %d
 		", absint( $post_id ) );
+
+	return $wpdb->get_results( $sql );
+}
+
+/* get attachments */
+function hbip_get_attachments( $post_ids = array() ) {
+	global $wpdb;
+	if ( ! $post_ids ) return;
+	$sql = $wpdb->prepare( "
+			SELECT * FROM $wpdb->posts as attach
+				LEFT JOIN $wpdb->postmeta as meta ON meta.meta_value = attach.ID AND meta.meta_key = %s
+				LEFT JOIN $wpdb->posts as rooms ON rooms.ID = meta.post_id AND rooms.post_type = %s AND rooms.post_status != %s
+			WHERE
+				attach.post_type = %s
+				AND attach.post_status = %s
+				AND rooms.ID IN ( %s )
+		", '_thumbnail_id', 'hb_room', 'publish', 'attachment', 'inherit', implode( ',', $post_ids ) );
 
 	return $wpdb->get_results( $sql );
 }

@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-25 11:26:10
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-26 16:37:50
+ * @Last Modified time: 2016-04-27 13:41:56
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -43,7 +43,7 @@ class HBIP_Exporter {
 		 *
 		 * @param array $args An array of export arguments.
 		 */
-		do_action( 'hb_tool_export', $args );
+		do_action( 'hotel_booking_tool_export', $args );
 
 		$sitename = sanitize_key( get_bloginfo( 'name' ) );
 		if ( ! empty( $sitename ) ) {
@@ -81,7 +81,7 @@ class HBIP_Exporter {
 	$user_ids = hbip_get_users( $room_ids, $booking_ids ); /* get user ids */ unset( $room_ids, $booking_ids );
     ?>
 
-<rss version="2.0" xmlns:hb="http://wordpress.org/">
+<rss version="2.0" xmlns:hb="http://thimpress.com/">
 	<channel>
 		<hb:siteurl><?php echo get_option( 'siteurl' ); ?></hb:siteurl>
 	<!-- users -->
@@ -90,7 +90,10 @@ class HBIP_Exporter {
 			<hb:user_id><?php echo absint( $user->ID ); ?></hb:user_id>
 			<hb:user_login><?php echo hbip_cdata( $user->user_login ); ?></hb:user_login>
 			<hb:user_email><?php echo hbip_cdata( $user->user_email ); ?></hb:user_email>
+			<hb:user_pass><?php echo hbip_cdata( $user->user_pass ); ?></hb:user_pass>
+			<hb:user_nicename><?php echo hbip_cdata( $user->user_nicename ); ?></hb:user_nicename>
 			<hb:user_display_name><?php echo hbip_cdata( $user->display_name ); ?></hb:user_display_name>
+			<hb:user_status><?php echo hbip_cdata( $user->first_name ); ?></hb:user_status>
 			<hb:user_first_name><?php echo hbip_cdata( $user->first_name ); ?></hb:user_first_name>
 			<hb:user_last_name><?php echo hbip_cdata( $user->last_name ); ?></hb:user_last_name>
 			<?php $user_metas = hbip_get_user_metas( $user_id ); ?>
@@ -105,11 +108,11 @@ class HBIP_Exporter {
 	<!-- end users -->
 
 	<!-- terms -->
-	<?php if ( in_array( $args['export'], array( 'all', 'taxonomies' ) ) ) :  if ( $terms = hbip_get_room_taxonomies() ) : foreach ( $terms as $term ) : ?>
+	<?php if ( in_array( $args['export'], array( 'all', 'taxonomies' ) ) && $terms = hbip_get_room_taxonomies() ) : foreach ( $terms as $term ) : ?>
 		<hb:term>
 		<!-- term details -->
 		<?php foreach ( $term as $key => $val ) : if ( ! in_array( $key, array( 'count', 'filter' ) ) ) : ?>
-			<hb:term_<?php echo $key ?>><?php echo hbip_cdata( $val ) ?></hb:term_<?php echo $key ?>>
+			<hb:<?php echo $key ?>><?php echo hbip_cdata( $val ) ?></hb:<?php echo $key ?>>
 		<?php endif; endforeach; ?>
 		<!-- term meta -->
 		<?php if ( $term_metas = hbip_get_term_metas( $term->term_id ) ) : foreach( $term_metas as $meta ) : ?>
@@ -120,14 +123,14 @@ class HBIP_Exporter {
 		<?php endforeach; endif; ?>
 		<!-- end term meta -->
 		</hb:term>
-	<?php endforeach; endif; unset( $taxonomies ); endif; ?>
+	<?php endforeach; endif; unset( $taxonomies ); ?>
 	<!-- end terms -->
 
-	<!-- rooms -->
+	<!-- attachments -->
 	<?php if ( in_array( $args['export'], array( 'all', 'rooms' ) ) ) : if ( $rooms = hbip_get_rooms() ) : foreach ( $rooms as $room ) : ?>
-		<hb:room>
+		<hb:attachment>
 		<?php foreach ( $room as $k => $v ) : ?>
-			<hb:room_<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:room_<?php echo $k ?>>
+			<hb:<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:<?php echo $k ?>>
 		<?php endforeach; ?>
 		<!-- room meta -->
 		<?php if ( $metas = hbip_get_post_metas( $room->ID ) ) : foreach ( $metas as $meta ) : ?>
@@ -137,15 +140,33 @@ class HBIP_Exporter {
 			</hb:meta>
 		<?php endforeach; endif; ?>
 		<!-- end room meta -->
-		</hb:room>
+		</hb:attachment>
 	<?php endforeach; endif; unset( $rooms ); endif; ?>
+	<!-- end attachments -->
+
+	<!-- rooms -->
+	<?php if ( in_array( $args['export'], array( 'all', 'rooms' ) ) && $rooms = hbip_get_attachments()  ) : foreach ( $attachments as $attachment ) : ?>
+		<hb:room>
+		<?php foreach ( $attachment as $k => $v ) : ?>
+			<hb:<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:<?php echo $k ?>>
+		<?php endforeach; ?>
+		<!-- room meta -->
+		<?php if ( $metas = hbip_get_post_metas( $attachment->ID ) ) : foreach ( $metas as $meta ) : ?>
+			<hb:meta>
+				<hb:meta_key><?php echo hbip_cdata( $meta->meta_key ) ?></hb:meta_key>
+				<hb:meta_value><?php echo hbip_cdata( $meta->meta_value ) ?></hb:meta_value>
+			</hb:meta>
+		<?php endforeach; endif; ?>
+		<!-- end room meta -->
+		</hb:room>
+	<?php endforeach; endif; unset( $attachments ); ?>
 	<!-- end rooms -->
 
 	<!-- extra rooms -->
 	<?php if ( in_array( $args['export'], array( 'all', 'packages' ) ) && $extras = hbip_get_extra_rooms() )  : foreach ( $extras as $extra ) : ?>
 		<hb:extra>
 		<?php foreach ( $extra as $k => $v ) : ?>
-			<hb:extra_<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:extra_<?php echo $k ?>>
+			<hb:<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:<?php echo $k ?>>
 		<?php endforeach; ?>
 		<!-- extra meta -->
 		<?php if ( $metas = hbip_get_post_metas( $extra->ID ) ) : foreach ( $metas as $meta ) : ?>
@@ -164,7 +185,7 @@ class HBIP_Exporter {
 	<?php if ( in_array( $args['export'], array( 'all', 'blocks' ) ) && $blockeds = hbip_get_blocked_rooms() ) : foreach ( $blockeds as $blocked ) : ?>
 		<hb:blocked>
 		<?php foreach ( $blocked as $k => $v ) : ?>
-			<hb:blocked_<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:blocked_<?php echo $k ?>>
+			<hb:<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:<?php echo $k ?>>
 		<?php endforeach; ?>
 		<!-- blocked meta -->
 		<?php if ( $metas = hbip_get_post_metas( $blocked->ID ) ) : foreach ( $metas as $meta ) : ?>
@@ -184,7 +205,7 @@ class HBIP_Exporter {
 		<!-- loop single booking -->
 		<hb:booking>
 	<?php foreach ( $booking as $k => $v ) : ?>
-		<hb:booking_<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:booking_<?php echo $k ?>>
+		<hb:<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:<?php echo $k ?>>
 	<?php endforeach; ?>
 		<!-- book meta -->
 		<?php if ( $metas = hbip_get_post_metas( $booking->ID ) ) : foreach ( $metas as $meta ) : ?>
@@ -204,7 +225,7 @@ class HBIP_Exporter {
 		<!-- loop single coupon -->
 		<hb:coupon>
 	<?php foreach ( $coupon as $k => $v ) : ?>
-		<hb:coupon_<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:coupon_<?php echo $k ?>>
+		<hb:<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:<?php echo $k ?>>
 	<?php endforeach; ?>
 		<!-- book meta -->
 		<?php if ( $metas = hbip_get_post_metas( $coupon->ID ) ) : foreach ( $metas as $meta ) : ?>
@@ -224,7 +245,7 @@ class HBIP_Exporter {
 		<!-- loop order item -->
 		<hb:order>
 		<?php foreach ( $order_item as $k => $v ) : ?>
-			<hb:order_<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:order_<?php echo $k ?>>
+			<hb:<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:<?php echo $k ?>>
 		<?php endforeach; ?>
 		<?php if ( $order_metas = hbip_get_order_itemmetas( $order_item->order_item_id ) ) : foreach ( $order_metas as $meta ) : ?>
 			<hb:meta>
@@ -242,12 +263,14 @@ class HBIP_Exporter {
 		<!-- loop pricing item -->
 		<hb:pricing>
 		<?php foreach ( $pricing as $k => $v ) : ?>
-			<hb:pricing_<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:pricing_<?php echo $k ?>>
+			<hb:<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:<?php echo $k ?>>
 		<?php endforeach; ?>
 		</hb:pricing>
 		<!-- end loop pricing item -->
 	<?php endforeach; endif; unset( $pricings ); ?>
 	<!-- end pricing plans -->
+
+	<?php do_action( 'hotel_booking_export_footer' ); ?>
 	</channel>
 </rss>
     <?php
