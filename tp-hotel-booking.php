@@ -271,7 +271,7 @@ class TP_Hotel_Booking {
     public function enqueue_assets(){
         $dependencies = array(
             'jquery',
-            // 'jquery-ui-sortable',
+            'jquery-ui-sortable',
             'jquery-ui-datepicker'
         );
 

@@ -152,11 +152,11 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base{
             ! empty( $_GET['hb-order-pay-nonce'] ) &&
             wp_verify_nonce( $_GET['hb-order-pay-nonce'], 'hb-order-pay-nonce' ) )
         {
-            $tpl = 'order-pay.php';
+            $tpl = 'checkout/order-pay.php';
         }
         else
         {
-            $tpl = 'checkout.php';
+            $tpl = 'checkout/checkout.php';
         }
         return $tpl;
     }

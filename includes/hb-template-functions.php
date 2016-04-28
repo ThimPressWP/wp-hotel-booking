@@ -484,13 +484,13 @@ if ( ! function_exists( 'hb_setup_shortcode_page_content' ) ){
             return $content;
         }
 
-        if ( hb_get_page_id( 'cart' ) === $page_id ) {
+        if ( hb_get_page_id( 'cart' ) == $page_id ) {
             $content = '[' . apply_filters( 'hotel_booking_cart_shortcode_tag', 'hotel_booking_cart' ) . ']';
-        } else if ( hb_get_page_id( 'checkout' ) === $page_id ) {
+        } else if ( hb_get_page_id( 'checkout' ) == $page_id ) {
             $content = '[' . apply_filters( 'hotel_booking_checkout_shortcode_tag', 'hotel_booking_checkout' ) . ']';
-        } else if ( hb_get_page_id( 'search' ) === $page_id ) {
+        } else if ( hb_get_page_id( 'search' ) == $page_id ) {
             $content = '[' . apply_filters( 'hotel_booking_search_shortcode_tag', 'hotel_booking' ) . ']';
-        } else if ( hb_get_page_id( 'account' ) === $page_id ) {
+        } else if ( hb_get_page_id( 'account' ) == $page_id ) {
             $content = '[' . apply_filters( 'hotel_booking_account_shortcode_tag', 'hotel_booking_account' ) . ']';
         }
         return do_shortcode( $content );

@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-25 11:26:10
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-28 08:09:48
+ * @Last Modified time: 2016-04-28 15:40:30
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -148,7 +148,7 @@ class HBIP_Exporter {
 
 	<!-- rooms -->
 	<?php if ( in_array( $args['export'], array( 'all', 'rooms' ) ) && $rooms = hbip_get_rooms()  ) : foreach ( $rooms as $room ) : ?>
-		<hb:attachment>
+		<hb:room>
 		<?php foreach ( $room as $k => $v ) : ?>
 			<hb:<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:<?php echo $k ?>>
 		<?php endforeach; ?>
@@ -160,26 +160,8 @@ class HBIP_Exporter {
 			</hb:meta>
 		<?php endforeach; endif; ?>
 		<!-- end room meta -->
-		</hb:attachment>
-	<?php endforeach; endif; unset( $rooms ) ?>
-	<!-- end attachments -->
-
-	<!-- rooms -->
-	<?php if ( in_array( $args['export'], array( 'all', 'rooms' ) ) && $rooms = hbip_get_attachments()  ) : foreach ( $attachments as $attachment ) : ?>
-		<hb:room>
-		<?php foreach ( $attachment as $k => $v ) : ?>
-			<hb:<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:<?php echo $k ?>>
-		<?php endforeach; ?>
-		<!-- room meta -->
-		<?php if ( $metas = hbip_get_post_metas( $attachment->ID ) ) : foreach ( $metas as $meta ) : ?>
-			<hb:meta>
-				<hb:meta_key><?php echo hbip_cdata( $meta->meta_key ) ?></hb:meta_key>
-				<hb:meta_value><?php echo hbip_cdata( $meta->meta_value ) ?></hb:meta_value>
-			</hb:meta>
-		<?php endforeach; endif; ?>
-		<!-- end room meta -->
 		</hb:room>
-	<?php endforeach; endif; unset( $rooms ); ?>
+	<?php endforeach; endif; unset( $rooms ) ?>
 	<!-- end rooms -->
 
 	<!-- extra rooms -->
