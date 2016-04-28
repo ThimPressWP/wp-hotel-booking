@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-25 11:26:10
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-27 17:30:04
+ * @Last Modified time: 2016-04-28 08:09:48
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -161,7 +161,7 @@ class HBIP_Exporter {
 		<?php endforeach; endif; ?>
 		<!-- end room meta -->
 		</hb:attachment>
-	<?php endforeach; endif; unset( $rooms ); endif; ?>
+	<?php endforeach; endif; unset( $rooms ) ?>
 	<!-- end attachments -->
 
 	<!-- rooms -->
