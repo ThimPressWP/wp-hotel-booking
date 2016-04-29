@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-25 11:26:10
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-29 11:25:47
+ * @Last Modified time: 2016-04-29 16:13:34
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -130,8 +130,15 @@ class HBIP_Exporter {
 	<!-- attachments -->
 	<?php if ( in_array( $args['export'], array( 'all', 'rooms' ) ) && $attachments = hbip_get_attachments() ) : foreach ( $attachments as $attachment ) : ?>
 		<hb:attachment>
-		<?php foreach ( $attachment as $k => $v ) : ?>
-			<hb:<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:<?php echo $k ?>>
+		<?php $upload_dir = wp_upload_dir(); foreach ( $attachment as $k => $v ) : ?>
+			<?php if ( $k === 'guid' && strpos( $v, site_url() ) === false && preg_match( '/[0-9]{4}\/[0-9]{2}\/[^.*]+\.[jpeg|jpg|png]*$/i', $v, $match ) ) : ?>
+				<?php
+					$guid = trailingslashit( $upload_dir['baseurl'] ) . $match[0];
+				?>
+				<hb:<?php echo $k ?>><?php echo hbip_cdata( $guid ) ?></hb:<?php echo $k ?>>
+			<?php else: ?>
+				<hb:<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:<?php echo $k ?>>
+			<?php endif; ?>
 		<?php endforeach; ?>
 		<!-- attach meta -->
 		<?php if ( $metas = hbip_get_post_metas( $attachment->ID ) ) : foreach ( $metas as $meta ) : ?>
@@ -146,7 +153,7 @@ class HBIP_Exporter {
 	<!-- end attachments -->
 
 	<!-- rooms -->
-	<?php if ( in_array( $args['export'], array( 'all', 'rooms' ) ) && $rooms = hbip_get_rooms()  ) : foreach ( $rooms as $room ) : ?>
+	<?php if ( in_array( $args['export'], array( 'all', 'rooms' ) ) && $rooms = hbip_get_rooms() ) : foreach ( $rooms as $room ) : ?>
 		<hb:room>
 		<?php foreach ( $room as $k => $v ) : ?>
 			<hb:<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:<?php echo $k ?>>
@@ -160,7 +167,7 @@ class HBIP_Exporter {
 		<?php endforeach; endif; ?>
 		<!-- end room meta -->
 		<!-- room taxonomy -->
-		<?php if ( $terms = wp_get_post_terms( $room->ID, 'hb_room_type' ) ) : foreach ( $terms as $term ) : ?>
+		<?php if ( $terms = wp_get_post_terms( $room->ID, array( 'hb_room_type' ) ) ) : foreach ( $terms as $term ) : ?>
 			<hb:term><?php echo hbip_cdata( $term->term_id ); ?></hb:term>
 		<?php endforeach; endif; ?>
 		<!-- end room taxonomy -->
@@ -170,7 +177,7 @@ class HBIP_Exporter {
 	<!-- end rooms -->
 
 	<!-- extra rooms -->
-	<?php if ( in_array( $args['export'], array( 'all', 'packages' ) ) && $extras = hbip_get_extra_rooms() )  : foreach ( $extras as $extra ) : ?>
+	<?php if ( in_array( $args['export'], array( 'all', 'packages' ) ) && $extras = hbip_get_extra_rooms() ) : foreach ( $extras as $extra ) : ?>
 		<hb:extra>
 		<?php foreach ( $extra as $k => $v ) : ?>
 			<hb:<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:<?php echo $k ?>>
@@ -183,10 +190,9 @@ class HBIP_Exporter {
 			</hb:meta>
 		<?php endforeach; endif; ?>
 		<!-- end extra meta -->
-		<!-- end extra rooms -->
 		</hb:extra>
 	<?php endforeach; endif; unset( $extras ); ?>
-	<!-- end rooms -->
+	<!-- end extra rooms -->
 
 	<!-- blocked rooms -->
 	<?php if ( in_array( $args['export'], array( 'all', 'blocks' ) ) && $blockeds = hbip_get_blocked_rooms() ) : foreach ( $blockeds as $blocked ) : ?>

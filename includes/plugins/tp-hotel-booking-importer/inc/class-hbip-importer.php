@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-25 11:25:39
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-29 13:33:45
+ * @Last Modified time: 2016-04-29 14:58:23
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -37,6 +37,8 @@ class HBIP_Importer {
 
 	public function dispatch() {
 
+		$this->header();
+
 		$step = 0;
 		if ( isset( $_GET['step'] ) ) {
 			$step = sanitize_text_field( $_GET['step'] );
@@ -59,6 +61,23 @@ class HBIP_Importer {
 					}
 				break;
 		}
+
+		$this->footer();
+	}
+
+	public function header() {
+		?>
+			<div class="wrap">
+				<h2><?php _e( 'Hotel Booking Import', 'tp-hotel-booking-importer' ); ?></h2>
+		<?php
+	}
+
+	public function footer() {
+		?>
+
+			</div>
+
+		<?php
 	}
 
 	/* form */
@@ -792,9 +811,11 @@ class HBIP_Importer {
 					if ( isset( $room['meta'] ) && $room['meta'] ) {
 						foreach ( $room['meta'] as $meta_key => $value ) {
 							/* room type */
-							if ( in_array( $meta_key, array( '_hb_room_type', '_hb_room_capacity' ) ) ) {
+							if ( $meta_key === '_hb_room_capacity' ) {
 								$room_type_id = isset( $this->remaps['terms'], $this->remaps['terms'][ $value ] ) ? $this->remaps['terms'][ $value ] : $value;
-								update_post_meta( $post_id, '_hb_room_type', $room_type_id );
+								// update_post_meta( $post_id, '_hb_room_type', $room_type_id );
+								update_post_meta( $post_id, 'hb_room_capacity', $room_type_id );
+								wp_set_object_terms( $post_id, array( $room_type_id ), 'hb_room_capacity' );
 							} else if ( $meta_key === '_hb_gallery' ) {
 								$value = maybe_unserialize( $value );
 								$new = array();
@@ -1013,7 +1034,7 @@ class HBIP_Importer {
 	 */
 	private function import_error( $message = '', $die = true ) {
 		if ( $die ) {
-			echo '<p><strong>' . __( 'Sorry, there has been an error.', 'tp-hotel-booking-importer' ) . '</strong><br />';
+			echo '<p class="description"><strong>' . __( 'Sorry, there has been an error.', 'tp-hotel-booking-importer' ) . '</strong><br />';
 		}
 		if ( $message ) {
 			echo esc_html( $message );
