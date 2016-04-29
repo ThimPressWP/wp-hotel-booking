@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-25 11:25:39
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-29 10:19:23
+ * @Last Modified time: 2016-04-29 13:33:45
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -475,7 +475,7 @@ class HBIP_Importer {
 					/* process attachment */
 					$post_id = $this->process_attachment( $attach, $attach['guid'] );
 					if ( is_wp_error( $post_id ) ) {
-						$this->import_error( $post_id->get_error_message() );
+						$this->import_error( $post_id->get_error_message(), false );
 					}
 					$this->remap[ 'attachments' ][ $attach['ID'] ] = $post_id;
 				}
@@ -557,7 +557,14 @@ class HBIP_Importer {
 
 		// fetch the remote url and write it to the placeholder file
 		// $http = new WP_Http(); echo $url; die();
-		$headers = wp_get_http( $url, $upload['file'] );
+		// $headers = wp_get_http( $url, $upload['file'] );
+		/* since 4.4 wp */
+		$response = wp_remote_get( $url, array(
+			'stream' => true,
+			'filename' => $upload['file']
+		) );
+
+		$headers = wp_remote_retrieve_headers( $response );
 
 		// request failed
 		if ( ! $headers ) {
@@ -565,10 +572,13 @@ class HBIP_Importer {
 			return new WP_Error( 'import_file_error', __('Remote server did not respond', 'tp-hotel-booking-importer') );
 		}
 
+		/* respone status */
+		$status = wp_remote_retrieve_response_code( $response );
+
 		// make sure the fetch was successful
-		if ( $headers['response'] != '200' ) {
+		if ( $status != '200' ) {
 			@unlink( $upload['file'] );
-			return new WP_Error( 'import_file_error', sprintf( __('Remote server returned error response %1$d %2$s', 'tp-hotel-booking-importer'), esc_html($headers['response']), get_status_header_desc($headers['response']) ) );
+			return new WP_Error( 'import_file_error', sprintf( __('Remote server returned error response %1$d %2$s', 'tp-hotel-booking-importer'), esc_html( $status ), get_status_header_desc( $status ) ) );
 		}
 
 		$filesize = filesize( $upload['file'] );
@@ -986,8 +996,8 @@ class HBIP_Importer {
 				if ( ! isset( $pricing['room_id'] ) ) continue;
 				$room_id = isset( $this->remaps[ 'rooms' ], $this->remaps[ 'rooms' ][$pricing['room_id']] ) ? $this->remaps[ 'rooms' ][$pricing['room_id']] : $pricing['room_id'];
 				$plan_id = hb_room_set_pricing_plan(array(
-						'start_time'		=> $pricing['start_time'] ? $pricing['start_time'] : null,
-						'end_time'			=> $pricing['end_time'] ? $pricing['end_time'] : null,
+						'start_time'		=> $pricing['start_time'] ? strtotime( $pricing['start_time'] ) : null,
+						'end_time'			=> $pricing['end_time'] ? strtotime( $pricing['end_time'] ) : null,
 						'pricing'			=> maybe_unserialize( $pricing['pricing'] ),
 						'room_id'			=> $room_id
 					));
@@ -1001,12 +1011,18 @@ class HBIP_Importer {
 	 * Show import error and quit.
 	 * @param  string $message
 	 */
-	private function import_error( $message = '' ) {
-		echo '<p><strong>' . __( 'Sorry, there has been an error.', 'tp-hotel-booking-importer' ) . '</strong><br />';
+	private function import_error( $message = '', $die = true ) {
+		if ( $die ) {
+			echo '<p><strong>' . __( 'Sorry, there has been an error.', 'tp-hotel-booking-importer' ) . '</strong><br />';
+		}
 		if ( $message ) {
 			echo esc_html( $message );
 		}
-		echo '</p>'; die();
+		if ( $die ) {
+			echo '</p>'; die();
+		} else {
+			echo '</p>';
+		}
 	}
 
 	/* completed message */
