@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-25 15:01:39
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-27 17:39:17
+ * @Last Modified time: 2016-04-29 11:26:51
  */
 
 /* get rooms */
@@ -67,18 +67,17 @@ function hbip_get_post_metas( $post_id = null ) {
 }
 
 /* get attachments */
-function hbip_get_attachments( $post_ids = array() ) {
+function hbip_get_attachments() {
 	global $wpdb;
-	if ( ! $post_ids ) return;
 	$sql = $wpdb->prepare( "
 			SELECT attach.* FROM $wpdb->posts as attach
-				LEFT JOIN $wpdb->postmeta as meta ON meta.meta_value = attach.ID AND meta.meta_key = %s
-				LEFT JOIN $wpdb->posts as rooms ON rooms.ID = meta.post_id AND rooms.post_type = %s AND rooms.post_status = %s
+				INNER JOIN $wpdb->postmeta as meta ON meta.meta_value = attach.ID AND meta.meta_key = %s
+				INNER JOIN $wpdb->posts as rooms ON rooms.ID = meta.post_id AND rooms.post_type = %s AND rooms.post_status = %s
 			WHERE
 				attach.post_type = %s
 				AND attach.post_status = %s
-				AND rooms.ID IN ( %s )
-		", '_thumbnail_id', 'hb_room', 'publish', 'attachment', 'inherit', implode( ',', $post_ids ) );
+				GROUP BY attach.ID
+		", '_thumbnail_id', 'hb_room', 'publish', 'attachment', 'inherit' );
 
 	return $wpdb->get_results( $sql );
 }

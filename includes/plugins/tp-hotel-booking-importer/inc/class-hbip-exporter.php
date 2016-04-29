@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-25 11:26:10
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-29 08:38:57
+ * @Last Modified time: 2016-04-29 11:25:47
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -79,7 +79,6 @@ class HBIP_Exporter {
 	$room_ids = hbip_get_rooms( true ); /* get room ids */
 	$booking_ids = hbip_get_books( true ); /* get booking ids */
 	$user_ids = hbip_get_users( $room_ids, $booking_ids ); /* get user ids */
-	$attachments = hbip_get_attachments( (array) $room_ids );
 	unset( $room_ids, $booking_ids );
     ?>
 
@@ -129,7 +128,7 @@ class HBIP_Exporter {
 	<!-- end terms -->
 
 	<!-- attachments -->
-	<?php if ( in_array( $args['export'], array( 'all', 'rooms' ) ) ) : foreach ( $attachments as $attachment ) : ?>
+	<?php if ( in_array( $args['export'], array( 'all', 'rooms' ) ) && $attachments = hbip_get_attachments() ) : foreach ( $attachments as $attachment ) : ?>
 		<hb:attachment>
 		<?php foreach ( $attachment as $k => $v ) : ?>
 			<hb:<?php echo $k ?>><?php echo hbip_cdata( $v ) ?></hb:<?php echo $k ?>>

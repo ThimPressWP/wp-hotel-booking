@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-25 11:25:39
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-29 10:19:23
+ * @Last Modified time: 2016-04-29 10:40:40
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -475,7 +475,7 @@ class HBIP_Importer {
 					/* process attachment */
 					$post_id = $this->process_attachment( $attach, $attach['guid'] );
 					if ( is_wp_error( $post_id ) ) {
-						$this->import_error( $post_id->get_error_message() );
+						$this->import_error( $post_id->get_error_message(), false );
 					}
 					$this->remap[ 'attachments' ][ $attach['ID'] ] = $post_id;
 				}
@@ -1001,12 +1001,18 @@ class HBIP_Importer {
 	 * Show import error and quit.
 	 * @param  string $message
 	 */
-	private function import_error( $message = '' ) {
-		echo '<p><strong>' . __( 'Sorry, there has been an error.', 'tp-hotel-booking-importer' ) . '</strong><br />';
+	private function import_error( $message = '', $die = true ) {
+		if ( $die ) {
+			echo '<p><strong>' . __( 'Sorry, there has been an error.', 'tp-hotel-booking-importer' ) . '</strong><br />';
+		}
 		if ( $message ) {
 			echo esc_html( $message );
 		}
-		echo '</p>'; die();
+		if ( $die ) {
+			echo '</p>'; die();
+		} else {
+			echo '</p>';
+		}
 	}
 
 	/* completed message */
