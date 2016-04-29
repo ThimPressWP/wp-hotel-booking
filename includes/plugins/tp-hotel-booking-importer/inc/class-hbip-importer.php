@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-25 11:25:39
  * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-29 09:33:29
+ * @Last Modified time: 2016-04-29 10:19:23
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -124,6 +124,9 @@ class HBIP_Importer {
 
 		/* extras */
 		$this->import_extras();
+
+		/* blocked */
+		$this->import_blocked();
 
 		/* rooms */
 		$this->import_rooms();
@@ -466,14 +469,15 @@ class HBIP_Importer {
 				$sql = $wpdb->prepare( "
 						SELECT post_id FROM $wpdb->postmeta WHERE meta_key = %s AND meta_value = %s LIMIT 1
 					", '_wp_attached_file', $attach_file );
-				if ( $attach_id = $wpdb->get_var( $sql ) ) {
-					$this->remap[ 'attachments' ][] = $attach_id;
+				if ( $post_id = $wpdb->get_var( $sql ) ) {
+					$this->remap[ 'attachments' ][ $attach['ID'] ] = $post_id;
 				} else if ( isset( $attach['guid'] ) ) {
 					/* process attachment */
 					$post_id = $this->process_attachment( $attach, $attach['guid'] );
 					if ( is_wp_error( $post_id ) ) {
 						$this->import_error( $post_id->get_error_message() );
 					}
+					$this->remap[ 'attachments' ][ $attach['ID'] ] = $post_id;
 				}
 			}
 		}
@@ -689,6 +693,56 @@ class HBIP_Importer {
 		unset( $this->extras );
 	}
 
+	/* import blocked */
+	public function import_blocked() {
+		if ( ! $this->blockeds ) {
+			return;
+		}
+		$chunk = array_chunk( $this->blockeds, 20 );
+		foreach ( $chunk as $blockeds ) {
+			foreach ( $blockeds as $block ) {
+				$post_id = get_posts( array (
+				        'name'   		=> $block['post_name'],
+				        'post_type'   	=> $block['post_type'],
+				        'numberposts' 	=> 1,
+				        'fields' 		=> 'ids'
+				    ) );
+
+				if ( $post_id ) {
+					$post_id = array_shift( $post_id );
+					$this->remaps[ 'blockeds' ][ $block['ID'] ] = $post_id;
+				} else {
+					$author = isset( $this->remaps[ 'users' ][ $block['post_author'] ] ) ? $this->remaps[ 'users' ][ $block['post_author'] ] : get_current_user_id();
+					$postdata = array(
+						'post_author' => $author, 'post_date' => $block['post_date'],
+						'post_date_gmt' => $block['post_date_gmt'], 'post_content' => $block['post_content'],
+						'post_excerpt' => $block['post_excerpt'], 'post_title' => $block['post_title'],
+						'post_status' => $block['post_status'], 'post_name' => $block['post_name'],
+						'comment_status' => $block['comment_status'],
+						'post_type' => $block['post_type']
+					);
+
+					/* insert new record */
+					$post_id = wp_insert_post( $postdata );
+					if ( is_wp_error( $post_id ) ) {
+						$this->import_error( $post_id->get_error_message() );
+					} else {
+						$this->remaps['blockeds'][ $block['ID'] ] = $post_id;
+					}
+
+					/* block meta */
+					if ( isset( $block['meta'] ) && $block['meta'] ) {
+						foreach ( $block['meta'] as $meta_key => $value ) {
+							update_post_meta( $post_id, sanitize_key( $meta_key ), $value );
+						}
+					}
+				}
+			}
+		}
+
+		unset( $this->blockeds );
+	}
+
 	/* import rooms */
 	public function import_rooms() {
 		$this->remaps['rooms'] = array();
@@ -752,6 +806,9 @@ class HBIP_Importer {
 									}
 								}
 								update_post_meta( $post_id, '_hb_room_extra', $new );
+							} else if ( $meta_key === 'hb_blocked_id' ) {
+								$block_id = isset( $this->remaps['blockeds'], $this->remaps['blockeds'][ $value ] ) ? $this->remaps['blockeds'][ $value ] : $value;
+								update_post_meta( $post_id, 'hb_blocked_id', $block_id );
 							} else {
 								update_post_meta( $post_id, sanitize_key( $meta_key ), sanitize_text_field( $value ) );
 							}

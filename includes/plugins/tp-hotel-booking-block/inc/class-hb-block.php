@@ -64,6 +64,7 @@ class Hotel_Booking_Block
 			'has_archive'        => true,
 			'hierarchical'       => false,
 			'menu_position'      => null,
+            'can_export'         => false,
 			'supports'           => array( 'title' )
 		);
 

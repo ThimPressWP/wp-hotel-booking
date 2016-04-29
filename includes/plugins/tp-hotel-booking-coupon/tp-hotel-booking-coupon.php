@@ -166,6 +166,7 @@ class TP_Hotel_Booking_Coupon
             'show_in_admin_bar'  => true,
             'show_in_nav_menus'  => true,
             'supports'           => array( 'title' ),
+            'can_export'         => false,
             'hierarchical'       => false
         );
         $args = apply_filters( 'hotel_booking_register_post_type_coupon_arg', $args );
