@@ -57,7 +57,7 @@ class HB_Extra_Post_Type
 			'exclude_from_search' => true,
 			'has_archive'         => true,
 			'query_var'           => true,
-			'can_export'          => false,
+			// 'can_export'          => false,
 			'rewrite'             => true,
 			'capability_type'     => 'post',
 			'supports'            => array(

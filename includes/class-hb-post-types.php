@@ -447,7 +447,7 @@ class HB_Post_Types{
             'supports'           => array( 'title', 'editor', 'thumbnail', 'revisions', 'comments', 'author' ),
             'hierarchical'       => false,
             'rewrite'            => array( 'slug' => _x( 'rooms', 'URL slug', 'tp-hotel-booking' ), 'with_front' => false, 'feeds' => true ),
-            'can_export'         => false,
+            // 'can_export'         => false,
             'menu_position'      => 3,
             'menu_icon'          => 'dashicons-admin-home'
         );
@@ -486,7 +486,7 @@ class HB_Post_Types{
             'show_in_nav_menus'  => true,
             'supports'           => array( 'title' ),
             'hierarchical'       => false,
-            'can_export'         => false,
+            // 'can_export'         => false,
             'capabilities'       => array(
                 // 'create_posts'  => 'do_not_allow'
             )

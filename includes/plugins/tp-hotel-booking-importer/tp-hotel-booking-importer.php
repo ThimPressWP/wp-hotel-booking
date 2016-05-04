@@ -51,6 +51,9 @@ final class Hotel_Booking_Importer {
 				require_once HOTEL_BOOKING_IMPORTER_PATH . 'inc/class-hbip-admin-menu.php';
 				require_once HOTEL_BOOKING_IMPORTER_PATH . 'inc/class-hbip-importer.php';
 				require_once HOTEL_BOOKING_IMPORTER_PATH . 'inc/class-hbip-exporter.php';
+
+				/* thim-framework hook */
+				add_action( 'thim_framework_after_process_posts', array( $this, 'thim_framework_before_import' ), 10, 2 );
 			}
 		}
 
@@ -81,6 +84,20 @@ final class Hotel_Booking_Importer {
 				<p><?php _e( 'The <strong>TP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>TP Hotel Booking Importer</strong> add-on'); ?></p>
 			</div>
 		<?php
+	}
+
+	function thim_framework_before_import( $processed_posts ) {
+		if ( ! isset( $_SESSION['thimpress-demodata-dir'] ) ) {
+			return;
+		}
+
+		$file = $_SESSION['thimpress-demodata-dir'] . '/data/tp-hotel-booking/pricing.xml';
+
+		if ( file_exists( $file ) ) {
+			HBIP_Importer::instance()->parse( $file );
+			HBIP_Importer::instance()->import_pricings( null, $processed_posts );
+		}
+
 	}
 
 }

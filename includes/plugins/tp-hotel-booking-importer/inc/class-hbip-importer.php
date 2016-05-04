@@ -2,8 +2,8 @@
 /**
  * @Author: ducnvtt
  * @Date:   2016-04-25 11:25:39
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-29 14:58:23
+ * @Last Modified by:   someone
+ * @Last Modified time: 2016-05-04 14:51:55
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,6 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class HBIP_Importer {
+
+	static $instance = null;
 
 	/* id import */
 	protected $id = null;
@@ -440,8 +442,15 @@ class HBIP_Importer {
 	}
 
 	/* import users */
-	public function import_users( ) {
+	public function import_users( $users = null ) {
 		$this->remaps['users'] = array();
+		if ( $users ) {
+			$this->users = $users;
+		}
+
+		if ( ! $this->users ) {
+			return;
+		}
 		/* insert 20 records */
 		foreach ( $this->users as $user ) {
 			if ( isset( $user['user_email'] ) ) {
@@ -477,8 +486,16 @@ class HBIP_Importer {
 	}
 
 	/* import attachments */
-	public function import_attachments( ) {
+	public function import_attachments( $attachments = null ) {
 		$this->remap[ 'attachments' ] = array();
+
+		if ( $attachments ) {
+			$this->attachments = $attachments;
+		}
+
+		if ( $this->attachments ) {
+			return;
+		}
 		$chunk = array_chunk( $this->attachments, 20 );
 		if ( ! $chunk ) return $this->remap[ 'attachments' ];
 		global $wpdb;
@@ -723,7 +740,11 @@ class HBIP_Importer {
 	}
 
 	/* import blocked */
-	public function import_blocked() {
+	public function import_blocked( $blockeds = null ) {
+		if ( $blockeds ) {
+			$this->blockeds = $blockeds;
+		}
+
 		if ( ! $this->blockeds ) {
 			return;
 		}
@@ -773,8 +794,16 @@ class HBIP_Importer {
 	}
 
 	/* import rooms */
-	public function import_rooms() {
+	public function import_rooms( $rooms = null ) {
 		$this->remaps['rooms'] = array();
+
+		if ( $rooms ) {
+			$this->rooms = $rooms;
+		}
+
+		if ( ! $this->rooms ) {
+			return;
+		}
 
 		$chunk = array_chunk( $this->rooms, 20 );
 		foreach ( $chunk as $rooms ) {
@@ -862,8 +891,12 @@ class HBIP_Importer {
 	}
 
 	/* import coupons */
-	public function import_coupons() {
+	public function import_coupons( $coupons = null ) {
 		$this->remaps['coupons'] = array();
+
+		if ( $coupons ) {
+			$this->coupons = $coupons;
+		}
 
 		if ( ! $this->coupons ) {
 			return;
@@ -914,8 +947,12 @@ class HBIP_Importer {
 	}
 
 	/* import bookings */
-	public function import_bookings() {
+	public function import_bookings( $bookings = null ) {
 		$this->remaps['bookings'] = array();
+
+		if ( $bookings ) {
+			$this->bookings = $bookings;
+		}
 
 		if ( ! $this->bookings ) {
 			return;
@@ -972,8 +1009,12 @@ class HBIP_Importer {
 	}
 
 	/* import orders */
-	public function import_orders() {
+	public function import_orders( $orders = null ) {
 		$this->remaps['orders'] = array();
+
+		if ( $orders ) {
+			$this->orders = $orders;
+		}
 
 		if ( ! $this->orders ) {
 			return;
@@ -1009,8 +1050,15 @@ class HBIP_Importer {
 	}
 
 	/* import pricings */
-	public function import_pricings() {
+	public function import_pricings( $pricings = null, $room_maps = null ) {
 		$this->remap['pricing'] = array();
+
+		if ( $pricings ) {
+			$this->pricings = $pricings;
+		}
+		if ( $room_maps ) {
+			$this->remaps[ 'rooms' ] = $room_maps;
+		}
 		$chunk = array_chunk( $this->pricings, 20 );
 		foreach ( $chunk as $pricings ) {
 			foreach ( $pricings as $pricing ) {
@@ -1051,12 +1099,21 @@ class HBIP_Importer {
 		printf( __( '<p>Import completed.</p>', 'tp-hotel-booking-importer' ) );
 	}
 
+	public static function instance() {
+
+		if ( ! self::$instance ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+
 }
 
-new HBIP_Importer();
+HBIP_Importer::instance();
 
 add_action( 'admin_init', 'hbip_importer' );
 function hbip_importer() {
-	$GLOBALS['hbip_importer'] = new HBIP_Importer();
+	$GLOBALS['hbip_importer'] = HBIP_Importer::instance();
 	register_importer( 'hbip_importer', 'Hotel Booking', __( 'This will contain all of your <strong> rooms, bookings, coupons, users, pricing plan, block special date and additonal packages</strong>.', 'tp-hotel-booking-importer'), array( $GLOBALS['hbip_importer'], 'dispatch' ) );
 }
