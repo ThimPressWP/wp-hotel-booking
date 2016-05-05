@@ -31,6 +31,9 @@ class HB_Room_Extra extends HB_Room
         {
             foreach( $extras as $k => $post_id )
             {
+                if ( ! get_post( $post_id) ) {
+                    continue;
+                }
                 $package = HB_Extra_Package::instance( $post_id );
                 $ext = new stdClass();
                 $ext->ID                    = (int)$post_id;
@@ -53,7 +56,7 @@ class HB_Room_Extra extends HB_Room
             ) );
 
         foreach ( $default as $key => $post ) {
-           if( ! array_key_exists( $post->ID, $results ) )
+           if( ! array_key_exists( $post->ID, $results ) && get_post( $post->ID ) )
            {
                 $package = HB_Extra_Package::instance( $post->ID );
                 $ext = new stdClass();
