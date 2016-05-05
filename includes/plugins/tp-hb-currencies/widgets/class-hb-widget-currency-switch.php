@@ -72,7 +72,9 @@ class HB_Widget_Currency_Switch extends WP_Widget
         <script type="text/javascript">
             (function($){
                 $(document).ready(function(){
-                    $('#tp_hb_currencies_select_<?php echo esc_js( $id ) ?>').tokenize();
+                    if ( typeof $.fn.tokenize !== 'undefined' ) {
+                        $('#tp_hb_currencies_select_<?php echo esc_js( $id ) ?>').tokenize();
+                    }
                 });
             })(jQuery);
         </script>
