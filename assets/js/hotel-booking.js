@@ -887,7 +887,7 @@
 
 		hb_single_tab_details.hide();
 		var tabActive = hb_single_details_tab.find('a.active').attr('href');
-		hb_single_details_content.find(tabActive).show();
+		hb_single_details_content.find(tabActive).fadeIn();
 
 		hb_single_details_tab.find('a').on('click', function (event) {
 			event.preventDefault();
@@ -895,7 +895,7 @@
 			$(this).addClass('active');
 			var tab_id = $(this).attr('href');
 			hb_single_tab_details.hide();
-			hb_single_details_content.find(tab_id).show();
+			hb_single_details_content.find(tab_id).fadeIn();
 			return false;
 		});
 
