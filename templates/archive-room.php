@@ -39,12 +39,12 @@ get_header(); ?>
 
 			<?php
 				/**
-				 * hotel_booking_before_shop_loop hook
+				 * hotel_booking_before_room_loop hook
 				 *
 				 * @hooked hotel_booking_result_count - 20
 				 * @hooked hotel_booking_catalog_ordering - 30
 				 */
-				do_action( 'hotel_booking_before_shop_loop' );
+				do_action( 'hotel_booking_before_room_loop' );
 			?>
 
 			<?php hotel_booking_room_loop_start(); ?>
@@ -61,11 +61,11 @@ get_header(); ?>
 
 			<?php
 				/**
-				 * hotel_booking_after_shop_loop hook
+				 * hotel_booking_after_room_loop hook
 				 *
 				 * @hooked hotel_booking_pagination - 10
 				 */
-				do_action( 'hotel_booking_after_shop_loop' );
+				do_action( 'hotel_booking_after_room_loop' );
 			?>
 
 		<?php endif; ?>

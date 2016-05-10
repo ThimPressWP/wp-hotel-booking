@@ -2,8 +2,8 @@
 /**
  * @Author: ducnvtt
  * @Date:   2016-04-12 13:08:14
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-29 13:32:29
+ * @Last Modified by:   someone
+ * @Last Modified time: 2016-05-10 15:43:55
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -157,7 +157,7 @@ if ( ! function_exists( 'hb_room_get_regular_plan' ) ) {
 		}
 
 		$plans = hb_room_get_pricing_plans( $room_id );
-		$regular_plan = $selected_plan = null;
+		$regular_plan = null;
         if( $plans ){
             foreach( $plans as $plan ){
                 if ( ! $plan->start && ! $plan->end ) {
@@ -189,5 +189,23 @@ if ( ! function_exists( 'hb_room_remove_pricing' ) ) {
 
 		do_action( 'hb_room_remove_pricing', $plan_id );
 		return $plan_id;
+	}
+}
+
+if ( ! function_exists( 'hotel_booking_print_pricing_json' ) ) {
+	function hotel_booking_print_pricing_json( $room_id = null ) {
+		var_dump(hb_room_get_pricing_plans( $room_id ) );
+		$json = array();
+		if ( ! $room_id ) {
+			return $json;
+		}
+
+		$regular_plan = hb_room_get_regular_plan( $room_id );
+		if ( ! $regular_plan ) {
+			return $json;
+		}
+
+		// if (  )
+		return array();
 	}
 }

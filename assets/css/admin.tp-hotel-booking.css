@@ -815,3 +815,13 @@ th.column-room_type{
     z-index: 999999!important;
 }
 /***END DIALOG***/
+
+/* FULL CALENDAR */
+.tp-hotel-booking-fullcalendar.fc td,
+.tp-hotel-booking-fullcalendar.fc th{
+    font-size: 12px;
+}
+.tp-hotel-booking-fullcalendar.fc-ltr .fc-basic-view .fc-day-number{
+    text-align: center;
+    font-size: 10px;
+}

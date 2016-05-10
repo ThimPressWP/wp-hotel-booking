@@ -193,6 +193,7 @@ class TP_Hotel_Booking {
         $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-account.php' );
         $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-checkout.php' );
         $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-lastest-reviews.php' );
+        $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-rooms.php' );
         $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-mini-cart.php' );
         $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-slider.php' );
         $this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking.php' );
@@ -281,9 +282,12 @@ class TP_Hotel_Booking {
         wp_register_script( 'tp-admin-hotel-booking-select2', $this->plugin_url( 'assets/js/select2.min.js' ) );
         if( is_admin() ){
             $dependencies = array_merge( $dependencies, array( 'backbone' ) );
-            wp_register_style( 'tp-admin-hotel-booking', $this->plugin_url( 'assets/css/admin.tp-hotel-booking.min.css' ) );
+            wp_register_style( 'tp-admin-hotel-booking', $this->plugin_url( 'assets/css/admin.tp-hotel-booking.css' ) );
             wp_register_script( 'tp-admin-hotel-booking', $this->plugin_url( 'assets/js/admin.hotel-booking.min.js' ), $dependencies );
             wp_localize_script( 'tp-admin-hotel-booking', 'hotel_booking_i18n', hb_admin_i18n() );
+            wp_register_script( 'tp-admin-hotel-booking-moment', $this->plugin_url( 'assets/js/moment.min.js' ), $dependencies );
+            wp_register_script( 'tp-admin-hotel-booking-fullcalendar', $this->plugin_url( 'assets/js/fullcalendar.min.js' ), $dependencies );
+            wp_register_style( 'tp-admin-hotel-booking-fullcalendar', $this->plugin_url( 'assets/css/fullcalendar.min.css' ) );
         } else {
             wp_register_style( 'tp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.min.css' ) );
             wp_register_script( 'tp-hotel-booking', $this->plugin_url( 'assets/js/hotel-booking.min.js' ), $dependencies );
@@ -306,6 +310,11 @@ class TP_Hotel_Booking {
             wp_enqueue_script( 'jquery' );
             wp_enqueue_script( 'jquery-ui-core' );
             wp_enqueue_script( 'jquery-ui-autocomplete' );
+
+            /* fullcalendar */
+            wp_enqueue_script( 'tp-admin-hotel-booking-moment' );
+            wp_enqueue_style( 'tp-admin-hotel-booking-fullcalendar' );
+            wp_enqueue_script( 'tp-admin-hotel-booking-fullcalendar' );
         } else {
             wp_enqueue_style( 'tp-hotel-booking' );
             wp_enqueue_script( 'tp-hotel-booking' );
@@ -361,3 +370,39 @@ class TP_Hotel_Booking {
 }
 
 $GLOBALS['tp_hotel_booking'] = TP_Hotel_Booking::instance();
+// add_action( 'init', function(){
+//     flush_rewrite_rules();die();
+// } );
+// $endpoits = array(
+//         'view-book'     => 'view-book'
+//     );
+
+// add_action( 'init', function(){
+//     global $endpoits;
+//     foreach ( $endpoits as $key => $var ) {
+//         add_rewrite_endpoint( $var, EP_PERMALINK | EP_PAGES );
+//     }
+// } );
+
+// add_filter( 'query_vars', function( $vars ){
+//     global $endpoits;
+//     foreach ( $endpoits as $k => $v ) {
+//         $vars[] = $k;
+//     }
+
+//     return $vars;
+// } );
+// add_action( 'parse_request', function(){
+//     global $endpoits;
+//     global $wp;
+
+//     // Map query vars to their keys, or get them if endpoints are not supported
+//     foreach ( $endpoits as $key => $var ) {
+//         if ( isset( $_GET[ $var ] ) ) {
+//             $wp->query_vars[ $key ] = $_GET[ $var ];
+//         } elseif ( isset( $wp->query_vars[ $var ] ) ) {
+//             $wp->query_vars[ $key ] = $wp->query_vars[ $var ];
+//         }
+//     }
+
+// }, 0 );

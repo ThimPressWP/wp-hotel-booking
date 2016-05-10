@@ -349,9 +349,9 @@ if( ! function_exists( 'hotel_booking_loop_room_price' ) )
     }
 }
 
-if( ! function_exists( 'hotel_booking_after_shop_loop' ) )
+if( ! function_exists( 'hotel_booking_after_room_loop' ) )
 {
-    function hotel_booking_after_shop_loop()
+    function hotel_booking_after_room_loop()
     {
         hb_get_template('pagination.php');
     }

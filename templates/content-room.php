@@ -15,19 +15,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
-<?php
-	/**
-	 * hotel_booking_before_loop_room hook
-	 *
-	 */
-	 do_action( 'hotel_booking_before_loop_room' );
-
-	 if ( post_password_required() ) {
-	 	echo get_the_password_form();
-	 	return;
-	 }
-?>
-
 <li id="room-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 	<?php
