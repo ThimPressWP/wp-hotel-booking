@@ -817,11 +817,38 @@ th.column-room_type{
 /***END DIALOG***/
 
 /* FULL CALENDAR */
-.tp-hotel-booking-fullcalendar.fc td,
-.tp-hotel-booking-fullcalendar.fc th{
+.hotel-booking-fullcalendar.fc td,
+.hotel-booking-fullcalendar.fc th{
     font-size: 12px;
 }
-.tp-hotel-booking-fullcalendar.fc-ltr .fc-basic-view .fc-day-number{
+.hotel-booking-fullcalendar.fc-ltr .fc-basic-view .fc-day-number{
     text-align: center;
     font-size: 10px;
+}
+.hotel-booking-fullcalendar-month{
+    float: left;
+}
+.hotel-booking-fullcalendar-toolbar{
+    overflow: hidden;
+}
+.hotel-booking-fullcalendar-toolbar .fc-right{
+    float: right;
+}
+.hotel-booking-fullcalendar-toolbar .fc-button-group{
+    margin: 10px 0;
+}
+.hotel-booking-fullcalendar-toolbar .fc-button{
+    height: 2.1em;
+    line-height: 2.1em;
+}
+.hotel-booking-fullcalendar-toolbar .fc-button:hover{
+    cursor: pointer;
+    color: #333;
+    text-decoration: none;
+    background-color: #e6e6e6;
+    background-position: 0 -15px;
+    -webkit-transition: background-position .1s linear;
+    -moz-transition: background-position .1s linear;
+    -o-transition: background-position .1s linear;
+    transition: background-position .1s linear;
 }

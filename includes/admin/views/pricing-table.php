@@ -144,8 +144,6 @@ $count_plants = count( $plans );
     </form>
 </div>
 
-<div class="tp-hotel-booking-fullcalendar" data-events="<?php echo esc_attr( json_encode( hotel_booking_print_pricing_json( $room_id ) ) ) ?>"></div>
-
 <script type="text/html" id="tmpl-hb-pricing-table">
     <div class="hb-pricing-table">
         <h3 class="hb-pricing-table-title">
@@ -187,67 +185,20 @@ $count_plants = count( $plans );
         </div>
     </div>
 </script>
-<?php //var_dump(hotel_booking_print_pricing_json( $room_id )) ?>
-<script type="text/javascript">
-    (function($){
 
-        // $( document ).ready( function(){
-        //     var hb_fullcalendar = $( '.tp-hotel-booking-fullcalendar' );
-
-        //     for ( var i = 0; i < hb_fullcalendar.length; i++ ) {
-        //         var _fullcalendar = $( hb_fullcalendar[i] ),
-        //             _data_events = _fullcalendar.attr( 'data-events' );
-
-        //             if ( typeof _data_events === 'undefined' ) {
-        //                 _data_events = [];
-        //             } else {
-        //                 _data_events = JSON.stringify( _data_events );
-        //             }
-        //             _fullcalendar.fullCalendar({
-        //                 header:{
-        //                     left: '',
-        //                     center: 'title',
-        //                     right: 'prev,next',
-        //                 },
-        //                 ignoreTimezone: false,
-        //                 handleWindowResize: true,
-        //                 editable:false,
-        //                 defaultView:'singleRowMonth',
-        //                 // events: [
-        //                 //     {
-        //                 //         title: 'All Day Event',
-        //                 //         start: '1970-01-01',
-        //                 //         end: '9999-12-31'
-        //                 //     }
-        //                 // ],
-        //                 events: function( start,end,callback ){
-        //                     var event = [];
-        //                     event.push({
-        //                         title: 'Garten',
-        //                         start: '1970-01-01',
-        //                         allday: true
-        //                     });
-
-        //                     // callback(event);
-        //                 },
-        //                 eventAfterRender: function( event, element, view ) {
-        //                     console.debug( event, element, view );
-        //                 },
-        //                 viewRender: function( view, element ) {
-        //                     // _fullcalendar.fullCalendar({
-        //                     //     events: [
-        //                     //         {
-        //                     //             title: 'aaa',
-        //                     //             start: '1970-01-01',
-        //                     //             end: '9999-12-31'
-        //                     //         }
-        //                     //     ]
-        //                     // });
-        //                 }
-        //             });
-        //     }
-
-        // });
-
-    })(jQuery);
-</script>
+<?php if ( $room_id ) : ?>
+    <h2 class="hotel-booking-fullcalendar-month"><?php printf( '%s', date_i18n( 'F, Y', time() ) ) ?></h2>
+    <div class="hotel-booking-fullcalendar-toolbar">
+        <div class="fc-right">
+            <div class="fc-button-group">
+                <button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-left" data-month="<?php echo date( 'm/d/Y', strtotime( '-1 month' , time() ) ) ?>" data-room=<?php echo esc_attr( $room_id ) ?>>
+                    <span class="fc-icon fc-icon-left-single-arrow"></span>
+                </button>
+                <button type="button" class="fc-next-button fc-button fc-state-default fc-corner-right" data-month="<?php echo date( 'm/d/Y', strtotime( '+1 month' , time() ) ) ?>" data-room=<?php echo esc_attr( $room_id ) ?>>
+                    <span class="fc-icon fc-icon-right-single-arrow"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="hotel-booking-fullcalendar" data-events="<?php echo esc_attr( hotel_booking_print_pricing_json( $room_id, date( 'm/d/Y' ) ) ) ?>"></div>
+<?php endif; ?>

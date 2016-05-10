@@ -156,6 +156,99 @@
             init_pricing_plan(this);
         });
 
+        /* full calendar */
+        function fullcalendar_init() {
+            var hb_fullcalendar = $( '.hotel-booking-fullcalendar' );
+
+            for ( var i = 0; i < hb_fullcalendar.length; i++ ) {
+                var _fullcalendar = $( hb_fullcalendar[i] ),
+                    _data_events = _fullcalendar.attr( 'data-events' );
+
+                    if ( typeof _data_events === 'undefined' ) {
+                        _data_events = [];
+                    }
+
+                    _fullcalendar.fullCalendar({
+                        header:{
+                            left: '',
+                            right: '',
+                        },
+                        ignoreTimezone: false,
+                        handleWindowResize: true,
+                        editable:false,
+                        defaultView: 'singleRowMonth',
+                        events: function(start, end, timezone, callback) {
+                            callback( JSON.parse( _data_events ) );
+                        }
+                    });
+            }
+        }
+
+        var date = new Date();
+        var fullcalendar_initdates = [];
+        fullcalendar_initdates.push( date.getYear() + '-' + date.getMonth() );
+        fullcalendar_init(); // init fullcalendar
+        $( document ).on( 'click', '.hotel-booking-fullcalendar-toolbar .fc-button', function( event ){
+            event.preventDefault();
+            var _self = $( this ),
+                _calendar = $( '.hotel-booking-fullcalendar' ),
+                _room_id = _self.attr( 'data-room' ),
+                _date = _self.attr( 'data-month' );
+
+            $.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                data: {
+                    action: 'hotel_booking_load_other_full_calendar',
+                    nonce: hotel_settings.nonce,
+                    room_id: _room_id,
+                    date: _date
+                },
+                beforeSend: function() {
+                    _self.append( '<i class="fa fa-spinner fa-spin"></i>' );
+                }
+            }).done( function( res ){
+                _self.find( '.fa' ).remove();
+                if ( res.status === true ) {
+                    // $( '.hotel-booking-fullcalendar' ).fullCalendar( 'removeEvents' );
+                    var events = JSON.parse( res.events );
+
+                    try {
+                        var date = new Date( events[0].start ),
+                            month_string = date.getYear() + '-' + date.getMonth();
+                        if ( fullcalendar_initdates.indexOf( month_string ) == -1 ) {
+
+                            fullcalendar_initdates.push( month_string );
+                            for ( var i = 0; i < events.length; i++ ) {
+                                var event = events[i];
+                                _calendar.fullCalendar( 'renderEvent', event, true );
+                            }
+                        }
+                    } catch( error ) {
+                        console.debug( error );
+                    }
+                    $( '.hotel-booking-fullcalendar' ).fullCalendar( 'refetchEvents' );
+
+                    if ( _self.hasClass( 'fc-next-button' ) ) {
+                        _calendar.fullCalendar( 'next' );
+                    } else {
+                        _calendar.fullCalendar( 'prev' );
+                    }
+
+                    $( '.hotel-booking-fullcalendar-month' ).text( res.month_name );
+                    $( '.hotel-booking-fullcalendar-toolbar .fc-next-button' ).attr( 'data-month', res.next );
+                    $( '.hotel-booking-fullcalendar-toolbar .fc-prev-button' ).attr( 'data-month', res.prev );
+                }
+
+            }).fail( function(){
+                _self.find( '.fa' ).remove();
+            });
+
+            return false;
+        } );
+
+        /* end fullcalendar */
+
         // var $tabClicked = $('.hb-admin-sub-tab li a').click(function(e){
         //     e.preventDefault();
         //     var id = $(this).attr('href'),

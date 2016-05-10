@@ -2,14 +2,14 @@
 /**
  * @Author: ducnvtt
  * @Date:   2016-04-14 10:37:32
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-14 14:51:43
+ * @Last Modified by:   someone
+ * @Last Modified time: 2016-05-11 16:42:47
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
-
+var_dump(1); die();
 // email heading
 hb_get_template( 'emails/email-header.php',
 	array(

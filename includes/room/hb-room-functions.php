@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-12 13:08:14
  * @Last Modified by:   someone
- * @Last Modified time: 2016-05-10 15:43:55
+ * @Last Modified time: 2016-05-11 16:58:52
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -193,19 +193,28 @@ if ( ! function_exists( 'hb_room_remove_pricing' ) ) {
 }
 
 if ( ! function_exists( 'hotel_booking_print_pricing_json' ) ) {
-	function hotel_booking_print_pricing_json( $room_id = null ) {
-		var_dump(hb_room_get_pricing_plans( $room_id ) );
+	function hotel_booking_print_pricing_json( $room_id = null, $date = null ) {
+		$start = date( 'm/01/Y', strtotime( $date ) );
+		$end = date( 'm/t/Y', strtotime( $date ) );
+
 		$json = array();
-		if ( ! $room_id ) {
+		if ( ! $room_id || ! $date ) {
 			return $json;
 		}
 
-		$regular_plan = hb_room_get_regular_plan( $room_id );
-		if ( ! $regular_plan ) {
-			return $json;
+		$month_day = date( 't', strtotime( $end ) );
+		$room = HB_Room::instance( $room_id );
+		for ( $i = 0; $i < $month_day; $i++ ) {
+			$day = strtotime( $start ) + $i * 24 * HOUR_IN_SECONDS;
+			$price = $room->get_price( $day, false );
+
+			$json[] = array(
+					'title'		=> $price ? floatval( $price ) : '0',
+					'start'		=> date( 'Y-m-d', $day ),
+					'end'		=> date( 'Y-m-d', strtotime( '+1 day' , $day ) )
+				);
 		}
 
-		// if (  )
-		return array();
+		return json_encode( $json );
 	}
 }

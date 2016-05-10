@@ -39,7 +39,8 @@ class HB_Ajax {
 			'admin_remove_order_item'		=> false,
 			'admin_remove_order_items'		=> false,
 			'add_coupon_to_order'			=> false,
-			'remove_coupon_on_order'		=> false
+			'remove_coupon_on_order'		=> false,
+			'load_other_full_calendar'		=> false
 		);
 
 		foreach ( $ajax_actions as $action => $priv ) {
@@ -645,6 +646,34 @@ class HB_Ajax {
 				'status'		=> true,
 				'html'			=> $html
 			) );
+	}
+
+	static function load_other_full_calendar() {
+		check_ajax_referer( 'hb_booking_nonce_action', 'nonce' );
+
+		if ( ! isset( $_POST['room_id'] ) ) {
+			wp_send_json( array(
+				'status'		=> fasle,
+				'message'		=> __( 'Room is not exists.', 'tp-hotel-booking' )
+			) );
+		}
+
+		$room_id = absint( $_POST['room_id'] );
+		if ( ! isset( $_POST['date'] ) ) {
+			wp_send_json( array(
+				'status'		=> fasle,
+				'message'		=> __( 'Date is not exists.', 'tp-hotel-booking' )
+			) );
+		}
+		$date = sanitize_text_field( $_POST['date'] );
+
+		wp_send_json( array(
+			'status'	=> true,
+			'events'	=> hotel_booking_print_pricing_json( $room_id, date( 'm/d/Y', strtotime( $date ) ) ),
+			'next'		=> date( 'm/d/Y', strtotime( '+1 month', strtotime( $date ) ) ),
+			'prev'		=> date( 'm/d/Y', strtotime( '-1 month', strtotime( $date ) ) ),
+			'month_name'	=> date_i18n( 'F, Y', strtotime( $date ) )
+		) );
 	}
 
 }
