@@ -135,7 +135,10 @@ function hb_dropdown_rooms( $args = array( 'selected' => '' ) ) {
 	$emptySelected             = new stdClass;
 	$emptySelected->ID         = '';
 	$emptySelected->post_title = __( '---Select Room---', 'tp-hotel-booking' );
+	/* filter rooms dropdown list */
+	$posts = apply_filters( 'hotel_booking_rooms_dropdown', $posts );
 	$posts                     = array_merge( array( $emptySelected ), $posts );
+
 	foreach ( $posts as $key => $post ) {
 		$output .= '<option value="' . $post->ID . '"' . ( $post->ID == $args['selected'] ? ' selected' : '' ) . '>' . $post->post_title . '</option>';
 	}

@@ -26,8 +26,16 @@ if( isset( $field['multiple'] ) &&  $field['multiple'] === true )
     $name = $field['name'] . '[]';
 }
 
+$field_attr = '';
+if( $field['attr'] ){
+    if( is_array( $field['attr'] ) ){
+        $field_attr = join( " ", $field['attr'] );
+    }else{
+        $field_attr = $field['attr'];
+    }
+}
 ?>
-<select name="<?php echo esc_attr( $name ); ?>"<?php echo ( $multiple ) ? ' multiple' : '' ?>>
+<select name="<?php echo esc_attr( $name ); ?>"<?php echo ( $multiple ) ? ' multiple' : '' ?> <?php printf( '%s', $field_attr ) ?>>
     <?php if( ! empty( $field['options'] ) ) foreach( $field['options'] as $k => $option ){?>
     <?php
         if( ! is_object( $option ) && ! is_array( $option ) ){
