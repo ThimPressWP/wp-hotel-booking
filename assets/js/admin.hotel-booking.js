@@ -265,6 +265,7 @@
 
         // $.datepicker.setDefaults({ dateFormat: hotel_booking_i18n.date_time_format });
         // $.datepicker.setDefaults({ dateFormat: 'mm/dd/yy' });
+        console.debug( 1 );
         $(".datetime-picker-metabox").datepicker({
             dateFormat      : hotel_booking_i18n.date_time_format,
             monthNames      : hotel_booking_i18n.monthNames,

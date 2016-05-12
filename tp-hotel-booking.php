@@ -370,6 +370,7 @@ class TP_Hotel_Booking {
 }
 
 $GLOBALS['tp_hotel_booking'] = TP_Hotel_Booking::instance();
+
 // add_action( 'init', function(){
 //     flush_rewrite_rules();die();
 // } );
