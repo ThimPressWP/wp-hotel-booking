@@ -4,7 +4,7 @@
  * Plugin URI: http://thimpress.com/
  * Description: Support book room without search room
  * Author: ThimPress
- * Version: 0.9
+ * Version: 0.9.1
  * Text Domain: tp-hotel-booking-room
  * Domain Path: /languages/
  */

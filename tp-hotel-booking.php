@@ -282,8 +282,8 @@ class TP_Hotel_Booking {
         wp_register_script( 'tp-admin-hotel-booking-select2', $this->plugin_url( 'assets/js/select2.min.js' ) );
         if( is_admin() ){
             $dependencies = array_merge( $dependencies, array( 'backbone' ) );
-            wp_register_style( 'tp-admin-hotel-booking', $this->plugin_url( 'assets/css/admin.tp-hotel-booking.css' ) );
-            wp_register_script( 'tp-admin-hotel-booking', $this->plugin_url( 'assets/js/admin.hotel-booking.js' ), $dependencies );
+            wp_register_style( 'tp-admin-hotel-booking', $this->plugin_url( 'assets/css/admin.tp-hotel-booking.min.css' ) );
+            wp_register_script( 'tp-admin-hotel-booking', $this->plugin_url( 'assets/js/admin.hotel-booking.min.js' ), $dependencies );
             wp_localize_script( 'tp-admin-hotel-booking', 'hotel_booking_i18n', hb_admin_i18n() );
             wp_register_script( 'tp-admin-hotel-booking-moment', $this->plugin_url( 'assets/js/moment.min.js' ), $dependencies );
             wp_register_script( 'tp-admin-hotel-booking-fullcalendar', $this->plugin_url( 'assets/js/fullcalendar.min.js' ), $dependencies );
