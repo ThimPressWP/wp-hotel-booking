@@ -61,10 +61,14 @@ class HB_Cart
         $this->booking_sessions = HB_Sessions::instance( 'thimpress_hotel_booking_info_' . HB_BLOG_ID . $appfix, true );
 
         // refresh cart session
-    	$this->refresh();
+    	add_action( 'wp_loaded', array( $this, 'wp_loaded' ) );
 
         // update init hook
         add_action( 'init', array($this, 'hotel_booking_cart_update') );
+    }
+
+    public function wp_loaded() {
+        $this->refresh();
     }
 
     function __get( $key )
@@ -627,7 +631,6 @@ class HB_Cart
         if ( $this->is_empty ) {
             return new WP_Error( 'hotel_booking_transaction_error', __( 'Your cart is empty.', 'tp-hotel-booking' ) );
         }
-
 
         // initialize object
         $transaction = new stdClass();

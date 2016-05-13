@@ -782,12 +782,15 @@
 					}
 
 					// redirect if url is ! undefined
-					if( typeof response.url !== 'undefined' )
-					{
+					if( typeof response.url !== 'undefined' ) {
 						window.location.href = response.url;
-					}
-					else if ( response.sig ) {
-						window.location.href = action.replace(/\?.*/, '') + '?hotel-booking-params=' + response.sig;
+					} else if ( response.sig ) {
+						if ( action.indexOf( '?' ) === -1 ) {
+							action += '?hotel-booking-params=' + response.sig;
+						} else {
+							action += '&hotel-booking-params=' + response.sig;
+						}
+						window.location.href = action;
 					}
 					// button.removeClass('hb_loading');
 				}

@@ -1139,7 +1139,7 @@ function hb_get_user_payment_method( $slug ) {
 
 function hb_get_page_id( $name ) {
 	$settings = hb_settings();
-	return $settings->get( "{$name}_page_id" );
+	return apply_filters( 'hb_get_page_id', $settings->get( "{$name}_page_id" ) );
 }
 
 function hb_get_page_permalink( $name ) {
@@ -1701,4 +1701,44 @@ if ( ! function_exists( 'hb_get_date_format' ) ) {
 
 	    return $dateFormat;
 	}
+}
+
+if ( ! function_exists( 'hb_get_pages' ) ) {
+
+	function hb_get_pages() {
+		global $wpdb;
+		$sql = $wpdb->prepare("
+				SELECT ID, post_title FROM $wpdb->posts
+				WHERE $wpdb->posts.post_type = %s AND $wpdb->posts.post_status = %s
+				GROUP BY $wpdb->posts.post_name
+			", 'page', 'publish');
+		$pages = $wpdb->get_results( $sql );
+		return apply_filters( 'hb_get_pages', $pages );
+	}
+
+}
+
+if ( ! function_exists( 'hb_dropdown_pages' ) ) {
+
+	function hb_dropdown_pages( $args = array() ) {
+		$args = wp_parse_args( $args, array(
+					'show_option_none'  => __( '---Select page---', 'tp-hotel-booking' ),
+                    'option_none_value' => 0,
+                    'name'      => '',
+                    'selected'  => ''
+			) );
+
+		$args = apply_filters( 'hb_dropdown_pages_args', $args );
+		$pages = hb_get_pages();
+
+		$html = array();
+		$html[] = '<select name="' . esc_attr( $args['name'] ) . '" >';
+		$html[] = '<option value="">'. esc_html( $args['show_option_none'] ) .'</option>';
+		foreach ( $pages as $page ) {
+			$html[] = '<option value="' . esc_attr( $page->ID ) . '"'. selected( $args['selected'], $page->ID, false ) .'>'. esc_html( $page->post_title ) .'</option>';
+		}
+		$html[] = '</select>';
+		echo implode( '', $html );
+	}
+
 }

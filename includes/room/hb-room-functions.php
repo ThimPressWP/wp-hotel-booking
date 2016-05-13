@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-04-12 13:08:14
  * @Last Modified by:   someone
- * @Last Modified time: 2016-05-11 16:58:52
+ * @Last Modified time: 2016-05-13 14:55:29
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -46,7 +46,7 @@ if ( ! function_exists( 'hb_room_get_pricing_plans' ) ) {
 			$plans[ $plan->plan_id ] = $pl;
 		}
 
-		return apply_filters( 'hb_room_get_pricing_plans', $plans );
+		return apply_filters( 'hb_room_get_pricing_plans', $plans, $room_id );
 	}
 }
 
