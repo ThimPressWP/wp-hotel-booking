@@ -3,7 +3,7 @@
  * @Author: ducnvtt
  * @Date:   2016-03-29 15:07:16
  * @Last Modified by:   someone
- * @Last Modified time: 2016-05-10 13:12:58
+ * @Last Modified time: 2016-05-13 11:31:15
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -280,7 +280,7 @@ class HB_Admin_Settings {
 								<td class="hb-form-field hb-form-field-<?php echo esc_attr( $field['type'] ) ?>">
 									<?php if ( isset( $field['id'] ) ) : ?>
 										<?php
-											wp_dropdown_pages(
+											hb_dropdown_pages(
 							                    array(
 							                        'show_option_none'  => __( '---Select page---', 'tp-hotel-booking' ),
 							                        'option_none_value' => 0,

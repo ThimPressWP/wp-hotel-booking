@@ -114,7 +114,7 @@ class HB_Product_Room_Base extends HB_Product_Abstract
                 }
                 break;
             case 'name':
-                $return = get_the_title( $this->post->ID );
+                $return = get_the_title( $this->ID );
                 break;
             case 'capacity':
                 $term_id = get_post_meta( $this->post->ID, '_hb_room_capacity', true );
@@ -124,7 +124,7 @@ class HB_Product_Room_Base extends HB_Product_Abstract
                 }
                 break;
             case 'capacity_title':
-                $term_id = get_post_meta( $this->post->ID, '_hb_room_capacity', true );
+                $term_id = get_post_meta( $this->ID, '_hb_room_capacity', true );
                 if( $key == 'capacity_title' ) {
                     $term = get_term( $term_id, 'hb_room_capacity' );
                     if( isset( $term->name ) ) {
@@ -141,13 +141,13 @@ class HB_Product_Room_Base extends HB_Product_Abstract
                 $return = get_post_meta( $this->post->ID, '_hb_room_capacity', true );
                 break;
             case 'addition_information':
-                $return = get_post_meta( $this->post->ID, '_hb_room_addition_information', true );
+                $return = get_post_meta( $this->ID, '_hb_room_addition_information', true );
                 break;
             case 'thumbnail':
-                if( has_post_thumbnail( $this->post->ID ) ){
-                    $return = get_the_post_thumbnail( $this->post->ID, 'thumbnail' );
+                if( has_post_thumbnail( $this->ID ) ){
+                    $return = get_the_post_thumbnail( $this->ID, 'thumbnail' );
                 }else{
-                    $gallery = get_post_meta( $this->post->ID, '_hb_gallery', true );
+                    $gallery = get_post_meta( $this->ID, '_hb_gallery', true );
                     if( $gallery ) {
                         $attachment_id = array_shift($gallery);
                         $return = wp_get_attachment_image( $attachment_id, 'thumbnail' );
@@ -160,7 +160,7 @@ class HB_Product_Room_Base extends HB_Product_Abstract
                 $return = $this->get_galleries();
                 break;
             case 'max_child':
-                $return = get_post_meta( $this->post->ID, '_hb_max_child_per_room', true );
+                $return = get_post_meta( $this->ID, '_hb_max_child_per_room', true );
                 break;
 
             case 'dropdown_room':
@@ -215,7 +215,7 @@ class HB_Product_Room_Base extends HB_Product_Abstract
                 $return = $this->get_data('extra_packages');
                 break;
         }
-        return $return;
+        return apply_filters( 'hotel_booking_room_get_data', $return, $key, $this );
     }
 
     function get_galleries( $with_featured = true ) {
@@ -302,7 +302,7 @@ class HB_Product_Room_Base extends HB_Product_Abstract
 
         }
         $this->_room_details_total = $room_details_total;
-        return $details;
+        return apply_filters( 'hotel_booking_get_booking_room_details', $details, $this->post->ID );
     }
 
     /**
