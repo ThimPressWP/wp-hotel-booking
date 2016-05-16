@@ -103,14 +103,14 @@ function hb_locate_template( $template_name, $template_path = '', $default_path 
 
     $template = null;
     // Look within passed path within the theme - this is priority
-    if( hb_enable_overwrite_template() ) {
+    // if( hb_enable_overwrite_template() ) {
         $template = locate_template(
             array(
                 trailingslashit($template_path) . $template_name,
                 $template_name
             )
         );
-    }
+    // }
     // Get default template
     if ( ! $template ) {
         $template = $default_path . $template_name;
