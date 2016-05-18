@@ -4,13 +4,13 @@
     Plugin URI: http://thimpress.com/
     Description: Payment Stripe TP Hotel Booking Addon
     Author: ThimPress
-    Version: 1.0.2.1
+    Version: 1.0.2.2
     Author URI: http://thimpress.com
 */
 
 define( 'TP_HB_STRIPE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TP_HB_STRIPE_URI', plugins_url( '', __FILE__ ) );
-define( 'TP_HB_STRIPE_VER', '1.0.2.1' );
+define( 'TP_HB_STRIPE_VER', '1.0.2.2' );
 
 class TP_Hotel_Booking_Payment_Stripe
 {
@@ -96,7 +96,7 @@ class TP_Hotel_Booking_Payment_Stripe
 
 	function enqueue_scripts(){
         // stripe and checkout assets
-        wp_register_script( 'tp-hotel-booking-stripe-js', TP_HB_STRIPE_URI . '/assets/js/stripe.js', array() );
+        wp_register_script( 'tp-hotel-booking-stripe-js', 'https://checkout.stripe.com/checkout.js', array() );
         wp_register_script( 'tp-hotel-booking-stripe-checkout-js', TP_HB_STRIPE_URI . '/assets/js/checkout.js', array() );
 
         $setting = HB_Settings::instance()->get('stripe');
