@@ -130,8 +130,8 @@ function hb_enqueue_lightbox_assets(){
     $settings = HB_Settings::instance();
     $lightbox_settings = $settings->get('lightbox');
     if( ! $lightbox_settings ) return;
-    if( empty( $lightbox_settings['lightbox'] ) ) return;
-    do_action( 'hb_lightbox_assets_' . $lightbox_settings['lightbox'] );
+    // if( empty( $lightbox_settings['lightbox'] ) ) return;
+    do_action( 'hb_lightbox_assets_' . $lightbox_settings );
 }
 
 function hb_lightbox_assets_lightbox2(){
