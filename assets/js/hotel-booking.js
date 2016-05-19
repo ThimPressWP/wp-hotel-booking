@@ -78,7 +78,7 @@
 				if ( response && response.ID ) {
 					var $container = $('#hb-order-new-customer');
 					for ( var key in response.data ) {
-						var inputName = key.replace(/^_hb_/, '');
+						var inputName = key.replace(/^_hb_customer_/, '');
 						var $field = $container.find('input[name="' + inputName + '"], select[name="' + inputName + '"], textarea[name="' + inputName + '"]');
 						$field.val(response.data[key]);
 					}

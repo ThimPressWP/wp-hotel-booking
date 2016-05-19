@@ -58,19 +58,15 @@ class HB_Ajax {
 	 */
 	static function fetch_customer_info() {
 		$email      = hb_get_request( 'email' );
-		$query_args = array(
-			'post_type'  => 'hb_customer',
-			'meta_query' => array(
-				array(
-					'key'     => '_hb_email',
-					'value'   => $email,
-					'compare' => 'EQUALS'
-				),
-			)
+		$args = array(
+			'post_type'  => 'hb_booking',
+	      	'meta_key'	=> '_hb_customer_email',
+	      	'meta_value'	=> $email,
+	      	'post_status' => 'any'
 		);
 		// set_transient( 'hotel_booking_customer_email_' . HB_BLOG_ID, $email, DAY_IN_SECONDS );
 		TP_Hotel_Booking::instance()->cart->set_customer( 'customer_email', $email );
-		if ( $posts = get_posts( $query_args ) ) {
+		if ( $posts = get_posts( $args ) ) {
 			$customer       = $posts[0];
 			$customer->data = array();
 			$data           = get_post_meta( $customer->ID );
