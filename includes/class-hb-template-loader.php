@@ -38,20 +38,21 @@ class HB_TemplateLoader {
         else if( is_room_taxonomy() )
         {
             $term   = get_queried_object();
+            $taxonomy = $term->taxonomy;
             if ( strpos( $term->taxonomy, 'hb_' ) === 0 ) {
-                $term->taxonomy = substr( $term->taxonomy, 3 );
+                $taxonomy = substr( $term->taxonomy, 3 );
             }
 
             if ( is_tax( 'hb_room_type' ) || is_tax( 'hb_room_capacity' ) ) {
-                $file = 'taxonomy-' . $term->taxonomy . '.php';
+                $file = 'taxonomy-' . $taxonomy . '.php';
             } else {
                 $file = 'archive-room.php';
             }
 
-            $find[] = 'taxonomy-' . $term->taxonomy . '-' . $term->slug . '.php';
-            $find[] = hb_template_path() . '/taxonomy-' . $term->taxonomy . '-' . $term->slug . '.php';
+            $find[] = 'taxonomy-' . $taxonomy . '-' . $term->slug . '.php';
+            $find[] = hb_template_path() . '/taxonomy-' . $taxonomy . '-' . $term->slug . '.php';
             $find[] = 'taxonomy-' . $term->taxonomy . '.php';
-            $find[] = hb_template_path() . '/taxonomy-' . $term->taxonomy . '.php';
+            $find[] = hb_template_path() . '/taxonomy-' . $taxonomy . '.php';
             $find[] = $file;
         }
         else if( is_single() )
