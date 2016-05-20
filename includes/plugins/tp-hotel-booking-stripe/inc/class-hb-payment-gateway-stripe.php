@@ -120,7 +120,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
         $user_id = $booking->user_id;
         $cus_id = null;
         if ( $user_id ) {
-            $cus_id =get_uer_meta( $user_id, 'tp-hotel-booking-stripe-id', true );
+            $cus_id =get_user_meta( $user_id, 'tp-hotel-booking-stripe-id', true );
         } else {
             global $wpdb;
             $sql = $wpdb->prepare("
