@@ -9,7 +9,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
-var_dump(1); die();
+
 // email heading
 hb_get_template( 'emails/email-header.php',
 	array(
