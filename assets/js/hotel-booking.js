@@ -123,7 +123,7 @@
 			mesgs = [];
 		if (-1 == $title.val()) {
 			// alert( hotel_booking_i18n.empty_customer_title );
-			mesgs.push( hotel_booking_i18n.empty_customer_title );console.debug($title.parents('div:first'));
+			mesgs.push( hotel_booking_i18n.empty_customer_title );
 			$title.parents('div:first').addClass( 'error' );
 		}
 
