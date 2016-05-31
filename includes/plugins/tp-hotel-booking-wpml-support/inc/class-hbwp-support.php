@@ -32,7 +32,7 @@ class HBWPML_Support {
 		add_action( 'init', array( $this, 'init'), 999 );
 		/* compare current language and default language */
 		if ( $this->current_language_code === $this->default_language_code ) {
-			return;
+			//return;
 		}
 
 		/* disable change some room attributes in other post languages */

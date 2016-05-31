@@ -5,13 +5,13 @@
     Plugin URI: http://thimpress.com/
     Description: Multilnguage CMS support
     Author: ThimPress
-    Version: 0.1
+    Version: 0.1.1
     Author URI: http://thimpress.com
 */
 
 define( 'HOTELBOOKING_WMPL_DIR', plugin_dir_path( __FILE__ ) );
 define( 'HOTELBOOKING_WMPL_URI', plugins_url( '', __FILE__ ) );
-define( 'HOTELBOOKING_WMPL_VER', '0.1' );
+define( 'HOTELBOOKING_WMPL_VER', '0.1.1' );
 
 class TP_Hotel_Booking_Wpml_Support
 {
