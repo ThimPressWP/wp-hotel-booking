@@ -122,13 +122,20 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      * @param $request
      */
     function web_hook_process_paypal_standard( $request ){
-        $payload['cmd'] = '_notify-validate';
-        foreach( $_POST as $key => $value ) {
-            $payload[$key] = stripslashes( $value );
-        }
+        $payload = array_merge_recursive( array( 'cmd' => '_notify-validate' ), wp_unslash( $_POST ) );
         $paypal_api_url = ! empty( $_REQUEST['test_ipn'] ) ? $this->paypal_payment_sandbox_url : $this->paypal_payment_live_url;
-        $response = wp_remote_post( $paypal_api_url, array( 'body' => $payload ) );
+
+        $params = array(
+            'body'        => $payload,
+            'timeout'     => 60,
+            'httpversion' => '1.1',
+            'compress'    => false,
+            'decompress'  => false,
+            'user-agent'  => 'HotelBooking'
+        );
+        $response = wp_safe_remote_post( $paypal_api_url, $params );
         $body = wp_remote_retrieve_body( $response );
+
         if ( 'VERIFIED' === $body ) {
             if ( ! empty( $request['txn_type'] ) ) {
 
