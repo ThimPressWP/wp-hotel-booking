@@ -45,7 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 														<table>
 															<tr>
 																<th>
-																	<p><?php printf( __( 'Country %s', 'tp-hotel-booking' ), $options->get( 'hotel_name' ) ) ?></p>
+																	<p><?php printf( __( 'Country %s', 'tp-hotel-booking' ), $options->get( 'hotel_country' ) ) ?></p>
 																	<p><?php printf( __( 'Address %s', 'tp-hotel-booking' ), $options->get( 'hotel_address' ) ) ?></p>
 																	<p><?php printf( __( 'City %s', 'tp-hotel-booking' ), $options->get( 'hotel_city' ) ) ?></p>
 																	<p><?php printf( __( 'State %s', 'tp-hotel-booking' ), $options->get( 'hotel_state' ) ) ?></p>
