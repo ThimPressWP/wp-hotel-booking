@@ -1,5 +1,4 @@
 <?php
-
 /*
     Plugin Name: TP Hotel Booking WPML Support
     Plugin URI: http://thimpress.com/
