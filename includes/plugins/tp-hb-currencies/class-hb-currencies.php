@@ -21,6 +21,7 @@ class HB_SW_Curreny
 	public function __construct( )
 	{
 		add_action( 'admin_init', array( $this, 'init' ) );
+		add_filter( 'hotel_booking_currency_aggregator', array( $this, 'aggregator' ) );
 
 		$settings = HB_SW_Curreny_Setting::instance();
 		if ( $settings->get( 'enable' ) ) {
@@ -34,7 +35,6 @@ class HB_SW_Curreny
 			 */
 			add_filter( 'hb_currency', array( $this, 'switch_currencies' ), 99 );
 			add_filter( 'hotel_booking_price_switcher', array( $this, 'switch_price' ) );
-			add_filter( 'hotel_booking_currency_aggregator', array( $this, 'aggregator' ) );
 
 			add_action( 'plugins_loaded', array( $this, 'set_currency' ) );
 			add_action( 'qtranslate_init_language', array( $this, 'qtranslate' ) );
@@ -47,6 +47,7 @@ class HB_SW_Curreny
 			 * enqueue scripts
 			 */
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
+			// add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue' ) );
 		}
 	}
 
@@ -57,6 +58,13 @@ class HB_SW_Curreny
 	public function enqueue()
 	{
 		wp_enqueue_script( 'tp-hb-currencies', TP_HB_CURRENCY_URI . '/assets/js/tp-hb-currencies.min.js', 'jquery', HB_VERSION, true );
+	}
+
+	public function admin_enqueue() {
+		// wp_register_script( 'tp-admin-hotel-booking-tokenize-js', TP_HB_CURRENCY_URI . '/assets/js/jquery.tokenize.min.js' );
+  //       wp_register_style( 'tp-admin-hotel-booking-tokenize-css', TP_HB_CURRENCY_URI . '/assets/css/jquery.tokenize.min.css' );
+  //       wp_enqueue_script( 'tp-admin-hotel-booking-tokenize-js' );
+  //   	wp_enqueue_style( 'tp-admin-hotel-booking-tokenize-css' );
 	}
 
 	/**

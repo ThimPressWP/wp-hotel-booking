@@ -96,7 +96,6 @@ class TP_Hotel_Booking_Report
         wp_register_script( 'tp-admin-hotel-booking-tokenize-js', TP_HB_REPORT_URI . 'assets/js/jquery.tokenize.min.js' );
         wp_register_style( 'tp-admin-hotel-booking-tokenize-css', TP_HB_REPORT_URI . 'assets/css/jquery.tokenize.min.css' );
 
-
         wp_enqueue_script( 'tp-admin-hotel-booking-chartjs' );
         wp_enqueue_script( 'tp-admin-hotel-booking-tokenize-js' );
         wp_enqueue_style( 'tp-admin-hotel-booking-tokenize-css' );

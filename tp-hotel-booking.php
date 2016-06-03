@@ -173,7 +173,7 @@ class TP_Hotel_Booking {
         $this->_include( 'includes/room/hb-room-functions.php' );
         $this->_include( 'includes/room/class-hb-room.php' );
         // // addon
-        if ( apply_filters( 'hotel_booking_enable_currency_addon', false ) ) {
+        if ( apply_filters( 'hotel_booking_enable_currency_addon', true ) ) {
             $this->_include( 'includes/plugins/tp-hb-currencies/tp-hb-currencies.php' );
         }
         $this->_include( 'includes/plugins/tp-hb-extra/tp-hb-extra.php' );
