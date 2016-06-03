@@ -114,7 +114,8 @@ if ( ! class_exists( 'HB_Admin_Setting_General' ) ) {
 							'id'		=> 'tp_hotel_booking_tax',
 							'title'		=> __( 'Tax', 'tp-hotel-booking' ),
 							'default'	=> 10,
-							'min'		=> 0
+							'min'		=> 0,
+							'step'		=> 'any'
 						),
 
 					array(

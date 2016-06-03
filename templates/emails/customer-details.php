@@ -12,14 +12,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 <h2><?php _e( 'Customer Details', 'tp-hotel-booking' ) ?></h2>
-<table class="width-100">
+<table class="width-100 customer_details" cellspacing="0" cellpadding="0">
 	<tr>
 		<td class="callout-inner secondary">
-			<table class="row">
+			<table class="width-100">
 				<tbody>
 					<tr>
 						<th class="width-50 columns first">
-							<table>
+							<table class="width-100">
 								<tr>
 									<th>
 										<p> <strong><?php _e( 'Payment Method', 'tp-hotel-booking' ) ?></strong><br> <?php echo esc_html( $booking->method_title ) ?> </p>
@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							</table>
 						</th>
 						<th class="width-50 columns last">
-							<table>
+							<table class="width-100">
 								<tr>
 									<th>
 										<p>

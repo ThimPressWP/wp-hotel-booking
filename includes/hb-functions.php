@@ -564,7 +564,7 @@ function hb_i18n() {
 		'monthNamesShort'				=> hb_month_name_short_js(),
 		'dayNames'						=> hb_day_name_js(),
 		'dayNamesShort'					=> hb_day_name_short_js(),
-		'dayNamesMin '					=> hb_day_name_min_js(),
+		'dayNamesMin'					=> hb_day_name_min_js(),
 	);
 	return apply_filters( 'hb_i18n', $translation );
 }

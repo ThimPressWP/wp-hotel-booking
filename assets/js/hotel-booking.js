@@ -21,7 +21,7 @@
 	}
 
 	function isInteger( a ) {
-		return Number( a ) && ( a % 1 === 0 );
+		return Number( a ) || ( a % 1 === 0 );
 	}
 
 	function isEmail( email ) {
@@ -640,6 +640,7 @@
 		var tomorrow = new Date();
 
 		var start_plus = $( document ).triggerHandler( 'hotel_booking_min_check_in_date', [ 1, today, tomorrow ] );
+		start_plus = parseInt( start_plus );
 		if ( ! isInteger( start_plus ) ) {
 			start_plus = 1;
 		}

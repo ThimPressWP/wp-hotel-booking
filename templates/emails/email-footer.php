@@ -12,55 +12,54 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
-										<table class="row footer text-center">
-											<tbody>
-												<tr>
-													<th class="width-30 columns first">
-														<table>
+									<table class="row footer text-center" cellspacing="0" cellpadding="0">
+										<tbody>
+											<tr>
+												<th class="width-30 columns first">
+													<table cellspacing="0" cellpadding="0">
+														<tr>
+															<th>
+																<h3><?php printf( '%s', $options->get( 'hotel_name' ) ? $options->get( 'hotel_name' ) : get_bloginfo( 'name' ) ) ?></h3>
+															</th>
+														</tr>
+													</table>
+												</th>
+												<th class="width-30 columns">
+													<table cellspacing="0" cellpadding="0">
+														<?php $phone = $options->get( 'hotel_phone_number' ); ?>
+														<?php if ( $phone ) : ?>
 															<tr>
 																<th>
-																	<h3><?php printf( '%s', $options->get( 'hotel_name' ) ? $options->get( 'hotel_name' ) : get_bloginfo( 'name' ) ) ?></h3>
+																	<p><?php printf( __( 'Phone number %s', 'tp-hotel-booking' ), $phone ) ?></p>
 																</th>
 															</tr>
-														</table>
-													</th>
-													<th class="width-30 columns">
-														<table>
-															<?php $phone = $options->get( 'hotel_phone_number' ); ?>
-															<?php if ( $phone ) : ?>
-																<tr>
-																	<th>
-																		<p><?php printf( __( 'Phone number %s', 'tp-hotel-booking' ), $phone ) ?></p>
-																	</th>
-																</tr>
-															<?php endif; ?>
-															<tr>
-																<th>
-																	<p><?php printf( __( 'Admin email at %s', 'tp-hotel-booking' ), $options->get( 'hotel_email_address' ) ? $options->get( 'hotel_email_address' ) : get_option( 'admin_email' ) ) ?></p>
-																</th>
-															</tr>
-														</table>
-													</th>
-													<th class="width-30 columns last">
-														<table>
-															<tr>
-																<th>
-																	<p><?php printf( __( 'Country %s', 'tp-hotel-booking' ), $options->get( 'hotel_country' ) ) ?></p>
-																	<p><?php printf( __( 'Address %s', 'tp-hotel-booking' ), $options->get( 'hotel_address' ) ) ?></p>
-																	<p><?php printf( __( 'City %s', 'tp-hotel-booking' ), $options->get( 'hotel_city' ) ) ?></p>
-																	<p><?php printf( __( 'State %s', 'tp-hotel-booking' ), $options->get( 'hotel_state' ) ) ?></p>
-																</th>
-															</tr>
-														</table>
-													</th>
-												</tr>
-											</tbody>
-										</table>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</center>
+														<?php endif; ?>
+														<tr>
+															<th>
+																<p><?php printf( __( 'Admin email at %s', 'tp-hotel-booking' ), $options->get( 'hotel_email_address' ) ? $options->get( 'hotel_email_address' ) : get_option( 'admin_email' ) ) ?></p>
+															</th>
+														</tr>
+													</table>
+												</th>
+												<th class="width-30 columns last">
+													<table cellspacing="0" cellpadding="0">
+														<tr>
+															<th>
+																<p><?php printf( __( 'Country %s', 'tp-hotel-booking' ), $options->get( 'hotel_country' ) ) ?></p>
+																<p><?php printf( __( 'Address %s', 'tp-hotel-booking' ), $options->get( 'hotel_address' ) ) ?></p>
+																<p><?php printf( __( 'City %s', 'tp-hotel-booking' ), $options->get( 'hotel_city' ) ) ?></p>
+																<p><?php printf( __( 'State %s', 'tp-hotel-booking' ), $options->get( 'hotel_state' ) ) ?></p>
+															</th>
+														</tr>
+													</table>
+												</th>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</td>
 			</tr>
 		</table>

@@ -19,11 +19,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<meta name="viewport" content="width=device-width">
 	<style type="text/css">
 		body, table.body{ margin: 0 auto; }
-		body *{ font-size: 13px; color: #666; font-weight: 400 }
-		table.body{ max-width: 500px; margin: 0 auto; }
-		h1, h2, h3, h4, h5, h6{ margin: 5px 0; }
+		body *{ font-size: 13px; color: #666; font-weight: 400; vertical-align: top }
+		table.body{ max-width: 500px; margin: 0 auto; background-color: #f6f6f6 }
+		h1, h2, h3, h4, h5, h6{ margin: 5px 0; font-weight: 600 }
 		h1{ text-align: center; font-size: 25px; }
-		h2{ font-size: 18px; }
+		h2{ font-size: 15px; }
+		table.container.text-center h1{
+	        padding: 10px;
+		    background-color: #7AABF1;
+		    color: #fff;
+		    margin: -10px -10px 10px -10px;
+		    display: inline-block;
+		    width: 100%;
+		}
+		table.container.text-center > tbody > tr > td{
+			padding: 10px;
+		}
+		strong{ font-weight: 600 }
 		.width-100{
 			width: 100%;
 		}
@@ -33,7 +45,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 		.width-30{
 			width: 33%;
 		}
-		.desc{font-weight: 600; font-size: 15px;}
+		.desc{ text-align: center; font-size: 13px; padding: 10px 0; }
+		table {
+		    border-spacing: 0;
+		    border-collapse: collapse;
+		}
 		table th{
 			font-weight: 600;
 			text-align: left;
@@ -43,26 +59,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 		table th{ font-weight: 600; font-size: 15px;  }
 		table td{ font-weight: 400; font-size: 13px;  }
 		table h1{ text-align: center }
+		.booking_details th, .booking_details td {
+	        border: 1px solid #eeeeee;
+		    padding: 5px;
+		}
 		p{
-			margin: 0;
+			margin: 0 0 10px 0;
 		}
 	</style>
 </head>
 <body>
-	<table class="body" data-made-with-foundation="">
+	<table class="body" data-made-with-foundation="" cellspacing="0" cellpadding="0">
 		<tr>
 			<td class="center" align="center" valign="top">
-				<center data-parsed="">
-					<table class="container text-center">
-						<tbody>
-							<tr>
-								<td>
-									<table class="row">
-										<tbody>
-											<tr>
-												<th class="width-50">
-													<table>
-														<tr>
-															<th>
-																<h1><?php echo esc_html( $email_heading ) ?></h1>
-																<p class="desc"><?php echo esc_html( $email_heading_desc ) ?></p>
+				<table class="container text-center" cellspacing="0" cellpadding="0">
+					<tbody>
+						<tr>
+							<td>
+								<h1><?php echo esc_html( $email_heading ) ?></h1>
+								<p class="desc"><?php echo esc_html( $email_heading_desc ) ?></p>

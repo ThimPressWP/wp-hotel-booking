@@ -103,6 +103,10 @@ function hb_new_booking_email( $booking_id = null ) {
 
     $headers = "Content-Type: " . ( $format == 'html' ? 'text/html' : 'text/plain' ) . "\r\n";
     $send    = wp_mail( $to, $subject, $body, $headers );
+    // if ( $fo = fopen( HB_PLUGIN_PATH . '/new-booking.html', 'w+' ) ) {
+    //     fwrite( $fo, $body );
+    //     fclose($fo);
+    // }
     return $send;
 }
 
@@ -178,5 +182,9 @@ function hb_new_customer_booking_email( $booking_id = null ) {
     $email_content = hb_get_template_content( 'emails/customer-booking.php', array( 'booking' => $booking, 'options' => hb_settings() ) );
 
     wp_mail( $booking->customer_email, $email_subject, stripslashes( $email_content ), $headers );
+    // if ( $fo = fopen( HB_PLUGIN_PATH . '/customer-booking.html', 'w+' ) ) {
+    //     fwrite( $fo, $email_content );
+    //     fclose($fo);
+    // }
     remove_filter('wp_mail_content_type', 'hb_set_html_content_type');
 }

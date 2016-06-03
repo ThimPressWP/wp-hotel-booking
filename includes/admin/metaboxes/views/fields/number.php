@@ -29,6 +29,7 @@ $value = $field['std'];
 if( is_callable( $field['filter'] ) ){
     $value = call_user_func_array( $field['filter'], array( $value ) );
 }
+
 printf(
     '<input type="number" name="%s" id="%s" value="%s" step="%s" min="%s" max="%s" placeholder="%s" %s />',
     $field['name'],

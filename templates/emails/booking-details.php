@@ -13,12 +13,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <h2><?php _e( 'Booking Details', 'tp-hotel-booking' ) ?></h2>
-<table>
+<table class="width-100 booking_details" cellspacing="0" cellpadding="0">
 	<tr>
 		<th><?php _e( 'Item', 'tp-hotel-booking' ) ?></th>
 		<th><?php _e( 'Check in', 'tp-hotel-booking' ) ?></th>
 		<th><?php _e( 'Check out', 'tp-hotel-booking' ) ?></th>
-		<th><?php _e( '#', 'tp-hotel-booking' ) ?>#</th>
+		<th><?php _e( '#', 'tp-hotel-booking' ) ?></th>
 		<th><?php _e( 'Price', 'tp-hotel-booking' ) ?></th>
 	</tr>
 	<?php $items = hb_get_order_items( $booking->id ); foreach ( $items as $k => $item ) : ?>

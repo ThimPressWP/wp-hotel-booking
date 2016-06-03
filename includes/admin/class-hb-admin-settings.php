@@ -141,7 +141,7 @@ class HB_Admin_Settings {
 
 											<?php echo isset( $field['min'] ) && is_numeric( $field['min'] ) ? ' min="'.esc_attr( $field['min'] ).'"' : '' ?>
 											<?php echo isset( $field['max'] ) && is_numeric( $field['max'] ) ? ' max="'.esc_attr( $field['max'] ).'"' : '' ?>
-											<?php echo isset( $field['step'] ) && is_numeric( $field['step'] ) ? ' step="'.esc_attr( $field['step'] ).'"' : '' ?>
+											<?php echo isset( $field['step'] ) ? ' step="'.esc_attr( $field['step'] ).'"' : '' ?>
 
 										<?php endif; ?>
 									/>
