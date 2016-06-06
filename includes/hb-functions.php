@@ -668,7 +668,7 @@ function hb_day_name_min_js(){
 			__( 'Mo', 'tp-hotel-booking' ),
 			__( 'Tu', 'tp-hotel-booking' ),
 			__( 'We', 'tp-hotel-booking' ),
-			__( 'Thu', 'tp-hotel-booking' ),
+			__( 'Th', 'tp-hotel-booking' ),
 			__( 'Fr', 'tp-hotel-booking' ),
 			__( 'Sa', 'tp-hotel-booking' )
 		) );
