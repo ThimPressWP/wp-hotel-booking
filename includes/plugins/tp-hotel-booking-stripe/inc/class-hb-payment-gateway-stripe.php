@@ -87,8 +87,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
 
         $response = $this->stripe_request( $request );
 
-        if( is_wp_error( $response ) )
-        {
+        if( is_wp_error( $response ) ) {
             $return = array( 'result' => 'error', 'message' => sprintf( __( '%s. Please try again', 'tp-hotel-booking-stripe' ), $response->get_error_message() ) );
         } else {
             if( $response->id )

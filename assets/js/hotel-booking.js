@@ -60,7 +60,7 @@
 		}
 		$button.attr('disabled', true);
 		$email.attr('disabled', true);
-		var customer_table = $('.hb-col-padding hb-col-border');
+		var customer_table = $('.hb-col-padding.hb-col-border');
 		$.ajax({
 			url       : hotel_settings.ajax,
 			dataType  : 'html',
@@ -386,42 +386,41 @@
 			var template = wp.template('hb-minicart-item');
 			template = template(data);
 
-			if ( length === 0 )
-				return;
+			if ( length > 0 ) {
+				for ( var i = 0; i < length; i++ ) {
+					var cart = $(mini_cart[i]),
+						cart_item = $(mini_cart[i]).find('.hb_mini_cart_item'),
+						insert = false,
+						empty = cart.find('.hb_mini_cart_empty'),
+						footer_ele = cart.find('.hb_mini_cart_footer'),
+						items_length = cart_item.length;
 
-			for ( var i = 0; i < length; i++ ) {
-				var cart = $(mini_cart[i]),
-					cart_item = $(mini_cart[i]).find('.hb_mini_cart_item'),
-					insert = false,
-					empty = cart.find('.hb_mini_cart_empty'),
-					footer_ele = cart.find('.hb_mini_cart_footer'),
-					items_length = cart_item.length;
-
-				if ( items_length === 0 ) {
-					var footer = wp.template('hb-minicart-footer');
-					var ele = footer_ele;
-					if ( empty.length === 1 ) {
-						empty.after(footer({}));
-						empty.before(template);
-					} else {
-						footer_ele.before(template);
-					}
-					insert = true;
-					break;
-				} else {
-					for ( var y = 0; y < items_length; y++ ) {
-						var item = $(cart_item[y]),
-							cart_id = item.attr( 'data-cart-id' );
-
-						if ( data.cart_id === cart_id ) {
-							item.replaceWith( template );
-							insert = true;
-							break;
+					if ( items_length === 0 ) {
+						var footer = wp.template('hb-minicart-footer');
+						var ele = footer_ele;
+						if ( empty.length === 1 ) {
+							empty.after(footer({}));
+							empty.before(template);
+						} else {
+							footer_ele.before(template);
 						}
-					}
+						insert = true;
+						break;
+					} else {
+						for ( var y = 0; y < items_length; y++ ) {
+							var item = $(cart_item[y]),
+								cart_id = item.attr( 'data-cart-id' );
 
-					if ( insert === false ) {
-						footer_ele.before( template );
+							if ( data.cart_id === cart_id ) {
+								item.replaceWith( template );
+								insert = true;
+								break;
+							}
+						}
+
+						if ( insert === false ) {
+							footer_ele.before( template );
+						}
 					}
 				}
 			}

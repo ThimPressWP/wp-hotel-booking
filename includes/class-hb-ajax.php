@@ -266,7 +266,8 @@ class HB_Ajax {
 			return;
 
 		$cart = TP_Hotel_Booking::instance()->cart;
-		if( $cart->cart_contents && ! isset( $_POST['cart_id'] ) || ! array_key_exists( sanitize_text_field( $_POST['cart_id'] ), $cart->cart_contents ) ) {
+
+		if( empty( $cart->cart_contents ) || ! isset( $_POST['cart_id'] ) || ! array_key_exists( sanitize_text_field( $_POST['cart_id'] ), $cart->cart_contents ) ) {
 			hb_send_json( array( 'status' => 'warning', 'message' => __( 'Cart item is not exists.', 'tp-hotel-booking' ) ) );
 		}
 

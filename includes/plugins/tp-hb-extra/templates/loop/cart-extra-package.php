@@ -1,9 +1,11 @@
 <?php
-
 /**
  * template extra cart
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit();
+}
 ?>
 
 <tr class="hb_checkout_item package" data-cart-id="<?php echo esc_attr( $cart_id ) ?>" data-parent-id="<?php echo esc_attr( $package->parent_id ) ?>">

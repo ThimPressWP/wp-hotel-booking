@@ -108,8 +108,7 @@
 					_parents = _self.parents('.hb_mini_cart_item:first'),
 					_overlay = _self.parents( '.hb_mini_cart_item:first, tr' );
 
-				if( typeof _parents === 'undefined' || _parents.length === 0 )
-				{
+				if( typeof _parents === 'undefined' || _parents.length === 0 ) {
 					_parents = _self.parents('.hb_checkout_item.package:first');
 				}
 
@@ -126,7 +125,7 @@
 						_overlay.hb_overlay_ajax_start();
 					}
 				}).done( function( res ) {
-					res = TPHB_Extra_Site.parseJSON(res);
+					res = TPHB_Extra_Site.parseJSON( res );
 					if( typeof res.status !== 'undefined' && res.status == 'success' )
 					{
 						HB_Booking_Cart.hb_add_to_cart_callback( res, function(){
@@ -134,7 +133,7 @@
 
 				            for( var i = 0; i < cart_table.length; i++ )
 				            {
-				                var _table = $(cart_table[i]);
+				                var _table = $( cart_table[i] );
 				                var tr = _table.find('table').find('.hb_checkout_item.package');
 				                for ( var y = 0; y < tr.length; y++ )
 				                {

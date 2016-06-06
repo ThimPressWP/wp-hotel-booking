@@ -219,7 +219,7 @@ class HB_Extra_Cart
 			}
 
 		} else {
-			wp_send_json( array( 'status' => 'success', 'message' => __( 'Cart item is not exists.', 'tp-hotel-booking' ) ) );
+			wp_send_json( array( 'status' => 'warning', 'message' => __( 'Cart item is not exists.', 'tp-hotel-booking' ) ) );
 		}
 	}
 
