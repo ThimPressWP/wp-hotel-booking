@@ -269,8 +269,7 @@ class HB_Extra_Cart
 			}
 
 			tp_hb_extra_get_template( 'loop/addition-services-title.php', array( 'page' => $page, 'room' => $room, 'cart_id' => $cart_id ) );
-			foreach ( $extra_packages as $package_cart_id => $cart_item )
-			{
+			foreach ( $extra_packages as $package_cart_id => $cart_item ) {
 				tp_hb_extra_get_template( 'loop/cart-extra-package.php', array( 'cart_id' => $package_cart_id, 'package' => $cart_item ) );
 			}
 		}
