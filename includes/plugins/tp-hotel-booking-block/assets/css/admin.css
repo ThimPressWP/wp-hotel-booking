@@ -35,3 +35,6 @@ hotel-calendar{
 .block-message.error{
     color: #E66A12;
 }
+.remove-plan{
+    display: block;
+}

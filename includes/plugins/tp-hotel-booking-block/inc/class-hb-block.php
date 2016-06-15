@@ -1,8 +1,8 @@
 <?php
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
+
 /**
  * class Block process
  */
@@ -305,7 +305,6 @@ class Hotel_Booking_Block
 		$child = isset( $param[ 'child' ] ) ? (int)$param[ 'child' ] : hb_get_max_child_of_rooms();
 
 		global $wpdb;
-
 	    /**
 	     * blocked
 	     * @var

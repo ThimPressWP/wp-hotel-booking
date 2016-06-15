@@ -69,7 +69,9 @@ class HBWPML_Support {
 		}
 
 		foreach ( $sessions->session as $cart_id => $param ) {
-			$param['product_id'] = $this->get_object_default_language( $param['product_id'], get_post_type( $param['product_id'] ), false, $this->current_language_code );
+			if ( $id = $this->get_object_default_language( $param['product_id'], get_post_type( $param['product_id'] ), true, $this->current_language_code ) ) {
+				$param['product_id'] = $id;
+			}
 			// var_dump($param['product_id'], $this->current_language_code); die();
 			$qty = isset( $param['quantity'] ) ? absint( $param['quantity'] ) : 1;
 			unset( $param['quantity'] );
@@ -88,7 +90,7 @@ class HBWPML_Support {
 			$lang = $this->default_language_code;
 		}
 
-		return icl_object_id( $id, $type, false, $lang );
+		return icl_object_id( $id, $type, $default, $lang );
 	}
 
 	/**
@@ -97,10 +99,13 @@ class HBWPML_Support {
 	 * @return $fields array
 	 */
 	public function disable_change_room_attributes( $fields ) {
-
+		if ( $this->current_language_code === $this->default_language_code ) {
+			return $fields;
+		}
 		foreach ( $fields as $k => $field ) {
-			if ( in_array( $field['name'], array( 'num_of_rooms', 'room_capacity', 'max_child_per_room' ) ) )
-			$fields[$k][ 'attr' ]['disabled'] = 'disabled';
+			if ( in_array( $field['name'], array( 'num_of_rooms', 'room_capacity', 'max_child_per_room' ) ) ) {
+				$fields[$k][ 'attr' ]['disabled'] = 'disabled';
+			}
 		}
 		return $fields;
 	}
@@ -111,6 +116,9 @@ class HBWPML_Support {
 	 * @return $fields array
 	 */
 	public function disable_change_coupon_attributes( $fields ) {
+		if ( $this->current_language_code === $this->default_language_code ) {
+			return $fields;
+		}
 		foreach ( $fields as $k => $field ) {
 			if ( $field['name'] !== 'coupon_description' ) {
 				$fields[$k][ 'attr' ]['disabled'] = 'disabled';
