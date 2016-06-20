@@ -461,7 +461,11 @@ add_action( 'admin_print_scripts', 'hb_admin_js_template' );
 
 function hb_meta_box_coupon_date( $value, $field_name, $meta_box_name ){
     if( in_array( $field_name, array( 'coupon_date_from', 'coupon_date_to' ) ) && $meta_box_name == 'coupon_settings' ){
-        $value = strtotime( $value );
+        if ( isset( $_POST['_hb_' . $field_name . '_timestamp'] ) ) {
+            $value = sanitize_text_field( $_POST['_hb_' . $field_name . '_timestamp'] );
+        } else {
+            $value = strtotime( $value );
+        }
     }
     return $value;
 }

@@ -147,7 +147,7 @@ class HBWPML_Support {
 		$taxonomy = sanitize_text_field( $_REQUEST['taxonomy'] );
         $term_id = $this->get_object_default_language( $term_id, 'hb_room_capacity' );
         $term = get_term( $term_id, $taxonomy );
-        switch ($column_name) {
+        switch ( $column_name ) {
             case 'ordering':
                 $attr = '';
                 $content = sprintf( '<input class="hb-number-field" type="number" name="%s_ordering[%d]" value="%d" size="3" disabled />', $taxonomy, $term_id, $term->term_group );
@@ -199,6 +199,24 @@ class HBWPML_Support {
 
 	public function hb_search_query( $query, $args ) {
 		global $wpdb;
+	    /**
+	     * blocked
+	     * @var
+	     */
+		$blocked = $wpdb->prepare( "
+				SELECT COALESCE( COUNT( blocked_time.meta_value ), 0 )
+				FROM $wpdb->postmeta AS blocked_post
+				INNER JOIN $wpdb->posts AS calendar ON calendar.ID = blocked_post.meta_value
+				INNER JOIN $wpdb->postmeta AS blocked_time ON blocked_time.post_id = calendar.ID
+				WHERE
+					blocked_post.post_id = rooms.ID
+					AND calendar.post_type = %s
+					AND calendar.post_status = %s
+					AND blocked_post.meta_key = %s
+					AND blocked_time.meta_key = %s
+					AND blocked_time.meta_value >= %d
+					AND blocked_time.meta_value <= %d
+			", 'hb_blocked', 'publish', 'hb_blocked_id', 'hb_blocked_time', $args['check_in'], $args['check_out'] );
 		$not = $wpdb->prepare("
 				(
 					SELECT COALESCE( SUM( meta.meta_value ), 0 ) FROM {$wpdb->hotel_booking_order_itemmeta} AS meta
@@ -225,7 +243,7 @@ class HBWPML_Support {
 			);
 
 		$query = $wpdb->prepare("
-				SELECT rooms.*, ( number.meta_value - {$not} ) AS available_rooms FROM $wpdb->posts AS rooms
+				SELECT rooms.*, ( number.meta_value - {$not} ) AS available_rooms, ($blocked) AS blocked FROM $wpdb->posts AS rooms
 					LEFT JOIN $wpdb->postmeta AS number ON rooms.ID = number.post_id AND number.meta_key = %s
 					LEFT JOIN {$wpdb->postmeta} pm1 ON pm1.post_id = rooms.ID AND pm1.meta_key = %s
 					LEFT JOIN {$wpdb->termmeta} term_cap ON term_cap.term_id = pm1.meta_value AND term_cap.meta_key = %s
@@ -238,7 +256,7 @@ class HBWPML_Support {
 					AND pm2.meta_value <= %d
 					AND wpml_translation.language_code = %s
 				GROUP BY rooms.post_name
-				HAVING available_rooms > 0
+				HAVING ( available_rooms > 0 AND blocked = 0 )
 				ORDER BY term_cap.meta_value DESC
 			", '_hb_num_of_rooms', '_hb_room_capacity', 'hb_max_number_of_adults', '_hb_max_child_per_room', 'hb_room', 'publish', $args['adults'], $args['child'], $this->current_language_code );
 

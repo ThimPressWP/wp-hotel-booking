@@ -310,7 +310,7 @@ class Hotel_Booking_Block
 	     * @var
 	     */
 		$blocked = $wpdb->prepare( "
-				SELECT COUNT( blocked_time.meta_value )
+				SELECT COALESCE( COUNT( blocked_time.meta_value ), 0 )
 				FROM $wpdb->postmeta AS blocked_post
 				INNER JOIN $wpdb->posts AS calendar ON calendar.ID = blocked_post.meta_value
 				INNER JOIN $wpdb->postmeta AS blocked_time ON blocked_time.post_id = calendar.ID
