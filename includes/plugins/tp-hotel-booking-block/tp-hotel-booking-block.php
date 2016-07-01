@@ -4,13 +4,13 @@
     Plugin URI: http://thimpress.com/
     Description: Block booking rooms for specific dates
     Author: ThimPress
-    Version: 1.0.2.3
+    Version: 1.0.2.4
     Author URI: http://thimpress.com
 */
 // return;
 define( 'TP_HB_BLOCK_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TP_HB_BLOCK_URI', plugin_dir_url( __FILE__ ) );
-define( 'TP_HB_BLOCK_VER', '1.0.2.3' );
+define( 'TP_HB_BLOCK_VER', '1.0.2.4' );
 
 class TP_Hotel_Booking_Block
 {
@@ -37,7 +37,7 @@ class TP_Hotel_Booking_Block
 			$file = $plugin_file;
 		}
 		if ( $file ) {
-			load_textdomain( 'tp-hotel-booking-paypal', $file );
+			load_textdomain( 'tp-hotel-booking-block', $file );
 		}
 	}
 

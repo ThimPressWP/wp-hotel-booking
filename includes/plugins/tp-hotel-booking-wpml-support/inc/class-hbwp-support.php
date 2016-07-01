@@ -144,6 +144,9 @@ class HBWPML_Support {
 
 	/* capacity ordering */
 	public function hotel_booking_capacity_order_attr( $content, $column_name, $term_id ) {
+		if ( $this->current_language_code === $this->default_language_code ) {
+			return $content;
+		}
 		$taxonomy = sanitize_text_field( $_REQUEST['taxonomy'] );
         $term_id = $this->get_object_default_language( $term_id, 'hb_room_capacity' );
         $term = get_term( $term_id, $taxonomy );
