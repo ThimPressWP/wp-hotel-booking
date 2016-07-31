@@ -340,19 +340,17 @@ class Hotel_Booking_Block {
         $check_out = $args['check_out_date'];
         $sql = $wpdb->prepare( "
 				SELECT COALESCE( COUNT( blocked_time.meta_value ), 0 )
-				FROM $wpdb->postmeta AS blocked_post
-				INNER JOIN $wpdb->posts AS calendar ON calendar.ID = blocked_post.meta_value
-				INNER JOIN $wpdb->postmeta AS blocked_time ON blocked_time.post_id = calendar.ID
+				FROM $wpdb->postmeta AS blocked_time
+				INNER JOIN $wpdb->posts AS calendar ON calendar.ID = blocked_time.meta_value
+				INNER JOIN $wpdb->postmeta AS blocked_post ON blocked_post.post_id = calendar.ID
 				WHERE
-					blocked_post.post_id = %d
+					blocked_time.post_id = %d
 					AND calendar.post_type = %s
 					AND calendar.post_status = %s
-					AND blocked_post.meta_key = %s
 					AND blocked_time.meta_key = %s
-					AND ( blocked_time.meta_value >= %d
-                                            AND blocked_time.meta_value <= %d )
-                                        OR ( blocked_time.meta_value >= %d
-                                            AND blocked_time.meta_value >= %d )
+					AND blocked_post.meta_key = %s
+					AND ( blocked_post.meta_value > %d
+                                            AND blocked_post.meta_value <= %d )
 			", $room_id, 'hb_blocked', 'publish', 'hb_blocked_id', 'hb_blocked_time', $check_in, $check_out, $check_in, $check_out );
 
         $blocked = $wpdb->get_var( $sql );
