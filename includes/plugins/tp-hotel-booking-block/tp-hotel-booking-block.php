@@ -4,7 +4,7 @@
     Plugin URI: http://thimpress.com/
     Description: Block booking rooms for specific dates
     Author: ThimPress
-    Version: 1.0.2.4
+    Version: 1.0.2.5
     Author URI: http://thimpress.com
 */
 // return;
