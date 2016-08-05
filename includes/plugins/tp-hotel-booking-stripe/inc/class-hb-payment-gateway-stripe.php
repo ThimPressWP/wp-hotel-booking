@@ -200,7 +200,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
     }
 
     function form(){
-        echo _e( 'Pay with Credit card');
+        echo _e( 'Pay with Credit card', 'tp-hotel-booking-stripe' );
     }
 }
 

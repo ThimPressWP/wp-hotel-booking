@@ -116,7 +116,7 @@ do_action( 'hotel_booking_before_checkout_form' );
                 <p>
                     <label>
                         <input type="checkbox" name="tos" value="1" />
-                        <?php printf( __( 'I agree with <a href="%s" target="_blank">%s</a>' ), get_permalink( $tos_page_id ), get_the_title( $tos_page_id ) ); ?>
+                        <?php printf( __( 'I agree with ', 'tp-hotel-booking' )  . '<a href="%s" target="_blank">%s</a>', get_permalink( $tos_page_id ), get_the_title( $tos_page_id ) ); ?>
                     </label>
                 </p>
             <?php } ?>
