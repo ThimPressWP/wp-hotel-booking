@@ -141,7 +141,10 @@ class HB_Post_Types{
      */
     function posts_join_paged( $join ){
         global $wpdb;
-
+        $result = $wpdb->get_col("SELECT order_item_id FROM {$wpdb->hotel_booking_order_items} WHERE `order_item_id` IS NOT NULL");
+        if ( ! $this->is_search( 'booking' ) || ! $result ) {
+            return $join;
+        }
         if( is_admin() && $this->is_search( 'booking' ) ){
             $join .= "
                 INNER JOIN {$wpdb->hotel_booking_order_items} AS ord_item ON ord_item.order_id = {$wpdb->posts}.ID

@@ -31,7 +31,7 @@ class HB_Shortcode_Hotel_Booking_Mini_Cart extends HB_Shortcodes
 
             <?php else: ?>
 
-                <p class="hb_mini_cart_empty"><?php _e( 'You cart is empty.', 'tp-hotel-booking' ) ?></p>
+                <p class="hb_mini_cart_empty"><?php _e( 'Your cart is empty.', 'tp-hotel-booking' ) ?></p>
 
             <?php endif; ?>
         </div>
