@@ -33,7 +33,6 @@ class HB_Widget_Search extends WP_Widget{
         if ( $title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base ) ) {
             echo sprintf( '%s', $args['before_title'] . $title . $args['after_title'] );
         }
-        $search = hb_get_page_permalink( 'search' );
 
         // check show title search form
         $show_title = 'true';
@@ -44,7 +43,7 @@ class HB_Widget_Search extends WP_Widget{
         if( isset($instance['show_label']) ) {
             $show_label = $instance['show_label'];
         }
-        echo do_shortcode('[hotel_booking search_page="' . $search . '" show_title="'.$show_title.'" show_label="'.$show_label.'"]');
+        echo do_shortcode('[hotel_booking show_title="'.$show_title.'" show_label="'.$show_label.'"]');
         echo sprintf( '%s', $args['after_widget'] );
     }
 
