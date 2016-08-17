@@ -1,0 +1,25 @@
+{
+  "name": "tp-hotel-booking",
+  "version": "1.0.0",
+  "description": "=== WP Hotel Booking ===\r Contributors: thimpress\r Donate link: https://thimpress.com/\r Tags: hotel, booking, hotel booking, reservation, reservations\r Requires at least: 3.0.1\r Tested up to: 4.4.2\r Stable tag: trunk\r License: GPLv2 or later\r License URI: http://www.gnu.org/licenses/gpl-2.0.html",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://ducnvtt92@bitbucket.org/foobla/tp-hotel-booking.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/foobla/tp-hotel-booking#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.2",
+    "gulp-save": "^1.2.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^2.0.0"
+  }
+}
