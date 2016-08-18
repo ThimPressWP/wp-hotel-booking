@@ -60,16 +60,6 @@ class HBWPML_Support {
         add_filter( 'hb_generate_transaction_object_room', array( $this, 'hb_generate_transaction_object_room' ), 10, 2 );
 
         // add_filter( 'icl_set_current_language', array( $this, 'wpml_switcher_language' ), 999 );
-        add_filter( 'hb_get_url', array( $this, 'hb_get_url' ), 10, 4 );
-    }
-    
-    /**
-     * search url
-     */
-    public function hb_get_url( $url, $page_id, $base_url, $query ) {
-        $page_id = icl_object_id( $page_id, 'page', false, $this->current_language_code );
-        $base_url = get_permalink( $page_id );
-        return $base_url . $query;
     }
 
     public function init() {
@@ -195,7 +185,7 @@ class HBWPML_Support {
     /* get page id */
 
     public function hb_get_page_id( $page_id ) {
-        return $this->get_object_default_language( $page_id, 'page', true );
+        return $this->get_object_default_language( $page_id, 'page', true, $this->current_language_code );
     }
 
     /* the content setup shortcode atts check available */

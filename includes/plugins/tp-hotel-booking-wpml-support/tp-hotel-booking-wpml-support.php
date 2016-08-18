@@ -4,7 +4,7 @@
     Plugin URI: http://thimpress.com/
     Description: Multilnguage CMS support
     Author: ThimPress
-    Version: 0.1.2
+    Version: 0.1.3
     Author URI: http://thimpress.com
 */
 

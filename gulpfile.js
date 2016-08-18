@@ -1,10 +1,10 @@
 /**
  * Command line
- * step 1: Install Nodejs & npm
- * step 2: Install gulp: sudo npm install gulp --save-dev
- * step 3: Init environment
- * step 4: Install packages: sudo npm install gulp-concat gulp-rename gulp-save gulp-sass gulp-sourcemaps gulp-uglify gulp-save save-dev
- * step 5: Start watch: gulp watch
+ * step 1: Install Nodejs & npm. 'npm install -g gulp-cli'
+ * step 2: Init environment: 'sudo npm init'
+ * step 3: Install gulp: 'sudo npm install gulp --save-dev'
+ * step 4: Install packages: 'sudo npm install gulp-concat gulp-rename gulp-save gulp-sass gulp-sourcemaps gulp-uglify gulp-save --save-dev'
+ * step 5: Start watch: 'gulp watch'
  * @type Module gulp|Module gulp
  */
 var gulp = require( 'gulp' ),
@@ -28,7 +28,7 @@ gulp.task( 'scripts', function(){
 } );
 
 /**
- * Conver Sass to Css and minify
+ * Convert Sass to Css and minify
  */
 gulp.task( 'styles', function(){
     return sass( 'assets/css/.scss' )
