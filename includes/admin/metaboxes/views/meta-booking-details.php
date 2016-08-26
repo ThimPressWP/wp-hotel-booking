@@ -107,17 +107,17 @@ $booking = HB_Booking::instance( $post->ID );
                 <div class="edit_details">
                     <div class="edit_col">
                         <?php hb_dropdown_titles( array( 'name' => '_hb_customer_title', 'class' => 'normal', 'selected' => $booking->customer_title ) ); ?>
-                        <input type="text" name="_hb_customer_first_name" id="_hb_customer_first_name" value="<?php echo esc_attr( $booking->customer_first_name ) ?>" placehoder="<?php esc_attr_e( 'First name', 'tp-hotel-booking' ); ?>"/>
-                        <input type="text" name="_hb_customer_last_name" id="_hb_customer_last_name" value="<?php echo esc_attr( $booking->customer_last_name ) ?>" placehoder="<?php esc_attr_e( 'Last name', 'tp-hotel-booking' ); ?>"/>
-                        <input type="text" name="_hb_customer_address" id="_hb_customer_address" value="<?php echo esc_attr( $booking->customer_address ) ?>" placehoder="<?php esc_attr_e( 'Address', 'tp-hotel-booking' ); ?>"/>
-                        <input type="text" name="_hb_customer_city" id="_hb_customer_city" value="<?php echo esc_attr( $booking->customer_city ) ?>" placehoder="<?php esc_attr_e( 'City', 'tp-hotel-booking' ); ?>"/>
+                        <input type="text" name="_hb_customer_first_name" id="_hb_customer_first_name" value="<?php echo esc_attr( $booking->customer_first_name ) ?>" placeholder="<?php esc_attr_e( 'First name', 'tp-hotel-booking' ); ?>"/>
+                        <input type="text" name="_hb_customer_last_name" id="_hb_customer_last_name" value="<?php echo esc_attr( $booking->customer_last_name ) ?>" placeholder="<?php esc_attr_e( 'Last name', 'tp-hotel-booking' ); ?>"/>
+                        <input type="text" name="_hb_customer_address" id="_hb_customer_address" value="<?php echo esc_attr( $booking->customer_address ) ?>" placeholder="<?php esc_attr_e( 'Address', 'tp-hotel-booking' ); ?>"/>
+                        <input type="text" name="_hb_customer_city" id="_hb_customer_city" value="<?php echo esc_attr( $booking->customer_city ) ?>" placeholder="<?php esc_attr_e( 'City', 'tp-hotel-booking' ); ?>"/>
                     </div>
                     <div class="edit_col">
-                        <input type="text" name="_hb_customer_state" id="_hb_customer_state" value="<?php echo esc_attr( $booking->customer_state ) ?>" placehoder="<?php esc_attr_e( 'State', 'tp-hotel-booking' ); ?>"/>
-                        <input type="text" name="_hb_customer_postal_code" id="_hb_customer_postal_code" value="<?php echo esc_attr( $booking->customer_postal_code ) ?>" placehoder="<?php esc_attr_e( 'Postl code', 'tp-hotel-booking' ); ?>"/>
+                        <input type="text" name="_hb_customer_state" id="_hb_customer_state" value="<?php echo esc_attr( $booking->customer_state ) ?>" placeholder="<?php esc_attr_e( 'State', 'tp-hotel-booking' ); ?>"/>
+                        <input type="text" name="_hb_customer_postal_code" id="_hb_customer_postal_code" value="<?php echo esc_attr( $booking->customer_postal_code ) ?>" placeholder="<?php esc_attr_e( 'Postl code', 'tp-hotel-booking' ); ?>"/>
                         <input type="email" placeholder="<?php esc_attr_e( 'Email address', 'tp-hotel-booking' ); ?>" name="_hb_customer_email" value="<?php echo esc_attr( $booking->customer_email ) ?>" />
                         <input type="text" name="_hb_customer_fax" placeholder="<?php esc_attr_e( 'Fax', 'tp-hotel-booking' ); ?>" value="<?php echo esc_attr( $booking->customer_tax ) ?>" />
-                        <input type="number" name="_hb_customer_phone" placeholder="<?php esc_attr_e( 'Phone', 'tp-hotel-booking' ); ?>" value="<?php echo esc_attr( $booking->customer_phone ) ?>" />
+                        <input type="text" name="_hb_customer_phone" placeholder="<?php esc_attr_e( 'Phone', 'tp-hotel-booking' ); ?>" value="<?php echo esc_attr( $booking->customer_phone ) ?>" />
                         <?php hb_dropdown_countries( array( 'name' => '_hb_customer_country', 'class' => 'normal', 'show_option_none' => __( 'Country', 'tp-hotel-booking' ), 'selected' => $booking->customer_country ) ); ?>
                     </div>
                 </div>
