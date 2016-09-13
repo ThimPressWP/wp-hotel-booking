@@ -1,17 +1,16 @@
 <?php
 $settings = HB_Settings::instance();
-$paypal = $settings->get('paypal');
+$paypal = $settings->get( 'paypal' );
 $paypal = wp_parse_args(
-    $paypal,
-    array(
-        'enable'    => 'on',
-        'email'     => '',
-        'sandbox'   => 'off',
-        'sandbox_email' => ''
-    )
+        $paypal, array(
+    'enable' => 'on',
+    'email' => '',
+    'sandbox' => 'off',
+    'sandbox_email' => ''
+        )
 );
 
-$field_name = $settings->get_field_name('paypal');
+$field_name = $settings->get_field_name( 'paypal' );
 ?>
 <table class="form-table">
     <tr>

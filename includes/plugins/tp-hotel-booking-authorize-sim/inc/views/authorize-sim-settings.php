@@ -1,21 +1,20 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
+if ( !defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
 $settings = HB_Settings::instance();
-$authorize = $settings->get('authorize');
+$authorize = $settings->get( 'authorize' );
 $authorize = wp_parse_args(
-    $authorize,
-    array(
-        'enable'    => 'on',
-        'sandbox'   => 'off',
-        'api_login_id'     => '',
-        'transaction_key' => ''
-    )
+        $authorize, array(
+    'enable' => 'on',
+    'sandbox' => 'off',
+    'api_login_id' => '',
+    'transaction_key' => ''
+        )
 );
 
-$field_name = $settings->get_field_name('authorize');
+$field_name = $settings->get_field_name( 'authorize' );
 ?>
 <table class="form-table">
     <tr>

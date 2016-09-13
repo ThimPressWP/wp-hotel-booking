@@ -1,13 +1,14 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
+if ( !defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
 /**
  * Class HB_Settings
  */
-class HB_Settings{
+class HB_Settings {
+
     /**
      * @var object
      */
@@ -24,7 +25,6 @@ class HB_Settings{
      * @var array
      */
     protected $_options = array();
-
     protected $_resizeImage = array();
 
     /**
@@ -33,18 +33,18 @@ class HB_Settings{
      * @param string
      * @param array
      */
-    function __construct( $new_prefix = null, $default = array() ){
+    function __construct( $new_prefix = null, $default = array() ) {
         add_action( 'admin_init', array( $this, 'update_settings' ) );
-        if( $new_prefix ){
+        if ( $new_prefix ) {
             $this->_option_prefix = $new_prefix;
         }
 
-        if( is_object( $default ) ){
-            $default = (array)$default;
+        if ( is_object( $default ) ) {
+            $default = (array) $default;
         }
 
-        if( is_array( $default ) ){
-            foreach( $default as $k => $value ){
+        if ( is_array( $default ) ) {
+            foreach ( $default as $k => $value ) {
                 add_option( $this->_option_prefix . $k, $value );
             }
         }
@@ -57,12 +57,12 @@ class HB_Settings{
      * @param string
      * @return mixed
      */
-    function get( $name, $default = false ){
+    function get( $name, $default = false ) {
         if ( strpos( $name, 'tp_hotel_booking_' ) === 0 ) {
             $name = str_replace( 'tp_hotel_booking_', '', $name );
         }
-        if( ! empty( $this->_options[ $name ] ) ){
-            return $this->_options[ $name ];
+        if ( !empty( $this->_options[$name] ) ) {
+            return $this->_options[$name];
         }
         return $default;
     }
@@ -74,10 +74,10 @@ class HB_Settings{
      * @param mixed
      * @return array
      */
-    function set( $name, $value ){
+    function set( $name, $value ) {
         // update option
         update_option( $this->_option_prefix . $name, $value );
-        $this->_options[ $name ] = $value;
+        $this->_options[$name] = $value;
 
         // allow hook
         do_action( 'hb_update_settings_' . $name, $name, $value );
@@ -90,9 +90,9 @@ class HB_Settings{
      * @param string
      * @return array
      */
-    function remove( $name ){
-        if( array_key_exists( $name, $this->_options ) ){
-            unset( $this->_options[ $name ] );
+    function remove( $name ) {
+        if ( array_key_exists( $name, $this->_options ) ) {
+            unset( $this->_options[$name] );
         }
         return $this->_options;
     }
@@ -100,10 +100,11 @@ class HB_Settings{
     /**
      * Update all options into database
      */
-    function update(){
-        if( $this->_options ) foreach( $this->_options as $k => $v ){
-            update_option( $this->_option_prefix . $k, $v );
-        }
+    function update() {
+        if ( $this->_options )
+            foreach ( $this->_options as $k => $v ) {
+                update_option( $this->_option_prefix . $k, $v );
+            }
     }
 
     /**
@@ -112,7 +113,7 @@ class HB_Settings{
      * @param string
      * @return string
      */
-    function get_field_name( $name ){
+    function get_field_name( $name ) {
         return $this->_option_prefix . $name;
     }
 
@@ -122,25 +123,26 @@ class HB_Settings{
      * @param string
      * @return string
      */
-    function get_field_id( $name ){
+    function get_field_id( $name ) {
         return sanitize_title( $this->get_field_name( $name ) );
     }
 
     /**
      * Update settings
      */
-    function update_settings(){
-        if( strtolower( $_SERVER['REQUEST_METHOD']) != 'post' ) return;
-        foreach( $_POST as $k => $v ){
-            if( preg_match( '!^' . $this->_option_prefix . '!', $k ) ) {
+    function update_settings() {
+        if ( strtolower( $_SERVER['REQUEST_METHOD'] ) != 'post' )
+            return;
+        foreach ( $_POST as $k => $v ) {
+            if ( preg_match( '!^' . $this->_option_prefix . '!', $k ) ) {
                 $option_key = preg_replace( '!^' . $this->_option_prefix . '!', '', $k );
-                if( ! $option_key ) continue;
+                if ( !$option_key )
+                    continue;
                 if ( is_string( $v ) ) {
-                    $_POST[ $k ] = sanitize_text_field( $v );
+                    $_POST[$k] = sanitize_text_field( $v );
                 }
-                $this->set( $option_key, $_POST[ $k ] );
+                $this->set( $option_key, $_POST[$k] );
             }
-
         }
         $this->update();
     }
@@ -149,19 +151,18 @@ class HB_Settings{
      * Load all options
      * @return array
      */
-    private function _load_options(){
+    private function _load_options() {
         global $wpdb;
-        $query = $wpdb->prepare("
+        $query = $wpdb->prepare( "
                 SELECT option_name, option_value
                 FROM {$wpdb->options}
                 WHERE option_name LIKE %s
-            ",
-            $this->_option_prefix . '%'
+            ", $this->_option_prefix . '%'
         );
-        if( $options = $wpdb->get_results( $query ) ){
-            foreach( $options as $option ){
+        if ( $options = $wpdb->get_results( $query ) ) {
+            foreach ( $options as $option ) {
                 $name = str_replace( $this->_option_prefix, '', $option->option_name );
-                $this->_options[ $name ] = maybe_unserialize( $option->option_value );
+                $this->_options[$name] = maybe_unserialize( $option->option_value );
             }
         }
         return $this->_options;
@@ -172,7 +173,7 @@ class HB_Settings{
      *
      * @return string
      */
-    function __toString(){
+    function __toString() {
         return json_encode( $this->_options );
     }
 
@@ -183,21 +184,20 @@ class HB_Settings{
      * @param array $fields
      * @return string
      */
-    function toJson( $fields = array() ){
-        if( $fields ){
+    function toJson( $fields = array() ) {
+        if ( $fields ) {
             $options = array();
-            foreach( $fields as $k => $v ){
-                $options[ $v ] = $this->get( $v );
+            foreach ( $fields as $k => $v ) {
+                $options[$v] = $this->get( $v );
             }
             $return = json_encode( $options );
-        }else{
+        } else {
             $return = json_encode( $this->_options );
         }
         return $return;
     }
 
-    function get_prefix()
-    {
+    function get_prefix() {
         return $this->_option_prefix;
     }
 
@@ -209,19 +209,20 @@ class HB_Settings{
      * @param array
      * @return HB_Settings instance
      */
-    static function instance( $prefix = null, $default = array() ){
-        if( ! $prefix || ! is_string( $prefix ) ){
+    static function instance( $prefix = null, $default = array() ) {
+        if ( !$prefix || !is_string( $prefix ) ) {
             $prefix = 'tp_hotel_booking_';
         }
-        if( empty( self::$_instances[ $prefix ] ) ){
-            self::$_instances[ $prefix ] = new self( $prefix, $default );
+        if ( empty( self::$_instances[$prefix] ) ) {
+            self::$_instances[$prefix] = new self( $prefix, $default );
         }
-        return self::$_instances[ $prefix ];
+        return self::$_instances[$prefix];
     }
+
 }
 
 $GLOBALS['hb_settings'] = HB_Settings::instance();
 
-function hb_settings(){
+function hb_settings() {
     return HB_Settings::instance();
 }

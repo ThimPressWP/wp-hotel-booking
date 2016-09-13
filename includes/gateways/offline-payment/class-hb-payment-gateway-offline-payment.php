@@ -87,7 +87,7 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
         hb_add_message( sprintf( __( 'Thank you! Your booking has been placed. Please check your email %s to view booking details', 'tp-hotel-booking' ), $booking->customer_email ) );
         return array(
             'result'    => 'success',
-            'redirect'  => '?hotel-booking-offline-payment=1'
+            'redirect'  => add_query_arg( 'hotel-booking-offline-payment', 1, hb_get_checkout_url() )
         );
 
     }

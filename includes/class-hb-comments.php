@@ -1,6 +1,6 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
+if ( !defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
@@ -9,12 +9,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Handle actions for comments and reviews
  */
-class HB_Comments{
+class HB_Comments {
 
     /**
      * Constructor
      */
-    function __construct(){
+    function __construct() {
         add_action( 'comment_post', array( __CLASS__, 'add_comment_rating' ), 10, 2 );
         add_action( 'hotel_booking_single_room_before_tabs_content_hb_room_reviews', 'comments_template' );
         add_filter( 'comments_template', array( __CLASS__, 'load_comments_template' ) );
@@ -29,8 +29,8 @@ class HB_Comments{
     /**
      * Load template for room reviews if it is enable
      */
-    function comments_template(){
-        if( comments_open() ){
+    function comments_template() {
+        if ( comments_open() ) {
             comments_template();
         }
     }
@@ -41,7 +41,7 @@ class HB_Comments{
      * @param string $template
      * @return string
      */
-    static function load_comments_template( $template ){
+    static function load_comments_template( $template ) {
         if ( get_post_type() !== 'hb_room' ) {
             return $template;
         }
@@ -73,8 +73,7 @@ class HB_Comments{
                 // save comment rating
                 add_comment_meta( $comment_id, 'rating', $rating, true );
 
-                if( $approved === 1 )
-                {
+                if ( $approved === 1 ) {
                     // save post meta arveger_rating
                     $comment = get_comment( $comment_id );
 
@@ -85,71 +84,60 @@ class HB_Comments{
 
                     $old_rating = get_post_meta( $postID, 'arveger_rating', true );
                     $old_modify = get_post_meta( $postID, 'arveger_rating_last_modify', true );
-                    if( $old_rating )
-                    {
+                    if ( $old_rating ) {
                         update_post_meta( $postID, 'arveger_rating', $averger_rating );
                         update_post_meta( $postID, 'arveger_rating_last_modify', time() );
-                    }
-                    else
-                    {
+                    } else {
                         add_post_meta( $postID, 'arveger_rating', $averger_rating );
                         add_post_meta( $postID, 'arveger_rating_last_modify', time() );
                     }
                 }
             }
-
         }
     }
 
-    static function comments_count()
-    {
+    static function comments_count() {
         global $hb_room;
         echo '<span class="comment-count">(' . $hb_room->get_review_count() . ')</span>';
     }
 
-    static function addTabReviews( $tabsInfo )
-    {
-        if( ! comments_open() )
+    static function addTabReviews( $tabsInfo ) {
+        if ( !comments_open() )
             return $tabsInfo;
 
         $tabsInfo[] = array(
-            'id'        => 'hb_room_reviews',
-            'title'     => __( 'Reviews', 'tp-hotel-booking' ),
-            'content'   => ''
+            'id' => 'hb_room_reviews',
+            'title' => __( 'Reviews', 'tp-hotel-booking' ),
+            'content' => ''
         );
 
         return $tabsInfo;
     }
 
-    function comments_column( $columns )
-    {
-        $columns['hb_rating']   = __( 'Rating Room', 'tp-hotel-booking' );
+    function comments_column( $columns ) {
+        $columns['hb_rating'] = __( 'Rating Room', 'tp-hotel-booking' );
         return $columns;
     }
 
-    function comments_custom_column( $column, $comment_id )
-    {
-        switch ( $column )
-        {
+    function comments_custom_column( $column, $comment_id ) {
+        switch ( $column ) {
             case 'hb_rating':
-                if( $rating = get_comment_meta( $comment_id, 'rating', true ) )
-                {
+                if ( $rating = get_comment_meta( $comment_id, 'rating', true ) ) {
                     $html = array();
                     $html[] = '<div class="rating">';
-                    if( $rating ):
-                        $html[] =   '<div itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating" class="star-rating" title="'.( sprintf( __( 'Rated %d out of 5', 'tp-hotel-booking' ), $rating ) ).'">';
-                        $html[] =       '<span style="width:'.( ( $rating / 5 ) * 100 ) .'%"></span>';
-                        $html[] =   '</div>';
+                    if ( $rating ):
+                        $html[] = '<div itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating" class="star-rating" title="' . ( sprintf( __( 'Rated %d out of 5', 'tp-hotel-booking' ), $rating ) ) . '">';
+                        $html[] = '<span style="width:' . ( ( $rating / 5 ) * 100 ) . '%"></span>';
+                        $html[] = '</div>';
                     endif;
-                    $html[] =  '</div>';
-                    $html = implode( '', $html);
+                    $html[] = '</div>';
+                    $html = implode( '', $html );
                 }
-                else
-                {
+                else {
                     $html = __( 'No rating', 'tp-hotel-booking' );
                 }
                 echo sprintf( '%s', $html );
-            break;
+                break;
         }
     }
 

@@ -24,7 +24,8 @@ function hb_get_max_capacity_of_rooms() {
                 $max = $cap;
             }
         }
-    return $max;
+
+    return apply_filters( 'get_max_capacity_of_rooms', $max );
 }
 
 // get array search
@@ -1002,10 +1003,10 @@ function hb_search_rooms( $args = array() ) {
 
     $query = $wpdb->prepare( "
 			SELECT rooms.*, ( number.meta_value - {$not} ) AS available_rooms FROM $wpdb->posts AS rooms
-				LEFT JOIN $wpdb->postmeta AS number ON rooms.ID = number.post_id AND number.meta_key = %s
-				LEFT JOIN {$wpdb->postmeta} pm1 ON pm1.post_id = rooms.ID AND pm1.meta_key = %s
-				LEFT JOIN {$wpdb->termmeta} term_cap ON term_cap.term_id = pm1.meta_value AND term_cap.meta_key = %s
-				LEFT JOIN {$wpdb->postmeta} pm2 ON pm2.post_id = rooms.ID AND pm2.meta_key = %s
+                                LEFT JOIN {$wpdb->postmeta} AS number ON rooms.ID = number.post_id AND number.meta_key = %s
+				LEFT JOIN {$wpdb->postmeta} AS pm1 ON pm1.post_id = rooms.ID AND pm1.meta_key = %s
+				LEFT JOIN {$wpdb->termmeta} AS term_cap ON term_cap.term_id = pm1.meta_value AND term_cap.meta_key = %s
+				LEFT JOIN {$wpdb->postmeta} AS pm2 ON pm2.post_id = rooms.ID AND pm2.meta_key = %s
 			WHERE
 				rooms.post_type = %s
 				AND rooms.post_status = %s
@@ -1021,7 +1022,7 @@ function hb_search_rooms( $args = array() ) {
         'check_out' => $check_out_date_to_time,
         'adults' => $adults,
         'child' => $max_child
-    ) );
+            ) );
 
     if ( $search = $wpdb->get_results( $query ) ) {
         foreach ( $search as $k => $p ) {

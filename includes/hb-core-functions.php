@@ -46,7 +46,7 @@ if ( !function_exists( 'hotel_booking_get_room_available' ) ) {
             'excerpt' => array(
                 0
             )
-        ) );
+                ) );
 
         if ( !$args['check_in_date'] ) {
             $valid = false;

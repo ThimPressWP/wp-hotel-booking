@@ -1,16 +1,21 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
 }
 
-abstract class HB_Product_Abstract
-{
+abstract class HB_Product_Abstract {
 
-	function __construct( $params = null ){}
+    function __construct( $params = null ) {
+        
+    }
 
-	function amount_include_tax(){}
+    function amount_include_tax() {
+        
+    }
 
-	function amount_exclude_tax(){}
+    function amount_exclude_tax() {
+        
+    }
 
 }

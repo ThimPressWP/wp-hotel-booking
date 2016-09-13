@@ -1,128 +1,116 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
 }
 
-if( ! session_id() ) {
+if ( !session_id() ) {
     @session_start();
 }
 
-class HB_Sessions
-{
+class HB_Sessions {
 
-	// instance
-	static $_instance = null;
+    // instance
+    static $_instance = null;
+    // $session
+    public $session = null;
+    // live time of cookie
+    private $live_item = null;
+    // remember
+    private $remember = false;
 
-	// $session
-	public $session = null;
+    /**
+     * prefix
+     * @var null
+     */
+    public $prefix = null;
 
-	// live time of cookie
-	private $live_item = null;
+    function __construct( $prefix = '', $remember = true ) {
+        if ( !$prefix )
+            return;
 
-	// remember
-	private $remember = false;
+        $this->prefix = $prefix;
+        $this->remember = $remember;
 
-	/**
-	 * prefix
-	 * @var null
-	 */
-	public $prefix = null;
+        $this->live_item = 12 * HOUR_IN_SECONDS;
 
-	function __construct( $prefix = '', $remember = true )
-	{
-		if( ! $prefix )
-			return;
+        // get all
+        $this->session = $this->load();
+    }
 
-		$this->prefix = $prefix;
-		$this->remember = $remember;
+    /**
+     * load all with prefix
+     * @return
+     */
+    function load() {
+        if ( isset( $_SESSION[$this->prefix] ) ) {
+            return $_SESSION[$this->prefix];
+        } else if ( $this->remember && isset( $_COOKIE[$this->prefix] ) ) {
+            return $_SESSION[$this->prefix] = maybe_unserialize( $_COOKIE[$this->prefix] );
+        }
 
-		$this->live_item = 12 * HOUR_IN_SECONDS;
+        return array();
+    }
 
-		// get all
-		$this->session = $this->load();
+    // remove session
+    function remove() {
+        if ( isset( $_SESSION[$this->prefix] ) ) {
+            unset( $_SESSION[$this->prefix] );
+        }
 
-	}
+        if ( $this->remember && isset( $_COOKIE[$this->prefix] ) ) {
+            unset( $_COOKIE[$this->prefix] );
+            setcookie( $this->prefix, '', time() - $this->live_item, COOKIEPATH, COOKIE_DOMAIN );
+        }
 
-	/**
-	 * load all with prefix
-	 * @return
-	 */
-	function load()
-	{
-		if( isset( $_SESSION[ $this->prefix ] ) ) {
-			return $_SESSION[ $this->prefix ];
-		} else if( $this->remember && isset( $_COOKIE[ $this->prefix ] ) ) {
-			return $_SESSION[ $this->prefix ] = maybe_unserialize( $_COOKIE[ $this->prefix ] );
-		}
+        return $this->session = null;
+    }
 
-		return array();
-	}
+    /**
+     * set key
+     * @param $key
+     * @param $value
+     */
+    function set( $name = null, $value = null ) {
+        if ( !$name )
+            return;
 
-	// remove session
-	function remove()
-	{
-		if( isset( $_SESSION[ $this->prefix ] ) )
-		{
-			unset( $_SESSION[ $this->prefix ] );
-		}
+        $time = time();
+        if ( !$value ) {
+            unset( $this->session[$name] );
+            $time = $time - $this->live_item;
+        } else {
+            $this->session[$name] = $value;
+            $time = $time + $this->live_item;
+        }
 
-		if( $this->remember && isset( $_COOKIE[ $this->prefix ] ) )
-		{
-			unset( $_COOKIE[$this->prefix] );
-			setcookie( $this->prefix, '', time() - $this->live_item, COOKIEPATH, COOKIE_DOMAIN );
-		}
+        // save session
+        $_SESSION[$this->prefix] = $this->session;
 
-		return $this->session = null;
-	}
+        // save cookie
+        if ( $this->remember ) {
+            @setcookie( $this->prefix, maybe_serialize( $this->session ), $time, COOKIEPATH, COOKIE_DOMAIN );
+        }
+    }
 
-	/**
-	 * set key
-	 * @param $key
-	 * @param $value
-	 */
-	function set( $name = null, $value = null )
-	{
-		if( ! $name ) return;
+    /**
+     * get value
+     * @param  $key
+     * @return anythings
+     */
+    function get( $name = null, $default = null ) {
+        if ( !$name )
+            return $default;
 
-		$time = time();
-		if( ! $value ) {
-			unset( $this->session[ $name ] );
-			$time = $time - $this->live_item;
-		} else {
-			$this->session[ $name ] = $value;
-			$time = $time + $this->live_item;
-		}
+        if ( isset( $this->session[$name] ) )
+            return $this->session[$name];
+    }
 
-		// save session
-		$_SESSION[ $this->prefix ] = $this->session;
+    static function instance( $prefix = '' ) {
+        if ( !empty( self::$_instance[$prefix] ) )
+            return self::$_instance[$prefix];
 
-		// save cookie
-		if ( $this->remember ) {
-			@setcookie( $this->prefix, maybe_serialize( $this->session ), $time, COOKIEPATH, COOKIE_DOMAIN );
-		}
-	}
-
-	/**
-	 * get value
-	 * @param  $key
-	 * @return anythings
-	 */
-	function get( $name = null, $default = null )
-	{
-		if( ! $name )
-			return $default;
-
-		if( isset( $this->session[ $name ] ) )
-			return $this->session[ $name ];
-	}
-
-	static function instance( $prefix = '' )
-	{
-		if( ! empty( self::$_instance[ $prefix ] ) )
-			return self::$_instance[ $prefix ];
-
-		return self::$_instance[ $prefix ] = new self( $prefix );
-	}
+        return self::$_instance[$prefix] = new self( $prefix );
+    }
 
 }

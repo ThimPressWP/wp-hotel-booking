@@ -3,36 +3,37 @@
 /**
  * Class HB_Payment_Gateway_Paypal
  */
-class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
-    /**
-     * @var null
-     */
-    protected $paypal_live_url              = null;
+class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base {
 
     /**
      * @var null
      */
-    protected $paypal_sandbox_url           = null;
+    protected $paypal_live_url = null;
 
     /**
      * @var null
      */
-    protected $paypal_payment_live_url      = null;
+    protected $paypal_sandbox_url = null;
 
     /**
      * @var null
      */
-    protected $paypal_payment_sandbox_url   = null;
+    protected $paypal_payment_live_url = null;
 
     /**
      * @var null
      */
-    protected $paypal_nvp_api_live_url      = null;
+    protected $paypal_payment_sandbox_url = null;
 
     /**
      * @var null
      */
-    protected $paypal_vnp_api_sandbox_url   = null;
+    protected $paypal_nvp_api_live_url = null;
+
+    /**
+     * @var null
+     */
+    protected $paypal_vnp_api_sandbox_url = null;
 
     /**
      * @var array
@@ -42,19 +43,19 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
     /**
      * Construction
      */
-    function __construct(){
+    function __construct() {
         parent::__construct();
         $this->_slug = 'paypal';
         $this->_title = __( 'Paypal', 'tp-hotel-booking-paypal' );
         $this->_description = __( 'Pay with Paypal', 'tp-hotel-booking-paypal' );
-        $this->_settings = HB_Settings::instance()->get('paypal');
+        $this->_settings = HB_Settings::instance()->get( 'paypal' );
 
-        $this->paypal_live_url              = 'https://www.paypal.com/';
-        $this->paypal_sandbox_url           = 'https://www.sandbox.paypal.com/';
-        $this->paypal_payment_live_url      = 'https://www.paypal.com/cgi-bin/webscr';
-        $this->paypal_payment_sandbox_url   = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
-        $this->paypal_nvp_api_live_url      = 'https://api-3t.paypal.com/nvp';
-        $this->paypal_nvp_api_sandbox_url   = 'https://api-3t.sandbox.paypal.com/nvp';
+        $this->paypal_live_url = 'https://www.paypal.com/';
+        $this->paypal_sandbox_url = 'https://www.sandbox.paypal.com/';
+        $this->paypal_payment_live_url = 'https://www.paypal.com/cgi-bin/webscr';
+        $this->paypal_payment_sandbox_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
+        $this->paypal_nvp_api_live_url = 'https://api-3t.paypal.com/nvp';
+        $this->paypal_nvp_api_sandbox_url = 'https://api-3t.sandbox.paypal.com/nvp';
 
         $this->init();
     }
@@ -62,7 +63,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
     /**
      * Init hooks
      */
-    function init(){
+    function init() {
         add_action( 'hb_payment_gateway_form_' . $this->slug, array( $this, 'form' ) );
         add_action( 'hb_do_checkout_' . $this->_slug, array( $this, 'process_checkout' ) );
         add_action( 'hb_do_transaction_paypal-standard', array( $this, 'process_booking_paypal_standard' ) );
@@ -77,7 +78,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      *
      * @return mixed
      */
-    function payment_method_title(){
+    function payment_method_title() {
         return $this->_description;
     }
 
@@ -88,52 +89,53 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      * @param $total
      * @param $total_with_currency
      */
-    function column_total_content( $booking_id, $total, $total_with_currency ){
+    function column_total_content( $booking_id, $total, $total_with_currency ) {
         $booking = HB_Booking::instance( $booking_id );
-        if( $total && $booking->method == 'paypal-standard' ) {
+        if ( $total && $booking->method == 'paypal-standard' ) {
             $advance_payment = $booking->advance_payment;
-            printf(__('<br /><small>(Paid %s%% of %s via %s)</small>', 'tp-hotel-booking-paypal'), round( $advance_payment / $total, 2 ) * 100, $total_with_currency, 'Paypal' );
+            printf( __( '<br /><small>(Paid %s%% of %s via %s)</small>', 'tp-hotel-booking-paypal' ), round( $advance_payment / $total, 2 ) * 100, $total_with_currency, 'Paypal' );
         }
     }
 
-
-    function form(){
-        echo _e( 'Pay with Paypal', 'tp-hotel-booking-paypal');
+    function form() {
+        echo _e( 'Pay with Paypal', 'tp-hotel-booking-paypal' );
     }
 
     /**
      * @return bool
      */
-    function process_booking_paypal_standard(){
+    function process_booking_paypal_standard() {
         //return;
-        if( ! empty( $_REQUEST['hb-transaction-method'] ) && ( 'paypal-standard' == sanitize_text_field( $_REQUEST['hb-transaction-method'] ) ) ) {
+        if ( !empty( $_REQUEST['hb-transaction-method'] ) && ( 'paypal-standard' == sanitize_text_field( $_REQUEST['hb-transaction-method'] ) ) ) {
             $cart = HB_Cart::instance();
             $cart->empty_cart();
 
-            wp_redirect( get_site_url() ); exit();
+            wp_redirect( get_site_url() );
+            exit();
         }
 
-        wp_redirect( get_site_url() ); exit();
+        wp_redirect( get_site_url() );
+        exit();
     }
 
     /**
      * Web hook to process booking with Paypal IPN
      * @param $request
      */
-    function web_hook_process_paypal_standard( $request ){
+    function web_hook_process_paypal_standard( $request ) {
         $payload['cmd'] = '_notify-validate';
-        foreach( $_POST as $key => $value ) {
+        foreach ( $_POST as $key => $value ) {
             $payload[$key] = stripslashes( $value );
         }
-        $paypal_api_url = ! empty( $_REQUEST['test_ipn'] ) ? $this->paypal_payment_sandbox_url : $this->paypal_payment_live_url;
+        $paypal_api_url = !empty( $_REQUEST['test_ipn'] ) ? $this->paypal_payment_sandbox_url : $this->paypal_payment_live_url;
         $response = wp_remote_post( $paypal_api_url, array( 'body' => $payload ) );
         $body = wp_remote_retrieve_body( $response );
         if ( 'VERIFIED' === $body ) {
-            if ( ! empty( $request['txn_type'] ) ) {
+            if ( !empty( $request['txn_type'] ) ) {
 
                 switch ( $request['txn_type'] ) {
                     case 'web_accept':
-                        if ( ! empty( $request['custom'] ) && ( $booking = $this->get_booking( $request['custom'] ) ) ) {
+                        if ( !empty( $request['custom'] ) && ( $booking = $this->get_booking( $request['custom'] ) ) ) {
                             $request['payment_status'] = strtolower( $request['payment_status'] );
 
                             if ( isset( $request['test_ipn'] ) && 1 == $request['test_ipn'] && 'pending' == $request['payment_status'] ) {
@@ -144,21 +146,20 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
                             }
                         }
                         break;
-
                 }
             }
         }
     }
 
-    function get_booking( $raw_custom ){
+    function get_booking( $raw_custom ) {
         $raw_custom = stripslashes( $raw_custom );
         if ( ( $custom = json_decode( $raw_custom ) ) && is_object( $custom ) ) {
-            $booking_id  = $custom->booking_id;
+            $booking_id = $custom->booking_id;
             $booking_key = $custom->booking_key;
 
             // Fallback to serialized data if safe. This is @deprecated in 2.3.11
-        } elseif ( preg_match( '/^a:2:{/', $raw_custom ) && ! preg_match( '/[CO]:\+?[0-9]+:"/', $raw_custom ) && ( $custom = maybe_unserialize( $raw_custom ) ) ) {
-            $booking_id  = $custom[0];
+        } elseif ( preg_match( '/^a:2:{/', $raw_custom ) && !preg_match( '/[CO]:\+?[0-9]+:"/', $raw_custom ) && ( $custom = maybe_unserialize( $raw_custom ) ) ) {
+            $booking_id = $custom[0];
             $booking_key = $custom[1];
 
             // Nothing was found
@@ -167,13 +168,13 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
             return false;
         }
 
-        if ( ! $booking = HB_Booking::instance( $booking_id ) ) {
+        if ( !$booking = HB_Booking::instance( $booking_id ) ) {
             $booking_id = hb_get_booking_id_by_key( $booking_key );
-            $booking    = HB_Booking::instance( $booking_id );
+            $booking = HB_Booking::instance( $booking_id );
         }
 
-        if ( ! $booking || $booking->booking_key !== $booking_key ) {
-            printf( __( 'Error: Booking Keys do not match %s and %s.', 'tp-hotel-booking-paypal' ) , $booking->booking_key, $booking_key );
+        if ( !$booking || $booking->booking_key !== $booking_key ) {
+            printf( __( 'Error: Booking Keys do not match %s and %s.', 'tp-hotel-booking-paypal' ), $booking->booking_key, $booking_key );
             return false;
         }
         return $booking;
@@ -192,23 +193,18 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         }
 
         if ( 'completed' === $request['payment_status'] ) {
-            if( (float)$booking->total === (float)$request['payment_gross'] )
-            {
-                $this->payment_complete( $booking, ( ! empty( $request['txn_id'] ) ? $request['txn_id'] : '' ), __( 'IPN payment completed', 'tp-hotel-booking-paypal' ) );
-            }
-            else
-            {
+            if ( (float) $booking->total === (float) $request['payment_gross'] ) {
+                $this->payment_complete( $booking, (!empty( $request['txn_id'] ) ? $request['txn_id'] : '' ), __( 'IPN payment completed', 'tp-hotel-booking-paypal' ) );
+            } else {
                 $booking->update_status( 'processing' );
             }
             // save paypal fee
-            if ( ! empty( $request['mc_fee'] ) ) {
+            if ( !empty( $request['mc_fee'] ) ) {
                 update_post_meta( $booking->post->id, 'PayPal Transaction Fee', $request['mc_fee'] );
             }
-
         } else {
-
+            
         }
-
     }
 
     /**
@@ -226,7 +222,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      * @param string $txn_id
      * @param string $note - not use
      */
-    function payment_complete( $booking, $txn_id = '', $note = '' ){
+    function payment_complete( $booking, $txn_id = '', $note = '' ) {
         $booking->payment_complete( $txn_id );
     }
 
@@ -236,18 +232,19 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      * @param $txn_id
      * @return int
      */
-    function get_order_id( $txn_id ){
+    function get_order_id( $txn_id ) {
 
         $args = array(
-            'meta_key'    => '_hb_method_id',
-            'meta_value'  => $txn_id,
+            'meta_key' => '_hb_method_id',
+            'meta_value' => $txn_id,
             'numberposts' => 1, //we should only have one, so limit to 1
         );
 
         $bookings = hb_get_bookings( $args );
-        if( $bookings ) foreach( $bookings as $booking ){
-            return $booking->ID;
-        }
+        if ( $bookings )
+            foreach ( $bookings as $booking ) {
+                return $booking->ID;
+            }
         return 0;
     }
 
@@ -257,46 +254,46 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      * @param $booking_id
      * @return string
      */
-    protected function _get_paypal_basic_checkout_url( $booking_id ){
+    protected function _get_paypal_basic_checkout_url( $booking_id ) {
 
         $paypal = HB_Settings::instance()->get( 'paypal' );
 
-        $paypal_args = array (
-            'cmd'      => '_xclick',
-            'amount'   => round( TP_Hotel_Booking::instance()->cart->hb_get_cart_total( ! hb_get_request( 'pay_all' ) ), 2 ),
+        $paypal_args = array(
+            'cmd' => '_xclick',
+            'amount' => round( TP_Hotel_Booking::instance()->cart->hb_get_cart_total( !hb_get_request( 'pay_all' ) ), 2 ),
             'quantity' => '1',
         );
 
-        $booking    = HB_Booking::instance( $booking_id );
+        $booking = HB_Booking::instance( $booking_id );
         $advance_payment = hb_get_advance_payment();
         $pay_all = hb_get_request( 'pay_all' );
 
         $nonce = wp_create_nonce( 'hb-paypal-nonce' );
         $paypal_email = $paypal['sandbox'] === 'on' ? $paypal['sandbox_email'] : $paypal['email'];
         $custom = array( 'booking_id' => $booking->id, 'booking_key' => $booking->booking_key );
-        if( $advance_payment && ! $pay_all ){
+        if ( $advance_payment && !$pay_all ) {
             $custom['advance_payment'] = $advance_payment;
         }
         $query = array(
-            'business'      => $paypal_email,
-            'item_name'     => hb_get_cart_description(),
-            'return'        => add_query_arg( array( 'hb-transaction-method' => 'paypal-standard', 'paypal-nonce' => $nonce ), hb_get_return_url() ),
+            'business' => $paypal_email,
+            'item_name' => hb_get_cart_description(),
+            'return' => add_query_arg( array( 'hb-transaction-method' => 'paypal-standard', 'paypal-nonce' => $nonce ), hb_get_return_url() ),
             'currency_code' => hb_get_currency(),
-            'notify_url'    => get_site_url() . '/?' . hb_get_web_hook( 'paypal-standard' ) . '=1',
-            'no_note'       => '1',
-            'shipping'      => '0',
-            'email'         => $booking->customer_email,
-            'rm'            => '2',
+            'notify_url' => get_site_url() . '/?' . hb_get_web_hook( 'paypal-standard' ) . '=1',
+            'no_note' => '1',
+            'shipping' => '0',
+            'email' => $booking->customer_email,
+            'rm' => '2',
             'cancel_return' => hb_get_return_url(),
-            'custom'        => json_encode( $custom ),
-            'no_shipping'   => '1'
+            'custom' => json_encode( $custom ),
+            'no_shipping' => '1'
         );
 
         $query = array_merge( $paypal_args, $query );
 
         $query = apply_filters( 'hb_paypal_standard_query', $query );
 
-        $paypal_payment_url = ( $paypal['sandbox'] === 'on' ? $this->paypal_payment_sandbox_url : $this->paypal_payment_live_url ) . '?' .  http_build_query( $query );
+        $paypal_payment_url = ( $paypal['sandbox'] === 'on' ? $this->paypal_payment_sandbox_url : $this->paypal_payment_live_url ) . '?' . http_build_query( $query );
 
         return $paypal_payment_url;
     }
@@ -307,10 +304,10 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      * @param null $booking_id
      * @return array
      */
-    function process_checkout( $booking_id = null ){
+    function process_checkout( $booking_id = null ) {
         return array(
-            'result'    => 'success',
-            'redirect'  => $this->_get_paypal_basic_checkout_url(  $booking_id  )
+            'result' => 'success',
+            'redirect' => $this->_get_paypal_basic_checkout_url( $booking_id )
         );
     }
 
@@ -319,14 +316,15 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      *
      * @param $gateway
      */
-    function admin_settings(){
+    function admin_settings() {
         include_once TP_HB_PAYPAL_DIR . '/inc/views/paypal-settings.php';
     }
 
     /**
      * @return bool
      */
-    function is_enable(){
-        return ! empty( $this->_settings['enable'] ) && $this->_settings['enable'] == 'on';
+    function is_enable() {
+        return !empty( $this->_settings['enable'] ) && $this->_settings['enable'] == 'on';
     }
+
 }

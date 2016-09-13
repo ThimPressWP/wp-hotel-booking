@@ -1,16 +1,14 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
+if ( !defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-class HB_Product_Room_Base extends HB_Product_Abstract
-{
-	public $quantity = 1;
+class HB_Product_Room_Base extends HB_Product_Abstract {
 
-	public $check_in_date = 1;
-
-	public $check_out_date = 1;
+    public $quantity = 1;
+    public $check_in_date = 1;
+    public $check_out_date = 1;
 
     /**
      * @var null
@@ -33,33 +31,32 @@ class HB_Product_Room_Base extends HB_Product_Abstract
     public $_room_details_total = 0;
 
     /**
-    * @return setting
-    */
+     * @return setting
+     */
     public $_settings;
 
     /**
-    * reivew detail
-    * @return null or array
-    */
+     * reivew detail
+     * @return null or array
+     */
     public $_review_details = null;
 
-	function __construct( $post, $params = null )
-	{
-		if( is_numeric( $post ) && $post && get_post_type( $post ) == 'hb_room' ) {
+    function __construct( $post, $params = null ) {
+        if ( is_numeric( $post ) && $post && get_post_type( $post ) == 'hb_room' ) {
             $this->post = get_post( $post );
-        }else if ( $post instanceof WP_Post || is_object( $post ) ){
+        } else if ( $post instanceof WP_Post || is_object( $post ) ) {
             $this->post = $post;
         }
         if ( empty( $this->post ) ) {
             $this->post = hb_create_empty_post();
         }
         global $hb_settings;
-        if( ! $this->_settings )
+        if ( !$this->_settings )
             $this->_settings = $hb_settings;
 
-        if( $params )
+        if ( $params )
             $this->set_data( $params );
-	}
+    }
 
     /**
      * Set extra data form room
@@ -68,9 +65,9 @@ class HB_Product_Room_Base extends HB_Product_Abstract
      * @param null $value
      * @return $this
      */
-    function set_data( $key, $value = null ){
-        if( is_array( $key ) ){
-            foreach( $key as $k => $v ){
+    function set_data( $key, $value = null ) {
+        if ( is_array( $key ) ) {
+            foreach ( $key as $k => $v ) {
                 $this->set_data( $k, $v );
             }
         } else {
@@ -85,8 +82,8 @@ class HB_Product_Room_Base extends HB_Product_Abstract
      * @param $key
      * @return bool
      */
-    function get_data( $key ){
-        return ! empty( $this->_external_data[ $key ] ) ? $this->_external_data[ $key ] : ( $key === false ? $this->_external_data : false );
+    function get_data( $key ) {
+        return !empty( $this->_external_data[$key] ) ? $this->_external_data[$key] : ( $key === false ? $this->_external_data : false );
     }
 
     /**
@@ -95,20 +92,19 @@ class HB_Product_Room_Base extends HB_Product_Abstract
      * @param $key
      * @return int|string
      */
-    function __get( $key ){
+    function __get( $key ) {
         static $fields = array();
         $return = '';
-        switch( $key ){
+        switch ( $key ) {
             case 'ID':
-                $return = $this->get_data('id') ? $this->get_data('id') : $this->post->ID;
+                $return = $this->get_data( 'id' ) ? $this->get_data( 'id' ) : $this->post->ID;
                 break;
             case 'room_type':
                 // $return = intval( get_post_meta( $this->post->ID, '_hb_room_type', true ) );
                 $terms = get_the_terms( $this->post->ID, 'hb_room_type' );
                 $return = array();
-                if( $terms )
-                {
-                    foreach ($terms as $key => $term) {
+                if ( $terms ) {
+                    foreach ( $terms as $key => $term ) {
                         $return[] = $term->term_id;
                     }
                 }
@@ -119,21 +115,21 @@ class HB_Product_Room_Base extends HB_Product_Abstract
             case 'capacity':
                 $term_id = get_post_meta( $this->post->ID, '_hb_room_capacity', true );
                 $return = get_term_meta( $term_id, 'hb_max_number_of_adults', true );
-                if ( ! $return ) {
-                    $return = (int)get_option( 'hb_taxonomy_capacity_' . $term_id );
+                if ( !$return ) {
+                    $return = (int) get_option( 'hb_taxonomy_capacity_' . $term_id );
                 }
                 break;
             case 'capacity_title':
                 $term_id = get_post_meta( $this->ID, '_hb_room_capacity', true );
-                if( $key == 'capacity_title' ) {
+                if ( $key == 'capacity_title' ) {
                     $term = get_term( $term_id, 'hb_room_capacity' );
-                    if( isset( $term->name ) ) {
+                    if ( isset( $term->name ) ) {
                         $return = $term->name;
                     }
                 } else {
                     $return = get_term_meta( $term_id, 'hb_max_number_of_adults', true );
-                    if ( ! $return ) {
-                        $return = (int)get_option( 'hb_taxonomy_capacity_' . $term_id );
+                    if ( !$return ) {
+                        $return = (int) get_option( 'hb_taxonomy_capacity_' . $term_id );
                     }
                 }
                 break;
@@ -144,15 +140,15 @@ class HB_Product_Room_Base extends HB_Product_Abstract
                 $return = get_post_meta( $this->ID, '_hb_room_addition_information', true );
                 break;
             case 'thumbnail':
-                if( has_post_thumbnail( $this->ID ) ){
+                if ( has_post_thumbnail( $this->ID ) ) {
                     $return = get_the_post_thumbnail( $this->ID, 'thumbnail' );
-                }else{
+                } else {
                     $gallery = get_post_meta( $this->ID, '_hb_gallery', true );
-                    if( $gallery ) {
-                        $attachment_id = array_shift($gallery);
+                    if ( $gallery ) {
+                        $attachment_id = array_shift( $gallery );
                         $return = wp_get_attachment_image( $attachment_id, 'thumbnail' );
                     } else {
-                        $return = '<img src="'.esc_url( HB_PLUGIN_URL . '/includes/libraries/carousel/default.png' ).'" alt="'.$this->post->post_title.'"/>';
+                        $return = '<img src="' . esc_url( HB_PLUGIN_URL . '/includes/libraries/carousel/default.png' ) . '" alt="' . $this->post->post_title . '"/>';
                     }
                 }
                 break;
@@ -167,7 +163,7 @@ class HB_Product_Room_Base extends HB_Product_Abstract
                 $max_rooms = get_post_meta( $this->post->ID, '_hb_num_of_rooms', true );
                 $return = '<select name="hb-num-of-rooms[' . $this->post->ID . ']">';
                 $return .= '<option value="0">' . __( 'Select', 'tp-hotel-booking' ) . '</option>';
-                for( $i = 1; $i <= $max_rooms; $i++ ){
+                for ( $i = 1; $i <= $max_rooms; $i++ ) {
                     $return .= sprintf( '<option value="%1$d">%1$d</option>', $i );
                 }
                 $return .= '</select>';
@@ -182,37 +178,37 @@ class HB_Product_Room_Base extends HB_Product_Abstract
                 $return = __( 'why i am here?', 'tp-hotel-booking' );
                 break;
             case 'check_in_date':
-                $return = $this->get_data('check_in_date');
+                $return = $this->get_data( 'check_in_date' );
                 break;
             case 'check_out_date':
-                $return = $this->get_data('check_out_date');
+                $return = $this->get_data( 'check_out_date' );
                 break;
             case 'in_to_out':
-                $return = strtotime($this->get_data('check_in_date')) . '_' . strtotime($this->get_data('check_out_date'));
+                $return = strtotime( $this->get_data( 'check_in_date' ) ) . '_' . strtotime( $this->get_data( 'check_out_date' ) );
                 break;
             case 'quantity':
-                $return = $this->get_data('quantity');
+                $return = $this->get_data( 'quantity' );
                 break;
             case 'total':
-                $return = $this->get_total( $this->get_data('check_in_date'), $this->get_data('check_out_date'), $this->get_data( 'quantity' ), false );
+                $return = $this->get_total( $this->get_data( 'check_in_date' ), $this->get_data( 'check_out_date' ), $this->get_data( 'quantity' ), false );
                 break;
             case 'total_tax':
-                $return = $this->get_total( $this->get_data('check_in_date'), $this->get_data('check_out_date'), $this->get_data( 'quantity' ), true );
+                $return = $this->get_total( $this->get_data( 'check_in_date' ), $this->get_data( 'check_out_date' ), $this->get_data( 'quantity' ), true );
                 break;
             case 'amount_singular_exclude_tax':
-                $return = $this->get_total( $this->get_data('check_in_date'), $this->get_data('check_out_date'), 1, false );
+                $return = $this->get_total( $this->get_data( 'check_in_date' ), $this->get_data( 'check_out_date' ), 1, false );
                 break;
             case 'amount_singular_include_tax':
-                $return = $this->get_total( $this->get_data('check_in_date'), $this->get_data('check_out_date'), 1, true );
+                $return = $this->get_total( $this->get_data( 'check_in_date' ), $this->get_data( 'check_out_date' ), 1, true );
                 break;
             case 'amount_singular':
                 $return = $this->amount_singular();
                 break;
             case 'search_key':
-                $return = $this->get_data('search_key');
+                $return = $this->get_data( 'search_key' );
                 break;
             case 'extra_packages':
-                $return = $this->get_data('extra_packages');
+                $return = $this->get_data( 'extra_packages' );
                 break;
         }
         return apply_filters( 'hotel_booking_room_get_data', $return, $key, $this );
@@ -220,50 +216,50 @@ class HB_Product_Room_Base extends HB_Product_Abstract
 
     function get_galleries( $with_featured = true ) {
         $gallery = array();
-        if( $with_featured && $thumb_id = get_post_thumbnail_id( $this->post->ID ) ) {
+        if ( $with_featured && $thumb_id = get_post_thumbnail_id( $this->post->ID ) ) {
             $featured_thumb = wp_get_attachment_image_src( $thumb_id, 'thumbnail' );
             $featured_full = wp_get_attachment_image_src( $thumb_id, 'full' );
             $alt = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
             $gallery[] = array(
-                'id'    => $thumb_id,
-                'src'   => $featured_full[0],
+                'id' => $thumb_id,
+                'src' => $featured_full[0],
                 'thumb' => $featured_thumb[0],
-                'alt'   => $alt ? $alt : get_the_title( $thumb_id )
+                'alt' => $alt ? $alt : get_the_title( $thumb_id )
             );
         }
 
         $galleries = get_post_meta( $this->post->ID, '_hb_gallery', true );
-        if( ! $galleries )
+        if ( !$galleries )
             return $gallery;
 
-        foreach( $galleries as $thumb_id ){
+        foreach ( $galleries as $thumb_id ) {
             $alt = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
 
-            $w = $this->_settings->get('room_thumbnail_width', 150);
-            $h = $this->_settings->get('room_thumbnail_height', 150);
+            $w = $this->_settings->get( 'room_thumbnail_width', 150 );
+            $h = $this->_settings->get( 'room_thumbnail_height', 150 );
 
             $size = apply_filters( 'hotel_booking_room_thumbnail_size', array( 'width' => $w, 'height' => $h ) );
             $thumb = $this->renderImage( $thumb_id, $size, true, 'thumbnail' );
-            if ( ! $thumb ) {
+            if ( !$thumb ) {
                 $thumb_src = wp_get_attachment_image_src( $thumb_id, 'thumbnail' );
                 $thumb = $thumb_src[0];
             }
 
-            $w = $this->_settings->get('room_image_gallery_width', 1000);
-            $h = $this->_settings->get('room_image_gallery_height', 667);
+            $w = $this->_settings->get( 'room_image_gallery_width', 1000 );
+            $h = $this->_settings->get( 'room_image_gallery_height', 667 );
             $size = apply_filters( 'hotel_booking_room_gallery_size', array( 'width' => $w, 'height' => $h ) );
 
             $full = $this->renderImage( $thumb_id, $size, true, 'full' );
-            if ( ! $full ) {
+            if ( !$full ) {
                 $full_src = wp_get_attachment_image_src( $thumb_id, 'full' );
                 $full = $full_src[0];
             }
             $alt = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
             $gallery[] = array(
-                'id'    => $thumb_id,
-                'src'   => $full,
+                'id' => $thumb_id,
+                'src' => $full,
                 'thumb' => $thumb,
-                'alt'   => $alt ? $alt : get_the_title( $thumb_id )
+                'alt' => $alt ? $alt : get_the_title( $thumb_id )
             );
         }
         return $gallery;
@@ -282,24 +278,23 @@ class HB_Product_Room_Base extends HB_Product_Abstract
         $end_date_to_time = strtotime( $end_date );
 
         $tax = false;
-        if( hb_price_including_tax() ) {
+        if ( hb_price_including_tax() ) {
             $tax = true;
         }
 
         $nights = hb_count_nights_two_dates( $end_date, $start_date );
-        for( $i = 0; $i < $nights; $i++ ){
+        for ( $i = 0; $i < $nights; $i++ ) {
             $c_date = $start_date_to_time + $i * DAY_IN_SECONDS;
-            $date = date('w', $c_date );
-            if( ! isset( $details[ $date ] ) ){
-                $details[ $date ] = array(
+            $date = date( 'w', $c_date );
+            if ( !isset( $details[$date] ) ) {
+                $details[$date] = array(
                     'count' => 0,
                     'price' => 0
                 );
             }
-            $details[ $date ]['count'] ++;
-            $details[ $date ]['price'] += $this->get_total( $c_date, 1, 1, $tax );
-            $room_details_total +=  $details[ $date ]['price'];
-
+            $details[$date]['count'] ++;
+            $details[$date]['price'] += $this->get_total( $c_date, 1, 1, $tax );
+            $room_details_total += $details[$date]['price'];
         }
         $this->_room_details_total = $room_details_total;
         return apply_filters( 'hotel_booking_get_booking_room_details', $details, $this->post->ID );
@@ -314,18 +309,17 @@ class HB_Product_Room_Base extends HB_Product_Abstract
      */
     function get_price( $date = null, $including_tax = true ) {
         $tax = 0;
-        if( $including_tax ){
+        if ( $including_tax ) {
             $settings = HB_Settings::instance();
-            if( $settings->get( 'price_including_tax' ) ) {
-                $tax = $settings->get('tax');
-                $tax = (float)$tax / 100;
+            if ( $settings->get( 'price_including_tax' ) ) {
+                $tax = $settings->get( 'tax' );
+                $tax = (float) $tax / 100;
             }
         }
 
-        if( ! $date ) {
+        if ( !$date ) {
             $date = time();
-        }
-        elseif( is_string( $date ) ){
+        } elseif ( is_string( $date ) ) {
             $date = @strtotime( $date );
         }
 
@@ -335,8 +329,8 @@ class HB_Product_Room_Base extends HB_Product_Abstract
 
         if ( $selected_plan ) {
             $prices = $selected_plan->prices;
-            if( $prices && isset( $prices[ date( 'w', $date ) ] ) ) {
-                $return = $prices[ date( 'w', $date ) ];
+            if ( $prices && isset( $prices[date( 'w', $date )] ) ) {
+                $return = $prices[date( 'w', $date )];
                 $return = $return + $return * $tax;
             }
         }
@@ -356,16 +350,16 @@ class HB_Product_Room_Base extends HB_Product_Abstract
     function get_total( $from = null, $to = null, $num_of_rooms = 1, $including_tax = true ) {
         $nights = 0;
         $total = 0;
-        if( is_null( $from ) && is_null( $to ) ){
-            $to_time = (int)$this->check_out_date;
-            $from_time = (int)$this->check_in_date;
-        }else {
-            if ( ! is_numeric( $from ) ) {
+        if ( is_null( $from ) && is_null( $to ) ) {
+            $to_time = (int) $this->check_out_date;
+            $from_time = (int) $this->check_in_date;
+        } else {
+            if ( !is_numeric( $from ) ) {
                 $from_time = strtotime( $from );
             } else {
                 $from_time = $from;
             }
-            if ( ! is_numeric( $to ) ) {
+            if ( !is_numeric( $to ) ) {
                 $to_time = strtotime( $to );
             } else {
                 if ( $to >= DAY_IN_SECONDS ) {
@@ -376,11 +370,11 @@ class HB_Product_Room_Base extends HB_Product_Abstract
             }
         }
 
-        if ( ! $num_of_rooms ) {
+        if ( !$num_of_rooms ) {
             $num_of_rooms = intval( $this->get_data( 'quantity' ) );
         }
 
-        if ( ! $nights ) {
+        if ( !$nights ) {
             $nights = hb_count_nights_two_dates( $to_time, $from_time );
         }
 
@@ -393,13 +387,12 @@ class HB_Product_Room_Base extends HB_Product_Abstract
         $total = apply_filters( 'hotel_booking_room_total_price_excl_tax', $total, $this );
         $settings = HB_Settings::instance();
         // room price include tax
-        if ( $including_tax )
-        {
+        if ( $including_tax ) {
             // $tax_enbale = apply_filters( 'hotel_booking_extra_tax_enable', hb_price_including_tax() );
             // if ( $tax_enbale ) {
-                $tax_price = $total * hb_get_tax_settings();
-                $tax_price = apply_filters( 'hotel_booking_room_total_price_incl_tax', $tax_price, $this );
-                $total = $total + $tax_price;
+            $tax_price = $total * hb_get_tax_settings();
+            $tax_price = apply_filters( 'hotel_booking_room_total_price_incl_tax', $tax_price, $this );
+            $total = $total + $tax_price;
             // }
         }
         return $total;
@@ -409,35 +402,31 @@ class HB_Product_Room_Base extends HB_Product_Abstract
      * Get list of pricing plan of this room type
      * @return null
      */
-    function get_pricing_plans(){
-        if( ! $this->_plans ) {
+    function get_pricing_plans() {
+        if ( !$this->_plans ) {
             $this->_plans = hb_room_get_pricing_plans( $this->post->ID );
         }
         return $this->_plans;
     }
 
-    function get_related_rooms()
-    {
+    function get_related_rooms() {
         $room_types = get_the_terms( $this->post->ID, 'hb_room_type' );
-        $room_capacity = (int)get_post_meta( $this->post->ID, '_hb_room_capacity', true );
+        $room_capacity = (int) get_post_meta( $this->post->ID, '_hb_room_capacity', true );
         $max_adults_per_room = get_term_meta( $room_capacity, 'hb_max_number_of_adults', true );
-        if ( ! $max_adults_per_room ) {
-            $max_adults_per_room = (int)get_option( 'hb_taxonomy_capacity_' . $room_capacity );
+        if ( !$max_adults_per_room ) {
+            $max_adults_per_room = (int) get_option( 'hb_taxonomy_capacity_' . $room_capacity );
         }
-        if ( ! $max_adults_per_room ) {
-            $max_adults_per_room = (int)get_post_meta( $this->post->ID, '_hb_max_adults_per_room', true );
+        if ( !$max_adults_per_room ) {
+            $max_adults_per_room = (int) get_post_meta( $this->post->ID, '_hb_max_adults_per_room', true );
         }
-        $max_child_per_room = (int)get_post_meta( $this->post->ID, '_hb_max_child_per_room', true );
+        $max_child_per_room = (int) get_post_meta( $this->post->ID, '_hb_max_child_per_room', true );
 
         $taxonomis = array();
-        if( $room_types )
-        {
-            foreach ($room_types as $key => $tax) {
+        if ( $room_types ) {
+            foreach ( $room_types as $key => $tax ) {
                 $taxonomis[] = $tax->term_id;
             }
-        }
-        else
-        {
+        } else {
             $terms = get_terms( 'hb_room_type' );
             foreach ( $terms as $key => $term ) {
                 $taxonomis[] = $term->term_id;
@@ -445,29 +434,29 @@ class HB_Product_Room_Base extends HB_Product_Abstract
         }
 
         $args = array(
-                'post_type'     => 'hb_room',
-                'status'        => 'publish',
-                'meta_query'    => array(
-                        // array(
-                        //     'key'       => '_hb_max_adults_per_room',
-                        //     'value'     => $max_adults_per_room,
-                        //     'compare'   => '>=',
-                        // ),
-                        array(
-                            'key'       => '_hb_max_child_per_room',
-                            'value'     => $max_child_per_room,
-                            'compare'   => '<='
-                        ),
-                    ),
-                'tax_query' => array(
-                        array(
-                            'taxonomy' => 'hb_room_type',
-                            'field'    => 'term_id',
-                            'terms'    => $taxonomis
-                        ),
-                    ),
-                'post__not_in'  => array( $this->post->ID )
-            );
+            'post_type' => 'hb_room',
+            'status' => 'publish',
+            'meta_query' => array(
+                // array(
+                //     'key'       => '_hb_max_adults_per_room',
+                //     'value'     => $max_adults_per_room,
+                //     'compare'   => '>=',
+                // ),
+                array(
+                    'key' => '_hb_max_child_per_room',
+                    'value' => $max_child_per_room,
+                    'compare' => '<='
+                ),
+            ),
+            'tax_query' => array(
+                array(
+                    'taxonomy' => 'hb_room_type',
+                    'field' => 'term_id',
+                    'terms' => $taxonomis
+                ),
+            ),
+            'post__not_in' => array( $this->post->ID )
+        );
         $query = new WP_Query( $args );
         wp_reset_postdata();
         return $query;
@@ -480,9 +469,9 @@ class HB_Product_Room_Base extends HB_Product_Abstract
      */
     function get_review_count() {
         global $wpdb;
-        $transient_name = rand().'hb_review_count_' . $this->post->ID;
+        $transient_name = rand() . 'hb_review_count_' . $this->post->ID;
         if ( false === ( $count = get_transient( $transient_name ) ) ) {
-            $count = count($this->get_review_details());
+            $count = count( $this->get_review_details() );
 
             //set_transient( $transient_name, $count, DAY_IN_SECONDS * 30 );
         }
@@ -490,111 +479,90 @@ class HB_Product_Room_Base extends HB_Product_Abstract
         return apply_filters( 'hb_room_review_count', $count, $this );
     }
 
-    function get_review_details()
-    {
-        if( ! $this->_review_details )
-        {
+    function get_review_details() {
+        if ( !$this->_review_details ) {
             return get_comments( array( 'post_id' => $this->post->ID, 'status' => 'approve' ) );
         }
         return $this->_review_details;
     }
 
-    function getImage( $type = 'catalog', $attachID = false, $echo = true )
-    {
-        if( $type === 'catalog' )
-        {
+    function getImage( $type = 'catalog', $attachID = false, $echo = true ) {
+        if ( $type === 'catalog' ) {
             return $this->get_catalog( $attachID = false, $echo = true );
         }
         return $this->get_thumbnail( $attachID = false, $echo = true );
     }
 
-    function average_rating()
-    {
+    function average_rating() {
         $comments = $this->get_review_details();
         $total = 0;
         $i = 0;
-        foreach ($comments as $key => $comment) {
+        foreach ( $comments as $key => $comment ) {
             $rating = get_comment_meta( $comment->comment_ID, 'rating', true );
-            if( $rating )
-            {
+            if ( $rating ) {
                 $total = $total + $rating;
                 $i++;
             }
         }
-        if( $comments && $i )
+        if ( $comments && $i )
             return $total / $i;
 
         return null;
     }
 
     /**
-    * get thumbnail
-    * @return html or array atts
-    */
-    function get_thumbnail( $attachID = false, $echo = true )
-    {
-        $w = $this->_settings->get('room_thumbnail_width', 150);
-        $h = $this->_settings->get('room_thumbnail_height', 150);
+     * get thumbnail
+     * @return html or array atts
+     */
+    function get_thumbnail( $attachID = false, $echo = true ) {
+        $w = $this->_settings->get( 'room_thumbnail_width', 150 );
+        $h = $this->_settings->get( 'room_thumbnail_height', 150 );
 
         $size = apply_filters( 'hotel_booking_room_thumbnail_size', array( 'width' => $w, 'height' => $h ) );
 
-        if( $attachID == false )
+        if ( $attachID == false )
             $attachID = get_post_thumbnail_id( $this->post->ID );
 
-        $alt = get_post_meta($attachID, '_wp_attachment_image_alt', true );
+        $alt = get_post_meta( $attachID, '_wp_attachment_image_alt', true );
         $image = $this->renderImage( $attachID, $size, false, 'thumbnail' );
         // default thumbnail
 
-        if( $echo && $image )
-        {
-            if( is_array($image) )
-            {
-                echo sprintf('<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', esc_url( $image[0] ), esc_attr( $image[1] ), esc_attr( $image[2] ), esc_attr( $alt ) );
+        if ( $echo && $image ) {
+            if ( is_array( $image ) ) {
+                echo sprintf( '<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', esc_url( $image[0] ), esc_attr( $image[1] ), esc_attr( $image[2] ), esc_attr( $alt ) );
+            } else {
+                sprintf( '<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', esc_url( $image ), esc_attr( $w ), esc_attr( $h ), esc_attr( $alt ) );
             }
-            else
-            {
-                sprintf('<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', esc_url( $image ), esc_attr( $w ), esc_attr( $h ), esc_attr( $alt ) );
-            }
-        }
-        else
-        {
+        } else {
             return $image;
         }
     }
 
-    function get_catalog( $attachID = false, $echo = true )
-    {
-        $w = $this->_settings->get('catalog_image_width', 270);
-        $h = $this->_settings->get('catalog_image_height', 270);
+    function get_catalog( $attachID = false, $echo = true ) {
+        $w = $this->_settings->get( 'catalog_image_width', 270 );
+        $h = $this->_settings->get( 'catalog_image_height', 270 );
 
         $size = apply_filters( 'hotel_booking_room_gallery_size', array( 'width' => $w, 'height' => $h ) );
 
-        if( $attachID == false )
+        if ( $attachID == false )
             $attachID = get_post_thumbnail_id( $this->post->ID );
 
         $alt = get_post_meta( $attachID, '_wp_attachment_image_alt', true );
 
         $image = $this->renderImage( $attachID, $size, false, 'large' );
 
-        if( $echo && $image )
-        {
-            if( is_array($image) )
-            {
-                echo sprintf('<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', esc_url( $image[0] ), esc_attr( $image[1] ), esc_attr( $image[2] ), esc_attr( $alt ) );
+        if ( $echo && $image ) {
+            if ( is_array( $image ) ) {
+                echo sprintf( '<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', esc_url( $image[0] ), esc_attr( $image[1] ), esc_attr( $image[2] ), esc_attr( $alt ) );
+            } else {
+                sprintf( '<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', esc_url( $image ), esc_attr( $w ), esc_attr( $h ), esc_attr( $alt ) );
             }
-            else
-            {
-                sprintf('<img src="%1$s" width="%2$s" height="%3$s" alt="%4$s"/>', esc_url( $image ), esc_attr( $w ), esc_attr( $h ), esc_attr( $alt ) );
-            }
-        }
-        else
-        {
+        } else {
             return $image;
         }
     }
 
-    function renderImage( $attachID = null, $size = array(), $src = true, $default = 'thumbnail' )
-    {
+    function renderImage( $attachID = null, $size = array(), $src = true, $default = 'thumbnail' ) {
         $resizer = HB_Reizer::getInstance();
 
         $image = $resizer->process( $attachID, $size, $src );
@@ -606,20 +574,19 @@ class HB_Product_Room_Base extends HB_Product_Abstract
                 return $image[0];
             } else {
                 return array(
-                        $image[0],
-                        $image[1],
-                        $image[2]
-                    );
+                    $image[0],
+                    $image[1],
+                    $image[2]
+                );
             }
         }
     }
 
-    function pricing_plan()
-    {
+    function pricing_plan() {
         $prices = array();
-        $prices = hb_get_price_plan_room(get_the_ID());
-        if( $prices )
-            sort($prices);
+        $prices = hb_get_price_plan_room( get_the_ID() );
+        if ( $prices )
+            sort( $prices );
 
         $sort = $prices;
         $prices['min'] = current( $sort );
@@ -643,19 +610,17 @@ class HB_Product_Room_Base extends HB_Product_Abstract
         return apply_filters( 'hotel_booking_room_item_amount', $amount, $this );
     }
 
-    function amount_singular_exclude_tax()
-    {
+    function amount_singular_exclude_tax() {
         return apply_filters( 'hotel_booking_room_singular_total_exclude_tax', $this->amount_singular_exclude_tax, $this );
     }
 
-    function amount_singular_include_tax()
-    {
+    function amount_singular_include_tax() {
         return apply_filters( 'hotel_booking_room_singular_total_include_tax', $this->amount_singular_include_tax, $this );
     }
 
-    function amount_singular( $cart = false )
-    {
+    function amount_singular( $cart = false ) {
         $amount = hb_price_including_tax( $cart ) ? $this->amount_singular_include_tax() : $this->amount_singular_exclude_tax();
         return apply_filters( 'hotel_booking_room_amount_singular', $amount, $this );
     }
+
 }

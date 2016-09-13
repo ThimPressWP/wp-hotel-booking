@@ -1,186 +1,187 @@
 <?php
 
-if( ! function_exists( 'hb_sw_get_template' ) )
-{
+if ( !function_exists( 'hb_sw_get_template' ) ) {
 
-	/**
-	 * Get other templates passing attributes and including the file.
-	 *
-	 * @param string $template_name
-	 * @param array  $args          (default: array())
-	 * @param string $template_path (default: '')
-	 * @param string $default_path  (default: '')
-	 *
-	 * @return void
-	 */
-	function hb_sw_get_template( $template_name, $args = array(), $template_path = '', $default_path = '' ) {
-	    if ( $args && is_array( $args ) ) {
-	        extract( $args );
-	    }
+    /**
+     * Get other templates passing attributes and including the file.
+     *
+     * @param string $template_name
+     * @param array  $args          (default: array())
+     * @param string $template_path (default: '')
+     * @param string $default_path  (default: '')
+     *
+     * @return void
+     */
+    function hb_sw_get_template( $template_name, $args = array(), $template_path = '', $default_path = '' ) {
+        if ( $args && is_array( $args ) ) {
+            extract( $args );
+        }
 
-	    $located = hb_sw_locate_template( $template_name, $template_path, $default_path );
+        $located = hb_sw_locate_template( $template_name, $template_path, $default_path );
 
-	    if ( !file_exists( $located ) ) {
-	        _doing_it_wrong( __FUNCTION__, sprintf( '<code>%s</code> does not exist.', $located ), '2.1' );
-	        return;
-	    }
-	    // Allow 3rd party plugin filter template file from their plugin
-	    $located = apply_filters( 'hb_sw_get_template', $located, $template_name, $args, $template_path, $default_path );
+        if ( !file_exists( $located ) ) {
+            _doing_it_wrong( __FUNCTION__, sprintf( '<code>%s</code> does not exist.', $located ), '2.1' );
+            return;
+        }
+        // Allow 3rd party plugin filter template file from their plugin
+        $located = apply_filters( 'hb_sw_get_template', $located, $template_name, $args, $template_path, $default_path );
 
-	    do_action( 'hb_sw_before_template_part', $template_name, $template_path, $located, $args );
+        do_action( 'hb_sw_before_template_part', $template_name, $template_path, $located, $args );
 
-	    include( $located );
+        include( $located );
 
-	    do_action( 'hb_sw_after_template_part', $template_name, $template_path, $located, $args );
-	}
+        do_action( 'hb_sw_after_template_part', $template_name, $template_path, $located, $args );
+    }
 
-	function hb_sw_template_path(){
-	    return apply_filters( 'hb_sw_template_path', 'tp-hb-currencies' );
-	}
-	/**
-	 * get template part
-	 *
-	 * @param   string $slug
-	 * @param   string $name
-	 *
-	 * @return  string
-	 */
-	function hb_sw_get_template_part( $slug, $name = '' ) {
-	    $template = '';
+    function hb_sw_template_path() {
+        return apply_filters( 'hb_sw_template_path', 'tp-hb-currencies' );
+    }
 
-	    // Look in yourtheme/slug-name.php and yourtheme/courses-manage/slug-name.php
-	    if ( $name ) {
-	        $template = locate_template( array( "{$slug}-{$name}.php", hb_sw_template_path() . "/{$slug}-{$name}.php" ) );
-	    }
+    /**
+     * get template part
+     *
+     * @param   string $slug
+     * @param   string $name
+     *
+     * @return  string
+     */
+    function hb_sw_get_template_part( $slug, $name = '' ) {
+        $template = '';
 
-	    // Get default slug-name.php
-	    if ( !$template && $name && file_exists( TP_HB_CURRENCY . "/templates/{$slug}-{$name}.php" ) ) {
-	        $template = TP_HB_CURRENCY . "/templates/{$slug}-{$name}.php";
-	    }
+        // Look in yourtheme/slug-name.php and yourtheme/courses-manage/slug-name.php
+        if ( $name ) {
+            $template = locate_template( array( "{$slug}-{$name}.php", hb_sw_template_path() . "/{$slug}-{$name}.php" ) );
+        }
 
-	    // If template file doesn't exist, look in yourtheme/slug.php and yourtheme/courses-manage/slug.php
-	    if ( !$template ) {
-	        $template = locate_template( array( "{$slug}.php", hb_sw_template_path() . "{$slug}.php" ) );
-	    }
+        // Get default slug-name.php
+        if ( !$template && $name && file_exists( TP_HB_CURRENCY . "/templates/{$slug}-{$name}.php" ) ) {
+            $template = TP_HB_CURRENCY . "/templates/{$slug}-{$name}.php";
+        }
 
-	    // Allow 3rd party plugin filter template file from their plugin
-	    if ( $template ) {
-	        $template = apply_filters( 'hb_sw_get_template_part', $template, $slug, $name );
-	    }
-	    if ( $template && file_exists( $template ) ) {
-	        load_template( $template, false );
-	    }
+        // If template file doesn't exist, look in yourtheme/slug.php and yourtheme/courses-manage/slug.php
+        if ( !$template ) {
+            $template = locate_template( array( "{$slug}.php", hb_sw_template_path() . "{$slug}.php" ) );
+        }
 
-	    return $template;
-	}
+        // Allow 3rd party plugin filter template file from their plugin
+        if ( $template ) {
+            $template = apply_filters( 'hb_sw_get_template_part', $template, $slug, $name );
+        }
+        if ( $template && file_exists( $template ) ) {
+            load_template( $template, false );
+        }
 
-	/**
-	 * Locate a template and return the path for inclusion.
-	 *
-	 * This is the load order:
-	 *
-	 *        yourtheme        /    $template_path    /    $template_name
-	 *        yourtheme        /    $template_name
-	 *        $default_path    /    $template_name
-	 *
-	 * @access public
-	 *
-	 * @param string $template_name
-	 * @param string $template_path (default: '')
-	 * @param string $default_path  (default: '')
-	 *
-	 * @return string
-	 */
-	function hb_sw_locate_template( $template_name, $template_path = '', $default_path = '' ) {
+        return $template;
+    }
 
-	    if ( !$template_path ) {
-	        $template_path = hb_sw_template_path();
-	    }
+    /**
+     * Locate a template and return the path for inclusion.
+     *
+     * This is the load order:
+     *
+     *        yourtheme        /    $template_path    /    $template_name
+     *        yourtheme        /    $template_name
+     *        $default_path    /    $template_name
+     *
+     * @access public
+     *
+     * @param string $template_name
+     * @param string $template_path (default: '')
+     * @param string $default_path  (default: '')
+     *
+     * @return string
+     */
+    function hb_sw_locate_template( $template_name, $template_path = '', $default_path = '' ) {
 
-	    if ( !$default_path ) {
-	        $default_path = TP_HB_CURRENCY . '/templates/';
-	    }
+        if ( !$template_path ) {
+            $template_path = hb_sw_template_path();
+        }
 
-	    $template = null;
-	    // Look within passed path within the theme - this is priority
-	    $template = locate_template(
-            array(
-                trailingslashit($template_path) . $template_name,
-                $template_name
-            )
+        if ( !$default_path ) {
+            $default_path = TP_HB_CURRENCY . '/templates/';
+        }
+
+        $template = null;
+        // Look within passed path within the theme - this is priority
+        $template = locate_template(
+                array(
+                    trailingslashit( $template_path ) . $template_name,
+                    $template_name
+                )
         );
-	    // Get default template
-	    if ( !$template ) {
-	        $template = $default_path . $template_name;
-	    }
+        // Get default template
+        if ( !$template ) {
+            $template = $default_path . $template_name;
+        }
 
-	    // Return what we found
-	    return apply_filters( 'hb_sw_locate_template', $template, $template_name, $template_path );
-	}
+        // Return what we found
+        return apply_filters( 'hb_sw_locate_template', $template, $template_name, $template_path );
+    }
+
 }
 
-if( ! function_exists( 'hb_sw_currency_countries' ) )
-{
-	/**
-	 * country code => currency code
-	 * @return array
-	 */
-	function hb_sw_currency_countries()
-	{
-		$country_currency = array(
-			"US"	=>	"USD",
-			"EN"	=>	"EUR",
-			"BE"	=>	"EUR",
-			"ES"	=>	"EUR",
-			"LU"	=>	"EUR",
-			"PT"	=>	"EUR",
-			"DE"	=>	"EUR",
-			"FR"	=>	"EUR",
-			"MT"	=>	"EUR",
-			"SI"	=>	"EUR",
-			"IE"	=>	"EUR",
-			"IT"	=>	"EUR",
-			"NL"	=>	"EUR",
-			"SK"	=>	"EUR",
-			"GR"	=>	"EUR",
-			"CY"	=>	"EUR",
-			"AT"	=>	"EUR",
-			"FI"	=>	"EUR",
-			"JP"	=>	"JPY",
-			"BG"	=>	"BGN",
-			"CZ"	=>	"CZK",
-			"DK"	=>	"DKK",
-			"EE"	=>	"EEK",
-			"GB"	=>	"GBP",
-			"HU"	=>	"HUF",
-			"LT"	=>	"LTL",
-			"LV"	=>	"LVL",
-			"PL"	=>	"PLN",
-			"RO"	=>	"RON",
-			"SE"	=>	"SEK",
-			"CH"	=>	"CHF",
-			"NO"	=>	"NOK",
-			"HR"	=>	"HRK",
-			"RU"	=>	"RUB",
-			"TR"	=>	"TRY",
-			"AU"	=>	"AUD",
-			"BR"	=>	"BRL",
-			"CA"	=>	"CAD",
-			"CN"	=>	"CNY",
-			"HK"	=>	"HKD",
-			"ID"	=>	"IDR",
-			"IN"	=>	"INR",
-			"KR"	=>	"KRW",
-			"MX"	=>	"MXN",
-			"MY"	=>	"MYR",
-			"NZ"	=>	"NZD",
-			"PH"	=>	"PHP",
-			"SG"	=>	"SGD",
-			"TH"	=>	"THB",
-			"ZA"	=>	"ZAR",
-			"VI"	=>	"VND"
-		);
+if ( !function_exists( 'hb_sw_currency_countries' ) ) {
 
-		return apply_filters( 'hb_sw_currencies_languages', $country_currency );
-	}
+    /**
+     * country code => currency code
+     * @return array
+     */
+    function hb_sw_currency_countries() {
+        $country_currency = array(
+            "US" => "USD",
+            "EN" => "EUR",
+            "BE" => "EUR",
+            "ES" => "EUR",
+            "LU" => "EUR",
+            "PT" => "EUR",
+            "DE" => "EUR",
+            "FR" => "EUR",
+            "MT" => "EUR",
+            "SI" => "EUR",
+            "IE" => "EUR",
+            "IT" => "EUR",
+            "NL" => "EUR",
+            "SK" => "EUR",
+            "GR" => "EUR",
+            "CY" => "EUR",
+            "AT" => "EUR",
+            "FI" => "EUR",
+            "JP" => "JPY",
+            "BG" => "BGN",
+            "CZ" => "CZK",
+            "DK" => "DKK",
+            "EE" => "EEK",
+            "GB" => "GBP",
+            "HU" => "HUF",
+            "LT" => "LTL",
+            "LV" => "LVL",
+            "PL" => "PLN",
+            "RO" => "RON",
+            "SE" => "SEK",
+            "CH" => "CHF",
+            "NO" => "NOK",
+            "HR" => "HRK",
+            "RU" => "RUB",
+            "TR" => "TRY",
+            "AU" => "AUD",
+            "BR" => "BRL",
+            "CA" => "CAD",
+            "CN" => "CNY",
+            "HK" => "HKD",
+            "ID" => "IDR",
+            "IN" => "INR",
+            "KR" => "KRW",
+            "MX" => "MXN",
+            "MY" => "MYR",
+            "NZ" => "NZD",
+            "PH" => "PHP",
+            "SG" => "SGD",
+            "TH" => "THB",
+            "ZA" => "ZAR",
+            "VI" => "VND"
+        );
+
+        return apply_filters( 'hb_sw_currencies_languages', $country_currency );
+    }
+
 }

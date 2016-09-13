@@ -1,49 +1,45 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
+if ( !defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-class HB_Shortcode_Hotel_Booking_Checkout extends HB_Shortcodes
-{
+class HB_Shortcode_Hotel_Booking_Checkout extends HB_Shortcodes {
 
-	public $shortcode = 'hotel_booking_checkout';
+    public $shortcode = 'hotel_booking_checkout';
 
-	public function __construct()
-	{
-		parent::__construct();
-	}
+    public function __construct() {
+        parent::__construct();
+    }
 
-	function add_shortcode( $atts, $content = null )
-	{
+    function add_shortcode( $atts, $content = null ) {
         $customer = new stdClass;
-        $customer->title        = '';
-        $customer->first_name   = '';
-        $customer->last_name    = '';
-        $customer->email        = '';
-        $customer->address      = '';
-        $customer->state        = '';
-        $customer->city         = '';
-        $customer->postal_code  = '';
-        $customer->country      = '';
-        $customer->phone        = '';
-        $customer->fax          = '';
+        $customer->title = '';
+        $customer->first_name = '';
+        $customer->last_name = '';
+        $customer->email = '';
+        $customer->address = '';
+        $customer->state = '';
+        $customer->city = '';
+        $customer->postal_code = '';
+        $customer->country = '';
+        $customer->phone = '';
+        $customer->fax = '';
 
-        if( is_user_logged_in() ){
+        if ( is_user_logged_in() ) {
             $user = HB_User::get_current_user();
 
-            $customer->title        = $user->title;
-            $customer->first_name   = $user->first_name;
-            $customer->last_name    = $user->last_name;
-            $customer->email        = $user->email;
-            $customer->address      = $user->address;
-            $customer->state        = $user->state;
-            $customer->city         = $user->city;
-            $customer->postal_code  = $user->postal_code;
-            $customer->country      = $user->country;
-            $customer->phone        = $user->phone;
-            $customer->fax          = $user->fax;
-
+            $customer->title = $user->title;
+            $customer->first_name = $user->first_name;
+            $customer->last_name = $user->last_name;
+            $customer->email = $user->email;
+            $customer->address = $user->address;
+            $customer->state = $user->state;
+            $customer->city = $user->city;
+            $customer->postal_code = $user->postal_code;
+            $customer->country = $user->country;
+            $customer->phone = $user->phone;
+            $customer->fax = $user->fax;
         }
 
         $template = apply_filters( 'hotel_booking_checkout_tpl', 'checkout/checkout.php' );
@@ -53,7 +49,7 @@ class HB_Shortcode_Hotel_Booking_Checkout extends HB_Shortcodes
         hb_get_template( $template, $template_args );
         do_action( 'hb_wrapper_end' );
         return ob_get_clean();
-	}
+    }
 
 }
 

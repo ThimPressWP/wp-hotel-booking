@@ -60,6 +60,7 @@ class HBWPML_Support {
         add_filter( 'hb_generate_transaction_object_room', array( $this, 'hb_generate_transaction_object_room' ), 10, 2 );
 
         // add_filter( 'icl_set_current_language', array( $this, 'wpml_switcher_language' ), 999 );
+        add_filter( 'get_max_capacity_of_rooms', array( $this, 'max_capacity_of_rooms' ) );
     }
 
     public function init() {
@@ -81,8 +82,14 @@ class HBWPML_Support {
         // $this->current_language_code === $this->default_language_code
     }
 
-    /* get default post_id, capacity, room_type by origin post_ID || term_ID */
-
+    /**
+     * get default post_id, capacity, room_type by origin post_ID || term_ID
+     * @param type $id
+     * @param type $type
+     * @param type $default
+     * @param type $lang
+     * @return int
+     */
     public function get_object_default_language( $id = null, $type = 'hb_room', $default = false, $lang = false ) {
         if ( !$id ) {
             return;
@@ -169,12 +176,16 @@ class HBWPML_Support {
         return $content;
     }
 
-    /* get pages */
-
+    /**
+     * get pages
+     * @global type $wpdb
+     * @param type $pages
+     * @return type
+     */
     public function hb_get_pages( $pages ) {
         global $wpdb;
         $sql = $wpdb->prepare( "
-				SELECT page.ID, page.post_title FROM $wpdb->posts as page
+				SELECT DISTINCT page.ID, page.post_title FROM $wpdb->posts as page
 				INNER JOIN {$wpdb->prefix}icl_translations as wpml_translation ON page.ID = wpml_translation.element_id AND wpml_translation.language_code = %s
 				WHERE page.post_type = %s
 					AND page.post_status = %s
@@ -182,14 +193,21 @@ class HBWPML_Support {
         return $wpdb->get_results( $sql );
     }
 
-    /* get page id */
-
+    /**
+     * get page id
+     * @param type $page_id
+     * @return int
+     */
     public function hb_get_page_id( $page_id ) {
         return $this->get_object_default_language( $page_id, 'page', true, $this->current_language_code );
     }
 
-    /* the content setup shortcode atts check available */
-
+    /**
+     * the content setup shortcode atts check available
+     * @global type $post
+     * @param string $content
+     * @return string
+     */
     public function the_content( $content ) {
         global $post;
         if ( is_page() && ( $this->get_object_default_language( $post->ID, 'page', true ) == hb_get_page_id( 'search' ) || has_shortcode( $content, 'hotel_booking' ) ) ) {
@@ -206,6 +224,13 @@ class HBWPML_Support {
         return $content;
     }
 
+    /**
+     * filter search query
+     * @global type $wpdb
+     * @param type $query
+     * @param type $args
+     * @return type
+     */
     public function hb_search_query( $query, $args ) {
         global $wpdb;
         /**
@@ -250,10 +275,10 @@ class HBWPML_Support {
         $query = $wpdb->prepare( "
 				SELECT rooms.*, ( number.meta_value - {$not} ) AS available_rooms, ($blocked) AS blocked FROM $wpdb->posts AS rooms
 					LEFT JOIN $wpdb->postmeta AS number ON rooms.ID = number.post_id AND number.meta_key = %s
-					LEFT JOIN {$wpdb->postmeta} pm1 ON pm1.post_id = rooms.ID AND pm1.meta_key = %s
-					LEFT JOIN {$wpdb->termmeta} term_cap ON term_cap.term_id = pm1.meta_value AND term_cap.meta_key = %s
-					LEFT JOIN {$wpdb->postmeta} pm2 ON pm2.post_id = rooms.ID AND pm2.meta_key = %s
-					LEFT JOIN {$wpdb->prefix}icl_translations as wpml_translation ON rooms.ID = wpml_translation.element_id
+					LEFT JOIN {$wpdb->postmeta} AS pm1 ON pm1.post_id = rooms.ID AND pm1.meta_key = %s
+					LEFT JOIN {$wpdb->termmeta} AS term_cap ON term_cap.term_id = pm1.meta_value AND term_cap.meta_key = %s
+					LEFT JOIN {$wpdb->postmeta} AS pm2 ON pm2.post_id = rooms.ID AND pm2.meta_key = %s
+					LEFT JOIN {$wpdb->prefix}icl_translations AS wpml_translation ON rooms.ID = wpml_translation.element_id
 				WHERE
 					rooms.post_type = %s
 					AND rooms.post_status = %s
@@ -268,8 +293,12 @@ class HBWPML_Support {
         return $query;
     }
 
-    /* get pricing plans default room language */
-
+    /**
+     * get pricing plans default room language
+     * @param type $plans
+     * @param type $id
+     * @return type
+     */
     public function hotel_booking_pricing_plans( $plans, $id ) {
         remove_filter( 'hb_room_get_pricing_plans', array( $this, 'hotel_booking_pricing_plans' ), 10, 2 );
         if ( ( $primary_room_id = $this->get_object_default_language( $id, 'hb_room' ) ) && $primary_room_id != $id ) {
@@ -284,8 +313,12 @@ class HBWPML_Support {
         return $transaction;
     }
 
-    /* cart generate booking item params */
-
+    /**
+     * cart generate booking item params
+     * @param array $params
+     * @param type $product
+     * @return type
+     */
     public function hb_generate_transaction_object_room( $params, $product ) {
         $params['product_id'] = $this->get_object_default_language( $params['product_id'], $product->post->post_type );
         return $params;
@@ -299,6 +332,27 @@ class HBWPML_Support {
         }
 
         return $lang;
+    }
+
+    public function max_capacity_of_rooms( $max ) {
+        $terms = get_terms( 'hb_room_capacity', array( 'hide_empty' => false ) );
+        if ( $terms ) {
+            foreach ( $terms as $term ) {
+                $default_term = $this->get_object_default_language( $term->term_id, 'hb_room_capacity', true );
+                $cap = get_term_meta( $default_term, 'hb_max_number_of_adults', true );
+                /**
+                 * @since  1.1.2
+                 * use term meta
+                 */
+                if ( !$cap ) {
+                    $cap = get_option( "hb_taxonomy_capacity_{$default_term}" );
+                }
+                if ( intval( $cap ) > $max ) {
+                    $max = $cap;
+                }
+            }
+        }
+        return $max;
     }
 
 }

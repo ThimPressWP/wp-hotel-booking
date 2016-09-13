@@ -1,13 +1,13 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
+if ( !defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
 /**
  * Class HB_Meta_Box
  */
-class HB_Meta_Box{
+class HB_Meta_Box {
 
     /**
      * @var object
@@ -30,43 +30,36 @@ class HB_Meta_Box{
      * @param array
      * @param array
      */
-    function __construct( $args = array(), $fields = array() ){
-        $this->_args    = wp_parse_args(
-            $args,
-            array(
-                'title'             => '',
-                'post_type'         => 'post',
-                'meta_key_prefix'   => ''
-            )
+    function __construct( $args = array(), $fields = array() ) {
+        $this->_args = wp_parse_args(
+                $args, array(
+            'title' => '',
+            'post_type' => 'post',
+            'meta_key_prefix' => ''
+                )
         );
-        $this->_fields  = $fields;
+        $this->_fields = $fields;
 
         add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
-
     }
 
     /**
      * Add meta box to post
      */
-    function add_meta_box(){
-        $meta_box_id    = $this->_args['name'];
+    function add_meta_box() {
+        $meta_box_id = $this->_args['name'];
         $meta_box_title = $this->_args['title'];
-        $callback       = ! empty( $this->_args['callback'] ) ? $this->_args['callback'] : array( $this, 'render' );
-        $post_types     = ! empty( $this->_args['post_type'] ) ? $this->_args['post_type'] : 'post';
-        $priority       = ! empty( $this->_args['priority'] ) ? $this->_args['priority'] : 'default';
-        $context        = ! empty( $this->_args['context'] ) ? $this->_args['context'] : 'normal';
-        if( is_string( $post_types ) ){
+        $callback = !empty( $this->_args['callback'] ) ? $this->_args['callback'] : array( $this, 'render' );
+        $post_types = !empty( $this->_args['post_type'] ) ? $this->_args['post_type'] : 'post';
+        $priority = !empty( $this->_args['priority'] ) ? $this->_args['priority'] : 'default';
+        $context = !empty( $this->_args['context'] ) ? $this->_args['context'] : 'normal';
+        if ( is_string( $post_types ) ) {
             $post_types = explode( ',', $post_types );
         }
 
-        foreach( $post_types as $post_type ) {
+        foreach ( $post_types as $post_type ) {
             add_meta_box(
-                $meta_box_id,
-                $meta_box_title,
-                $callback,
-                $post_type,
-                $context,
-                $priority
+                    $meta_box_id, $meta_box_title, $callback, $post_type, $context, $priority
             );
         }
     }
@@ -77,10 +70,10 @@ class HB_Meta_Box{
      * @param array
      * @return HB_Meta_Box instance
      */
-    function add_field( $field ){
+    function add_field( $field ) {
         $args = func_get_args();
-        foreach( $args as $f ) {
-            $this->_fields[] = (array)$f;
+        foreach ( $args as $f ) {
+            $this->_fields[] = (array) $f;
         }
         // metabox hook
         $this->_fields = apply_filters( 'hb_metabox_' . $this->_args['name'], $this->_fields );
@@ -91,7 +84,7 @@ class HB_Meta_Box{
      * Return all fields of meta box
      * @return array
      */
-    function get_fields(){
+    function get_fields() {
         return $this->_fields;
     }
 
@@ -102,9 +95,9 @@ class HB_Meta_Box{
      * @param string
      * @return bool
      */
-    function has_post_meta( $object_id, $meta_key ){
+    function has_post_meta( $object_id, $meta_key ) {
         $meta_type = 'post';
-        $meta_cache = wp_cache_get($object_id, $meta_type . '_meta');
+        $meta_cache = wp_cache_get( $object_id, $meta_type . '_meta' );
 
         if ( !$meta_cache ) {
             $meta_cache = update_meta_cache( $meta_type, array( $object_id ) );
@@ -118,25 +111,25 @@ class HB_Meta_Box{
      *
      * @param int
      */
-    function render( $post ){
-        if( $fields = $this->_fields ){
+    function render( $post ) {
+        if ( $fields = $this->_fields ) {
             echo '<ul class="hb-form-table">';
-            foreach( $fields as $field ){
+            foreach ( $fields as $field ) {
                 echo '<li class="hb-form-field">';
-                if( isset($field['label']) && $field['label'] != '' )
+                if ( isset( $field['label'] ) && $field['label'] != '' )
                     echo '<label class="hb-form-field-label">' . $field['label'] . '</label>';
-                if( $this->has_post_meta( $post->ID, $field['name'] ) ) {
+                if ( $this->has_post_meta( $post->ID, $field['name'] ) ) {
                     $field['std'] = get_post_meta( $post->ID, $this->_args['meta_key_prefix'] . $field['name'], true );
                 }
                 $field['name'] = $this->_args['meta_key_prefix'] . $field['name'];
-                if( empty( $field['id'] ) ){
+                if ( empty( $field['id'] ) ) {
                     $field['id'] = sanitize_title( $field['name'] );
                 }
                 echo '<div class="hb-form-field-input">';
                 echo '<div class="hb-form-field-input-inner">';
                 $tmpl = TP_Hotel_Booking::instance()->locate( "includes/admin/metaboxes/views/fields/{$field['type']}.php" );
                 require $tmpl;
-                if( ! empty( $field['desc'] ) ){
+                if ( !empty( $field['desc'] ) ) {
                     printf( '<p class="description">%s</p>', $field['desc'] );
                 }
                 echo '</div>';
@@ -153,7 +146,7 @@ class HB_Meta_Box{
      *
      * @return string
      */
-    function get_nonce_field_name(){
+    function get_nonce_field_name() {
         return 'meta_box_' . $this->_args['name'];
     }
 
@@ -162,7 +155,7 @@ class HB_Meta_Box{
      *
      * @return string
      */
-    function get_nonce_field_action(){
+    function get_nonce_field_action() {
         return 'update_meta_box_' . $this->_args['name'];
     }
 
@@ -171,15 +164,17 @@ class HB_Meta_Box{
      *
      * @param int
      */
-    function update( $post_id ){
-        if ( ! isset( $_POST[ $this->get_nonce_field_name() ] ) || ! wp_verify_nonce( sanitize_text_field( $_POST[ $this->get_nonce_field_name() ] ), $this->get_nonce_field_action() ) ) return;
-        if( ! $this->_fields ) return;
+    function update( $post_id ) {
+        if ( !isset( $_POST[$this->get_nonce_field_name()] ) || !wp_verify_nonce( sanitize_text_field( $_POST[$this->get_nonce_field_name()] ), $this->get_nonce_field_action() ) )
+            return;
+        if ( !$this->_fields )
+            return;
 
-        foreach( $this->_fields as $field ){
-            if( array_key_exists( $this->_args['meta_key_prefix'] . $field['name'], (array)$_POST ) ) {
+        foreach ( $this->_fields as $field ) {
+            if ( array_key_exists( $this->_args['meta_key_prefix'] . $field['name'], (array) $_POST ) ) {
                 $meta_value = $_POST[$this->_args['meta_key_prefix'] . $field['name']];
                 $meta_value = apply_filters( 'hb_meta_box_update_meta_value', $meta_value, $field['name'], $this->_args['name'], $post_id );
-                update_post_meta($post_id, $this->_args['meta_key_prefix'] . $field['name'], $meta_value );
+                update_post_meta( $post_id, $this->_args['meta_key_prefix'] . $field['name'], $meta_value );
             }
         }
 
@@ -191,13 +186,16 @@ class HB_Meta_Box{
      *
      * @param $post_id
      */
-    static function update_meta_boxes( $post_id ){
-        if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
-        if( 'post' != strtolower( $_SERVER['REQUEST_METHOD'] ) ) return;
+    static function update_meta_boxes( $post_id ) {
+        if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+            return;
+        if ( 'post' != strtolower( $_SERVER['REQUEST_METHOD'] ) )
+            return;
 
-        if( ! ( $meta_boxes = self::$_meta_boxes ) ) return;
+        if ( !( $meta_boxes = self::$_meta_boxes ) )
+            return;
 
-        foreach( $meta_boxes as $meta_box ){
+        foreach ( $meta_boxes as $meta_box ) {
             $meta_box->update( $post_id );
         }
     }
@@ -210,13 +208,15 @@ class HB_Meta_Box{
      * @param array $fields
      * @return HB_Meta_Box instance
      */
-    static function instance( $id, $args, $fields ){
-        if( empty( self::$_meta_boxes[ $id ] ) ){
-            if( empty( $args['name'] ) ) $args['name'] = $id;
-            self::$_meta_boxes[ $id ] = new self( $args, $fields );
+    static function instance( $id, $args, $fields ) {
+        if ( empty( self::$_meta_boxes[$id] ) ) {
+            if ( empty( $args['name'] ) )
+                $args['name'] = $id;
+            self::$_meta_boxes[$id] = new self( $args, $fields );
         }
-        return self::$_meta_boxes[ $id ];
+        return self::$_meta_boxes[$id];
     }
+
 }
 
 /**

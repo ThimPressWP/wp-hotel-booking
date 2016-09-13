@@ -1,6 +1,6 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
+if ( !defined( 'ABSPATH' ) ) {
     exit;
 }
 
@@ -16,28 +16,24 @@ class HB_TemplateLoader {
      * The Constructor
      */
     public function __construct() {
-        add_filter('template_include', array($this, 'template_loader'));
+        add_filter( 'template_include', array( $this, 'template_loader' ) );
     }
 
-    public function template_loader($template)
-    {
+    public function template_loader( $template ) {
         $post_type = get_post_type();
 
         $file = '';
         $find = array();
-        if( $post_type !== 'hb_room' ) {
+        if ( $post_type !== 'hb_room' ) {
             return $template;
         }
 
-        if( is_post_type_archive( 'hb_room' ) )
-        {
+        if ( is_post_type_archive( 'hb_room' ) ) {
             $file = 'archive-room.php';
             $find[] = $file;
             $find[] = hb_template_path() . '/' . $file;
-        }
-        else if( is_room_taxonomy() )
-        {
-            $term   = get_queried_object();
+        } else if ( is_room_taxonomy() ) {
+            $term = get_queried_object();
             $taxonomy = $term->taxonomy;
             if ( strpos( $term->taxonomy, 'hb_' ) === 0 ) {
                 $taxonomy = substr( $term->taxonomy, 3 );
@@ -54,28 +50,25 @@ class HB_TemplateLoader {
             $find[] = 'taxonomy-' . $term->taxonomy . '.php';
             $find[] = hb_template_path() . '/taxonomy-' . $taxonomy . '.php';
             $find[] = $file;
-        }
-        else if( is_single() )
-        {
+        } else if ( is_single() ) {
             $file = 'single-room.php';
             $find[] = $file;
             $find[] = hb_template_path() . '/' . $file;
         }
 
-        if( $file )
-        {
+        if ( $file ) {
             $find[] = hb_template_path() . '/' . $file;
-            $hb_template = untrailingslashit(HB_PLUGIN_PATH) . '/templates/' . $file;
+            $hb_template = untrailingslashit( HB_PLUGIN_PATH ) . '/templates/' . $file;
             $template = locate_template( array_unique( $find ) );
 
-            if( ! $template && file_exists( $hb_template ) )
-            {
+            if ( !$template && file_exists( $hb_template ) ) {
                 $template = $hb_template;
             }
         }
 
         return $template;
     }
+
 }
 
 new HB_TemplateLoader();

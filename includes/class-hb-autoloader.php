@@ -1,6 +1,6 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
+if ( !defined( 'ABSPATH' ) ) {
     exit;
 }
 
@@ -54,12 +54,12 @@ class HB_Autoloader {
      */
     public function autoload( $class ) {
         $class = strtolower( $class );
-        $file  = $this->get_file_name_from_class( $class );
-        $path  = $this->include_path;
+        $file = $this->get_file_name_from_class( $class );
+        $path = $this->include_path;
 
         // payment gateways
         if ( strpos( $class, 'hb_payment_gateway_' ) === 0 ) {
-            $path = $this->include_path . 'gateways/' . substr( str_replace( '_', '-', $class), 19 ) . '/';
+            $path = $this->include_path . 'gateways/' . substr( str_replace( '_', '-', $class ), 19 ) . '/';
         }
 
         // widgets
@@ -74,6 +74,7 @@ class HB_Autoloader {
 
         $this->load_file( $path . $file );
     }
+
 }
 
 new HB_Autoloader();
