@@ -1611,7 +1611,7 @@ if ( !function_exists( 'hb_get_url' ) ) {
         if ( !empty( $params ) ) {
             $query_str = '?hotel-booking-params=' . base64_encode( serialize( $params ) );
         }
-        return apply_filters( 'hb_get_url', hb_get_page_permalink( 'search' ) . $query_str, hb_get_page_id( 'search' ), $url, $query );
+        return apply_filters( 'hb_get_url', hb_get_page_permalink( 'search' ) . $query_str, hb_get_page_id( 'search' ), $params );
     }
 
 }
