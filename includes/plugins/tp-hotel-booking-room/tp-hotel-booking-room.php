@@ -21,6 +21,7 @@ class TP_Hotel_Booking_Room {
 
     static $instance = null;
     public $available = false;
+    public $booking = null;
 
     function __construct() {
         // loaded
@@ -45,6 +46,8 @@ class TP_Hotel_Booking_Room {
 
             // load text domain
             $this->load_textdomain();
+            
+            $this->booking = TP_Hotel_Booking_Room_Extenstion::instance();
         }
     }
 

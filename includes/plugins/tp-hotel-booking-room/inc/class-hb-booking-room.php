@@ -12,15 +12,17 @@ if ( !defined( 'ABSPATH' ) ) {
 if ( !class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
 
     class TP_Hotel_Booking_Room_Extenstion {
+        
+        private static $instance = null;
 
-        function __construct() {
+        public function __construct() {
             add_action( 'hb_admin_settings_tab_after', array( $this, 'admin_settings' ) );
-
-            add_action( 'init', array( $this, 'init' ) );
+            // init
+            $this->init();
         }
 
         // add admin setting
-        function admin_settings( $tab ) {
+        public function admin_settings( $tab ) {
             if ( $tab !== 'room' ) {
                 return;
             }
@@ -39,12 +41,12 @@ if ( !class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
             <?php
         }
 
-        function init() {
+        public function init() {
             if ( !hb_settings()->get( 'enable_single_book', 0 ) ) {
                 return;
             }
 
-            add_action( 'hotel_booking_single_room_title', array( $this, 'single_add_button' ) );
+            add_action( 'hotel_booking_single_room_title', array( $this, 'single_add_button' ), 9 );
             add_action( 'wp_footer', array( $this, 'wp_footer' ) );
             // enqueue script
             add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
@@ -58,16 +60,16 @@ if ( !class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
             add_action( 'wp_ajax_nopriv_hotel_booking_single_check_room_available', array( $this, 'hotel_booking_single_check_room_available' ) );
         }
 
-        function single_add_button() {
+        public function single_add_button() {
             ob_start();
             $this->get_template( 'single-search-button.php' );
             $html = ob_get_clean();
             echo $html;
         }
 
-        function wp_footer() {
+        public function wp_footer() {
             $html = array();
-            $html[] = '<div id="hotel_booking_room_hidden"></div>';
+//            $html[] = '<div id="hotel_booking_room_hidden"></div>';
             ob_start();
             // search form.
             $this->get_template( 'single-search-available.php' );
@@ -78,7 +80,7 @@ if ( !class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
         }
 
         // enqueue script
-        function enqueue() {
+        public function enqueue() {
             wp_enqueue_script( 'jquery-ui-datepicker' );
             wp_register_script( 'magnific-popup', TP_HB_BOOKING_ROOM_URI . 'inc/libraries/magnific-popup/jquery.magnific-popup.min.js', array(), false, true );
             wp_enqueue_script( 'magnific-popup' );
@@ -90,7 +92,7 @@ if ( !class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
             wp_enqueue_script( 'tp-hotel-booking-room', TP_HB_BOOKING_ROOM_URI . 'assets/js/site.js' );
         }
 
-        function check_room_availabel() {
+        public function check_room_availabel() {
             // ajax referer
             if ( !isset( $_POST['check-room-availabel-nonce'] ) || !check_ajax_referer( 'check_room_availabel_nonce', 'check-room-availabel-nonce' ) ) {
                 return;
@@ -123,7 +125,7 @@ if ( !class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
             die();
         }
 
-        function add_to_cart_redirect( $param, $room ) {
+        public function add_to_cart_redirect( $param, $room ) {
             if ( isset( $param['status'] ) && $param['status'] === 'success' && isset( $_POST['is_single'] ) && $_POST['is_single'] ) {
                 $param['redirect'] = hb_get_cart_url();
             }
@@ -131,7 +133,7 @@ if ( !class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
             return $param;
         }
 
-        function template_path() {
+        public function template_path() {
             return apply_filters( 'hb_room_addon_template_path', 'tp-hotel-booking' );
         }
 
@@ -143,7 +145,7 @@ if ( !class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
          *
          * @return  string
          */
-        function get_template_part( $slug, $name = '' ) {
+        public function get_template_part( $slug, $name = '' ) {
             $template = '';
 
             // Look in yourtheme/slug-name.php and yourtheme/courses-manage/slug-name.php
@@ -182,7 +184,7 @@ if ( !class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
          *
          * @return void
          */
-        function get_template( $template_name, $args = array(), $template_path = '', $default_path = '' ) {
+        public function get_template( $template_name, $args = array(), $template_path = '', $default_path = '' ) {
             if ( $args && is_array( $args ) ) {
                 extract( $args );
             }
@@ -220,7 +222,7 @@ if ( !class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
          *
          * @return string
          */
-        function locate_template( $template_name, $template_path = '', $default_path = '' ) {
+        public function locate_template( $template_name, $template_path = '', $default_path = '' ) {
 
             if ( !$template_path ) {
                 $template_path = $this->template_path();
@@ -247,7 +249,7 @@ if ( !class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
             return apply_filters( 'hb_room_locate_template', $template, $template_name, $template_path );
         }
 
-        function hotel_booking_single_check_room_available() {
+        public function hotel_booking_single_check_room_available() {
             if ( !isset( $_POST['hb-booking-single-room-check-nonce-action'] ) || !wp_verify_nonce( $_POST['hb-booking-single-room-check-nonce-action'], 'hb_booking_single_room_check_nonce_action' ) ) {
                 return;
             }
@@ -300,8 +302,14 @@ if ( !class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
             // input is not pass validate, sanitize
             wp_send_json( array( 'status' => false, 'messages' => $errors ) );
         }
-
+        
+        public static function instance(){
+            if ( ! self::$instance ) {
+                self::$instance = new self();
+            }
+            
+            return self::$instance;
+        }
     }
 
-    new TP_Hotel_Booking_Room_Extenstion();
 }

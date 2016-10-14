@@ -9,18 +9,18 @@ class HB_Shortcode_Hotel_Booking_Mini_Cart extends HB_Shortcodes {
 
     public function __construct() {
         parent::__construct();
-        add_action( 'wp_footer', array( $this, 'mini_cart' ) );
+//        add_action( 'wp_footer', array( $this, 'mini_cart' ) );
         add_action( 'wp_enqueue_scripts', array( $this, 'utils' ) );
     }
 
     function add_shortcode( $atts, $content = null ) {
         ?>
         <div id="hotel_booking_mini_cart_<?php echo uniqid() ?>" class="hotel_booking_mini_cart">
-        <?php if ( isset( $atts['title'] ) && $atts['title'] ): ?>
+            <?php if ( isset( $atts['title'] ) && $atts['title'] ): ?>
 
                 <h3><?php echo esc_html( $atts['title'] ); ?></h3>
 
-        <?php endif; ?>
+            <?php endif; ?>
 
             <?php if ( !empty( TP_Hotel_Booking::instance()->cart->cart_contents ) ): ?>
 
@@ -30,20 +30,19 @@ class HB_Shortcode_Hotel_Booking_Mini_Cart extends HB_Shortcodes {
 
                 <p class="hb_mini_cart_empty"><?php _e( 'Your cart is empty.', 'tp-hotel-booking' ) ?></p>
 
-        <?php endif; ?>
+            <?php endif; ?>
         </div>
-            <?php
-        }
-
-        function mini_cart() {
-            echo hb_get_template_content( 'cart/mini_cart_layout.php' );
-        }
-
-        function utils() {
-            wp_enqueue_script( 'wp-util' );
-        }
-
+        <?php
     }
 
-    new HB_Shortcode_Hotel_Booking_Mini_Cart();
-    
+    function mini_cart() {
+        echo hb_get_template_content( 'cart/mini_cart_layout.php' );
+    }
+
+    function utils() {
+        wp_enqueue_script( 'wp-util' );
+    }
+
+}
+
+new HB_Shortcode_Hotel_Booking_Mini_Cart();

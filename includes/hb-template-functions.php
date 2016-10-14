@@ -71,7 +71,9 @@ function hb_get_template( $template_name, $args = array(), $template_path = '', 
 
     do_action( 'hb_before_template_part', $template_name, $template_path, $located, $args );
 
-    include( $located );
+    if ( $located && file_exists( $located ) ) {
+        include( $located );
+    }
 
     do_action( 'hb_after_template_part', $template_name, $template_path, $located, $args );
 }
@@ -531,3 +533,9 @@ if ( !function_exists( 'hotel_show_pricing' ) ) {
 
 }
 /*=====  End of template hooks  ======*/
+add_action( 'wp_footer', 'hb_print_mini_cart_template' );
+if ( !function_exists( 'hb_print_mini_cart_template' ) ) {
+    function hb_print_mini_cart_template() {
+        echo hb_get_template_content( 'cart/mini_cart_layout.php' );
+    }
+}

@@ -1060,9 +1060,15 @@ function hb_search_rooms( $args = array() ) {
         }
     }
 
+    $results = apply_filters( 'hb_search_available_rooms', $results, array(
+        'check_in' => $check_in_date_to_time,
+        'check_out' => $check_out_date_to_time,
+        'adults' => $adults,
+        'child' => $max_child
+            ) );
     global $hb_settings;
     $total = count( $results );
-    $posts_per_page = (int) apply_filters( 'hb_number_search_results', $hb_settings->get( 'posts_per_page', 8 ) );
+    $posts_per_page = (int) apply_filters( 'hb_number_search_rooms_per_page', $hb_settings->get( 'posts_per_page', 8 ) );
     $page = isset( $_GET['hb_page'] ) ? absint( $_GET['hb_page'] ) : 1;
     $offset = ( $page * $posts_per_page ) - $posts_per_page;
     $max_num_pages = ceil( $total / $posts_per_page );
