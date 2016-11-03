@@ -45,7 +45,7 @@ class HB_Admin_Metabox_Room_Price {
 			return;
 		}
 
-		if ( ! isset( $_POST['hotel-booking-room-pricing-nonce'] ) || ! wp_verify_nonce( $_POST['hotel-booking-room-pricing-nonce'], 'hotel_booking_room_pricing_nocne' ) ) {
+		if ( ! isset( $_POST['hotel-booking-room-pricing-nonce'] ) || ! wp_verify_nonce( $_POST['hotel-booking-room-pricing-nonce'], 'hotel_booking_room_pricing_nonce' ) ) {
 			return;
 		}
 
