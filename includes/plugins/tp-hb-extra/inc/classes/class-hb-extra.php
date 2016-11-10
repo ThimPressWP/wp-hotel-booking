@@ -1,12 +1,10 @@
 <?php
 
-class HB_Extra_Field
-{
+class HB_Extra_Field {
 
 	protected $_extras_type = null;
 
-	function __construct()
-	{
+	function __construct() {
 		add_filter( 'hb_metabox_room_settings', array( $this, 'meta_fields' ) );
 		add_action( 'hotel_booking_loop_after_item', array( $this, 'render_extra' ), 10, 1 );
 		add_action( 'hotel_booking_after_add_room_to_cart_form', array( $this, 'render_extra' ), 10, 1 );
@@ -21,76 +19,75 @@ class HB_Extra_Field
 
 	/**
 	 * meta field box render
+	 *
 	 * @param  [type] $fields [description]
+	 *
 	 * @return [type]         [description]
 	 */
-	function meta_fields( $fields )
-	{
+	function meta_fields( $fields ) {
 		$fields[] = array(
-				'name'		=> 'room_extra',
-				'label'		=> __( 'Addition Package', 'tp-hb-extra' ),
-				'type'		=> 'select',
-				'options'	=> $this->extra_fields(),
-				'multiple'	=> true,
-				'filter'		=> array( $this, 'meta_value' )
-			);
+			'name'       => 'room_extra',
+			'label'      => __( 'Addition Package', 'tp-hb-extra' ),
+			'type'       => 'multiple',
+			'options'    => $this->extra_fields(),
+			'filter'     => array( $this, 'meta_value' ),
+		);
 
 		return $fields;
 	}
 
-	protected function extra_fields()
-	{
+	protected function extra_fields() {
 		global $hb_extra_settings;
 		$options = array();
-		$extras = $hb_extra_settings->get_extra();
+		$extras  = $hb_extra_settings->get_extra();
 		foreach ( $extras as $key => $ex ) {
-			$opt = new stdClass();
-			$opt->text = $ex->post_title;
+			$opt        = new stdClass();
+			$opt->text  = $ex->post_title;
 			$opt->value = $ex->ID;
-			$options[] = $opt;
+			$options[]  = $opt;
 		}
 		return $options;
 	}
 
 	/**
 	 * return value meta box content
-	 * @param  @string || @array
+	 *
+	 * @param   @string || @array
+	 *
 	 * @return  @string || @array
 	 */
-	function meta_value( $val )
-	{
+	function meta_value( $val ) {
 		return $val;
 	}
 
-	function admin_booking_room_details( $booking_params, $search_key, $room_id )
-	{
-		if( ! isset( $booking_params[ $search_key ] ) ||
-			! isset( $booking_params[ $search_key ][ $room_id ] ) ||
-			! isset($booking_params[ $search_key ][ $room_id ]['extra_packages_details'])
-		)
-		{
+	function admin_booking_room_details( $booking_params, $search_key, $room_id ) {
+		if ( !isset( $booking_params[$search_key] ) ||
+			!isset( $booking_params[$search_key][$room_id] ) ||
+			!isset( $booking_params[$search_key][$room_id]['extra_packages_details'] )
+		) {
 			return;
 		}
 
-		$packages = $booking_params[ $search_key ][ $room_id ]['extra_packages_details'];
+		$packages = $booking_params[$search_key][$room_id]['extra_packages_details'];
 		?>
-			<ul>
-				<?php foreach ( $packages as $id => $package ): ?>
-					<li>
-						<small><?php printf( '%s (x%s)', $package['package_title'], $package['package_quantity'] ) ?></small>
-					</li>
-				<?php endforeach ?>
-			</ul>
+		<ul>
+			<?php foreach ( $packages as $id => $package ): ?>
+				<li>
+					<small><?php printf( '%s (x%s)', $package['package_title'], $package['package_quantity'] ) ?></small>
+				</li>
+			<?php endforeach ?>
+		</ul>
 		<?php
 	}
 
 	/**
 	 * render html extra field search room
+	 *
 	 * @param  $post_id
+	 *
 	 * @return template
 	 */
-	function render_extra( $post_id )
-	{
+	function render_extra( $post_id ) {
 		tp_hb_extra_get_template( 'loop/extra-search-room.php', array( 'post_id' => $post_id ) );
 	}
 
@@ -98,7 +95,9 @@ class HB_Extra_Field
 	 * Extra single search room
 	 *
 	 * Add to cart
+	 *
 	 * @param $post object
+	 *
 	 * @return html
 	 */
 	function single_room_cart( $post ) {
