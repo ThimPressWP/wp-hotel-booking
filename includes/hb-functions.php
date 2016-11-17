@@ -571,6 +571,7 @@ function hb_i18n() {
 		'dayNames'                       => hb_day_name_js(),
 		'dayNamesShort'                  => hb_day_name_short_js(),
 		'dayNamesMin'                    => hb_day_name_min_js(),
+		'date_start'                     => get_option( 'start_of_week' ),
 	);
 	return apply_filters( 'hb_i18n', $translation );
 }

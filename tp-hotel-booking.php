@@ -374,39 +374,3 @@ class TP_Hotel_Booking {
 
 $GLOBALS['tp_hotel_booking'] = TP_Hotel_Booking::instance();
 
-// add_action( 'init', function(){
-//     flush_rewrite_rules();die();
-// } );
-// $endpoits = array(
-//         'view-book'     => 'view-book'
-//     );
-
-// add_action( 'init', function(){
-//     global $endpoits;
-//     foreach ( $endpoits as $key => $var ) {
-//         add_rewrite_endpoint( $var, EP_PERMALINK | EP_PAGES );
-//     }
-// } );
-
-// add_filter( 'query_vars', function( $vars ){
-//     global $endpoits;
-//     foreach ( $endpoits as $k => $v ) {
-//         $vars[] = $k;
-//     }
-
-//     return $vars;
-// } );
-// add_action( 'parse_request', function(){
-//     global $endpoits;
-//     global $wp;
-
-//     // Map query vars to their keys, or get them if endpoints are not supported
-//     foreach ( $endpoits as $key => $var ) {
-//         if ( isset( $_GET[ $var ] ) ) {
-//             $wp->query_vars[ $key ] = $_GET[ $var ];
-//         } elseif ( isset( $wp->query_vars[ $var ] ) ) {
-//             $wp->query_vars[ $key ] = $wp->query_vars[ $var ];
-//         }
-//     }
-
-// }, 0 );
