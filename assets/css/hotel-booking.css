@@ -1835,6 +1835,10 @@ input[type="submit"],
 	transform: scale(1.15, 1.15);
 }
 
+.error {
+	border: 1px solid red !important;
+}
+
 @media (min-width: 1200px) {
 	.content-pusher.boxed-area {
 		max-width: 1200px;
