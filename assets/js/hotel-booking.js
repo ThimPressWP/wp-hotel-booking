@@ -644,7 +644,7 @@
 			dayNames       : hotel_booking_i18n.dayNames,
 			dayNamesShort  : hotel_booking_i18n.dayNamesShort,
 			dayNamesMin    : hotel_booking_i18n.dayNamesMin,
-			minDate        : tomorrow,
+			minDate        : today,
 			maxDate        : '+365D',
 			numberOfMonths : 1,
 			onSelect       : function () {
@@ -733,10 +733,10 @@
 			var check_in = new Date($check_in.datepicker('getDate')),
 				check_out = new Date($check_out.datepicker('getDate')),
 				current = new Date();
-			if (check_in.compareWith(current) == -1) {
-				$check_in.addClass('error');
-				return false;
-			}
+			// if (check_in.compareWith(current) == -1) {
+			// 	$check_in.addClass('error');
+			// 	return false;
+			// }
 
 			if (check_in.compareWith(check_out) >= 0) {
 				$check_in.addClass('error');
