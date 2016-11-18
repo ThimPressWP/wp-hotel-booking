@@ -1,3 +1,12 @@
+=== 1.1.5.8 ===
+- Change workflow for search room process
+- Change logic for search room in Block Room add-on
+- Fix bug in block room calendar plan
+- Fix multiple choice addition packages
+- Fix capacity with WPML
+
+- Update hook cart
+
 === 1.1.5.7 ===
 - Text Domain
 - Update hook cart

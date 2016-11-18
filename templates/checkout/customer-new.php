@@ -28,7 +28,7 @@ if ( !defined( 'ABSPATH' ) ) {
                     <span class="hb-required">*</span></label>
 
                 <div class="hb-form-field-input">
-                    <input type="text" name="last_name" value="<?php echo esc_attr( $customer->last_name ); ?>" placeholder="<?php _e( 'Last name', 'tp-hotel-booking' ); ?>" />
+                    <input type="text" name="last_name" value="<?php echo esc_attr( $customer->last_name ); ?>" placeholder="<?php _e( 'Last name', 'tp-hotel-booking' ); ?>" required />
                 </div>
             </li>
             <li class="hb-form-field">
