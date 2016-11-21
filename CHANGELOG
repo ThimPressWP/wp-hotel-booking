@@ -1,9 +1,13 @@
-=== 1.1.5.8 ===
-- Change workflow for search room process
-- Change logic for search room in Block Room add-on
-- Fix bug in block room calendar plan
-- Fix multiple choice addition packages
-- Fix capacity with WPML
+= 1.2 =
+* Update logic of search room process
+* Update booking current day
+* Update multiple choice addition packages
+* Update mini cart template
+* Update maximum capacity
+* Update all templates
+* Update to compatible with Wordpress 4.6.1
+* Add WPML support
+* Fix block room calender plan
 
 - Update hook cart
 

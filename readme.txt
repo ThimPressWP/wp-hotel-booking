@@ -110,6 +110,17 @@ Yes.
 * Update Pricing
 * Book in room addon ( Support book room without search room )
 
+= 1.2 =
+* Update logic of search room process
+* Update booking current day
+* Update multiple choice addition packages
+* Update mini cart template
+* Update maximum capacity
+* Update all templates
+* Update to compatible with Wordpress 4.6.1
+* Add WPML support
+* Fix block room calender plan
+
 == Upgrade Notice ==
 
 = 1.0 =
