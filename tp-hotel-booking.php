@@ -194,6 +194,7 @@ class TP_Hotel_Booking {
 		$this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-account.php' );
 		$this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-checkout.php' );
 		$this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-lastest-reviews.php' );
+		$this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-best-reviews.php' );
 		$this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-rooms.php' );
 		$this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-mini-cart.php' );
 		$this->_include( 'includes/shortcodes/class-hb-shortcode-hotel-booking-slider.php' );
@@ -342,7 +343,7 @@ class TP_Hotel_Booking {
 		$upload_dir      = wp_upload_dir();
 		$upload_base_url = $upload_dir['baseurl'];
 		?>
-		<script type="text/javascript">
+        <script type="text/javascript">
 			var hotel_settings = {
 				ajax           : '<?php echo admin_url( 'admin-ajax.php' ); ?>',
 				settings       : <?php echo HB_Settings::instance()->toJson( apply_filters( 'hb_settings_fields', array( 'review_rating_required' ) ) ); ?>,
@@ -353,7 +354,7 @@ class TP_Hotel_Booking {
 				nonce          : '<?php echo wp_create_nonce( 'hb_booking_nonce_action' ); ?>',
 				timezone       : '<?php echo current_time( 'timestamp' ) ?>'
 			}
-		</script>
+        </script>
 		<?php
 	}
 
