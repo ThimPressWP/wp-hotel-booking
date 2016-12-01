@@ -117,6 +117,8 @@ Yes.
 * Update mini cart template
 * Update maximum capacity
 * Update all templates
+* Update shortcode lastest reviews
+* Update shortcode best reviews
 * Update to compatible with Wordpress 4.6.1
 * Add WPML support
 * Fix block room calender plan
