@@ -17,7 +17,7 @@ class HB_Shortcode_Hotel_Booking_Lastest_Reviews extends HB_Shortcodes {
         $args = array(
             'post_type' => 'hb_room',
             'meta_key' => 'arveger_rating_last_modify',
-            'limit' => $number,
+            'posts_per_page' => $number,
             'order' => 'DESC',
             'orderby' => array( 'meta_value_num' => 'DESC' )
         );
