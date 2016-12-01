@@ -32,6 +32,35 @@ function hb_get_max_capacity_of_rooms() {
 	return apply_filters( 'get_max_capacity_of_rooms', $max );
 }
 
+function hb_get_min_capacity_of_rooms() {
+	static $min = null;
+//	if ( !is_null( $max ) ) {
+//		return $max;
+//	}
+	$terms = get_terms( 'hb_room_capacity', array( 'hide_empty' => false ) );
+	if ( $terms )
+		foreach ( $terms as $term ) {
+			$cap = get_term_meta( $term->term_id, 'hb_max_number_of_adults', true );
+			/**
+			 * @since  1.1.2
+			 * use term meta
+			 */
+			if ( !$cap ) {
+				$cap = get_option( "hb_taxonomy_capacity_{$term->term_id}" );
+			}
+			if ( intval( $cap ) < $min ) {
+				$min = $cap;
+			}
+		}
+	if ( !$min ) {
+		global $wpdb;
+		$results = $wpdb->get_results( "SELECT MIN(meta_value) as min FROM wp_termmeta WHERE meta_key = 'hb_max_number_of_adults'", ARRAY_A );
+		$min     = $results[0]['min'];
+	}
+	return apply_filters( 'get_min_capacity_of_rooms', $min );
+}
+
+
 // get array search
 function hb_get_capacity_of_rooms() {
 	$terms  = get_terms( 'hb_room_capacity', array( 'hide_empty' => false ) );
@@ -970,7 +999,7 @@ function hb_format_price( $price, $with_currency = true ) {
 function hb_search_rooms( $args = array() ) {
 	global $wpdb;
 	$adults_term = hb_get_request( 'adults', 0 );
-	$adults      = $adults_term ? get_term_meta( $adults_term, 'hb_max_number_of_adults', true ) : hb_get_max_capacity_of_rooms();
+	$adults      = $adults_term ? get_term_meta( $adults_term, 'hb_max_number_of_adults', true ) : hb_get_min_capacity_of_rooms();
 	if ( !$adults ) {
 		$adults = $adults_term ? (int) get_option( 'hb_taxonomy_capacity_' . $adults_term ) : 0;
 	}
@@ -1023,7 +1052,7 @@ function hb_search_rooms( $args = array() ) {
 				rooms.post_type = %s
 				AND rooms.post_status = %s
 				AND term_cap.meta_value >= %d
-				AND pm2.meta_value >= %d
+				AND pm2.meta_value <= %d
 			GROUP BY rooms.post_name
 			HAVING available_rooms > 0
 			ORDER BY term_cap.meta_value DESC
