@@ -1003,7 +1003,7 @@ function hb_search_rooms( $args = array() ) {
 	if ( !$adults ) {
 		$adults = $adults_term ? (int) get_option( 'hb_taxonomy_capacity_' . $adults_term ) : 0;
 	}
-	$max_child = hb_get_request( 'max_child', hb_get_max_child_of_rooms() );
+	$max_child = hb_get_request( 'max_child', 1 );
 
 	$args = wp_parse_args(
 		$args, array(
@@ -1052,7 +1052,7 @@ function hb_search_rooms( $args = array() ) {
 				rooms.post_type = %s
 				AND rooms.post_status = %s
 				AND term_cap.meta_value >= %d
-				AND pm2.meta_value <= %d
+				AND pm2.meta_value >= %d
 			GROUP BY rooms.post_name
 			HAVING available_rooms > 0
 			ORDER BY term_cap.meta_value DESC
