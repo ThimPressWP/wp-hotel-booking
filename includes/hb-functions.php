@@ -1003,7 +1003,7 @@ function hb_search_rooms( $args = array() ) {
 	if ( !$adults ) {
 		$adults = $adults_term ? (int) get_option( 'hb_taxonomy_capacity_' . $adults_term ) : 0;
 	}
-	$max_child = hb_get_request( 'max_child', 1 );
+	$max_child = hb_get_request( 'max_child', 0 );
 
 	$args = wp_parse_args(
 		$args, array(
