@@ -42,7 +42,7 @@
 			onSelect       : function (date) {
 				var _self = $(this),
 					_date = _self.datepicker('getDate'),
-					_timestamp = new Date(_date).getTime() / 1000 - ( new Date().getTimezoneOffset() * 60 ),
+					_timestamp = new Date(_date).getTime() / 1000 - ( new Date(_date).getTimezoneOffset() * 60 ),
 					name = _self.attr('name');
 				var hidden_name = false;
 				if (name.indexOf('date-start') === 0) {
