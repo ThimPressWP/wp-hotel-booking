@@ -1,12 +1,12 @@
 <?php
 /**
  * @Author: ducnvtt
- * @Date:   2016-03-24 16:36:36
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-15 10:51:34
+ * @Date  :   2016-03-24 16:36:36
+ * @Last  Modified by:   ducnvtt
+ * @Last  Modified time: 2016-04-15 10:51:34
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if ( !defined( 'ABSPATH' ) ) {
 	exit();
 }
 
@@ -28,11 +28,11 @@ class HB_Admin_Metabox_Booking_Details {
 
 		$this->title = __( 'Booking Details', 'tp-hotel-booking' );
 
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ), 10, 2 );
-		add_action( 'save_post', array( __CLASS__ , 'update' ) );
+		add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ), 10 );
+		add_action( 'save_post', array( __CLASS__, 'update' ) );
 	}
 
-	public function add_meta_box( $post_type, $post ) {
+	public function add_meta_box() {
 		add_meta_box( $this->id, $this->title, array( $this, 'render' ), $this->screen, $this->context, $this->priority, $this->callback_args );
 	}
 
@@ -45,7 +45,7 @@ class HB_Admin_Metabox_Booking_Details {
 			return;
 		}
 
-		if ( ! isset( $_POST['hotel_booking_metabox_booking_details_nonce'] ) || ! wp_verify_nonce( $_POST['hotel_booking_metabox_booking_details_nonce'], 'hotel-booking-metabox-booking-details' ) ) {
+		if ( !isset( $_POST['hotel_booking_metabox_booking_details_nonce'] ) || !wp_verify_nonce( $_POST['hotel_booking_metabox_booking_details_nonce'], 'hotel-booking-metabox-booking-details' ) ) {
 			return;
 		}
 
