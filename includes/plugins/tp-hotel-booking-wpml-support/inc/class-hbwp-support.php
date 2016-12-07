@@ -282,8 +282,8 @@ class HBWPML_Support {
 				WHERE
 					rooms.post_type = %s
 					AND rooms.post_status = %s
-					AND term_cap.meta_value <= %d
-					AND pm2.meta_value <= %d
+					AND term_cap.meta_value >= %d
+					AND pm2.meta_value >= %d
 					AND wpml_translation.language_code = %s
 				GROUP BY rooms.post_name
 				HAVING ( available_rooms > 0 AND blocked = 0 )
