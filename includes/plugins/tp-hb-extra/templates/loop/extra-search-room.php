@@ -7,10 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 // HB_Room_Extra instead of HB_Room
 $room_extra = HB_Room_Extra::instance( $post_id );
 
-//var_dump($post_id);
 $room_extra = $room_extra->get_extra();
 
-//var_dump($room_extra);
 ?>
 
 <?php if ( $room_extra ): ?>

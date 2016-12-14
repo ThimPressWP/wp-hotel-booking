@@ -1,4326 +1,4040 @@
-# Loco Gettext template
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: TP Hotel Booking\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: Mon Feb 29 2016 14:41:46 GMT+0700 (SE Asia Standard Time)\n"
-"POT-Revision-Date: Thu Apr 14 2016 15:45:46 GMT+0700 (SE Asia Standard Time)\n"
+"POT-Creation-Date: 2016-12-14 15:19+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-Basepath: .\n"
-"X-Poedit-SearchPath-0: ..\n"
-"X-Poedit-KeywordsList: _:1;gettext:1;dgettext:2;ngettext:1,2;dngettext:2,3;"
-"__:1;_e:1;_c:1;_n:1,2;_n_noop:1,2;_nc:1,2;__ngettext:1,2;__ngettext_noop:1,2;"
-"_x:1,2c;_ex:1,2c;_nx:1,2,4c;_nx_noop:1,2,3c;_n_js:1,2;_nx_js:1,2,3c;"
-"esc_attr__:1;esc_html__:1;esc_attr_e:1;esc_html_e:1;esc_attr_x:1,2c;"
-"esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
-"X-Generator: Loco - https://localise.biz/"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#. Text in echo
-msgid "TP Hotel Booking"
-msgstr ""
-
-#. URI of the plugin
-msgid "http://thimpress.com"
-msgstr ""
-
-#. Description of the plugin
-msgid "Full of professional features for a booking room system."
-msgstr ""
-
-#. Author of the plugin
-msgid "ThimPress"
-msgstr ""
-
-#. Description of the plugin
-msgid "Resizes WordPress images on the fly"
-msgstr ""
-
-#. Author of the plugin
-msgid "Syamil MJ"
-msgstr ""
-
-#. Author URI of the plugin
-msgid "http://aquagraphite.com"
-msgstr ""
-
-#: ../includes/class-hb-ajax.php:156
+#: includes/class-hb-ajax.php:155
 msgid "Coupon code applied"
 msgstr ""
 
-#: ../includes/class-hb-ajax.php:159
+#: includes/class-hb-ajax.php:158
 msgid "Coupon does not exist!"
 msgstr ""
 
-#: ../includes/class-hb-ajax.php:170
+#: includes/class-hb-ajax.php:169
 msgid "Coupon code removed"
 msgstr ""
 
-#: ../includes/class-hb-ajax.php:209
+#: includes/class-hb-ajax.php:207
 msgid "Room ID is not exists."
 msgstr ""
 
-#: ../includes/class-hb-ajax.php:221
+#: includes/class-hb-ajax.php:218
 msgid "Can not select zero room."
 msgstr ""
 
-#: ../includes/class-hb-ajax.php:228
+#: includes/class-hb-ajax.php:225
 msgid "Checkin date, checkout date is invalid."
 msgstr ""
 
-#: ../includes/class-hb-ajax.php:248
+#: includes/class-hb-ajax.php:244
 msgid "Added successfully."
 msgstr ""
 
-#: ../includes/class-hb-ajax.php:261
+#: includes/class-hb-ajax.php:257
 msgid "Room selected. Please View Cart to change order"
 msgstr ""
 
-#. Text in function
-#: ../includes/class-hb-ajax.php:273 ../includes/plugins/tp-hb-
-#: extra/inc/classes/class-hb-extra-cart.php:222
+#: includes/class-hb-ajax.php:269
+#: includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-cart.php:222
 msgid "Cart item is not exists."
 msgstr ""
 
-#: ../includes/class-hb-ajax.php:339 ../includes/hb-core-functions.php:38
+#: includes/class-hb-ajax.php:336 includes/hb-core-functions.php:40
 msgid "Room not found."
 msgstr ""
 
-#: ../includes/class-hb-ajax.php:346
+#: includes/class-hb-ajax.php:343
 msgid "Please select check in date and checkout date."
 msgstr ""
 
-#: ../includes/class-hb-ajax.php:398
+#: includes/class-hb-ajax.php:393
 msgid "Edit order item"
 msgstr ""
 
-#: ../includes/class-hb-ajax.php:463
+#: includes/class-hb-ajax.php:457
 msgid "Can not add item with zero quantity."
 msgstr ""
 
-#: ../includes/class-hb-ajax.php:477 ../includes/class-hb-ajax.php:484
+#: includes/class-hb-ajax.php:471 includes/class-hb-ajax.php:478
 msgid "Check in date is invalid"
 msgstr ""
 
-#: ../includes/class-hb-checkout.php:53 ../includes/booking/hb-booking-functions.
-#: php:63 ../includes/cart/class-hb-cart.php:628
+#: includes/class-hb-ajax.php:648
+msgid "Room is not exists."
+msgstr ""
+
+#: includes/class-hb-ajax.php:656
+msgid "Date is not exists."
+msgstr ""
+
+#: includes/class-hb-checkout.php:53
+#: includes/booking/hb-booking-functions.php:63
+#: includes/cart/class-hb-cart.php:593
+#: includes/shortcodes/class-hb-shortcode-hotel-booking-mini-cart.php:31
 msgid "Your cart is empty."
 msgstr ""
 
-#: ../includes/class-hb-checkout.php:55
+#: includes/class-hb-checkout.php:55
 #, php-format
 msgid "Sorry, your session has expired. <a href=\"%s\">Return to homepage</a>"
 msgstr ""
 
-#: ../includes/class-hb-checkout.php:89
+#: includes/class-hb-checkout.php:89
 msgid "You have to Login to process checkout."
 msgstr ""
 
-#: ../includes/class-hb-checkout.php:96
+#: includes/class-hb-checkout.php:96
 msgid "The payment method is not available"
 msgstr ""
 
-#: ../includes/class-hb-checkout.php:120
+#: includes/class-hb-checkout.php:120
 msgid "can not create booking"
 msgstr ""
 
-#. Text in echo
-#: ../includes/class-hb-comments.php:117 ../templates/single-room-reviews.php:28
+#: includes/class-hb-comments.php:110 templates/single-room-reviews.php:28
 msgid "Reviews"
 msgstr ""
 
-#: ../includes/class-hb-comments.php:126
+#: includes/class-hb-comments.php:118
 msgid "Rating Room"
 msgstr ""
 
-#. Text in function
-#: ../includes/class-hb-comments.php:140 ../includes/class-hb-post-types.php:329 .
-#: ./templates/loop/rating.php:24 ../templates/single-room/review.php:29
+#: includes/class-hb-comments.php:129 includes/class-hb-post-types.php:311
+#: templates/loop/rating.php:24 templates/single-room/review.php:29
 #, php-format
 msgid "Rated %d out of 5"
 msgstr ""
 
-#: ../includes/class-hb-comments.php:149
+#: includes/class-hb-comments.php:137
 msgid "No rating"
 msgstr ""
 
-#: ../includes/class-hb-install.php:111
+#: includes/class-hb-install.php:108
 msgctxt "Page Slug"
 msgid "hotel-cart"
 msgstr ""
 
-#: ../includes/class-hb-install.php:112
+#: includes/class-hb-install.php:109
 msgctxt "Page Title"
 msgid "Hotel Cart"
 msgstr ""
 
-#: ../includes/class-hb-install.php:120
+#: includes/class-hb-install.php:116
 msgctxt "Page Slug"
 msgid "hotel-checkout"
 msgstr ""
 
-#: ../includes/class-hb-install.php:121
+#: includes/class-hb-install.php:117
 msgctxt "Page Title"
 msgid "Hotel Checkout"
 msgstr ""
 
-#: ../includes/class-hb-install.php:129
+#: includes/class-hb-install.php:124
 msgctxt "Page Slug"
 msgid "hotel-search"
 msgstr ""
 
-#: ../includes/class-hb-install.php:130
+#: includes/class-hb-install.php:125
 msgctxt "Page Title"
 msgid "Hotel Booking Search"
 msgstr ""
 
-#: ../includes/class-hb-install.php:138
+#: includes/class-hb-install.php:132
 msgctxt "Page Slug"
 msgid "hotel-account"
 msgstr ""
 
-#: ../includes/class-hb-install.php:139
+#: includes/class-hb-install.php:133
 msgctxt "Page Title"
 msgid "Hotel Account"
 msgstr ""
 
-#: ../includes/class-hb-install.php:147
+#: includes/class-hb-install.php:140
 msgctxt "Page Slug"
 msgid "hotel-term-condition"
 msgstr ""
 
-#: ../includes/class-hb-install.php:148
+#: includes/class-hb-install.php:141
 msgctxt "Page Title"
 msgid "Terms and Conditions "
 msgstr ""
 
-#. Text in function
-#: ../includes/class-hb-post-types.php:57
+#: includes/class-hb-post-types.php:59
 msgid "Type"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:58
+#: includes/class-hb-post-types.php:60
 msgid "Validate From"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:59
+#: includes/class-hb-post-types.php:61
 msgid "Validate To"
 msgstr ""
 
-#. Text in function
-#: ../includes/class-hb-post-types.php:60 ../includes/admin/hb-admin-functions.
-#: php:148
+#: includes/class-hb-post-types.php:62
+#: includes/admin/hb-admin-functions.php:148
 msgid "Minimum spend"
 msgstr ""
 
-#. Text in function
-#: ../includes/class-hb-post-types.php:61 ../includes/admin/hb-admin-functions.
-#: php:156
+#: includes/class-hb-post-types.php:63
+#: includes/admin/hb-admin-functions.php:156
 msgid "Maximum spend"
 msgstr ""
 
-#. Text in function
-#: ../includes/class-hb-post-types.php:62 ../includes/admin/hb-admin-functions.
-#: php:164
+#: includes/class-hb-post-types.php:64
+#: includes/admin/hb-admin-functions.php:164
 msgid "Usage limit per coupon"
 msgstr ""
 
-#. Text in function
-#: ../includes/class-hb-post-types.php:63 ../includes/admin/hb-admin-functions.
-#: php:171
+#: includes/class-hb-post-types.php:65
+#: includes/admin/hb-admin-functions.php:171
 msgid "Used"
 msgstr ""
 
-#. Text in echo
-#: ../includes/class-hb-post-types.php:73
+#: includes/class-hb-post-types.php:75
 msgid "Fixed cart"
 msgstr ""
 
-#. Text in echo
-#: ../includes/class-hb-post-types.php:74
+#: includes/class-hb-post-types.php:77
 msgid "Percent cart"
 msgstr ""
 
-#. Text in function
-#: ../includes/class-hb-post-types.php:279 ../includes/class-hb-post-types.php:622
+#: includes/class-hb-post-types.php:262 includes/class-hb-post-types.php:512
 msgid "Room Type"
 msgstr ""
 
-#. Text in function
-#: ../includes/class-hb-post-types.php:280
+#: includes/class-hb-post-types.php:263
 msgid "Max Child"
 msgstr ""
 
-#. Text in function
-#: ../includes/class-hb-post-types.php:281 ../includes/plugins/tp-hb-
-#: extra/inc/admin/views/extra.php:38 ../includes/plugins/tp-hb-
-#: extra/inc/admin/views/extra.php:71 ../includes/plugins/tp-hb-
-#: extra/inc/admin/views/extra.php:109 ../templates/emails/booking-details.php:22 
-#: ../templates/loop/price.php:25
+#: includes/class-hb-post-types.php:264
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:38
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:71
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:109
+#: templates/emails/booking-details.php:20 templates/loop/price.php:27
 msgid "Price"
 msgstr ""
 
-#. Text in function
-#: ../includes/class-hb-post-types.php:282
+#: includes/class-hb-post-types.php:265
 msgid "Average Rating"
 msgstr ""
 
-#. Text in function
-#: ../includes/class-hb-post-types.php:321
+#: includes/class-hb-post-types.php:303
 msgid "View Price"
 msgstr ""
 
-#. Text in echo
-#: ../includes/class-hb-post-types.php:387
+#: includes/class-hb-post-types.php:367
 msgid "Gallery"
 msgstr ""
 
-#. Text in echo
-#: ../includes/class-hb-post-types.php:389 ../templates/cart/cart.php:20 ..
-#: /templates/checkout/checkout.php:21
+#: includes/class-hb-post-types.php:369 templates/cart/cart.php:20
+#: templates/checkout/checkout.php:21
 msgid "Capacity"
 msgstr ""
 
-#. Text in echo
-#: ../includes/class-hb-post-types.php:391
+#: includes/class-hb-post-types.php:371
 msgid "Ordering"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:446
+#: includes/class-hb-post-types.php:425
 msgctxt "post type general name"
 msgid "Rooms"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:447
+#: includes/class-hb-post-types.php:426
 msgctxt "post type singular name"
 msgid "Room"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:448 ../includes/class-hb-post-types.php:450
+#: includes/class-hb-post-types.php:427 includes/class-hb-post-types.php:429
 msgid "Rooms"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:449 ../includes/class-hb-post-types.php:
-#: 487 ../includes/class-hb-post-types.php:525 ../includes/plugins/tp-hotel-
-#: booking-coupon/tp-hotel-booking-coupon.php:147
+#: includes/class-hb-post-types.php:428 includes/class-hb-post-types.php:469
+#: includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:140
 msgid "Parent Item:"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:451
+#: includes/class-hb-post-types.php:430
 msgid "View Room"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:452
+#: includes/class-hb-post-types.php:431 includes/class-hb-post-types.php:432
 msgid "Add New Room"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:453 ../includes/class-hb-post-types.php:
-#: 491 ../includes/class-hb-post-types.php:529 ../includes/plugins/tp-hotel-
-#: booking-coupon/tp-hotel-booking-coupon.php:151
-msgid "Add New"
-msgstr ""
-
-#: ../includes/class-hb-post-types.php:454
+#: includes/class-hb-post-types.php:433
 msgid "Edit Room"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:455
+#: includes/class-hb-post-types.php:434
 msgid "Update Room"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:456
+#: includes/class-hb-post-types.php:435
 msgid "Search Room"
 msgstr ""
 
-#. Text in echo
-#: ../includes/class-hb-post-types.php:457
+#: includes/class-hb-post-types.php:436
+#: includes/shortcodes/class-hb-shortcode-hotel-booking-rooms.php:67
 msgid "No room found"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:458
+#: includes/class-hb-post-types.php:437
 msgid "No room found in Trash"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:473
+#: includes/class-hb-post-types.php:452
 msgctxt "URL slug"
 msgid "rooms"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:484
+#: includes/class-hb-post-types.php:466
 msgctxt "post type general name"
 msgid "Bookings"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:485
+#: includes/class-hb-post-types.php:467
 msgctxt "post type singular name"
 msgid "Booking"
 msgstr ""
 
-#. Text in function
-#: ../includes/class-hb-post-types.php:486 ../includes/class-hb-post-types.php:
-#: 488 ../templates/account/bookings.php:24
+#: includes/class-hb-post-types.php:468 includes/class-hb-post-types.php:470
+#: templates/account/bookings.php:24
 msgid "Bookings"
 msgstr ""
 
-#. Text in function
-#: ../includes/class-hb-post-types.php:489
+#: includes/class-hb-post-types.php:471
 msgid "View Booking"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:490
+#: includes/class-hb-post-types.php:472
 msgid "Add New Booking"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:492
+#: includes/class-hb-post-types.php:473
+#: includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:144
+msgid "Add New"
+msgstr ""
+
+#: includes/class-hb-post-types.php:474
 msgid "Edit Booking"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:493
+#: includes/class-hb-post-types.php:475
 msgid "Update Booking"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:494
+#: includes/class-hb-post-types.php:476
 msgid "Search Booking"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:495
+#: includes/class-hb-post-types.php:477
 msgid "No booking found"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:496
+#: includes/class-hb-post-types.php:478
 msgid "No booking found in Trash"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:522
-msgctxt "post type general name"
-msgid "Customers"
-msgstr ""
-
-#: ../includes/class-hb-post-types.php:523
-msgctxt "post type singular name"
-msgid "Customer"
-msgstr ""
-
-#: ../includes/class-hb-post-types.php:524 ../includes/class-hb-post-types.php:526
-msgid "Customers"
-msgstr ""
-
-#: ../includes/class-hb-post-types.php:527
-msgid "View Customer"
-msgstr ""
-
-#: ../includes/class-hb-post-types.php:528
-msgid "Add New Customer"
-msgstr ""
-
-#: ../includes/class-hb-post-types.php:530
-msgid "Edit Customer"
-msgstr ""
-
-#: ../includes/class-hb-post-types.php:531
-msgid "Update Customer"
-msgstr ""
-
-#: ../includes/class-hb-post-types.php:532
-msgid "Search Customer"
-msgstr ""
-
-#: ../includes/class-hb-post-types.php:533
-msgid "No customer found"
-msgstr ""
-
-#: ../includes/class-hb-post-types.php:534
-msgid "No customer found in Trash"
-msgstr ""
-
-#: ../includes/class-hb-post-types.php:624
+#: includes/class-hb-post-types.php:514
 msgctxt "taxonomy general name"
 msgid "Room Types"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:625
+#: includes/class-hb-post-types.php:515
 msgctxt "taxonomy singular name"
 msgid "Room Type"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:626
+#: includes/class-hb-post-types.php:516
 msgctxt "Room Types"
-msgid "Types"
+msgid "Room Types"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:627
+#: includes/class-hb-post-types.php:517
 msgid "Search Room Types"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:628
+#: includes/class-hb-post-types.php:518
 msgid "All Room Types"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:629
+#: includes/class-hb-post-types.php:519
 msgid "Parent Room Type"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:630
+#: includes/class-hb-post-types.php:520
 msgid "Parent Room Type:"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:631
+#: includes/class-hb-post-types.php:521
 msgid "Edit Room Type"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:632
+#: includes/class-hb-post-types.php:522
 msgid "Update Room Type"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:633
+#: includes/class-hb-post-types.php:523
 msgid "Add New Room Type"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:634
+#: includes/class-hb-post-types.php:524
 msgid "New Room Type Name"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:639
+#: includes/class-hb-post-types.php:529
 msgctxt "URL slug"
 msgid "room-type"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:653 ../includes/class-hb-post-types.php:656
+#: includes/class-hb-post-types.php:541 includes/class-hb-post-types.php:544
 msgid "Room Capacity"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:655 ../includes/admin/class-hb-admin-menu.
-#: php:35 ../includes/admin/class-hb-admin-menu.php:36
+#: includes/class-hb-post-types.php:543
 msgid "Room Capacities"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:657
+#: includes/class-hb-post-types.php:545
 msgctxt "Room Capacities"
-msgid "Types"
+msgid "Room Capacities"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:658
+#: includes/class-hb-post-types.php:546
 msgid "Search Room Capacities"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:659
+#: includes/class-hb-post-types.php:547
 msgid "All Room Capacity"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:660
+#: includes/class-hb-post-types.php:548
 msgid "Parent Room Capacity"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:661
+#: includes/class-hb-post-types.php:549
 msgid "Parent Room Capacity:"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:662
+#: includes/class-hb-post-types.php:550
 msgid "Edit Room Capacity"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:663
+#: includes/class-hb-post-types.php:551
 msgid "Update Room Capacity"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:664
+#: includes/class-hb-post-types.php:552
 msgid "Add New Room Capacity"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:665
+#: includes/class-hb-post-types.php:553
 msgid "New Room Type Capacity"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:670
+#: includes/class-hb-post-types.php:558
 msgctxt "URL slug"
 msgid "room-capacity"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:688 ../includes/booking/hb-booking-
-#: functions.php:118
+#: includes/class-hb-post-types.php:574
+#: includes/booking/hb-booking-functions.php:118
 msgctxt "Booking status"
 msgid "Cancelled"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:693
+#: includes/class-hb-post-types.php:579
 #, php-format
 msgid "Cancelled <span class=\"count\">(%s)</span>"
 msgid_plural "Cancelled <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../includes/class-hb-post-types.php:698 ../includes/booking/hb-booking-
-#: functions.php:119
+#: includes/class-hb-post-types.php:584
+#: includes/booking/hb-booking-functions.php:119
 msgctxt "Booking status"
 msgid "Pending"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:703
+#: includes/class-hb-post-types.php:589
 #, php-format
 msgid "Pending <span class=\"count\">(%s)</span>"
 msgid_plural "Pending <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../includes/class-hb-post-types.php:708 ../includes/booking/hb-booking-
-#: functions.php:120
+#: includes/class-hb-post-types.php:594
+#: includes/booking/hb-booking-functions.php:120
 msgctxt "Booking status"
 msgid "Processing"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:713
+#: includes/class-hb-post-types.php:599
 #, php-format
 msgid "Processing <span class=\"count\">(%s)</span>"
 msgid_plural "Processing <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../includes/class-hb-post-types.php:718 ../includes/booking/hb-booking-
-#: functions.php:121
+#: includes/class-hb-post-types.php:604
+#: includes/booking/hb-booking-functions.php:121
 msgctxt "Booking status"
 msgid "Completed"
 msgstr ""
 
-#: ../includes/class-hb-post-types.php:723
+#: includes/class-hb-post-types.php:609
 #, php-format
 msgid "Completed <span class=\"count\">(%s)</span>"
 msgid_plural "Completed <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#. Text in echo
-#: ../includes/class-hb-settings.php:208 ../includes/admin/class-hb-admin-menu.
-#: php:42 ../includes/admin/class-hb-admin-menu.php:43 ..
-#: /includes/admin/views/pricing-table.php:27
-msgid "Pricing Plans"
-msgstr ""
-
-#: ../includes/hb-core-functions.php:51
+#: includes/hb-core-functions.php:53
 msgid "Check in date is not valid."
 msgstr ""
 
-#: ../includes/hb-core-functions.php:60
+#: includes/hb-core-functions.php:62
 msgid "Check out date is not valid."
 msgstr ""
 
-#: ../includes/hb-core-functions.php:113
+#: includes/hb-core-functions.php:110
 msgid "This room is not available."
 msgstr ""
 
-#: ../includes/hb-functions.php:137
+#: includes/hb-functions.php:175
 msgid "---Select Room---"
 msgstr ""
 
-#. Text in function
-#: ../includes/hb-functions.php:267 ../includes/hb-functions.php:473 ..
-#: /includes/products/class-hb-product-room.php:169 ../templates/search/loop.php:55
+#: includes/hb-functions.php:305 includes/hb-functions.php:513
+#: includes/products/class-hb-product-room.php:165
+#: templates/search/loop.php:55
 msgid "Select"
 msgstr ""
 
-#. Text in function
-#: ../includes/hb-functions.php:434
+#: includes/hb-functions.php:475
 msgid "Sun"
 msgstr ""
 
-#. Text in function
-#: ../includes/hb-functions.php:435
+#: includes/hb-functions.php:476
 msgid "Mon"
 msgstr ""
 
-#. Text in function
-#: ../includes/hb-functions.php:436
+#: includes/hb-functions.php:477
 msgid "Tue"
 msgstr ""
 
-#: ../includes/hb-functions.php:437
+#: includes/hb-functions.php:478
 msgid "Web"
 msgstr ""
 
-#. Text in function
-#: ../includes/hb-functions.php:438 ../includes/hb-functions.php:668
+#: includes/hb-functions.php:479
 msgid "Thu"
 msgstr ""
 
-#. Text in function
-#: ../includes/hb-functions.php:439
+#: includes/hb-functions.php:480
 msgid "Fri"
 msgstr ""
 
-#. Text in function
-#: ../includes/hb-functions.php:440
+#: includes/hb-functions.php:481
 msgid "Sat"
 msgstr ""
 
-#. Text in function
-#: ../includes/hb-functions.php:452
+#: includes/hb-functions.php:493
 msgid "Mr."
 msgstr ""
 
-#. Text in function
-#: ../includes/hb-functions.php:453
+#: includes/hb-functions.php:494
 msgid "Ms."
 msgstr ""
 
-#. Text in function
-#: ../includes/hb-functions.php:454
+#: includes/hb-functions.php:495
 msgid "Mrs."
 msgstr ""
 
-#. Text in function
-#: ../includes/hb-functions.php:455
+#: includes/hb-functions.php:496
 msgid "Miss."
 msgstr ""
 
-#. Text in function
-#: ../includes/hb-functions.php:456
+#: includes/hb-functions.php:497
 msgid "Dr."
 msgstr ""
 
-#. Text in function
-#: ../includes/hb-functions.php:457
+#: includes/hb-functions.php:498
 msgid "Prof."
 msgstr ""
 
-#: ../includes/hb-functions.php:531
+#: includes/hb-functions.php:572
 msgid "Your email address is invalid."
 msgstr ""
 
-#: ../includes/hb-functions.php:532
+#: includes/hb-functions.php:573
 msgid "Please select your payment method."
 msgstr ""
 
-#: ../includes/hb-functions.php:533
+#: includes/hb-functions.php:574
 msgid "Please accept our Terms and Conditions."
 msgstr ""
 
-#: ../includes/hb-functions.php:534
+#: includes/hb-functions.php:575
 msgid "Please select at least one the room."
 msgstr ""
 
-#: ../includes/hb-functions.php:535
+#: includes/hb-functions.php:576
 msgid "Please select your title."
 msgstr ""
 
-#: ../includes/hb-functions.php:536
+#: includes/hb-functions.php:577
 msgid "Please enter your first name."
 msgstr ""
 
-#: ../includes/hb-functions.php:537
+#: includes/hb-functions.php:578
 msgid "Please enter your last name."
 msgstr ""
 
-#: ../includes/hb-functions.php:539
+#: includes/hb-functions.php:579
 msgid "Please enter your address."
 msgstr ""
 
-#: ../includes/hb-functions.php:540
+#: includes/hb-functions.php:580
 msgid "Please enter your city name."
 msgstr ""
 
-#: ../includes/hb-functions.php:541
+#: includes/hb-functions.php:581
 msgid "Please enter your state."
 msgstr ""
 
-#: ../includes/hb-functions.php:542
+#: includes/hb-functions.php:582
 msgid "Please enter your postal code."
 msgstr ""
 
-#: ../includes/hb-functions.php:543
+#: includes/hb-functions.php:583
 msgid "Please select your country."
 msgstr ""
 
-#: ../includes/hb-functions.php:544
+#: includes/hb-functions.php:584
 msgid "Please enter your phone number."
 msgstr ""
 
-#: ../includes/hb-functions.php:545
+#: includes/hb-functions.php:585
 msgid "Your email is invalid."
 msgstr ""
 
-#: ../includes/hb-functions.php:546
+#: includes/hb-functions.php:586
 msgid ""
 "Your email does not match with existing email! Ok to create a new customer "
 "information."
 msgstr ""
 
-#: ../includes/hb-functions.php:548
+#: includes/hb-functions.php:587
 msgid "Please select check in date."
 msgstr ""
 
-#: ../includes/hb-functions.php:549
+#: includes/hb-functions.php:588
 msgid "Please select check out date."
 msgstr ""
 
-#: ../includes/hb-functions.php:550
+#: includes/hb-functions.php:589
 msgid "Check in date must be greater than the current."
 msgstr ""
 
-#: ../includes/hb-functions.php:551
+#: includes/hb-functions.php:590
 msgid "Check out date must be greater than the check in."
 msgstr ""
 
-#: ../includes/hb-functions.php:553
+#: includes/hb-functions.php:591
 msgid "Please enter coupon code."
 msgstr ""
 
-#: ../includes/hb-functions.php:554
+#: includes/hb-functions.php:592
 msgid "Please select a rating."
 msgstr ""
 
-#: ../includes/hb-functions.php:556
+#: includes/hb-functions.php:594
 msgid "Please select room number."
 msgstr ""
 
-#: ../includes/hb-functions.php:557
+#: includes/hb-functions.php:595
 msgid "Please try again!"
 msgstr ""
 
-#: ../includes/hb-functions.php:615
+#: includes/hb-functions.php:654
 msgid "January"
 msgstr ""
 
-#: ../includes/hb-functions.php:616
+#: includes/hb-functions.php:655
 msgid "February"
 msgstr ""
 
-#: ../includes/hb-functions.php:617
+#: includes/hb-functions.php:656
 msgid "March"
 msgstr ""
 
-#: ../includes/hb-functions.php:618
+#: includes/hb-functions.php:657
 msgid "April"
 msgstr ""
 
-#: ../includes/hb-functions.php:619
+#: includes/hb-functions.php:658
 msgid "May"
 msgstr ""
 
-#: ../includes/hb-functions.php:620
+#: includes/hb-functions.php:659
 msgid "June"
 msgstr ""
 
-#: ../includes/hb-functions.php:621
+#: includes/hb-functions.php:660
 msgid "July"
 msgstr ""
 
-#: ../includes/hb-functions.php:622
+#: includes/hb-functions.php:661
 msgid "August"
 msgstr ""
 
-#: ../includes/hb-functions.php:623
+#: includes/hb-functions.php:662
 msgid "September"
 msgstr ""
 
-#: ../includes/hb-functions.php:624
+#: includes/hb-functions.php:663
 msgid "October"
 msgstr ""
 
-#: ../includes/hb-functions.php:625
+#: includes/hb-functions.php:664
 msgid "November"
 msgstr ""
 
-#: ../includes/hb-functions.php:626
+#: includes/hb-functions.php:665
 msgid "December"
 msgstr ""
 
-#: ../includes/hb-functions.php:632
+#: includes/hb-functions.php:671
 msgid "Jan"
 msgstr ""
 
-#: ../includes/hb-functions.php:633
+#: includes/hb-functions.php:672
 msgid "Feb"
 msgstr ""
 
-#: ../includes/hb-functions.php:634
+#: includes/hb-functions.php:673
 msgid "Mar"
 msgstr ""
 
-#: ../includes/hb-functions.php:635
+#: includes/hb-functions.php:674
 msgid "Apr"
 msgstr ""
 
-#: ../includes/hb-functions.php:636
+#: includes/hb-functions.php:675
 msgid "Maj"
 msgstr ""
 
-#: ../includes/hb-functions.php:637
+#: includes/hb-functions.php:676
 msgid "Jun"
 msgstr ""
 
-#: ../includes/hb-functions.php:638
+#: includes/hb-functions.php:677
 msgid "Jul"
 msgstr ""
 
-#: ../includes/hb-functions.php:639
+#: includes/hb-functions.php:678
 msgid "Aug"
 msgstr ""
 
-#: ../includes/hb-functions.php:640
+#: includes/hb-functions.php:679
 msgid "Sep"
 msgstr ""
 
-#: ../includes/hb-functions.php:641
+#: includes/hb-functions.php:680
 msgid "Oct"
 msgstr ""
 
-#: ../includes/hb-functions.php:642
+#: includes/hb-functions.php:681
 msgid "Nov"
 msgstr ""
 
-#: ../includes/hb-functions.php:643
+#: includes/hb-functions.php:682
 msgid "Dec"
 msgstr ""
 
-#: ../includes/hb-functions.php:649
+#: includes/hb-functions.php:688
 msgid "Sunday"
 msgstr ""
 
-#: ../includes/hb-functions.php:650
+#: includes/hb-functions.php:689
 msgid "Monday"
 msgstr ""
 
-#: ../includes/hb-functions.php:651
+#: includes/hb-functions.php:690
 msgid "Tuesday"
 msgstr ""
 
-#: ../includes/hb-functions.php:652
+#: includes/hb-functions.php:691
 msgid "Wednesday"
 msgstr ""
 
-#: ../includes/hb-functions.php:653
+#: includes/hb-functions.php:692
 msgid "Thursday"
 msgstr ""
 
-#: ../includes/hb-functions.php:654
+#: includes/hb-functions.php:693
 msgid "Friday"
 msgstr ""
 
-#: ../includes/hb-functions.php:655
+#: includes/hb-functions.php:694
 msgid "Saturday"
 msgstr ""
 
-#: ../includes/hb-functions.php:664
+#: includes/hb-functions.php:704
 msgid "Su"
 msgstr ""
 
-#: ../includes/hb-functions.php:665
+#: includes/hb-functions.php:705
 msgid "Mo"
 msgstr ""
 
-#: ../includes/hb-functions.php:666
+#: includes/hb-functions.php:706
 msgid "Tu"
 msgstr ""
 
-#: ../includes/hb-functions.php:667
+#: includes/hb-functions.php:707
 msgid "We"
 msgstr ""
 
-#: ../includes/hb-functions.php:669
+#: includes/hb-functions.php:708
+msgid "Th"
+msgstr ""
+
+#: includes/hb-functions.php:709
 msgid "Fr"
 msgstr ""
 
-#: ../includes/hb-functions.php:670
+#: includes/hb-functions.php:710
 msgid "Sa"
 msgstr ""
 
-#: ../includes/hb-functions.php:1238
+#: includes/hb-functions.php:1276
 msgid "Afghanistan"
 msgstr ""
 
-#: ../includes/hb-functions.php:1239
+#: includes/hb-functions.php:1277
 msgid "&#197;land Islands"
 msgstr ""
 
-#: ../includes/hb-functions.php:1240
+#: includes/hb-functions.php:1278
 msgid "Albania"
 msgstr ""
 
-#: ../includes/hb-functions.php:1241
+#: includes/hb-functions.php:1279
 msgid "Algeria"
 msgstr ""
 
-#: ../includes/hb-functions.php:1242
+#: includes/hb-functions.php:1280
 msgid "Andorra"
 msgstr ""
 
-#: ../includes/hb-functions.php:1243
+#: includes/hb-functions.php:1281
 msgid "Angola"
 msgstr ""
 
-#: ../includes/hb-functions.php:1244
+#: includes/hb-functions.php:1282
 msgid "Anguilla"
 msgstr ""
 
-#: ../includes/hb-functions.php:1245
+#: includes/hb-functions.php:1283
 msgid "Antarctica"
 msgstr ""
 
-#: ../includes/hb-functions.php:1246
+#: includes/hb-functions.php:1284
 msgid "Antigua and Barbuda"
 msgstr ""
 
-#: ../includes/hb-functions.php:1247
+#: includes/hb-functions.php:1285
 msgid "Argentina"
 msgstr ""
 
-#: ../includes/hb-functions.php:1248
+#: includes/hb-functions.php:1286
 msgid "Armenia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1249
+#: includes/hb-functions.php:1287
 msgid "Aruba"
 msgstr ""
 
-#: ../includes/hb-functions.php:1250
+#: includes/hb-functions.php:1288
 msgid "Australia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1251
+#: includes/hb-functions.php:1289
 msgid "Austria"
 msgstr ""
 
-#: ../includes/hb-functions.php:1252
+#: includes/hb-functions.php:1290
 msgid "Azerbaijan"
 msgstr ""
 
-#: ../includes/hb-functions.php:1253
+#: includes/hb-functions.php:1291
 msgid "Bahamas"
 msgstr ""
 
-#: ../includes/hb-functions.php:1254
+#: includes/hb-functions.php:1292
 msgid "Bahrain"
 msgstr ""
 
-#: ../includes/hb-functions.php:1255
+#: includes/hb-functions.php:1293
 msgid "Bangladesh"
 msgstr ""
 
-#: ../includes/hb-functions.php:1256
+#: includes/hb-functions.php:1294
 msgid "Barbados"
 msgstr ""
 
-#: ../includes/hb-functions.php:1257
+#: includes/hb-functions.php:1295
 msgid "Belarus"
 msgstr ""
 
-#: ../includes/hb-functions.php:1258
+#: includes/hb-functions.php:1296
 msgid "Belgium"
 msgstr ""
 
-#: ../includes/hb-functions.php:1259
+#: includes/hb-functions.php:1297
 msgid "Belau"
 msgstr ""
 
-#: ../includes/hb-functions.php:1260
+#: includes/hb-functions.php:1298
 msgid "Belize"
 msgstr ""
 
-#: ../includes/hb-functions.php:1261
+#: includes/hb-functions.php:1299
 msgid "Benin"
 msgstr ""
 
-#: ../includes/hb-functions.php:1262
+#: includes/hb-functions.php:1300
 msgid "Bermuda"
 msgstr ""
 
-#: ../includes/hb-functions.php:1263
+#: includes/hb-functions.php:1301
 msgid "Bhutan"
 msgstr ""
 
-#: ../includes/hb-functions.php:1264
+#: includes/hb-functions.php:1302
 msgid "Bolivia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1265
+#: includes/hb-functions.php:1303
 msgid "Bonaire, Saint Eustatius and Saba"
 msgstr ""
 
-#: ../includes/hb-functions.php:1266
+#: includes/hb-functions.php:1304
 msgid "Bosnia and Herzegovina"
 msgstr ""
 
-#: ../includes/hb-functions.php:1267
+#: includes/hb-functions.php:1305
 msgid "Botswana"
 msgstr ""
 
-#: ../includes/hb-functions.php:1268
+#: includes/hb-functions.php:1306
 msgid "Bouvet Island"
 msgstr ""
 
-#: ../includes/hb-functions.php:1269
+#: includes/hb-functions.php:1307
 msgid "Brazil"
 msgstr ""
 
-#: ../includes/hb-functions.php:1270
+#: includes/hb-functions.php:1308
 msgid "British Indian Ocean Territory"
 msgstr ""
 
-#: ../includes/hb-functions.php:1271
+#: includes/hb-functions.php:1309
 msgid "British Virgin Islands"
 msgstr ""
 
-#: ../includes/hb-functions.php:1272
+#: includes/hb-functions.php:1310
 msgid "Brunei"
 msgstr ""
 
-#: ../includes/hb-functions.php:1273
+#: includes/hb-functions.php:1311
 msgid "Bulgaria"
 msgstr ""
 
-#: ../includes/hb-functions.php:1274
+#: includes/hb-functions.php:1312
 msgid "Burkina Faso"
 msgstr ""
 
-#: ../includes/hb-functions.php:1275
+#: includes/hb-functions.php:1313
 msgid "Burundi"
 msgstr ""
 
-#: ../includes/hb-functions.php:1276
+#: includes/hb-functions.php:1314
 msgid "Cambodia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1277
+#: includes/hb-functions.php:1315
 msgid "Cameroon"
 msgstr ""
 
-#: ../includes/hb-functions.php:1278
+#: includes/hb-functions.php:1316
 msgid "Canada"
 msgstr ""
 
-#: ../includes/hb-functions.php:1279
+#: includes/hb-functions.php:1317
 msgid "Cape Verde"
 msgstr ""
 
-#: ../includes/hb-functions.php:1280
+#: includes/hb-functions.php:1318
 msgid "Cayman Islands"
 msgstr ""
 
-#: ../includes/hb-functions.php:1281
+#: includes/hb-functions.php:1319
 msgid "Central African Republic"
 msgstr ""
 
-#: ../includes/hb-functions.php:1282
+#: includes/hb-functions.php:1320
 msgid "Chad"
 msgstr ""
 
-#: ../includes/hb-functions.php:1283
+#: includes/hb-functions.php:1321
 msgid "Chile"
 msgstr ""
 
-#: ../includes/hb-functions.php:1284
+#: includes/hb-functions.php:1322
 msgid "China"
 msgstr ""
 
-#: ../includes/hb-functions.php:1285
+#: includes/hb-functions.php:1323
 msgid "Christmas Island"
 msgstr ""
 
-#: ../includes/hb-functions.php:1286
+#: includes/hb-functions.php:1324
 msgid "Cocos (Keeling) Islands"
 msgstr ""
 
-#: ../includes/hb-functions.php:1287
+#: includes/hb-functions.php:1325
 msgid "Colombia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1288
+#: includes/hb-functions.php:1326
 msgid "Comoros"
 msgstr ""
 
-#: ../includes/hb-functions.php:1289
+#: includes/hb-functions.php:1327
 msgid "Congo (Brazzaville)"
 msgstr ""
 
-#: ../includes/hb-functions.php:1290
+#: includes/hb-functions.php:1328
 msgid "Congo (Kinshasa)"
 msgstr ""
 
-#: ../includes/hb-functions.php:1291
+#: includes/hb-functions.php:1329
 msgid "Cook Islands"
 msgstr ""
 
-#: ../includes/hb-functions.php:1292
+#: includes/hb-functions.php:1330
 msgid "Costa Rica"
 msgstr ""
 
-#: ../includes/hb-functions.php:1293
+#: includes/hb-functions.php:1331
 msgid "Croatia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1294
+#: includes/hb-functions.php:1332
 msgid "Cuba"
 msgstr ""
 
-#: ../includes/hb-functions.php:1295
+#: includes/hb-functions.php:1333
 msgid "Cura&Ccedil;ao"
 msgstr ""
 
-#: ../includes/hb-functions.php:1296
+#: includes/hb-functions.php:1334
 msgid "Cyprus"
 msgstr ""
 
-#: ../includes/hb-functions.php:1297
+#: includes/hb-functions.php:1335
 msgid "Czech Republic"
 msgstr ""
 
-#: ../includes/hb-functions.php:1298
+#: includes/hb-functions.php:1336
 msgid "Denmark"
 msgstr ""
 
-#: ../includes/hb-functions.php:1299
+#: includes/hb-functions.php:1337
 msgid "Djibouti"
 msgstr ""
 
-#: ../includes/hb-functions.php:1300
+#: includes/hb-functions.php:1338
 msgid "Dominica"
 msgstr ""
 
-#: ../includes/hb-functions.php:1301
+#: includes/hb-functions.php:1339
 msgid "Dominican Republic"
 msgstr ""
 
-#: ../includes/hb-functions.php:1302
+#: includes/hb-functions.php:1340
 msgid "Ecuador"
 msgstr ""
 
-#: ../includes/hb-functions.php:1303
+#: includes/hb-functions.php:1341
 msgid "Egypt"
 msgstr ""
 
-#: ../includes/hb-functions.php:1304
+#: includes/hb-functions.php:1342
 msgid "El Salvador"
 msgstr ""
 
-#: ../includes/hb-functions.php:1305
+#: includes/hb-functions.php:1343
 msgid "Equatorial Guinea"
 msgstr ""
 
-#: ../includes/hb-functions.php:1306
+#: includes/hb-functions.php:1344
 msgid "Eritrea"
 msgstr ""
 
-#: ../includes/hb-functions.php:1307
+#: includes/hb-functions.php:1345
 msgid "Estonia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1308
+#: includes/hb-functions.php:1346
 msgid "Ethiopia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1309
+#: includes/hb-functions.php:1347
 msgid "Falkland Islands"
 msgstr ""
 
-#: ../includes/hb-functions.php:1310
+#: includes/hb-functions.php:1348
 msgid "Faroe Islands"
 msgstr ""
 
-#: ../includes/hb-functions.php:1311
+#: includes/hb-functions.php:1349
 msgid "Fiji"
 msgstr ""
 
-#: ../includes/hb-functions.php:1312
+#: includes/hb-functions.php:1350
 msgid "Finland"
 msgstr ""
 
-#: ../includes/hb-functions.php:1313
+#: includes/hb-functions.php:1351
 msgid "France"
 msgstr ""
 
-#: ../includes/hb-functions.php:1314
+#: includes/hb-functions.php:1352
 msgid "French Guiana"
 msgstr ""
 
-#: ../includes/hb-functions.php:1315
+#: includes/hb-functions.php:1353
 msgid "French Polynesia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1316
+#: includes/hb-functions.php:1354
 msgid "French Southern Territories"
 msgstr ""
 
-#: ../includes/hb-functions.php:1317
+#: includes/hb-functions.php:1355
 msgid "Gabon"
 msgstr ""
 
-#: ../includes/hb-functions.php:1318
+#: includes/hb-functions.php:1356
 msgid "Gambia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1319
+#: includes/hb-functions.php:1357
 msgid "Georgia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1320
+#: includes/hb-functions.php:1358
 msgid "Germany"
 msgstr ""
 
-#: ../includes/hb-functions.php:1321
+#: includes/hb-functions.php:1359
 msgid "Ghana"
 msgstr ""
 
-#: ../includes/hb-functions.php:1322
+#: includes/hb-functions.php:1360
 msgid "Gibraltar"
 msgstr ""
 
-#: ../includes/hb-functions.php:1323
+#: includes/hb-functions.php:1361
 msgid "Greece"
 msgstr ""
 
-#: ../includes/hb-functions.php:1324
+#: includes/hb-functions.php:1362
 msgid "Greenland"
 msgstr ""
 
-#: ../includes/hb-functions.php:1325
+#: includes/hb-functions.php:1363
 msgid "Grenada"
 msgstr ""
 
-#: ../includes/hb-functions.php:1326
+#: includes/hb-functions.php:1364
 msgid "Guadeloupe"
 msgstr ""
 
-#: ../includes/hb-functions.php:1327
+#: includes/hb-functions.php:1365
 msgid "Guatemala"
 msgstr ""
 
-#: ../includes/hb-functions.php:1328
+#: includes/hb-functions.php:1366
 msgid "Guernsey"
 msgstr ""
 
-#: ../includes/hb-functions.php:1329
+#: includes/hb-functions.php:1367
 msgid "Guinea"
 msgstr ""
 
-#: ../includes/hb-functions.php:1330
+#: includes/hb-functions.php:1368
 msgid "Guinea-Bissau"
 msgstr ""
 
-#: ../includes/hb-functions.php:1331
+#: includes/hb-functions.php:1369
 msgid "Guyana"
 msgstr ""
 
-#: ../includes/hb-functions.php:1332
+#: includes/hb-functions.php:1370
 msgid "Haiti"
 msgstr ""
 
-#: ../includes/hb-functions.php:1333
+#: includes/hb-functions.php:1371
 msgid "Heard Island and McDonald Islands"
 msgstr ""
 
-#: ../includes/hb-functions.php:1334
+#: includes/hb-functions.php:1372
 msgid "Honduras"
 msgstr ""
 
-#: ../includes/hb-functions.php:1335
+#: includes/hb-functions.php:1373
 msgid "Hong Kong"
 msgstr ""
 
-#: ../includes/hb-functions.php:1336
+#: includes/hb-functions.php:1374
 msgid "Hungary"
 msgstr ""
 
-#: ../includes/hb-functions.php:1337
+#: includes/hb-functions.php:1375
 msgid "Iceland"
 msgstr ""
 
-#: ../includes/hb-functions.php:1338
+#: includes/hb-functions.php:1376
 msgid "India"
 msgstr ""
 
-#: ../includes/hb-functions.php:1339
+#: includes/hb-functions.php:1377
 msgid "Indonesia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1340
+#: includes/hb-functions.php:1378
 msgid "Iran"
 msgstr ""
 
-#: ../includes/hb-functions.php:1341
+#: includes/hb-functions.php:1379
 msgid "Iraq"
 msgstr ""
 
-#: ../includes/hb-functions.php:1342
+#: includes/hb-functions.php:1380
 msgid "Republic of Ireland"
 msgstr ""
 
-#: ../includes/hb-functions.php:1343
+#: includes/hb-functions.php:1381
 msgid "Isle of Man"
 msgstr ""
 
-#: ../includes/hb-functions.php:1344
+#: includes/hb-functions.php:1382
 msgid "Israel"
 msgstr ""
 
-#: ../includes/hb-functions.php:1345
+#: includes/hb-functions.php:1383
 msgid "Italy"
 msgstr ""
 
-#: ../includes/hb-functions.php:1346
+#: includes/hb-functions.php:1384
 msgid "Ivory Coast"
 msgstr ""
 
-#: ../includes/hb-functions.php:1347
+#: includes/hb-functions.php:1385
 msgid "Jamaica"
 msgstr ""
 
-#: ../includes/hb-functions.php:1348
+#: includes/hb-functions.php:1386
 msgid "Japan"
 msgstr ""
 
-#: ../includes/hb-functions.php:1349
+#: includes/hb-functions.php:1387
 msgid "Jersey"
 msgstr ""
 
-#: ../includes/hb-functions.php:1350
+#: includes/hb-functions.php:1388
 msgid "Jordan"
 msgstr ""
 
-#: ../includes/hb-functions.php:1351
+#: includes/hb-functions.php:1389
 msgid "Kazakhstan"
 msgstr ""
 
-#: ../includes/hb-functions.php:1352
+#: includes/hb-functions.php:1390
 msgid "Kenya"
 msgstr ""
 
-#: ../includes/hb-functions.php:1353
+#: includes/hb-functions.php:1391
 msgid "Kiribati"
 msgstr ""
 
-#: ../includes/hb-functions.php:1354
+#: includes/hb-functions.php:1392
 msgid "Kuwait"
 msgstr ""
 
-#: ../includes/hb-functions.php:1355
+#: includes/hb-functions.php:1393
 msgid "Kyrgyzstan"
 msgstr ""
 
-#: ../includes/hb-functions.php:1356
+#: includes/hb-functions.php:1394
 msgid "Laos"
 msgstr ""
 
-#: ../includes/hb-functions.php:1357
+#: includes/hb-functions.php:1395
 msgid "Latvia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1358
+#: includes/hb-functions.php:1396
 msgid "Lebanon"
 msgstr ""
 
-#: ../includes/hb-functions.php:1359
+#: includes/hb-functions.php:1397
 msgid "Lesotho"
 msgstr ""
 
-#: ../includes/hb-functions.php:1360
+#: includes/hb-functions.php:1398
 msgid "Liberia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1361
+#: includes/hb-functions.php:1399
 msgid "Libya"
 msgstr ""
 
-#: ../includes/hb-functions.php:1362
+#: includes/hb-functions.php:1400
 msgid "Liechtenstein"
 msgstr ""
 
-#: ../includes/hb-functions.php:1363
+#: includes/hb-functions.php:1401
 msgid "Lithuania"
 msgstr ""
 
-#: ../includes/hb-functions.php:1364
+#: includes/hb-functions.php:1402
 msgid "Luxembourg"
 msgstr ""
 
-#: ../includes/hb-functions.php:1365
+#: includes/hb-functions.php:1403
 msgid "Macao S.A.R., China"
 msgstr ""
 
-#: ../includes/hb-functions.php:1366
+#: includes/hb-functions.php:1404
 msgid "Macedonia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1367
+#: includes/hb-functions.php:1405
 msgid "Madagascar"
 msgstr ""
 
-#: ../includes/hb-functions.php:1368
+#: includes/hb-functions.php:1406
 msgid "Malawi"
 msgstr ""
 
-#: ../includes/hb-functions.php:1369
+#: includes/hb-functions.php:1407
 msgid "Malaysia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1370
+#: includes/hb-functions.php:1408
 msgid "Maldives"
 msgstr ""
 
-#: ../includes/hb-functions.php:1371
+#: includes/hb-functions.php:1409
 msgid "Mali"
 msgstr ""
 
-#: ../includes/hb-functions.php:1372
+#: includes/hb-functions.php:1410
 msgid "Malta"
 msgstr ""
 
-#: ../includes/hb-functions.php:1373
+#: includes/hb-functions.php:1411
 msgid "Marshall Islands"
 msgstr ""
 
-#: ../includes/hb-functions.php:1374
+#: includes/hb-functions.php:1412
 msgid "Martinique"
 msgstr ""
 
-#: ../includes/hb-functions.php:1375
+#: includes/hb-functions.php:1413
 msgid "Mauritania"
 msgstr ""
 
-#: ../includes/hb-functions.php:1376
+#: includes/hb-functions.php:1414
 msgid "Mauritius"
 msgstr ""
 
-#: ../includes/hb-functions.php:1377
+#: includes/hb-functions.php:1415
 msgid "Mayotte"
 msgstr ""
 
-#: ../includes/hb-functions.php:1378
+#: includes/hb-functions.php:1416
 msgid "Mexico"
 msgstr ""
 
-#: ../includes/hb-functions.php:1379
+#: includes/hb-functions.php:1417
 msgid "Micronesia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1380
+#: includes/hb-functions.php:1418
 msgid "Moldova"
 msgstr ""
 
-#: ../includes/hb-functions.php:1381
+#: includes/hb-functions.php:1419
 msgid "Monaco"
 msgstr ""
 
-#: ../includes/hb-functions.php:1382
+#: includes/hb-functions.php:1420
 msgid "Mongolia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1383
+#: includes/hb-functions.php:1421
 msgid "Montenegro"
 msgstr ""
 
-#: ../includes/hb-functions.php:1384
+#: includes/hb-functions.php:1422
 msgid "Montserrat"
 msgstr ""
 
-#: ../includes/hb-functions.php:1385
+#: includes/hb-functions.php:1423
 msgid "Morocco"
 msgstr ""
 
-#: ../includes/hb-functions.php:1386
+#: includes/hb-functions.php:1424
 msgid "Mozambique"
 msgstr ""
 
-#: ../includes/hb-functions.php:1387
+#: includes/hb-functions.php:1425
 msgid "Myanmar"
 msgstr ""
 
-#: ../includes/hb-functions.php:1388
+#: includes/hb-functions.php:1426
 msgid "Namibia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1389
+#: includes/hb-functions.php:1427
 msgid "Nauru"
 msgstr ""
 
-#: ../includes/hb-functions.php:1390
+#: includes/hb-functions.php:1428
 msgid "Nepal"
 msgstr ""
 
-#: ../includes/hb-functions.php:1391
+#: includes/hb-functions.php:1429
 msgid "Netherlands"
 msgstr ""
 
-#: ../includes/hb-functions.php:1392
+#: includes/hb-functions.php:1430
 msgid "Netherlands Antilles"
 msgstr ""
 
-#: ../includes/hb-functions.php:1393
+#: includes/hb-functions.php:1431
 msgid "New Caledonia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1394
+#: includes/hb-functions.php:1432
 msgid "New Zealand"
 msgstr ""
 
-#: ../includes/hb-functions.php:1395
+#: includes/hb-functions.php:1433
 msgid "Nicaragua"
 msgstr ""
 
-#: ../includes/hb-functions.php:1396
+#: includes/hb-functions.php:1434
 msgid "Niger"
 msgstr ""
 
-#: ../includes/hb-functions.php:1397
+#: includes/hb-functions.php:1435
 msgid "Nigeria"
 msgstr ""
 
-#: ../includes/hb-functions.php:1398
+#: includes/hb-functions.php:1436
 msgid "Niue"
 msgstr ""
 
-#: ../includes/hb-functions.php:1399
+#: includes/hb-functions.php:1437
 msgid "Norfolk Island"
 msgstr ""
 
-#: ../includes/hb-functions.php:1400
+#: includes/hb-functions.php:1438
 msgid "North Korea"
 msgstr ""
 
-#: ../includes/hb-functions.php:1401
+#: includes/hb-functions.php:1439
 msgid "Norway"
 msgstr ""
 
-#: ../includes/hb-functions.php:1402
+#: includes/hb-functions.php:1440
 msgid "Oman"
 msgstr ""
 
-#: ../includes/hb-functions.php:1403
+#: includes/hb-functions.php:1441
 msgid "Pakistan"
 msgstr ""
 
-#: ../includes/hb-functions.php:1404
+#: includes/hb-functions.php:1442
 msgid "Palestinian Territory"
 msgstr ""
 
-#: ../includes/hb-functions.php:1405
+#: includes/hb-functions.php:1443
 msgid "Panama"
 msgstr ""
 
-#: ../includes/hb-functions.php:1406
+#: includes/hb-functions.php:1444
 msgid "Papua New Guinea"
 msgstr ""
 
-#: ../includes/hb-functions.php:1407
+#: includes/hb-functions.php:1445
 msgid "Paraguay"
 msgstr ""
 
-#: ../includes/hb-functions.php:1408
+#: includes/hb-functions.php:1446
 msgid "Peru"
 msgstr ""
 
-#: ../includes/hb-functions.php:1409
+#: includes/hb-functions.php:1447
 msgid "Philippines"
 msgstr ""
 
-#: ../includes/hb-functions.php:1410
+#: includes/hb-functions.php:1448
 msgid "Pitcairn"
 msgstr ""
 
-#: ../includes/hb-functions.php:1411
+#: includes/hb-functions.php:1449
 msgid "Poland"
 msgstr ""
 
-#: ../includes/hb-functions.php:1412
+#: includes/hb-functions.php:1450
 msgid "Portugal"
 msgstr ""
 
-#: ../includes/hb-functions.php:1413
+#: includes/hb-functions.php:1451
 msgid "Qatar"
 msgstr ""
 
-#: ../includes/hb-functions.php:1414
+#: includes/hb-functions.php:1452
 msgid "Reunion"
 msgstr ""
 
-#: ../includes/hb-functions.php:1415
+#: includes/hb-functions.php:1453
 msgid "Romania"
 msgstr ""
 
-#: ../includes/hb-functions.php:1416
+#: includes/hb-functions.php:1454
 msgid "Russia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1417
+#: includes/hb-functions.php:1455
 msgid "Rwanda"
 msgstr ""
 
-#: ../includes/hb-functions.php:1418
+#: includes/hb-functions.php:1456
 msgid "Saint Barth&eacute;lemy"
 msgstr ""
 
-#: ../includes/hb-functions.php:1419
+#: includes/hb-functions.php:1457
 msgid "Saint Helena"
 msgstr ""
 
-#: ../includes/hb-functions.php:1420
+#: includes/hb-functions.php:1458
 msgid "Saint Kitts and Nevis"
 msgstr ""
 
-#: ../includes/hb-functions.php:1421
+#: includes/hb-functions.php:1459
 msgid "Saint Lucia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1422
+#: includes/hb-functions.php:1460
 msgid "Saint Martin (French part)"
 msgstr ""
 
-#: ../includes/hb-functions.php:1423
+#: includes/hb-functions.php:1461
 msgid "Saint Martin (Dutch part)"
 msgstr ""
 
-#: ../includes/hb-functions.php:1424
+#: includes/hb-functions.php:1462
 msgid "Saint Pierre and Miquelon"
 msgstr ""
 
-#: ../includes/hb-functions.php:1425
+#: includes/hb-functions.php:1463
 msgid "Saint Vincent and the Grenadines"
 msgstr ""
 
-#: ../includes/hb-functions.php:1426
+#: includes/hb-functions.php:1464
 msgid "San Marino"
 msgstr ""
 
-#: ../includes/hb-functions.php:1427
+#: includes/hb-functions.php:1465
 msgid "S&atilde;o Tom&eacute; and Pr&iacute;ncipe"
 msgstr ""
 
-#: ../includes/hb-functions.php:1428
+#: includes/hb-functions.php:1466
 msgid "Saudi Arabia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1429
+#: includes/hb-functions.php:1467
 msgid "Senegal"
 msgstr ""
 
-#: ../includes/hb-functions.php:1430
+#: includes/hb-functions.php:1468
 msgid "Serbia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1431
+#: includes/hb-functions.php:1469
 msgid "Seychelles"
 msgstr ""
 
-#: ../includes/hb-functions.php:1432
+#: includes/hb-functions.php:1470
 msgid "Sierra Leone"
 msgstr ""
 
-#: ../includes/hb-functions.php:1433
+#: includes/hb-functions.php:1471
 msgid "Singapore"
 msgstr ""
 
-#: ../includes/hb-functions.php:1434
+#: includes/hb-functions.php:1472
 msgid "Slovakia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1435
+#: includes/hb-functions.php:1473
 msgid "Slovenia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1436
+#: includes/hb-functions.php:1474
 msgid "Solomon Islands"
 msgstr ""
 
-#: ../includes/hb-functions.php:1437
+#: includes/hb-functions.php:1475
 msgid "Somalia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1438
+#: includes/hb-functions.php:1476
 msgid "South Africa"
 msgstr ""
 
-#: ../includes/hb-functions.php:1439
+#: includes/hb-functions.php:1477
 msgid "South Georgia/Sandwich Islands"
 msgstr ""
 
-#: ../includes/hb-functions.php:1440
+#: includes/hb-functions.php:1478
 msgid "South Korea"
 msgstr ""
 
-#: ../includes/hb-functions.php:1441
+#: includes/hb-functions.php:1479
 msgid "South Sudan"
 msgstr ""
 
-#: ../includes/hb-functions.php:1442
+#: includes/hb-functions.php:1480
 msgid "Spain"
 msgstr ""
 
-#: ../includes/hb-functions.php:1443
+#: includes/hb-functions.php:1481
 msgid "Sri Lanka"
 msgstr ""
 
-#: ../includes/hb-functions.php:1444
+#: includes/hb-functions.php:1482
 msgid "Sudan"
 msgstr ""
 
-#: ../includes/hb-functions.php:1445
+#: includes/hb-functions.php:1483
 msgid "Suriname"
 msgstr ""
 
-#: ../includes/hb-functions.php:1446
+#: includes/hb-functions.php:1484
 msgid "Svalbard and Jan Mayen"
 msgstr ""
 
-#: ../includes/hb-functions.php:1447
+#: includes/hb-functions.php:1485
 msgid "Swaziland"
 msgstr ""
 
-#: ../includes/hb-functions.php:1448
+#: includes/hb-functions.php:1486
 msgid "Sweden"
 msgstr ""
 
-#: ../includes/hb-functions.php:1449
+#: includes/hb-functions.php:1487
 msgid "Switzerland"
 msgstr ""
 
-#: ../includes/hb-functions.php:1450
+#: includes/hb-functions.php:1488
 msgid "Syria"
 msgstr ""
 
-#: ../includes/hb-functions.php:1451
+#: includes/hb-functions.php:1489
 msgid "Taiwan"
 msgstr ""
 
-#: ../includes/hb-functions.php:1452
+#: includes/hb-functions.php:1490
 msgid "Tajikistan"
 msgstr ""
 
-#: ../includes/hb-functions.php:1453
+#: includes/hb-functions.php:1491
 msgid "Tanzania"
 msgstr ""
 
-#: ../includes/hb-functions.php:1454
+#: includes/hb-functions.php:1492
 msgid "Thailand"
 msgstr ""
 
-#: ../includes/hb-functions.php:1455
+#: includes/hb-functions.php:1493
 msgid "Timor-Leste"
 msgstr ""
 
-#: ../includes/hb-functions.php:1456
+#: includes/hb-functions.php:1494
 msgid "Togo"
 msgstr ""
 
-#: ../includes/hb-functions.php:1457
+#: includes/hb-functions.php:1495
 msgid "Tokelau"
 msgstr ""
 
-#: ../includes/hb-functions.php:1458
+#: includes/hb-functions.php:1496
 msgid "Tonga"
 msgstr ""
 
-#: ../includes/hb-functions.php:1459
+#: includes/hb-functions.php:1497
 msgid "Trinidad and Tobago"
 msgstr ""
 
-#: ../includes/hb-functions.php:1460
+#: includes/hb-functions.php:1498
 msgid "Tunisia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1461
+#: includes/hb-functions.php:1499
 msgid "Turkey"
 msgstr ""
 
-#: ../includes/hb-functions.php:1462
+#: includes/hb-functions.php:1500
 msgid "Turkmenistan"
 msgstr ""
 
-#: ../includes/hb-functions.php:1463
+#: includes/hb-functions.php:1501
 msgid "Turks and Caicos Islands"
 msgstr ""
 
-#: ../includes/hb-functions.php:1464
+#: includes/hb-functions.php:1502
 msgid "Tuvalu"
 msgstr ""
 
-#: ../includes/hb-functions.php:1465
+#: includes/hb-functions.php:1503
 msgid "Uganda"
 msgstr ""
 
-#: ../includes/hb-functions.php:1466
+#: includes/hb-functions.php:1504
 msgid "Ukraine"
 msgstr ""
 
-#: ../includes/hb-functions.php:1467
+#: includes/hb-functions.php:1505
 msgid "United Arab Emirates"
 msgstr ""
 
-#: ../includes/hb-functions.php:1468
+#: includes/hb-functions.php:1506
 msgid "United Kingdom (UK)"
 msgstr ""
 
-#: ../includes/hb-functions.php:1469
+#: includes/hb-functions.php:1507
 msgid "United States (US)"
 msgstr ""
 
-#: ../includes/hb-functions.php:1470
+#: includes/hb-functions.php:1508
 msgid "Uruguay"
 msgstr ""
 
-#: ../includes/hb-functions.php:1471
+#: includes/hb-functions.php:1509
 msgid "Uzbekistan"
 msgstr ""
 
-#: ../includes/hb-functions.php:1472
+#: includes/hb-functions.php:1510
 msgid "Vanuatu"
 msgstr ""
 
-#: ../includes/hb-functions.php:1473
+#: includes/hb-functions.php:1511
 msgid "Vatican"
 msgstr ""
 
-#: ../includes/hb-functions.php:1474
+#: includes/hb-functions.php:1512
 msgid "Venezuela"
 msgstr ""
 
-#: ../includes/hb-functions.php:1475
+#: includes/hb-functions.php:1513
 msgid "Vietnam"
 msgstr ""
 
-#: ../includes/hb-functions.php:1476
+#: includes/hb-functions.php:1514
 msgid "Wallis and Futuna"
 msgstr ""
 
-#: ../includes/hb-functions.php:1477
+#: includes/hb-functions.php:1515
 msgid "Western Sahara"
 msgstr ""
 
-#: ../includes/hb-functions.php:1478
+#: includes/hb-functions.php:1516
 msgid "Western Samoa"
 msgstr ""
 
-#: ../includes/hb-functions.php:1479
+#: includes/hb-functions.php:1517
 msgid "Yemen"
 msgstr ""
 
-#: ../includes/hb-functions.php:1480
+#: includes/hb-functions.php:1518
 msgid "Zambia"
 msgstr ""
 
-#: ../includes/hb-functions.php:1481
+#: includes/hb-functions.php:1519
 msgid "Zimbabwe"
 msgstr ""
 
-#: ../includes/hb-functions.php:1587
+#: includes/hb-functions.php:1628
 #, php-format
 msgid "%1$s"
 msgstr ""
 
-#: ../includes/hb-template-functions.php:180
+#: includes/hb-functions.php:1773
+#: includes/admin/class-hb-admin-settings.php:285
+msgid "---Select page---"
+msgstr ""
+
+#: includes/hb-template-functions.php:190
 #, php-format
 msgid "Search Results: &ldquo;%s&rdquo;"
 msgstr ""
 
-#: ../includes/hb-template-functions.php:183
+#: includes/hb-template-functions.php:193
 #, php-format
 msgid "&nbsp;&ndash; Page %s"
 msgstr ""
 
-#: ../includes/hb-webhooks.php:55 ../includes/hb-webhooks.php:55
+#: includes/hb-template-functions.php:525
+#: includes/admin/class-hb-admin-menu.php:42
+#: includes/admin/class-hb-admin-menu.php:43
+#: includes/admin/views/pricing-table.php:27
+msgid "Pricing Plans"
+msgstr ""
+
+#: includes/hb-webhooks.php:55
 msgid "TP Hotel Booking webhook process Complete"
 msgstr ""
 
-#: ../includes/admin/class-hb-admin-menu.php:28 ../includes/admin/class-hb-admin-
-#: menu.php:29
-msgid "Room Types"
+#: includes/admin/class-hb-admin-menu.php:16
+#: includes/admin/class-hb-admin-menu.php:17
+msgid "TP Hotel Booking"
 msgstr ""
 
-#: ../includes/admin/class-hb-admin-menu.php:58 ../includes/admin/class-hb-admin-
-#: menu.php:59
+#: includes/admin/class-hb-admin-menu.php:58
+#: includes/admin/class-hb-admin-menu.php:59
 msgid "Addition Packages"
 msgstr ""
 
-#: ../includes/admin/class-hb-admin-menu.php:68 ../includes/admin/class-hb-admin-
-#: menu.php:69
+#: includes/admin/class-hb-admin-menu.php:68
+#: includes/admin/class-hb-admin-menu.php:69
 msgid "Settings"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/class-hb-admin-settings.php:285
-msgid "---Select page---"
-msgstr ""
-
-#. Text in echo
-#: ../includes/admin/class-hb-admin-settings.php:340 ..
-#: /includes/admin/metaboxes/views/meta-booking-actions.php:25 ..
-#: /includes/admin/views/pricing-table.php:133 ../includes/plugins/tp-hotel-
-#: booking-block/inc/admin/views/block.php:37 ../templates/cart/cart.php:95
+#: includes/admin/class-hb-admin-settings.php:340
+#: includes/admin/metaboxes/views/meta-booking-actions.php:25
+#: includes/admin/views/pricing-table.php:136
+#: includes/plugins/tp-hotel-booking-block/inc/admin/views/block.php:35
+#: templates/cart/cart.php:95
 msgid "Update"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:24
+#: includes/admin/hb-admin-functions.php:24
 msgid "Are you sure you want to remove this pricing table?"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:25
+#: includes/admin/hb-admin-functions.php:25
 msgid "Select start date for plan"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:26
+#: includes/admin/hb-admin-functions.php:26
 msgid "Select end date for plan"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:27
+#: includes/admin/hb-admin-functions.php:27
 msgid "Please select date range and filter type"
 msgstr ""
 
-#: ../includes/admin/hb-admin-functions.php:31
+#: includes/admin/hb-admin-functions.php:31
 msgid "Enter user login."
 msgstr ""
 
-#: ../includes/admin/hb-admin-functions.php:32
+#: includes/admin/hb-admin-functions.php:32
 msgid "Enter room name."
 msgstr ""
 
-#: ../includes/admin/hb-admin-functions.php:33
+#: includes/admin/hb-admin-functions.php:33
 msgid "Enter coupon code."
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:42
+#: includes/admin/hb-admin-functions.php:42
 msgid "Room Settings"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/hb-admin-functions.php:51 ..
-#: /includes/admin/metaboxes/views/meta-booking-items-template-js.php:56 ..
-#: /includes/admin/metaboxes/views/meta-booking-items-template-js.php:93 ..
-#: /includes/admin/metaboxes/views/meta-booking-items-template-js.php:166 ..
-#: /templates/cart/cart.php:21 ../templates/checkout/checkout.php:22
+#: includes/admin/hb-admin-functions.php:51
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:56
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:93
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:166
+#: templates/cart/cart.php:21 templates/checkout/checkout.php:22
 msgid "Quantity"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:54
+#: includes/admin/hb-admin-functions.php:54
 msgid "The number of rooms"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:60
+#: includes/admin/hb-admin-functions.php:60
 msgid "Number of adults"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:73
+#: includes/admin/hb-admin-functions.php:73
 msgid "Max child per room"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:81 ../templates/checkout/addition-
-#: information.php:10
+#: includes/admin/hb-admin-functions.php:81
+#: templates/checkout/addition-information.php:10
 msgid "Addition Information"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:92
+#: includes/admin/hb-admin-functions.php:92
 msgid "Coupon Settings"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:102 ../includes/plugins/tp-hb-
-#: extra/inc/admin/views/extra.php:34 ../includes/plugins/tp-hb-
-#: extra/inc/admin/views/extra.php:67 ../includes/plugins/tp-hb-
-#: extra/inc/admin/views/extra.php:105 ../templates/single-room/details.php:14
+#: includes/admin/hb-admin-functions.php:102
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:34
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:67
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:105
+#: templates/single-room/details.php:14
 msgid "Description"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:108
+#: includes/admin/hb-admin-functions.php:108
 msgid "Discount type"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:112
+#: includes/admin/hb-admin-functions.php:112
 msgid "Cart discount"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:113
+#: includes/admin/hb-admin-functions.php:113
 #, php-format
 msgid "Cart % discount"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:118
+#: includes/admin/hb-admin-functions.php:118
 msgid "Discount value"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:126
+#: includes/admin/hb-admin-functions.php:126
 msgid "Validate from"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:137
+#: includes/admin/hb-admin-functions.php:137
 msgid "Validate until"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:150
-msgid "This field allows you to set the minimum subtotal needed to use the coupon."
+#: includes/admin/hb-admin-functions.php:150
+msgid ""
+"This field allows you to set the minimum subtotal needed to use the coupon."
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:158
+#: includes/admin/hb-admin-functions.php:158
 msgid ""
 "This field allows you to set the maximum subtotal allowed when using the "
 "coupon."
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:166
+#: includes/admin/hb-admin-functions.php:166
 msgid "How many times this coupon can be used before it is void."
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:180
+#: includes/admin/hb-admin-functions.php:180
 msgid "Gallery Settings"
 msgstr ""
 
-#: ../includes/admin/hb-admin-functions.php:238
+#: includes/admin/hb-admin-functions.php:243
 msgid "Customer"
 msgstr ""
 
-#: ../includes/admin/hb-admin-functions.php:239
+#: includes/admin/hb-admin-functions.php:244
 msgid "Date"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/hb-admin-functions.php:240 ..
-#: /includes/admin/metaboxes/views/meta-booking-items-template-js.php:47 ..
-#: /templates/emails/booking-details.php:19
+#: includes/admin/hb-admin-functions.php:245
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:47
+#: templates/emails/booking-details.php:17
 msgid "Check in"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/hb-admin-functions.php:241 ..
-#: /includes/admin/metaboxes/views/meta-booking-items-template-js.php:49 ..
-#: /templates/checkout/checkout.php:123 ../templates/emails/booking-details.php:20
+#: includes/admin/hb-admin-functions.php:246
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:49
+#: templates/checkout/checkout.php:123 templates/emails/booking-details.php:18
 msgid "Check out"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/hb-admin-functions.php:242 ..
-#: /includes/admin/metaboxes/views/meta-booking-items.php:43 ..
-#: /templates/account/bookings.php:32 ../templates/emails/booking-details.php:41 .
-#: ./templates/search/booking-room-details.php:30
+#: includes/admin/hb-admin-functions.php:247
+#: includes/admin/metaboxes/views/meta-booking-items.php:43
+#: templates/account/bookings.php:32 templates/emails/booking-details.php:41
+#: templates/search/booking-room-details.php:30
 msgid "Total"
 msgstr ""
 
-#: ../includes/admin/hb-admin-functions.php:243
+#: includes/admin/hb-admin-functions.php:248
 msgid "Booking Order"
 msgstr ""
 
-#: ../includes/admin/hb-admin-functions.php:244 ../templates/account/bookings.php:
-#: 33
+#: includes/admin/hb-admin-functions.php:249 templates/account/bookings.php:33
 msgid "Status"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:279
+#: includes/admin/hb-admin-functions.php:284
 #, php-format
 msgid "<br />(<small>%s</small>)"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:292
+#: includes/admin/hb-admin-functions.php:297
 #, php-format
 msgid "<br />(<small class=\"hb_advance_payment\">Charged %s = %s</small>)"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:369
+#: includes/admin/hb-admin-functions.php:375
 msgid "Booking date"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:370
+#: includes/admin/hb-admin-functions.php:376
 msgid "Check-in date"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/hb-admin-functions.php:371
+#: includes/admin/hb-admin-functions.php:377
 msgid "Check-out date"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/hb-admin-functions.php:376 ../includes/admin/views/pricing-
-#: table.php:87 ../includes/admin/views/pricing-table.php:147
+#: includes/admin/hb-admin-functions.php:382
+#: includes/admin/views/pricing-table.php:90
+#: includes/admin/views/pricing-table.php:150
 msgid "Date Range"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/hb-admin-functions.php:377
+#: includes/admin/hb-admin-functions.php:383
 msgid "From"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/hb-admin-functions.php:379
+#: includes/admin/hb-admin-functions.php:385
 msgid "To"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/hb-admin-functions.php:382
+#: includes/admin/hb-admin-functions.php:388
 msgid "---Filter By---"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/hb-admin-functions.php:451 ../includes/admin/hb-admin-
-#: functions.php:478 ../includes/admin/metaboxes/views/fields/gallery.php:22
+#: includes/admin/hb-admin-functions.php:427
+#: includes/admin/hb-admin-functions.php:454
+#: includes/admin/metaboxes/views/fields/gallery.php:22
 msgid "Remove this image"
 msgstr ""
 
-#: ../includes/admin/metaboxes/class-hb-admin-metabox-booking-actions.php:25
+#: includes/admin/metaboxes/class-hb-admin-metabox-booking-actions.php:29
 msgid "Booking Actions"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/metaboxes/class-hb-admin-metabox-booking-details.php:25 ..
-#: /templates/emails/booking-details.php:15
+#: includes/admin/metaboxes/class-hb-admin-metabox-booking-details.php:29
+#: templates/emails/booking-details.php:13
 msgid "Booking Details"
 msgstr ""
 
-#: ../includes/admin/metaboxes/class-hb-admin-metabox-booking-items.php:25
+#: includes/admin/metaboxes/class-hb-admin-metabox-booking-items.php:29
 msgid "Booking Items"
 msgstr ""
 
-#: ../includes/admin/metaboxes/class-hb-admin-metabox-room-price.php:29
+#: includes/admin/metaboxes/class-hb-admin-metabox-room-price.php:29
 msgid "Regular Price"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-actions.php:20
+#: includes/admin/metaboxes/views/meta-booking-actions.php:20
 msgid "Move to Trash"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-actions.php:25
+#: includes/admin/metaboxes/views/meta-booking-actions.php:25
 msgid "Save Book"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-details.php:26
+#: includes/admin/metaboxes/views/meta-booking-details.php:25
 #, php-format
 msgid "Book ID %s"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-details.php:28
+#: includes/admin/metaboxes/views/meta-booking-details.php:27
 #, php-format
 msgid "Booked on %s"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/metaboxes/views/meta-booking-details.php:32 ..
-#: /includes/admin/settings/class-hb-admin-setting-general.php:23 ..
-#: /includes/admin/settings/class-hb-admin-setting-payments.php:85
+#: includes/admin/metaboxes/views/meta-booking-details.php:31
+#: includes/admin/settings/class-hb-admin-setting-general.php:22
+#: includes/admin/settings/class-hb-admin-setting-payments.php:85
 msgid "General"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-details.php:35
+#: includes/admin/metaboxes/views/meta-booking-details.php:34
 msgid "Payment Method:"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-details.php:39
+#: includes/admin/metaboxes/views/meta-booking-details.php:38
 #, php-format
 msgid "%s is not available"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-details.php:53
+#: includes/admin/metaboxes/views/meta-booking-details.php:52
 msgid "Booking Status:"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-details.php:64
+#: includes/admin/metaboxes/views/meta-booking-details.php:63
 msgid "Customer:"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-details.php:80
+#: includes/admin/metaboxes/views/meta-booking-details.php:79
 msgid "Customer's Details"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/metaboxes/views/meta-booking-details.php:85 ..
-#: /includes/admin/metaboxes/views/meta-booking-details.php:113 ..
-#: /templates/checkout/customer-new.php:30 ../templates/checkout/customer-new.php:
-#: 34 ../templates/emails/customer-details.php:39
+#: includes/admin/metaboxes/views/meta-booking-details.php:84
+#: includes/admin/metaboxes/views/meta-booking-details.php:112
+#: templates/checkout/customer-new.php:35
+#: templates/checkout/customer-new.php:39
+#: templates/emails/customer-details.php:40
 msgid "Address"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/metaboxes/views/meta-booking-details.php:100 ..
-#: /includes/admin/settings/class-hb-admin-setting-hotel-info.php:96 ..
-#: /templates/single-room-reviews.php:69 ../templates/checkout/customer-existing.
-#: php:15 ../templates/checkout/customer-new.php:80
+#: includes/admin/metaboxes/views/meta-booking-details.php:99
+#: includes/admin/settings/class-hb-admin-setting-hotel-info.php:96
+#: templates/single-room-reviews.php:69
+#: templates/checkout/customer-existing.php:15
+#: templates/checkout/customer-new.php:85
 msgid "Email"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/metaboxes/views/meta-booking-details.php:104 ..
-#: /includes/admin/metaboxes/views/meta-booking-details.php:121 ..
-#: /templates/checkout/customer-new.php:72
+#: includes/admin/metaboxes/views/meta-booking-details.php:103
+#: includes/admin/metaboxes/views/meta-booking-details.php:120
+#: templates/checkout/customer-new.php:77
 msgid "Phone"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/metaboxes/views/meta-booking-details.php:111 ..
-#: /templates/checkout/customer-new.php:25
+#: includes/admin/metaboxes/views/meta-booking-details.php:110
+#: templates/checkout/customer-new.php:19
+#: templates/checkout/customer-new.php:23
 msgid "First name"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/metaboxes/views/meta-booking-details.php:112 ..
-#: /templates/checkout/customer-new.php:26
+#: includes/admin/metaboxes/views/meta-booking-details.php:111
+#: templates/checkout/customer-new.php:27
+#: templates/checkout/customer-new.php:31
 msgid "Last name"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/metaboxes/views/meta-booking-details.php:114 ..
-#: /includes/admin/settings/class-hb-admin-setting-hotel-info.php:54 ..
-#: /templates/checkout/customer-new.php:38 ../templates/checkout/customer-new.php:
-#: 42
+#: includes/admin/metaboxes/views/meta-booking-details.php:113
+#: includes/admin/settings/class-hb-admin-setting-hotel-info.php:54
+#: templates/checkout/customer-new.php:43
+#: templates/checkout/customer-new.php:47
 msgid "City"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/metaboxes/views/meta-booking-details.php:117 ..
-#: /includes/admin/settings/class-hb-admin-setting-hotel-info.php:61 ..
-#: /templates/checkout/customer-new.php:46 ../templates/checkout/customer-new.php:
-#: 50
+#: includes/admin/metaboxes/views/meta-booking-details.php:116
+#: includes/admin/settings/class-hb-admin-setting-hotel-info.php:61
+#: templates/checkout/customer-new.php:51
+#: templates/checkout/customer-new.php:55
 msgid "State"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-details.php:118
+#: includes/admin/metaboxes/views/meta-booking-details.php:117
 msgid "Postl code"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/metaboxes/views/meta-booking-details.php:119 ..
-#: /templates/checkout/customer-new.php:84
+#: includes/admin/metaboxes/views/meta-booking-details.php:118
+#: templates/checkout/customer-new.php:89
 msgid "Email address"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/metaboxes/views/meta-booking-details.php:120 ..
-#: /includes/admin/settings/class-hb-admin-setting-hotel-info.php:89 ..
-#: /templates/checkout/customer-new.php:88 ../templates/checkout/customer-new.php:
-#: 91
+#: includes/admin/metaboxes/views/meta-booking-details.php:119
+#: includes/admin/settings/class-hb-admin-setting-hotel-info.php:89
+#: templates/checkout/customer-new.php:93
+#: templates/checkout/customer-new.php:96
 msgid "Fax"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/metaboxes/views/meta-booking-details.php:122 ..
-#: /includes/admin/settings/class-hb-admin-setting-hotel-info.php:68 ..
-#: /templates/checkout/customer-new.php:64 ../templates/checkout/customer-new.php:
-#: 68
+#: includes/admin/metaboxes/views/meta-booking-details.php:121
+#: includes/admin/settings/class-hb-admin-setting-hotel-info.php:68
+#: templates/checkout/customer-new.php:69
+#: templates/checkout/customer-new.php:73
 msgid "Country"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-details.php:132
+#: includes/admin/metaboxes/views/meta-booking-details.php:131
 msgid "Customer's Notes"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-details.php:140 ..
-#: /includes/booking/hb-booking-functions.php:78 ../includes/plugins/tp-hotel-
-#: booking-woocommerce/includes/class-hb-wc-checkout.php:153 ..
-#: /includes/plugins/tp-hotel-booking-woocommerce/includes/class-hb-wc-checkout.
-#: php:159
+#: includes/admin/metaboxes/views/meta-booking-details.php:139
+#: includes/booking/hb-booking-functions.php:78
+#: includes/plugins/tp-hotel-booking-woocommerce/includes/class-hb-wc-checkout.php:111
+#: includes/plugins/tp-hotel-booking-woocommerce/includes/class-hb-wc-checkout.php:117
 msgid "Empty Booking Notes"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-items-template-js.php:28
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:28
 msgid "Add new item"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-items-template-js.php:74
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:74
 msgid "Extra Packages"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-items-template-js.php:112 ..
-#: /includes/plugins/tp-hotel-booking-room/inc/class-hb-booking-room.php:95
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:112
+#: includes/plugins/tp-hotel-booking-room/templates/single-search-available.php:44
 msgid "Check Available"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-items-template-js.php:116 ..
-#: /includes/admin/metaboxes/views/meta-booking-items-template-js.php:229
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:116
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:229
 msgid "Close"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-items-template-js.php:117 ..
-#: /includes/admin/metaboxes/views/meta-booking-items-template-js.php:230
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:117
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:230
 msgid "Add"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-items-template-js.php:134
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:134
 msgid "Do you want to do this?"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/metaboxes/views/meta-booking-items-template-js.php:153 ..
-#: /includes/plugins/tp-hb-currencies/settings/settings.php:28 ..
-#: /includes/plugins/tp-hb-currencies/settings/settings.php:37 ..
-#: /includes/widgets/class-hb-widget-room-carousel.php:79 ..
-#: /includes/widgets/class-hb-widget-room-carousel.php:88
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:153
+#: includes/plugins/tp-hb-currencies/settings/settings.php:28
+#: includes/plugins/tp-hb-currencies/settings/settings.php:37
+#: includes/widgets/class-hb-widget-room-carousel.php:79
+#: includes/widgets/class-hb-widget-room-carousel.php:88
 msgid "No"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/metaboxes/views/meta-booking-items-template-js.php:154 ..
-#: /includes/plugins/tp-hb-currencies/settings/settings.php:27 ..
-#: /includes/plugins/tp-hb-currencies/settings/settings.php:36 ..
-#: /includes/widgets/class-hb-widget-room-carousel.php:77 ..
-#: /includes/widgets/class-hb-widget-room-carousel.php:85
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:154
+#: includes/plugins/tp-hb-currencies/settings/settings.php:27
+#: includes/plugins/tp-hb-currencies/settings/settings.php:36
+#: includes/widgets/class-hb-widget-room-carousel.php:77
+#: includes/widgets/class-hb-widget-room-carousel.php:85
 msgid "Yes"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-items-template-js.php:193
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:193
 msgid "Add new coupon"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-items.php:31 ..
-#: /templates/emails/booking-details.php:18
+#: includes/admin/metaboxes/views/meta-booking-items.php:31
+#: templates/emails/booking-details.php:16
 msgid "Item"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-items.php:34
+#: includes/admin/metaboxes/views/meta-booking-items.php:34
 msgid "Checkin - Checkout"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/metaboxes/views/meta-booking-items.php:37 ..
-#: /templates/cart/cart.php:24 ../templates/checkout/checkout.php:25 ..
-#: /templates/loop/price.php:43 ../templates/search/booking-room-details.php:19
+#: includes/admin/metaboxes/views/meta-booking-items.php:37
+#: templates/cart/cart.php:24 templates/checkout/checkout.php:25
+#: templates/loop/price.php:45 templates/search/booking-room-details.php:19
 msgid "Night"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-items.php:40
+#: includes/admin/metaboxes/views/meta-booking-items.php:40
 msgid "Qty"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-items.php:46
+#: includes/admin/metaboxes/views/meta-booking-items.php:46
 msgid "Actions"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-items.php:91
+#: includes/admin/metaboxes/views/meta-booking-items.php:91
 msgid "Delete select item(s)"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-items.php:93
+#: includes/admin/metaboxes/views/meta-booking-items.php:93
 msgid "Sync"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-items.php:98
+#: includes/admin/metaboxes/views/meta-booking-items.php:98
 msgid "Add Coupon"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-items.php:102
+#: includes/admin/metaboxes/views/meta-booking-items.php:102
 msgid "Remove Coupon"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-items.php:105
+#: includes/admin/metaboxes/views/meta-booking-items.php:105
 msgid "Add Room Item"
 msgstr ""
 
-#: ../includes/admin/metaboxes/views/meta-booking-items.php:116
+#: includes/admin/metaboxes/views/meta-booking-items.php:116
 #, php-format
 msgid "Coupon(<a href=\"%s\">%s</a>)"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/metaboxes/views/meta-booking-items.php:125 ..
-#: /templates/cart/cart.php:57 ../templates/checkout/checkout.php:53
+#: includes/admin/metaboxes/views/meta-booking-items.php:125
+#: templates/cart/cart.php:57 templates/checkout/checkout.php:53
 msgid "Sub Total"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/metaboxes/views/meta-booking-items.php:133 ..
-#: /includes/admin/settings/class-hb-admin-setting-general.php:115 ..
-#: /templates/cart/cart.php:66 ../templates/checkout/checkout.php:63
+#: includes/admin/metaboxes/views/meta-booking-items.php:133
+#: includes/admin/settings/class-hb-admin-setting-general.php:102
+#: templates/cart/cart.php:66 templates/checkout/checkout.php:63
 msgid "Tax"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/metaboxes/views/meta-booking-items.php:141 ..
-#: /templates/cart/cart.php:76 ../templates/checkout/checkout.php:74
+#: includes/admin/metaboxes/views/meta-booking-items.php:141
+#: templates/cart/cart.php:76 templates/checkout/checkout.php:74
 msgid "Grand Total"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/settings/class-hb-admin-setting-emails.php:22
+#: includes/admin/metaboxes/views/meta-room-pricing.php:23
+#: includes/admin/views/pricing-table.php:44
+#: includes/admin/views/pricing-table.php:98
+msgid "Edit"
+msgstr ""
+
+#: includes/admin/settings/class-hb-admin-setting-emails.php:22
 msgid "Emails"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-emails.php:38
+#: includes/admin/settings/class-hb-admin-setting-emails.php:38
 msgid "Email Sender"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-emails.php:39
+#: includes/admin/settings/class-hb-admin-setting-emails.php:39
 msgid "The name and email address of the sender displays in email"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-emails.php:45
+#: includes/admin/settings/class-hb-admin-setting-emails.php:45
 msgid "From name"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-emails.php:53
+#: includes/admin/settings/class-hb-admin-setting-emails.php:53
 msgid "From Email"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-emails.php:61
+#: includes/admin/settings/class-hb-admin-setting-emails.php:61
 msgid "Email subject"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-emails.php:62 ..
-#: /includes/admin/settings/class-hb-admin-setting-emails.php:63 ..
-#: /includes/booking/hb-booking-hooks.php:169
+#: includes/admin/settings/class-hb-admin-setting-emails.php:62
+#: includes/admin/settings/class-hb-admin-setting-emails.php:63
+#: includes/booking/hb-booking-hooks.php:173
 msgid "Reservation"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-emails.php:76 ..
-#: /includes/admin/settings/class-hb-admin-setting-emails.php:146
+#: includes/admin/settings/class-hb-admin-setting-emails.php:76
+#: includes/admin/settings/class-hb-admin-setting-emails.php:146
 msgid "New Booking"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-emails.php:77
+#: includes/admin/settings/class-hb-admin-setting-emails.php:77
 msgid "New booking emails are sent to user admin when a booking is received."
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-emails.php:83 ..
-#: /includes/gateways/offline-payment/views/settings.php:28 ..
-#: /includes/gateways/paypal/views/settings.php:29 ../includes/plugins/tp-hb-
-#: currencies/settings/settings.php:24 ../includes/plugins/tp-hotel-booking-
-#: authorize-sim/inc/views/authorize-sim-settings.php:22 ../includes/plugins/tp-
-#: hotel-booking-paypal/inc/views/paypal-settings.php:18 ../includes/plugins/tp-
-#: hotel-booking-stripe/inc/views/strip-settings.php:21 ../includes/plugins/tp-
-#: hotel-booking-woocommerce/includes/admin/views/wc-settings.php:14
+#: includes/admin/settings/class-hb-admin-setting-emails.php:83
+#: includes/gateways/offline-payment/views/settings.php:28
+#: includes/gateways/paypal/views/settings.php:29
+#: includes/plugins/tp-hb-currencies/settings/settings.php:24
+#: includes/plugins/tp-hotel-booking-authorize-sim/inc/views/authorize-sim-settings.php:21
+#: includes/plugins/tp-hotel-booking-paypal/inc/views/paypal-settings.php:17
+#: includes/plugins/tp-hotel-booking-stripe/inc/views/strip-settings.php:21
+#: includes/plugins/tp-hotel-booking-woocommerce/includes/admin/views/wc-settings.php:14
 msgid "Enable"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-emails.php:90
+#: includes/admin/settings/class-hb-admin-setting-emails.php:90
 msgid "Recipient(s)"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-emails.php:91 ..
-#: /includes/admin/settings/class-hb-admin-setting-emails.php:100 ..
-#: /includes/admin/settings/class-hb-admin-setting-emails.php:126
+#: includes/admin/settings/class-hb-admin-setting-emails.php:91
+#: includes/admin/settings/class-hb-admin-setting-emails.php:100
+#: includes/admin/settings/class-hb-admin-setting-emails.php:126
 #, php-format
 msgid "Enter recipients (comma separated) for this email. Defaults to %s."
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-emails.php:99
+#: includes/admin/settings/class-hb-admin-setting-emails.php:99
 msgid "Subject"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-emails.php:108
+#: includes/admin/settings/class-hb-admin-setting-emails.php:108
 msgid "Email Heading"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-emails.php:109
+#: includes/admin/settings/class-hb-admin-setting-emails.php:109
 msgid ""
 "The main heading displays in the top of email. Default heading: New customer "
 "booking"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-emails.php:117
+#: includes/admin/settings/class-hb-admin-setting-emails.php:117
 msgid "Email Heading Description"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-emails.php:118 ..
-#: /includes/admin/settings/class-hb-admin-setting-emails.php:119 ..
-#: /includes/booking/hb-booking-hooks.php:76
+#: includes/admin/settings/class-hb-admin-setting-emails.php:118
+#: includes/admin/settings/class-hb-admin-setting-emails.php:119
+#: includes/booking/hb-booking-hooks.php:76
 msgid "Reservated"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-emails.php:125
+#: includes/admin/settings/class-hb-admin-setting-emails.php:125
 msgid "Email Format"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/settings/class-hb-admin-setting-emails.php:129
+#: includes/admin/settings/class-hb-admin-setting-emails.php:129
 msgid "Plain Text"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/settings/class-hb-admin-setting-emails.php:130
+#: includes/admin/settings/class-hb-admin-setting-emails.php:130
 msgid "HTML"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/settings/class-hb-admin-setting-emails.php:145
+#: includes/admin/settings/class-hb-admin-setting-emails.php:145
 msgid "Email Options"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-general.php:34
+#: includes/admin/settings/class-hb-admin-setting-general.php:32
 msgid "General Options"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-general.php:35
+#: includes/admin/settings/class-hb-admin-setting-general.php:33
 msgid "General options for system."
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-general.php:41
+#: includes/admin/settings/class-hb-admin-setting-general.php:38
 msgid "Search Page"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-general.php:47
+#: includes/admin/settings/class-hb-admin-setting-general.php:43
 msgid "Checkout Page"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-general.php:53
+#: includes/admin/settings/class-hb-admin-setting-general.php:48
 msgid "Cart Page"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-general.php:59
+#: includes/admin/settings/class-hb-admin-setting-general.php:53
 msgid "Account Page"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-general.php:65
+#: includes/admin/settings/class-hb-admin-setting-general.php:58
 msgid "Terms And Conditions Page"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-general.php:71 ..
-#: /includes/plugins/tp-hb-currencies/class-hb-currencies.php:224
+#: includes/admin/settings/class-hb-admin-setting-general.php:63
+#: includes/plugins/tp-hb-currencies/class-hb-currencies.php:232
 msgid "Currency"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-general.php:79
+#: includes/admin/settings/class-hb-admin-setting-general.php:70
 msgid "Currency Position"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-general.php:81
+#: includes/admin/settings/class-hb-admin-setting-general.php:72
 msgid "Left ( $69.99 )"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-general.php:82
+#: includes/admin/settings/class-hb-admin-setting-general.php:73
 msgid "Right ( 69.99$ )"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-general.php:83
+#: includes/admin/settings/class-hb-admin-setting-general.php:74
 msgid "Left with space ( $ 69.99 )"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-general.php:84
+#: includes/admin/settings/class-hb-admin-setting-general.php:75
 msgid "Right with space ( 69.99 $ )"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-general.php:92
+#: includes/admin/settings/class-hb-admin-setting-general.php:82
 msgid "Thousands Separator"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-general.php:99
+#: includes/admin/settings/class-hb-admin-setting-general.php:88
 msgid "Decimals Separator"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-general.php:106
+#: includes/admin/settings/class-hb-admin-setting-general.php:94
 msgid "Number of decimal"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-general.php:123
+#: includes/admin/settings/class-hb-admin-setting-general.php:110
 msgid "Price including tax"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-general.php:130
+#: includes/admin/settings/class-hb-admin-setting-general.php:116
 msgid "Price display"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-general.php:132
+#: includes/admin/settings/class-hb-admin-setting-general.php:118
 msgid "Min"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-general.php:133
+#: includes/admin/settings/class-hb-admin-setting-general.php:119
 msgid "Max"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-general.php:134
+#: includes/admin/settings/class-hb-admin-setting-general.php:120
 msgid "Min to Max"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-general.php:142
+#: includes/admin/settings/class-hb-admin-setting-general.php:127
 msgid "Advance Payment"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-general.php:143
+#: includes/admin/settings/class-hb-admin-setting-general.php:128
 msgid "Payment addvance. Eg: 50%"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-hotel-info.php:23
+#: includes/admin/settings/class-hb-admin-setting-hotel-info.php:23
 msgid "Hotel Info"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-hotel-info.php:34
+#: includes/admin/settings/class-hb-admin-setting-hotel-info.php:34
 msgid "Your hotel information"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-hotel-info.php:40
+#: includes/admin/settings/class-hb-admin-setting-hotel-info.php:40
 msgid "Hotel Name"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-hotel-info.php:47
+#: includes/admin/settings/class-hb-admin-setting-hotel-info.php:47
 msgid "Hotel Adress"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-hotel-info.php:75
+#: includes/admin/settings/class-hb-admin-setting-hotel-info.php:75
 msgid "Zip / Postal Code"
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/settings/class-hb-admin-setting-hotel-info.php:82 ..
-#: /templates/checkout/customer-new.php:76
+#: includes/admin/settings/class-hb-admin-setting-hotel-info.php:82
+#: templates/checkout/customer-new.php:81
 msgid "Phone Number"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-lightboxs.php:23
+#: includes/admin/settings/class-hb-admin-setting-lightboxs.php:23
 msgid "Lightboxs"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-lightboxs.php:34
+#: includes/admin/settings/class-hb-admin-setting-lightboxs.php:34
 msgid "Lightbox options"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-lightboxs.php:35
+#: includes/admin/settings/class-hb-admin-setting-lightboxs.php:35
 msgid "General options for Lightbox system."
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-lightboxs.php:42
+#: includes/admin/settings/class-hb-admin-setting-lightboxs.php:42
 msgid "Lightbox type"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-payments.php:23 ..
-#: /includes/plugins/tp-hotel-booking-room/inc/class-hb-booking-room.php:87
+#: includes/admin/settings/class-hb-admin-setting-payments.php:23
 msgid "Checkout"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-payments.php:34
+#: includes/admin/settings/class-hb-admin-setting-payments.php:34
 msgid "Payment General Options"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-payments.php:35
+#: includes/admin/settings/class-hb-admin-setting-payments.php:35
 msgid "Payment General options for system."
 msgstr ""
 
-#. Text in function
-#: ../includes/admin/settings/class-hb-admin-setting-payments.php:41 ..
-#: /includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-
-#: authorize-sim.php:241
+#: includes/admin/settings/class-hb-admin-setting-payments.php:41
+#: includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-authorize-sim.php:228
 msgid "Cancel Payment"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-payments.php:42
+#: includes/admin/settings/class-hb-admin-setting-payments.php:42
 msgid "Cancel Payment after hour(s)"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-payments.php:50
+#: includes/admin/settings/class-hb-admin-setting-payments.php:50
 msgid "Process"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-payments.php:51
+#: includes/admin/settings/class-hb-admin-setting-payments.php:51
 msgid "Allows customers to checkout without creating an account."
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-room.php:23
+#: includes/admin/settings/class-hb-admin-setting-room.php:23
 msgid "Room"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-room.php:34
+#: includes/admin/settings/class-hb-admin-setting-room.php:34
 msgid "Catalog Options"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-room.php:35
+#: includes/admin/settings/class-hb-admin-setting-room.php:35
 msgid ""
-"Catalog settings display column number and image size used in room list ( "
-"archive page, related room )."
+"Catalog settings display column number and image size used in room list "
+"( archive page, related room )."
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-room.php:42
+#: includes/admin/settings/class-hb-admin-setting-room.php:42
 msgid "Number of column display catalog page"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-room.php:49
+#: includes/admin/settings/class-hb-admin-setting-room.php:49
 msgid "Number of post display in page"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-room.php:63
+#: includes/admin/settings/class-hb-admin-setting-room.php:63
 msgid "Catalog images size"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-room.php:68
+#: includes/admin/settings/class-hb-admin-setting-room.php:68
 msgid "Display rating"
 msgstr ""
 
-#: ../includes/admin/settings/class-hb-admin-setting-room.php:81
+#: includes/admin/settings/class-hb-admin-setting-room.php:81
 msgid "Room Options"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-room.php:82
+#: includes/admin/settings/class-hb-admin-setting-room.php:82
 msgid ""
 "Room settings display column number and image size used in gallery single "
 "page"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-room.php:96
+#: includes/admin/settings/class-hb-admin-setting-room.php:96
 msgid "Room images size gallery"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-room.php:110
+#: includes/admin/settings/class-hb-admin-setting-room.php:110
 msgid "Room images thumbnail"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-room.php:115
+#: includes/admin/settings/class-hb-admin-setting-room.php:115
 msgid "Display pricing plans"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-room.php:122
+#: includes/admin/settings/class-hb-admin-setting-room.php:122
 msgid "Enable ratings on reviews"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-room.php:132
+#: includes/admin/settings/class-hb-admin-setting-room.php:132
 msgid "Ratings are required to leave a review"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/settings/class-hb-admin-setting-room.php:140
+#: includes/admin/settings/class-hb-admin-setting-room.php:140
 msgid "Enable gallery lightbox"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/views/pricing-table.php:30
+#: includes/admin/views/pricing-table.php:30
 msgid "Select name of room"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/views/pricing-table.php:36
+#: includes/admin/views/pricing-table.php:36
 msgid "Regular price"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/views/pricing-table.php:44 ../includes/admin/views/pricing-
-#: table.php:95
-msgid "Edit"
-msgstr ""
-
-#. Text in echo
-#: ../includes/admin/views/pricing-table.php:45 ../includes/admin/views/pricing-
-#: table.php:154 ../includes/admin/views/pricing-table.php:157
+#: includes/admin/views/pricing-table.php:45
+#: includes/admin/views/pricing-table.php:157
+#: includes/admin/views/pricing-table.php:160
 msgid "Clone"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/views/pricing-table.php:46 ../includes/admin/views/pricing-
-#: table.php:97 ../includes/admin/views/pricing-table.php:160 ..
-#: /includes/plugins/tp-hb-extra/inc/admin/views/extra.php:53 ..
-#: /includes/plugins/tp-hb-extra/inc/admin/views/extra.php:86 ..
-#: /includes/plugins/tp-hb-extra/inc/admin/views/extra.php:124
+#: includes/admin/views/pricing-table.php:46
+#: includes/admin/views/pricing-table.php:100
+#: includes/admin/views/pricing-table.php:163
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:53
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:86
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:124
 msgid "Remove"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/views/pricing-table.php:74
+#: includes/admin/views/pricing-table.php:77
 msgid "Other plan"
 msgstr ""
 
-#: ../includes/admin/views/pricing-table.php:75
+#: includes/admin/views/pricing-table.php:78
 #, php-format
 msgid "(%d plan)"
 msgid_plural "(%d plans)"
 msgstr[0] ""
 msgstr[1] ""
 
-#. Text in echo
-#: ../includes/admin/views/pricing-table.php:126
+#: includes/admin/views/pricing-table.php:129
 msgid "No addition plans"
 msgstr ""
 
-#. Text in echo
-#: ../includes/admin/views/pricing-table.php:132
+#: includes/admin/views/pricing-table.php:135
 msgid "Add Plan"
 msgstr ""
 
-#: ../includes/booking/hb-booking-functions.php:77
+#: includes/booking/hb-booking-functions.php:77
 msgid "Booking "
 msgstr ""
 
-#: ../includes/booking/hb-booking-functions.php:83
+#: includes/booking/hb-booking-functions.php:83
 msgid "Invalid booking status"
 msgstr ""
 
-#: ../includes/booking/hb-booking-functions.php:299 ../includes/booking/hb-
-#: booking-functions.php:309 ../includes/booking/hb-booking-functions.php:319
+#: includes/booking/hb-booking-functions.php:299
+#: includes/booking/hb-booking-functions.php:309
+#: includes/booking/hb-booking-functions.php:319
 msgid "Booking is not found."
 msgstr ""
 
-#: ../includes/booking/hb-booking-functions.php:353
+#: includes/booking/hb-booking-functions.php:353
 msgid "Cancelled"
 msgstr ""
 
-#: ../includes/booking/hb-booking-hooks.php:75
+#: includes/booking/hb-booking-hooks.php:75
 msgid "New customer booking"
 msgstr ""
 
-#: ../includes/cart/class-hb-cart.php:207
+#: includes/cart/class-hb-cart.php:197
 msgid "Can not add to cart, product is not exist."
 msgstr ""
 
-#. Text in function
-#: ../includes/gateways/offline-payment/class-hb-payment-gateway-offline-payment.
-#: php:19
+#: includes/gateways/offline-payment/class-hb-payment-gateway-offline-payment.php:19
 msgid "Offline Payment"
 msgstr ""
 
-#: ../includes/gateways/offline-payment/class-hb-payment-gateway-offline-payment.
-#: php:20
+#: includes/gateways/offline-payment/class-hb-payment-gateway-offline-payment.php:20
 msgid "Pay on arrival"
 msgstr ""
 
-#. Text in echo
-#: ../includes/gateways/offline-payment/class-hb-payment-gateway-offline-payment.
-#: php:52
+#: includes/gateways/offline-payment/class-hb-payment-gateway-offline-payment.php:52
 msgid "<br />(<small>Pay on arrival</small>)"
 msgstr ""
 
-#: ../includes/gateways/offline-payment/class-hb-payment-gateway-offline-payment.
-#: php:87
+#: includes/gateways/offline-payment/class-hb-payment-gateway-offline-payment.php:87
 #, php-format
 msgid ""
 "Thank you! Your booking has been placed. Please check your email %s to view "
 "booking details"
 msgstr ""
 
-#: ../includes/gateways/offline-payment/class-hb-payment-gateway-offline-payment.
-#: php:96
+#: includes/gateways/offline-payment/class-hb-payment-gateway-offline-payment.php:96
 msgid " Pay on Arrival"
 msgstr ""
 
-#: ../includes/gateways/paypal/class-hb-payment-gateway-paypal.php:52 ..
-#: /includes/plugins/tp-hotel-booking-paypal/inc/class-hb-payment-gateway-paypal.
-#: php:48
+#: includes/gateways/paypal/class-hb-payment-gateway-paypal.php:52
+#: includes/plugins/tp-hotel-booking-paypal/inc/class-hb-payment-gateway-paypal.php:49
 msgid "Paypal"
 msgstr ""
 
-#: ../includes/gateways/paypal/class-hb-payment-gateway-paypal.php:53 ..
-#: /includes/gateways/paypal/class-hb-payment-gateway-paypal.php:103 ..
-#: /includes/plugins/tp-hotel-booking-paypal/inc/class-hb-payment-gateway-paypal.
-#: php:49 ../includes/plugins/tp-hotel-booking-paypal/inc/class-hb-payment-
-#: gateway-paypal.php:101
+#: includes/gateways/paypal/class-hb-payment-gateway-paypal.php:53
+#: includes/gateways/paypal/class-hb-payment-gateway-paypal.php:103
+#: includes/plugins/tp-hotel-booking-paypal/inc/class-hb-payment-gateway-paypal.php:50
+#: includes/plugins/tp-hotel-booking-paypal/inc/class-hb-payment-gateway-paypal.php:101
 msgid "Pay with Paypal"
 msgstr ""
 
-#: ../includes/gateways/paypal/class-hb-payment-gateway-paypal.php:98 ..
-#: /includes/plugins/tp-hotel-booking-paypal/inc/class-hb-payment-gateway-paypal.
-#: php:95
+#: includes/gateways/paypal/class-hb-payment-gateway-paypal.php:98
+#: includes/plugins/tp-hotel-booking-paypal/inc/class-hb-payment-gateway-paypal.php:96
 #, php-format
 msgid "<br /><small>(Paid %s%% of %s via %s)</small>"
 msgstr ""
 
-#: ../includes/gateways/paypal/class-hb-payment-gateway-paypal.php:167 ..
-#: /includes/plugins/tp-hotel-booking-paypal/inc/class-hb-payment-gateway-paypal.
-#: php:166
+#: includes/gateways/paypal/class-hb-payment-gateway-paypal.php:174
+#: includes/plugins/tp-hotel-booking-paypal/inc/class-hb-payment-gateway-paypal.php:167
 msgid "Error: Booking ID and key were not found in \"custom\"."
 msgstr ""
 
-#: ../includes/gateways/paypal/class-hb-payment-gateway-paypal.php:177 ..
-#: /includes/plugins/tp-hotel-booking-paypal/inc/class-hb-payment-gateway-paypal.
-#: php:176
+#: includes/gateways/paypal/class-hb-payment-gateway-paypal.php:184
+#: includes/plugins/tp-hotel-booking-paypal/inc/class-hb-payment-gateway-paypal.php:177
 #, php-format
 msgid "Error: Booking Keys do not match %s and %s."
 msgstr ""
 
-#: ../includes/gateways/paypal/class-hb-payment-gateway-paypal.php:197 ..
-#: /includes/plugins/tp-hotel-booking-paypal/inc/class-hb-payment-gateway-paypal.
-#: php:197
+#: includes/gateways/paypal/class-hb-payment-gateway-paypal.php:204
+#: includes/plugins/tp-hotel-booking-paypal/inc/class-hb-payment-gateway-paypal.php:197
 msgid "IPN payment completed"
 msgstr ""
 
-#. Text in echo
-#: ../includes/gateways/paypal/views/settings.php:36 ../includes/plugins/tp-hotel-
-#: booking-paypal/inc/views/paypal-settings.php:25
+#: includes/gateways/paypal/views/settings.php:36
+#: includes/plugins/tp-hotel-booking-paypal/inc/views/paypal-settings.php:24
 msgid "Paypal email"
 msgstr ""
 
-#. Text in echo
-#: ../includes/gateways/paypal/views/settings.php:42 ../includes/plugins/tp-hotel-
-#: booking-authorize-sim/inc/views/authorize-sim-settings.php:29 ..
-#: /includes/plugins/tp-hotel-booking-paypal/inc/views/paypal-settings.php:31
+#: includes/gateways/paypal/views/settings.php:42
+#: includes/plugins/tp-hotel-booking-authorize-sim/inc/views/authorize-sim-settings.php:28
+#: includes/plugins/tp-hotel-booking-paypal/inc/views/paypal-settings.php:30
 msgid "Sandbox Mode"
 msgstr ""
 
-#. Text in echo
-#: ../includes/gateways/paypal/views/settings.php:49 ../includes/plugins/tp-hotel-
-#: booking-paypal/inc/views/paypal-settings.php:38
+#: includes/gateways/paypal/views/settings.php:49
+#: includes/plugins/tp-hotel-booking-paypal/inc/views/paypal-settings.php:37
 msgid "Paypal sandbox email"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-currencies/class-hb-currencies-storage.php:123
+#: includes/plugins/tp-hb-currencies/class-hb-currencies-storage.php:123
 #, php-format
 msgid "no data for %s"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hb-currencies/settings/settings.php:18
+#: includes/plugins/tp-hb-currencies/settings/settings.php:18
 msgid "Currency settings"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hb-currencies/settings/settings.php:20
+#: includes/plugins/tp-hb-currencies/settings/settings.php:20
 msgid "Currency settings extension"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hb-currencies/settings/settings.php:33
+#: includes/plugins/tp-hb-currencies/settings/settings.php:33
 msgid "Is multiple allowed"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hb-currencies/settings/settings.php:42
+#: includes/plugins/tp-hb-currencies/settings/settings.php:42
 msgid "Currency aggregator"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hb-currencies/settings/settings.php:53
+#: includes/plugins/tp-hb-currencies/settings/settings.php:53
 msgid "Currency storage"
 msgstr ""
 
-#. Text in function
-#: ../includes/plugins/tp-hb-currencies/settings/settings.php:56
+#: includes/plugins/tp-hb-currencies/settings/settings.php:56
 msgid "Session"
 msgstr ""
 
-#. Text in function
-#: ../includes/plugins/tp-hb-currencies/settings/settings.php:58
+#: includes/plugins/tp-hb-currencies/settings/settings.php:58
 msgid "Transient"
 msgstr ""
 
-#. Text in function
-#: ../includes/plugins/tp-hb-currencies/widgets/class-hb-widget-currency-switch.
-#: php:12
+#: includes/plugins/tp-hb-currencies/widgets/class-hb-widget-currency-switch.php:12
 msgid "HB Currency Switcher"
 msgstr ""
 
-#. Text in function
-#: ../includes/plugins/tp-hb-currencies/widgets/class-hb-widget-currency-switch.
-#: php:13
+#: includes/plugins/tp-hb-currencies/widgets/class-hb-widget-currency-switch.php:13
 msgid "Switch currency"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hb-currencies/widgets/class-hb-widget-currency-switch.
-#: php:57 ../includes/widgets/class-hb-widget-best-reviews.php:59 ..
-#: /includes/widgets/class-hb-widget-lastest-reviews.php:59 ..
-#: /includes/widgets/class-hb-widget-mini-cart.php:59 ../includes/widgets/class-
-#: hb-widget-room-carousel.php:63 ../includes/widgets/class-hb-widget-search.php:62
+#: includes/plugins/tp-hb-currencies/widgets/class-hb-widget-currency-switch.php:57
+#: includes/widgets/class-hb-widget-best-reviews.php:59
+#: includes/widgets/class-hb-widget-lastest-reviews.php:59
+#: includes/widgets/class-hb-widget-mini-cart.php:59
+#: includes/widgets/class-hb-widget-room-carousel.php:63
+#: includes/widgets/class-hb-widget-search.php:61
 msgid "Title:"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hb-currencies/widgets/class-hb-widget-currency-switch.
-#: php:61
+#: includes/plugins/tp-hb-currencies/widgets/class-hb-widget-currency-switch.php:61
 msgid "Select Currencies:"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/tp-hb-extra.php:46
+#: includes/plugins/tp-hb-extra/tp-hb-extra.php:44
 msgid "Remove package. Are you sure?"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/inc/functions.php:139
+#: includes/plugins/tp-hb-extra/inc/functions.php:139
 msgid "Trip"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/inc/functions.php:140
+#: includes/plugins/tp-hb-extra/inc/functions.php:140
 msgid "Number"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/inc/admin/class-hb-admin.php:26
+#: includes/plugins/tp-hb-extra/inc/admin/class-hb-admin.php:26
 msgid "Extra Room Packages"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/inc/admin/views/extra.php:19
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:19
 msgid "Adding room's services packages with detail price for every service"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/inc/admin/views/extra.php:23
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:23
 msgid "Extra Options"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hb-extra/inc/admin/views/extra.php:30 ..
-#: /includes/plugins/tp-hb-extra/inc/admin/views/extra.php:63 ..
-#: /includes/plugins/tp-hb-extra/inc/admin/views/extra.php:101 ..
-#: /templates/single-room-reviews.php:67 ../templates/checkout/customer-new.php:21
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:30
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:63
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:101
+#: templates/single-room-reviews.php:67
 msgid "Name"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/inc/admin/views/extra.php:41 ..
-#: /includes/plugins/tp-hb-extra/inc/admin/views/extra.php:74 ..
-#: /includes/plugins/tp-hb-extra/inc/admin/views/extra.php:112 ..
-#: /includes/plugins/tp-hb-extra/templates/loop/extra-search-room.php:45
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:41
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:74
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:112
+#: includes/plugins/tp-hb-extra/templates/loop/extra-search-room.php:52
+#: includes/plugins/tp-hb-extra/templates/loop/extra-single-search-room.php:55
 msgid "Package"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/inc/admin/views/extra.php:44 ..
-#: /includes/plugins/tp-hb-extra/inc/admin/views/extra.php:77 ..
-#: /includes/plugins/tp-hb-extra/inc/admin/views/extra.php:115
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:44
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:77
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:115
 msgid "Price Type"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/inc/admin/views/extra.php:48 ..
-#: /includes/plugins/tp-hb-extra/inc/admin/views/extra.php:81 ..
-#: /includes/plugins/tp-hb-extra/inc/admin/views/extra.php:119
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:48
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:81
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:119
 msgid "All Rooms"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/inc/admin/views/extra.php:92
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:92
 msgid "Save Extra"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/inc/admin/views/extra.php:93
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:93
 msgid "Add another item"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/inc/admin/views/extra.php:106
+#: includes/plugins/tp-hb-extra/inc/admin/views/extra.php:106
 msgid "Enter description here"
 msgstr ""
 
-#. Text in function
-#: ../includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-cart.php:175
+#: includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-cart.php:175
 msgid "Cart ID is not exists."
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-cart.php:301 ..
-#: /includes/plugins/tp-hb-extra/templates/loop/addition-services-title.php:3
+#: includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-cart.php:300
+#: includes/plugins/tp-hb-extra/templates/loop/addition-services-title.php:3
 msgid "Addition Services"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:30 ..
-#: /includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:31 ..
-#: /includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:41
+#: includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:30
+#: includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:31
+#: includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:41
 msgid "Extra Room"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:32
+#: includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:32
 msgctxt "tp-hb-extra"
 msgid "Add New Extra Room"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:33
+#: includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:33
 msgid "Add New Extra Room"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:34
+#: includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:34
 msgid "Edit Extra Room"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:35
+#: includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:35
 msgid "New Extra Room"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:36
+#: includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:36
 msgid "View Extra Room"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:37
+#: includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:37
 msgid "Search Extra Room"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:38
+#: includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:38
 msgid "No Extra Room found"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:39
+#: includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:39
 msgid "No Extra Room found in Trash"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:40
+#: includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:40
 msgid "Parent Singular Extra Room:"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:47
+#: includes/plugins/tp-hb-extra/inc/classes/class-hb-extra-post-type.php:47
 msgid "Extra room system booking"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/inc/classes/class-hb-extra.php:29
+#: includes/plugins/tp-hb-extra/inc/classes/class-hb-extra.php:30
 msgid "Addition Package"
 msgstr ""
 
-#: ../includes/plugins/tp-hb-extra/templates/loop/extra-search-room.php:13
+#: includes/plugins/tp-hb-extra/templates/loop/extra-search-room.php:20
+#: includes/plugins/tp-hb-extra/templates/loop/extra-single-search-room.php:23
 msgid "Optional Extras"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hb-extra/templates/loop/mini-cart-extra.php:15 ..
-#: /includes/plugins/tp-hb-extra/templates/shortcodes/mini_cart_layout.php:20
+#: includes/plugins/tp-hb-extra/templates/loop/mini-cart-extra.php:15
+#: includes/plugins/tp-hb-extra/templates/shortcodes/mini_cart_layout.php:20
 msgid "Addition Services:"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hb-extra/templates/shortcodes/mini_cart_layout.php:13 ..
-#: /templates/cart/mini_cart_layout.php:20 ../templates/loop/mini-cart-loop.php:
-#: 28 ../templates/search/loop.php:48
+#: includes/plugins/tp-hb-extra/templates/shortcodes/mini_cart_layout.php:13
+#: templates/cart/mini_cart_layout.php:20 templates/loop/mini-cart-loop.php:28
+#: templates/search/loop.php:48
 msgid "Quantity: "
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hb-extra/templates/shortcodes/mini_cart_layout.php:40 ..
-#: /templates/cart/mini_cart_layout.php:27 ../templates/loop/mini-cart-loop.php:37
+#: includes/plugins/tp-hb-extra/templates/shortcodes/mini_cart_layout.php:40
+#: templates/cart/mini_cart_layout.php:27 templates/loop/mini-cart-loop.php:37
 msgid "Price: "
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hb-extra/templates/shortcodes/mini_cart_layout.php:50 ..
-#: /templates/cart/cart.php:94 ../templates/cart/mini_cart.php:21 ..
-#: /templates/cart/mini_cart_layout.php:36
+#: includes/plugins/tp-hb-extra/templates/shortcodes/mini_cart_layout.php:50
+#: templates/cart/cart.php:94 templates/cart/mini_cart.php:21
+#: templates/cart/mini_cart_layout.php:36
 msgid "Check Out"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hb-extra/templates/shortcodes/mini_cart_layout.php:51 ..
-#: /templates/cart/mini_cart.php:22 ../templates/cart/mini_cart_layout.php:37
+#: includes/plugins/tp-hb-extra/templates/shortcodes/mini_cart_layout.php:51
+#: templates/cart/mini_cart.php:22 templates/cart/mini_cart_layout.php:37
 msgid "View Cart"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hb-extra/templates/shortcodes/mini_cart_layout.php:56 ..
-#: /templates/cart/cart.php:104 ../templates/cart/mini_cart.php:28 ..
-#: /templates/cart/mini_cart_layout.php:42
+#: includes/plugins/tp-hb-extra/templates/shortcodes/mini_cart_layout.php:56
+#: templates/cart/cart.php:104 templates/cart/mini_cart.php:28
+#: templates/cart/mini_cart_layout.php:42
 msgid "Your cart is empty!"
 msgstr ""
 
-#. Name of the plugin
-msgid "TP Hotel Booking Authorize Payment"
-msgstr ""
-
-#. Description of the plugin
-msgid "Payment Authorize TP Hotel Booking Addon"
-msgstr ""
-
-#: ../includes/plugins/tp-hotel-booking-authorize-sim/tp-hotel-booking-authorize-
-#: sim.php:91
+#: includes/plugins/tp-hotel-booking-authorize-sim/tp-hotel-booking-authorize-sim.php:82
 msgid ""
 "The <strong>TP Hotel Booking</strong> is not installed and/or activated. "
 "Please install and/or activate before you can using <strong>TP Hotel Booking "
 "Authorize</strong> add-on"
 msgstr ""
 
-#. Text in function
-#: ../includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-
-#: gateway-authorize-sim.php:58
+#: includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-authorize-sim.php:57
 msgid "Authorize"
 msgstr ""
 
-#. Text in function
-#: ../includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-
-#: gateway-authorize-sim.php:59 ../includes/plugins/tp-hotel-booking-authorize-
-#: sim/inc/class-hb-payment-gateway-authorize-sim.php:256
+#: includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-authorize-sim.php:58
+#: includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-authorize-sim.php:243
 msgid "Pay with Authorize.net"
 msgstr ""
 
-#. Text in function
-#: ../includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-
-#: gateway-authorize-sim.php:75
+#: includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-authorize-sim.php:74
 msgid "This transaction has been approved."
 msgstr ""
 
-#. Text in function
-#: ../includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-
-#: gateway-authorize-sim.php:76
+#: includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-authorize-sim.php:75
 msgid "This transaction has been declined."
 msgstr ""
 
-#. Text in function
-#: ../includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-
-#: gateway-authorize-sim.php:77
+#: includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-authorize-sim.php:76
 msgid "There has been an error processing this transaction."
 msgstr ""
 
-#. Text in function
-#: ../includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-
-#: gateway-authorize-sim.php:78
+#: includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-authorize-sim.php:77
 msgid " This transaction is being held for review."
 msgstr ""
 
-#. Text in function
-#: ../includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-
-#: gateway-authorize-sim.php:243
+#: includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-authorize-sim.php:230
 msgid "Click here to return our homepage"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-
-#: gateway-authorize-sim.php:280
+#: includes/plugins/tp-hotel-booking-authorize-sim/inc/class-hb-payment-gateway-authorize-sim.php:267
 msgid "Pay with Authorize"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hotel-booking-authorize-sim/inc/views/authorize-sim-
-#: settings.php:36
+#: includes/plugins/tp-hotel-booking-authorize-sim/inc/views/authorize-sim-settings.php:35
 msgid "API Login ID"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hotel-booking-authorize-sim/inc/views/authorize-sim-
-#: settings.php:42
+#: includes/plugins/tp-hotel-booking-authorize-sim/inc/views/authorize-sim-settings.php:41
 msgid "Transaction Key"
 msgstr ""
 
-#. Name of the plugin
-msgid "TP Hotel Booking Block Room Calendar"
-msgstr ""
-
-#. Description of the plugin
-msgid "Block booking rooms for specific dates"
-msgstr ""
-
-#: ../includes/plugins/tp-hotel-booking-block/tp-hotel-booking-block.php:83
+#: includes/plugins/tp-hotel-booking-block/tp-hotel-booking-block.php:74
 msgid ""
 "The <strong>TP Hotel Booking</strong> is not installed and/or activated. "
 "Please install and/or activate before you can using <strong>TP Hotel Booking "
 "Block</strong> add-on."
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:38
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:37
 msgctxt "post type general name"
 msgid "Blocked"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:39
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:38
 msgctxt "post type singular name"
 msgid "Blocked"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:40
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:39
 msgctxt "admin menu"
 msgid "Blocked"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:41
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:40
 msgctxt "add new on admin bar"
 msgid "Blocked"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:42
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:41
 msgctxt "block"
 msgid "Add New"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:43
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:42
 msgid "Add New Blocked"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:44
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:43
 msgid "New Blocked"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:45
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:44
 msgid "Edit Blocked"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:46
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:45
 msgid "View Blocked"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:47
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:46
 msgid "All Blocked"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:48
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:47
 msgid "Search Blocked"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:49
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:48
 msgid "Parent Blocked:"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:50
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:49
 msgid "No blocked found."
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:51
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:50
 msgid "No blocked found in Trash."
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:56
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:55
 msgid "Blocked days."
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:82 ..
-#: /includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:83
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:81
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:82
 msgid "Block Special Date"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:114
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:111
 msgid "Request has error. Please try again."
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:125
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:120
 msgid "Something went wrong."
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:147 ..
-#: /includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:148
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:140
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:141
 msgid "Block item"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:182
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:171
 msgid "Update Completed."
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:188
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:176
 msgid "You must Login System"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:283
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:257
 msgid "Something went wrong. Please try again!"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:291 ..
-#: /includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:295
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:263
+#: includes/plugins/tp-hotel-booking-block/inc/class-hb-block.php:267
 msgid "Remove completed!"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/admin/views/block.php:22
+#: includes/plugins/tp-hotel-booking-block/inc/admin/views/block.php:20
 msgid "Remove Plan"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-block/inc/admin/views/block.php:36
+#: includes/plugins/tp-hotel-booking-block/inc/admin/views/block.php:34
 msgid "Add Specific Calander"
 msgstr ""
 
-#. Name of the plugin
-msgid "TP Hotel Booking Coupon"
-msgstr ""
-
-#: ../includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:85
+#: includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:76
 msgid ""
 "The <strong>TP Hotel Booking</strong> is not installed and/or activated. "
 "Please install and/or activate before you can using <strong>TP Hotel Booking "
 "Coupon</strong> add-on."
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:98
+#: includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:89
 msgid "Enable Coupon"
 msgstr ""
 
-#. Text in function
-#: ../includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:121
+#: includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:113
 #, php-format
 msgid "Coupon applied: %s"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:130
+#: includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:122
 msgid "Coupon"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:131
+#: includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:123
 msgid "Apply Coupon"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:144
+#: includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:137
 msgctxt "Coupons"
 msgid "Coupons"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:145
+#: includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:138
 msgctxt "Coupon"
 msgid "Coupon"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:146 ..
-#: /includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:148
+#: includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:139
+#: includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:141
 msgid "Coupons"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:149
+#: includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:142
 msgid "View Coupon"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:150
+#: includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:143
 msgid "Add New Coupon"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:152
+#: includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:145
 msgid "Edit Coupon"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:153
+#: includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:146
 msgid "Update Coupon"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:154
+#: includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:147
 msgid "Search Coupon"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:155
+#: includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:148
 msgid "No coupon found"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:156
+#: includes/plugins/tp-hotel-booking-coupon/tp-hotel-booking-coupon.php:149
 msgid "No coupon found in Trash"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-coupon/inc/class-hb-coupon.php:107
+#: includes/plugins/tp-hotel-booking-coupon/inc/class-hb-coupon.php:110
 #, php-format
 msgid "The minimum spend for this coupon is %s."
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-coupon/inc/class-hb-coupon.php:114
+#: includes/plugins/tp-hotel-booking-coupon/inc/class-hb-coupon.php:117
 #, php-format
 msgid "The maximum spend for this coupon is %s."
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-coupon/inc/class-hb-coupon.php:122
+#: includes/plugins/tp-hotel-booking-coupon/inc/class-hb-coupon.php:125
 msgid "Coupon usage limit has been reached."
 msgstr ""
 
-#. Name of the plugin
-msgid "TP Hotel Booking PayPal Payment"
+#: includes/plugins/tp-hotel-booking-importer/tp-hotel-booking-importer.php:77
+msgid ""
+"The <strong>TP Hotel Booking</strong> is not installed and/or activated. "
+"Please install and/or activate before you can using <strong>TP Hotel Booking "
+"Importer</strong> add-on"
 msgstr ""
 
-#. Description of the plugin
-msgid "Payment PayPal TP Hotel Booking Addon"
+#: includes/plugins/tp-hotel-booking-importer/inc/class-hbip-admin-menu.php:34
+#: includes/plugins/tp-hotel-booking-importer/inc/class-hbip-admin-menu.php:35
+msgid "Tools"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-paypal/tp-hotel-booking-paypal.php:92
+#: includes/plugins/tp-hotel-booking-importer/inc/class-hbip-admin-menu.php:53
+#: includes/plugins/tp-hotel-booking-report/inc/views/report.php:82
+msgid "Export"
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-importer/inc/class-hbip-admin-menu.php:54
+msgid "Import"
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-importer/inc/class-hbip-importer.php:71
+msgid "Hotel Booking Import"
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-importer/inc/class-hbip-importer.php:96
+#, php-format
+msgid ""
+"Sorry, there has been an error, could not be found at <code>%s</code>. It is "
+"likely that this was caused by a permissions problem."
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-importer/inc/class-hbip-importer.php:110
+msgid "Sorry, there has been an error. File is not exists."
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-importer/inc/class-hbip-importer.php:203
+msgid "Could not load content file."
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-importer/inc/class-hbip-importer.php:560
+msgid "Invalid file type"
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-importer/inc/class-hbip-importer.php:614
+msgid "Remote server did not respond"
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-importer/inc/class-hbip-importer.php:623
+#, php-format
+msgid "Remote server returned error response %1$d %2$s"
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-importer/inc/class-hbip-importer.php:630
+msgid "Remote file is incorrect size"
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-importer/inc/class-hbip-importer.php:635
+msgid "Zero size file downloaded"
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-importer/inc/class-hbip-importer.php:641
+#, php-format
+msgid "Remote file is too large, limit is %s"
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-importer/inc/class-hbip-importer.php:1102
+msgid "Sorry, there has been an error."
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-importer/inc/class-hbip-importer.php:1118
+msgid "<p>Import completed.</p>"
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-importer/inc/class-hbip-importer.php:1138
+msgid ""
+"This will contain all of your <strong> rooms, bookings, coupons, users, "
+"pricing plan, block special date and additonal packages</strong>."
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-importer/inc/views/export.php:18
+msgid "All"
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-importer/inc/views/export.php:20
+msgid ""
+"This will contain all of your rooms, bookings, coupons, users, pricing plan, "
+"block special date, additonal packages."
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-importer/inc/views/export.php:26
+msgid "Pricing"
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-importer/inc/views/export.php:28
+msgid "This will contain all Pricing Plan of roms( Only support our theme. )"
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-importer/inc/views/export.php:32
+msgid "Download Export File"
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-importer/inc/views/import.php:16
+msgid ""
+"This will import all of your rooms, bookings, coupons, users, pricing plan, "
+"block special date, additonal packages if exists in export file."
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-paypal/tp-hotel-booking-paypal.php:82
 msgid ""
 "The <strong>TP Hotel Booking</strong> is not installed and/or activated. "
 "Please install and/or activate before you can using <strong>TP Hotel Booking "
 "PayPal</strong> add-on"
 msgstr ""
 
-#. Name of the plugin
-msgid "TP Hotel Booking Report Addon"
-msgstr ""
-
-#: ../includes/plugins/tp-hotel-booking-report/tp-hotel-booking-report.php:84
+#: includes/plugins/tp-hotel-booking-report/tp-hotel-booking-report.php:79
 msgid ""
 "The <strong>TP Hotel Booking</strong> is not installed and/or activated. "
 "Please install and/or activate before you can using <strong>TP Hotel Booking "
 "Report</strong> add-on."
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-report/inc/class-hb-report-price.php:58 ..
-#: /includes/plugins/tp-hotel-booking-report/inc/class-hb-report-room.php:50
+#: includes/plugins/tp-hotel-booking-report/inc/class-hb-report-price.php:55
+#: includes/plugins/tp-hotel-booking-report/inc/class-hb-report-room.php:39
 #, php-format
 msgid "Chart in %s to %s"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-report/inc/class-hb-report-price.php:322 .
-#: ./includes/plugins/tp-hotel-booking-report/inc/class-hb-report-room.php:436
+#: includes/plugins/tp-hotel-booking-report/inc/class-hb-report-price.php:268
+#: includes/plugins/tp-hotel-booking-report/inc/class-hb-report-room.php:345
 msgid "Date/Time"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-report/inc/class-hb-report-price.php:327 .
-#: ./includes/plugins/tp-hotel-booking-report/inc/class-hb-report.php:119
+#: includes/plugins/tp-hotel-booking-report/inc/class-hb-report-price.php:272
+#: includes/plugins/tp-hotel-booking-report/inc/class-hb-report.php:106
 msgid "Month"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-report/inc/class-hb-report-price.php:331
+#: includes/plugins/tp-hotel-booking-report/inc/class-hb-report-price.php:276
 msgid "Total Earning"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-report/inc/class-hb-report-price.php:379
+#: includes/plugins/tp-hotel-booking-report/inc/class-hb-report-price.php:320
 #, php-format
 msgid "Total %s to %s"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-report/inc/class-hb-report-room.php:307
+#: includes/plugins/tp-hotel-booking-report/inc/class-hb-report-room.php:230
 #, php-format
 msgid "%s unavaiable"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-report/inc/class-hb-report-room.php:315
+#: includes/plugins/tp-hotel-booking-report/inc/class-hb-report-room.php:237
 #, php-format
 msgid "%s avaiable"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-report/inc/class-hb-report-room.php:323
+#: includes/plugins/tp-hotel-booking-report/inc/class-hb-report-room.php:243
 #, php-format
 msgid "%s quantity of room"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-report/inc/class-hb-report-room.php:446
+#: includes/plugins/tp-hotel-booking-report/inc/class-hb-report-room.php:354
 msgid "Unavaiable"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-report/inc/class-hb-report-room.php:487
+#: includes/plugins/tp-hotel-booking-report/inc/class-hb-report-room.php:389
 msgid "Avaiable"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-report/inc/class-hb-report-room.php:493
+#: includes/plugins/tp-hotel-booking-report/inc/class-hb-report-room.php:393
 msgid "Room Quantity"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-report/inc/class-hb-report.php:113
+#: includes/plugins/tp-hotel-booking-report/inc/class-hb-report.php:102
 msgid "Day"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-report/inc/functions.php:11 ..
-#: /includes/plugins/tp-hotel-booking-report/inc/functions.php:12
+#: includes/plugins/tp-hotel-booking-report/inc/functions.php:10
+#: includes/plugins/tp-hotel-booking-report/inc/functions.php:11
 msgid "Reports"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hotel-booking-report/inc/views/canvas-price.php:4
+#: includes/plugins/tp-hotel-booking-report/inc/views/canvas-price.php:4
 msgid "Report Chart Amount Total"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hotel-booking-report/inc/views/canvas-room.php:4
+#: includes/plugins/tp-hotel-booking-report/inc/views/canvas-room.php:4
 msgid "Report Chart Room Unavailable"
 msgstr ""
 
-#. Text in function
-#: ../includes/plugins/tp-hotel-booking-report/inc/views/report.php:7
+#: includes/plugins/tp-hotel-booking-report/inc/views/report.php:7
 msgid "Booking Price"
 msgstr ""
 
-#. Text in function
-#: ../includes/plugins/tp-hotel-booking-report/inc/views/report.php:11
+#: includes/plugins/tp-hotel-booking-report/inc/views/report.php:11
 msgid "Room availability"
 msgstr ""
 
-#. Text in function
-#: ../includes/plugins/tp-hotel-booking-report/inc/views/report.php:40
+#: includes/plugins/tp-hotel-booking-report/inc/views/report.php:40
 msgid "Year"
 msgstr ""
 
-#. Text in function
-#: ../includes/plugins/tp-hotel-booking-report/inc/views/report.php:44
+#: includes/plugins/tp-hotel-booking-report/inc/views/report.php:44
 msgid "Last Month"
 msgstr ""
 
-#. Text in function
-#: ../includes/plugins/tp-hotel-booking-report/inc/views/report.php:48
+#: includes/plugins/tp-hotel-booking-report/inc/views/report.php:48
 msgid "This Month"
 msgstr ""
 
-#. Text in function
-#: ../includes/plugins/tp-hotel-booking-report/inc/views/report.php:52
+#: includes/plugins/tp-hotel-booking-report/inc/views/report.php:52
 msgid "Last 7 Days"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hotel-booking-report/inc/views/report.php:82
-msgid "Export"
-msgstr ""
-
-#. Text in echo
-#: ../includes/plugins/tp-hotel-booking-report/inc/views/report.php:107
+#: includes/plugins/tp-hotel-booking-report/inc/views/report.php:107
 msgid "Go"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hotel-booking-report/inc/views/sidebar-room.php:9
+#: includes/plugins/tp-hotel-booking-report/inc/views/sidebar-room.php:9
 msgid "Rooms Search"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hotel-booking-report/inc/views/sidebar-room.php:36
+#: includes/plugins/tp-hotel-booking-report/inc/views/sidebar-room.php:36
 msgid "Show"
 msgstr ""
 
-#. Name of the plugin
-msgid "TP Booking Booking Room"
+#: includes/plugins/tp-hotel-booking-room/inc/class-hb-booking-room.php:34
+msgid "Enable book in single room"
 msgstr ""
 
-#. Description of the plugin
-msgid "Support book room without search room"
-msgstr ""
-
-#: ../includes/plugins/tp-hotel-booking-room/inc/class-hb-booking-room.php:64 ..
-#: /includes/plugins/tp-hotel-booking-room/inc/functions.php:79 ..
-#: /templates/search/results.php:32
+#: includes/plugins/tp-hotel-booking-room/inc/class-hb-booking-room.php:124
+#: templates/search/results.php:32
 msgid "No room found."
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-room/inc/class-hb-booking-room.php:75
-msgid "Step 1: Check in - Check out date"
+#: includes/plugins/tp-hotel-booking-room/inc/class-hb-booking-room.php:260
+#: includes/plugins/tp-hotel-booking-room/inc/class-hb-booking-room.php:266
+msgid "Check in date is required."
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-room/inc/class-hb-booking-room.php:76
-msgid "Step 2: Quantity"
+#: includes/plugins/tp-hotel-booking-room/inc/class-hb-booking-room.php:273
+msgid "Check out date is required."
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-room/inc/class-hb-booking-room.php:82
-msgid "Checkin"
+#: includes/plugins/tp-hotel-booking-room/inc/class-hb-booking-room.php:298
+#, php-format
+msgid "No room found in %s and %s"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hotel-booking-room/inc/class-hb-booking-room.php:105 ..
-#: /templates/search/loop.php:63
-msgid "Select this room"
+#: includes/plugins/tp-hotel-booking-room/templates/single-book-room.php:25
+msgid "Please select number of room and packages(optional)"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-room/inc/class-hb-booking-room.php:121
-msgid "Quantity:"
+#: includes/plugins/tp-hotel-booking-room/templates/single-book-room.php:35
+msgid "Select Number Of Room"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-room/inc/class-hb-booking-room.php:123
+#: includes/plugins/tp-hotel-booking-room/templates/single-book-room.php:48
+#: templates/pagination.php:29 templates/search/results.php:21
+msgid "Previous"
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-room/templates/single-book-room.php:57
+msgid "Add To Cart"
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-room/templates/single-search-available.php:26
+msgid "Please set arrival date and departure date before check available."
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-room/templates/single-search-available.php:32
+#: templates/search/search.php:27 templates/search/search.php:29
+msgid "Arrival Date"
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-room/templates/single-search-available.php:37
+#: templates/search/search.php:34 templates/search/search.php:36
+msgid "Departure Date"
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-room/templates/single-search-available.php:54
+msgid "Quantity Available"
+msgstr ""
+
+#: includes/plugins/tp-hotel-booking-room/templates/single-search-available.php:57
 msgid "--- Quantity ---"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-room/inc/functions.php:29
-msgid "Room is invalid."
+#: includes/plugins/tp-hotel-booking-room/templates/single-search-button.php:16
+msgid "Check Availability This Room"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-room/inc/functions.php:33
-msgid "Check in date is invalid."
-msgstr ""
-
-#: ../includes/plugins/tp-hotel-booking-room/inc/functions.php:37
-msgid "Check out date is invalid."
-msgstr ""
-
-#. Name of the plugin
-msgid "TP Hotel Booking Stripe Payment"
-msgstr ""
-
-#. Description of the plugin
-msgid "Payment Stripe TP Hotel Booking Addon"
-msgstr ""
-
-#: ../includes/plugins/tp-hotel-booking-stripe/tp-hotel-booking-stripe.php:92
+#: includes/plugins/tp-hotel-booking-stripe/tp-hotel-booking-stripe.php:84
 msgid ""
 "The <strong>TP Hotel Booking</strong> is not installed and/or activated. "
 "Please install and/or activate before you can using <strong>TP Hotel Booking "
 "Stripe</strong> add-on"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-
-#: stripe.php:31
+#: includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-stripe.php:31
 msgid "Stripe"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-
-#: stripe.php:32
+#: includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-stripe.php:32
 msgid "Pay with Stripe"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-
-#: stripe.php:82
+#: includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-stripe.php:82
 #, php-format
 msgid "%s - Order %s"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-
-#: stripe.php:92
+#: includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-stripe.php:91
 #, php-format
 msgid "%s. Please try again"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-
-#: stripe.php:109
+#: includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-stripe.php:108
 msgid "Please try again"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-
-#: stripe.php:142
+#: includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-stripe.php:141
 msgid "Donor for"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-
-#: stripe.php:177
+#: includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-stripe.php:176
 msgid "There was a problem connecting to the payment gateway."
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-
-#: stripe.php:180
+#: includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-stripe.php:179
 msgid "Empty response."
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-
-#: stripe.php:188
+#: includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-stripe.php:187
 msgid "Invalid response."
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-
-#: stripe.php:204
+#: includes/plugins/tp-hotel-booking-stripe/inc/class-hb-payment-gateway-stripe.php:203
 msgid "Pay with Credit card"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hotel-booking-stripe/inc/views/strip-settings.php:28
+#: includes/plugins/tp-hotel-booking-stripe/inc/views/strip-settings.php:28
 msgid "Test Mode Enable"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hotel-booking-stripe/inc/views/strip-settings.php:35
+#: includes/plugins/tp-hotel-booking-stripe/inc/views/strip-settings.php:35
 msgid "Test Secret Key"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hotel-booking-stripe/inc/views/strip-settings.php:41
+#: includes/plugins/tp-hotel-booking-stripe/inc/views/strip-settings.php:41
 msgid "Test Publishable Key"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hotel-booking-stripe/inc/views/strip-settings.php:47
+#: includes/plugins/tp-hotel-booking-stripe/inc/views/strip-settings.php:47
 msgid "Live Secret Key"
 msgstr ""
 
-#. Text in echo
-#: ../includes/plugins/tp-hotel-booking-stripe/inc/views/strip-settings.php:53
+#: includes/plugins/tp-hotel-booking-stripe/inc/views/strip-settings.php:53
 msgid "Live Publishable Key"
 msgstr ""
 
-#. Name of the plugin
-msgid "TP Booking WooCommerce"
-msgstr ""
-
-#. Description of the plugin
-msgid "Support paying for a booking with the payment methods provided by woocommerce"
-msgstr ""
-
-#: ../includes/plugins/tp-hotel-booking-woocommerce/includes/class-hb-wc-booking.
-#: php:74
+#: includes/plugins/tp-hotel-booking-woocommerce/includes/class-hb-wc-booking.php:68
 msgid "Via WooCommerce"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-woocommerce/includes/class-hb-wc-settings.
-#: php:15 ../includes/plugins/tp-hotel-booking-
-#: woocommerce/includes/admin/views/wc-settings.php:10
+#: includes/plugins/tp-hotel-booking-woocommerce/includes/class-hb-wc-settings.php:17
+#: includes/plugins/tp-hotel-booking-woocommerce/includes/admin/views/wc-settings.php:10
 msgid "WooCommerce"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-woocommerce/includes/admin/views/wc-is-
-#: not-installed.php:2
+#: includes/plugins/tp-hotel-booking-woocommerce/includes/admin/views/wc-is-not-installed.php:2
 msgid ""
 "The <strong>WooCommerce</strong> is not installed and/or activated. Please "
 "install and/or activate before you can using <strong>TP Hotel Booking "
 "WooCommerce</strong> add-on"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-woocommerce/includes/admin/views/wc-
-#: settings.php:11
+#: includes/plugins/tp-hotel-booking-woocommerce/includes/admin/views/wc-settings.php:11
 msgid "Settings for WooCommerce addon"
 msgstr ""
 
-#: ../includes/plugins/tp-hotel-booking-woocommerce/includes/admin/views/wc-
-#: settings.php:20
+#: includes/plugins/tp-hotel-booking-woocommerce/includes/admin/views/wc-settings.php:20
 msgid "Check this option to enable make booking payments via WooCommerce"
 msgstr ""
 
-#: ../includes/products/class-hb-product-room.php:182
+#: includes/plugins/tp-hotel-booking-wpml-support/tp-hotel-booking-wpml-support.php:66
+msgid ""
+"<strong>TP Hotel Booking and WPML Multilingual CMS</strong> is not installed "
+"and/or activated. Please install and/or activate before you can using "
+"<strong>TP Hotel Booking support WPML</strong> add-on"
+msgstr ""
+
+#: includes/products/class-hb-product-room.php:178
 msgid "why i am here?"
 msgstr ""
 
-#. Text in echo
-#: ../includes/shortcodes/class-hb-shortcode-hotel-booking-mini-cart.php:34
-msgid "You cart is empty."
-msgstr ""
-
-#. Text in function
-#: ../includes/widgets/class-hb-widget-best-reviews.php:19
+#: includes/widgets/class-hb-widget-best-reviews.php:19
 msgid "HB Rooms Best Reviews"
 msgstr ""
 
-#. Text in function
-#: ../includes/widgets/class-hb-widget-best-reviews.php:20
+#: includes/widgets/class-hb-widget-best-reviews.php:20
 msgid "Display rooms have best reviews"
 msgstr ""
 
-#: ../includes/widgets/class-hb-widget-best-reviews.php:63 ..
-#: /includes/widgets/class-hb-widget-lastest-reviews.php:63 ..
-#: /includes/widgets/class-hb-widget-room-carousel.php:71
+#: includes/widgets/class-hb-widget-best-reviews.php:63
+#: includes/widgets/class-hb-widget-lastest-reviews.php:63
+#: includes/widgets/class-hb-widget-room-carousel.php:71
 msgid "Number of items:"
 msgstr ""
 
-#. Text in function
-#: ../includes/widgets/class-hb-widget-lastest-reviews.php:19
+#: includes/widgets/class-hb-widget-lastest-reviews.php:19
 msgid "HB Rooms Lastest Reviews"
 msgstr ""
 
-#. Text in function
-#: ../includes/widgets/class-hb-widget-lastest-reviews.php:20
+#: includes/widgets/class-hb-widget-lastest-reviews.php:20
 msgid "Display rooms have lastest reviews"
 msgstr ""
 
-#. Text in function
-#: ../includes/widgets/class-hb-widget-mini-cart.php:19
+#: includes/widgets/class-hb-widget-mini-cart.php:19
 msgid "HB Widget Mini Cart"
 msgstr ""
 
-#. Text in function
-#: ../includes/widgets/class-hb-widget-mini-cart.php:20
+#: includes/widgets/class-hb-widget-mini-cart.php:20
 msgid "Display order of customer"
 msgstr ""
 
-#. Text in function
-#: ../includes/widgets/class-hb-widget-room-carousel.php:19
+#: includes/widgets/class-hb-widget-room-carousel.php:19
 msgid "HB Rooms Carousel"
 msgstr ""
 
-#. Text in function
-#: ../includes/widgets/class-hb-widget-room-carousel.php:20
+#: includes/widgets/class-hb-widget-room-carousel.php:20
 msgid "Display rooms slider"
 msgstr ""
 
-#: ../includes/widgets/class-hb-widget-room-carousel.php:67
+#: includes/widgets/class-hb-widget-room-carousel.php:67
 msgid "Number of rooms to show:"
 msgstr ""
 
-#: ../includes/widgets/class-hb-widget-room-carousel.php:75
+#: includes/widgets/class-hb-widget-room-carousel.php:75
 msgid "Navigation:"
 msgstr ""
 
-#: ../includes/widgets/class-hb-widget-room-carousel.php:82
+#: includes/widgets/class-hb-widget-room-carousel.php:82
 msgid "Pagination:"
 msgstr ""
 
-#. Text in echo
-#: ../includes/widgets/class-hb-widget-room-carousel.php:91
+#: includes/widgets/class-hb-widget-room-carousel.php:91
 msgid "Text Link"
 msgstr ""
 
-#. Text in function
-#: ../includes/widgets/class-hb-widget-search.php:19
+#: includes/widgets/class-hb-widget-search.php:19
 msgid "HB Search Rooms"
 msgstr ""
 
-#. Text in function
-#: ../includes/widgets/class-hb-widget-search.php:20
+#: includes/widgets/class-hb-widget-search.php:20
 msgid "Display the form for search rooms."
 msgstr ""
 
-#. Text in echo
-#: ../includes/widgets/class-hb-widget-search.php:69
+#: includes/widgets/class-hb-widget-search.php:68
 msgid "Show title search form"
 msgstr ""
 
-#. Text in echo
-#: ../includes/widgets/class-hb-widget-search.php:74
+#: includes/widgets/class-hb-widget-search.php:73
 msgid "Show label search form"
 msgstr ""
 
-#. Text in echo
-#: ../templates/confirm.php:11
+#: templates/confirm.php:11
 msgid "Finish"
 msgstr ""
 
-#. Text in function
-#: ../templates/pagination.php:29 ../templates/search/results.php:21
-msgid "Previous"
-msgstr ""
-
-#. Text in function
-#: ../templates/pagination.php:30 ../templates/search/results.php:22
+#: templates/pagination.php:30 templates/search/results.php:22
 msgid "Next"
 msgstr ""
 
-#: ../templates/single-room-reviews.php:26
+#: templates/single-room-reviews.php:26
 #, php-format
 msgid "%s review for %s"
 msgid_plural "%s reviews for %s"
 msgstr[0] ""
 msgstr[1] ""
 
-#. Text in echo
-#: ../templates/single-room-reviews.php:50
+#: templates/single-room-reviews.php:50
 msgid "There are no reviews yet."
 msgstr ""
 
-#. Text in function
-#: ../templates/single-room-reviews.php:62
+#: templates/single-room-reviews.php:62
 msgid "Add a review"
 msgstr ""
 
-#. Text in function
-#: ../templates/single-room-reviews.php:62
+#: templates/single-room-reviews.php:62
 msgid "Be the first to review"
 msgstr ""
 
-#. Text in function
-#: ../templates/single-room-reviews.php:63
+#: templates/single-room-reviews.php:63
 #, php-format
 msgid "Leave a Reply to %s"
 msgstr ""
 
-#. Text in function
-#: ../templates/single-room-reviews.php:72
+#: templates/single-room-reviews.php:72
 msgid "Submit"
 msgstr ""
 
-#. Text in function
-#: ../templates/single-room-reviews.php:78
+#: templates/single-room-reviews.php:78
 msgid "Your Rating"
 msgstr ""
 
-#. Text in function
-#: ../templates/single-room-reviews.php:82
+#: templates/single-room-reviews.php:82
 msgid "Your Review"
 msgstr ""
 
-#. Text in echo
-#: ../templates/single-room-reviews.php:90
-msgid "Only logged in customers who have purchased this product may leave a review."
+#: templates/single-room-reviews.php:90
+msgid ""
+"Only logged in customers who have purchased this product may leave a review."
 msgstr ""
 
-#: ../templates/account/account.php:14
+#: templates/account/account.php:14
 #, php-format
 msgid "You must <strong><a href=\"%s\">Login<a/></strong>."
 msgstr ""
 
-#: ../templates/account/bookings.php:17
+#: templates/account/bookings.php:17
 msgid "You have no order booking system"
 msgstr ""
 
-#. Text in function
-#: ../templates/account/bookings.php:30
+#: templates/account/bookings.php:30
 msgid "ID"
 msgstr ""
 
-#. Text in function
-#: ../templates/account/bookings.php:31
+#: templates/account/bookings.php:31
 msgid "Booking Date"
 msgstr ""
 
-#. Text in echo
-#: ../templates/cart/cart.php:15
+#: templates/cart/cart.php:15
 msgid "Cart"
 msgstr ""
 
-#. Text in echo
-#: ../templates/cart/cart.php:19 ../templates/checkout/checkout.php:20
+#: templates/cart/cart.php:19 templates/checkout/checkout.php:20
 msgid "Room type"
 msgstr ""
 
-#. Text in echo
-#: ../templates/cart/cart.php:22 ../templates/checkout/checkout.php:23
+#: templates/cart/cart.php:22 templates/checkout/checkout.php:23
 msgid "Check - in"
 msgstr ""
 
-#. Text in echo
-#: ../templates/cart/cart.php:23 ../templates/checkout/checkout.php:24
+#: templates/cart/cart.php:23 templates/checkout/checkout.php:24
 msgid "Check - out"
 msgstr ""
 
-#. Text in echo
-#: ../templates/cart/cart.php:25 ../templates/checkout/checkout.php:26
+#: templates/cart/cart.php:25 templates/checkout/checkout.php:26
 msgid "Gross Total"
 msgstr ""
 
-#: ../templates/cart/cart.php:40 ../templates/checkout/checkout.php:37
+#: templates/cart/cart.php:40 templates/checkout/checkout.php:37
 #, php-format
 msgid "%d adult"
 msgid_plural "%d adults"
 msgstr[0] ""
 msgstr[1] ""
 
-#. Text in function
-#: ../templates/cart/cart.php:68 ../templates/checkout/checkout.php:65
+#: templates/cart/cart.php:68 templates/checkout/checkout.php:65
 msgid "(price including tax)"
 msgstr ""
 
-#. Text in function
-#: ../templates/cart/cart.php:83 ../templates/checkout/checkout.php:81
+#: templates/cart/cart.php:83 templates/checkout/checkout.php:81
 #, php-format
 msgid "Advance Payment (%s%% of Grand Total)"
 msgstr ""
 
-#. Text in echo
-#: ../templates/checkout/checkout.php:17
+#: templates/checkout/checkout.php:17
 msgid "Booking Rooms"
 msgstr ""
 
-#. Text in echo
-#: ../templates/checkout/checkout.php:90
+#: templates/checkout/checkout.php:90
 msgid "I want to pay all"
 msgstr ""
 
-#: ../templates/checkout/checkout.php:101
+#: templates/checkout/checkout.php:101
 #, php-format
 msgid ""
-"You have to <strong><a href=\"%s\">login</a></strong> or <strong><a "
-"href=\"%s\">register</a></strong> to checkout."
+"You have to <strong><a href=\"%s\">login</a></strong> or <strong><a href=\"%s"
+"\">register</a></strong> to checkout."
 msgstr ""
 
-#: ../templates/checkout/checkout.php:119
-#, php-format
-msgid "I agree with <a href=\"%s\" target=\"_blank\">%s</a>"
+#: templates/checkout/checkout.php:119
+msgid "I agree with "
 msgstr ""
 
-#: ../templates/checkout/customer-existing.php:10
+#: templates/checkout/customer-existing.php:10
 msgid "-Or-"
 msgstr ""
 
-#. Text in echo
-#: ../templates/checkout/customer-existing.php:12
+#: templates/checkout/customer-existing.php:12
 msgid "Existing customer?"
 msgstr ""
 
-#. Text in echo
-#: ../templates/checkout/customer-existing.php:17
+#: templates/checkout/customer-existing.php:17
 msgid "Your email here"
 msgstr ""
 
-#. Text in echo
-#: ../templates/checkout/customer-existing.php:21
+#: templates/checkout/customer-existing.php:21
 msgid "Apply"
 msgstr ""
 
-#. Text in echo
-#: ../templates/checkout/customer-new.php:10
+#: templates/checkout/customer-new.php:8
 msgid "New Customer"
 msgstr ""
 
-#. Text in function
-#: ../templates/checkout/customer-new.php:13
+#: templates/checkout/customer-new.php:11
 msgid "Title"
 msgstr ""
 
-#. Text in function
-#: ../templates/checkout/customer-new.php:56
+#: templates/checkout/customer-new.php:61
 msgid "Postal Code"
 msgstr ""
 
-#. Text in echo
-#: ../templates/checkout/customer-new.php:60
+#: templates/checkout/customer-new.php:65
 msgid "Postal code"
 msgstr ""
 
-#. Text in echo
-#: ../templates/checkout/customer.php:9
+#: templates/checkout/customer.php:9 templates/emails/customer-details.php:12
 msgid "Customer Details"
 msgstr ""
 
-#. Text in echo
-#: ../templates/checkout/payment-method.php:11 ../templates/emails/customer-
-#: details.php:25
+#: templates/checkout/order-pay.php:14
+#, php-format
+msgid "Booking ID: %s"
+msgstr ""
+
+#: templates/checkout/order-pay.php:16
+msgid "Payment status: "
+msgstr ""
+
+#: templates/checkout/order-pay.php:20
+msgid "Booking Date: "
+msgstr ""
+
+#: templates/checkout/order-pay.php:24
+msgid "Payment Method: "
+msgstr ""
+
+#: templates/checkout/order-pay.php:28
+msgid "Total: "
+msgstr ""
+
+#: templates/checkout/order-pay.php:32
+msgid "Advance Payment: "
+msgstr ""
+
+#: templates/checkout/order-pay.php:39
+#, php-format
+msgid "%s was pay completed"
+msgstr ""
+
+#: templates/checkout/payment-method.php:11
+#: templates/emails/customer-details.php:23
 msgid "Payment Method"
 msgstr ""
 
-#: ../templates/emails/booking-details.php:21
+#: templates/emails/booking-details.php:19
 msgid "#"
 msgstr ""
 
-#: ../templates/emails/booking-details.php:37
+#: templates/emails/booking-details.php:37
 msgid "Subtotal"
 msgstr ""
 
-#: ../templates/emails/booking-details.php:47
+#: templates/emails/booking-details.php:47
 msgid "Addition Infomation"
 msgstr ""
 
-#: ../templates/emails/customer-booking.php:16
+#: templates/emails/customer-booking.php:16
 msgid "Thanks for your booking."
 msgstr ""
 
-#: ../templates/emails/customer-booking.php:17
+#: templates/emails/customer-booking.php:17
 msgid ""
 "Thank you for making reservation at our hotel. We will try our best to bring "
 "the best service. Good luck and see you soon!"
 msgstr ""
 
-#: ../templates/emails/customer-details.php:26
+#: templates/emails/customer-details.php:24
 msgid "Email Address"
 msgstr ""
 
-#: ../templates/emails/customer-details.php:27
+#: templates/emails/customer-details.php:25
 msgid "Booking ID"
 msgstr ""
 
-#. Text in echo
-#: ../templates/emails/customer-details.php:37
+#: templates/emails/customer-details.php:27
+msgid "Addtion Information"
+msgstr ""
+
+#: templates/emails/customer-details.php:38
 msgid "Customer Name"
 msgstr ""
 
-#: ../templates/emails/email-footer.php:33
+#: templates/emails/email-footer.php:33
 #, php-format
 msgid "Phone number %s"
 msgstr ""
 
-#: ../templates/emails/email-footer.php:39
+#: templates/emails/email-footer.php:39
 #, php-format
 msgid "Admin email at %s"
 msgstr ""
 
-#: ../templates/emails/email-footer.php:48
+#: templates/emails/email-footer.php:48
 #, php-format
 msgid "Country %s"
 msgstr ""
 
-#: ../templates/emails/email-footer.php:49
+#: templates/emails/email-footer.php:49
 #, php-format
 msgid "Address %s"
 msgstr ""
 
-#: ../templates/emails/email-footer.php:50
+#: templates/emails/email-footer.php:50
 #, php-format
 msgid "City %s"
 msgstr ""
 
-#: ../templates/emails/email-footer.php:51
+#: templates/emails/email-footer.php:51
 #, php-format
 msgid "State %s"
 msgstr ""
 
-#: ../templates/loop/pricing_plan.php:25
+#: templates/loop/pricing_plan.php:23
 msgid "to"
 msgstr ""
 
-#: ../templates/loop/pricing_plan.php:28
+#: templates/loop/pricing_plan.php:26
 msgid "Regular plan"
 msgstr ""
 
-#. Text in echo
-#: ../templates/search/booking-room-details.php:35
+#: templates/search/booking-room-details.php:35
 msgid "* vat is included"
 msgstr ""
 
-#. Text in echo
-#: ../templates/search/booking-room-details.php:38
+#: templates/search/booking-room-details.php:38
 msgid "* vat is not included yet"
 msgstr ""
 
-#. Text in echo
-#: ../templates/search/loop.php:32
+#: templates/search/loop.php:32
 msgid "Capacity:"
 msgstr ""
 
-#. Text in echo
-#: ../templates/search/loop.php:36
+#: templates/search/loop.php:36
 msgid "Max Child:"
 msgstr ""
 
-#. Text in echo
-#: ../templates/search/loop.php:40
+#: templates/search/loop.php:40
 msgid "Price:"
 msgstr ""
 
-#. Text in echo
-#: ../templates/search/loop.php:43
+#: templates/search/loop.php:43
 msgid "(View price breakdown)"
 msgstr ""
 
-#. Text in echo
-#: ../templates/search/results.php:14
+#: templates/search/loop.php:63
+msgid "Select this room"
+msgstr ""
+
+#: templates/search/results.php:14
 msgid "Search results"
 msgstr ""
 
-#. Text in echo
-#: ../templates/search/results.php:34
+#: templates/search/results.php:34
 msgid "Search again!"
 msgstr ""
 
-#. Text in echo
-#: ../templates/search/search.php:22
+#: templates/search/search.php:22
 msgid "Search your room"
 msgstr ""
 
-#. Text in function
-#: ../templates/search/search.php:27 ../templates/search/search.php:29
-msgid "Arrival Date"
-msgstr ""
-
-#. Text in function
-#: ../templates/search/search.php:33 ../templates/search/search.php:35
-msgid "Departure Date"
-msgstr ""
-
-#. Text in function
-#: ../templates/search/search.php:39 ../templates/search/search.php:47
+#: templates/search/search.php:41 templates/search/search.php:49
 msgid "Adults"
 msgstr ""
 
-#. Text in function
-#: ../templates/search/search.php:57 ../templates/search/search.php:65
+#: templates/search/search.php:60 templates/search/search.php:68
 msgid "Children"
 msgstr ""
 
-#. Text in echo
-#: ../templates/search/search.php:78
+#: templates/search/search.php:81
 msgid "Check Availability"
 msgstr ""
 
-#. Text in function
-#: ../templates/shortcodes/order-pay.php:14
-#, php-format
-msgid "Booking ID: %s"
-msgstr ""
-
-#: ../templates/shortcodes/order-pay.php:16
-msgid "Payment status: "
-msgstr ""
-
-#: ../templates/shortcodes/order-pay.php:20
-msgid "Booking Date: "
-msgstr ""
-
-#. Text in echo
-#: ../templates/shortcodes/order-pay.php:24
-msgid "Payment Method: "
-msgstr ""
-
-#. Text in echo
-#: ../templates/shortcodes/order-pay.php:28
-msgid "Total: "
-msgstr ""
-
-#. Text in echo
-#: ../templates/shortcodes/order-pay.php:32
-msgid "Advance Payment: "
-msgstr ""
-
-#. Text in function
-#: ../templates/shortcodes/order-pay.php:39
-#, php-format
-msgid "%s was pay completed"
-msgstr ""
-
-#. Text in function
-#: ../templates/single-room/details.php:19
+#: templates/single-room/details.php:19
 msgid "Additional Information"
 msgstr ""
 
-#. Text in echo
-#: ../templates/single-room/related-room.php:19
+#: templates/single-room/related-room.php:19
 msgid "Other Rooms"
 msgstr ""
 
-#. Text in echo
-#: ../templates/single-room/review.php:37
+#: templates/single-room/review.php:37
 msgid "Your comment is awaiting approval"
 msgstr ""
