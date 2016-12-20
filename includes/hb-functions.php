@@ -276,6 +276,28 @@ function hb_get_child_per_room() {
 }
 
 /**
+ * Get dropdown select children in search room form
+ *
+ * @return mixed
+ */
+function hb_get_children_of_rooms() {
+	$children = hb_get_child_per_room();
+	$return   = array();
+	if ( $children ) {
+		foreach ( $children as $key => $child ) {
+			$return[$key] = array(
+				'value' => $child,
+				'text'  => $child
+			);
+		}
+	}
+
+	ksort( $return );
+	return $return;
+}
+
+
+/**
  * Get list of child per each room with all available rooms
  *
  * @return mixed

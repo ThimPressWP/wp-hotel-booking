@@ -1,39 +1,47 @@
-=== WP Hotel Booking ===
+=== TP Hotel Booking ===
 Contributors: thimpress, leehld
 Donate link: https://thimpress.com/
 Tags: hotel, booking, hotel booking, reservation, reservations
-Requires at least: 3.0.1
+Requires at least: 4.2
 Tested up to: 4.7
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-WordPress Hotel Booking - A complete hotel booking plugin for WordPress.
+WordPress Hotel Booking Plugin - A complete hotel booking reservation plugin for WordPress.
 
 == Description ==
 
-A complete hotel booking plugin for WordPress.
+A complete **hotel booking plugin** for WordPress.
 
-**Features**
+> **One-Time Discount - Christmas Week Sale - 10 Days Left**
+> [Sailing Hotel Wordpress Theme](http://themeforest.net/item/hotel-wordpress-theme-sailing/13321455?utm_source=wporg&utm_medium=wphotelbookingDC&ref=thimpress&utm_campaign=wphotelbooking) is on SALE for **only $64**.
+> 7 Demo Layouts + Easy Install + Hotel Booking Management System.
 
-* Complete Hotel Booking System
-* Room Management
-* Bookings Management
-* Customer Management
-* Coupon Management
-* Pricing Plans Management
-* Extra Packages Management
-* Block Special Date Management
-* Reports + Multilingual Ready
-* Multi Currencies
-* 4 Payment Gateways (Offline Payment, Authorize.net, Paypal, Stripe)
+###Hotel WordPress Themes###
+
+Take a look at Premium **[Hotel WordPress Theme](http://themeforest.net/item/hotel-wordpress-theme-sailing/13321455?utm_source=wporg&utm_medium=wphotelbooking&ref=thimpress&utm_campaign=wphotelbooking)** we designed to work with WP Hotel Booking, all developers are welcome to develop WordPress Hotel Theme based on this awesome Hotel Booking plugin for WordPress. More WordPress Hotel Themes will come soon, both free WordPress themes as well as premium WordPress themes for this hotel booking / reservation plugin.
+
+###Features###
+
+- Complete Hotel Booking System
+- Room Management
+- Bookings Management
+- Customer Management
+- Coupon Management
+- Pricing Plans Management
+- Extra Packages Management
+- Block Special Date Management
+- Reports + Multilingual Ready
+- Multi Currencies
+- 4 Payment Gateways (Offline Payment, Authorize.net, Paypal, Stripe)
 
 == Installation ==
 
 1. Upload the plugin files to the `/wp-content/plugins/wp-hotel-booking` directory, or install the plugin through the WordPress plugins screen directly.
-1. Activate the plugin through the 'Plugins' screen in WordPress
-1. Use the Settings->Plugin Name screen to configure the plugin
-1. (Make your instructions match the desired user flow for activating and installing your plugin. Include any steps that might be needed for explanatory purposes)
+2. Activate the plugin through the 'Plugins' screen in WordPress
+3. Use the Settings->Plugin Name screen to configure the plugin
+4. (Make your instructions match the desired user flow for activating and installing your plugin. Include any steps that might be needed for explanatory purposes)
 
 
 == Frequently Asked Questions ==
@@ -48,8 +56,13 @@ Yes.
 
 == Screenshots ==
 
-1. WP Hotel Booking Dashboard
-2. Online Hotel Booking form
+1. WP Hotel Booking Room Management
+2. Create A New Room
+3. Room Booking Management
+4. Room Capacity
+5. Addition Packages
+6. Room Pricing Plans
+7. System settings
 
 == Changelog ==
 
@@ -122,6 +135,9 @@ Yes.
 * Update to compatible with Wordpress 4.6.1
 * Add WPML support
 * Fix block room calender plan
+
+= 1.7 =
+* Update dropdown select children in search room form
 
 == Upgrade Notice ==
 
