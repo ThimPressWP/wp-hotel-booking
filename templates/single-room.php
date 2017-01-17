@@ -2,7 +2,7 @@
 /**
  * The Template for displaying all single products.
  *
- * Override this template by copying it to yourtheme/tp-hotel-booking/templates/single-product.php
+ * Override this template by copying it to yourtheme/tp-hotel-booking/single-room.php
  *
  * @author 		ThimPress
  * @package 	tp-hotel-booking/templates

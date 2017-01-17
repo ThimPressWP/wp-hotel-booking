@@ -2,7 +2,7 @@
 /**
  * The Template for displaying all archive products.
  *
- * Override this template by copying it to yourtheme/tp-hotel-booking/templates/taxonomy-room_type.php
+ * Override this template by copying it to yourtheme/tp-hotel-booking/taxonomy-room_type.php
  *
  * @author 		ThimPress
  * @package 	tp-hotel-booking/templates
