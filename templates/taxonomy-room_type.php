@@ -1,15 +1,15 @@
 <?php
 /**
- * The Template for displaying all archive products.
+ * The Template for displaying archive room page
  *
  * Override this template by copying it to yourtheme/tp-hotel-booking/taxonomy-room_type.php
  *
- * @author 		ThimPress
- * @package 	tp-hotel-booking/templates
- * @version     1.1.2
+ * @author        ThimPress
+ * @package       tp-hotel-booking/templates
+ * @version       1.6
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if ( !defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 

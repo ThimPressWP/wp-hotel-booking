@@ -1,12 +1,12 @@
 <?php
 /**
  * @Author: ducnvtt
- * @Date:   2016-04-14 10:46:27
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-15 16:55:46
+ * @Date  :   2016-04-14 10:46:27
+ * @Last  Modified by:   ducnvtt
+ * @Last  Modified time: 2016-04-15 16:55:46
  */
 if ( !defined( 'ABSPATH' ) ) {
-    exit();
+	exit();
 }
 ?>
 
@@ -19,9 +19,9 @@ if ( !defined( 'ABSPATH' ) ) {
         <th><?php _e( '#', 'tp-hotel-booking' ) ?></th>
         <th><?php _e( 'Price', 'tp-hotel-booking' ) ?></th>
     </tr>
-    <?php $items = hb_get_order_items( $booking->id );
-    foreach ( $items as $k => $item ) :
-        ?>
+	<?php $items = hb_get_order_items( $booking->id );
+	foreach ( $items as $k => $item ) :
+		?>
 
         <tr>
             <td><?php printf( '%s', $item->order_item_name ) ?></td>
@@ -31,8 +31,8 @@ if ( !defined( 'ABSPATH' ) ) {
             <td><?php printf( '%s', hb_format_price( hb_get_order_item_meta( $item->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $booking->currency ) ) ) ?></td>
         </tr>
 
-        <?php do_action( 'hotel_booking_email_after_room_item', $item, $booking ); ?>
-<?php endforeach; ?>
+		<?php do_action( 'hotel_booking_email_after_room_item', $item, $booking ); ?>
+	<?php endforeach; ?>
     <tr>
         <td colspan="4"><b><?php _e( 'Subtotal', 'tp-hotel-booking' ) ?></b></td>
         <td><?php printf( '%s', hb_format_price( $booking->sub_total(), hb_get_currency_symbol( $booking->currency ) ) ) ?></td>

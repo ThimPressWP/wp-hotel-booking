@@ -23,25 +23,25 @@ $prices = isset( $prices->prices ) ? $prices->prices : array();
 	$min = min( $prices );
 	$max = max( $prices );
 	?>
-	<div class="price">
-		<span class="title-price"><?php _e( 'Price', 'tp-hotel-booking' ); ?></span>
+    <div class="price">
+        <span class="title-price"><?php _e( 'Price', 'tp-hotel-booking' ); ?></span>
 		<?php if ( $price_display === 'max' ): ?>
 
-			<span class="price_value price_max"><?php echo hb_format_price( $max ) ?></span>
+            <span class="price_value price_max"><?php echo hb_format_price( $max ) ?></span>
 
 		<?php elseif ( $price_display === 'min_to_max' && $min !== $max ): ?>
 
-			<span class="price_value price_min_to_max">
+            <span class="price_value price_min_to_max">
 				<?php echo hb_format_price( $min ) ?>
-				-
+                -
 				<?php echo hb_format_price( $max ) ?>
 			</span>
 
 		<?php else: ?>
 
-			<span class="price_value price_min"><?php echo hb_format_price( $min ) ?></span>
+            <span class="price_value price_min"><?php echo hb_format_price( $min ) ?></span>
 
 		<?php endif; ?>
-		<span class="unit"><?php _e( 'Night', 'tp-hotel-booking' ); ?></span>
-	</div>
+        <span class="unit"><?php _e( 'Night', 'tp-hotel-booking' ); ?></span>
+    </div>
 <?php endif; ?>

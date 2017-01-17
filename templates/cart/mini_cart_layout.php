@@ -1,7 +1,7 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-    exit();
+if ( !defined( 'ABSPATH' ) ) {
+	exit();
 }
 
 ?>
@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
         <div class="hb_mini_cart_top">
 
-        <h4 class="hb_title"><a href="{{{ data.permalink }}}">{{ data.name }}</a></h4>
+            <h4 class="hb_title"><a href="{{{ data.permalink }}}">{{ data.name }}</a></h4>
             <span class="hb_mini_cart_remove"><i class="fa fa-times"></i></span>
 
         </div>

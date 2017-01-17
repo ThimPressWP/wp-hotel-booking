@@ -1,17 +1,18 @@
 <?php
 /**
  * @Author: ducnvtt
- * @Date:   2016-04-11 13:52:26
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-11 15:17:46
+ * @Date  :   2016-04-11 13:52:26
+ * @Last  Modified by:   ducnvtt
+ * @Last  Modified time: 2016-04-11 15:17:46
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if ( !defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-if ( ! is_user_logged_in() ) {
-	printf( __( 'You must <strong><a href="%s">Login<a/></strong>.', 'tp-hotel-booking' ), wp_login_url( hb_get_account_url() ) ); return;
+if ( !is_user_logged_in() ) {
+	printf( __( 'You must <strong><a href="%s">Login<a/></strong>.', 'tp-hotel-booking' ), wp_login_url( hb_get_account_url() ) );
+	return;
 }
 
 // list orders

@@ -1,11 +1,11 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-    exit();
+if ( !defined( 'ABSPATH' ) ) {
+	exit();
 }
 
 ?>
-<?php if ( ! is_user_logged_in() ) : ?>
+<?php if ( !is_user_logged_in() ) : ?>
 
     <div class="hb-order-existing-customer" data-label="<?php esc_attr_e( '-Or-', 'tp-hotel-booking' ); ?>">
         <div class="hb-col-padding hb-col-border">

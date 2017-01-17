@@ -1,6 +1,6 @@
 <?php
 if ( !defined( 'ABSPATH' ) ) {
-    exit();
+	exit();
 }
 ?>
 <div class="hb-order-new-customer" id="hb-order-new-customer">
@@ -12,7 +12,7 @@ if ( !defined( 'ABSPATH' ) ) {
                     <span class="hb-required">*</span> </label>
 
                 <div class="hb-form-field-input">
-                    <?php hb_dropdown_titles( array( 'selected' => $customer->title ) ); ?>
+					<?php hb_dropdown_titles( array( 'selected' => $customer->title ) ); ?>
                 </div>
             </li>
             <li class="hb-form-field">
@@ -70,7 +70,7 @@ if ( !defined( 'ABSPATH' ) ) {
                     <span class="hb-required">*</span></label>
 
                 <div class="hb-form-field-input">
-                    <?php hb_dropdown_countries( array( 'name' => 'country', 'show_option_none' => __( 'Country', 'tp-hotel-booking' ), 'selected' => $customer->country ) ); ?>
+					<?php hb_dropdown_countries( array( 'name' => 'country', 'show_option_none' => __( 'Country', 'tp-hotel-booking' ), 'selected' => $customer->country ) ); ?>
                 </div>
             </li>
             <li class="hb-form-field">

@@ -1,20 +1,20 @@
 <?php
 /**
  * @Author: ducnvtt
- * @Date:   2016-04-14 11:14:34
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-14 15:02:21
+ * @Date  :   2016-04-14 11:14:34
+ * @Last  Modified by:   ducnvtt
+ * @Last  Modified time: 2016-04-14 15:02:21
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if ( !defined( 'ABSPATH' ) ) {
 	exit();
 }
 
 // email heading
 hb_get_template( 'emails/email-header.php',
 	array(
-		'email_heading' => __( 'Thanks for your booking.', 'tp-hotel-booking' ),
-		'email_heading_desc'	=> __( 'Thank you for making reservation at our hotel. We will try our best to bring the best service. Good luck and see you soon!', 'tp-hotel-booking' )
+		'email_heading'      => __( 'Thanks for your booking.', 'tp-hotel-booking' ),
+		'email_heading_desc' => __( 'Thank you for making reservation at our hotel. We will try our best to bring the best service. Good luck and see you soon!', 'tp-hotel-booking' )
 	)
 );
 
