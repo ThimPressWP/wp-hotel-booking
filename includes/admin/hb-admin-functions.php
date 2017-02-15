@@ -21,16 +21,16 @@ function hb_admin_settings_tabs(){
  */
 function hb_admin_i18n(){
     $i18n = array(
-        'confirm_remove_pricing_table'  => __( 'Are you sure you want to remove this pricing table?', 'tp-hotel-booking' ),
-        'empty_pricing_plan_start_date' => __( 'Select start date for plan', 'tp-hotel-booking'),
-        'empty_pricing_plan_start_end'  => __( 'Select end date for plan', 'tp-hotel-booking'),
-        'filter_error'                  => __( 'Please select date range and filter type', 'tp-hotel-booking' ),
+        'confirm_remove_pricing_table'  => __( 'Are you sure you want to remove this pricing table?', 'wp-hotel-booking' ),
+        'empty_pricing_plan_start_date' => __( 'Select start date for plan', 'wp-hotel-booking'),
+        'empty_pricing_plan_start_end'  => __( 'Select end date for plan', 'wp-hotel-booking'),
+        'filter_error'                  => __( 'Please select date range and filter type', 'wp-hotel-booking' ),
         'date_time_format'              => hb_date_time_format_js(),
         'monthNames'                    => hb_month_name_js(),
         'monthNamesShort'               => hb_month_name_short_js(),
-        'select_user'                   => __( 'Enter user login.', 'tp-hotel-booking' ),
-        'select_room'                   => __( 'Enter room name.', 'tp-hotel-booking' ),
-        'select_coupon'                 => __( 'Enter coupon code.', 'tp-hotel-booking' ),
+        'select_user'                   => __( 'Enter user login.', 'wp-hotel-booking' ),
+        'select_room'                   => __( 'Enter room name.', 'wp-hotel-booking' ),
+        'select_coupon'                 => __( 'Enter coupon code.', 'wp-hotel-booking' ),
     );
     return apply_filters( 'hb_admin_i18n', $i18n );
 }
@@ -39,7 +39,7 @@ function hb_add_meta_boxes(){
     HB_Meta_Box::instance(
         'room_settings',
         array(
-            'title'             => __( 'Room Settings', 'tp-hotel-booking' ),
+            'title'             => __( 'Room Settings', 'wp-hotel-booking' ),
             'post_type'         => 'hb_room',
             'meta_key_prefix'   => '_hb_',
             'priority'          => 'high'
@@ -48,16 +48,16 @@ function hb_add_meta_boxes(){
     )->add_field(
         array(
             'name'      => 'num_of_rooms',
-            'label'     => __( 'Quantity', 'tp-hotel-booking' ),
+            'label'     => __( 'Quantity', 'wp-hotel-booking' ),
             'type'      => 'number',
             'std'       => '100',
-            'desc'      => __( 'The number of rooms', 'tp-hotel-booking' ),
+            'desc'      => __( 'The number of rooms', 'wp-hotel-booking' ),
             'min'       => 1,
             'max'       => 100
         ),
         array(
             'name'      => 'room_capacity',
-            'label'     => __( 'Number of adults', 'tp-hotel-booking' ),
+            'label'     => __( 'Number of adults', 'wp-hotel-booking' ),
             'type'      => 'select',
             'options'   => hb_get_room_capacities(
                 array(
@@ -70,7 +70,7 @@ function hb_add_meta_boxes(){
         ),
         array(
             'name'      => 'max_child_per_room',
-            'label'     => __( 'Max child per room', 'tp-hotel-booking' ),
+            'label'     => __( 'Max child per room', 'wp-hotel-booking' ),
             'type'      => 'number',
             'std'       => 0,
             'min'       => 0,
@@ -78,7 +78,7 @@ function hb_add_meta_boxes(){
         ),
         array(
             'name'      => 'room_addition_information',
-            'label'     => __( 'Addition Information', 'tp-hotel-booking' ),
+            'label'     => __( 'Addition Information', 'wp-hotel-booking' ),
             'type'      => 'textarea',
             'std'       => '',
             'editor'    => true
@@ -89,7 +89,7 @@ function hb_add_meta_boxes(){
     HB_Meta_Box::instance(
         'coupon_settings',
         array(
-            'title'             => __( 'Coupon Settings', 'tp-hotel-booking' ),
+            'title'             => __( 'Coupon Settings', 'wp-hotel-booking' ),
             'post_type'         => 'hb_coupon',
             'meta_key_prefix'   => '_hb_',
             'context'           => 'normal',
@@ -99,23 +99,23 @@ function hb_add_meta_boxes(){
     )->add_field(
         array(
             'name'      => 'coupon_description',
-            'label'     => __( 'Description', 'tp-hotel-booking' ),
+            'label'     => __( 'Description', 'wp-hotel-booking' ),
             'type'      => 'textarea',
             'std'       => ''
         ),
         array(
             'name'      => 'coupon_discount_type',
-            'label'     => __( 'Discount type', 'tp-hotel-booking' ),
+            'label'     => __( 'Discount type', 'wp-hotel-booking' ),
             'type'      => 'select',
             'std'       => '',
             'options'   => array(
-                'fixed_cart' => __( 'Cart discount', 'tp-hotel-booking' ),
-                'percent_cart' => __( 'Cart % discount', 'tp-hotel-booking' )
+                'fixed_cart' => __( 'Cart discount', 'wp-hotel-booking' ),
+                'percent_cart' => __( 'Cart % discount', 'wp-hotel-booking' )
             )
         ),
         array(
             'name'      => 'coupon_discount_value',
-            'label'     => __( 'Discount value', 'tp-hotel-booking' ),
+            'label'     => __( 'Discount value', 'wp-hotel-booking' ),
             'type'      => 'number',
             'std'       => '',
             'min'       => 0,
@@ -123,7 +123,7 @@ function hb_add_meta_boxes(){
         ),
         array(
             'name'      => 'coupon_date_from',
-            'label'     => __( 'Validate from', 'tp-hotel-booking' ),
+            'label'     => __( 'Validate from', 'wp-hotel-booking' ),
             'type'      => 'datetime',
             'filter' => 'hb_meta_box_field_coupon_date'
         ),
@@ -134,7 +134,7 @@ function hb_add_meta_boxes(){
         ),
         array(
             'name'      => 'coupon_date_to',
-            'label'     => __( 'Validate until', 'tp-hotel-booking' ),
+            'label'     => __( 'Validate until', 'wp-hotel-booking' ),
             'type'      => 'datetime',
             'filter' => 'hb_meta_box_field_coupon_date'
         ),
@@ -145,30 +145,30 @@ function hb_add_meta_boxes(){
         ),
         array(
             'name'      => 'minimum_spend',
-            'label'     => __( 'Minimum spend', 'tp-hotel-booking' ),
+            'label'     => __( 'Minimum spend', 'wp-hotel-booking' ),
             'type'      => 'number',
-            'desc'      => __( 'This field allows you to set the minimum subtotal needed to use the coupon.', 'tp-hotel-booking' ),
+            'desc'      => __( 'This field allows you to set the minimum subtotal needed to use the coupon.', 'wp-hotel-booking' ),
             'min'       => 0,
             'step'      => 0.1
         ),
         array(
             'name'      => 'maximum_spend',
-            'label'     => __( 'Maximum spend', 'tp-hotel-booking' ),
+            'label'     => __( 'Maximum spend', 'wp-hotel-booking' ),
             'type'      => 'number',
-            'desc'      => __( 'This field allows you to set the maximum subtotal allowed when using the coupon.', 'tp-hotel-booking' ),
+            'desc'      => __( 'This field allows you to set the maximum subtotal allowed when using the coupon.', 'wp-hotel-booking' ),
             'min'       => 0,
             'step'      => 0.1
         ),
         array(
             'name'      => 'limit_per_coupon',
-            'label'     => __( 'Usage limit per coupon', 'tp-hotel-booking' ),
+            'label'     => __( 'Usage limit per coupon', 'wp-hotel-booking' ),
             'type'      => 'number',
-            'desc'      => __( 'How many times this coupon can be used before it is void.', 'tp-hotel-booking' ),
+            'desc'      => __( 'How many times this coupon can be used before it is void.', 'wp-hotel-booking' ),
             'min'       => 0
         ),
         array(
             'name'      => 'used',
-            'label'     => __( 'Used', 'tp-hotel-booking' ),
+            'label'     => __( 'Used', 'wp-hotel-booking' ),
             'type'      => 'label',
             'filter'    => 'hb_meta_box_field_coupon_used'
         )
@@ -177,7 +177,7 @@ function hb_add_meta_boxes(){
     HB_Meta_Box::instance(
         'gallery_settings',
         array(
-            'title'             => __( 'Gallery Settings', 'tp-hotel-booking' ),
+            'title'             => __( 'Gallery Settings', 'wp-hotel-booking' ),
             'post_type'         => 'hb_room',
             'meta_key_prefix'   => '_hb_', // meta key prefix,
             'priority'          => 'high'
@@ -240,13 +240,13 @@ if ( ! function_exists( 'hb_admin_init_metaboxes' ) ) {
 function hb_booking_table_head( $default ) {
     unset($default['author']);
     unset($default['date']);
-    $default['customer']            = __( 'Customer', 'tp-hotel-booking' );
-    $default['booking_date']        = __( 'Date', 'tp-hotel-booking' );
-    $default['check_in_date']       = __( 'Check in', 'tp-hotel-booking' );
-    $default['check_out_date']      = __( 'Check out', 'tp-hotel-booking' );
-    $default['total']               = __( 'Total', 'tp-hotel-booking' );
-    $default['title']               = __( 'Booking Order', 'tp-hotel-booking' );
-    $default['status']              = __( 'Status', 'tp-hotel-booking' );
+    $default['customer']            = __( 'Customer', 'wp-hotel-booking' );
+    $default['booking_date']        = __( 'Date', 'wp-hotel-booking' );
+    $default['check_in_date']       = __( 'Check in', 'wp-hotel-booking' );
+    $default['check_out_date']      = __( 'Check out', 'wp-hotel-booking' );
+    $default['total']               = __( 'Total', 'wp-hotel-booking' );
+    $default['title']               = __( 'Booking Order', 'wp-hotel-booking' );
+    $default['status']              = __( 'Status', 'wp-hotel-booking' );
     return $default;
 }
 add_filter('manage_hb_booking_posts_columns', 'hb_booking_table_head');
@@ -281,7 +281,7 @@ function hb_manage_booking_column( $column_name, $post_id ) {
 
             $echo[] = $total_with_currency;
             if( $method = hb_get_user_payment_method( $booking->method ) ) {
-                $echo[] = sprintf( __( '<br />(<small>%s</small>)', 'tp-hotel-booking' ), $method->description );
+                $echo[] = sprintf( __( '<br />(<small>%s</small>)', 'wp-hotel-booking' ), $method->description );
             }
             // display paid
             if( $status === 'hb-processing' )
@@ -294,7 +294,7 @@ function hb_manage_booking_column( $column_name, $post_id ) {
 
                 if ( floatval($total) !== floatval( $advance_payment ) ) {
                     $echo[] = sprintf(
-                        __( '<br />(<small class="hb_advance_payment">Charged %s = %s</small>)', 'tp-hotel-booking' ),
+                        __( '<br />(<small class="hb_advance_payment">Charged %s = %s</small>)', 'wp-hotel-booking' ),
                         $advance_settings . '%',
                         hb_format_price( $advance_payment, hb_get_currency_symbol( $currency ) )
                     );
@@ -372,20 +372,20 @@ function hb_booking_restrict_manage_posts(){
         $filter_types = apply_filters(
             'hb_booking_filter_types',
             array(
-                'booking-date'      => __( 'Booking date', 'tp-hotel-booking' ),
-                'check-in-date'     => __( 'Check-in date', 'tp-hotel-booking' ),
-                'check-out-date'    => __( 'Check-out date', 'tp-hotel-booking' )
+                'booking-date'      => __( 'Booking date', 'wp-hotel-booking' ),
+                'check-in-date'     => __( 'Check-in date', 'wp-hotel-booking' ),
+                'check-out-date'    => __( 'Check-out date', 'wp-hotel-booking' )
             )
         );
 
         ?>
-        <span><?php _e( 'Date Range', 'tp-hotel-booking' ); ?></span>
-        <input type="text" id="hb-booking-date-from" class="hb-date-field" value="<?php echo esc_attr( $from ); ?>" name="date-from" readonly placeholder="<?php _e( 'From', 'tp-hotel-booking' ); ?>" />
+        <span><?php _e( 'Date Range', 'wp-hotel-booking' ); ?></span>
+        <input type="text" id="hb-booking-date-from" class="hb-date-field" value="<?php echo esc_attr( $from ); ?>" name="date-from" readonly placeholder="<?php _e( 'From', 'wp-hotel-booking' ); ?>" />
         <input type="hidden" value="<?php echo esc_attr( $from_timestamp ); ?>" name="date-from-timestamp" />
-        <input type="text" id="hb-booking-date-to" class="hb-date-field" value="<?php echo esc_attr( $to ); ?>" name="date-to" readonly placeholder="<?php _e( 'To', 'tp-hotel-booking' ); ?>" />
+        <input type="text" id="hb-booking-date-to" class="hb-date-field" value="<?php echo esc_attr( $to ); ?>" name="date-to" readonly placeholder="<?php _e( 'To', 'wp-hotel-booking' ); ?>" />
         <input type="hidden" value="<?php echo esc_attr( $to_timestamp ); ?>" name="date-to-timestamp" />
         <select name="filter-type">
-            <option value=""><?php _e( '---Filter By---', 'tp-hotel-booking' ); ?></option>
+            <option value=""><?php _e( '---Filter By---', 'wp-hotel-booking' ); ?></option>
             <?php foreach( $filter_types as $slug => $text ){?>
             <option value="<?php echo esc_attr( $slug ); ?>" <?php selected( $slug == $filter_type ); ?>><?php echo esc_html( $text ); ?></option>
             <?php } ?>
@@ -424,7 +424,7 @@ function hb_admin_js_template(){
                                     </div>
                                 </div>
                             </div>
-                            <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'tp-hotel-booking' ); ?>"></a>
+                            <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'wp-hotel-booking' ); ?>"></a>
                         </li>
                     <# }); #>
                     <li class="attachment add-new">
@@ -451,7 +451,7 @@ function hb_admin_js_template(){
                     </div>
                 </div>
             </div>
-            <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'tp-hotel-booking' ); ?>"></a>
+            <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'wp-hotel-booking' ); ?>"></a>
         </li>
     </script>
 <?php

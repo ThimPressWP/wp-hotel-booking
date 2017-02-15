@@ -3,7 +3,7 @@
  * Loop Price
  *
  * @author        ThimPress
- * @package       Tp-hotel-booking/Templates
+ * @package       wp-hotel-booking/templates
  * @version       1.1.3
  */
 
@@ -24,7 +24,7 @@ $prices = isset( $prices->prices ) ? $prices->prices : array();
 	$max = max( $prices );
 	?>
     <div class="price">
-        <span class="title-price"><?php _e( 'Price', 'tp-hotel-booking' ); ?></span>
+        <span class="title-price"><?php _e( 'Price', 'wp-hotel-booking' ); ?></span>
 		<?php if ( $price_display === 'max' ): ?>
 
             <span class="price_value price_max"><?php echo hb_format_price( $max ) ?></span>
@@ -42,6 +42,6 @@ $prices = isset( $prices->prices ) ? $prices->prices : array();
             <span class="price_value price_min"><?php echo hb_format_price( $min ) ?></span>
 
 		<?php endif; ?>
-        <span class="unit"><?php _e( 'Night', 'tp-hotel-booking' ); ?></span>
+        <span class="unit"><?php _e( 'Night', 'wp-hotel-booking' ); ?></span>
     </div>
 <?php endif; ?>

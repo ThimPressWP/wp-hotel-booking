@@ -19,7 +19,7 @@ if ( ! class_exists( 'HB_Admin_Setting_Emails' ) ) {
 
 		function __construct() {
 
-			$this->title = __( 'Emails', 'tp-hotel-booking' );
+			$this->title = __( 'Emails', 'wp-hotel-booking' );
 
 			parent::__construct();
 		}
@@ -35,14 +35,14 @@ if ( ! class_exists( 'HB_Admin_Setting_Emails' ) ) {
 					array(
 							'type'		=> 'section_start',
 							'id'		=> 'email_options',
-							'title'		=> __( 'Email Sender', 'tp-hotel-booking' ),
-							'desc'		=> __( 'The name and email address of the sender displays in email', 'tp-hotel-booking' )
+							'title'		=> __( 'Email Sender', 'wp-hotel-booking' ),
+							'desc'		=> __( 'The name and email address of the sender displays in email', 'wp-hotel-booking' )
 						),
 
 					array(
 							'type'		=> 'text',
 							'id'		=> 'tp_hotel_booking_email_general_from_name',
-							'title'		=> __( 'From name', 'tp-hotel-booking' ),
+							'title'		=> __( 'From name', 'wp-hotel-booking' ),
 							'default'	=> get_option( 'blogname' ),
 							'placeholder'	=> get_option( 'blogname' )
 						),
@@ -50,7 +50,7 @@ if ( ! class_exists( 'HB_Admin_Setting_Emails' ) ) {
 					array(
 							'type'		=> 'text',
 							'id'		=> 'tp_hotel_booking_email_general_from_email',
-							'title'		=> __( 'From Email', 'tp-hotel-booking' ),
+							'title'		=> __( 'From Email', 'wp-hotel-booking' ),
 							'default'	=> get_option( 'admin_email' ),
 							'placeholder'	=> get_option( 'admin_email' )
 						),
@@ -58,9 +58,9 @@ if ( ! class_exists( 'HB_Admin_Setting_Emails' ) ) {
 					array(
 							'type'		=> 'text',
 							'id'		=> 'tp_hotel_booking_email_general_subject',
-							'title'		=> __( 'Email subject', 'tp-hotel-booking' ),
-							'default'	=> __( 'Reservation', 'tp-hotel-booking' ),
-							'placeholder'	=> __( 'Reservation', 'tp-hotel-booking' )
+							'title'		=> __( 'Email subject', 'wp-hotel-booking' ),
+							'default'	=> __( 'Reservation', 'wp-hotel-booking' ),
+							'placeholder'	=> __( 'Reservation', 'wp-hotel-booking' )
 						),
 
 					array(
@@ -73,22 +73,22 @@ if ( ! class_exists( 'HB_Admin_Setting_Emails' ) ) {
 					array(
 							'type'		=> 'section_start',
 							'id'		=> 'new_booking',
-							'title'		=> __( 'New Booking', 'tp-hotel-booking' ),
-							'desc'		=> __( 'New booking emails are sent to user admin when a booking is received.', 'tp-hotel-booking' )
+							'title'		=> __( 'New Booking', 'wp-hotel-booking' ),
+							'desc'		=> __( 'New booking emails are sent to user admin when a booking is received.', 'wp-hotel-booking' )
 						),
 
 					array(
 							'type'		=> 'checkbox',
 							'id'		=> 'tp_hotel_booking_email_new_booking_enable',
-							'title'		=> __( 'Enable', 'tp-hotel-booking' ),
+							'title'		=> __( 'Enable', 'wp-hotel-booking' ),
 							'default'	=> 1,
 						),
 
 					array(
 							'type'		=> 'text',
 							'id'		=> 'tp_hotel_booking_email_new_booking_recipients',
-							'title'		=> __( 'Recipient(s)', 'tp-hotel-booking' ),
-							'desc'		=> sprintf( __( 'Enter recipients (comma separated) for this email. Defaults to %s.', 'tp-hotel-booking' ), get_option( 'admin_email' ) ),
+							'title'		=> __( 'Recipient(s)', 'wp-hotel-booking' ),
+							'desc'		=> sprintf( __( 'Enter recipients (comma separated) for this email. Defaults to %s.', 'wp-hotel-booking' ), get_option( 'admin_email' ) ),
 							'default'	=> get_option( 'admin_email' ),
 							'placeholder'	=> get_option( 'admin_email' )
 						),
@@ -96,8 +96,8 @@ if ( ! class_exists( 'HB_Admin_Setting_Emails' ) ) {
 					array(
 							'type'		=> 'text',
 							'id'		=> 'tp_hotel_booking_email_new_booking_subject',
-							'title'		=> __( 'Subject', 'tp-hotel-booking' ),
-							'desc'		=> sprintf( __( 'Enter recipients (comma separated) for this email. Defaults to %s.', 'tp-hotel-booking' ), get_option( 'admin_email' ) ),
+							'title'		=> __( 'Subject', 'wp-hotel-booking' ),
+							'desc'		=> sprintf( __( 'Enter recipients (comma separated) for this email. Defaults to %s.', 'wp-hotel-booking' ), get_option( 'admin_email' ) ),
 							'default'	=> '[{site_title}] New customer booking ({booking_number}) - {booking_date}',
 							'placeholder'	=> '[{site_title}] New customer booking ({booking_number}) - {booking_date}'
 						),
@@ -105,8 +105,8 @@ if ( ! class_exists( 'HB_Admin_Setting_Emails' ) ) {
 					array(
 							'type'		=> 'text',
 							'id'		=> 'tp_hotel_booking_email_new_booking_heading',
-							'title'		=> __( 'Email Heading', 'tp-hotel-booking' ),
-							'desc'		=> __( 'The main heading displays in the top of email. Default heading: New customer booking', 'tp-hotel-booking' ),
+							'title'		=> __( 'Email Heading', 'wp-hotel-booking' ),
+							'desc'		=> __( 'The main heading displays in the top of email. Default heading: New customer booking', 'wp-hotel-booking' ),
 							'default'	=> 'New customer booking',
 							'placeholder'	=> 'New customer booking'
 						),
@@ -114,20 +114,20 @@ if ( ! class_exists( 'HB_Admin_Setting_Emails' ) ) {
 					array(
 							'type'		=> 'text',
 							'id'		=> 'tp_hotel_booking_email_new_booking_heading_desc',
-							'title'		=> __( 'Email Heading Description', 'tp-hotel-booking' ),
-							'default'	=> __( 'Reservated', 'tp-hotel-booking' ),
-							'placeholder'	=> __( 'Reservated', 'tp-hotel-booking' )
+							'title'		=> __( 'Email Heading Description', 'wp-hotel-booking' ),
+							'default'	=> __( 'Reservated', 'wp-hotel-booking' ),
+							'placeholder'	=> __( 'Reservated', 'wp-hotel-booking' )
 						),
 
 					array(
 							'type'		=> 'select',
 							'id'		=> 'tp_hotel_booking_email_new_booking_format',
-							'title'		=> __( 'Email Format', 'tp-hotel-booking' ),
-							'desc'		=> sprintf( __( 'Enter recipients (comma separated) for this email. Defaults to %s.', 'tp-hotel-booking' ), get_option( 'admin_email' ) ),
+							'title'		=> __( 'Email Format', 'wp-hotel-booking' ),
+							'desc'		=> sprintf( __( 'Enter recipients (comma separated) for this email. Defaults to %s.', 'wp-hotel-booking' ), get_option( 'admin_email' ) ),
 							'default'	=> 'html',
 							'options'	=> array(
-									'plain'		=> __( 'Plain Text', 'tp-hotel-booking' ),
-									'html'		=> __( 'HTML', 'tp-hotel-booking' )
+									'plain'		=> __( 'Plain Text', 'wp-hotel-booking' ),
+									'html'		=> __( 'HTML', 'wp-hotel-booking' )
 								)
 						),
 
@@ -142,8 +142,8 @@ if ( ! class_exists( 'HB_Admin_Setting_Emails' ) ) {
 
 		public function get_sections() {
 			$sections = array(
-					'email-options'		=> __( 'Email Options', 'tp-hotel-booking' ),
-					'new-booking'		=> __( 'New Booking', 'tp-hotel-booking' ),
+					'email-options'		=> __( 'Email Options', 'wp-hotel-booking' ),
+					'new-booking'		=> __( 'New Booking', 'wp-hotel-booking' ),
 				);
 			return apply_filters( 'hotel_booking_admin_setting_sections_' . $this->id, $sections );
 		}

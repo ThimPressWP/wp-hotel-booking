@@ -66,7 +66,7 @@ class HB_Ajax {
             'post_status' => 'any'
         );
         // set_transient( 'hotel_booking_customer_email_' . HB_BLOG_ID, $email, DAY_IN_SECONDS );
-        TP_Hotel_Booking::instance()->cart->set_customer( 'customer_email', $email );
+        WP_Hotel_Booking::instance()->cart->set_customer( 'customer_email', $email );
         if ( $posts = get_posts( $args ) ) {
             $customer = $posts[0];
             $customer->data = array();
@@ -151,11 +151,11 @@ class HB_Ajax {
                     session_start();
                 }
                 // set session
-                TP_Hotel_Booking::instance()->cart->set_customer( 'coupon', $coupon->post->ID );
-                hb_add_message( __( 'Coupon code applied', 'tp-hotel-booking' ) );
+                WP_Hotel_Booking::instance()->cart->set_customer( 'coupon', $coupon->post->ID );
+                hb_add_message( __( 'Coupon code applied', 'wp-hotel-booking' ) );
             }
         } else {
-            $response['message'] = __( 'Coupon does not exist!', 'tp-hotel-booking' );
+            $response['message'] = __( 'Coupon does not exist!', 'wp-hotel-booking' );
         }
         hb_send_json(
                 $response
@@ -165,8 +165,8 @@ class HB_Ajax {
     static function remove_coupon() {
         !session_id() && session_start();
         // delete_transient( 'hb_user_coupon_' . session_id() );
-        TP_Hotel_Booking::instance()->cart->set_customer( 'coupon', null );
-        hb_add_message( __( 'Coupon code removed', 'tp-hotel-booking' ) );
+        WP_Hotel_Booking::instance()->cart->set_customer( 'coupon', null );
+        hb_add_message( __( 'Coupon code removed', 'wp-hotel-booking' ) );
         hb_send_json(
                 array(
                     'result' => 'success'
@@ -204,7 +204,7 @@ class HB_Ajax {
         }
 
         if ( !isset( $_POST['room-id'] ) || !isset( $_POST['hb-num-of-rooms'] ) ) {
-            hb_send_json( array( 'status' => 'warning', 'message' => __( 'Room ID is not exists.', 'tp-hotel-booking' ) ) );
+            hb_send_json( array( 'status' => 'warning', 'message' => __( 'Room ID is not exists.', 'wp-hotel-booking' ) ) );
         }
 
         if ( !isset( $_POST['check_in_date'] ) || !isset( $_POST['check_out_date'] ) ) {
@@ -215,14 +215,14 @@ class HB_Ajax {
         $param = array();
         $param['product_id'] = sanitize_text_field( $product_id );
         if ( !isset( $_POST['hb-num-of-rooms'] ) || !absint( sanitize_text_field( $_POST['hb-num-of-rooms'] ) ) ) {
-            hb_send_json( array( 'status' => 'warning', 'message' => __( 'Can not select zero room.', 'tp-hotel-booking' ) ) );
+            hb_send_json( array( 'status' => 'warning', 'message' => __( 'Can not select zero room.', 'wp-hotel-booking' ) ) );
         } else {
             $qty = absint( sanitize_text_field( sanitize_text_field( $_POST['hb-num-of-rooms'] ) ) );
         }
 
         // validate checkin, checkout date
         if ( !isset( $_POST['check_in_date'] ) || !isset( $_POST['check_in_date'] ) ) {
-            hb_send_json( array( 'status' => 'warning', 'message' => __( 'Checkin date, checkout date is invalid.', 'tp-hotel-booking' ) ) );
+            hb_send_json( array( 'status' => 'warning', 'message' => __( 'Checkin date, checkout date is invalid.', 'wp-hotel-booking' ) ) );
         } else {
             $param['check_in_date'] = sanitize_text_field( $_POST['check_in_date'] );
             $param['check_out_date'] = sanitize_text_field( $_POST['check_out_date'] );
@@ -231,30 +231,30 @@ class HB_Ajax {
         $param = apply_filters( 'hotel_booking_add_cart_params', $param );
         do_action( 'hotel_booking_before_add_to_cart', $_POST );
         // add to cart
-        $cart_item_id = TP_Hotel_Booking::instance()->cart->add_to_cart( $product_id, $param, $qty );
+        $cart_item_id = WP_Hotel_Booking::instance()->cart->add_to_cart( $product_id, $param, $qty );
 
         if ( !is_wp_error( $cart_item_id ) ) {
-            $cart_item = TP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id );
+            $cart_item = WP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id );
             $room = $cart_item->product_data;
 
             do_action( 'hotel_booking_added_cart_completed', $cart_item_id, $cart_item, $_POST );
 
             $results = array(
                 'status' => 'success',
-                'message' => sprintf( '<label class="hb_success_message">%1$s</label>', __( 'Added successfully.', 'tp-hotel-booking' ) ),
+                'message' => sprintf( '<label class="hb_success_message">%1$s</label>', __( 'Added successfully.', 'wp-hotel-booking' ) ),
                 'id' => $product_id,
                 'permalink' => get_permalink( $product_id ),
                 'name' => sprintf( '%s', $room->name ) . ( $room->capacity_title ? sprintf( '(%s)', $room->capacity_title ) : '' ),
                 'quantity' => $qty,
                 'cart_id' => $cart_item_id,
-                'total' => hb_format_price( TP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id )->amount )
+                'total' => hb_format_price( WP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id )->amount )
             );
 
             $results = apply_filters( 'hotel_booking_add_to_cart_results', $results, $room );
 
             hb_send_json( $results );
         } else {
-            hb_send_json( array( 'status' => 'warning', 'message' => __( 'Room selected. Please View Cart to change order', 'tp-hotel-booking' ) ) );
+            hb_send_json( array( 'status' => 'warning', 'message' => __( 'Room selected. Please View Cart to change order', 'wp-hotel-booking' ) ) );
         }
     }
 
@@ -263,10 +263,10 @@ class HB_Ajax {
         if ( !check_ajax_referer( 'hb_booking_nonce_action', 'nonce' ) )
             return;
 
-        $cart = TP_Hotel_Booking::instance()->cart;
+        $cart = WP_Hotel_Booking::instance()->cart;
 
         if ( empty( $cart->cart_contents ) || !isset( $_POST['cart_id'] ) || !array_key_exists( sanitize_text_field( $_POST['cart_id'] ), $cart->cart_contents ) ) {
-            hb_send_json( array( 'status' => 'warning', 'message' => __( 'Cart item is not exists.', 'tp-hotel-booking' ) ) );
+            hb_send_json( array( 'status' => 'warning', 'message' => __( 'Cart item is not exists.', 'wp-hotel-booking' ) ) );
         }
 
         if ( $cart->remove_cart_item( sanitize_text_field( $_POST['cart_id'] ) ) ) {
@@ -333,14 +333,14 @@ class HB_Ajax {
         if ( !isset( $_POST['product_id'] ) || !$_POST['product_id'] ) {
             wp_send_json( array(
                 'status' => false,
-                'message' => __( 'Room not found.', 'tp-hotel-booking' )
+                'message' => __( 'Room not found.', 'wp-hotel-booking' )
             ) );
         }
 
         if ( !isset( $_POST['check_in_date_timestamp'] ) || !isset( $_POST['check_out_date_timestamp'] ) ) {
             wp_send_json( array(
                 'status' => false,
-                'message' => __( 'Please select check in date and checkout date.', 'tp-hotel-booking' )
+                'message' => __( 'Please select check in date and checkout date.', 'wp-hotel-booking' )
             ) );
         }
 
@@ -390,7 +390,7 @@ class HB_Ajax {
         // extra hook
         $args = apply_filters( 'hotel_booking_admin_load_order_item', array(
             'status' => true,
-            'modal_title' => __( 'Edit order item', 'tp-hotel-booking' ),
+            'modal_title' => __( 'Edit order item', 'wp-hotel-booking' ),
             'order_id' => $order_id,
             'order_item_id' => $order_item_id,
             'product_id' => $product_id,
@@ -454,7 +454,7 @@ class HB_Ajax {
         if ( !$qty ) {
             wp_send_json( array(
                 'status' => false,
-                'message' => __( 'Can not add item with zero quantity.', 'tp-hotel-booking' )
+                'message' => __( 'Can not add item with zero quantity.', 'wp-hotel-booking' )
             ) );
         }
 
@@ -468,14 +468,14 @@ class HB_Ajax {
             $check_in_date = absint( $_POST['check_in_date_timestamp'] );
         } else {
             $return = false;
-            $errors->add( 'check_in_date_invalid', __( 'Check in date is invalid', 'tp-hotel-booking' ) );
+            $errors->add( 'check_in_date_invalid', __( 'Check in date is invalid', 'wp-hotel-booking' ) );
         }
 
         if ( isset( $_POST['check_out_date_timestamp'] ) ) {
             $check_out_date = absint( $_POST['check_out_date_timestamp'] );
         } else {
             $return = false;
-            $errors->add( 'check_out_date_invalid', __( 'Check in date is invalid', 'tp-hotel-booking' ) );
+            $errors->add( 'check_out_date_invalid', __( 'Check in date is invalid', 'wp-hotel-booking' ) );
         }
 
         if ( $return === false ) {
@@ -645,7 +645,7 @@ class HB_Ajax {
         if ( !isset( $_POST['room_id'] ) ) {
             wp_send_json( array(
                 'status' => fasle,
-                'message' => __( 'Room is not exists.', 'tp-hotel-booking' )
+                'message' => __( 'Room is not exists.', 'wp-hotel-booking' )
             ) );
         }
 
@@ -653,7 +653,7 @@ class HB_Ajax {
         if ( !isset( $_POST['date'] ) ) {
             wp_send_json( array(
                 'status' => fasle,
-                'message' => __( 'Date is not exists.', 'tp-hotel-booking' )
+                'message' => __( 'Date is not exists.', 'wp-hotel-booking' )
             ) );
         }
         $date = sanitize_text_field( $_POST['date'] );

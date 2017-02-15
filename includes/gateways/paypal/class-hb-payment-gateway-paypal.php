@@ -49,8 +49,8 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
     function __construct(){
         parent::__construct();
         $this->_slug = 'paypal';
-        $this->_title = __( 'Paypal', 'tp-hotel-booking' );
-        $this->_description = __( 'Pay with Paypal', 'tp-hotel-booking' );
+        $this->_title = __( 'Paypal', 'wp-hotel-booking' );
+        $this->_description = __( 'Pay with Paypal', 'wp-hotel-booking' );
         $this->_settings = HB_Settings::instance()->get('paypal');
 
         $this->paypal_live_url              = 'https://www.paypal.com/';
@@ -95,12 +95,12 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
     function column_total_content( $booking_id, $total, $total_with_currency ){
         if( $total && get_post_meta( $booking_id, '_hb_method', true ) == 'paypal-standard' ) {
             $advance_payment = get_post_meta($booking_id, '_hb_advance_payment', true);
-            printf(__('<br /><small>(Paid %s%% of %s via %s)</small>', 'tp-hotel-booking'), round( $advance_payment / $total, 2 ) * 100, $total_with_currency, 'Paypal' );
+            printf(__('<br /><small>(Paid %s%% of %s via %s)</small>', 'wp-hotel-booking'), round( $advance_payment / $total, 2 ) * 100, $total_with_currency, 'Paypal' );
         }
     }
 
     function form(){
-        echo _e( 'Pay with Paypal', 'tp-hotel-booking');
+        echo _e( 'Pay with Paypal', 'wp-hotel-booking');
     }
 
     /**
@@ -171,7 +171,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
 
             // Nothing was found
         } else {
-            _e( 'Error: Booking ID and key were not found in "custom".', 'tp-hotel-booking' );
+            _e( 'Error: Booking ID and key were not found in "custom".', 'wp-hotel-booking' );
             return false;
         }
 
@@ -181,7 +181,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         }
 
         if ( ! $booking || $booking->booking_key !== $booking_key ) {
-            printf( __( 'Error: Booking Keys do not match %s and %s.', 'tp-hotel-booking' ) , $booking->booking_key, $booking_key );
+            printf( __( 'Error: Booking Keys do not match %s and %s.', 'wp-hotel-booking' ) , $booking->booking_key, $booking_key );
             return false;
         }
         return $booking;
@@ -201,7 +201,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
 
         if ( 'completed' === $request['payment_status'] ) {
             if( (float)$booking->total === (float)$request['payment_gross'] ) {
-                $this->payment_complete( $booking, ( ! empty( $request['txn_id'] ) ? $request['txn_id'] : '' ), __( 'IPN payment completed', 'tp-hotel-booking' ) );
+                $this->payment_complete( $booking, ( ! empty( $request['txn_id'] ) ? $request['txn_id'] : '' ), __( 'IPN payment completed', 'wp-hotel-booking' ) );
             } else {
                 $booking->update_status( 'processing' );
             }
@@ -268,7 +268,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
 
         $paypal_args = array (
             'cmd'      => '_xclick',
-            'amount'   => round( TP_Hotel_Booking::instance()->cart->hb_get_cart_total( ! hb_get_request( 'pay_all' ) ), 2 ),
+            'amount'   => round( WP_Hotel_Booking::instance()->cart->hb_get_cart_total( ! hb_get_request( 'pay_all' ) ), 2 ),
             'quantity' => '1',
         );
 
@@ -325,7 +325,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      * @param $gateway
      */
     function admin_settings( ){
-        $template = TP_Hotel_Booking::instance()->locate( 'includes/gateways/paypal/views/settings.php' );
+        $template = WP_Hotel_Booking::instance()->locate( 'includes/gateways/paypal/views/settings.php' );
         include_once $template;
     }
 

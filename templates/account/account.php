@@ -11,7 +11,7 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 if ( !is_user_logged_in() ) {
-	printf( __( 'You must <strong><a href="%s">Login<a/></strong>.', 'tp-hotel-booking' ), wp_login_url( hb_get_account_url() ) );
+	printf( __( 'You must <strong><a href="%s">Login<a/></strong>.', 'wp-hotel-booking' ), wp_login_url( hb_get_account_url() ) );
 	return;
 }
 

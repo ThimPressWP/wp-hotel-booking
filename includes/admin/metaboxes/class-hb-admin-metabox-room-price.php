@@ -26,7 +26,7 @@ class HB_Admin_Metabox_Room_Price {
 
 	function __construct() {
 
-		$this->title = __( 'Regular Price', 'tp-hotel-booking' );
+		$this->title = __( 'Regular Price', 'wp-hotel-booking' );
 
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ), 10, 2 );
 		add_action( 'save_post', array( $this, 'update' ) );

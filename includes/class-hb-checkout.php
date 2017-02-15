@@ -42,21 +42,21 @@ class HB_Checkout {
         }
 
         // generate transaction
-        $transaction = TP_Hotel_Booking::instance()->cart->generate_transaction( $order );
+        $transaction = WP_Hotel_Booking::instance()->cart->generate_transaction( $order );
         // allow hook
         $booking_info = apply_filters( 'hotel_booking_checkout_booking_info', $transaction->booking_info, $transaction );
         $order_items = apply_filters( 'hotel_booking_checkout_booking_order_items', $transaction->order_items, $transaction );
 
-        if ( TP_Hotel_Booking::instance()->cart->cart_items_count === 0 ) {
+        if ( WP_Hotel_Booking::instance()->cart->cart_items_count === 0 ) {
             hb_send_json( array(
                 'result' => 'fail',
-                'message' => __( 'Your cart is empty.', 'tp-hotel-booking' )
+                'message' => __( 'Your cart is empty.', 'wp-hotel-booking' )
             ) );
-            throw new Exception( sprintf( __( 'Sorry, your session has expired. <a href="%s">Return to homepage</a>', 'tp-hotel-booking' ), home_url() ) );
+            throw new Exception( sprintf( __( 'Sorry, your session has expired. <a href="%s">Return to homepage</a>', 'wp-hotel-booking' ), home_url() ) );
         }
 
         // load booking id from sessions
-        $booking_id = TP_Hotel_Booking::instance()->cart->booking_id;
+        $booking_id = WP_Hotel_Booking::instance()->cart->booking_id;
 
         // Resume the unpaid order if its pending
         if ( $booking_id && ( $booking = HB_Booking::instance( $booking_id ) ) && $booking->post->ID && $booking->has_status( array( 'pending', 'cancelled' ) ) ) {
@@ -86,21 +86,21 @@ class HB_Checkout {
         }
 
         if ( !is_user_logged_in() && !hb_settings()->get( 'guest_checkout' ) ) {
-            throw new Exception( __( 'You have to Login to process checkout.', 'tp-hotel-booking' ) );
+            throw new Exception( __( 'You have to Login to process checkout.', 'wp-hotel-booking' ) );
         }
 
         // payment method
         $payment_method = hb_get_user_payment_method( hb_get_request( 'hb-payment-method' ) );
 
         if ( !$payment_method ) {
-            throw new Exception( __( 'The payment method is not available', 'tp-hotel-booking' ) );
+            throw new Exception( __( 'The payment method is not available', 'wp-hotel-booking' ) );
         }
 
         $this->payment_method = $payment_method;
         $booking_id = $this->create_booking();
         if ( $booking_id ) {
             // if total > 0
-            if ( TP_Hotel_Booking::instance()->cart->needs_payment() ) {
+            if ( WP_Hotel_Booking::instance()->cart->needs_payment() ) {
                 $result = $this->payment_method->process_checkout( $booking_id );
             } else {
                 if ( empty( $booking ) ) {
@@ -117,12 +117,12 @@ class HB_Checkout {
         } else {
             hb_send_json( array(
                 'result' => 'success',
-                'redirect' => __( 'can not create booking', 'tp-hotel-booking' )
+                'redirect' => __( 'can not create booking', 'wp-hotel-booking' )
             ) );
         }
 
         if ( !empty( $result['result'] ) && $result['result'] == 'success' ) {
-            TP_Hotel_Booking::instance()->cart->empty_cart();
+            WP_Hotel_Booking::instance()->cart->empty_cart();
 
             $result = apply_filters( 'hb_payment_successful_result', $result, $booking_id );
 

@@ -20,7 +20,7 @@ if ( ! class_exists( 'HB_Admin_Setting_Room' ) ) {
 
 		function __construct() {
 
-			$this->title = __( 'Room', 'tp-hotel-booking' );
+			$this->title = __( 'Room', 'wp-hotel-booking' );
 
 			parent::__construct();
 		}
@@ -31,22 +31,22 @@ if ( ! class_exists( 'HB_Admin_Setting_Room' ) ) {
 					array(
 							'type'		=> 'section_start',
 							'id'		=> 'catalog_room_setting',
-							'title'		=> __( 'Catalog Options', 'tp-hotel-booking' ),
-							'desc'		=> __( 'Catalog settings display column number and image size used in room list ( archive page, related room ).', 'tp-hotel-booking' )
+							'title'		=> __( 'Catalog Options', 'wp-hotel-booking' ),
+							'desc'		=> __( 'Catalog settings display column number and image size used in room list ( archive page, related room ).', 'wp-hotel-booking' )
 						),
 
 					array(
 							'id'		=> 'tp_hotel_booking_catalog_number_column',
 							'type'		=> 'number',
 							'default'	=> 4,
-							'title'		=> __( 'Number of column display catalog page', 'tp-hotel-booking' )
+							'title'		=> __( 'Number of column display catalog page', 'wp-hotel-booking' )
 						),
 
 					array(
 							'id'		=> 'tp_hotel_booking_posts_per_page',
 							'type'		=> 'number',
 							'default'	=> 8,
-							'title'		=> __( 'Number of post display in page', 'tp-hotel-booking' )
+							'title'		=> __( 'Number of post display in page', 'wp-hotel-booking' )
 						),
 
 					array(
@@ -60,12 +60,12 @@ if ( ! class_exists( 'HB_Admin_Setting_Room' ) ) {
 									'width'		=> 270,
 									'height'	=> 270
 								),
-							'title'		=> __( 'Catalog images size', 'tp-hotel-booking' )
+							'title'		=> __( 'Catalog images size', 'wp-hotel-booking' )
 						),
 
 					array(
 							'id'		=> 'tp_hotel_booking_catalog_display_rating',
-							'title'		=> __( 'Display rating', 'tp-hotel-booking' ),
+							'title'		=> __( 'Display rating', 'wp-hotel-booking' ),
 							'type'		=> 'checkbox',
 							'default'	=> 1
 						),
@@ -78,8 +78,8 @@ if ( ! class_exists( 'HB_Admin_Setting_Room' ) ) {
 					array(
 							'type'		=> 'section_start',
 							'id'		=> 'room_setting',
-							'title'		=> __( 'Room Options', 'tp-hotel-booking' ),
-							'desc'		=> __( 'Room settings display column number and image size used in gallery single page', 'tp-hotel-booking' )
+							'title'		=> __( 'Room Options', 'wp-hotel-booking' ),
+							'desc'		=> __( 'Room settings display column number and image size used in gallery single page', 'wp-hotel-booking' )
 						),
 
 					array(
@@ -93,7 +93,7 @@ if ( ! class_exists( 'HB_Admin_Setting_Room' ) ) {
 									'width'		=> 270,
 									'height'	=> 270
 								),
-							'title'		=> __( 'Room images size gallery', 'tp-hotel-booking' )
+							'title'		=> __( 'Room images size gallery', 'wp-hotel-booking' )
 						),
 
 					array(
@@ -107,19 +107,19 @@ if ( ! class_exists( 'HB_Admin_Setting_Room' ) ) {
 									'width'		=> 150,
 									'height'	=> 150
 								),
-							'title'		=> __( 'Room images thumbnail', 'tp-hotel-booking' )
+							'title'		=> __( 'Room images thumbnail', 'wp-hotel-booking' )
 						),
 
 					array(
 							'id'		=> 'tp_hotel_booking_display_pricing_plans',
-							'title'		=> __( 'Display pricing plans', 'tp-hotel-booking' ),
+							'title'		=> __( 'Display pricing plans', 'wp-hotel-booking' ),
 							'type'		=> 'checkbox',
 							'default'	=> 1
 						),
 
 					array(
 							'id'		=> 'tp_hotel_booking_enable_review_rating',
-							'title'		=> __( 'Enable ratings on reviews', 'tp-hotel-booking' ),
+							'title'		=> __( 'Enable ratings on reviews', 'wp-hotel-booking' ),
 							'type'		=> 'checkbox',
 							'default'	=> 1,
 							'atts'		=> array(
@@ -129,7 +129,7 @@ if ( ! class_exists( 'HB_Admin_Setting_Room' ) ) {
 
 					array(
 							'id'		=> 'tp_hotel_booking_review_rating_required',
-							'title'		=> __( 'Ratings are required to leave a review', 'tp-hotel-booking' ),
+							'title'		=> __( 'Ratings are required to leave a review', 'wp-hotel-booking' ),
 							'type'		=> 'checkbox',
 							'default'	=> 1,
 							'trclass'	=> array( 'enable_ratings_on_reviews' )
@@ -137,7 +137,7 @@ if ( ! class_exists( 'HB_Admin_Setting_Room' ) ) {
 
 					array(
 							'id'		=> 'tp_hotel_booking_enable_gallery_lightbox',
-							'title'		=> __( 'Enable gallery lightbox', 'tp-hotel-booking' ),
+							'title'		=> __( 'Enable gallery lightbox', 'wp-hotel-booking' ),
 							'type'		=> 'checkbox',
 							'default'	=> 1
 						),

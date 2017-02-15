@@ -3,7 +3,7 @@
  * Mini Cart loop
  *
  * @author        ThimPress
- * @package       Tp-hotel-booking/Templates
+ * @package       wp-hotel-booking/templates
  * @version       1.1.4
  */
 if ( !defined( 'ABSPATH' ) ) {
@@ -13,7 +13,7 @@ if ( !defined( 'ABSPATH' ) ) {
 ?>
 <div class="hb_mini_cart_item" data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
 
-	<?php $cart_item = TP_Hotel_Booking::instance()->cart->get_cart_item( $cart_id ) ?>
+	<?php $cart_item = WP_Hotel_Booking::instance()->cart->get_cart_item( $cart_id ) ?>
 	<?php do_action( 'hotel_booking_before_mini_cart_loop', $room ); ?>
 
     <div class="hb_mini_cart_top">
@@ -27,7 +27,7 @@ if ( !defined( 'ABSPATH' ) ) {
 
     <div class="hb_mini_cart_number">
 
-        <label><?php _e( 'Quantity: ', 'tp-hotel-booking' ); ?></label>
+        <label><?php _e( 'Quantity: ', 'wp-hotel-booking' ); ?></label>
         <span><?php printf( '%s', $cart_item->quantity ); ?></span>
 
     </div>
@@ -36,7 +36,7 @@ if ( !defined( 'ABSPATH' ) ) {
 
     <div class="hb_mini_cart_price">
 
-        <label><?php _e( 'Price: ', 'tp-hotel-booking' ); ?></label>
+        <label><?php _e( 'Price: ', 'wp-hotel-booking' ); ?></label>
         <span><?php printf( '%s', hb_format_price( $cart_item->amount ) ) ?></span>
 
     </div>

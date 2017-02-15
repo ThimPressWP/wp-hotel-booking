@@ -16,8 +16,8 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
     function __construct(){
         parent::__construct();
         $this->_slug = 'offline-payment';
-        $this->_title = __( 'Offline Payment', 'tp-hotel-booking' );
-        $this->_description = __( 'Pay on arrival', 'tp-hotel-booking' );
+        $this->_title = __( 'Offline Payment', 'wp-hotel-booking' );
+        $this->_description = __( 'Pay on arrival', 'wp-hotel-booking' );
         $this->_settings = HB_Settings::instance()->get('offline-payment');
         $this->init();
     }
@@ -49,7 +49,7 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
     function column_total_content( $booking_id, $total, $total_with_currency ){
         $booking = HB_Booking::instance( $booking_id );
         if( $booking->method === 'offline-payment' ) {
-            _e( '<br />(<small>Pay on arrival</small>)', 'tp-hotel-booking' );
+            _e( '<br />(<small>Pay on arrival</small>)', 'wp-hotel-booking' );
         }
     }
 
@@ -59,7 +59,7 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
      * @param $gateway
      */
     function admin_settings(){
-        $template = TP_Hotel_Booking::instance()->locate( 'includes/gateways/offline-payment/views/settings.php' );
+        $template = WP_Hotel_Booking::instance()->locate( 'includes/gateways/offline-payment/views/settings.php' );
         include_once $template;
     }
 
@@ -84,7 +84,7 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
             $booking->update_status( 'processing' );
         }
 
-        hb_add_message( sprintf( __( 'Thank you! Your booking has been placed. Please check your email %s to view booking details', 'tp-hotel-booking' ), $booking->customer_email ) );
+        hb_add_message( sprintf( __( 'Thank you! Your booking has been placed. Please check your email %s to view booking details', 'wp-hotel-booking' ), $booking->customer_email ) );
         return array(
             'result'    => 'success',
             'redirect'  => add_query_arg( 'hotel-booking-offline-payment', 1, hb_get_checkout_url() )
@@ -93,6 +93,6 @@ class HB_Payment_Gateway_Offline_Payment extends HB_Payment_Gateway_Base{
     }
 
     function form(){
-        echo _e( ' Pay on Arrival', 'tp-hotel-booking' );
+        echo _e( ' Pay on Arrival', 'wp-hotel-booking' );
     }
 }

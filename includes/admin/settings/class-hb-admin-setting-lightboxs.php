@@ -20,7 +20,7 @@ if ( ! class_exists( 'HB_Admin_Setting_Lightboxs' ) ) {
 
 		function __construct() {
 
-			$this->title = __( 'Lightboxs', 'tp-hotel-booking' );
+			$this->title = __( 'Lightboxs', 'wp-hotel-booking' );
 
 			parent::__construct();
 		}
@@ -31,15 +31,15 @@ if ( ! class_exists( 'HB_Admin_Setting_Lightboxs' ) ) {
 					array(
 							'type'		=> 'section_start',
 							'id'		=> 'lightbox_settings',
-							'title'		=> __( 'Lightbox options', 'tp-hotel-booking' ),
-							'desc'		=> __( 'General options for Lightbox system.', 'tp-hotel-booking' )
+							'title'		=> __( 'Lightbox options', 'wp-hotel-booking' ),
+							'desc'		=> __( 'General options for Lightbox system.', 'wp-hotel-booking' )
 						),
 
 					array(
 							'type'		=> 'select',
 							'id'		=> 'tp_hotel_booking_lightbox',
 							'options'	=> hb_get_support_lightboxs(),
-							'title'		=> __( 'Lightbox type', 'tp-hotel-booking' ),
+							'title'		=> __( 'Lightbox type', 'wp-hotel-booking' ),
 							'default'	=> 'lightbox2'
 						),
 

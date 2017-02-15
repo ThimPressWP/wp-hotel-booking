@@ -29,30 +29,30 @@ $featured = $gallery ? array_shift( $gallery ) : false;
                 </h4>
                 <ul class="hb-room-meta">
                     <li class="hb_search_capacity">
-                        <label><?php _e( 'Capacity:', 'tp-hotel-booking' ); ?></label>
+                        <label><?php _e( 'Capacity:', 'wp-hotel-booking' ); ?></label>
                         <div class=""><?php echo esc_html( $room->capacity ); ?></div>
                     </li>
                     <li class="hb_search_max_child">
-                        <label><?php _e( 'Max Child:', 'tp-hotel-booking' ); ?></label>
+                        <label><?php _e( 'Max Child:', 'wp-hotel-booking' ); ?></label>
                         <div><?php echo esc_html( $room->max_child ); ?></div>
                     </li>
                     <li class="hb_search_price">
-                        <label><?php _e( 'Price:', 'tp-hotel-booking' ); ?></label>
+                        <label><?php _e( 'Price:', 'wp-hotel-booking' ); ?></label>
                         <span class="hb_search_item_price"><?php echo hb_format_price( $room->amount_singular ); ?></span>
                         <div class="hb_view_price">
-                            <a href="" class="hb-view-booking-room-details"><?php _e( '(View price breakdown)', 'tp-hotel-booking' ); ?></a>
+                            <a href="" class="hb-view-booking-room-details"><?php _e( '(View price breakdown)', 'wp-hotel-booking' ); ?></a>
 							<?php hb_get_template( 'search/booking-room-details.php', array( 'room' => $room ) ); ?>
                         </div>
                     </li>
                     <li class="hb_search_quantity">
-                        <label><?php _e( 'Quantity: ', 'tp-hotel-booking' ); ?></label>
+                        <label><?php _e( 'Quantity: ', 'wp-hotel-booking' ); ?></label>
                         <div>
 							<?php
 							hb_dropdown_numbers(
 								array(
 									'name'             => 'hb-num-of-rooms',
 									'min'              => 1,
-									'show_option_none' => __( 'Select', 'tp-hotel-booking' ),
+									'show_option_none' => __( 'Select', 'wp-hotel-booking' ),
 									'max'              => $room->post->available_rooms,
 									'class'            => 'number_room_select'
 								)
@@ -61,7 +61,7 @@ $featured = $gallery ? array_shift( $gallery ) : false;
                         </div>
                     </li>
                     <li class="hb_search_add_to_cart">
-                        <button class="hb_add_to_cart"><?php _e( 'Select this room', 'tp-hotel-booking' ) ?></button>
+                        <button class="hb_add_to_cart"><?php _e( 'Select this room', 'wp-hotel-booking' ) ?></button>
                     </li>
                 </ul>
             </div>

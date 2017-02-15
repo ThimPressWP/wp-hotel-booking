@@ -5,7 +5,7 @@
  * Override this template by copying it to yourtheme/tp-hotel-booking/content-room.php
  *
  * @author        ThimPress
- * @package       tp-hotel-booking/templates
+ * @package       wp-hotel-booking/templates
  * @version       1.6
  */
 

@@ -20,7 +20,7 @@ if ( ! class_exists( 'HB_Admin_Setting_Payments' ) ) {
 
 		function __construct() {
 
-			$this->title = __( 'Checkout', 'tp-hotel-booking' );
+			$this->title = __( 'Checkout', 'wp-hotel-booking' );
 
 			parent::__construct();
 		}
@@ -31,15 +31,15 @@ if ( ! class_exists( 'HB_Admin_Setting_Payments' ) ) {
 					array(
 							'type'		=> 'section_start',
 							'id'		=> 'payment_general_setting',
-							'title'		=> __( 'Payment General Options', 'tp-hotel-booking' ),
-							'desc'		=> __( 'Payment General options for system.', 'tp-hotel-booking' )
+							'title'		=> __( 'Payment General Options', 'wp-hotel-booking' ),
+							'desc'		=> __( 'Payment General options for system.', 'wp-hotel-booking' )
 						),
 
 					array(
 							'type'		=> 'number',
 							'id'		=> 'tp_hotel_booking_cancel_payment',
-							'title'		=> __( 'Cancel Payment', 'tp-hotel-booking' ),
-							'desc'		=> __( 'Cancel Payment after hour(s)', 'tp-hotel-booking' ),
+							'title'		=> __( 'Cancel Payment', 'wp-hotel-booking' ),
+							'desc'		=> __( 'Cancel Payment after hour(s)', 'wp-hotel-booking' ),
 							'default'	=> 12,
 							'min'		=> 1,
 						),
@@ -47,8 +47,8 @@ if ( ! class_exists( 'HB_Admin_Setting_Payments' ) ) {
 					array(
 							'type'		=> 'checkbox',
 							'id'		=> 'tp_hotel_booking_guest_checkout',
-							'title'		=> __( 'Process', 'tp-hotel-booking' ),
-							'desc'		=> __( 'Allows customers to checkout without creating an account.', 'tp-hotel-booking' ),
+							'title'		=> __( 'Process', 'wp-hotel-booking' ),
+							'desc'		=> __( 'Allows customers to checkout without creating an account.', 'wp-hotel-booking' ),
 							'default'	=> 1
 						),
 

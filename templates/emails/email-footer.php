@@ -30,13 +30,13 @@ if ( !defined( 'ABSPATH' ) ) {
 				<?php if ( $phone ) : ?>
                     <tr>
                         <th>
-                            <p><?php printf( __( 'Phone number %s', 'tp-hotel-booking' ), $phone ) ?></p>
+                            <p><?php printf( __( 'Phone number %s', 'wp-hotel-booking' ), $phone ) ?></p>
                         </th>
                     </tr>
 				<?php endif; ?>
                 <tr>
                     <th>
-                        <p><?php printf( __( 'Admin email at %s', 'tp-hotel-booking' ), $options->get( 'hotel_email_address' ) ? $options->get( 'hotel_email_address' ) : get_option( 'admin_email' ) ) ?></p>
+                        <p><?php printf( __( 'Admin email at %s', 'wp-hotel-booking' ), $options->get( 'hotel_email_address' ) ? $options->get( 'hotel_email_address' ) : get_option( 'admin_email' ) ) ?></p>
                     </th>
                 </tr>
             </table>
@@ -45,10 +45,10 @@ if ( !defined( 'ABSPATH' ) ) {
             <table cellspacing="0" cellpadding="0">
                 <tr>
                     <th>
-                        <p><?php printf( __( 'Country %s', 'tp-hotel-booking' ), $options->get( 'hotel_country' ) ) ?></p>
-                        <p><?php printf( __( 'Address %s', 'tp-hotel-booking' ), $options->get( 'hotel_address' ) ) ?></p>
-                        <p><?php printf( __( 'City %s', 'tp-hotel-booking' ), $options->get( 'hotel_city' ) ) ?></p>
-                        <p><?php printf( __( 'State %s', 'tp-hotel-booking' ), $options->get( 'hotel_state' ) ) ?></p>
+                        <p><?php printf( __( 'Country %s', 'wp-hotel-booking' ), $options->get( 'hotel_country' ) ) ?></p>
+                        <p><?php printf( __( 'Address %s', 'wp-hotel-booking' ), $options->get( 'hotel_address' ) ) ?></p>
+                        <p><?php printf( __( 'City %s', 'wp-hotel-booking' ), $options->get( 'hotel_city' ) ) ?></p>
+                        <p><?php printf( __( 'State %s', 'wp-hotel-booking' ), $options->get( 'hotel_state' ) ) ?></p>
                     </th>
                 </tr>
             </table>

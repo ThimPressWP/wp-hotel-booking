@@ -13,8 +13,8 @@ if ( !defined( 'ABSPATH' ) ) {
 // email heading
 hb_get_template( 'emails/email-header.php',
 	array(
-		'email_heading'      => __( 'Thanks for your booking.', 'tp-hotel-booking' ),
-		'email_heading_desc' => __( 'Thank you for making reservation at our hotel. We will try our best to bring the best service. Good luck and see you soon!', 'tp-hotel-booking' )
+		'email_heading'      => __( 'Thanks for your booking.', 'wp-hotel-booking' ),
+		'email_heading_desc' => __( 'Thank you for making reservation at our hotel. We will try our best to bring the best service. Good luck and see you soon!', 'wp-hotel-booking' )
 	)
 );
 

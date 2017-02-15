@@ -10,14 +10,14 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<h2><?php _e( 'Booking Details', 'tp-hotel-booking' ) ?></h2>
+<h2><?php _e( 'Booking Details', 'wp-hotel-booking' ) ?></h2>
 <table class="width-100 booking_details" cellspacing="0" cellpadding="0">
     <tr>
-        <th><?php _e( 'Item', 'tp-hotel-booking' ) ?></th>
-        <th><?php _e( 'Check in', 'tp-hotel-booking' ) ?></th>
-        <th><?php _e( 'Check out', 'tp-hotel-booking' ) ?></th>
-        <th><?php _e( '#', 'tp-hotel-booking' ) ?></th>
-        <th><?php _e( 'Price', 'tp-hotel-booking' ) ?></th>
+        <th><?php _e( 'Item', 'wp-hotel-booking' ) ?></th>
+        <th><?php _e( 'Check in', 'wp-hotel-booking' ) ?></th>
+        <th><?php _e( 'Check out', 'wp-hotel-booking' ) ?></th>
+        <th><?php _e( '#', 'wp-hotel-booking' ) ?></th>
+        <th><?php _e( 'Price', 'wp-hotel-booking' ) ?></th>
     </tr>
 	<?php $items = hb_get_order_items( $booking->id );
 	foreach ( $items as $k => $item ) :
@@ -34,16 +34,16 @@ if ( !defined( 'ABSPATH' ) ) {
 		<?php do_action( 'hotel_booking_email_after_room_item', $item, $booking ); ?>
 	<?php endforeach; ?>
     <tr>
-        <td colspan="4"><b><?php _e( 'Subtotal', 'tp-hotel-booking' ) ?></b></td>
+        <td colspan="4"><b><?php _e( 'Subtotal', 'wp-hotel-booking' ) ?></b></td>
         <td><?php printf( '%s', hb_format_price( $booking->sub_total(), hb_get_currency_symbol( $booking->currency ) ) ) ?></td>
     </tr>
     <tr>
-        <td colspan="4"><b><?php _e( 'Total', 'tp-hotel-booking' ) ?></b></td>
+        <td colspan="4"><b><?php _e( 'Total', 'wp-hotel-booking' ) ?></b></td>
         <td><?php printf( '%s', hb_format_price( $booking->total(), hb_get_currency_symbol( $booking->currency ) ) ) ?></td>
     </tr>
 </table>
 
 <?php if ( $booking->content ) : ?>
-    <h2><?php _e( 'Addition Infomation', 'tp-hotel-booking' ); ?></h2>
+    <h2><?php _e( 'Addition Infomation', 'wp-hotel-booking' ); ?></h2>
     <p><?php printf( '%s', $booking->content ) ?></p>
 <?php endif; ?>

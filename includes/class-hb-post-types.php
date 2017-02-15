@@ -56,13 +56,13 @@ class HB_Post_Types {
     }
 
     function custom_coupon_columns( $columns ) {
-        $columns['type'] = __( 'Type', 'tp-hotel-booking' );
-        $columns['from'] = __( 'Validate From', 'tp-hotel-booking' );
-        $columns['to'] = __( 'Validate To', 'tp-hotel-booking' );
-        $columns['minimum_spend'] = __( 'Minimum spend', 'tp-hotel-booking' );
-        $columns['maximum_spend'] = __( 'Maximum spend', 'tp-hotel-booking' );
-        $columns['limit_per_coupon'] = __( 'Usage limit per coupon', 'tp-hotel-booking' );
-        $columns['usage_count'] = __( 'Used', 'tp-hotel-booking' );
+        $columns['type'] = __( 'Type', 'wp-hotel-booking' );
+        $columns['from'] = __( 'Validate From', 'wp-hotel-booking' );
+        $columns['to'] = __( 'Validate To', 'wp-hotel-booking' );
+        $columns['minimum_spend'] = __( 'Minimum spend', 'wp-hotel-booking' );
+        $columns['maximum_spend'] = __( 'Maximum spend', 'wp-hotel-booking' );
+        $columns['limit_per_coupon'] = __( 'Usage limit per coupon', 'wp-hotel-booking' );
+        $columns['usage_count'] = __( 'Used', 'wp-hotel-booking' );
         unset( $columns['date'] );
         return $columns;
     }
@@ -72,9 +72,9 @@ class HB_Post_Types {
         switch ( $column ) {
             case 'type':
                 switch ( get_post_meta( $post->ID, '_hb_coupon_discount_type', true ) ) {
-                    case 'fixed_cart': _e( 'Fixed cart', 'tp-hotel-booking' );
+                    case 'fixed_cart': _e( 'Fixed cart', 'wp-hotel-booking' );
                         break;
-                    case 'percent_cart': _e( 'Percent cart', 'tp-hotel-booking' );
+                    case 'percent_cart': _e( 'Percent cart', 'wp-hotel-booking' );
                         break;
                 }
                 break;
@@ -248,7 +248,7 @@ class HB_Post_Types {
      */
     function enqueue_scripts() {
         if ( in_array( hb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) ) {
-            wp_enqueue_script( 'hb-edit-tags', TP_Hotel_Booking::instance()->plugin_url( 'assets/js/edit-tags.min.js' ), array( 'jquery', 'jquery-ui-sortable' ) );
+            wp_enqueue_script( 'hb-edit-tags', WP_Hotel_Booking::instance()->plugin_url( 'assets/js/edit-tags.min.js' ), array( 'jquery', 'jquery-ui-sortable' ) );
         }
     }
 
@@ -259,10 +259,10 @@ class HB_Post_Types {
      * @return mixed
      */
     function custom_room_columns( $a ) {
-        $a['room_type'] = __( 'Room Type', 'tp-hotel-booking' );
-        $a['room_capacity'] = __( 'Max Child', 'tp-hotel-booking' );
-        $a['room_price_plan'] = __( 'Price', 'tp-hotel-booking' );
-        $a['room_average_rating'] = __( 'Average Rating', 'tp-hotel-booking' );
+        $a['room_type'] = __( 'Room Type', 'wp-hotel-booking' );
+        $a['room_capacity'] = __( 'Max Child', 'wp-hotel-booking' );
+        $a['room_price_plan'] = __( 'Price', 'wp-hotel-booking' );
+        $a['room_average_rating'] = __( 'Average Rating', 'wp-hotel-booking' );
 
         // move comments to the last of list
         if ( isset( $a['comments'] ) ) {
@@ -300,7 +300,7 @@ class HB_Post_Types {
                 echo get_post_meta( $post->ID, '_hb_max_child_per_room', true );
                 break;
             case 'room_price_plan':
-                echo '<a href="' . admin_url( 'admin.php?page=tp_hotel_booking_pricing&hb-room=' . $post->ID ) . '">' . __( 'View Price', 'tp-hotel-booking' ) . '</a>';
+                echo '<a href="' . admin_url( 'admin.php?page=tp_hotel_booking_pricing&hb-room=' . $post->ID ) . '">' . __( 'View Price', 'wp-hotel-booking' ) . '</a>';
                 break;
             case 'room_average_rating':
                 $room = HB_Room::instance( $post->ID );
@@ -308,7 +308,7 @@ class HB_Post_Types {
                 $html = array();
                 $html[] = '<div class="rating">';
                 if ( $rating ):
-                    $html[] = '<div itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating" class="star-rating" title="' . ( sprintf( __( 'Rated %d out of 5', 'tp-hotel-booking' ), $rating ) ) . '">';
+                    $html[] = '<div itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating" class="star-rating" title="' . ( sprintf( __( 'Rated %d out of 5', 'wp-hotel-booking' ), $rating ) ) . '">';
                     $html[] = '<span style="width:' . ( ( $rating / 5 ) * 100 ) . '%"></span>';
                     $html[] = '</div>';
                 endif;
@@ -364,11 +364,11 @@ class HB_Post_Types {
 
     function taxonomy_columns( $columns ) {
         if ( 'hb_room_type' == sanitize_text_field( $_REQUEST['taxonomy'] ) ) {
-            $columns['thumbnail'] = __( 'Gallery', 'tp-hotel-booking' );
+            $columns['thumbnail'] = __( 'Gallery', 'wp-hotel-booking' );
         } else {
-            $columns['capacity'] = __( 'Capacity', 'tp-hotel-booking' );
+            $columns['capacity'] = __( 'Capacity', 'wp-hotel-booking' );
         }
-        $columns['ordering'] = __( 'Ordering', 'tp-hotel-booking' );
+        $columns['ordering'] = __( 'Ordering', 'wp-hotel-booking' );
         if ( isset( $columns['description'] ) ) {
             unset( $columns['description'] );
         }
@@ -422,19 +422,19 @@ class HB_Post_Types {
          */
         $args = array(
             'labels' => array(
-                'name' => _x( 'Rooms', 'post type general name', 'tp-hotel-booking' ),
-                'singular_name' => _x( 'Room', 'post type singular name', 'tp-hotel-booking' ),
-                'menu_name' => __( 'Rooms', 'tp-hotel-booking' ),
-                'parent_item_colon' => __( 'Parent Item:', 'tp-hotel-booking' ),
-                'all_items' => __( 'Rooms', 'tp-hotel-booking' ),
-                'view_item' => __( 'View Room', 'tp-hotel-booking' ),
-                'add_new_item' => __( 'Add New Room', 'tp-hotel-booking' ),
-                'add_new' => __( 'Add New Room', 'tp-hotel-booking' ),
-                'edit_item' => __( 'Edit Room', 'tp-hotel-booking' ),
-                'update_item' => __( 'Update Room', 'tp-hotel-booking' ),
-                'search_items' => __( 'Search Room', 'tp-hotel-booking' ),
-                'not_found' => __( 'No room found', 'tp-hotel-booking' ),
-                'not_found_in_trash' => __( 'No room found in Trash', 'tp-hotel-booking' ),
+                'name' => _x( 'Rooms', 'post type general name', 'wp-hotel-booking' ),
+                'singular_name' => _x( 'Room', 'post type singular name', 'wp-hotel-booking' ),
+                'menu_name' => __( 'Rooms', 'wp-hotel-booking' ),
+                'parent_item_colon' => __( 'Parent Item:', 'wp-hotel-booking' ),
+                'all_items' => __( 'Rooms', 'wp-hotel-booking' ),
+                'view_item' => __( 'View Room', 'wp-hotel-booking' ),
+                'add_new_item' => __( 'Add New Room', 'wp-hotel-booking' ),
+                'add_new' => __( 'Add New Room', 'wp-hotel-booking' ),
+                'edit_item' => __( 'Edit Room', 'wp-hotel-booking' ),
+                'update_item' => __( 'Update Room', 'wp-hotel-booking' ),
+                'search_items' => __( 'Search Room', 'wp-hotel-booking' ),
+                'not_found' => __( 'No room found', 'wp-hotel-booking' ),
+                'not_found_in_trash' => __( 'No room found in Trash', 'wp-hotel-booking' ),
             ),
             'public' => true,
             'query_var' => true,
@@ -449,7 +449,7 @@ class HB_Post_Types {
             'taxonomies' => array( 'room_category', 'room_tag' ),
             'supports' => array( 'title', 'editor', 'thumbnail', 'revisions', 'comments', 'author' ),
             'hierarchical' => false,
-            'rewrite' => array( 'slug' => _x( 'rooms', 'URL slug', 'tp-hotel-booking' ), 'with_front' => false, 'feeds' => true ),
+            'rewrite' => array( 'slug' => _x( 'rooms', 'URL slug', 'wp-hotel-booking' ), 'with_front' => false, 'feeds' => true ),
             // 'can_export'         => false,
             'menu_position' => 3,
             'menu_icon' => 'dashicons-admin-home'
@@ -463,19 +463,19 @@ class HB_Post_Types {
          */
         $args = array(
             'labels' => array(
-                'name' => _x( 'Bookings', 'post type general name', 'tp-hotel-booking' ),
-                'singular_name' => _x( 'Booking', 'post type singular name', 'tp-hotel-booking' ),
-                'menu_name' => __( 'Bookings', 'tp-hotel-booking' ),
-                'parent_item_colon' => __( 'Parent Item:', 'tp-hotel-booking' ),
-                'all_items' => __( 'Bookings', 'tp-hotel-booking' ),
-                'view_item' => __( 'View Booking', 'tp-hotel-booking' ),
-                'add_new_item' => __( 'Add New Booking', 'tp-hotel-booking' ),
-                'add_new' => __( 'Add New', 'tp-hotel-booking' ),
-                'edit_item' => __( 'Edit Booking', 'tp-hotel-booking' ),
-                'update_item' => __( 'Update Booking', 'tp-hotel-booking' ),
-                'search_items' => __( 'Search Booking', 'tp-hotel-booking' ),
-                'not_found' => __( 'No booking found', 'tp-hotel-booking' ),
-                'not_found_in_trash' => __( 'No booking found in Trash', 'tp-hotel-booking' ),
+                'name' => _x( 'Bookings', 'post type general name', 'wp-hotel-booking' ),
+                'singular_name' => _x( 'Booking', 'post type singular name', 'wp-hotel-booking' ),
+                'menu_name' => __( 'Bookings', 'wp-hotel-booking' ),
+                'parent_item_colon' => __( 'Parent Item:', 'wp-hotel-booking' ),
+                'all_items' => __( 'Bookings', 'wp-hotel-booking' ),
+                'view_item' => __( 'View Booking', 'wp-hotel-booking' ),
+                'add_new_item' => __( 'Add New Booking', 'wp-hotel-booking' ),
+                'add_new' => __( 'Add New', 'wp-hotel-booking' ),
+                'edit_item' => __( 'Edit Booking', 'wp-hotel-booking' ),
+                'update_item' => __( 'Update Booking', 'wp-hotel-booking' ),
+                'search_items' => __( 'Search Booking', 'wp-hotel-booking' ),
+                'not_found' => __( 'No booking found', 'wp-hotel-booking' ),
+                'not_found_in_trash' => __( 'No booking found in Trash', 'wp-hotel-booking' ),
             ),
             'public' => false,
             'query_var' => true,
@@ -498,7 +498,7 @@ class HB_Post_Types {
         register_post_type( 'hb_booking', $args );
 
         if ( is_admin() ) {
-            TP_Hotel_Booking::instance()->_include( 'includes/walkers/class-hb-walker-room-type-dropdown.php' );
+            WP_Hotel_Booking::instance()->_include( 'includes/walkers/class-hb-walker-room-type-dropdown.php' );
         }
     }
 
@@ -509,24 +509,24 @@ class HB_Post_Types {
          */
         $args = array(
             'hierarchical' => true,
-            'label' => __( 'Room Type', 'tp-hotel-booking' ),
+            'label' => __( 'Room Type', 'wp-hotel-booking' ),
             'labels' => array(
-                'name' => _x( 'Room Types', 'taxonomy general name', 'tp-hotel-booking' ),
-                'singular_name' => _x( 'Room Type', 'taxonomy singular name', 'tp-hotel-booking' ),
-                'menu_name' => _x( 'Room Types', 'Room Types', 'tp-hotel-booking' ),
-                'search_items' => __( 'Search Room Types', 'tp-hotel-booking' ),
-                'all_items' => __( 'All Room Types', 'tp-hotel-booking' ),
-                'parent_item' => __( 'Parent Room Type', 'tp-hotel-booking' ),
-                'parent_item_colon' => __( 'Parent Room Type:', 'tp-hotel-booking' ),
-                'edit_item' => __( 'Edit Room Type', 'tp-hotel-booking' ),
-                'update_item' => __( 'Update Room Type', 'tp-hotel-booking' ),
-                'add_new_item' => __( 'Add New Room Type', 'tp-hotel-booking' ),
-                'new_item_name' => __( 'New Room Type Name', 'tp-hotel-booking' )
+                'name' => _x( 'Room Types', 'taxonomy general name', 'wp-hotel-booking' ),
+                'singular_name' => _x( 'Room Type', 'taxonomy singular name', 'wp-hotel-booking' ),
+                'menu_name' => _x( 'Room Types', 'Room Types', 'wp-hotel-booking' ),
+                'search_items' => __( 'Search Room Types', 'wp-hotel-booking' ),
+                'all_items' => __( 'All Room Types', 'wp-hotel-booking' ),
+                'parent_item' => __( 'Parent Room Type', 'wp-hotel-booking' ),
+                'parent_item_colon' => __( 'Parent Room Type:', 'wp-hotel-booking' ),
+                'edit_item' => __( 'Edit Room Type', 'wp-hotel-booking' ),
+                'update_item' => __( 'Update Room Type', 'wp-hotel-booking' ),
+                'add_new_item' => __( 'Add New Room Type', 'wp-hotel-booking' ),
+                'new_item_name' => __( 'New Room Type Name', 'wp-hotel-booking' )
             ),
             'public' => true,
             'show_ui' => true,
             'query_var' => true,
-            'rewrite' => array( 'slug' => _x( 'room-type', 'URL slug', 'tp-hotel-booking' ) )
+            'rewrite' => array( 'slug' => _x( 'room-type', 'URL slug', 'wp-hotel-booking' ) )
         );
         $args = apply_filters( 'hotel_booking_register_tax_room_type_arg', $args );
         register_taxonomy( 'hb_room_type', array( 'hb_room' ), $args
@@ -538,24 +538,24 @@ class HB_Post_Types {
         $args = array(
             'hierarchical' => false,
             // 'update_count_callback' => '_wc_term_recount',
-            'label' => __( 'Room Capacity', 'tp-hotel-booking' ),
+            'label' => __( 'Room Capacity', 'wp-hotel-booking' ),
             'labels' => array(
-                'name' => __( 'Room Capacities', 'tp-hotel-booking' ),
-                'singular_name' => __( 'Room Capacity', 'tp-hotel-booking' ),
-                'menu_name' => _x( 'Room Capacities', 'Room Capacities', 'tp-hotel-booking' ),
-                'search_items' => __( 'Search Room Capacities', 'tp-hotel-booking' ),
-                'all_items' => __( 'All Room Capacity', 'tp-hotel-booking' ),
-                'parent_item' => __( 'Parent Room Capacity', 'tp-hotel-booking' ),
-                'parent_item_colon' => __( 'Parent Room Capacity:', 'tp-hotel-booking' ),
-                'edit_item' => __( 'Edit Room Capacity', 'tp-hotel-booking' ),
-                'update_item' => __( 'Update Room Capacity', 'tp-hotel-booking' ),
-                'add_new_item' => __( 'Add New Room Capacity', 'tp-hotel-booking' ),
-                'new_item_name' => __( 'New Room Type Capacity', 'tp-hotel-booking' )
+                'name' => __( 'Room Capacities', 'wp-hotel-booking' ),
+                'singular_name' => __( 'Room Capacity', 'wp-hotel-booking' ),
+                'menu_name' => _x( 'Room Capacities', 'Room Capacities', 'wp-hotel-booking' ),
+                'search_items' => __( 'Search Room Capacities', 'wp-hotel-booking' ),
+                'all_items' => __( 'All Room Capacity', 'wp-hotel-booking' ),
+                'parent_item' => __( 'Parent Room Capacity', 'wp-hotel-booking' ),
+                'parent_item_colon' => __( 'Parent Room Capacity:', 'wp-hotel-booking' ),
+                'edit_item' => __( 'Edit Room Capacity', 'wp-hotel-booking' ),
+                'update_item' => __( 'Update Room Capacity', 'wp-hotel-booking' ),
+                'add_new_item' => __( 'Add New Room Capacity', 'wp-hotel-booking' ),
+                'new_item_name' => __( 'New Room Type Capacity', 'wp-hotel-booking' )
             ),
             'show_ui' => true,
             'query_var' => true,
             'rewrite' => array(
-                'slug' => _x( 'room-capacity', 'URL slug', 'tp-hotel-booking' ),
+                'slug' => _x( 'room-capacity', 'URL slug', 'wp-hotel-booking' ),
                 'with_front' => false,
                 'hierarchical' => true,
             )
@@ -571,42 +571,42 @@ class HB_Post_Types {
     function register_post_statues() {
 
         $args = array(
-            'label' => _x( 'Cancelled', 'Booking status', 'tp-hotel-booking' ),
+            'label' => _x( 'Cancelled', 'Booking status', 'wp-hotel-booking' ),
             'public' => false,
             'exclude_from_search' => false,
             'show_in_admin_all_list' => true,
             'show_in_admin_status_list' => true,
-            'label_count' => _n_noop( 'Cancelled <span class="count">(%s)</span>', 'Cancelled <span class="count">(%s)</span>', 'tp-hotel-booking' )
+            'label_count' => _n_noop( 'Cancelled <span class="count">(%s)</span>', 'Cancelled <span class="count">(%s)</span>', 'wp-hotel-booking' )
         );
         register_post_status( 'hb-cancelled', $args );
 
         $args = array(
-            'label' => _x( 'Pending', 'Booking status', 'tp-hotel-booking' ),
+            'label' => _x( 'Pending', 'Booking status', 'wp-hotel-booking' ),
             'public' => false,
             'exclude_from_search' => false,
             'show_in_admin_all_list' => true,
             'show_in_admin_status_list' => true,
-            'label_count' => _n_noop( 'Pending <span class="count">(%s)</span>', 'Pending <span class="count">(%s)</span>', 'tp-hotel-booking' )
+            'label_count' => _n_noop( 'Pending <span class="count">(%s)</span>', 'Pending <span class="count">(%s)</span>', 'wp-hotel-booking' )
         );
         register_post_status( 'hb-pending', $args );
 
         $args = array(
-            'label' => _x( 'Processing', 'Booking status', 'tp-hotel-booking' ),
+            'label' => _x( 'Processing', 'Booking status', 'wp-hotel-booking' ),
             'public' => false,
             'exclude_from_search' => false,
             'show_in_admin_all_list' => true,
             'show_in_admin_status_list' => true,
-            'label_count' => _n_noop( 'Processing <span class="count">(%s)</span>', 'Processing <span class="count">(%s)</span>', 'tp-hotel-booking' )
+            'label_count' => _n_noop( 'Processing <span class="count">(%s)</span>', 'Processing <span class="count">(%s)</span>', 'wp-hotel-booking' )
         );
         register_post_status( 'hb-processing', $args );
 
         $args = array(
-            'label' => _x( 'Completed', 'Booking status', 'tp-hotel-booking' ),
+            'label' => _x( 'Completed', 'Booking status', 'wp-hotel-booking' ),
             'public' => false,
             'exclude_from_search' => false,
             'show_in_admin_all_list' => true,
             'show_in_admin_status_list' => true,
-            'label_count' => _n_noop( 'Completed <span class="count">(%s)</span>', 'Completed <span class="count">(%s)</span>', 'tp-hotel-booking' )
+            'label_count' => _n_noop( 'Completed <span class="count">(%s)</span>', 'Completed <span class="count">(%s)</span>', 'wp-hotel-booking' )
         );
         register_post_status( 'hb-completed', $args );
     }

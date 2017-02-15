@@ -78,7 +78,7 @@ class HB_Install {
     // create options default
     static function create_options() {
         if ( !class_exists( 'HB_Admin_Settings' ) ) {
-            TP_Hotel_Booking::instance()->_include( 'includes/admin/class-hb-admin-settings.php' );
+            WP_Hotel_Booking::instance()->_include( 'includes/admin/class-hb-admin-settings.php' );
         }
 
         $settings_pages = HB_Admin_Settings::get_settings_pages();
@@ -98,47 +98,47 @@ class HB_Install {
     // create page. Eg: hotel-checkout, hotel-cart
     static function create_pages() {
         if ( !function_exists( 'hb_create_page' ) ) {
-            TP_Hotel_Booking::instance()->_include( 'includes/admin/hb-admin-functions.php' );
-            TP_Hotel_Booking::instance()->_include( 'includes/hb-functions.php' );
+            WP_Hotel_Booking::instance()->_include( 'includes/admin/hb-admin-functions.php' );
+            WP_Hotel_Booking::instance()->_include( 'includes/hb-functions.php' );
         }
 
         $pages = array();
         if ( !hb_get_page_id( 'cart' ) || !get_post( hb_get_page_id( 'cart' ) ) ) {
             $pages['cart'] = array(
-                'name' => _x( 'hotel-cart', 'Page Slug', 'tp-hotel-booking' ),
-                'title' => _x( 'Hotel Cart', 'Page Title', 'tp-hotel-booking' ),
+                'name' => _x( 'hotel-cart', 'Page Slug', 'wp-hotel-booking' ),
+                'title' => _x( 'Hotel Cart', 'Page Title', 'wp-hotel-booking' ),
                 'content' => '[' . apply_filters( 'hotel_booking_cart_shortcode_tag', 'hotel_booking_cart' ) . ']'
             );
         }
 
         if ( !hb_get_page_id( 'checkout' ) || !get_post( hb_get_page_id( 'checkout' ) ) ) {
             $pages['checkout'] = array(
-                'name' => _x( 'hotel-checkout', 'Page Slug', 'tp-hotel-booking' ),
-                'title' => _x( 'Hotel Checkout', 'Page Title', 'tp-hotel-booking' ),
+                'name' => _x( 'hotel-checkout', 'Page Slug', 'wp-hotel-booking' ),
+                'title' => _x( 'Hotel Checkout', 'Page Title', 'wp-hotel-booking' ),
                 'content' => '[' . apply_filters( 'hotel_booking_checkout_shortcode_tag', 'hotel_booking_checkout' ) . ']'
             );
         }
 
         if ( !hb_get_page_id( 'search' ) || !get_post( hb_get_page_id( 'search' ) ) ) {
             $pages['search'] = array(
-                'name' => _x( 'hotel-search', 'Page Slug', 'tp-hotel-booking' ),
-                'title' => _x( 'Hotel Booking Search', 'Page Title', 'tp-hotel-booking' ),
+                'name' => _x( 'hotel-search', 'Page Slug', 'wp-hotel-booking' ),
+                'title' => _x( 'Hotel Booking Search', 'Page Title', 'wp-hotel-booking' ),
                 'content' => '[' . apply_filters( 'hotel_booking_search_shortcode_tag', 'hotel_booking' ) . ']'
             );
         }
 
         if ( !hb_get_page_id( 'account' ) || !get_post( hb_get_page_id( 'account' ) ) ) {
             $pages['account'] = array(
-                'name' => _x( 'hotel-account', 'Page Slug', 'tp-hotel-booking' ),
-                'title' => _x( 'Hotel Account', 'Page Title', 'tp-hotel-booking' ),
+                'name' => _x( 'hotel-account', 'Page Slug', 'wp-hotel-booking' ),
+                'title' => _x( 'Hotel Account', 'Page Title', 'wp-hotel-booking' ),
                 'content' => '[' . apply_filters( 'hotel_booking_account_shortcode_tag', 'hotel_booking_account' ) . ']'
             );
         }
 
         if ( !hb_get_page_id( 'terms' ) || !get_post( hb_get_page_id( 'terms' ) ) ) {
             $pages['terms'] = array(
-                'name' => _x( 'hotel-term-condition', 'Page Slug', 'tp-hotel-booking' ),
-                'title' => _x( 'Terms and Conditions ', 'Page Title', 'tp-hotel-booking' ),
+                'name' => _x( 'hotel-term-condition', 'Page Slug', 'wp-hotel-booking' ),
+                'title' => _x( 'Terms and Conditions ', 'Page Title', 'wp-hotel-booking' ),
                 'content' => apply_filters( 'hotel_booking_terms_content', 'Something notices' )
             );
         }
@@ -154,7 +154,7 @@ class HB_Install {
     // create terms default for system
     static function create_terms() {
         if ( !class_exists( 'HB_Post_Types' ) ) {
-            TP_Hotel_Booking::instance()->_include( 'includes/class-hb-post-types.php' );
+            WP_Hotel_Booking::instance()->_include( 'includes/class-hb-post-types.php' );
         }
 
         // register taxonomies

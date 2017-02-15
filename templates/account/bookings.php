@@ -14,7 +14,7 @@ $user     = HB_User::get_current_user();
 $bookings = $user->get_bookings();
 
 if ( !$bookings ) {
-	_e( 'You have no order booking system', 'tp-hotel-booking' );
+	_e( 'You have no order booking system', 'wp-hotel-booking' );
 	return;
 }
 
@@ -22,16 +22,16 @@ if ( !$bookings ) {
 
 <div class="hb_booking_wrapper">
 
-    <h2><?php _e( 'Bookings', 'tp-hotel-booking' ) ?></h2>
+    <h2><?php _e( 'Bookings', 'wp-hotel-booking' ) ?></h2>
 
     <table class="hb_booking_table">
 
         <thead>
         <tr>
-            <th><?php _e( 'ID', 'tp-hotel-booking' ); ?></th>
-            <th><?php _e( 'Booking Date', 'tp-hotel-booking' ); ?></th>
-            <th><?php _e( 'Total', 'tp-hotel-booking' ); ?></th>
-            <th><?php _e( 'Status', 'tp-hotel-booking' ); ?></th>
+            <th><?php _e( 'ID', 'wp-hotel-booking' ); ?></th>
+            <th><?php _e( 'Booking Date', 'wp-hotel-booking' ); ?></th>
+            <th><?php _e( 'Total', 'wp-hotel-booking' ); ?></th>
+            <th><?php _e( 'Status', 'wp-hotel-booking' ); ?></th>
         </tr>
         </thead>
 

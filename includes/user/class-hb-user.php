@@ -10,7 +10,7 @@ if ( !defined( 'ABSPATH' ) ) {
     exit();
 }
 
-TP_Hotel_Booking::instance()->_include( 'includes/user/class-hb-abstract-user.php' );
+WP_Hotel_Booking::instance()->_include( 'includes/user/class-hb-abstract-user.php' );
 
 class HB_User extends HB_User_Abstract {
 

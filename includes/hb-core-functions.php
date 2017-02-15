@@ -37,7 +37,7 @@ if ( !function_exists( 'hotel_booking_get_room_available' ) ) {
         $errors = new WP_Error;
         if ( !$room_id ) {
             $valid = false;
-            $errors->add( 'room_id_invalid', __( 'Room not found.', 'tp-hotel-booking' ) );
+            $errors->add( 'room_id_invalid', __( 'Room not found.', 'wp-hotel-booking' ) );
         }
 
         $args = wp_parse_args( $args, array(
@@ -50,7 +50,7 @@ if ( !function_exists( 'hotel_booking_get_room_available' ) ) {
 
         if ( !$args['check_in_date'] ) {
             $valid = false;
-            $errors->add( 'check_in_date_not_available', __( 'Check in date is not valid.', 'tp-hotel-booking' ) );
+            $errors->add( 'check_in_date_not_available', __( 'Check in date is not valid.', 'wp-hotel-booking' ) );
         } else {
             if ( !is_numeric( $args['check_in_date'] ) ) {
                 $args['check_in_date'] = strtotime( $args['check_in_date'] );
@@ -59,7 +59,7 @@ if ( !function_exists( 'hotel_booking_get_room_available' ) ) {
 
         if ( !$args['check_out_date'] ) {
             $valid = false;
-            $errors->add( 'check_out_date_not_available', __( 'Check out date is not valid.', 'tp-hotel-booking' ) );
+            $errors->add( 'check_out_date_not_available', __( 'Check out date is not valid.', 'wp-hotel-booking' ) );
         } else {
             if ( !is_numeric( $args['check_out_date'] ) ) {
                 $args['check_out_date'] = strtotime( $args['check_out_date'] );
@@ -107,7 +107,7 @@ if ( !function_exists( 'hotel_booking_get_room_available' ) ) {
 
             $qty = absint( $wpdb->get_var( $sql ) ) - absint( $wpdb->get_var( $not ) );
             if ( $qty === 0 ) {
-                $errors->add( 'zero', __( 'This room is not available.', 'tp-hotel-booking' ) );
+                $errors->add( 'zero', __( 'This room is not available.', 'wp-hotel-booking' ) );
                 return $errors;
             }
             return apply_filters( 'hotel_booking_get_room_available', $qty, $room_id, $args );

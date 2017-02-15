@@ -9,7 +9,7 @@ $related = $room->get_related_rooms();
 ?>
 <?php if ( $related->posts ): ?>
     <div class="hb_related_other_room has_slider">
-        <h3 class="title"><?php _e( 'Other Rooms', 'tp-hotel-booking' ); ?></h3>
+        <h3 class="title"><?php _e( 'Other Rooms', 'wp-hotel-booking' ); ?></h3>
 		<?php if ( count( $related->posts ) > 3 ) : ?>
             <div class="navigation">
                 <div class="prev"><span class="pe-7s-angle-left"></span></div>

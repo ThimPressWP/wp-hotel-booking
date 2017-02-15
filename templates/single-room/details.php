@@ -12,12 +12,12 @@ $content = ob_get_clean();
 $tabsInfo   = array();
 $tabsInfo[] = array(
 	'id'      => 'hb_room_description',
-	'title'   => __( 'Description', 'tp-hotel-booking' ),
+	'title'   => __( 'Description', 'wp-hotel-booking' ),
 	'content' => $content
 );
 $tabsInfo[] = array(
 	'id'      => 'hb_room_additinal',
-	'title'   => __( 'Additional Information', 'tp-hotel-booking' ),
+	'title'   => __( 'Additional Information', 'wp-hotel-booking' ),
 	'content' => $room->addition_information
 );
 $tabs       = apply_filters( 'hotel_booking_single_room_infomation_tabs', $tabsInfo );

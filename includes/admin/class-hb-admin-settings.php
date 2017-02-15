@@ -14,10 +14,10 @@ class HB_Admin_Settings {
 
 	public static function get_settings_pages() {
 
-		TP_Hotel_Booking::instance()->_include( 'includes/admin/class-hb-admin-setting-page.php' );
+		WP_Hotel_Booking::instance()->_include( 'includes/admin/class-hb-admin-setting-page.php' );
 		$tabs = array();
 
-		// use TP_Hotel_Booking::instance() return null active hook
+		// use WP_Hotel_Booking::instance() return null active hook
 		$tabs[] = include 'settings/class-hb-admin-setting-general.php';
 		$tabs[] = include 'settings/class-hb-admin-setting-hotel-info.php';
 		$tabs[] = include 'settings/class-hb-admin-setting-lightboxs.php';
@@ -282,7 +282,7 @@ class HB_Admin_Settings {
 										<?php
 											hb_dropdown_pages(
 							                    array(
-							                        'show_option_none'  => __( '---Select page---', 'tp-hotel-booking' ),
+							                        'show_option_none'  => __( '---Select page---', 'wp-hotel-booking' ),
 							                        'option_none_value' => 0,
 							                        'name'      => $field['id'],
 							                        'selected'  => $selected
@@ -337,7 +337,7 @@ class HB_Admin_Settings {
 			        <?php do_action( 'hb_admin_settings_tab_after', $selected_tab ); ?>
 			        <div class="clearfix"></div>
 			        <p class="clearfix">
-			            <button class="button button-primary"><?php _e( 'Update', 'tp-hotel-booking' ); ?></button>
+			            <button class="button button-primary"><?php _e( 'Update', 'wp-hotel-booking' ); ?></button>
 			        </p>
 
 			    </form>

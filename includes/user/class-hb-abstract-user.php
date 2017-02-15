@@ -31,7 +31,7 @@ abstract class HB_User_Abstract {
         }
 
         if ( !$this->id ) {
-            // throw new Exception( sprintf( __( 'User %s is not exists.', 'tp-hotel-booking' ), $user ) );
+            // throw new Exception( sprintf( __( 'User %s is not exists.', 'wp-hotel-booking' ), $user ) );
         }
     }
 

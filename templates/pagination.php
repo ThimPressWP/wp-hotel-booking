@@ -5,7 +5,7 @@
  * Override this template by copying it to yourtheme/tp-hotel-booking/pagination.php
  *
  * @author        ThimPress
- * @package       tp-hotel-booking/templates
+ * @package       wp-hotel-booking/templates
  * @version       1.6
  */
 
@@ -29,8 +29,8 @@ if ( $wp_query->max_num_pages <= 1 ) {
 		'add_args'  => '',
 		'current'   => max( 1, get_query_var( 'paged' ) ),
 		'total'     => $wp_query->max_num_pages,
-		'prev_text' => __( 'Previous', 'tp-hotel-booking' ),
-		'next_text' => __( 'Next', 'tp-hotel-booking' ),
+		'prev_text' => __( 'Previous', 'wp-hotel-booking' ),
+		'next_text' => __( 'Next', 'wp-hotel-booking' ),
 		'type'      => 'list',
 		'end_size'  => 3,
 		'mid_size'  => 3

@@ -9,7 +9,7 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit();
 }
 ?>
-<h2><?php _e( 'Customer Details', 'tp-hotel-booking' ) ?></h2>
+<h2><?php _e( 'Customer Details', 'wp-hotel-booking' ) ?></h2>
 <table class="width-100 customer_details" cellspacing="0" cellpadding="0">
     <tr>
         <td class="callout-inner secondary">
@@ -21,17 +21,17 @@ if ( !defined( 'ABSPATH' ) ) {
                             <tr>
                                 <th>
                                     <p>
-                                        <strong><?php _e( 'Payment Method', 'tp-hotel-booking' ) ?></strong><br> <?php echo esc_html( $booking->method_title ) ?>
+                                        <strong><?php _e( 'Payment Method', 'wp-hotel-booking' ) ?></strong><br> <?php echo esc_html( $booking->method_title ) ?>
                                     </p>
                                     <p>
-                                        <strong><?php _e( 'Email Address', 'tp-hotel-booking' ) ?></strong><br> <?php echo esc_html( $booking->customer_email ) ?>
+                                        <strong><?php _e( 'Email Address', 'wp-hotel-booking' ) ?></strong><br> <?php echo esc_html( $booking->customer_email ) ?>
                                     </p>
                                     <p>
-                                        <strong><?php _e( 'Booking ID', 'tp-hotel-booking' ) ?></strong><br> <?php echo esc_html( $booking->get_booking_number() ) ?>
+                                        <strong><?php _e( 'Booking ID', 'wp-hotel-booking' ) ?></strong><br> <?php echo esc_html( $booking->get_booking_number() ) ?>
                                     </p>
 									<?php if ( $booking->post->post_content ) : ?>
                                         <p>
-                                            <strong><?php _e( 'Addtion Information', 'tp-hotel-booking' ) ?></strong><br> <?php echo esc_html( $booking->post->post_content ) ?>
+                                            <strong><?php _e( 'Addtion Information', 'wp-hotel-booking' ) ?></strong><br> <?php echo esc_html( $booking->post->post_content ) ?>
                                         </p>
 									<?php endif; ?>
                                 </th>
@@ -43,9 +43,9 @@ if ( !defined( 'ABSPATH' ) ) {
                             <tr>
                                 <th>
                                     <p>
-                                        <strong><?php _e( 'Customer Name', 'tp-hotel-booking' ); ?></strong><br>
+                                        <strong><?php _e( 'Customer Name', 'wp-hotel-booking' ); ?></strong><br>
 										<?php printf( '%s', hb_get_customer_fullname( $booking->id ) ) ?><br>
-                                        <strong><?php _e( 'Address', 'tp-hotel-booking' ) ?></strong><br>
+                                        <strong><?php _e( 'Address', 'wp-hotel-booking' ) ?></strong><br>
 										<?php printf( '%s', $booking->customer_country ) ?><br>
 										<?php printf( '%s', $booking->customer_address ) ?><br>
 										<?php printf( '%s', $booking->customer_city ) ?><br><br>

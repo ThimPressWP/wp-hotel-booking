@@ -47,11 +47,11 @@ class HB_Comments {
         }
 
         $check_dirs = array(
-            trailingslashit( get_stylesheet_directory() ) . 'tp-hotel-booking',
-            trailingslashit( get_template_directory() ) . 'tp-hotel-booking',
+            trailingslashit( get_stylesheet_directory() ) . 'wp-hotel-booking',
+            trailingslashit( get_template_directory() ) . 'wp-hotel-booking',
             trailingslashit( get_stylesheet_directory() ),
             trailingslashit( get_template_directory() ),
-            trailingslashit( TP_Hotel_Booking::instance()->plugin_path( 'templates/' ) )
+            trailingslashit( WP_Hotel_Booking::instance()->plugin_path( 'templates/' ) )
         );
 
         foreach ( $check_dirs as $dir ) {
@@ -107,7 +107,7 @@ class HB_Comments {
 
         $tabsInfo[] = array(
             'id' => 'hb_room_reviews',
-            'title' => __( 'Reviews', 'tp-hotel-booking' ),
+            'title' => __( 'Reviews', 'wp-hotel-booking' ),
             'content' => ''
         );
 
@@ -115,7 +115,7 @@ class HB_Comments {
     }
 
     function comments_column( $columns ) {
-        $columns['hb_rating'] = __( 'Rating Room', 'tp-hotel-booking' );
+        $columns['hb_rating'] = __( 'Rating Room', 'wp-hotel-booking' );
         return $columns;
     }
 
@@ -126,7 +126,7 @@ class HB_Comments {
                     $html = array();
                     $html[] = '<div class="rating">';
                     if ( $rating ):
-                        $html[] = '<div itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating" class="star-rating" title="' . ( sprintf( __( 'Rated %d out of 5', 'tp-hotel-booking' ), $rating ) ) . '">';
+                        $html[] = '<div itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating" class="star-rating" title="' . ( sprintf( __( 'Rated %d out of 5', 'wp-hotel-booking' ), $rating ) ) . '">';
                         $html[] = '<span style="width:' . ( ( $rating / 5 ) * 100 ) . '%"></span>';
                         $html[] = '</div>';
                     endif;
@@ -134,7 +134,7 @@ class HB_Comments {
                     $html = implode( '', $html );
                 }
                 else {
-                    $html = __( 'No rating', 'tp-hotel-booking' );
+                    $html = __( 'No rating', 'wp-hotel-booking' );
                 }
                 echo sprintf( '%s', $html );
                 break;

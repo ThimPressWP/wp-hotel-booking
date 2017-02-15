@@ -5,7 +5,7 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 function hb_template_path() {
-	return apply_filters( 'hb_template_path', 'tp-hotel-booking' );
+	return apply_filters( 'hb_template_path', 'wp-hotel-booking' );
 }
 
 /**
@@ -140,8 +140,8 @@ function hb_enqueue_lightbox_assets() {
 }
 
 function hb_lightbox_assets_lightbox2() {
-	wp_enqueue_script( 'lightbox2', TP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/lightbox2/js/lightbox.min.js' ) );
-	wp_enqueue_style( 'lightbox2', TP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/lightbox2/css/lightbox.min.css' ) );
+	wp_enqueue_script( 'lightbox2', WP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/lightbox2/js/lightbox.min.js' ) );
+	wp_enqueue_style( 'lightbox2', WP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/lightbox2/css/lightbox.min.css' ) );
 	?>
     <script type="text/javascript">
 		jQuery(function () {
@@ -153,8 +153,8 @@ function hb_lightbox_assets_lightbox2() {
 }
 
 function hb_lightbox_assets_fancyBox() {
-	wp_enqueue_script( 'fancyBox', TP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/fancyBox/source/jquery.fancybox.js' ) );
-	wp_enqueue_style( 'fancyBox', TP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/fancyBox/source/jquery.fancybox.css' ) );
+	wp_enqueue_script( 'fancyBox', WP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/fancyBox/source/jquery.fancybox.js' ) );
+	wp_enqueue_style( 'fancyBox', WP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/fancyBox/source/jquery.fancybox.css' ) );
 	?>
     <script type="text/javascript">
 		jQuery(function ($) {
@@ -187,10 +187,10 @@ if ( !function_exists( 'hotel_booking_page_title' ) ) {
 	function hotel_booking_page_title( $echo = true ) {
 
 		if ( is_search() ) {
-			$page_title = sprintf( __( 'Search Results: &ldquo;%s&rdquo;', 'tp-hotel-booking ' ), get_search_query() );
+			$page_title = sprintf( __( 'Search Results: &ldquo;%s&rdquo;', 'wp-hotel-booking' ), get_search_query() );
 
 			if ( get_query_var( 'paged' ) )
-				$page_title .= sprintf( __( '&nbsp;&ndash; Page %s', 'tp-hotel-booking' ), get_query_var( 'paged' ) );
+				$page_title .= sprintf( __( '&nbsp;&ndash; Page %s', 'wp-hotel-booking' ), get_query_var( 'paged' ) );
 		} elseif ( is_tax() ) {
 
 			$page_title = single_term_title( "", false );
@@ -412,7 +412,7 @@ if ( !function_exists( 'hb_body_class' ) ) {
 	function hb_body_class( $classes ) {
 		$classes = (array) $classes;
 		if ( is_room() || is_room_taxonomy() ) {
-			$classes[] = 'tp-hotel-booking';
+			$classes[] = 'wp-hotel-booking';
 		}
 
 		return array_unique( $classes );
@@ -522,7 +522,7 @@ if ( !function_exists( 'hotel_display_pricing_plans' ) ) {
 
 		$tabs[] = array(
 			'id'      => 'hb_room_pricing_plans',
-			'title'   => __( 'Pricing Plans', 'tp-hotel-booking' ),
+			'title'   => __( 'Pricing Plans', 'wp-hotel-booking' ),
 			'content' => ''
 		);
 		return $tabs;

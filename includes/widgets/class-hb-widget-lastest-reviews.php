@@ -16,8 +16,8 @@ class HB_Widget_Lastest_Reviews extends WP_Widget{
     {
         parent::__construct(
             'hb_widget_lastest_reviews', // widget base id
-            __( 'HB Rooms Lastest Reviews', 'tp-hotel-booking' ), // name of widget
-            array( 'description' => __( "Display rooms have lastest reviews", 'tp-hotel-booking' ) ) // description widget
+            __( 'HB Rooms Lastest Reviews', 'wp-hotel-booking' ), // name of widget
+            array( 'description' => __( "Display rooms have lastest reviews", 'wp-hotel-booking' ) ) // description widget
         );
     }
 

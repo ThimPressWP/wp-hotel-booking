@@ -72,8 +72,8 @@ function hb_new_booking_email( $booking_id = null ) {
 
     $to                 = $settings->get( 'email_new_booking_recipients', get_option( 'admin_email' ) );
     $subject            = $settings->get( 'email_new_booking_subject', '[{site_title}] New customer booking ({order_number}) - {order_date}' );
-    $email_heading      = $settings->get( 'email_new_booking_heading', __( 'New customer booking', 'tp-hotel-booking' ) );
-    $email_heading_desc = $settings->get( 'email_new_booking_heading_desc', __( 'Reservated', 'tp-hotel-booking' ) );
+    $email_heading      = $settings->get( 'email_new_booking_heading', __( 'New customer booking', 'wp-hotel-booking' ) );
+    $email_heading_desc = $settings->get( 'email_new_booking_heading_desc', __( 'Reservated', 'wp-hotel-booking' ) );
     $format             = $settings->get( 'email_new_booking_format', 'html' );
 
     $find = array(
@@ -170,7 +170,7 @@ function hb_new_customer_booking_email( $booking_id = null ) {
     }
 
     $booking = HB_Booking::instance( $booking_id );
-    $email_subject = hb_settings()->get( 'email_general_subject', __( 'Reservation', 'tp-hotel-booking' ) );
+    $email_subject = hb_settings()->get( 'email_general_subject', __( 'Reservation', 'wp-hotel-booking' ) );
 
     $headers[] = 'Content-Type: text/html; charset=UTF-8';
     // set mail from email

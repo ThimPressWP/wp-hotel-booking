@@ -28,22 +28,22 @@ $rooms = hb_get_order_items( $post->ID );
 					<input type="checkbox" id="booking-item-checkall" />
 				</th>
 				<th class="name left">
-					<?php _e( 'Item', 'tp-hotel-booking' ); ?>
+					<?php _e( 'Item', 'wp-hotel-booking' ); ?>
 				</th>
 				<th class="checkin_checkout center">
-					<?php _e( 'Checkin - Checkout', 'tp-hotel-booking' ) ?>
+					<?php _e( 'Checkin - Checkout', 'wp-hotel-booking' ) ?>
 				</th>
 				<th class="night center">
-					<?php _e( 'Night', 'tp-hotel-booking' ); ?>
+					<?php _e( 'Night', 'wp-hotel-booking' ); ?>
 				</th>
 				<th class="qty center">
-					<?php _e( 'Qty', 'tp-hotel-booking' ); ?>
+					<?php _e( 'Qty', 'wp-hotel-booking' ); ?>
 				</th>
 				<th class="total center">
-					<?php _e( 'Total', 'tp-hotel-booking' ); ?>
+					<?php _e( 'Total', 'wp-hotel-booking' ); ?>
 				</th>
 				<th class="total center actions">
-					<?php _e( 'Actions', 'tp-hotel-booking' ) ?>
+					<?php _e( 'Actions', 'wp-hotel-booking' ) ?>
 				</th>
 			</tr>
 		</thead>
@@ -88,21 +88,21 @@ $rooms = hb_get_order_items( $post->ID );
 			<tr>
 				<th class="left" colspan="3">
 					<select id="actions">
-						<option><?php _e( 'Delete select item(s)', 'tp-hotel-booking' ); ?></option>
+						<option><?php _e( 'Delete select item(s)', 'wp-hotel-booking' ); ?></option>
 					</select>
-					<a href="#" class="button button-primary" id="action_sync" data-order-id="<?php echo esc_attr( $hb_booking->id ) ?>"><?php _e( 'Sync', 'tp-hotel-booking' ); ?></a>
+					<a href="#" class="button button-primary" id="action_sync" data-order-id="<?php echo esc_attr( $hb_booking->id ) ?>"><?php _e( 'Sync', 'wp-hotel-booking' ); ?></a>
 				</th>
 				<th class="right" colspan="4">
 					<?php if ( ! $hb_booking->coupon_id ) : ?>
 
-						<a href="#" class="button" id="add_coupon" data-order-id="<?php echo esc_attr( $hb_booking->id ) ?>"><?php _e( 'Add Coupon', 'tp-hotel-booking' ); ?></a>
+						<a href="#" class="button" id="add_coupon" data-order-id="<?php echo esc_attr( $hb_booking->id ) ?>"><?php _e( 'Add Coupon', 'wp-hotel-booking' ); ?></a>
 
 					<?php else: ?>
 
-						<a href="#" class="button" id="remove_coupon" data-order-id="<?php echo esc_attr( $hb_booking->id ) ?>"  data-coupon-id="<?php echo esc_attr( $hb_booking->coupon_id ) ?>"><?php _e( 'Remove Coupon', 'tp-hotel-booking' ); ?></a>
+						<a href="#" class="button" id="remove_coupon" data-order-id="<?php echo esc_attr( $hb_booking->id ) ?>"  data-coupon-id="<?php echo esc_attr( $hb_booking->coupon_id ) ?>"><?php _e( 'Remove Coupon', 'wp-hotel-booking' ); ?></a>
 
 					<?php endif; ?>
-					<a href="#" class="button" id="add_room_item" data-order-id="<?php echo esc_attr( $hb_booking->id ) ?>"><?php _e( 'Add Room Item', 'tp-hotel-booking' ); ?></a>
+					<a href="#" class="button" id="add_room_item" data-order-id="<?php echo esc_attr( $hb_booking->id ) ?>"><?php _e( 'Add Room Item', 'wp-hotel-booking' ); ?></a>
 				</th>
 			</tr>
 		</tfoot>
@@ -113,7 +113,7 @@ $rooms = hb_get_order_items( $post->ID );
 			<?php if ( $hb_booking->coupon_id ) : ?>
 				<tr class="coupon">
 					<td class="center">
-						<?php printf( __( 'Coupon(<a href="%s">%s</a>)', 'tp-hotel-booking' ), get_edit_post_link( $hb_booking->coupon_id ), $hb_booking->coupon_code ) ?>
+						<?php printf( __( 'Coupon(<a href="%s">%s</a>)', 'wp-hotel-booking' ), get_edit_post_link( $hb_booking->coupon_id ), $hb_booking->coupon_code ) ?>
 					</td>
 					<td class="coupon_discount">
 						<?php printf( '-%s', hb_format_price( $hb_booking->coupon_value, hb_get_currency_symbol( $hb_booking->currency ) ) ); ?>
@@ -122,7 +122,7 @@ $rooms = hb_get_order_items( $post->ID );
 			<?php endif; ?>
 			<tr>
 				<td class="center">
-					<?php _e( 'Sub Total', 'tp-hotel-booking' ) ?>
+					<?php _e( 'Sub Total', 'wp-hotel-booking' ) ?>
 				</td>
 				<td class="subtotal">
 					<?php printf( '%s', hb_format_price( hb_booking_subtotal( $hb_booking->id ), hb_get_currency_symbol( $hb_booking->currency ) ) ); ?>
@@ -130,7 +130,7 @@ $rooms = hb_get_order_items( $post->ID );
 			</tr>
 			<tr>
 				<td class="center">
-					<?php _e( 'Tax', 'tp-hotel-booking' ) ?>
+					<?php _e( 'Tax', 'wp-hotel-booking' ) ?>
 				</td>
 				<td class="tax">
 					<?php printf( '%s', apply_filters( 'hotel_booking_admin_book_details', hb_format_price( hb_booking_tax_total( $hb_booking->id ), hb_get_currency_symbol( $hb_booking->currency ) ), $hb_booking ) ); ?>
@@ -138,7 +138,7 @@ $rooms = hb_get_order_items( $post->ID );
 			</tr>
 			<tr>
 				<td class="center">
-					<?php _e( 'Grand Total', 'tp-hotel-booking' ) ?>
+					<?php _e( 'Grand Total', 'wp-hotel-booking' ) ?>
 				</td>
 				<td class="grand_total">
 					<?php printf( '%s', hb_format_price( hb_booking_total( $hb_booking->id ), hb_get_currency_symbol( $hb_booking->currency ) ) ) ?>

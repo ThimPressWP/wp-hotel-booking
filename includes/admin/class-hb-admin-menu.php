@@ -13,8 +13,8 @@ class HB_Admin_Menu{
 
     function register(){
         add_menu_page(
-            __( 'TP Hotel Booking', 'tp-hotel-booking' ),
-            __( 'TP Hotel Booking', 'tp-hotel-booking' ),
+            __( 'WP Hotel Booking', 'wp-hotel-booking' ),
+            __( 'WP Hotel Booking', 'wp-hotel-booking' ),
             'manage_options',
             'tp_hotel_booking',
             '',
@@ -25,22 +25,22 @@ class HB_Admin_Menu{
         $menu_items = array(
             // 'room_type' => array(
             //     'tp_hotel_booking',
-            //     __( 'Room Types', 'tp-hotel-booking' ),
-            //     __( 'Room Types', 'tp-hotel-booking' ),
+            //     __( 'Room Types', 'wp-hotel-booking' ),
+            //     __( 'Room Types', 'wp-hotel-booking' ),
             //     'manage_options',
             //     'edit-tags.php?taxonomy=hb_room_type'
             // ),
             // 'room_capacity' => array(
             //     'tp_hotel_booking',
-            //     __( 'Room Capacities', 'tp-hotel-booking' ),
-            //     __( 'Room Capacities', 'tp-hotel-booking' ),
+            //     __( 'Room Capacities', 'wp-hotel-booking' ),
+            //     __( 'Room Capacities', 'wp-hotel-booking' ),
             //     'manage_options',
             //     'edit-tags.php?taxonomy=hb_room_capacity'
             // ),
             'pricing_table'   => array(
                 'tp_hotel_booking',
-                __( 'Pricing Plans', 'tp-hotel-booking' ),
-                __( 'Pricing Plans', 'tp-hotel-booking' ),
+                __( 'Pricing Plans', 'wp-hotel-booking' ),
+                __( 'Pricing Plans', 'wp-hotel-booking' ),
                 'manage_options',
                 'tp_hotel_booking_pricing',
                 array( $this, 'pricing_table' )
@@ -55,8 +55,8 @@ class HB_Admin_Menu{
         {
             $menu_items[] = array(
                 'tp_hotel_booking',
-                __( 'Addition Packages', 'tp-hotel-booking' ),
-                __( 'Addition Packages', 'tp-hotel-booking' ),
+                __( 'Addition Packages', 'wp-hotel-booking' ),
+                __( 'Addition Packages', 'wp-hotel-booking' ),
                 'manage_options',
                 'tp_hotel_booking_other_settings',
                 array( $this, 'other_settings' )
@@ -65,8 +65,8 @@ class HB_Admin_Menu{
 
         $menu_items['settings'] = array(
                 'tp_hotel_booking',
-                __( 'Settings', 'tp-hotel-booking' ),
-                __( 'Settings', 'tp-hotel-booking' ),
+                __( 'Settings', 'wp-hotel-booking' ),
+                __( 'Settings', 'wp-hotel-booking' ),
                 'manage_options',
                 'tp_hotel_booking_settings',
                 array( $this, 'settings_page' )
@@ -87,12 +87,12 @@ class HB_Admin_Menu{
 
     function pricing_table(){
         wp_enqueue_script( 'wp-util' );
-        TP_Hotel_Booking::instance()->_include( 'includes/admin/views/pricing-table.php' );
+        WP_Hotel_Booking::instance()->_include( 'includes/admin/views/pricing-table.php' );
     }
 
     function other_settings()
     {
-        TP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings/other_settings.php' );
+        WP_Hotel_Booking::instance()->_include( 'includes/admin/views/settings/other_settings.php' );
     }
 }
 

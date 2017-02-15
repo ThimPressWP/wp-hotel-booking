@@ -59,8 +59,8 @@ function hb_create_booking( $booking_info = array(), $order_items = array() ) {
             '_hb_customer_fax'           => ''
         ) );
     // return WP_Error if cart is empty
-    if( TP_Hotel_Booking::instance()->cart->cart_items_count === 0 ){
-        return new WP_Error( 'hotel_booking_cart_empty', __( 'Your cart is empty.', 'tp-hotel-booking' ) );
+    if( WP_Hotel_Booking::instance()->cart->cart_items_count === 0 ){
+        return new WP_Error( 'hotel_booking_cart_empty', __( 'Your cart is empty.', 'wp-hotel-booking' ) );
     }
 
     $args = array(
@@ -71,24 +71,24 @@ function hb_create_booking( $booking_info = array(), $order_items = array() ) {
         'parent'        => 0
     );
 
-    TP_Hotel_Booking::instance()->_include( 'includes/class-hb-room.php' );
+    WP_Hotel_Booking::instance()->_include( 'includes/class-hb-room.php' );
 
     $booking = HB_Booking::instance( $args['booking_id'] );
-    $booking->post->post_title      = sprintf( __( 'Booking ', 'tp-hotel-booking' ) );
-    $booking->post->post_content    = hb_get_request( 'addition_information' ) ? hb_get_request( 'addition_information' ) : __( 'Empty Booking Notes', 'tp-hotel-booking' ) ;
+    $booking->post->post_title      = sprintf( __( 'Booking ', 'wp-hotel-booking' ) );
+    $booking->post->post_content    = hb_get_request( 'addition_information' ) ? hb_get_request( 'addition_information' ) : __( 'Empty Booking Notes', 'wp-hotel-booking' ) ;
     $booking->post->post_status     = 'hb-' . apply_filters( 'hb_default_order_status', 'pending' );
 
     if ( $args['status'] ) {
         if ( ! in_array( 'hb-' . $args['status'], array_keys( hb_get_booking_statuses() ) ) ) {
-            return new WP_Error( 'hb_invalid_booking_status', __( 'Invalid booking status', 'tp-hotel-booking' ) );
+            return new WP_Error( 'hb_invalid_booking_status', __( 'Invalid booking status', 'wp-hotel-booking' ) );
         }
         $booking->post->post_status  = 'hb-' . $args['status'];
     }
 
     $booking_info['_hb_booking_key'] = apply_filters( 'hb_generate_booking_key', uniqid( 'booking' ) );
 
-    if( TP_Hotel_Booking::instance()->cart->coupon ){
-        $booking_info['_hb_coupon_id'] = TP_Hotel_Booking::instance()->cart->coupon;
+    if( WP_Hotel_Booking::instance()->cart->coupon ){
+        $booking_info['_hb_coupon_id'] = WP_Hotel_Booking::instance()->cart->coupon;
         $coupon = HB_Coupon::instance( $booking_info['_hb_coupon_id'] );
         $booking_info['_hb_coupon_code'] = $coupon->coupon_code;
         $booking_info['_hb_coupon_value'] = $coupon->discount_value;
@@ -101,7 +101,7 @@ function hb_create_booking( $booking_info = array(), $order_items = array() ) {
     $booking_id = $booking->update( $order_items );
 
     // set session booking id
-    TP_Hotel_Booking::instance()->cart->set_booking( 'booking_id', $booking_id );
+    WP_Hotel_Booking::instance()->cart->set_booking( 'booking_id', $booking_id );
 
     // do action
     do_action( 'hotel_booking_create_booking', $booking_id, $booking_info, $order_items );
@@ -115,10 +115,10 @@ function hb_create_booking( $booking_info = array(), $order_items = array() ) {
  */
 function hb_get_booking_statuses() {
     $booking_statuses = array(
-        'hb-cancelled'  => _x( 'Cancelled', 'Booking status', 'tp-hotel-booking' ),
-        'hb-pending'    => _x( 'Pending', 'Booking status', 'tp-hotel-booking' ),
-        'hb-processing' => _x( 'Processing', 'Booking status', 'tp-hotel-booking' ),
-        'hb-completed'  => _x( 'Completed', 'Booking status', 'tp-hotel-booking' ),
+        'hb-cancelled'  => _x( 'Cancelled', 'Booking status', 'wp-hotel-booking' ),
+        'hb-pending'    => _x( 'Pending', 'Booking status', 'wp-hotel-booking' ),
+        'hb-processing' => _x( 'Processing', 'Booking status', 'wp-hotel-booking' ),
+        'hb-completed'  => _x( 'Completed', 'Booking status', 'wp-hotel-booking' ),
     );
     return apply_filters( 'hb_booking_statuses', $booking_statuses );
 }
@@ -296,7 +296,7 @@ function hb_delete_order_item_meta( $item_id = null, $meta_key = null, $meta_val
 // get sub total booking
 function hb_booking_subtotal( $booking_id = null ) {
     if ( ! $booking_id ) {
-        throw new Exception( __( 'Booking is not found.', 'tp-hotel-booking' ) );
+        throw new Exception( __( 'Booking is not found.', 'wp-hotel-booking' ) );
     }
     $booking = HB_Booking::instance( $booking_id );
 
@@ -306,7 +306,7 @@ function hb_booking_subtotal( $booking_id = null ) {
 // get total booking
 function hb_booking_total( $booking_id = null ) {
     if ( ! $booking_id ) {
-        throw new Exception( __( 'Booking is not found.', 'tp-hotel-booking' ) );
+        throw new Exception( __( 'Booking is not found.', 'wp-hotel-booking' ) );
     }
     $booking = HB_Booking::instance( $booking_id );
 
@@ -316,7 +316,7 @@ function hb_booking_total( $booking_id = null ) {
 // get total booking
 function hb_booking_tax_total( $booking_id = null ) {
     if ( ! $booking_id ) {
-        throw new Exception( __( 'Booking is not found.', 'tp-hotel-booking' ) );
+        throw new Exception( __( 'Booking is not found.', 'wp-hotel-booking' ) );
     }
     $booking = HB_Booking::instance( $booking_id );
 
@@ -350,7 +350,7 @@ function hb_get_booking_status_label( $booking_id ) {
     } else {
         $status = $booking_id;
     }
-    return ! empty( $statuses[$status] ) ? $statuses[$status] : __( 'Cancelled', 'tp-hotel-booking' );
+    return ! empty( $statuses[$status] ) ? $statuses[$status] : __( 'Cancelled', 'wp-hotel-booking' );
 }
 
 if ( ! function_exists( 'hb_booking_get_check_in_date' ) ) {

@@ -64,7 +64,7 @@ class HB_Shortcode_Hotel_Booking_Rooms extends HB_Shortcodes {
             hotel_booking_room_loop_end();
         else:
 
-            _e( 'No room found', 'tp-hotel-booking' );
+            _e( 'No room found', 'wp-hotel-booking' );
 
         endif;
         wp_reset_postdata();

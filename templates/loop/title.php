@@ -3,7 +3,7 @@
  * Product loop title
  *
  * @author  ThimPress
- * @package Tp-hotel-booking/Templates
+ * @package wp-hotel-booking/templates
  * @version 1.1.4
  */
 

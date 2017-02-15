@@ -19,7 +19,7 @@
                         </div>
                     </div>
                 </div>
-                <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'tp-hotel-booking' ); ?>"></a>
+                <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'wp-hotel-booking' ); ?>"></a>
             </li>
         <?php endforeach; endif; ?>
         <li class="attachment add-new">

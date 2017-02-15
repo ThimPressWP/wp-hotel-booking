@@ -5,7 +5,7 @@
  * Override this template by copying it to yourtheme/tp-hotel-booking/confirm.php
  *
  * @author        ThimPress
- * @package       tp-hotel-booking/templates
+ * @package       wp-hotel-booking/templates
  * @version       1.6
  */
 
@@ -18,7 +18,7 @@ if ( !defined( 'ABSPATH' ) ) {
     <form name="hb-search-form">
         <input type="hidden" name="hotel-booking" value="complete">
         <p>
-            <button type="submit"><?php _e( 'Finish', 'tp-hotel-booking' ); ?></button>
+            <button type="submit"><?php _e( 'Finish', 'wp-hotel-booking' ); ?></button>
         </p>
     </form>
 </div>

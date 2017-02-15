@@ -16,7 +16,7 @@ if ( !defined( 'ABSPATH' ) ) {
             <tr>
                 <td class="hb_search_item_day"><?php printf( '%s', hb_date_to_name( $day ) ) ?></td>
                 <td class="hb_search_item_total_description">
-					<?php printf( 'x%d %s', $info['count'], __( 'Night', 'tp-hotel-booking' ) ) ?>
+					<?php printf( 'x%d %s', $info['count'], __( 'Night', 'wp-hotel-booking' ) ) ?>
                 </td>
                 <td class="hb_search_item_price">
 					<?php echo hb_format_price( round( $info['price'], 2 ) ); ?>
@@ -27,14 +27,14 @@ if ( !defined( 'ABSPATH' ) ) {
         <tfoot>
         <tr>
             <td class="hb_search_item_total_bold">
-				<?php _e( 'Total', 'tp-hotel-booking' ) ?>
+				<?php _e( 'Total', 'wp-hotel-booking' ) ?>
             </td>
             <td class="hb_search_item_total_description">
 				<?php
 				if ( hb_price_including_tax() ) {
-					_e( '* vat is included', 'tp-hotel-booking' );
+					_e( '* vat is included', 'wp-hotel-booking' );
 				} else {
-					_e( '* vat is not included yet', 'tp-hotel-booking' );
+					_e( '* vat is not included yet', 'wp-hotel-booking' );
 				}
 				?>
             </td>

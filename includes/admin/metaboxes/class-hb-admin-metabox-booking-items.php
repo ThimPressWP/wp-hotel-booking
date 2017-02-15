@@ -26,7 +26,7 @@ class HB_Admin_Metabox_Booking_Items {
 
 	function __construct() {
 
-		$this->title = __( 'Booking Items', 'tp-hotel-booking' );
+		$this->title = __( 'Booking Items', 'wp-hotel-booking' );
 
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ), 10 );
 		add_action( 'save_post', array( $this, 'update' ) );

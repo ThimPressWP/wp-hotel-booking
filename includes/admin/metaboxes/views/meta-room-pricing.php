@@ -20,7 +20,7 @@ $plan_id      = isset( $regular_plan->ID ) ? $regular_plan->ID : 0;
 		<input type="hidden" name="_hbpricing[plan_id][]" value="<?php echo esc_attr( $plan_id ) ?>" />
 	</h3>
 	<div class="hb-pricing-controls">
-		<a href="" class="dashicons dashicons-edit" data-action="edit" title="<?php _e( 'Edit', 'tp-hotel-booking' ); ?>"></a>
+		<a href="" class="dashicons dashicons-edit" data-action="edit" title="<?php _e( 'Edit', 'wp-hotel-booking' ); ?>"></a>
 	</div>
 	<div class="hb-pricing-list">
 		<table>

@@ -8,15 +8,15 @@ function hb_register_web_hook( $key, $param ) {
     if ( !$key ) {
         return;
     }
-    if ( empty( $GLOBALS['tp-hotel-booking']['web_hooks'] ) ) {
-        $GLOBALS['tp-hotel-booking']['web_hooks'] = array();
+    if ( empty( $GLOBALS['wp-hotel-booking']['web_hooks'] ) ) {
+        $GLOBALS['wp-hotel-booking']['web_hooks'] = array();
     }
-    $GLOBALS['tp-hotel-booking']['web_hooks'][$key] = $param;
+    $GLOBALS['wp-hotel-booking']['web_hooks'][$key] = $param;
     do_action( 'hb_register_web_hook', $key, $param );
 }
 
 function hb_get_web_hooks() {
-    $web_hooks = empty( $GLOBALS['tp-hotel-booking']['web_hooks'] ) ? array() : (array) $GLOBALS['tp-hotel-booking']['web_hooks'];
+    $web_hooks = empty( $GLOBALS['wp-hotel-booking']['web_hooks'] ) ? array() : (array) $GLOBALS['wp-hotel-booking']['web_hooks'];
     return apply_filters( 'hb_web_hooks', $web_hooks );
 }
 
@@ -52,7 +52,7 @@ function hb_process_web_hooks() {
     }
     if ( $web_hooks_processed ) {
         do_action( 'hb_web_hooks_processed' );
-        wp_die( __( 'TP Hotel Booking webhook process Complete', 'tp-hotel-booking' ), __( 'TP Hotel Booking webhook process Complete', 'tp-hotel-booking' ), array( 'response' => 200 ) );
+        wp_die( __( 'TP Hotel Booking webhook process Complete', 'wp-hotel-booking' ), __( 'TP Hotel Booking webhook process Complete', 'wp-hotel-booking' ), array( 'response' => 200 ) );
     }
 }
 

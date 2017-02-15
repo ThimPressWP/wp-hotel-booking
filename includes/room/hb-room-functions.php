@@ -15,7 +15,7 @@ if ( !function_exists( 'hb_room_get_pricing_plans' ) ) {
     // get pricing plans
     function hb_room_get_pricing_plans( $room_id = null ) {
         if ( !$room_id ) {
-            // throw new Exception( __( 'Room id is not exists.', 'tp-hotel-booking' ), 503 );
+            // throw new Exception( __( 'Room id is not exists.', 'wp-hotel-booking' ), 503 );
         }
 
         global $wpdb;

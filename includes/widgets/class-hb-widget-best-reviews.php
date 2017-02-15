@@ -16,8 +16,8 @@ class HB_Widget_Best_Reviews extends WP_Widget{
     {
         parent::__construct(
             'hb_widget_best_reviews', // widget base id
-            __( 'HB Rooms Best Reviews', 'tp-hotel-booking' ), // name of widget
-            array( 'description' => __( "Display rooms have best reviews", 'tp-hotel-booking' ) ) // description widget
+            __( 'HB Rooms Best Reviews', 'wp-hotel-booking' ), // name of widget
+            array( 'description' => __( "Display rooms have best reviews", 'wp-hotel-booking' ) ) // description widget
         );
     }
 

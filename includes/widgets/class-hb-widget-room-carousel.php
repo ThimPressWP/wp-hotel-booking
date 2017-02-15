@@ -16,8 +16,8 @@ class HB_Widget_Room_Carousel extends WP_Widget{
     {
         parent::__construct(
             'hb_widget_carousel', // widget base id
-            __( 'HB Rooms Carousel', 'tp-hotel-booking' ), // name of widget
-            array( 'description' => __( "Display rooms slider", 'tp-hotel-booking' ) ) // description widget
+            __( 'HB Rooms Carousel', 'wp-hotel-booking' ), // name of widget
+            array( 'description' => __( "Display rooms slider", 'wp-hotel-booking' ) ) // description widget
         );
     }
 
@@ -74,21 +74,21 @@ class HB_Widget_Room_Carousel extends WP_Widget{
         <p>
             <label><?php _e( 'Navigation:' ); ?></label>
             <input id="<?php echo esc_attr( $this->get_field_id( 'nav' ) ); ?>1" name="<?php echo esc_attr( $this->get_field_name( 'nav' ) ); ?>" type="radio" value="1"<?php echo sprintf( '%s', (!isset($instance['nav']) || $instance['nav']) ? 'checked' : '' ); ?>>
-            <label for="<?php echo esc_attr( $this->get_field_id( 'nav' ) ); ?>1"><?php _e('Yes', 'tp-hotel-booking') ?></label>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'nav' ) ); ?>1"><?php _e('Yes', 'wp-hotel-booking') ?></label>
             <input id="<?php echo esc_attr( $this->get_field_id( 'nav' ) ); ?>0" name="<?php echo esc_attr( $this->get_field_name( 'nav' ) ); ?>" type="radio" value="0"<?php echo sprintf( '%s', (isset($instance['nav']) && !$instance['nav']) ? 'checked' : '' ); ?>>
-            <label for="<?php echo esc_attr( $this->get_field_id( 'nav' ) ); ?>0"><?php _e('No', 'tp-hotel-booking') ?></label>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'nav' ) ); ?>0"><?php _e('No', 'wp-hotel-booking') ?></label>
         </p>
         <p>
             <label><?php _e( 'Pagination:' ); ?></label>
             <!--yes-->
             <input id="<?php echo esc_attr( $this->get_field_id( 'pagination' ) ); ?>1" name="<?php echo esc_attr( $this->get_field_name( 'pagination' ) ); ?>" type="radio" value="1"<?php echo sprintf( '%s', (!isset($instance['pagination']) || $instance['pagination']) ? 'checked' : '' ); ?>>
-            <label for="<?php echo esc_attr( $this->get_field_id( 'pagination' ) ); ?>1"><?php _e('Yes', 'tp-hotel-booking') ?></label>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'pagination' ) ); ?>1"><?php _e('Yes', 'wp-hotel-booking') ?></label>
             <!--no-->
             <input id="<?php echo esc_attr( $this->get_field_id( 'pagination' ) ); ?>0" name="<?php echo esc_attr( $this->get_field_name( 'pagination' ) ); ?>" type="radio" value="0"<?php echo sprintf( '%s', (isset($instance['pagination']) && !$instance['pagination']) ? 'checked' : '' ); ?>>
-            <label for="<?php echo esc_attr( $this->get_field_id( 'pagination' ) ); ?>0"><?php _e('No', 'tp-hotel-booking') ?></label>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'pagination' ) ); ?>0"><?php _e('No', 'wp-hotel-booking') ?></label>
         </p>
         <p>
-            <label for="<?php echo esc_attr( $this->get_field_id( 'text_link' ) ); ?>"><?php _e('Text Link', 'tp-hotel-booking') ?></label>
+            <label for="<?php echo esc_attr( $this->get_field_id( 'text_link' ) ); ?>"><?php _e('Text Link', 'wp-hotel-booking') ?></label>
             <input id="<?php echo esc_attr( $this->get_field_id( 'text_link' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'text_link' ) ); ?>" type="text" value="<?php echo esc_attr($text_link); ?>">
         </p>
         <?php

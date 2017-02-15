@@ -1,4 +1,4 @@
-=== TP Hotel Booking ===
+=== WP Hotel Booking ===
 Contributors: thimpress, leehld
 Donate link: https://thimpress.com/
 Tags: hotel, booking, hotel booking, reservation, reservations
@@ -66,46 +66,45 @@ Yes.
 
 == Changelog ==
 
-= 1.0.1 =
-* Fix load text-domain.
-* Add language file en_US
-* Add Extra Package
-* Update, Fix Query search ( customer's feedback: http://thimpress.com/forums/topic/calendar-availabality-room/#post-42595 )
-* Query search booking_pricing( Admin panel )
-* Woocommerce Payment( Addon )
+= 1.6.3.2 =
+* Fix required plugins path
 
-= 1.0.2 =
-* Update Woocommerce addon
-* Search rooms. Import demo data more than once. post_meta not unique.
+= 1.6.3.1 =
+* Compatibility with Wordpress 4.7.1
+* Fix bug undefined get children function
 
-= 1.0.3 =
-* Update, Add hook ajax search url result. 'hotel_booking_parse_search_param', 'hotel_booking_ajax_remove_cart_item'
-* Addon Block Special Date( Angularjs, ajax )
-* Update Rating
+= 1.6.3 =
+* Compatibility with Wordpress 4.7
+* Update WP Hotel Booking add-ons
 
-= 1.1 =
-* Add Sessions Class, Update Cart Class
-* Optimize process checkout
-* Remove data saving booking if it not usesful( postmeta )
-* Optimize Payment Stripe process( remove stripe sdk, use REST API )
-* Admin booking details
-* Update hook processs addon
+= 1.6.2 =
+* Fix checkout issue
+* Update logic of search room process
+* Update latest reviews shortcode
+* Update best reviews shortcode
+* Add an add-on supports book room without search room
 
-= 1.1.1 =
-* Update Resize image, gallery, archive rooms
-* Update Session class
-* Support Loco Translation & Mulilanguages
+= 1.1.6.1 =
+* Update WP Booking WooCommerce add-on
 
-= 1.1.2 =
-* Add template taxonomy room type
-* Translate calendar search widget
-* Update calendar format
-* Update capacity( customer feedback ) + remove option + add term meta + search query + admin update capacity
+= 1.1.6 =
+* Update logic of search room process
+* Update multiple choice addition packages
+* Update mini cart template
+* Update maximum capacity
+* Update all templates
+* Update to compatible with Wordpress 4.6.1
+* Fix block room calender plan
 
-= 1.1.3 =
-* Update check-in, check-out filter
-* Query search
-* Update report customer delete post
+= 1.1.5.1 =
+* Add book manually
+* User book
+* Update Pricing
+* Book in room add-on ( Support book room without search room )
+
+= 1.1.4.1 =
+* Auto cancel payment
+* Booking inside single room detail
 
 = 1.1.4 =
 * Coupon update
@@ -113,33 +112,51 @@ Yes.
 * Select room search
 * Pricing plan
 
-= 1.1.4.1 =
-* Auto cancel payment
-* Booking inside single room detail
+= 1.1.3 =
+- Update check-in, check-out filter
+- Query search
+- Update report customer delete post
 
-= 1.1.5.1 =
-* Add book manually
-* User book
-* Update Pricing
-* Book in room addon ( Support book room without search room )
+= 1.1.2 =
+- Add template taxonomy room type
+- Translate calendar search widget
+- Update calendar format
+- Update capacity (customer feedback) + remove option + add term meta + search query + admin update capacity
 
-= 1.2 =
-* Update logic of search room process
-* Update booking current day
-* Update multiple choice addition packages
-* Update mini cart template
-* Update maximum capacity
-* Update all templates
-* Update shortcode lastest reviews
-* Update shortcode best reviews
-* Update to compatible with Wordpress 4.6.1
-* Add WPML support
-* Fix block room calender plan
+= 1.1.1 =
+- Update Resize image, gallery, archive rooms
+- Update Session class
+- Support Loco Translation & Mulilanguages
 
-= 1.7 =
-* Update dropdown select children in search room form
+= 1.1 =
+- Add Sessions Class, Update Cart Class
+- Optimize process checkout
+- Remove data saving booking if it not usesful (postmeta)
+- Optimize Payment Stripe process (remove stripe sdk, use REST API)
+- Admin booking details
+- Update hook processs addon
+
+= 1.0.3 =
+- Update, Add hook ajax search url result. 'hotel_booking_parse_search_param', 'hotel_booking_ajax_remove_cart_item'
+- Addon Block Special Date (Angularjs, ajax)
+- Update Rating
+
+= 1.0.2 =
+- Update Woocommerce addon
+- Search rooms. Import demo data more than once. post_meta not unique.
+
+= 1.0.1 =
+- Fix load text-domain.
+- Add language file en_US
+- Add Extra Package
+- Update, Fix Query search (customer's feedback: http://thimpress.com/forums/topic/calendar-availabality-room/#post-42595)
+- Query search booking_pricing (Admin panel)
+- Woocommerce Payment (add-on)
+
+= 1.0 =
+- An amazing Hotel Booking plugin for WordPress was born
 
 == Upgrade Notice ==
 
 = 1.0 =
-* An amazing Hotel Booking plugin for WordPress was born
+- An amazing Hotel Booking plugin for WordPress was born

@@ -194,7 +194,7 @@ class HB_Cart {
      */
     function add_to_cart( $post_id = null, $params = array(), $qty = 1, $group_post_id = null, $asc = false ) {
         if ( !$post_id ) {
-            return new WP_Error( 'hotel_booking_add_to_cart_error', __( 'Can not add to cart, product is not exist.', 'tp-hotel-booking' ) );
+            return new WP_Error( 'hotel_booking_add_to_cart_error', __( 'Can not add to cart, product is not exist.', 'wp-hotel-booking' ) );
         }
 
         $post_id = absint( $post_id );
@@ -590,7 +590,7 @@ class HB_Cart {
      */
     function generate_transaction( $payment_method = null ) {
         if ( $this->is_empty ) {
-            return new WP_Error( 'hotel_booking_transaction_error', __( 'Your cart is empty.', 'tp-hotel-booking' ) );
+            return new WP_Error( 'hotel_booking_transaction_error', __( 'Your cart is empty.', 'wp-hotel-booking' ) );
         }
 
         // initialize object
@@ -598,7 +598,7 @@ class HB_Cart {
         $booking_info = array();
 
         // use coupon
-        if ( HB_Settings::instance()->get( 'enable_coupon' ) && $coupon = TP_Hotel_Booking::instance()->cart->coupon ) {
+        if ( HB_Settings::instance()->get( 'enable_coupon' ) && $coupon = WP_Hotel_Booking::instance()->cart->coupon ) {
             $coupon = HB_Coupon::instance( $coupon );
 
             $booking_info['_hb_coupon_id'] = $coupon->ID;

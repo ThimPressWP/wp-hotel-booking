@@ -8,7 +8,7 @@ $payment_gateways = hb_get_payment_gateways( array( 'enable' => true ) );
 ?>
 <div class="hb-payment-form">
     <div class="hb-col-padding hb-col-border">
-        <h4><?php _e( 'Payment Method', 'tp-hotel-booking' ); ?></h4>
+        <h4><?php _e( 'Payment Method', 'wp-hotel-booking' ); ?></h4>
         <ul class="hb-payment-methods">
 			<?php $i = 0; ?>
 			<?php foreach ( $payment_gateways as $gateway ) : ?>
