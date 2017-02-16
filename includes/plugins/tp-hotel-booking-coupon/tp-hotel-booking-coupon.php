@@ -1,6 +1,6 @@
 <?php
 /*
-  Plugin Name: TP Hotel Booking Coupon
+  Plugin Name: WP Hotel Booking Coupon
   Plugin URI: http://thimpress.com/
   Description: TP Hotel Booking Coupon
   Author: ThimPress

@@ -1,6 +1,6 @@
 <?php
 /*
-  Plugin Name: TP Hotel Booking PayPal Payment
+  Plugin Name: WP Hotel Booking PayPal Payment
   Plugin URI: http://thimpress.com/
   Description: Payment PayPal TP Hotel Booking Addon
   Author: ThimPress

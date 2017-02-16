@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Plugin Name: TP Booking Booking Room
+ * Plugin Name: WP Booking Booking Room
  * Plugin URI: http://thimpress.com/
  * Description: Support book room without search room
  * Author: ThimPress

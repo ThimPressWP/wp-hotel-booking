@@ -1,6 +1,6 @@
 <?php
 /*
-  Plugin Name: TP Hotel Booking Stripe Payment
+  Plugin Name: WP Hotel Booking Stripe Payment
   Plugin URI: http://thimpress.com/
   Description: Payment Stripe TP Hotel Booking Addon
   Author: ThimPress

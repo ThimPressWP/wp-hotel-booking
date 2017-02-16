@@ -1,6 +1,6 @@
 <?php
 /*
-  Plugin Name: TP Hotel Booking Block Room Calendar
+  Plugin Name: WP Hotel Booking Block Room Calendar
   Plugin URI: http://thimpress.com/
   Description: Block booking rooms for specific dates
   Author: ThimPress

@@ -1,6 +1,6 @@
 <?php
 /*
-  Plugin Name: TP Hotel Booking Importer
+  Plugin Name: WP Hotel Booking Importer
   Plugin URI: http://thimpress.com/
   Description: TP Hotel Booking Export, Import Rooms, Bookings, Pricings, Rooms Types, Rooms Capacities
   Author: ThimPress
