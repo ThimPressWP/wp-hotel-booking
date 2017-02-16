@@ -34,7 +34,7 @@ class TP_Hotel_Booking_Coupon {
             $file = $plugin_file;
         }
         if ( $file ) {
-            load_textdomain( 'tp-hotel-booking-coupon', $file );
+            load_textdomain( 'wp-hotel-booking-coupon', $file );
         }
     }
 

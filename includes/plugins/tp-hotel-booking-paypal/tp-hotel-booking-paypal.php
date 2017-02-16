@@ -57,7 +57,7 @@ class TP_Hotel_Booking_Payment_PayPal {
             $file = $plugin_file;
         }
         if ( $file ) {
-            load_textdomain( 'tp-hotel-booking-paypal', $file );
+            load_textdomain( 'wp-hotel-booking-paypal', $file );
         }
     }
 

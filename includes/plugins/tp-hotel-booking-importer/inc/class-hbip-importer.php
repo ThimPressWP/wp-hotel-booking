@@ -68,7 +68,7 @@ class HBIP_Importer {
     public function header() {
         ?>
         <div class="wrap">
-            <h2><?php _e( 'Hotel Booking Import', 'tp-hotel-booking-importer' ); ?></h2>
+            <h2><?php _e( 'Hotel Booking Import', 'wp-hotel-booking-importer' ); ?></h2>
         <?php
     }
 
@@ -93,7 +93,7 @@ class HBIP_Importer {
         if ( isset( $file['error'] ) ) {
             $this->import_error();
         } elseif ( !file_exists( $file['file'] ) ) {
-            $this->import_error( sprintf( __( 'Sorry, there has been an error, could not be found at <code>%s</code>. It is likely that this was caused by a permissions problem.', 'tp-hotel-booking-importer' ), $file['file'] ) );
+            $this->import_error( sprintf( __( 'Sorry, there has been an error, could not be found at <code>%s</code>. It is likely that this was caused by a permissions problem.', 'wp-hotel-booking-importer' ), $file['file'] ) );
         }
 
         if ( isset( $file['id'] ) ) {
@@ -107,7 +107,7 @@ class HBIP_Importer {
 
     public function import( $file = null ) {
         if ( !file_exists( $file ) ) {
-            $this->import_error( sprintf( __( 'Sorry, there has been an error. File is not exists.', 'tp-hotel-booking-importer' ), $file['error'] ) );
+            $this->import_error( sprintf( __( 'Sorry, there has been an error. File is not exists.', 'wp-hotel-booking-importer' ), $file['error'] ) );
         }
 
         /* set limit time */
@@ -200,7 +200,7 @@ class HBIP_Importer {
         }
 
         if ( !$xml ) {
-            return new WP_Error( 'hpip_import_xml_error', __( 'Could not load content file.', 'tp-hotel-booking-importer' ) );
+            return new WP_Error( 'hpip_import_xml_error', __( 'Could not load content file.', 'wp-hotel-booking-importer' ) );
         }
 
         $namespaces = $xml->getDocNamespaces();
@@ -557,7 +557,7 @@ class HBIP_Importer {
         if ( $info = wp_check_filetype( $upload['file'] ) ) {
             $post['post_mime_type'] = $info['type'];
         } else {
-            return new WP_Error( 'attachment_processing_error', __( 'Invalid file type', 'tp-hotel-booking-importer' ) );
+            return new WP_Error( 'attachment_processing_error', __( 'Invalid file type', 'wp-hotel-booking-importer' ) );
         }
 
         $post['guid'] = $upload['url'];
@@ -611,7 +611,7 @@ class HBIP_Importer {
         // request failed
         if ( !$headers ) {
             @unlink( $upload['file'] );
-            return new WP_Error( 'import_file_error', __( 'Remote server did not respond', 'tp-hotel-booking-importer' ) );
+            return new WP_Error( 'import_file_error', __( 'Remote server did not respond', 'wp-hotel-booking-importer' ) );
         }
 
         /* respone status */
@@ -620,25 +620,25 @@ class HBIP_Importer {
         // make sure the fetch was successful
         if ( $status != '200' ) {
             @unlink( $upload['file'] );
-            return new WP_Error( 'import_file_error', sprintf( __( 'Remote server returned error response %1$d %2$s', 'tp-hotel-booking-importer' ), esc_html( $status ), get_status_header_desc( $status ) ) );
+            return new WP_Error( 'import_file_error', sprintf( __( 'Remote server returned error response %1$d %2$s', 'wp-hotel-booking-importer' ), esc_html( $status ), get_status_header_desc( $status ) ) );
         }
 
         $filesize = filesize( $upload['file'] );
 
         if ( isset( $headers['content-length'] ) && $filesize != $headers['content-length'] ) {
             @unlink( $upload['file'] );
-            return new WP_Error( 'import_file_error', __( 'Remote file is incorrect size', 'tp-hotel-booking-importer' ) );
+            return new WP_Error( 'import_file_error', __( 'Remote file is incorrect size', 'wp-hotel-booking-importer' ) );
         }
 
         if ( 0 == $filesize ) {
             @unlink( $upload['file'] );
-            return new WP_Error( 'import_file_error', __( 'Zero size file downloaded', 'tp-hotel-booking-importer' ) );
+            return new WP_Error( 'import_file_error', __( 'Zero size file downloaded', 'wp-hotel-booking-importer' ) );
         }
 
         $max_size = (int) $this->max_attachment_size();
         if ( !empty( $max_size ) && $filesize > $max_size ) {
             @unlink( $upload['file'] );
-            return new WP_Error( 'import_file_error', sprintf( __( 'Remote file is too large, limit is %s', 'tp-hotel-booking-importer' ), size_format( $max_size ) ) );
+            return new WP_Error( 'import_file_error', sprintf( __( 'Remote file is too large, limit is %s', 'wp-hotel-booking-importer' ), size_format( $max_size ) ) );
         }
 
         // keep track of the old and new urls so we can substitute them later
@@ -1099,7 +1099,7 @@ class HBIP_Importer {
      */
     private function import_error( $message = '', $die = true ) {
         if ( $die ) {
-            echo '<p class="description"><strong>' . __( 'Sorry, there has been an error.', 'tp-hotel-booking-importer' ) . '</strong><br />';
+            echo '<p class="description"><strong>' . __( 'Sorry, there has been an error.', 'wp-hotel-booking-importer' ) . '</strong><br />';
         }
         if ( $message ) {
             echo esc_html( $message );
@@ -1115,7 +1115,7 @@ class HBIP_Importer {
     /* completed message */
 
     private function completed() {
-        printf( __( '<p>Import completed.</p>', 'tp-hotel-booking-importer' ) );
+        printf( __( '<p>Import completed.</p>', 'wp-hotel-booking-importer' ) );
     }
 
     public static function instance() {
@@ -1135,5 +1135,5 @@ add_action( 'admin_init', 'hbip_importer' );
 
 function hbip_importer() {
     $GLOBALS['hbip_importer'] = HBIP_Importer::instance();
-    register_importer( 'hbip_importer', 'Hotel Booking', __( 'This will contain all of your <strong> rooms, bookings, coupons, users, pricing plan, block special date and additonal packages</strong>.', 'tp-hotel-booking-importer' ), array( $GLOBALS['hbip_importer'], 'dispatch' ) );
+    register_importer( 'hbip_importer', 'Hotel Booking', __( 'This will contain all of your <strong> rooms, bookings, coupons, users, pricing plan, block special date and additonal packages</strong>.', 'wp-hotel-booking-importer' ), array( $GLOBALS['hbip_importer'], 'dispatch' ) );
 }

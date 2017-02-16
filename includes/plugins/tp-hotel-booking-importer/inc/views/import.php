@@ -13,7 +13,7 @@ $size = size_format( $bytes );
 $upload_dir = wp_upload_dir();
 ?>
 <div class="wrap">
-    <p class="description"><?php _e( 'This will import all of your rooms, bookings, coupons, users, pricing plan, block special date, additonal packages if exists in export file.', 'tp-hotel-booking-importer' ); ?></p>
+    <p class="description"><?php _e( 'This will import all of your rooms, bookings, coupons, users, pricing plan, block special date, additonal packages if exists in export file.', 'wp-hotel-booking-importer' ); ?></p>
 <?php
 if ( isset( $_SESSION['hbip_import_flash_messages'] ) ) :
     foreach ( $_SESSION['hbip_import_flash_messages'] as $type => $message ) :

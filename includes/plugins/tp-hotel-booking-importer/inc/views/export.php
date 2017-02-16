@@ -15,21 +15,21 @@ if ( !defined( 'ABSPATH' ) ) {
     <fieldset>
         <p>
             <input type="radio" name="export" value="all" id="all" checked/>
-            <label for="all"><?php _e( 'All', 'tp-hotel-booking-importer' ) ?></label>
+            <label for="all"><?php _e( 'All', 'wp-hotel-booking-importer' ) ?></label>
         </p>
-        <p class="description"><?php _e( 'This will contain all of your rooms, bookings, coupons, users, pricing plan, block special date, additonal packages.', 'tp-hotel-booking-importer' ); ?></p>
+        <p class="description"><?php _e( 'This will contain all of your rooms, bookings, coupons, users, pricing plan, block special date, additonal packages.', 'wp-hotel-booking-importer' ); ?></p>
     </fieldset>
 
     <fieldset>
         <p>
             <input type="radio" name="export" value="pricing" id="pricing"/>
-            <label for="all"><?php _e( 'Pricing', 'tp-hotel-booking-importer' ) ?></label>
+            <label for="all"><?php _e( 'Pricing', 'wp-hotel-booking-importer' ) ?></label>
         </p>
-        <p class="description"><?php _e( 'This will contain all Pricing Plan of roms( Only support our theme. )', 'tp-hotel-booking-importer' ); ?></p>
+        <p class="description"><?php _e( 'This will contain all Pricing Plan of roms( Only support our theme. )', 'wp-hotel-booking-importer' ); ?></p>
     </fieldset>
     <p>
 <?php wp_nonce_field( 'hbtool_export', 'hbtool_export' ); ?>
-        <button type="submit" class="button button-primary"><?php _e( 'Download Export File', 'tp-hotel-booking-importer' ); ?></button>
+        <button type="submit" class="button button-primary"><?php _e( 'Download Export File', 'wp-hotel-booking-importer' ); ?></button>
     </p>
 
 </form>

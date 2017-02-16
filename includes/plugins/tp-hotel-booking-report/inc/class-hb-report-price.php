@@ -52,7 +52,7 @@ class HB_Report_Price extends HB_Report {
 
         $this->calculate_current_range( $this->_range );
 
-        $this->_title = sprintf( __( 'Chart in %s to %s', 'tp-hotel-booking-report' ), $this->_start_in, $this->_end_in );
+        $this->_title = sprintf( __( 'Chart in %s to %s', 'wp-hotel-booking-report' ), $this->_start_in, $this->_end_in );
 
         add_action( 'admin_init', array( $this, 'export_csv' ) );
         add_filter( 'hotel_booking_sidebar_price_info', array( $this, 'total_ear' ) );
@@ -265,15 +265,15 @@ class HB_Report_Price extends HB_Report {
         $output = fopen( 'php://output', 'w' );
 
         $column = array(
-            __( 'Date/Time', 'tp-hotel-booking-report' )
+            __( 'Date/Time', 'wp-hotel-booking-report' )
         );
         if ( $this->chart_groupby === 'month' ) {
             $column = array(
-                __( 'Month', 'tp-hotel-booking-report' )
+                __( 'Month', 'wp-hotel-booking-report' )
             );
         }
 
-        $column[] = __( 'Total Earning', 'tp-hotel-booking-report' );
+        $column[] = __( 'Total Earning', 'wp-hotel-booking-report' );
 
         $column = apply_filters( 'hotel_booking_export_report_price_column', $column );
 
@@ -317,7 +317,7 @@ class HB_Report_Price extends HB_Report {
                 $price = $price + $item->total;
             }
             $sidebars[] = array(
-                'title' => sprintf( __( 'Total %s to %s', 'tp-hotel-booking-report' ), $this->_start_in, $this->_end_in ),
+                'title' => sprintf( __( 'Total %s to %s', 'wp-hotel-booking-report' ), $this->_start_in, $this->_end_in ),
                 'descr' => hb_format_price( $price )
             );
         }

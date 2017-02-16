@@ -57,7 +57,7 @@ class TP_Hotel_Booking_Payment_Authorize {
             $file = $plugin_file;
         }
         if ( $file ) {
-            load_textdomain( 'tp-hotel-booking-authorize-sim', $file );
+            load_textdomain( 'wp-hotel-booking-authorize-sim', $file );
         }
     }
 

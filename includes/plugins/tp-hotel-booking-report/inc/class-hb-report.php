@@ -31,7 +31,7 @@ abstract class HB_Report {
         switch ( $current_range ) {
 
             case 'custom':
-                if ( !isset( $_GET['tp-hotel-booking-report'] ) ) {
+                if ( !isset( $_GET['wp-hotel-booking-report'] ) ) {
                     return;
                 }
 
@@ -99,11 +99,11 @@ abstract class HB_Report {
         if ( $this->chart_groupby === 'day' ) {
             $this->_range_start = date( 'z', strtotime( $this->_start_in ) );
             $this->_range_end = date( 'z', strtotime( $this->_end_in ) );
-            $this->chart_groupby_title = __( 'Day', 'tp-hotel-booking-report' );
+            $this->chart_groupby_title = __( 'Day', 'wp-hotel-booking-report' );
         } else {
             $this->_range_start = date( 'm', strtotime( $this->_start_in ) );
             $this->_range_end = date( 'm', strtotime( $this->_end_in ) );
-            $this->chart_groupby_title = __( 'Month', 'tp-hotel-booking-report' );
+            $this->chart_groupby_title = __( 'Month', 'wp-hotel-booking-report' );
         }
     }
 

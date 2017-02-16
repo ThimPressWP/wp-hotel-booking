@@ -32,7 +32,7 @@ class TP_Hotel_Booking_Report {
             $file = $plugin_file;
         }
         if ( $file ) {
-            load_textdomain( 'tp-hotel-booking-report', $file );
+            load_textdomain( 'wp-hotel-booking-report', $file );
         }
     }
 

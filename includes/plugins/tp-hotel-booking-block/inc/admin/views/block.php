@@ -17,7 +17,7 @@ $rooms = $wpdb->get_results( $wpdb->prepare(
             <!--Loop Start-->
             <div class="calendar_setup" ng-repeat="block in calendars">
                 <!--Remove button-->
-                <a href="javascript:void(0)" class="button remove-plan" ng-click="remove_calendar( block.id )"><?php _e( 'Remove Plan', 'tp-hotel-booking-block' ); ?></a>
+                <a href="javascript:void(0)" class="button remove-plan" ng-click="remove_calendar( block.id )"><?php _e( 'Remove Plan', 'wp-hotel-booking-block' ); ?></a>
 
                 <!--room in rooms-->
                 <select ng-model="block.post_id" ng-multiple="true" ng-options="room.post_title for room in rooms  track by room.ID" size="10" multiple></select>
@@ -31,8 +31,8 @@ $rooms = $wpdb->get_results( $wpdb->prepare(
         </div>
 
         <p style="clear: both"></p>
-        <a class="button" id="hotel_add_calendar" ng-click="add_calendar()"><?php _e( 'Add Specific Calander', 'tp-hotel-booking-block' ); ?></a>
-        <button class="button button-primary"><?php _e( 'Update', 'tp-hotel-booking-block' ) ?></button>
+        <a class="button" id="hotel_add_calendar" ng-click="add_calendar()"><?php _e( 'Add Specific Calander', 'wp-hotel-booking-block' ); ?></a>
+        <button class="button button-primary"><?php _e( 'Update', 'wp-hotel-booking-block' ) ?></button>
 
     </form>
 

@@ -54,8 +54,8 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base {
         parent::__construct();
 
         $this->_slug = 'authorize';
-        $this->_title = __( 'Authorize', 'tp-hotel-booking-authorize-sim' );
-        $this->_description = __( 'Pay with Authorize.net', 'tp-hotel-booking-authorize-sim' );
+        $this->_title = __( 'Authorize', 'wp-hotel-booking-authorize-sim' );
+        $this->_description = __( 'Pay with Authorize.net', 'wp-hotel-booking-authorize-sim' );
         $this->_settings = HB_Settings::instance()->get( 'authorize' );
 
         $this->_api_login_id = isset( $this->_settings['api_login_id'] ) ? $this->_settings['api_login_id'] : '8u33RVeK';
@@ -71,10 +71,10 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base {
             $this->_authorize_url = $this->_production_authorize_url;
 
         $this->_messages = array(
-            1 => __( 'This transaction has been approved.', 'tp-hotel-booking-authorize-sim' ),
-            2 => __( 'This transaction has been declined.', 'tp-hotel-booking-authorize-sim' ),
-            3 => __( 'There has been an error processing this transaction.', 'tp-hotel-booking-authorize-sim' ),
-            4 => __( ' This transaction is being held for review.', 'tp-hotel-booking-authorize-sim' )
+            1 => __( 'This transaction has been approved.', 'wp-hotel-booking-authorize-sim' ),
+            2 => __( 'This transaction has been declined.', 'wp-hotel-booking-authorize-sim' ),
+            3 => __( 'There has been an error processing this transaction.', 'wp-hotel-booking-authorize-sim' ),
+            4 => __( ' This transaction is being held for review.', 'wp-hotel-booking-authorize-sim' )
         );
 
         $this->init();
@@ -225,9 +225,9 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base {
             'x_type' => 'AUTH_CAPTURE',
             'x_cancel_url' => hb_get_return_url(),
             'x_email_customer' => 'TRUE',
-            'x_cancel_url_text' => __( 'Cancel Payment', 'tp-hotel-booking-authorize-sim' ),
+            'x_cancel_url_text' => __( 'Cancel Payment', 'wp-hotel-booking-authorize-sim' ),
             'x_receipt_link_method' => 'POST',
-            'x_receipt_link_text' => __( 'Click here to return our homepage', 'tp-hotel-booking-authorize-sim' ),
+            'x_receipt_link_text' => __( 'Click here to return our homepage', 'wp-hotel-booking-authorize-sim' ),
             'x_receipt_link_URL' => hb_get_return_url(),
         );
 
@@ -240,7 +240,7 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base {
         <?php foreach ( $authorize_args as $name => $val ): ?>
                 <input type="hidden" name="<?php echo esc_attr( $name ); ?>" value="<?php echo esc_attr( $val ) ?>" />
         <?php endforeach; ?>
-            <button type="submit"><?php _e( 'Pay with Authorize.net', 'tp-hotel-booking-authorize-sim' ) ?></button>
+            <button type="submit"><?php _e( 'Pay with Authorize.net', 'wp-hotel-booking-authorize-sim' ) ?></button>
         </form>
         <script type="text/javascript">
             ( function ( $ ) {
@@ -264,7 +264,7 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base {
      * @return [html] [description]
      */
     function form() {
-        echo _e( 'Pay with Authorize', 'tp-hotel-booking-authorize-sim' );
+        echo _e( 'Pay with Authorize', 'wp-hotel-booking-authorize-sim' );
     }
 
     /**

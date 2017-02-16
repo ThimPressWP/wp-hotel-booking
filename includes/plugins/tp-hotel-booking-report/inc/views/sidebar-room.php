@@ -6,8 +6,8 @@
 ?>
 <form method="GET">
 
-	<h4><?php _e( 'Rooms Search', 'tp-hotel-booking-report' ) ?></h4>
-	<?php wp_nonce_field( 'tp-hotel-booking-report', 'tp-hotel-booking-report' ); ?>
+	<h4><?php _e( 'Rooms Search', 'wp-hotel-booking-report' ) ?></h4>
+	<?php wp_nonce_field( 'wp-hotel-booking-report', 'wp-hotel-booking-report' ); ?>
 	<input type="hidden" name="page" value="<?php echo isset($_GET['page']) ? sanitize_text_field( $_GET['page'] ) : '' ?>" />
 	<input type="hidden" name="tab" value="room" />
 	<input type="hidden" name="range" value="<?php echo isset( $_GET['range'] ) ? esc_attr( sanitize_text_field( $_GET['range'] ) ) : '7day' ?>" />
@@ -33,7 +33,7 @@
 	    <?php endforeach; ?>
 	</select>
 	<p>
-		<button type="submit" class="button"><?php _e( 'Show', 'tp-hotel-booking-report' ) ?></button>
+		<button type="submit" class="button"><?php _e( 'Show', 'wp-hotel-booking-report' ) ?></button>
 	</p>
 
 </form>

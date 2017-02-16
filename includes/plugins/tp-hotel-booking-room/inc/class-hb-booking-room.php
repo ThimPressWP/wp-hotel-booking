@@ -31,7 +31,7 @@ if ( !class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
             ?>
             <table class="form-table">
                 <tr>
-                    <th><?php _e( 'Enable book in single room', 'tp-hotel-booking-room' ); ?></th>
+                    <th><?php _e( 'Enable book in single room', 'wp-hotel-booking-room' ); ?></th>
                     <td>
                         <input type="hidden" name="<?php echo esc_attr( $settings->get_field_name( 'enable_single_book' ) ); ?>" value="0" />
                         <input type="checkbox" name="<?php echo esc_attr( $settings->get_field_name( 'enable_single_book' ) ); ?>" <?php checked( $settings->get( 'enable_single_book' ) ? 1 : 0, 1 ); ?> value="1" />
@@ -88,8 +88,8 @@ if ( !class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
             wp_register_style( 'magnific-popup', TP_HB_BOOKING_ROOM_URI . 'inc/libraries/magnific-popup/magnific-popup.css', array(), false, true );
             wp_enqueue_style( 'magnific-popup' );
 
-            wp_enqueue_style( 'tp-hotel-booking-room', TP_HB_BOOKING_ROOM_URI . 'assets/css/site.css' );
-            wp_enqueue_script( 'tp-hotel-booking-room', TP_HB_BOOKING_ROOM_URI . 'assets/js/site.js' );
+            wp_enqueue_style( 'wp-hotel-booking-room', TP_HB_BOOKING_ROOM_URI . 'assets/css/site.css' );
+            wp_enqueue_script( 'wp-hotel-booking-room', TP_HB_BOOKING_ROOM_URI . 'assets/js/site.js' );
         }
 
         public function check_room_availabel() {
@@ -121,7 +121,7 @@ if ( !class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
                 die();
             }
 
-            wp_send_json( array( 'status' => false, 'message' => __( 'No room found.', 'tp-hotel-booking-room' ) ) );
+            wp_send_json( array( 'status' => false, 'message' => __( 'No room found.', 'wp-hotel-booking-room' ) ) );
             die();
         }
 
@@ -257,20 +257,20 @@ if ( !class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
             $errors = array();
 
             if ( !isset( $_POST['room-id'] ) || !is_numeric( $_POST['check_in_date_timestamp'] ) ) {
-                $errors[] = __( 'Check in date is required.', 'tp-hotel-booking-room' );
+                $errors[] = __( 'Check in date is required.', 'wp-hotel-booking-room' );
             } else {
                 $room_id = absint( $_POST['room-id'] );
             }
 
             if ( !isset( $_POST['check_in_date'] ) || !isset( $_POST['check_in_date_timestamp'] ) || !is_numeric( $_POST['check_in_date_timestamp'] ) ) {
-                $errors[] = __( 'Check in date is required.', 'tp-hotel-booking-room' );
+                $errors[] = __( 'Check in date is required.', 'wp-hotel-booking-room' );
             } else {
                 $checkindate_text = sanitize_text_field( $_POST['check_in_date'] );
                 $checkindate = absint( $_POST['check_in_date_timestamp'] );
             }
 
             if ( !isset( $_POST['check_out_date_timestamp'] ) || !is_numeric( $_POST['check_out_date_timestamp'] ) ) {
-                $errors[] = __( 'Check out date is required.', 'tp-hotel-booking-room' );
+                $errors[] = __( 'Check out date is required.', 'wp-hotel-booking-room' );
             } else {
                 $checkoutdate_text = sanitize_text_field( $_POST['check_out_date'] );
                 $checkoutdate = absint( $_POST['check_out_date_timestamp'] );
@@ -295,7 +295,7 @@ if ( !class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
                         'qty' => $qty
                     ) );
                 } else {
-                    $errors[] = sprintf( __( 'No room found in %s and %s', 'tp-hotel-booking-room' ), $checkindate_text, $checkoutdate_text );
+                    $errors[] = sprintf( __( 'No room found in %s and %s', 'wp-hotel-booking-room' ), $checkindate_text, $checkoutdate_text );
                 }
             }
 

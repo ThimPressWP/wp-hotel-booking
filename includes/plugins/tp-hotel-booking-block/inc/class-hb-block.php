@@ -34,25 +34,25 @@ class Hotel_Booking_Block {
 
     function register_post_type() {
         $labels = array(
-            'name' => _x( 'Blocked', 'post type general name', 'tp-hotel-booking-block' ),
-            'singular_name' => _x( 'Blocked', 'post type singular name', 'tp-hotel-booking-block' ),
-            'menu_name' => _x( 'Blocked', 'admin menu', 'tp-hotel-booking-block' ),
-            'name_admin_bar' => _x( 'Blocked', 'add new on admin bar', 'tp-hotel-booking-block' ),
-            'add_new' => _x( 'Add New', 'block', 'tp-hotel-booking-block' ),
-            'add_new_item' => __( 'Add New Blocked', 'tp-hotel-booking-block' ),
-            'new_item' => __( 'New Blocked', 'tp-hotel-booking-block' ),
-            'edit_item' => __( 'Edit Blocked', 'tp-hotel-booking-block' ),
-            'view_item' => __( 'View Blocked', 'tp-hotel-booking-block' ),
-            'all_items' => __( 'All Blocked', 'tp-hotel-booking-block' ),
-            'search_items' => __( 'Search Blocked', 'tp-hotel-booking-block' ),
-            'parent_item_colon' => __( 'Parent Blocked:', 'tp-hotel-booking-block' ),
-            'not_found' => __( 'No blocked found.', 'tp-hotel-booking-block' ),
-            'not_found_in_trash' => __( 'No blocked found in Trash.', 'tp-hotel-booking-block' )
+            'name' => _x( 'Blocked', 'post type general name', 'wp-hotel-booking-block' ),
+            'singular_name' => _x( 'Blocked', 'post type singular name', 'wp-hotel-booking-block' ),
+            'menu_name' => _x( 'Blocked', 'admin menu', 'wp-hotel-booking-block' ),
+            'name_admin_bar' => _x( 'Blocked', 'add new on admin bar', 'wp-hotel-booking-block' ),
+            'add_new' => _x( 'Add New', 'block', 'wp-hotel-booking-block' ),
+            'add_new_item' => __( 'Add New Blocked', 'wp-hotel-booking-block' ),
+            'new_item' => __( 'New Blocked', 'wp-hotel-booking-block' ),
+            'edit_item' => __( 'Edit Blocked', 'wp-hotel-booking-block' ),
+            'view_item' => __( 'View Blocked', 'wp-hotel-booking-block' ),
+            'all_items' => __( 'All Blocked', 'wp-hotel-booking-block' ),
+            'search_items' => __( 'Search Blocked', 'wp-hotel-booking-block' ),
+            'parent_item_colon' => __( 'Parent Blocked:', 'wp-hotel-booking-block' ),
+            'not_found' => __( 'No blocked found.', 'wp-hotel-booking-block' ),
+            'not_found_in_trash' => __( 'No blocked found in Trash.', 'wp-hotel-booking-block' )
         );
 
         $args = array(
             'labels' => $labels,
-            'description' => __( 'Blocked days.', 'tp-hotel-booking-block' ),
+            'description' => __( 'Blocked days.', 'wp-hotel-booking-block' ),
             'public' => false,
             'publicly_queryable' => true,
             'show_ui' => true,
@@ -78,8 +78,8 @@ class Hotel_Booking_Block {
     function block_menu( $menus ) {
         $menus['block'] = array(
             'tp_hotel_booking',
-            __( 'Block Special Date', 'tp-hotel-booking-block' ),
-            __( 'Block Special Date', 'tp-hotel-booking-block' ),
+            __( 'Block Special Date', 'wp-hotel-booking-block' ),
+            __( 'Block Special Date', 'wp-hotel-booking-block' ),
             'manage_options',
             'tp_hotel_block',
             array( $this, 'block_build_page' )
@@ -108,7 +108,7 @@ class Hotel_Booking_Block {
 
         $l10n = apply_filters( 'hote_booking_block_l10n', array(
             'ajaxurl' => admin_url( 'admin-ajax.php?schema=hotel-block' ),
-            'error_ajax' => __( 'Request has error. Please try again.', 'tp-hotel-booking-block' )
+            'error_ajax' => __( 'Request has error. Please try again.', 'wp-hotel-booking-block' )
                 ) );
         wp_localize_script( 'tp_hotel_booking_block', 'Hotel_Booking_Block', $l10n );
 
@@ -117,7 +117,7 @@ class Hotel_Booking_Block {
 
     function hotel_block_update() {
         if ( !isset( $_REQUEST['schema'] ) || sanitize_text_field( $_REQUEST['schema'] ) !== 'hotel-block' ) {
-            wp_send_json( array( 'status' => 'failed', 'message' => __( 'Something went wrong.', 'tp-hotel-booking-block' ) ) );
+            wp_send_json( array( 'status' => 'failed', 'message' => __( 'Something went wrong.', 'wp-hotel-booking-block' ) ) );
         }
 
         $calendars = json_decode( file_get_contents( 'php://input' ) );
@@ -137,8 +137,8 @@ class Hotel_Booking_Block {
                 $calendar_id = wp_insert_post( array(
                     'post_type' => 'hb_blocked',
                     'post_status' => 'publish',
-                    'post_title' => __( 'Block item', 'tp-hotel-booking-block' ),
-                    'post_content' => __( 'Block item', 'tp-hotel-booking-block' )
+                    'post_title' => __( 'Block item', 'wp-hotel-booking-block' ),
+                    'post_content' => __( 'Block item', 'wp-hotel-booking-block' )
                         ) );
             }
 
@@ -168,12 +168,12 @@ class Hotel_Booking_Block {
             }
         }
 
-        wp_send_json( array( 'status' => 'success', 'data' => $this->get_blocked(), 'message' => __( 'Update Completed.', 'tp-hotel-booking-block' ) ) );
+        wp_send_json( array( 'status' => 'success', 'data' => $this->get_blocked(), 'message' => __( 'Update Completed.', 'wp-hotel-booking-block' ) ) );
     }
 
     // ajax not loggin
     function notLogin() {
-        wp_send_json( array( 'status' => 'failed', 'message' => __( 'You must Login System', 'tp-hotel-booking-block' ) ) );
+        wp_send_json( array( 'status' => 'failed', 'message' => __( 'You must Login System', 'wp-hotel-booking-block' ) ) );
     }
 
     // get blocked time return object
@@ -254,17 +254,17 @@ class Hotel_Booking_Block {
 
     function wp_ajax_hotel_block_delete_post_type() {
         if ( !isset( $_REQUEST['schema'] ) || sanitize_text_field( $_REQUEST['schema'] ) !== 'hotel-block' ) {
-            wp_send_json( array( 'status' => 'failed', 'message' => __( 'Something went wrong. Please try again!', 'tp-hotel-booking-block' ) ) );
+            wp_send_json( array( 'status' => 'failed', 'message' => __( 'Something went wrong. Please try again!', 'wp-hotel-booking-block' ) ) );
         }
 
         $calendar = json_decode( file_get_contents( 'php://input' ) );
         if ( $calendar_id = $calendar->calendar_id ) {
             if ( get_post( $calendar_id ) && wp_delete_post( $calendar_id ) ) {
-                wp_send_json( array( 'status' => 'success', 'data' => $this->get_blocked(), 'message' => __( 'Remove completed!', 'tp-hotel-booking-block' ) ) );
+                wp_send_json( array( 'status' => 'success', 'data' => $this->get_blocked(), 'message' => __( 'Remove completed!', 'wp-hotel-booking-block' ) ) );
             }
         }
 
-        wp_send_json( array( 'status' => 'success', 'data' => $this->get_blocked(), 'message' => __( 'Remove completed!', 'tp-hotel-booking-block' ) ) );
+        wp_send_json( array( 'status' => 'success', 'data' => $this->get_blocked(), 'message' => __( 'Remove completed!', 'wp-hotel-booking-block' ) ) );
     }
 
     // custom search query

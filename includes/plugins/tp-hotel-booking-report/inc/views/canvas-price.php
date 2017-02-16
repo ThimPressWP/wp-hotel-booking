@@ -1,7 +1,7 @@
 <?php
 	global $hb_report;
 ?>
-<h3 class="chart_title"><?php _e( 'Report Chart Amount Total', 'tp-hotel-booking-report' ) ?></h3>
+<h3 class="chart_title"><?php _e( 'Report Chart Amount Total', 'wp-hotel-booking-report' ) ?></h3>
 <canvas id="hotel_canvas_report_price"></canvas>
 <script>
 

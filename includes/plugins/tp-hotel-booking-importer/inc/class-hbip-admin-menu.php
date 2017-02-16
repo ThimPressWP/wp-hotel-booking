@@ -50,8 +50,8 @@ class HBIP_Admin_Menu {
     /* tabs */
 
     public function tabs( $tabs ) {
-        $tabs['export'] = __( 'Export', 'tp-hotel-booking-importer' );
-        $tabs['import'] = __( 'Import', 'tp-hotel-booking-importer' );
+        $tabs['export'] = __( 'Export', 'wp-hotel-booking-importer' );
+        $tabs['import'] = __( 'Import', 'wp-hotel-booking-importer' );
         return $tabs;
     }
 

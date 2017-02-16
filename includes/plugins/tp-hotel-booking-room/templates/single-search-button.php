@@ -13,4 +13,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $hb_room;
 ?>
 
-<a href="#" data-id="<?php echo esc_attr( $hb_room->ID ) ?>" class="hb_button hb_primary" id="hb_room_load_booking_form"><?php _e( 'Check Availability This Room', 'tp-hotel-booking-room' ); ?></a>
+<a href="#" data-id="<?php echo esc_attr( $hb_room->ID ) ?>" class="hb_button hb_primary" id="hb_room_load_booking_form"><?php _e( 'Check Availability This Room', 'wp-hotel-booking-room' ); ?></a>

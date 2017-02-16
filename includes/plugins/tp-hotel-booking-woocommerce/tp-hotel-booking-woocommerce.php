@@ -469,7 +469,7 @@ class TP_Hotel_Booking_Woocommerce {
 			$file = $plugin_file;
 		}
 		if ( $file ) {
-			load_textdomain( 'tp-hotel-booking-woocommerce', $file );
+			load_textdomain( 'wp-hotel-booking-woocommerce', $file );
 		}
 	}
 

@@ -64,7 +64,7 @@ final class Hotel_Booking_Importer {
             $file = $plugin_file;
         }
         if ( $file ) {
-            load_textdomain( 'tp-hotel-booking-importer', $file );
+            load_textdomain( 'wp-hotel-booking-importer', $file );
         }
     }
 

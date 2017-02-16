@@ -22,7 +22,7 @@ if ( ! $post ) {
 
 		<div class="hb-booking-room-form-head">
 			<h2 class="hb-room-name"><?php printf( '%s', $post->post_title ) ?></h2>
-			<p class="description"><?php _e( 'Please select number of room and packages(optional)', 'tp-hotel-booking-room' ) ?></p>
+			<p class="description"><?php _e( 'Please select number of room and packages(optional)', 'wp-hotel-booking-room' ) ?></p>
 		</div>
 
 		<div class="hb-search-results-form-container">
@@ -45,7 +45,7 @@ if ( ! $post ) {
 		</div>
 
 		<div class="hb-booking-room-form-footer">
-			<a href="#" data-template="hb-room-load-form" class="hb_previous_step hb_button"><?php _e( 'Previous', 'tp-hotel-booking-room' ); ?></a>
+			<a href="#" data-template="hb-room-load-form" class="hb_previous_step hb_button"><?php _e( 'Previous', 'wp-hotel-booking-room' ); ?></a>
 			<input type="hidden" name="check_in_date_text" value="{{ data.check_in_date_text }}" />
 			<input type="hidden" name="check_out_date_text" value="{{ data.check_out_date_text }}" />
 			<input type="hidden" name="check_in_date" value="{{ data.check_in_date }}" />
@@ -54,7 +54,7 @@ if ( ! $post ) {
 			<input type="hidden" name="action" value="hotel_booking_ajax_add_to_cart"/>
 			<input type="hidden" name="is_single" value="1" />
 			<?php wp_nonce_field( 'hb_booking_nonce_action', 'nonce' ); ?>
-			<button type="submit" class="hb_add_to_cart hb_button"><?php _e( 'Add To Cart', 'tp-hotel-booking-room' ); ?></button>
+			<button type="submit" class="hb_add_to_cart hb_button"><?php _e( 'Add To Cart', 'wp-hotel-booking-room' ); ?></button>
 		</div>
 	</form>
 

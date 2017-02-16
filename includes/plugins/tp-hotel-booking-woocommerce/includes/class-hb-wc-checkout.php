@@ -108,13 +108,13 @@ class HB_WC_Checkout extends HB_Checkout {
         $transaction->booking_info['_hb_advance_payment'] = $woocommerce->cart->total;
         // currency of default
         $transaction->booking_info['_hb_currency'] = get_woocommerce_currency();
-        $transaction->booking_info['_hb_description'] = $order->customer_message ? $order->customer_message : __( 'Empty Booking Notes', 'tp-hotel-booking-woocommerce' );
+        $transaction->booking_info['_hb_description'] = $order->customer_message ? $order->customer_message : __( 'Empty Booking Notes', 'wp-hotel-booking-woocommerce' );
         // $transaction->booking_info['_hb_coupons']					= '';
         // $transaction->booking_info['_hb_coupons_total_discount'] 	= '';
         $transaction->booking_info['_hb_tax'] = $woocommerce->cart->get_taxes_total();
         $transaction->booking_info['_hb_woo_order_id'] = $order->id;
         $transaction->booking_info['_hb_price_including_tax'] = wc_prices_include_tax() ? 1 : 0;
-        $transaction->booking_info['_hb_addition_information'] = $order->customer_message ? $order->customer_message : __( 'Empty Booking Notes', 'tp-hotel-booking-woocommerce' );
+        $transaction->booking_info['_hb_addition_information'] = $order->customer_message ? $order->customer_message : __( 'Empty Booking Notes', 'wp-hotel-booking-woocommerce' );
         $transaction->booking_info['_hb_customer_first_name'] = $order->billing_first_name;
         $transaction->booking_info['_hb_customer_last_name'] = $order->billing_last_name;
         $transaction->booking_info['_hb_customer_address'] = $order->billing_address_1;

@@ -7,8 +7,8 @@ if ( !function_exists( 'hotel_report_menu' ) ) {
     function hotel_report_menu( $menus ) {
         $menus['reports'] = array(
             'tp_hotel_booking',
-            __( 'Reports', 'tp-hotel-booking-report' ),
-            __( 'Reports', 'tp-hotel-booking-report' ),
+            __( 'Reports', 'wp-hotel-booking-report' ),
+            __( 'Reports', 'wp-hotel-booking-report' ),
             'manage_options',
             'tp_hotel_booking_report',
             'hotel_create_report_page'

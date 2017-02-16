@@ -65,7 +65,7 @@ class HB_WC_Booking {
                 $currency = get_post_meta( $post_id, '_hb_currency', true );
                 $html = wc_price( $total, array( 'currency' => $currency ) );
             }
-            $html .= '<br /><small><a href="' . esc_attr( get_edit_post_link( $order_id ) ) . '">(' . __( 'Via WooCommerce', 'tp-hotel-booking-woocommerce' ) . ')</a></small>';
+            $html .= '<br /><small><a href="' . esc_attr( get_edit_post_link( $order_id ) ) . '">(' . __( 'Via WooCommerce', 'wp-hotel-booking-woocommerce' ) . ')</a></small>';
         }
         return $html;
     }

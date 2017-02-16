@@ -59,7 +59,7 @@ class TP_Hotel_Booking_Payment_Stripe {
             $file = $plugin_file;
         }
         if ( $file ) {
-            load_textdomain( 'tp-hotel-booking-stripe', $file );
+            load_textdomain( 'wp-hotel-booking-stripe', $file );
         }
     }
 
