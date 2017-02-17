@@ -42,12 +42,12 @@ class HB_Checkout {
         }
 
         // generate transaction
-        $transaction = WP_Hotel_Booking::instance()->cart->generate_transaction( $order );
+        $transaction = TP_Hotel_Booking::instance()->cart->generate_transaction( $order );
         // allow hook
         $booking_info = apply_filters( 'hotel_booking_checkout_booking_info', $transaction->booking_info, $transaction );
         $order_items = apply_filters( 'hotel_booking_checkout_booking_order_items', $transaction->order_items, $transaction );
 
-        if ( WP_Hotel_Booking::instance()->cart->cart_items_count === 0 ) {
+        if ( TP_Hotel_Booking::instance()->cart->cart_items_count === 0 ) {
             hb_send_json( array(
                 'result' => 'fail',
                 'message' => __( 'Your cart is empty.', 'wp-hotel-booking' )
@@ -56,7 +56,7 @@ class HB_Checkout {
         }
 
         // load booking id from sessions
-        $booking_id = WP_Hotel_Booking::instance()->cart->booking_id;
+        $booking_id = TP_Hotel_Booking::instance()->cart->booking_id;
 
         // Resume the unpaid order if its pending
         if ( $booking_id && ( $booking = HB_Booking::instance( $booking_id ) ) && $booking->post->ID && $booking->has_status( array( 'pending', 'cancelled' ) ) ) {
@@ -100,7 +100,7 @@ class HB_Checkout {
         $booking_id = $this->create_booking();
         if ( $booking_id ) {
             // if total > 0
-            if ( WP_Hotel_Booking::instance()->cart->needs_payment() ) {
+            if ( TP_Hotel_Booking::instance()->cart->needs_payment() ) {
                 $result = $this->payment_method->process_checkout( $booking_id );
             } else {
                 if ( empty( $booking ) ) {
@@ -122,7 +122,7 @@ class HB_Checkout {
         }
 
         if ( !empty( $result['result'] ) && $result['result'] == 'success' ) {
-            WP_Hotel_Booking::instance()->cart->empty_cart();
+            TP_Hotel_Booking::instance()->cart->empty_cart();
 
             $result = apply_filters( 'hb_payment_successful_result', $result, $booking_id );
 

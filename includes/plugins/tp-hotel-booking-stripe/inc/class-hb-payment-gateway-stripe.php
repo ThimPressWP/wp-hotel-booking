@@ -97,7 +97,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
                 } else {
                     $book->update_status( 'processing' );
                 }
-                WP_Hotel_Booking::instance()->cart->empty_cart();
+                TP_Hotel_Booking::instance()->cart->empty_cart();
                 $return = array(
                     'result'    => 'success',
                     'redirect'  => hb_get_return_url()

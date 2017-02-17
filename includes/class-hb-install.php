@@ -78,7 +78,7 @@ class HB_Install {
     // create options default
     static function create_options() {
         if ( !class_exists( 'HB_Admin_Settings' ) ) {
-            WP_Hotel_Booking::instance()->_include( 'includes/admin/class-hb-admin-settings.php' );
+            TP_Hotel_Booking::instance()->_include( 'includes/admin/class-hb-admin-settings.php' );
         }
 
         $settings_pages = HB_Admin_Settings::get_settings_pages();
@@ -98,8 +98,8 @@ class HB_Install {
     // create page. Eg: hotel-checkout, hotel-cart
     static function create_pages() {
         if ( !function_exists( 'hb_create_page' ) ) {
-            WP_Hotel_Booking::instance()->_include( 'includes/admin/hb-admin-functions.php' );
-            WP_Hotel_Booking::instance()->_include( 'includes/hb-functions.php' );
+            TP_Hotel_Booking::instance()->_include( 'includes/admin/hb-admin-functions.php' );
+            TP_Hotel_Booking::instance()->_include( 'includes/hb-functions.php' );
         }
 
         $pages = array();
@@ -154,7 +154,7 @@ class HB_Install {
     // create terms default for system
     static function create_terms() {
         if ( !class_exists( 'HB_Post_Types' ) ) {
-            WP_Hotel_Booking::instance()->_include( 'includes/class-hb-post-types.php' );
+            TP_Hotel_Booking::instance()->_include( 'includes/class-hb-post-types.php' );
         }
 
         // register taxonomies

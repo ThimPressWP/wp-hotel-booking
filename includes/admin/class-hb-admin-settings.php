@@ -14,10 +14,10 @@ class HB_Admin_Settings {
 
 	public static function get_settings_pages() {
 
-		WP_Hotel_Booking::instance()->_include( 'includes/admin/class-hb-admin-setting-page.php' );
+		TP_Hotel_Booking::instance()->_include( 'includes/admin/class-hb-admin-setting-page.php' );
 		$tabs = array();
 
-		// use WP_Hotel_Booking::instance() return null active hook
+		// use TP_Hotel_Booking::instance() return null active hook
 		$tabs[] = include 'settings/class-hb-admin-setting-general.php';
 		$tabs[] = include 'settings/class-hb-admin-setting-hotel-info.php';
 		$tabs[] = include 'settings/class-hb-admin-setting-lightboxs.php';

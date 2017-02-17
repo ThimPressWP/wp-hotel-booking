@@ -30,7 +30,7 @@ class TP_Hotel_Booking_Payment_PayPal {
             include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
         }
 
-        if ( class_exists( 'WP_Hotel_Booking' ) && ( is_plugin_active( 'tp-hotel-booking/tp-hotel-booking.php' ) || is_plugin_active( 'wp-hotel-booking/wp-hotel-booking.php' ) ) ) {
+        if ( class_exists( 'TP_Hotel_Booking' ) && ( is_plugin_active( 'tp-hotel-booking/tp-hotel-booking.php' ) || is_plugin_active( 'wp-hotel-booking/wp-hotel-booking.php' ) ) ) {
             $this->is_hotel_active = true;
         }
 

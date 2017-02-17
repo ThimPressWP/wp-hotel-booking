@@ -97,8 +97,8 @@ class HB_Extra_Factory {
 		$parent_quantity = 1;
 		if ( isset( $params['order_item_id'] ) ) {
 			$parent_quantity = hb_get_order_item_meta( hb_get_parent_order_item( $params['order_item_id'] ), 'quantity', true );
-		} else if ( !is_admin() && isset( $params['parent_id'] ) && WP_Hotel_Booking::instance()->cart ) {
-			$parent = WP_Hotel_Booking::instance()->cart->get_cart_item( $params['parent_id'] );
+		} else if ( !is_admin() && isset( $params['parent_id'] ) && TP_Hotel_Booking::instance()->cart ) {
+			$parent = TP_Hotel_Booking::instance()->cart->get_cart_item( $params['parent_id'] );
 			if ( $parent ) {
 				$parent_quantity = $parent->quantity;
 			}

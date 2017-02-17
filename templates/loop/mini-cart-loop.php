@@ -13,7 +13,7 @@ if ( !defined( 'ABSPATH' ) ) {
 ?>
 <div class="hb_mini_cart_item" data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
 
-	<?php $cart_item = WP_Hotel_Booking::instance()->cart->get_cart_item( $cart_id ) ?>
+	<?php $cart_item = TP_Hotel_Booking::instance()->cart->get_cart_item( $cart_id ) ?>
 	<?php do_action( 'hotel_booking_before_mini_cart_loop', $room ); ?>
 
     <div class="hb_mini_cart_top">

@@ -59,7 +59,7 @@ function hb_create_booking( $booking_info = array(), $order_items = array() ) {
             '_hb_customer_fax'           => ''
         ) );
     // return WP_Error if cart is empty
-    if( WP_Hotel_Booking::instance()->cart->cart_items_count === 0 ){
+    if( TP_Hotel_Booking::instance()->cart->cart_items_count === 0 ){
         return new WP_Error( 'hotel_booking_cart_empty', __( 'Your cart is empty.', 'wp-hotel-booking' ) );
     }
 
@@ -71,7 +71,7 @@ function hb_create_booking( $booking_info = array(), $order_items = array() ) {
         'parent'        => 0
     );
 
-    WP_Hotel_Booking::instance()->_include( 'includes/class-hb-room.php' );
+    TP_Hotel_Booking::instance()->_include( 'includes/class-hb-room.php' );
 
     $booking = HB_Booking::instance( $args['booking_id'] );
     $booking->post->post_title      = sprintf( __( 'Booking ', 'wp-hotel-booking' ) );
@@ -87,8 +87,8 @@ function hb_create_booking( $booking_info = array(), $order_items = array() ) {
 
     $booking_info['_hb_booking_key'] = apply_filters( 'hb_generate_booking_key', uniqid( 'booking' ) );
 
-    if( WP_Hotel_Booking::instance()->cart->coupon ){
-        $booking_info['_hb_coupon_id'] = WP_Hotel_Booking::instance()->cart->coupon;
+    if( TP_Hotel_Booking::instance()->cart->coupon ){
+        $booking_info['_hb_coupon_id'] = TP_Hotel_Booking::instance()->cart->coupon;
         $coupon = HB_Coupon::instance( $booking_info['_hb_coupon_id'] );
         $booking_info['_hb_coupon_code'] = $coupon->coupon_code;
         $booking_info['_hb_coupon_value'] = $coupon->discount_value;
@@ -101,7 +101,7 @@ function hb_create_booking( $booking_info = array(), $order_items = array() ) {
     $booking_id = $booking->update( $order_items );
 
     // set session booking id
-    WP_Hotel_Booking::instance()->cart->set_booking( 'booking_id', $booking_id );
+    TP_Hotel_Booking::instance()->cart->set_booking( 'booking_id', $booking_id );
 
     // do action
     do_action( 'hotel_booking_create_booking', $booking_id, $booking_info, $order_items );

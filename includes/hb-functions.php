@@ -1102,9 +1102,9 @@ function hb_search_rooms( $args = array() ) {
 		}
 	}
 
-	if ( WP_Hotel_Booking::instance()->cart->cart_contents && $search ) {
+	if ( TP_Hotel_Booking::instance()->cart->cart_contents && $search ) {
 		$selected_id = array();
-		foreach ( WP_Hotel_Booking::instance()->cart->cart_contents as $k => $cart ) {
+		foreach ( TP_Hotel_Booking::instance()->cart->cart_contents as $k => $cart ) {
 			$selected_id[$cart->product_id] = $cart->quantity;
 		}
 
@@ -1234,7 +1234,7 @@ function hb_handle_purchase_request() {
 		hb_get_payment_gateways();
 		$requested_transaction_method = sanitize_text_field( $_REQUEST[$method_var] );
 		hb_do_transaction( $requested_transaction_method );
-	} else if ( hb_get_page_id( 'checkout' ) && is_page( hb_get_page_id( 'checkout' ) ) && empty( WP_Hotel_Booking::instance()->cart->cart_contents ) ) {
+	} else if ( hb_get_page_id( 'checkout' ) && is_page( hb_get_page_id( 'checkout' ) ) && empty( TP_Hotel_Booking::instance()->cart->cart_contents ) ) {
 		wp_redirect( hb_get_cart_url() );
 		exit();
 	}

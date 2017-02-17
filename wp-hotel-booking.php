@@ -21,7 +21,7 @@ define( 'HB_BLOG_ID', get_current_blog_id() );
 /**
  * Class TP_Hotel_Booking
  */
-class WP_Hotel_Booking {
+class TP_Hotel_Booking {
 
 	/**
 	 * Hold the instance of main class
@@ -373,5 +373,5 @@ class WP_Hotel_Booking {
 	}
 }
 
-$GLOBALS['wp_hotel_booking'] = WP_Hotel_Booking::instance();
+$GLOBALS['wp_hotel_booking'] = TP_Hotel_Booking::instance();
 
