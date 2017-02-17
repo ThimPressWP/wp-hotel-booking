@@ -2,7 +2,7 @@
 /*
   Plugin Name: WP Hotel Booking PayPal Payment
   Plugin URI: http://thimpress.com/
-  Description: Payment PayPal TP Hotel Booking Addon
+  Description: Payment PayPal WP Hotel Booking Addon
   Author: ThimPress
   Version: 1.0.2.1
   Author URI: http://thimpress.com
@@ -10,7 +10,7 @@
 
 define( 'TP_HB_PAYPAL_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TP_HB_PAYPAL_URI', plugins_url( '', __FILE__ ) );
-define( 'TP_HB_PAYPAL_VER', '1.0.2.1' );
+define( 'TP_HB_PAYPAL_VER', '1.7' );
 
 class TP_Hotel_Booking_Payment_PayPal {
 
@@ -48,8 +48,8 @@ class TP_Hotel_Booking_Payment_PayPal {
     }
 
     function load_text_domain() {
-        $default = WP_LANG_DIR . '/plugins/tp-hotel-booking-paypal-' . get_locale() . '.mo';
-        $plugin_file = TP_HB_PAYPAL_DIR . '/languages/tp-hotel-booking-paypal-' . get_locale() . '.mo';
+        $default = WP_LANG_DIR . '/plugins/wp-hotel-booking-paypal-' . get_locale() . '.mo';
+        $plugin_file = TP_HB_PAYPAL_DIR . '/languages/wp-hotel-booking-paypal-' . get_locale() . '.mo';
         $file = false;
         if ( file_exists( $default ) ) {
             $file = $default;
@@ -79,7 +79,7 @@ class TP_Hotel_Booking_Payment_PayPal {
     function add_notices() {
         ?>
         <div class="error">
-            <p><?php _e( 'The <strong>TP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>TP Hotel Booking PayPal</strong> add-on' ); ?></p>
+            <p><?php _e( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking PayPal</strong> add-on' ); ?></p>
         </div>
         <?php
     }

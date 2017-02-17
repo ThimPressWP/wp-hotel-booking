@@ -2,9 +2,9 @@
 /*
   Plugin Name: WP Hotel Booking Importer
   Plugin URI: http://thimpress.com/
-  Description: TP Hotel Booking Export, Import Rooms, Bookings, Pricings, Rooms Types, Rooms Capacities
+  Description: WP Hotel Booking Export, Import Rooms, Bookings, Pricings, Rooms Types, Rooms Capacities
   Author: ThimPress
-  Version: 0.0.1
+  Version: 1.7
   Author URI: http://thimpress.com
  */
 
@@ -14,7 +14,7 @@ if ( !defined( 'ABSPATH' ) ) {
 
 define( 'HOTEL_BOOKING_IMPORTER_PATH', plugin_dir_path( __FILE__ ) );
 define( 'HOTEL_BOOKING_IMPORTER_URI', plugin_dir_url( __FILE__ ) );
-define( 'HOTEL_BOOKING_IMPORTER_VER', '0.0.1' );
+define( 'HOTEL_BOOKING_IMPORTER_VER', '1.7' );
 
 final class Hotel_Booking_Importer {
 
@@ -55,8 +55,8 @@ final class Hotel_Booking_Importer {
     }
 
     function load_text_domain() {
-        $default = WP_LANG_DIR . '/plugins/tp-hotel-booking-importer-' . get_locale() . '.mo';
-        $plugin_file = HOTEL_BOOKING_IMPORTER_PATH . '/languages/tp-hotel-booking-importer-' . get_locale() . '.mo';
+        $default = WP_LANG_DIR . '/plugins/wp-hotel-booking-importer-' . get_locale() . '.mo';
+        $plugin_file = HOTEL_BOOKING_IMPORTER_PATH . '/languages/wp-hotel-booking-importer-' . get_locale() . '.mo';
         $file = false;
         if ( file_exists( $default ) ) {
             $file = $default;
@@ -74,7 +74,7 @@ final class Hotel_Booking_Importer {
     function add_notices() {
         ?>
         <div class="error">
-            <p><?php _e( 'The <strong>TP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>TP Hotel Booking Importer</strong> add-on' ); ?></p>
+            <p><?php _e( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Importer</strong> add-on' ); ?></p>
         </div>
         <?php
     }
@@ -95,8 +95,3 @@ final class Hotel_Booking_Importer {
 }
 
 new Hotel_Booking_Importer();
-
-// $str = 'http://demo.foobla.com/sailing/wp-content/uploads/2014/01/blog-room.jpg';
-// // var_dump(strpos( $str, 'http://demo.thimpress.com/sailing/') === false ); die();
-// $str = preg_match( '/\/[0-9]{4}\/[0-9]{2}\/[^.*]+\.[jpeg|jpg|png]*$/i', $str, $match );
-// var_dump($match, site_url(  ) . $match[0] ); die();

@@ -1,24 +1,26 @@
 <?php
 /*
-  Plugin Name: WP Hotel Booking Authorize Payment
+  Plugin Name: WP Hotel Booking Stripe Payment
   Plugin URI: http://thimpress.com/
-  Description: Payment Authorize TP Hotel Booking Addon
+  Description: Payment Stripe WP Hotel Booking Addon
   Author: ThimPress
-  Version: 1.0.2.1
+  Version: 1.7
   Author URI: http://thimpress.com
  */
 
-define( 'TP_HB_AUTHORIZE_DIR', plugin_dir_path( __FILE__ ) );
-define( 'TP_HB_AUTHORIZE_URI', plugins_url( '', __FILE__ ) );
-define( 'TP_HB_AUTHORIZE_VER', '1.0.2.1' );
+define( 'TP_HB_STRIPE_DIR', plugin_dir_path( __FILE__ ) );
+define( 'TP_HB_STRIPE_URI', plugins_url( '', __FILE__ ) );
+define( 'TP_HB_STRIPE_VER', '1.7' );
 
-class TP_Hotel_Booking_Payment_Authorize {
+class TP_Hotel_Booking_Payment_Stripe {
 
     public $is_hotel_active = false;
-    public $slug = 'authorize';
+    public $slug = 'stripe';
 
     function __construct() {
         add_action( 'plugins_loaded', array( $this, 'is_hotel_active' ) );
+
+        add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
     }
 
     /**
@@ -40,7 +42,7 @@ class TP_Hotel_Booking_Payment_Authorize {
             // add payment
             add_filter( 'hb_payment_gateways', array( $this, 'add_payment_classes' ) );
             if ( $this->is_hotel_active ) {
-                require_once TP_HB_AUTHORIZE_DIR . '/inc/class-hb-payment-gateway-authorize-sim.php';
+                require_once TP_HB_STRIPE_DIR . '/inc/class-hb-payment-gateway-stripe.php';
             }
         }
 
@@ -48,8 +50,8 @@ class TP_Hotel_Booking_Payment_Authorize {
     }
 
     function load_text_domain() {
-        $default = WP_LANG_DIR . '/plugins/tp-hotel-booking-authorize-sim-' . get_locale() . '.mo';
-        $plugin_file = TP_HB_AUTHORIZE_DIR . '/languages/tp-hotel-booking-authorize-sim-' . get_locale() . '.mo';
+        $default = WP_LANG_DIR . '/plugins/wp-hotel-booking-stripe-' . get_locale() . '.mo';
+        $plugin_file = TP_HB_STRIPE_DIR . '/languages/wp-hotel-booking-stripe-' . get_locale() . '.mo';
         $file = false;
         if ( file_exists( $default ) ) {
             $file = $default;
@@ -57,7 +59,7 @@ class TP_Hotel_Booking_Payment_Authorize {
             $file = $plugin_file;
         }
         if ( $file ) {
-            load_textdomain( 'wp-hotel-booking-authorize-sim', $file );
+            load_textdomain( 'wp-hotel-booking-stripe', $file );
         }
     }
 
@@ -69,7 +71,7 @@ class TP_Hotel_Booking_Payment_Authorize {
         if ( array_key_exists( $this->slug, $payments ) )
             return $payments;
 
-        $payments[$this->slug] = new HB_Payment_Gateway_Authorize_Sim();
+        $payments[$this->slug] = new HB_Payment_Gateway_Stripe();
         return $payments;
     }
 
@@ -79,11 +81,25 @@ class TP_Hotel_Booking_Payment_Authorize {
     function add_notices() {
         ?>
         <div class="error">
-            <p><?php _e( 'The <strong>TP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>TP Hotel Booking Authorize</strong> add-on' ); ?></p>
+            <p><?php _e( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Stripe</strong> add-on' ); ?></p>
         </div>
         <?php
     }
 
+    function enqueue_scripts() {
+        // stripe and checkout assets
+        wp_register_script( 'tp-hotel-booking-stripe-js', 'https://checkout.stripe.com/checkout.js', array() );
+        wp_register_script( 'tp-hotel-booking-stripe-checkout-js', TP_HB_STRIPE_URI . '/assets/js/checkout.js', array() );
+
+        $setting = HB_Settings::instance()->get( 'stripe' );
+
+        if ( !empty( $setting['enable'] ) && $setting['enable'] == 'on' ) {
+            // stripe
+            wp_enqueue_script( 'tp-hotel-booking-stripe-js' );
+            wp_enqueue_script( 'tp-hotel-booking-stripe-checkout-js' );
+        }
+    }
+
 }
 
-new TP_Hotel_Booking_Payment_Authorize();
+new TP_Hotel_Booking_Payment_Stripe();

@@ -4,13 +4,13 @@
   Plugin URI: http://thimpress.com/
   Description: Block booking rooms for specific dates
   Author: ThimPress
-  Version: 1.0.2.6
+  Version: 1.7
   Author URI: http://thimpress.com
  */
 // return;
 define( 'TP_HB_BLOCK_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TP_HB_BLOCK_URI', plugin_dir_url( __FILE__ ) );
-define( 'TP_HB_BLOCK_VER', '1.0.2.6' );
+define( 'TP_HB_BLOCK_VER', '1.7' );
 
 class TP_Hotel_Booking_Block {
 
@@ -25,8 +25,8 @@ class TP_Hotel_Booking_Block {
      * @return null
      */
     public function load_textdomain() {
-        $default = WP_LANG_DIR . '/plugins/tp-hotel-booking-block-' . get_locale() . '.mo';
-        $plugin_file = TP_HB_BLOCK_DIR . '/languages/tp-hotel-booking-block-' . get_locale() . '.mo';
+        $default = WP_LANG_DIR . '/plugins/wp-hotel-booking-block-' . get_locale() . '.mo';
+        $plugin_file = TP_HB_BLOCK_DIR . '/languages/wp-hotel-booking-block-' . get_locale() . '.mo';
         $file = false;
         if ( file_exists( $default ) ) {
             $file = $default;
@@ -71,7 +71,7 @@ class TP_Hotel_Booking_Block {
     function add_notices() {
         ?>
         <div class="error">
-            <p><?php _e( 'The <strong>TP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>TP Hotel Booking Block</strong> add-on.' ); ?></p>
+            <p><?php _e( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Block</strong> add-on.' ); ?></p>
         </div>
         <?php
     }

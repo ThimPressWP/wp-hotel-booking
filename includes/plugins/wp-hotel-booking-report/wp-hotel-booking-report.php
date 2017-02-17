@@ -2,13 +2,13 @@
 /*
   Plugin Name: WP Hotel Booking Report Addon
   Plugin URI: http://thimpress.com/
-  Description: TP Hotel Booking Report Addon
+  Description: WP Hotel Booking Report Addon
   Author: ThimPress
-  Version: 1.0.2.1
+  Version: 1.7
  */
 define( 'TP_HB_REPORT_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TP_HB_REPORT_URI', plugin_dir_url( __FILE__ ) );
-define( 'TP_HB_REPORT_VER', '1.0.2.1' );
+define( 'TP_HB_REPORT_VER', '1.7' );
 
 class TP_Hotel_Booking_Report {
 
@@ -23,8 +23,8 @@ class TP_Hotel_Booking_Report {
      * @return null
      */
     public function load_textdomain() {
-        $default = WP_LANG_DIR . '/plugins/tp-hotel-booking-report-' . get_locale() . '.mo';
-        $plugin_file = TP_HB_REPORT_DIR . '/languages/tp-hotel-booking-report-' . get_locale() . '.mo';
+        $default = WP_LANG_DIR . '/plugins/wp-hotel-booking-report-' . get_locale() . '.mo';
+        $plugin_file = TP_HB_REPORT_DIR . '/languages/wp-hotel-booking-report-' . get_locale() . '.mo';
         $file = false;
         if ( file_exists( $default ) ) {
             $file = $default;
@@ -76,7 +76,7 @@ class TP_Hotel_Booking_Report {
     function add_notices() {
         ?>
         <div class="error">
-            <p><?php _e( 'The <strong>TP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>TP Hotel Booking Report</strong> add-on.' ); ?></p>
+            <p><?php _e( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Report</strong> add-on.' ); ?></p>
         </div>
         <?php
     }

@@ -5,8 +5,8 @@
  * Plugin URI: http://thimpress.com/
  * Description: Support book room without search room
  * Author: ThimPress
- * Version: 0.9.2
- * Text Domain: tp-hotel-booking-room
+ * Version: 1.7
+ * Text Domain: wp-hotel-booking-room
  * Domain Path: /languages/
  */
 if ( !defined( 'ABSPATH' ) ) {
@@ -80,7 +80,7 @@ class TP_Hotel_Booking_Room {
 
     function admin_notice() {
         print( '<div class="error">
-					<p>The <strong>TP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>TP Hotel Booking Room</strong> add-on</p>
+					<p>The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Room</strong> add-on</p>
 				</div>' );
     }
 

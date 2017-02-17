@@ -5,12 +5,12 @@
   Plugin URI: http://thimpress.com/
   Description: Support paying for a booking with the payment methods provided by woocommerce
   Author: ThimPress
-  Version: 1.0.2.1
+  Version: 1.7
   Author URI: http://thimpress.com
   Requires at least: 3.5
   Tested up to: 4.3
 
-  Text Domain: tp-hotel-booking-woocommerce
+  Text Domain: wp-hotel-booking-woocommerce
   Domain Path: /lang/
  */
 
@@ -460,8 +460,8 @@ class TP_Hotel_Booking_Woocommerce {
 	}
 
 	public static function load_text_domain() {
-		$default     = WP_LANG_DIR . '/plugins/tp-hotel-booking-woocommerce-' . get_locale() . '.mo';
-		$plugin_file = HB_WC_PLUGIN_PATH . '/languages/tp-hotel-booking-woocommerce-' . get_locale() . '.mo';
+		$default     = WP_LANG_DIR . '/plugins/wp-hotel-booking-woocommerce-' . get_locale() . '.mo';
+		$plugin_file = HB_WC_PLUGIN_PATH . '/languages/wp-hotel-booking-woocommerce-' . get_locale() . '.mo';
 		$file        = false;
 		if ( file_exists( $default ) ) {
 			$file = $default;

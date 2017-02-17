@@ -2,15 +2,15 @@
 /*
   Plugin Name: WP Hotel Booking Coupon
   Plugin URI: http://thimpress.com/
-  Description: TP Hotel Booking Coupon
+  Description: wP Hotel Booking Coupon
   Author: ThimPress
-  Version: 1.0.2.1
+  Version: 1.7
   Author URI: http://thimpress.com
  */
 
 define( 'TP_HB_COUPON_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TP_HB_COUPON_URI', plugin_dir_url( __FILE__ ) );
-define( 'TP_HB_COUPON_VER', '1.0.2.1' );
+define( 'TP_HB_COUPON_VER', '1.7' );
 
 class TP_Hotel_Booking_Coupon {
 
@@ -25,8 +25,8 @@ class TP_Hotel_Booking_Coupon {
      * @return null
      */
     public function load_textdomain() {
-        $default = WP_LANG_DIR . '/plugins/tp-hotel-booking-coupon-' . get_locale() . '.mo';
-        $plugin_file = TP_HB_COUPON_DIR . '/languages/tp-hotel-booking-coupon-' . get_locale() . '.mo';
+        $default = WP_LANG_DIR . '/plugins/wp-hotel-booking-coupon-' . get_locale() . '.mo';
+        $plugin_file = TP_HB_COUPON_DIR . '/languages/wp-hotel-booking-coupon-' . get_locale() . '.mo';
         $file = false;
         if ( file_exists( $default ) ) {
             $file = $default;
@@ -73,7 +73,7 @@ class TP_Hotel_Booking_Coupon {
     function add_notices() {
         ?>
         <div class="error">
-            <p><?php _e( 'The <strong>TP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>TP Hotel Booking Coupon</strong> add-on.' ); ?></p>
+            <p><?php _e( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Coupon</strong> add-on.' ); ?></p>
         </div>
         <?php
     }

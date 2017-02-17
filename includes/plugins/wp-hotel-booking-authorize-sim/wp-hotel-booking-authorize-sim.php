@@ -1,26 +1,24 @@
 <?php
 /*
-  Plugin Name: WP Hotel Booking Stripe Payment
+  Plugin Name: WP Hotel Booking Authorize Payment
   Plugin URI: http://thimpress.com/
-  Description: Payment Stripe TP Hotel Booking Addon
+  Description: Payment Authorize WP Hotel Booking Add-on
   Author: ThimPress
-  Version: 1.0.2.3
+  Version: 1.7
   Author URI: http://thimpress.com
  */
 
-define( 'TP_HB_STRIPE_DIR', plugin_dir_path( __FILE__ ) );
-define( 'TP_HB_STRIPE_URI', plugins_url( '', __FILE__ ) );
-define( 'TP_HB_STRIPE_VER', '1.0.2.3' );
+define( 'TP_HB_AUTHORIZE_DIR', plugin_dir_path( __FILE__ ) );
+define( 'TP_HB_AUTHORIZE_URI', plugins_url( '', __FILE__ ) );
+define( 'TP_HB_AUTHORIZE_VER', '1.7' );
 
-class TP_Hotel_Booking_Payment_Stripe {
+class TP_Hotel_Booking_Payment_Authorize {
 
     public $is_hotel_active = false;
-    public $slug = 'stripe';
+    public $slug = 'authorize';
 
     function __construct() {
         add_action( 'plugins_loaded', array( $this, 'is_hotel_active' ) );
-
-        add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
     }
 
     /**
@@ -42,7 +40,7 @@ class TP_Hotel_Booking_Payment_Stripe {
             // add payment
             add_filter( 'hb_payment_gateways', array( $this, 'add_payment_classes' ) );
             if ( $this->is_hotel_active ) {
-                require_once TP_HB_STRIPE_DIR . '/inc/class-hb-payment-gateway-stripe.php';
+                require_once TP_HB_AUTHORIZE_DIR . '/inc/class-hb-payment-gateway-authorize-sim.php';
             }
         }
 
@@ -50,8 +48,8 @@ class TP_Hotel_Booking_Payment_Stripe {
     }
 
     function load_text_domain() {
-        $default = WP_LANG_DIR . '/plugins/tp-hotel-booking-stripe-' . get_locale() . '.mo';
-        $plugin_file = TP_HB_STRIPE_DIR . '/languages/tp-hotel-booking-stripe-' . get_locale() . '.mo';
+        $default = WP_LANG_DIR . '/plugins/wp-hotel-booking-authorize-sim-' . get_locale() . '.mo';
+        $plugin_file = TP_HB_AUTHORIZE_DIR . '/languages/wp-hotel-booking-authorize-sim-' . get_locale() . '.mo';
         $file = false;
         if ( file_exists( $default ) ) {
             $file = $default;
@@ -59,7 +57,7 @@ class TP_Hotel_Booking_Payment_Stripe {
             $file = $plugin_file;
         }
         if ( $file ) {
-            load_textdomain( 'wp-hotel-booking-stripe', $file );
+            load_textdomain( 'wp-hotel-booking-authorize-sim', $file );
         }
     }
 
@@ -71,7 +69,7 @@ class TP_Hotel_Booking_Payment_Stripe {
         if ( array_key_exists( $this->slug, $payments ) )
             return $payments;
 
-        $payments[$this->slug] = new HB_Payment_Gateway_Stripe();
+        $payments[$this->slug] = new HB_Payment_Gateway_Authorize_Sim();
         return $payments;
     }
 
@@ -81,25 +79,11 @@ class TP_Hotel_Booking_Payment_Stripe {
     function add_notices() {
         ?>
         <div class="error">
-            <p><?php _e( 'The <strong>TP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>TP Hotel Booking Stripe</strong> add-on' ); ?></p>
+            <p><?php _e( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Authorize</strong> add-on' ); ?></p>
         </div>
         <?php
     }
 
-    function enqueue_scripts() {
-        // stripe and checkout assets
-        wp_register_script( 'tp-hotel-booking-stripe-js', 'https://checkout.stripe.com/checkout.js', array() );
-        wp_register_script( 'tp-hotel-booking-stripe-checkout-js', TP_HB_STRIPE_URI . '/assets/js/checkout.js', array() );
-
-        $setting = HB_Settings::instance()->get( 'stripe' );
-
-        if ( !empty( $setting['enable'] ) && $setting['enable'] == 'on' ) {
-            // stripe
-            wp_enqueue_script( 'tp-hotel-booking-stripe-js' );
-            wp_enqueue_script( 'tp-hotel-booking-stripe-checkout-js' );
-        }
-    }
-
 }
 
-new TP_Hotel_Booking_Payment_Stripe();
+new TP_Hotel_Booking_Payment_Authorize();
