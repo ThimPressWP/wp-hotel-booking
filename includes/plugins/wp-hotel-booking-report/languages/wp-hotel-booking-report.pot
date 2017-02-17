@@ -1,0 +1,130 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Package Name\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-02-17 17:47+0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: wp-hotel-booking-report.php:79
+msgid ""
+"The <strong>WP Hotel Booking</strong> is not installed and/or activated. "
+"Please install and/or activate before you can using <strong>WP Hotel Booking "
+"Report</strong> add-on."
+msgstr ""
+
+#: inc/class-hb-report-price.php:55 inc/class-hb-report-room.php:39
+#, php-format
+msgid "Chart in %s to %s"
+msgstr ""
+
+#: inc/class-hb-report-price.php:268 inc/class-hb-report-room.php:345
+msgid "Date/Time"
+msgstr ""
+
+#: inc/class-hb-report-price.php:272 inc/class-hb-report.php:106
+msgid "Month"
+msgstr ""
+
+#: inc/class-hb-report-price.php:276
+msgid "Total Earning"
+msgstr ""
+
+#: inc/class-hb-report-price.php:320
+#, php-format
+msgid "Total %s to %s"
+msgstr ""
+
+#: inc/class-hb-report-room.php:230
+#, php-format
+msgid "%s unavaiable"
+msgstr ""
+
+#: inc/class-hb-report-room.php:237
+#, php-format
+msgid "%s avaiable"
+msgstr ""
+
+#: inc/class-hb-report-room.php:243
+#, php-format
+msgid "%s quantity of room"
+msgstr ""
+
+#: inc/class-hb-report-room.php:354
+msgid "Unavaiable"
+msgstr ""
+
+#: inc/class-hb-report-room.php:389
+msgid "Avaiable"
+msgstr ""
+
+#: inc/class-hb-report-room.php:393
+msgid "Room Quantity"
+msgstr ""
+
+#: inc/class-hb-report.php:102
+msgid "Day"
+msgstr ""
+
+#: inc/functions.php:10 inc/functions.php:11
+msgid "Reports"
+msgstr ""
+
+#: inc/views/canvas-price.php:4
+msgid "Report Chart Amount Total"
+msgstr ""
+
+#: inc/views/canvas-room.php:4
+msgid "Report Chart Room Unavailable"
+msgstr ""
+
+#: inc/views/report.php:7
+msgid "Booking Price"
+msgstr ""
+
+#: inc/views/report.php:11
+msgid "Room availability"
+msgstr ""
+
+#: inc/views/report.php:40
+msgid "Year"
+msgstr ""
+
+#: inc/views/report.php:44
+msgid "Last Month"
+msgstr ""
+
+#: inc/views/report.php:48
+msgid "This Month"
+msgstr ""
+
+#: inc/views/report.php:52
+msgid "Last 7 Days"
+msgstr ""
+
+#: inc/views/report.php:82
+msgid "Export"
+msgstr ""
+
+#: inc/views/report.php:107
+msgid "Go"
+msgstr ""
+
+#: inc/views/sidebar-room.php:9
+msgid "Rooms Search"
+msgstr ""
+
+#: inc/views/sidebar-room.php:36
+msgid "Show"
+msgstr ""

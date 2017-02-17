@@ -1,0 +1,83 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Package Name\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-02-17 17:47+0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: inc/class-hb-booking-room.php:34
+msgid "Enable book in single room"
+msgstr ""
+
+#: inc/class-hb-booking-room.php:124
+msgid "No room found."
+msgstr ""
+
+#: inc/class-hb-booking-room.php:260 inc/class-hb-booking-room.php:266
+msgid "Check in date is required."
+msgstr ""
+
+#: inc/class-hb-booking-room.php:273
+msgid "Check out date is required."
+msgstr ""
+
+#: inc/class-hb-booking-room.php:298
+#, php-format
+msgid "No room found in %s and %s"
+msgstr ""
+
+#: templates/single-book-room.php:25
+msgid "Please select number of room and packages(optional)"
+msgstr ""
+
+#: templates/single-book-room.php:35
+msgid "Select Number Of Room"
+msgstr ""
+
+#: templates/single-book-room.php:48
+msgid "Previous"
+msgstr ""
+
+#: templates/single-book-room.php:57
+msgid "Add To Cart"
+msgstr ""
+
+#: templates/single-search-available.php:26
+msgid "Please set arrival date and departure date before check available."
+msgstr ""
+
+#: templates/single-search-available.php:32
+msgid "Arrival Date"
+msgstr ""
+
+#: templates/single-search-available.php:37
+msgid "Departure Date"
+msgstr ""
+
+#: templates/single-search-available.php:44
+msgid "Check Available"
+msgstr ""
+
+#: templates/single-search-available.php:54
+msgid "Quantity Available"
+msgstr ""
+
+#: templates/single-search-available.php:57
+msgid "--- Quantity ---"
+msgstr ""
+
+#: templates/single-search-button.php:16
+msgid "Check Availability This Room"
+msgstr ""
