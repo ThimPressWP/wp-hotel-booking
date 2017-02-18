@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-17 17:41+0700\n"
+"POT-Creation-Date: 2017-02-18 08:35+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: wp-hotel-booking-authorize-sim.php:82
+#: wp-hotel-booking-authorize-sim.php:83
 msgid ""
 "The <strong>WP Hotel Booking</strong> is not installed and/or activated. "
 "Please install and/or activate before you can using <strong>WP Hotel Booking "
-"Authorize</strong> add-on"
+"Authorize Payment</strong> add-on."
 msgstr ""
 
 #: inc/class-hb-payment-gateway-authorize-sim.php:57
