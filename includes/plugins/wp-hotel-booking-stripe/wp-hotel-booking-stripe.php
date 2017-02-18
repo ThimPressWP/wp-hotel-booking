@@ -2,7 +2,7 @@
 /*
   Plugin Name: WP Hotel Booking Stripe Payment
   Plugin URI: http://thimpress.com/
-  Description: Payment Stripe WP Hotel Booking Addon
+  Description: Stripe payment gateway for WP Hotel Booking
   Author: ThimPress
   Version: 1.7
   Author URI: http://thimpress.com
@@ -81,7 +81,7 @@ class TP_Hotel_Booking_Payment_Stripe {
     function add_notices() {
         ?>
         <div class="error">
-            <p><?php _e( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Stripe</strong> add-on' ); ?></p>
+            <p><?php _e( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Stripe Payment</strong> add-on.' ); ?></p>
         </div>
         <?php
     }

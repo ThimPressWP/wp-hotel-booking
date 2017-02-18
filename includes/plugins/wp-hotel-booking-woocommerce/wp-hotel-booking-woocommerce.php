@@ -1,9 +1,9 @@
 <?php
 
 /*
-  Plugin Name: WP Booking WooCommerce
+  Plugin Name: WP Hotel Booking WooCommerce
   Plugin URI: http://thimpress.com/
-  Description: Support paying for a booking with the payment methods provided by woocommerce
+  Description: Support paying for a booking with the payment system provided by WooCommerce
   Author: ThimPress
   Version: 1.7
   Author URI: http://thimpress.com

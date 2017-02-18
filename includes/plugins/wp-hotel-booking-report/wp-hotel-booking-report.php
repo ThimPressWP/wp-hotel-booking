@@ -1,8 +1,8 @@
 <?php
 /*
-  Plugin Name: WP Hotel Booking Report Addon
+  Plugin Name: WP Hotel Booking Report
   Plugin URI: http://thimpress.com/
-  Description: WP Hotel Booking Report Addon
+  Description: WP Hotel Booking Report
   Author: ThimPress
   Version: 1.7
  */

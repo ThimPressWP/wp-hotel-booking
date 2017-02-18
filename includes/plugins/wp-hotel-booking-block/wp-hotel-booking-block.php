@@ -1,6 +1,6 @@
 <?php
 /*
-  Plugin Name: WP Hotel Booking Block Room Calendar
+  Plugin Name: WP Hotel Booking Block Room
   Plugin URI: http://thimpress.com/
   Description: Block booking rooms for specific dates
   Author: ThimPress
@@ -71,7 +71,7 @@ class TP_Hotel_Booking_Block {
     function add_notices() {
         ?>
         <div class="error">
-            <p><?php _e( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Block</strong> add-on.' ); ?></p>
+            <p><?php _e( 'The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Block Room</strong> add-on.' ); ?></p>
         </div>
         <?php
     }

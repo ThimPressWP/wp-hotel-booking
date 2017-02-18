@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Plugin Name: WP Booking Booking Room
+ * Plugin Name: WP Hotel Booking Booking Room
  * Plugin URI: http://thimpress.com/
  * Description: Support book room without search room
  * Author: ThimPress
@@ -80,7 +80,7 @@ class TP_Hotel_Booking_Room {
 
     function admin_notice() {
         print( '<div class="error">
-					<p>The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Room</strong> add-on</p>
+					<p>The <strong>WP Hotel Booking</strong> is not installed and/or activated. Please install and/or activate before you can using <strong>WP Hotel Booking Booking Room</strong> add-on.</p>
 				</div>' );
     }
 
