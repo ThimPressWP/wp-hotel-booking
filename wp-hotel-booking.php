@@ -2,7 +2,7 @@
 /*
     Plugin Name: WP Hotel Booking
     Plugin URI: http://thimpress.com/
-    Description: Full of professional features for a booking room system.
+    Description: Full of professional features for a booking room system
     Author: ThimPress
     Version: 1.7
     Author URI: http://thimpress.com

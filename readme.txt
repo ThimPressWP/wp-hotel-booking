@@ -66,6 +66,11 @@ Yes.
 
 == Changelog ==
 
+= 1.7 =
+* Update add-ons
+* Fix notice when init room meta boxes
+* Fix bug of timestamp pricing plan
+
 = 1.6.3.2 =
 * Fix required plugins path
 
