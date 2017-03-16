@@ -132,7 +132,6 @@ $count_plants = count( $plans );
             </div>
             <p>
                 <input type="hidden" name="room_id" value="<?php echo esc_attr( $room_id ) ?>" />
-                <button class="button hb-add-new-plan" type="button"><?php _e( 'Add Plan', 'wp-hotel-booking' ); ?></button>
                 <button class="button button-primary"><?php _e( 'Update', 'wp-hotel-booking'); ?></button>
             </p>
             <?php wp_nonce_field( 'hb-update-pricing-plan', 'hb-update-pricing-plan-field' ); ?>

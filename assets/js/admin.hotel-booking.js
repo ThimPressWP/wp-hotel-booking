@@ -292,24 +292,6 @@
 			$("#txtFromDate").datepicker("show");
 		});
 
-		$('.hb-add-new-plan').click(function () {
-			if ($('.hb-pricing-table').length >= 2)
-				return;
-			var $plan = $(wp.template('hb-pricing-table')({}));
-			$('#hb-pricing-plan-list').prepend($plan);
-			init_pricing_plan($plan);
-			$plan.css('opacity', 0).css("background-color", "#00A0D2").css("transition", "background-color 0.5s");
-			if ($(window).scrollTop() > $plan.offset().top - 100) {
-				$(window).scrollTop($plan.offset().top - 100);
-			}
-			$plan.fadeTo(350, 0.8).delay(1000).fadeTo(250, 1, function () {
-				$(this).css("background-color", "");
-				$('a[data-action="edit"]', $plan).trigger('click');
-			});
-			$('#hb-no-plan-message').hide();
-
-		});
-
 		$('#hb-booking-date-from').datepicker({
 			dateFormat     : hotel_booking_i18n.date_time_format,
 			monthNames     : hotel_booking_i18n.monthNames,
