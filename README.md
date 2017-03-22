@@ -1,11 +1,11 @@
 [![Travis](https://img.shields.io/travis/rust-lang/rust.svg)]()
 [![Jenkins coverage](https://img.shields.io/jenkins/c/https/jenkins.qa.ubuntu.com/view/Utopic/view/All/job/address-book-service-utopic-i386-ci.svg)]()
 
-###Hotel WordPress Themes
+## Hotel WordPress Themes
 
 Take a look at Premium **[Hotel WordPress Theme](http://themeforest.net/item/hotel-wordpress-theme-sailing/13321455?utm_source=wporg&utm_medium=wphotelbooking&ref=thimpress&utm_campaign=wphotelbooking)** we designed to work with WP Hotel Booking, all developers are welcome to develop WordPress Hotel Theme based on this awesome Hotel Booking plugin for WordPress. More WordPress Hotel Themes will come soon, both free WordPress themes as well as premium WordPress themes for this hotel booking / reservation plugin.
 
-###Features
+## Features
 
 - Complete Hotel Booking System
 - Room Management
@@ -19,7 +19,7 @@ Take a look at Premium **[Hotel WordPress Theme](http://themeforest.net/item/hot
 - Multi Currencies
 - 4 Payment Gateways (Offline Payment, Authorize.net, Paypal, Stripe)
 
-###Installation
+## Installation
 
 **From your WordPress dashboard**  
 1. Visit 'Plugin > Add new'.  
@@ -30,7 +30,7 @@ Take a look at Premium **[Hotel WordPress Theme](http://themeforest.net/item/hot
 1. Search, select and download WP Hotel Booking.  
 2. Activate the plugin through the 'Plugins' menu in WordPress Dashboard.
 
-###Frequently Asked Questions
+## Frequently Asked Questions
 
 **How many payment gateways does this hotel booking plugin offer?**
 
