@@ -4,7 +4,7 @@
     Plugin URI: http://thimpress.com/
     Description: Full of professional features for a booking room system
     Author: ThimPress
-    Version: 1.7.2
+    Version: 1.7.3
     Author URI: http://thimpress.com
 */
 
@@ -15,7 +15,7 @@ if ( !defined( 'ABSPATH' ) ) {
 define( 'HB_FILE', __FILE__ );
 define( 'HB_PLUGIN_PATH', dirname( __FILE__ ) );
 define( 'HB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
-define( 'HB_VERSION', '1.7.2' );
+define( 'HB_VERSION', '1.7.3' );
 define( 'HB_BLOG_ID', get_current_blog_id() );
 
 /**
