@@ -598,7 +598,7 @@ class HB_Cart {
         $booking_info = array();
 
         // use coupon
-        if ( HB_Settings::instance()->get( 'enable_coupon' ) && $coupon = TP_Hotel_Booking::instance()->cart->coupon ) {
+        if ( HB_Settings::instance()->get( 'enable_coupon' ) && $coupon = WP_Hotel_Booking::instance()->cart->coupon ) {
             $coupon = HB_Coupon::instance( $coupon );
 
             $booking_info['_hb_coupon_id'] = $coupon->ID;

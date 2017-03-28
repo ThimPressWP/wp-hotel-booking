@@ -140,7 +140,7 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base {
         }
 
         $book->update_status( $status );
-		TP_Hotel_Booking::instance()->cart->empty_cart();
+		WP_Hotel_Booking::instance()->cart->empty_cart();
         wp_redirect( hb_get_checkout_url() );
         exit();
     }
@@ -184,7 +184,7 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base {
         $book_id = absint( $_GET['hb-order-pay'] );
         $book = HB_Booking::instance( $book_id );
 
-        // $customer = HB_Customer::instance( TP_Hotel_Booking::instance()->cart->customer_id );//$book->_customer->data;
+        // $customer = HB_Customer::instance( WP_Hotel_Booking::instance()->cart->customer_id );//$book->_customer->data;
         $time = time();
         $nonce = wp_create_nonce( 'replay-pay-nonce' );
 

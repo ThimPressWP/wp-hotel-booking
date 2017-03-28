@@ -51,7 +51,7 @@ class HB_Comments {
             trailingslashit( get_template_directory() ) . 'wp-hotel-booking',
             trailingslashit( get_stylesheet_directory() ),
             trailingslashit( get_template_directory() ),
-            trailingslashit( TP_Hotel_Booking::instance()->plugin_path( 'templates/' ) )
+            trailingslashit( WP_Hotel_Booking::instance()->plugin_path( 'templates/' ) )
         );
 
         foreach ( $check_dirs as $dir ) {

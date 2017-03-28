@@ -268,7 +268,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
 
         $paypal_args = array (
             'cmd'      => '_xclick',
-            'amount'   => round( TP_Hotel_Booking::instance()->cart->hb_get_cart_total( ! hb_get_request( 'pay_all' ) ), 2 ),
+            'amount'   => round( WP_Hotel_Booking::instance()->cart->hb_get_cart_total( ! hb_get_request( 'pay_all' ) ), 2 ),
             'quantity' => '1',
         );
 
@@ -325,7 +325,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      * @param $gateway
      */
     function admin_settings( ){
-        $template = TP_Hotel_Booking::instance()->locate( 'includes/gateways/paypal/views/settings.php' );
+        $template = WP_Hotel_Booking::instance()->locate( 'includes/gateways/paypal/views/settings.php' );
         include_once $template;
     }
 

@@ -66,7 +66,7 @@ class HB_Ajax {
             'post_status' => 'any'
         );
         // set_transient( 'hotel_booking_customer_email_' . HB_BLOG_ID, $email, DAY_IN_SECONDS );
-        TP_Hotel_Booking::instance()->cart->set_customer( 'customer_email', $email );
+        WP_Hotel_Booking::instance()->cart->set_customer( 'customer_email', $email );
         if ( $posts = get_posts( $args ) ) {
             $customer = $posts[0];
             $customer->data = array();
@@ -151,7 +151,7 @@ class HB_Ajax {
                     session_start();
                 }
                 // set session
-                TP_Hotel_Booking::instance()->cart->set_customer( 'coupon', $coupon->post->ID );
+                WP_Hotel_Booking::instance()->cart->set_customer( 'coupon', $coupon->post->ID );
                 hb_add_message( __( 'Coupon code applied', 'wp-hotel-booking' ) );
             }
         } else {
@@ -165,7 +165,7 @@ class HB_Ajax {
     static function remove_coupon() {
         !session_id() && session_start();
         // delete_transient( 'hb_user_coupon_' . session_id() );
-        TP_Hotel_Booking::instance()->cart->set_customer( 'coupon', null );
+        WP_Hotel_Booking::instance()->cart->set_customer( 'coupon', null );
         hb_add_message( __( 'Coupon code removed', 'wp-hotel-booking' ) );
         hb_send_json(
                 array(
@@ -231,10 +231,10 @@ class HB_Ajax {
         $param = apply_filters( 'hotel_booking_add_cart_params', $param );
         do_action( 'hotel_booking_before_add_to_cart', $_POST );
         // add to cart
-        $cart_item_id = TP_Hotel_Booking::instance()->cart->add_to_cart( $product_id, $param, $qty );
+        $cart_item_id = WP_Hotel_Booking::instance()->cart->add_to_cart( $product_id, $param, $qty );
 
         if ( !is_wp_error( $cart_item_id ) ) {
-            $cart_item = TP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id );
+            $cart_item = WP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id );
             $room = $cart_item->product_data;
 
             do_action( 'hotel_booking_added_cart_completed', $cart_item_id, $cart_item, $_POST );
@@ -247,7 +247,7 @@ class HB_Ajax {
                 'name' => sprintf( '%s', $room->name ) . ( $room->capacity_title ? sprintf( '(%s)', $room->capacity_title ) : '' ),
                 'quantity' => $qty,
                 'cart_id' => $cart_item_id,
-                'total' => hb_format_price( TP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id )->amount )
+                'total' => hb_format_price( WP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id )->amount )
             );
 
             $results = apply_filters( 'hotel_booking_add_to_cart_results', $results, $room );
@@ -263,7 +263,7 @@ class HB_Ajax {
         if ( !check_ajax_referer( 'hb_booking_nonce_action', 'nonce' ) )
             return;
 
-        $cart = TP_Hotel_Booking::instance()->cart;
+        $cart = WP_Hotel_Booking::instance()->cart;
 
         if ( empty( $cart->cart_contents ) || !isset( $_POST['cart_id'] ) || !array_key_exists( sanitize_text_field( $_POST['cart_id'] ), $cart->cart_contents ) ) {
             hb_send_json( array( 'status' => 'warning', 'message' => __( 'Cart item is not exists.', 'wp-hotel-booking' ) ) );
