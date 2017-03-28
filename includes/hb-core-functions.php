@@ -136,7 +136,7 @@ if ( !function_exists( 'hotel_booking_get_product_class' ) ) {
 
 }
 
-function hb_create_page( $slug, $option = '', $page_title = '', $page_content = '', $post_parent = 0 ) {
+function wphb_create_page( $slug, $option = '', $page_title = '', $page_content = '', $post_parent = 0 ) {
     global $wpdb;
 
     $option_value = get_option( $option );

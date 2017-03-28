@@ -24,7 +24,7 @@ class HB_Shortcode_Hotel_Booking_Best_Reviews extends HB_Shortcodes {
 		$query = new WP_Query( $args );
 
 		if ( $query->have_posts() ):
-			hb_get_template( 'shortcodes/best_reviews.php', array( 'atts' => $atts, 'query' => $query ) );
+			wphb_get_template( 'shortcodes/best_reviews.php', array( 'atts' => $atts, 'query' => $query ) );
 		endif;
 	}
 

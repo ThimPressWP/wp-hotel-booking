@@ -19,7 +19,7 @@ if ( !defined( 'ABSPATH' ) ) {
 					<?php printf( 'x%d %s', $info['count'], __( 'Night', 'wp-hotel-booking' ) ) ?>
                 </td>
                 <td class="hb_search_item_price">
-					<?php echo hb_format_price( round( $info['price'], 2 ) ); ?>
+					<?php echo wphb_format_price( round( $info['price'], 2 ) ); ?>
                 </td>
             </tr>
 		<?php endforeach; ?>
@@ -39,7 +39,7 @@ if ( !defined( 'ABSPATH' ) ) {
 				?>
             </td>
             <td class="hb_search_item_price">
-				<?php echo hb_format_price( $room->amount_singular ); ?>
+				<?php echo wphb_format_price( $room->amount_singular ); ?>
             </td>
         </tr>
         </tfoot>

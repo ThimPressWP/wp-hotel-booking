@@ -5,12 +5,12 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class HB_Checkout
+ * Class WPHB_Checkout
  */
-class HB_Checkout {
+class WPHB_Checkout {
 
     /**
-     * @var HB_Checkout object instance
+     * @var WPHB_Checkout object instance
      * @access protected
      */
     static protected $_instance = null;
@@ -61,7 +61,7 @@ class HB_Checkout {
         // Resume the unpaid order if its pending
         if ( $booking_id && ( $booking = HB_Booking::instance( $booking_id ) ) && $booking->post->ID && $booking->has_status( array( 'pending', 'cancelled' ) ) ) {
             $booking_info['ID'] = $booking_id;
-            $booking_info['post_content'] = hb_get_request( 'addition_information' );
+            $booking_info['post_content'] = wphb_get_request( 'addition_information' );
             $booking->set_booking_info( $booking_info );
             // update booking info meta post
             $booking_id = $booking->update( $order_items );
@@ -85,12 +85,12 @@ class HB_Checkout {
             return;
         }
 
-        if ( !is_user_logged_in() && !hb_settings()->get( 'guest_checkout' ) ) {
+        if ( !is_user_logged_in() && !wphb_settings()->get( 'guest_checkout' ) ) {
             throw new Exception( __( 'You have to Login to process checkout.', 'wp-hotel-booking' ) );
         }
 
         // payment method
-        $payment_method = hb_get_user_payment_method( hb_get_request( 'hb-payment-method' ) );
+        $payment_method = wphb_get_user_payment_method( wphb_get_request( 'hb-payment-method' ) );
 
         if ( !$payment_method ) {
             throw new Exception( __( 'The payment method is not available', 'wp-hotel-booking' ) );
@@ -140,7 +140,7 @@ class HB_Checkout {
     /**
      * Get unique instance for this object
      *
-     * @return HB_Checkout
+     * @return WPHB_Checkout
      */
     static function instance() {
         if ( empty( self::$_instance ) ) {

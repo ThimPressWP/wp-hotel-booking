@@ -5,9 +5,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class HB_Booking
+ * Class WPHB_Booking
  */
-class HB_Booking{
+class WPHB_Booking{
 
     /**
      * @var array
@@ -265,7 +265,7 @@ class HB_Booking{
      * @return string
      */
     function get_booking_number(){
-        return hb_format_order_number( $this->id );
+        return wphb_format_order_number( $this->id );
     }
 
     /**
@@ -300,7 +300,7 @@ class HB_Booking{
      * @return mixed
      */
     public function get_checkout_booking_received_url() {
-        $received_url = hb_get_page_permalink( 'search' );
+        $received_url = wphb_get_page_permalink( 'search' );
         return apply_filters( 'hb_get_checkout_booking_received_url', $received_url, $this );
     }
 

@@ -15,7 +15,7 @@ if ( !defined( 'TP_HB_CURRENCY_URI' ) )
 if ( !defined( 'TP_HB_STORAGE_NAME' ) )
     define( 'TP_HB_STORAGE_NAME', 'tp_hb_sw_currency' );
 
-class HB_SW_Factory {
+class WPHB_SW_Factory {
 
     public function __construct() {
         $this->init();
@@ -27,4 +27,4 @@ class HB_SW_Factory {
 
 }
 
-new HB_SW_Factory();
+new WPHB_SW_Factory();

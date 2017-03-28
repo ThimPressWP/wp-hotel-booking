@@ -4,7 +4,7 @@ if ( !defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-abstract class HB_Product_Abstract {
+abstract class WPHB_Product_Abstract {
 
     function __construct( $params = null ) {
         

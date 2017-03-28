@@ -12,7 +12,7 @@ if ( !defined( 'ABSPATH' ) ) {
 
 WP_Hotel_Booking::instance()->_include( 'includes/user/class-hb-abstract-user.php' );
 
-class HB_User extends HB_User_Abstract {
+class WPHB_User extends WPHB_User_Abstract {
 
     static $users = null;
 

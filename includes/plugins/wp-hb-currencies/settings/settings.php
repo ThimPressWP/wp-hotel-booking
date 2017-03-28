@@ -1,6 +1,6 @@
 <?php
 
-// HB_SW_Curreny_Setting instead of HB_Settings
+// HB_SW_Curreny_Setting instead of WPHB_Settings
 $settings = HB_SW_Curreny_Setting::instance();
 
 // currencies options

@@ -53,7 +53,7 @@ do_action( 'hotel_booking_archive_description' );
 
 	<?php while ( have_posts() ) : the_post(); ?>
 
-		<?php hb_get_template_part( 'content', 'room' ); ?>
+		<?php wphb_get_template_part( 'content', 'room' ); ?>
 
 	<?php endwhile; // end of the loop. ?>
 

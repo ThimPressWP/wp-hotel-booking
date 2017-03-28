@@ -7,7 +7,7 @@ if ( !defined( 'ABSPATH' ) ) {
 /**
  * Class HB_Room
  */
-class HB_Room extends HB_Product_Room_Base {
+class WPHB_Room extends WPHB_Product_Room_Base {
 
     /**
      * @var array

@@ -10,9 +10,9 @@ if ( !defined( 'ABSPATH' ) ) {
     exit();
 }
 
-if ( !class_exists( 'HB_Admin_Setting_General' ) ) {
+if ( !class_exists( 'WPHB_Admin_Setting_General' ) ) {
 
-    class HB_Admin_Setting_General extends HB_Admin_Setting_Page {
+    class WPHB_Admin_Setting_General extends WPHB_Admin_Setting_Page {
 
         public $id = 'general';
         public $title = null;
@@ -61,7 +61,7 @@ if ( !class_exists( 'HB_Admin_Setting_General' ) ) {
                     'type' => 'select',
                     'id' => 'tp_hotel_booking_currency',
                     'title' => __( 'Currency', 'wp-hotel-booking' ),
-                    'options' => hb_payment_currencies(),
+                    'options' => wphb_payment_currencies(),
                     'default' => 'USD'
                 ),
                 array(
@@ -141,4 +141,4 @@ if ( !class_exists( 'HB_Admin_Setting_General' ) ) {
 
 }
 
-return new HB_Admin_Setting_General();
+return new WPHB_Admin_Setting_General();

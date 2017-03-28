@@ -5,9 +5,9 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class HB_Ajax
+ * Class WPHB_Ajax
  */
-class HB_Ajax {
+class WPHB_Ajax {
 
     /**
      * @var bool
@@ -58,7 +58,7 @@ class HB_Ajax {
      * Fetch customer information with user email
      */
     static function fetch_customer_info() {
-        $email = hb_get_request( 'email' );
+        $email = wphb_get_request( 'email' );
         $args = array(
             'post_type' => 'hb_booking',
             'meta_key' => '_hb_customer_email',
@@ -94,7 +94,7 @@ class HB_Ajax {
      * Get all images for a room type
      */
     static function load_room_type_galley() {
-        $term_id = hb_get_request( 'term_id' );
+        $term_id = wphb_get_request( 'term_id' );
         $attachment_ids = get_option( 'hb_taxonomy_thumbnail_' . $term_id );
         $attachments = array();
         if ( $attachment_ids )
@@ -114,13 +114,13 @@ class HB_Ajax {
     static function parse_search_params() {
         check_ajax_referer( 'hb_search_nonce_action', 'nonce' );
         $params = array(
-            'hotel-booking' => hb_get_request( 'hotel-booking' ),
-            'check_in_date' => hb_get_request( 'check_in_date' ),
-            'check_out_date' => hb_get_request( 'check_out_date' ),
-            'hb_check_in_date' => hb_get_request( 'hb_check_in_date' ),
-            'hb_check_out_date' => hb_get_request( 'hb_check_out_date' ),
-            'adults' => hb_get_request( 'adults_capacity' ),
-            'max_child' => hb_get_request( 'max_child' )
+            'hotel-booking' => wphb_get_request( 'hotel-booking' ),
+            'check_in_date' => wphb_get_request( 'check_in_date' ),
+            'check_out_date' => wphb_get_request( 'check_out_date' ),
+            'hb_check_in_date' => wphb_get_request( 'hb_check_in_date' ),
+            'hb_check_out_date' => wphb_get_request( 'hb_check_out_date' ),
+            'adults' => wphb_get_request( 'adults_capacity' ),
+            'max_child' => wphb_get_request( 'max_child' )
         );
 
         $return = apply_filters( 'hotel_booking_parse_search_param', array(
@@ -133,7 +133,7 @@ class HB_Ajax {
 
     static function apply_coupon() {
         !session_id() && session_start();
-        $code = hb_get_request( 'code' );
+        $code = wphb_get_request( 'code' );
         ob_start();
         $today = strtotime( date( 'm/d/Y' ) );
         $coupon = hb_get_coupons_active( $today, $code );
@@ -152,7 +152,7 @@ class HB_Ajax {
                 }
                 // set session
                 WP_Hotel_Booking::instance()->cart->set_customer( 'coupon', $coupon->post->ID );
-                hb_add_message( __( 'Coupon code applied', 'wp-hotel-booking' ) );
+                wphb_add_message( __( 'Coupon code applied', 'wp-hotel-booking' ) );
             }
         } else {
             $response['message'] = __( 'Coupon does not exist!', 'wp-hotel-booking' );
@@ -166,7 +166,7 @@ class HB_Ajax {
         !session_id() && session_start();
         // delete_transient( 'hb_user_coupon_' . session_id() );
         WP_Hotel_Booking::instance()->cart->set_customer( 'coupon', null );
-        hb_add_message( __( 'Coupon code removed', 'wp-hotel-booking' ) );
+        wphb_add_message( __( 'Coupon code removed', 'wp-hotel-booking' ) );
         hb_send_json(
                 array(
                     'result' => 'success'
@@ -178,12 +178,12 @@ class HB_Ajax {
 
         check_ajax_referer( 'hb_booking_nonce_action', 'nonce' );
 
-        $check_in = hb_get_request( 'check_in_date' );
-        $check_out = hb_get_request( 'check_out_date' );
-        $num_of_rooms = hb_get_request( 'hb-num-of-rooms' );
+        $check_in = wphb_get_request( 'check_in_date' );
+        $check_out = wphb_get_request( 'check_out_date' );
+        $num_of_rooms = wphb_get_request( 'hb-num-of-rooms' );
 
         $params = array(
-            'hotel-booking' => hb_get_request( 'hotel-booking' ),
+            'hotel-booking' => wphb_get_request( 'hotel-booking' ),
             'check_in_date' => $check_in,
             'check_out_date' => $check_out,
             'hb-num-of-rooms' => $num_of_rooms
@@ -247,7 +247,7 @@ class HB_Ajax {
                 'name' => sprintf( '%s', $room->name ) . ( $room->capacity_title ? sprintf( '(%s)', $room->capacity_title ) : '' ),
                 'quantity' => $qty,
                 'cart_id' => $cart_item_id,
-                'total' => hb_format_price( WP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id )->amount )
+                'total' => wphb_format_price( WP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id )->amount )
             );
 
             $results = apply_filters( 'hotel_booking_add_to_cart_results', $results, $room );
@@ -272,9 +272,9 @@ class HB_Ajax {
         if ( $cart->remove_cart_item( sanitize_text_field( $_POST['cart_id'] ) ) ) {
             $return = apply_filters( 'hotel_booking_ajax_remove_cart_item', array(
                 'status' => 'success',
-                'sub_total' => hb_format_price( $cart->sub_total ),
-                'grand_total' => hb_format_price( $cart->total ),
-                'advance_payment' => hb_format_price( $cart->advance_payment )
+                'sub_total' => wphb_format_price( $cart->sub_total ),
+                'grand_total' => wphb_format_price( $cart->total ),
+                'advance_payment' => wphb_format_price( $cart->advance_payment )
                     ) );
 
             hb_send_json( $return );
@@ -669,4 +669,4 @@ class HB_Ajax {
 
 }
 
-new HB_Ajax();
+new WPHB_Ajax();

@@ -4,7 +4,7 @@ if ( !defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-class HB_Product_Room_Base extends HB_Product_Abstract {
+class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 
     public $quantity = 1;
     public $check_in_date = 1;
@@ -310,7 +310,7 @@ class HB_Product_Room_Base extends HB_Product_Abstract {
     function get_price( $date = null, $including_tax = true ) {
         $tax = 0;
         if ( $including_tax ) {
-            $settings = HB_Settings::instance();
+            $settings = WPHB_Settings::instance();
             if ( $settings->get( 'price_including_tax' ) ) {
                 $tax = $settings->get( 'tax' );
                 $tax = (float) $tax / 100;
@@ -385,7 +385,7 @@ class HB_Product_Room_Base extends HB_Product_Abstract {
         }
 
         $total = apply_filters( 'hotel_booking_room_total_price_excl_tax', $total, $this );
-        $settings = HB_Settings::instance();
+        $settings = WPHB_Settings::instance();
         // room price include tax
         if ( $including_tax ) {
             // $tax_enbale = apply_filters( 'hotel_booking_extra_tax_enable', hb_price_including_tax() );
@@ -563,7 +563,7 @@ class HB_Product_Room_Base extends HB_Product_Abstract {
     }
 
     function renderImage( $attachID = null, $size = array(), $src = true, $default = 'thumbnail' ) {
-        $resizer = HB_Reizer::getInstance();
+        $resizer = WPHB_Reizer::getInstance();
 
         $image = $resizer->process( $attachID, $size, $src );
         if ( $image ) {

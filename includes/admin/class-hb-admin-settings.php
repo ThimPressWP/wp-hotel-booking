@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-class HB_Admin_Settings {
+class WPHB_Admin_Settings {
 
 	public static function get_settings_pages() {
 
@@ -80,7 +80,7 @@ class HB_Admin_Settings {
 
 				case 'select':
 				case 'multiselect':
-					$selected = hb_settings()->get( $field['id'], isset( $field['default'] ) ? $field['default'] : array() );
+					$selected = wphb_settings()->get( $field['id'], isset( $field['default'] ) ? $field['default'] : array() );
 						?>
 							<tr valign="top">
 								<th scope="row">
@@ -117,7 +117,7 @@ class HB_Admin_Settings {
 				case 'number':
 				case 'email':
 				case 'password':
-					$value = hb_settings()->get( $field['id'] );
+					$value = wphb_settings()->get( $field['id'] );
 						?>
 							<tr valign="top">
 								<th scope="row">
@@ -151,7 +151,7 @@ class HB_Admin_Settings {
 					break;
 
 				case 'checkbox':
-						$val = hb_settings()->get( $field['id'] );
+						$val = wphb_settings()->get( $field['id'] );
 						?>
 							<tr valign="top"<?php echo isset( $field['trclass'] ) ? ' class="'.implode( '', $field['trclass'] ).'"' : '' ?>>
 								<th scope="row">
@@ -173,7 +173,7 @@ class HB_Admin_Settings {
 					break;
 
 				case 'radio':
-						$selected = hb_settings()->get( $field['id'], isset( $field['default'] ) ? $field['default'] : '' );
+						$selected = wphb_settings()->get( $field['id'], isset( $field['default'] ) ? $field['default'] : '' );
 						?>
 							<tr valign="top">
 								<th scope="row">
@@ -203,8 +203,8 @@ class HB_Admin_Settings {
 					break;
 
 				case 'image_size':
-						$width = hb_settings()->get( $field['id'] . '_width', isset( $field['default']['width'] ) ? $field['default']['width'] : 270 );
-						$height = hb_settings()->get( $field['id'] . '_height', isset( $field['default']['height'] ) ? $field['default']['height'] : 270 );
+						$width = wphb_settings()->get( $field['id'] . '_width', isset( $field['default']['width'] ) ? $field['default']['width'] : 270 );
+						$height = wphb_settings()->get( $field['id'] . '_height', isset( $field['default']['height'] ) ? $field['default']['height'] : 270 );
 						?>
 							<tr valign="top">
 								<th scope="row">
@@ -241,7 +241,7 @@ class HB_Admin_Settings {
 					break;
 
 				case 'textarea':
-					$content = hb_settings()->get( $field['id'] );
+					$content = wphb_settings()->get( $field['id'] );
 						?>
 							<tr valign="top">
 								<th scope="row">
@@ -264,7 +264,7 @@ class HB_Admin_Settings {
 					break;
 
 				case 'select_page':
-					$selected = hb_settings()->get( $field['id'], 0 );
+					$selected = wphb_settings()->get( $field['id'], 0 );
 						?>
 							<tr valign="top">
 								<th scope="row">

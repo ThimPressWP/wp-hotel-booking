@@ -5,9 +5,9 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class HB_Settings
+ * Class WPHB_Settings
  */
-class HB_Reizer {
+class WPHB_Reizer {
 
     /**
      * $_upload_base_dir is base path upload folder. Ex: wp-content/uploads

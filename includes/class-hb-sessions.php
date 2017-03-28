@@ -8,7 +8,7 @@ if ( !session_id() ) {
     @session_start();
 }
 
-class HB_Sessions {
+class WPHB_Sessions {
 
     // instance
     static $_instance = null;

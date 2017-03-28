@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</td>
 
 	<td class="hb_gross_total" style="text-align: center;">
-		<?php echo hb_format_price( $package->amount_exclude_tax ) ?>
+		<?php echo wphb_format_price( $package->amount_exclude_tax ) ?>
 	</td>
 
 </tr>

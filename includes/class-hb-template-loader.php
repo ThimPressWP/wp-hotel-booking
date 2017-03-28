@@ -4,7 +4,7 @@ if ( !defined( 'ABSPATH' ) ) {
     exit;
 }
 
-class HB_TemplateLoader {
+class WPHB_TemplateLoader {
 
     /**
      * Path to the includes directory
@@ -31,7 +31,7 @@ class HB_TemplateLoader {
         if ( is_post_type_archive( 'hb_room' ) ) {
             $file = 'archive-room.php';
             $find[] = $file;
-            $find[] = hb_template_path() . '/' . $file;
+            $find[] = wphb_template_path() . '/' . $file;
         } else if ( is_room_taxonomy() ) {
             $term = get_queried_object();
             $taxonomy = $term->taxonomy;
@@ -46,18 +46,18 @@ class HB_TemplateLoader {
             }
 
             $find[] = 'taxonomy-' . $taxonomy . '-' . $term->slug . '.php';
-            $find[] = hb_template_path() . '/taxonomy-' . $taxonomy . '-' . $term->slug . '.php';
+            $find[] = wphb_template_path() . '/taxonomy-' . $taxonomy . '-' . $term->slug . '.php';
             $find[] = 'taxonomy-' . $term->taxonomy . '.php';
-            $find[] = hb_template_path() . '/taxonomy-' . $taxonomy . '.php';
+            $find[] = wphb_template_path() . '/taxonomy-' . $taxonomy . '.php';
             $find[] = $file;
         } else if ( is_single() ) {
             $file = 'single-room.php';
             $find[] = $file;
-            $find[] = hb_template_path() . '/' . $file;
+            $find[] = wphb_template_path() . '/' . $file;
         }
 
         if ( $file ) {
-            $find[] = hb_template_path() . '/' . $file;
+            $find[] = wphb_template_path() . '/' . $file;
             $hb_template = untrailingslashit( HB_PLUGIN_PATH ) . '/templates/' . $file;
             $template = locate_template( array_unique( $find ) );
 
@@ -71,4 +71,4 @@ class HB_TemplateLoader {
 
 }
 
-new HB_TemplateLoader();
+new WPHB_TemplateLoader();

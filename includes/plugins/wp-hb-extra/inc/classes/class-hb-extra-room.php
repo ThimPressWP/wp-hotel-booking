@@ -1,6 +1,6 @@
 <?php
 
-class HB_Room_Extra extends HB_Room {
+class HB_Room_Extra extends WPHB_Room {
 	/**
 	 * @var array
 	 */

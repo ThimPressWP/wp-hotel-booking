@@ -61,7 +61,7 @@ class HB_Widget_Currency_Switch extends WP_Widget
             <label for="<?php echo esc_attr( $this->get_field_id( 'currencies' ) ); ?>"><?php _e( 'Select Currencies:', 'wp-hotel-booking' ); ?></label>
             <br />
             <select name="<?php echo esc_attr( $this->get_field_name( 'currencies' ) ); ?>[]" id="tp_hb_currencies_select_<?php echo esc_attr($id) ?>" class="tokenize-sample widefat" multiple="multiple" >
-                <?php foreach( hb_payment_currencies() as $k => $cur ) : ?>
+                <?php foreach( wphb_payment_currencies() as $k => $cur ) : ?>
                     <option value="<?php echo esc_attr( $k ); ?>"<?php echo in_array( $k, $currencies ) ? ' selected' : '' ?>>
                         <?php printf( '%s', $cur ) ?>
                     </option>

@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $week_names = hb_date_names();
 
-$room_id = intval( hb_get_request( 'hb-room' ) );
+$room_id = intval( wphb_get_request( 'hb-room' ) );
 
 $plans = hb_room_get_pricing_plans( $room_id );
 
@@ -28,7 +28,7 @@ $count_plants = count( $plans );
     <form method="post" name="pricing-table-form">
         <p>
             <strong><?php _e( 'Select name of room', 'wp-hotel-booking' ); ?></strong>
-            &nbsp;&nbsp;<?php echo hb_dropdown_rooms( array( 'selected' => $room_id ) ); ?>
+            &nbsp;&nbsp;<?php echo wphb_dropdown_rooms( array( 'selected' => $room_id ) ); ?>
         </p>
         <?php if( $room_id ) : ?>
             <div class="hb-pricing-table regular-price clearfix">

@@ -10,9 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-if ( ! class_exists( 'HB_Admin_Setting_Payments' ) ) {
+if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 
-	class HB_Admin_Setting_Payments extends HB_Admin_Setting_Page {
+	class WPHB_Admin_Setting_Payments extends WPHB_Admin_Setting_Page {
 
 		public $id = 'payments';
 
@@ -67,7 +67,7 @@ if ( ! class_exists( 'HB_Admin_Setting_Payments' ) ) {
 				$current_section = sanitize_text_field( $_REQUEST['section'] );
 			}
 
-			$payments = hb_get_payment_gateways();
+			$payments = wphb_get_payment_gateways();
 			if ( $current_section && $current_section !== 'general' ) {
 				foreach ( $payments as $payment ) {
 					if ( $payment->slug === $current_section ) {
@@ -84,7 +84,7 @@ if ( ! class_exists( 'HB_Admin_Setting_Payments' ) ) {
 			$sections = array();
 			$sections['general'] = __( 'General' );
 
-			$payments = hb_get_payment_gateways();
+			$payments = wphb_get_payment_gateways();
 			foreach( $payments as $payment ) {
 				$sections[$payment->slug] = $payment->title;
 			}
@@ -94,4 +94,4 @@ if ( ! class_exists( 'HB_Admin_Setting_Payments' ) ) {
 	}
 
 }
-return new HB_Admin_Setting_Payments();
+return new WPHB_Admin_Setting_Payments();

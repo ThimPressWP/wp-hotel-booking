@@ -7,13 +7,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Allows log files to be written to for debugging purposes.
  *
- * @class 		HB_Logger
+ * @class 		WPHB_Logger
  * @version		1.1.4
  * @package		WooCommerce/Classes
  * @category	Class
  * @author 		WooThemes
  */
-class HB_Logger {
+class WPHB_Logger {
 
     /**
      * @var array Stores open file _handles.

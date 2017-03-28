@@ -10,9 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-if ( ! class_exists( 'HB_Admin_Setting_Lightboxs' ) ) {
+if ( ! class_exists( 'WPHB_Admin_Setting_Lightboxs' ) ) {
 
-	class HB_Admin_Setting_Lightboxs extends HB_Admin_Setting_Page {
+	class WPHB_Admin_Setting_Lightboxs extends WPHB_Admin_Setting_Page {
 
 		public $id = 'lightboxs';
 
@@ -38,7 +38,7 @@ if ( ! class_exists( 'HB_Admin_Setting_Lightboxs' ) ) {
 					array(
 							'type'		=> 'select',
 							'id'		=> 'tp_hotel_booking_lightbox',
-							'options'	=> hb_get_support_lightboxs(),
+							'options'	=> wphb_get_support_lightboxs(),
 							'title'		=> __( 'Lightbox type', 'wp-hotel-booking' ),
 							'default'	=> 'lightbox2'
 						),
@@ -54,4 +54,4 @@ if ( ! class_exists( 'HB_Admin_Setting_Lightboxs' ) ) {
 	}
 
 }
-return new HB_Admin_Setting_Lightboxs();
+return new WPHB_Admin_Setting_Lightboxs();

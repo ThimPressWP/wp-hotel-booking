@@ -13,7 +13,7 @@ if ( !defined( 'ABSPATH' ) ) {
 
 	<?php while ( $query->have_posts() ) : $query->the_post(); ?>
 
-		<?php hb_get_template_part( 'content', 'room' ); ?>
+		<?php wphb_get_template_part( 'content', 'room' ); ?>
 
 	<?php endwhile; // end of the loop. ?>
 

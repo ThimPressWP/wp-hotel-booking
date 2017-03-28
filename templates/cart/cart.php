@@ -47,7 +47,7 @@ global $hb_settings;
                             <td class="hb_check_out"><?php echo date_i18n( hb_get_date_format(), strtotime( $room->get_data( 'check_out_date' ) ) ) ?></td>
                             <td class="hb_night"><?php echo hb_count_nights_two_dates( $room->get_data( 'check_out_date' ), $room->get_data( 'check_in_date' ) ) ?></td>
                             <td class="hb_gross_total">
-								<?php echo hb_format_price( $room->total ); ?>
+								<?php echo wphb_format_price( $room->total ); ?>
                             </td>
                         </tr>
 						<?php do_action( 'hotel_booking_cart_after_item', $room, $cart_id ); ?>
@@ -60,7 +60,7 @@ global $hb_settings;
                 <tr class="hb_sub_total">
                     <td colspan="8"><?php _e( 'Sub Total', 'wp-hotel-booking' ); ?>
                         <span class="hb-align-right hb_sub_total_value">
-                                <?php echo hb_format_price( $cart->sub_total ); ?>
+                                <?php echo wphb_format_price( $cart->sub_total ); ?>
                             </span>
                     </td>
                 </tr>
@@ -78,14 +78,14 @@ global $hb_settings;
                 <tr class="hb_advance_grand_total">
                     <td colspan="8">
 						<?php _e( 'Grand Total', 'wp-hotel-booking' ); ?>
-                        <span class="hb-align-right hb_grand_total_value"><?php echo hb_format_price( $cart->total ) ?></span>
+                        <span class="hb-align-right hb_grand_total_value"><?php echo wphb_format_price( $cart->total ) ?></span>
                     </td>
                 </tr>
 				<?php if ( $advance_payment = $cart->advance_payment ) : ?>
                     <tr class="hb_advance_payment">
                         <td colspan="8">
-							<?php printf( __( 'Advance Payment (%s%% of Grand Total)', 'wp-hotel-booking' ), hb_get_advance_payment() ); ?>
-                            <span class="hb-align-right hb_advance_payment_value"><?php echo hb_format_price( $advance_payment ); ?></span>
+							<?php printf( __( 'Advance Payment (%s%% of Grand Total)', 'wp-hotel-booking' ), wphb_get_advance_payment() ); ?>
+                            <span class="hb-align-right hb_advance_payment_value"><?php echo wphb_format_price( $advance_payment ); ?></span>
                         </td>
                     </tr>
 				<?php endif; ?>
@@ -95,7 +95,7 @@ global $hb_settings;
                 </tr>
             </table>
             <p>
-                <a href="<?php echo hb_get_checkout_url() ?>" class="hb_button hb_checkout"><?php _e( 'Check Out', 'wp-hotel-booking' ); ?></a>
+                <a href="<?php echo wphb_get_checkout_url() ?>" class="hb_button hb_checkout"><?php _e( 'Check Out', 'wp-hotel-booking' ); ?></a>
                 <button type="submit" class="hb_button update"><?php _e( 'Update', 'wp-hotel-booking' ); ?></button>
             </p>
         </form>

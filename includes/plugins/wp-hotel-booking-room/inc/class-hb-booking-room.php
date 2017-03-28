@@ -27,7 +27,7 @@ if ( !class_exists( 'WP_Hotel_Booking_Room_Extenstion' ) ) {
                 return;
             }
 
-            $settings = hb_settings();
+            $settings = wphb_settings();
             ?>
             <table class="form-table">
                 <tr>
@@ -42,7 +42,7 @@ if ( !class_exists( 'WP_Hotel_Booking_Room_Extenstion' ) ) {
         }
 
         public function init() {
-            if ( !hb_settings()->get( 'enable_single_book', 0 ) ) {
+            if ( !wphb_settings()->get( 'enable_single_book', 0 ) ) {
                 return;
             }
 
@@ -127,7 +127,7 @@ if ( !class_exists( 'WP_Hotel_Booking_Room_Extenstion' ) ) {
 
         public function add_to_cart_redirect( $param, $room ) {
             if ( isset( $param['status'] ) && $param['status'] === 'success' && isset( $_POST['is_single'] ) && $_POST['is_single'] ) {
-                $param['redirect'] = hb_get_cart_url();
+                $param['redirect'] = wphb_get_cart_url();
             }
 
             return $param;

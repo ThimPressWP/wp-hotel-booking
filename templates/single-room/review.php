@@ -5,7 +5,7 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 $rating   = intval( get_comment_meta( $comment->comment_ID, 'rating', true ) );
-$settings = HB_Settings::instance();
+$settings = WPHB_Settings::instance();
 ?>
 <li itemprop="review" itemscope itemtype="http://schema.org/Review" <?php comment_class(); ?> id="li-comment-<?php comment_ID() ?>">
 
@@ -33,7 +33,7 @@ $settings = HB_Settings::instance();
                     <strong itemprop="author"><?php comment_author(); ?></strong> <?php
 
 					?>&ndash;
-                    <time itemprop="datePublished" datetime="<?php echo get_comment_date( 'c' ); ?>"><?php echo get_comment_date( hb_date_format() ); ?></time>
+                    <time itemprop="datePublished" datetime="<?php echo get_comment_date( 'c' ); ?>"><?php echo get_comment_date( wphb_date_format() ); ?></time>
                     :
                 </p>
 

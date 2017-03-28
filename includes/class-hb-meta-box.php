@@ -5,9 +5,9 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class HB_Meta_Box
+ * Class WPHB_Meta_Box
  */
-class HB_Meta_Box {
+class WPHB_Meta_Box {
 
     /**
      * @var object
@@ -68,7 +68,7 @@ class HB_Meta_Box {
      * Add new field to meta box
      *
      * @param array
-     * @return HB_Meta_Box instance
+     * @return WPHB_Meta_Box instance
      */
     function add_field( $field ) {
         $args = func_get_args();
@@ -206,7 +206,7 @@ class HB_Meta_Box {
      * @param string $id
      * @param array $args
      * @param array $fields
-     * @return HB_Meta_Box instance
+     * @return WPHB_Meta_Box instance
      */
     static function instance( $id, $args, $fields ) {
         if ( empty( self::$_meta_boxes[$id] ) ) {
@@ -222,4 +222,4 @@ class HB_Meta_Box {
 /**
  * Save post action
  */
-add_action( 'save_post', array( 'HB_Meta_Box', 'update_meta_boxes' ) );
+add_action( 'save_post', array( 'WPHB_Meta_Box', 'update_meta_boxes' ) );

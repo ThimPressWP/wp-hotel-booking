@@ -10,9 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-if ( ! class_exists( 'HB_Admin_Setting_Room' ) ) {
+if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 
-	class HB_Admin_Setting_Room extends HB_Admin_Setting_Page {
+	class WPHB_Admin_Setting_Room extends WPHB_Admin_Setting_Page {
 
 		public $id = 'room';
 
@@ -153,4 +153,4 @@ if ( ! class_exists( 'HB_Admin_Setting_Room' ) ) {
 	}
 
 }
-return new HB_Admin_Setting_Room();
+return new WPHB_Admin_Setting_Room();

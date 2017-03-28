@@ -4,7 +4,7 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-function hb_template_path() {
+function wphb_template_path() {
 	return apply_filters( 'hb_template_path', 'wp-hotel-booking' );
 }
 
@@ -16,12 +16,12 @@ function hb_template_path() {
  *
  * @return  string
  */
-function hb_get_template_part( $slug, $name = '' ) {
+function wphb_get_template_part( $slug, $name = '' ) {
 	$template = '';
 
 	// Look in yourtheme/slug-name.php and yourtheme/courses-manage/slug-name.php
 	if ( $name ) {
-		$template = locate_template( array( "{$slug}-{$name}.php", hb_template_path() . "/{$slug}-{$name}.php" ) );
+		$template = locate_template( array( "{$slug}-{$name}.php", wphb_template_path() . "/{$slug}-{$name}.php" ) );
 	}
 
 	// Get default slug-name.php
@@ -31,7 +31,7 @@ function hb_get_template_part( $slug, $name = '' ) {
 
 	// If template file doesn't exist, look in yourtheme/slug.php and yourtheme/courses-manage/slug.php
 	if ( !$template ) {
-		$template = locate_template( array( "{$slug}.php", hb_template_path() . "{$slug}.php" ) );
+		$template = locate_template( array( "{$slug}.php", wphb_template_path() . "{$slug}.php" ) );
 	}
 
 	// Allow 3rd party plugin filter template file from their plugin
@@ -55,12 +55,12 @@ function hb_get_template_part( $slug, $name = '' ) {
  *
  * @return void
  */
-function hb_get_template( $template_name, $args = array(), $template_path = '', $default_path = '' ) {
+function wphb_get_template( $template_name, $args = array(), $template_path = '', $default_path = '' ) {
 	if ( $args && is_array( $args ) ) {
 		extract( $args );
 	}
 
-	$located = hb_locate_template( $template_name, $template_path, $default_path );
+	$located = wphb_locate_template( $template_name, $template_path, $default_path );
 
 	if ( !file_exists( $located ) ) {
 		_doing_it_wrong( __FUNCTION__, sprintf( '<code>%s</code> does not exist.', $located ), '2.1' );
@@ -95,10 +95,10 @@ function hb_get_template( $template_name, $args = array(), $template_path = '', 
  *
  * @return string
  */
-function hb_locate_template( $template_name, $template_path = '', $default_path = '' ) {
+function wphb_locate_template( $template_name, $template_path = '', $default_path = '' ) {
 
 	if ( !$template_path ) {
-		$template_path = hb_template_path();
+		$template_path = wphb_template_path();
 	}
 
 	if ( !$default_path ) {
@@ -124,14 +124,14 @@ function hb_locate_template( $template_name, $template_path = '', $default_path 
 	return apply_filters( 'hb_locate_template', $template, $template_name, $template_path );
 }
 
-function hb_get_template_content( $template_name, $args = array(), $template_path = '', $default_path = '' ) {
+function wphb_get_template_content( $template_name, $args = array(), $template_path = '', $default_path = '' ) {
 	ob_start();
-	hb_get_template( $template_name, $args, $template_path, $default_path );
+	wphb_get_template( $template_name, $args, $template_path, $default_path );
 	return ob_get_clean();
 }
 
-function hb_enqueue_lightbox_assets() {
-	$settings          = HB_Settings::instance();
+function wphb_enqueue_lightbox_assets() {
+	$settings          = WPHB_Settings::instance();
 	$lightbox_settings = $settings->get( 'lightbox' );
 	if ( !$lightbox_settings )
 		return;
@@ -139,7 +139,7 @@ function hb_enqueue_lightbox_assets() {
 	do_action( 'hb_lightbox_assets_' . $lightbox_settings );
 }
 
-function hb_lightbox_assets_lightbox2() {
+function wphb_lightbox_assets_lightbox2() {
 	wp_enqueue_script( 'lightbox2', WP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/lightbox2/js/lightbox.min.js' ) );
 	wp_enqueue_style( 'lightbox2', WP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/lightbox2/css/lightbox.min.css' ) );
 	?>
@@ -152,7 +152,7 @@ function hb_lightbox_assets_lightbox2() {
 
 }
 
-function hb_lightbox_assets_fancyBox() {
+function wphb_lightbox_assets_fancyBox() {
 	wp_enqueue_script( 'fancyBox', WP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/fancyBox/source/jquery.fancybox.js' ) );
 	wp_enqueue_style( 'fancyBox', WP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/fancyBox/source/jquery.fancybox.css' ) );
 	?>
@@ -168,7 +168,7 @@ function hb_lightbox_assets_fancyBox() {
 if ( !function_exists( 'hb_display_message' ) ) {
 
 	function hb_display_message() {
-		hb_get_template( 'messages.php' );
+		wphb_get_template( 'messages.php' );
 	}
 
 }
@@ -196,7 +196,7 @@ if ( !function_exists( 'hotel_booking_page_title' ) ) {
 			$page_title = single_term_title( "", false );
 		} else {
 
-			$shop_page_id = hb_get_page_id( 'shop' );
+			$shop_page_id = wphb_get_page_id( 'shop' );
 			$page_title   = get_the_title( $shop_page_id );
 		}
 
@@ -221,7 +221,7 @@ if ( !function_exists( 'hotel_booking_room_loop_start' ) ) {
 	 */
 	function hotel_booking_room_loop_start( $echo = true ) {
 		ob_start();
-		hb_get_template( 'loop/loop-start.php' );
+		wphb_get_template( 'loop/loop-start.php' );
 		if ( $echo )
 			echo ob_get_clean();
 		else
@@ -241,7 +241,7 @@ if ( !function_exists( 'hotel_booking_room_loop_end' ) ) {
 	function hotel_booking_room_loop_end( $echo = true ) {
 		ob_start();
 
-		hb_get_template( 'loop/loop-end.php' );
+		wphb_get_template( 'loop/loop-end.php' );
 
 		if ( $echo )
 			echo ob_get_clean();
@@ -256,7 +256,7 @@ if ( !function_exists( 'hotel_booking_template_loop_room_title' ) ) {
 	 * Show the room title in the room loop. By default this is an H3
 	 */
 	function hotel_booking_template_loop_room_title() {
-		hb_get_template( 'loop/title.php' );
+		wphb_get_template( 'loop/title.php' );
 	}
 
 }
@@ -286,7 +286,7 @@ if ( !function_exists( 'hotel_booking_room_archive_description' ) ) {
 	 */
 	function hotel_booking_room_archive_description() {
 		if ( is_post_type_archive( 'room' ) && get_query_var( 'paged' ) == 0 ) {
-			$shop_page = get_post( hb_get_page_id( 'shop' ) );
+			$shop_page = get_post( wphb_get_page_id( 'shop' ) );
 			if ( $shop_page ) {
 				$description = hb_format_content( $shop_page->post_content );
 				if ( $description ) {
@@ -346,7 +346,7 @@ if ( !function_exists( 'hotel_booking_sidebar' ) ) {
 if ( !function_exists( 'hotel_booking_loop_room_thumbnail' ) ) {
 
 	function hotel_booking_loop_room_thumbnail() {
-		hb_get_template( 'loop/thumbnail.php' );
+		wphb_get_template( 'loop/thumbnail.php' );
 	}
 
 }
@@ -354,7 +354,7 @@ if ( !function_exists( 'hotel_booking_loop_room_thumbnail' ) ) {
 if ( !function_exists( 'hotel_booking_room_title' ) ) {
 
 	function hotel_booking_room_title() {
-		hb_get_template( 'loop/title.php' );
+		wphb_get_template( 'loop/title.php' );
 	}
 
 }
@@ -362,7 +362,7 @@ if ( !function_exists( 'hotel_booking_room_title' ) ) {
 if ( !function_exists( 'hotel_booking_loop_room_price' ) ) {
 
 	function hotel_booking_loop_room_price() {
-		hb_get_template( 'loop/price.php' );
+		wphb_get_template( 'loop/price.php' );
 	}
 
 }
@@ -370,7 +370,7 @@ if ( !function_exists( 'hotel_booking_loop_room_price' ) ) {
 if ( !function_exists( 'hotel_booking_after_room_loop' ) ) {
 
 	function hotel_booking_after_room_loop() {
-		hb_get_template( 'pagination.php' );
+		wphb_get_template( 'pagination.php' );
 	}
 
 }
@@ -378,7 +378,7 @@ if ( !function_exists( 'hotel_booking_after_room_loop' ) ) {
 if ( !function_exists( 'hotel_booking_single_room_gallery' ) ) {
 
 	function hotel_booking_single_room_gallery() {
-		hb_get_template( 'single-room/gallery.php' );
+		wphb_get_template( 'single-room/gallery.php' );
 	}
 
 }
@@ -386,7 +386,7 @@ if ( !function_exists( 'hotel_booking_single_room_gallery' ) ) {
 if ( !function_exists( 'hotel_booking_single_room_infomation' ) ) {
 
 	function hotel_booking_single_room_infomation() {
-		hb_get_template( 'single-room/details.php' );
+		wphb_get_template( 'single-room/details.php' );
 	}
 
 }
@@ -402,7 +402,7 @@ if ( !function_exists( 'hb_comments' ) ) {
 	 */
 	function hb_comments( $comment, $args, $depth ) {
 		$GLOBALS['comment'] = $comment;
-		hb_get_template( 'single-room/review.php', array( 'comment' => $comment, 'args' => $args, 'depth' => $depth ) );
+		wphb_get_template( 'single-room/review.php', array( 'comment' => $comment, 'args' => $args, 'depth' => $depth ) );
 	}
 
 }
@@ -427,7 +427,7 @@ if ( !function_exists( 'hotel_booking_single_room_related' ) ) {
 	 */
 
 	function hotel_booking_single_room_related() {
-		hb_get_template( 'single-room/related-room.php' );
+		wphb_get_template( 'single-room/related-room.php' );
 	}
 
 }
@@ -452,7 +452,7 @@ if ( !function_exists( 'hotel_booking_remove_widget_search' ) ) {
 		if ( !is_page() )
 			return $sidebar_widgets;
 
-		if ( !$post->ID == hb_get_page_id( 'search' ) )
+		if ( !$post->ID == wphb_get_page_id( 'search' ) )
 			return $sidebar_widgets;
 
 		foreach ( $sidebar_widgets as $sidebarID => $widgets ) {
@@ -473,7 +473,7 @@ if ( !function_exists( 'hotel_booking_loop_room_rating' ) ) {
 		global $hb_room;
 		global $hb_settings;
 		if ( $hb_settings->get( 'catalog_display_rating' ) ) {
-			hb_get_template( 'loop/rating.php', array( 'rating' => $hb_room->average_rating() ) );
+			wphb_get_template( 'loop/rating.php', array( 'rating' => $hb_room->average_rating() ) );
 		}
 	}
 
@@ -484,7 +484,7 @@ if ( !function_exists( 'hotel_booking_after_loop_room_item' ) ) {
 	function hotel_booking_after_loop_room_item() {
 		global $hb_settings;
 		if ( $hb_settings->get( 'enable_gallery_lightbox' ) ) {
-			hb_get_template( 'loop/gallery-lightbox.php' );
+			wphb_get_template( 'loop/gallery-lightbox.php' );
 		}
 	}
 
@@ -501,13 +501,13 @@ if ( !function_exists( 'hb_setup_shortcode_page_content' ) ) {
 			return $content;
 		}
 
-		if ( hb_get_page_id( 'cart' ) == $page_id ) {
+		if ( wphb_get_page_id( 'cart' ) == $page_id ) {
 			$content = '[' . apply_filters( 'hotel_booking_cart_shortcode_tag', 'hotel_booking_cart' ) . ']';
-		} else if ( hb_get_page_id( 'checkout' ) == $page_id ) {
+		} else if ( wphb_get_page_id( 'checkout' ) == $page_id ) {
 			$content = '[' . apply_filters( 'hotel_booking_checkout_shortcode_tag', 'hotel_booking_checkout' ) . ']';
-		} else if ( hb_get_page_id( 'search' ) == $page_id ) {
+		} else if ( wphb_get_page_id( 'search' ) == $page_id ) {
 			$content = '[' . apply_filters( 'hotel_booking_search_shortcode_tag', 'hotel_booking' ) . ']';
-		} else if ( hb_get_page_id( 'account' ) == $page_id ) {
+		} else if ( wphb_get_page_id( 'account' ) == $page_id ) {
 			$content = '[' . apply_filters( 'hotel_booking_account_shortcode_tag', 'hotel_booking_account' ) . ']';
 		}
 		return do_shortcode( $content );
@@ -517,7 +517,7 @@ if ( !function_exists( 'hb_setup_shortcode_page_content' ) ) {
 if ( !function_exists( 'hotel_display_pricing_plans' ) ) {
 
 	function hotel_display_pricing_plans( $tabs ) {
-		if ( !hb_settings()->get( 'display_pricing_plans' ) )
+		if ( !wphb_settings()->get( 'display_pricing_plans' ) )
 			return $tabs;
 
 		$tabs[] = array(
@@ -533,7 +533,7 @@ if ( !function_exists( 'hotel_display_pricing_plans' ) ) {
 if ( !function_exists( 'hotel_show_pricing' ) ) {
 
 	function hotel_show_pricing() {
-		hb_get_template( 'loop/pricing_plan.php' );
+		wphb_get_template( 'loop/pricing_plan.php' );
 	}
 
 }
@@ -541,6 +541,6 @@ if ( !function_exists( 'hotel_show_pricing' ) ) {
 add_action( 'wp_footer', 'hb_print_mini_cart_template' );
 if ( !function_exists( 'hb_print_mini_cart_template' ) ) {
 	function hb_print_mini_cart_template() {
-		echo hb_get_template_content( 'cart/mini_cart_layout.php' );
+		echo wphb_get_template_content( 'cart/mini_cart_layout.php' );
 	}
 }

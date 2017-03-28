@@ -10,7 +10,7 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-class HB_Admin_Metabox_Booking_Actions {
+class WPHB_Admin_Metabox_Booking_Actions {
 
 	public $id = 'hb-booking-actions';
 

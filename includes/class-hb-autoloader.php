@@ -4,7 +4,7 @@ if ( !defined( 'ABSPATH' ) ) {
     exit;
 }
 
-class HB_Autoloader {
+class WPHB_Autoloader {
 
     /**
      * Path to the includes directory
@@ -68,7 +68,7 @@ class HB_Autoloader {
         }
 
         // admin metaboxs
-        if ( strpos( $class, 'hb_admin_metabox_' ) === 0 ) {
+        if ( strpos( $class, 'wphb_admin_metabox_' ) === 0 ) {
             $path = $this->include_path . 'admin/metaboxes/';
         }
 
@@ -77,4 +77,4 @@ class HB_Autoloader {
 
 }
 
-new HB_Autoloader();
+new WPHB_Autoloader();

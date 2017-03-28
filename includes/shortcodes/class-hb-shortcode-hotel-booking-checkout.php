@@ -46,7 +46,7 @@ class HB_Shortcode_Hotel_Booking_Checkout extends HB_Shortcodes {
         $template_args = apply_filters( 'hotel_booking_checkout_tpl_template_args', array( 'customer' => $customer ) );
         ob_start();
         do_action( 'hb_wrapper_start' );
-        hb_get_template( $template, $template_args );
+        wphb_get_template( $template, $template_args );
         do_action( 'hb_wrapper_end' );
         return ob_get_clean();
     }

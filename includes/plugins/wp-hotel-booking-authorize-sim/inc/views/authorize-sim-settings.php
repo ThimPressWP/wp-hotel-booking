@@ -3,7 +3,7 @@ if ( !defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-$settings = HB_Settings::instance();
+$settings = WPHB_Settings::instance();
 $authorize = $settings->get( 'authorize' );
 $authorize = wp_parse_args(
         $authorize, array(

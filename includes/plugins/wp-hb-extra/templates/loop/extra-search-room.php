@@ -50,7 +50,7 @@ $room_extra = $room_extra->get_extra();
 									<input type="hidden" step="1" min="1" name="hb_optional_quantity[<?php echo esc_attr( $extra->ID  ); ?>]" value="1"/>
 								<?php endif; ?>
 								<label>
-									<strong><?php printf( '%s', hb_format_price( $extra->amount_singular ) ) ?></strong>
+									<strong><?php printf( '%s', wphb_format_price( $extra->amount_singular ) ) ?></strong>
 									<small><?php printf( '/ %s', $extra->respondent_name ? $extra->respondent_name : __( 'Package', 'wp-hb-extra' ) ) ?></small>
 								</label>
 							</div>

@@ -188,13 +188,13 @@ class HB_Extra_Cart
 		                    'permalink' 		=> get_permalink( $room->product_id ),
 		                    'name'      		=> sprintf( '%s', $room->product_data->name ) . ( $room->product_data->capacity_title ? sprintf( '(%s)', $room->product_data->capacity_title) : '' ),
 		                    'quantity'  		=> $room->quantity,
-		                    'total'     		=> hb_format_price( $room->amount ),
+		                    'total'     		=> wphb_format_price( $room->amount ),
 		                    // use to cart table
 		                    'package_id'		=> $cart_id,
-		                    'item_total'		=> hb_format_price( $room->amount_include_tax ),
-		                    'sub_total'  		=> hb_format_price( WP_Hotel_Booking::instance()->cart->sub_total ),
-			                'grand_total'   	=> hb_format_price( WP_Hotel_Booking::instance()->cart->total ),
-			                'advance_payment' 	=> hb_format_price( WP_Hotel_Booking::instance()->cart->advance_payment )
+		                    'item_total'		=> wphb_format_price( $room->amount_include_tax ),
+		                    'sub_total'  		=> wphb_format_price( WP_Hotel_Booking::instance()->cart->sub_total ),
+			                'grand_total'   	=> wphb_format_price( WP_Hotel_Booking::instance()->cart->total ),
+			                'advance_payment' 	=> wphb_format_price( WP_Hotel_Booking::instance()->cart->advance_payment )
 		            );
 
 				$extraRoom = WP_Hotel_Booking::instance()->cart->get_extra_packages( $package_item->parent_id );
@@ -203,7 +203,7 @@ class HB_Extra_Cart
 					foreach ( $extraRoom as $cart_id => $cart_item ) {
 						$extra = HB_Extra_Package::instance( $cart_item->product_id );
 						$extra_packages[] = array(
-								'package_title'				=> sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->amount_singular ) ),
+								'package_title'				=> sprintf( '%s (%s)', $extra->title, wphb_format_price( $extra->amount_singular ) ),
 								'cart_id'					=> $cart_id,
 								'package_quantity'			=> sprintf( 'x%s', $cart_item->quantity ),
 								'package_respondent'		=> $extra->respondent
@@ -242,7 +242,7 @@ class HB_Extra_Cart
 					// extra class
 					$extra = HB_Extra_Package::instance( $cart_item->product_id );
 					$extra_packages[] = array(
-							'package_title'		=> sprintf( '%s (%s)', $extra->title, hb_format_price( $extra->amount_singular ) ),
+							'package_title'		=> sprintf( '%s (%s)', $extra->title, wphb_format_price( $extra->amount_singular ) ),
 							'package_id'		=> $extra->ID,
 							'cart_id'			=> $cart_item_id,
 							'package_quantity'	=> sprintf( 'x%s', $cart_item->quantity )
@@ -317,7 +317,7 @@ class HB_Extra_Cart
 						</td>
 
 						<td>
-							<?php echo hb_format_price( $cart_item->amount_singular_exclude_tax, hb_get_currency_symbol( $booking->currency ) ) ?>
+							<?php echo wphb_format_price( $cart_item->amount_singular_exclude_tax, wphb_get_currency_symbol( $booking->currency ) ) ?>
 						</td>
 
 					</tr>
@@ -330,10 +330,10 @@ class HB_Extra_Cart
 	function check_respondent( $respondent )
 	{
 		// remove_filter( 'hb_extra_cart_input', array( $this, 'check_respondent' ) );
-		if( is_page( hb_get_page_id( 'checkout' ) ) || hb_get_request( 'hotel-booking' ) === 'checkout' )
+		if( is_page( wphb_get_page_id( 'checkout' ) ) || wphb_get_request( 'hotel-booking' ) === 'checkout' )
 			return false;
 
-		if( is_page( hb_get_page_id( 'cart' ) ) || hb_get_request( 'hotel-booking' ) === 'cart' )
+		if( is_page( wphb_get_page_id( 'cart' ) ) || wphb_get_request( 'hotel-booking' ) === 'cart' )
 		{
 			if( $respondent === 'trip' )
 				return false;
@@ -361,7 +361,7 @@ class HB_Extra_Cart
 
 			$html[] = sprintf( '<td class="qty">%s</td>', hb_get_order_item_meta( $package->order_item_id, 'qty', true ) );
 
-			$html[] = sprintf( '<td class="total">%s</td>', hb_format_price( hb_get_order_item_meta( $package->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $hb_booking->currency ) ) );
+			$html[] = sprintf( '<td class="total">%s</td>', wphb_format_price( hb_get_order_item_meta( $package->order_item_id, 'subtotal', true ), wphb_get_currency_symbol( $hb_booking->currency ) ) );
 
 			$html[] = '<td class="actions">';
 
@@ -396,7 +396,7 @@ class HB_Extra_Cart
 			$html[] = '<td>' . sprintf( '%s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $package->order_item_id, 'check_in_date', true ) ) ) . '</td>';
 			$html[] = '<td>' . sprintf( '%s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $package->order_item_id, 'check_out_date', true ) ) )  . '</td>';
 			$html[] = '<td>' . sprintf( '%s', hb_get_order_item_meta( $package->order_item_id, 'qty', true ) )  . '</td>';
-			$html[] = '<td>' . sprintf( '%s', hb_format_price( hb_get_order_item_meta( $package->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $hb_booking->currency ) ) )  . '</td>';
+			$html[] = '<td>' . sprintf( '%s', wphb_format_price( hb_get_order_item_meta( $package->order_item_id, 'subtotal', true ), wphb_get_currency_symbol( $hb_booking->currency ) ) )  . '</td>';
 
 			$html[] = '</tr>';
 		}

@@ -10,9 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-if ( ! class_exists( 'HB_Admin_Setting_Hotel_Info' ) ) {
+if ( ! class_exists( 'WPHB_Admin_Setting_Hotel_Info' ) ) {
 
-	class HB_Admin_Setting_Hotel_Info extends HB_Admin_Setting_Page {
+	class WPHB_Admin_Setting_Hotel_Info extends WPHB_Admin_Setting_Page {
 
 		public $id = 'hotel_info';
 
@@ -108,4 +108,4 @@ if ( ! class_exists( 'HB_Admin_Setting_Hotel_Info' ) ) {
 	}
 
 }
-return new HB_Admin_Setting_Hotel_Info();
+return new WPHB_Admin_Setting_Hotel_Info();

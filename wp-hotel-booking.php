@@ -346,7 +346,7 @@ class WP_Hotel_Booking {
         <script type="text/javascript">
 			var hotel_settings = {
 				ajax           : '<?php echo admin_url( 'admin-ajax.php' ); ?>',
-				settings       : <?php echo HB_Settings::instance()->toJson( apply_filters( 'hb_settings_fields', array( 'review_rating_required' ) ) ); ?>,
+				settings       : <?php echo WPHB_Settings::instance()->toJson( apply_filters( 'hb_settings_fields', array( 'review_rating_required' ) ) ); ?>,
 				upload_base_url: '<?php echo esc_js( $upload_base_url ) ?>',
 				meta_key       : {
 					prefix: '_hb_'

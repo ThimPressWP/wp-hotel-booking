@@ -20,7 +20,7 @@ $related = $room->get_related_rooms();
 
 		<?php while ( $related->have_posts() ) : $related->the_post(); ?>
 
-			<?php hb_get_template_part( 'content', 'room' ); ?>
+			<?php wphb_get_template_part( 'content', 'room' ); ?>
 
 		<?php endwhile; // end of the loop. ?>
 

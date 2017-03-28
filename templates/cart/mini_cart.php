@@ -11,15 +11,15 @@ $rooms = WP_Hotel_Booking::instance()->cart->get_rooms();
 	<?php foreach ( $rooms as $key => $room ): ?>
 
 		<?php if ( $cart_item = WP_Hotel_Booking::instance()->cart->get_cart_item( $key ) ) : ?>
-			<?php hb_get_template( 'loop/mini-cart-loop.php', array( 'cart_id' => $key, 'room' => $room ) ); ?>
+			<?php wphb_get_template( 'loop/mini-cart-loop.php', array( 'cart_id' => $key, 'room' => $room ) ); ?>
 		<?php endif; ?>
 
 	<?php endforeach; ?>
 
     <div class="hb_mini_cart_footer">
 
-        <a href="<?php echo esc_url( hb_get_checkout_url() ); ?>" class="hb_button hb_checkout"><?php _e( 'Check Out', 'wp-hotel-booking' ); ?></a>
-        <a href="<?php echo esc_url( hb_get_cart_url() ); ?>" class="hb_button hb_view_cart"><?php _e( 'View Cart', 'wp-hotel-booking' ); ?></a>
+        <a href="<?php echo esc_url( wphb_get_checkout_url() ); ?>" class="hb_button hb_checkout"><?php _e( 'Check Out', 'wp-hotel-booking' ); ?></a>
+        <a href="<?php echo esc_url( wphb_get_cart_url() ); ?>" class="hb_button hb_view_cart"><?php _e( 'View Cart', 'wp-hotel-booking' ); ?></a>
 
     </div>
 

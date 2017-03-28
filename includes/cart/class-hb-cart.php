@@ -45,13 +45,13 @@ class HB_Cart {
 
     function __construct( $appfix = null ) {
         // session class
-        $this->sessions = HB_Sessions::instance( 'thimpress_hotel_booking_' . HB_BLOG_ID . $appfix, true );
+        $this->sessions = WPHB_Sessions::instance( 'thimpress_hotel_booking_' . HB_BLOG_ID . $appfix, true );
 
         // session customer object
-        $this->customer_sessions = HB_Sessions::instance( 'thimpress_hotel_booking_customer_' . HB_BLOG_ID . $appfix, true );
+        $this->customer_sessions = WPHB_Sessions::instance( 'thimpress_hotel_booking_customer_' . HB_BLOG_ID . $appfix, true );
 
         // session booking object
-        $this->booking_sessions = HB_Sessions::instance( 'thimpress_hotel_booking_info_' . HB_BLOG_ID . $appfix, true );
+        $this->booking_sessions = WPHB_Sessions::instance( 'thimpress_hotel_booking_info_' . HB_BLOG_ID . $appfix, true );
 
         // refresh cart session
         add_action( 'wp_loaded', array( $this, 'wp_loaded' ) );
@@ -569,7 +569,7 @@ class HB_Cart {
      */
     function get_advance_payment() {
         $total = $this->get_total();
-        if ( $advance_payment = hb_get_advance_payment() ) {
+        if ( $advance_payment = wphb_get_advance_payment() ) {
             $total = $total * $advance_payment / 100;
         }
         return $total;
@@ -598,7 +598,7 @@ class HB_Cart {
         $booking_info = array();
 
         // use coupon
-        if ( HB_Settings::instance()->get( 'enable_coupon' ) && $coupon = WP_Hotel_Booking::instance()->cart->coupon ) {
+        if ( WPHB_Settings::instance()->get( 'enable_coupon' ) && $coupon = WP_Hotel_Booking::instance()->cart->coupon ) {
             $coupon = HB_Coupon::instance( $coupon );
 
             $booking_info['_hb_coupon_id'] = $coupon->ID;
@@ -609,8 +609,8 @@ class HB_Cart {
         // booking info array param
         $booking_info = array_merge( $booking_info, array(
             '_hb_tax' => $this->cart_total_include_tax - $this->cart_total_exclude_tax,
-            '_hb_advance_payment' => $this->hb_get_cart_total( !hb_get_request( 'pay_all' ) ),
-            '_hb_advance_payment_setting' => hb_settings()->get( 'advance_payment', 50 ),
+            '_hb_advance_payment' => $this->hb_get_cart_total( !wphb_get_request( 'pay_all' ) ),
+            '_hb_advance_payment_setting' => wphb_settings()->get( 'advance_payment', 50 ),
             '_hb_currency' => apply_filters( 'hotel_booking_payment_currency', hb_get_currency() ),
             // '_hb_customer_id'               => $customer_id,
             '_hb_user_id' => get_current_blog_id(),
@@ -618,17 +618,17 @@ class HB_Cart {
             '_hb_method_title' => $payment_method->title,
             '_hb_method_id' => $payment_method->method_id,
             // customer
-            '_hb_customer_title' => hb_get_request( 'title' ),
-            '_hb_customer_first_name' => hb_get_request( 'first_name' ),
-            '_hb_customer_last_name' => hb_get_request( 'last_name' ),
-            '_hb_customer_address' => hb_get_request( 'address' ),
-            '_hb_customer_city' => hb_get_request( 'city' ),
-            '_hb_customer_state' => hb_get_request( 'state' ),
-            '_hb_customer_postal_code' => hb_get_request( 'postal_code' ),
-            '_hb_customer_country' => hb_get_request( 'country' ),
-            '_hb_customer_phone' => hb_get_request( 'phone' ),
-            '_hb_customer_email' => hb_get_request( 'email' ),
-            '_hb_customer_fax' => hb_get_request( 'fax' )
+            '_hb_customer_title' => wphb_get_request( 'title' ),
+            '_hb_customer_first_name' => wphb_get_request( 'first_name' ),
+            '_hb_customer_last_name' => wphb_get_request( 'last_name' ),
+            '_hb_customer_address' => wphb_get_request( 'address' ),
+            '_hb_customer_city' => wphb_get_request( 'city' ),
+            '_hb_customer_state' => wphb_get_request( 'state' ),
+            '_hb_customer_postal_code' => wphb_get_request( 'postal_code' ),
+            '_hb_customer_country' => wphb_get_request( 'country' ),
+            '_hb_customer_phone' => wphb_get_request( 'phone' ),
+            '_hb_customer_email' => wphb_get_request( 'email' ),
+            '_hb_customer_fax' => wphb_get_request( 'fax' )
         ) );
 
         // set booking info

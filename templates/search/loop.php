@@ -38,10 +38,10 @@ $featured = $gallery ? array_shift( $gallery ) : false;
                     </li>
                     <li class="hb_search_price">
                         <label><?php _e( 'Price:', 'wp-hotel-booking' ); ?></label>
-                        <span class="hb_search_item_price"><?php echo hb_format_price( $room->amount_singular ); ?></span>
+                        <span class="hb_search_item_price"><?php echo wphb_format_price( $room->amount_singular ); ?></span>
                         <div class="hb_view_price">
                             <a href="" class="hb-view-booking-room-details"><?php _e( '(View price breakdown)', 'wp-hotel-booking' ); ?></a>
-							<?php hb_get_template( 'search/booking-room-details.php', array( 'room' => $room ) ); ?>
+							<?php wphb_get_template( 'search/booking-room-details.php', array( 'room' => $room ) ); ?>
                         </div>
                     </li>
                     <li class="hb_search_quantity">
@@ -68,8 +68,8 @@ $featured = $gallery ? array_shift( $gallery ) : false;
         </div>
 
 		<?php wp_nonce_field( 'hb_booking_nonce_action', 'nonce' ); ?>
-        <input type="hidden" name="check_in_date" value="<?php echo date( 'm/d/Y', hb_get_request( 'hb_check_in_date' ) ); ?>" />
-        <input type="hidden" name="check_out_date" value="<?php echo date( 'm/d/Y', hb_get_request( 'hb_check_out_date' ) ); ?>">
+        <input type="hidden" name="check_in_date" value="<?php echo date( 'm/d/Y', wphb_get_request( 'hb_check_in_date' ) ); ?>" />
+        <input type="hidden" name="check_out_date" value="<?php echo date( 'm/d/Y', wphb_get_request( 'hb_check_out_date' ) ); ?>">
         <input type="hidden" name="room-id" value="<?php echo esc_attr( $room->post->ID ); ?>">
         <input type="hidden" name="hotel-booking" value="cart">
         <input type="hidden" name="action" value="hotel_booking_ajax_add_to_cart" />
@@ -77,6 +77,6 @@ $featured = $gallery ? array_shift( $gallery ) : false;
 		<?php do_action( 'hotel_booking_loop_after_item', $room->post->ID ); ?>
     </form>
 	<?php if ( ( isset( $atts['gallery'] ) && $atts['gallery'] === 'true' ) || $hb_settings->get( 'enable_gallery_lightbox' ) ): ?>
-		<?php hb_get_template( 'loop/gallery-lightbox.php', array( 'room' => $room ) ) ?>
+		<?php wphb_get_template( 'loop/gallery-lightbox.php', array( 'room' => $room ) ) ?>
 	<?php endif; ?>
 </li>

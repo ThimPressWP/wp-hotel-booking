@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-class HB_Admin {
+class WPHB_Admin {
 
 	function __construct(){
 		add_action( 'init', array( $this, 'includes' ) );
@@ -69,4 +69,4 @@ class HB_Admin {
 
 }
 
-new HB_Admin();
+new WPHB_Admin();

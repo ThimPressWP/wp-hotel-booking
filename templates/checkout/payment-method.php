@@ -4,7 +4,7 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-$payment_gateways = hb_get_payment_gateways( array( 'enable' => true ) );
+$payment_gateways = wphb_get_payment_gateways( array( 'enable' => true ) );
 ?>
 <div class="hb-payment-form">
     <div class="hb-col-padding hb-col-border">

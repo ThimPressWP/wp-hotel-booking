@@ -10,7 +10,7 @@ if ( !defined( 'ABSPATH' ) ) {
     exit();
 }
 
-abstract class HB_User_Abstract {
+abstract class WPHB_User_Abstract {
 
     public $user = null;
     public $id = null;

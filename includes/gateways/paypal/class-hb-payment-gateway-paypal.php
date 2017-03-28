@@ -51,7 +51,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
         $this->_slug = 'paypal';
         $this->_title = __( 'Paypal', 'wp-hotel-booking' );
         $this->_description = __( 'Pay with Paypal', 'wp-hotel-booking' );
-        $this->_settings = HB_Settings::instance()->get('paypal');
+        $this->_settings = WPHB_Settings::instance()->get('paypal');
 
         $this->paypal_live_url              = 'https://www.paypal.com/';
         $this->paypal_sandbox_url           = 'https://www.sandbox.paypal.com/';
@@ -249,7 +249,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
             'numberposts' => 1, //we should only have one, so limit to 1
         );
 
-        $bookings = hb_get_bookings( $args );
+        $bookings = wphb_get_bookings( $args );
         if( $bookings ) foreach( $bookings as $booking ){
             return $booking->ID;
         }
@@ -264,17 +264,17 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      */
     protected function _get_paypal_basic_checkout_url(  $booking_id ) {
 
-        $paypal = HB_Settings::instance()->get( 'paypal' );
+        $paypal = WPHB_Settings::instance()->get( 'paypal' );
 
         $paypal_args = array (
             'cmd'      => '_xclick',
-            'amount'   => round( WP_Hotel_Booking::instance()->cart->hb_get_cart_total( ! hb_get_request( 'pay_all' ) ), 2 ),
+            'amount'   => round( WP_Hotel_Booking::instance()->cart->hb_get_cart_total( ! wphb_get_request( 'pay_all' ) ), 2 ),
             'quantity' => '1',
         );
 
         $booking    = HB_Booking::instance( $booking_id );
-        $advance_payment = hb_get_advance_payment();
-        $pay_all = hb_get_request( 'pay_all' );
+        $advance_payment = wphb_get_advance_payment();
+        $pay_all = wphb_get_request( 'pay_all' );
 
         $nonce = wp_create_nonce( 'hb-paypal-nonce' );
         $paypal_email = $paypal['sandbox'] === 'on' ? $paypal['sandbox_email'] : $paypal['email'];

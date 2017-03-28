@@ -56,7 +56,7 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base {
         $this->_slug = 'authorize';
         $this->_title = __( 'Authorize', 'wp-hotel-booking-authorize-sim' );
         $this->_description = __( 'Pay with Authorize.net', 'wp-hotel-booking-authorize-sim' );
-        $this->_settings = HB_Settings::instance()->get( 'authorize' );
+        $this->_settings = WPHB_Settings::instance()->get( 'authorize' );
 
         $this->_api_login_id = isset( $this->_settings['api_login_id'] ) ? $this->_settings['api_login_id'] : '8u33RVeK';
         $this->_transaction_key = isset( $this->_settings['transaction_key'] ) ? $this->_settings['transaction_key'] : '36zHT3e446Hha7X8';
@@ -114,7 +114,7 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base {
             return;
 
         if ( isset( $_POST['x_response_reason_text'] ) )
-            hb_add_message( $_POST['x_response_reason_text'] );
+            wphb_add_message( $_POST['x_response_reason_text'] );
 
         $code = 0;
         if ( isset( $_POST['x_response_code'] ) && array_key_exists( (int) $_POST['x_response_code'], $this->_messages ) )
@@ -141,7 +141,7 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base {
 
         $book->update_status( $status );
 		WP_Hotel_Booking::instance()->cart->empty_cart();
-        wp_redirect( hb_get_checkout_url() );
+        wp_redirect( wphb_get_checkout_url() );
         exit();
     }
 
@@ -276,7 +276,7 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base {
     protected function _get_authorize_basic_checkout_url( $booking_id ) {
         $nonce = wp_create_nonce( 'hb-order-pay-nonce' );
         return add_query_arg(
-                array( 'hb-order-pay' => $booking_id, 'hb-order-pay-nonce' => $nonce ), hb_get_page_permalink( 'checkout' ) );
+                array( 'hb-order-pay' => $booking_id, 'hb-order-pay-nonce' => $nonce ), wphb_get_page_permalink( 'checkout' ) );
     }
 
     /**

@@ -394,7 +394,7 @@ class WP_Hotel_Booking_Woocommerce {
 	}
 
 	private function _parse_request() {
-		$segments = parse_url( hb_get_request( '_wp_http_referer' ) );
+		$segments = parse_url( wphb_get_request( '_wp_http_referer' ) );
 		$request  = false;
 		if ( !empty( $segments['query'] ) ) {
 			parse_str( $segments['query'], $params );
@@ -474,7 +474,7 @@ class WP_Hotel_Booking_Woocommerce {
 	}
 
 	public static function admin_notice() {
-		if ( !class_exists( 'HB_Settings' ) )
+		if ( !class_exists( 'WPHB_Settings' ) )
 			return;
 
 		if ( function_exists( 'hb_wc_admin_view' ) ) {
@@ -483,9 +483,9 @@ class WP_Hotel_Booking_Woocommerce {
 	}
 
 	public static function wc_enable() {
-		if ( !class_exists( 'HB_Settings' ) )
+		if ( !class_exists( 'WPHB_Settings' ) )
 			return;
-		return self::$_wc_loaded && HB_Settings::instance()->get( 'wc_enable' ) == 'yes';
+		return self::$_wc_loaded && WPHB_Settings::instance()->get( 'wc_enable' ) == 'yes';
 	}
 
 	public function frontend_scripts() {
@@ -505,14 +505,14 @@ class WP_Hotel_Booking_Woocommerce {
 	 * Including library files
 	 */
 	private function _includes() {
-		if ( !class_exists( 'HB_Settings' ) )
+		if ( !class_exists( 'WPHB_Settings' ) )
 			return;
 
 		require_once "includes/class-hb-wc-product-room.php";
 		require_once "includes/class-hb-wc-product-package.php";
 		require_once "includes/class-hb-wc-checkout.php";
 		require_once "includes/class-hb-wc-booking.php";
-		$this->settings = HB_Settings::instance();
+		$this->settings = WPHB_Settings::instance();
 	}
 
 	/**
@@ -673,10 +673,10 @@ class WP_Hotel_Booking_Woocommerce {
 		if ( !$post ) {
 			return;
 		}
-		if ( $post->ID == hb_get_page_id( 'cart' ) ) {
+		if ( $post->ID == wphb_get_page_id( 'cart' ) ) {
 			wp_redirect( WC()->cart->get_cart_url() );
 			exit();
-		} else if ( $post->ID == hb_get_page_id( 'checkout' ) ) {
+		} else if ( $post->ID == wphb_get_page_id( 'checkout' ) ) {
 			wp_redirect( WC()->cart->get_checkout_url() );
 			exit();
 		}

@@ -68,7 +68,7 @@ function hb_get_cart_description(){
  * @return mixed
  */
 function hb_get_return_url(){
-    $url = hb_get_checkout_url();
+    $url = wphb_get_checkout_url();
     return apply_filters( 'hb_return_url', $url );
 }
 
@@ -80,7 +80,7 @@ function hb_get_return_url(){
 function hb_get_coupons_active( $date, $code = false ){
 
     $coupons = false;
-    $enable = HB_Settings::instance()->get( 'enable_coupon' );
+    $enable = WPHB_Settings::instance()->get( 'enable_coupon' );
 
     if( $enable && $code ) {
         $args = array(

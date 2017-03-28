@@ -19,7 +19,7 @@ function tp_hb_extra_get_template_part( $slug, $name = '' ) {
         $template = locate_template( array(
             "{$slug}-{$name}.php",
             tp_hb_extra_template_path() . "/{$slug}-{$name}.php",
-            hb_template_path() . '/' . tp_hb_extra_template_path() . "/{$slug}-{$name}.php",
+            wphb_template_path() . '/' . tp_hb_extra_template_path() . "/{$slug}-{$name}.php",
         ));
     }
 
@@ -33,7 +33,7 @@ function tp_hb_extra_get_template_part( $slug, $name = '' ) {
         $template = locate_template( array(
             "{$slug}.php",
             tp_hb_extra_template_path() . "{$slug}.php",
-            hb_template_path() . '/' . tp_hb_extra_template_path() . "{$slug}.php",
+            wphb_template_path() . '/' . tp_hb_extra_template_path() . "{$slug}.php",
         ) );
     }
 
@@ -111,7 +111,7 @@ function tp_hb_extra_locate_template( $template_name, $template_path = '', $defa
     $template = locate_template(
         array(
             trailingslashit( $template_path ) . $template_name,
-            trailingslashit( hb_template_path() . '/' . $template_path ) . $template_name,
+            trailingslashit( wphb_template_path() . '/' . $template_path ) . $template_name,
             $template_name
         )
     );
@@ -184,7 +184,7 @@ if( ! function_exists( 'is_hb_checkout' ) )
 
     function is_hb_checkout()
     {
-        return ( is_page( hb_get_page_id( 'checkout' ) ) || hb_get_request( 'hotel-booking' ) === 'checkout' );
+        return ( is_page( wphb_get_page_id( 'checkout' ) ) || wphb_get_request( 'hotel-booking' ) === 'checkout' );
     }
 }
 
@@ -194,6 +194,6 @@ if( ! function_exists( 'is_hb_cart' ) )
 
     function is_hb_cart()
     {
-        return ( is_page( hb_get_page_id( 'cart' ) ) || hb_get_request( 'hotel-booking' ) === 'cart' );
+        return ( is_page( wphb_get_page_id( 'cart' ) ) || wphb_get_request( 'hotel-booking' ) === 'cart' );
     }
 }

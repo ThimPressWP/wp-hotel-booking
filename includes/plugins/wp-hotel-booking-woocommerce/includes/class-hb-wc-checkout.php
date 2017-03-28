@@ -1,9 +1,9 @@
 <?php
 
-if ( !class_exists( 'HB_Checkout' ) )
+if ( !class_exists( 'WPHB_Checkout' ) )
     return;
 
-class HB_WC_Checkout extends HB_Checkout {
+class HB_WC_Checkout extends WPHB_Checkout {
 
     function __construct() {
         parent::__construct();
@@ -64,7 +64,7 @@ class HB_WC_Checkout extends HB_Checkout {
      * @return [type]
      */
     public function create_booking( $order = null ) {
-        return HB_Checkout::instance()->create_booking( $order );
+        return WPHB_Checkout::instance()->create_booking( $order );
     }
 
     /**

@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-class HB_Admin_Menu{
+class WPHB_Admin_Menu{
 
     function __construct(){
         add_action( 'admin_menu', array( $this, 'register' ) );
@@ -82,7 +82,7 @@ class HB_Admin_Menu{
     }
 
     function settings_page(){
-        HB_Admin_Settings::output();
+        WPHB_Admin_Settings::output();
     }
 
     function pricing_table(){
@@ -96,4 +96,4 @@ class HB_Admin_Menu{
     }
 }
 
-new HB_Admin_Menu();
+new WPHB_Admin_Menu();

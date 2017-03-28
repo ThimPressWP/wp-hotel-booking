@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-$settings = HB_Settings::instance();
+$settings = WPHB_Settings::instance();
 $payment = $settings->get('offline-payment');
 $payment = wp_parse_args(
     $payment,

@@ -5,11 +5,11 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class HB_Comments
+ * Class WPHB_Comments
  *
  * Handle actions for comments and reviews
  */
-class HB_Comments {
+class WPHB_Comments {
 
     /**
      * Constructor
@@ -143,4 +143,4 @@ class HB_Comments {
 
 }
 
-new HB_Comments();
+new WPHB_Comments();

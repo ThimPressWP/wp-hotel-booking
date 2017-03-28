@@ -1,7 +1,7 @@
 <?php
 /**
  * use hb_settings function get field name
- * HB_Settings save auto
+ * WPHB_Settings save auto
  * else customize save function
  */
 

@@ -36,7 +36,7 @@ function hb_admin_i18n(){
 }
 
 function hb_add_meta_boxes(){
-    HB_Meta_Box::instance(
+    WPHB_Meta_Box::instance(
         'room_settings',
         array(
             'title'             => __( 'Room Settings', 'wp-hotel-booking' ),
@@ -59,7 +59,7 @@ function hb_add_meta_boxes(){
             'name'      => 'room_capacity',
             'label'     => __( 'Number of adults', 'wp-hotel-booking' ),
             'type'      => 'select',
-            'options'   => hb_get_room_capacities(
+            'options'   => wphb_get_room_capacities(
                 array(
                     'map_fields' => array(
                         'term_id'   => 'value',
@@ -86,7 +86,7 @@ function hb_add_meta_boxes(){
     );
 
     // coupon meta box
-    HB_Meta_Box::instance(
+    WPHB_Meta_Box::instance(
         'coupon_settings',
         array(
             'title'             => __( 'Coupon Settings', 'wp-hotel-booking' ),
@@ -174,7 +174,7 @@ function hb_add_meta_boxes(){
         )
     );
 
-    HB_Meta_Box::instance(
+    WPHB_Meta_Box::instance(
         'gallery_settings',
         array(
             'title'             => __( 'Gallery Settings', 'wp-hotel-booking' ),
@@ -221,10 +221,10 @@ add_action( 'admin_init', 'hb_admin_init_metaboxes', 50 );
 if ( ! function_exists( 'hb_admin_init_metaboxes' ) ) {
     function hb_admin_init_metaboxes() {
         $metaboxes = array(
-                new HB_Admin_Metabox_Booking_Details(), // booking details
-                new HB_Admin_Metabox_Booking_Items(), // booking items
-                new HB_Admin_Metabox_Booking_Actions(), // booking actions
-                new HB_Admin_Metabox_Room_Price() // room price
+                new WPHB_Admin_Metabox_Booking_Details(), // booking details
+                new WPHB_Admin_Metabox_Booking_Items(), // booking items
+                new WPHB_Admin_Metabox_Booking_Actions(), // booking actions
+                new WPHB_Admin_Metabox_Room_Price() // room price
             );
         return apply_filters( 'hb_admin_init_metaboxes', $metaboxes );
     }
@@ -264,10 +264,10 @@ function hb_manage_booking_column( $column_name, $post_id ) {
     $status = get_post_status( $post_id );
     switch ( $column_name ){
         case 'booking_id':
-            $echo[] = hb_format_order_number( $post_id );
+            $echo[] = wphb_format_order_number( $post_id );
             break;
         case 'customer':
-            $echo[] = hb_get_customer_fullname( $post_id, true );
+            $echo[] = wphb_get_customer_fullname( $post_id, true );
             $echo[] = $booking->user_id && ( $user = get_userdata( $booking->user_id ) ) ? sprintf( '<br /><strong><small><a href="%s">%s</a></small></strong>', get_edit_user_link( $booking->user_id ), $user->user_login ) : '';
             break;
         case 'total':
@@ -277,10 +277,10 @@ function hb_manage_booking_column( $column_name, $post_id ) {
             if( ! $currency ) {
                 $currency = $booking->currency;
             }
-            $total_with_currency = hb_format_price( $total, hb_get_currency_symbol( $currency ) );
+            $total_with_currency = wphb_format_price( $total, wphb_get_currency_symbol( $currency ) );
 
             $echo[] = $total_with_currency;
-            if( $method = hb_get_user_payment_method( $booking->method ) ) {
+            if( $method = wphb_get_user_payment_method( $booking->method ) ) {
                 $echo[] = sprintf( __( '<br />(<small>%s</small>)', 'wp-hotel-booking' ), $method->description );
             }
             // display paid
@@ -296,7 +296,7 @@ function hb_manage_booking_column( $column_name, $post_id ) {
                     $echo[] = sprintf(
                         __( '<br />(<small class="hb_advance_payment">Charged %s = %s</small>)', 'wp-hotel-booking' ),
                         $advance_settings . '%',
-                        hb_format_price( $advance_payment, hb_get_currency_symbol( $currency ) )
+                        wphb_format_price( $advance_payment, wphb_get_currency_symbol( $currency ) )
                     );
                 }
             }
@@ -363,11 +363,11 @@ function hb_booking_restrict_manage_posts(){
     if ('hb_booking' == $type){
         //change this to the list of values you want to show
         //in 'label' => 'value' format
-        $from           = hb_get_request( 'date-from' );
-        $from_timestamp = hb_get_request( 'date-from-timestamp' );
-        $to             = hb_get_request( 'date-to' );
-        $to_timestamp   = hb_get_request( 'date-to-timestamp' );
-        $filter_type    = hb_get_request( 'filter-type' );
+        $from           = wphb_get_request( 'date-from' );
+        $from_timestamp = wphb_get_request( 'date-from-timestamp' );
+        $to             = wphb_get_request( 'date-to' );
+        $to_timestamp   = wphb_get_request( 'date-to-timestamp' );
+        $filter_type    = wphb_get_request( 'filter-type' );
 
         $filter_types = apply_filters(
             'hb_booking_filter_types',
@@ -402,7 +402,7 @@ add_action( 'admin_head-edit.php', 'hb_edit_post_change_title_in_list' );
 function hb_edit_post_new_title_in_list( $title, $post_id ){
     global $post_type;
     if( $post_type == 'hb_booking' ) {
-        $title = hb_format_order_number( $post_id );
+        $title = wphb_format_order_number( $post_id );
     }
     return $title;
 }
@@ -513,12 +513,12 @@ function hb_booking_detail_update_meta_box( $k, $vl, $post_id ) {
 
     $status = sanitize_text_field( $vl );
 
-    remove_action( 'save_post', array( 'HB_Admin_Metabox_Booking_Details', 'update' ) );
+    remove_action( 'save_post', array( 'WPHB_Admin_Metabox_Booking_Details', 'update' ) );
 
     $book = HB_Booking::instance( $post_id );
     $book->update_status( $status );
 
-    add_action( 'save_post', array( 'HB_Admin_Metabox_Booking_Details', 'update' ) );
+    add_action( 'save_post', array( 'WPHB_Admin_Metabox_Booking_Details', 'update' ) );
 }
 
 add_action( 'hb_update_meta_box_gallery_settings', 'hb_update_meta_box_gallery' );

@@ -5,9 +5,9 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class HB_Settings
+ * Class WPHB_Settings
  */
-class HB_Settings {
+class WPHB_Settings {
 
     /**
      * @var object
@@ -202,12 +202,12 @@ class HB_Settings {
     }
 
     /**
-     * Get unique instance of HB_Settings
+     * Get unique instance of WPHB_Settings
      * Create a new one if it is not created
      *
      * @param string
      * @param array
-     * @return HB_Settings instance
+     * @return WPHB_Settings instance
      */
     static function instance( $prefix = null, $default = array() ) {
         if ( !$prefix || !is_string( $prefix ) ) {
@@ -221,8 +221,8 @@ class HB_Settings {
 
 }
 
-$GLOBALS['hb_settings'] = HB_Settings::instance();
+$GLOBALS['hb_settings'] = WPHB_Settings::instance();
 
-function hb_settings() {
-    return HB_Settings::instance();
+function wphb_settings() {
+    return WPHB_Settings::instance();
 }

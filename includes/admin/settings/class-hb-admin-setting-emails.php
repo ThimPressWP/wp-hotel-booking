@@ -10,8 +10,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-if ( ! class_exists( 'HB_Admin_Setting_Emails' ) ) {
-	class HB_Admin_Setting_Emails extends HB_Admin_Setting_Page {
+if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
+	class WPHB_Admin_Setting_Emails extends WPHB_Admin_Setting_Page {
 
 		public $id = 'emails';
 
@@ -151,4 +151,4 @@ if ( ! class_exists( 'HB_Admin_Setting_Emails' ) ) {
 	}
 
 }
-return new HB_Admin_Setting_Emails();
+return new WPHB_Admin_Setting_Emails();

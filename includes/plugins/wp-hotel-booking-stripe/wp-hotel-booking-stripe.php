@@ -91,7 +91,7 @@ class WP_Hotel_Booking_Payment_Stripe {
         wp_register_script( 'tp-hotel-booking-stripe-js', 'https://checkout.stripe.com/checkout.js', array() );
         wp_register_script( 'tp-hotel-booking-stripe-checkout-js', TP_HB_STRIPE_URI . '/assets/js/checkout.js', array() );
 
-        $setting = HB_Settings::instance()->get( 'stripe' );
+        $setting = WPHB_Settings::instance()->get( 'stripe' );
 
         if ( !empty( $setting['enable'] ) && $setting['enable'] == 'on' ) {
             // stripe

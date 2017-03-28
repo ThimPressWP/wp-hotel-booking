@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-abstract class HB_Admin_Setting_Page {
+abstract class WPHB_Admin_Setting_Page {
 
 	protected $id = null;
 
@@ -44,7 +44,7 @@ abstract class HB_Admin_Setting_Page {
 	// output setting page
 	public function output() {
 		$settings = $this->get_settings();
-		HB_Admin_Settings::render_fields( $settings );
+		WPHB_Admin_Settings::render_fields( $settings );
 	}
 
 	// filter section in tab id
@@ -79,7 +79,7 @@ abstract class HB_Admin_Setting_Page {
 	// save setting option
 	public function save() {
 		$settings = $this->get_settings();
-		HB_Admin_Settings::save_fields( $settings );
+		WPHB_Admin_Settings::save_fields( $settings );
 	}
 
 }

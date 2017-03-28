@@ -17,7 +17,7 @@
 			<?php foreach ( $packages as $cart ) : ?>
 				<li>
 					<div class="hb_package_title">
-						<a href="#"><?php printf( '%s (%s)', $cart->product_data->title, hb_format_price( $cart->amount_singular ) ) ?></a>
+						<a href="#"><?php printf( '%s (%s)', $cart->product_data->title, wphb_format_price( $cart->amount_singular ) ) ?></a>
 						<span>
 							(<?php printf( 'x%s', $cart->quantity ) ?>)
 							<a href="#" class="hb_package_remove" data-cart-id="<?php echo esc_attr( $cart->cart_id ) ?>"><i class="fa fa-times"></i></a>
