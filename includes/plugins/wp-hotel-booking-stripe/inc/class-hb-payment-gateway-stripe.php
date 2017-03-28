@@ -3,7 +3,7 @@
 /**
  * Class HB_Payment_Gateway_Stripe
  */
-class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
+class HB_Payment_Gateway_Stripe extends WPHB_Payment_Gateway_Base{
 
     /**
      * @var array
@@ -67,7 +67,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
 
     function process_checkout( $booking_id = null )
     {
-        $cart = HB_Cart::instance();
+        $cart = WPHB_Cart::instance();
         $book = HB_Booking::instance( $booking_id );
 
         $cus_id = $this->add_customer( $booking_id );

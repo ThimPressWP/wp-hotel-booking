@@ -29,7 +29,7 @@ class HB_Extra_Admin
 
 	function extra_settings_build()
 	{
-		HB_Extra_Factory::instance()->_include( TP_HB_EXTRA_INC . '/admin/views/extra.php' );
+		WPHB_Extra_Factory::instance()->_include( TP_HB_EXTRA_INC . '/admin/views/extra.php' );
 	}
 
 }

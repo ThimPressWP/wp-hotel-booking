@@ -98,7 +98,7 @@ class HB_WC_Checkout extends WPHB_Checkout {
 
     public function woo_transaction_object( $transaction, $order ) {
         global $woocommerce;
-        $cart = HB_Cart::instance();
+        $cart = WPHB_Cart::instance();
 
         if ( !$order )
             return $transaction;

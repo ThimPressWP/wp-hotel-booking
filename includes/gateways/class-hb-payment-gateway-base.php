@@ -5,9 +5,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class HB_Payment_Gateway_Base
+ * Class WPHB_Payment_Gateway_Base
  */
-class HB_Payment_Gateway_Base{
+class WPHB_Payment_Gateway_Base{
     /**
      * @var string
      */

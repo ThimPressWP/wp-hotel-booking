@@ -58,12 +58,12 @@ class WPHB_Autoloader {
         $path = $this->include_path;
 
         // payment gateways
-        if ( strpos( $class, 'hb_payment_gateway_' ) === 0 ) {
-            $path = $this->include_path . 'gateways/' . substr( str_replace( '_', '-', $class ), 19 ) . '/';
+        if ( strpos( $class, 'wphb_payment_gateway_' ) === 0 ) {
+            $path = $this->include_path . 'gateways/' . substr( str_replace( '_', '-', $class ), 21 ) . '/';
         }
 
         // widgets
-        if ( stripos( $class, 'hb_widget_' ) === 0 ) {
+        if ( stripos( $class, 'wphb_widget_' ) === 0 ) {
             $path = $this->include_path . '/widgets/';
         }
 

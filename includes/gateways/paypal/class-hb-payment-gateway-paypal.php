@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class HB_Payment_Gateway_Paypal
  */
-class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
+class HB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base{
     /**
      * @var null
      */
@@ -108,7 +108,7 @@ class HB_Payment_Gateway_Paypal extends HB_Payment_Gateway_Base{
      */
     function process_booking_paypal_standard(){
         if( ! empty( $_REQUEST['hb-transaction-method'] ) && ( 'paypal-standard' == sanitize_text_field( $_REQUEST['hb-transaction-method'] ) ) ) {
-            $cart = HB_Cart::instance();
+            $cart = WPHB_Cart::instance();
             $cart->empty_cart();
 
             wp_redirect( get_site_url() ); exit();

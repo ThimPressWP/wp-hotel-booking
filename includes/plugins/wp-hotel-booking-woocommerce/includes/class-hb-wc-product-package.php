@@ -23,7 +23,7 @@ class HB_WC_Product_Package extends WC_Product_Simple {
     function get_price() {
         $qty = 1;
         if ( !isset( $this->data['parent_id'] ) ) {
-            $parent = HB_Cart::instance()->get_cart_item( $this->data['parent_id'] );
+            $parent = WPHB_Cart::instance()->get_cart_item( $this->data['parent_id'] );
             $qty = $parent->quantity;
         } else if ( isset( $this->data['woo_cart_id'] ) ) {
             $parent = WC()->cart->get_cart_item( $this->data['woo_cart_id'] );

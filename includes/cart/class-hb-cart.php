@@ -4,7 +4,7 @@ if ( !defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-class HB_Cart {
+class WPHB_Cart {
 
     /**
      * @var bool

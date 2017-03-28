@@ -73,7 +73,7 @@ class WP_Hotel_Booking {
 
 	public function init() {
 		// cart
-		$this->cart = HB_Cart::instance();
+		$this->cart = WPHB_Cart::instance();
 
 		// user
 		$this->user = hb_get_current_user();
@@ -81,17 +81,17 @@ class WP_Hotel_Booking {
 
 	// install hook
 	public function install() {
-		return HB_Install::install();
+		return WPHB_Install::install();
 	}
 
 	// create new blog table
 	public function create_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
-		return HB_Install::create_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta );
+		return WPHB_Install::create_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta );
 	}
 
 	// delete table when delete blog, multisite
 	public function delete_blog_table( $tables ) {
-		return HB_Install::delete_tables( $tables );
+		return WPHB_Install::delete_tables( $tables );
 	}
 
 	/**
@@ -136,6 +136,7 @@ class WP_Hotel_Booking {
 		$this->_include( 'includes/class-hb-autoloader.php' );
 		$this->_include( 'includes/class-hb-template-loader.php' );
 		$this->_include( 'includes/class-hb-ajax.php' );
+		$this->_include( 'includes/class-hb-install.php' );
 
 		if ( is_admin() ) {
 			$this->admin_includes();

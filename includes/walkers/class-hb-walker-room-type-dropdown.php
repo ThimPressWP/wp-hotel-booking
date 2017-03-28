@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-class HB_Walker_Room_Type_Dropdown extends Walker_CategoryDropdown {
+class WPHB_Walker_Room_Type_Dropdown extends Walker_CategoryDropdown {
     function start_el(&$output, $category, $depth = 0, $args = array(), $id = 0) {
         $pad = str_repeat('&nbsp;', $depth * 3);
         $adults = get_term_meta( $category->xxx, 'hb_max_number_of_adults', true );

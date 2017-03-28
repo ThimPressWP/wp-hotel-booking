@@ -21,7 +21,7 @@ if ( !defined( 'TP_HB_EXTRA_TPL' ) )
 if ( !defined( 'TP_HB_OPTION_NAME' ) )
 	define( 'TP_HB_OPTION_NAME', 'tp_hb_extra_room' );
 
-class HB_Extra_Factory {
+class WPHB_Extra_Factory {
 
 	static $_self = null;
 
@@ -139,4 +139,4 @@ class HB_Extra_Factory {
 
 }
 
-new HB_Extra_Factory();
+new WPHB_Extra_Factory();

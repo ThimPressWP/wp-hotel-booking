@@ -3,7 +3,7 @@
 /**
  * Class HB_Payment_Gateway_Authorize_Sim
  */
-class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base {
+class HB_Payment_Gateway_Authorize_Sim extends WPHB_Payment_Gateway_Base {
 
     /**
      * production URL

@@ -10,7 +10,7 @@ if ( !defined( 'ABSPATH' ) ) {
     exit();
 }
 
-class HB_Install {
+class WPHB_Install {
 
     static $upgrade = array();
 
