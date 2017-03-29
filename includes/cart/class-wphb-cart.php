@@ -45,13 +45,13 @@ class WPHB_Cart {
 
     function __construct( $appfix = null ) {
         // session class
-        $this->sessions = WPHB_Sessions::instance( 'thimpress_hotel_booking_' . HB_BLOG_ID . $appfix, true );
+        $this->sessions = WPHB_Sessions::instance( 'thimpress_hotel_booking_' . WPHB_BLOG_ID . $appfix, true );
 
         // session customer object
-        $this->customer_sessions = WPHB_Sessions::instance( 'thimpress_hotel_booking_customer_' . HB_BLOG_ID . $appfix, true );
+        $this->customer_sessions = WPHB_Sessions::instance( 'thimpress_hotel_booking_customer_' . WPHB_BLOG_ID . $appfix, true );
 
         // session booking object
-        $this->booking_sessions = WPHB_Sessions::instance( 'thimpress_hotel_booking_info_' . HB_BLOG_ID . $appfix, true );
+        $this->booking_sessions = WPHB_Sessions::instance( 'thimpress_hotel_booking_info_' . WPHB_BLOG_ID . $appfix, true );
 
         // refresh cart session
         add_action( 'wp_loaded', array( $this, 'wp_loaded' ) );

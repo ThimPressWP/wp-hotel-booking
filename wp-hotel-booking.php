@@ -12,11 +12,11 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-define( 'HB_FILE', __FILE__ );
-define( 'HB_PLUGIN_PATH', dirname( __FILE__ ) );
-define( 'HB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
-define( 'HB_VERSION', '1.7.4' );
-define( 'HB_BLOG_ID', get_current_blog_id() );
+define( 'WPHB_FILE', __FILE__ );
+define( 'WPHB_PLUGIN_PATH', dirname( __FILE__ ) );
+define( 'WPHB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
+define( 'WPHB_VERSION', '1.7.4' );
+define( 'WPHB_BLOG_ID', get_current_blog_id() );
 
 /**
  * Class WP_Hotel_Booking

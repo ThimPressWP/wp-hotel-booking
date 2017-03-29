@@ -148,7 +148,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
                         $attachment_id = array_shift( $gallery );
                         $return = wp_get_attachment_image( $attachment_id, 'thumbnail' );
                     } else {
-                        $return = '<img src="' . esc_url( HB_PLUGIN_URL . '/includes/libraries/carousel/default.png' ) . '" alt="' . $this->post->post_title . '"/>';
+                        $return = '<img src="' . esc_url( WPHB_PLUGIN_URL . '/includes/libraries/carousel/default.png' ) . '" alt="' . $this->post->post_title . '"/>';
                     }
                 }
                 break;

@@ -57,7 +57,7 @@ class HB_SW_Curreny
 	 */
 	public function enqueue()
 	{
-		wp_enqueue_script( 'tp-hb-currencies', TP_HB_CURRENCY_URI . '/assets/js/tp-hb-currencies.min.js', 'jquery', HB_VERSION, true );
+		wp_enqueue_script( 'tp-hb-currencies', TP_HB_CURRENCY_URI . '/assets/js/tp-hb-currencies.min.js', 'jquery', WPHB_VERSION, true );
 	}
 
 	public function admin_enqueue() {

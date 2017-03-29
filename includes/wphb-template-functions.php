@@ -25,8 +25,8 @@ function hb_get_template_part( $slug, $name = '' ) {
 	}
 
 	// Get default slug-name.php
-	if ( !$template && $name && file_exists( HB_PLUGIN_PATH . "/templates/{$slug}-{$name}.php" ) ) {
-		$template = HB_PLUGIN_PATH . "/templates/{$slug}-{$name}.php";
+	if ( !$template && $name && file_exists( WPHB_PLUGIN_PATH . "/templates/{$slug}-{$name}.php" ) ) {
+		$template = WPHB_PLUGIN_PATH . "/templates/{$slug}-{$name}.php";
 	}
 
 	// If template file doesn't exist, look in yourtheme/slug.php and yourtheme/courses-manage/slug.php
@@ -102,7 +102,7 @@ function hb_locate_template( $template_name, $template_path = '', $default_path 
 	}
 
 	if ( !$default_path ) {
-		$default_path = HB_PLUGIN_PATH . '/templates/';
+		$default_path = WPHB_PLUGIN_PATH . '/templates/';
 	}
 
 	$template = null;

@@ -68,7 +68,7 @@ class WPHB_Install {
 		// upgrade database
 		self::upgrade_database();
 
-		update_option( 'hotel_booking_version', HB_VERSION );
+		update_option( 'hotel_booking_version', WPHB_VERSION );
 	}
 
 	// upgrade database
@@ -274,7 +274,7 @@ class WPHB_Install {
 
 	// create new table when create new blog multisite
 	static function create_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
-		$plugin = basename( HB_PLUGIN_PATH ) . '/' . basename( HB_PLUGIN_PATH ) . '.php';
+		$plugin = basename( WPHB_PLUGIN_PATH ) . '/' . basename( WPHB_PLUGIN_PATH ) . '.php';
 		if ( is_plugin_active_for_network( $plugin ) ) {
 			// switch to current blog
 			switch_to_blog( $blog_id );

@@ -37,7 +37,7 @@ class WPHB_Admin_Metabox_Room_Price {
 	}
 
 	public function render( $post ) {
-		require_once HB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-room-pricing.php';
+		require_once WPHB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-room-pricing.php';
 	}
 
 	public function update( $post_id ) {

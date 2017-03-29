@@ -65,7 +65,7 @@ class WPHB_Ajax {
             'meta_value' => $email,
             'post_status' => 'any'
         );
-        // set_transient( 'hotel_booking_customer_email_' . HB_BLOG_ID, $email, DAY_IN_SECONDS );
+        // set_transient( 'hotel_booking_customer_email_' . WPHB_BLOG_ID, $email, DAY_IN_SECONDS );
         WP_Hotel_Booking::instance()->cart->set_customer( 'customer_email', $email );
         if ( $posts = get_posts( $args ) ) {
             $customer = $posts[0];
@@ -522,8 +522,8 @@ class WPHB_Ajax {
 
         $post = get_post( $order_id );
         ob_start();
-        require_once HB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items.php';
-        require_once HB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items-template-js.php';
+        require_once WPHB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items.php';
+        require_once WPHB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items-template-js.php';
         $html = ob_get_clean();
         wp_send_json( array(
             'status' => true,
@@ -545,8 +545,8 @@ class WPHB_Ajax {
 
             $post = get_post( $order_id );
             ob_start();
-            require_once HB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items.php';
-            require_once HB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items-template-js.php';
+            require_once WPHB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items.php';
+            require_once WPHB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items-template-js.php';
             $html = ob_get_clean();
             wp_send_json( array(
                 'status' => true,
@@ -572,8 +572,8 @@ class WPHB_Ajax {
 
         $post = get_post( $order_id );
         ob_start();
-        require_once HB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items.php';
-        require_once HB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items-template-js.php';
+        require_once WPHB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items.php';
+        require_once WPHB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items-template-js.php';
         $html = ob_get_clean();
         wp_send_json( array(
             'status' => true,
@@ -603,8 +603,8 @@ class WPHB_Ajax {
 
         $post = get_post( $order_id );
         ob_start();
-        require_once HB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items.php';
-        require_once HB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items-template-js.php';
+        require_once WPHB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items.php';
+        require_once WPHB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items-template-js.php';
         $html = ob_get_clean();
         wp_send_json( array(
             'status' => true,
@@ -630,8 +630,8 @@ class WPHB_Ajax {
 
         $post = get_post( $order_id );
         ob_start();
-        require_once HB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items.php';
-        require_once HB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items-template-js.php';
+        require_once WPHB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items.php';
+        require_once WPHB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items-template-js.php';
         $html = ob_get_clean();
         wp_send_json( array(
             'status' => true,

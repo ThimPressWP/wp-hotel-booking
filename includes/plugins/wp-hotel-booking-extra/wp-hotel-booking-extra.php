@@ -3,14 +3,14 @@
 if ( !defined( 'ABSPATH' ) )
 	exit;
 
-if ( !defined( 'HB_PLUGIN_PATH' ) )
+if ( !defined( 'WPHB_PLUGIN_PATH' ) )
 	return;
 
 if ( !defined( 'TP_HB_EXTRA' ) )
 	define( 'TP_HB_EXTRA', dirname( __FILE__ ) );
 
 if ( !defined( 'TP_HB_EXTRA_URI' ) )
-	define( 'TP_HB_EXTRA_URI', HB_PLUGIN_URL . '/includes/plugins/wp-hotel-booking-extra' );
+	define( 'TP_HB_EXTRA_URI', WPHB_PLUGIN_URL . '/includes/plugins/wp-hotel-booking-extra' );
 
 if ( !defined( 'TP_HB_EXTRA_INC' ) )
 	define( 'TP_HB_EXTRA_INC', TP_HB_EXTRA . '/inc' );
@@ -118,11 +118,11 @@ class WPHB_Extra_Factory {
 	 */
 	public function enqueue() {
 		if ( is_admin() ) {
-			wp_register_script( 'tp-hb-extra-js', TP_HB_EXTRA_URI . '/inc/assets/js/admin.min.js', array(), HB_VERSION, true );
-			wp_enqueue_style( 'tp-hb-extra-css', TP_HB_EXTRA_URI . '/inc/assets/css/admin.min.css', array(), HB_VERSION );
+			wp_register_script( 'tp-hb-extra-js', TP_HB_EXTRA_URI . '/inc/assets/js/admin.min.js', array(), WPHB_VERSION, true );
+			wp_enqueue_style( 'tp-hb-extra-css', TP_HB_EXTRA_URI . '/inc/assets/css/admin.min.css', array(), WPHB_VERSION );
 		} else {
-			wp_register_script( 'tp-hb-extra-js', TP_HB_EXTRA_URI . '/inc/assets/js/site.js', array(), HB_VERSION, true );
-			wp_enqueue_style( 'tp-hb-extra-css', TP_HB_EXTRA_URI . '/inc/assets/css/site.min.css', array(), HB_VERSION );
+			wp_register_script( 'tp-hb-extra-js', TP_HB_EXTRA_URI . '/inc/assets/js/site.js', array(), WPHB_VERSION, true );
+			wp_enqueue_style( 'tp-hb-extra-css', TP_HB_EXTRA_URI . '/inc/assets/css/site.min.css', array(), WPHB_VERSION );
 		}
 
 		wp_localize_script( 'tp-hb-extra-js', 'TPHB_Extra_Lang', apply_filters( 'hb_extra_l10n', array() ) );

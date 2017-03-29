@@ -168,7 +168,7 @@ class HB_Extra_Cart
 
 	function remove_package()
 	{
-		if( ! isset( $_POST ) || ! defined( 'HB_BLOG_ID' ) )
+		if( ! isset( $_POST ) || ! defined( 'WPHB_BLOG_ID' ) )
 			return;
 
 		if( ! isset( $_POST['cart_id'] ) || ! $_POST['cart_id'] ) {

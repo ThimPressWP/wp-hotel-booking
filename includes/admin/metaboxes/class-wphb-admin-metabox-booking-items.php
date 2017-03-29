@@ -37,8 +37,8 @@ class WPHB_Admin_Metabox_Booking_Items {
 	}
 
 	public function render( $post ) {
-		require_once HB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items.php';
-		require_once HB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items-template-js.php';
+		require_once WPHB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items.php';
+		require_once WPHB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items-template-js.php';
 	}
 
 	public function update( $post_id ) {

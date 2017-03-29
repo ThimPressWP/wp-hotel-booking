@@ -169,7 +169,7 @@ class HB_Payment_Gateway_Stripe extends WPHB_Payment_Gateway_Base{
                 'body'          => $request,
                 'timeout'       => 70,
                 'sslverify'     => false,
-                'user-agent'    => 'TP Hotel Booking ' . HB_VERSION
+                'user-agent'    => 'TP Hotel Booking ' . WPHB_VERSION
         ));
 
         if ( is_wp_error($response) ) {

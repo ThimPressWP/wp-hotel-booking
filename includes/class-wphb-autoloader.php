@@ -22,7 +22,7 @@ class WPHB_Autoloader {
 
         spl_autoload_register( array( $this, 'autoload' ) );
 
-        $this->include_path = untrailingslashit( HB_PLUGIN_PATH ) . '/includes/';
+        $this->include_path = untrailingslashit( WPHB_PLUGIN_PATH ) . '/includes/';
     }
 
     /**
