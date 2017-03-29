@@ -14,16 +14,16 @@ class WPHB_Admin_Settings {
 
 	public static function get_settings_pages() {
 
-		WP_Hotel_Booking::instance()->_include( 'includes/admin/class-hb-admin-setting-page.php' );
+		WP_Hotel_Booking::instance()->_include( 'includes/admin/class-wphb-admin-setting-page.php' );
 		$tabs = array();
 
 		// use WP_Hotel_Booking::instance() return null active hook
-		$tabs[] = include 'settings/class-hb-admin-setting-general.php';
-		$tabs[] = include 'settings/class-hb-admin-setting-hotel-info.php';
-		$tabs[] = include 'settings/class-hb-admin-setting-lightboxs.php';
-		$tabs[] = include 'settings/class-hb-admin-setting-emails.php';
-		$tabs[] = include 'settings/class-hb-admin-setting-payments.php';
-		$tabs[] = include 'settings/class-hb-admin-setting-room.php';
+		$tabs[] = include 'settings/class-wphb-admin-setting-general.php';
+		$tabs[] = include 'settings/class-wphb-admin-setting-hotel-info.php';
+		$tabs[] = include 'settings/class-wphb-admin-setting-lightboxs.php';
+		$tabs[] = include 'settings/class-wphb-admin-setting-emails.php';
+		$tabs[] = include 'settings/class-wphb-admin-setting-payments.php';
+		$tabs[] = include 'settings/class-wphb-admin-setting-room.php';
 
 		return apply_filters( 'hotel_booking_admin_setting_pages', $tabs );
 	}

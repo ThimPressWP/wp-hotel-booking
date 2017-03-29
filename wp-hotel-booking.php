@@ -153,7 +153,7 @@ class WP_Hotel_Booking {
 		$this->_include( 'includes/class-hb-post-types.php' );
 
 		$this->_include( 'includes/hb-core-functions.php' );
-		$this->_include( 'includes/hb-functions.php' );
+		$this->_include( 'includes/wphb-functions.php' );
 		$this->_include( 'includes/class-hb-resizer.php' );
 
 		// booking
@@ -208,7 +208,7 @@ class WP_Hotel_Booking {
 	}
 
 	public function admin_includes() {
-		$this->_include( 'includes/admin/class-hb-admin.php' );
+		$this->_include( 'includes/admin/class-wphb-admin.php' );
 	}
 
 	// load payments addons

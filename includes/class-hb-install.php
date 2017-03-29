@@ -85,7 +85,7 @@ class WPHB_Install {
 	// create options default
 	static function create_options() {
 		if ( !class_exists( 'WPHB_Admin_Settings' ) ) {
-			WP_Hotel_Booking::instance()->_include( 'includes/admin/class-hb-admin-settings.php' );
+			WP_Hotel_Booking::instance()->_include( 'includes/admin/class-wphb-admin-settings.php' );
 		}
 
 		$settings_pages = WPHB_Admin_Settings::get_settings_pages();
@@ -105,8 +105,8 @@ class WPHB_Install {
 	// create page. Eg: hotel-checkout, hotel-cart
 	static function create_pages() {
 		if ( !function_exists( 'wphb_create_page' ) ) {
-			WP_Hotel_Booking::instance()->_include( 'includes/admin/hb-admin-functions.php' );
-			WP_Hotel_Booking::instance()->_include( 'includes/hb-functions.php' );
+			WP_Hotel_Booking::instance()->_include( 'includes/admin/wphb-admin-functions.php' );
+			WP_Hotel_Booking::instance()->_include( 'includes/wphb-functions.php' );
 		}
 
 		$pages = array();

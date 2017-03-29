@@ -21,11 +21,11 @@ class WPHB_Admin {
 
 	function includes(){
 
-		WP_Hotel_Booking::instance()->_include( 'includes/admin/class-hb-admin-settings.php' );
-		WP_Hotel_Booking::instance()->_include( 'includes/admin/class-hb-admin-menu.php' );
-        WP_Hotel_Booking::instance()->_include( 'includes/class-hb-meta-box.php' );
-        WP_Hotel_Booking::instance()->_include( 'includes/admin/hb-admin-functions.php' );
-        WP_Hotel_Booking::instance()->_include( 'includes/admin/class-hb-customer.php' );
+		WP_Hotel_Booking::instance()->_include( 'includes/admin/class-wphb-admin-settings.php' );
+		WP_Hotel_Booking::instance()->_include( 'includes/admin/class-wphb-admin-menu.php' );
+        WP_Hotel_Booking::instance()->_include( 'includes/class-wphb-meta-box.php' );
+        WP_Hotel_Booking::instance()->_include( 'includes/admin/wphb-admin-functions.php' );
+        WP_Hotel_Booking::instance()->_include( 'includes/admin/class-wphb-customer.php' );
 	}
 
 	function update_pricing() {
