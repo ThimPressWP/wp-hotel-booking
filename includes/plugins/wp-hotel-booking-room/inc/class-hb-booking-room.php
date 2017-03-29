@@ -9,9 +9,9 @@ if ( !defined( 'ABSPATH' ) ) {
     exit();
 }
 
-if ( !class_exists( 'TP_Hotel_Booking_Room_Extenstion' ) ) {
+if ( !class_exists( 'WP_Hotel_Booking_Room_Extenstion' ) ) {
 
-    class TP_Hotel_Booking_Room_Extenstion {
+    class WP_Hotel_Booking_Room_Extenstion {
         
         private static $instance = null;
 

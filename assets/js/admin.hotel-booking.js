@@ -406,6 +406,20 @@
 				tab_content.addClass('active');
 
 		});
+
+		$(document).on('click', '.hb-dismiss-notice button', function (event) {
+			var parent = $(this).closest('.hb-dismiss-notice');
+			if (parent.length) {
+				event.preventDefault();
+				$.ajax({
+					url : ajaxurl,
+					type: 'POST',
+					data: {
+						action: 'hotel_booking_dismiss_notice'
+					}
+				})
+			}
+		});
 	}
 
 	$doc.ready(_ready);

@@ -12,7 +12,7 @@ define( 'TP_HB_COUPON_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TP_HB_COUPON_URI', plugin_dir_url( __FILE__ ) );
 define( 'TP_HB_COUPON_VER', '1.7' );
 
-class TP_Hotel_Booking_Coupon {
+class WP_Hotel_Booking_Coupon {
 
     public $is_hotel_active = false;
 
@@ -47,7 +47,7 @@ class TP_Hotel_Booking_Coupon {
             include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
         }
 
-        if ( class_exists( 'TP_Hotel_Booking' ) && ( is_plugin_active( 'tp-hotel-booking/tp-hotel-booking.php' ) || is_plugin_active( 'wp-hotel-booking/wp-hotel-booking.php' ) ) ) {
+        if ( class_exists( 'TP_Hotel_Booking' ) && ( is_plugin_active( 'tp-hotel-booking/tp-hotel-booking.php' ) || is_plugin_active( 'wp-hotel-booking/wp-hotel-booking.php' ) && class_exists( 'WP_Hotel_Booking' ) ) ) {
             $this->is_hotel_active = true;
         }
 
@@ -102,7 +102,7 @@ class TP_Hotel_Booking_Coupon {
             ?>
             <?php
             // if( $coupon = get_transient( 'hb_user_coupon_' . session_id() ) ) {
-            if ( $coupon = TP_Hotel_Booking::instance()->cart->coupon ) {
+            if ( $coupon = WP_Hotel_Booking::instance()->cart->coupon ) {
                 $coupon = HB_Coupon::instance( $coupon );
                 ?>
                 <tr class="hb_coupon">
@@ -168,4 +168,4 @@ class TP_Hotel_Booking_Coupon {
 
 }
 
-$Coupon = new TP_Hotel_Booking_Coupon();
+$Coupon = new WP_Hotel_Booking_Coupon();

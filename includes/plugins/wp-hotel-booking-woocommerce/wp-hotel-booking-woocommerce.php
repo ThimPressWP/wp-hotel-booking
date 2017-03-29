@@ -15,16 +15,16 @@
  */
 
 /**
- * Class TP_Hotel_Booking_Woocommerce
+ * Class WP_Hotel_Booking_Woocommerce
  *
  * Main class
  */
-class TP_Hotel_Booking_Woocommerce {
+class WP_Hotel_Booking_Woocommerce {
 
 	/**
 	 * @var null
 	 *
-	 * Hold the instance of TP_Hotel_Booking_Woocommerce
+	 * Hold the instance of WP_Hotel_Booking_Woocommerce
 	 */
 	protected static $_instance = null;
 	protected static $_wc_loaded = false;
@@ -223,12 +223,12 @@ class TP_Hotel_Booking_Woocommerce {
 				$hotel_cart_param['parent_id'] = $cart_item['parent_id'];
 			}
 
-			$hotel_cart_id = TP_Hotel_Booking::instance()->cart->generate_cart_id( $hotel_cart_param );
+			$hotel_cart_id = WP_Hotel_Booking::instance()->cart->generate_cart_id( $hotel_cart_param );
 
-			$hotel_cart_contents = TP_Hotel_Booking::instance()->cart->cart_contents;
+			$hotel_cart_contents = WP_Hotel_Booking::instance()->cart->cart_contents;
 
 			if ( array_key_exists( $hotel_cart_id, $hotel_cart_contents ) ) {
-				TP_Hotel_Booking::instance()->cart->remove_cart_item( $hotel_cart_id );
+				WP_Hotel_Booking::instance()->cart->remove_cart_item( $hotel_cart_id );
 			}
 		}
 	}
@@ -249,7 +249,7 @@ class TP_Hotel_Booking_Woocommerce {
 			if ( !isset( $cart_item['check_in_date'] ) && !isset( $cart_item['check_out_date'] ) )
 				return $return;
 
-			$hotel_cart_items = TP_Hotel_Booking::instance()->cart->cart_contents;
+			$hotel_cart_items = WP_Hotel_Booking::instance()->cart->cart_contents;
 
 			// param render hotel cart id
 			$hotel_cart_param = array(
@@ -263,8 +263,8 @@ class TP_Hotel_Booking_Woocommerce {
 			}
 
 			// hotel cart id
-			$hotel_cart_id = TP_Hotel_Booking::instance()->cart->generate_cart_id( $hotel_cart_param );
-			TP_Hotel_Booking::instance()->cart->update_cart_item( $hotel_cart_id, $quantity );
+			$hotel_cart_id = WP_Hotel_Booking::instance()->cart->generate_cart_id( $hotel_cart_param );
+			WP_Hotel_Booking::instance()->cart->update_cart_item( $hotel_cart_id, $quantity );
 		}
 
 		do_action( 'hb_wc_update_cart', $return, $cart_item_key, $values, $quantity );
@@ -300,7 +300,7 @@ class TP_Hotel_Booking_Woocommerce {
 			$hotel_cart_param['parent_id'] = $cart_item['parent_id'];
 		}
 
-		TP_Hotel_Booking::instance()->cart->add_to_cart( $cart_item['product_id'], $hotel_cart_param, $cart_item['quantity'] );
+		WP_Hotel_Booking::instance()->cart->add_to_cart( $cart_item['product_id'], $hotel_cart_param, $cart_item['quantity'] );
 
 		do_action( 'hb_wc_restored_cart_item', $cart_item_id, $cart );
 		return true;
@@ -343,9 +343,9 @@ class TP_Hotel_Booking_Woocommerce {
 	function woocommerce_order_status_changed( $order_id, $old_status, $new_status ) {
 		if ( $booking_id = hb_get_post_id_meta( '_hb_woo_order_id', $order_id ) ) {
 			if ( in_array( $new_status, array( 'completed', 'pending', 'processing', 'cancelled' ) ) ) {
-				HB_Booking::instance( $booking_id )->update_status( $new_status );
+				WPHB_Booking::instance( $booking_id )->update_status( $new_status );
 			} else {
-				HB_Booking::instance( $booking_id )->update_status( 'pending' );
+				WPHB_Booking::instance( $booking_id )->update_status( 'pending' );
 			}
 		}
 	}
@@ -441,7 +441,7 @@ class TP_Hotel_Booking_Woocommerce {
 			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 		}
 
-		if ( class_exists( 'TP_Hotel_Booking' ) && ( is_plugin_active( 'tp-hotel-booking/tp-hotel-booking.php' ) || is_plugin_active( 'wp-hotel-booking/wp-hotel-booking.php' ) ) ) {
+		if ( class_exists( 'TP_Hotel_Booking' ) && ( is_plugin_active( 'tp-hotel-booking/tp-hotel-booking.php' ) || is_plugin_active( 'wp-hotel-booking/wp-hotel-booking.php' ) && class_exists( 'WP_Hotel_Booking' ) ) ) {
 			self::$_wc_loaded = true;
 		}
 
@@ -451,7 +451,7 @@ class TP_Hotel_Booking_Woocommerce {
 			self::$_wc_loaded = false;
 		}
 
-		TP_Hotel_Booking_Woocommerce::instance();
+		WP_Hotel_Booking_Woocommerce::instance();
 		if ( !self::$_wc_loaded ) {
 			add_action( 'admin_notices', array( __CLASS__, 'admin_notice' ) );
 		}
@@ -474,7 +474,7 @@ class TP_Hotel_Booking_Woocommerce {
 	}
 
 	public static function admin_notice() {
-		if ( !class_exists( 'HB_Settings' ) )
+		if ( !class_exists( 'WPHB_Settings' ) )
 			return;
 
 		if ( function_exists( 'hb_wc_admin_view' ) ) {
@@ -483,9 +483,9 @@ class TP_Hotel_Booking_Woocommerce {
 	}
 
 	public static function wc_enable() {
-		if ( !class_exists( 'HB_Settings' ) )
+		if ( !class_exists( 'WPHB_Settings' ) )
 			return;
-		return self::$_wc_loaded && HB_Settings::instance()->get( 'wc_enable' ) == 'yes';
+		return self::$_wc_loaded && WPHB_Settings::instance()->get( 'wc_enable' ) == 'yes';
 	}
 
 	public function frontend_scripts() {
@@ -505,14 +505,14 @@ class TP_Hotel_Booking_Woocommerce {
 	 * Including library files
 	 */
 	private function _includes() {
-		if ( !class_exists( 'HB_Settings' ) )
+		if ( !class_exists( 'WPHB_Settings' ) )
 			return;
 
 		require_once "includes/class-hb-wc-product-room.php";
 		require_once "includes/class-hb-wc-product-package.php";
 		require_once "includes/class-hb-wc-checkout.php";
 		require_once "includes/class-hb-wc-booking.php";
-		$this->settings = HB_Settings::instance();
+		$this->settings = WPHB_Settings::instance();
 	}
 
 	/**
@@ -651,7 +651,7 @@ class TP_Hotel_Booking_Woocommerce {
 	function hb_booking_status_changed( $booking_id, $old_status, $new_status ) {
 		remove_action( 'hb_booking_status_changed', array( $this, 'hb_booking_status_changed' ), 10, 3 );
 
-		$booking = HB_Booking::instance( $booking_id );
+		$booking = WPHB_Booking::instance( $booking_id );
 
 		$woo_order_id = $booking->woo_order_id;
 
@@ -709,7 +709,7 @@ class TP_Hotel_Booking_Woocommerce {
 					'check_in_date'  => $item['check_in_date'],
 					'check_out_date' => $item['check_out_date'],
 				);
-				$parent_id = TP_Hotel_Booking::instance()->cart->generate_cart_id( $param );
+				$parent_id = WP_Hotel_Booking::instance()->cart->generate_cart_id( $param );
 
 				foreach ( $cart_items as $cart_package_id => $package ) {
 					if ( !isset( $package['parent_id'] ) || !isset( $package['check_in_date'] ) || !isset( $package['check_out_date'] ) )
@@ -727,4 +727,4 @@ class TP_Hotel_Booking_Woocommerce {
 
 }
 
-add_action( 'plugins_loaded', array( 'TP_Hotel_Booking_Woocommerce', 'load' ) );
+add_action( 'plugins_loaded', array( 'WP_Hotel_Booking_Woocommerce', 'load' ) );

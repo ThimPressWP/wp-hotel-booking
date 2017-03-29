@@ -3,7 +3,7 @@
 /**
  * Class HB_Payment_Gateway_Stripe
  */
-class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
+class HB_Payment_Gateway_Stripe extends WPHB_Payment_Gateway_Base{
 
     /**
      * @var array
@@ -30,7 +30,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
         parent::__construct();
         $this->_title = __( 'Stripe', 'wp-hotel-booking-stripe' );
         $this->_description = __( 'Pay with Stripe', 'wp-hotel-booking-stripe' );
-        $this->_settings = maybe_unserialize(HB_Settings::instance()->get('stripe'));
+        $this->_settings = maybe_unserialize(WPHB_Settings::instance()->get('stripe'));
 
         $debug = ( ! isset($this->_settings['test_mode']) || $this->_settings['test_mode'] === 'on' ) ? true : false;
         if( ! isset($this->_settings['test_secret_key']) || ! $this->_settings['test_secret_key'] )
@@ -67,8 +67,8 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
 
     function process_checkout( $booking_id = null )
     {
-        $cart = HB_Cart::instance();
-        $book = HB_Booking::instance( $booking_id );
+        $cart = WPHB_Cart::instance();
+        $book = WPHB_Booking::instance( $booking_id );
 
         $cus_id = $this->add_customer( $booking_id );
 
@@ -97,7 +97,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
                 } else {
                     $book->update_status( 'processing' );
                 }
-                TP_Hotel_Booking::instance()->cart->empty_cart();
+                WP_Hotel_Booking::instance()->cart->empty_cart();
                 $return = array(
                     'result'    => 'success',
                     'redirect'  => hb_get_return_url()
@@ -114,7 +114,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
 
     public function add_customer( $booking_id = null, $customer = null ) {
 
-        $booking = HB_Booking::instance( $booking_id );
+        $booking = WPHB_Booking::instance( $booking_id );
 
         $user_id = $booking->user_id;
         $cus_id = null;
@@ -169,7 +169,7 @@ class HB_Payment_Gateway_Stripe extends HB_Payment_Gateway_Base{
                 'body'          => $request,
                 'timeout'       => 70,
                 'sslverify'     => false,
-                'user-agent'    => 'TP Hotel Booking ' . HB_VERSION
+                'user-agent'    => 'TP Hotel Booking ' . WPHB_VERSION
         ));
 
         if ( is_wp_error($response) ) {

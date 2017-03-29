@@ -1,9 +1,9 @@
 <?php
 
-if ( !class_exists( 'HB_Checkout' ) )
+if ( !class_exists( 'WPHB_Checkout' ) )
     return;
 
-class HB_WC_Checkout extends HB_Checkout {
+class HB_WC_Checkout extends WPHB_Checkout {
 
     function __construct() {
         parent::__construct();
@@ -52,7 +52,7 @@ class HB_WC_Checkout extends HB_Checkout {
 
         if ( $create === true ) {
             if ( $booking = $this->create_booking( $order ) ) {
-				TP_Hotel_Booking::instance()->cart->empty_cart();
+				WP_Hotel_Booking::instance()->cart->empty_cart();
                 return true;
             }
         }
@@ -64,7 +64,7 @@ class HB_WC_Checkout extends HB_Checkout {
      * @return [type]
      */
     public function create_booking( $order = null ) {
-        return HB_Checkout::instance()->create_booking( $order );
+        return WPHB_Checkout::instance()->create_booking( $order );
     }
 
     /**
@@ -98,7 +98,7 @@ class HB_WC_Checkout extends HB_Checkout {
 
     public function woo_transaction_object( $transaction, $order ) {
         global $woocommerce;
-        $cart = HB_Cart::instance();
+        $cart = WPHB_Cart::instance();
 
         if ( !$order )
             return $transaction;

@@ -5,7 +5,7 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 $rating   = intval( get_comment_meta( $comment->comment_ID, 'rating', true ) );
-$settings = HB_Settings::instance();
+$settings = WPHB_Settings::instance();
 ?>
 <li itemprop="review" itemscope itemtype="http://schema.org/Review" <?php comment_class(); ?> id="li-comment-<?php comment_ID() ?>">
 

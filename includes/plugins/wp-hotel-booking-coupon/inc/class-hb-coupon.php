@@ -74,7 +74,7 @@ class HB_Coupon {
         $discount = 0;
         switch ( $this->_settings['coupon_discount_type'] ) {
             case 'percent_cart':
-                $cart = HB_Cart::instance();
+                $cart = WPHB_Cart::instance();
                 $subtotal = $cart->get_sub_total();
                 $discount = $subtotal * $this->_settings['coupon_discount_value'] / 100;
                 break;
@@ -94,7 +94,7 @@ class HB_Coupon {
 
     function get_cart_sub_total() {
         remove_filter( 'hb_cart_sub_total', array( $this, 'apply_sub_total_discount' ), 999 );
-        $cart = HB_Cart::instance();
+        $cart = WPHB_Cart::instance();
         $cart_sub_total = $cart->get_sub_total();
         add_filter( 'hb_cart_sub_total', array( $this, 'apply_sub_total_discount' ), 999 );
         return $cart_sub_total;

@@ -5,7 +5,7 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 ?>
-<?php $book = HB_Booking::instance( $booking_id ); ?>
+<?php $book = WPHB_Booking::instance( $booking_id ); ?>
 
 <?php $currency_symbol = hb_get_currency_symbol( $book->currency ); ?>
 

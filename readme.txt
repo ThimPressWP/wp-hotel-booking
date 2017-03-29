@@ -14,13 +14,14 @@ WordPress Hotel Booking Plugin - A complete hotel booking reservation plugin for
 
 A complete **hotel booking plugin** for WordPress.
 
-> **One-Time Discount - Christmas Week Sale - 10 Days Left**
-> [Sailing Hotel Wordpress Theme](http://themeforest.net/item/hotel-wordpress-theme-sailing/13321455?utm_source=wporg&utm_medium=wphotelbookingDC&ref=thimpress&utm_campaign=wphotelbooking) is on SALE for **only $64**.
-> 7 Demo Layouts + Easy Install + Hotel Booking Management System.
+> **One-Time Discount - 10 Days Left**
+
+> ** Announcing:** NEW [Hotel WP Theme](https://themeforest.net/item/travel-booking-hotel-wordpress-theme-hotel-wp/18828322?utm_source=wporg&utm_medium=wphotelbookingDC&ref=thimpress&utm_campaign=wphotelbooking) - 50% Discounts, only $39
+or [The Ultimate Sailing Hotel](http://themeforest.net/item/hotel-wordpress-theme-sailing/13321455?utm_source=wporg&utm_medium=wphotelbookingDC&ref=thimpress&utm_campaign=wphotelbooking), using by 1500 hotels, $64 Only
 
 ###Hotel WordPress Themes###
 
-Take a look at Premium **[Hotel WordPress Theme](http://themeforest.net/item/hotel-wordpress-theme-sailing/13321455?utm_source=wporg&utm_medium=wphotelbooking&ref=thimpress&utm_campaign=wphotelbooking)** we designed to work with WP Hotel Booking, all developers are welcome to develop WordPress Hotel Theme based on this awesome Hotel Booking plugin for WordPress. More WordPress Hotel Themes will come soon, both free WordPress themes as well as premium WordPress themes for this hotel booking / reservation plugin.
+Take a look at the Premium **[HotelWP - Hotel Wordpress Theme](https://themeforest.net/item/travel-booking-hotel-wordpress-theme-hotel-wp/18828322?utm_source=wporg&utm_medium=wphotelbookingDC&ref=thimpress&utm_campaign=wphotelbooking)** and **[Hotel Sailing Theme](http://themeforest.net/item/hotel-wordpress-theme-sailing/13321455?utm_source=wporg&utm_medium=wphotelbookingDC&ref=thimpress&utm_campaign=wphotelbooking)** we designed to work with WP Hotel Booking, all developers are welcome to develop WordPress Hotel Theme based on this awesome Hotel Booking plugin for WordPress. More WordPress Hotel Themes will come soon, both free WordPress themes as well as premium WordPress themes for this hotel booking / reservation plugin.
 
 ###Features###
 
@@ -65,6 +66,21 @@ Yes.
 7. System settings
 
 == Changelog ==
+
+= 1.7.4 =
+* Update plugin classes and functions
+
+= 1.7.3 =
+* Fix update pricing plan
+
+= 1.7.2 =
+* Fix default value for new booking admin email
+* Fix admin style make review starts in plugins page broken
+* Update assets js
+* Remove add plan button
+
+= 1.7.1 =
+* Update add-ons
 
 = 1.7 =
 * Update add-ons

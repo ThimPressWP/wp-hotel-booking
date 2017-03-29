@@ -1,5 +1,5 @@
 <?php
-$settings = HB_Settings::instance();
+$settings = WPHB_Settings::instance();
 $stripe = $settings->get('stripe');
 $stripe = wp_parse_args(
     $stripe,
