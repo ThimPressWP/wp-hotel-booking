@@ -16,7 +16,7 @@ class WPHB_Shortcode_Hotel_Booking_Cart extends WPHB_Shortcodes {
         $template = apply_filters( 'hotel_booking_cart_template', 'cart/cart.php' );
         ob_start();
         do_action( 'hb_wrapper_start' );
-        wphb_get_template( $template, $atts );
+        hb_get_template( $template, $atts );
         do_action( 'hb_wrapper_end' );
         return ob_get_clean();
     }

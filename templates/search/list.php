@@ -8,7 +8,7 @@ if ( !defined( 'ABSPATH' ) ) {
 <ul class="hb-search-results">
 	<?php
 	foreach ( $results as $room ) {
-		wphb_get_template( 'search/loop.php', array( 'room' => $room, 'atts' => $atts ) );
+		hb_get_template( 'search/loop.php', array( 'room' => $room, 'atts' => $atts ) );
 	}
 	?>
 </ul>

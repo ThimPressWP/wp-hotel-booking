@@ -80,7 +80,7 @@ class WPHB_Admin_Settings {
 
 				case 'select':
 				case 'multiselect':
-					$selected = wphb_settings()->get( $field['id'], isset( $field['default'] ) ? $field['default'] : array() );
+					$selected = hb_settings()->get( $field['id'], isset( $field['default'] ) ? $field['default'] : array() );
 						?>
 							<tr valign="top">
 								<th scope="row">
@@ -117,7 +117,7 @@ class WPHB_Admin_Settings {
 				case 'number':
 				case 'email':
 				case 'password':
-					$value = wphb_settings()->get( $field['id'] );
+					$value = hb_settings()->get( $field['id'] );
 						?>
 							<tr valign="top">
 								<th scope="row">
@@ -151,7 +151,7 @@ class WPHB_Admin_Settings {
 					break;
 
 				case 'checkbox':
-						$val = wphb_settings()->get( $field['id'] );
+						$val = hb_settings()->get( $field['id'] );
 						?>
 							<tr valign="top"<?php echo isset( $field['trclass'] ) ? ' class="'.implode( '', $field['trclass'] ).'"' : '' ?>>
 								<th scope="row">
@@ -173,7 +173,7 @@ class WPHB_Admin_Settings {
 					break;
 
 				case 'radio':
-						$selected = wphb_settings()->get( $field['id'], isset( $field['default'] ) ? $field['default'] : '' );
+						$selected = hb_settings()->get( $field['id'], isset( $field['default'] ) ? $field['default'] : '' );
 						?>
 							<tr valign="top">
 								<th scope="row">
@@ -203,8 +203,8 @@ class WPHB_Admin_Settings {
 					break;
 
 				case 'image_size':
-						$width = wphb_settings()->get( $field['id'] . '_width', isset( $field['default']['width'] ) ? $field['default']['width'] : 270 );
-						$height = wphb_settings()->get( $field['id'] . '_height', isset( $field['default']['height'] ) ? $field['default']['height'] : 270 );
+						$width = hb_settings()->get( $field['id'] . '_width', isset( $field['default']['width'] ) ? $field['default']['width'] : 270 );
+						$height = hb_settings()->get( $field['id'] . '_height', isset( $field['default']['height'] ) ? $field['default']['height'] : 270 );
 						?>
 							<tr valign="top">
 								<th scope="row">
@@ -241,7 +241,7 @@ class WPHB_Admin_Settings {
 					break;
 
 				case 'textarea':
-					$content = wphb_settings()->get( $field['id'] );
+					$content = hb_settings()->get( $field['id'] );
 						?>
 							<tr valign="top">
 								<th scope="row">
@@ -264,7 +264,7 @@ class WPHB_Admin_Settings {
 					break;
 
 				case 'select_page':
-					$selected = wphb_settings()->get( $field['id'], 0 );
+					$selected = hb_settings()->get( $field['id'], 0 );
 						?>
 							<tr valign="top">
 								<th scope="row">

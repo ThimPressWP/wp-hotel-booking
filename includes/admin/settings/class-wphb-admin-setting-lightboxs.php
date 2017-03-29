@@ -38,7 +38,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Lightboxs' ) ) {
 					array(
 							'type'		=> 'select',
 							'id'		=> 'tp_hotel_booking_lightbox',
-							'options'	=> wphb_get_support_lightboxs(),
+							'options'	=> hb_get_support_lightboxs(),
 							'title'		=> __( 'Lightbox type', 'wp-hotel-booking' ),
 							'default'	=> 'lightbox2'
 						),

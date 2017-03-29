@@ -32,7 +32,7 @@ function hb_get_max_capacity_of_rooms() {
 	return apply_filters( 'get_max_capacity_of_rooms', $max );
 }
 
-function wphb_get_min_capacity_of_rooms() {
+function hb_get_min_capacity_of_rooms() {
 	static $min = null;
 //	if ( !is_null( $max ) ) {
 //		return $max;
@@ -101,7 +101,7 @@ function hb_get_capacity_of_rooms() {
  *
  * @return string
  */
-function wphb_dropdown_room_capacities( $args = array() ) {
+function hb_dropdown_room_capacities( $args = array() ) {
 	$args = wp_parse_args(
 		$args, array(
 			'echo' => true
@@ -131,7 +131,7 @@ function wphb_dropdown_room_capacities( $args = array() ) {
  *
  * @return string
  */
-function wphb_dropdown_room_types( $args = array() ) {
+function hb_dropdown_room_types( $args = array() ) {
 	$args = wp_parse_args(
 		$args, array(
 			'echo' => true
@@ -163,7 +163,7 @@ function wphb_dropdown_room_types( $args = array() ) {
  *
  * @return string
  */
-function wphb_dropdown_rooms( $args = array( 'selected' => '' ) ) {
+function hb_dropdown_rooms( $args = array( 'selected' => '' ) ) {
 	global $wpdb;
 	$posts = $wpdb->get_results( $wpdb->prepare(
 		"SELECT ID, post_title FROM {$wpdb->posts} WHERE `post_type` = %s AND `post_status` = %s", 'hb_room', 'publish'
@@ -191,7 +191,7 @@ function wphb_dropdown_rooms( $args = array( 'selected' => '' ) ) {
  *
  * @return array
  */
-function wphb_get_room_types( $args = array() ) {
+function hb_get_room_types( $args = array() ) {
 	$args  = wp_parse_args(
 		$args, array(
 			'taxonomy'   => 'hb_room_type',
@@ -227,7 +227,7 @@ function wphb_get_room_types( $args = array() ) {
  *
  * @return array
  */
-function wphb_get_room_capacities( $args = array() ) {
+function hb_get_room_capacities( $args = array() ) {
 	$args  = wp_parse_args(
 		$args, array(
 			'taxonomy'   => 'hb_room_capacity',
@@ -261,7 +261,7 @@ function wphb_get_room_capacities( $args = array() ) {
  *
  * @return mixed
  */
-function wphb_get_child_per_room() {
+function hb_get_child_per_room() {
 	global $wpdb;
 	$query = $wpdb->prepare( "
         SELECT DISTINCT meta_value
@@ -280,8 +280,8 @@ function wphb_get_child_per_room() {
  *
  * @return mixed
  */
-function wphb_get_children_of_rooms() {
-	$children = wphb_get_child_per_room();
+function hb_get_children_of_rooms() {
+	$children = hb_get_child_per_room();
 	$return   = array();
 	if ( $children ) {
 		foreach ( $children as $key => $child ) {
@@ -301,8 +301,8 @@ function wphb_get_children_of_rooms() {
  *
  * @return mixed
  */
-function wphb_get_max_child_of_rooms() {
-	$rows = wphb_get_child_per_room();
+function hb_get_max_child_of_rooms() {
+	$rows = hb_get_child_per_room();
 	if ( $rows ) {
 		sort( $rows );
 		return $rows ? end( $rows ) : - 1;
@@ -314,14 +314,14 @@ function wphb_get_max_child_of_rooms() {
  *
  * @param array $args
  */
-function wphb_dropdown_child_per_room( $args = array() ) {
+function hb_dropdown_child_per_room( $args = array() ) {
 	$args      = wp_parse_args(
 		$args, array(
 			'name'     => '',
 			'selected' => ''
 		)
 	);
-	$max_child = wphb_get_max_child_of_rooms();
+	$max_child = hb_get_max_child_of_rooms();
 	$output    = '<select name="' . $args['name'] . '">';
 	$output .= '<option value="0">' . __( 'Select', 'wp-hotel-booking' ) . '</option>';
 	if ( $max_child > 0 ) {
@@ -340,14 +340,14 @@ function wphb_dropdown_child_per_room( $args = array() ) {
  *
  * @return int
  */
-function wphb_get_room_type_capacities( $type_id ) {
+function hb_get_room_type_capacities( $type_id ) {
 	return intval( get_option( "hb_taxonomy_capacity_{$type_id}" ) );
 }
 
 /**
  * Parse a param from request has encoded
  */
-function wphb_parse_request() {
+function hb_parse_request() {
 	$params = hb_get_request( 'hotel-booking-params' );
 	if ( $params ) {
 		$params = maybe_unserialize( base64_decode( $params ) );
@@ -367,14 +367,14 @@ function wphb_parse_request() {
 	}
 }
 
-add_action( 'init', 'wphb_parse_request' );
+add_action( 'init', 'hb_parse_request' );
 
 /**
  * Get the list of common currencies
  *
  * @return mixed
  */
-function wphb_payment_currencies() {
+function hb_payment_currencies() {
 	$currencies = array(
 		'AED' => 'United Arab Emirates Dirham (د.إ)',
 		'AUD' => 'Australian Dollars ($)',
@@ -890,7 +890,7 @@ if ( !function_exists( 'hb_customer_place_order' ) ) {
 if ( !function_exists( 'hb_get_currency' ) ) {
 
 	function hb_get_currency() {
-		$currencies     = wphb_payment_currencies();
+		$currencies     = hb_payment_currencies();
 		$currency_codes = array_keys( $currencies );
 		$currency       = reset( $currency_codes );
 
@@ -898,7 +898,7 @@ if ( !function_exists( 'hb_get_currency' ) ) {
 	}
 }
 
-function wphb_get_currency_symbol( $currency = '' ) {
+function hb_get_currency_symbol( $currency = '' ) {
 	if ( !$currency ) {
 		$currency = hb_get_currency();
 	}
@@ -1033,7 +1033,7 @@ function wphb_get_currency_symbol( $currency = '' ) {
 	return apply_filters( 'hb_currency_symbol', $currency_symbol, $currency );
 }
 
-function wphb_format_price( $price, $with_currency = true ) {
+function hb_format_price( $price, $with_currency = true ) {
 	$settings                  = WPHB_Settings::instance();
 	$position                  = $settings->get( 'price_currency_position' );
 	$price_thousands_separator = $settings->get( 'price_thousands_separator' );
@@ -1046,7 +1046,7 @@ function wphb_format_price( $price, $with_currency = true ) {
 	$before = $after = '';
 	if ( $with_currency ) {
 		if ( gettype( $with_currency ) != 'string' ) {
-			$currency = wphb_get_currency_symbol();
+			$currency = hb_get_currency_symbol();
 		} else {
 			$currency = $with_currency;
 		}
@@ -1074,10 +1074,10 @@ function wphb_format_price( $price, $with_currency = true ) {
 	return apply_filters( 'hb_price_format', $price_format, $price, $with_currency );
 }
 
-function wphb_search_rooms( $args = array() ) {
+function hb_search_rooms( $args = array() ) {
 	global $wpdb;
 	$adults_term = hb_get_request( 'adults', 0 );
-	$adults      = $adults_term ? get_term_meta( $adults_term, 'hb_max_number_of_adults', true ) : wphb_get_min_capacity_of_rooms();
+	$adults      = $adults_term ? get_term_meta( $adults_term, 'hb_max_number_of_adults', true ) : hb_get_min_capacity_of_rooms();
 	if ( !$adults ) {
 		$adults = $adults_term ? (int) get_option( 'hb_taxonomy_capacity_' . $adults_term ) : 0;
 	}
@@ -1206,7 +1206,7 @@ function wphb_search_rooms( $args = array() ) {
 	return apply_filters( 'hb_search_results', $GLOBALS['hb_search_rooms'], $args );
 }
 
-function wphb_get_payment_gateways( $args = array() ) {
+function hb_get_payment_gateways( $args = array() ) {
 	static $payment_gateways = array();
 	if ( !$payment_gateways ) {
 		$defaults         = array(
@@ -1236,8 +1236,8 @@ function wphb_get_payment_gateways( $args = array() ) {
 	return $gateways;
 }
 
-function wphb_get_user_payment_method( $slug ) {
-	$methods = wphb_get_payment_gateways( array( 'enable' => true ) );
+function hb_get_user_payment_method( $slug ) {
+	$methods = hb_get_payment_gateways( array( 'enable' => true ) );
 	$method  = false;
 	if ( $methods && !empty( $methods[$slug] ) ) {
 		$method = $methods[$slug];
@@ -1245,16 +1245,16 @@ function wphb_get_user_payment_method( $slug ) {
 	return $method;
 }
 
-function wphb_get_page_id( $name ) {
-	$settings = wphb_settings();
+function hb_get_page_id( $name ) {
+	$settings = hb_settings();
 	return apply_filters( 'hb_get_page_id', $settings->get( "{$name}_page_id" ) );
 }
 
 function hb_get_page_permalink( $name ) {
-	return get_the_permalink( wphb_get_page_id( $name ) );
+	return get_the_permalink( hb_get_page_id( $name ) );
 }
 
-function wphb_get_endpoint_url( $endpoint, $value = '', $permalink = '' ) {
+function hb_get_endpoint_url( $endpoint, $value = '', $permalink = '' ) {
 	if ( !$permalink )
 		$permalink = get_permalink();
 
@@ -1270,34 +1270,34 @@ function wphb_get_endpoint_url( $endpoint, $value = '', $permalink = '' ) {
 		$url = add_query_arg( $endpoint, $value, $permalink );
 	}
 
-	return apply_filters( 'wphb_get_endpoint_url(', $url, $endpoint, $value, $permalink );
+	return apply_filters( 'hb_get_endpoint_url(', $url, $endpoint, $value, $permalink );
 }
 
-function wphb_get_advance_payment() {
+function hb_get_advance_payment() {
 	$advance_payment = WPHB_Settings::instance()->get( 'advance_payment' );
 	return apply_filters( 'hb_advance_payment', $advance_payment );
 }
 
-function wphb_do_transaction( $method, $transaction = false ) {
+function hb_do_transaction( $method, $transaction = false ) {
 	do_action( 'hb_do_transaction_' . $method, $transaction );
 }
 
 /**
  * Process purchase request
  */
-function wphb_handle_purchase_request() {
+function hb_handle_purchase_request() {
 	$method_var = 'hb-transaction-method';
 	if ( !empty( $_REQUEST[$method_var] ) ) {
-		wphb_get_payment_gateways();
+		hb_get_payment_gateways();
 		$requested_transaction_method = sanitize_text_field( $_REQUEST[$method_var] );
-		wphb_do_transaction( $requested_transaction_method );
-	} else if ( wphb_get_page_id( 'checkout' ) && is_page( wphb_get_page_id( 'checkout' ) ) && empty( WP_Hotel_Booking::instance()->cart->cart_contents ) ) {
-		wp_redirect( wphb_get_cart_url() );
+		hb_do_transaction( $requested_transaction_method );
+	} else if ( hb_get_page_id( 'checkout' ) && is_page( hb_get_page_id( 'checkout' ) ) && empty( WP_Hotel_Booking::instance()->cart->cart_contents ) ) {
+		wp_redirect( hb_get_cart_url() );
 		exit();
 	}
 }
 
-function wphb_get_bookings( $args = array() ) {
+function hb_get_bookings( $args = array() ) {
 	$defaults = array(
 		'post_type' => 'hb_booking',
 	);
@@ -1309,9 +1309,9 @@ function wphb_get_bookings( $args = array() ) {
 /**
  *
  */
-function wphb_maybe_modify_page_content( $content ) {
+function hb_maybe_modify_page_content( $content ) {
 	global $post;
-	if ( is_page() && ( $post->ID == wphb_get_page_id( 'search' ) || has_shortcode( $content, 'hotel_booking' ) ) ) {
+	if ( is_page() && ( $post->ID == hb_get_page_id( 'search' ) || has_shortcode( $content, 'hotel_booking' ) ) ) {
 
 		// params search result
 		$page       = hb_get_request( 'hotel-booking' );
@@ -1325,22 +1325,22 @@ function wphb_maybe_modify_page_content( $content ) {
 	return $content;
 }
 
-add_filter( 'the_content', 'wphb_maybe_modify_page_content' );
+add_filter( 'the_content', 'hb_maybe_modify_page_content' );
 
 /**
  * Init some task when wp init
  */
-function wphb_init() {
-	wphb_get_payment_gateways();
+function hb_init() {
+	hb_get_payment_gateways();
 }
 
-add_action( 'init', 'wphb_init' );
+add_action( 'init', 'hb_init' );
 
-function wphb_format_order_number( $order_number ) {
+function hb_format_order_number( $order_number ) {
 	return '#' . sprintf( "%d", $order_number );
 }
 
-function wphb_get_support_lightboxs() {
+function hb_get_support_lightboxs() {
 	$lightboxs = array(
 		'lightbox2' => 'Lightbox 2'
 		// ,
@@ -1349,7 +1349,7 @@ function wphb_get_support_lightboxs() {
 	return apply_filters( 'hb_lightboxs', $lightboxs );
 }
 
-function wphb_get_countries() {
+function hb_get_countries() {
 	$countries = array(
 		'AF' => __( 'Afghanistan', 'wp-hotel-booking' ),
 		'AX' => __( '&#197;land Islands', 'wp-hotel-booking' ),
@@ -1599,8 +1599,8 @@ function wphb_get_countries() {
 	return $countries;
 }
 
-function wphb_dropdown_countries( $args = array() ) {
-	$countries = wphb_get_countries();
+function hb_dropdown_countries( $args = array() ) {
+	$countries = hb_get_countries();
 	$args      = wp_parse_args( $args, array(
 			'name'              => 'countries',
 			'selected'          => '',
@@ -1624,7 +1624,7 @@ function wphb_dropdown_countries( $args = array() ) {
  * @param        $message
  * @param string $type
  */
-function wphb_add_message( $message, $type = 'message' ) {
+function hb_add_message( $message, $type = 'message' ) {
 	$messages = get_transient( 'hb_message_' . session_id() );
 	if ( empty( $messages ) ) {
 		$messages = array();
@@ -1639,7 +1639,7 @@ function wphb_add_message( $message, $type = 'message' ) {
 	set_transient( 'hb_message_' . session_id(), $messages, MINUTE_IN_SECONDS * 3 );
 }
 
-function wphb_get_customer_fullname( $booking_id = null, $with_title = false ) {
+function hb_get_customer_fullname( $booking_id = null, $with_title = false ) {
 	if ( $booking_id ) {
 		$booking = WPHB_Booking::instance( $booking_id );
 
@@ -1690,13 +1690,13 @@ if ( !function_exists( 'is_room_taxonomy' ) ) {
 
 }
 
-if ( !function_exists( 'wphb_render_label_shortcode' ) ) {
+if ( !function_exists( 'hb_render_label_shortcode' ) ) {
 
 	/**
 	 * Returns html label shortcode search.
 	 * @return html
 	 */
-	function wphb_render_label_shortcode( $atts = array(), $name = '', $text = '', $check = '' ) {
+	function hb_render_label_shortcode( $atts = array(), $name = '', $text = '', $check = '' ) {
 		$show = false;
 		if ( !isset( $atts[$name] ) || strtolower( $atts[$name] ) === $check )
 			$show = true;
@@ -1713,7 +1713,7 @@ if ( !function_exists( 'wphb_render_label_shortcode' ) ) {
  *
  * @return string
  */
-function wphb_date_format() {
+function hb_date_format() {
 	return apply_filters( 'hb_date_format', 'd M Y' );
 }
 
@@ -1728,23 +1728,23 @@ if ( !function_exists( 'is_room' ) ) {
 
 }
 
-if ( !function_exists( 'wphb_get_url' ) ) {
+if ( !function_exists( 'hb_get_url' ) ) {
 
-	function wphb_get_url( $params = array() ) {
+	function hb_get_url( $params = array() ) {
 		global $hb_settings;
 		$query_str = '';
 		if ( !empty( $params ) ) {
 			$query_str = '?hotel-booking-params=' . base64_encode( serialize( $params ) );
 		}
-		return apply_filters( 'hb_get_url', hb_get_page_permalink( 'search' ) . $query_str, wphb_get_page_id( 'search' ), $params );
+		return apply_filters( 'hb_get_url', hb_get_page_permalink( 'search' ) . $query_str, hb_get_page_id( 'search' ), $params );
 	}
 
 }
 
-if ( !function_exists( 'wphb_get_cart_url' ) ) {
+if ( !function_exists( 'hb_get_cart_url' ) ) {
 
-	function wphb_get_cart_url() {
-		$id = wphb_get_page_id( 'cart' );
+	function hb_get_cart_url() {
+		$id = hb_get_page_id( 'cart' );
 
 		$url = home_url();
 		if ( $id ) {
@@ -1756,10 +1756,10 @@ if ( !function_exists( 'wphb_get_cart_url' ) ) {
 
 }
 
-if ( !function_exists( 'wphb_get_checkout_url' ) ) {
+if ( !function_exists( 'hb_get_checkout_url' ) ) {
 
-	function wphb_get_checkout_url() {
-		$id = wphb_get_page_id( 'checkout' );
+	function hb_get_checkout_url() {
+		$id = hb_get_page_id( 'checkout' );
 
 		$url = home_url();
 		if ( $id ) {
@@ -1771,10 +1771,10 @@ if ( !function_exists( 'wphb_get_checkout_url' ) ) {
 
 }
 
-if ( !function_exists( 'wphb_get_account_url' ) ) {
+if ( !function_exists( 'hb_get_account_url' ) ) {
 
-	function wphb_get_account_url() {
-		$id = wphb_get_page_id( 'account' );
+	function hb_get_account_url() {
+		$id = hb_get_page_id( 'account' );
 
 		$url = home_url();
 		if ( $id ) {

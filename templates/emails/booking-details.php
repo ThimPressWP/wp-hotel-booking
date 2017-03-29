@@ -28,18 +28,18 @@ if ( !defined( 'ABSPATH' ) ) {
             <td><?php printf( '%s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $item->order_item_id, 'check_in_date', true ) ) ) ?></td>
             <td><?php printf( '%s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $item->order_item_id, 'check_out_date', true ) ) ) ?></td>
             <td><?php printf( '%s', hb_get_order_item_meta( $item->order_item_id, 'qty', true ) ) ?></td>
-            <td><?php printf( '%s', wphb_format_price( hb_get_order_item_meta( $item->order_item_id, 'subtotal', true ), wphb_get_currency_symbol( $booking->currency ) ) ) ?></td>
+            <td><?php printf( '%s', hb_format_price( hb_get_order_item_meta( $item->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $booking->currency ) ) ) ?></td>
         </tr>
 
 		<?php do_action( 'hotel_booking_email_after_room_item', $item, $booking ); ?>
 	<?php endforeach; ?>
     <tr>
         <td colspan="4"><b><?php _e( 'Subtotal', 'wp-hotel-booking' ) ?></b></td>
-        <td><?php printf( '%s', wphb_format_price( $booking->sub_total(), wphb_get_currency_symbol( $booking->currency ) ) ) ?></td>
+        <td><?php printf( '%s', hb_format_price( $booking->sub_total(), hb_get_currency_symbol( $booking->currency ) ) ) ?></td>
     </tr>
     <tr>
         <td colspan="4"><b><?php _e( 'Total', 'wp-hotel-booking' ) ?></b></td>
-        <td><?php printf( '%s', wphb_format_price( $booking->total(), wphb_get_currency_symbol( $booking->currency ) ) ) ?></td>
+        <td><?php printf( '%s', hb_format_price( $booking->total(), hb_get_currency_symbol( $booking->currency ) ) ) ?></td>
     </tr>
 </table>
 

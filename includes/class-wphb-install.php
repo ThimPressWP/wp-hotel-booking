@@ -104,13 +104,13 @@ class WPHB_Install {
 
 	// create page. Eg: hotel-checkout, hotel-cart
 	static function create_pages() {
-		if ( !function_exists( 'wphb_create_page' ) ) {
+		if ( !function_exists( 'hb_create_page ' ) ) {
 			WP_Hotel_Booking::instance()->_include( 'includes/admin/wphb-admin-functions.php' );
 			WP_Hotel_Booking::instance()->_include( 'includes/wphb-functions.php' );
 		}
 
 		$pages = array();
-		if ( !wphb_get_page_id( 'cart' ) || !get_post( wphb_get_page_id( 'cart' ) ) ) {
+		if ( !hb_get_page_id( 'cart' ) || !get_post( hb_get_page_id( 'cart' ) ) ) {
 			$pages['cart'] = array(
 				'name'    => _x( 'hotel-cart', 'Page Slug', 'wp-hotel-booking' ),
 				'title'   => _x( 'Hotel Cart', 'Page Title', 'wp-hotel-booking' ),
@@ -118,7 +118,7 @@ class WPHB_Install {
 			);
 		}
 
-		if ( !wphb_get_page_id( 'checkout' ) || !get_post( wphb_get_page_id( 'checkout' ) ) ) {
+		if ( !hb_get_page_id( 'checkout' ) || !get_post( hb_get_page_id( 'checkout' ) ) ) {
 			$pages['checkout'] = array(
 				'name'    => _x( 'hotel-checkout', 'Page Slug', 'wp-hotel-booking' ),
 				'title'   => _x( 'Hotel Checkout', 'Page Title', 'wp-hotel-booking' ),
@@ -126,7 +126,7 @@ class WPHB_Install {
 			);
 		}
 
-		if ( !wphb_get_page_id( 'search' ) || !get_post( wphb_get_page_id( 'search' ) ) ) {
+		if ( !hb_get_page_id( 'search' ) || !get_post( hb_get_page_id( 'search' ) ) ) {
 			$pages['search'] = array(
 				'name'    => _x( 'hotel-search', 'Page Slug', 'wp-hotel-booking' ),
 				'title'   => _x( 'Hotel Booking Search', 'Page Title', 'wp-hotel-booking' ),
@@ -134,7 +134,7 @@ class WPHB_Install {
 			);
 		}
 
-		if ( !wphb_get_page_id( 'account' ) || !get_post( wphb_get_page_id( 'account' ) ) ) {
+		if ( !hb_get_page_id( 'account' ) || !get_post( hb_get_page_id( 'account' ) ) ) {
 			$pages['account'] = array(
 				'name'    => _x( 'hotel-account', 'Page Slug', 'wp-hotel-booking' ),
 				'title'   => _x( 'Hotel Account', 'Page Title', 'wp-hotel-booking' ),
@@ -142,7 +142,7 @@ class WPHB_Install {
 			);
 		}
 
-		if ( !wphb_get_page_id( 'terms' ) || !get_post( wphb_get_page_id( 'terms' ) ) ) {
+		if ( !hb_get_page_id( 'terms' ) || !get_post( hb_get_page_id( 'terms' ) ) ) {
 			$pages['terms'] = array(
 				'name'    => _x( 'hotel-term-condition', 'Page Slug', 'wp-hotel-booking' ),
 				'title'   => _x( 'Terms and Conditions ', 'Page Title', 'wp-hotel-booking' ),
@@ -150,10 +150,10 @@ class WPHB_Install {
 			);
 		}
 
-		if ( $pages && function_exists( 'wphb_create_page' ) ) {
+		if ( $pages && function_exists( 'hb_create_page ' ) ) {
 			foreach ( $pages as $key => $page ) {
-				$pageId = wphb_create_page( esc_sql( $page['name'] ), 'hotel_booking_' . $key . '_page_id', $page['title'], $page['content'], !empty( $page['parent'] ) ? wphb_get_page_id( $page['parent'] ) : '' );
-				wphb_settings()->set( $key . '_page_id', $pageId );
+				$pageId = hb_create_page ( esc_sql( $page['name'] ), 'hotel_booking_' . $key . '_page_id', $page['title'], $page['content'], !empty( $page['parent'] ) ? hb_get_page_id( $page['parent'] ) : '' );
+				hb_settings()->set( $key . '_page_id', $pageId );
 			}
 		}
 	}

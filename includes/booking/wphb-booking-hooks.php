@@ -16,7 +16,7 @@ if ( !function_exists( 'hotel_booking_create_booking' ) ) {
 		$booking_status = get_post_status( $booking_id );
 		if ( $booking_status === 'hb-pending' ) {
 			wp_clear_scheduled_hook( 'hotel_booking_change_cancel_booking_status', array( $booking_id ) );
-			$time = wphb_settings()->get( 'cancel_payment', 12 ) * HOUR_IN_SECONDS;
+			$time = hb_settings()->get( 'cancel_payment', 12 ) * HOUR_IN_SECONDS;
 			wp_schedule_single_event( time() + $time, 'hotel_booking_change_cancel_booking_status', array( $booking_id ) );
 		}
 	}
@@ -97,7 +97,7 @@ if ( !function_exists( 'hb_new_booking_email' ) ) {
 
 		$subject = str_replace( $find, $replace, $subject );
 
-		$body = wphb_get_template_content( 'emails/admin/admin-new-booking.php', array(
+		$body = hb_get_template_content( 'emails/admin/admin-new-booking.php', array(
 			'booking'            => $booking,
 			'options'            => $settings,
 			'email_heading'      => $email_heading,
@@ -153,7 +153,7 @@ if ( !function_exists( 'hb_customer_place_order_email' ) ) {
 		hb_new_customer_booking_email( $booking_id );
 
 		// send admin uer
-		$enable = wphb_settings()->get( 'email_new_booking_enable' );
+		$enable = hb_settings()->get( 'email_new_booking_enable' );
 		if ( $enable ) {
 			hb_new_booking_email( $booking_id );
 		}
@@ -184,7 +184,7 @@ if ( !function_exists( 'hb_new_customer_booking_email' ) ) {
 		}
 
 		$booking       = WPHB_Booking::instance( $booking_id );
-		$email_subject = wphb_settings()->get( 'email_general_subject', __( 'Reservation', 'wp-hotel-booking' ) );
+		$email_subject = hb_settings()->get( 'email_general_subject', __( 'Reservation', 'wp-hotel-booking' ) );
 
 		$headers[] = 'Content-Type: text/html; charset=UTF-8';
 		// set mail from email
@@ -193,7 +193,7 @@ if ( !function_exists( 'hb_new_customer_booking_email' ) ) {
 		add_filter( 'wp_mail_from_name', 'hb_wp_mail_from_name' );
 		add_filter( 'wp_mail_content_type', 'hb_set_html_content_type' );
 
-		$email_content = wphb_get_template_content( 'emails/customer-booking.php', array( 'booking' => $booking, 'options' => wphb_settings() ) );
+		$email_content = hb_get_template_content( 'emails/customer-booking.php', array( 'booking' => $booking, 'options' => hb_settings() ) );
 
 		wp_mail( $booking->customer_email, $email_subject, stripslashes( $email_content ), $headers );
 		// if ( $fo = fopen( HB_PLUGIN_PATH . '/customer-booking.html', 'w+' ) ) {

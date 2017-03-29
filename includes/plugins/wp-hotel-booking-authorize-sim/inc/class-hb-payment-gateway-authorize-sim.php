@@ -114,7 +114,7 @@ class HB_Payment_Gateway_Authorize_Sim extends WPHB_Payment_Gateway_Base {
             return;
 
         if ( isset( $_POST['x_response_reason_text'] ) )
-            wphb_add_message( $_POST['x_response_reason_text'] );
+            hb_add_message( $_POST['x_response_reason_text'] );
 
         $code = 0;
         if ( isset( $_POST['x_response_code'] ) && array_key_exists( (int) $_POST['x_response_code'], $this->_messages ) )
@@ -141,7 +141,7 @@ class HB_Payment_Gateway_Authorize_Sim extends WPHB_Payment_Gateway_Base {
 
         $book->update_status( $status );
 		WP_Hotel_Booking::instance()->cart->empty_cart();
-        wp_redirect( wphb_get_checkout_url() );
+        wp_redirect( hb_get_checkout_url() );
         exit();
     }
 

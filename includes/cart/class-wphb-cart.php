@@ -569,7 +569,7 @@ class WPHB_Cart {
      */
     function get_advance_payment() {
         $total = $this->get_total();
-        if ( $advance_payment = wphb_get_advance_payment() ) {
+        if ( $advance_payment = hb_get_advance_payment() ) {
             $total = $total * $advance_payment / 100;
         }
         return $total;
@@ -610,7 +610,7 @@ class WPHB_Cart {
         $booking_info = array_merge( $booking_info, array(
             '_hb_tax' => $this->cart_total_include_tax - $this->cart_total_exclude_tax,
             '_hb_advance_payment' => $this->hb_get_cart_total( !hb_get_request( 'pay_all' ) ),
-            '_hb_advance_payment_setting' => wphb_settings()->get( 'advance_payment', 50 ),
+            '_hb_advance_payment_setting' => hb_settings()->get( 'advance_payment', 50 ),
             '_hb_currency' => apply_filters( 'hotel_booking_payment_currency', hb_get_currency() ),
             // '_hb_customer_id'               => $customer_id,
             '_hb_user_id' => get_current_blog_id(),

@@ -4,5 +4,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $field['selected'] = $field['std'];
-wphb_dropdown_countries( $field );
+hb_dropdown_countries( $field );
 ?>

@@ -82,7 +82,7 @@ class WP_Hotel_Booking_Coupon {
         if ( $settings !== 'general' ) {
             return;
         }
-        $settings = wphb_settings();
+        $settings = hb_settings();
         ?>
         <table class="form-table">
             <tr>
@@ -97,7 +97,7 @@ class WP_Hotel_Booking_Coupon {
     }
 
     function hotel_booking_before_cart_total() {
-        $settings = wphb_settings();
+        $settings = hb_settings();
         if ( defined( 'TP_HOTEL_COUPON' ) && TP_HOTEL_COUPON && $settings->get( 'enable_coupon' ) ) {
             ?>
             <?php
@@ -112,7 +112,7 @@ class WP_Hotel_Booking_Coupon {
                         </p>
                         <span class="hb-remove-coupon_code"><?php printf( __( 'Coupon applied: %s', 'tp-hotel-booking' ), $coupon->coupon_code ); ?></span>
                         <span class="hb-align-right">
-                            -<?php echo wphb_format_price( $coupon->discount_value ); ?>
+                            -<?php echo hb_format_price( $coupon->discount_value ); ?>
                         </span>
                     </td>
                 </tr>

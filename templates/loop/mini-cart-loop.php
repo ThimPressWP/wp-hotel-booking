@@ -37,7 +37,7 @@ if ( !defined( 'ABSPATH' ) ) {
     <div class="hb_mini_cart_price">
 
         <label><?php _e( 'Price: ', 'wp-hotel-booking' ); ?></label>
-        <span><?php printf( '%s', wphb_format_price( $cart_item->amount ) ) ?></span>
+        <span><?php printf( '%s', hb_format_price( $cart_item->amount ) ) ?></span>
 
     </div>
 

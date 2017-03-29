@@ -152,7 +152,7 @@ class WPHB_Ajax {
                 }
                 // set session
                 WP_Hotel_Booking::instance()->cart->set_customer( 'coupon', $coupon->post->ID );
-                wphb_add_message( __( 'Coupon code applied', 'wp-hotel-booking' ) );
+                hb_add_message( __( 'Coupon code applied', 'wp-hotel-booking' ) );
             }
         } else {
             $response['message'] = __( 'Coupon does not exist!', 'wp-hotel-booking' );
@@ -166,7 +166,7 @@ class WPHB_Ajax {
         !session_id() && session_start();
         // delete_transient( 'hb_user_coupon_' . session_id() );
         WP_Hotel_Booking::instance()->cart->set_customer( 'coupon', null );
-        wphb_add_message( __( 'Coupon code removed', 'wp-hotel-booking' ) );
+        hb_add_message( __( 'Coupon code removed', 'wp-hotel-booking' ) );
         hb_send_json(
                 array(
                     'result' => 'success'
@@ -247,7 +247,7 @@ class WPHB_Ajax {
                 'name' => sprintf( '%s', $room->name ) . ( $room->capacity_title ? sprintf( '(%s)', $room->capacity_title ) : '' ),
                 'quantity' => $qty,
                 'cart_id' => $cart_item_id,
-                'total' => wphb_format_price( WP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id )->amount )
+                'total' => hb_format_price( WP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id )->amount )
             );
 
             $results = apply_filters( 'hotel_booking_add_to_cart_results', $results, $room );
@@ -272,9 +272,9 @@ class WPHB_Ajax {
         if ( $cart->remove_cart_item( sanitize_text_field( $_POST['cart_id'] ) ) ) {
             $return = apply_filters( 'hotel_booking_ajax_remove_cart_item', array(
                 'status' => 'success',
-                'sub_total' => wphb_format_price( $cart->sub_total ),
-                'grand_total' => wphb_format_price( $cart->total ),
-                'advance_payment' => wphb_format_price( $cart->advance_payment )
+                'sub_total' => hb_format_price( $cart->sub_total ),
+                'grand_total' => hb_format_price( $cart->total ),
+                'advance_payment' => hb_format_price( $cart->advance_payment )
                     ) );
 
             hb_send_json( $return );

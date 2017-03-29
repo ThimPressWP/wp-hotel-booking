@@ -85,12 +85,12 @@ class WPHB_Checkout {
             return;
         }
 
-        if ( !is_user_logged_in() && !wphb_settings()->get( 'guest_checkout' ) ) {
+        if ( !is_user_logged_in() && !hb_settings()->get( 'guest_checkout' ) ) {
             throw new Exception( __( 'You have to Login to process checkout.', 'wp-hotel-booking' ) );
         }
 
         // payment method
-        $payment_method = wphb_get_user_payment_method( hb_get_request( 'hb-payment-method' ) );
+        $payment_method = hb_get_user_payment_method( hb_get_request( 'hb-payment-method' ) );
 
         if ( !$payment_method ) {
             throw new Exception( __( 'The payment method is not available', 'wp-hotel-booking' ) );

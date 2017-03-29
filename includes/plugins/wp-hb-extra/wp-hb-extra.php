@@ -55,7 +55,7 @@ class WPHB_Extra_Factory {
 		$this->_include( TP_HB_EXTRA_INC . '/functions.php' );
 		if ( is_admin() ) {
 			$this->_include( TP_HB_EXTRA_INC . '/admin/admin-functions.php' );
-			$this->_include( TP_HB_EXTRA_INC . '/admin/class-wphb-admin.php' );
+			$this->_include( TP_HB_EXTRA_INC . '/admin/class-hb-admin.php' );
 		}
 
 		$this->_include( TP_HB_EXTRA_INC . '/classes/class-hb-extra.php' );

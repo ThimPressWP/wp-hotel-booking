@@ -24,7 +24,7 @@ class WPHB_Shortcode_Hotel_Booking_Lastest_Reviews extends WPHB_Shortcodes {
         $query = new WP_Query( $args );
 
         if ( $query->have_posts() ):
-            wphb_get_template( 'shortcodes/lastest_reviews.php', array( 'atts' => $atts, 'query' => $query ) );
+            hb_get_template( 'shortcodes/lastest_reviews.php', array( 'atts' => $atts, 'query' => $query ) );
         endif;
     }
 

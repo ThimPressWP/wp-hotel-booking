@@ -12,7 +12,7 @@ global $hb_search_rooms;
 <div id="hotel-booking-results">
 	<?php if ( $results && !empty( $hb_search_rooms['data'] ) ): ?>
         <h3><?php _e( 'Search results', 'wp-hotel-booking' ); ?></h3>
-		<?php wphb_get_template( 'search/list.php', array( 'results' => $hb_search_rooms['data'], 'atts' => $atts ) ); ?>
+		<?php hb_get_template( 'search/list.php', array( 'results' => $hb_search_rooms['data'], 'atts' => $atts ) ); ?>
         <nav class="rooms-pagination">
 			<?php
 			echo paginate_links( apply_filters( 'hb_pagination_args', array(
@@ -31,7 +31,7 @@ global $hb_search_rooms;
 	<?php else: ?>
         <p><?php _e( 'No room found.', 'wp-hotel-booking' ); ?></p>
         <p>
-            <a href="<?php echo wphb_get_url(); ?>"><?php _e( 'Search again!', 'wp-hotel-booking' ); ?></a>
+            <a href="<?php echo hb_get_url(); ?>"><?php _e( 'Search again!', 'wp-hotel-booking' ); ?></a>
         </p>
 	<?php endif; ?>
 </div>

@@ -61,7 +61,7 @@ if ( !class_exists( 'WPHB_Admin_Setting_General' ) ) {
                     'type' => 'select',
                     'id' => 'tp_hotel_booking_currency',
                     'title' => __( 'Currency', 'wp-hotel-booking' ),
-                    'options' => wphb_payment_currencies(),
+                    'options' => hb_payment_currencies(),
                     'default' => 'USD'
                 ),
                 array(

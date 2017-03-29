@@ -64,7 +64,7 @@ if ( !function_exists( 'hb_add_meta_boxes' ) ) {
 				'name'    => 'room_capacity',
 				'label'   => __( 'Number of adults', 'wp-hotel-booking' ),
 				'type'    => 'select',
-				'options' => wphb_get_room_capacities(
+				'options' => hb_get_room_capacities(
 					array(
 						'map_fields' => array(
 							'term_id' => 'value',
@@ -277,10 +277,10 @@ if ( !function_exists( 'hb_manage_booking_column' ) ) {
 		$status  = get_post_status( $post_id );
 		switch ( $column_name ) {
 			case 'booking_id':
-				$echo[] = wphb_format_order_number( $post_id );
+				$echo[] = hb_format_order_number( $post_id );
 				break;
 			case 'customer':
-				$echo[] = wphb_get_customer_fullname( $post_id, true );
+				$echo[] = hb_get_customer_fullname( $post_id, true );
 				$echo[] = $booking->user_id && ( $user = get_userdata( $booking->user_id ) ) ? sprintf( '<br /><strong><small><a href="%s">%s</a></small></strong>', get_edit_user_link( $booking->user_id ), $user->user_login ) : '';
 				break;
 			case 'total':
@@ -290,10 +290,10 @@ if ( !function_exists( 'hb_manage_booking_column' ) ) {
 				if ( !$currency ) {
 					$currency = $booking->currency;
 				}
-				$total_with_currency = wphb_format_price( $total, wphb_get_currency_symbol( $currency ) );
+				$total_with_currency = hb_format_price( $total, hb_get_currency_symbol( $currency ) );
 
 				$echo[] = $total_with_currency;
-				if ( $method = wphb_get_user_payment_method( $booking->method ) ) {
+				if ( $method = hb_get_user_payment_method( $booking->method ) ) {
 					$echo[] = sprintf( __( '<br />(<small>%s</small>)', 'wp-hotel-booking' ), $method->description );
 				}
 				// display paid
@@ -308,7 +308,7 @@ if ( !function_exists( 'hb_manage_booking_column' ) ) {
 						$echo[] = sprintf(
 							__( '<br />(<small class="hb_advance_payment">Charged %s = %s</small>)', 'wp-hotel-booking' ),
 							$advance_settings . '%',
-							wphb_format_price( $advance_payment, wphb_get_currency_symbol( $currency ) )
+							hb_format_price( $advance_payment, hb_get_currency_symbol( $currency ) )
 						);
 					}
 				}
@@ -428,7 +428,7 @@ if ( !function_exists( 'hb_edit_post_new_title_in_list' ) ) {
 	function hb_edit_post_new_title_in_list( $title, $post_id ) {
 		global $post_type;
 		if ( $post_type == 'hb_booking' ) {
-			$title = wphb_format_order_number( $post_id );
+			$title = hb_format_order_number( $post_id );
 		}
 		return $title;
 	}

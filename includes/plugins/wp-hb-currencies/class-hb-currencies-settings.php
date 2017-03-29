@@ -33,7 +33,7 @@ class HB_SW_Curreny_Setting
 		if( isset( self::$_instance[ $this->_option_name ] ) )
 			return self::$_instance[ $this->_option_name ];
 
-		$hb_settings = wphb_settings();
+		$hb_settings = hb_settings();
 
 		$this->_options = $hb_settings->get( $this->_option_name );
 

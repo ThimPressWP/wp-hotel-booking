@@ -22,7 +22,7 @@ class WPHB_Shortcode_Hotel_Booking_Account extends WPHB_Shortcodes {
         $template = apply_filters( 'hotel_booking_account_template', 'account/account.php' );
         ob_start();
         do_action( 'hb_wrapper_start' );
-        wphb_get_template( $template, $atts );
+        hb_get_template( $template, $atts );
         do_action( 'hb_wrapper_end' );
         return ob_get_clean();
     }

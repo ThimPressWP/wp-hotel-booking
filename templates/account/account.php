@@ -11,12 +11,12 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 if ( !is_user_logged_in() ) {
-	printf( __( 'You must <strong><a href="%s">Login<a/></strong>.', 'wp-hotel-booking' ), wp_login_url( wphb_get_account_url() ) );
+	printf( __( 'You must <strong><a href="%s">Login<a/></strong>.', 'wp-hotel-booking' ), wp_login_url( hb_get_account_url() ) );
 	return;
 }
 
 // list orders
-wphb_get_template( 'account/bookings.php' );
+hb_get_template( 'account/bookings.php' );
 
 // user info
-wphb_get_template( 'account/user-info.php' );
+hb_get_template( 'account/user-info.php' );

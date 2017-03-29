@@ -223,6 +223,6 @@ class WPHB_Settings {
 
 $GLOBALS['hb_settings'] = WPHB_Settings::instance();
 
-function wphb_settings() {
+function hb_settings() {
     return WPHB_Settings::instance();
 }

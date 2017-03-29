@@ -44,7 +44,7 @@ if ( !defined( 'ABSPATH' ) ) {
                                 <th>
                                     <p>
                                         <strong><?php _e( 'Customer Name', 'wp-hotel-booking' ); ?></strong><br>
-										<?php printf( '%s', wphb_get_customer_fullname( $booking->id ) ) ?><br>
+										<?php printf( '%s', hb_get_customer_fullname( $booking->id ) ) ?><br>
                                         <strong><?php _e( 'Address', 'wp-hotel-booking' ) ?></strong><br>
 										<?php printf( '%s', $booking->customer_country ) ?><br>
 										<?php printf( '%s', $booking->customer_address ) ?><br>

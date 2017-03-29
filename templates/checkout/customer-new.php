@@ -70,7 +70,7 @@ if ( !defined( 'ABSPATH' ) ) {
                     <span class="hb-required">*</span></label>
 
                 <div class="hb-form-field-input">
-					<?php wphb_dropdown_countries( array( 'name' => 'country', 'show_option_none' => __( 'Country', 'wp-hotel-booking' ), 'selected' => $customer->country ) ); ?>
+					<?php hb_dropdown_countries( array( 'name' => 'country', 'show_option_none' => __( 'Country', 'wp-hotel-booking' ), 'selected' => $customer->country ) ); ?>
                 </div>
             </li>
             <li class="hb-form-field">

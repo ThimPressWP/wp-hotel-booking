@@ -53,7 +53,7 @@ class WPHB_Shortcode_Hotel_Booking extends WPHB_Shortcodes {
                 $search_permalink = $search_page;
             }
         } else {
-            $search_permalink = wphb_get_url();
+            $search_permalink = hb_get_url();
         }
         $template_args['search_page'] = $search_permalink;
         /**
@@ -70,7 +70,7 @@ class WPHB_Shortcode_Hotel_Booking extends WPHB_Shortcodes {
                     break;
 
                 $template = 'search/results.php';
-                $template_args['results'] = wphb_search_rooms(
+                $template_args['results'] = hb_search_rooms(
                         array(
                             'check_in_date' => $start_date,
                             'check_out_date' => $end_date,
@@ -86,7 +86,7 @@ class WPHB_Shortcode_Hotel_Booking extends WPHB_Shortcodes {
         $template = apply_filters( 'hotel_booking_shortcode_template', $template );
         ob_start();
         do_action( 'hb_wrapper_start' );
-        wphb_get_template( $template, $template_args );
+        hb_get_template( $template, $template_args );
         do_action( 'hb_wrapper_end' );
         return ob_get_clean();
     }

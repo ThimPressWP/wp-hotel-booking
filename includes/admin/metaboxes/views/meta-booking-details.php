@@ -22,7 +22,7 @@ $booking = WPHB_Booking::instance( $post->ID );
 <div id="booking_details">
     <?php wp_nonce_field( 'hotel-booking-metabox-booking-details', 'hotel_booking_metabox_booking_details_nonce' ); ?>
     <h2 class="hb_meta_title">
-        <?php printf( __( 'Book ID %s', 'wp-hotel-booking' ), wphb_format_order_number( $post->ID ) ) ?>
+        <?php printf( __( 'Book ID %s', 'wp-hotel-booking' ), hb_format_order_number( $post->ID ) ) ?>
     </h2>
     <p class="description"><?php printf( __( 'Booked on %s', 'wp-hotel-booking' ), $post->post_date ) ?></p>
     <div id="booking_details_section">
@@ -32,7 +32,7 @@ $booking = WPHB_Booking::instance( $post->ID );
             <ul>
                 <li>
                     <label><?php _e( 'Payment Method:', 'wp-hotel-booking' ); ?></label>
-                    <?php $methods = wphb_get_payment_gateways(); ?>
+                    <?php $methods = hb_get_payment_gateways(); ?>
                     <select name="_hb_method">
                         <?php if ( $booking->method && !array_key_exists( $booking->method, $methods ) ) : ?>
                             <option value="<?php echo esc_attr( $booking->method ) ?>" selected><?php printf( __( '%s is not available', 'wp-hotel-booking' ), $booking->method_title ) ?></option>
@@ -77,7 +77,7 @@ $booking = WPHB_Booking::instance( $post->ID );
                 <div class="address details">
                     <strong><?php _e( 'Address', 'wp-hotel-booking' ); ?></strong>
                     <br />
-                    <small><?php printf( '%s', wphb_get_customer_fullname( $post->ID, true ) ); ?></small>
+                    <small><?php printf( '%s', hb_get_customer_fullname( $post->ID, true ) ); ?></small>
                     <br />
                     <small><?php printf( '%s', $booking->customer_address ) ?></small>
                     <br />
@@ -112,7 +112,7 @@ $booking = WPHB_Booking::instance( $post->ID );
                         <input type="email" placeholder="<?php esc_attr_e( 'Email address', 'wp-hotel-booking' ); ?>" name="_hb_customer_email" value="<?php echo esc_attr( $booking->customer_email ) ?>" />
                         <input type="text" name="_hb_customer_fax" placeholder="<?php esc_attr_e( 'Fax', 'wp-hotel-booking' ); ?>" value="<?php echo esc_attr( $booking->customer_tax ) ?>" />
                         <input type="text" name="_hb_customer_phone" placeholder="<?php esc_attr_e( 'Phone', 'wp-hotel-booking' ); ?>" value="<?php echo esc_attr( $booking->customer_phone ) ?>" />
-                        <?php wphb_dropdown_countries( array( 'name' => '_hb_customer_country', 'class' => 'normal', 'show_option_none' => __( 'Country', 'wp-hotel-booking' ), 'selected' => $booking->customer_country ) ); ?>
+                        <?php hb_dropdown_countries( array( 'name' => '_hb_customer_country', 'class' => 'normal', 'show_option_none' => __( 'Country', 'wp-hotel-booking' ), 'selected' => $booking->customer_country ) ); ?>
                     </div>
                 </div>
             </div>

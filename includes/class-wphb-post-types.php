@@ -90,7 +90,7 @@ class WPHB_Post_Types {
             case 'maximum_spend':
                 if ( $value = get_post_meta( $post->ID, '_hb_' . $column, true ) ) {
                     if ( get_post_meta( $post->ID, '_hb_coupon_discount_type', true ) == 'fixed_cart' ) {
-                        echo wphb_format_price( $value );
+                        echo hb_format_price( $value );
                     } else {
                         echo sprintf( '%s', $value . '%' );
                     }

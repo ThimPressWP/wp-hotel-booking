@@ -28,7 +28,7 @@ $count_plants = count( $plans );
     <form method="post" name="pricing-table-form">
         <p>
             <strong><?php _e( 'Select name of room', 'wp-hotel-booking' ); ?></strong>
-            &nbsp;&nbsp;<?php echo wphb_dropdown_rooms( array( 'selected' => $room_id ) ); ?>
+            &nbsp;&nbsp;<?php echo hb_dropdown_rooms( array( 'selected' => $room_id ) ); ?>
         </p>
         <?php if( $room_id ) : ?>
             <div class="hb-pricing-table regular-price clearfix">

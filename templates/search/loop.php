@@ -38,10 +38,10 @@ $featured = $gallery ? array_shift( $gallery ) : false;
                     </li>
                     <li class="hb_search_price">
                         <label><?php _e( 'Price:', 'wp-hotel-booking' ); ?></label>
-                        <span class="hb_search_item_price"><?php echo wphb_format_price( $room->amount_singular ); ?></span>
+                        <span class="hb_search_item_price"><?php echo hb_format_price( $room->amount_singular ); ?></span>
                         <div class="hb_view_price">
                             <a href="" class="hb-view-booking-room-details"><?php _e( '(View price breakdown)', 'wp-hotel-booking' ); ?></a>
-							<?php wphb_get_template( 'search/booking-room-details.php', array( 'room' => $room ) ); ?>
+							<?php hb_get_template( 'search/booking-room-details.php', array( 'room' => $room ) ); ?>
                         </div>
                     </li>
                     <li class="hb_search_quantity">
@@ -77,6 +77,6 @@ $featured = $gallery ? array_shift( $gallery ) : false;
 		<?php do_action( 'hotel_booking_loop_after_item', $room->post->ID ); ?>
     </form>
 	<?php if ( ( isset( $atts['gallery'] ) && $atts['gallery'] === 'true' ) || $hb_settings->get( 'enable_gallery_lightbox' ) ): ?>
-		<?php wphb_get_template( 'loop/gallery-lightbox.php', array( 'room' => $room ) ) ?>
+		<?php hb_get_template( 'loop/gallery-lightbox.php', array( 'room' => $room ) ) ?>
 	<?php endif; ?>
 </li>

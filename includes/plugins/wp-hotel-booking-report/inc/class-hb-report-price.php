@@ -318,7 +318,7 @@ class HB_Report_Price extends HB_Report {
             }
             $sidebars[] = array(
                 'title' => sprintf( __( 'Total %s to %s', 'wp-hotel-booking-report' ), $this->_start_in, $this->_end_in ),
-                'descr' => wphb_format_price( $price )
+                'descr' => hb_format_price( $price )
             );
         }
 

@@ -24,7 +24,7 @@ class WPHB_Shortcode_Hotel_Booking_Mini_Cart extends WPHB_Shortcodes {
 
             <?php if ( !empty( WP_Hotel_Booking::instance()->cart->cart_contents ) ): ?>
 
-                <?php wphb_get_template( 'cart/mini_cart.php' ); ?>
+                <?php hb_get_template( 'cart/mini_cart.php' ); ?>
 
             <?php else: ?>
 
@@ -36,7 +36,7 @@ class WPHB_Shortcode_Hotel_Booking_Mini_Cart extends WPHB_Shortcodes {
     }
 
     function mini_cart() {
-        echo wphb_get_template_content( 'cart/mini_cart_layout.php' );
+        echo hb_get_template_content( 'cart/mini_cart_layout.php' );
     }
 
     function utils() {

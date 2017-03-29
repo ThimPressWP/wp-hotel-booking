@@ -249,7 +249,7 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base{
             'numberposts' => 1, //we should only have one, so limit to 1
         );
 
-        $bookings = wphb_get_bookings( $args );
+        $bookings = hb_get_bookings( $args );
         if( $bookings ) foreach( $bookings as $booking ){
             return $booking->ID;
         }
@@ -273,7 +273,7 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base{
         );
 
         $booking    = WPHB_Booking::instance( $booking_id );
-        $advance_payment = wphb_get_advance_payment();
+        $advance_payment = hb_get_advance_payment();
         $pay_all = hb_get_request( 'pay_all' );
 
         $nonce = wp_create_nonce( 'hb-paypal-nonce' );

@@ -33,7 +33,7 @@ $settings = WPHB_Settings::instance();
                     <strong itemprop="author"><?php comment_author(); ?></strong> <?php
 
 					?>&ndash;
-                    <time itemprop="datePublished" datetime="<?php echo get_comment_date( 'c' ); ?>"><?php echo get_comment_date( wphb_date_format() ); ?></time>
+                    <time itemprop="datePublished" datetime="<?php echo get_comment_date( 'c' ); ?>"><?php echo get_comment_date( hb_date_format() ); ?></time>
                     :
                 </p>
 

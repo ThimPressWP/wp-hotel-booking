@@ -272,7 +272,7 @@ class Hotel_Booking_Block {
         $check_in = isset( $param['check_in'] ) ? $param['check_in'] : time();
         $check_out = isset( $param['check_out'] ) ? $param['check_out'] : time();
         $adults = isset( $param['adults'] ) ? (int) $param['adults'] : hb_get_max_capacity_of_rooms();
-        $child = isset( $param['child'] ) ? (int) $param['child'] : wphb_get_max_child_of_rooms();
+        $child = isset( $param['child'] ) ? (int) $param['child'] : hb_get_max_child_of_rooms();
 
         global $wpdb;
         /**

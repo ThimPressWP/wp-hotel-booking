@@ -11,7 +11,7 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 // email heading
-wphb_get_template( 'emails/email-header.php',
+hb_get_template( 'emails/email-header.php',
 	array(
 		'email_heading'      => $email_heading,
 		'email_heading_desc' => $email_heading_desc
@@ -19,10 +19,10 @@ wphb_get_template( 'emails/email-header.php',
 );
 
 // customer details
-wphb_get_template( 'emails/customer-details.php', array( 'booking' => $booking, 'options' => $options ) );
+hb_get_template( 'emails/customer-details.php', array( 'booking' => $booking, 'options' => $options ) );
 
 // booking details
-wphb_get_template( 'emails/booking-details.php', array( 'booking' => $booking, 'options' => $options ) );
+hb_get_template( 'emails/booking-details.php', array( 'booking' => $booking, 'options' => $options ) );
 
 // email footer
-wphb_get_template( 'emails/email-footer.php', array( 'booking' => $booking, 'options' => $options ) );
+hb_get_template( 'emails/email-footer.php', array( 'booking' => $booking, 'options' => $options ) );

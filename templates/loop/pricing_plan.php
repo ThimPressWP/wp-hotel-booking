@@ -41,7 +41,7 @@ $plans      = hb_room_get_pricing_plans( get_the_ID() );
 			<?php for ( $i = 0; $i < 7; $i ++ ) { ?>
                 <td>
 					<?php $price = isset( $prices[$i] ) ? $prices[$i] : ''; ?>
-					<?php printf( '%s', wphb_format_price( $price ) ) ?>
+					<?php printf( '%s', hb_format_price( $price ) ) ?>
                 </td>
 			<?php } ?>
         </tr>

@@ -673,10 +673,10 @@ class WP_Hotel_Booking_Woocommerce {
 		if ( !$post ) {
 			return;
 		}
-		if ( $post->ID == wphb_get_page_id( 'cart' ) ) {
+		if ( $post->ID == hb_get_page_id( 'cart' ) ) {
 			wp_redirect( WC()->cart->get_cart_url() );
 			exit();
-		} else if ( $post->ID == wphb_get_page_id( 'checkout' ) ) {
+		} else if ( $post->ID == hb_get_page_id( 'checkout' ) ) {
 			wp_redirect( WC()->cart->get_checkout_url() );
 			exit();
 		}

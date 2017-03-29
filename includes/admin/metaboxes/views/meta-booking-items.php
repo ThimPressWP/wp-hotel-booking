@@ -68,7 +68,7 @@ $rooms = hb_get_order_items( $post->ID );
 						<?php printf( '%s', hb_get_order_item_meta( $room->order_item_id, 'qty', true ) ) ?>
 					</td>
 					<td class="total center">
-						<?php printf( '%s', wphb_format_price( hb_get_order_item_meta( $room->order_item_id, 'subtotal', true ), wphb_get_currency_symbol( $hb_booking->currency ) ) ); ?>
+						<?php printf( '%s', hb_format_price( hb_get_order_item_meta( $room->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $hb_booking->currency ) ) ); ?>
 					</td>
 					<td class="actions">
 						<a href="#" class="edit" data-order-id="<?php echo esc_attr( $hb_booking->id ); ?>" data-order-item-id="<?php echo esc_attr( $room->order_item_id ) ?>" data-order-item-type="line_item">
@@ -116,7 +116,7 @@ $rooms = hb_get_order_items( $post->ID );
 						<?php printf( __( 'Coupon(<a href="%s">%s</a>)', 'wp-hotel-booking' ), get_edit_post_link( $hb_booking->coupon_id ), $hb_booking->coupon_code ) ?>
 					</td>
 					<td class="coupon_discount">
-						<?php printf( '-%s', wphb_format_price( $hb_booking->coupon_value, wphb_get_currency_symbol( $hb_booking->currency ) ) ); ?>
+						<?php printf( '-%s', hb_format_price( $hb_booking->coupon_value, hb_get_currency_symbol( $hb_booking->currency ) ) ); ?>
 					</td>
 				</tr>
 			<?php endif; ?>
@@ -125,7 +125,7 @@ $rooms = hb_get_order_items( $post->ID );
 					<?php _e( 'Sub Total', 'wp-hotel-booking' ) ?>
 				</td>
 				<td class="subtotal">
-					<?php printf( '%s', wphb_format_price( hb_booking_subtotal( $hb_booking->id ), wphb_get_currency_symbol( $hb_booking->currency ) ) ); ?>
+					<?php printf( '%s', hb_format_price( hb_booking_subtotal( $hb_booking->id ), hb_get_currency_symbol( $hb_booking->currency ) ) ); ?>
 				</td>
 			</tr>
 			<tr>
@@ -133,7 +133,7 @@ $rooms = hb_get_order_items( $post->ID );
 					<?php _e( 'Tax', 'wp-hotel-booking' ) ?>
 				</td>
 				<td class="tax">
-					<?php printf( '%s', apply_filters( 'hotel_booking_admin_book_details', wphb_format_price( hb_booking_tax_total( $hb_booking->id ), wphb_get_currency_symbol( $hb_booking->currency ) ), $hb_booking ) ); ?>
+					<?php printf( '%s', apply_filters( 'hotel_booking_admin_book_details', hb_format_price( hb_booking_tax_total( $hb_booking->id ), hb_get_currency_symbol( $hb_booking->currency ) ), $hb_booking ) ); ?>
 				</td>
 			</tr>
 			<tr>
@@ -141,7 +141,7 @@ $rooms = hb_get_order_items( $post->ID );
 					<?php _e( 'Grand Total', 'wp-hotel-booking' ) ?>
 				</td>
 				<td class="grand_total">
-					<?php printf( '%s', wphb_format_price( hb_booking_total( $hb_booking->id ), wphb_get_currency_symbol( $hb_booking->currency ) ) ) ?>
+					<?php printf( '%s', hb_format_price( hb_booking_total( $hb_booking->id ), hb_get_currency_symbol( $hb_booking->currency ) ) ) ?>
 				</td>
 			</tr>
 		</tbody>

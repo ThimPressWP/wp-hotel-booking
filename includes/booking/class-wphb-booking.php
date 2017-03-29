@@ -265,7 +265,7 @@ class WPHB_Booking{
      * @return string
      */
     function get_booking_number(){
-        return wphb_format_order_number( $this->id );
+        return hb_format_order_number( $this->id );
     }
 
     /**
