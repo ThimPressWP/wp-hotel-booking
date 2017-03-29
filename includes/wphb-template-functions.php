@@ -4,8 +4,10 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-function hb_template_path() {
-	return apply_filters( 'hb_template_path', 'wp-hotel-booking' );
+if ( !function_exists( 'hb_template_path' ) ) {
+	function hb_template_path() {
+		return apply_filters( 'hb_template_path', 'wp-hotel-booking' );
+	}
 }
 
 /**
@@ -16,33 +18,36 @@ function hb_template_path() {
  *
  * @return  string
  */
-function hb_get_template_part( $slug, $name = '' ) {
-	$template = '';
+if ( !function_exists( 'hb_get_template_part' ) ) {
 
-	// Look in yourtheme/slug-name.php and yourtheme/courses-manage/slug-name.php
-	if ( $name ) {
-		$template = locate_template( array( "{$slug}-{$name}.php", hb_template_path() . "/{$slug}-{$name}.php" ) );
-	}
+	function hb_get_template_part( $slug, $name = '' ) {
+		$template = '';
 
-	// Get default slug-name.php
-	if ( !$template && $name && file_exists( WPHB_PLUGIN_PATH . "/templates/{$slug}-{$name}.php" ) ) {
-		$template = WPHB_PLUGIN_PATH . "/templates/{$slug}-{$name}.php";
-	}
+		// Look in yourtheme/slug-name.php and yourtheme/courses-manage/slug-name.php
+		if ( $name ) {
+			$template = locate_template( array( "{$slug}-{$name}.php", hb_template_path() . "/{$slug}-{$name}.php" ) );
+		}
 
-	// If template file doesn't exist, look in yourtheme/slug.php and yourtheme/courses-manage/slug.php
-	if ( !$template ) {
-		$template = locate_template( array( "{$slug}.php", hb_template_path() . "{$slug}.php" ) );
-	}
+		// Get default slug-name.php
+		if ( !$template && $name && file_exists( WPHB_PLUGIN_PATH . "/templates/{$slug}-{$name}.php" ) ) {
+			$template = WPHB_PLUGIN_PATH . "/templates/{$slug}-{$name}.php";
+		}
 
-	// Allow 3rd party plugin filter template file from their plugin
-	if ( $template ) {
-		$template = apply_filters( 'hb_get_template_part', $template, $slug, $name );
-	}
-	if ( $template && file_exists( $template ) ) {
-		load_template( $template, false );
-	}
+		// If template file doesn't exist, look in yourtheme/slug.php and yourtheme/courses-manage/slug.php
+		if ( !$template ) {
+			$template = locate_template( array( "{$slug}.php", hb_template_path() . "{$slug}.php" ) );
+		}
 
-	return $template;
+		// Allow 3rd party plugin filter template file from their plugin
+		if ( $template ) {
+			$template = apply_filters( 'hb_get_template_part', $template, $slug, $name );
+		}
+		if ( $template && file_exists( $template ) ) {
+			load_template( $template, false );
+		}
+
+		return $template;
+	}
 }
 
 /**
@@ -55,27 +60,30 @@ function hb_get_template_part( $slug, $name = '' ) {
  *
  * @return void
  */
-function hb_get_template( $template_name, $args = array(), $template_path = '', $default_path = '' ) {
-	if ( $args && is_array( $args ) ) {
-		extract( $args );
+if ( !function_exists( 'hb_get_template' ) ) {
+
+	function hb_get_template( $template_name, $args = array(), $template_path = '', $default_path = '' ) {
+		if ( $args && is_array( $args ) ) {
+			extract( $args );
+		}
+
+		$located = hb_locate_template( $template_name, $template_path, $default_path );
+
+		if ( !file_exists( $located ) ) {
+			_doing_it_wrong( __FUNCTION__, sprintf( '<code>%s</code> does not exist.', $located ), '2.1' );
+			return;
+		}
+		// Allow 3rd party plugin filter template file from their plugin
+		$located = apply_filters( 'hb_get_template', $located, $template_name, $args, $template_path, $default_path );
+
+		do_action( 'hb_before_template_part', $template_name, $template_path, $located, $args );
+
+		if ( $located && file_exists( $located ) ) {
+			include( $located );
+		}
+
+		do_action( 'hb_after_template_part', $template_name, $template_path, $located, $args );
 	}
-
-	$located = hb_locate_template( $template_name, $template_path, $default_path );
-
-	if ( !file_exists( $located ) ) {
-		_doing_it_wrong( __FUNCTION__, sprintf( '<code>%s</code> does not exist.', $located ), '2.1' );
-		return;
-	}
-	// Allow 3rd party plugin filter template file from their plugin
-	$located = apply_filters( 'hb_get_template', $located, $template_name, $args, $template_path, $default_path );
-
-	do_action( 'hb_before_template_part', $template_name, $template_path, $located, $args );
-
-	if ( $located && file_exists( $located ) ) {
-		include( $located );
-	}
-
-	do_action( 'hb_after_template_part', $template_name, $template_path, $located, $args );
 }
 
 /**
@@ -95,74 +103,88 @@ function hb_get_template( $template_name, $args = array(), $template_path = '', 
  *
  * @return string
  */
-function hb_locate_template( $template_name, $template_path = '', $default_path = '' ) {
+if ( !function_exists( 'hb_locate_template' ) ) {
 
-	if ( !$template_path ) {
-		$template_path = hb_template_path();
+	function hb_locate_template( $template_name, $template_path = '', $default_path = '' ) {
+
+		if ( !$template_path ) {
+			$template_path = hb_template_path();
+		}
+
+		if ( !$default_path ) {
+			$default_path = WPHB_PLUGIN_PATH . '/templates/';
+		}
+
+		$template = null;
+		// Look within passed path within the theme - this is priority
+		// if( hb_enable_overwrite_template() ) {
+		$template = locate_template(
+			array(
+				trailingslashit( $template_path ) . $template_name,
+				$template_name
+			)
+		);
+		// }
+		// Get default template
+		if ( !$template ) {
+			$template = $default_path . $template_name;
+		}
+
+		// Return what we found
+		return apply_filters( 'hb_locate_template', $template, $template_name, $template_path );
 	}
+}
 
-	if ( !$default_path ) {
-		$default_path = WPHB_PLUGIN_PATH . '/templates/';
+if ( !function_exists( 'hb_get_template_content' ) ) {
+
+	function hb_get_template_content( $template_name, $args = array(), $template_path = '', $default_path = '' ) {
+		ob_start();
+		hb_get_template( $template_name, $args, $template_path, $default_path );
+		return ob_get_clean();
 	}
+}
 
-	$template = null;
-	// Look within passed path within the theme - this is priority
-	// if( hb_enable_overwrite_template() ) {
-	$template = locate_template(
-		array(
-			trailingslashit( $template_path ) . $template_name,
-			$template_name
-		)
-	);
-	// }
-	// Get default template
-	if ( !$template ) {
-		$template = $default_path . $template_name;
+if ( !function_exists( 'hb_enqueue_lightbox_assets' ) ) {
+
+	function hb_enqueue_lightbox_assets() {
+		$settings          = WPHB_Settings::instance();
+		$lightbox_settings = $settings->get( 'lightbox' );
+		if ( !$lightbox_settings )
+			return;
+		// if( empty( $lightbox_settings['lightbox'] ) ) return;
+		do_action( 'hb_lightbox_assets_' . $lightbox_settings );
 	}
-
-	// Return what we found
-	return apply_filters( 'hb_locate_template', $template, $template_name, $template_path );
 }
 
-function hb_get_template_content( $template_name, $args = array(), $template_path = '', $default_path = '' ) {
-	ob_start();
-	hb_get_template( $template_name, $args, $template_path, $default_path );
-	return ob_get_clean();
+if ( !function_exists( 'hb_lightbox_assets_lightbox2' ) ) {
+
+	function hb_lightbox_assets_lightbox2() {
+		wp_enqueue_script( 'lightbox2', WP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/lightbox2/js/lightbox.min.js' ) );
+		wp_enqueue_style( 'lightbox2', WP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/lightbox2/css/lightbox.min.css' ) );
+		?>
+        <script type="text/javascript">
+			jQuery(function () {
+
+			});
+        </script>
+		<?php
+
+	}
 }
 
-function hb_enqueue_lightbox_assets() {
-	$settings          = WPHB_Settings::instance();
-	$lightbox_settings = $settings->get( 'lightbox' );
-	if ( !$lightbox_settings )
-		return;
-	// if( empty( $lightbox_settings['lightbox'] ) ) return;
-	do_action( 'hb_lightbox_assets_' . $lightbox_settings );
-}
+if ( !function_exists( 'hb_lightbox_assets_fancyBox' ) ) {
 
-function hb_lightbox_assets_lightbox2() {
-	wp_enqueue_script( 'lightbox2', WP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/lightbox2/js/lightbox.min.js' ) );
-	wp_enqueue_style( 'lightbox2', WP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/lightbox2/css/lightbox.min.css' ) );
-	?>
-    <script type="text/javascript">
-		jQuery(function () {
-
-		});
-    </script>
-	<?php
-
-}
-
-function hb_lightbox_assets_fancyBox() {
-	wp_enqueue_script( 'fancyBox', WP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/fancyBox/source/jquery.fancybox.js' ) );
-	wp_enqueue_style( 'fancyBox', WP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/fancyBox/source/jquery.fancybox.css' ) );
-	?>
-    <script type="text/javascript">
-		jQuery(function ($) {
-			$(".hb-room-gallery").fancybox();
-		});
-    </script>
-	<?php
-
+	function hb_lightbox_assets_fancyBox() {
+		wp_enqueue_script( 'fancyBox', WP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/fancyBox/source/jquery.fancybox.js' ) );
+		wp_enqueue_style( 'fancyBox', WP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/fancyBox/source/jquery.fancybox.css' ) );
+		?>
+        <script type="text/javascript">
+			jQuery(function ($) {
+				$(".hb-room-gallery").fancybox();
+			});
+        </script>
+		<?php
+	}
 }
 
 if ( !function_exists( 'hb_display_message' ) ) {
