@@ -183,7 +183,7 @@ class WP_Hotel_Booking {
 		// cart
 		$this->_include( 'includes/cart/hb-cart-functions.php' );
 		$this->_include( 'includes/cart/class-hb-cart.php' );
-		$this->_include( 'includes/gateways/class-hb-payment-gateway-base.php' );
+		$this->_include( 'includes/gateways/class-wphb-payment-gateway-base.php' );
 
 		$this->_include( 'includes/hb-webhooks.php' );
 	}

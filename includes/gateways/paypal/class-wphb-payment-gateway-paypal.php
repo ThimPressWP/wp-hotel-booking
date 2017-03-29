@@ -5,9 +5,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class HB_Payment_Gateway_Paypal
+ * Class WPHB_Payment_Gateway_Paypal
  */
-class HB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base{
+class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base{
     /**
      * @var null
      */
@@ -345,7 +345,7 @@ if( ! function_exists( 'hotel_booking_payment_paypal' ) )
         if( array_key_exists( 'paypal', $payments ) )
             return $payments;
 
-        $payments[ 'paypal' ] = new HB_Payment_Gateway_Paypal();
+        $payments[ 'paypal' ] = new WPHB_Payment_Gateway_Paypal();
         return $payments;
     }
 }
