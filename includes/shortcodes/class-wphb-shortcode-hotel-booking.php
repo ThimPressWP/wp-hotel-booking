@@ -17,17 +17,17 @@ class WPHB_Shortcode_Hotel_Booking extends WPHB_Shortcodes {
             WP_Hotel_Booking::instance()->_include( 'includes/class-wphb-room.php' );
         }
 
-        $start_date = wphb_get_request( 'hb_check_in_date' );
+        $start_date = hb_get_request( 'hb_check_in_date' );
         if ( $start_date ) {
             $start_date = date( 'm/d/Y', $start_date + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
         }
 
-        $end_date = wphb_get_request( 'hb_check_out_date' );
+        $end_date = hb_get_request( 'hb_check_out_date' );
         if ( $end_date ) {
             $end_date = date( 'm/d/Y', $end_date + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
         }
-        $adults = wphb_get_request( 'adults', 1 );
-        $max_child = wphb_get_request( 'max_child', 0 );
+        $adults = hb_get_request( 'adults', 1 );
+        $max_child = hb_get_request( 'max_child', 0 );
 
         $atts = wp_parse_args(
                 $atts, array(
@@ -39,7 +39,7 @@ class WPHB_Shortcode_Hotel_Booking extends WPHB_Shortcodes {
                 )
         );
 
-        $page = wphb_get_request( 'hotel-booking' );
+        $page = hb_get_request( 'hotel-booking' );
 
         $template = 'search/search.php';
         $template_args = array();

@@ -13,4 +13,4 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-wphb_get_template_part( 'archive', 'room' );
+hb_get_template_part( 'archive', 'room' );

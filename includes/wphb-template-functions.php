@@ -16,7 +16,7 @@ function wphb_template_path() {
  *
  * @return  string
  */
-function wphb_get_template_part( $slug, $name = '' ) {
+function hb_get_template_part( $slug, $name = '' ) {
 	$template = '';
 
 	// Look in yourtheme/slug-name.php and yourtheme/courses-manage/slug-name.php

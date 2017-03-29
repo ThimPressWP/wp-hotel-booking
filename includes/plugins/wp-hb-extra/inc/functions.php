@@ -184,7 +184,7 @@ if( ! function_exists( 'is_hb_checkout' ) )
 
     function is_hb_checkout()
     {
-        return ( is_page( wphb_get_page_id( 'checkout' ) ) || wphb_get_request( 'hotel-booking' ) === 'checkout' );
+        return ( is_page( wphb_get_page_id( 'checkout' ) ) || hb_get_request( 'hotel-booking' ) === 'checkout' );
     }
 }
 
@@ -194,6 +194,6 @@ if( ! function_exists( 'is_hb_cart' ) )
 
     function is_hb_cart()
     {
-        return ( is_page( wphb_get_page_id( 'cart' ) ) || wphb_get_request( 'hotel-booking' ) === 'cart' );
+        return ( is_page( wphb_get_page_id( 'cart' ) ) || hb_get_request( 'hotel-booking' ) === 'cart' );
     }
 }

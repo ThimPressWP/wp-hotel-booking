@@ -109,7 +109,7 @@ class WPHB_Post_Types {
     }
 
     function terms_orderby( $orderby, $args, $taxonomies ) {
-        if ( in_array( wphb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) ) {
+        if ( in_array( hb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) ) {
             $orderby = 'term_group';
         }
 
@@ -117,17 +117,17 @@ class WPHB_Post_Types {
     }
 
     function terms_args( $args, $taxonomies ) {
-        if ( in_array( wphb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) ) {
+        if ( in_array( hb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) ) {
             $args['order'] = 'ASC';
         }
         return $args;
     }
 
     function posts_fields( $fields ) {
-        if ( is_admin() && wphb_get_request( 'post_type' ) == 'hb_booking' ) {
-            $from = wphb_get_request( 'date-from-timestamp' );
-            $to = wphb_get_request( 'date-to-timestamp' );
-            $filter = wphb_get_request( 'filter-type' );
+        if ( is_admin() && hb_get_request( 'post_type' ) == 'hb_booking' ) {
+            $from = hb_get_request( 'date-from-timestamp' );
+            $to = hb_get_request( 'date-to-timestamp' );
+            $filter = hb_get_request( 'filter-type' );
             if ( $from && $to && $filter == 'booking-date' ) {
                 $fields .= ", DATE_FORMAT(`post_date`,'%Y%m%d') AS post_date_timestamp";
             }
@@ -153,10 +153,10 @@ class WPHB_Post_Types {
             ";
         }
 
-        if ( is_admin() && wphb_get_request( 'post_type' ) == 'hb_booking' ) {
-            $from = wphb_get_request( 'date-from-timestamp' );
-            $to = wphb_get_request( 'date-to-timestamp' );
-            $filter = wphb_get_request( 'filter-type' );
+        if ( is_admin() && hb_get_request( 'post_type' ) == 'hb_booking' ) {
+            $from = hb_get_request( 'date-from-timestamp' );
+            $to = hb_get_request( 'date-to-timestamp' );
+            $filter = hb_get_request( 'filter-type' );
             if ( $from && $to & $filter ) {
                 switch ( $filter ) {
                     case 'booking-date':
@@ -185,10 +185,10 @@ class WPHB_Post_Types {
      */
     function posts_where_paged( $where ) {
 
-        if ( is_admin() && wphb_get_request( 'post_type' ) == 'hb_booking' ) {
-            $from = wphb_get_request( 'date-from-timestamp' );
-            $to = wphb_get_request( 'date-to-timestamp' );
-            $filter = wphb_get_request( 'filter-type' );
+        if ( is_admin() && hb_get_request( 'post_type' ) == 'hb_booking' ) {
+            $from = hb_get_request( 'date-from-timestamp' );
+            $to = hb_get_request( 'date-to-timestamp' );
+            $filter = hb_get_request( 'filter-type' );
             if ( $from && $to & $filter ) {
                 $from = absint( $from );
                 $to = absint( $to );
@@ -214,13 +214,13 @@ class WPHB_Post_Types {
 
     // group by
     function posts_groupby( $groupby ) {
-        if ( is_admin() && wphb_get_request( 'post_type' ) == 'hb_booking' ) {
+        if ( is_admin() && hb_get_request( 'post_type' ) == 'hb_booking' ) {
             global $wpdb;
             $groupby .= " {$wpdb->posts}.ID ";
-            $filter = wphb_get_request( 'filter-type' );
+            $filter = hb_get_request( 'filter-type' );
             if ( $filter === 'booking-date' ) {
-                $from = date( 'Ymd', wphb_get_request( 'date-from-timestamp' ) );
-                $to = date( 'Ymd', wphb_get_request( 'date-to-timestamp' ) );
+                $from = date( 'Ymd', hb_get_request( 'date-from-timestamp' ) );
+                $to = date( 'Ymd', hb_get_request( 'date-to-timestamp' ) );
                 if ( $from == $to ) {
                     $groupby .= "
                         HAVING post_date_timestamp = {$from}
@@ -247,7 +247,7 @@ class WPHB_Post_Types {
      * Enqueue scripts
      */
     function enqueue_scripts() {
-        if ( in_array( wphb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) ) {
+        if ( in_array( hb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) ) {
             wp_enqueue_script( 'hb-edit-tags', WP_Hotel_Booking::instance()->plugin_url( 'assets/js/edit-tags.min.js' ), array( 'jquery', 'jquery-ui-sortable' ) );
         }
     }
@@ -323,7 +323,7 @@ class WPHB_Post_Types {
      */
     function update_taxonomy() {
 
-        if ( !empty( $_REQUEST['action'] ) && in_array( wphb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) ) {
+        if ( !empty( $_REQUEST['action'] ) && in_array( hb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) ) {
             $taxonomy = !empty( $_REQUEST['taxonomy'] ) ? sanitize_text_field( $_REQUEST['taxonomy'] ) : '';
             global $wpdb;
             if ( !empty( $_POST["{$taxonomy}_ordering"] ) ) {
@@ -400,7 +400,7 @@ class WPHB_Post_Types {
      * Fix menu parent for taxonomy menu item
      */
     function fix_menu_parent_file() {
-        if ( in_array( wphb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) )
+        if ( in_array( hb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) )
             $GLOBALS['parent_file'] = 'tp_hotel_booking';
     }
 

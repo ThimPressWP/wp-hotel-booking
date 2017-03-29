@@ -23,7 +23,7 @@ do_action( 'hotel_booking_before_main_content' );
 
 <?php while ( have_posts() ) : the_post(); ?>
 
-	<?php wphb_get_template_part( 'content', 'single-room' ); ?>
+	<?php hb_get_template_part( 'content', 'single-room' ); ?>
 
 <?php endwhile; // end of the loop. ?>
 

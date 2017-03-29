@@ -268,13 +268,13 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base{
 
         $paypal_args = array (
             'cmd'      => '_xclick',
-            'amount'   => round( WP_Hotel_Booking::instance()->cart->hb_get_cart_total( ! wphb_get_request( 'pay_all' ) ), 2 ),
+            'amount'   => round( WP_Hotel_Booking::instance()->cart->hb_get_cart_total( ! hb_get_request( 'pay_all' ) ), 2 ),
             'quantity' => '1',
         );
 
         $booking    = WPHB_Booking::instance( $booking_id );
         $advance_payment = wphb_get_advance_payment();
-        $pay_all = wphb_get_request( 'pay_all' );
+        $pay_all = hb_get_request( 'pay_all' );
 
         $nonce = wp_create_nonce( 'hb-paypal-nonce' );
         $paypal_email = $paypal['sandbox'] === 'on' ? $paypal['sandbox_email'] : $paypal['email'];

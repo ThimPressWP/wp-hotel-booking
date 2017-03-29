@@ -58,7 +58,7 @@ class WPHB_Ajax {
      * Fetch customer information with user email
      */
     static function fetch_customer_info() {
-        $email = wphb_get_request( 'email' );
+        $email = hb_get_request( 'email' );
         $args = array(
             'post_type' => 'hb_booking',
             'meta_key' => '_hb_customer_email',
@@ -94,7 +94,7 @@ class WPHB_Ajax {
      * Get all images for a room type
      */
     static function load_room_type_galley() {
-        $term_id = wphb_get_request( 'term_id' );
+        $term_id = hb_get_request( 'term_id' );
         $attachment_ids = get_option( 'hb_taxonomy_thumbnail_' . $term_id );
         $attachments = array();
         if ( $attachment_ids )
@@ -114,13 +114,13 @@ class WPHB_Ajax {
     static function parse_search_params() {
         check_ajax_referer( 'hb_search_nonce_action', 'nonce' );
         $params = array(
-            'hotel-booking' => wphb_get_request( 'hotel-booking' ),
-            'check_in_date' => wphb_get_request( 'check_in_date' ),
-            'check_out_date' => wphb_get_request( 'check_out_date' ),
-            'hb_check_in_date' => wphb_get_request( 'hb_check_in_date' ),
-            'hb_check_out_date' => wphb_get_request( 'hb_check_out_date' ),
-            'adults' => wphb_get_request( 'adults_capacity' ),
-            'max_child' => wphb_get_request( 'max_child' )
+            'hotel-booking' => hb_get_request( 'hotel-booking' ),
+            'check_in_date' => hb_get_request( 'check_in_date' ),
+            'check_out_date' => hb_get_request( 'check_out_date' ),
+            'hb_check_in_date' => hb_get_request( 'hb_check_in_date' ),
+            'hb_check_out_date' => hb_get_request( 'hb_check_out_date' ),
+            'adults' => hb_get_request( 'adults_capacity' ),
+            'max_child' => hb_get_request( 'max_child' )
         );
 
         $return = apply_filters( 'hotel_booking_parse_search_param', array(
@@ -133,7 +133,7 @@ class WPHB_Ajax {
 
     static function apply_coupon() {
         !session_id() && session_start();
-        $code = wphb_get_request( 'code' );
+        $code = hb_get_request( 'code' );
         ob_start();
         $today = strtotime( date( 'm/d/Y' ) );
         $coupon = hb_get_coupons_active( $today, $code );
@@ -178,12 +178,12 @@ class WPHB_Ajax {
 
         check_ajax_referer( 'hb_booking_nonce_action', 'nonce' );
 
-        $check_in = wphb_get_request( 'check_in_date' );
-        $check_out = wphb_get_request( 'check_out_date' );
-        $num_of_rooms = wphb_get_request( 'hb-num-of-rooms' );
+        $check_in = hb_get_request( 'check_in_date' );
+        $check_out = hb_get_request( 'check_out_date' );
+        $num_of_rooms = hb_get_request( 'hb-num-of-rooms' );
 
         $params = array(
-            'hotel-booking' => wphb_get_request( 'hotel-booking' ),
+            'hotel-booking' => hb_get_request( 'hotel-booking' ),
             'check_in_date' => $check_in,
             'check_out_date' => $check_out,
             'hb-num-of-rooms' => $num_of_rooms

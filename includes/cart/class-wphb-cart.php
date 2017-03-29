@@ -609,7 +609,7 @@ class WPHB_Cart {
         // booking info array param
         $booking_info = array_merge( $booking_info, array(
             '_hb_tax' => $this->cart_total_include_tax - $this->cart_total_exclude_tax,
-            '_hb_advance_payment' => $this->hb_get_cart_total( !wphb_get_request( 'pay_all' ) ),
+            '_hb_advance_payment' => $this->hb_get_cart_total( !hb_get_request( 'pay_all' ) ),
             '_hb_advance_payment_setting' => wphb_settings()->get( 'advance_payment', 50 ),
             '_hb_currency' => apply_filters( 'hotel_booking_payment_currency', hb_get_currency() ),
             // '_hb_customer_id'               => $customer_id,
@@ -618,17 +618,17 @@ class WPHB_Cart {
             '_hb_method_title' => $payment_method->title,
             '_hb_method_id' => $payment_method->method_id,
             // customer
-            '_hb_customer_title' => wphb_get_request( 'title' ),
-            '_hb_customer_first_name' => wphb_get_request( 'first_name' ),
-            '_hb_customer_last_name' => wphb_get_request( 'last_name' ),
-            '_hb_customer_address' => wphb_get_request( 'address' ),
-            '_hb_customer_city' => wphb_get_request( 'city' ),
-            '_hb_customer_state' => wphb_get_request( 'state' ),
-            '_hb_customer_postal_code' => wphb_get_request( 'postal_code' ),
-            '_hb_customer_country' => wphb_get_request( 'country' ),
-            '_hb_customer_phone' => wphb_get_request( 'phone' ),
-            '_hb_customer_email' => wphb_get_request( 'email' ),
-            '_hb_customer_fax' => wphb_get_request( 'fax' )
+            '_hb_customer_title' => hb_get_request( 'title' ),
+            '_hb_customer_first_name' => hb_get_request( 'first_name' ),
+            '_hb_customer_last_name' => hb_get_request( 'last_name' ),
+            '_hb_customer_address' => hb_get_request( 'address' ),
+            '_hb_customer_city' => hb_get_request( 'city' ),
+            '_hb_customer_state' => hb_get_request( 'state' ),
+            '_hb_customer_postal_code' => hb_get_request( 'postal_code' ),
+            '_hb_customer_country' => hb_get_request( 'country' ),
+            '_hb_customer_phone' => hb_get_request( 'phone' ),
+            '_hb_customer_email' => hb_get_request( 'email' ),
+            '_hb_customer_fax' => hb_get_request( 'fax' )
         ) );
 
         // set booking info

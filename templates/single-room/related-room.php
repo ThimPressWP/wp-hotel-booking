@@ -4,7 +4,7 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-$room    = HB_Room::instance( get_the_ID() );
+$room    = WPHB_Room::instance( get_the_ID() );
 $related = $room->get_related_rooms();
 ?>
 <?php if ( $related->posts ): ?>
@@ -20,7 +20,7 @@ $related = $room->get_related_rooms();
 
 		<?php while ( $related->have_posts() ) : $related->the_post(); ?>
 
-			<?php wphb_get_template_part( 'content', 'room' ); ?>
+			<?php hb_get_template_part( 'content', 'room' ); ?>
 
 		<?php endwhile; // end of the loop. ?>
 

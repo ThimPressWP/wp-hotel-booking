@@ -77,7 +77,7 @@ if ( !function_exists( 'hb_create_booking' ) ) {
 
 		$booking                     = WPHB_Booking::instance( $args['booking_id'] );
 		$booking->post->post_title   = sprintf( __( 'Booking ', 'wp-hotel-booking' ) );
-		$booking->post->post_content = wphb_get_request( 'addition_information' ) ? wphb_get_request( 'addition_information' ) : __( 'Empty Booking Notes', 'wp-hotel-booking' );
+		$booking->post->post_content = hb_get_request( 'addition_information' ) ? hb_get_request( 'addition_information' ) : __( 'Empty Booking Notes', 'wp-hotel-booking' );
 		$booking->post->post_status  = 'hb-' . apply_filters( 'hb_default_order_status', 'pending' );
 
 		if ( $args['status'] ) {

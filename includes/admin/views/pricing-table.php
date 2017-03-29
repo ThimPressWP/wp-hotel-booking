@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $week_names = hb_date_names();
 
-$room_id = intval( wphb_get_request( 'hb-room' ) );
+$room_id = intval( hb_get_request( 'hb-room' ) );
 
 $plans = hb_room_get_pricing_plans( $room_id );
 

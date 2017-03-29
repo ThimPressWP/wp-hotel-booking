@@ -276,7 +276,7 @@ class HB_Payment_Gateway_Authorize_Sim extends WPHB_Payment_Gateway_Base {
     protected function _get_authorize_basic_checkout_url( $booking_id ) {
         $nonce = wp_create_nonce( 'hb-order-pay-nonce' );
         return add_query_arg(
-                array( 'hb-order-pay' => $booking_id, 'hb-order-pay-nonce' => $nonce ), wphb_get_page_permalink( 'checkout' ) );
+                array( 'hb-order-pay' => $booking_id, 'hb-order-pay-nonce' => $nonce ), hb_get_page_permalink( 'checkout' ) );
     }
 
     /**

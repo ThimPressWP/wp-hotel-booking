@@ -33,7 +33,7 @@ $items    = isset( $atts['number'] ) ? (int) $atts['number'] : 4;
 
 		<?php while ( $query->have_posts() ) : $query->the_post(); ?>
 
-			<?php wphb_get_template_part( 'content', 'room' ); ?>
+			<?php hb_get_template_part( 'content', 'room' ); ?>
 
 		<?php endwhile; // end of the loop. ?>
 

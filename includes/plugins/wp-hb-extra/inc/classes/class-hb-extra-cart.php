@@ -330,10 +330,10 @@ class HB_Extra_Cart
 	function check_respondent( $respondent )
 	{
 		// remove_filter( 'hb_extra_cart_input', array( $this, 'check_respondent' ) );
-		if( is_page( wphb_get_page_id( 'checkout' ) ) || wphb_get_request( 'hotel-booking' ) === 'checkout' )
+		if( is_page( wphb_get_page_id( 'checkout' ) ) || hb_get_request( 'hotel-booking' ) === 'checkout' )
 			return false;
 
-		if( is_page( wphb_get_page_id( 'cart' ) ) || wphb_get_request( 'hotel-booking' ) === 'cart' )
+		if( is_page( wphb_get_page_id( 'cart' ) ) || hb_get_request( 'hotel-booking' ) === 'cart' )
 		{
 			if( $respondent === 'trip' )
 				return false;

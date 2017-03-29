@@ -57,7 +57,7 @@ class WPHB_Shortcode_Hotel_Booking_Rooms extends WPHB_Shortcodes {
 
             while ( $query->have_posts() ) : $query->the_post();
 
-                wphb_get_template_part( 'content', 'room' );
+                hb_get_template_part( 'content', 'room' );
 
             endwhile; // end of the loop.
 

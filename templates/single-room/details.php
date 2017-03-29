@@ -4,7 +4,7 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-$room = HB_Room::instance( get_the_ID() );
+$room = WPHB_Room::instance( get_the_ID() );
 ob_start();
 the_content();
 $content = ob_get_clean();

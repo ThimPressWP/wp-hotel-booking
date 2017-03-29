@@ -61,7 +61,7 @@ class WPHB_Checkout {
         // Resume the unpaid order if its pending
         if ( $booking_id && ( $booking = WPHB_Booking::instance( $booking_id ) ) && $booking->post->ID && $booking->has_status( array( 'pending', 'cancelled' ) ) ) {
             $booking_info['ID'] = $booking_id;
-            $booking_info['post_content'] = wphb_get_request( 'addition_information' );
+            $booking_info['post_content'] = hb_get_request( 'addition_information' );
             $booking->set_booking_info( $booking_info );
             // update booking info meta post
             $booking_id = $booking->update( $order_items );
@@ -90,7 +90,7 @@ class WPHB_Checkout {
         }
 
         // payment method
-        $payment_method = wphb_get_user_payment_method( wphb_get_request( 'hb-payment-method' ) );
+        $payment_method = wphb_get_user_payment_method( hb_get_request( 'hb-payment-method' ) );
 
         if ( !$payment_method ) {
             throw new Exception( __( 'The payment method is not available', 'wp-hotel-booking' ) );

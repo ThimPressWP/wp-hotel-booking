@@ -394,7 +394,7 @@ class WP_Hotel_Booking_Woocommerce {
 	}
 
 	private function _parse_request() {
-		$segments = parse_url( wphb_get_request( '_wp_http_referer' ) );
+		$segments = parse_url( hb_get_request( '_wp_http_referer' ) );
 		$request  = false;
 		if ( !empty( $segments['query'] ) ) {
 			parse_str( $segments['query'], $params );

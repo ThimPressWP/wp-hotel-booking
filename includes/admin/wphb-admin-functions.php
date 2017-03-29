@@ -383,11 +383,11 @@ if ( !function_exists( 'hb_booking_restrict_manage_posts' ) ) {
 		if ( 'hb_booking' == $type ) {
 			//change this to the list of values you want to show
 			//in 'label' => 'value' format
-			$from           = wphb_get_request( 'date-from' );
-			$from_timestamp = wphb_get_request( 'date-from-timestamp' );
-			$to             = wphb_get_request( 'date-to' );
-			$to_timestamp   = wphb_get_request( 'date-to-timestamp' );
-			$filter_type    = wphb_get_request( 'filter-type' );
+			$from           = hb_get_request( 'date-from' );
+			$from_timestamp = hb_get_request( 'date-from-timestamp' );
+			$to             = hb_get_request( 'date-to' );
+			$to_timestamp   = hb_get_request( 'date-to-timestamp' );
+			$filter_type    = hb_get_request( 'filter-type' );
 
 			$filter_types = apply_filters(
 				'hb_booking_filter_types',

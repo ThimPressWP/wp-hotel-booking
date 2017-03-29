@@ -68,8 +68,8 @@ $featured = $gallery ? array_shift( $gallery ) : false;
         </div>
 
 		<?php wp_nonce_field( 'hb_booking_nonce_action', 'nonce' ); ?>
-        <input type="hidden" name="check_in_date" value="<?php echo date( 'm/d/Y', wphb_get_request( 'hb_check_in_date' ) ); ?>" />
-        <input type="hidden" name="check_out_date" value="<?php echo date( 'm/d/Y', wphb_get_request( 'hb_check_out_date' ) ); ?>">
+        <input type="hidden" name="check_in_date" value="<?php echo date( 'm/d/Y', hb_get_request( 'hb_check_in_date' ) ); ?>" />
+        <input type="hidden" name="check_out_date" value="<?php echo date( 'm/d/Y', hb_get_request( 'hb_check_out_date' ) ); ?>">
         <input type="hidden" name="room-id" value="<?php echo esc_attr( $room->post->ID ); ?>">
         <input type="hidden" name="hotel-booking" value="cart">
         <input type="hidden" name="action" value="hotel_booking_ajax_add_to_cart" />

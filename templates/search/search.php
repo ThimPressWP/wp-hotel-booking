@@ -4,10 +4,10 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-$check_in_date  = wphb_get_request( 'check_in_date' );
-$check_out_date = wphb_get_request( 'check_out_date' );
-$adults         = wphb_get_request( 'adults', 0 );
-$max_child      = wphb_get_request( 'max_child', 0 );
+$check_in_date  = hb_get_request( 'check_in_date' );
+$check_out_date = hb_get_request( 'check_out_date' );
+$adults         = hb_get_request( 'adults', 0 );
+$max_child      = hb_get_request( 'max_child', 0 );
 $uniqid         = uniqid();
 
 ?>
@@ -45,11 +45,11 @@ $uniqid         = uniqid();
 						array(
 							'name'              => 'adults_capacity',
 							'min'               => 1,
-							'max'               => wphb_get_max_capacity_of_rooms(),
+							'max'               => hb_get_max_capacity_of_rooms(),
 							'show_option_none'  => __( 'Adults', 'wp-hotel-booking' ),
 							'selected'          => $adults,
 							'option_none_value' => 0,
-							'options'           => wphb_get_capacity_of_rooms()
+							'options'           => hb_get_capacity_of_rooms()
 						)
 					);
 					?>
