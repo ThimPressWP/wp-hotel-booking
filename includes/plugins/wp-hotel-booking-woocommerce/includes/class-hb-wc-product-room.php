@@ -13,7 +13,7 @@ class HB_WC_Product_Room extends WC_Product_Simple {
     }
 
     function get_price() {
-        $room = HB_Room::instance( $this->post, $this->data );
+        $room = WPHB_Room::instance( $this->post, $this->data );
         return $room->amount_singular_exclude_tax;
     }
 

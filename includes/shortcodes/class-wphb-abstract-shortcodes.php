@@ -7,7 +7,7 @@ if ( !defined( 'ABSPATH' ) ) {
 /**
  * Class HB_Shortcodes
  */
-abstract class HB_Shortcodes {
+abstract class WPHB_Shortcodes {
 
     // shortcode name
     protected $shortcode = null;

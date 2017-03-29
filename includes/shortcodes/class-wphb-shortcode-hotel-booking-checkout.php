@@ -4,7 +4,7 @@ if ( !defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-class HB_Shortcode_Hotel_Booking_Checkout extends HB_Shortcodes {
+class WPHB_Shortcode_Hotel_Booking_Checkout extends WPHB_Shortcodes {
 
     public $shortcode = 'hotel_booking_checkout';
 
@@ -53,4 +53,4 @@ class HB_Shortcode_Hotel_Booking_Checkout extends HB_Shortcodes {
 
 }
 
-new HB_Shortcode_Hotel_Booking_Checkout();
+new WPHB_Shortcode_Hotel_Booking_Checkout();

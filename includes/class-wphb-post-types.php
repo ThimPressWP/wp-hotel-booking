@@ -303,7 +303,7 @@ class WPHB_Post_Types {
                 echo '<a href="' . admin_url( 'admin.php?page=tp_hotel_booking_pricing&hb-room=' . $post->ID ) . '">' . __( 'View Price', 'wp-hotel-booking' ) . '</a>';
                 break;
             case 'room_average_rating':
-                $room = HB_Room::instance( $post->ID );
+                $room = WPHB_Room::instance( $post->ID );
                 $rating = $room->average_rating();
                 $html = array();
                 $html[] = '<div class="rating">';

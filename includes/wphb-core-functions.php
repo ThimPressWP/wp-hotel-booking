@@ -123,9 +123,9 @@ if ( !function_exists( 'hotel_booking_get_product_class' ) ) {
 
         $post_type = get_post_type( $product_id );
 
-        $product = 'HB_Product_' . implode( '_', array_map( 'ucfirst', explode( '_', $post_type ) ) );
+        $product = 'WPHB_Product_' . implode( '_', array_map( 'ucfirst', explode( '_', $post_type ) ) );
         if ( !class_exists( $product ) ) {
-            $product = 'HB_Room';
+            $product = 'WPHB_Room';
         }
 
         $product = apply_filters( 'hotel_booking_cart_product_class_name', $product, $product_id );

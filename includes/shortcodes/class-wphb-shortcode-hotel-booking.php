@@ -4,7 +4,7 @@ if ( !defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-class HB_Shortcode_Hotel_Booking extends HB_Shortcodes {
+class WPHB_Shortcode_Hotel_Booking extends WPHB_Shortcodes {
 
     public $shortcode = 'hotel_booking';
 
@@ -13,7 +13,7 @@ class HB_Shortcode_Hotel_Booking extends HB_Shortcodes {
     }
 
     function add_shortcode( $atts, $content = null ) {
-        if ( !class_exists( 'HB_Room' ) ) {
+        if ( !class_exists( 'WPHB_Room' ) ) {
             WP_Hotel_Booking::instance()->_include( 'includes/class-wphb-room.php' );
         }
 
@@ -93,4 +93,4 @@ class HB_Shortcode_Hotel_Booking extends HB_Shortcodes {
 
 }
 
-new HB_Shortcode_Hotel_Booking();
+new WPHB_Shortcode_Hotel_Booking();

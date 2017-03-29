@@ -63,7 +63,7 @@ class WPHB_Room extends WPHB_Product_Room_Base {
         if ( empty( $post->post_type ) || !in_array( $post->post_type, array( 'hb_room' ) ) )
             return;
 
-        return $GLOBALS['hb_room'] = HB_Room::instance( $post );
+        return $GLOBALS['hb_room'] = WPHB_Room::instance( $post );
     }
 
     /**

@@ -61,7 +61,7 @@ class WP_Hotel_Booking {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_action( 'wp_print_scripts', array( $this, 'global_js' ) );
-		add_action( 'template_redirect', 'hb_handle_purchase_request', 999 );
+		add_action( 'template_redirect', 'wphb_handle_purchase_request', 999 );
 		register_activation_hook( plugin_basename( __FILE__ ), array( $this, 'install' ) );
 		add_action( 'init', array( $this, 'init' ), 20 );
 

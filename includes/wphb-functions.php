@@ -753,7 +753,7 @@ if ( !function_exists( 'hb_day_name_short_js' ) ) {
 		return apply_filters( 'hotel_booking_day_name_short_js', hb_date_names() );
 	}
 }
-if ( !function_exists( 'hb_dropdown_titles' ) ) {
+if ( !function_exists( 'hb_day_name_min_js' ) ) {
 
 	function hb_day_name_min_js() {
 		return apply_filters( 'hotel_booking_day_name_min_js', array(
@@ -1145,7 +1145,7 @@ function wphb_search_rooms( $args = array() ) {
 
 	if ( $search = $wpdb->get_results( $query ) ) {
 		foreach ( $search as $k => $p ) {
-			$room                        = HB_Room::instance( $p, array(
+			$room                        = WPHB_Room::instance( $p, array(
 				'check_in_date'  => date( 'm/d/Y', $check_in_date_to_time ),
 				'check_out_date' => date( 'm/d/Y', $check_out_date_to_time ),
 				'quantity'       => 1

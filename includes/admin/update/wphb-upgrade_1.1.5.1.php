@@ -116,7 +116,7 @@ if ( $params ) {
                         hb_add_order_item_meta( $order_item_id, 'check_in_date', strtotime( $meta['check_in_date'] ) );
                         hb_add_order_item_meta( $order_item_id, 'check_out_date', strtotime( $meta['check_out_date'] ) );
 
-                        $room = HB_Room::instance( $id, array(
+                        $room = WPHB_Room::instance( $id, array(
                                 'check_in_date'     => $meta['check_in_date'],
                                 'check_out_date'    => $meta['check_out_date'],
                                 'quantity'          => $meta['quantity']

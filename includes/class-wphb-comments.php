@@ -79,7 +79,7 @@ class WPHB_Comments {
 
                     $postID = absint( $comment->comment_post_ID );
 
-                    $room = HB_Room::instance( $postID );
+                    $room = WPHB_Room::instance( $postID );
                     $averger_rating = $room->average_rating();
 
                     $old_rating = get_post_meta( $postID, 'arveger_rating', true );
