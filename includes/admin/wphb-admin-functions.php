@@ -272,7 +272,7 @@ add_filter( 'manage_hb_booking_posts_columns', 'hb_booking_table_head' );
  */
 if ( !function_exists( 'hb_manage_booking_column' ) ) {
 	function hb_manage_booking_column( $column_name, $post_id ) {
-		$booking = HB_Booking::instance( $post_id );
+		$booking = WPHB_Booking::instance( $post_id );
 		$echo    = array();
 		$status  = get_post_status( $post_id );
 		switch ( $column_name ) {
@@ -554,7 +554,7 @@ if ( !function_exists( 'hb_manage_booking_column' ) ) {
 
 		remove_action( 'save_post', array( 'WPHB_Admin_Metabox_Booking_Details', 'update' ) );
 
-		$book = HB_Booking::instance( $post_id );
+		$book = WPHB_Booking::instance( $post_id );
 		$book->update_status( $status );
 
 		add_action( 'save_post', array( 'WPHB_Admin_Metabox_Booking_Details', 'update' ) );

@@ -75,7 +75,7 @@ if ( !function_exists( 'hb_new_booking_email' ) ) {
 			return;
 		}
 		$settings = WPHB_Settings::instance();
-		$booking  = HB_Booking::instance( $booking_id );
+		$booking  = WPHB_Booking::instance( $booking_id );
 
 		$to                 = $settings->get( 'email_new_booking_recipients', get_option( 'admin_email' ) );
 		$subject            = $settings->get( 'email_new_booking_subject', '[{site_title}] New customer booking ({order_number}) - {order_date}' );
@@ -183,7 +183,7 @@ if ( !function_exists( 'hb_new_customer_booking_email' ) ) {
 			return;
 		}
 
-		$booking       = HB_Booking::instance( $booking_id );
+		$booking       = WPHB_Booking::instance( $booking_id );
 		$email_subject = wphb_settings()->get( 'email_general_subject', __( 'Reservation', 'wp-hotel-booking' ) );
 
 		$headers[] = 'Content-Type: text/html; charset=UTF-8';

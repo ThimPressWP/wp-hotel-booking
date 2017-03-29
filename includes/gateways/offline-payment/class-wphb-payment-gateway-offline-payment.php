@@ -47,7 +47,7 @@ class WPHB_Payment_Gateway_Offline_Payment extends WPHB_Payment_Gateway_Base{
      * @param $total_with_currency
      */
     function column_total_content( $booking_id, $total, $total_with_currency ){
-        $booking = HB_Booking::instance( $booking_id );
+        $booking = WPHB_Booking::instance( $booking_id );
         if( $booking->method === 'offline-payment' ) {
             _e( '<br />(<small>Pay on arrival</small>)', 'wp-hotel-booking' );
         }
@@ -79,7 +79,7 @@ class WPHB_Payment_Gateway_Offline_Payment extends WPHB_Payment_Gateway_Base{
      * @return array
      */
     function process_checkout( $booking_id = null ){
-        $booking = HB_Booking::instance( $booking_id );
+        $booking = WPHB_Booking::instance( $booking_id );
         if( $booking ){
             $booking->update_status( 'processing' );
         }

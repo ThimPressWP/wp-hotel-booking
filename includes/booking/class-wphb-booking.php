@@ -351,10 +351,10 @@ class WPHB_Booking{
     }
 
     /**
-     * Get an instance of HB_Booking by post ID or WP_Post object
+     * Get an instance of WPHB_Booking by post ID or WP_Post object
      *
      * @param $booking
-     * @return HB_Booking
+     * @return WPHB_Booking
      */
     static function instance( $booking ) {
         $post = $booking;

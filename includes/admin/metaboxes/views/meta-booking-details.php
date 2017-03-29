@@ -10,7 +10,7 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 global $post;
-$booking = HB_Booking::instance( $post->ID );
+$booking = WPHB_Booking::instance( $post->ID );
 ?>
 
 <style type="text/css">

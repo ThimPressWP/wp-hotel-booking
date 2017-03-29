@@ -13,7 +13,7 @@ if ( !defined( 'ABSPATH' ) ) {
 // get booking
 if ( !function_exists( 'hb_get_booking' ) ) {
 	function hb_get_booking( $book = null ) {
-		return HB_Booking::instance( $book );
+		return WPHB_Booking::instance( $book );
 	}
 }
 
@@ -23,8 +23,8 @@ if ( !function_exists( 'hb_get_booking' ) ) {
  * @param int
  * @param string
  */
-function wphb_update_booking_status( $booking_id, $status ) {
-	$booking = HB_Booking::instance( $booking_id );
+function hb_update_booking_status( $booking_id, $status ) {
+	$booking = WPHB_Booking::instance( $booking_id );
 	return $booking->update_status( $status );
 }
 
@@ -75,7 +75,7 @@ if ( !function_exists( 'hb_create_booking' ) ) {
 
 		WP_Hotel_Booking::instance()->_include( 'includes/class-wphb-room.php' );
 
-		$booking                     = HB_Booking::instance( $args['booking_id'] );
+		$booking                     = WPHB_Booking::instance( $args['booking_id'] );
 		$booking->post->post_title   = sprintf( __( 'Booking ', 'wp-hotel-booking' ) );
 		$booking->post->post_content = wphb_get_request( 'addition_information' ) ? wphb_get_request( 'addition_information' ) : __( 'Empty Booking Notes', 'wp-hotel-booking' );
 		$booking->post->post_status  = 'hb-' . apply_filters( 'hb_default_order_status', 'pending' );
@@ -312,7 +312,7 @@ if ( !function_exists( 'hb_booking_subtotal' ) ) {
 		if ( !$booking_id ) {
 			throw new Exception( __( 'Booking is not found.', 'wp-hotel-booking' ) );
 		}
-		$booking = HB_Booking::instance( $booking_id );
+		$booking = WPHB_Booking::instance( $booking_id );
 
 		return $booking->sub_total();
 	}
@@ -325,7 +325,7 @@ if ( !function_exists( 'hb_booking_total' ) ) {
 		if ( !$booking_id ) {
 			throw new Exception( __( 'Booking is not found.', 'wp-hotel-booking' ) );
 		}
-		$booking = HB_Booking::instance( $booking_id );
+		$booking = WPHB_Booking::instance( $booking_id );
 
 		return $booking->total();
 	}
@@ -337,7 +337,7 @@ if ( !function_exists( 'hb_booking_tax_total' ) ) {
 		if ( !$booking_id ) {
 			throw new Exception( __( 'Booking is not found.', 'wp-hotel-booking' ) );
 		}
-		$booking = HB_Booking::instance( $booking_id );
+		$booking = WPHB_Booking::instance( $booking_id );
 
 		return $booking->tax_total();
 	}

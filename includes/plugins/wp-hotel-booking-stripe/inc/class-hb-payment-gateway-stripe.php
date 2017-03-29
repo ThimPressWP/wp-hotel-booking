@@ -68,7 +68,7 @@ class HB_Payment_Gateway_Stripe extends WPHB_Payment_Gateway_Base{
     function process_checkout( $booking_id = null )
     {
         $cart = WPHB_Cart::instance();
-        $book = HB_Booking::instance( $booking_id );
+        $book = WPHB_Booking::instance( $booking_id );
 
         $cus_id = $this->add_customer( $booking_id );
 
@@ -114,7 +114,7 @@ class HB_Payment_Gateway_Stripe extends WPHB_Payment_Gateway_Base{
 
     public function add_customer( $booking_id = null, $customer = null ) {
 
-        $booking = HB_Booking::instance( $booking_id );
+        $booking = WPHB_Booking::instance( $booking_id );
 
         $user_id = $booking->user_id;
         $cus_id = null;

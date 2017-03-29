@@ -22,7 +22,7 @@ class HB_WC_Booking {
         if ( !$booking_id = get_post_meta( $id, 'hb_wc_booking_id', true ) )
             return;
 
-        $book = HB_Booking::instance( $booking_id );
+        $book = WPHB_Booking::instance( $booking_id );
 
         switch ( $new_status ) {
             case 'processing':

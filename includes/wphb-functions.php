@@ -1641,7 +1641,7 @@ function wphb_add_message( $message, $type = 'message' ) {
 
 function wphb_get_customer_fullname( $booking_id = null, $with_title = false ) {
 	if ( $booking_id ) {
-		$booking = HB_Booking::instance( $booking_id );
+		$booking = WPHB_Booking::instance( $booking_id );
 
 		$first_name = $last_name = '';
 		if ( $booking->customer_first_name ) {

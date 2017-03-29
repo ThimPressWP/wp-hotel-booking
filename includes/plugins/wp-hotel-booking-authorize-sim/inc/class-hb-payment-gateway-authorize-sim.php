@@ -128,7 +128,7 @@ class HB_Payment_Gateway_Authorize_Sim extends WPHB_Payment_Gateway_Base {
             return;
 
         $id = (int) $_POST['x_invoice_num'];
-        $book = HB_Booking::instance( $id );
+        $book = WPHB_Booking::instance( $id );
 
         if ( $code === 1 ) {
             if ( (float) $book->total === (float) $amout )
@@ -182,7 +182,7 @@ class HB_Payment_Gateway_Authorize_Sim extends WPHB_Payment_Gateway_Base {
             return;
 
         $book_id = absint( $_GET['hb-order-pay'] );
-        $book = HB_Booking::instance( $book_id );
+        $book = WPHB_Booking::instance( $book_id );
 
         // $customer = HB_Customer::instance( WP_Hotel_Booking::instance()->cart->customer_id );//$book->_customer->data;
         $time = time();

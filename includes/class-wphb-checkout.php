@@ -59,7 +59,7 @@ class WPHB_Checkout {
         $booking_id = WP_Hotel_Booking::instance()->cart->booking_id;
 
         // Resume the unpaid order if its pending
-        if ( $booking_id && ( $booking = HB_Booking::instance( $booking_id ) ) && $booking->post->ID && $booking->has_status( array( 'pending', 'cancelled' ) ) ) {
+        if ( $booking_id && ( $booking = WPHB_Booking::instance( $booking_id ) ) && $booking->post->ID && $booking->has_status( array( 'pending', 'cancelled' ) ) ) {
             $booking_info['ID'] = $booking_id;
             $booking_info['post_content'] = wphb_get_request( 'addition_information' );
             $booking->set_booking_info( $booking_info );
@@ -68,7 +68,7 @@ class WPHB_Checkout {
         } else {
             $booking_id = hb_create_booking( $booking_info, $order_items );
             // initialize Booking object
-            $booking = HB_Booking::instance( $booking_id );
+            $booking = WPHB_Booking::instance( $booking_id );
         }
 
         do_action( 'hb_new_booking', $booking_id );
@@ -104,7 +104,7 @@ class WPHB_Checkout {
                 $result = $this->payment_method->process_checkout( $booking_id );
             } else {
                 if ( empty( $booking ) ) {
-                    $booking = HB_Booking::instance( $booking_id );
+                    $booking = WPHB_Booking::instance( $booking_id );
                 }
                 // No payment was required for order
                 $booking->payment_complete();

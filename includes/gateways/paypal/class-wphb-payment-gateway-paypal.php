@@ -175,9 +175,9 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base{
             return false;
         }
 
-        if ( ! $booking = HB_Booking::instance( $booking_id ) ) {
+        if ( ! $booking = WPHB_Booking::instance( $booking_id ) ) {
             $booking_id = hb_get_booking_id_by_key( $booking_key );
-            $booking    = HB_Booking::instance( $booking_id );
+            $booking    = WPHB_Booking::instance( $booking_id );
         }
 
         if ( ! $booking || $booking->booking_key !== $booking_key ) {
@@ -190,7 +190,7 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base{
     /**
      * Handle a completed payment
      *
-     * @param HB_Booking
+     * @param WPHB_Booking
      * @param Paypal IPN params
      */
     protected function payment_status_completed( $booking, $request ) {
@@ -219,7 +219,7 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base{
     /**
      * Handle a pending payment
      *
-     * @param  HB_Booking
+     * @param  WPHB_Booking
      * @param Paypal IPN params
      */
     protected function payment_status_pending( $booking, $request ) {
@@ -227,7 +227,7 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base{
     }
 
     /**
-     * @param HB_Booking
+     * @param WPHB_Booking
      * @param string $txn_id
      * @param string $note - not use
      */
@@ -272,7 +272,7 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base{
             'quantity' => '1',
         );
 
-        $booking    = HB_Booking::instance( $booking_id );
+        $booking    = WPHB_Booking::instance( $booking_id );
         $advance_payment = wphb_get_advance_payment();
         $pay_all = wphb_get_request( 'pay_all' );
 
