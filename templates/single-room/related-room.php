@@ -4,7 +4,7 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-$room    = HB_Room::instance( get_the_ID() );
+$room    = WPHB_Room::instance( get_the_ID() );
 $related = $room->get_related_rooms();
 ?>
 <?php if ( $related->posts ): ?>

@@ -4,7 +4,7 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-$cart = TP_Hotel_Booking::instance()->cart;
+$cart = WP_Hotel_Booking::instance()->cart;
 global $hb_settings;
 
 do_action( 'hotel_booking_before_checkout_form' );
@@ -29,7 +29,7 @@ do_action( 'hotel_booking_before_checkout_form' );
 					<?php foreach ( $rooms as $cart_id => $room ): ?>
 						<?php
 						if ( ( $num_of_rooms = (int) $room->get_data( 'quantity' ) ) == 0 ) continue;
-						$cart_extra = TP_Hotel_Booking::instance()->cart->get_extra_packages( $cart_id );
+						$cart_extra = WP_Hotel_Booking::instance()->cart->get_extra_packages( $cart_id );
 						$sub_total  = $room->get_total( $room->check_in_date, $room->check_out_date, $num_of_rooms, false );
 						?>
                         <tr class="hb_checkout_item" data-cart-id="<?php echo esc_attr( $cart_id ); ?>">

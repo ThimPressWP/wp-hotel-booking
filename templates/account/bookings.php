@@ -10,7 +10,7 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-$user     = HB_User::get_current_user();
+$user     = WPHB_User::get_current_user();
 $bookings = $user->get_bookings();
 
 if ( !$bookings ) {

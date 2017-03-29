@@ -1,9 +1,9 @@
 <?php
 
-if ( !class_exists( 'HB_Settings' ) )
+if ( !class_exists( 'WPHB_Settings' ) )
     return;
 
-class HB_WC_Settings extends HB_Settings {
+class HB_WC_Settings extends WPHB_Settings {
 
     function __construct() {
         add_filter( 'hb_admin_settings_tabs', array( $this, 'register_settings' ), 101 );

@@ -3,7 +3,7 @@
 /**
  * Class HB_Payment_Gateway_Authorize_Sim
  */
-class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base {
+class HB_Payment_Gateway_Authorize_Sim extends WPHB_Payment_Gateway_Base {
 
     /**
      * production URL
@@ -56,7 +56,7 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base {
         $this->_slug = 'authorize';
         $this->_title = __( 'Authorize', 'wp-hotel-booking-authorize-sim' );
         $this->_description = __( 'Pay with Authorize.net', 'wp-hotel-booking-authorize-sim' );
-        $this->_settings = HB_Settings::instance()->get( 'authorize' );
+        $this->_settings = WPHB_Settings::instance()->get( 'authorize' );
 
         $this->_api_login_id = isset( $this->_settings['api_login_id'] ) ? $this->_settings['api_login_id'] : '8u33RVeK';
         $this->_transaction_key = isset( $this->_settings['transaction_key'] ) ? $this->_settings['transaction_key'] : '36zHT3e446Hha7X8';
@@ -128,7 +128,7 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base {
             return;
 
         $id = (int) $_POST['x_invoice_num'];
-        $book = HB_Booking::instance( $id );
+        $book = WPHB_Booking::instance( $id );
 
         if ( $code === 1 ) {
             if ( (float) $book->total === (float) $amout )
@@ -140,7 +140,7 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base {
         }
 
         $book->update_status( $status );
-		TP_Hotel_Booking::instance()->cart->empty_cart();
+		WP_Hotel_Booking::instance()->cart->empty_cart();
         wp_redirect( hb_get_checkout_url() );
         exit();
     }
@@ -182,9 +182,9 @@ class HB_Payment_Gateway_Authorize_Sim extends HB_Payment_Gateway_Base {
             return;
 
         $book_id = absint( $_GET['hb-order-pay'] );
-        $book = HB_Booking::instance( $book_id );
+        $book = WPHB_Booking::instance( $book_id );
 
-        // $customer = HB_Customer::instance( TP_Hotel_Booking::instance()->cart->customer_id );//$book->_customer->data;
+        // $customer = HB_Customer::instance( WP_Hotel_Booking::instance()->cart->customer_id );//$book->_customer->data;
         $time = time();
         $nonce = wp_create_nonce( 'replay-pay-nonce' );
 

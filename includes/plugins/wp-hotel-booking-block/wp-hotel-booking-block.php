@@ -12,7 +12,7 @@ define( 'TP_HB_BLOCK_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TP_HB_BLOCK_URI', plugin_dir_url( __FILE__ ) );
 define( 'TP_HB_BLOCK_VER', '1.7' );
 
-class TP_Hotel_Booking_Block {
+class WP_Hotel_Booking_Block {
 
     public $is_hotel_active = false;
 
@@ -47,7 +47,7 @@ class TP_Hotel_Booking_Block {
             include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
         }
 
-        if ( class_exists( 'TP_Hotel_Booking' ) && ( is_plugin_active( 'tp-hotel-booking/tp-hotel-booking.php' ) || is_plugin_active( 'wp-hotel-booking/wp-hotel-booking.php' ) ) ) {
+		if ( class_exists( 'TP_Hotel_Booking' ) && ( is_plugin_active( 'tp-hotel-booking/tp-hotel-booking.php' ) || is_plugin_active( 'wp-hotel-booking/wp-hotel-booking.php' ) && class_exists( 'WP_Hotel_Booking' ) ) ) {
             $this->is_hotel_active = true;
         }
 
@@ -78,4 +78,4 @@ class TP_Hotel_Booking_Block {
 
 }
 
-$hotel_block = new TP_Hotel_Booking_Block();
+$hotel_block = new WP_Hotel_Booking_Block();

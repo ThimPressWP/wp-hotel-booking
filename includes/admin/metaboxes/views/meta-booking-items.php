@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
-$hb_booking = HB_Booking::instance( $post->ID );
+$hb_booking = WPHB_Booking::instance( $post->ID );
 $rooms = hb_get_order_items( $post->ID );
 ?>
 <style type="text/css">

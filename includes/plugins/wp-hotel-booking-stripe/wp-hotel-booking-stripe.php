@@ -12,7 +12,7 @@ define( 'TP_HB_STRIPE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TP_HB_STRIPE_URI', plugins_url( '', __FILE__ ) );
 define( 'TP_HB_STRIPE_VER', '1.7' );
 
-class TP_Hotel_Booking_Payment_Stripe {
+class WP_Hotel_Booking_Payment_Stripe {
 
     public $is_hotel_active = false;
     public $slug = 'stripe';
@@ -32,7 +32,7 @@ class TP_Hotel_Booking_Payment_Stripe {
             include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
         }
 
-        if ( class_exists( 'TP_Hotel_Booking' ) && ( is_plugin_active( 'tp-hotel-booking/tp-hotel-booking.php' ) || is_plugin_active( 'wp-hotel-booking/wp-hotel-booking.php' ) ) ) {
+		if ( class_exists( 'TP_Hotel_Booking' ) && ( is_plugin_active( 'tp-hotel-booking/tp-hotel-booking.php' ) || is_plugin_active( 'wp-hotel-booking/wp-hotel-booking.php' ) && class_exists( 'WP_Hotel_Booking' ) ) ) {
             $this->is_hotel_active = true;
         }
 
@@ -91,7 +91,7 @@ class TP_Hotel_Booking_Payment_Stripe {
         wp_register_script( 'tp-hotel-booking-stripe-js', 'https://checkout.stripe.com/checkout.js', array() );
         wp_register_script( 'tp-hotel-booking-stripe-checkout-js', TP_HB_STRIPE_URI . '/assets/js/checkout.js', array() );
 
-        $setting = HB_Settings::instance()->get( 'stripe' );
+        $setting = WPHB_Settings::instance()->get( 'stripe' );
 
         if ( !empty( $setting['enable'] ) && $setting['enable'] == 'on' ) {
             // stripe
@@ -102,4 +102,4 @@ class TP_Hotel_Booking_Payment_Stripe {
 
 }
 
-new TP_Hotel_Booking_Payment_Stripe();
+new WP_Hotel_Booking_Payment_Stripe();

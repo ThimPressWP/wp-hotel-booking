@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-$settings = HB_Settings::instance();
+$settings = WPHB_Settings::instance();
 $paypal = $settings->get('paypal');
 $paypal = wp_parse_args(
     $paypal,
