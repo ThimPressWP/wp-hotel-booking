@@ -1648,7 +1648,7 @@ function wphb_get_customer_fullname( $booking_id = null, $with_title = false ) {
 			$first_name = $booking->customer_first_name;
 			$last_name  = $booking->customer_last_name;
 		} else if ( $booking->user_id ) {
-			$user       = HB_User::get_user( $booking->user_id );
+			$user       = WPHB_User::get_user( $booking->user_id );
 			$first_name = $user->first_name;
 			$last_name  = $user->last_name;
 		}

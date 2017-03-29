@@ -14,7 +14,7 @@ if ( !defined( 'ABSPATH' ) ) {
 if ( !function_exists( 'hb_get_user' ) ) {
 
     function hb_get_user( $user = null ) {
-        return HB_User::get_user( $user );
+        return WPHB_User::get_user( $user );
     }
 
 }
@@ -26,7 +26,7 @@ if ( !function_exists( 'hb_get_current_user' ) ) {
         global $hb_curent_user;
 
         if ( !$hb_curent_user ) {
-            $hb_curent_user = HB_User::get_current_user();
+            $hb_curent_user = WPHB_User::get_current_user();
         }
         return $hb_curent_user;
     }

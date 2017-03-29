@@ -27,7 +27,7 @@ class HB_Shortcode_Hotel_Booking_Checkout extends HB_Shortcodes {
         $customer->fax = '';
 
         if ( is_user_logged_in() ) {
-            $user = HB_User::get_current_user();
+            $user = WPHB_User::get_current_user();
 
             $customer->title = $user->title;
             $customer->first_name = $user->first_name;

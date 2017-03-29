@@ -89,7 +89,7 @@ $booking = HB_Booking::instance( $post->ID );
                     <br />
                     <small><?php printf( '%s', $booking->customer_country ) ?></small>
                     <br />
-                    <?php $customer_email = $booking->user_id ? HB_User::get_user( $booking->user_id )->user_email : $booking->customer_email; ?>
+                    <?php $customer_email = $booking->user_id ? WPHB_User::get_user( $booking->user_id )->user_email : $booking->customer_email; ?>
                     <strong><?php _e( 'Email', 'wp-hotel-booking' ) ?></strong>
                     <br />
                     <a href="mailto:<?php echo esc_attr( $customer_email ) ?>"><?php printf( '%s', $customer_email ) ?></a>
