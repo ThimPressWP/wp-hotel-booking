@@ -174,9 +174,9 @@ class WP_Hotel_Booking {
 		$this->_include( 'includes/room/class-wphb-room.php' );
 		// // addon
 		if ( apply_filters( 'hotel_booking_enable_currency_addon', true ) ) {
-			$this->_include( 'includes/plugins/wp-hb-currencies/wp-hb-currencies.php' );
+			$this->_include( 'includes/plugins/wp-hotel-booking-currencies/wp-hotel-booking-currencies.php' );
 		}
-		$this->_include( 'includes/plugins/wp-hb-extra/wp-hb-extra.php' );
+		$this->_include( 'includes/plugins/wp-hotel-booking-extra/wp-hotel-booking-extra.php' );
 		// // end addon
 
 		$this->_include( 'includes/class-wphb-sessions.php' );

@@ -10,7 +10,7 @@ if ( !defined( 'TP_HB_EXTRA' ) )
 	define( 'TP_HB_EXTRA', dirname( __FILE__ ) );
 
 if ( !defined( 'TP_HB_EXTRA_URI' ) )
-	define( 'TP_HB_EXTRA_URI', HB_PLUGIN_URL . '/includes/plugins/wp-hb-extra' );
+	define( 'TP_HB_EXTRA_URI', HB_PLUGIN_URL . '/includes/plugins/wp-hotel-booking-extra' );
 
 if ( !defined( 'TP_HB_EXTRA_INC' ) )
 	define( 'TP_HB_EXTRA_INC', TP_HB_EXTRA . '/inc' );
