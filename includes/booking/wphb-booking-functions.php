@@ -73,7 +73,7 @@ if ( !function_exists( 'hb_create_booking' ) ) {
 			'parent'        => 0
 		);
 
-		WP_Hotel_Booking::instance()->_include( 'includes/class-hb-room.php' );
+		WP_Hotel_Booking::instance()->_include( 'includes/class-wphb-room.php' );
 
 		$booking                     = HB_Booking::instance( $args['booking_id'] );
 		$booking->post->post_title   = sprintf( __( 'Booking ', 'wp-hotel-booking' ) );

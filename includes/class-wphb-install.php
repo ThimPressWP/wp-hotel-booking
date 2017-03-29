@@ -22,7 +22,7 @@ class WPHB_Install {
 		}
 
 		self::$upgrade = apply_filters( 'hotel_booking_upgrade_file_vesion', array(
-				'1.1.5.1' => 'admin/update/hotel_booking-upgrade_1.1.5.1.php'
+				'1.1.5.1' => 'admin/update/wphb-upgrade_1.1.5.1.php'
 			)
 		);
 
@@ -161,7 +161,7 @@ class WPHB_Install {
 	// create terms default for system
 	static function create_terms() {
 		if ( !class_exists( 'WPHB_Post_Types' ) ) {
-			WP_Hotel_Booking::instance()->_include( 'includes/class-hb-post-types.php' );
+			WP_Hotel_Booking::instance()->_include( 'includes/class-wphb-post-types.php' );
 		}
 
 		// register taxonomies
