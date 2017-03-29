@@ -1787,8 +1787,10 @@ if ( !function_exists( 'hb_render_label_shortcode' ) ) {
  *
  * @return string
  */
-function hb_date_format() {
-	return apply_filters( 'hb_date_format', 'd M Y' );
+if ( !function_exists( 'hb_date_format' ) ) {
+	function hb_date_format() {
+		return apply_filters( 'hb_date_format', 'd M Y' );
+	}
 }
 
 if ( !function_exists( 'is_room' ) ) {

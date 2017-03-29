@@ -23,9 +23,11 @@ if ( !function_exists( 'hb_get_booking' ) ) {
  * @param int
  * @param string
  */
-function hb_update_booking_status( $booking_id, $status ) {
-	$booking = WPHB_Booking::instance( $booking_id );
-	return $booking->update_status( $status );
+if ( !function_exists( 'hb_update_booking_status' ) ) {
+	function hb_update_booking_status( $booking_id, $status ) {
+		$booking = WPHB_Booking::instance( $booking_id );
+		return $booking->update_status( $status );
+	}
 }
 
 /**
