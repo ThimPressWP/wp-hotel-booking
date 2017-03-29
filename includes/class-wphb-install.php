@@ -27,8 +27,23 @@ class WPHB_Install {
 		);
 
 		$active_plugins = get_option( 'active_plugins', true );
-		if ( ( $key = array_search( 'tp-hotel-booking/tp-hotel-booking.php', $active_plugins ) ) !== false ) {
-			unset( $active_plugins[$key] );
+
+		$tp_plugins = array(
+			'tp-hotel-booking/tp-hotel-booking.php',
+			'tp-hotel-booking-authorize-sim/tp-hotel-booking-authorize-sim.php',
+			'tp-hotel-booking-block/tp-hotel-booking-block.php',
+			'tp-hotel-booking-coupon', 'tp-hotel-booking-coupon.php',
+			'tp-hotel-booking-report/tp-hotel-booking-report.php',
+			'tp-hotel-booking-room/tp-hotel-booking-room.php',
+			'tp-hotel-booking-stripe/tp-hotel-booking-stripe.php',
+			'tp-hotel-booking-woocommerce/tp-hotel-booking-woocommerce.php',
+			'tp-hotel-booking-wpml-support/tp-hotel-booking-wpml-support.php'
+		);
+
+		foreach ( $tp_plugins as $plugin ) {
+			if ( ( $key = array_search( $plugin, $active_plugins ) ) !== false ) {
+				unset( $active_plugins[$key] );
+			}
 		}
 		update_option( 'active_plugins', $active_plugins );
 
@@ -50,6 +65,10 @@ class WPHB_Install {
 		} else {
 			self::do_install();
 		}
+	}
+
+	static function uninstall(){
+		delete_option('wphb_notice_remove_hotel_booking');
 	}
 
 	static function do_install() {
@@ -152,7 +171,7 @@ class WPHB_Install {
 
 		if ( $pages && function_exists( 'hb_create_page ' ) ) {
 			foreach ( $pages as $key => $page ) {
-				$pageId = hb_create_page ( esc_sql( $page['name'] ), 'hotel_booking_' . $key . '_page_id', $page['title'], $page['content'], !empty( $page['parent'] ) ? hb_get_page_id( $page['parent'] ) : '' );
+				$pageId = hb_create_page( esc_sql( $page['name'] ), 'hotel_booking_' . $key . '_page_id', $page['title'], $page['content'], !empty( $page['parent'] ) ? hb_get_page_id( $page['parent'] ) : '' );
 				hb_settings()->set( $key . '_page_id', $pageId );
 			}
 		}

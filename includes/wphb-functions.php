@@ -1069,7 +1069,7 @@ if ( !function_exists( 'hb_get_currency_symbol' ) ) {
 	}
 }
 
-if ( !function_exists( 'hb_get_currency_symbol' ) ) {
+if ( !function_exists( 'hb_format_price' ) ) {
 	function hb_format_price( $price, $with_currency = true ) {
 		$settings                  = WPHB_Settings::instance();
 		$position                  = $settings->get( 'price_currency_position' );
