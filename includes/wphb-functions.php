@@ -346,7 +346,7 @@ if ( !function_exists( 'hb_dropdown_child_per_room' ) ) {
 		);
 		$max_child = hb_get_max_child_of_rooms();
 		$output    = '<select name="' . $args['name'] . '">';
-		$output .= '<option value="0">' . __( 'Select', 'wp-hotel-booking' ) . '</option>';
+		$output    .= '<option value="0">' . __( 'Select', 'wp-hotel-booking' ) . '</option>';
 		if ( $max_child > 0 ) {
 			for ( $i = 1; $i <= $max_child; $i ++ ) {
 				$output .= sprintf( '<option value="%1$d"%2$s>%1$d</option>', $i, $args['selected'] == $i ? ' selected="selected"' : '' );
@@ -462,12 +462,11 @@ if ( !function_exists( 'hb_payment_currencies' ) ) {
  * @return bool
  */
 if ( !function_exists( 'hb_enable_overwrite_template' ) ) {
-	if ( !function_exists( 'hb_enable_overwrite_template' ) ) {
-		function hb_enable_overwrite_template() {
-			return WPHB_Settings::instance()->get( 'overwrite_templates' ) == 'on';
-		}
+	function hb_enable_overwrite_template() {
+		return WPHB_Settings::instance()->get( 'overwrite_templates' ) == 'on';
 	}
 }
+
 
 /**
  * Get a variable from request
