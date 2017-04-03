@@ -47,7 +47,7 @@ class TP_Hotel_Booking_Room {
             // load text domain
             $this->load_textdomain();
             
-            $this->booking = TP_Hotel_Booking_Room_Extenstion::instance();
+            $this->booking = WP_Hotel_Booking_Room_Extenstion::instance();
         }
     }
 
