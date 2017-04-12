@@ -385,9 +385,9 @@ class WP_Hotel_Booking_Woocommerce {
 
 	// woo product class process
 	function product_class( $classname, $product_type, $post_type, $product_id ) {
-		if ( 'hb_room' == $post_type ) {
+		if ( 'hb_room' == get_post_type( $product_id ) ) {
 			$classname = 'HB_WC_Product_Room';
-		} else if ( 'hb_extra_room' == $post_type ) {
+		} else if ( 'hb_extra_room' == get_post_type( $product_id ) ) {
 			$classname = 'HB_WC_Product_Package';
 		}
 		return $classname;
