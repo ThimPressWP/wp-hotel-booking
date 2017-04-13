@@ -5,7 +5,7 @@
   Plugin URI: http://thimpress.com/
   Description: Support paying for a booking with the payment system provided by WooCommerce
   Author: ThimPress
-  Version: 1.7
+  Version: 1.7.1
   Author URI: http://thimpress.com
   Requires at least: 3.5
   Tested up to: 4.3
