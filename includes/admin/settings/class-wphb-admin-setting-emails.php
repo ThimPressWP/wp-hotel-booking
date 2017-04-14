@@ -98,7 +98,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 							'id'		=> 'tp_hotel_booking_email_new_booking_subject',
 							'title'		=> __( 'Subject', 'wp-hotel-booking' ),
 							'desc'		=> sprintf( __( 'Enter recipients (comma separated) for this email. Defaults to %s.', 'wp-hotel-booking' ), get_option( 'admin_email' ) ),
-							'default'	=> '[{site_title}] New customer booking ({order_number}) - {order_date}',
+							'default'	=> '[{site_title}] New customer booking ({booking_number}) - {booking_date}',
 							'placeholder'	=> '[{site_title}] New customer booking ({booking_number}) - {booking_date}'
 						),
 
