@@ -165,7 +165,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 			case 'dropdown_room':
 				$max_rooms = get_post_meta( $this->post->ID, '_hb_num_of_rooms', true );
 				$return    = '<select name="hb-num-of-rooms[' . $this->post->ID . ']">';
-				$return    .= '<option value="0">' . __( 'Select', 'wp-hotel-booking' ) . '</option>';
+				$return .= '<option value="0">' . __( 'Select', 'wp-hotel-booking' ) . '</option>';
 				for ( $i = 1; $i <= $max_rooms; $i ++ ) {
 					$return .= sprintf( '<option value="%1$d">%1$d</option>', $i );
 				}
@@ -297,7 +297,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 			}
 			$details[$date]['count'] ++;
 			$details[$date]['price'] += $this->get_total( $c_date, 1, 1, $tax );
-			$room_details_total      += $details[$date]['price'];
+			$room_details_total += $details[$date]['price'];
 		}
 		$this->_room_details_total = $room_details_total;
 		return apply_filters( 'hotel_booking_get_booking_room_details', $details, $this->post->ID );
@@ -386,7 +386,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 		$from = mktime( 0, 0, 0, date( 'm', $from_time ), date( 'd', $from_time ), date( 'Y', $from_time ) );
 		for ( $i = 0; $i < $nights; $i ++ ) {
 			$total_per_night = $this->get_price( $from + $i * DAY_IN_SECONDS, false );
-			$total           += $total_per_night * $num_of_rooms;
+			$total += $total_per_night * $num_of_rooms;
 		}
 
 		$total    = apply_filters( 'hotel_booking_room_total_price_excl_tax', $total, $this );
@@ -472,7 +472,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 	 *
 	 * @return mixed
 	 */
-	function get_review_count() {
+	function get_review_count( $content = 'view' ) {
 		global $wpdb;
 		$transient_name = rand() . 'hb_review_count_' . $this->post->ID;
 		if ( false === ( $count = get_transient( $transient_name ) ) ) {
@@ -628,12 +628,15 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 		return apply_filters( 'hotel_booking_room_amount_singular', $amount, $this );
 	}
 
-	function is_taxable() {
+	function is_taxable( $content = 'view' ) {
 		return true;
 	}
 
-	function get_tax_class() {
+	function get_tax_class( $content = 'view' ) {
 		return '';
 	}
 
+	public function is_in_stock(){
+
+	}
 }

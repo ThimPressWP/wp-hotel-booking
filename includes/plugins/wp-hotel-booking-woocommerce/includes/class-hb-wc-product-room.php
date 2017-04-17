@@ -15,7 +15,7 @@ if ( $woocommerce && version_compare( $woocommerce->version, '3.0.0', '<' ) ) {
 
 	class HB_WC_Product_Room extends WC_Product_Simple {
 
-		public $data = null;
+		//public $data = null;
 		public $total;
 
 		/*
@@ -40,7 +40,9 @@ if ( $woocommerce && version_compare( $woocommerce->version, '3.0.0', '<' ) ) {
 		}
 
 		function get_price( $context = 'view' ) {
-			$room = WPHB_Room::instance( $this->post, $this->data );
+			//$room = WPHB_Room::instance( $this->post, $this->data );
+			$room = WPHB_Room::instance( $this->get_id(), $this->get_data() );
+
 			return $room->amount_singular_exclude_tax;
 		}
 
@@ -78,6 +80,29 @@ if ( $woocommerce && version_compare( $woocommerce->version, '3.0.0', '<' ) ) {
 			return get_the_title( $this->get_id() );
 		}
 
+		public function is_in_stock() {
+			return true;
+		}
+
+		public function set_check_in_date( $value ) {
+			$this->data['check_in_date'] = $value;
+		}
+
+		public function set_check_out_date( $value ) {
+			$this->data['check_out_date'] = $value;
+		}
+
+		public function set_parent_id( $value ) {
+			$this->data['parent_id'] = $value;
+		}
+
+		public function set_product_id( $value ) {
+			$this->data['product_id'] = $value;
+		}
+
+		public function set_woo_cart_id( $value ) {
+			$this->data['woo_cart_id'] = $value;
+		}
 	}
 
 }

@@ -124,7 +124,6 @@ class WP_Hotel_Booking_Woocommerce {
 	 */
 	public function hotel_add_to_cart( $cart_item_id, $params ) {
 		// remove_action( 'hotel_booking_added_cart', array( $this, 'hotel_add_to_cart' ), 10, 2 );
-
 		global $woocommerce;
 
 		if ( !$woocommerce || !$woocommerce->cart ) return '';
@@ -307,7 +306,7 @@ class WP_Hotel_Booking_Woocommerce {
 	}
 
 	function get_cart_item_from_session( $session_data, $values, $key ) {
-		$session_data['data']->data = $values;
+		$session_data['data']->set_props( $values );
 		return $session_data;
 	}
 
@@ -408,15 +407,20 @@ class WP_Hotel_Booking_Woocommerce {
 
 	// add product class param
 	function add_cart_item( $cart_item, $cart_id ) {
-		if ( in_array( $cart_item['data']->post->post_type, array( 'hb_room', 'hb_extra_room' ) ) ) {
-			$cart_item['data']->data = array(
-				'product_id'     => $cart_item['product_id'],
-				'check_in_date'  => $cart_item['check_in_date'],
-				'check_out_date' => $cart_item['check_out_date'],
-				'woo_cart_id'    => $cart_id
+		//print_r($cart_item['data']->get_id());die();
+		$post_type = get_post_type( $cart_item['data']->get_id() );
+
+		if ( in_array( $post_type, array( 'hb_room', 'hb_extra_room' ) ) ) {
+			$cart_item['data']->set_props(
+				array(
+					'product_id'     => $cart_item['product_id'],
+					'check_in_date'  => $cart_item['check_in_date'],
+					'check_out_date' => $cart_item['check_out_date'],
+					'woo_cart_id'    => $cart_id
+				)
 			);
-			if ( $cart_item['data']->post->post_type === 'hb_extra_room' ) {
-				$cart_item['data']->data['parent_id'] = $cart_item['parent_id'];
+			if ( $post_type === 'hb_extra_room' ) {
+				$cart_item['data']->set_parent_id( $cart_item['parent_id'] );
 			}
 		}
 
