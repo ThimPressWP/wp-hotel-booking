@@ -563,12 +563,18 @@ class WP_Hotel_Booking_Woocommerce {
 	function room_price_tax( $tax_price, $room ) {
 		remove_filter( 'hotel_booking_room_total_price_incl_tax', array( $this, 'room_price_tax' ), 10, 2 );
 		// woo get price
-		$product = new WC_Product( $room->post->ID );
+		$product = ( $room );
 
 		add_filter( 'hotel_booking_room_total_price_incl_tax', array( $this, 'room_price_tax' ), 10, 2 );
 
-		$price_incl_tax = $product->get_price_including_tax( $room->get_data( 'quantity' ), $room->amount_singular_exclude_tax );
-		$price_excl_tax = $product->get_price_excluding_tax( $room->get_data( 'quantity' ), $room->amount_singular_exclude_tax );
+		if ( !function_exists( 'wc_get_price_including_tax' ) ) {
+			$price_incl_tax = $product->wc_get_price_including_tax( $room->get_data( 'quantity' ), $room->amount_singular_exclude_tax );
+			$price_excl_tax = $product->wc_get_price_including_tax( $room->get_data( 'quantity' ), $room->amount_singular_exclude_tax );
+		} else {
+			$price_incl_tax = wc_get_price_including_tax( $product, array( 'qty' => $room->get_data( 'quantity' ), 'price' => $room->amount_singular_exclude_tax ) );
+			$price_excl_tax = wc_get_price_including_tax( $product, array( 'qty' => $room->get_data( 'quantity' ), 'price' => $room->amount_singular_exclude_tax ) );
+		}
+
 
 		return $price_incl_tax - $price_excl_tax;
 	}
@@ -583,7 +589,7 @@ class WP_Hotel_Booking_Woocommerce {
 	 * @return [type]            [description]
 	 */
 	function packages_regular_price_tax( $tax_price, $price, $package ) {
-		$product = new WC_Product( $package->ID );
+		$product = wc_get_product( $package->ID );
 		$price   = $package->amount_singular_exclude_tax();
 		// $price = $product->get_price();
 		$price_incl_tax = $product->get_price_including_tax( 1, $price );
@@ -614,7 +620,7 @@ class WP_Hotel_Booking_Woocommerce {
 		if ( wc_tax_enabled() && get_option( 'woocommerce_tax_display_cart' ) === 'incl' ) {
 			// woo get price
 			if ( get_post_type( $cart_item->product_id ) === 'hb_room' ) {
-				$woo_product = new WC_Product( $cart_item->product_id );
+				$woo_product = wc_get_product( $cart_item->product_id );
 				$price       = $product->get_total( $cart_item->check_in_date, $product->check_out_date, $cart_item->quantity, false, false );
 
 				$amount = $woo_product->get_price_including_tax( $price, $product->quantity );
