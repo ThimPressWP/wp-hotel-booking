@@ -572,11 +572,13 @@ class WP_Hotel_Booking_Woocommerce {
 		add_filter( 'hotel_booking_room_total_price_incl_tax', array( $this, 'room_price_tax' ), 10, 2 );
 
 		if ( !function_exists( 'wc_get_price_including_tax' ) ) {
-			$price_incl_tax = $product->wc_get_price_including_tax( $room->get_data( 'quantity' ), $room->amount_singular_exclude_tax );
-			$price_excl_tax = $product->wc_get_price_including_tax( $room->get_data( 'quantity' ), $room->amount_singular_exclude_tax );
+			// woo get price
+			$product = new WC_Product( $room->post->ID );
+			$price_incl_tax = $product->get_price_including_tax( $room->get_data( 'quantity' ), $room->amount_singular_exclude_tax );
+			$price_excl_tax = $product->get_price_excluding_tax( $room->get_data( 'quantity' ), $room->amount_singular_exclude_tax );
 		} else {
-			$price_incl_tax = wc_get_price_including_tax( $product, array( 'qty' => $room->get_data( 'quantity' ), 'price' => $room->amount_singular_exclude_tax ) );
-			$price_excl_tax = wc_get_price_including_tax( $product, array( 'qty' => $room->get_data( 'quantity' ), 'price' => $room->amount_singular_exclude_tax ) );
+			$price_incl_tax = wc_get_price_including_tax( $room, array( 'qty' => $room->get_data( 'quantity' ), 'price' => $room->amount_singular_exclude_tax ) );
+			$price_excl_tax = wc_get_price_including_tax( $room, array( 'qty' => $room->get_data( 'quantity' ), 'price' => $room->amount_singular_exclude_tax ) );
 		}
 
 
@@ -593,11 +595,17 @@ class WP_Hotel_Booking_Woocommerce {
 	 * @return [type]            [description]
 	 */
 	function packages_regular_price_tax( $tax_price, $price, $package ) {
-		$product = wc_get_product( $package->ID );
-		$price   = $package->amount_singular_exclude_tax();
-		// $price = $product->get_price();
-		$price_incl_tax = $product->get_price_including_tax( 1, $price );
-		$price_excl_tax = $product->get_price_excluding_tax( 1, $price );
+
+		if ( !function_exists( 'wc_get_price_including_tax' ) ) {
+			$product = wc_get_product( $package->ID );
+			$price   = $package->amount_singular_exclude_tax();
+
+			$price_incl_tax = $product->get_price_including_tax( 1, $price );
+			$price_excl_tax = $product->get_price_excluding_tax( 1, $price );
+		} else {
+			$price_incl_tax = wc_get_price_including_tax( $package, array( 'qty' => $package->get_data( 'quantity' ), 'price' => $package->amount_singular_exclude_tax ) );
+			$price_excl_tax = wc_get_price_including_tax( $package, array( 'qty' => $package->get_data( 'quantity' ), 'price' => $package->amount_singular_exclude_tax ) );
+		}
 
 		return $price_incl_tax - $price_excl_tax;
 	}
