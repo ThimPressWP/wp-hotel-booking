@@ -260,7 +260,7 @@ class WPHB_Post_Types {
      */
     function custom_room_columns( $a ) {
         $a['room_type'] = __( 'Room Type', 'wp-hotel-booking' );
-        $a['room_capacity'] = __( 'Max Child', 'wp-hotel-booking' );
+        $a['room_capacity'] = __( 'Max Children', 'wp-hotel-booking' );
         $a['room_price_plan'] = __( 'Price', 'wp-hotel-booking' );
         $a['room_average_rating'] = __( 'Average Rating', 'wp-hotel-booking' );
 

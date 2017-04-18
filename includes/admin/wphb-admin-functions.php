@@ -75,7 +75,7 @@ if ( !function_exists( 'hb_add_meta_boxes' ) ) {
 			),
 			array(
 				'name'  => 'max_child_per_room',
-				'label' => __( 'Max child per room', 'wp-hotel-booking' ),
+				'label' => __( 'Max children per room', 'wp-hotel-booking' ),
 				'type'  => 'number',
 				'std'   => 0,
 				'min'   => 0,

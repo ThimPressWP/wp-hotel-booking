@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Display form for search rooms
  * @extends WP_Widget
  */
-class WPHB_Widget_Best_Reviews extends WP_Widget{
+class HB_Widget_Best_Reviews extends WP_Widget{
     /**
      * Constructor
      */
