@@ -66,8 +66,12 @@ class WPHB_Install {
 		}
 	}
 
-	static function uninstall(){
-		delete_option('wphb_notice_remove_hotel_booking');
+	static function uninstall() {
+		if ( is_multisite() ) {
+			delete_site_option( 'wphb_notice_remove_hotel_booking' );
+		} else {
+			delete_option( 'wphb_notice_remove_hotel_booking' );
+		}
 	}
 
 	static function do_install() {

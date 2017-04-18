@@ -67,6 +67,10 @@ Yes.
 
 == Changelog ==
 
+= 1.7.5 =
+- Fix deactivate previous version process for multisite
+- Update Woocomerce payment add-on for Woocommerce version 3.x
+
 = 1.7.4 =
 * Update plugin classes and functions
 

@@ -59,7 +59,11 @@ class WPHB_Ajax {
 	 * Dismiss remove TP Hotel Booking plugin notice
 	 */
 	static function dismiss_notice() {
-		update_option( 'wphb_notice_remove_hotel_booking', 1 );
+		if ( is_multisite() ) {
+			update_site_option( 'wphb_notice_remove_hotel_booking', 1 );
+		} else {
+			update_option( 'wphb_notice_remove_hotel_booking', 1 );
+		}
 		wp_send_json( array(
 			'status' => 'done'
 		) );
