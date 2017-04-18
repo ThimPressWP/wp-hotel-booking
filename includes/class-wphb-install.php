@@ -26,8 +26,6 @@ class WPHB_Install {
 			)
 		);
 
-		$active_plugins = get_option( 'active_plugins', true );
-
 		$tp_plugins = array(
 			'tp-hotel-booking/tp-hotel-booking.php',
 			'tp-hotel-booking-authorize-sim/tp-hotel-booking-authorize-sim.php',
@@ -41,11 +39,12 @@ class WPHB_Install {
 		);
 
 		foreach ( $tp_plugins as $plugin ) {
-			if ( ( $key = array_search( $plugin, $active_plugins ) ) !== false ) {
-				unset( $active_plugins[$key] );
+			if ( is_multisite() ) {
+				deactivate_plugins( $plugin, false, true );
+			} else {
+				deactivate_plugins( $plugin, false, false );
 			}
 		}
-		update_option( 'active_plugins', $active_plugins );
 
 		global $wpdb;
 		if ( is_multisite() ) {
