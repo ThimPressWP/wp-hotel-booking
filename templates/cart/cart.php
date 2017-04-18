@@ -81,6 +81,7 @@ global $hb_settings;
                         <span class="hb-align-right hb_grand_total_value"><?php echo hb_format_price( $cart->total ) ?></span>
                     </td>
                 </tr>
+				<?php $advance_payment = ''; ?>
 				<?php if ( $advance_payment == $cart->advance_payment ) : ?>
                     <tr class="hb_advance_payment">
                         <td colspan="8">
