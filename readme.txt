@@ -67,6 +67,9 @@ Yes.
 
 == Changelog ==
 
+= 1.7.6 =
+- Update WP Hotel Booking WPML Support add-on
+
 = 1.7.5 =
 - Fix deactivate previous version process for multisite
 - Update Woocomerce payment add-on for Woocommerce version 3.x
