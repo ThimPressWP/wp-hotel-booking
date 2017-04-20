@@ -16,7 +16,7 @@ A complete **hotel booking plugin** for WordPress.
 
 > **One-Time Discount - 10 Days Left**
 
-> ** Announcing:** NEW [Hotel WP Theme](https://themeforest.net/item/travel-booking-hotel-wordpress-theme-hotel-wp/18828322?utm_source=wporg&utm_medium=wphotelbookingDC&ref=thimpress&utm_campaign=wphotelbooking) - 50% Discounts, only $39
+> ** Announcing:** NEW [Hotel WP Theme](https://themeforest.net/item/travel-booking-hotel-wordpress-theme-hotel-wp/18828322?utm_source=wporg&utm_medium=wphotelbookingDC&ref=thimpress&utm_campaign=wphotelbooking) - 100% Woocommerce compatible, only $64
 or [The Ultimate Sailing Hotel](http://themeforest.net/item/hotel-wordpress-theme-sailing/13321455?utm_source=wporg&utm_medium=wphotelbookingDC&ref=thimpress&utm_campaign=wphotelbooking), using by 1500 hotels, $64 Only
 
 ###Hotel WordPress Themes###
@@ -66,6 +66,9 @@ Yes.
 7. System settings
 
 == Changelog ==
+
+= 1.7.6.1 =
+- Update file language
 
 = 1.7.6 =
 - Update WP Hotel Booking WPML Support add-on

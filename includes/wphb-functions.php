@@ -534,7 +534,7 @@ if ( !function_exists( 'hb_date_names' ) ) {
 			__( 'Sun', 'wp-hotel-booking' ),
 			__( 'Mon', 'wp-hotel-booking' ),
 			__( 'Tue', 'wp-hotel-booking' ),
-			__( 'Web', 'wp-hotel-booking' ),
+			__( 'Wed', 'wp-hotel-booking' ),
 			__( 'Thu', 'wp-hotel-booking' ),
 			__( 'Fri', 'wp-hotel-booking' ),
 			__( 'Sat', 'wp-hotel-booking' )
