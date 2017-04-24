@@ -5,7 +5,7 @@
  * Plugin URI: http://thimpress.com/
  * Description: Support book room without search room
  * Author: ThimPress
- * Version: 1.7
+ * Version: 1.7.1
  * Text Domain: wp-hotel-booking-room
  * Domain Path: /languages/
  */
