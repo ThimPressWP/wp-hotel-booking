@@ -134,7 +134,7 @@ if ( !class_exists( 'WP_Hotel_Booking_Room_Extenstion' ) ) {
         }
 
         public function template_path() {
-            return apply_filters( 'hb_room_addon_template_path', 'tp-hotel-booking' );
+            return apply_filters( 'hb_room_addon_template_path', 'wp-hotel-booking-room' );
         }
 
         /**

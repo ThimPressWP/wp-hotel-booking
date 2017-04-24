@@ -17,7 +17,7 @@ define( 'TP_HB_BOOKING_ROOM_PATH', plugin_dir_path( __FILE__ ) );
 define( 'TP_HB_BOOKING_ROOM_URI', plugin_dir_url( __FILE__ ) );
 define( 'TP_HB_BOOKING_ROOM_INC_PATH', plugin_dir_path( __FILE__ ) . 'inc' );
 
-class TP_Hotel_Booking_Room {
+class WP_Hotel_Booking_Room {
 
     static $instance = null;
     public $available = false;
@@ -94,8 +94,8 @@ class TP_Hotel_Booking_Room {
 
 }
 
-function TP_Hotel_Booking_Room() {
-    return TP_Hotel_Booking_Room::instance();
+function WP_Hotel_Booking_Room() {
+    return WP_Hotel_Booking_Room::instance();
 }
 
-$GLOBALS['TP_Hotel_Booking_Room'] = TP_Hotel_Booking_Room();
+$GLOBALS['WP_Hotel_Booking_Room'] = WP_Hotel_Booking_Room();
