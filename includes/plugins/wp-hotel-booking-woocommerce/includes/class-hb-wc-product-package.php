@@ -14,7 +14,7 @@ if ( $woocommerce && version_compare( $woocommerce->version, '3.0.0', '<' ) ) {
 
 	class HB_WC_Product_Package extends WC_Product_Simple {
 
-		public $data = null;
+		//public $data = null;
 		public $total;
 		public $package = null;
 
@@ -40,20 +40,38 @@ if ( $woocommerce && version_compare( $woocommerce->version, '3.0.0', '<' ) ) {
 		 */
 		function get_price( $context = 'view' ) {
 			$qty = 1;
-			if ( !isset( $this->data['parent_id'] ) ) {
-				$parent = WPHB_Cart::instance()->get_cart_item( $this->data['parent_id'] );
-				$qty    = $parent->quantity;
-			} else if ( isset( $this->data['woo_cart_id'] ) ) {
-				$parent = WC()->cart->get_cart_item( $this->data['woo_cart_id'] );
-				$qty    = $parent['quantity'];
-			}
 
-			$this->package = HB_Extra_Package::instance( $this->post, array(
-				'check_in_date'  => $this->data['check_in_date'],
-				'check_out_date' => $this->data['check_out_date'],
+//			$parent_id   = $this->get_data( 'parent_id' );
+//			$woo_cart_id = $this->get_id('woo_cart_id');
+//			if ( !isset( $parent_id ) ) {
+//				$parent = WPHB_Cart::instance()->get_cart_item( $parent_id );
+//				$qty    = $parent->quantity;
+//			} else if ( isset( $woo_cart_id ) ) {
+//				$parent = WC()->cart->get_cart_item( $woo_cart_id );
+//				$qty    = $parent->get_data( 'quantity' );
+//			}
+
+			$this->package = HB_Extra_Package::instance( $this->get_id(), array(
+//				'check_in_date'  => $this->get_data( 'check_in_date' ),
+//				'check_out_date' => $this->get_data( 'check_out_date' ),
 				'room_quantity'  => $qty,
 				'quantity'       => 1
 			) );
+
+//			if ( !isset( $this->data['parent_id'] ) ) {
+//				$parent = WPHB_Cart::instance()->get_cart_item( $this->data['parent_id'] );
+//				$qty    = $parent->quantity;
+//			} else if ( isset( $this->data['woo_cart_id'] ) ) {
+//				$parent = WC()->cart->get_cart_item( $this->data['woo_cart_id'] );
+//				$qty    = $parent['quantity'];
+//			}
+//			$this->package = HB_Extra_Package::instance( $this->post, array(
+//				'check_in_date'  => $this->data['check_in_date'],
+//				'check_out_date' => $this->data['check_out_date'],
+//				'room_quantity'  => $qty,
+//				'quantity'       => 1
+//			) );
+
 			return $this->package->amount_singular_exclude_tax();
 		}
 
@@ -65,7 +83,7 @@ if ( $woocommerce && version_compare( $woocommerce->version, '3.0.0', '<' ) ) {
 			if ( !class_exists( 'HB_Extra_Package' ) )
 				return parent::is_sold_individually();
 
-			$package = HB_Extra_Package::instance( $this->post );
+			$package = HB_Extra_Package::instance( $this->get_id() );
 
 			if ( !$package->respondent )
 				return parent::is_sold_individually();
@@ -80,6 +98,10 @@ if ( $woocommerce && version_compare( $woocommerce->version, '3.0.0', '<' ) ) {
 		 * Check if a product is purchasable
 		 */
 		function is_purchasable( $context = 'view' ) {
+			return true;
+		}
+
+		function is_in_stock() {
 			return true;
 		}
 

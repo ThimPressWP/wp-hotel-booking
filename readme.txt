@@ -67,6 +67,9 @@ Yes.
 
 == Changelog ==
 
+= 1.7.6.3 =
+- Fix add addition package to cart in WP Hotel Booking Woocommerce add-on
+
 = 1.7.6.2 =
 - Fix override template bug in WP Hotel Booking Room add-on
 
