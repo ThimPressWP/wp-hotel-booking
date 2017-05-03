@@ -539,7 +539,7 @@ if ( !function_exists( 'hb_get_rooms' ) ) {
 }
 
 add_action( 'hb_booking_detail_update_meta_box', 'hb_booking_detail_update_meta_box', 10, 3 );
-if ( !function_exists( 'hb_manage_booking_column' ) ) {
+if ( !function_exists( 'hb_booking_detail_update_meta_box' ) ) {
 
 	function hb_booking_detail_update_meta_box( $k, $vl, $post_id ) {
 		if ( get_post_type( $post_id ) !== 'hb_booking' ) {

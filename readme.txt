@@ -67,6 +67,9 @@ Yes.
 
 == Changelog ==
 
+= 1.7.6.4 =
+- Fix bug in admin create new bookings process
+
 = 1.7.6.3 =
 - Fix add addition package to cart in WP Hotel Booking Woocommerce add-on
 
