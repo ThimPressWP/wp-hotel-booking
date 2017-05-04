@@ -63,8 +63,65 @@ if ( !function_exists( 'hb_wp_mail_from_name' ) ) {
 	}
 }
 
+
 /**
- * Send email to user after they booked room
+ * Filter content type to text/html for email
+ *
+ * @return string
+ */
+if ( !function_exists( 'hb_set_html_content_type' ) ) {
+
+	function hb_set_html_content_type() {
+		return 'text/html';
+	}
+}
+
+/**
+ * Place order process send email
+ * admin and cusomer
+ */
+add_action( 'hb_place_order', 'hb_customer_place_order_email', 10, 2 );
+if ( !function_exists( 'hb_customer_place_order_email' ) ) {
+	/**
+	 * hb_customer_place_order_email
+	 *
+	 * @param  array
+	 * @param  $booking_id
+	 *
+	 * @return array
+	 */
+	function hb_customer_place_order_email( $return = array(), $booking_id = null ) {
+		if ( !$booking_id || !isset( $return['result'] ) || $return['result'] !== 'success' ) {
+			return;
+		}
+	}
+}
+add_action( 'hb_booking_status_changed', 'hb_customer_email_order_changes_status', 10, 3 );
+if ( !function_exists( 'hb_customer_email_order_changes_status' ) ) {
+	// Send customer when completed
+	function hb_customer_email_order_changes_status( $booking_id = null, $old_status = null, $new_status = null ) {
+		if ( !$booking_id ) {
+			return;
+		}
+
+		if ( $new_status && $new_status !== 'completed' ) {
+			return;
+		}
+
+
+		// send customer email
+		hb_new_customer_booking_email( $booking_id );
+
+		// send admin uer
+		$enable = hb_settings()->get( 'email_new_booking_enable' );
+		if ( $enable ) {
+			hb_new_booking_email( $booking_id );
+		}
+	}
+}
+
+/**
+ * Send email to admin after customer booked room
  *
  * @param int $booking_id
  */
@@ -115,64 +172,6 @@ if ( !function_exists( 'hb_new_booking_email' ) ) {
 		//     fclose($fo);
 		// }
 		return $send;
-	}
-}
-
-/**
- * Filter content type to text/html for email
- *
- * @return string
- */
-if ( !function_exists( 'hb_set_html_content_type' ) ) {
-
-	function hb_set_html_content_type() {
-		return 'text/html';
-	}
-}
-
-/**
- * Place order process send email
- * admin and cusomer
- */
-add_action( 'hb_place_order', 'hb_customer_place_order_email', 10, 2 );
-if ( !function_exists( 'hb_customer_place_order_email' ) ) {
-	/**
-	 * hb_customer_place_order_email
-	 *
-	 * @param  array
-	 * @param  $booking_id
-	 *
-	 * @return array
-	 */
-	function hb_customer_place_order_email( $return = array(), $booking_id = null ) {
-		if ( !$booking_id || !isset( $return['result'] ) || $return['result'] !== 'success' ) {
-			return;
-		}
-
-		// send customer=
-		hb_new_customer_booking_email( $booking_id );
-
-		// send admin uer
-		$enable = hb_settings()->get( 'email_new_booking_enable' );
-		if ( $enable ) {
-			hb_new_booking_email( $booking_id );
-		}
-	}
-}
-add_action( 'hb_booking_status_changed', 'hb_customer_email_order_changes_status', 10, 3 );
-if ( !function_exists( 'hb_customer_email_order_changes_status' ) ) {
-	// Send customer when completed
-	function hb_customer_email_order_changes_status( $booking_id = null, $old_status = null, $new_status = null ) {
-		if ( !$booking_id ) {
-			return;
-		}
-
-		if ( $new_status && $new_status !== 'completed' ) {
-			return;
-		}
-
-		// send customer email
-		hb_new_customer_booking_email( $booking_id );
 	}
 }
 
