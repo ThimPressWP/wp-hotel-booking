@@ -652,10 +652,11 @@
 				unique = unique.replace('check_in_date_', '');
 				var date = $(this).datepicker('getDate');
 
-				var check_in_range_check_out = $(document).triggerHandler('hotel_booking_range_check_in_check_out', [1, today, tomorrow]);
+				var check_in_range_check_out = hotel_settings.min_booking_date;
 				if (!isInteger(check_in_range_check_out)) {
 					check_in_range_check_out = 1;
 				}
+
 				if (date) {
 					date.setDate(date.getDate() + check_in_range_check_out);
 				}
@@ -681,10 +682,11 @@
 				var check_in = $('#check_in_date_' + unique),
 					selected = $(this).datepicker('getDate');
 
-				var check_in_range_check_out = $(document).triggerHandler('hotel_booking_range_check_in_check_out', [1, today, tomorrow]);
+				var check_in_range_check_out = hotel_settings.min_booking_date;
 				if (!isInteger(check_in_range_check_out)) {
 					check_in_range_check_out = 1;
 				}
+
 				selected.setDate(selected.getDate() - check_in_range_check_out);
 
 				check_in.datepicker('option', 'maxDate', selected);

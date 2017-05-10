@@ -96,6 +96,14 @@ if ( !class_exists( 'WPHB_Admin_Setting_General' ) ) {
                     'min' => 0,
                     'max' => 3,
                 ),
+	            array(
+		            'type' => 'number',
+		            'id' => 'tp_hotel_booking_minimum_booking_day',
+		            'title' => __( 'Minimum booking day', 'wp-hotel-booking' ),
+		            'default' => 1,
+		            'min' => 0,
+		            'step' => 'any'
+	            ),
                 array(
                     'type' => 'number',
                     'id' => 'tp_hotel_booking_tax',

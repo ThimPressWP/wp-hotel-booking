@@ -49,9 +49,10 @@
 				today = new Date(),
 				tomorrow = new Date();
 
-			var date_range = $(document).triggerHandler('hotel_booking_min_check_in_date'),
-				checkin_range_checkout = $(document).triggerHandler('hotel_booking_range_check_in_check_out');
-			if (!checkin_range_checkout || !Hotel_Booking_Room_Addon.is_int(checkin_range_checkout)) {
+			var date_range = $(document).triggerHandler('hotel_booking_min_check_in_date');
+
+			var checkin_range_checkout = hotel_settings.min_booking_date;
+			if (!isInteger(checkin_range_checkout)) {
 				checkin_range_checkout = 1;
 			}
 
