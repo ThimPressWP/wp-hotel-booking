@@ -67,7 +67,7 @@
 				dayNames       : hotel_booking_i18n.dayNames,
 				dayNamesShort  : hotel_booking_i18n.dayNamesShort,
 				dayNamesMin    : hotel_booking_i18n.dayNamesMin,
-				minDate        : tomorrow,
+				minDate        : today,
 				maxDate        : '+365D',
 				onSelect       : function (selected) {
 					var checkout_date = checkin.datepicker('getDate'),
