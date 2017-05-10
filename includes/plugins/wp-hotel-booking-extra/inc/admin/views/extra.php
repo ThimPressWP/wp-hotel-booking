@@ -44,11 +44,6 @@ foreach ( $extra_types as $key => $value ) {
                         <h4><?php _e( 'Price Type', 'wp-hb-extra' ); ?></h4>
                         <?php tp_hb_extra_select( $field_name . '['.$post->ID.'][respondent]', array( 'options' => $respondent ), get_post_meta( $post->ID, 'tp_hb_extra_room_respondent', true ) ) ; ?>
                     </div>
-                    <div class="rooms">
-                        <h4><?php _e( 'All Rooms', 'wp-hb-extra' ); ?></h4>
-                        <input type="hidden" name="<?php echo esc_attr( $field_name ); ?>[<?php echo esc_attr( $post->ID ); ?>][selected]" value="0"/>
-                        <input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>[<?php echo esc_attr( $post->ID ) ?>][selected]" value="1"<?php echo get_post_meta( $post->ID, 'tp_hb_extra_room_selected', true ) == 1 ? ' checked' : ''  ?>/>
-                    </div>
                     <div class="remove">
                         <a data-id="<?php echo esc_attr( $post->ID ); ?>" class="button remove_button"><?php esc_attr_e( 'Remove', 'wp-hb-extra' ); ?></a>
                     </div>
@@ -76,11 +71,6 @@ foreach ( $extra_types as $key => $value ) {
                 <div class="type">
                     <h4><?php _e( 'Price Type', 'wp-hb-extra' ); ?></h4>
                     <?php tp_hb_extra_select( $field_name . '[0][respondent]', array( 'options' => $respondent ), '' ) ; ?>
-                </div>
-                <div class="rooms">
-                    <h4><?php _e( 'All Rooms', 'wp-hb-extra' ); ?></h4>
-                    <input type="hidden" name="<?php echo esc_attr( $field_name ); ?>[0][selected]" value="0"/>
-                    <input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>[0][selected]" value="1"/>
                 </div>
                 <div class="remove">
                     <a data-id="" class="button remove_button"><?php esc_attr_e( 'Remove', 'wp-hb-extra' ); ?></a>
@@ -114,11 +104,6 @@ foreach ( $extra_types as $key => $value ) {
         <div class="type">
             <h4><?php _e( 'Price Type', 'wp-hb-extra' ); ?></h4>
             <?php tp_hb_extra_select( $field_name . '[{{ data.id }}][respondent]', array( 'options' => $respondent ), '' ) ; ?>
-        </div>
-        <div class="rooms">
-            <h4><?php _e( 'All Rooms', 'wp-hb-extra' ); ?></h4>
-            <input type="hidden" name="<?php echo esc_attr( $field_name ); ?>[{{ data.id }}][selected]" value="0"/>
-            <input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>[{{ data.id }}][selected]" value="1"/>
         </div>
         <div class="remove">
             <a data-id="{{ data.id }}" class="button remove_button"><?php esc_attr_e( 'Remove', 'wp-hb-extra' ); ?></a>
