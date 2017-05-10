@@ -5,7 +5,7 @@
  * @Last  Modified by:   ducnvtt
  * @Last  Modified time: 2016-04-15 16:56:13
  */
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 ?>
@@ -24,14 +24,20 @@ if ( !defined( 'ABSPATH' ) ) {
                                         <strong><?php _e( 'Payment Method', 'wp-hotel-booking' ) ?></strong><br> <?php echo esc_html( $booking->method_title ) ?>
                                     </p>
                                     <p>
+                                        <strong><?php _e( 'Booking ID', 'wp-hotel-booking' ) ?></strong><br> <?php echo esc_html( $booking->get_booking_number() ) ?>
+                                    </p>
+                                    <p>
                                         <strong><?php _e( 'Email Address', 'wp-hotel-booking' ) ?></strong><br> <?php echo esc_html( $booking->customer_email ) ?>
                                     </p>
                                     <p>
-                                        <strong><?php _e( 'Booking ID', 'wp-hotel-booking' ) ?></strong><br> <?php echo esc_html( $booking->get_booking_number() ) ?>
+                                        <strong><?php _e( 'Phone Number', 'wp-hotel-booking' ) ?></strong><br> <?php echo esc_html( $booking->customer_phone ) ?>
+                                    </p>
+                                    <p>
+                                        <strong><?php _e( 'Postal Code', 'wp-hotel-booking' ) ?></strong><br> <?php echo esc_html( $booking->customer_postal_code ) ?>
                                     </p>
 									<?php if ( $booking->post->post_content ) : ?>
                                         <p>
-                                            <strong><?php _e( 'Addtion Information', 'wp-hotel-booking' ) ?></strong><br> <?php echo esc_html( $booking->post->post_content ) ?>
+                                            <strong><?php _e( 'Addition Information', 'wp-hotel-booking' ) ?></strong><br> <?php echo esc_html( $booking->post->post_content ) ?>
                                         </p>
 									<?php endif; ?>
                                 </th>
@@ -45,6 +51,8 @@ if ( !defined( 'ABSPATH' ) ) {
                                     <p>
                                         <strong><?php _e( 'Customer Name', 'wp-hotel-booking' ); ?></strong><br>
 										<?php printf( '%s', hb_get_customer_fullname( $booking->id ) ) ?><br>
+                                    </p>
+                                    <p>
                                         <strong><?php _e( 'Address', 'wp-hotel-booking' ) ?></strong><br>
 										<?php printf( '%s', $booking->customer_country ) ?><br>
 										<?php printf( '%s', $booking->customer_address ) ?><br>
