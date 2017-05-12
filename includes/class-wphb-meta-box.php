@@ -176,6 +176,10 @@ class WPHB_Meta_Box {
                 $meta_value = apply_filters( 'hb_meta_box_update_meta_value', $meta_value, $field['name'], $this->_args['name'], $post_id );
                 update_post_meta( $post_id, $this->_args['meta_key_prefix'] . $field['name'], $meta_value );
             }
+
+	        if ( ! $_POST[ $this->_args['meta_key_prefix'] . 'room_extra' ] ) {
+		        update_post_meta( $post_id, $this->_args['meta_key_prefix'] . 'room_extra', '' );
+	        }
         }
 
         do_action( 'hb_update_meta_box_' . $this->_args['name'], $post_id );
