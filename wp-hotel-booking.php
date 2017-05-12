@@ -363,7 +363,7 @@ class WP_Hotel_Booking {
 				},
 				nonce           : '<?php echo wp_create_nonce( 'hb_booking_nonce_action' ); ?>',
 				timezone        : '<?php echo current_time( 'timestamp' ) ?>',
-				min_booking_date: '<?php echo $min_booking_date; ?>'
+				min_booking_date: <?php echo $min_booking_date; ?>
 			}
         </script>
 		<?php
