@@ -493,7 +493,7 @@ class WP_Hotel_Booking_Woocommerce {
 	}
 
 	public function frontend_scripts() {
-		wp_enqueue_script( 'hb_wc_checkout', HB_WC_PLUGIN_URL . 'assets/js/frontend/checkout.js', array( 'jquery' ) );
+		wp_enqueue_script( 'hb_wc_checkout', HB_WC_PLUGIN_URL . 'assets/js/frontend/site.min.js', array( 'jquery' ) );
 		wp_enqueue_style( 'hb_wc_site', HB_WC_PLUGIN_URL . 'assets/css/frontend/site.css' );
 	}
 

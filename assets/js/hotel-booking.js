@@ -526,6 +526,9 @@
 						}
 
 						if (typeof code.status !== 'undefined' && code.status === 'success') {
+
+							// update woo cart when add room to cart
+							$('body').trigger('hb_added_item_to_cart');
 							// add message successfully
 							if (typeof code.redirect !== 'undefined') {
 								window.location.href = code.redirect;
@@ -572,6 +575,9 @@
 					res = parseJSON(res);
 					if (typeof res.status === 'undefined' || res.status !== 'success')
 						alert(hotel_booking_i18n.waring.try_again);
+
+					// update woo cart when remove room from cart
+					$('body').trigger('hb_removed_item_to_cart');
 
 					if (typeof res.sub_total !== 'undefined')
 						$('span.hb_sub_total_value').html(res.sub_total);
