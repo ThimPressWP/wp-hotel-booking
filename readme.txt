@@ -67,6 +67,11 @@ Yes.
 
 == Changelog ==
 
+= 1.7.6.6 =
+- Add minimum booking day option
+- Update email booking notice
+- Fix update Woocommrece cart when add room to cart in WP Hotel Booking Woocommerce add-on
+
 = 1.7.6.5 =
 - Update email booking notice process
 
