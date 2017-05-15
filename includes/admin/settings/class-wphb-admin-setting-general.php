@@ -133,7 +133,7 @@ if ( !class_exists( 'WPHB_Admin_Setting_General' ) ) {
                     'type' => 'number',
                     'id' => 'tp_hotel_booking_advance_payment',
                     'title' => __( 'Advance Payment', 'wp-hotel-booking' ),
-                    'desc' => __( 'Payment addvance. Eg: 50%', 'wp-hotel-booking' ),
+                    'desc' => __( 'Payment advance. Eg: 50%', 'wp-hotel-booking' ),
                     'default' => 50,
                     'min' => 0,
                     'max' => 100
