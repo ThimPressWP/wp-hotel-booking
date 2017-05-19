@@ -8,6 +8,10 @@
 'use strict';
 (function ($) {
 
+	function isInteger(a) {
+		return Number(a) || ( a % 1 === 0 );
+	}
+
 	var Hotel_Booking_Room_Addon = {
 		init                      : function () {
 			// load add to cart form
