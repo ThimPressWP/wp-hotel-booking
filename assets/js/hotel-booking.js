@@ -670,6 +670,8 @@
 				var checkout = $('#check_out_date_' + unique);
 				checkout.datepicker('option', 'minDate', date);
 			}
+		}).on('click', function () {
+			$(this).datepicker('show');
 		});
 
 		$('input[id^="check_out_date"]').datepicker({
@@ -697,6 +699,8 @@
 
 				check_in.datepicker('option', 'maxDate', selected);
 			}
+		}).on('click', function () {
+			$(this).datepicker('show');
 		});
 
 		$('#datepickerImage').click(function () {
