@@ -67,6 +67,9 @@ Yes.
 
 == Changelog ==
 
+= 1.7.6.7 =
+- Update datepicker with RTL languages
+
 = 1.7.6.6 =
 - Add minimum booking day option
 - Update email booking notice
