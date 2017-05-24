@@ -115,8 +115,8 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 							'type'		=> 'text',
 							'id'		=> 'tp_hotel_booking_email_new_booking_heading_desc',
 							'title'		=> __( 'Email Heading Description', 'wp-hotel-booking' ),
-							'default'	=> __( 'Reservated', 'wp-hotel-booking' ),
-							'placeholder'	=> __( 'Reservated', 'wp-hotel-booking' )
+							'default'	=> __( 'You have a new booking room', 'wp-hotel-booking' ),
+							'placeholder'	=> __( 'You have a new booking room', 'wp-hotel-booking' )
 						),
 
 					array(

@@ -5,15 +5,15 @@
  * @Last  Modified by:   ducnvtt
  * @Last  Modified time: 2016-04-15 16:55:46
  */
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 ?>
 
-<h2><?php _e( 'Booking Details', 'wp-hotel-booking' ) ?></h2>
+<h2 class="section-title"><?php echo __( 'Booking ', 'wp-hotel-booking' ) . $booking->get_booking_number(); ?></h2>
 <table class="width-100 booking_details" cellspacing="0" cellpadding="0">
     <tr>
-        <th><?php _e( 'Item', 'wp-hotel-booking' ) ?></th>
+        <th><?php _e( 'Room', 'wp-hotel-booking' ) ?></th>
         <th><?php _e( 'Check in', 'wp-hotel-booking' ) ?></th>
         <th><?php _e( 'Check out', 'wp-hotel-booking' ) ?></th>
         <th><?php _e( '#', 'wp-hotel-booking' ) ?></th>
@@ -38,12 +38,16 @@ if ( !defined( 'ABSPATH' ) ) {
         <td><?php printf( '%s', hb_format_price( $booking->sub_total(), hb_get_currency_symbol( $booking->currency ) ) ) ?></td>
     </tr>
     <tr>
+        <td colspan="4"><b><?php _e( 'Payment method', 'wp-hotel-booking' ) ?></b></td>
+        <td><?php echo esc_html( $booking->method_title ) ?></td>
+    </tr>
+    <tr>
         <td colspan="4"><b><?php _e( 'Total', 'wp-hotel-booking' ) ?></b></td>
         <td><?php printf( '%s', hb_format_price( $booking->total(), hb_get_currency_symbol( $booking->currency ) ) ) ?></td>
     </tr>
 </table>
 
 <?php if ( $booking->content ) : ?>
-    <h2><?php _e( 'Addition Infomation', 'wp-hotel-booking' ); ?></h2>
+    <h2><?php _e( 'Addition Information', 'wp-hotel-booking' ); ?></h2>
     <p><?php printf( '%s', $booking->content ) ?></p>
 <?php endif; ?>
