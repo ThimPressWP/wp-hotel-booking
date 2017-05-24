@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Package Name\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-12 11:47+0700\n"
+"POT-Creation-Date: 2017-05-24 11:08+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1916,7 +1916,7 @@ msgstr ""
 
 #: includes/admin/wphb-admin-functions.php:86
 #: templates/checkout/addition-information.php:10
-#: templates/emails/customer-details.php:40
+#: templates/emails/booking-details.php:51
 msgid "Addition Information"
 msgstr ""
 
@@ -1998,7 +1998,7 @@ msgstr ""
 
 #: includes/admin/wphb-admin-functions.php:256
 #: includes/admin/metaboxes/views/meta-booking-items.php:43
-#: templates/account/bookings.php:33 templates/emails/booking-details.php:41
+#: templates/account/bookings.php:33 templates/emails/booking-details.php:45
 #: templates/search/booking-room-details.php:30
 msgid "Total"
 msgstr ""
@@ -2063,7 +2063,6 @@ msgid "Booking Actions"
 msgstr ""
 
 #: includes/admin/metaboxes/class-wphb-admin-metabox-booking-details.php:29
-#: templates/emails/booking-details.php:13
 msgid "Booking Details"
 msgstr ""
 
@@ -2124,7 +2123,6 @@ msgstr ""
 #: includes/admin/metaboxes/views/meta-booking-details.php:106
 #: templates/checkout/customer-new.php:35
 #: templates/checkout/customer-new.php:39
-#: templates/emails/customer-details.php:56
 msgid "Address"
 msgstr ""
 
@@ -2250,7 +2248,6 @@ msgid "Add new coupon"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items.php:31
-#: templates/emails/booking-details.php:16
 msgid "Item"
 msgstr ""
 
@@ -2345,7 +2342,7 @@ msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:62
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:63
-#: includes/booking/wphb-booking-hooks.php:186
+#: includes/booking/wphb-booking-hooks.php:213
 msgid "Reservation"
 msgstr ""
 
@@ -2399,8 +2396,8 @@ msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:118
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:119
-#: includes/booking/wphb-booking-hooks.php:140
-msgid "Reservated"
+#: includes/booking/wphb-booking-hooks.php:167
+msgid "You have a new booking room"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:125
@@ -2513,7 +2510,7 @@ msgid "Advance Payment"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-general.php:136
-msgid "Payment addvance. Eg: 50%"
+msgid "Payment advance. Eg: 50%"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:23
@@ -2538,7 +2535,6 @@ msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:82
 #: templates/checkout/customer-new.php:81
-#: templates/emails/customer-details.php:33
 msgid "Phone Number"
 msgstr ""
 
@@ -2588,6 +2584,7 @@ msgid "Allows customers to checkout without creating an account."
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-room.php:23
+#: templates/emails/booking-details.php:16
 msgid "Room"
 msgstr ""
 
@@ -2690,6 +2687,7 @@ msgid "No addition plans"
 msgstr ""
 
 #: includes/booking/wphb-booking-functions.php:81
+#: templates/emails/booking-details.php:13
 msgid "Booking "
 msgstr ""
 
@@ -2707,7 +2705,19 @@ msgstr ""
 msgid "Cancelled"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:139
+#: includes/booking/wphb-booking-hooks.php:104
+msgid "Booking accepted"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:105
+msgid "Your booking is accepted"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:106
+msgid "Your booking is pending until the payment is completed"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:166
 msgid "New customer booking"
 msgstr ""
 
@@ -3419,7 +3429,7 @@ msgstr ""
 msgid "Check Availability This Room"
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-stripe/wp-hotel-booking-stripe.php:84
+#: includes/plugins/wp-hotel-booking-stripe/wp-hotel-booking-stripe.php:87
 msgid ""
 "The <strong>WP Hotel Booking</strong> is not installed and/or activated. "
 "Please install and/or activate before you can using <strong>WP Hotel Booking "
@@ -3739,7 +3749,6 @@ msgid "Title"
 msgstr ""
 
 #: templates/checkout/customer-new.php:61
-#: templates/emails/customer-details.php:36
 msgid "Postal Code"
 msgstr ""
 
@@ -3747,7 +3756,7 @@ msgstr ""
 msgid "Postal code"
 msgstr ""
 
-#: templates/checkout/customer.php:9 templates/emails/customer-details.php:12
+#: templates/checkout/customer.php:9
 msgid "Customer Details"
 msgstr ""
 
@@ -3782,7 +3791,6 @@ msgid "%s was pay completed"
 msgstr ""
 
 #: templates/checkout/payment-method.php:11
-#: templates/emails/customer-details.php:24
 msgid "Payment Method"
 msgstr ""
 
@@ -3794,12 +3802,12 @@ msgstr ""
 msgid "Subtotal"
 msgstr ""
 
-#: templates/emails/booking-details.php:47
-msgid "Addition Infomation"
+#: templates/emails/booking-details.php:41
+msgid "Payment method"
 msgstr ""
 
 #: templates/emails/customer-booking.php:16
-msgid "Thanks for your booking."
+msgid "Thanks for your booking"
 msgstr ""
 
 #: templates/emails/customer-booking.php:17
@@ -3808,46 +3816,36 @@ msgid ""
 "the best service. Good luck and see you soon!"
 msgstr ""
 
-#: templates/emails/customer-details.php:27
-msgid "Booking ID"
+#: templates/emails/customer-details.php:12
+msgid "Customer details"
 msgstr ""
 
-#: templates/emails/customer-details.php:30
-msgid "Email Address"
+#: templates/emails/customer-details.php:14
+msgid "Customer Name:"
 msgstr ""
 
-#: templates/emails/customer-details.php:52
-msgid "Customer Name"
+#: templates/emails/customer-details.php:17
+msgid "Email address:"
 msgstr ""
 
-#: templates/emails/email-footer.php:33
-#, php-format
-msgid "Phone number %s"
+#: templates/emails/customer-details.php:20
+msgid "Phone:"
 msgstr ""
 
-#: templates/emails/email-footer.php:39
-#, php-format
-msgid "Admin email at %s"
+#: templates/emails/customer-details.php:26
+msgid "Billing address"
 msgstr ""
 
-#: templates/emails/email-footer.php:48
-#, php-format
-msgid "Country %s"
+#: templates/emails/customer-details.php:28
+msgid "Address:"
 msgstr ""
 
-#: templates/emails/email-footer.php:49
-#, php-format
-msgid "Address %s"
+#: templates/emails/customer-details.php:36
+msgid "Postal Code:"
 msgstr ""
 
-#: templates/emails/email-footer.php:58
-#, php-format
-msgid "City %s"
-msgstr ""
-
-#: templates/emails/email-footer.php:59
-#, php-format
-msgid "State %s"
+#: templates/emails/customer-details.php:40
+msgid "Addition Information:"
 msgstr ""
 
 #: templates/loop/pricing_plan.php:23

@@ -103,7 +103,7 @@ if ( ! function_exists( 'hb_customer_place_order_email' ) ) {
 		$format             = $settings->get( 'email_new_booking_format', 'html' );
 		$subject            = __( 'Booking accepted', 'wp-hotel-booking' );
 		$email_heading      = __( 'Your booking is accepted', 'wp-hotel-booking' );
-		$email_heading_desc = __( 'Your booking is pending until we confirm payment has been received', 'wp-hotel-booking' );
+		$email_heading_desc = __( 'Your booking is pending until the payment is completed', 'wp-hotel-booking' );
 
 
 		$body = hb_get_template_content( 'emails/booking-accepted.php', array(
