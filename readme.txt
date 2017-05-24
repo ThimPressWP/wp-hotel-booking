@@ -69,6 +69,8 @@ Yes.
 
 = 1.7.6.7 =
 - Update datepicker with RTL languages
+- Update booking completed email
+- Add place booking email for customer
 
 = 1.7.6.6 =
 - Add minimum booking day option

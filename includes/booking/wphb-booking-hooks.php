@@ -87,15 +87,40 @@ if ( ! function_exists( 'hb_customer_place_order_email' ) ) {
 	/**
 	 * hb_customer_place_order_email
 	 *
-	 * @param  array
-	 * @param  $booking_id
+	 * @param array $return
+	 * @param null  $booking_id
 	 *
-	 * @return array
+	 * @return bool|void
 	 */
 	function hb_customer_place_order_email( $return = array(), $booking_id = null ) {
 		if ( ! $booking_id || ! isset( $return['result'] ) || $return['result'] !== 'success' ) {
 			return;
 		}
+
+		$settings = WPHB_Settings::instance();
+		$booking  = WPHB_Booking::instance( $booking_id );
+
+		$format             = $settings->get( 'email_new_booking_format', 'html' );
+		$subject            = __( 'Booking accepted', 'wp-hotel-booking' );
+		$email_heading      = __( 'Your booking is accepted', 'wp-hotel-booking' );
+		$email_heading_desc = __( 'Your booking is pending until we confirm payment has been received', 'wp-hotel-booking' );
+
+
+		$body = hb_get_template_content( 'emails/booking-accepted.php', array(
+			'booking'            => $booking,
+			'email_heading'      => $email_heading,
+			'email_heading_desc' => $email_heading_desc
+		) );
+
+		if ( ! $body ) {
+			return;
+		}
+
+		$headers = "Content-Type: " . ( $format == 'html' ? 'text/html' : 'text/plain' ) . "\r\n";
+		$send    = wp_mail( $booking->customer_email, $subject, $body, $headers );
+
+		return $send;
+
 	}
 }
 add_action( 'hb_booking_status_changed', 'hb_customer_email_order_changes_status', 10, 3 );
