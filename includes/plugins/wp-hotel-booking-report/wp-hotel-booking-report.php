@@ -41,7 +41,7 @@ class WP_Hotel_Booking_Report {
 	 * @return null
 	 */
 	function plugins_loaded() {
-		if ( !function_exists( 'is_plugin_active' ) ) {
+		if ( ! function_exists( 'is_plugin_active' ) ) {
 			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 		}
 
@@ -49,7 +49,7 @@ class WP_Hotel_Booking_Report {
 			$this->is_hotel_active = true;
 		}
 
-		if ( !$this->is_hotel_active ) {
+		if ( ! $this->is_hotel_active ) {
 			add_action( 'admin_notices', array( $this, 'add_notices' ) );
 		} else {
 			if ( $this->is_hotel_active ) {
@@ -69,9 +69,11 @@ class WP_Hotel_Booking_Report {
 		require_once TP_HB_REPORT_DIR . '/inc/class-hb-report-price.php';
 		require_once TP_HB_REPORT_DIR . '/inc/class-hb-report-room.php';
 
-		$report = HB_Report_Room::instance();
+		$report_room = HB_Report_Room::instance();
+		$report_room->export_csv();
 
-		$report->export_csv();
+		$report_price = HB_Report_Price::instance();
+		$report_price->export_csv();
 	}
 
 	/**
