@@ -67,6 +67,10 @@ Yes.
 
 == Changelog ==
 
+= 1.7.6.8 =
+- Update create pages process
+- Add place booking email for admin
+
 = 1.7.6.7 =
 - Update datepicker with RTL languages
 - Update booking completed email
