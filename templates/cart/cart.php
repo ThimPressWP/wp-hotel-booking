@@ -82,7 +82,7 @@ global $hb_settings;
                     </td>
                 </tr>
 				<?php $advance_payment = ''; ?>
-				<?php if ( $advance_payment == $cart->advance_payment ) : ?>
+				<?php if ( $advance_payment = $cart->advance_payment ) : ?>
                     <tr class="hb_advance_payment">
                         <td colspan="8">
 							<?php printf( __( 'Advance Payment (%s%% of Grand Total)', 'wp-hotel-booking' ), hb_get_advance_payment() ); ?>
