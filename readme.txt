@@ -67,6 +67,10 @@ Yes.
 
 == Changelog ==
 
+= 1.7.6.9 =
+- Update search room based on timezone
+- Update checkout required fields
+
 = 1.7.6.8 =
 - Update create pages process
 - Add place booking email for admin

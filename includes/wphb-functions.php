@@ -601,18 +601,20 @@ if ( ! function_exists( 'hb_dropdown_titles' ) ) {
 				'name'              => 'title',
 				'selected'          => '',
 				'show_option_none'  => __( 'Select', 'wp-hotel-booking' ),
-				'option_none_value' => - 1,
-				'echo'              => true
+				'option_none_value' => '',
+				'echo'              => true,
+				'required'          => false
 			)
 		);
 		$name              = '';
 		$selected          = '';
 		$echo              = false;
+		$required          = false;
 		$show_option_none  = false;
-		$option_none_value = - 1;
+		$option_none_value = '';
 		extract( $args );
 		$titles = hb_get_common_titles();
-		$output = '<select name="' . $name . '">';
+		$output = '<select name="' . $name . '" ' . ( $required ? 'required' : '' ) . '>';
 		if ( $show_option_none ) {
 			$output .= sprintf( '<option value="%s">%s</option>', $option_none_value, $show_option_none );
 		}
@@ -1719,10 +1721,11 @@ if ( ! function_exists( 'hb_dropdown_countries' ) ) {
 				'name'              => 'countries',
 				'selected'          => '',
 				'show_option_none'  => false,
-				'option_none_value' => ''
+				'option_none_value' => '',
+				'required'          => false
 			)
 		);
-		echo '<select name="' . $args['name'] . '">';
+		echo '<select name="' . $args['name'] . '"' . ( ( $args['required'] ) ? 'required' : '' ) . '>';
 		if ( $args['show_option_none'] ) {
 			echo '<option value="' . $args['option_none_value'] . '">' . $args['show_option_none'] . '</option>';
 		}
