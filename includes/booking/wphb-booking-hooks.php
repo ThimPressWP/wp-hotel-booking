@@ -108,6 +108,11 @@ if (!function_exists('hb_customer_place_order_email')) {
 
         $format = $settings->get('email_new_booking_format', 'html');
         $headers = "Content-Type: " . ($format == 'html' ? 'text/html' : 'text/plain') . "\r\n";
+	    // set mail from email
+	    add_filter('wp_mail_from', 'hb_wp_mail_from');
+	    // set mail from name
+	    add_filter('wp_mail_from_name', 'hb_wp_mail_from_name');
+	    add_filter('wp_mail_content_type', 'hb_set_html_content_type');
 
 
         // customer place order email
