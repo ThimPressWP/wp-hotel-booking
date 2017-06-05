@@ -67,6 +67,10 @@ Yes.
 
 == Changelog ==
 
+= 1.7.7 =
+- Update email from when customer place booking
+- Update single search available template of booking room add-on
+
 = 1.7.6.9 =
 - Update search room based on timezone
 - Update checkout required fields
