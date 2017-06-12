@@ -26,9 +26,9 @@ class HB_Room_Extra extends WPHB_Room {
 
 
 		$results = array();
-		if ( !empty( $extras ) ) {
+		if ( ! empty( $extras ) ) {
 			foreach ( $extras as $k => $post_id ) {
-				if ( !get_post( $post_id ) ) {
+				if ( ! get_post( $post_id ) ) {
 					continue;
 				}
 				$package              = HB_Extra_Package::instance( $post_id );
@@ -39,8 +39,9 @@ class HB_Room_Extra extends WPHB_Room {
 				$ext->amount_singular = (float) $package->amount_singular();
 				$ext->respondent      = $package->respondent;
 				$ext->respondent_name = $package->respondent_name;
-				$ext->selected        = get_post_meta( $post_id, 'tp_hb_extra_room_selected', true );
-				$results[$post_id]    = $ext;
+				$ext->price           = hb_format_price( $ext->amount_singular );
+				$ext->selected       = get_post_meta( $post_id, 'tp_hb_extra_room_selected', true );
+				$results[ $post_id ] = $ext;
 			}
 
 		}
@@ -58,19 +59,20 @@ class HB_Room_Extra extends WPHB_Room {
 			$id = $room;
 		}
 
-		if ( empty( self::$_instance[$id] ) ) {
-			return self::$_instance[$id] = new self( $post, $options );
+		if ( empty( self::$_instance[ $id ] ) ) {
+			return self::$_instance[ $id ] = new self( $post, $options );
 		} else {
-			$room = self::$_instance[$id];
+			$room = self::$_instance[ $id ];
 
 			if ( isset( $options['check_in_date'], $options['check_out_date'] )
-				&& ( ( $options['check_in_date'] !== $room->check_in_date ) || ( $options['check_out_date'] !== $room->check_out_date ) )
-				|| $room->quantity === false || $room->quantity != $options['quantity']
+			     && ( ( $options['check_in_date'] !== $room->check_in_date ) || ( $options['check_out_date'] !== $room->check_out_date ) )
+			     || $room->quantity === false || $room->quantity != $options['quantity']
 			) {
 				return new self( $post, $options );
 			}
 		}
-		return self::$_instance[$id];
+
+		return self::$_instance[ $id ];
 
 	}
 

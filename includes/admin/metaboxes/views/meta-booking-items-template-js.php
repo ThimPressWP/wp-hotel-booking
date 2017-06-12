@@ -52,7 +52,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<# } #>
 				<div class="section">
 					<# if ( typeof data.qty !== 'undefined' ) { #>
-						<select name="qty">
+						<select name="qty" class="number_room_select">
 							<option value="0"><?php _e( 'Quantity' ) ?></option>
 							<# for ( var i = 1; i <= data.qty; i++ ) { #>
 
@@ -162,7 +162,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <!--Qty-->
 <script type="text/html" id="tmpl-hb-qty">
 	<# if ( typeof data.qty !== 'undefined' ) { #>
-		<select name="qty">
+		<select name="qty" class="number_room_select">
 			<option value="0"><?php _e( 'Quantity' ) ?></option>
 			<# for ( var i = 1; i <= data.qty; i++ ) { #>
 
@@ -175,6 +175,55 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<# } #>
 		</select>
 	<# } #>
+    <# if ( typeof data.extra !== 'undefined' ) { #>
+        <div class="hb_addition_package_extra">
+            <div class="hb_addition_package_title">
+                <h5 class="hb_addition_package_title_toggle">
+                    <a href="javascript:void(0)" class="hb_package_toggle">
+					    <?php esc_html_e( 'Optional Extras', 'wp-hotel-booking' ); ?>
+                    </a>
+                </h5>
+            </div>
+            <div class="hb_addition_packages">
+                <ul class="hb_addition_packages_ul">
+                    <# for ( var _extra in data.extra ) { #>
+                        <div class="{{data.extra[_extra].title}}"></div>
+
+                        <li data-price="{{data.extra[_extra].amount_singular}}">
+                            <div class="hb_extra_optional_right">
+                                <input type="checkbox"
+                                       name="hb_optional_quantity_selected[{{data.extra[_extra].ID}}]"
+                                       class="hb_optional_quantity_selected" id="<?php echo esc_attr( 'hb-ex-room-{{data.product_id}}-{{_extra}}') ?>"
+                                />
+                            </div>
+                            <div class="hb_extra_optional_left">
+                                <div class="hb_extra_title">
+                                    <div class="hb_package_title">
+                                        <label for="<?php echo esc_attr( 'hb-ex-room-{{data.product_id}}-{{_extra}}') ?>">{{data.extra[_extra].title}}</label>
+                                    </div>
+                                    <p>{{data.extra[_extra].description}}</p>
+                                </div>
+                                <div class="hb_extra_detail_price">
+                                    <# if( data.extra[_extra].respondent === 'number') { #>
+                                        <input type="number" step="1" min="1" name="hb_optional_quantity[{{_extra}}]" value="1" class="hb_optional_quantity"/>
+                                    <# } else { #>
+                                        <input type="hidden" step="1" min="1" name="hb_optional_quantity[{{_extra}}]" value="1"/>
+                                    <# } #>
+                                    <label>
+                                        <# if( data.extra[_extra].respondent_name ) { #>
+                                            <small>{{data.extra[_extra].respondent_name}}</small>
+                                        <# } else { #>
+                                            <small><?php _e( 'Package', 'wp-hotel-booking' ); ?></small>
+                                        <# } #>
+                                    </label>
+                                </div>
+                            </div>
+                        </li>
+                    <# } #>
+                </ul>
+            </div>
+        </div>
+        <# } #>
 </script>
 <!--Qty-->
 
