@@ -210,6 +210,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                         <input type="hidden" step="1" min="1" name="hb_optional_quantity[{{_extra}}]" value="1"/>
                                     <# } #>
                                     <label>
+                                        <strong>{{data.extra[_extra].price}} /</strong>
                                         <# if( data.extra[_extra].respondent_name ) { #>
                                             <small>{{data.extra[_extra].respondent_name}}</small>
                                         <# } else { #>
