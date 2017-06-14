@@ -549,10 +549,10 @@ class WPHB_Post_Types {
 			'query_var'    => true,
 			'rewrite'      => array( 'slug' => _x( 'room-type', 'URL slug', 'wp-hotel-booking' ) ),
 			'capabilities' => array(
-				'manage_terms' => 'edit_hb_rooms',
-				'edit_terms'   => 'edit_hb_rooms',
-				'delete_terms' => 'edit_hb_rooms',
-				'assign_terms' => 'edit_hb_rooms'
+				'manage_terms' => 'manage_hb_booking',
+				'edit_terms'   => 'manage_hb_booking',
+				'delete_terms' => 'manage_hb_booking',
+				'assign_terms' => 'manage_hb_booking'
 			)
 		);
 		$args = apply_filters( 'hotel_booking_register_tax_room_type_arg', $args );
@@ -587,10 +587,10 @@ class WPHB_Post_Types {
 				'hierarchical' => true,
 			),
 			'capabilities' => array(
-				'manage_terms' => 'edit_hb_rooms',
-				'edit_terms'   => 'edit_hb_rooms',
-				'delete_terms' => 'edit_hb_rooms',
-				'assign_terms' => 'edit_hb_rooms'
+				'manage_terms' => 'manage_hb_booking',
+				'edit_terms'   => 'manage_hb_booking',
+				'delete_terms' => 'manage_hb_booking',
+				'assign_terms' => 'manage_hb_booking'
 			)
 		);
 		$args = apply_filters( 'hotel_booking_register_tax_capacity_arg', $args );
