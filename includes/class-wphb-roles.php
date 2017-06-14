@@ -39,38 +39,39 @@ if ( ! class_exists( 'WPHB_Roles' ) ) {
 
 //			$booking_manager->add_cap( 'manage_options');
 
-			$booking_manager->add_cap( 'edit_hb_booking');
-			$booking_manager->add_cap( 'read_hb_booking');
-			$booking_manager->add_cap( 'delete_hb_booking');
-			$booking_manager->add_cap( 'edit_' . $booking_cap );
-			$booking_manager->add_cap( 'delete_' . $booking_cap);
-			$booking_manager->add_cap( 'edit_others_' . $booking_cap );
-			$booking_manager->add_cap( 'publish_' . $booking_cap );
-
-			$booking_manager->add_cap( 'edit_hb_room');
-			$booking_manager->add_cap( 'read_hb_room');
-			$booking_manager->add_cap( 'delete_hb_room');
-			$booking_manager->add_cap( 'edit_hb_rooms');
-			$booking_manager->add_cap( 'edit_hb_rooms');
-			$booking_manager->add_cap( 'delete_hb_rooms');
-			$booking_manager->add_cap( 'edit_others_hb_rooms');
-			$booking_manager->add_cap( 'publish_hb_rooms');
-			$booking_manager->add_cap( 'read');
-
-
-//			$booking_manager->add_cap( 'edit_posts' );
-//			$booking_manager->add_cap( 'delete_posts' );
-//			$booking_manager->add_cap( 'edit_others_posts' );
+//			$booking_manager->add_cap( 'edit_hb_booking');
+//			$booking_manager->add_cap( 'read_hb_booking');
+//			$booking_manager->add_cap( 'delete_hb_booking');
+//			$booking_manager->add_cap( 'edit_' . $booking_cap );
+//			$booking_manager->add_cap( 'delete_' . $booking_cap);
+//			$booking_manager->add_cap( 'edit_others_' . $booking_cap );
+//			$booking_manager->add_cap( 'publish_' . $booking_cap );
 //
-//			$booking_manager->remove_cap('edit_hb_rooms');
-//			$booking_manager->remove_cap('edit_hb_rooms');
-//			$booking_manager->remove_cap('delete_hb_rooms');
-//			$booking_manager->remove_cap('edit_others_hb_rooms');
-//
-//			$booking_manager->remove_cap('edit_posts');
-//			$booking_manager->remove_cap('delete_posts');
-//			$booking_manager->remove_cap('edit_others_posts');
+//			$booking_manager->add_cap( 'edit_hb_room');
+//			$booking_manager->add_cap( 'read_hb_room');
+//			$booking_manager->add_cap( 'delete_hb_room');
+//			$booking_manager->add_cap( 'edit_hb_rooms');
+//			$booking_manager->add_cap( 'delete_hb_rooms');
+//			$booking_manager->add_cap( 'edit_others_hb_rooms');
+//			$booking_manager->add_cap( 'publish_hb_rooms');
+//			$booking_manager->add_cap( 'read');
 
+
+			$booking_manager->add_cap( 'edit_posts');
+			$booking_manager->add_cap( 'read_posts');
+			$booking_manager->add_cap( 'delete_posts');
+			$booking_manager->add_cap( 'edit_others_posts');
+			$booking_manager->add_cap( 'publish_posts');
+//			$booking_manager->add_cap( 'read');
+
+
+//			remove_role('wphb_booking_manager');
+
+
+//			echo '<pre>';
+//			var_dump( $booking_manager );
+//			echo '</pre>';
+//			die();
 
 		}
 
