@@ -153,7 +153,7 @@ class WP_Hotel_Booking_Coupon {
 			'publicly_queryable' => false,
 			'show_ui'            => true,
 			'has_archive'        => false,
-			'capability_type'    => 'post',
+			'capability_type'    => 'hb_room',
 			'map_meta_cap'       => true,
 			'show_in_menu'       => 'tp_hotel_booking',
 			'show_in_admin_bar'  => true,
