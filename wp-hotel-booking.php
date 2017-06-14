@@ -4,18 +4,18 @@
     Plugin URI: http://thimpress.com/
     Description: Full of professional features for a booking room system
     Author: ThimPress
-    Version: 1.7.4
+    Version: 1.7.7
     Author URI: http://thimpress.com
 */
 
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
 define( 'WPHB_FILE', __FILE__ );
 define( 'WPHB_PLUGIN_PATH', dirname( __FILE__ ) );
 define( 'WPHB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
-define( 'WPHB_VERSION', '1.7.4' );
+define( 'WPHB_VERSION', '1.7.7' );
 define( 'WPHB_BLOG_ID', get_current_blog_id() );
 
 /**
@@ -153,7 +153,7 @@ class WP_Hotel_Booking {
 		$this->_include( 'includes/wphb-template-functions.php' );
 		$this->_include( 'includes/wphb-widget-functions.php' );
 
-		if ( !is_admin() ) {
+		if ( ! is_admin() ) {
 			$this->frontend_includes();
 		}
 		$this->_include( 'includes/class-wphb-post-types.php' );
@@ -170,6 +170,7 @@ class WP_Hotel_Booking {
 		// users
 		$this->_include( 'includes/user/wphb-user-functions.php' );
 		$this->_include( 'includes/user/class-wphb-user.php' );
+		$this->_include( 'includes/class-wphb-roles.php' );
 
 		// products
 		$this->_include( 'includes/products/class-wphb-abstract-product.php' );
@@ -208,7 +209,7 @@ class WP_Hotel_Booking {
 		$this->_include( 'includes/shortcodes/class-wphb-shortcode-hotel-booking.php' );
 		// end shortcodes
 
-		if ( !class_exists( 'Aq_Resize' ) ) {
+		if ( ! class_exists( 'Aq_Resize' ) ) {
 			$this->_include( 'includes/aq_resizer.php' );
 		}
 	}
@@ -231,9 +232,10 @@ class WP_Hotel_Booking {
 	 * @return string
 	 */
 	public function plugin_path( $sub = '' ) {
-		if ( !$this->_plugin_path ) {
+		if ( ! $this->_plugin_path ) {
 			$this->_plugin_path = untrailingslashit( plugin_dir_path( __FILE__ ) );
 		}
+
 		return $this->_plugin_path . '/' . $sub;
 	}
 
@@ -245,9 +247,10 @@ class WP_Hotel_Booking {
 	 * @return string
 	 */
 	public function plugin_url( $sub = '' ) {
-		if ( !$this->_plugin_url ) {
+		if ( ! $this->_plugin_url ) {
 			$this->_plugin_url = untrailingslashit( plugins_url( '/', __FILE__ ) );
 		}
+
 		return $this->_plugin_url . '/' . $sub;
 	}
 
@@ -301,7 +304,7 @@ class WP_Hotel_Booking {
 			wp_register_style( 'wp-admin-hotel-booking-fullcalendar', $this->plugin_url( 'assets/css/fullcalendar.min.css' ) );
 		} else {
 			wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.min.css' ) );
-			wp_register_script( 'wp-hotel-booking', $this->plugin_url( 'assets/js/hotel-booking.min.js' ), $dependencies , false, true);
+			wp_register_script( 'wp-hotel-booking', $this->plugin_url( 'assets/js/hotel-booking.min.js' ), $dependencies, false, true );
 
 			wp_localize_script( 'wp-hotel-booking', 'hotel_booking_i18n', hb_i18n() );
 
@@ -351,16 +354,16 @@ class WP_Hotel_Booking {
 		$upload_base_url = $upload_dir['baseurl'];
 		?>
         <script type="text/javascript">
-			var hotel_settings = {
-				ajax           : '<?php echo admin_url( 'admin-ajax.php' ); ?>',
-				settings       : <?php echo WPHB_Settings::instance()->toJson( apply_filters( 'hb_settings_fields', array( 'review_rating_required' ) ) ); ?>,
-				upload_base_url: '<?php echo esc_js( $upload_base_url ) ?>',
-				meta_key       : {
-					prefix: '_hb_'
-				},
-				nonce          : '<?php echo wp_create_nonce( 'hb_booking_nonce_action' ); ?>',
-				timezone       : '<?php echo current_time( 'timestamp' ) ?>'
-			}
+            var hotel_settings = {
+                ajax: '<?php echo admin_url( 'admin-ajax.php' ); ?>',
+                settings: <?php echo WPHB_Settings::instance()->toJson( apply_filters( 'hb_settings_fields', array( 'review_rating_required' ) ) ); ?>,
+                upload_base_url: '<?php echo esc_js( $upload_base_url ) ?>',
+                meta_key: {
+                    prefix: '_hb_'
+                },
+                nonce: '<?php echo wp_create_nonce( 'hb_booking_nonce_action' ); ?>',
+                timezone: '<?php echo current_time( 'timestamp' ) ?>'
+            }
         </script>
 		<?php
 	}
@@ -372,7 +375,7 @@ class WP_Hotel_Booking {
 	 * @return object|WP_Hotel_Booking
 	 */
 	static function instance() {
-		if ( !self::$_instance ) {
+		if ( ! self::$_instance ) {
 			self::$_instance = new self();
 		}
 
