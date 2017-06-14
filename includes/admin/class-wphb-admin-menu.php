@@ -15,7 +15,7 @@ class WPHB_Admin_Menu{
         add_menu_page(
             __( 'WP Hotel Booking', 'wp-hotel-booking' ),
             __( 'WP Hotel Booking', 'wp-hotel-booking' ),
-            'manage_options',
+            'edit_others_posts',
             'tp_hotel_booking',
             '',
             'dashicons-calendar',
