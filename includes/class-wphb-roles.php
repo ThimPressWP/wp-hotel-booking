@@ -29,7 +29,7 @@ if ( ! class_exists( 'WPHB_Roles' ) ) {
 
 			add_role(
 				'wphb_hotel_manager',
-				__( 'Hotel Manager' ),
+				__( 'Hotel Manager', 'wp-hotel-booking' ),
 				array()
 			);
 
@@ -39,6 +39,7 @@ if ( ! class_exists( 'WPHB_Roles' ) ) {
 			$hotel_manager = get_role( 'wphb_hotel_manager' );
 
 			// add capability for hotel manager
+			$hotel_manager->add_cap( 'read' );
 			$hotel_manager->add_cap( 'delete_' . $room_cap );
 			$hotel_manager->add_cap( 'delete_published_' . $room_cap );
 			$hotel_manager->add_cap( 'delete_private_' . $room_cap );
@@ -59,6 +60,36 @@ if ( ! class_exists( 'WPHB_Roles' ) ) {
 
 			$hotel_manager->add_cap( 'upload_files' );
 			$hotel_manager->add_cap( 'manage_hb_booking' );
+
+			add_role(
+				'wphb_booking_editor',
+				__( 'Booking Editor', 'wp-hotel-booking' ),
+				array()
+			);
+
+			$booking_editor = get_role( 'wphb_booking_editor' );
+
+			// add capability for booking
+			$booking_editor->add_cap( 'read' );
+			$booking_editor->add_cap( 'delete_' . $room_cap );
+			$booking_editor->add_cap( 'delete_published_' . $room_cap );
+			$booking_editor->add_cap( 'delete_private_' . $room_cap );
+			$booking_editor->add_cap( 'edit_others_' . $room_cap );
+			$booking_editor->add_cap( 'edit_' . $room_cap );
+			$booking_editor->add_cap( 'edit_published_' . $room_cap );
+			$booking_editor->add_cap( 'edit_private_' . $room_cap );
+			$booking_editor->add_cap( 'edit_others_' . $room_cap );
+
+			$booking_editor->add_cap( 'delete_' . $booking_cap );
+			$booking_editor->add_cap( 'delete_published_' . $booking_cap );
+			$booking_editor->add_cap( 'delete_private_' . $booking_cap );
+			$booking_editor->add_cap( 'edit_others_' . $booking_cap );
+			$booking_editor->add_cap( 'edit_' . $booking_cap );
+			$booking_editor->add_cap( 'edit_published_' . $booking_cap );
+			$booking_editor->add_cap( 'edit_private_' . $booking_cap );
+			$booking_editor->add_cap( 'edit_others_' . $booking_cap );
+
+			$booking_editor->add_cap( 'upload_files' );
 
 
 			$admin = get_role( 'administrator' );
@@ -83,6 +114,7 @@ if ( ! class_exists( 'WPHB_Roles' ) ) {
 			$admin->add_cap( 'edit_others_' . $booking_cap );
 
 			$admin->add_cap( 'manage_hb_booking' );
+
 
 		}
 

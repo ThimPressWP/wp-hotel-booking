@@ -514,9 +514,6 @@ class WPHB_Post_Types {
 			'show_in_nav_menus'  => true,
 			'supports'           => array( 'title' ),
 			'hierarchical'       => false,
-			// 'can_export'         => false,
-			'capabilities'       => array(// 'create_posts'  => 'do_not_allow'
-			)
 		);
 		$args = apply_filters( 'hotel_booking_register_post_type_booking_arg', $args );
 		register_post_type( 'hb_booking', $args );
