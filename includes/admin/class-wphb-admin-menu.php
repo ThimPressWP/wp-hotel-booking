@@ -15,7 +15,7 @@ class WPHB_Admin_Menu{
         add_menu_page(
             __( 'WP Hotel Booking', 'wp-hotel-booking' ),
             __( 'WP Hotel Booking', 'wp-hotel-booking' ),
-            'edit_others_posts',
+            'manage_options',
             'tp_hotel_booking',
             '',
             'dashicons-calendar',
@@ -23,20 +23,6 @@ class WPHB_Admin_Menu{
         );
 
         $menu_items = array(
-            // 'room_type' => array(
-            //     'tp_hotel_booking',
-            //     __( 'Room Types', 'wp-hotel-booking' ),
-            //     __( 'Room Types', 'wp-hotel-booking' ),
-            //     'manage_options',
-            //     'edit-tags.php?taxonomy=hb_room_type'
-            // ),
-            // 'room_capacity' => array(
-            //     'tp_hotel_booking',
-            //     __( 'Room Capacities', 'wp-hotel-booking' ),
-            //     __( 'Room Capacities', 'wp-hotel-booking' ),
-            //     'manage_options',
-            //     'edit-tags.php?taxonomy=hb_room_capacity'
-            // ),
             'pricing_table'   => array(
                 'tp_hotel_booking',
                 __( 'Pricing Plans', 'wp-hotel-booking' ),

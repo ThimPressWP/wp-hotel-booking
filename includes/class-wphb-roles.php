@@ -33,45 +33,31 @@ if ( ! class_exists( 'WPHB_Roles' ) ) {
 				array()
 			);
 
+			$room_cap    = 'hb_rooms';
 			$booking_cap = 'hb_bookings';
 
 			$booking_manager = get_role( 'wphb_booking_manager' );
 
-//			$booking_manager->add_cap( 'manage_options');
+			$admin = get_role( 'administrator' );
 
-//			$booking_manager->add_cap( 'edit_hb_booking');
-//			$booking_manager->add_cap( 'read_hb_booking');
-//			$booking_manager->add_cap( 'delete_hb_booking');
-//			$booking_manager->add_cap( 'edit_' . $booking_cap );
-//			$booking_manager->add_cap( 'delete_' . $booking_cap);
-//			$booking_manager->add_cap( 'edit_others_' . $booking_cap );
-//			$booking_manager->add_cap( 'publish_' . $booking_cap );
-//
-//			$booking_manager->add_cap( 'edit_hb_room');
-//			$booking_manager->add_cap( 'read_hb_room');
-//			$booking_manager->add_cap( 'delete_hb_room');
-//			$booking_manager->add_cap( 'edit_hb_rooms');
-//			$booking_manager->add_cap( 'delete_hb_rooms');
-//			$booking_manager->add_cap( 'edit_others_hb_rooms');
-//			$booking_manager->add_cap( 'publish_hb_rooms');
-//			$booking_manager->add_cap( 'read');
+			// add capability for admin
+			$admin->add_cap( 'delete_' . $room_cap );
+			$admin->add_cap( 'delete_published_' . $room_cap );
+			$admin->add_cap( 'delete_private_' . $room_cap );
+			$admin->add_cap( 'edit_others_' . $room_cap );
+			$admin->add_cap( 'edit_' . $room_cap );
+			$admin->add_cap( 'edit_published_' . $room_cap );
+			$admin->add_cap( 'edit_private_' . $room_cap );
+			$admin->add_cap( 'edit_others_' . $room_cap );
 
-
-			$booking_manager->add_cap( 'edit_posts');
-			$booking_manager->add_cap( 'read_posts');
-			$booking_manager->add_cap( 'delete_posts');
-			$booking_manager->add_cap( 'edit_others_posts');
-			$booking_manager->add_cap( 'publish_posts');
-//			$booking_manager->add_cap( 'read');
-
-
-//			remove_role('wphb_booking_manager');
-
-
-//			echo '<pre>';
-//			var_dump( $booking_manager );
-//			echo '</pre>';
-//			die();
+			$admin->add_cap( 'delete_' . $booking_cap );
+			$admin->add_cap( 'delete_published_' . $booking_cap );
+			$admin->add_cap( 'delete_private_' . $booking_cap );
+			$admin->add_cap( 'edit_others_' . $booking_cap );
+			$admin->add_cap( 'edit_' . $booking_cap );
+			$admin->add_cap( 'edit_published_' . $booking_cap );
+			$admin->add_cap( 'edit_private_' . $booking_cap );
+			$admin->add_cap( 'edit_others_' . $booking_cap );
 
 		}
 
