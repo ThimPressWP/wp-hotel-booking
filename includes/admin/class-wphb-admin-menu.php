@@ -66,6 +66,19 @@ class WPHB_Admin_Menu {
 			}
 		}
 
+		// get user role
+		$user_roles = wp_get_current_user()->roles;
+
+		if ( $user_roles ) {
+			if ( $user_roles == array( 'wphb_booking_editor' ) || $user_roles == array( 'wphb_hotel_manager' ) ) {
+				remove_menu_page( 'edit.php' ); // Posts
+				remove_menu_page( 'upload.php' ); // Media
+				remove_menu_page( 'edit-comments.php' ); // Comments
+				remove_menu_page( 'tools.php' ); // Tools
+			}
+		}
+
+
 	}
 
 	function settings_page() {
