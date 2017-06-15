@@ -67,6 +67,11 @@ Yes.
 
 == Changelog ==
 
+= 1.7.8 =
+* Add Hotel Manager role to manage hotel booking
+* Add Booking Editor role to manage rooms and bookings
+* Update capabilities for users
+
 = 1.7.7 =
 - Update email from when customer place booking
 - Update single search available template of booking room add-on

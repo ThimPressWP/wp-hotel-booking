@@ -9,7 +9,7 @@ if ( !function_exists( 'hotel_report_menu' ) ) {
             'tp_hotel_booking',
             __( 'Reports', 'wp-hotel-booking-report' ),
             __( 'Reports', 'wp-hotel-booking-report' ),
-            'manage_options',
+            'manage_hb_booking',
             'tp_hotel_booking_report',
             'hotel_create_report_page'
         );

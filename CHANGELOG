@@ -1,0 +1,158 @@
+= 1.7.8 =
+* Add Hotel Manager role to manage hotel booking
+* Add Booking Editor role to manage rooms and bookings
+* Update capabilities for users
+
+= 1.7.7 =
+* Update email from when customer place booking
+* Update single search available template of booking room add-on
+
+= 1.7.6.9=
+* Update search room based on timezone
+* Update checkout required fields
+
+= 1.7.6.8=
+* Update create pages process
+* Add place booking email for admin
+
+= 1.7.6.7=
+* Update datepicker with RTL languages
+* Update booking completed email
+* Add place booking email for customer
+
+= 1.7.6.6=
+* Add minimum booking day option
+* Update email booking notice
+* Fix update Woocommrece cart when add room to cart in WP Hotel Booking Woocommerce add-on
+
+= 1.7.6.5 =
+* Update email booking notice process
+
+= 1.7.6.4 =
+* Fix bug in admin create new bookings process
+
+= 1.7.6.3 =
+* Fix add addition package to cart in WP Hotel Booking Woocommerce add-on
+
+= 1.7.6.2 =
+* Fix override template bug in WP Hotel Booking Room add-on
+
+= 1.7.6.1 =
+* Update file language
+
+= 1.7.6 =
+* Update WP Hotel Booking WPML Support add-on
+
+= 1.7.5 =
+* Fix deactivate previous version process for multisite
+* Update Woocomerce payment add-on for Woocommerce version 3.x
+
+= 1.7.4 =
+* Update plugin classes and functions
+
+= 1.7.3 =
+* Fix update pricing plan
+
+= 1.7.2 =
+* Fix default value for new booking admin email
+* Fix admin style make review starts in plugins page broken
+* Update assets js
+* Remove add plan button
+
+= 1.7.1 =
+* Update add-ons
+
+= 1.7 =
+* Update add-ons
+* Fix notice when init room meta boxes
+* Fix bug of timestamp pricing plan
+
+= 1.6.3.2 =
+* Fix required plugins path
+
+= 1.6.3.1 =
+* Compatibility with Wordpress 4.7.1
+* Fix bug undefined get children function
+
+= 1.6.3 =
+* Compatibility with Wordpress 4.7
+* Update WP Hotel Booking add-ons
+
+= 1.6.2 =
+* Fix checkout issue
+* Update logic of search room process
+* Update latest reviews shortcode
+* Update best reviews shortcode
+* Add an add-on supports book room without search room
+
+= 1.1.6.1 =
+* Update WP Booking WooCommerce add-on
+
+= 1.1.6 =
+* Update logic of search room process
+* Update multiple choice addition packages
+* Update mini cart template
+* Update maximum capacity
+* Update all templates
+* Update to compatible with Wordpress 4.6.1
+* Fix block room calender plan
+
+= 1.1.5.1 =
+* Add book manually
+* User book
+* Update Pricing
+* Book in room add-on ( Support book room without search room )
+
+= 1.1.4.1 =
+* Auto cancel payment
+* Booking inside single room detail
+
+= 1.1.4 =
+* Coupon update
+* Report update
+* Select room search
+* Pricing plan
+
+= 1.1.3 =
+- Update check-in, check-out filter
+- Query search
+- Update report customer delete post
+
+= 1.1.2 =
+- Add template taxonomy room type
+- Translate calendar search widget
+- Update calendar format
+- Update capacity (customer feedback) + remove option + add term meta + search query + admin update capacity
+
+= 1.1.1 =
+- Update Resize image, gallery, archive rooms
+- Update Session class
+- Support Loco Translation & Mulilanguages
+
+= 1.1 =
+- Add Sessions Class, Update Cart Class
+- Optimize process checkout
+- Remove data saving booking if it not usesful (postmeta)
+- Optimize Payment Stripe process (remove stripe sdk, use REST API)
+- Admin booking details
+- Update hook processs addon
+
+= 1.0.3 =
+- Update, Add hook ajax search url result. 'hotel_booking_parse_search_param', 'hotel_booking_ajax_remove_cart_item'
+- Addon Block Special Date (Angularjs, ajax)
+- Update Rating
+
+= 1.0.2 =
+- Update Woocommerce addon
+- Search rooms. Import demo data more than once. post_meta not unique.
+
+= 1.0.1 =
+- Fix load text-domain.
+- Add language file en_US
+- Add Extra Package
+- Update, Fix Query search (customer's feedback: http://thimpress.com/forums/topic/calendar-availabality-room/#post-42595)
+- Query search booking_pricing (Admin panel)
+- Woocommerce Payment (add-on)
+
+= 1.0 =
+- An amazing Hotel Booking plugin for WordPress was born

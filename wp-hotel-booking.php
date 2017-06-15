@@ -4,7 +4,7 @@
     Plugin URI: http://thimpress.com/
     Description: Full of professional features for a booking room system
     Author: ThimPress
-    Version: 1.7.7
+    Version: 1.7.8
     Author URI: http://thimpress.com
 */
 
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'WPHB_FILE', __FILE__ );
 define( 'WPHB_PLUGIN_PATH', dirname( __FILE__ ) );
 define( 'WPHB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
-define( 'WPHB_VERSION', '1.7.7' );
+define( 'WPHB_VERSION', '1.7.8' );
 define( 'WPHB_BLOG_ID', get_current_blog_id() );
 
 /**
@@ -170,6 +170,7 @@ class WP_Hotel_Booking {
 		// users
 		$this->_include( 'includes/user/wphb-user-functions.php' );
 		$this->_include( 'includes/user/class-wphb-user.php' );
+		$this->_include( 'includes/class-wphb-roles.php' );
 
 		// products
 		$this->_include( 'includes/products/class-wphb-abstract-product.php' );

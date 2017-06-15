@@ -80,7 +80,7 @@ class Hotel_Booking_Block {
             'tp_hotel_booking',
             __( 'Block Special Date', 'wp-hotel-booking-block' ),
             __( 'Block Special Date', 'wp-hotel-booking-block' ),
-            'manage_options',
+            'manage_hb_booking',
             'tp_hotel_block',
             array( $this, 'block_build_page' )
         );

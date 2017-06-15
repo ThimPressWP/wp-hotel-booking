@@ -5,7 +5,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
-      <library name="PHP">
+      <library name="PHP" type="php">
         <CLASSES>
           <root url="file://C:/WTServer/WWW/ob_wphotelbooking" />
         </CLASSES>
