@@ -74,7 +74,6 @@
 }
 .hb_extra_optional_right{
 	float: left;
-	width: 0px
 }
 .hb_extra_optional_left{
 	padding-left: 30px;
@@ -149,11 +148,6 @@
 	float: right;
 }
 
-.hb_addition_package_extra input[type="checkbox"]:checked:before{
-    content: '\2714' !important;
-    font: 400 18px/1 dashicons;
-    margin: -4px 0 0 0px;
-}
 .hb_checkout_item.package td {
     padding: 5px 5px !important;
     font-size: 15px;

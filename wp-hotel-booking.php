@@ -350,8 +350,9 @@ class WP_Hotel_Booking {
 	 * Output global js settings
 	 */
 	public function global_js() {
-		$upload_dir      = wp_upload_dir();
-		$upload_base_url = $upload_dir['baseurl'];
+		$upload_dir       = wp_upload_dir();
+		$upload_base_url  = $upload_dir['baseurl'];
+		$min_booking_date = get_option( 'tp_hotel_booking_minimum_booking_day' ) ? get_option( 'tp_hotel_booking_minimum_booking_day' ) : 1;
 		?>
         <script type="text/javascript">
             var hotel_settings = {
@@ -362,7 +363,8 @@ class WP_Hotel_Booking {
                     prefix: '_hb_'
                 },
                 nonce: '<?php echo wp_create_nonce( 'hb_booking_nonce_action' ); ?>',
-                timezone: '<?php echo current_time( 'timestamp' ) ?>'
+                timezone: '<?php echo current_time( 'timestamp' ) ?>',
+                min_booking_date: <?php echo $min_booking_date; ?>
             }
         </script>
 		<?php

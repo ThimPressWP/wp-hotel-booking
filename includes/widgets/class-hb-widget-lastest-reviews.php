@@ -8,16 +8,16 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Display form for search rooms
  * @extends WP_Widget
  */
-class WPHB_Widget_Best_Reviews extends WP_Widget{
+class HB_Widget_Lastest_Reviews extends WP_Widget{
     /**
      * Constructor
      */
     public function __construct()
     {
         parent::__construct(
-            'hb_widget_best_reviews', // widget base id
-            __( 'HB Rooms Best Reviews', 'wp-hotel-booking' ), // name of widget
-            array( 'description' => __( "Display rooms have best reviews", 'wp-hotel-booking' ) ) // description widget
+            'hb_widget_lastest_reviews', // widget base id
+            __( 'HB Rooms Lastest Reviews', 'wp-hotel-booking' ), // name of widget
+            array( 'description' => __( "Display rooms have lastest reviews", 'wp-hotel-booking' ) ) // description widget
         );
     }
 
@@ -34,13 +34,13 @@ class WPHB_Widget_Best_Reviews extends WP_Widget{
         $html = array();
         if( $instance )
         {
-            $html[] = '[hotel_booking_best_reviews';
+            $html[] = '[hotel_booking_lastest_reviews';
             foreach ($instance as $att => $param) {
                 if( is_array($param) )
                     continue;
                 $html[] = $att.'="'.$param.'"';
             }
-            $html[] = '][/hotel_booking_best_reviews]';
+            $html[] = '][/hotel_booking_lastest_reviews]';
         }
         echo do_shortcode( implode(' ', $html) );
         echo sprintf( '%s', $args['after_widget'] );
@@ -61,7 +61,7 @@ class WPHB_Widget_Best_Reviews extends WP_Widget{
         </p>
         <p>
             <label for="<?php echo esc_attr( $this->get_field_id( 'number' ) ); ?>"><?php _e( 'Number of items:' ); ?></label>
-            <input id="<?php echo esc_attr( $this->get_field_id( 'number' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'number' ) ); ?>" type="number" value="<?php echo esc_attr( esc_attr( $number ) ); ?>" min="1">
+            <input id="<?php echo esc_attr( $this->get_field_id( 'number' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'number' ) ); ?>" type="number" value="<?php echo esc_attr( $number ); ?>" min="1">
         </p>
         <?php
     }

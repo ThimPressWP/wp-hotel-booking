@@ -68,7 +68,6 @@ $uniqid         = uniqid();
 							'show_option_none'  => __( 'Children', 'wp-hotel-booking' ),
 							'option_none_value' => 0,
 							'selected'          => $max_child,
-							'options'           => hb_get_children_of_rooms()
 						)
 					);
 					?>

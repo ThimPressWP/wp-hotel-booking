@@ -96,6 +96,14 @@ if ( !class_exists( 'WPHB_Admin_Setting_General' ) ) {
                     'min' => 0,
                     'max' => 3,
                 ),
+	            array(
+		            'type' => 'number',
+		            'id' => 'tp_hotel_booking_minimum_booking_day',
+		            'title' => __( 'Minimum booking day', 'wp-hotel-booking' ),
+		            'default' => 1,
+		            'min' => 0,
+		            'step' => 'any'
+	            ),
                 array(
                     'type' => 'number',
                     'id' => 'tp_hotel_booking_tax',
@@ -125,7 +133,7 @@ if ( !class_exists( 'WPHB_Admin_Setting_General' ) ) {
                     'type' => 'number',
                     'id' => 'tp_hotel_booking_advance_payment',
                     'title' => __( 'Advance Payment', 'wp-hotel-booking' ),
-                    'desc' => __( 'Payment addvance. Eg: 50%', 'wp-hotel-booking' ),
+                    'desc' => __( 'Payment advance. Eg: 50%', 'wp-hotel-booking' ),
                     'default' => 50,
                     'min' => 0,
                     'max' => 100

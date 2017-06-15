@@ -34,7 +34,7 @@ if ( !function_exists( 'hb_sw_get_template' ) ) {
     }
 
     function hb_sw_template_path() {
-        return apply_filters( 'hb_sw_template_path', 'tp-hb-currencies' );
+        return apply_filters( 'hb_sw_template_path', 'wp-hb-currencies' );
     }
 
     /**

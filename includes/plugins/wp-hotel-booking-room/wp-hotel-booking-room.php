@@ -5,7 +5,7 @@
  * Plugin URI: http://thimpress.com/
  * Description: Support book room without search room
  * Author: ThimPress
- * Version: 1.7
+ * Version: 1.7.3
  * Text Domain: wp-hotel-booking-room
  * Domain Path: /languages/
  */
@@ -17,7 +17,7 @@ define( 'TP_HB_BOOKING_ROOM_PATH', plugin_dir_path( __FILE__ ) );
 define( 'TP_HB_BOOKING_ROOM_URI', plugin_dir_url( __FILE__ ) );
 define( 'TP_HB_BOOKING_ROOM_INC_PATH', plugin_dir_path( __FILE__ ) . 'inc' );
 
-class TP_Hotel_Booking_Room {
+class WP_Hotel_Booking_Room {
 
     static $instance = null;
     public $available = false;
@@ -33,7 +33,7 @@ class TP_Hotel_Booking_Room {
             include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
         }
 
-		if ( ( class_exists( 'TP_Hotel_Booking' ) && is_plugin_active( 'tp-hotel-booking/tp-hotel-booking.php' ) ) || ( is_plugin_active( 'wp-hotel-booking/wp-hotel-booking.php' ) && class_exists( 'WP_Hotel_Booking' ) ) ) {
+		if ( ( class_exists( 'TP_Hotel_Booking' ) && is_plugin_active( 'tp-hotel-booking/tp-hotel-booking.php' ) ) || ( is_plugin_active( 'WP-Hotel-Booking/wp-hotel-booking.php' ) && class_exists( 'WP_Hotel_Booking' ) ) ) {
             $this->available = true;
         }
 
@@ -94,8 +94,8 @@ class TP_Hotel_Booking_Room {
 
 }
 
-function TP_Hotel_Booking_Room() {
-    return TP_Hotel_Booking_Room::instance();
+function WP_Hotel_Booking_Room() {
+    return WP_Hotel_Booking_Room::instance();
 }
 
-$GLOBALS['TP_Hotel_Booking_Room'] = TP_Hotel_Booking_Room();
+$GLOBALS['WP_Hotel_Booking_Room'] = WP_Hotel_Booking_Room();

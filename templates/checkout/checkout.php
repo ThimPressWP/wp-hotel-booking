@@ -52,7 +52,7 @@ do_action( 'hotel_booking_before_checkout_form' );
 				<?php do_action( 'hotel_booking_before_cart_total' ); ?>
 
                 <tr class="hb_sub_total">
-                    <td colspan="8"><?php _e( 'Sub Total', 'wp-hotel-booking' ); ?>
+                    <td colspan="7"><?php _e( 'Sub Total', 'wp-hotel-booking' ); ?>
                         <span class="hb-align-right hb_sub_total_value">
                         <?php echo hb_format_price( $cart->sub_total ); ?>
                     </span>
@@ -61,7 +61,7 @@ do_action( 'hotel_booking_before_checkout_form' );
 
 				<?php if ( $tax = hb_get_tax_settings() ) { ?>
                     <tr class="hb_advance_tax">
-                        <td colspan="8">
+                        <td colspan="7">
 							<?php _e( 'Tax', 'wp-hotel-booking' ); ?>
 							<?php if ( $tax < 0 ) { ?>
                                 <span><?php printf( __( '(price including tax)', 'wp-hotel-booking' ) ); ?></span>
@@ -72,21 +72,22 @@ do_action( 'hotel_booking_before_checkout_form' );
 				<?php } ?>
 
                 <tr class="hb_advance_grand_total">
-                    <td colspan="8">
+                    <td colspan="7">
 						<?php _e( 'Grand Total', 'wp-hotel-booking' ); ?>
                         <span class="hb-align-right hb_grand_total_value"><?php echo hb_format_price( $cart->total ); ?></span>
                     </td>
                 </tr>
-				<?php if ( $advance_payment == $cart->advance_payment ) { ?>
+				<?php $advance_payment = ''; ?>
+				<?php if ( $advance_payment = $cart->advance_payment ) { ?>
                     <tr class="hb_advance_payment">
-                        <td colspan="8">
+                        <td colspan="7">
 							<?php printf( __( 'Advance Payment (%s%% of Grand Total)', 'wp-hotel-booking' ), hb_get_advance_payment() ); ?>
                             <span class="hb-align-right hb_advance_payment_value"><?php echo hb_format_price( $advance_payment ); ?></span>
                         </td>
                     </tr>
 					<?php if ( hb_get_advance_payment() < 100 ) { ?>
                         <tr class="hb_payment_all">
-                            <td colspan="8" class="hb-align-right">
+                            <td colspan="7" class="hb-align-right">
                                 <label class="hb-align-right">
                                     <input type="checkbox" name="pay_all" />
 									<?php _e( 'I want to pay all', 'wp-hotel-booking' ); ?>

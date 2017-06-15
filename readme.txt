@@ -16,7 +16,7 @@ A complete **hotel booking plugin** for WordPress.
 
 > **One-Time Discount - 10 Days Left**
 
-> ** Announcing:** NEW [Hotel WP Theme](https://themeforest.net/item/travel-booking-hotel-wordpress-theme-hotel-wp/18828322?utm_source=wporg&utm_medium=wphotelbookingDC&ref=thimpress&utm_campaign=wphotelbooking) - 50% Discounts, only $39
+> ** Announcing:** NEW [Hotel WP Theme](https://themeforest.net/item/travel-booking-hotel-wordpress-theme-hotel-wp/18828322?utm_source=wporg&utm_medium=wphotelbookingDC&ref=thimpress&utm_campaign=wphotelbooking) - 100% Woocommerce compatible, only $64
 or [The Ultimate Sailing Hotel](http://themeforest.net/item/hotel-wordpress-theme-sailing/13321455?utm_source=wporg&utm_medium=wphotelbookingDC&ref=thimpress&utm_campaign=wphotelbooking), using by 1500 hotels, $64 Only
 
 ###Hotel WordPress Themes###
@@ -73,48 +73,48 @@ Yes.
 * Update capabilities for users
 
 = 1.7.7 =
-* Update email from when customer place booking
-* Update single search available template of booking room add-on
+- Update email from when customer place booking
+- Update single search available template of booking room add-on
 
-= 1.7.6.9=
-* Update search room based on timezone
-* Update checkout required fields
+= 1.7.6.9 =
+- Update search room based on timezone
+- Update checkout required fields
 
-= 1.7.6.8=
-* Update create pages process
-* Add place booking email for admin
+= 1.7.6.8 =
+- Update create pages process
+- Add place booking email for admin
 
-= 1.7.6.7=
-* Update datepicker with RTL languages
-* Update booking completed email
-* Add place booking email for customer
+= 1.7.6.7 =
+- Update datepicker with RTL languages
+- Update booking completed email
+- Add place booking email for customer
 
-= 1.7.6.6=
-* Add minimum booking day option
-* Update email booking notice
-* Fix update Woocommrece cart when add room to cart in WP Hotel Booking Woocommerce add-on
+= 1.7.6.6 =
+- Add minimum booking day option
+- Update email booking notice
+- Fix update Woocommrece cart when add room to cart in WP Hotel Booking Woocommerce add-on
 
 = 1.7.6.5 =
-* Update email booking notice process
+- Update email booking notice process
 
 = 1.7.6.4 =
-* Fix bug in admin create new bookings process
+- Fix bug in admin create new bookings process
 
 = 1.7.6.3 =
-* Fix add addition package to cart in WP Hotel Booking Woocommerce add-on
+- Fix add addition package to cart in WP Hotel Booking Woocommerce add-on
 
 = 1.7.6.2 =
-* Fix override template bug in WP Hotel Booking Room add-on
+- Fix override template bug in WP Hotel Booking Room add-on
 
 = 1.7.6.1 =
-* Update file language
+- Update file language
 
 = 1.7.6 =
-* Update WP Hotel Booking WPML Support add-on
+- Update WP Hotel Booking WPML Support add-on
 
 = 1.7.5 =
-* Fix deactivate previous version process for multisite
-* Update Woocomerce payment add-on for Woocommerce version 3.x
+- Fix deactivate previous version process for multisite
+- Update Woocomerce payment add-on for Woocommerce version 3.x
 
 = 1.7.4 =
 * Update plugin classes and functions

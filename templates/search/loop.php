@@ -33,7 +33,7 @@ $featured = $gallery ? array_shift( $gallery ) : false;
                         <div class=""><?php echo esc_html( $room->capacity ); ?></div>
                     </li>
                     <li class="hb_search_max_child">
-                        <label><?php _e( 'Max Child:', 'wp-hotel-booking' ); ?></label>
+                        <label><?php _e( 'Max Children:', 'wp-hotel-booking' ); ?></label>
                         <div><?php echo esc_html( $room->max_child ); ?></div>
                     </li>
                     <li class="hb_search_price">

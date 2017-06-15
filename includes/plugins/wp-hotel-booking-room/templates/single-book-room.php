@@ -54,7 +54,8 @@ if ( ! $post ) {
 			<input type="hidden" name="action" value="hotel_booking_ajax_add_to_cart"/>
 			<input type="hidden" name="is_single" value="1" />
 			<?php wp_nonce_field( 'hb_booking_nonce_action', 'nonce' ); ?>
-			<button type="submit" class="hb_add_to_cart hb_button"><?php _e( 'Add To Cart', 'wp-hotel-booking-room' ); ?></button>
+			<?php do_action( 'hotel_booking_loop_after_item', $post->ID ); ?>
+            <button type="submit" class="hb_add_to_cart hb_button"><?php _e( 'Add To Cart', 'wp-hotel-booking-room' ); ?></button>
 		</div>
 	</form>
 

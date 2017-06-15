@@ -1,6 +1,6 @@
 <?php
 
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
@@ -18,8 +18,9 @@ class WPHB_Ajax {
 	 * Constructor
 	 */
 	function __construct() {
-		if ( self::$_loaded )
+		if ( self::$_loaded ) {
 			return;
+		}
 
 		$ajax_actions = array(
 			'fetch_customer_info'      => true,
@@ -59,7 +60,11 @@ class WPHB_Ajax {
 	 * Dismiss remove TP Hotel Booking plugin notice
 	 */
 	static function dismiss_notice() {
-		update_option( 'wphb_notice_remove_hotel_booking', 1 );
+		if ( is_multisite() ) {
+			update_site_option( 'wphb_notice_remove_hotel_booking', 1 );
+		} else {
+			update_option( 'wphb_notice_remove_hotel_booking', 1 );
+		}
 		wp_send_json( array(
 			'status' => 'done'
 		) );
@@ -83,7 +88,7 @@ class WPHB_Ajax {
 			$customer->data = array();
 			$data           = get_post_meta( $customer->ID );
 			foreach ( $data as $k => $v ) {
-				$customer->data[$k] = $v[0];
+				$customer->data[ $k ] = $v[0];
 			}
 		} else {
 			$customer = null;
@@ -108,7 +113,7 @@ class WPHB_Ajax {
 		$term_id        = hb_get_request( 'term_id' );
 		$attachment_ids = get_option( 'hb_taxonomy_thumbnail_' . $term_id );
 		$attachments    = array();
-		if ( $attachment_ids )
+		if ( $attachment_ids ) {
 			foreach ( $attachment_ids as $id ) {
 				$attachment    = wp_get_attachment_image_src( $id, 'thumbnail' );
 				$attachments[] = array(
@@ -116,6 +121,7 @@ class WPHB_Ajax {
 					'src' => $attachment[0]
 				);
 			}
+		}
 		hb_send_json( $attachments );
 	}
 
@@ -143,7 +149,7 @@ class WPHB_Ajax {
 	}
 
 	static function apply_coupon() {
-		!session_id() && session_start();
+		! session_id() && session_start();
 		$code = hb_get_request( 'code' );
 		ob_start();
 		$today  = strtotime( date( 'm/d/Y' ) );
@@ -158,7 +164,7 @@ class WPHB_Ajax {
 				$response['result'] = 'success';
 				$response['type']   = get_post_meta( $coupon->ID, '_hb_coupon_discount_type', true );
 				$response['value']  = get_post_meta( $coupon->ID, '_hb_coupon_discount_value', true );
-				if ( !session_id() ) {
+				if ( ! session_id() ) {
 					session_start();
 				}
 				// set session
@@ -174,7 +180,7 @@ class WPHB_Ajax {
 	}
 
 	static function remove_coupon() {
-		!session_id() && session_start();
+		! session_id() && session_start();
 		// delete_transient( 'hb_user_coupon_' . session_id() );
 		WP_Hotel_Booking::instance()->cart->set_customer( 'coupon', null );
 		hb_add_message( __( 'Coupon code removed', 'wp-hotel-booking' ) );
@@ -210,30 +216,39 @@ class WPHB_Ajax {
 	}
 
 	static function ajax_add_to_cart() {
-		if ( !check_ajax_referer( 'hb_booking_nonce_action', 'nonce' ) ) {
+		if ( ! check_ajax_referer( 'hb_booking_nonce_action', 'nonce' ) ) {
 			return;
 		}
 
-		if ( !isset( $_POST['room-id'] ) || !isset( $_POST['hb-num-of-rooms'] ) ) {
-			hb_send_json( array( 'status' => 'warning', 'message' => __( 'Room ID is not exists.', 'wp-hotel-booking' ) ) );
+		if ( ! isset( $_POST['room-id'] ) || ! isset( $_POST['hb-num-of-rooms'] ) ) {
+			hb_send_json( array(
+				'status'  => 'warning',
+				'message' => __( 'Room ID is not exists.', 'wp-hotel-booking' )
+			) );
 		}
 
-		if ( !isset( $_POST['check_in_date'] ) || !isset( $_POST['check_out_date'] ) ) {
+		if ( ! isset( $_POST['check_in_date'] ) || ! isset( $_POST['check_out_date'] ) ) {
 			return;
 		}
 
 		$product_id          = absint( $_POST['room-id'] );
 		$param               = array();
 		$param['product_id'] = sanitize_text_field( $product_id );
-		if ( !isset( $_POST['hb-num-of-rooms'] ) || !absint( sanitize_text_field( $_POST['hb-num-of-rooms'] ) ) ) {
-			hb_send_json( array( 'status' => 'warning', 'message' => __( 'Can not select zero room.', 'wp-hotel-booking' ) ) );
+		if ( ! isset( $_POST['hb-num-of-rooms'] ) || ! absint( sanitize_text_field( $_POST['hb-num-of-rooms'] ) ) ) {
+			hb_send_json( array(
+				'status'  => 'warning',
+				'message' => __( 'Can not select zero room.', 'wp-hotel-booking' )
+			) );
 		} else {
 			$qty = absint( sanitize_text_field( sanitize_text_field( $_POST['hb-num-of-rooms'] ) ) );
 		}
 
 		// validate checkin, checkout date
-		if ( !isset( $_POST['check_in_date'] ) || !isset( $_POST['check_in_date'] ) ) {
-			hb_send_json( array( 'status' => 'warning', 'message' => __( 'Checkin date, checkout date is invalid.', 'wp-hotel-booking' ) ) );
+		if ( ! isset( $_POST['check_in_date'] ) || ! isset( $_POST['check_in_date'] ) ) {
+			hb_send_json( array(
+				'status'  => 'warning',
+				'message' => __( 'Checkin date, checkout date is invalid.', 'wp-hotel-booking' )
+			) );
 		} else {
 			$param['check_in_date']  = sanitize_text_field( $_POST['check_in_date'] );
 			$param['check_out_date'] = sanitize_text_field( $_POST['check_out_date'] );
@@ -244,7 +259,7 @@ class WPHB_Ajax {
 		// add to cart
 		$cart_item_id = WP_Hotel_Booking::instance()->cart->add_to_cart( $product_id, $param, $qty );
 
-		if ( !is_wp_error( $cart_item_id ) ) {
+		if ( ! is_wp_error( $cart_item_id ) ) {
 			$cart_item = WP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id );
 			$room      = $cart_item->product_data;
 
@@ -265,19 +280,26 @@ class WPHB_Ajax {
 
 			hb_send_json( $results );
 		} else {
-			hb_send_json( array( 'status' => 'warning', 'message' => __( 'Room selected. Please View Cart to change order', 'wp-hotel-booking' ) ) );
+			hb_send_json( array(
+				'status'  => 'warning',
+				'message' => __( 'Room selected. Please View Cart to change order', 'wp-hotel-booking' )
+			) );
 		}
 	}
 
 	// remove cart item
 	static function ajax_remove_item_cart() {
-		if ( !check_ajax_referer( 'hb_booking_nonce_action', 'nonce' ) )
+		if ( ! check_ajax_referer( 'hb_booking_nonce_action', 'nonce' ) ) {
 			return;
+		}
 
 		$cart = WP_Hotel_Booking::instance()->cart;
 
-		if ( empty( $cart->cart_contents ) || !isset( $_POST['cart_id'] ) || !array_key_exists( sanitize_text_field( $_POST['cart_id'] ), $cart->cart_contents ) ) {
-			hb_send_json( array( 'status' => 'warning', 'message' => __( 'Cart item is not exists.', 'wp-hotel-booking' ) ) );
+		if ( empty( $cart->cart_contents ) || ! isset( $_POST['cart_id'] ) || ! array_key_exists( sanitize_text_field( $_POST['cart_id'] ), $cart->cart_contents ) ) {
+			hb_send_json( array(
+				'status'  => 'warning',
+				'message' => __( 'Cart item is not exists.', 'wp-hotel-booking' )
+			) );
 		}
 
 		if ( $cart->remove_cart_item( sanitize_text_field( $_POST['cart_id'] ) ) ) {
@@ -294,7 +316,7 @@ class WPHB_Ajax {
 
 	// ajax load user in booking details
 	static function load_order_user() {
-		if ( !isset( $_POST['nonce'] ) || !wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) || !isset( $_POST['user_name'] ) ) {
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) || ! isset( $_POST['user_name'] ) ) {
 			return;
 		}
 
@@ -313,7 +335,7 @@ class WPHB_Ajax {
 
 	// ajax load room in booking details
 	static function load_room_ajax() {
-		if ( !isset( $_POST['nonce'] ) || !wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) || !isset( $_POST['room'] ) ) {
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) || ! isset( $_POST['room'] ) ) {
 			return;
 		}
 
@@ -336,19 +358,19 @@ class WPHB_Ajax {
 	// ajax check available room in booking details
 	static function check_room_available() {
 
-		if ( !isset( $_POST['hotel-admin-check-room-available'] ) || !wp_verify_nonce( $_POST['hotel-admin-check-room-available'], 'hotel_admin_check_room_available' ) ) {
+		if ( ! isset( $_POST['hotel-admin-check-room-available'] ) || ! wp_verify_nonce( $_POST['hotel-admin-check-room-available'], 'hotel_admin_check_room_available' ) ) {
 			return;
 		}
 
 		//hotel_booking_get_room_available
-		if ( !isset( $_POST['product_id'] ) || !$_POST['product_id'] ) {
+		if ( ! isset( $_POST['product_id'] ) || ! $_POST['product_id'] ) {
 			wp_send_json( array(
 				'status'  => false,
 				'message' => __( 'Room not found.', 'wp-hotel-booking' )
 			) );
 		}
 
-		if ( !isset( $_POST['check_in_date_timestamp'] ) || !isset( $_POST['check_out_date_timestamp'] ) ) {
+		if ( ! isset( $_POST['check_in_date_timestamp'] ) || ! isset( $_POST['check_out_date_timestamp'] ) ) {
 			wp_send_json( array(
 				'status'  => false,
 				'message' => __( 'Please select check in date and checkout date.', 'wp-hotel-booking' )
@@ -364,13 +386,19 @@ class WPHB_Ajax {
 			)
 		) );
 
-		if ( $qty && !is_wp_error( $qty ) ) {
+		if ( $qty && ! is_wp_error( $qty ) ) {
+
+			// HB_Room_Extra instead of HB_Room
+			$room_extra = HB_Room_Extra::instance( $product_id );
+
+			$room_extra = $room_extra->get_extra();
 
 			$args = apply_filters( 'hotel_booking_check_room_available', array(
 				'status'       => true,
 				'qty'          => $qty,
 				'qty_selected' => isset( $_POST['order_item_id'] ) ? hb_get_order_item_meta( $_POST['order_item_id'], 'qty', true ) : 0,
-				'product_id'   => $product_id
+				'product_id'   => $product_id,
+				'extra'        => $room_extra
 			) );
 			wp_send_json( $args );
 		} else {
@@ -383,11 +411,11 @@ class WPHB_Ajax {
 
 	// ajax load oder item to edit
 	static function load_order_item() {
-		if ( !isset( $_POST['nonce'] ) || !wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) ) {
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) ) {
 			return;
 		}
 
-		if ( !isset( $_POST['order_item_id'] ) ) {
+		if ( ! isset( $_POST['order_item_id'] ) ) {
 			wp_send_json( array() );
 		}
 
@@ -425,7 +453,7 @@ class WPHB_Ajax {
 
 	// ajax load coupons code
 	static function load_coupon_ajax() {
-		if ( !isset( $_POST['nonce'] ) || !wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) ) {
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) ) {
 			return;
 		}
 
@@ -452,7 +480,7 @@ class WPHB_Ajax {
 
 	// book mamunal add order item
 	static function admin_add_order_item() {
-		if ( !isset( $_POST['hotel-admin-check-room-available'] ) && !wp_verify_nonce( $_POST['hotel-admin-check-room-available'], 'hotel_admin_check_room_available' ) ) {
+		if ( ! isset( $_POST['hotel-admin-check-room-available'] ) && ! wp_verify_nonce( $_POST['hotel-admin-check-room-available'], 'hotel_admin_check_room_available' ) ) {
 			return;
 		}
 
@@ -461,7 +489,7 @@ class WPHB_Ajax {
 		$product_id = isset( $_POST['product_id'] ) ? $_POST['product_id'] : 0;
 		$qty        = isset( $_POST['qty'] ) ? absint( $_POST['qty'] ) : 0;
 
-		if ( !$qty ) {
+		if ( ! $qty ) {
 			wp_send_json( array(
 				'status'  => false,
 				'message' => __( 'Can not add item with zero quantity.', 'wp-hotel-booking' )
@@ -497,7 +525,7 @@ class WPHB_Ajax {
 			'order_item_type'   => isset( $_POST['order_item_type'] ) && $_POST['order_item_type'] ? sanitize_title( $_POST['order_item_type'] ) : 'line_item',
 			'order_item_parent' => isset( $_POST['order_item_parent'] ) && $_POST['order_item_parent'] ? absint( $_POST['order_item_parent'] ) : null
 		);
-		if ( !$order_item_id ) {
+		if ( ! $order_item_id ) {
 			// add new order item
 			$order_item_id = hb_add_order_item( $order_id, $args );
 		} else {
@@ -544,7 +572,7 @@ class WPHB_Ajax {
 	// remove order item
 	static function admin_remove_order_item() {
 		// verify nonce
-		if ( !check_ajax_referer( 'hotel-booking-confirm', 'hotel_booking_confirm' ) ) {
+		if ( ! check_ajax_referer( 'hotel-booking-confirm', 'hotel_booking_confirm' ) ) {
 			return;
 		}
 
@@ -568,7 +596,7 @@ class WPHB_Ajax {
 	// remove list order items
 	static function admin_remove_order_items() {
 		// verify nonce
-		if ( !check_ajax_referer( 'hotel-booking-confirm', 'hotel_booking_confirm' ) ) {
+		if ( ! check_ajax_referer( 'hotel-booking-confirm', 'hotel_booking_confirm' ) ) {
 			return;
 		}
 
@@ -593,11 +621,11 @@ class WPHB_Ajax {
 
 	// add new coupon
 	static function add_coupon_to_order() {
-		if ( !check_ajax_referer( 'hotel_admin_get_coupon_available', 'hotel-admin-get-coupon-available' ) || !class_exists( 'HB_Coupon' ) ) {
+		if ( ! check_ajax_referer( 'hotel_admin_get_coupon_available', 'hotel-admin-get-coupon-available' ) || ! class_exists( 'HB_Coupon' ) ) {
 			return;
 		}
 
-		if ( !isset( $_POST['order_id'] ) || !isset( $_POST['coupon_id'] ) ) {
+		if ( ! isset( $_POST['order_id'] ) || ! isset( $_POST['coupon_id'] ) ) {
 			return;
 		}
 
@@ -624,11 +652,11 @@ class WPHB_Ajax {
 
 	// remove coupon order
 	static function remove_coupon_on_order() {
-		if ( !check_ajax_referer( 'hotel-booking-confirm', 'hotel_booking_confirm' ) ) {
+		if ( ! check_ajax_referer( 'hotel-booking-confirm', 'hotel_booking_confirm' ) ) {
 			return;
 		}
 
-		if ( !isset( $_POST['order_id'] ) || !isset( $_POST['coupon_id'] ) ) {
+		if ( ! isset( $_POST['order_id'] ) || ! isset( $_POST['coupon_id'] ) ) {
 			return;
 		}
 
@@ -652,7 +680,7 @@ class WPHB_Ajax {
 	static function load_other_full_calendar() {
 		check_ajax_referer( 'hb_booking_nonce_action', 'nonce' );
 
-		if ( !isset( $_POST['room_id'] ) ) {
+		if ( ! isset( $_POST['room_id'] ) ) {
 			wp_send_json( array(
 				'status'  => fasle,
 				'message' => __( 'Room is not exists.', 'wp-hotel-booking' )
@@ -660,7 +688,7 @@ class WPHB_Ajax {
 		}
 
 		$room_id = absint( $_POST['room_id'] );
-		if ( !isset( $_POST['date'] ) ) {
+		if ( ! isset( $_POST['date'] ) ) {
 			wp_send_json( array(
 				'status'  => fasle,
 				'message' => __( 'Date is not exists.', 'wp-hotel-booking' )

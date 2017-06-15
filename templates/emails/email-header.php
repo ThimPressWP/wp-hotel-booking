@@ -6,7 +6,7 @@
  * @Last  Modified time: 2016-04-15 16:55:06
  */
 
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
@@ -18,6 +18,12 @@ if ( !defined( 'ABSPATH' ) ) {
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width">
     <style type="text/css">
+        h2.section-title {
+            color: #7AABF1;
+            margin: 15px 0;
+            font-size: 18px;
+        }
+
         body, table.body {
             margin: 0 auto;
         }
@@ -50,7 +56,7 @@ if ( !defined( 'ABSPATH' ) ) {
         }
 
         table.container.text-center h1 {
-            padding: 10px;
+            padding: 20px 0;
             background-color: #7AABF1;
             color: #fff;
             margin: -10px -10px 10px -10px;
@@ -64,18 +70,6 @@ if ( !defined( 'ABSPATH' ) ) {
 
         strong {
             font-weight: 600
-        }
-
-        .width-100 {
-            width: 100%;
-        }
-
-        .width-50 {
-            width: 50%;
-        }
-
-        .width-30 {
-            width: 33%;
         }
 
         .desc {
@@ -118,8 +112,8 @@ if ( !defined( 'ABSPATH' ) ) {
         }
 
         .booking_details th, .booking_details td {
-            border: 1px solid #eeeeee;
-            padding: 5px;
+            border: 2px solid #eeeeee;
+            padding: 12px;
         }
 
         p {

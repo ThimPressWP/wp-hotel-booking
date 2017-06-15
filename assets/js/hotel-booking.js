@@ -526,6 +526,9 @@
 						}
 
 						if (typeof code.status !== 'undefined' && code.status === 'success') {
+
+							// update woo cart when add room to cart
+							$('body').trigger('hb_added_item_to_cart');
 							// add message successfully
 							if (typeof code.redirect !== 'undefined') {
 								window.location.href = code.redirect;
@@ -572,6 +575,9 @@
 					res = parseJSON(res);
 					if (typeof res.status === 'undefined' || res.status !== 'success')
 						alert(hotel_booking_i18n.waring.try_again);
+
+					// update woo cart when remove room from cart
+					$('body').trigger('hb_removed_item_to_cart');
 
 					if (typeof res.sub_total !== 'undefined')
 						$('span.hb_sub_total_value').html(res.sub_total);
@@ -652,10 +658,11 @@
 				unique = unique.replace('check_in_date_', '');
 				var date = $(this).datepicker('getDate');
 
-				var check_in_range_check_out = $(document).triggerHandler('hotel_booking_range_check_in_check_out', [1, today, tomorrow]);
+				var check_in_range_check_out = hotel_settings.min_booking_date;
 				if (!isInteger(check_in_range_check_out)) {
 					check_in_range_check_out = 1;
 				}
+
 				if (date) {
 					date.setDate(date.getDate() + check_in_range_check_out);
 				}
@@ -663,6 +670,8 @@
 				var checkout = $('#check_out_date_' + unique);
 				checkout.datepicker('option', 'minDate', date);
 			}
+		}).on('click', function () {
+			$(this).datepicker('show');
 		});
 
 		$('input[id^="check_out_date"]').datepicker({
@@ -681,14 +690,17 @@
 				var check_in = $('#check_in_date_' + unique),
 					selected = $(this).datepicker('getDate');
 
-				var check_in_range_check_out = $(document).triggerHandler('hotel_booking_range_check_in_check_out', [1, today, tomorrow]);
+				var check_in_range_check_out = hotel_settings.min_booking_date;
 				if (!isInteger(check_in_range_check_out)) {
 					check_in_range_check_out = 1;
 				}
+
 				selected.setDate(selected.getDate() - check_in_range_check_out);
 
 				check_in.datepicker('option', 'maxDate', selected);
 			}
+		}).on('click', function () {
+			$(this).datepicker('show');
 		});
 
 		$('#datepickerImage').click(function () {

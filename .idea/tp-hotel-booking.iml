@@ -7,10 +7,10 @@
     <orderEntry type="module-library">
       <library name="PHP" type="php">
         <CLASSES>
-          <root url="file:///Applications/MAMP/htdocs/foobla/hotel-booking" />
+          <root url="file://C:/WTServer/WWW/ob_wphotelbooking" />
         </CLASSES>
         <SOURCES>
-          <root url="file:///Applications/MAMP/htdocs/foobla/hotel-booking" />
+          <root url="file://C:/WTServer/WWW/ob_wphotelbooking" />
         </SOURCES>
       </library>
     </orderEntry>

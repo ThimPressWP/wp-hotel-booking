@@ -216,6 +216,18 @@ class HB_Extra_Package
         return apply_filters( 'hotel_booking_package_amount_singular', $amount, $this );
     }
 
+	function is_taxable( $content = 'view' ) {
+		return false;
+	}
+
+	function get_tax_class( $content = 'view' ) {
+		return '';
+	}
+
+	public function is_in_stock(){
+
+	}
+
 	/**
 	 * return instance variable instead of new class
 	 * @param  integer $id               	post id

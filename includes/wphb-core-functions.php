@@ -206,18 +206,26 @@ if ( !function_exists( 'hb_create_page' ) ) {
 	}
 }
 
-if ( file_exists( ABSPATH . 'wp-content/plugins/tp-hotel-booking/tp-hotel-booking.php' ) && !get_option( 'wphb_notice_remove_hotel_booking' ) ) {
-	add_action( 'admin_notices', 'hb_notice_remove_hotel_booking' );
+if ( is_multisite() ) {
+	if ( file_exists( ABSPATH . 'wp-content/plugins/tp-hotel-booking/tp-hotel-booking.php' ) && !get_site_option( 'wphb_notice_remove_hotel_booking' ) ) {
+		add_action( 'network_admin_notices', 'hb_notice_remove_hotel_booking' );
+		add_action( 'admin_notices', 'hb_notice_remove_hotel_booking' );
+	}
+} else {
+	if ( file_exists( ABSPATH . 'wp-content/plugins/tp-hotel-booking/tp-hotel-booking.php' ) && !get_option( 'wphb_notice_remove_hotel_booking' ) ) {
+		add_action( 'admin_notices', 'hb_notice_remove_hotel_booking' );
+	}
 }
+
 /**
- * Show notice required remove event auth add-on
+ * Show notice required remove tp hotel booking plugin and add-ons
  */
 
 if ( !function_exists( 'hb_notice_remove_hotel_booking' ) ) {
 	function hb_notice_remove_hotel_booking() { ?>
         <div class="notice notice-error hb-dismiss-notice is-dismissible">
             <p>
-                <?php echo __( wp_kses( '<strong>WP Hotel Booking</strong> plugin version ' . WPHB_VERSION . ' is an upgrade of <strong>TP Hotel Booking</strong> plugin. Please deactivate and delete <strong>TP Hotel Booking/TP Hotel Booking add-ons</strong> and replace by <strong>WP Hotel Booking/WP Hotel Booking add-ons</strong>.', array( 'strong' => array() ) ), 'wp-hotel-booking' ); ?>
+				<?php echo __( wp_kses( '<strong>WP Hotel Booking</strong> plugin version ' . WPHB_VERSION . ' is an upgrade of <strong>TP Hotel Booking</strong> plugin. Please deactivate and delete <strong>TP Hotel Booking/TP Hotel Booking add-ons</strong> and replace by <strong>WP Hotel Booking/WP Hotel Booking add-ons</strong>.', array( 'strong' => array() ) ), 'wp-hotel-booking' ); ?>
             </p>
 
         </div>

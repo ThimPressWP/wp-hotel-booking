@@ -63,7 +63,7 @@ class WPHB_Autoloader {
         }
 
         // widgets
-        if ( stripos( $class, 'wphb_widget_' ) === 0 ) {
+        if ( stripos( $class, 'hb_widget_' ) === 0 ) {
             $path = $this->include_path . '/widgets/';
         }
 
