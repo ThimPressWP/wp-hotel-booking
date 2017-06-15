@@ -4,13 +4,13 @@
   Plugin URI: http://thimpress.com/
   Description: WP Hotel Booking Coupon
   Author: ThimPress
-  Version: 1.7
+  Version: 1.7.1
   Author URI: http://thimpress.com
  */
 
 define( 'TP_HB_COUPON_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TP_HB_COUPON_URI', plugin_dir_url( __FILE__ ) );
-define( 'TP_HB_COUPON_VER', '1.7' );
+define( 'TP_HB_COUPON_VER', '1.7.1' );
 
 class WP_Hotel_Booking_Coupon {
 

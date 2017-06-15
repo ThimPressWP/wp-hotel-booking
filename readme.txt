@@ -67,6 +67,55 @@ Yes.
 
 == Changelog ==
 
+= 1.7.8 =
+* Add Hotel Manager role to manage hotel booking
+* Add Booking Editor role to manage rooms and bookings
+* Update capabilities for users
+
+= 1.7.7 =
+* Update email from when customer place booking
+* Update single search available template of booking room add-on
+
+= 1.7.6.9=
+* Update search room based on timezone
+* Update checkout required fields
+
+= 1.7.6.8=
+* Update create pages process
+* Add place booking email for admin
+
+= 1.7.6.7=
+* Update datepicker with RTL languages
+* Update booking completed email
+* Add place booking email for customer
+
+= 1.7.6.6=
+* Add minimum booking day option
+* Update email booking notice
+* Fix update Woocommrece cart when add room to cart in WP Hotel Booking Woocommerce add-on
+
+= 1.7.6.5 =
+* Update email booking notice process
+
+= 1.7.6.4 =
+* Fix bug in admin create new bookings process
+
+= 1.7.6.3 =
+* Fix add addition package to cart in WP Hotel Booking Woocommerce add-on
+
+= 1.7.6.2 =
+* Fix override template bug in WP Hotel Booking Room add-on
+
+= 1.7.6.1 =
+* Update file language
+
+= 1.7.6 =
+* Update WP Hotel Booking WPML Support add-on
+
+= 1.7.5 =
+* Fix deactivate previous version process for multisite
+* Update Woocomerce payment add-on for Woocommerce version 3.x
+
 = 1.7.4 =
 * Update plugin classes and functions
 
