@@ -70,3 +70,5 @@ branches:
   only:
   - develop
   - master
+
+dist: trusty

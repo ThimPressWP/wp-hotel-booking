@@ -71,6 +71,7 @@ Yes.
 * Add Hotel Manager role to manage hotel booking
 * Add Booking Editor role to manage rooms and bookings
 * Update capabilities for users
+* Update add-ons
 
 = 1.7.7 =
 - Update email from when customer place booking
