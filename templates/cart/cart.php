@@ -81,6 +81,7 @@ global $hb_settings;
                         <span class="hb-align-right hb_grand_total_value"><?php echo hb_format_price( $cart->total ) ?></span>
                     </td>
                 </tr>
+                <?php if ( hb_get_advance_payment() != '' ) { ?>
 				<?php $advance_payment = ''; ?>
 				<?php if ( $advance_payment = $cart->advance_payment ) : ?>
                     <tr class="hb_advance_payment">
@@ -90,6 +91,7 @@ global $hb_settings;
                         </td>
                     </tr>
 				<?php endif; ?>
+                <?php } ?>
 
                 <tr>
 					<?php wp_nonce_field( 'hb_cart_field', 'hb_cart_field' ); ?>

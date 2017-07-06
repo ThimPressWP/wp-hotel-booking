@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Package Name\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-24 11:08+0700\n"
-"PO-Revision-Date: 2017-07-05 07:49+0000\n"
+"PO-Revision-Date: 2017-07-06 07:19+0000\n"
 "Last-Translator: Admin <support@acrontum.de>\n"
 "Language-Team: German\n"
 "Language: de-DE\n"
@@ -190,11 +190,6 @@ msgstr ""
 #: includes/class-wphb-post-types.php:435
 msgid "Search Room"
 msgstr ""
-
-#: includes/class-wphb-post-types.php:436
-#: includes/shortcodes/class-wphb-shortcode-hotel-booking-rooms.php:67
-msgid "No room found"
-msgstr "kein Zimmer gefunden"
 
 #: includes/class-wphb-post-types.php:437
 msgid "No room found in Trash"
@@ -2741,11 +2736,6 @@ msgstr ""
 msgid "Cart ID is not exists."
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-cart.php:300
-#: includes/plugins/wp-hotel-booking-extra/templates/loop/addition-services-title.php:3
-msgid "Addition Services"
-msgstr ""
-
 #: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:30
 #: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:31
 #: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:41
@@ -2800,22 +2790,11 @@ msgstr ""
 #: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-search-room.php:22
 #: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-single-search-room.php:23
 msgid "Optional Extras"
-msgstr ""
-
-#: includes/plugins/wp-hotel-booking-extra/templates/loop/mini-cart-extra.php:15
-#: includes/plugins/wp-hotel-booking-extra/templates/shortcodes/mini_cart_layout.php:20
-msgid "Addition Services:"
-msgstr ""
+msgstr "Zusatzleistungen"
 
 #: includes/plugins/wp-hotel-booking-extra/templates/shortcodes/mini_cart_layout.php:51
 #: templates/cart/mini_cart.php:22 templates/cart/mini_cart_layout.php:37
 msgid "View Cart"
-msgstr ""
-
-#: includes/plugins/wp-hotel-booking-extra/templates/shortcodes/mini_cart_layout.php:56
-#: templates/cart/cart.php:109 templates/cart/mini_cart.php:28
-#: templates/cart/mini_cart_layout.php:42
-msgid "Your cart is empty!"
 msgstr ""
 
 #: includes/plugins/wp-hotel-booking-report/wp-hotel-booking-report.php:79
@@ -2937,11 +2916,6 @@ msgstr ""
 #: includes/plugins/wp-hotel-booking-room/inc/class-hb-booking-room.php:34
 msgid "Enable book in single room"
 msgstr ""
-
-#: includes/plugins/wp-hotel-booking-room/inc/class-hb-booking-room.php:124
-#: templates/search/results.php:32
-msgid "No room found."
-msgstr "Kein Zimmer gefunden."
 
 #: includes/plugins/wp-hotel-booking-room/inc/class-hb-booking-room.php:260
 msgid "Check in id is required."
@@ -3320,10 +3294,6 @@ msgstr ""
 msgid "Regular plan"
 msgstr ""
 
-#: templates/search/results.php:34
-msgid "Search again!"
-msgstr "Jetzt erneut suchen!"
-
 #: templates/single-room/related-room.php:12
 msgid "Other Rooms"
 msgstr ""
@@ -3485,6 +3455,36 @@ msgstr ""
 #: vendor/wp-cli/wp-cli/php/WP_CLI/CommandWithUpgrade.php:484
 msgid "API error. Try Again."
 msgstr ""
+
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-cart.php:300
+#: includes/plugins/wp-hotel-booking-extra/templates/loop/addition-services-title.php:3
+msgid "Addition Services"
+msgstr "Zusatzleistungen"
+
+#: includes/plugins/wp-hotel-booking-extra/templates/loop/mini-cart-extra.php:15
+#: includes/plugins/wp-hotel-booking-extra/templates/shortcodes/mini_cart_layout.php:20
+msgid "Addition Services:"
+msgstr "Zusatzleistungen:"
+
+#: includes/plugins/wp-hotel-booking-extra/templates/shortcodes/mini_cart_layout.php:56
+#: templates/cart/cart.php:109 templates/cart/mini_cart.php:28
+#: templates/cart/mini_cart_layout.php:42
+msgid "Your cart is empty!"
+msgstr "Ihr Warenkorb ist leer!"
+
+#: includes/class-wphb-post-types.php:436
+#: includes/shortcodes/class-wphb-shortcode-hotel-booking-rooms.php:67
+msgid "No room found"
+msgstr "kein Zimmer gefunden"
+
+#: includes/plugins/wp-hotel-booking-room/inc/class-hb-booking-room.php:124
+#: templates/search/results.php:32
+msgid "No room found."
+msgstr "Kein Zimmer gefunden."
+
+#: templates/search/results.php:34
+msgid "Search again!"
+msgstr "Jetzt erneut suchen!"
 
 #: templates/checkout/checkout.php:17
 msgid "Booking Rooms"
