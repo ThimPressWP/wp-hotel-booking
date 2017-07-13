@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Package Name\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-24 11:08+0700\n"
-"PO-Revision-Date: 2017-07-06 07:19+0000\n"
+"PO-Revision-Date: 2017-07-13 05:23+0000\n"
 "Last-Translator: Admin <support@acrontum.de>\n"
 "Language-Team: German\n"
 "Language: de-DE\n"
@@ -2022,7 +2022,7 @@ msgstr ""
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:119
 #: includes/booking/wphb-booking-hooks.php:167
 msgid "You have a new booking room"
-msgstr ""
+msgstr "Sie haben eine neue Buchung erhalten"
 
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:125
 msgid "Email Format"
@@ -2326,15 +2326,15 @@ msgstr ""
 
 #: includes/booking/wphb-booking-hooks.php:105
 msgid "Your booking is accepted"
-msgstr ""
+msgstr "Wir haben Ihre Buchung erhalten"
 
 #: includes/booking/wphb-booking-hooks.php:106
 msgid "Your booking is pending until the payment is completed"
-msgstr ""
+msgstr "Ihre Buchung ist bis zur Beendigung der Zahlung reserviert"
 
 #: includes/booking/wphb-booking-hooks.php:166
 msgid "New customer booking"
-msgstr ""
+msgstr "Neue Kundenbuchung"
 
 #: includes/cart/class-wphb-cart.php:197
 msgid "Can not add to cart, product is not exist."
@@ -2345,6 +2345,8 @@ msgid ""
 "Thank you! Your booking has been placed. We will contact you to confirm "
 "about the booking soon."
 msgstr ""
+"Vielen Dank! Ihre Buchung wurde gesendet. Wir werden uns umgehend mit Ihnen "
+"in Verbindung setzen."
 
 #: includes/gateways/paypal/class-wphb-payment-gateway-paypal.php:52
 msgid "Paypal"
@@ -2786,11 +2788,6 @@ msgstr ""
 #: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra.php:30
 msgid "Addition Package"
 msgstr ""
-
-#: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-search-room.php:22
-#: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-single-search-room.php:23
-msgid "Optional Extras"
-msgstr "Zusatzleistungen"
 
 #: includes/plugins/wp-hotel-booking-extra/templates/shortcodes/mini_cart_layout.php:51
 #: templates/cart/mini_cart.php:22 templates/cart/mini_cart_layout.php:37
@@ -3455,6 +3452,11 @@ msgstr ""
 #: vendor/wp-cli/wp-cli/php/WP_CLI/CommandWithUpgrade.php:484
 msgid "API error. Try Again."
 msgstr ""
+
+#: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-search-room.php:22
+#: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-single-search-room.php:23
+msgid "Optional Extras"
+msgstr "Zusatzleistungen"
 
 #: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-cart.php:300
 #: includes/plugins/wp-hotel-booking-extra/templates/loop/addition-services-title.php:3
