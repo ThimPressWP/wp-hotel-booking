@@ -1171,8 +1171,10 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 
 		$check_in_time          = strtotime( $args['check_in_date'] );
 		$check_out_time         = strtotime( $args['check_out_date'] );
-		$check_in_date_to_time  = (mktime( 0, 0, 0, date( 'm', $check_in_time ), date( 'd', $check_in_time ), date( 'Y', $check_in_time ) )+1);
-		$check_out_date_to_time = (mktime( 0, 0, 0, date( 'm', $check_out_time ), date( 'd', $check_out_time ), date( 'Y', $check_out_time ) )-1);
+		$check_in_date_to_time  = mktime( 0, 0, 0, date( 'm', $check_in_time ), date( 'd', $check_in_time ), date( 'Y', $check_in_time ) );
+		$check_out_date_to_time = mktime( 0, 0, 0, date( 'm', $check_out_time ), date( 'd', $check_out_time ), date( 'Y', $check_out_time ) );
+		$check_in_date_to_time_sql  = (mktime( 0, 0, 0, date( 'm', $check_in_time ), date( 'd', $check_in_time ), date( 'Y', $check_in_time ) )+1);
+		$check_out_date_to_time_sql = (mktime( 0, 0, 0, date( 'm', $check_out_time ), date( 'd', $check_out_time ), date( 'Y', $check_out_time ) )-1);
 
 		$results = array();
 
@@ -1194,7 +1196,7 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 					AND booking.post_type = %s
 					AND booking.post_status IN ( %s, %s, %s )
 			)
-		", 'qty', 'product_id', 'check_in_date', 'check_out_date', $check_in_date_to_time, $check_out_date_to_time, $check_in_date_to_time, $check_out_date_to_time, $check_in_date_to_time, $check_out_date_to_time, 'hb_booking', 'hb-completed', 'hb-processing', 'hb-pending'
+		", 'qty', 'product_id', 'check_in_date', 'check_out_date', $check_in_date_to_time_sql, $check_out_date_to_time_sql, $check_in_date_to_time_sql, $check_out_date_to_time_sql, $check_in_date_to_time_sql, $check_out_date_to_time_sql, 'hb_booking', 'hb-completed', 'hb-processing', 'hb-pending'
 		);
 
 		$query = $wpdb->prepare( "
