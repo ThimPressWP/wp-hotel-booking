@@ -628,7 +628,8 @@ class WPHB_Cart {
             '_hb_customer_country' => hb_get_request( 'country' ),
             '_hb_customer_phone' => hb_get_request( 'phone' ),
             '_hb_customer_email' => hb_get_request( 'email' ),
-            '_hb_customer_fax' => hb_get_request( 'fax' )
+            '_hb_customer_fax' => hb_get_request( 'fax' ),
+	    '_hb_customer_company' => hb_get_request( 'company' )
         ) );
 
         // set booking info

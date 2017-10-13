@@ -60,7 +60,8 @@ if ( !function_exists( 'hb_create_booking' ) ) {
 			'_hb_customer_country'        => '',
 			'_hb_customer_phone'          => '',
 			'_hb_customer_email'          => '',
-			'_hb_customer_fax'            => ''
+			'_hb_customer_fax'            => '',
+			'_hb_customer_company'        => ''
 		) );
 		// return WP_Error if cart is empty
 		if ( WP_Hotel_Booking::instance()->cart->cart_items_count === 0 ) {

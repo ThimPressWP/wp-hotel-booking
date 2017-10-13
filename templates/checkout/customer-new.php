@@ -110,6 +110,14 @@ if ( ! defined( 'ABSPATH' ) ) {
                            placeholder="<?php _e( 'Fax', 'wp-hotel-booking' ); ?>"/>
                 </div>
             </li>
+            <li class="hb-form-field">
+                <label class="hb-form-field-label"><?php _e( 'Firma', 'wp-hotel-booking' ); ?></label>
+
+                <div class="hb-form-field-input">
+                    <input type="text" name="company" value="<?php echo esc_attr( $customer->company ); ?>"
+                           placeholder="<?php _e( 'Firma', 'wp-hotel-booking' ); ?>"/>
+                </div>
+            </li>
         </ul>
         <input type="hidden" name="existing-customer-id" value=""/>
     </div>

@@ -79,6 +79,8 @@ $booking = WPHB_Booking::instance( $post->ID );
                     <br />
                     <small><?php printf( '%s', hb_get_customer_fullname( $post->ID, true ) ); ?></small>
                     <br />
+		    <small><?php printf( '%s', $booking->customer_company ) ?></small>
+                    <br />
                     <small><?php printf( '%s', $booking->customer_address ) ?></small>
                     <br />
                     <small><?php printf( '%s', $booking->customer_city ) ?></small>
