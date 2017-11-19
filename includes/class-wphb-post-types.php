@@ -149,7 +149,7 @@ class WPHB_Post_Types {
 	 */
 	function posts_join_paged( $join ) {
 		global $wpdb;
-		$result = $wpdb->get_col( "SELECT order_item_id FROM {$wpdb->hotel_booking_order_items} WHERE `order_item_id` IS NOT NULL" );
+		$result = $wpdb->get_col( "SELECT order_item_id FROM {$wpdb->prefix}hotel_booking_order_items WHERE `order_item_id` IS NOT NULL" );
 		if ( ! $this->is_search( 'booking' ) || ! $result ) {
 			return $join;
 		}

@@ -27,24 +27,24 @@ class HB_Extra_Post_Type
 	function init()
 	{
 		$labels = array(
-			'name'                => __( 'Extra Room', 'wp-hb-extra' ),
-			'singular_name'       => __( 'Extra Room', 'wp-hb-extra' ),
-			'add_new'             => _x( 'Add New Extra Room', 'wp-hb-extra', 'wp-hb-extra' ),
-			'add_new_item'        => __( 'Add New Extra Room', 'wp-hb-extra' ),
-			'edit_item'           => __( 'Edit Extra Room', 'wp-hb-extra' ),
-			'new_item'            => __( 'New Extra Room', 'wp-hb-extra' ),
-			'view_item'           => __( 'View Extra Room', 'wp-hb-extra' ),
-			'search_items'        => __( 'Search Extra Room', 'wp-hb-extra' ),
-			'not_found'           => __( 'No Extra Room found', 'wp-hb-extra' ),
-			'not_found_in_trash'  => __( 'No Extra Room found in Trash', 'wp-hb-extra' ),
-			'parent_item_colon'   => __( 'Parent Singular Extra Room:', 'wp-hb-extra' ),
-			'menu_name'           => __( 'Extra Room', 'wp-hb-extra' ),
+			'name'                => __( 'Extra Room', 'wp-hotel-booking' ),
+			'singular_name'       => __( 'Extra Room', 'wp-hotel-booking' ),
+			'add_new'             => _x( 'Add New Extra Room', 'wp-hotel-booking', 'wp-hotel-booking' ),
+			'add_new_item'        => __( 'Add New Extra Room', 'wp-hotel-booking' ),
+			'edit_item'           => __( 'Edit Extra Room', 'wp-hotel-booking' ),
+			'new_item'            => __( 'New Extra Room', 'wp-hotel-booking' ),
+			'view_item'           => __( 'View Extra Room', 'wp-hotel-booking' ),
+			'search_items'        => __( 'Search Extra Room', 'wp-hotel-booking' ),
+			'not_found'           => __( 'No Extra Room found', 'wp-hotel-booking' ),
+			'not_found_in_trash'  => __( 'No Extra Room found in Trash', 'wp-hotel-booking' ),
+			'parent_item_colon'   => __( 'Parent Singular Extra Room:', 'wp-hotel-booking' ),
+			'menu_name'           => __( 'Extra Room', 'wp-hotel-booking' ),
 		);
 
 		$args = array(
 			'labels'              => $labels,
 			'hierarchical'        => false,
-			'description'         => __( 'Extra room system booking', 'wp-hb-extra' ),
+			'description'         => __( 'Extra room system booking', 'wp-hotel-booking' ),
 			'taxonomies'          => array(),
 			'public'              => false,
 			'show_ui'             => false,

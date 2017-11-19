@@ -60,8 +60,7 @@ if ( !function_exists( 'hb_create_booking' ) ) {
 			'_hb_customer_country'        => '',
 			'_hb_customer_phone'          => '',
 			'_hb_customer_email'          => '',
-			'_hb_customer_fax'            => '',
-			'_hb_customer_company'        => ''
+			'_hb_customer_fax'            => ''
 		) );
 		// return WP_Error if cart is empty
 		if ( WP_Hotel_Booking::instance()->cart->cart_items_count === 0 ) {
@@ -90,7 +89,7 @@ if ( !function_exists( 'hb_create_booking' ) ) {
 			$booking->post->post_status = 'hb-' . $args['status'];
 		}
 
-		$booking_info['_hb_booking_key'] = apply_filters( 'hb_generate_booking_key', uniqid( 'booking' ) );
+		$booking_info['_hb_booking_key'] = apply_filters( 'hb_generate_booking_key', uniqid() );
 
 		if ( WP_Hotel_Booking::instance()->cart->coupon ) {
 			$booking_info['_hb_coupon_id']    = WP_Hotel_Booking::instance()->cart->coupon;

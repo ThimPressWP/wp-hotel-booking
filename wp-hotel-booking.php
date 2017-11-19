@@ -4,7 +4,7 @@
     Plugin URI: http://thimpress.com/
     Description: Full of professional features for a booking room system
     Author: ThimPress
-    Version: 1.7.8
+    Version: 1.7.9.6
     Author URI: http://thimpress.com
 */
 
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'WPHB_FILE', __FILE__ );
 define( 'WPHB_PLUGIN_PATH', dirname( __FILE__ ) );
 define( 'WPHB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
-define( 'WPHB_VERSION', '1.7.8' );
+define( 'WPHB_VERSION', '1.7.9.7' );
 define( 'WPHB_BLOG_ID', get_current_blog_id() );
 
 /**
@@ -63,7 +63,9 @@ class WP_Hotel_Booking {
 		add_action( 'wp_print_scripts', array( $this, 'global_js' ) );
 		add_action( 'template_redirect', 'hb_handle_purchase_request', 999 );
 		register_activation_hook( plugin_basename( __FILE__ ), array( $this, 'install' ) );
-		register_activation_hook( plugin_basename( __FILE__ ), array( $this, 'uninstall' ) );
+		register_deactivation_hook( plugin_basename( __FILE__ ), array( $this, 'uninstall' ) );
+		add_action( 'plugin_loaded', array( $this, 'install' ) );
+
 		add_action( 'init', array( $this, 'init' ), 20 );
 
 		// create new blog in multisite
@@ -82,22 +84,22 @@ class WP_Hotel_Booking {
 
 	// install hook
 	public function install() {
-		return WPHB_Install::install();
+		WPHB_Install::install();
 	}
 
 	// uninstall hook
 	public function uninstall() {
-		return WPHB_Install::uninstall();
+		WPHB_Install::uninstall();
 	}
 
 	// create new blog table
 	public function create_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
-		return WPHB_Install::create_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta );
+		WPHB_Install::create_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta );
 	}
 
 	// delete table when delete blog, multisite
 	public function delete_blog_table( $tables ) {
-		return WPHB_Install::delete_tables( $tables );
+		WPHB_Install::delete_tables( $tables );
 	}
 
 	/**
@@ -297,13 +299,13 @@ class WP_Hotel_Booking {
 		if ( is_admin() ) {
 			$dependencies = array_merge( $dependencies, array( 'backbone' ) );
 			wp_register_style( 'wp-admin-hotel-booking', $this->plugin_url( 'assets/css/admin.tp-hotel-booking.min.css' ) );
-			wp_register_script( 'wp-admin-hotel-booking', $this->plugin_url( 'assets/js/admin.hotel-booking.js' ), $dependencies );
+			wp_register_script( 'wp-admin-hotel-booking', $this->plugin_url( 'assets/js/admin.hotel-booking.min.js' ), $dependencies );
 			wp_localize_script( 'wp-admin-hotel-booking', 'hotel_booking_i18n', hb_admin_i18n() );
 			wp_register_script( 'wp-admin-hotel-booking-moment', $this->plugin_url( 'assets/js/moment.min.js' ), $dependencies );
 			wp_register_script( 'wp-admin-hotel-booking-fullcalendar', $this->plugin_url( 'assets/js/fullcalendar.min.js' ), $dependencies );
 			wp_register_style( 'wp-admin-hotel-booking-fullcalendar', $this->plugin_url( 'assets/css/fullcalendar.min.css' ) );
 		} else {
-			wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.min.css' ) );
+			wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.css' ) );
 			wp_register_script( 'wp-hotel-booking', $this->plugin_url( 'assets/js/hotel-booking.min.js' ), $dependencies, false, true );
 
 			wp_localize_script( 'wp-hotel-booking', 'hotel_booking_i18n', hb_i18n() );

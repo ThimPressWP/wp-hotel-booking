@@ -136,8 +136,8 @@ if( ! function_exists( 'tp_hb_extra_type' ) )
 	function tp_hb_extra_type()
 	{
 		return apply_filters( 'hb_extra_type', array(
-				'trip' 		=> __( 'Trip', 'wp-hb-extra' ),
-				'number'	=> __( 'Number', 'wp-hb-extra' )
+				'trip' 		=> __( 'Trip', 'wp-hotel-booking' ),
+				'number'	=> __( 'Number', 'wp-hotel-booking' )
 			)
 		);
 	}

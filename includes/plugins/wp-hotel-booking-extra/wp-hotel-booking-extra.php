@@ -43,7 +43,7 @@ class WPHB_Extra_Factory {
 	 * @return [type]       [description]
 	 */
 	public function language_js( $l10n ) {
-		$l10n['remove_confirm'] = __( 'Remove package. Are you sure?', 'wp-hb-extra' );
+		$l10n['remove_confirm'] = __( 'Remove package. Are you sure?', 'wp-hotel-booking' );
 		return $l10n;
 	}
 

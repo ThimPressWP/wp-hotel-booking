@@ -77,7 +77,6 @@ do_action( 'hotel_booking_before_checkout_form' );
                         <span class="hb-align-right hb_grand_total_value"><?php echo hb_format_price( $cart->total ); ?></span>
                     </td>
                 </tr>
-                <?php if ( hb_get_advance_payment() != '' ) { ?>
 				<?php $advance_payment = ''; ?>
 				<?php if ( $advance_payment = $cart->advance_payment ) { ?>
                     <tr class="hb_advance_payment">
@@ -96,7 +95,6 @@ do_action( 'hotel_booking_before_checkout_form' );
                             </td>
                         </tr>
 					<?php } ?>
-				<?php } ?>
 				<?php } ?>
 
             </table>

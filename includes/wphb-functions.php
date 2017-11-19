@@ -28,7 +28,7 @@ if ( ! function_exists( 'hb_get_max_capacity_of_rooms' ) ) {
 		}
 		if ( ! $max ) {
 			global $wpdb;
-			$results = $wpdb->get_results( "SELECT MAX(meta_value) as max FROM wp_termmeta WHERE meta_key = 'hb_max_number_of_adults'", ARRAY_A );
+			$results = $wpdb->get_results( "SELECT MAX(meta_value) as max FROM $wpdb->termmeta WHERE meta_key = 'hb_max_number_of_adults'", ARRAY_A );
 			$max     = $results[0]['max'];
 		}
 
@@ -60,7 +60,7 @@ if ( ! function_exists( 'hb_get_min_capacity_of_rooms' ) ) {
 		}
 		if ( ! $min ) {
 			global $wpdb;
-			$results = $wpdb->get_results( "SELECT MIN(meta_value) as min FROM wp_termmeta WHERE meta_key = 'hb_max_number_of_adults'", ARRAY_A );
+			$results = $wpdb->get_results( "SELECT MIN(meta_value) as min FROM $wpdb->termmeta WHERE meta_key = 'hb_max_number_of_adults'", ARRAY_A );
 			$min     = $results[0]['min'];
 		}
 
@@ -702,6 +702,8 @@ if ( ! function_exists( 'hb_i18n' ) ) {
 			'dayNamesShort'                  => hb_day_name_short_js(),
 			'dayNamesMin'                    => hb_day_name_min_js(),
 			'date_start'                     => get_option( 'start_of_week' ),
+			'view_cart'                      => __( 'View Cart', 'wp-hotel-booking' ),
+			'cart_url'                       => hb_get_cart_url()
 		);
 
 		return apply_filters( 'hb_i18n', $translation );
@@ -1173,8 +1175,6 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 		$check_out_time         = strtotime( $args['check_out_date'] );
 		$check_in_date_to_time  = mktime( 0, 0, 0, date( 'm', $check_in_time ), date( 'd', $check_in_time ), date( 'Y', $check_in_time ) );
 		$check_out_date_to_time = mktime( 0, 0, 0, date( 'm', $check_out_time ), date( 'd', $check_out_time ), date( 'Y', $check_out_time ) );
-		$check_in_date_to_time_sql  = (mktime( 0, 0, 0, date( 'm', $check_in_time ), date( 'd', $check_in_time ), date( 'Y', $check_in_time ) )+1);
-		$check_out_date_to_time_sql = (mktime( 0, 0, 0, date( 'm', $check_out_time ), date( 'd', $check_out_time ), date( 'Y', $check_out_time ) )-1);
 
 		$results = array();
 
@@ -1196,7 +1196,7 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 					AND booking.post_type = %s
 					AND booking.post_status IN ( %s, %s, %s )
 			)
-		", 'qty', 'product_id', 'check_in_date', 'check_out_date', $check_in_date_to_time_sql, $check_out_date_to_time_sql, $check_in_date_to_time_sql, $check_out_date_to_time_sql, $check_in_date_to_time_sql, $check_out_date_to_time_sql, 'hb_booking', 'hb-completed', 'hb-processing', 'hb-pending'
+		", 'qty', 'product_id', 'check_in_date', 'check_out_date', $check_in_date_to_time, $check_out_date_to_time, $check_in_date_to_time, $check_out_date_to_time, $check_in_date_to_time, $check_out_date_to_time, 'hb_booking', 'hb-completed', 'hb-processing', 'hb-pending'
 		);
 
 		$query = $wpdb->prepare( "
@@ -1231,8 +1231,9 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 				) );
 				$room->post->available_rooms = (int) $p->available_rooms;
 
-				$room = apply_filters( 'hotel_booking_query_seach_parser', $room );
-				if ( $room ) {
+				$room = apply_filters( 'hotel_booking_query_search_parser', $room );
+
+				if ( $room && $room->post->available_rooms > 0 ) {
 					$results[ $k ] = $room;
 				}
 			}
@@ -1386,12 +1387,13 @@ if ( ! function_exists( 'hb_do_transaction' ) ) {
  */
 if ( ! function_exists( 'hb_handle_purchase_request' ) ) {
 	function hb_handle_purchase_request() {
-		$method_var = 'hb-transaction-method';
+		$method_var   = 'hb-transaction-method';
+		$cart_content = WP_Hotel_Booking::instance()->cart->cart_contents;
 		if ( ! empty( $_REQUEST[ $method_var ] ) ) {
 			hb_get_payment_gateways();
 			$requested_transaction_method = sanitize_text_field( $_REQUEST[ $method_var ] );
 			hb_do_transaction( $requested_transaction_method );
-		} else if ( hb_get_page_id( 'checkout' ) && is_page( hb_get_page_id( 'checkout' ) ) && empty( WP_Hotel_Booking::instance()->cart->cart_contents ) ) {
+		} else if ( hb_get_page_id( 'checkout' ) && is_page( hb_get_page_id( 'checkout' ) ) && empty( $cart_content ) ) {
 			wp_redirect( hb_get_cart_url() );
 			exit();
 		}

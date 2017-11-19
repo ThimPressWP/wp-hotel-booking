@@ -25,7 +25,6 @@ class WPHB_Shortcode_Hotel_Booking_Checkout extends WPHB_Shortcodes {
         $customer->country = '';
         $customer->phone = '';
         $customer->fax = '';
-	$customer->company = '';
 
         if ( is_user_logged_in() ) {
             $user = WPHB_User::get_current_user();
@@ -41,7 +40,6 @@ class WPHB_Shortcode_Hotel_Booking_Checkout extends WPHB_Shortcodes {
             $customer->country = $user->country;
             $customer->phone = $user->phone;
             $customer->fax = $user->fax;
-	    $customer->company = $user->company;
         }
 
         $template = apply_filters( 'hotel_booking_checkout_tpl', 'checkout/checkout.php' );

@@ -27,7 +27,7 @@ class HB_Extra_Field {
 	function meta_fields( $fields ) {
 		$fields[] = array(
 			'name'       => 'room_extra',
-			'label'      => __( 'Addition Package', 'wp-hb-extra' ),
+			'label'      => __( 'Addition Package', 'wp-hotel-booking' ),
 			'type'       => 'multiple',
 			'options'    => $this->extra_fields(),
 			'filter'     => array( $this, 'meta_value' ),

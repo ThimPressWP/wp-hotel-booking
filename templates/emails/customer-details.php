@@ -27,8 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <ul>
     <li><strong><?php echo esc_html__( 'Address:', 'wp-hotel-booking' ); ?></strong>
         <span>
-			<?php printf( '%s', $booking->customer_company ) ?><br>
-            <?php printf( '%s', $booking->customer_address ) ?><br>
+			<?php printf( '%s', $booking->customer_address ) ?><br>
 			<?php printf( '%s', $booking->customer_city ) ?><br>
 			<?php printf( '%s', $booking->customer_state ) ?><br>
 			<?php printf( '%s', $booking->customer_country ) ?><br>

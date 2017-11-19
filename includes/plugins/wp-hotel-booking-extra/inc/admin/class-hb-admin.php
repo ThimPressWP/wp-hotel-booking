@@ -23,7 +23,7 @@ class HB_Extra_Admin
 	 */
 	function extra_settings( $settings )
 	{
-		$settings['hotel_booking_extra_settings'] = __( 'Extra Room Packages', 'wp-hb-extra' );
+		$settings['hotel_booking_extra_settings'] = __( 'Extra Room Packages', 'wp-hotel-booking' );
 		return $settings;
 	}
 

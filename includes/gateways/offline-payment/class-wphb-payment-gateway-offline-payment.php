@@ -85,11 +85,13 @@ class WPHB_Payment_Gateway_Offline_Payment extends WPHB_Payment_Gateway_Base {
 			$booking->update_status( 'processing' );
 		}
 
-		hb_add_message( __( 'Thank you! Your booking has been placed. We will contact you to confirm about the booking soon.', 'wp-hotel-booking' ) );
+//		hb_add_message( __( 'Thank you! Your booking has been placed. We will contact you to confirm about the booking soon.', 'wp-hotel-booking' ) );
 
 		return array(
 			'result'   => 'success',
-			'redirect' => add_query_arg( 'hotel-booking-offline-payment', 1, hb_get_checkout_url() )
+			'redirect' => add_query_arg( array( 'booking'    => $booking_id,
+			                                    'key' => $booking->booking_key
+			), hb_get_cart_url() . '/thank-you/' )
 		);
 
 	}

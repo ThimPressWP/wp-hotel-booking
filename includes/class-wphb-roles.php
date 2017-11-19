@@ -46,6 +46,7 @@ if ( ! class_exists( 'WPHB_Roles' ) ) {
 			$hotel_manager->add_cap( 'publish_' . $room_cap );
 			$hotel_manager->add_cap( 'delete_published_' . $room_cap );
 			$hotel_manager->add_cap( 'delete_private_' . $room_cap );
+			$hotel_manager->add_cap( 'delete_others_' . $room_cap );
 			$hotel_manager->add_cap( 'edit_others_' . $room_cap );
 			$hotel_manager->add_cap( 'edit_' . $room_cap );
 			$hotel_manager->add_cap( 'edit_published_' . $room_cap );
@@ -56,6 +57,7 @@ if ( ! class_exists( 'WPHB_Roles' ) ) {
 			$hotel_manager->add_cap( 'delete_' . $booking_cap );
 			$hotel_manager->add_cap( 'delete_published_' . $booking_cap );
 			$hotel_manager->add_cap( 'delete_private_' . $booking_cap );
+			$hotel_manager->add_cap( 'delete_others_' . $booking_cap );
 			$hotel_manager->add_cap( 'edit_others_' . $booking_cap );
 			$hotel_manager->add_cap( 'edit_' . $booking_cap );
 			$hotel_manager->add_cap( 'edit_published_' . $booking_cap );
@@ -80,6 +82,7 @@ if ( ! class_exists( 'WPHB_Roles' ) ) {
 			$booking_editor->add_cap( 'delete_' . $room_cap );
 			$booking_editor->add_cap( 'delete_published_' . $room_cap );
 			$booking_editor->add_cap( 'delete_private_' . $room_cap );
+			$booking_editor->add_cap( 'delete_others_' . $room_cap );
 			$booking_editor->add_cap( 'edit_others_' . $room_cap );
 			$booking_editor->add_cap( 'edit_' . $room_cap );
 			$booking_editor->add_cap( 'edit_published_' . $room_cap );
@@ -90,6 +93,7 @@ if ( ! class_exists( 'WPHB_Roles' ) ) {
 			$booking_editor->add_cap( 'delete_' . $booking_cap );
 			$booking_editor->add_cap( 'delete_published_' . $booking_cap );
 			$booking_editor->add_cap( 'delete_private_' . $booking_cap );
+			$booking_editor->add_cap( 'delete_others_' . $booking_cap );
 			$booking_editor->add_cap( 'edit_others_' . $booking_cap );
 			$booking_editor->add_cap( 'edit_' . $booking_cap );
 			$booking_editor->add_cap( 'edit_published_' . $booking_cap );
@@ -106,6 +110,7 @@ if ( ! class_exists( 'WPHB_Roles' ) ) {
 			$admin->add_cap( 'delete_' . $room_cap );
 			$admin->add_cap( 'delete_published_' . $room_cap );
 			$admin->add_cap( 'delete_private_' . $room_cap );
+			$admin->add_cap( 'delete_others_' . $room_cap );
 			$admin->add_cap( 'edit_others_' . $room_cap );
 			$admin->add_cap( 'edit_' . $room_cap );
 			$admin->add_cap( 'edit_published_' . $room_cap );
@@ -116,6 +121,7 @@ if ( ! class_exists( 'WPHB_Roles' ) ) {
 			$admin->add_cap( 'delete_' . $booking_cap );
 			$admin->add_cap( 'delete_published_' . $booking_cap );
 			$admin->add_cap( 'delete_private_' . $booking_cap );
+			$admin->add_cap( 'delete_others_' . $booking_cap );
 			$admin->add_cap( 'edit_others_' . $booking_cap );
 			$admin->add_cap( 'edit_' . $booking_cap );
 			$admin->add_cap( 'edit_published_' . $booking_cap );

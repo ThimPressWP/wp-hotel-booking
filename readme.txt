@@ -3,7 +3,7 @@ Contributors: thimpress, leehld
 Donate link: https://thimpress.com/
 Tags: hotel, booking, hotel booking, reservation, reservations
 Requires at least: 4.2
-Tested up to: 4.7
+Tested up to: 4.9
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -37,6 +37,17 @@ Take a look at the Premium **[HotelWP - Hotel Wordpress Theme](https://themefore
 - Multi Currencies
 - 4 Payment Gateways (Offline Payment, Authorize.net, Paypal, Stripe)
 
+**Free add-ons for WP Hotel Booking are available in WordPress:**
+
+- <a href="https://wordpress.org/plugins/wp-hotel-booking-authorize-sim/" target="_blank">Authorize.Net Payment method for WP Hotel Booking</a> - Authorize.Net payment method for WP Hotel Booking Plugin.
+- <a href="https://wordpress.org/plugins/wp-hotel-booking-stripe/" target="_blank">Stripe Payment method for WP Hotel Booking</a> - Stripe payment method for WP Hotel Booking Plugin.
+- <a href="https://wordpress.org/plugins/wp-hotel-booking-block/" target="_blank">Block booking for WP Hotel Booking</a> - Block booking rooms of WP Hotel Booking for specific dates.
+- <a href="https://wordpress.org/plugins/wp-hotel-booking-booking-room/" target="_blank">Booking in single room for WP Hotel Booking</a> - Support booking in single room page for WP Hotel Booking.
+- <a href="https://wordpress.org/plugins/wp-hotel-booking-report/" target="_blank">Statistic for WP Hotel Booking</a> - Statistic booking for WP Hotel Booking Plugin.
+- <a href="https://wordpress.org/plugins/wp-hotel-booking-coupon/" target="_blank">Coupon for WP Hotel Booking</a> - Coupon for WP Hotel Booking Plugin.
+- <a href="https://wordpress.org/plugins/wp-hotel-booking-woocommerce/" target="_blank">Woocommerce payment method for WP Hotel Booking</a> - Support paying for booking of WP Hotel Booking plugin with the payment system provided by WooCommerce..
+- <a href="https://wordpress.org/plugins/wp-hotel-booking-wpml-support/" target="_blank">WPML for WP Hotel Booking</a> - Multilnguage CMS support for WP Hotel Booking Plugin.
+
 == Installation ==
 
 1. Upload the plugin files to the `/wp-content/plugins/wp-hotel-booking` directory, or install the plugin through the WordPress plugins screen directly.
@@ -66,6 +77,59 @@ Yes.
 7. System settings
 
 == Changelog ==
+
+= 1.7.9.6 =
+* Update compatible with Wordpress 4.9
+
+= 1.7.9.5 =
+* Update admin booking page
+
+= 1.7.9.4 =
+* Add cancel booking email option
+* Fix add to cart in single room of booking room add-on
+* Update deprecated functions in Woocommerce add-on
+* Update select date in booking room add-on
+
+= 1.7.9.3 =
+* Fix customer email in admin booking page
+
+= 1.7.9.2 =
+* Fix View Cart button in search room page
+
+= 1.7.9.1 =
+* Update search room template
+* Update extra room package price in Woocommerce payment add-on
+
+= 1.7.9 =
+* Update hotel roles
+
+= 1.7.8.9 =
+* Update search room when update booking status for WPML Support add-on
+* Update Woocommerce booking payment gateway
+
+= 1.7.8.8 =
+* Update compatible with PHP 5.5
+
+= 1.7.8.7 =
+* Update WP Hotel Booking WPML Support add-on
+
+= 1.7.8.6 =
+* Update thank you booking template
+
+= 1.7.8.5 =
+* Add thank you booking page
+
+= 1.7.8.4 =
+* Update language extra package add-on
+
+= 1.7.8.3 =
+* Improve auto update Woocommerce cart for Woocommerce payment add-on
+
+= 1.7.8.2 =
+* Fix query with database prefix
+
+= 1.7.8.1 =
+* Update customer place booking email
 
 = 1.7.8 =
 * Add Hotel Manager role to manage hotel booking

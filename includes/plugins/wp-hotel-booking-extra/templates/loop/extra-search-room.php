@@ -17,7 +17,7 @@ $room_extra = $room_extra->get_extra();
         <div class="hb_addition_package_title">
             <h5 class="hb_addition_package_title_toggle">
                 <a href="javascript:void(0)" class="hb_package_toggle">
-					<?php esc_html_e( 'Optional Extras', 'wp-hb-extra' ); ?>
+					<?php esc_html_e( 'Optional Extras', 'wp-hotel-booking' ); ?>
                 </a>
             </h5>
         </div>
@@ -52,7 +52,7 @@ $room_extra = $room_extra->get_extra();
 								<?php endif; ?>
                                 <label>
                                     <strong><?php echo $extra->price; ?></strong>
-                                    <small><?php printf( '/ %s', $extra->respondent_name ? $extra->respondent_name : __( 'Package', 'wp-hb-extra' ) ) ?></small>
+                                    <small><?php printf( '/ %s', $extra->respondent_name ? $extra->respondent_name : __( 'Package', 'wp-hotel-booking' ) ) ?></small>
                                 </label>
                             </div>
                         </div>
