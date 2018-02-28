@@ -20,7 +20,6 @@ class WPHB_Admin_Settings {
 		// use WP_Hotel_Booking::instance() return null active hook
 		$tabs[] = include 'settings/class-wphb-admin-setting-general.php';
 		$tabs[] = include 'settings/class-wphb-admin-setting-hotel-info.php';
-		$tabs[] = include 'settings/class-wphb-admin-setting-lightboxs.php';
 		$tabs[] = include 'settings/class-wphb-admin-setting-emails.php';
 		$tabs[] = include 'settings/class-wphb-admin-setting-payments.php';
 		$tabs[] = include 'settings/class-wphb-admin-setting-room.php';

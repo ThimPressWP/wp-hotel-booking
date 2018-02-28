@@ -53,5 +53,5 @@
     </div>
 </script>
 <script type="text/html" id="tmpl-hb-minicart-empty">
-    <p class="hb_mini_cart_empty"><?php _e( 'Your cart is empty!', 'wp-hotel-booking' ); ?></p>
+    <p class="hb_mini_cart_empty"><?php _e( 'Your cart is empty.', 'wp-hotel-booking' ); ?></p>
 </script>

@@ -3,7 +3,7 @@ Contributors: thimpress, leehld
 Donate link: https://thimpress.com/
 Tags: hotel, booking, hotel booking, reservation, reservations
 Requires at least: 4.2
-Tested up to: 4.9
+Tested up to: 4.9.4
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -39,7 +39,7 @@ Take a look at the Premium **[HotelWP - Hotel Wordpress Theme](https://themefore
 
 **Free add-ons for WP Hotel Booking are available in WordPress:**
 
-- <a href="https://wordpress.org/plugins/wp-hotel-booking-authorize-sim/" target="_blank">Authorize.Net Payment method for WP Hotel Booking</a> - Authorize.Net payment method for WP Hotel Booking Plugin.
+- <a href="https://wordpress.org/plugins/wp-hotel-booking-authorize-payment/" target="_blank">Authorize.Net Payment method for WP Hotel Booking</a> - Authorize.Net payment method for WP Hotel Booking Plugin.
 - <a href="https://wordpress.org/plugins/wp-hotel-booking-stripe/" target="_blank">Stripe Payment method for WP Hotel Booking</a> - Stripe payment method for WP Hotel Booking Plugin.
 - <a href="https://wordpress.org/plugins/wp-hotel-booking-block/" target="_blank">Block booking for WP Hotel Booking</a> - Block booking rooms of WP Hotel Booking for specific dates.
 - <a href="https://wordpress.org/plugins/wp-hotel-booking-booking-room/" target="_blank">Booking in single room for WP Hotel Booking</a> - Support booking in single room page for WP Hotel Booking.
@@ -54,7 +54,6 @@ Take a look at the Premium **[HotelWP - Hotel Wordpress Theme](https://themefore
 2. Activate the plugin through the 'Plugins' screen in WordPress
 3. Use the Settings->Plugin Name screen to configure the plugin
 4. (Make your instructions match the desired user flow for activating and installing your plugin. Include any steps that might be needed for explanatory purposes)
-
 
 == Frequently Asked Questions ==
 
@@ -77,6 +76,59 @@ Yes.
 7. System settings
 
 == Changelog ==
+
+= 1.9.1 =
+* Fix create default database tables process.
+
+= 1.9 =
+* Add option disable select quantity in Hotel Search page.
+
+= 1.8.9 =
+* Fix js typo error in checkout page
+* Update pricing table base on "Week Starts On" option
+* Remove admin setting lightbox tab
+
+= 1.8.8 =
+* Update custom page body classes
+
+= 1.8.7 =
+* Update checkout thank you page
+* Update cart templates
+
+= 1.8.6 =
+* Update custom field for room and booking type
+
+= 1.8.5 =
+* Update custom class to default pages
+* Update redirect thank you page after Paypal checkout
+* Update cart template
+
+= 1.8.4 =
+* Fix duplicate admin settings
+
+= 1.8.3 =
+* Update process create database tables
+
+= 1.8.2 =
+* Update compatible with Wordpress 4.9.2
+* Update admin settings
+
+= 1.8.1 =
+* Fix duplicate image in room gallery lightbox
+
+= 1.8 =
+* Update single room template
+
+= 1.7.9.9 =
+* Disable convert currency via Google Finance and Yahoo Finance
+
+= 1.7.9.8 =
+* Add link edit in single room page
+* Update sort by capacity in search room page
+
+= 1.7.9.7 =
+* Update cart page
+* Update room pricing plan template
 
 = 1.7.9.6 =
 * Update compatible with Wordpress 4.9

@@ -1,6 +1,6 @@
 <?php
 
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit();
 }
 
@@ -27,12 +27,15 @@ global $hb_settings;
 				<?php if ( $rooms = $cart->get_rooms() ): ?>
 					<?php foreach ( $rooms as $cart_id => $room ): ?>
 						<?php
-						if ( ( $num_of_rooms = (int) $room->get_data( 'quantity' ) ) == 0 ) continue;
+						if ( ( $num_of_rooms = (int) $room->get_data( 'quantity' ) ) == 0 ) {
+							continue;
+						}
 						$cart_extra = WP_Hotel_Booking::instance()->cart->get_extra_packages( $cart_id );
 						?>
                         <tr class="hb_checkout_item" data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
                             <td<?php echo defined( 'TP_HB_EXTRA' ) && $cart_extra ? ' rowspan="' . ( count( $cart_extra ) + 2 ) . '"' : '' ?>>
-                                <a href="javascript:void(0)" class="hb_remove_cart_item" data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
+                                <a href="javascript:void(0)" class="hb_remove_cart_item"
+                                   data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
                                     <i class="fa fa-times"></i>
                                 </a>
                             </td>
@@ -41,7 +44,7 @@ global $hb_settings;
                             </td>
                             <td class="hb_capacity"><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'wp-hotel-booking' ), $room->capacity ); ?> </td>
                             <td class="hb_quantity">
-                                <input type="number" min="0" class="hb_room_number_edit" name="hotel_booking_cart[<?php echo esc_attr( $cart_id ) ?>]" value="<?php echo esc_attr( $num_of_rooms ); ?>" />
+                                <p><?php echo esc_html( $num_of_rooms ); ?></p>
                             </td>
                             <td class="hb_check_in"><?php echo date_i18n( hb_get_date_format(), strtotime( $room->get_data( 'check_in_date' ) ) ) ?></td>
                             <td class="hb_check_out"><?php echo date_i18n( hb_get_date_format(), strtotime( $room->get_data( 'check_out_date' ) ) ) ?></td>
@@ -96,8 +99,8 @@ global $hb_settings;
                 </tr>
             </table>
             <p>
-                <a href="<?php echo hb_get_checkout_url() ?>" class="hb_button hb_checkout"><?php _e( 'Check Out', 'wp-hotel-booking' ); ?></a>
-                <button type="submit" class="hb_button update"><?php _e( 'Update', 'wp-hotel-booking' ); ?></button>
+                <a href="<?php echo hb_get_checkout_url() ?>"
+                   class="hb_button hb_checkout"><?php _e( 'Check Out', 'wp-hotel-booking' ); ?></a>
             </p>
         </form>
     </div>

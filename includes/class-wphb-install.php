@@ -81,7 +81,7 @@ class WPHB_Install {
 	static function do_install() {
 
 		// create pages
-		self::create_pages();
+//		self::create_pages();
 
 		// create update options
 		self::create_options();
@@ -89,7 +89,7 @@ class WPHB_Install {
 		// create term default. Eg: Room Capacities
 		// self::create_terms();
 		// create tables
-		self::create_tables();
+//		self::create_tables();
 
 		// upgrade database
 		self::upgrade_database();
@@ -173,6 +173,14 @@ class WPHB_Install {
 				'name'    => _x( 'hotel-term-condition', 'Page Slug', 'wp-hotel-booking' ),
 				'title'   => _x( 'Terms and Conditions ', 'Page Title', 'wp-hotel-booking' ),
 				'content' => apply_filters( 'hotel_booking_terms_content', 'Something notices' )
+			);
+		}
+
+		if ( ! hb_get_page_id( 'thankyou' ) || ! get_post( hb_get_page_id( 'thankyou' ) ) ) {
+			$pages['thankyou'] = array(
+				'name'    => _x( 'hotel-thank-you', 'Page Slug', 'wp-hotel-booking' ),
+				'title'   => _x( 'Hotel Thank You', 'Page Title', 'wp-hotel-booking' ),
+				'content' => '[' . apply_filters( 'hotel_booking_thankyou_shortcode_tag', 'hotel_booking_thankyou' ) . ']'
 			);
 		}
 

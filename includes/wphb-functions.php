@@ -562,6 +562,24 @@ if ( ! function_exists( 'hb_date_names' ) ) {
 	}
 }
 
+if ( ! function_exists( 'hb_start_of_week_order' ) ) {
+	function hb_start_of_week_order() {
+		$start = get_option( 'start_of_week' );
+
+		$order = array();
+
+		for ( $i = (int) $start; $i < 7; $i ++ ) {
+			$order[] = $i;
+		}
+
+		for ( $j = 0; $j < $start; $j ++ ) {
+			$order[] = $j;
+		}
+
+		return $order;
+	}
+}
+
 if ( ! function_exists( 'hb_date_to_name' ) ) {
 	function hb_date_to_name( $date ) {
 		$date_names = hb_date_names();
@@ -945,13 +963,12 @@ if ( ! function_exists( 'hb_is_ajax' ) ) {
 	}
 }
 
-/**
- * Place order for a booking
- *
- * @throws Exception
- */
 if ( ! function_exists( 'hb_customer_place_order' ) ) {
-
+	/**
+	 * Place order for a booking
+	 *
+	 * @throws Exception
+	 */
 	function hb_customer_place_order() {
 		WPHB_Checkout::instance()->process_checkout();
 		exit();
@@ -1212,7 +1229,7 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 				AND pm2.meta_value >= %d
 			GROUP BY rooms.post_name
 			HAVING available_rooms > 0
-			ORDER BY term_cap.meta_value DESC
+			ORDER BY term_cap.meta_value ASC
 		", '_hb_num_of_rooms', '_hb_room_capacity', 'hb_max_number_of_adults', '_hb_max_child_per_room', 'hb_room', 'publish', $adults, $max_child );
 
 		$query = apply_filters( 'hb_search_query', $query, array(
@@ -1396,6 +1413,9 @@ if ( ! function_exists( 'hb_handle_purchase_request' ) ) {
 		} else if ( hb_get_page_id( 'checkout' ) && is_page( hb_get_page_id( 'checkout' ) ) && empty( $cart_content ) ) {
 			wp_redirect( hb_get_cart_url() );
 			exit();
+		} else if ( hb_get_page_id( 'thankyou' ) && is_page( hb_get_page_id( 'thankyou' ) ) && hb_get_thank_you_url() ) {
+			wp_redirect( hb_get_cart_url() );
+			exit();
 		}
 	}
 }
@@ -1457,8 +1477,6 @@ if ( ! function_exists( 'hb_get_support_lightboxs' ) ) {
 	function hb_get_support_lightboxs() {
 		$lightboxs = array(
 			'lightbox2' => 'Lightbox 2'
-			// ,
-			// 'fancyBox'  => 'fancyBox'
 		);
 
 		return apply_filters( 'hb_lightboxs', $lightboxs );
@@ -1886,6 +1904,29 @@ if ( ! function_exists( 'hb_get_cart_url' ) ) {
 	}
 
 }
+
+if ( ! function_exists( 'hb_get_thank_you_url' ) ) {
+
+	function hb_get_thank_you_url( $booking_id = '', $booking_key = '' ) {
+
+		if ( ! ( $booking_id && $booking_key ) ) {
+			return false;
+		}
+
+		$id = hb_get_page_id( 'thankyou' );
+
+		$url = home_url();
+		if ( $id ) {
+			$url = get_the_permalink( $id );
+		}
+
+		return apply_filters( 'hb_thank_you_url', add_query_arg( array(
+			'booking' => $booking_id,
+			'key'     => $booking_key
+		), $url ), $url, $id, $booking_id, $booking_key );
+	}
+}
+
 
 if ( ! function_exists( 'hb_get_checkout_url' ) ) {
 

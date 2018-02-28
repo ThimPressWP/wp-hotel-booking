@@ -468,7 +468,15 @@ class WPHB_Post_Types {
 			'show_in_admin_bar'  => true,
 			'show_in_nav_menus'  => true,
 			'taxonomies'         => array( 'room_category', 'room_tag' ),
-			'supports'           => array( 'title', 'editor', 'thumbnail', 'revisions', 'comments', 'author' ),
+			'supports'           => array(
+				'title',
+				'editor',
+				'thumbnail',
+				'revisions',
+				'comments',
+				'author',
+				'custom-fields'
+			),
 			'hierarchical'       => false,
 			'rewrite'            => array(
 				'slug'       => _x( 'rooms', 'URL slug', 'wp-hotel-booking' ),
@@ -512,7 +520,7 @@ class WPHB_Post_Types {
 			'show_in_menu'       => 'tp_hotel_booking',
 			'show_in_admin_bar'  => true,
 			'show_in_nav_menus'  => true,
-			'supports'           => array( 'title' ),
+			'supports'           => array( 'title', 'custom-fields' ),
 			'hierarchical'       => false,
 		);
 		$args = apply_filters( 'hotel_booking_register_post_type_booking_arg', $args );

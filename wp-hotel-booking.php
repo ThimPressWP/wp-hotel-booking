@@ -4,7 +4,7 @@
     Plugin URI: http://thimpress.com/
     Description: Full of professional features for a booking room system
     Author: ThimPress
-    Version: 1.7.9.6
+    Version: 1.9.1
     Author URI: http://thimpress.com
 */
 
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'WPHB_FILE', __FILE__ );
 define( 'WPHB_PLUGIN_PATH', dirname( __FILE__ ) );
 define( 'WPHB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
-define( 'WPHB_VERSION', '1.7.9.7' );
+define( 'WPHB_VERSION', '1.9.1' );
 define( 'WPHB_BLOG_ID', get_current_blog_id() );
 
 /**
@@ -52,8 +52,9 @@ class WP_Hotel_Booking {
 	 * Construction
 	 */
 	public function __construct() {
+
 		if ( self::$_instance ) {
-			return self::$_instance;
+			return;
 		}
 		$this->includes();
 
@@ -62,6 +63,7 @@ class WP_Hotel_Booking {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_action( 'wp_print_scripts', array( $this, 'global_js' ) );
 		add_action( 'template_redirect', 'hb_handle_purchase_request', 999 );
+		add_action( 'admin_init', array( $this, 'create_tables' ) );
 		register_activation_hook( plugin_basename( __FILE__ ), array( $this, 'install' ) );
 		register_deactivation_hook( plugin_basename( __FILE__ ), array( $this, 'uninstall' ) );
 		add_action( 'plugin_loaded', array( $this, 'install' ) );
@@ -77,9 +79,17 @@ class WP_Hotel_Booking {
 	public function init() {
 		// cart
 		$this->cart = WPHB_Cart::instance();
-
 		// user
 		$this->user = hb_get_current_user();
+	}
+
+	public function create_tables() {
+		if ( ! get_option( 'wphb_init', false ) ) {
+			WPHB_Install::create_tables();
+			WPHB_Install::create_pages();
+
+			update_option( 'wphb_init', true );
+		}
 	}
 
 	// install hook
@@ -99,7 +109,7 @@ class WP_Hotel_Booking {
 
 	// delete table when delete blog, multisite
 	public function delete_blog_table( $tables ) {
-		WPHB_Install::delete_tables( $tables );
+		return WPHB_Install::delete_tables( $tables );
 	}
 
 	/**
@@ -181,10 +191,6 @@ class WP_Hotel_Booking {
 
 		$this->_include( 'includes/room/wphb-room-functions.php' );
 		$this->_include( 'includes/room/class-wphb-room.php' );
-		// // addon
-		if ( apply_filters( 'hotel_booking_enable_currency_addon', true ) ) {
-			$this->_include( 'includes/plugins/wp-hotel-booking-currencies/wp-hotel-booking-currencies.php' );
-		}
 		$this->_include( 'includes/plugins/wp-hotel-booking-extra/wp-hotel-booking-extra.php' );
 		// // end addon
 
@@ -203,6 +209,7 @@ class WP_Hotel_Booking {
 		$this->_include( 'includes/shortcodes/class-wphb-shortcode-hotel-booking-cart.php' );
 		$this->_include( 'includes/shortcodes/class-wphb-shortcode-hotel-booking-account.php' );
 		$this->_include( 'includes/shortcodes/class-wphb-shortcode-hotel-booking-checkout.php' );
+		$this->_include( 'includes/shortcodes/class-wphb-shortcode-hotel-booking-thankyou.php' );
 		$this->_include( 'includes/shortcodes/class-wphb-shortcode-hotel-booking-lastest-reviews.php' );
 		$this->_include( 'includes/shortcodes/class-wphb-shortcode-hotel-booking-best-reviews.php' );
 		$this->_include( 'includes/shortcodes/class-wphb-shortcode-hotel-booking-rooms.php' );

@@ -120,77 +120,77 @@
 
         var $title = $form.find('select[name="title"]'),
             mesgs = [];
-        if ($title.lenth == 1 && -1 == $title.val()) {
+        if ($title.length === 1 && -1 === $title.val()) {
             // alert( hotel_booking_i18n.empty_customer_title );
             mesgs.push(hotel_booking_i18n.empty_customer_title);
             $title.parents('div:first').addClass('error');
         }
 
         var $firstName = $form.find('input[name="first_name"]');
-        if ($firstName.length == 1 && !$firstName.val()) {
+        if ($firstName.length === 1 && !$firstName.val()) {
             // alert(hotel_booking_i18n.empty_customer_first_name);
             mesgs.push(hotel_booking_i18n.empty_customer_first_name);
             $firstName.parents('div:first').addClass('error');
         }
 
         var $lastName = $form.find('input[name="last_name"]');
-        if ($lastName.lenth == 1 && !$lastName.val()) {
+        if ($lastName.length === 1 && !$lastName.val()) {
             // alert( hotel_booking_i18n.empty_customer_last_name );
             mesgs.push(hotel_booking_i18n.empty_customer_last_name);
             $lastName.parents('div:first').addClass('error');
         }
 
         var $address = $form.find('input[name="address"]');
-        if ($address.lenth == 1 && !$address.val()) {
+        if ($address.length === 1 && !$address.val()) {
             // alert( hotel_booking_i18n.empty_customer_address );
             mesgs.push(hotel_booking_i18n.empty_customer_address);
             $address.parents('div:first').addClass('error');
         }
 
         var $city = $form.find('input[name="city"]');
-        if ($city.lenth == 1 && !$city.val()) {
+        if ($city.length === 1 && !$city.val()) {
             // alert(hotel_booking_i18n.empty_customer_city);
             mesgs.push(hotel_booking_i18n.empty_customer_city);
             $city.parents('div:first').addClass('error');
         }
 
         var $state = $form.find('input[name="state"]');
-        if ($state.lenth == 1 && !$state.val()) {
+        if ($state.length === 1 && !$state.val()) {
             // alert( hotel_booking_i18n.empty_customer_state );
             mesgs.push(hotel_booking_i18n.empty_customer_state);
             $state.parents('div:first').addClass('error');
         }
 
         var $postalCode = $form.find('input[name="postal_code"]');
-        if ($postalCode.lenth == 1 && !$postalCode.val()) {
+        if ($postalCode.length === 1 && !$postalCode.val()) {
             // alert( hotel_booking_i18n.empty_customer_postal_code );
             mesgs.push(hotel_booking_i18n.empty_customer_postal_code);
             $postalCode.parents('div:first').addClass('error');
         }
 
         var $country = $form.find('select[name="country"]');
-        if ($country.lenth == 1 && !$country.val()) {
+        if ($country.length === 1 && !$country.val()) {
             // alert( hotel_booking_i18n.empty_customer_country );
             mesgs.push(hotel_booking_i18n.empty_customer_country);
             $country.parents('div:first').addClass('error');
         }
 
         var $phone = $form.find('input[name="phone"]');
-        if ($phone.lenth == 1 && !$phone.val()) {
+        if ($phone.length === 1 && !$phone.val()) {
             // alert( hotel_booking_i18n.empty_customer_phone );
             mesgs.push(hotel_booking_i18n.empty_customer_phone);
             $phone.parents('div:first').addClass('error');
         }
 
         var $email = $form.find('input[name="email"]');
-        if ($email.lenth == 1 && !isEmail($email.val())) {
+        if ($email.length === 1 && !isEmail($email.val())) {
             // alert( hotel_booking_i18n.customer_email_invalid );
             mesgs.push(hotel_booking_i18n.customer_email_invalid);
             $email.parents('div:first').addClass('error');
         }
 
         var $payment_method = $form.find('input[name="hb-payment-method"]:checked');
-        if ($payment_method.lenth == 1 && $payment_method.length == 0) {
+        if ($payment_method.length === 1 && $payment_method.length === 0) {
             // alert( hotel_booking_i18n.no_payment_method_selected );
             mesgs.push(hotel_booking_i18n.no_payment_method_selected);
             $payment_method.parents('div:first').addClass('error');
@@ -305,8 +305,8 @@
                     button.removeClass('hb_loading');
                     try {
                         var response = parseJSON(code);
-                        if (response.result == 'success') {
-                            if (response.redirect != undefined) {
+                        if (response.result === 'success') {
+                            if (response.redirect !== undefined) {
                                 window.location.href = response.redirect;
                             }
                         } else if (typeof response.message !== 'undefined') {
