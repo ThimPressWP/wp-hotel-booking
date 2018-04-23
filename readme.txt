@@ -3,7 +3,7 @@ Contributors: thimpress, leehld
 Donate link: https://thimpress.com/
 Tags: hotel, booking, hotel booking, reservation, reservations
 Requires at least: 4.2
-Tested up to: 4.9.4
+Tested up to: 4.9.5
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -77,11 +77,21 @@ Yes.
 
 == Changelog ==
 
+= 1.9.4 =
+- Update email booking details
+
+= 1.9.3 =
+* Add default list rooms page
+
+= 1.9.2 =
+* Optimize create default database tables process
+* Fix issue select extra with Single purchase option
+
 = 1.9.1 =
-* Fix create default database tables process.
+* Fix create default database tables process
 
 = 1.9 =
-* Add option disable select quantity in Hotel Search page.
+* Add option disable select quantity in Hotel Search page
 
 = 1.8.9 =
 * Fix js typo error in checkout page

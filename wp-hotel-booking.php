@@ -4,7 +4,7 @@
     Plugin URI: http://thimpress.com/
     Description: Full of professional features for a booking room system
     Author: ThimPress
-    Version: 1.9.1
+    Version: 1.9.4
     Author URI: http://thimpress.com
 */
 
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'WPHB_FILE', __FILE__ );
 define( 'WPHB_PLUGIN_PATH', dirname( __FILE__ ) );
 define( 'WPHB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
-define( 'WPHB_VERSION', '1.9.1' );
+define( 'WPHB_VERSION', '1.9.4' );
 define( 'WPHB_BLOG_ID', get_current_blog_id() );
 
 /**
@@ -84,12 +84,8 @@ class WP_Hotel_Booking {
 	}
 
 	public function create_tables() {
-		if ( ! get_option( 'wphb_init', false ) ) {
-			WPHB_Install::create_tables();
-			WPHB_Install::create_pages();
-
-			update_option( 'wphb_init', true );
-		}
+		WPHB_Install::create_tables();
+		WPHB_Install::create_pages();
 	}
 
 	// install hook
@@ -345,8 +341,11 @@ class WP_Hotel_Booking {
 			// rooms slider widget
 			wp_enqueue_script( 'wp-hotel-booking-owl-carousel' );
 
+
 			// room galleria
-			wp_enqueue_script( 'wp-hotel-booking-gallery' );
+			if ( is_singular( 'hb_room' ) ) {
+				wp_enqueue_script( 'wp-hotel-booking-gallery' );
+			}
 		}
 		wp_enqueue_style( 'wp-hotel-booking-libaries-style' );
 

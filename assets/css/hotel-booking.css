@@ -1109,6 +1109,7 @@
     float: right;
     margin-top: -80px;
     margin-right: 15px;
+    position: relative;
 }
 
 .hb_related_other_room .navigation .prev,

@@ -5,12 +5,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $hb_settings;
-$gallery  = $room->gallery;
-$featured = $gallery ? array_shift( $gallery ) : false;
+$gallery         = $room->gallery;
+$featured        = $gallery ? array_shift( $gallery ) : false;
+$single_purchase = get_option( 'tp_hotel_booking_single_purchase' );
 ?>
 <li class="hb-room clearfix">
 
-    <form name="hb-search-results" class="hb-search-room-results">
+    <form name="hb-search-results"
+          class="hb-search-room-results <?php echo ( $single_purchase ) ? 'single-purchase' : ''; ?>">
 		<?php do_action( 'hotel_booking_loop_before_item', $room->post->ID ); ?>
         <div class="hb-room-content">
             <div class="hb-room-thumbnail">
@@ -48,7 +50,7 @@ $featured = $gallery ? array_shift( $gallery ) : false;
 							<?php hb_get_template( 'search/booking-room-details.php', array( 'room' => $room ) ); ?>
                         </div>
                     </li>
-					<?php if ( ! get_option( 'tp_hotel_booking_single_purchase', true ) ) { ?>
+					<?php if ( ! $single_purchase ) { ?>
                         <li class="hb_search_quantity">
                             <label><?php _e( 'Quantity: ', 'wp-hotel-booking' ); ?></label>
                             <div>

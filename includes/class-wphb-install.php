@@ -136,6 +136,14 @@ class WPHB_Install {
 		}
 
 		$pages = array();
+		if ( ! hb_get_page_id( 'rooms' ) || ! get_post( hb_get_page_id( 'rooms' ) ) ) {
+			$pages['rooms'] = array(
+				'name'    => _x( 'hotel-rooms', 'Page Slug', 'wp-hotel-booking' ),
+				'title'   => _x( 'Hotel Rooms', 'Page Title', 'wp-hotel-booking' ),
+				'content' => '[' . apply_filters( 'hotel_booking_rooms_shortcode_tag', 'hotel_booking_rooms' ) . ']'
+			);
+		}
+
 		if ( ! hb_get_page_id( 'cart' ) || ! get_post( hb_get_page_id( 'cart' ) ) ) {
 			$pages['cart'] = array(
 				'name'    => _x( 'hotel-cart', 'Page Slug', 'wp-hotel-booking' ),
@@ -271,8 +279,7 @@ class WPHB_Install {
 					meta_value longtext NULL,
 					UNIQUE KEY meta_id (meta_id),
 					PRIMARY KEY  (meta_id),
-					KEY hotel_booking_order_item_id(hotel_booking_order_item_id),
-					KEY meta_key(meta_key)
+					KEY hotel_booking_order_item_id(hotel_booking_order_item_id)
 				) $charset_collate;
 			";
 			dbDelta( $sql );

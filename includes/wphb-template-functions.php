@@ -428,6 +428,10 @@ if ( ! function_exists( 'hb_body_class' ) ) {
 		$classes = (array) $classes;
 
 		switch ( $post->ID ) {
+			case hb_get_page_id( 'rooms' ):
+				$classes[] = 'wp-hotel-booking-page';
+				$classes[] = 'wp-hotel-booking-rooms';
+				break;
 			case hb_get_page_id( 'cart' ):
 				$classes[] = 'wp-hotel-booking-page';
 				$classes[] = 'wp-hotel-booking-cart';
@@ -551,7 +555,9 @@ if ( ! function_exists( 'hb_setup_shortcode_page_content' ) ) {
 			return $content;
 		}
 
-		if ( hb_get_page_id( 'cart' ) == $page_id ) {
+		if ( hb_get_page_id( 'rooms' ) == $page_id ) {
+			$content = '[' . apply_filters( 'hotel_booking_rooms_shortcode_tag', 'hotel_booking_rooms' ) . ']';
+		} else if ( hb_get_page_id( 'cart' ) == $page_id ) {
 			$content = '[' . apply_filters( 'hotel_booking_cart_shortcode_tag', 'hotel_booking_cart' ) . ']';
 		} else if ( hb_get_page_id( 'checkout' ) == $page_id ) {
 			$content = '[' . apply_filters( 'hotel_booking_checkout_shortcode_tag', 'hotel_booking_checkout' ) . ']';
@@ -559,6 +565,8 @@ if ( ! function_exists( 'hb_setup_shortcode_page_content' ) ) {
 			$content = '[' . apply_filters( 'hotel_booking_search_shortcode_tag', 'hotel_booking' ) . ']';
 		} else if ( hb_get_page_id( 'account' ) == $page_id ) {
 			$content = '[' . apply_filters( 'hotel_booking_account_shortcode_tag', 'hotel_booking_account' ) . ']';
+		} else if ( hb_get_page_id( 'thankyou' ) == $page_id ) {
+			$content = '[' . apply_filters( 'hotel_booking_thankyou_shortcode_tag', 'hotel_booking_thankyou' ) . ']';
 		}
 
 		return do_shortcode( $content );

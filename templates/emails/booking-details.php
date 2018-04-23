@@ -1,14 +1,7 @@
 <?php
-/**
- * @Author: ducnvtt
- * @Date  :   2016-04-14 10:46:27
- * @Last  Modified by:   ducnvtt
- * @Last  Modified time: 2016-04-15 16:55:46
- */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit();
-}
-?>
+} ?>
 
 <h2 class="section-title"><?php echo __( 'Booking ', 'wp-hotel-booking' ) . $booking->get_booking_number(); ?></h2>
 <table class="width-100 booking_details" cellspacing="0" cellpadding="0">
@@ -39,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     </tr>
     <tr>
         <td colspan="4"><b><?php _e( 'Payment method', 'wp-hotel-booking' ) ?></b></td>
-        <td><?php echo esc_html( $booking->method_title ) ?></td>
+        <td><?php echo $booking->method_title ? esc_html( $booking->method_title ) : __( 'Offline Payment', 'wp-hotel-booking' ) ?></td>
     </tr>
     <tr>
         <td colspan="4"><b><?php _e( 'Total', 'wp-hotel-booking' ) ?></b></td>

@@ -31,7 +31,7 @@ $related = $room->get_related_rooms();
 		(function ($) {
 			"use strict";
 			$(document).ready(function () {
-				var thimpress_hotel_booking_carousel_related = $('.hb_related_other_room ul.rooms');
+				var thimpress_hotel_booking_carousel_related = $('.hb_related_other_room .rooms');
 				thimpress_hotel_booking_carousel_related.owlCarousel({
 					navigation     : false,
 					pagination     : false,

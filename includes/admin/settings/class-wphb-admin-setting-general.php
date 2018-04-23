@@ -34,6 +34,11 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 				),
 				array(
 					'type'  => 'select_page',
+					'id'    => 'tp_hotel_booking_rooms_page_id',
+					'title' => __( 'Rooms Page', 'wp-hotel-booking' )
+				),
+				array(
+					'type'  => 'select_page',
 					'id'    => 'tp_hotel_booking_search_page_id',
 					'title' => __( 'Search Page', 'wp-hotel-booking' )
 				),
