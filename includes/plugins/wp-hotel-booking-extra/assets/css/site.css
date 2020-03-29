@@ -1,0 +1,197 @@
+.hb_addition_package_extra {
+    display: none;
+    clear: both;
+    padding-top: 30px;
+}
+
+.single-purchase .hb_addition_package_extra {
+    display: block;
+}
+
+.single-purchase .hb_addition_package_extra .hb_addition_packages {
+    display: none;
+}
+
+.hb_addition_package_extra .hb_addition_package_title_toggle {
+    margin: 0;
+}
+
+.hb_addition_package_extra a.hb_package_toggle {
+    display: block;
+    color: #333333 !important;
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: 700;
+    text-transform: none;
+    padding: 0;
+    text-decoration: none !important;
+    /* margin-bottom: 15px; */
+}
+
+.hb_addition_package_extra a.hb_package_toggle:after {
+    content: '\f342';
+    font-family: dashicon;
+    font: 400 18px/1 dashicons;
+    vertical-align: top;
+    line-height: 28px;
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.hb_addition_package_extra a.hb_package_toggle.active:after {
+    content: '\f346';
+}
+
+.hb_addition_package_extra .hb_package_toggle:hover,
+.hb_addition_package_extra .hb_package_toggle.active {
+    border-color: #46598b;
+    color: #46598b;
+}
+
+.hb_addition_packages {
+    padding: 30px;
+    border: 1px solid #eee;
+    border-bottom: 0;
+    margin-bottom: -30px;
+    margin-top: 15px;
+}
+
+.hb_addition_packages input[type=radio],
+.hb_addition_packages input[type=checkbox] {
+    border: 1px solid #333;
+    margin-top: 3px;
+}
+
+.hb_addition_packages .hb_package_title {
+    line-height: 30px;
+    padding: 0;
+    text-transform: none;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.hb_addition_packages.active {
+    /*display: block;*/
+}
+
+.hb_addition_packages_ul {
+    margin: 0;
+    list-style: none;
+}
+
+.hb_addition_packages_ul li {
+    padding: 20px 20px 20px 0;
+    margin: 0;
+    border-bottom: 1px solid #eee;
+}
+
+.hb_addition_packages_ul li:first-child {
+    padding-top: 0;
+}
+
+.hb_addition_packages_ul li:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.hb_extra_optional_right {
+    float: left;
+}
+
+.hb_extra_optional_left {
+    padding-left: 30px;
+}
+
+.hb_package_title {
+    text-transform: uppercase;
+    color: #333333;
+    font-weight: 600;
+    font-size: 14px;
+    margin: 0;
+    padding: 5px 0;
+}
+
+.hb_package_title label:hover {
+    cursor: pointer;
+}
+
+.hb_package_title label {
+    margin: 0;
+    font-weight: 400;
+}
+
+.hb_extra_title p {
+    font-size: 14px;
+    margin-bottom: 8px !important;
+    color: #999;
+}
+
+.hb_extra_detail_price .hb_optional_quantity {
+    box-shadow: none;
+    text-align: center;
+    border: 1px solid #d4d0ba;
+    font-family: inherit;
+    padding: 5px;
+    max-width: 60px;
+    padding: 1px;
+    margin-right: 5px;
+}
+
+.hb_extra_detail_price .hb_optional_quantity[readonly] {
+    background-color: #E8DFA9;
+}
+
+.hb_extra_detail_price strong {
+    font-size: 15px;
+}
+
+.hb_extra_detail_price small {
+    font-size: 13px;
+    font-style: italic;
+    font-weight: 400;
+}
+
+/**
+ * mini cart style
+ */
+.hb_mini_cart_price_packages label {
+    font-weight: 400;
+    color: #333;
+    line-height: 30px;
+    margin: 0;
+}
+
+.hb_mini_cart_price_packages ul {
+    margin-left: 0 !important;
+    margin: 5px 0;
+}
+
+.hotel_booking_mini_cart .hb_mini_cart_price_packages ul li {
+    padding: 0;
+    padding-left: 8px
+}
+
+.hb_mini_cart_price_packages .hb_package_title {
+    padding: 0;
+    text-transform: none;
+    font-size: 13px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 30px;
+}
+
+.hb_mini_cart_price_packages .hb_package_title > span {
+    float: right;
+}
+
+.hb_checkout_item.package td {
+    padding: 5px 5px !important;
+    font-size: 15px;
+}
+
+.hb_addition_services_title td {
+    text-align: center;
+    font-weight: 700;
+    font-style: italic;
+    color: #333;
+}

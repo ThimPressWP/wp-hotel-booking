@@ -1,0 +1,79 @@
+.tp_extra_form_field_settings{
+	border: 1px solid #dedede;
+}
+.tp_extra_form_field_settings > div > div{
+	padding: 10px;
+}
+#tp_extra_form {
+	overflow: hidden;
+}
+#tp_extra_form .tp_extra_form_head{
+	padding: 0;
+}
+#tp_extra_form h4{
+	margin: 0;
+	padding-bottom: 10px;
+	width: 100%;
+}
+.tp_extra_form_head h3{
+    margin: 0;
+    padding: 10px;
+    display: block;
+    text-align: center;
+    background-color: #77B1EA;
+    color: #fff;
+}
+.tp_extra_form_fields{
+	border-bottom: 1px solid #dedede;
+    padding-bottom: 10px;
+    overflow: hidden;
+}
+.tp_extra_form_fields:nth-child(2n+1){
+	background-color: #fff;
+}
+.tp_extra_form_fields > div{
+	width: 20%;
+	float: left;
+}
+.tp_extra_form_fields .remove{
+	padding-top: 30px;
+	width: 10%;
+}
+.tp_extra_form_fields .desc{
+	width: 30%;
+}
+.tp_extra_form_fields > div > input[type="checkbox"]{
+	width: auto;
+}
+.tp_extra_form_fields > div > input,
+.tp_extra_form_fields > div > textarea,
+.tp_extra_form_fields > div > select{
+	width: 90%;
+	max-width: 90%;
+	padding: 7px;
+}
+.tp_extra_form_fields .rooms,
+.tp_extra_form_fields > .type{
+	width: 10%;
+	text-align: center;
+}
+.tp_extra_form_fields > .price > *{
+	float: left;
+}
+.tp_extra_form_fields > .price input{
+	width: 45%;
+}
+.tp_extra_form_fields > .type select{
+	width: 100%;
+}
+.tp_extra_form_fields > .price span,
+.tp_extra_form_fields > .type select{
+	height: 36px;
+	line-height: 36px;
+}
+.tp_extra_form_fields > div > textarea{
+	min-height: 100px;
+}
+.tp_extra_add_item{
+	float: right;
+}
