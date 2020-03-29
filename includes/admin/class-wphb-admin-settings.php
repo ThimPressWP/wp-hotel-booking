@@ -1,14 +1,18 @@
 <?php
 /**
- * @Author: ducnvtt
- * @Date:   2016-03-29 15:07:16
- * @Last Modified by:   someone
- * @Last Modified time: 2016-05-13 11:31:15
+ * WP Hotel Booking admin settings.
+ *
+ * @version       1.9.6
+ * @author        ThimPress
+ * @package       WP_Hotel_Booking/Classes
+ * @category      Classes
+ * @author        Thimpress, leehld
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 class WPHB_Admin_Settings {
 

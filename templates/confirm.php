@@ -1,20 +1,22 @@
 <?php
+
 /**
- * Confirm plugin actions
+ * The template for displaying confirm actions.
  *
- * Override this template by copying it to yourtheme/tp-hotel-booking/confirm.php
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/confirm.php.
  *
- * @author        ThimPress
- * @package       wp-hotel-booking/templates
- * @version       1.6
+ * @author  ThimPress, leehld
+ * @package WP-Hotel-Booking/Templates
+ * @version 1.6
  */
 
-if ( !defined( 'ABSPATH' ) ) {
-	exit();
-}
-?>
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit(); ?>
+
 <div id="hotel-booking-confirm">
-    Confirm
+	<?php _e( 'Confirm', 'wp-hotel-booking' ); ?>
     <form name="hb-search-form">
         <input type="hidden" name="hotel-booking" value="complete">
         <p>

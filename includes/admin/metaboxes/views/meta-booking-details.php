@@ -1,13 +1,17 @@
 <?php
 /**
- * @Author: ducnvtt
- * @Date:   2016-03-25 09:32:53
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-13 13:47:55
+ * Admin View: Meta booking details.
+ *
+ * @version     1.9.7
+ * @package     WP_Hotel_Booking/Views
+ * @category    Views
+ * @author      Thimpress, leehld
  */
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 global $post;
 $booking = WPHB_Booking::instance( $post->ID );
@@ -36,7 +40,7 @@ $booking = WPHB_Booking::instance( $post->ID );
                     <select name="_hb_method">
 						<?php if ( $booking->method && ! array_key_exists( $booking->method, $methods ) ) : ?>
                             <option value="<?php echo esc_attr( $booking->method ) ?>"
-                                    selected><?php printf( __( '%s is not available', 'wp-hotel-booking' ), $booking->method_title ) ?></option>
+                                    selected><?php echo $booking->method_title; ?></option>
 						<?php endif; ?>
 						<?php foreach ( $methods as $id => $method ) : ?>
                             <option value="<?php echo esc_attr( $id ) ?>" <?php selected( $booking->method, $id ); ?>><?php printf( '%s(%s)', $method->title, $method->description ) ?></option>

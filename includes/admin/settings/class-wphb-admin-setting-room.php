@@ -1,15 +1,18 @@
 <?php
 /**
- * @Author: ducnvtt
- * @Date:   2016-03-29 17:13:06
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-01 13:39:29
+ * WP Hotel Booking admin setting room.
+ *
+ * @version     1.9.6
+ * @author      ThimPress
+ * @package     WP_Hotel_Booking/Classes
+ * @category    Classes
+ * @author      Thimpress, leehld
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
-
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 
 	class WPHB_Admin_Setting_Room extends WPHB_Admin_Setting_Page {
@@ -86,12 +89,12 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 							'id'		=> 'tp_hotel_booking_room_image_gallery',
 							'type'		=> 'image_size',
 							'default'	=> array(
-									'width'		=> 270,
-									'height'	=> 270
+									'width'		=> 1000,
+									'height'	=> 1000
 								),
 							'options'	=> array(
-									'width'		=> 270,
-									'height'	=> 270
+									'width'		=> 1000,
+									'height'	=> 1000
 								),
 							'title'		=> __( 'Room images size gallery', 'wp-hotel-booking' )
 						),

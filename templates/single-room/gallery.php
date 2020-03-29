@@ -1,19 +1,32 @@
 <?php
+/**
+ * The template for displaying single room gallery.
+ *
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/single-room/gallery.php.
+ *
+ * @author  ThimPress, leehld
+ * @package WP-Hotel-Booking/Templates
+ * @version 1.6
+ */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit();
 
 global $hb_room;
-$galeries = $hb_room->get_galleries( false );
+/**
+ * @var $hb_room WPHB_Room
+ */
+$galleries = $hb_room->get_galleries( false );
 ?>
 
-<?php if ( $galeries ) { ?>
+<?php if ( $galleries ) { ?>
     <div class="hb_room_gallery camera_wrap camera_emboss" id="camera_wrap_<?php the_ID() ?>">
-		<?php foreach ( $galeries as $key => $gallery ): ?>
+		<?php foreach ( $galleries as $key => $gallery ) { ?>
             <div data-thumb="<?php echo esc_url( $gallery['thumb'] ); ?>"
                  data-src="<?php echo esc_url( $gallery['src'] ); ?>"></div>
-		<?php endforeach; ?>
+		<?php } ?>
     </div>
 
     <script type="text/javascript">

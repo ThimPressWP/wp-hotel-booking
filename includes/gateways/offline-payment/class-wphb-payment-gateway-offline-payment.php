@@ -1,8 +1,18 @@
 <?php
+/**
+ * WP Hotel Booking Offline payment.
+ *
+ * @version       1.9.6
+ * @author        ThimPress
+ * @package       WP_Hotel_Booking/Classes
+ * @category      Classes
+ * @author        Thimpress, leehld
+ */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Class HB_Payment_Gateway_Stripe

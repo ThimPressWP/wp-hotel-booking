@@ -1,14 +1,17 @@
 <?php
 /**
- * @Author: ducnvtt
- * @Date:   2016-04-06 16:40:46
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-08 13:27:40
+ * Admin View: Meta booking items template js.
+ *
+ * @version     1.9.7
+ * @package     WP_Hotel_Booking/Views
+ * @category    Views
+ * @author      Thimpress, leehld
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 ?>
 
@@ -37,17 +40,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="section">
 						<select name="product_id" class="booking_search_room_items">
 							<# if ( typeof data.room !== 'undefined' ) { #>
-
 								<option value="{{ data.room.ID }}" selected>{{ data.room.post_title }}</option>
-
 							<# } #>
 						</select>
 					</div>
 					<div class="section">
 						<input type="text" name="check_in_date" class="check_in_date" value="{{ data.check_in_date }}" placeholder="<?php esc_attr_e( 'Check in', 'wp-hotel-booking' ); ?>" />
-						<input type="hidden" name="check_in_date_timestamp" value="{{ data.check_in_date_timestamp }}" />
+						<input type="hidden" name="check_in_date_timestamp" value="{{ data.check_in_date_timestamp }}" class="hb-room-item-field" />
 						<input type="text" name="check_out_date" class="check_out_date" value="{{ data.check_out_date }}" placeholder="<?php esc_attr_e( 'Check out', 'wp-hotel-booking' ); ?>" />
-						<input type="hidden" name="check_out_date_timestamp" value="{{ data.check_out_date_timestamp }}" />
+						<input type="hidden" name="check_out_date_timestamp" value="{{ data.check_out_date_timestamp }}" class="hb-room-item-field" />
 					</div>
 				<# } #>
 				<div class="section">
@@ -80,10 +81,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<div class="section">
 									<label>
 										<# if ( item.selected === true ) { #>
-											<input type="checkbox" name="sub_items[{{ item.ID }}][checked]" checked />
+											<input type="checkbox" name="sub_items[{{ item.ID }}][checked]" checked class="hb-room-item-field" />
 											<input type="hidden" name="sub_items[{{ item.ID }}][order_item_id]" value="{{ item.order_item_id }}" />
 										<# } else { #>
-											<input type="checkbox" name="sub_items[{{ item.ID }}][checked]" />
+											<input type="checkbox" name="sub_items[{{ item.ID }}][checked]" class="hb-room-item-field" />
 										<# } #>
 										{{ item.title }}
 									</label>
@@ -91,10 +92,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<# if ( item.respondent === 'number' ) { #>
 									<div class="section">
 										<?php _e( 'Quantity', 'wp-hotel-booking' ); ?>
-										<input name="sub_items[{{ item.ID }}][qty]" type="number" step="1" min="0" value="{{ item.qty }}" />
+										<input name="sub_items[{{ item.ID }}][qty]" type="number" step="1" min="0" value="{{ item.qty }}" class="hb-room-item-field" />
 									</div>
 								<# } else { #>
-									<input name="sub_items[{{ item.ID }}][qty]" type="hidden" value="{{ item.qty }}" />
+									<input name="sub_items[{{ item.ID }}][qty]" type="hidden" value="{{ item.qty }}" class="hb-room-item-field" />
 								<# } #>
 							</li>
 						<# } #>
@@ -114,7 +115,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<input type="hidden" name="order_item_type" value="{{ data.order_item_type }}" />
 				<input type="hidden" name="action" value="hotel_booking_admin_add_order_item" />
 				<button type="reset" class="button hb_modal_close"><?php _e( 'Close', 'wp-hotel-booking' ) ?></button>
-				<button type="submit" class="button button-primary hb_form_submit"><?php _e( 'Add', 'wp-hotel-booking' ); ?></button>
+				<button type="submit" class="button button-primary hb_form_submit" disabled><?php _e( 'Add', 'wp-hotel-booking' ); ?></button>
 			</div>
 		</form>
 	</div>

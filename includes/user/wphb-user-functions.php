@@ -1,14 +1,18 @@
 <?php
+/**
+ * WP Hotel Booking user functions.
+ *
+ * @version     1.9.6
+ * @author      ThimPress
+ * @package     WP_Hotel_Booking/Functions
+ * @category    Core Functions
+ * @author      Thimpress, leehld
+ */
 
 /**
- * @Author: ducnvtt
- * @Date:   2016-03-31 14:45:55
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-03-31 15:24:48
+ * Prevent loading this file directly
  */
-if ( !defined( 'ABSPATH' ) ) {
-    exit();
-}
+defined( 'ABSPATH' ) || exit;
 
 // get user
 if ( !function_exists( 'hb_get_user' ) ) {

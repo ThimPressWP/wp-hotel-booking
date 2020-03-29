@@ -1,15 +1,23 @@
 <?php
 /**
- * @Author: ducnvtt
- * @Date  :   2016-04-14 10:27:20
- * @Last  Modified by:   ducnvtt
- * @Last  Modified time: 2016-04-15 16:55:06
+ * The template for displaying email header.
+ *
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/emails/email-header.php.
+ *
+ * @author  ThimPress, leehld
+ * @package WP-Hotel-Booking/Templates
+ * @version 1.6
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit();
 
+/**
+ * @var $email_heading
+ * @var $email_heading_desc
+ */
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">

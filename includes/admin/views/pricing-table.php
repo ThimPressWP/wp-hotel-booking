@@ -1,8 +1,17 @@
 <?php
+/**
+ * Admin View: Pricing talbe view.
+ *
+ * @version     1.9.7
+ * @package     WP_Hotel_Booking/Views
+ * @category    Views
+ * @author      Thimpress, leehld
+ */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 $week_names = hb_date_names();
 

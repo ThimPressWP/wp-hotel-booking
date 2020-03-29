@@ -1,9 +1,9 @@
 === WP Hotel Booking ===
-Contributors: thimpress, leehld
+Contributors: thimpress, leehld, phamtungpth, thoakim
 Donate link: https://thimpress.com/
 Tags: hotel, booking, hotel booking, reservation, reservations
 Requires at least: 4.2
-Tested up to: 4.9.5
+Tested up to: 5.3
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -40,8 +40,8 @@ Take a look at the Premium **[HotelWP - Hotel Wordpress Theme](https://themefore
 **Free add-ons for WP Hotel Booking are available in WordPress:**
 
 - <a href="https://wordpress.org/plugins/wp-hotel-booking-authorize-payment/" target="_blank">Authorize.Net Payment method for WP Hotel Booking</a> - Authorize.Net payment method for WP Hotel Booking Plugin.
-- <a href="https://wordpress.org/plugins/wp-hotel-booking-stripe/" target="_blank">Stripe Payment method for WP Hotel Booking</a> - Stripe payment method for WP Hotel Booking Plugin.
-- <a href="https://wordpress.org/plugins/wp-hotel-booking-block/" target="_blank">Block booking for WP Hotel Booking</a> - Block booking rooms of WP Hotel Booking for specific dates.
+- <a href="https://wordpress.org/plugins/wp-hotel-booking-stripe-payment/" target="_blank">Stripe Payment method for WP Hotel Booking</a> - Stripe payment method for WP Hotel Booking Plugin.
+- <a href="https://wordpress.org/plugins/wp-hotel-booking-block-room/" target="_blank">Block booking for WP Hotel Booking</a> - Block booking rooms of WP Hotel Booking for specific dates.
 - <a href="https://wordpress.org/plugins/wp-hotel-booking-booking-room/" target="_blank">Booking in single room for WP Hotel Booking</a> - Support booking in single room page for WP Hotel Booking.
 - <a href="https://wordpress.org/plugins/wp-hotel-booking-report/" target="_blank">Statistic for WP Hotel Booking</a> - Statistic booking for WP Hotel Booking Plugin.
 - <a href="https://wordpress.org/plugins/wp-hotel-booking-coupon/" target="_blank">Coupon for WP Hotel Booking</a> - Coupon for WP Hotel Booking Plugin.
@@ -76,6 +76,100 @@ Yes.
 7. System settings
 
 == Changelog ==
+= 1.9.9 =
+~ Fixed some bugs security.
+~ Fixed issue: "Check Availability" case choice room hasn't Addition package
+~ Fixed minor bugs
+~ Add option: Redirect to page after book room
+~ Fixed: only role Hotel manager, Booking Editor or Administrator can create manual order
+
+= 1.9.8.7 =
++ Fixed issue: not remove loading icon after the action done.
+
+= 1.9.8.6 =
++ Fixed bug not work with j.n.Y date format.
++ Added loading effect when searching rooms, selecting rooms, checking out.
+
+= 1.9.8.5 =
++ Fixed bug duplicate fields in settings pages.
++ Added more several hooks.
+
+= 1.9.8.4 =
++ Fixed the bug not displaying booking orders in the All tab.
+
+= 1.9.8.3 =
++ Fixed the bug when displaying the max children number in search form.
++ Minified several js and css files.
+
+= 1.9.8.2 =
++ Added couple hooks in Select Extra Options view.
+
+= 1.9.8.1 =
++ Corrected path to override the Extra options add-on.
++ Fixed the conflict issue which causes Content duplication when Yoase SEO On.
++ Fixed warning message when displaying the price with PHP7.
++ Corrected the text in Emails Settings.
++ Not display the Advanced Payment in the cart when it set as 0% or not set.
+
+= 1.9.8 =
++ Fixed bug when searching by room capacity.
++ Added loading effect to the button when choose the extra options.
+
+= 1.9.7.9 =
++ Changed the way of displaying the price when TAX included.
++ Fixed bug in Widget: Show title/label option not work.
++ Fixed bug: Required extra option not auto be added to cart when Custom Process option ON.
++ Fixed a small bug with Menu in Back End.
++ Updated several language texts.
+
+= 1.9.7.8 =
++ Fixed bug when searching rooms with other languages.
+
+= 1.9.7.7 =
++ Update cancel mail template
+
+= 1.9.7.6 =
++ Update filter search room
+
+= 1.9.7.5 =
++ Fix issue show unpublished extra room in search page
++ Update default setting room images size in single room gallery
++ Update process get related rooms
++ Update tool check override templates to check WP Hotel Booking addons
+
+= 1.9.7.4 =
++ Add tool check override templates
++ Update templates instruction
+
+= 1.9.7.3 =
++ Update offline payment instruction in thank you page template
+
+= 1.9.7.2 =
++ Update select extra in search room page with custom process
++ Improve admin booking editor
+
+= 1.9.7.1 =
++ Update maximum extra price
+
+= 1.9.7 =
++ Update compatible with WPML
+
+= 1.9.6.2 =
++ Update search room process
+
+= 1.9.6.1 =
++ Fix search room process
+
+= 1.9.6 =
++ Update search room process
++ Update search form template
+
+= 1.9.5 =
+- Update booking checkin checkout same day
+- Update admin filter booking
+- Add custom booking process option
+- Restructure extra option
+- GDPR compliance
 
 = 1.9.4 =
 - Update email booking details

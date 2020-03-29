@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-26 15:06+0700\n"
+"POT-Creation-Date: 2019-03-18 16:46+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,3462 +18,3667 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: includes/class-wphb-ajax.php:172
+#: includes/class-wphb-ajax.php:84
+msgid "Cart ID is invalid."
+msgstr ""
+
+#: includes/class-wphb-ajax.php:221
 msgid "Coupon code applied"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:175
+#: includes/class-wphb-ajax.php:224
 msgid "Coupon does not exist!"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:186
+#: includes/class-wphb-ajax.php:235
 msgid "Coupon code removed"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:226
+#: includes/class-wphb-ajax.php:275
 msgid "Room ID is not exists."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:240
+#: includes/class-wphb-ajax.php:289
 msgid "Can not select zero room."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:250
+#: includes/class-wphb-ajax.php:299
 msgid "Checkin date, checkout date is invalid."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:270
+#: includes/class-wphb-ajax.php:321
 msgid "Added successfully."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:285
+#: includes/class-wphb-ajax.php:341
 msgid "Room selected. Please View Cart to change order"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:301
-#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-cart.php:222
+#: includes/class-wphb-ajax.php:357
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-cart.php:250
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-cart.php:230
 msgid "Cart item is not exists."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:369 includes/wphb-core-functions.php:40
+#: includes/class-wphb-ajax.php:425 includes/wphb-core-functions.php:52
 msgid "Room not found."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:376
+#: includes/class-wphb-ajax.php:432
 msgid "Please select check in date and checkout date."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:431
+#: includes/class-wphb-ajax.php:484
 msgid "Edit order item"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:495
+#: includes/class-wphb-ajax.php:548
 msgid "Can not add item with zero quantity."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:509 includes/class-wphb-ajax.php:516
+#: includes/class-wphb-ajax.php:562 includes/class-wphb-ajax.php:569
 msgid "Check in date is invalid"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:686
+#: includes/class-wphb-ajax.php:739
 msgid "Room is not exists."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:694
+#: includes/class-wphb-ajax.php:747
 msgid "Date is not exists."
 msgstr ""
 
-#: includes/class-wphb-checkout.php:53
-#: includes/booking/wphb-booking-functions.php:67
-#: includes/cart/class-wphb-cart.php:593
-#: includes/plugins/wp-hotel-booking-extra/templates/shortcodes/mini_cart_layout.php:56
-#: includes/shortcodes/class-wphb-shortcode-hotel-booking-mini-cart.php:33
+#: includes/class-wphb-checkout.php:63
+#: includes/booking/wphb-booking-functions.php:72
+#: includes/cart/class-wphb-cart.php:642
+#: includes/plugins/wp-hotel-booking-extra/templates/shortcodes/mini_cart_layout.php:76
+#: includes/shortcodes/class-wphb-shortcode-hotel-booking-mini-cart.php:44
 msgid "Your cart is empty."
 msgstr ""
 
-#: includes/class-wphb-checkout.php:55
+#: includes/class-wphb-checkout.php:65
 #, php-format
 msgid "Sorry, your session has expired. <a href=\"%s\">Return to homepage</a>"
 msgstr ""
 
-#: includes/class-wphb-checkout.php:89
+#: includes/class-wphb-checkout.php:99
 msgid "You have to Login to process checkout."
 msgstr ""
 
-#: includes/class-wphb-checkout.php:96
+#: includes/class-wphb-checkout.php:106
 msgid "The payment method is not available"
 msgstr ""
 
-#: includes/class-wphb-checkout.php:120
+#: includes/class-wphb-checkout.php:130
 msgid "can not create booking"
 msgstr ""
 
-#: includes/class-wphb-comments.php:110 templates/single-room-reviews.php:30
+#: includes/class-wphb-comments.php:120 templates/single-room-reviews.php:34
 msgid "Reviews"
 msgstr ""
 
-#: includes/class-wphb-comments.php:118
+#: includes/class-wphb-comments.php:128
 msgid "Rating Room"
 msgstr ""
 
-#: includes/class-wphb-comments.php:129 includes/class-wphb-post-types.php:326
-#: templates/loop/rating.php:24 templates/single-room/review.php:20
+#: includes/class-wphb-comments.php:139 includes/class-wphb-post-types.php:439
+#: templates/loop/rating.php:28 templates/single-room/review.php:32
 #, php-format
 msgid "Rated %d out of 5"
 msgstr ""
 
-#: includes/class-wphb-comments.php:137
+#: includes/class-wphb-comments.php:147
 msgid "No rating"
 msgstr ""
 
-#: includes/class-wphb-install.php:141
+#: includes/class-wphb-gdpr.php:36 includes/class-wphb-gdpr.php:45
+msgid "WPHB Booking"
+msgstr ""
+
+#: includes/class-wphb-gdpr.php:91 templates/account/bookings.php:36
+msgid "ID"
+msgstr ""
+
+#: includes/class-wphb-gdpr.php:93
+msgid "Created Date"
+msgstr ""
+
+#: includes/class-wphb-gdpr.php:97 templates/checkout/customer.php:22
+msgid "Customer Details"
+msgstr ""
+
+#: includes/class-wphb-gdpr.php:100
+msgid "Items"
+msgstr ""
+
+#: includes/class-wphb-gdpr.php:102
+#: includes/admin/wphb-admin-functions.php:278
+#: includes/admin/metaboxes/views/meta-booking-items.php:46
+#: templates/account/bookings.php:38 templates/checkout/thank-you.php:56
+#: templates/emails/booking-details.php:51
+#: templates/search/booking-room-details.php:41
+msgid "Total"
+msgstr ""
+
+#: includes/class-wphb-gdpr.php:106 templates/checkout/payment-method.php:21
+msgid "Payment Method"
+msgstr ""
+
+#: includes/class-wphb-gdpr.php:110
+#: includes/admin/wphb-admin-functions.php:280
+#: templates/account/bookings.php:39
+msgid "Status"
+msgstr ""
+
+#: includes/class-wphb-gdpr.php:117
+msgid "Hotel Booking"
+msgstr ""
+
+#: includes/class-wphb-install.php:145
+msgctxt "Page Slug"
+msgid "hotel-rooms"
+msgstr ""
+
+#: includes/class-wphb-install.php:146
+msgctxt "Page Title"
+msgid "Hotel Rooms"
+msgstr ""
+
+#: includes/class-wphb-install.php:153
 msgctxt "Page Slug"
 msgid "hotel-cart"
 msgstr ""
 
-#: includes/class-wphb-install.php:142
+#: includes/class-wphb-install.php:154
 msgctxt "Page Title"
 msgid "Hotel Cart"
 msgstr ""
 
-#: includes/class-wphb-install.php:149
+#: includes/class-wphb-install.php:161
 msgctxt "Page Slug"
 msgid "hotel-checkout"
 msgstr ""
 
-#: includes/class-wphb-install.php:150
+#: includes/class-wphb-install.php:162
 msgctxt "Page Title"
 msgid "Hotel Checkout"
 msgstr ""
 
-#: includes/class-wphb-install.php:157
+#: includes/class-wphb-install.php:169
 msgctxt "Page Slug"
 msgid "hotel-search"
 msgstr ""
 
-#: includes/class-wphb-install.php:158
+#: includes/class-wphb-install.php:170
 msgctxt "Page Title"
 msgid "Hotel Booking Search"
 msgstr ""
 
-#: includes/class-wphb-install.php:165
+#: includes/class-wphb-install.php:177
 msgctxt "Page Slug"
 msgid "hotel-account"
 msgstr ""
 
-#: includes/class-wphb-install.php:166
+#: includes/class-wphb-install.php:178
 msgctxt "Page Title"
 msgid "Hotel Account"
 msgstr ""
 
-#: includes/class-wphb-install.php:173
+#: includes/class-wphb-install.php:185
 msgctxt "Page Slug"
 msgid "hotel-term-condition"
 msgstr ""
 
-#: includes/class-wphb-install.php:174
+#: includes/class-wphb-install.php:186
 msgctxt "Page Title"
 msgid "Terms and Conditions "
 msgstr ""
 
-#: includes/class-wphb-install.php:181
+#: includes/class-wphb-install.php:193
 msgctxt "Page Slug"
 msgid "hotel-thank-you"
 msgstr ""
 
-#: includes/class-wphb-install.php:182
+#: includes/class-wphb-install.php:194
 msgctxt "Page Title"
 msgid "Hotel Thank You"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:59
+#: includes/class-wphb-post-types.php:90
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:118
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:213
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:105
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:195
 msgid "Type"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:60
+#: includes/class-wphb-post-types.php:91
 msgid "Validate From"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:61
+#: includes/class-wphb-post-types.php:92
 msgid "Validate To"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:62
-#: includes/admin/wphb-admin-functions.php:154
+#: includes/class-wphb-post-types.php:93
+#: includes/admin/wphb-admin-functions.php:174
 msgid "Minimum spend"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:63
-#: includes/admin/wphb-admin-functions.php:162
+#: includes/class-wphb-post-types.php:94
+#: includes/admin/wphb-admin-functions.php:182
 msgid "Maximum spend"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:64
-#: includes/admin/wphb-admin-functions.php:170
+#: includes/class-wphb-post-types.php:95
+#: includes/admin/wphb-admin-functions.php:190
 msgid "Usage limit per coupon"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:65
-#: includes/admin/wphb-admin-functions.php:177
+#: includes/class-wphb-post-types.php:96
+#: includes/admin/wphb-admin-functions.php:197
 msgid "Used"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:77
+#: includes/class-wphb-post-types.php:111
 msgid "Fixed cart"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:80
+#: includes/class-wphb-post-types.php:114
 msgid "Percent cart"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:276
-#: includes/class-wphb-post-types.php:541
+#: includes/class-wphb-post-types.php:389
+#: includes/class-wphb-post-types.php:671
 msgid "Room Type"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:277
+#: includes/class-wphb-post-types.php:390
 msgid "Max Children"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:278
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:38
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:66
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:99
-#: templates/emails/booking-details.php:20 templates/loop/price.php:27
+#: includes/class-wphb-post-types.php:391
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:116
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:197
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:44
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:69
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:102
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:103
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:179
+#: templates/emails/booking-details.php:25 templates/loop/price.php:34
 msgid "Price"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:279
+#: includes/class-wphb-post-types.php:392
 msgid "Average Rating"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:318
+#: includes/class-wphb-post-types.php:431
 msgid "View Price"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:386
+#: includes/class-wphb-post-types.php:507
 msgid "Gallery"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:388 templates/cart/cart.php:20
-#: templates/checkout/checkout.php:21
+#: includes/class-wphb-post-types.php:509 templates/cart/cart.php:35
+#: templates/checkout/checkout.php:36
 msgid "Capacity"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:390
+#: includes/class-wphb-post-types.php:511
 msgid "Ordering"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:446
+#: includes/class-wphb-post-types.php:574
 msgctxt "post type general name"
 msgid "Rooms"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:447
+#: includes/class-wphb-post-types.php:575
 msgctxt "post type singular name"
 msgid "Room"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:448
-#: includes/class-wphb-post-types.php:450
+#: includes/class-wphb-post-types.php:576
+#: includes/class-wphb-post-types.php:578
 msgid "Rooms"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:449
-#: includes/class-wphb-post-types.php:502
+#: includes/class-wphb-post-types.php:577
+#: includes/class-wphb-post-types.php:630
 msgid "Parent Item:"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:451
+#: includes/class-wphb-post-types.php:579
 msgid "View Room"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:452
-#: includes/class-wphb-post-types.php:453
+#: includes/class-wphb-post-types.php:580
+#: includes/class-wphb-post-types.php:581
 msgid "Add New Room"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:454
+#: includes/class-wphb-post-types.php:582
 msgid "Edit Room"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:455
+#: includes/class-wphb-post-types.php:583
 msgid "Update Room"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:456
+#: includes/class-wphb-post-types.php:584
 msgid "Search Room"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:457
-#: includes/shortcodes/class-wphb-shortcode-hotel-booking-rooms.php:67
+#: includes/class-wphb-post-types.php:585
+#: includes/shortcodes/class-wphb-shortcode-hotel-booking-rooms.php:77
 msgid "No room found"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:458
+#: includes/class-wphb-post-types.php:586
 msgid "No room found in Trash"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:482
+#: includes/class-wphb-post-types.php:610
 msgctxt "URL slug"
 msgid "rooms"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:499
+#: includes/class-wphb-post-types.php:627
 msgctxt "post type general name"
 msgid "Bookings"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:500
+#: includes/class-wphb-post-types.php:628
 msgctxt "post type singular name"
 msgid "Booking"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:501
-#: includes/class-wphb-post-types.php:503 templates/account/bookings.php:25
+#: includes/class-wphb-post-types.php:629
+#: includes/class-wphb-post-types.php:631 templates/account/bookings.php:31
 msgid "Bookings"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:504
+#: includes/class-wphb-post-types.php:632
 msgid "View Booking"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:505
+#: includes/class-wphb-post-types.php:633
 msgid "Add New Booking"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:506
+#: includes/class-wphb-post-types.php:634
 msgid "Add New"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:507
+#: includes/class-wphb-post-types.php:635
 msgid "Edit Booking"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:508
+#: includes/class-wphb-post-types.php:636
 msgid "Update Booking"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:509
+#: includes/class-wphb-post-types.php:637
 msgid "Search Booking"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:510
+#: includes/class-wphb-post-types.php:638
 msgid "No booking found"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:511
+#: includes/class-wphb-post-types.php:639
 msgid "No booking found in Trash"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:543
+#: includes/class-wphb-post-types.php:673
 msgctxt "taxonomy general name"
 msgid "Room Types"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:544
+#: includes/class-wphb-post-types.php:674
 msgctxt "taxonomy singular name"
 msgid "Room Type"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:545
+#: includes/class-wphb-post-types.php:675
 msgctxt "Room Types"
 msgid "Room Types"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:546
+#: includes/class-wphb-post-types.php:676
 msgid "Search Room Types"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:547
+#: includes/class-wphb-post-types.php:677
 msgid "All Room Types"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:548
+#: includes/class-wphb-post-types.php:678
 msgid "Parent Room Type"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:549
+#: includes/class-wphb-post-types.php:679
 msgid "Parent Room Type:"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:550
+#: includes/class-wphb-post-types.php:680
 msgid "Edit Room Type"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:551
+#: includes/class-wphb-post-types.php:681
 msgid "Update Room Type"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:552
+#: includes/class-wphb-post-types.php:682
 msgid "Add New Room Type"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:553
+#: includes/class-wphb-post-types.php:683
 msgid "New Room Type Name"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:558
+#: includes/class-wphb-post-types.php:688
 msgctxt "URL slug"
 msgid "room-type"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:576
-#: includes/class-wphb-post-types.php:579
+#: includes/class-wphb-post-types.php:706
+#: includes/class-wphb-post-types.php:709
 msgid "Room Capacity"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:578
+#: includes/class-wphb-post-types.php:708
 msgid "Room Capacities"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:580
+#: includes/class-wphb-post-types.php:710
 msgctxt "Room Capacities"
 msgid "Room Capacities"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:581
+#: includes/class-wphb-post-types.php:711
 msgid "Search Room Capacities"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:582
+#: includes/class-wphb-post-types.php:712
 msgid "All Room Capacity"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:583
+#: includes/class-wphb-post-types.php:713
 msgid "Parent Room Capacity"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:584
+#: includes/class-wphb-post-types.php:714
 msgid "Parent Room Capacity:"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:585
+#: includes/class-wphb-post-types.php:715
 msgid "Edit Room Capacity"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:586
+#: includes/class-wphb-post-types.php:716
 msgid "Update Room Capacity"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:587
+#: includes/class-wphb-post-types.php:717
 msgid "Add New Room Capacity"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:588
+#: includes/class-wphb-post-types.php:718
 msgid "New Room Type Capacity"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:593
+#: includes/class-wphb-post-types.php:723
 msgctxt "URL slug"
 msgid "room-capacity"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:615
-#: includes/booking/wphb-booking-functions.php:125
+#: includes/class-wphb-post-types.php:744
+#: includes/booking/wphb-booking-functions.php:131
 msgctxt "Booking status"
 msgid "Cancelled"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:620
+#: includes/class-wphb-post-types.php:749
 #, php-format
 msgid "Cancelled <span class=\"count\">(%s)</span>"
 msgid_plural "Cancelled <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-wphb-post-types.php:625
-#: includes/booking/wphb-booking-functions.php:126
+#: includes/class-wphb-post-types.php:754
+#: includes/booking/wphb-booking-functions.php:132
 msgctxt "Booking status"
 msgid "Pending"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:630
+#: includes/class-wphb-post-types.php:759
 #, php-format
 msgid "Pending <span class=\"count\">(%s)</span>"
 msgid_plural "Pending <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-wphb-post-types.php:635
-#: includes/booking/wphb-booking-functions.php:127
+#: includes/class-wphb-post-types.php:764
+#: includes/booking/wphb-booking-functions.php:133
 msgctxt "Booking status"
 msgid "Processing"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:640
+#: includes/class-wphb-post-types.php:769
 #, php-format
 msgid "Processing <span class=\"count\">(%s)</span>"
 msgid_plural "Processing <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-wphb-post-types.php:645
-#: includes/booking/wphb-booking-functions.php:128
+#: includes/class-wphb-post-types.php:774
+#: includes/booking/wphb-booking-functions.php:134
 msgctxt "Booking status"
 msgid "Completed"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:650
+#: includes/class-wphb-post-types.php:779
 #, php-format
 msgid "Completed <span class=\"count\">(%s)</span>"
 msgid_plural "Completed <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-wphb-roles.php:32
+#: includes/class-wphb-roles.php:38
 msgid "Hotel Manager"
 msgstr ""
 
-#: includes/class-wphb-roles.php:72
+#: includes/class-wphb-roles.php:78
 msgid "Booking Editor"
 msgstr ""
 
-#: includes/wphb-core-functions.php:53
+#: includes/class-wphb-settings.php:116
+msgid "Settings saved."
+msgstr ""
+
+#: includes/wphb-core-functions.php:65
 msgid "Check in date is not valid."
 msgstr ""
 
-#: includes/wphb-core-functions.php:62
+#: includes/wphb-core-functions.php:74
 msgid "Check out date is not valid."
 msgstr ""
 
-#: includes/wphb-core-functions.php:110
+#: includes/wphb-core-functions.php:122
 msgid "This room is not available."
 msgstr ""
 
-#: includes/wphb-functions.php:193
+#: includes/wphb-core-functions.php:261
+#: includes/plugins/wp-hotel-booking-extra/inc/functions.php:139
+#: includes/plugins/wp-hotel-booking-extra/inc/wphb-extra-functions.php:177
+msgid "Trip"
+msgstr ""
+
+#: includes/wphb-core-functions.php:262
+#: includes/plugins/wp-hotel-booking-extra/inc/functions.php:140
+#: includes/plugins/wp-hotel-booking-extra/inc/wphb-extra-functions.php:178
+msgid "Number"
+msgstr ""
+
+#: includes/wphb-functions.php:203
 msgid "---Select Room---"
 msgstr ""
 
-#: includes/wphb-functions.php:362 includes/wphb-functions.php:621
-#: includes/products/class-wphb-product-room.php:171
-#: templates/search/loop.php:60
+#: includes/wphb-functions.php:374 includes/wphb-functions.php:633
+#: includes/products/class-wphb-product-room.php:181
+#: templates/search/loop.php:76
 msgid "Select"
 msgstr ""
 
-#: includes/wphb-functions.php:552
+#: includes/wphb-functions.php:564
 msgid "Sun"
 msgstr ""
 
-#: includes/wphb-functions.php:553
+#: includes/wphb-functions.php:565
 msgid "Mon"
 msgstr ""
 
-#: includes/wphb-functions.php:554
+#: includes/wphb-functions.php:566
 msgid "Tue"
 msgstr ""
 
-#: includes/wphb-functions.php:555
+#: includes/wphb-functions.php:567
 msgid "Wed"
 msgstr ""
 
-#: includes/wphb-functions.php:556
+#: includes/wphb-functions.php:568
 msgid "Thu"
 msgstr ""
 
-#: includes/wphb-functions.php:557
+#: includes/wphb-functions.php:569
 msgid "Fri"
 msgstr ""
 
-#: includes/wphb-functions.php:558
+#: includes/wphb-functions.php:570
 msgid "Sat"
 msgstr ""
 
-#: includes/wphb-functions.php:594
+#: includes/wphb-functions.php:606
 msgid "Mr."
 msgstr ""
 
-#: includes/wphb-functions.php:595
+#: includes/wphb-functions.php:607
 msgid "Ms."
 msgstr ""
 
-#: includes/wphb-functions.php:596
+#: includes/wphb-functions.php:608
 msgid "Mrs."
 msgstr ""
 
-#: includes/wphb-functions.php:597
+#: includes/wphb-functions.php:609
 msgid "Miss."
 msgstr ""
 
-#: includes/wphb-functions.php:598
+#: includes/wphb-functions.php:610
 msgid "Dr."
 msgstr ""
 
-#: includes/wphb-functions.php:599
+#: includes/wphb-functions.php:611
 msgid "Prof."
 msgstr ""
 
-#: includes/wphb-functions.php:691
+#: includes/wphb-functions.php:703
 msgid "Your email address is invalid."
 msgstr ""
 
-#: includes/wphb-functions.php:692
+#: includes/wphb-functions.php:704
 msgid "Please select your payment method."
 msgstr ""
 
-#: includes/wphb-functions.php:693
+#: includes/wphb-functions.php:705
 msgid "Please accept our Terms and Conditions."
 msgstr ""
 
-#: includes/wphb-functions.php:694
+#: includes/wphb-functions.php:706
 msgid "Please select at least one the room."
 msgstr ""
 
-#: includes/wphb-functions.php:695
+#: includes/wphb-functions.php:707
 msgid "Please select your title."
 msgstr ""
 
-#: includes/wphb-functions.php:696
+#: includes/wphb-functions.php:708
 msgid "Please enter your first name."
 msgstr ""
 
-#: includes/wphb-functions.php:697
+#: includes/wphb-functions.php:709
 msgid "Please enter your last name."
 msgstr ""
 
-#: includes/wphb-functions.php:698
+#: includes/wphb-functions.php:710
 msgid "Please enter your address."
 msgstr ""
 
-#: includes/wphb-functions.php:699
+#: includes/wphb-functions.php:711
 msgid "Please enter your city name."
 msgstr ""
 
-#: includes/wphb-functions.php:700
+#: includes/wphb-functions.php:712
 msgid "Please enter your state."
 msgstr ""
 
-#: includes/wphb-functions.php:701
+#: includes/wphb-functions.php:713
 msgid "Please enter your postal code."
 msgstr ""
 
-#: includes/wphb-functions.php:702
+#: includes/wphb-functions.php:714
 msgid "Please select your country."
 msgstr ""
 
-#: includes/wphb-functions.php:703
+#: includes/wphb-functions.php:715
 msgid "Please enter your phone number."
 msgstr ""
 
-#: includes/wphb-functions.php:704
+#: includes/wphb-functions.php:716
 msgid "Your email is invalid."
 msgstr ""
 
-#: includes/wphb-functions.php:705
+#: includes/wphb-functions.php:717
 msgid ""
 "Your email does not match with existing email! Ok to create a new customer "
 "information."
 msgstr ""
 
-#: includes/wphb-functions.php:706
+#: includes/wphb-functions.php:718
 msgid "Please select check in date."
 msgstr ""
 
-#: includes/wphb-functions.php:707
+#: includes/wphb-functions.php:719
 msgid "Please select check out date."
 msgstr ""
 
-#: includes/wphb-functions.php:708
+#: includes/wphb-functions.php:720
 msgid "Check in date must be greater than the current."
 msgstr ""
 
-#: includes/wphb-functions.php:709
+#: includes/wphb-functions.php:721
 msgid "Check out date must be greater than the check in."
 msgstr ""
 
-#: includes/wphb-functions.php:710
+#: includes/wphb-functions.php:722
 msgid "Please enter coupon code."
 msgstr ""
 
-#: includes/wphb-functions.php:711
+#: includes/wphb-functions.php:723
 msgid "Please select a rating."
 msgstr ""
 
-#: includes/wphb-functions.php:713
+#: includes/wphb-functions.php:725
 msgid "Please select room number."
 msgstr ""
 
-#: includes/wphb-functions.php:714
+#: includes/wphb-functions.php:726
 msgid "Please try again!"
 msgstr ""
 
-#: includes/wphb-functions.php:723
-#: includes/plugins/wp-hotel-booking-extra/templates/shortcodes/mini_cart_layout.php:51
-#: templates/cart/mini_cart.php:22 templates/cart/mini_cart_layout.php:37
+#: includes/wphb-functions.php:735
+#: includes/plugins/wp-hotel-booking-extra/templates/shortcodes/mini_cart_layout.php:71
+#: templates/cart/mini_cart.php:36 templates/cart/mini_cart_layout.php:41
 msgid "View Cart"
 msgstr ""
 
-#: includes/wphb-functions.php:786
+#: includes/wphb-functions.php:802
 msgid "January"
 msgstr ""
 
-#: includes/wphb-functions.php:787
+#: includes/wphb-functions.php:803
 msgid "February"
 msgstr ""
 
-#: includes/wphb-functions.php:788
+#: includes/wphb-functions.php:804
 msgid "March"
 msgstr ""
 
-#: includes/wphb-functions.php:789
+#: includes/wphb-functions.php:805
 msgid "April"
 msgstr ""
 
-#: includes/wphb-functions.php:790
+#: includes/wphb-functions.php:806
 msgid "May"
 msgstr ""
 
-#: includes/wphb-functions.php:791
+#: includes/wphb-functions.php:807
 msgid "June"
 msgstr ""
 
-#: includes/wphb-functions.php:792
+#: includes/wphb-functions.php:808
 msgid "July"
 msgstr ""
 
-#: includes/wphb-functions.php:793
+#: includes/wphb-functions.php:809
 msgid "August"
 msgstr ""
 
-#: includes/wphb-functions.php:794
+#: includes/wphb-functions.php:810
 msgid "September"
 msgstr ""
 
-#: includes/wphb-functions.php:795
+#: includes/wphb-functions.php:811
 msgid "October"
 msgstr ""
 
-#: includes/wphb-functions.php:796
+#: includes/wphb-functions.php:812
 msgid "November"
 msgstr ""
 
-#: includes/wphb-functions.php:797
+#: includes/wphb-functions.php:813
 msgid "December"
 msgstr ""
 
-#: includes/wphb-functions.php:806
+#: includes/wphb-functions.php:822
 msgid "Jan"
 msgstr ""
 
-#: includes/wphb-functions.php:807
+#: includes/wphb-functions.php:823
 msgid "Feb"
 msgstr ""
 
-#: includes/wphb-functions.php:808
+#: includes/wphb-functions.php:824
 msgid "Mar"
 msgstr ""
 
-#: includes/wphb-functions.php:809
+#: includes/wphb-functions.php:825
 msgid "Apr"
 msgstr ""
 
-#: includes/wphb-functions.php:810
+#: includes/wphb-functions.php:826
 msgid "Maj"
 msgstr ""
 
-#: includes/wphb-functions.php:811
+#: includes/wphb-functions.php:827
 msgid "Jun"
 msgstr ""
 
-#: includes/wphb-functions.php:812
+#: includes/wphb-functions.php:828
 msgid "Jul"
 msgstr ""
 
-#: includes/wphb-functions.php:813
+#: includes/wphb-functions.php:829
 msgid "Aug"
 msgstr ""
 
-#: includes/wphb-functions.php:814
+#: includes/wphb-functions.php:830
 msgid "Sep"
 msgstr ""
 
-#: includes/wphb-functions.php:815
+#: includes/wphb-functions.php:831
 msgid "Oct"
 msgstr ""
 
-#: includes/wphb-functions.php:816
+#: includes/wphb-functions.php:832
 msgid "Nov"
 msgstr ""
 
-#: includes/wphb-functions.php:817
+#: includes/wphb-functions.php:833
 msgid "Dec"
 msgstr ""
 
-#: includes/wphb-functions.php:826
+#: includes/wphb-functions.php:842
 msgid "Sunday"
 msgstr ""
 
-#: includes/wphb-functions.php:827
+#: includes/wphb-functions.php:843
 msgid "Monday"
 msgstr ""
 
-#: includes/wphb-functions.php:828
+#: includes/wphb-functions.php:844
 msgid "Tuesday"
 msgstr ""
 
-#: includes/wphb-functions.php:829
+#: includes/wphb-functions.php:845
 msgid "Wednesday"
 msgstr ""
 
-#: includes/wphb-functions.php:830
+#: includes/wphb-functions.php:846
 msgid "Thursday"
 msgstr ""
 
-#: includes/wphb-functions.php:831
+#: includes/wphb-functions.php:847
 msgid "Friday"
 msgstr ""
 
-#: includes/wphb-functions.php:832
+#: includes/wphb-functions.php:848
 msgid "Saturday"
 msgstr ""
 
-#: includes/wphb-functions.php:847
+#: includes/wphb-functions.php:863
 msgid "Su"
 msgstr ""
 
-#: includes/wphb-functions.php:848
+#: includes/wphb-functions.php:864
 msgid "Mo"
 msgstr ""
 
-#: includes/wphb-functions.php:849
+#: includes/wphb-functions.php:865
 msgid "Tu"
 msgstr ""
 
-#: includes/wphb-functions.php:850
+#: includes/wphb-functions.php:866
 msgid "We"
 msgstr ""
 
-#: includes/wphb-functions.php:851
+#: includes/wphb-functions.php:867
 msgid "Th"
 msgstr ""
 
-#: includes/wphb-functions.php:852
+#: includes/wphb-functions.php:868
 msgid "Fr"
 msgstr ""
 
-#: includes/wphb-functions.php:853
+#: includes/wphb-functions.php:869
 msgid "Sa"
 msgstr ""
 
-#: includes/wphb-functions.php:1489
+#: includes/wphb-functions.php:1690
 msgid "Afghanistan"
 msgstr ""
 
-#: includes/wphb-functions.php:1490
+#: includes/wphb-functions.php:1691
 msgid "&#197;land Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:1491
+#: includes/wphb-functions.php:1692
 msgid "Albania"
 msgstr ""
 
-#: includes/wphb-functions.php:1492
+#: includes/wphb-functions.php:1693
 msgid "Algeria"
 msgstr ""
 
-#: includes/wphb-functions.php:1493
+#: includes/wphb-functions.php:1694
 msgid "Andorra"
 msgstr ""
 
-#: includes/wphb-functions.php:1494
+#: includes/wphb-functions.php:1695
 msgid "Angola"
 msgstr ""
 
-#: includes/wphb-functions.php:1495
+#: includes/wphb-functions.php:1696
 msgid "Anguilla"
 msgstr ""
 
-#: includes/wphb-functions.php:1496
+#: includes/wphb-functions.php:1697
 msgid "Antarctica"
 msgstr ""
 
-#: includes/wphb-functions.php:1497
+#: includes/wphb-functions.php:1698
 msgid "Antigua and Barbuda"
 msgstr ""
 
-#: includes/wphb-functions.php:1498
+#: includes/wphb-functions.php:1699
 msgid "Argentina"
 msgstr ""
 
-#: includes/wphb-functions.php:1499
+#: includes/wphb-functions.php:1700
 msgid "Armenia"
 msgstr ""
 
-#: includes/wphb-functions.php:1500
+#: includes/wphb-functions.php:1701
 msgid "Aruba"
 msgstr ""
 
-#: includes/wphb-functions.php:1501
+#: includes/wphb-functions.php:1702
 msgid "Australia"
 msgstr ""
 
-#: includes/wphb-functions.php:1502
+#: includes/wphb-functions.php:1703
 msgid "Austria"
 msgstr ""
 
-#: includes/wphb-functions.php:1503
+#: includes/wphb-functions.php:1704
 msgid "Azerbaijan"
 msgstr ""
 
-#: includes/wphb-functions.php:1504
+#: includes/wphb-functions.php:1705
 msgid "Bahamas"
 msgstr ""
 
-#: includes/wphb-functions.php:1505
+#: includes/wphb-functions.php:1706
 msgid "Bahrain"
 msgstr ""
 
-#: includes/wphb-functions.php:1506
+#: includes/wphb-functions.php:1707
 msgid "Bangladesh"
 msgstr ""
 
-#: includes/wphb-functions.php:1507
+#: includes/wphb-functions.php:1708
 msgid "Barbados"
 msgstr ""
 
-#: includes/wphb-functions.php:1508
+#: includes/wphb-functions.php:1709
 msgid "Belarus"
 msgstr ""
 
-#: includes/wphb-functions.php:1509
+#: includes/wphb-functions.php:1710
 msgid "Belgium"
 msgstr ""
 
-#: includes/wphb-functions.php:1510
+#: includes/wphb-functions.php:1711
 msgid "Belau"
 msgstr ""
 
-#: includes/wphb-functions.php:1511
+#: includes/wphb-functions.php:1712
 msgid "Belize"
 msgstr ""
 
-#: includes/wphb-functions.php:1512
+#: includes/wphb-functions.php:1713
 msgid "Benin"
 msgstr ""
 
-#: includes/wphb-functions.php:1513
+#: includes/wphb-functions.php:1714
 msgid "Bermuda"
 msgstr ""
 
-#: includes/wphb-functions.php:1514
+#: includes/wphb-functions.php:1715
 msgid "Bhutan"
 msgstr ""
 
-#: includes/wphb-functions.php:1515
+#: includes/wphb-functions.php:1716
 msgid "Bolivia"
 msgstr ""
 
-#: includes/wphb-functions.php:1516
+#: includes/wphb-functions.php:1717
 msgid "Bonaire, Saint Eustatius and Saba"
 msgstr ""
 
-#: includes/wphb-functions.php:1517
+#: includes/wphb-functions.php:1718
 msgid "Bosnia and Herzegovina"
 msgstr ""
 
-#: includes/wphb-functions.php:1518
+#: includes/wphb-functions.php:1719
 msgid "Botswana"
 msgstr ""
 
-#: includes/wphb-functions.php:1519
+#: includes/wphb-functions.php:1720
 msgid "Bouvet Island"
 msgstr ""
 
-#: includes/wphb-functions.php:1520
+#: includes/wphb-functions.php:1721
 msgid "Brazil"
 msgstr ""
 
-#: includes/wphb-functions.php:1521
+#: includes/wphb-functions.php:1722
 msgid "British Indian Ocean Territory"
 msgstr ""
 
-#: includes/wphb-functions.php:1522
+#: includes/wphb-functions.php:1723
 msgid "British Virgin Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:1523
+#: includes/wphb-functions.php:1724
 msgid "Brunei"
 msgstr ""
 
-#: includes/wphb-functions.php:1524
+#: includes/wphb-functions.php:1725
 msgid "Bulgaria"
 msgstr ""
 
-#: includes/wphb-functions.php:1525
+#: includes/wphb-functions.php:1726
 msgid "Burkina Faso"
 msgstr ""
 
-#: includes/wphb-functions.php:1526
+#: includes/wphb-functions.php:1727
 msgid "Burundi"
 msgstr ""
 
-#: includes/wphb-functions.php:1527
+#: includes/wphb-functions.php:1728
 msgid "Cambodia"
 msgstr ""
 
-#: includes/wphb-functions.php:1528
+#: includes/wphb-functions.php:1729
 msgid "Cameroon"
 msgstr ""
 
-#: includes/wphb-functions.php:1529
+#: includes/wphb-functions.php:1730
 msgid "Canada"
 msgstr ""
 
-#: includes/wphb-functions.php:1530
+#: includes/wphb-functions.php:1731
 msgid "Cape Verde"
 msgstr ""
 
-#: includes/wphb-functions.php:1531
+#: includes/wphb-functions.php:1732
 msgid "Cayman Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:1532
+#: includes/wphb-functions.php:1733
 msgid "Central African Republic"
 msgstr ""
 
-#: includes/wphb-functions.php:1533
+#: includes/wphb-functions.php:1734
 msgid "Chad"
 msgstr ""
 
-#: includes/wphb-functions.php:1534
+#: includes/wphb-functions.php:1735
 msgid "Chile"
 msgstr ""
 
-#: includes/wphb-functions.php:1535
+#: includes/wphb-functions.php:1736
 msgid "China"
 msgstr ""
 
-#: includes/wphb-functions.php:1536
+#: includes/wphb-functions.php:1737
 msgid "Christmas Island"
 msgstr ""
 
-#: includes/wphb-functions.php:1537
+#: includes/wphb-functions.php:1738
 msgid "Cocos (Keeling) Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:1538
+#: includes/wphb-functions.php:1739
 msgid "Colombia"
 msgstr ""
 
-#: includes/wphb-functions.php:1539
+#: includes/wphb-functions.php:1740
 msgid "Comoros"
 msgstr ""
 
-#: includes/wphb-functions.php:1540
+#: includes/wphb-functions.php:1741
 msgid "Congo (Brazzaville)"
 msgstr ""
 
-#: includes/wphb-functions.php:1541
+#: includes/wphb-functions.php:1742
 msgid "Congo (Kinshasa)"
 msgstr ""
 
-#: includes/wphb-functions.php:1542
+#: includes/wphb-functions.php:1743
 msgid "Cook Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:1543
+#: includes/wphb-functions.php:1744
 msgid "Costa Rica"
 msgstr ""
 
-#: includes/wphb-functions.php:1544
+#: includes/wphb-functions.php:1745
 msgid "Croatia"
 msgstr ""
 
-#: includes/wphb-functions.php:1545
+#: includes/wphb-functions.php:1746
 msgid "Cuba"
 msgstr ""
 
-#: includes/wphb-functions.php:1546
+#: includes/wphb-functions.php:1747
 msgid "Cura&Ccedil;ao"
 msgstr ""
 
-#: includes/wphb-functions.php:1547
+#: includes/wphb-functions.php:1748
 msgid "Cyprus"
 msgstr ""
 
-#: includes/wphb-functions.php:1548
+#: includes/wphb-functions.php:1749
 msgid "Czech Republic"
 msgstr ""
 
-#: includes/wphb-functions.php:1549
+#: includes/wphb-functions.php:1750
 msgid "Denmark"
 msgstr ""
 
-#: includes/wphb-functions.php:1550
+#: includes/wphb-functions.php:1751
 msgid "Djibouti"
 msgstr ""
 
-#: includes/wphb-functions.php:1551
+#: includes/wphb-functions.php:1752
 msgid "Dominica"
 msgstr ""
 
-#: includes/wphb-functions.php:1552
+#: includes/wphb-functions.php:1753
 msgid "Dominican Republic"
 msgstr ""
 
-#: includes/wphb-functions.php:1553
+#: includes/wphb-functions.php:1754
 msgid "Ecuador"
 msgstr ""
 
-#: includes/wphb-functions.php:1554
+#: includes/wphb-functions.php:1755
 msgid "Egypt"
 msgstr ""
 
-#: includes/wphb-functions.php:1555
+#: includes/wphb-functions.php:1756
 msgid "El Salvador"
 msgstr ""
 
-#: includes/wphb-functions.php:1556
+#: includes/wphb-functions.php:1757
 msgid "Equatorial Guinea"
 msgstr ""
 
-#: includes/wphb-functions.php:1557
+#: includes/wphb-functions.php:1758
 msgid "Eritrea"
 msgstr ""
 
-#: includes/wphb-functions.php:1558
+#: includes/wphb-functions.php:1759
 msgid "Estonia"
 msgstr ""
 
-#: includes/wphb-functions.php:1559
+#: includes/wphb-functions.php:1760
 msgid "Ethiopia"
 msgstr ""
 
-#: includes/wphb-functions.php:1560
+#: includes/wphb-functions.php:1761
 msgid "Falkland Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:1561
+#: includes/wphb-functions.php:1762
 msgid "Faroe Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:1562
+#: includes/wphb-functions.php:1763
 msgid "Fiji"
 msgstr ""
 
-#: includes/wphb-functions.php:1563
+#: includes/wphb-functions.php:1764
 msgid "Finland"
 msgstr ""
 
-#: includes/wphb-functions.php:1564
+#: includes/wphb-functions.php:1765
 msgid "France"
 msgstr ""
 
-#: includes/wphb-functions.php:1565
+#: includes/wphb-functions.php:1766
 msgid "French Guiana"
 msgstr ""
 
-#: includes/wphb-functions.php:1566
+#: includes/wphb-functions.php:1767
 msgid "French Polynesia"
 msgstr ""
 
-#: includes/wphb-functions.php:1567
+#: includes/wphb-functions.php:1768
 msgid "French Southern Territories"
 msgstr ""
 
-#: includes/wphb-functions.php:1568
+#: includes/wphb-functions.php:1769
 msgid "Gabon"
 msgstr ""
 
-#: includes/wphb-functions.php:1569
+#: includes/wphb-functions.php:1770
 msgid "Gambia"
 msgstr ""
 
-#: includes/wphb-functions.php:1570
+#: includes/wphb-functions.php:1771
 msgid "Georgia"
 msgstr ""
 
-#: includes/wphb-functions.php:1571
+#: includes/wphb-functions.php:1772
 msgid "Germany"
 msgstr ""
 
-#: includes/wphb-functions.php:1572
+#: includes/wphb-functions.php:1773
 msgid "Ghana"
 msgstr ""
 
-#: includes/wphb-functions.php:1573
+#: includes/wphb-functions.php:1774
 msgid "Gibraltar"
 msgstr ""
 
-#: includes/wphb-functions.php:1574
+#: includes/wphb-functions.php:1775
 msgid "Greece"
 msgstr ""
 
-#: includes/wphb-functions.php:1575
+#: includes/wphb-functions.php:1776
 msgid "Greenland"
 msgstr ""
 
-#: includes/wphb-functions.php:1576
+#: includes/wphb-functions.php:1777
 msgid "Grenada"
 msgstr ""
 
-#: includes/wphb-functions.php:1577
+#: includes/wphb-functions.php:1778
 msgid "Guadeloupe"
 msgstr ""
 
-#: includes/wphb-functions.php:1578
+#: includes/wphb-functions.php:1779
 msgid "Guatemala"
 msgstr ""
 
-#: includes/wphb-functions.php:1579
+#: includes/wphb-functions.php:1780
 msgid "Guernsey"
 msgstr ""
 
-#: includes/wphb-functions.php:1580
+#: includes/wphb-functions.php:1781
 msgid "Guinea"
 msgstr ""
 
-#: includes/wphb-functions.php:1581
+#: includes/wphb-functions.php:1782
 msgid "Guinea-Bissau"
 msgstr ""
 
-#: includes/wphb-functions.php:1582
+#: includes/wphb-functions.php:1783
 msgid "Guyana"
 msgstr ""
 
-#: includes/wphb-functions.php:1583
+#: includes/wphb-functions.php:1784
 msgid "Haiti"
 msgstr ""
 
-#: includes/wphb-functions.php:1584
+#: includes/wphb-functions.php:1785
 msgid "Heard Island and McDonald Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:1585
+#: includes/wphb-functions.php:1786
 msgid "Honduras"
 msgstr ""
 
-#: includes/wphb-functions.php:1586
+#: includes/wphb-functions.php:1787
 msgid "Hong Kong"
 msgstr ""
 
-#: includes/wphb-functions.php:1587
+#: includes/wphb-functions.php:1788
 msgid "Hungary"
 msgstr ""
 
-#: includes/wphb-functions.php:1588
+#: includes/wphb-functions.php:1789
 msgid "Iceland"
 msgstr ""
 
-#: includes/wphb-functions.php:1589
+#: includes/wphb-functions.php:1790
 msgid "India"
 msgstr ""
 
-#: includes/wphb-functions.php:1590
+#: includes/wphb-functions.php:1791
 msgid "Indonesia"
 msgstr ""
 
-#: includes/wphb-functions.php:1591
+#: includes/wphb-functions.php:1792
 msgid "Iran"
 msgstr ""
 
-#: includes/wphb-functions.php:1592
+#: includes/wphb-functions.php:1793
 msgid "Iraq"
 msgstr ""
 
-#: includes/wphb-functions.php:1593
+#: includes/wphb-functions.php:1794
 msgid "Republic of Ireland"
 msgstr ""
 
-#: includes/wphb-functions.php:1594
+#: includes/wphb-functions.php:1795
 msgid "Isle of Man"
 msgstr ""
 
-#: includes/wphb-functions.php:1595
+#: includes/wphb-functions.php:1796
 msgid "Israel"
 msgstr ""
 
-#: includes/wphb-functions.php:1596
+#: includes/wphb-functions.php:1797
 msgid "Italy"
 msgstr ""
 
-#: includes/wphb-functions.php:1597
+#: includes/wphb-functions.php:1798
 msgid "Ivory Coast"
 msgstr ""
 
-#: includes/wphb-functions.php:1598
+#: includes/wphb-functions.php:1799
 msgid "Jamaica"
 msgstr ""
 
-#: includes/wphb-functions.php:1599
+#: includes/wphb-functions.php:1800
 msgid "Japan"
 msgstr ""
 
-#: includes/wphb-functions.php:1600
+#: includes/wphb-functions.php:1801
 msgid "Jersey"
 msgstr ""
 
-#: includes/wphb-functions.php:1601
+#: includes/wphb-functions.php:1802
 msgid "Jordan"
 msgstr ""
 
-#: includes/wphb-functions.php:1602
+#: includes/wphb-functions.php:1803
 msgid "Kazakhstan"
 msgstr ""
 
-#: includes/wphb-functions.php:1603
+#: includes/wphb-functions.php:1804
 msgid "Kenya"
 msgstr ""
 
-#: includes/wphb-functions.php:1604
+#: includes/wphb-functions.php:1805
 msgid "Kiribati"
 msgstr ""
 
-#: includes/wphb-functions.php:1605
+#: includes/wphb-functions.php:1806
 msgid "Kuwait"
 msgstr ""
 
-#: includes/wphb-functions.php:1606
+#: includes/wphb-functions.php:1807
 msgid "Kyrgyzstan"
 msgstr ""
 
-#: includes/wphb-functions.php:1607
+#: includes/wphb-functions.php:1808
 msgid "Laos"
 msgstr ""
 
-#: includes/wphb-functions.php:1608
+#: includes/wphb-functions.php:1809
 msgid "Latvia"
 msgstr ""
 
-#: includes/wphb-functions.php:1609
+#: includes/wphb-functions.php:1810
 msgid "Lebanon"
 msgstr ""
 
-#: includes/wphb-functions.php:1610
+#: includes/wphb-functions.php:1811
 msgid "Lesotho"
 msgstr ""
 
-#: includes/wphb-functions.php:1611
+#: includes/wphb-functions.php:1812
 msgid "Liberia"
 msgstr ""
 
-#: includes/wphb-functions.php:1612
+#: includes/wphb-functions.php:1813
 msgid "Libya"
 msgstr ""
 
-#: includes/wphb-functions.php:1613
+#: includes/wphb-functions.php:1814
 msgid "Liechtenstein"
 msgstr ""
 
-#: includes/wphb-functions.php:1614
+#: includes/wphb-functions.php:1815
 msgid "Lithuania"
 msgstr ""
 
-#: includes/wphb-functions.php:1615
+#: includes/wphb-functions.php:1816
 msgid "Luxembourg"
 msgstr ""
 
-#: includes/wphb-functions.php:1616
+#: includes/wphb-functions.php:1817
 msgid "Macao S.A.R., China"
 msgstr ""
 
-#: includes/wphb-functions.php:1617
+#: includes/wphb-functions.php:1818
 msgid "Macedonia"
 msgstr ""
 
-#: includes/wphb-functions.php:1618
+#: includes/wphb-functions.php:1819
 msgid "Madagascar"
 msgstr ""
 
-#: includes/wphb-functions.php:1619
+#: includes/wphb-functions.php:1820
 msgid "Malawi"
 msgstr ""
 
-#: includes/wphb-functions.php:1620
+#: includes/wphb-functions.php:1821
 msgid "Malaysia"
 msgstr ""
 
-#: includes/wphb-functions.php:1621
+#: includes/wphb-functions.php:1822
 msgid "Maldives"
 msgstr ""
 
-#: includes/wphb-functions.php:1622
+#: includes/wphb-functions.php:1823
 msgid "Mali"
 msgstr ""
 
-#: includes/wphb-functions.php:1623
+#: includes/wphb-functions.php:1824
 msgid "Malta"
 msgstr ""
 
-#: includes/wphb-functions.php:1624
+#: includes/wphb-functions.php:1825
 msgid "Marshall Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:1625
+#: includes/wphb-functions.php:1826
 msgid "Martinique"
 msgstr ""
 
-#: includes/wphb-functions.php:1626
+#: includes/wphb-functions.php:1827
 msgid "Mauritania"
 msgstr ""
 
-#: includes/wphb-functions.php:1627
+#: includes/wphb-functions.php:1828
 msgid "Mauritius"
 msgstr ""
 
-#: includes/wphb-functions.php:1628
+#: includes/wphb-functions.php:1829
 msgid "Mayotte"
 msgstr ""
 
-#: includes/wphb-functions.php:1629
+#: includes/wphb-functions.php:1830
 msgid "Mexico"
 msgstr ""
 
-#: includes/wphb-functions.php:1630
+#: includes/wphb-functions.php:1831
 msgid "Micronesia"
 msgstr ""
 
-#: includes/wphb-functions.php:1631
+#: includes/wphb-functions.php:1832
 msgid "Moldova"
 msgstr ""
 
-#: includes/wphb-functions.php:1632
+#: includes/wphb-functions.php:1833
 msgid "Monaco"
 msgstr ""
 
-#: includes/wphb-functions.php:1633
+#: includes/wphb-functions.php:1834
 msgid "Mongolia"
 msgstr ""
 
-#: includes/wphb-functions.php:1634
+#: includes/wphb-functions.php:1835
 msgid "Montenegro"
 msgstr ""
 
-#: includes/wphb-functions.php:1635
+#: includes/wphb-functions.php:1836
 msgid "Montserrat"
 msgstr ""
 
-#: includes/wphb-functions.php:1636
+#: includes/wphb-functions.php:1837
 msgid "Morocco"
 msgstr ""
 
-#: includes/wphb-functions.php:1637
+#: includes/wphb-functions.php:1838
 msgid "Mozambique"
 msgstr ""
 
-#: includes/wphb-functions.php:1638
+#: includes/wphb-functions.php:1839
 msgid "Myanmar"
 msgstr ""
 
-#: includes/wphb-functions.php:1639
+#: includes/wphb-functions.php:1840
 msgid "Namibia"
 msgstr ""
 
-#: includes/wphb-functions.php:1640
+#: includes/wphb-functions.php:1841
 msgid "Nauru"
 msgstr ""
 
-#: includes/wphb-functions.php:1641
+#: includes/wphb-functions.php:1842
 msgid "Nepal"
 msgstr ""
 
-#: includes/wphb-functions.php:1642
+#: includes/wphb-functions.php:1843
 msgid "Netherlands"
 msgstr ""
 
-#: includes/wphb-functions.php:1643
+#: includes/wphb-functions.php:1844
 msgid "Netherlands Antilles"
 msgstr ""
 
-#: includes/wphb-functions.php:1644
+#: includes/wphb-functions.php:1845
 msgid "New Caledonia"
 msgstr ""
 
-#: includes/wphb-functions.php:1645
+#: includes/wphb-functions.php:1846
 msgid "New Zealand"
 msgstr ""
 
-#: includes/wphb-functions.php:1646
+#: includes/wphb-functions.php:1847
 msgid "Nicaragua"
 msgstr ""
 
-#: includes/wphb-functions.php:1647
+#: includes/wphb-functions.php:1848
 msgid "Niger"
 msgstr ""
 
-#: includes/wphb-functions.php:1648
+#: includes/wphb-functions.php:1849
 msgid "Nigeria"
 msgstr ""
 
-#: includes/wphb-functions.php:1649
+#: includes/wphb-functions.php:1850
 msgid "Niue"
 msgstr ""
 
-#: includes/wphb-functions.php:1650
+#: includes/wphb-functions.php:1851
 msgid "Norfolk Island"
 msgstr ""
 
-#: includes/wphb-functions.php:1651
+#: includes/wphb-functions.php:1852
 msgid "North Korea"
 msgstr ""
 
-#: includes/wphb-functions.php:1652
+#: includes/wphb-functions.php:1853
 msgid "Norway"
 msgstr ""
 
-#: includes/wphb-functions.php:1653
+#: includes/wphb-functions.php:1854
 msgid "Oman"
 msgstr ""
 
-#: includes/wphb-functions.php:1654
+#: includes/wphb-functions.php:1855
 msgid "Pakistan"
 msgstr ""
 
-#: includes/wphb-functions.php:1655
+#: includes/wphb-functions.php:1856
 msgid "Palestinian Territory"
 msgstr ""
 
-#: includes/wphb-functions.php:1656
+#: includes/wphb-functions.php:1857
 msgid "Panama"
 msgstr ""
 
-#: includes/wphb-functions.php:1657
+#: includes/wphb-functions.php:1858
 msgid "Papua New Guinea"
 msgstr ""
 
-#: includes/wphb-functions.php:1658
+#: includes/wphb-functions.php:1859
 msgid "Paraguay"
 msgstr ""
 
-#: includes/wphb-functions.php:1659
+#: includes/wphb-functions.php:1860
 msgid "Peru"
 msgstr ""
 
-#: includes/wphb-functions.php:1660
+#: includes/wphb-functions.php:1861
 msgid "Philippines"
 msgstr ""
 
-#: includes/wphb-functions.php:1661
+#: includes/wphb-functions.php:1862
 msgid "Pitcairn"
 msgstr ""
 
-#: includes/wphb-functions.php:1662
+#: includes/wphb-functions.php:1863
 msgid "Poland"
 msgstr ""
 
-#: includes/wphb-functions.php:1663
+#: includes/wphb-functions.php:1864
 msgid "Portugal"
 msgstr ""
 
-#: includes/wphb-functions.php:1664
+#: includes/wphb-functions.php:1865
 msgid "Qatar"
 msgstr ""
 
-#: includes/wphb-functions.php:1665
+#: includes/wphb-functions.php:1866
 msgid "Reunion"
 msgstr ""
 
-#: includes/wphb-functions.php:1666
+#: includes/wphb-functions.php:1867
 msgid "Romania"
 msgstr ""
 
-#: includes/wphb-functions.php:1667
+#: includes/wphb-functions.php:1868
 msgid "Russia"
 msgstr ""
 
-#: includes/wphb-functions.php:1668
+#: includes/wphb-functions.php:1869
 msgid "Rwanda"
 msgstr ""
 
-#: includes/wphb-functions.php:1669
+#: includes/wphb-functions.php:1870
 msgid "Saint Barth&eacute;lemy"
 msgstr ""
 
-#: includes/wphb-functions.php:1670
+#: includes/wphb-functions.php:1871
 msgid "Saint Helena"
 msgstr ""
 
-#: includes/wphb-functions.php:1671
+#: includes/wphb-functions.php:1872
 msgid "Saint Kitts and Nevis"
 msgstr ""
 
-#: includes/wphb-functions.php:1672
+#: includes/wphb-functions.php:1873
 msgid "Saint Lucia"
 msgstr ""
 
-#: includes/wphb-functions.php:1673
+#: includes/wphb-functions.php:1874
 msgid "Saint Martin (French part)"
 msgstr ""
 
-#: includes/wphb-functions.php:1674
+#: includes/wphb-functions.php:1875
 msgid "Saint Martin (Dutch part)"
 msgstr ""
 
-#: includes/wphb-functions.php:1675
+#: includes/wphb-functions.php:1876
 msgid "Saint Pierre and Miquelon"
 msgstr ""
 
-#: includes/wphb-functions.php:1676
+#: includes/wphb-functions.php:1877
 msgid "Saint Vincent and the Grenadines"
 msgstr ""
 
-#: includes/wphb-functions.php:1677
+#: includes/wphb-functions.php:1878
 msgid "San Marino"
 msgstr ""
 
-#: includes/wphb-functions.php:1678
+#: includes/wphb-functions.php:1879
 msgid "S&atilde;o Tom&eacute; and Pr&iacute;ncipe"
 msgstr ""
 
-#: includes/wphb-functions.php:1679
+#: includes/wphb-functions.php:1880
 msgid "Saudi Arabia"
 msgstr ""
 
-#: includes/wphb-functions.php:1680
+#: includes/wphb-functions.php:1881
 msgid "Senegal"
 msgstr ""
 
-#: includes/wphb-functions.php:1681
+#: includes/wphb-functions.php:1882
 msgid "Serbia"
 msgstr ""
 
-#: includes/wphb-functions.php:1682
+#: includes/wphb-functions.php:1883
 msgid "Seychelles"
 msgstr ""
 
-#: includes/wphb-functions.php:1683
+#: includes/wphb-functions.php:1884
 msgid "Sierra Leone"
 msgstr ""
 
-#: includes/wphb-functions.php:1684
+#: includes/wphb-functions.php:1885
 msgid "Singapore"
 msgstr ""
 
-#: includes/wphb-functions.php:1685
+#: includes/wphb-functions.php:1886
 msgid "Slovakia"
 msgstr ""
 
-#: includes/wphb-functions.php:1686
+#: includes/wphb-functions.php:1887
 msgid "Slovenia"
 msgstr ""
 
-#: includes/wphb-functions.php:1687
+#: includes/wphb-functions.php:1888
 msgid "Solomon Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:1688
+#: includes/wphb-functions.php:1889
 msgid "Somalia"
 msgstr ""
 
-#: includes/wphb-functions.php:1689
+#: includes/wphb-functions.php:1890
 msgid "South Africa"
 msgstr ""
 
-#: includes/wphb-functions.php:1690
+#: includes/wphb-functions.php:1891
 msgid "South Georgia/Sandwich Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:1691
+#: includes/wphb-functions.php:1892
 msgid "South Korea"
 msgstr ""
 
-#: includes/wphb-functions.php:1692
+#: includes/wphb-functions.php:1893
 msgid "South Sudan"
 msgstr ""
 
-#: includes/wphb-functions.php:1693
+#: includes/wphb-functions.php:1894
 msgid "Spain"
 msgstr ""
 
-#: includes/wphb-functions.php:1694
+#: includes/wphb-functions.php:1895
 msgid "Sri Lanka"
 msgstr ""
 
-#: includes/wphb-functions.php:1695
+#: includes/wphb-functions.php:1896
 msgid "Sudan"
 msgstr ""
 
-#: includes/wphb-functions.php:1696
+#: includes/wphb-functions.php:1897
 msgid "Suriname"
 msgstr ""
 
-#: includes/wphb-functions.php:1697
+#: includes/wphb-functions.php:1898
 msgid "Svalbard and Jan Mayen"
 msgstr ""
 
-#: includes/wphb-functions.php:1698
+#: includes/wphb-functions.php:1899
 msgid "Swaziland"
 msgstr ""
 
-#: includes/wphb-functions.php:1699
+#: includes/wphb-functions.php:1900
 msgid "Sweden"
 msgstr ""
 
-#: includes/wphb-functions.php:1700
+#: includes/wphb-functions.php:1901
 msgid "Switzerland"
 msgstr ""
 
-#: includes/wphb-functions.php:1701
+#: includes/wphb-functions.php:1902
 msgid "Syria"
 msgstr ""
 
-#: includes/wphb-functions.php:1702
+#: includes/wphb-functions.php:1903
 msgid "Taiwan"
 msgstr ""
 
-#: includes/wphb-functions.php:1703
+#: includes/wphb-functions.php:1904
 msgid "Tajikistan"
 msgstr ""
 
-#: includes/wphb-functions.php:1704
+#: includes/wphb-functions.php:1905
 msgid "Tanzania"
 msgstr ""
 
-#: includes/wphb-functions.php:1705
+#: includes/wphb-functions.php:1906
 msgid "Thailand"
 msgstr ""
 
-#: includes/wphb-functions.php:1706
+#: includes/wphb-functions.php:1907
 msgid "Timor-Leste"
 msgstr ""
 
-#: includes/wphb-functions.php:1707
+#: includes/wphb-functions.php:1908
 msgid "Togo"
 msgstr ""
 
-#: includes/wphb-functions.php:1708
+#: includes/wphb-functions.php:1909
 msgid "Tokelau"
 msgstr ""
 
-#: includes/wphb-functions.php:1709
+#: includes/wphb-functions.php:1910
 msgid "Tonga"
 msgstr ""
 
-#: includes/wphb-functions.php:1710
+#: includes/wphb-functions.php:1911
 msgid "Trinidad and Tobago"
 msgstr ""
 
-#: includes/wphb-functions.php:1711
+#: includes/wphb-functions.php:1912
 msgid "Tunisia"
 msgstr ""
 
-#: includes/wphb-functions.php:1712
+#: includes/wphb-functions.php:1913
 msgid "Turkey"
 msgstr ""
 
-#: includes/wphb-functions.php:1713
+#: includes/wphb-functions.php:1914
 msgid "Turkmenistan"
 msgstr ""
 
-#: includes/wphb-functions.php:1714
+#: includes/wphb-functions.php:1915
 msgid "Turks and Caicos Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:1715
+#: includes/wphb-functions.php:1916
 msgid "Tuvalu"
 msgstr ""
 
-#: includes/wphb-functions.php:1716
+#: includes/wphb-functions.php:1917
 msgid "Uganda"
 msgstr ""
 
-#: includes/wphb-functions.php:1717
+#: includes/wphb-functions.php:1918
 msgid "Ukraine"
 msgstr ""
 
-#: includes/wphb-functions.php:1718
+#: includes/wphb-functions.php:1919
 msgid "United Arab Emirates"
 msgstr ""
 
-#: includes/wphb-functions.php:1719
+#: includes/wphb-functions.php:1920
 msgid "United Kingdom (UK)"
 msgstr ""
 
-#: includes/wphb-functions.php:1720
+#: includes/wphb-functions.php:1921
 msgid "United States (US)"
 msgstr ""
 
-#: includes/wphb-functions.php:1721
+#: includes/wphb-functions.php:1922
 msgid "Uruguay"
 msgstr ""
 
-#: includes/wphb-functions.php:1722
+#: includes/wphb-functions.php:1923
 msgid "Uzbekistan"
 msgstr ""
 
-#: includes/wphb-functions.php:1723
+#: includes/wphb-functions.php:1924
 msgid "Vanuatu"
 msgstr ""
 
-#: includes/wphb-functions.php:1724
+#: includes/wphb-functions.php:1925
 msgid "Vatican"
 msgstr ""
 
-#: includes/wphb-functions.php:1725
+#: includes/wphb-functions.php:1926
 msgid "Venezuela"
 msgstr ""
 
-#: includes/wphb-functions.php:1726
+#: includes/wphb-functions.php:1927
 msgid "Vietnam"
 msgstr ""
 
-#: includes/wphb-functions.php:1727
+#: includes/wphb-functions.php:1928
 msgid "Wallis and Futuna"
 msgstr ""
 
-#: includes/wphb-functions.php:1728
+#: includes/wphb-functions.php:1929
 msgid "Western Sahara"
 msgstr ""
 
-#: includes/wphb-functions.php:1729
+#: includes/wphb-functions.php:1930
 msgid "Western Samoa"
 msgstr ""
 
-#: includes/wphb-functions.php:1730
+#: includes/wphb-functions.php:1931
 msgid "Yemen"
 msgstr ""
 
-#: includes/wphb-functions.php:1731
+#: includes/wphb-functions.php:1932
 msgid "Zambia"
 msgstr ""
 
-#: includes/wphb-functions.php:1732
+#: includes/wphb-functions.php:1933
 msgid "Zimbabwe"
 msgstr ""
 
-#: includes/wphb-functions.php:1852
+#: includes/wphb-functions.php:2053
 #, php-format
 msgid "%1$s"
 msgstr ""
 
-#: includes/wphb-functions.php:2025
-#: includes/admin/class-wphb-admin-settings.php:286
+#: includes/wphb-functions.php:2242
+#: includes/admin/class-wphb-admin-settings.php:290
 msgid "---Select page---"
 msgstr ""
 
-#: includes/wphb-template-functions.php:194
+#: includes/wphb-template-functions.php:204
 #, php-format
 msgid "Search Results: &ldquo;%s&rdquo;"
 msgstr ""
 
-#: includes/wphb-template-functions.php:197
+#: includes/wphb-template-functions.php:207
 #, php-format
 msgid "&nbsp;&ndash; Page %s"
 msgstr ""
 
-#: includes/wphb-template-functions.php:577
-#: includes/admin/class-wphb-admin-menu.php:28
-#: includes/admin/class-wphb-admin-menu.php:29
-#: includes/admin/views/pricing-table.php:27
+#: includes/wphb-template-functions.php:598
+#: includes/admin/class-wphb-admin-menu.php:48
+#: includes/admin/class-wphb-admin-menu.php:49
+#: includes/admin/views/pricing-table.php:36
 msgid "Pricing Plans"
 msgstr ""
 
-#: includes/wphb-template-functions.php:591
-#: includes/admin/metaboxes/views/meta-room-pricing.php:25
-#: includes/admin/views/pricing-table.php:51
-#: includes/admin/views/pricing-table.php:118
+#: includes/wphb-template-functions.php:612
+#: includes/admin/metaboxes/views/meta-room-pricing.php:28
+#: includes/admin/views/pricing-table.php:60
+#: includes/admin/views/pricing-table.php:127
 msgid "Edit"
 msgstr ""
 
-#: includes/wphb-webhooks.php:64
-msgid "TP Hotel Booking webhook process Complete"
+#: includes/wphb-webhooks.php:87
+msgid "WP Hotel Booking webhook process Complete"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-menu.php:16
-#: includes/admin/class-wphb-admin-menu.php:17
+#: includes/admin/class-wphb-admin-menu.php:36
+#: includes/admin/class-wphb-admin-menu.php:37
 msgid "WP Hotel Booking"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-menu.php:43
-#: includes/admin/class-wphb-admin-menu.php:44
-msgid "Addition Packages"
-msgstr ""
-
-#: includes/admin/class-wphb-admin-menu.php:53
-#: includes/admin/class-wphb-admin-menu.php:54
+#: includes/admin/class-wphb-admin-menu.php:56
+#: includes/admin/class-wphb-admin-menu.php:57
 msgid "Settings"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:345
-#: includes/admin/metaboxes/views/meta-booking-actions.php:25
-#: includes/admin/views/pricing-table.php:159
+#: includes/admin/class-wphb-admin-menu.php:70
+#: includes/admin/class-wphb-admin-menu.php:71
+msgid "Tools"
+msgstr ""
+
+#: includes/admin/class-wphb-admin-settings.php:349
+#: includes/admin/metaboxes/views/meta-booking-actions.php:28
+#: includes/admin/views/pricing-table.php:168
 msgid "Update"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:27
+#: includes/admin/wphb-admin-functions.php:46
 msgid "Are you sure you want to remove this pricing table?"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:28
+#: includes/admin/wphb-admin-functions.php:47
 msgid "Select start date for plan"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:29
+#: includes/admin/wphb-admin-functions.php:48
 msgid "Select end date for plan"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:30
+#: includes/admin/wphb-admin-functions.php:49
 msgid "Please select date range and filter type"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:34
+#: includes/admin/wphb-admin-functions.php:53
 msgid "Enter user login."
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:35
+#: includes/admin/wphb-admin-functions.php:54
 msgid "Enter room name."
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:36
+#: includes/admin/wphb-admin-functions.php:55
 msgid "Enter coupon code."
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:48
+#: includes/admin/wphb-admin-functions.php:56
+msgid "Search booking by username, user email"
+msgstr ""
+
+#: includes/admin/wphb-admin-functions.php:68
 msgid "Room Settings"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:57
-#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:56
-#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:93
-#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:166
-#: templates/cart/cart.php:21 templates/checkout/checkout.php:22
+#: includes/admin/wphb-admin-functions.php:77
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:57
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:94
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:167
+#: templates/cart/cart.php:36 templates/checkout/checkout.php:37
 msgid "Quantity"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:60
+#: includes/admin/wphb-admin-functions.php:80
 msgid "The number of rooms"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:66
+#: includes/admin/wphb-admin-functions.php:86
 msgid "Number of adults"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:79
+#: includes/admin/wphb-admin-functions.php:99
 msgid "Max children per room"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:87
-#: templates/checkout/addition-information.php:10
-#: templates/emails/booking-details.php:51
-msgid "Addition Information"
-msgstr ""
-
-#: includes/admin/wphb-admin-functions.php:98
-msgid "Coupon Settings"
-msgstr ""
-
-#: includes/admin/wphb-admin-functions.php:108
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:34
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:62
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:95
-#: templates/single-room/details.php:15
-msgid "Description"
-msgstr ""
-
-#: includes/admin/wphb-admin-functions.php:114
-msgid "Discount type"
+#: includes/admin/wphb-admin-functions.php:107
+#: templates/checkout/addition-information.php:19
+#: templates/emails/booking-details.php:65
+#: templates/single-room/details.php:31
+msgid "Additional Information"
 msgstr ""
 
 #: includes/admin/wphb-admin-functions.php:118
+msgid "Coupon Settings"
+msgstr ""
+
+#: includes/admin/wphb-admin-functions.php:128
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:40
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:65
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:98
+#: templates/single-room/details.php:26
+msgid "Description"
+msgstr ""
+
+#: includes/admin/wphb-admin-functions.php:134
+msgid "Discount type"
+msgstr ""
+
+#: includes/admin/wphb-admin-functions.php:138
 msgid "Cart discount"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:119
+#: includes/admin/wphb-admin-functions.php:139
 #, php-format
 msgid "Cart % discount"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:124
+#: includes/admin/wphb-admin-functions.php:144
 msgid "Discount value"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:132
+#: includes/admin/wphb-admin-functions.php:152
 msgid "Validate from"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:143
+#: includes/admin/wphb-admin-functions.php:163
 msgid "Validate until"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:156
+#: includes/admin/wphb-admin-functions.php:176
 msgid ""
 "This field allows you to set the minimum subtotal needed to use the coupon."
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:164
+#: includes/admin/wphb-admin-functions.php:184
 msgid ""
 "This field allows you to set the maximum subtotal allowed when using the "
 "coupon."
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:172
+#: includes/admin/wphb-admin-functions.php:192
 msgid "How many times this coupon can be used before it is void."
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:186
+#: includes/admin/wphb-admin-functions.php:206
 msgid "Gallery Settings"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:254
+#: includes/admin/wphb-admin-functions.php:274
 msgid "Customer"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:255
+#: includes/admin/wphb-admin-functions.php:275
 msgid "Date"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:256
-#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:47
-#: templates/emails/booking-details.php:17
+#: includes/admin/wphb-admin-functions.php:276
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:48
+#: templates/emails/booking-details.php:22
 msgid "Check in"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:257
-#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:49
-#: templates/checkout/checkout.php:127 templates/emails/booking-details.php:18
+#: includes/admin/wphb-admin-functions.php:277
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:50
+#: templates/checkout/checkout.php:149
 msgid "Check out"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:258
-#: includes/admin/metaboxes/views/meta-booking-items.php:43
-#: templates/account/bookings.php:33 templates/checkout/thank-you.php:60
-#: templates/emails/booking-details.php:45
-#: templates/search/booking-room-details.php:30
-msgid "Total"
-msgstr ""
-
-#: includes/admin/wphb-admin-functions.php:259
+#: includes/admin/wphb-admin-functions.php:279
 msgid "Booking Order"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:260
-#: templates/account/bookings.php:34
-msgid "Status"
-msgstr ""
-
-#: includes/admin/wphb-admin-functions.php:300
+#: includes/admin/wphb-admin-functions.php:320
 #, php-format
 msgid "<br />(<small>%s</small>)"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:312
+#: includes/admin/wphb-admin-functions.php:332
 #, php-format
 msgid "<br />(<small class=\"hb_advance_payment\">Charged %s = %s</small>)"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:399
+#: includes/admin/wphb-admin-functions.php:420
 msgid "Booking date"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:400
+#: includes/admin/wphb-admin-functions.php:421
 msgid "Check-in date"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:401
+#: includes/admin/wphb-admin-functions.php:422
 msgid "Check-out date"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:406
-#: includes/admin/views/pricing-table.php:101
-#: includes/admin/views/pricing-table.php:173
+#: includes/admin/wphb-admin-functions.php:427
+#: includes/admin/views/pricing-table.php:110
+#: includes/admin/views/pricing-table.php:182
 msgid "Date Range"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:408
+#: includes/admin/wphb-admin-functions.php:429
 msgid "From"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:411
+#: includes/admin/wphb-admin-functions.php:432
 msgid "To"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:414
+#: includes/admin/wphb-admin-functions.php:435
 msgid "---Filter By---"
 msgstr ""
 
-#: includes/admin/wphb-admin-functions.php:465
-#: includes/admin/wphb-admin-functions.php:493
+#: includes/admin/wphb-admin-functions.php:486
+#: includes/admin/wphb-admin-functions.php:514
 #: includes/admin/metaboxes/views/fields/gallery.php:22
 msgid "Remove this image"
 msgstr ""
 
-#: includes/admin/metaboxes/class-wphb-admin-metabox-booking-actions.php:29
+#: includes/admin/metaboxes/class-wphb-admin-metabox-booking-actions.php:33
 msgid "Booking Actions"
 msgstr ""
 
-#: includes/admin/metaboxes/class-wphb-admin-metabox-booking-details.php:29
+#: includes/admin/metaboxes/class-wphb-admin-metabox-booking-details.php:33
 msgid "Booking Details"
 msgstr ""
 
-#: includes/admin/metaboxes/class-wphb-admin-metabox-booking-items.php:29
-#: templates/checkout/thank-you.php:51
+#: includes/admin/metaboxes/class-wphb-admin-metabox-booking-items.php:33
+#: templates/checkout/thank-you.php:47
 msgid "Booking Items"
 msgstr ""
 
-#: includes/admin/metaboxes/class-wphb-admin-metabox-room-price.php:29
+#: includes/admin/metaboxes/class-wphb-admin-metabox-room-price.php:33
 msgid "Regular Price"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-actions.php:20
+#: includes/admin/metaboxes/views/meta-booking-actions.php:23
 msgid "Move to Trash"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-actions.php:25
+#: includes/admin/metaboxes/views/meta-booking-actions.php:28
 msgid "Save Book"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-details.php:25
+#: includes/admin/metaboxes/views/meta-booking-details.php:29
 #, php-format
 msgid "Book ID %s"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-details.php:27
+#: includes/admin/metaboxes/views/meta-booking-details.php:31
 #, php-format
 msgid "Booked on %s"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-details.php:31
-#: includes/admin/settings/class-wphb-admin-setting-general.php:22
-#: includes/admin/settings/class-wphb-admin-setting-payments.php:85
+#: includes/admin/metaboxes/views/meta-booking-details.php:35
+#: includes/admin/settings/class-wphb-admin-setting-general.php:26
+#: includes/admin/settings/class-wphb-admin-setting-payments.php:90
 msgid "General"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-details.php:34
+#: includes/admin/metaboxes/views/meta-booking-details.php:38
 msgid "Payment Method:"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-details.php:39
-#, php-format
-msgid "%s is not available"
-msgstr ""
-
-#: includes/admin/metaboxes/views/meta-booking-details.php:47
+#: includes/admin/metaboxes/views/meta-booking-details.php:51
 msgid "Booking Status:"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-details.php:63
+#: includes/admin/metaboxes/views/meta-booking-details.php:67
 msgid "Customer's Details"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-details.php:68
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:30
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:58
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:91
-#: templates/single-room-reviews.php:69
+#: includes/admin/metaboxes/views/meta-booking-details.php:72
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:36
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:61
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:94
+#: templates/single-room-reviews.php:71
 msgid "Name"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-details.php:72
-#: includes/admin/metaboxes/views/meta-booking-details.php:108
-#: templates/checkout/customer-new.php:37
-#: templates/checkout/customer-new.php:42
+#: includes/admin/metaboxes/views/meta-booking-details.php:76
+#: includes/admin/metaboxes/views/meta-booking-details.php:112
+#: templates/checkout/customer-new.php:53
+#: templates/checkout/customer-new.php:58
 msgid "Address"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-details.php:85
-#: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:96
-#: templates/single-room-reviews.php:71
-#: templates/checkout/customer-existing.php:15
-#: templates/checkout/customer-new.php:97
+#: includes/admin/metaboxes/views/meta-booking-details.php:89
+#: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:100
+#: templates/single-room-reviews.php:73
+#: templates/checkout/customer-existing.php:30
+#: templates/checkout/customer-new.php:113
 msgid "Email"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-details.php:89
-#: includes/admin/metaboxes/views/meta-booking-details.php:126
-#: templates/checkout/customer-new.php:88
+#: includes/admin/metaboxes/views/meta-booking-details.php:93
+#: includes/admin/metaboxes/views/meta-booking-details.php:130
+#: templates/checkout/customer-new.php:104
 msgid "Phone"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-details.php:102
-#: templates/checkout/customer-new.php:19
-#: templates/checkout/customer-new.php:24
+#: includes/admin/metaboxes/views/meta-booking-details.php:106
+#: templates/checkout/customer-new.php:35
+#: templates/checkout/customer-new.php:40
 msgid "First name"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-details.php:105
-#: templates/checkout/customer-new.php:28
-#: templates/checkout/customer-new.php:33
+#: includes/admin/metaboxes/views/meta-booking-details.php:109
+#: templates/checkout/customer-new.php:44
+#: templates/checkout/customer-new.php:49
 msgid "Last name"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-details.php:111
-#: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:54
-#: templates/checkout/customer-new.php:46
-#: templates/checkout/customer-new.php:51
+#: includes/admin/metaboxes/views/meta-booking-details.php:115
+#: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:58
+#: templates/checkout/customer-new.php:62
+#: templates/checkout/customer-new.php:67
 msgid "City"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-details.php:116
-#: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:61
-#: templates/checkout/customer-new.php:55
-#: templates/checkout/customer-new.php:60
+#: includes/admin/metaboxes/views/meta-booking-details.php:120
+#: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:65
+#: templates/checkout/customer-new.php:71
+#: templates/checkout/customer-new.php:76
 msgid "State"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-details.php:119
+#: includes/admin/metaboxes/views/meta-booking-details.php:123
 msgid "Postl code"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-details.php:120
-#: templates/checkout/customer-new.php:102
+#: includes/admin/metaboxes/views/meta-booking-details.php:124
+#: templates/checkout/customer-new.php:118
 msgid "Email address"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-details.php:123
-#: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:89
-#: templates/checkout/customer-new.php:106
-#: templates/checkout/customer-new.php:110
+#: includes/admin/metaboxes/views/meta-booking-details.php:127
+#: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:93
+#: templates/checkout/customer-new.php:122
+#: templates/checkout/customer-new.php:126
 msgid "Fax"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-details.php:131
-#: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:68
-#: templates/checkout/customer-new.php:75
-#: templates/checkout/customer-new.php:81
+#: includes/admin/metaboxes/views/meta-booking-details.php:135
+#: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:72
+#: templates/checkout/customer-new.php:91
+#: templates/checkout/customer-new.php:97
 msgid "Country"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-details.php:143
+#: includes/admin/metaboxes/views/meta-booking-details.php:147
 msgid "Customer's Notes"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-details.php:152
-#: includes/booking/wphb-booking-functions.php:82
+#: includes/admin/metaboxes/views/meta-booking-details.php:156
+#: includes/booking/wphb-booking-functions.php:87
 msgid "Empty Booking Notes"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:28
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:31
 msgid "Add new item"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:74
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:75
 msgid "Extra Packages"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:112
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:113
 msgid "Check Available"
-msgstr ""
-
-#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:116
-#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:229
-msgid "Close"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items-template-js.php:117
 #: includes/admin/metaboxes/views/meta-booking-items-template-js.php:230
+msgid "Close"
+msgstr ""
+
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:118
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:231
 msgid "Add"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:134
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:135
 msgid "Do you want to do this?"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:153
-#: includes/widgets/class-hb-widget-room-carousel.php:79
-#: includes/widgets/class-hb-widget-room-carousel.php:88
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:154
+#: includes/widgets/class-hb-widget-room-carousel.php:85
+#: includes/widgets/class-hb-widget-room-carousel.php:94
 msgid "No"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:154
-#: includes/widgets/class-hb-widget-room-carousel.php:77
-#: includes/widgets/class-hb-widget-room-carousel.php:85
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:155
+#: includes/widgets/class-hb-widget-room-carousel.php:83
+#: includes/widgets/class-hb-widget-room-carousel.php:91
 msgid "Yes"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:193
+#: includes/admin/metaboxes/views/meta-booking-items-template-js.php:194
 msgid "Add new coupon"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:31
-#: templates/checkout/thank-you.php:56
+#: includes/admin/metaboxes/views/meta-booking-items.php:34
+#: templates/checkout/thank-you.php:52
 msgid "Item"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:34
+#: includes/admin/metaboxes/views/meta-booking-items.php:37
 msgid "Checkin - Checkout"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:37
-#: templates/cart/cart.php:24 templates/checkout/checkout.php:25
-#: templates/checkout/thank-you.php:58 templates/loop/price.php:45
-#: templates/search/booking-room-details.php:19
+#: includes/admin/metaboxes/views/meta-booking-items.php:40
+#: templates/cart/cart.php:39 templates/checkout/checkout.php:40
+#: templates/checkout/thank-you.php:54 templates/loop/price.php:48
+#: templates/search/booking-room-details.php:30
 msgid "Night"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:40
-#: templates/checkout/thank-you.php:59
+#: includes/admin/metaboxes/views/meta-booking-items.php:43
+#: templates/checkout/thank-you.php:55
 msgid "Qty"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:46
+#: includes/admin/metaboxes/views/meta-booking-items.php:49
 msgid "Actions"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:91
+#: includes/admin/metaboxes/views/meta-booking-items.php:100
 msgid "Delete select item(s)"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:93
+#: includes/admin/metaboxes/views/meta-booking-items.php:103
 msgid "Sync"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:98
+#: includes/admin/metaboxes/views/meta-booking-items.php:109
 msgid "Add Coupon"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:102
+#: includes/admin/metaboxes/views/meta-booking-items.php:115
 msgid "Remove Coupon"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:105
+#: includes/admin/metaboxes/views/meta-booking-items.php:119
 msgid "Add Room Item"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:116
+#: includes/admin/metaboxes/views/meta-booking-items.php:130
 #, php-format
 msgid "Coupon(<a href=\"%s\">%s</a>)"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:125
-#: templates/cart/cart.php:64 templates/checkout/checkout.php:55
-#: templates/checkout/thank-you.php:105
+#: includes/admin/metaboxes/views/meta-booking-items.php:139
+#: templates/cart/cart.php:83 templates/checkout/checkout.php:78
+#: templates/checkout/thank-you.php:103
 msgid "Sub Total"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:133
-#: includes/admin/settings/class-wphb-admin-setting-general.php:123
-#: templates/cart/cart.php:73 templates/checkout/checkout.php:65
-#: templates/checkout/thank-you.php:111
+#: includes/admin/metaboxes/views/meta-booking-items.php:147
+#: includes/admin/settings/class-wphb-admin-setting-general.php:139
+#: templates/cart/cart.php:92 templates/checkout/checkout.php:88
+#: templates/checkout/thank-you.php:109
 msgid "Tax"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:141
-#: templates/cart/cart.php:83 templates/checkout/checkout.php:76
-#: templates/checkout/thank-you.php:117
+#: includes/admin/metaboxes/views/meta-booking-items.php:155
+#: templates/cart/cart.php:102 templates/checkout/checkout.php:99
+#: templates/checkout/thank-you.php:115
 msgid "Grand Total"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:22
+#: includes/admin/metaboxes/views/meta-booking-items.php:172
+#: includes/admin/settings/class-wphb-admin-setting-general.php:164
+#: templates/checkout/thank-you.php:134
+#: templates/emails/booking-details.php:56
+msgid "Advance Payment"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:26
 msgid "Emails"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:38
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:42
 msgid "Email Sender"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:39
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:43
 msgid "The name and email address of the sender displays in email"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:45
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:49
 msgid "From name"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:53
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:57
 msgid "From Email"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:61
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:65
 msgid "Email subject"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:62
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:63
-#: includes/booking/wphb-booking-hooks.php:261
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:66
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:67
+#: includes/booking/wphb-booking-hooks.php:269
 msgid "Reservation"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:76
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:215
-msgid "New Booking"
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:80
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:219
+msgid "Complete Booking"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:77
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:81
 msgid ""
 "New booking emails are sent to chosen recipient(s) when a booking is "
-"received."
+"completed."
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:83
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:152
-#: includes/gateways/offline-payment/views/settings.php:28
-#: includes/gateways/paypal/views/settings.php:29
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:87
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:156
+#: includes/gateways/offline-payment/views/settings.php:32
+#: includes/gateways/paypal/views/settings.php:32
 msgid "Enable"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:90
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:159
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:94
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:163
 msgid "Recipient(s)"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:91
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:100
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:160
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:169
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:95
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:164
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:173
 #, php-format
 msgid "Enter recipients (comma separated) for this email. Defaults to %s."
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:99
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:168
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:103
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:172
 msgid "Subject"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:108
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:177
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:104
+msgid "Enter the subject of this email."
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:112
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:181
 msgid "Email Heading"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:109
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:113
 msgid ""
-"The main heading displays in the top of email. Default heading: New customer "
+"The main heading displays in the top of email. Default heading: Completed "
 "booking"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:117
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:186
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:121
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:190
 msgid "Email Heading Description"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:118
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:119
-#: includes/booking/wphb-booking-hooks.php:215
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:122
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:123
+#: includes/booking/wphb-booking-hooks.php:223
 msgid "The customer has completed the transaction"
-msgstr ""
-
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:125
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:194
-msgid "Email Format"
-msgstr ""
-
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:128
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:197
-msgid "Plain Text"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:129
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:198
+msgid "Email Format"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:132
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:201
+msgid "Plain Text"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:133
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:202
 msgid "HTML"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:145
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:216
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:149
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:220
 msgid "Cancel Booking"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:146
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:150
 msgid ""
 "Cancel booking emails are sent to chosen recipient(s) when booking has been "
 "marked cancelled."
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:178
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:182
 msgid ""
 "The main heading displays in the top of email. Default heading: Cancelled "
 "booking"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:187
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:188
-#: includes/booking/wphb-booking-hooks.php:301
-#: templates/emails/customer-cancelled.php:15
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:191
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:192
+#: includes/booking/wphb-booking-hooks.php:323
+#: templates/emails/customer-cancelled.php:21
 msgid "Booking has been marked cancelled"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:214
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:218
 msgid "Email Options"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-general.php:32
+#: includes/admin/settings/class-wphb-admin-setting-general.php:36
 msgid "General Options"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-general.php:33
+#: includes/admin/settings/class-wphb-admin-setting-general.php:37
 msgid "General options for system."
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-general.php:38
+#: includes/admin/settings/class-wphb-admin-setting-general.php:42
+msgid "Rooms Page"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-general.php:47
 msgid "Search Page"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-general.php:43
+#: includes/admin/settings/class-wphb-admin-setting-general.php:52
 msgid "Checkout Page"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-general.php:48
+#: includes/admin/settings/class-wphb-admin-setting-general.php:57
 msgid "Cart Page"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-general.php:53
+#: includes/admin/settings/class-wphb-admin-setting-general.php:62
 msgid "Account Page"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-general.php:58
+#: includes/admin/settings/class-wphb-admin-setting-general.php:67
 msgid "Terms And Conditions Page"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-general.php:63
+#: includes/admin/settings/class-wphb-admin-setting-general.php:72
 msgid "Thank You Page"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-general.php:69
+#: includes/admin/settings/class-wphb-admin-setting-general.php:78
 msgid "Single Purchase"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-general.php:70
+#: includes/admin/settings/class-wphb-admin-setting-general.php:79
 msgid "Disable select quantity in Hotel Search page (default: one at a time)"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-general.php:76
-msgid "Currency"
-msgstr ""
-
-#: includes/admin/settings/class-wphb-admin-setting-general.php:83
-msgid "Currency Position"
-msgstr ""
-
 #: includes/admin/settings/class-wphb-admin-setting-general.php:85
-msgid "Left ( $69.99 )"
+msgid "Custom Process"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-general.php:86
-msgid "Right ( 69.99$ )"
+msgid "Choose extra options after select room in search page"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-general.php:87
-msgid "Left with space ( $ 69.99 )"
+#: includes/admin/settings/class-wphb-admin-setting-general.php:92
+msgid "Currency"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-general.php:88
-msgid "Right with space ( 69.99 $ )"
-msgstr ""
-
-#: includes/admin/settings/class-wphb-admin-setting-general.php:95
-msgid "Thousands Separator"
+#: includes/admin/settings/class-wphb-admin-setting-general.php:99
+msgid "Currency Position"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-general.php:101
+msgid "Left ( $69.99 )"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-general.php:102
+msgid "Right ( 69.99$ )"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-general.php:103
+msgid "Left with space ( $ 69.99 )"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-general.php:104
+msgid "Right with space ( 69.99 $ )"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-general.php:111
+msgid "Thousands Separator"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-general.php:117
 msgid "Decimals Separator"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-general.php:107
+#: includes/admin/settings/class-wphb-admin-setting-general.php:123
 msgid "Number of decimal"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-general.php:115
+#: includes/admin/settings/class-wphb-admin-setting-general.php:131
 msgid "Minimum booking nights"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-general.php:131
+#: includes/admin/settings/class-wphb-admin-setting-general.php:147
 msgid "Price including tax"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-general.php:137
+#: includes/admin/settings/class-wphb-admin-setting-general.php:153
 msgid "Price display"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-general.php:139
+#: includes/admin/settings/class-wphb-admin-setting-general.php:155
 msgid "Min"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-general.php:140
+#: includes/admin/settings/class-wphb-admin-setting-general.php:156
 msgid "Max"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-general.php:141
+#: includes/admin/settings/class-wphb-admin-setting-general.php:157
 msgid "Min to Max"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-general.php:148
-msgid "Advance Payment"
+#: includes/admin/settings/class-wphb-admin-setting-general.php:165
+msgid "Advance payment, eg: 50%"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-general.php:149
-msgid "Payment advance. Eg: 50%"
-msgstr ""
-
-#: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:23
+#: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:27
 msgid "Hotel Info"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:34
+#: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:38
 msgid "Your hotel information"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:40
+#: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:44
 msgid "Hotel Name"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:47
+#: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:51
 msgid "Hotel Adress"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:75
+#: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:79
 msgid "Zip / Postal Code"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:82
-#: templates/checkout/customer-new.php:93
+#: includes/admin/settings/class-wphb-admin-setting-hotel-info.php:86
+#: templates/checkout/customer-new.php:109
 msgid "Phone Number"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-lightboxs.php:23
+#: includes/admin/settings/class-wphb-admin-setting-lightboxs.php:27
 msgid "Lightboxs"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-lightboxs.php:34
+#: includes/admin/settings/class-wphb-admin-setting-lightboxs.php:38
 msgid "Lightbox options"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-lightboxs.php:35
+#: includes/admin/settings/class-wphb-admin-setting-lightboxs.php:39
 msgid "General options for Lightbox system."
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-lightboxs.php:42
+#: includes/admin/settings/class-wphb-admin-setting-lightboxs.php:46
 msgid "Lightbox type"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-payments.php:23
+#: includes/admin/settings/class-wphb-admin-setting-payments.php:27
 msgid "Checkout"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-payments.php:34
+#: includes/admin/settings/class-wphb-admin-setting-payments.php:38
 msgid "Payment General Options"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-payments.php:35
+#: includes/admin/settings/class-wphb-admin-setting-payments.php:39
 msgid "Payment General options for system."
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-payments.php:41
+#: includes/admin/settings/class-wphb-admin-setting-payments.php:45
 msgid "Cancel Payment"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-payments.php:42
+#: includes/admin/settings/class-wphb-admin-setting-payments.php:46
 msgid "Cancel Payment after hour(s)"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-payments.php:50
+#: includes/admin/settings/class-wphb-admin-setting-payments.php:55
 msgid "Process"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-payments.php:51
-msgid "Allows customers to checkout without creating an account."
+#: includes/admin/settings/class-wphb-admin-setting-payments.php:56
+msgid "Enable the option to allow guests checkout."
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-room.php:23
-#: templates/emails/booking-details.php:16
+#: includes/admin/settings/class-wphb-admin-setting-room.php:26
+#: templates/emails/booking-details.php:21
 msgid "Room"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-room.php:34
+#: includes/admin/settings/class-wphb-admin-setting-room.php:37
 msgid "Catalog Options"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-room.php:35
+#: includes/admin/settings/class-wphb-admin-setting-room.php:38
 msgid ""
 "Catalog settings display column number and image size used in room list "
 "( archive page, related room )."
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-room.php:42
+#: includes/admin/settings/class-wphb-admin-setting-room.php:45
 msgid "Number of column display catalog page"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-room.php:49
+#: includes/admin/settings/class-wphb-admin-setting-room.php:52
 msgid "Number of post display in page"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-room.php:63
+#: includes/admin/settings/class-wphb-admin-setting-room.php:66
 msgid "Catalog images size"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-room.php:68
+#: includes/admin/settings/class-wphb-admin-setting-room.php:71
 msgid "Display rating"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-room.php:81
+#: includes/admin/settings/class-wphb-admin-setting-room.php:84
 msgid "Room Options"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-room.php:82
+#: includes/admin/settings/class-wphb-admin-setting-room.php:85
 msgid ""
 "Room settings display column number and image size used in gallery single "
 "page"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-room.php:96
+#: includes/admin/settings/class-wphb-admin-setting-room.php:99
 msgid "Room images size gallery"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-room.php:110
+#: includes/admin/settings/class-wphb-admin-setting-room.php:113
 msgid "Room images thumbnail"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-room.php:115
+#: includes/admin/settings/class-wphb-admin-setting-room.php:118
 msgid "Display pricing plans"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-room.php:122
+#: includes/admin/settings/class-wphb-admin-setting-room.php:125
 msgid "Enable ratings on reviews"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-room.php:132
+#: includes/admin/settings/class-wphb-admin-setting-room.php:135
 msgid "Ratings are required to leave a review"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-room.php:140
+#: includes/admin/settings/class-wphb-admin-setting-room.php:143
 msgid "Enable gallery lightbox"
 msgstr ""
 
-#: includes/admin/views/pricing-table.php:30
+#: includes/admin/tools/class-wphb-tool-override-templates.php:38
+msgid "Template"
+msgstr ""
+
+#: includes/admin/tools/class-wphb-tool-override-templates.php:61
+#, php-format
+msgid "Override Templates (%s)"
+msgstr ""
+
+#: includes/admin/tools/class-wphb-tool-override-templates.php:69
+msgid "File"
+msgstr ""
+
+#: includes/admin/tools/class-wphb-tool-override-templates.php:72
+#, php-format
+msgid "All (%d)"
+msgstr ""
+
+#: includes/admin/tools/class-wphb-tool-override-templates.php:74
+#, php-format
+msgid "Up to date (%d)"
+msgstr ""
+
+#: includes/admin/tools/class-wphb-tool-override-templates.php:76
+#, php-format
+msgid "Outdated (%d)"
+msgstr ""
+
+#: includes/admin/tools/class-wphb-tool-override-templates.php:78
+#, php-format
+msgid "Undefined (%d)"
+msgstr ""
+
+#: includes/admin/tools/class-wphb-tool-override-templates.php:82
+msgid "Template version"
+msgstr ""
+
+#: includes/admin/tools/class-wphb-tool-override-templates.php:84
+msgid "Plugin version"
+msgstr ""
+
+#: includes/admin/tools/class-wphb-tool-override-templates.php:106
+msgid "There is no template file has overwritten"
+msgstr ""
+
+#: includes/admin/views/pricing-table.php:39
 msgid "Select name of room"
 msgstr ""
 
-#: includes/admin/views/pricing-table.php:36
+#: includes/admin/views/pricing-table.php:45
 msgid "Regular price"
 msgstr ""
 
-#: includes/admin/views/pricing-table.php:53
-#: includes/admin/views/pricing-table.php:181
-#: includes/admin/views/pricing-table.php:185
+#: includes/admin/views/pricing-table.php:62
+#: includes/admin/views/pricing-table.php:190
+#: includes/admin/views/pricing-table.php:194
 msgid "Clone"
 msgstr ""
 
-#: includes/admin/views/pricing-table.php:55
-#: includes/admin/views/pricing-table.php:121
-#: includes/admin/views/pricing-table.php:189
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:48
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:76
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:109
+#: includes/admin/views/pricing-table.php:64
+#: includes/admin/views/pricing-table.php:130
+#: includes/admin/views/pricing-table.php:198
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:54
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:79
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:112
 msgid "Remove"
 msgstr ""
 
-#: includes/admin/views/pricing-table.php:88
+#: includes/admin/views/pricing-table.php:97
 msgid "Other plan"
 msgstr ""
 
-#: includes/admin/views/pricing-table.php:89
+#: includes/admin/views/pricing-table.php:98
 #, php-format
 msgid "(%d plan)"
 msgid_plural "(%d plans)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/admin/views/pricing-table.php:153
+#: includes/admin/views/pricing-table.php:162
 msgid "No addition plans"
 msgstr ""
 
-#: includes/booking/wphb-booking-functions.php:81
-#: templates/emails/booking-details.php:13
+#: includes/booking/wphb-booking-functions.php:86
+#: templates/emails/booking-details.php:17
 msgid "Booking "
 msgstr ""
 
-#: includes/booking/wphb-booking-functions.php:87
+#: includes/booking/wphb-booking-functions.php:92
 msgid "Invalid booking status"
 msgstr ""
 
-#: includes/booking/wphb-booking-functions.php:315
-#: includes/booking/wphb-booking-functions.php:328
-#: includes/booking/wphb-booking-functions.php:340
+#: includes/booking/wphb-booking-functions.php:326
+#: includes/booking/wphb-booking-functions.php:339
+#: includes/booking/wphb-booking-functions.php:351
 msgid "Booking is not found."
 msgstr ""
 
-#: includes/booking/wphb-booking-functions.php:383
+#: includes/booking/wphb-booking-functions.php:395
 msgid "Cancelled"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:113
+#: includes/booking/wphb-booking-hooks.php:121
 msgid "Booking pending"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:114
+#: includes/booking/wphb-booking-hooks.php:122
 msgid "Your booking is pending"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:115
+#: includes/booking/wphb-booking-hooks.php:123
 msgid "Your booking is pending until the payment is completed"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:134
+#: includes/booking/wphb-booking-hooks.php:141
+msgid "[{site_title}] New customer booking ({booking_number}) - {booking_date}"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:142
 msgid "New customer booking"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:135
+#: includes/booking/wphb-booking-hooks.php:143
 msgid "You have a new booking room"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:214
-msgid "New Booking Payment"
+#: includes/booking/wphb-booking-hooks.php:222
+msgid "New Booking Completed"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:300
-#: templates/emails/customer-cancelled.php:14
+#: includes/booking/wphb-booking-hooks.php:322
+#: templates/emails/customer-cancelled.php:20
 msgid "Cancelled booking"
 msgstr ""
 
-#: includes/cart/class-wphb-cart.php:197
+#: includes/booking/wphb-booking-hooks.php:410
+msgctxt "Admin menu name"
+msgid "Bookings"
+msgstr ""
+
+#: includes/cart/class-wphb-cart.php:210
 msgid "Can not add to cart, product is not exist."
 msgstr ""
 
-#: includes/gateways/offline-payment/class-wphb-payment-gateway-offline-payment.php:19
+#: includes/gateways/offline-payment/class-wphb-payment-gateway-offline-payment.php:29
+#: templates/emails/booking-details.php:48
 msgid "Offline Payment"
 msgstr ""
 
-#: includes/gateways/offline-payment/class-wphb-payment-gateway-offline-payment.php:20
+#: includes/gateways/offline-payment/class-wphb-payment-gateway-offline-payment.php:30
 msgid "Pay on arrival"
 msgstr ""
 
-#: includes/gateways/offline-payment/class-wphb-payment-gateway-offline-payment.php:52
+#: includes/gateways/offline-payment/class-wphb-payment-gateway-offline-payment.php:62
 msgid "<br />(<small>Pay on arrival</small>)"
 msgstr ""
 
-#: includes/gateways/offline-payment/class-wphb-payment-gateway-offline-payment.php:98
+#: includes/gateways/offline-payment/class-wphb-payment-gateway-offline-payment.php:108
 msgid " Pay on Arrival"
 msgstr ""
 
-#: includes/gateways/paypal/class-wphb-payment-gateway-paypal.php:52
+#: includes/gateways/offline-payment/views/settings.php:38
+msgid "Enable checkout booking via Offline payment"
+msgstr ""
+
+#: includes/gateways/offline-payment/views/settings.php:42
+msgid "Instruction"
+msgstr ""
+
+#: includes/gateways/offline-payment/views/settings.php:50
+msgid "Information for bank transfer via Offline payment, eg: Bank account"
+msgstr ""
+
+#: includes/gateways/paypal/class-wphb-payment-gateway-paypal.php:62
 msgid "Paypal"
 msgstr ""
 
-#: includes/gateways/paypal/class-wphb-payment-gateway-paypal.php:53
-#: includes/gateways/paypal/class-wphb-payment-gateway-paypal.php:103
+#: includes/gateways/paypal/class-wphb-payment-gateway-paypal.php:63
+#: includes/gateways/paypal/class-wphb-payment-gateway-paypal.php:113
 msgid "Pay with Paypal"
 msgstr ""
 
-#: includes/gateways/paypal/class-wphb-payment-gateway-paypal.php:98
+#: includes/gateways/paypal/class-wphb-payment-gateway-paypal.php:108
 #, php-format
 msgid "<br /><small>(Paid %s%% of %s via %s)</small>"
 msgstr ""
 
-#: includes/gateways/paypal/class-wphb-payment-gateway-paypal.php:180
+#: includes/gateways/paypal/class-wphb-payment-gateway-paypal.php:190
 msgid "Error: Booking ID and key were not found in \"custom\"."
 msgstr ""
 
-#: includes/gateways/paypal/class-wphb-payment-gateway-paypal.php:191
+#: includes/gateways/paypal/class-wphb-payment-gateway-paypal.php:201
 #, php-format
 msgid "Error: Booking Keys do not match %s and %s."
 msgstr ""
 
-#: includes/gateways/paypal/class-wphb-payment-gateway-paypal.php:213
+#: includes/gateways/paypal/class-wphb-payment-gateway-paypal.php:223
 msgid "IPN payment completed"
 msgstr ""
 
-#: includes/gateways/paypal/views/settings.php:36
+#: includes/gateways/paypal/views/settings.php:39
 msgid "Paypal email"
 msgstr ""
 
-#: includes/gateways/paypal/views/settings.php:42
+#: includes/gateways/paypal/views/settings.php:45
 msgid "Sandbox Mode"
 msgstr ""
 
-#: includes/gateways/paypal/views/settings.php:49
+#: includes/gateways/paypal/views/settings.php:52
 msgid "Paypal sandbox email"
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/wp-hotel-booking-extra.php:46
+#: includes/plugins/wp-hotel-booking-extra/wp-hotel-booking-extra.php:56
 msgid "Remove package. Are you sure?"
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/inc/functions.php:139
-msgid "Trip"
-msgstr ""
-
-#: includes/plugins/wp-hotel-booking-extra/inc/functions.php:140
-msgid "Number"
-msgstr ""
-
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/class-hb-admin.php:26
-msgid "Extra Room Packages"
-msgstr ""
-
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:19
-msgid "Adding room's services packages with detail price for every service"
-msgstr ""
-
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:23
-msgid "Extra Options"
-msgstr ""
-
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:41
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:69
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:102
-#: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-search-room.php:55
-#: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-single-search-room.php:55
-msgid "Package"
-msgstr ""
-
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:44
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:72
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:105
-msgid "Price Type"
-msgstr ""
-
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:82
-msgid "Save Extra"
-msgstr ""
-
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:83
-msgid "Add another item"
-msgstr ""
-
-#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:96
-msgid "Enter description here"
-msgstr ""
-
-#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-cart.php:175
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-cart.php:200
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-cart.php:180
 msgid "Cart ID is not exists."
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-cart.php:300
-#: includes/plugins/wp-hotel-booking-extra/templates/loop/addition-services-title.php:3
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-cart.php:361
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-cart.php:322
+#: includes/plugins/wp-hotel-booking-extra/templates/loop/addition-services-title.php:26
 msgid "Addition Services"
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:30
-#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:31
-#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:41
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:48
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:49
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:35
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:36
 msgid "Extra Room"
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:32
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:50
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:37
 msgctxt "wp-hotel-booking"
 msgid "Add New Extra Room"
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:33
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:51
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:38
 msgid "Add New Extra Room"
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:34
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:52
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:39
 msgid "Edit Extra Room"
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:35
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:53
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:40
 msgid "New Extra Room"
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:36
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:54
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:41
 msgid "View Extra Room"
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:37
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:55
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:42
 msgid "Search Extra Room"
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:38
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:56
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:43
 msgid "No Extra Room found"
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:39
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:57
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:44
 msgid "No Extra Room found in Trash"
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:40
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:58
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:45
 msgid "Parent Singular Extra Room:"
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:47
-msgid "Extra room system booking"
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:59
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:30
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:46
+msgid "Extra Options"
 msgstr ""
 
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:117
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:206
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:104
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:188
+msgid "Unit"
+msgstr ""
+
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:119
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:220
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:106
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:202
+msgid "Required"
+msgstr ""
+
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:188
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:170
+msgid "Extra Settings"
+msgstr ""
+
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:200
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:182
+msgid "Price of extra room option"
+msgstr ""
+
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:207
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:189
+msgid "Unit of extra room option"
+msgstr ""
+
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:209
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:47
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:72
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:105
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:191
+#: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-search-room.php:63
+#: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-single-search-room.php:59
+#: templates/search/select-extra.php:53
+msgid "Package"
+msgstr ""
+
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:214
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:196
+msgid "Type of extra room option"
+msgstr ""
+
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:221
+#: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra-post-type.php:203
+msgid "Required include for all booking"
+msgstr ""
+
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra.php:53
 #: includes/plugins/wp-hotel-booking-extra/inc/classes/class-hb-extra.php:30
 msgid "Addition Package"
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-search-room.php:20
-#: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-single-search-room.php:23
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/class-hb-admin.php:26
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/class-wphb-extra-admin.php:39
+msgid "Extra Room Packages"
+msgstr ""
+
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:26
+msgid "Adding room's services packages with detail price for every service"
+msgstr ""
+
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:50
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:75
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:108
+msgid "Price Type"
+msgstr ""
+
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:85
+msgid "Save Extra"
+msgstr ""
+
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:86
+msgid "Add another item"
+msgstr ""
+
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:99
+msgid "Enter description here"
+msgstr ""
+
+#: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-search-room.php:27
+#: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-single-search-room.php:27
 msgid "Optional Extras"
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/templates/loop/mini-cart-extra.php:15
-#: includes/plugins/wp-hotel-booking-extra/templates/shortcodes/mini_cart_layout.php:20
+#: includes/plugins/wp-hotel-booking-extra/templates/loop/mini-cart-extra.php:24
+#: includes/plugins/wp-hotel-booking-extra/templates/shortcodes/mini_cart_layout.php:36
 msgid "Addition Services:"
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/templates/shortcodes/mini_cart_layout.php:13
-#: templates/cart/mini_cart_layout.php:20 templates/loop/mini-cart-loop.php:30
-#: templates/search/loop.php:53
+#: includes/plugins/wp-hotel-booking-extra/templates/shortcodes/mini_cart_layout.php:29
+#: templates/cart/mini_cart_layout.php:26 templates/loop/mini-cart-loop.php:37
+#: templates/search/loop.php:69
 msgid "Quantity: "
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/templates/shortcodes/mini_cart_layout.php:40
-#: templates/cart/mini_cart_layout.php:27 templates/loop/mini-cart-loop.php:39
+#: includes/plugins/wp-hotel-booking-extra/templates/shortcodes/mini_cart_layout.php:60
+#: templates/cart/mini_cart_layout.php:31 templates/loop/mini-cart-loop.php:44
 msgid "Price: "
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/templates/shortcodes/mini_cart_layout.php:50
-#: templates/cart/cart.php:103 templates/cart/mini_cart.php:21
-#: templates/cart/mini_cart_layout.php:36
+#: includes/plugins/wp-hotel-booking-extra/templates/shortcodes/mini_cart_layout.php:70
+#: templates/cart/cart.php:122 templates/cart/mini_cart.php:34
+#: templates/cart/mini_cart_layout.php:40
 msgid "Check Out"
 msgstr ""
 
-#: includes/products/class-wphb-product-room.php:184
+#: includes/products/class-wphb-product-room.php:194
 msgid "why i am here?"
 msgstr ""
 
-#: includes/widgets/class-hb-widget-best-reviews.php:19
+#: includes/widgets/class-hb-widget-best-reviews.php:25
 msgid "HB Rooms Best Reviews"
 msgstr ""
 
-#: includes/widgets/class-hb-widget-best-reviews.php:20
+#: includes/widgets/class-hb-widget-best-reviews.php:26
 msgid "Display rooms have best reviews"
 msgstr ""
 
-#: includes/widgets/class-hb-widget-best-reviews.php:59
-#: includes/widgets/class-hb-widget-lastest-reviews.php:59
-#: includes/widgets/class-hb-widget-mini-cart.php:59
-#: includes/widgets/class-hb-widget-room-carousel.php:63
-#: includes/widgets/class-hb-widget-search.php:61
-#: templates/checkout/thank-you.php:132
+#: includes/widgets/class-hb-widget-best-reviews.php:65
+#: includes/widgets/class-hb-widget-lastest-reviews.php:65
+#: includes/widgets/class-hb-widget-mini-cart.php:65
+#: includes/widgets/class-hb-widget-room-carousel.php:69
+#: includes/widgets/class-hb-widget-search.php:69
+#: templates/checkout/thank-you.php:150
 msgid "Title:"
 msgstr ""
 
-#: includes/widgets/class-hb-widget-best-reviews.php:63
-#: includes/widgets/class-hb-widget-lastest-reviews.php:63
-#: includes/widgets/class-hb-widget-room-carousel.php:71
+#: includes/widgets/class-hb-widget-best-reviews.php:69
+#: includes/widgets/class-hb-widget-lastest-reviews.php:69
+#: includes/widgets/class-hb-widget-room-carousel.php:77
 msgid "Number of items:"
 msgstr ""
 
-#: includes/widgets/class-hb-widget-lastest-reviews.php:19
+#: includes/widgets/class-hb-widget-lastest-reviews.php:25
 msgid "HB Rooms Lastest Reviews"
 msgstr ""
 
-#: includes/widgets/class-hb-widget-lastest-reviews.php:20
+#: includes/widgets/class-hb-widget-lastest-reviews.php:26
 msgid "Display rooms have lastest reviews"
 msgstr ""
 
-#: includes/widgets/class-hb-widget-mini-cart.php:19
+#: includes/widgets/class-hb-widget-mini-cart.php:25
 msgid "HB Widget Mini Cart"
 msgstr ""
 
-#: includes/widgets/class-hb-widget-mini-cart.php:20
+#: includes/widgets/class-hb-widget-mini-cart.php:26
 msgid "Display order of customer"
 msgstr ""
 
-#: includes/widgets/class-hb-widget-room-carousel.php:19
+#: includes/widgets/class-hb-widget-room-carousel.php:25
 msgid "HB Rooms Carousel"
 msgstr ""
 
-#: includes/widgets/class-hb-widget-room-carousel.php:20
+#: includes/widgets/class-hb-widget-room-carousel.php:26
 msgid "Display rooms slider"
 msgstr ""
 
-#: includes/widgets/class-hb-widget-room-carousel.php:67
+#: includes/widgets/class-hb-widget-room-carousel.php:73
 msgid "Number of rooms to show:"
 msgstr ""
 
-#: includes/widgets/class-hb-widget-room-carousel.php:75
+#: includes/widgets/class-hb-widget-room-carousel.php:81
 msgid "Navigation:"
 msgstr ""
 
-#: includes/widgets/class-hb-widget-room-carousel.php:82
+#: includes/widgets/class-hb-widget-room-carousel.php:88
 msgid "Pagination:"
 msgstr ""
 
-#: includes/widgets/class-hb-widget-room-carousel.php:91
+#: includes/widgets/class-hb-widget-room-carousel.php:97
 msgid "Text Link"
 msgstr ""
 
-#: includes/widgets/class-hb-widget-search.php:19
+#: includes/widgets/class-hb-widget-search.php:24
 msgid "HB Search Rooms"
 msgstr ""
 
-#: includes/widgets/class-hb-widget-search.php:20
+#: includes/widgets/class-hb-widget-search.php:25
 msgid "Display the form for search rooms."
 msgstr ""
 
-#: includes/widgets/class-hb-widget-search.php:68
+#: includes/widgets/class-hb-widget-search.php:80
 msgid "Show title search form"
 msgstr ""
 
-#: includes/widgets/class-hb-widget-search.php:73
+#: includes/widgets/class-hb-widget-search.php:87
 msgid "Show label search form"
 msgstr ""
 
-#: templates/confirm.php:21
+#: templates/confirm.php:19
+msgid "Confirm"
+msgstr ""
+
+#: templates/confirm.php:23
 msgid "Finish"
 msgstr ""
 
-#: templates/pagination.php:32 templates/search/results.php:21
+#: templates/pagination.php:30 templates/search/results.php:31
 msgid "Previous"
 msgstr ""
 
-#: templates/pagination.php:33 templates/search/results.php:22
+#: templates/pagination.php:31 templates/search/results.php:32
 msgid "Next"
 msgstr ""
 
-#: templates/single-room-reviews.php:28
+#: templates/single-room-reviews.php:32
 #, php-format
 msgid "%s review for %s"
 msgid_plural "%s reviews for %s"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/single-room-reviews.php:52
+#: templates/single-room-reviews.php:55
 msgid "There are no reviews yet."
 msgstr ""
 
-#: templates/single-room-reviews.php:64
+#: templates/single-room-reviews.php:66
 msgid "Add a review"
 msgstr ""
 
-#: templates/single-room-reviews.php:64
+#: templates/single-room-reviews.php:66
 msgid "Be the first to review"
 msgstr ""
 
-#: templates/single-room-reviews.php:65
+#: templates/single-room-reviews.php:67
 #, php-format
 msgid "Leave a Reply to %s"
 msgstr ""
 
-#: templates/single-room-reviews.php:74
+#: templates/single-room-reviews.php:76
 msgid "Submit"
 msgstr ""
 
-#: templates/single-room-reviews.php:80
+#: templates/single-room-reviews.php:82
 msgid "Your Rating"
 msgstr ""
 
-#: templates/single-room-reviews.php:84
+#: templates/single-room-reviews.php:86
 msgid "Your Review"
 msgstr ""
 
-#: templates/single-room-reviews.php:92
+#: templates/single-room-reviews.php:93
 msgid ""
 "Only logged in customers who have purchased this product may leave a review."
 msgstr ""
 
-#: templates/account/account.php:14
+#: templates/account/account.php:18
 #, php-format
 msgid "You must <strong><a href=\"%s\">Login<a/></strong>."
 msgstr ""
 
-#: templates/account/bookings.php:17
+#: templates/account/bookings.php:24
 msgid "You have no order booking system"
 msgstr ""
 
-#: templates/account/bookings.php:31
-msgid "ID"
-msgstr ""
-
-#: templates/account/bookings.php:32
+#: templates/account/bookings.php:37
 msgid "Booking Date"
 msgstr ""
 
-#: templates/cart/cart.php:15
+#: templates/cart/cart.php:28
 msgid "Cart"
 msgstr ""
 
-#: templates/cart/cart.php:19 templates/checkout/checkout.php:20
+#: templates/cart/cart.php:34 templates/checkout/checkout.php:35
 msgid "Room type"
 msgstr ""
 
-#: templates/cart/cart.php:22 templates/checkout/checkout.php:23
+#: templates/cart/cart.php:37 templates/checkout/checkout.php:38
 msgid "Check - in"
 msgstr ""
 
-#: templates/cart/cart.php:23 templates/checkout/checkout.php:24
+#: templates/cart/cart.php:38 templates/checkout/checkout.php:39
 msgid "Check - out"
 msgstr ""
 
-#: templates/cart/cart.php:25 templates/checkout/checkout.php:26
+#: templates/cart/cart.php:40 templates/checkout/checkout.php:41
 msgid "Gross Total"
 msgstr ""
 
-#: templates/cart/cart.php:45 templates/checkout/checkout.php:39
+#: templates/cart/cart.php:64 templates/checkout/checkout.php:61
 #, php-format
 msgid "%d adult"
 msgid_plural "%d adults"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/cart/cart.php:75 templates/checkout/checkout.php:67
+#: templates/cart/cart.php:94 templates/checkout/checkout.php:90
 msgid "(price including tax)"
 msgstr ""
 
-#: templates/cart/cart.php:91 templates/checkout/checkout.php:84
+#: templates/cart/cart.php:110 templates/checkout/checkout.php:108
 #, php-format
 msgid "Advance Payment (%s%% of Grand Total)"
 msgstr ""
 
-#: templates/cart/cart.php:112 templates/cart/mini_cart.php:28
-#: templates/cart/mini_cart_layout.php:42
+#: templates/cart/cart.php:131 templates/cart/mini_cart.php:42
+#: templates/cart/mini_cart_layout.php:46
 msgid "Your cart is empty!"
 msgstr ""
 
-#: templates/checkout/checkout.php:17
+#: templates/checkout/checkout.php:31
 msgid "Booking Rooms"
 msgstr ""
 
-#: templates/checkout/checkout.php:93
+#: templates/checkout/checkout.php:117
 msgid "I want to pay all"
 msgstr ""
 
-#: templates/checkout/checkout.php:104
+#: templates/checkout/checkout.php:127
 #, php-format
 msgid ""
 "You have to <strong><a href=\"%s\">login</a></strong> or <strong><a href=\"%s"
 "\">register</a></strong> to checkout."
 msgstr ""
 
-#: templates/checkout/checkout.php:122
+#: templates/checkout/checkout.php:144
 msgid "I agree with "
 msgstr ""
 
-#: templates/checkout/customer-existing.php:10
+#: templates/checkout/customer-existing.php:25
 msgid "-Or-"
 msgstr ""
 
-#: templates/checkout/customer-existing.php:12
+#: templates/checkout/customer-existing.php:27
 msgid "Existing customer?"
 msgstr ""
 
-#: templates/checkout/customer-existing.php:17
+#: templates/checkout/customer-existing.php:34
 msgid "Your email here"
 msgstr ""
 
-#: templates/checkout/customer-existing.php:21
+#: templates/checkout/customer-existing.php:38
 msgid "Apply"
 msgstr ""
 
-#: templates/checkout/customer-new.php:8
+#: templates/checkout/customer-new.php:24
 msgid "New Customer"
 msgstr ""
 
-#: templates/checkout/customer-new.php:11
+#: templates/checkout/customer-new.php:27
 msgid "Title"
 msgstr ""
 
-#: templates/checkout/customer-new.php:66
+#: templates/checkout/customer-new.php:82
 msgid "Postal Code"
 msgstr ""
 
-#: templates/checkout/customer-new.php:71
+#: templates/checkout/customer-new.php:87
 msgid "Postal code"
 msgstr ""
 
-#: templates/checkout/customer.php:9
-msgid "Customer Details"
-msgstr ""
-
-#: templates/checkout/order-pay.php:14
+#: templates/checkout/order-pay.php:25
 #, php-format
 msgid "Booking ID: %s"
 msgstr ""
 
-#: templates/checkout/order-pay.php:16
+#: templates/checkout/order-pay.php:27
 msgid "Payment status: "
 msgstr ""
 
-#: templates/checkout/order-pay.php:20
+#: templates/checkout/order-pay.php:31
 msgid "Booking Date: "
 msgstr ""
 
-#: templates/checkout/order-pay.php:24
+#: templates/checkout/order-pay.php:35
 msgid "Payment Method: "
 msgstr ""
 
-#: templates/checkout/order-pay.php:28
+#: templates/checkout/order-pay.php:39
 msgid "Total: "
 msgstr ""
 
-#: templates/checkout/order-pay.php:32
+#: templates/checkout/order-pay.php:43
 msgid "Advance Payment: "
 msgstr ""
 
-#: templates/checkout/order-pay.php:39
+#: templates/checkout/order-pay.php:51
 #, php-format
 msgid "%s was pay completed"
 msgstr ""
 
-#: templates/checkout/payment-method.php:11
-msgid "Payment Method"
-msgstr ""
-
-#: templates/checkout/thank-you.php:36
+#: templates/checkout/thank-you.php:32
 msgid ""
 "Thank you! Your booking has been placed. We will contact you to confirm "
 "about the booking soon."
 msgstr ""
 
-#: templates/checkout/thank-you.php:42
+#: templates/checkout/thank-you.php:38
 #, php-format
 msgid "Booking %s"
 msgstr ""
 
-#: templates/checkout/thank-you.php:44
+#: templates/checkout/thank-you.php:40
 #, php-format
 msgid "Date %s"
 msgstr ""
 
-#: templates/checkout/thank-you.php:57
+#: templates/checkout/thank-you.php:53
 msgid "Check in - Checkout"
 msgstr ""
 
-#: templates/checkout/thank-you.php:137
+#: templates/checkout/thank-you.php:155
 msgid "First Name:"
 msgstr ""
 
-#: templates/checkout/thank-you.php:142
+#: templates/checkout/thank-you.php:160
 msgid "Last Name:"
 msgstr ""
 
-#: templates/checkout/thank-you.php:147
-#: templates/emails/customer-details.php:28
+#: templates/checkout/thank-you.php:165
+#: templates/emails/customer-details.php:33
 msgid "Address:"
 msgstr ""
 
-#: templates/checkout/thank-you.php:152
+#: templates/checkout/thank-you.php:170
 msgid "City:"
 msgstr ""
 
-#: templates/checkout/thank-you.php:157
+#: templates/checkout/thank-you.php:175
 msgid "State:"
 msgstr ""
 
-#: templates/checkout/thank-you.php:162
-#: templates/emails/customer-details.php:36
+#: templates/checkout/thank-you.php:180
+#: templates/emails/customer-details.php:42
 msgid "Postal Code:"
 msgstr ""
 
-#: templates/checkout/thank-you.php:167
+#: templates/checkout/thank-you.php:185
 msgid "Country:"
 msgstr ""
 
-#: templates/checkout/thank-you.php:172
-#: templates/emails/customer-details.php:20
+#: templates/checkout/thank-you.php:190
+#: templates/emails/customer-details.php:26
 msgid "Phone:"
 msgstr ""
 
-#: templates/checkout/thank-you.php:177
+#: templates/checkout/thank-you.php:195
 msgid "Email:"
 msgstr ""
 
-#: templates/checkout/thank-you.php:182
+#: templates/checkout/thank-you.php:200
 msgid "Fax:"
 msgstr ""
 
-#: templates/checkout/thank-you.php:190
+#: templates/checkout/thank-you.php:208
 msgid "Booking Notes:"
 msgstr ""
 
-#: templates/checkout/thank-you.php:196 templates/checkout/thank-you.php:199
+#: templates/checkout/thank-you.php:217
+msgid "Payment Instruction"
+msgstr ""
+
+#: templates/checkout/thank-you.php:225 templates/checkout/thank-you.php:228
 msgid "Booking invalid"
 msgstr ""
 
-#: templates/emails/booking-details.php:19
+#: templates/emails/booking-details.php:23
+msgctxt "Email Template"
+msgid "Check out"
+msgstr ""
+
+#: templates/emails/booking-details.php:24
 msgid "#"
 msgstr ""
 
-#: templates/emails/booking-details.php:37
+#: templates/emails/booking-details.php:43
 msgid "Subtotal"
 msgstr ""
 
-#: templates/emails/booking-details.php:41
+#: templates/emails/booking-details.php:47
 msgid "Payment method"
 msgstr ""
 
-#: templates/emails/customer-booking.php:16
+#: templates/emails/customer-booking.php:20
 msgid "Thanks for your booking"
 msgstr ""
 
-#: templates/emails/customer-booking.php:17
+#: templates/emails/customer-booking.php:21
 msgid ""
 "Thank you for making reservation at our hotel. We will try our best to bring "
 "the best service. Good luck and see you soon!"
 msgstr ""
 
-#: templates/emails/customer-details.php:12
+#: templates/emails/customer-details.php:18
 msgid "Customer details"
 msgstr ""
 
-#: templates/emails/customer-details.php:14
+#: templates/emails/customer-details.php:20
 msgid "Customer Name:"
 msgstr ""
 
-#: templates/emails/customer-details.php:17
+#: templates/emails/customer-details.php:23
 msgid "Email address:"
 msgstr ""
 
-#: templates/emails/customer-details.php:26
+#: templates/emails/customer-details.php:31
 msgid "Billing address"
 msgstr ""
 
-#: templates/emails/customer-details.php:40
-msgid "Addition Information:"
+#: templates/emails/customer-details.php:46
+msgid "Additional Information:"
 msgstr ""
 
-#: templates/loop/pricing_plan.php:24
+#: templates/loop/pricing_plan.php:25
 msgid "Regular plan"
 msgstr ""
 
-#: templates/loop/pricing_plan.php:57
+#: templates/loop/pricing_plan.php:55
 msgid "to"
 msgstr ""
 
-#: templates/search/booking-room-details.php:35
+#: templates/search/booking-room-details.php:45
 msgid "* vat is included"
 msgstr ""
 
-#: templates/search/booking-room-details.php:37
+#: templates/search/booking-room-details.php:47
 msgid "* vat is not included yet"
 msgstr ""
 
-#: templates/search/loop.php:35
+#: templates/search/loop.php:51
 msgid "Capacity:"
 msgstr ""
 
-#: templates/search/loop.php:39
+#: templates/search/loop.php:55
 msgid "Max Children:"
 msgstr ""
 
-#: templates/search/loop.php:43
+#: templates/search/loop.php:59
 msgid "Price:"
 msgstr ""
 
-#: templates/search/loop.php:47
+#: templates/search/loop.php:63
 msgid "(View price breakdown)"
 msgstr ""
 
-#: templates/search/loop.php:74
+#: templates/search/loop.php:90
 msgid "Select this room"
 msgstr ""
 
-#: templates/search/results.php:14
+#: templates/search/results.php:23
 msgid "Search results"
 msgstr ""
 
-#: templates/search/results.php:32
+#: templates/search/results.php:42
 msgid "No room found."
 msgstr ""
 
-#: templates/search/results.php:34
+#: templates/search/results.php:44
 msgid "Search again!"
 msgstr ""
 
-#: templates/search/search.php:22
-msgid "Search your room"
-msgstr ""
-
-#: templates/search/search.php:27 templates/search/search.php:29
-msgid "Arrival Date"
-msgstr ""
-
-#: templates/search/search.php:34 templates/search/search.php:36
-msgid "Departure Date"
-msgstr ""
-
-#: templates/search/search.php:41 templates/search/search.php:49
-msgid "Adults"
-msgstr ""
-
-#: templates/search/search.php:60 templates/search/search.php:68
-msgid "Children"
-msgstr ""
-
-#: templates/search/search.php:81
+#: templates/search/search-form.php:35 templates/search/search-form.php:102
 msgid "Check Availability"
 msgstr ""
 
-#: templates/single-room/details.php:20
-msgid "Additional Information"
+#: templates/search/search-form.php:42 templates/search/search-form.php:46
+msgid "Arrival Date"
 msgstr ""
 
-#: templates/single-room/related-room.php:12
+#: templates/search/search-form.php:51 templates/search/search-form.php:55
+msgid "Departure Date"
+msgstr ""
+
+#: templates/search/search-form.php:60 templates/search/search-form.php:68
+msgid "Adults"
+msgstr ""
+
+#: templates/search/search-form.php:79 templates/search/search-form.php:87
+msgid "Children"
+msgstr ""
+
+#: templates/search/select-extra.php:66
+msgid "Back to search"
+msgstr ""
+
+#: templates/search/select-extra.php:68
+msgid "Next step"
+msgstr ""
+
+#: templates/search/select-extra.php:70
+msgid "There is no extra option of this room"
+msgstr ""
+
+#: templates/single-room/related-room.php:27
 msgid "Other Rooms"
 msgstr ""
 
-#: templates/single-room/review.php:28
+#: templates/single-room/review.php:38
 msgid "Your comment is awaiting approval"
 msgstr ""

@@ -1,7 +1,7 @@
 <?php
 
 function tp_hb_extra_template_path(){
-    return apply_filters( 'hb_extra_template_path', 'wp-hb-extra' );
+    return apply_filters( 'hb_extra_template_path', 'wp-hotel-booking-extra' );
 }
 /**
  * get template part

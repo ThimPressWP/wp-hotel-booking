@@ -1,14 +1,18 @@
 <?php
 /**
- * @Author: ducnvtt
- * @Date:   2016-03-29 17:13:06
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-14 14:54:23
+ * WP Hotel Booking admin setting emails.
+ *
+ * @version     1.9.6
+ * @author      ThimPress
+ * @package     WP_Hotel_Booking/Classes
+ * @category    Classes
+ * @author      Thimpress, leehld
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 	class WPHB_Admin_Setting_Emails extends WPHB_Admin_Setting_Page {
@@ -68,13 +72,13 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 					'id'   => 'email_options'
 				)
 			);
-			if ( $section === 'new-booking' ) {
+			if ( $section === 'complete-booking' ) {
 				$settings = array(
 					array(
 						'type'  => 'section_start',
-						'id'    => 'new_booking',
-						'title' => __( 'New Booking', 'wp-hotel-booking' ),
-						'desc'  => __( 'New booking emails are sent to chosen recipient(s) when a booking is received.', 'wp-hotel-booking' )
+						'id'    => 'complete_booking',
+						'title' => __( 'Complete Booking', 'wp-hotel-booking' ),
+						'desc'  => __( 'New booking emails are sent to chosen recipient(s) when a booking is completed.', 'wp-hotel-booking' )
 					),
 
 					array(
@@ -97,7 +101,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 						'type'        => 'text',
 						'id'          => 'tp_hotel_booking_email_new_booking_subject',
 						'title'       => __( 'Subject', 'wp-hotel-booking' ),
-						'desc'        => sprintf( __( 'Enter recipients (comma separated) for this email. Defaults to %s.', 'wp-hotel-booking' ), get_option( 'admin_email' ) ),
+						'desc'        => __( 'Enter the subject of this email.', 'wp-hotel-booking' ),
 						'default'     => '[{site_title}] Reservation completed ({booking_number}) - {booking_date}',
 						'placeholder' => '[{site_title}] Reservation completed ({booking_number}) - {booking_date}'
 					),
@@ -106,9 +110,9 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 						'type'        => 'text',
 						'id'          => 'tp_hotel_booking_email_new_booking_heading',
 						'title'       => __( 'Email Heading', 'wp-hotel-booking' ),
-						'desc'        => __( 'The main heading displays in the top of email. Default heading: New customer booking', 'wp-hotel-booking' ),
-						'default'     => 'New Booking Payment',
-						'placeholder' => 'New Booking Payment'
+						'desc'        => __( 'The main heading displays in the top of email. Default heading: Completed booking', 'wp-hotel-booking' ),
+						'default'     => 'Completed Payment',
+						'placeholder' => 'Completed Payment'
 					),
 
 					array(
@@ -132,7 +136,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 
 					array(
 						'type' => 'section_end',
-						'id'   => 'new_booking'
+						'id'   => 'complete_booking'
 					)
 				);
 			}
@@ -212,7 +216,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 		public function get_sections() {
 			$sections = array(
 				'email-options'  => __( 'Email Options', 'wp-hotel-booking' ),
-				'new-booking'    => __( 'New Booking', 'wp-hotel-booking' ),
+				'complete-booking'    => __( 'Complete Booking', 'wp-hotel-booking' ),
 				'cancel-booking' => __( 'Cancel Booking', 'wp-hotel-booking' )
 			);
 

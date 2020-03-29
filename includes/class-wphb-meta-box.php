@@ -1,8 +1,18 @@
 <?php
+/**
+ * WP Hotel Booking meta box.
+ *
+ * @version       1.9.6
+ * @author        ThimPress
+ * @package       WP_Hotel_Booking/Classes
+ * @category      Classes
+ * @author        Thimpress, leehld
+ */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Class WPHB_Meta_Box
@@ -187,7 +197,7 @@ class WPHB_Meta_Box {
 				}
 			}
 
-			if ( ! $_POST[ $this->_args['meta_key_prefix'] . 'room_extra' ] ) {
+			if ( ! isset( $_POST[ $this->_args['meta_key_prefix'] . 'room_extra' ] ) || ! $_POST[ $this->_args['meta_key_prefix'] . 'room_extra' ] ) {
 				update_post_meta( $post_id, $this->_args['meta_key_prefix'] . 'room_extra', '' );
 			}
 		}

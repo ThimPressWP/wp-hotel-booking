@@ -1,10 +1,18 @@
 <?php
 /**
- * @Author: ducnvtt
- * @Date  :   2016-03-31 15:40:31
- * @Last  Modified by:   someone
- * @Last  Modified time: 2016-05-11 16:45:23
+ * WP Hotel Booking booking hook.
+ *
+ * @version     1.9.6
+ * @author      ThimPress
+ * @package     WP_Hotel_Booking/Hooks
+ * @category    Hooks
+ * @author      Thimpress, leehld
  */
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Hook
@@ -88,7 +96,7 @@ if ( ! function_exists( 'hb_customer_place_order_email' ) ) {
 	 * hb_customer_place_order_email
 	 *
 	 * @param array $return
-	 * @param null $booking_id
+	 * @param null  $booking_id
 	 *
 	 * @return bool|void
 	 */
@@ -130,7 +138,7 @@ if ( ! function_exists( 'hb_customer_place_order_email' ) ) {
 
 		// admin place order email
 		$admin_email              = $settings->get( 'email_new_booking_recipients', get_option( 'admin_email' ) );
-		$admin_subject            = '[{site_title}] New customer booking ({booking_number}) - {booking_date}';
+		$admin_subject            = __( '[{site_title}] New customer booking ({booking_number}) - {booking_date}', 'wp-hotel-booking' );
 		$admin_email_heading      = __( 'New customer booking', 'wp-hotel-booking' );
 		$admin_email_heading_desc = __( 'You have a new booking room', 'wp-hotel-booking' );
 
@@ -180,7 +188,7 @@ if ( ! function_exists( 'hb_customer_email_order_changes_status' ) ) {
 			// send admin uer
 			$enable = hb_settings()->get( 'email_new_booking_enable' );
 			if ( $enable ) {
-				hb_new_booking_email( $booking_id );
+				hb_completed_booking_email( $booking_id );
 			}
 		} else if ( $new_status == 'cancelled' ) {
 			// send customer email
@@ -200,9 +208,9 @@ if ( ! function_exists( 'hb_customer_email_order_changes_status' ) ) {
  *
  * @param int $booking_id
  */
-if ( ! function_exists( 'hb_new_booking_email' ) ) {
+if ( ! function_exists( 'hb_completed_booking_email' ) ) {
 
-	function hb_new_booking_email( $booking_id = null ) {
+	function hb_completed_booking_email( $booking_id = null ) {
 		if ( ! $booking_id ) {
 			return;
 		}
@@ -211,7 +219,7 @@ if ( ! function_exists( 'hb_new_booking_email' ) ) {
 
 		$to                 = $settings->get( 'email_new_booking_recipients', get_option( 'admin_email' ) );
 		$subject            = $settings->get( 'email_new_booking_subject', '[{site_title}] Reservation completed ({booking_number}) - {booking_date}' );
-		$email_heading      = $settings->get( 'email_new_booking_heading', __( 'New Booking Payment', 'wp-hotel-booking' ) );
+		$email_heading      = $settings->get( 'email_new_booking_heading', __( 'New Booking Completed', 'wp-hotel-booking' ) );
 		$email_heading_desc = $settings->get( 'email_new_booking_heading_desc', __( 'The customer has completed the transaction', 'wp-hotel-booking' ) );
 		$format             = $settings->get( 'email_new_booking_format', 'html' );
 
@@ -271,6 +279,20 @@ if ( ! function_exists( 'hb_new_customer_booking_email' ) ) {
 			'booking' => $booking,
 			'options' => hb_settings()
 		) );
+
+		$find = array(
+			'booking-date'   => '{booking_date}',
+			'booking-number' => '{booking_number}',
+			'site-title'     => '{site_title}'
+		);
+
+		$replace = array(
+			'booking-date'   => date_i18n( 'd.m.Y', strtotime( date( 'd.m.Y' ) ) ),
+			'booking-number' => $booking->get_booking_number(),
+			'site-title'     => wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES )
+		);
+
+		$email_subject = str_replace( $find, $replace, $email_subject );
 
 		wp_mail( $booking->customer_email, $email_subject, stripslashes( $email_content ), $headers );
 		// if ( $fo = fopen( WPHB_PLUGIN_PATH . '/customer-booking.html', 'w+' ) ) {
@@ -364,5 +386,52 @@ if ( ! function_exists( 'hb_cancel_customer_booking_email' ) ) {
 		//     fclose($fo);
 		// }
 		remove_filter( 'wp_mail_content_type', 'hb_set_html_content_type' );
+	}
+}
+
+add_action( 'admin_head', 'hb_menu_booking_count' );
+
+if ( ! function_exists( 'hb_menu_booking_count' ) ) {
+	/**
+	 *
+	 */
+	function hb_menu_booking_count() {
+		global $submenu;
+
+		if ( isset( $submenu['tp_hotel_booking'] ) ) {
+			// Remove 'WooCommerce' sub menu item.
+			//			unset( $submenu['tp_hotel_booking'][0] );
+
+			$order_count = hb_get_processing_booking_count();
+
+			// Add count if user has access.
+			if ( $order_count ) {
+				foreach ( $submenu['tp_hotel_booking'] as $key => $menu_item ) {
+					if ( 0 === strpos( $menu_item[0], _x( 'Bookings', 'Admin menu name', 'wp-hotel-booking' ) ) ) {
+						$submenu['tp_hotel_booking'][ $key ][0] .= ' <span class="awaiting-mod update-plugins count-' . esc_attr( $order_count ) . '"><span class="processing-count">' . number_format_i18n( $order_count ) . '</span></span>'; // WPCS: override ok.
+						break;
+					}
+				}
+			}
+		}
+	}
+}
+
+if ( ! function_exists( 'hb_get_processing_booking_count' ) ) {
+	/**
+	 * @return int
+	 */
+	function hb_get_processing_booking_count() {
+		$query = array(
+			'post_type'   => 'hb_booking',
+			'post_status' => array(
+				'hb-pending',
+				'hb-processing'
+			)
+		);
+
+		$booking = new WP_Query( $query );
+
+		return $booking->post_count;
 	}
 }

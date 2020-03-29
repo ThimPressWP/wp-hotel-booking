@@ -1,12 +1,23 @@
 <?php
 /**
- * @Author: leehld
- * @Date  :   2017-10-26
+ * The template for displaying admin cancel booking email.
+ *
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/emails/admin/admin-cancel-booking.php.
+ *
+ * @author  ThimPress, leehld
+ * @package WP-Hotel-Booking/Templates
+ * @version 1.6
  */
 
-if ( !defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit();
+
+/**
+ * @var $email_heading
+ * @var $email_heading_desc
+ */
 
 // email heading
 hb_get_template( 'emails/email-header.php',

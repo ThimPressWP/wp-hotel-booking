@@ -1,8 +1,18 @@
 <?php
+/**
+ * WP Hotel Booking auto loader.
+ *
+ * @version       1.9.6
+ * @author        ThimPress
+ * @package       WP_Hotel_Booking/Classes
+ * @category      Classes
+ * @author        Thimpress, leehld
+ */
 
-if ( !defined( 'ABSPATH' ) ) {
-    exit;
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 class WPHB_Autoloader {
 
@@ -56,6 +66,12 @@ class WPHB_Autoloader {
         $class = strtolower( $class );
         $file = $this->get_file_name_from_class( $class );
         $path = $this->include_path;
+
+
+	    if ( stripos( $class, 'wphb_abstract_' ) === 0 ) {
+		    // abstract class
+		    $path = $this->include_path . '/abstracts/';
+	    }
 
         // payment gateways
         if ( strpos( $class, 'wphb_payment_gateway_' ) === 0 ) {

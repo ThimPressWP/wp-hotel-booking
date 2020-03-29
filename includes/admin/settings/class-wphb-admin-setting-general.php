@@ -1,14 +1,18 @@
 <?php
+/**
+ * WP Hotel Booking admin setting general.
+ *
+ * @version     1.9.6
+ * @author      ThimPress
+ * @package     WP_Hotel_Booking/Classes
+ * @category    Classes
+ * @author      Thimpress, leehld
+ */
 
 /**
- * @Author: ducnvtt
- * @Date:   2016-03-29 17:13:06
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-11 13:21:30
+ * Prevent loading this file directly
  */
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 
@@ -54,6 +58,11 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 				),
 				array(
 					'type'  => 'select_page',
+					'id'    => 'tp_hotel_booking_go_page_after_booking',
+					'title' => __( 'Redirect to page after book', 'wp-hotel-booking' )
+				),
+				array(
+					'type'  => 'select_page',
 					'id'    => 'tp_hotel_booking_account_page_id',
 					'title' => __( 'Account Page', 'wp-hotel-booking' )
 				),
@@ -73,6 +82,13 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					'id'      => 'tp_hotel_booking_single_purchase',
 					'title'   => __( 'Single Purchase', 'wp-hotel-booking' ),
 					'desc'    => __( 'Disable select quantity in Hotel Search page (default: one at a time)', 'wp-hotel-booking' ),
+					'default' => 1,
+				),
+				array(
+					'type'    => 'checkbox',
+					'id'      => 'tp_hotel_booking_custom_process',
+					'title'   => __( 'Custom Process', 'wp-hotel-booking' ),
+					'desc'    => __( 'Choose extra options after select room in search page', 'wp-hotel-booking' ),
 					'default' => 1,
 				),
 				array(
@@ -151,7 +167,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					'type'    => 'number',
 					'id'      => 'tp_hotel_booking_advance_payment',
 					'title'   => __( 'Advance Payment', 'wp-hotel-booking' ),
-					'desc'    => __( 'Payment advance. Eg: 50%', 'wp-hotel-booking' ),
+					'desc'    => __( 'Advance payment, eg: 50%', 'wp-hotel-booking' ),
 					'default' => 50,
 					'min'     => 0,
 					'max'     => 100

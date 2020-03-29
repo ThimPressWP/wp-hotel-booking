@@ -1,7 +1,18 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+/**
+ * WP Hotel Booking mini cart shortcode.
+ *
+ * @version       1.9.6
+ * @author        ThimPress
+ * @package       WP_Hotel_Booking/Classes/Shortcode
+ * @category      Classes
+ * @author        Thimpress, leehld
+ */
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 class WPHB_Shortcode_Hotel_Booking_Mini_Cart extends WPHB_Shortcodes {
 

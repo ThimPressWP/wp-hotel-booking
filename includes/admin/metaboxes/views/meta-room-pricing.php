@@ -1,14 +1,17 @@
 <?php
 /**
- * @Author: ducnvtt
- * @Date  :   2016-04-13 13:30:10
- * @Last  Modified by:   ducnvtt
- * @Last  Modified time: 2016-04-19 09:08:55
+ * Admin View: Meta room pricing.
+ *
+ * @version     1.9.7
+ * @package     WP_Hotel_Booking/Views
+ * @category    Views
+ * @author      Thimpress, leehld
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 $week_names   = hb_date_names();
 $regular_plan = hb_room_get_regular_plan( $post->ID );

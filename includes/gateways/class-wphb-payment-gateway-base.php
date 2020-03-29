@@ -1,8 +1,18 @@
 <?php
+/**
+ * WP Hotel Booking payment gateway base.
+ *
+ * @version       1.9.6
+ * @author        ThimPress
+ * @package       WP_Hotel_Booking/Classes
+ * @category      Classes
+ * @author        Thimpress, leehld
+ */
 
-if ( ! defined( 'ABSPATH' ) ) {
-    exit; // Exit if accessed directly
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Class WPHB_Payment_Gateway_Base

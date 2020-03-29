@@ -1,14 +1,18 @@
 <?php
+/**
+ * WP Hotel Booking account form shortcode.
+ *
+ * @version       1.9.6
+ * @author        ThimPress
+ * @package       WP_Hotel_Booking/Classes/Shortcode
+ * @category      Classes
+ * @author        Thimpress, leehld
+ */
 
 /**
- * @Author: ducnvtt
- * @Date:   2016-04-11 13:49:45
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-11 14:14:51
+ * Prevent loading this file directly
  */
-if ( !defined( 'ABSPATH' ) ) {
-    exit; // Exit if accessed directly
-}
+defined( 'ABSPATH' ) || exit;
 
 class WPHB_Shortcode_Hotel_Booking_Account extends WPHB_Shortcodes {
 

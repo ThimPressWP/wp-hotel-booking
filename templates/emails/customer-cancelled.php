@@ -1,12 +1,18 @@
 <?php
 /**
- * @Author: leehld
- * @Date  :   2017-10-26
+ * The template for displaying cancelled booking mail.
+ *
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/emails/customer-cancelled.php.
+ *
+ * @author  ThimPress, leehld
+ * @package WP-Hotel-Booking/Templates
+ * @version 1.9
  */
 
-if ( !defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit();
 
 // email heading
 hb_get_template( 'emails/email-header.php',

@@ -1,14 +1,20 @@
 <?php
 /**
- * @Author: ducnvtt
- * @Date  :   2016-04-14 10:38:17
- * @Last  Modified by:   ducnvtt
- * @Last  Modified time: 2016-04-15 16:56:13
+ * The template for displaying email customer details.
+ *
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/emails/customer-details.php.
+ *
+ * @author  ThimPress, leehld
+ * @package WP-Hotel-Booking/Templates
+ * @version 1.6
  */
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit();
 ?>
+
 <h2 class="section-title"><?php _e( 'Customer details', 'wp-hotel-booking' ) ?></h2>
 <ul>
     <li><strong><?php echo esc_html__( 'Customer Name:', 'wp-hotel-booking' ); ?></strong>
@@ -22,7 +28,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     </li>
 </ul>
 
-
 <h2 class="section-title"><?php _e( 'Billing address', 'wp-hotel-booking' ) ?></h2>
 <ul>
     <li><strong><?php echo esc_html__( 'Address:', 'wp-hotel-booking' ); ?></strong>
@@ -33,12 +38,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php printf( '%s', $booking->customer_country ) ?><br>
         </span>
     </li>
-    <li><strong><?php echo esc_html__( 'Postal Code:', 'wp-hotel-booking' ); ?></strong>
+    <li>
+        <strong><?php echo esc_html__( 'Postal Code:', 'wp-hotel-booking' ); ?></strong>
         <span><?php echo esc_html( $booking->customer_postal_code ) ?></span>
     </li>
-	<?php if ( $booking->post->post_content ) : ?>
-        <li><strong><?php echo esc_html__( 'Addition Information:', 'wp-hotel-booking' ); ?></strong>
+	<?php if ( $booking->post->post_content ) { ?>
+        <li><strong><?php echo esc_html__( 'Additional Information:', 'wp-hotel-booking' ); ?></strong>
             <span><?php echo esc_html( $booking->post->post_content ) ?></span>
         </li>
-	<?php endif; ?>
+	<?php } ?>
 </ul>

@@ -1,14 +1,9 @@
 <?php
-/**
- * @Author: ducnvtt
- * @Date:   2016-03-31 16:44:29
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-13 13:18:52
- */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 if ( ! defined( 'HB_INSTALLING' ) || HB_INSTALLING !== true ) {
     return;

@@ -1,8 +1,18 @@
 <?php
+/**
+ * WP Hotel Booking cart shortcode.
+ *
+ * @version       1.9.6
+ * @author        ThimPress
+ * @package       WP_Hotel_Booking/Classes/Shortcode
+ * @category      Classes
+ * @author        Thimpress, leehld
+ */
 
-if ( !defined( 'ABSPATH' ) ) {
-    exit; // Exit if accessed directly
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 class WPHB_Shortcode_Hotel_Booking_Cart extends WPHB_Shortcodes {
 

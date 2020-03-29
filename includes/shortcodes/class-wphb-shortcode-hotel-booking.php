@@ -1,8 +1,18 @@
 <?php
+/**
+ * WP Hotel Booking search room form shortcode.
+ *
+ * @version       1.9.7
+ * @author        ThimPress
+ * @package       WP_Hotel_Booking/Classes/Shortcode
+ * @category      Classes
+ * @author        Thimpress, leehld
+ */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 class WPHB_Shortcode_Hotel_Booking extends WPHB_Shortcodes {
 
@@ -35,13 +45,14 @@ class WPHB_Shortcode_Hotel_Booking extends WPHB_Shortcodes {
 				'check_out_date' => $end_date,
 				'adults'         => $adults,
 				'max_child'      => $max_child,
-				'search_page'    => null
+				'search_page'    => null,
+				'widget_search'  => false
 			)
 		);
 
 		$page = hb_get_request( 'hotel-booking' );
 
-		$template      = 'search/search.php';
+		$template      = 'search/search-page.php';
 		$template_args = array();
 
 		// find the url for form action
@@ -64,6 +75,7 @@ class WPHB_Shortcode_Hotel_Booking extends WPHB_Shortcodes {
 		/**
 		 * Display the template based on current step
 		 */
+
 		switch ( $page ) {
 			case 'results':
 				if ( ! isset( $atts['page'] ) || $atts['page'] !== 'results' ) {
@@ -81,9 +93,10 @@ class WPHB_Shortcode_Hotel_Booking extends WPHB_Shortcodes {
 				);
 				break;
 			default:
-				$template = 'search/search.php';
+				$template = 'search/search-page.php';
 				break;
 		}
+
 		$template = apply_filters( 'hotel_booking_shortcode_template', $template );
 		ob_start();
 		do_action( 'hb_wrapper_start' );

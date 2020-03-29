@@ -1,40 +1,36 @@
 <?php
 /**
- * The template for displaying product content in the single-product.php template
+ * The template for displaying content single room.
  *
- * Override this template by copying it to yourtheme/tp-hotel-booking/content-single-room.php
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/content-single-room.php.
  *
- * @author        ThimPress
- * @package       wp-hotel-booking/templates
- * @version       1.6
+ * @author  ThimPress, leehld
+ * @package WP-Hotel-Booking/Templates
+ * @version 1.6
  */
 
-if ( !defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
-?>
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit(); ?>
 
 <?php
 /**
  * hotel_booking_before_single_product hook
- *
  */
 do_action( 'hotel_booking_before_single_product' );
 
 if ( post_password_required() ) {
 	echo get_the_password_form();
+
 	return;
-}
-?>
+} ?>
 
 <div id="room-<?php the_ID(); ?>" <?php post_class( 'hb_single_room' ); ?>>
 
 	<?php
 	/**
 	 * hotel_booking_before_loop_room_summary hook
-	 *
-	 * @hooked hotel_booking_show_room_sale_flash - 10
-	 * @hooked hotel_booking_show_room_images - 20
 	 */
 	do_action( 'hotel_booking_before_single_room' );
 	?>
@@ -48,7 +44,7 @@ if ( post_password_required() ) {
 		do_action( 'hotel_booking_single_room_title' );
 
 		/**
-		 * hotel_booking_loop_room_single_price
+		 * hotel_booking_loop_room_price hook
 		 */
 		do_action( 'hotel_booking_loop_room_price' );
 
@@ -63,19 +59,19 @@ if ( post_password_required() ) {
 		do_action( 'hotel_booking_single_room_infomation' );
 		?>
 
-    </div><!-- .summary -->
+    </div>
 
 	<?php
 	/**
-	 * hotel_booking_after_loop_room hook
-	 *
-	 * @hooked hotel_booking_output_room_data_tabs - 10
-	 * @hooked hotel_booking_upsell_display - 15
-	 * @hooked hotel_booking_output_related_products - 20
+	 * hotel_booking_after_single_room hook
 	 */
 	do_action( 'hotel_booking_after_single_room' );
 	?>
 
-</div><!-- #product-<?php the_ID(); ?> -->
+</div>
 
-<?php do_action( 'hotel_booking_after_single_product' ); ?>
+<?php
+/**
+ * hotel_booking_after_single_product hook
+ */
+do_action( 'hotel_booking_after_single_product' ); ?>

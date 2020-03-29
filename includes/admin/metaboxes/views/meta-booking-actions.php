@@ -1,14 +1,17 @@
 <?php
 /**
- * @Author: ducnvtt
- * @Date:   2016-03-25 16:12:28
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-03-25 16:28:24
+ * Admin View: Meta booking actions.
+ *
+ * @version     1.9.7
+ * @package     WP_Hotel_Booking/Views
+ * @category    Views
+ * @author      Thimpress, leehld
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 global $post;
 

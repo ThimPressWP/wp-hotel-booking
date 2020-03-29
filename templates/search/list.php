@@ -1,14 +1,23 @@
 <?php
+/**
+ * The template for displaying search room list.
+ *
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/search/list.php.
+ *
+ * @author  ThimPress, leehld
+ * @package WP-Hotel-Booking/Templates
+ * @version 1.6
+ */
 
-if ( !defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit(); ?>
 
-?>
 <ul class="hb-search-results">
-	<?php
-	foreach ( $results as $room ) {
+
+	<?php foreach ( $results as $room ) {
 		hb_get_template( 'search/loop.php', array( 'room' => $room, 'atts' => $atts ) );
-	}
-	?>
+	} ?>
+    
 </ul>

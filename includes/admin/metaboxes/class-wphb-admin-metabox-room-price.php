@@ -1,14 +1,18 @@
 <?php
 /**
- * @Author: ducnvtt
- * @Date  :   2016-04-13 13:10:23
- * @Last  Modified by:   ducnvtt
- * @Last  Modified time: 2016-04-19 09:07:56
+ * WP Hotel Booking admin metabox room price.
+ *
+ * @version     1.9.6
+ * @author      ThimPress
+ * @package     WP_Hotel_Booking/Classes
+ * @category    Classes
+ * @author      Thimpress, leehld
  */
 
-if ( !defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 class WPHB_Admin_Metabox_Room_Price {
 

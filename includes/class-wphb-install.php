@@ -1,14 +1,18 @@
 <?php
+/**
+ * WP Hotel Booking install.
+ *
+ * @version       1.9.6
+ * @author        ThimPress
+ * @package       WP_Hotel_Booking/Classes
+ * @category      Classes
+ * @author        Thimpress, leehld
+ */
 
 /**
- * @Author: ducnvtt
- * @Date  :   2016-03-28 16:31:22
- * @Last  Modified by:   ducnvtt
- * @Last  Modified time: 2016-04-13 13:26:20
+ * Prevent loading this file directly
  */
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+defined( 'ABSPATH' ) || exit;
 
 class WPHB_Install {
 

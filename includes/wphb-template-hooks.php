@@ -1,8 +1,18 @@
 <?php
+/**
+ * WP Hotel Booking template hooks.
+ *
+ * @version       1.9.6
+ * @author        ThimPress
+ * @package       WP_Hotel_Booking/Hooks
+ * @category      Hooks
+ * @author        Thimpress, leehld
+ */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 add_action( 'hb_before_search_result', 'hb_enqueue_lightbox_assets' );
 add_action( 'hb_lightbox_assets_lightbox2', 'hb_lightbox_assets_lightbox2' );

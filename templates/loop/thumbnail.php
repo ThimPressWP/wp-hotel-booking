@@ -1,22 +1,25 @@
 <?php
 /**
- * Product loop thumbnail
+ * The template for displaying loop room thumbnail in archive room page.
  *
- * @author  ThimPress
- * @package wp-hotel-booking/templates
- * @version 1.1.4
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/loop/thumbnail.php.
+ *
+ * @author  ThimPress, leehld
+ * @package WP-Hotel-Booking/Templates
+ * @version 1.6
  */
 
-if ( !defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit();
+
 global $hb_room;
-global $hb_settings;
-$gallery  = $hb_room->gallery;
-$featured = $gallery ? array_shift( $gallery ) : false;
+/**
+ * @var $hb_room WPHB_Room
+ */
 ?>
+
 <div class="media">
-    <a href="<?php the_permalink(); ?>">
-		<?php $hb_room->getImage( 'catalog' ); ?>
-    </a>
+    <a href="<?php the_permalink(); ?>"><?php $hb_room->getImage( 'catalog' ); ?></a>
 </div>

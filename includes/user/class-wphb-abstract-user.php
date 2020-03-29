@@ -1,14 +1,18 @@
 <?php
+/**
+ * WP Hotel Booking abstract user.
+ *
+ * @version     1.9.6
+ * @author      ThimPress
+ * @package     WP_Hotel_Booking/Classes
+ * @category    Classes
+ * @author      Thimpress, leehld
+ */
 
 /**
- * @Author: ducnvtt
- * @Date:   2016-03-31 14:55:56
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-13 17:01:24
+ * Prevent loading this file directly
  */
-if ( !defined( 'ABSPATH' ) ) {
-    exit();
-}
+defined( 'ABSPATH' ) || exit;
 
 abstract class WPHB_User_Abstract {
 

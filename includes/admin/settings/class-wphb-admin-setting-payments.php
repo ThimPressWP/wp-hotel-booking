@@ -1,14 +1,18 @@
 <?php
 /**
- * @Author: ducnvtt
- * @Date:   2016-03-29 17:13:06
- * @Last Modified by:   ducnvtt
- * @Last Modified time: 2016-04-14 09:37:57
+ * WP Hotel Booking admin setting payments.
+ *
+ * @version     1.9.6
+ * @author      ThimPress
+ * @package     WP_Hotel_Booking/Classes
+ * @category    Classes
+ * @author      Thimpress, leehld
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 
@@ -41,14 +45,15 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 							'title'		=> __( 'Cancel Payment', 'wp-hotel-booking' ),
 							'desc'		=> __( 'Cancel Payment after hour(s)', 'wp-hotel-booking' ),
 							'default'	=> 12,
-							'min'		=> 1,
+							'step'	    => 0.1,
+							'min'		=> 0.1,
 						),
 
 					array(
 							'type'		=> 'checkbox',
 							'id'		=> 'tp_hotel_booking_guest_checkout',
 							'title'		=> __( 'Process', 'wp-hotel-booking' ),
-							'desc'		=> __( 'Allows customers to checkout without creating an account.', 'wp-hotel-booking' ),
+							'desc'		=> __( 'Enable the option to allow guests checkout.', 'wp-hotel-booking' ),
 							'default'	=> 1
 						),
 

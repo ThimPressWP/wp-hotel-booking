@@ -1,13 +1,19 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-    exit;
-}
 /**
- * Class HB_Widget_Room_Carousel
+ * WP Hotel Booking widget latest reviews.
  *
- * Display form for search rooms
- * @extends WP_Widget
+ * @version       1.9.6
+ * @author        ThimPress
+ * @package       WP_Hotel_Booking/Classes/Widgets
+ * @category      Classes
+ * @author        Thimpress, leehld
  */
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
+
 class HB_Widget_Lastest_Reviews extends WP_Widget{
     /**
      * Constructor

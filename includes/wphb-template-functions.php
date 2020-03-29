@@ -1,8 +1,18 @@
 <?php
+/**
+ * WP Hotel Booking template functions.
+ *
+ * @version       1.9.7.4
+ * @author        ThimPress
+ * @package       WP_Hotel_Booking/Functions
+ * @category      Functions
+ * @author        Thimpress, leehld
+ */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 if ( ! function_exists( 'hb_template_path' ) ) {
 	function hb_template_path() {
@@ -553,10 +563,13 @@ if ( ! function_exists( 'hb_setup_shortcode_page_content' ) ) {
 
 		if ( ! $page_id ) {
 			return $content;
-		}
+		}//echo'<pre>';print_r(hb_get_page_id( 'rooms' ));die;
 
 		if ( hb_get_page_id( 'rooms' ) == $page_id ) {
-			$content = '[' . apply_filters( 'hotel_booking_rooms_shortcode_tag', 'hotel_booking_rooms' ) . ']';
+			$current_content = get_post( $page_id )->post_content;
+			if ( strpos( $current_content, '[hotel_booking_rooms' ) === false ) {
+				$content = '[' . apply_filters( 'hotel_booking_rooms_shortcode_tag', 'hotel_booking_rooms' ) . ']';
+			}
 		} else if ( hb_get_page_id( 'cart' ) == $page_id ) {
 			$content = '[' . apply_filters( 'hotel_booking_cart_shortcode_tag', 'hotel_booking_cart' ) . ']';
 		} else if ( hb_get_page_id( 'checkout' ) == $page_id ) {

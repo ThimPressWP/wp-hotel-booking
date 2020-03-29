@@ -1,11 +1,19 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+/**
+ * WP Hotel Booking admin core functions.
+ *
+ * @version     1.9.7.4
+ * @author      ThimPress
+ * @package     WP_Hotel_Booking/Functions
+ * @category    Core Functions
+ * @author      Thimpress, leehld
+ */
 
 /**
- * Common function for admin side
+ * Prevent loading this file directly
  */
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Define default tabs for settings
  *
@@ -14,6 +22,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! function_exists( 'hb_admin_settings_tabs' ) ) {
 	function hb_admin_settings_tabs() {
 		return apply_filters( 'hb_admin_settings_tabs', array() );
+	}
+}
+
+if ( ! function_exists( 'wphb_get_admin_tools_tabs' ) ) {
+	/**
+	 * Get admin tool tabs.
+	 *
+	 * @return mixed
+	 */
+	function wphb_get_admin_tools_tabs() {
+		return apply_filters( 'wphb/admin/tool-tabs', array() );
 	}
 }
 
@@ -34,6 +53,7 @@ if ( ! function_exists( 'hb_admin_i18n' ) ) {
 			'select_user'                   => __( 'Enter user login.', 'wp-hotel-booking' ),
 			'select_room'                   => __( 'Enter room name.', 'wp-hotel-booking' ),
 			'select_coupon'                 => __( 'Enter coupon code.', 'wp-hotel-booking' ),
+			'search_booking'                => __( 'Search booking by username, user email', 'wp-hotel-booking' )
 		);
 
 		return apply_filters( 'hb_admin_i18n', $i18n );
@@ -84,7 +104,7 @@ if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
 			),
 			array(
 				'name'   => 'room_addition_information',
-				'label'  => __( 'Addition Information', 'wp-hotel-booking' ),
+				'label'  => __( 'Additional Information', 'wp-hotel-booking' ),
 				'type'   => 'textarea',
 				'std'    => '',
 				'editor' => true
@@ -315,6 +335,7 @@ if ( ! function_exists( 'hb_manage_booking_column' ) ) {
 						);
 					}
 				}
+
 				// end display paid
 				do_action( 'hb_manage_booing_column_total', $post_id, $total, $total_with_currency );
 				break;
@@ -451,28 +472,28 @@ if ( ! function_exists( 'hb_admin_js_template' ) ) {
                     <div class="hb-room-gallery">
                         <ul>
                             <# jQuery.each(data.gallery, function(){ var attachment = this; #>
-                                <li class="attachment">
-                                    <div class="attachment-preview">
-                                        <div class="thumbnail">
-                                            <div class="centered">
-                                                <img src="{{attachment.src}}" alt="">
-                                                <input type="hidden" name="hb-gallery[{{data.id}}][gallery][]"
-                                                       value="{{attachment.id}}"/>
-                                            </div>
+                            <li class="attachment">
+                                <div class="attachment-preview">
+                                    <div class="thumbnail">
+                                        <div class="centered">
+                                            <img src="{{attachment.src}}" alt="">
+                                            <input type="hidden" name="hb-gallery[{{data.id}}][gallery][]"
+                                                   value="{{attachment.id}}"/>
                                         </div>
                                     </div>
-                                    <a class="dashicons dashicons-trash"
-                                       title="<?php _e( 'Remove this image', 'wp-hotel-booking' ); ?>"></a>
-                                </li>
-                                <# }); #>
-                                    <li class="attachment add-new">
-                                        <div class="attachment-preview">
-                                            <div class="thumbnail">
-                                                <div class="dashicons-plus dashicons">
-                                                </div>
-                                            </div>
+                                </div>
+                                <a class="dashicons dashicons-trash"
+                                   title="<?php _e( 'Remove this image', 'wp-hotel-booking' ); ?>"></a>
+                            </li>
+                            <# }); #>
+                            <li class="attachment add-new">
+                                <div class="attachment-preview">
+                                    <div class="thumbnail">
+                                        <div class="dashicons-plus dashicons">
                                         </div>
-                                    </li>
+                                    </div>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                     <input type="hidden" name="hb-gallery[{{data.id}}][id]" value="{{data.id}}"/>

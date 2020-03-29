@@ -1,8 +1,18 @@
 <?php
+/**
+ * WP Hotel Booking roles.
+ *
+ * @version       1.9.6
+ * @author        ThimPress
+ * @package       WP_Hotel_Booking/Classes
+ * @category      Classes
+ * @author        Thimpress, leehld
+ */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'WPHB_Roles' ) ) {
 
@@ -11,16 +21,12 @@ if ( ! class_exists( 'WPHB_Roles' ) ) {
 	 */
 	class WPHB_Roles {
 
-
 		/**
 		 * WPHB_Roles constructor.
 		 */
 		public function __construct() {
-
 			add_action( 'plugins_loaded', array( $this, 'add_roles' ) );
-
 		}
-
 
 		/**
 		 * Add user roles.
@@ -129,12 +135,8 @@ if ( ! class_exists( 'WPHB_Roles' ) ) {
 			$admin->add_cap( 'edit_others_' . $booking_cap );
 
 			$admin->add_cap( 'manage_hb_booking' );
-
-
 		}
-
 	}
-
 }
 
 new WPHB_Roles();

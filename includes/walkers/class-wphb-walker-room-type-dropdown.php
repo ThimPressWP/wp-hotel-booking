@@ -1,8 +1,18 @@
 <?php
+/**
+ * WP Hotel Booking walker room type dropdown.
+ *
+ * @version       1.9.6
+ * @author        ThimPress
+ * @package       WP_Hotel_Booking/Classes
+ * @category      Classes
+ * @author        Thimpress, leehld
+ */
 
-if ( ! defined( 'ABSPATH' ) ) {
-    exit; // Exit if accessed directly
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 class WPHB_Walker_Room_Type_Dropdown extends Walker_CategoryDropdown {
     function start_el(&$output, $category, $depth = 0, $args = array(), $id = 0) {

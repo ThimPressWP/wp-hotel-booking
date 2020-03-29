@@ -1,116 +1,158 @@
 <?php
+/**
+ * WP Hotel Booking sessions.
+ *
+ * @version       1.9.6
+ * @author        ThimPress
+ * @package       WP_Hotel_Booking/Classes
+ * @category      Classes
+ * @author        Thimpress, leehld
+ */
 
-if ( !defined( 'ABSPATH' ) ) {
-    exit; // Exit if accessed directly
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
+
+if ( ! session_id() ) {
+	@session_start();
 }
 
-if ( !session_id() ) {
-    @session_start();
-}
+if ( ! class_exists( 'WPHB_Sessions' ) ) {
+	/**
+	 * Class WPHB_Sessions
+	 */
+	class WPHB_Sessions {
+		/**
+		 * @var null
+		 */
+		static $_instance = null;
 
-class WPHB_Sessions {
+		/**
+		 * @var array|mixed|null
+		 */
+		public $session = null;
 
-    // instance
-    static $_instance = null;
-    // $session
-    public $session = null;
-    // live time of cookie
-    private $live_item = null;
-    // remember
-    private $remember = false;
+		/**
+		 * @var float|int|null
+		 */
+		private $live_item = null;
 
-    /**
-     * prefix
-     * @var null
-     */
-    public $prefix = null;
+		/**
+		 * @var bool
+		 */
+		private $remember = false;
 
-    function __construct( $prefix = '', $remember = true ) {
-        if ( !$prefix )
-            return;
+		/**
+		 * @var null|string
+		 */
+		public $prefix = null;
 
-        $this->prefix = $prefix;
-        $this->remember = $remember;
+		/**
+		 * WPHB_Sessions constructor.
+		 *
+		 * @param string $prefix
+		 * @param bool   $remember
+		 */
+		public function __construct( $prefix = '', $remember = true ) {
+			if ( ! $prefix ) {
+				return;
+			}
 
-        $this->live_item = 12 * HOUR_IN_SECONDS;
+			$this->prefix   = $prefix;
+			$this->remember = $remember;
 
-        // get all
-        $this->session = $this->load();
-    }
+			$this->live_item = 12 * HOUR_IN_SECONDS;
 
-    /**
-     * load all with prefix
-     * @return
-     */
-    function load() {
-        if ( isset( $_SESSION[$this->prefix] ) ) {
-            return $_SESSION[$this->prefix];
-        } else if ( $this->remember && isset( $_COOKIE[$this->prefix] ) ) {
-            return $_SESSION[$this->prefix] = maybe_unserialize( $_COOKIE[$this->prefix] );
-        }
+			// get all
+			$this->session = $this->load();
+		}
 
-        return array();
-    }
+		/**
+		 * @return array|mixed
+		 */
+		public function load() {
+			if ( isset( $_SESSION[ $this->prefix ] ) ) {
+				return $_SESSION[ $this->prefix ];
+			} else if ( $this->remember && isset( $_COOKIE[ $this->prefix ] ) ) {
+				return $_SESSION[ $this->prefix ] = maybe_unserialize( $_COOKIE[ $this->prefix ] );
+			}
 
-    // remove session
-    function remove() {
-        if ( isset( $_SESSION[$this->prefix] ) ) {
-            unset( $_SESSION[$this->prefix] );
-        }
+			return array();
+		}
 
-        if ( $this->remember && isset( $_COOKIE[$this->prefix] ) ) {
-            unset( $_COOKIE[$this->prefix] );
-            setcookie( $this->prefix, '', time() - $this->live_item, COOKIEPATH, COOKIE_DOMAIN );
-        }
+		/**
+		 * @return null
+		 */
+		public function remove() {
+			if ( isset( $_SESSION[ $this->prefix ] ) ) {
+				unset( $_SESSION[ $this->prefix ] );
+			}
 
-        return $this->session = null;
-    }
+			if ( $this->remember && isset( $_COOKIE[ $this->prefix ] ) ) {
+				unset( $_COOKIE[ $this->prefix ] );
+				setcookie( $this->prefix, '', time() - $this->live_item, COOKIEPATH, COOKIE_DOMAIN );
+			}
 
-    /**
-     * set key
-     * @param $key
-     * @param $value
-     */
-    function set( $name = null, $value = null ) {
-        if ( !$name )
-            return;
+			return $this->session = null;
+		}
 
-        $time = time();
-        if ( !$value ) {
-            unset( $this->session[$name] );
-            $time = $time - $this->live_item;
-        } else {
-            $this->session[$name] = $value;
-            $time = $time + $this->live_item;
-        }
+		/**
+		 * @param null $name
+		 * @param null $value
+		 */
+		public function set( $name = null, $value = null ) {
+			if ( ! $name ) {
+				return;
+			}
 
-        // save session
-        $_SESSION[$this->prefix] = $this->session;
+			$time = time();
+			if ( ! $value ) {
+				unset( $this->session[ $name ] );
+				$time = $time - $this->live_item;
+			} else {
+				$this->session[ $name ] = $value;
+				$time                   = $time + $this->live_item;
+			}
 
-        // save cookie
-        if ( $this->remember ) {
-            @setcookie( $this->prefix, maybe_serialize( $this->session ), $time, COOKIEPATH, COOKIE_DOMAIN );
-        }
-    }
+			// save session
+			$_SESSION[ $this->prefix ] = $this->session;
 
-    /**
-     * get value
-     * @param  $key
-     * @return anythings
-     */
-    function get( $name = null, $default = null ) {
-        if ( !$name )
-            return $default;
+			// save cookie
+			if ( $this->remember ) {
+				@setcookie( $this->prefix, maybe_serialize( $this->session ), $time, COOKIEPATH, COOKIE_DOMAIN );
+			}
+		}
 
-        if ( isset( $this->session[$name] ) )
-            return $this->session[$name];
-    }
+		/**
+		 * @param null $name
+		 * @param null $default
+		 *
+		 * @return mixed|null
+		 */
+		public function get( $name = null, $default = null ) {
+			if ( ! $name ) {
+				return $default;
+			}
 
-    static function instance( $prefix = '' ) {
-        if ( !empty( self::$_instance[$prefix] ) )
-            return self::$_instance[$prefix];
+			if ( isset( $this->session[ $name ] ) ) {
+				return $this->session[ $name ];
+			}
 
-        return self::$_instance[$prefix] = new self( $prefix );
-    }
+			return $default;
+		}
 
+		/**
+		 * @param string $prefix
+		 *
+		 * @return WPHB_Sessions
+		 */
+		public static function instance( $prefix = '' ) {
+			if ( ! empty( self::$_instance[ $prefix ] ) ) {
+				return self::$_instance[ $prefix ];
+			}
+
+			return self::$_instance[ $prefix ] = new self( $prefix );
+		}
+	}
 }

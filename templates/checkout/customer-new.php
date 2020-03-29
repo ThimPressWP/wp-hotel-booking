@@ -1,8 +1,24 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * The template for displaying new customer form in checkout page.
+ *
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/checkout/customer-new.php.
+ *
+ * @author  ThimPress, leehld
+ * @package WP-Hotel-Booking/Templates
+ * @version 1.6
+ */
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
+
+/**
+ * @var $customer
+ */
 ?>
+
 <div class="hb-order-new-customer" id="hb-order-new-customer">
     <div class="hb-col-padding hb-col-border">
         <h4><?php _e( 'New Customer', 'wp-hotel-booking' ); ?></h4>
