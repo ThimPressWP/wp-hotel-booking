@@ -82,6 +82,7 @@ Yes.
 ~ Fixed minor bugs
 ~ Add option: Redirect to page after book room
 ~ Fixed: only role Hotel manager, Booking Editor or Administrator can create manual order
+~ Compatible with Wordpress 5.3
 
 = 1.9.8.7 =
 + Fixed issue: not remove loading icon after the action done.
