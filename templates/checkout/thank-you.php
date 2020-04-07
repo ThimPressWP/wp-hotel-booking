@@ -18,8 +18,8 @@ defined( 'ABSPATH' ) || exit;
 <?php get_header(); ?>
 
 <?php
-$booking_id = isset( $_GET['booking'] ) ? $_GET['booking'] : '';
-$key        = isset( $_GET['key'] ) ? $_GET['key'] : '';
+$booking_id = isset( $_GET['booking'] ) ? sanitize_text_field( $_GET['booking'] ) : '';
+$key        = isset( $_GET['key'] ) ? sanitize_text_field( $_GET['key'] ) : '';
 ?>
 
 <?php if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
@@ -152,12 +152,16 @@ $key        = isset( $_GET['key'] ) ? $_GET['key'] : '';
 					</li>
 
 					<li>
-						<label for="_hb_customer_first_name"><?php echo __( 'First Name:', 'wp-hotel-booking' ); ?></label>
+						<label for="_hb_customer_first_name">
+							<?php echo __( 'First Name:', 'wp-hotel-booking' ); ?>
+						</label>
 						<?php echo esc_html( $booking->customer_first_name ); ?>
 					</li>
 
 					<li>
-						<label for="_hb_customer_last_name"><?php echo __( 'Last Name:', 'wp-hotel-booking' ); ?></label>
+						<label for="_hb_customer_last_name">
+							<?php echo __( 'Last Name:', 'wp-hotel-booking' ); ?>
+						</label>
 						<?php echo esc_html( $booking->customer_last_name ); ?>
 					</li>
 
@@ -177,7 +181,9 @@ $key        = isset( $_GET['key'] ) ? $_GET['key'] : '';
 					</li>
 
 					<li>
-						<label for="_hb_customer_postal_code"><?php echo __( 'Postal Code:', 'wp-hotel-booking' ); ?></label>
+						<label for="_hb_customer_postal_code">
+							<?php echo __( 'Postal Code:', 'wp-hotel-booking' ); ?>
+						</label>
 						<?php echo esc_html( $booking->customer_postal_code ); ?>
 					</li>
 

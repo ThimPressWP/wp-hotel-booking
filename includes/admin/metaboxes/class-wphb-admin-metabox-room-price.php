@@ -49,11 +49,11 @@ class WPHB_Admin_Metabox_Room_Price {
 			return;
 		}
 
-		if ( !isset( $_POST['hotel-booking-room-pricing-nonce'] ) || !wp_verify_nonce( $_POST['hotel-booking-room-pricing-nonce'], 'hotel_booking_room_pricing_nonce' ) ) {
+		if ( ! isset( $_POST['hotel-booking-room-pricing-nonce'] ) || ! wp_verify_nonce( $_POST['hotel-booking-room-pricing-nonce'], 'hotel_booking_room_pricing_nonce' ) ) {
 			return;
 		}
 
-		if ( !isset( $_POST['_hbpricing'] ) ) {
+		if ( ! isset( $_POST['_hbpricing'] ) ) {
 			return;
 		}
 
@@ -62,8 +62,8 @@ class WPHB_Admin_Metabox_Room_Price {
 		foreach ( $plan_ids as $plan_id ) {
 			if ( array_key_exists( $plan_id, $prices ) ) {
 				hb_room_set_pricing_plan( array(
-					'start_time' => isset( $_POST['start_time'], $_POST['start_time'][$plan_id] ) ? $_POST['start_time'][$plan_id] : null,
-					'end_time'   => isset( $_POST['end_time'], $_POST['end_time'][$plan_id] ) ? $_POST['end_time'][$plan_id] : null,
+					'start_time' => isset( $_POST['start_time'], $_POST['start_time'][$plan_id] ) ? sanitize_text_field( $_POST['start_time'][$plan_id] ) : null,
+					'end_time'   => isset( $_POST['end_time'], $_POST['end_time'][$plan_id] ) ? sanitize_text_field( $_POST['end_time'][$plan_id] ) : null,
 					'pricing'    => isset( $prices[$plan_id] ) ? $prices[$plan_id] : null,
 					'room_id'    => $post_id,
 					'plan_id'    => $plan_id

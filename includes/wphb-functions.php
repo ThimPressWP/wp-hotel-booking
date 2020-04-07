@@ -17,9 +17,9 @@ defined( 'ABSPATH' ) || exit;
 if ( ! function_exists( 'hb_get_max_capacity_of_rooms' ) ) {
 	function hb_get_max_capacity_of_rooms() {
 		static $max = null;
-//	if ( !is_null( $max ) ) {
-//		return $max;
-//	}
+		//	if ( !is_null( $max ) ) {
+		//		return $max;
+		//	}
 		$terms = get_terms( 'hb_room_capacity', array( 'hide_empty' => false ) );
 		if ( $terms ) {
 			foreach ( $terms as $term ) {
@@ -49,9 +49,9 @@ if ( ! function_exists( 'hb_get_max_capacity_of_rooms' ) ) {
 if ( ! function_exists( 'hb_get_min_capacity_of_rooms' ) ) {
 	function hb_get_min_capacity_of_rooms() {
 		static $min = null;
-//	if ( !is_null( $max ) ) {
-//		return $max;
-//	}
+		//	if ( !is_null( $max ) ) {
+		//		return $max;
+		//	}
 		$terms = get_terms( 'hb_room_capacity', array( 'hide_empty' => false ) );
 		if ( $terms ) {
 			foreach ( $terms as $term ) {
@@ -80,7 +80,7 @@ if ( ! function_exists( 'hb_get_min_capacity_of_rooms' ) ) {
 
 
 if ( ! function_exists( 'hb_get_capacity_of_rooms' ) ) {
-// get array search
+	// get array search
 	function hb_get_capacity_of_rooms() {
 		$terms  = get_terms( 'hb_room_capacity', array( 'hide_empty' => false ) );
 		$return = array();
@@ -95,7 +95,7 @@ if ( ! function_exists( 'hb_get_capacity_of_rooms' ) ) {
 					get_option( 'hb_taxonomy_capacity_' . $term->term_id );
 				}
 				if ( $qty ) {
-					$return[ $qty ] = array(
+					$return[$qty] = array(
 						'value' => $qty,
 						'text'  => $qty
 					);
@@ -103,11 +103,11 @@ if ( ! function_exists( 'hb_get_capacity_of_rooms' ) ) {
 			}
 		}
 
-//	if ( !$return ) {
-//		global $wpdb;
-//		$return = $wpdb->get_results( "SELECT term_id as value,meta_value as text FROM wp_termmeta WHERE meta_key = 'hb_max_number_of_adults'", ARRAY_A );
-//		asort( $return );
-//	}
+		//	if ( !$return ) {
+		//		global $wpdb;
+		//		$return = $wpdb->get_results( "SELECT term_id as value,meta_value as text FROM wp_termmeta WHERE meta_key = 'hb_max_number_of_adults'", ARRAY_A );
+		//		asort( $return );
+		//	}
 
 		ksort( $return );
 
@@ -327,7 +327,7 @@ if ( ! function_exists( 'hb_get_children_of_rooms' ) ) {
 		$return   = array();
 		if ( $children ) {
 			foreach ( $children as $key => $child ) {
-				$return[ $key ] = array(
+				$return[$key] = array(
 					'value' => $child,
 					'text'  => $child
 				);
@@ -405,9 +405,9 @@ if ( ! function_exists( 'hb_parse_request' ) ) {
 			$params = maybe_unserialize( base64_decode( $params ) );
 			if ( $params && is_array( $params ) ) {
 				foreach ( $params as $k => $v ) {
-					$_GET[ $k ]     = sanitize_text_field( $v );
-					$_POST[ $k ]    = sanitize_text_field( $v );
-					$_REQUEST[ $k ] = sanitize_text_field( $v );
+					$_GET[$k]     = sanitize_text_field( $v );
+					$_POST[$k]    = sanitize_text_field( $v );
+					$_REQUEST[$k] = sanitize_text_field( $v );
 				}
 			}
 			if ( isset( $_GET['hotel-booking-params'] ) ) {
@@ -508,21 +508,22 @@ if ( ! function_exists( 'hb_enable_overwrite_template' ) ) {
 if ( ! function_exists( 'hb_get_request' ) ) {
 	function hb_get_request( $name, $default = null, $var = '' ) {
 		$return = $default;
+
 		switch ( strtolower( $var ) ) {
 			case 'post':
-				$var = $_POST;
+				if ( ! empty( $_POST[$name] ) ) {
+					$return = sanitize_text_field( $_POST[$name] );
+				}
 				break;
 			case 'get':
-				$var = $_GET;
+				if ( ! empty( $_GET[$name] ) ) {
+					$return = sanitize_text_field( $_GET[$name] );
+				}
 				break;
 			default:
-				$var = $_REQUEST;
-		}
-		if ( ! empty( $var[ $name ] ) ) {
-			$return = $var[ $name ];
-		}
-		if ( is_string( $return ) ) {
-			$return = sanitize_text_field( $return );
+				if ( ! empty( $_REQUEST[$name] ) ) {
+					$return = sanitize_text_field( $_REQUEST[$name] );
+				}
 		}
 
 		return $return;
@@ -596,7 +597,7 @@ if ( ! function_exists( 'hb_date_to_name' ) ) {
 	function hb_date_to_name( $date ) {
 		$date_names = hb_date_names();
 
-		return $date_names[ $date ];
+		return $date_names[$date];
 	}
 }
 
@@ -619,7 +620,7 @@ if ( ! function_exists( 'hb_get_title_by_slug' ) ) {
 	function hb_get_title_by_slug( $slug ) {
 		$titles = hb_get_common_titles();
 
-		return ! empty( $titles[ $slug ] ) ? $titles[ $slug ] : '';
+		return ! empty( $titles[$slug] ) ? $titles[$slug] : '';
 	}
 }
 
@@ -681,7 +682,7 @@ if ( ! function_exists( 'hb_create_empty_post' ) ) {
 				if ( ! in_array( $key, $args ) ) {
 					$posts[0]->{$key} = null;
 				} else {
-					$posts[0]->{$key} = $args[ $key ];
+					$posts[0]->{$key} = $args[$key];
 				}
 			}
 
@@ -1179,9 +1180,9 @@ if ( ! function_exists( 'hb_format_price' ) ) {
 		}
 
 		$price_format = $before
-		                . number_format(
-			                $price, $price_number_of_decimal, $price_decimals_separator, $price_thousands_separator
-		                ) . $after;
+			. number_format(
+				$price, $price_number_of_decimal, $price_decimals_separator, $price_thousands_separator
+			) . $after;
 
 		return apply_filters( 'hb_price_format', $price_format, $price, $with_currency );
 	}
@@ -1379,7 +1380,7 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 		}
 		$max_child = hb_get_request( 'max_child', 0 );
 
-		$args = wp_parse_args(
+		$args   = wp_parse_args(
 			$args, array(
 				'check_in_date'  => date( 'm/d/Y' ),
 				'check_out_date' => date( 'm/d/Y' ),
@@ -1452,7 +1453,7 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 				$room = apply_filters( 'hotel_booking_query_search_parser', $room, $args );
 
 				if ( $room && $room->post->available_rooms > 0 ) {
-					$results[ $k ] = $room;
+					$results[$k] = $room;
 				}
 			}
 		}
@@ -1460,7 +1461,7 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 		if ( WP_Hotel_Booking::instance()->cart->cart_contents && $search ) {
 			$selected_id = array();
 			foreach ( WP_Hotel_Booking::instance()->cart->cart_contents as $k => $cart ) {
-				$selected_id[ $cart->product_id ] = $cart->quantity;
+				$selected_id[$cart->product_id] = $cart->quantity;
 			}
 
 			foreach ( $results as $k => $room ) {
@@ -1470,8 +1471,8 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 					if (
 						( $in < $check_in_date_to_time && $check_out_date_to_time < $out ) || ( $in < $check_in_date_to_time && $check_out_date_to_time < $out )
 					) {
-						$total                                = $search[ $k ]->available_rooms;
-						$results[ $k ]->post->available_rooms = (int) $total - (int) $selected_id[ $room->post->ID ];
+						$total                              = $search[$k]->available_rooms;
+						$results[$k]->post->available_rooms = (int) $total - (int) $selected_id[$room->post->ID];
 					}
 				}
 			}
@@ -1527,7 +1528,7 @@ if ( ! function_exists( 'hb_get_payment_gateways' ) ) {
 			foreach ( $payment_gateways as $k => $gateway ) {
 				$is_enable = is_callable( array( $gateway, 'is_enable' ) ) && $gateway->is_enable();
 				if ( apply_filters( 'hb_payment_gateway_enable', $is_enable, $gateway ) ) {
-					$gateways[ $k ] = $gateway;
+					$gateways[$k] = $gateway;
 				}
 			}
 		} else {
@@ -1542,8 +1543,8 @@ if ( ! function_exists( 'hb_get_user_payment_method' ) ) {
 	function hb_get_user_payment_method( $slug ) {
 		$methods = hb_get_payment_gateways( array( 'enable' => true ) );
 		$method  = false;
-		if ( $methods && ! empty( $methods[ $slug ] ) ) {
-			$method = $methods[ $slug ];
+		if ( $methods && ! empty( $methods[$slug] ) ) {
+			$method = $methods[$slug];
 		}
 
 		return $method;
@@ -1607,9 +1608,9 @@ if ( ! function_exists( 'hb_handle_purchase_request' ) ) {
 	function hb_handle_purchase_request() {
 		$method_var   = 'hb-transaction-method';
 		$cart_content = WP_Hotel_Booking::instance()->cart->cart_contents;
-		if ( ! empty( $_REQUEST[ $method_var ] ) ) {
+		if ( ! empty( $_REQUEST[$method_var] ) ) {
 			hb_get_payment_gateways();
-			$requested_transaction_method = sanitize_text_field( $_REQUEST[ $method_var ] );
+			$requested_transaction_method = sanitize_text_field( $_REQUEST[$method_var] );
 			hb_do_transaction( $requested_transaction_method );
 		} else if ( hb_get_page_id( 'checkout' ) && is_page( hb_get_page_id( 'checkout' ) ) && empty( $cart_content ) ) {
 			wp_redirect( hb_get_cart_url() );
@@ -2013,7 +2014,7 @@ if ( ! function_exists( 'is_room_category' ) ) {
 	/**
 	 * is_room_category - Returns true when viewing a room category.
 	 *
-	 * @param  string $term (default: '') The term slug your checking for. Leave blank to return true on any.
+	 * @param string $term (default: '') The term slug your checking for. Leave blank to return true on any.
 	 *
 	 * @return bool
 	 */
@@ -2043,7 +2044,7 @@ if ( ! function_exists( 'hb_render_label_shortcode' ) ) {
 	 */
 	function hb_render_label_shortcode( $atts = array(), $name = '', $text = '', $check = '' ) {
 		$show = false;
-		if ( ! isset( $atts[ $name ] ) || strtolower( $atts[ $name ] ) === $check ) {
+		if ( ! isset( $atts[$name] ) || strtolower( $atts[$name] ) === $check ) {
 			$show = true;
 		}
 		if ( $show === false ) {

@@ -76,7 +76,7 @@ class WPHB_Ajax {
 			return;
 		}
 
-		$cart_id = $_POST['cart_id'];
+		$cart_id = sanitize_text_field( $_POST['cart_id'] );
 		if ( ! $cart_id ) {
 			hb_send_json( array(
 				'status'  => 'warning',
@@ -567,9 +567,9 @@ class WPHB_Ajax {
 		);
 
 
-		if ( ! current_user_can('administrator')
-			&& ! current_user_can('wphb_hotel_manager')
-			&& !current_user_can('wphb_booking_editor')) {
+		if ( ! current_user_can( 'administrator' )
+			&& ! current_user_can( 'wphb_hotel_manager' )
+			&& ! current_user_can( 'wphb_booking_editor' ) ) {
 			$result['message'] = __( 'Request not valid', 'wp-hotel-booking' );
 			wp_send_json( $result );
 		}
@@ -629,7 +629,7 @@ class WPHB_Ajax {
 
 		// Addition package
 		if ( isset( $_POST['sub_items'] ) ) {
-			hb_update_order_item_meta( $order_item_id, 'addition_package_items', serialize($_POST['sub_items']) );
+			hb_update_order_item_meta( $order_item_id, 'addition_package_items', serialize( $_POST['sub_items'] ) );
 		}
 
 		$params        = array(

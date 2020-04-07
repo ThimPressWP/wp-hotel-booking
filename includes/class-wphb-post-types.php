@@ -358,7 +358,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		 * @return bool
 		 */
 		public function is_search( $type ) {
-			$post_type = isset( $_GET['post_type'] ) ? $_GET['post_type'] : '';
+			$post_type = isset( $_GET['post_type'] ) ? sanitize_text_field( $_GET['post_type'] ) : '';
 			if ( is_admin() && $post_type === "hb_{$type}" ) {
 				return true;
 			}

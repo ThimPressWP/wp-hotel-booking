@@ -288,8 +288,8 @@ add_filter( 'manage_hb_booking_posts_columns', 'hb_booking_table_head' );
 /**
  * Retrieve information for listing in booking list
  *
- * @param  string
- * @param  int
+ * @param string
+ * @param int
  *
  * @return mixed
  */
@@ -375,8 +375,8 @@ if ( ! function_exists( 'hb_request_query' ) ) {
 				$post_statuses = hb_get_booking_statuses();
 
 				foreach ( $post_statuses as $status => $value ) {
-					if ( isset( $wp_post_statuses[ $status ] ) && false === $wp_post_statuses[ $status ]->show_in_admin_all_list ) {
-						unset( $post_statuses[ $status ] );
+					if ( isset( $wp_post_statuses[$status] ) && false === $wp_post_statuses[$status]->show_in_admin_all_list ) {
+						unset( $post_statuses[$status] );
 					}
 				}
 
@@ -400,8 +400,9 @@ if ( ! function_exists( 'hb_booking_restrict_manage_posts' ) ) {
 
 	function hb_booking_restrict_manage_posts() {
 		$type = 'post';
+
 		if ( isset( $_GET['post_type'] ) ) {
-			$type = $_GET['post_type'];
+			$type = sanitize_text_field( $_GET['post_type'] );
 		}
 
 		//only add filter to post type you want
@@ -424,19 +425,20 @@ if ( ! function_exists( 'hb_booking_restrict_manage_posts' ) ) {
 			);
 
 			?>
-            <span><?php _e( 'Date Range', 'wp-hotel-booking' ); ?></span>
-            <input type="text" id="hb-booking-date-from" class="hb-date-field" value="<?php echo esc_attr( $from ); ?>"
-                   name="date-from" readonly placeholder="<?php _e( 'From', 'wp-hotel-booking' ); ?>"/>
-            <input type="hidden" value="<?php echo esc_attr( $from_timestamp ); ?>" name="date-from-timestamp"/>
-            <input type="text" id="hb-booking-date-to" class="hb-date-field" value="<?php echo esc_attr( $to ); ?>"
-                   name="date-to" readonly placeholder="<?php _e( 'To', 'wp-hotel-booking' ); ?>"/>
-            <input type="hidden" value="<?php echo esc_attr( $to_timestamp ); ?>" name="date-to-timestamp"/>
-            <select name="filter-type">
-                <option value=""><?php _e( '---Filter By---', 'wp-hotel-booking' ); ?></option>
+			<span><?php _e( 'Date Range', 'wp-hotel-booking' ); ?></span>
+			<input type="text" id="hb-booking-date-from" class="hb-date-field" value="<?php echo esc_attr( $from ); ?>"
+				   name="date-from" readonly placeholder="<?php _e( 'From', 'wp-hotel-booking' ); ?>"/>
+			<input type="hidden" value="<?php echo esc_attr( $from_timestamp ); ?>" name="date-from-timestamp"/>
+			<input type="text" id="hb-booking-date-to" class="hb-date-field" value="<?php echo esc_attr( $to ); ?>"
+				   name="date-to" readonly placeholder="<?php _e( 'To', 'wp-hotel-booking' ); ?>"/>
+			<input type="hidden" value="<?php echo esc_attr( $to_timestamp ); ?>" name="date-to-timestamp"/>
+			<select name="filter-type">
+				<option value=""><?php _e( '---Filter By---', 'wp-hotel-booking' ); ?></option>
 				<?php foreach ( $filter_types as $slug => $text ) { ?>
-                    <option value="<?php echo esc_attr( $slug ); ?>" <?php selected( $slug == $filter_type ); ?>><?php echo esc_html( $text ); ?></option>
+					<option
+						value="<?php echo esc_attr( $slug ); ?>" <?php selected( $slug == $filter_type ); ?>><?php echo esc_html( $text ); ?></option>
 				<?php } ?>
-            </select>
+			</select>
 			<?php
 		}
 	}
@@ -466,54 +468,54 @@ if ( ! function_exists( 'hb_admin_js_template' ) ) {
 
 	function hb_admin_js_template() {
 		?>
-        <script type="text/html" id="tmpl-room-type-gallery">
-            <tr id="room-gallery-{{data.id}}" class="room-gallery">
-                <td colspan="{{data.colspan}}">
-                    <div class="hb-room-gallery">
-                        <ul>
-                            <# jQuery.each(data.gallery, function(){ var attachment = this; #>
-                            <li class="attachment">
-                                <div class="attachment-preview">
-                                    <div class="thumbnail">
-                                        <div class="centered">
-                                            <img src="{{attachment.src}}" alt="">
-                                            <input type="hidden" name="hb-gallery[{{data.id}}][gallery][]"
-                                                   value="{{attachment.id}}"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a class="dashicons dashicons-trash"
-                                   title="<?php _e( 'Remove this image', 'wp-hotel-booking' ); ?>"></a>
-                            </li>
-                            <# }); #>
-                            <li class="attachment add-new">
-                                <div class="attachment-preview">
-                                    <div class="thumbnail">
-                                        <div class="dashicons-plus dashicons">
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <input type="hidden" name="hb-gallery[{{data.id}}][id]" value="{{data.id}}"/>
-                </td>
-            </tr>
-        </script>
-        <script type="text/html" id="tmpl-room-type-attachment">
-            <li class="attachment">
-                <div class="attachment-preview">
-                    <div class="thumbnail">
-                        <div class="centered">
-                            <img src="{{data.src}}" alt="">
-                            <input type="hidden" name="hb-gallery[{{data.gallery_id}}][gallery][]" value="{{data.id}}"/>
-                        </div>
-                    </div>
-                </div>
-                <a class="dashicons dashicons-trash"
-                   title="<?php _e( 'Remove this image', 'wp-hotel-booking' ); ?>"></a>
-            </li>
-        </script>
+		<script type="text/html" id="tmpl-room-type-gallery">
+			<tr id="room-gallery-{{data.id}}" class="room-gallery">
+				<td colspan="{{data.colspan}}">
+					<div class="hb-room-gallery">
+						<ul>
+							<# jQuery.each(data.gallery, function(){ var attachment = this; #>
+							<li class="attachment">
+								<div class="attachment-preview">
+									<div class="thumbnail">
+										<div class="centered">
+											<img src="{{attachment.src}}" alt="">
+											<input type="hidden" name="hb-gallery[{{data.id}}][gallery][]"
+												   value="{{attachment.id}}"/>
+										</div>
+									</div>
+								</div>
+								<a class="dashicons dashicons-trash"
+								   title="<?php _e( 'Remove this image', 'wp-hotel-booking' ); ?>"></a>
+							</li>
+							<# }); #>
+							<li class="attachment add-new">
+								<div class="attachment-preview">
+									<div class="thumbnail">
+										<div class="dashicons-plus dashicons">
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<input type="hidden" name="hb-gallery[{{data.id}}][id]" value="{{data.id}}"/>
+				</td>
+			</tr>
+		</script>
+		<script type="text/html" id="tmpl-room-type-attachment">
+			<li class="attachment">
+				<div class="attachment-preview">
+					<div class="thumbnail">
+						<div class="centered">
+							<img src="{{data.src}}" alt="">
+							<input type="hidden" name="hb-gallery[{{data.gallery_id}}][gallery][]" value="{{data.id}}"/>
+						</div>
+					</div>
+				</div>
+				<a class="dashicons dashicons-trash"
+				   title="<?php _e( 'Remove this image', 'wp-hotel-booking' ); ?>"></a>
+			</li>
+		</script>
 		<?php
 	}
 }
@@ -528,8 +530,8 @@ if ( ! function_exists( 'hb_meta_box_coupon_date' ) ) {
 				'coupon_date_to'
 			) ) && $meta_box_name == 'coupon_settings'
 		) {
-			if ( isset( $_POST[ '_hb_' . $field_name . '_timestamp' ] ) ) {
-				$value = sanitize_text_field( $_POST[ '_hb_' . $field_name . '_timestamp' ] );
+			if ( isset( $_POST['_hb_' . $field_name . '_timestamp'] ) ) {
+				$value = sanitize_text_field( $_POST['_hb_' . $field_name . '_timestamp'] );
 			} else {
 				$value = strtotime( $value );
 			}
