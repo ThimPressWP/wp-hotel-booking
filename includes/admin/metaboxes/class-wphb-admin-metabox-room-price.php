@@ -57,8 +57,9 @@ class WPHB_Admin_Metabox_Room_Price {
 			return;
 		}
 
-		$plan_ids = isset( $_POST['_hbpricing']['plan_id'] ) ? $_POST['_hbpricing']['plan_id'] : array();
-		$prices   = isset( $_POST['_hbpricing']['prices'] ) ? $_POST['_hbpricing']['prices'] : array();
+		$plan_ids = isset( $_POST['_hbpricing']['plan_id'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['_hbpricing']['plan_id'] ) ) : array();
+		$prices   = isset( $_POST['_hbpricing']['prices'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['_hbpricing']['prices'] ) ) : array();
+
 		foreach ( $plan_ids as $plan_id ) {
 			if ( array_key_exists( $plan_id, $prices ) ) {
 				hb_room_set_pricing_plan( array(

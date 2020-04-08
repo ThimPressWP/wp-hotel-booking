@@ -89,11 +89,13 @@ class WPHB_Ajax {
 		$cart_item  = $cart->get_cart_item( $cart_id );
 
 		if ( isset( $_POST['hb_optional_quantity_selected'] ) ) {
-			$selected = $_POST['hb_optional_quantity_selected'];
+			$selected = array_map( 'sanitize_text_field', wp_unslash( $_POST['hb_optional_quantity_selected'] ) );
+			$extra_qty = array_map( 'sanitize_text_field', wp_unslash( $_POST['hb_optional_quantity'] ) );
+
 			foreach ( $selected as $extra_id => $select ) {
 				if ( $select == 'on' && $cart_item ) {
 					$extra_cart->ajax_added_cart( $cart_id, $cart_item, array(
-						'hb_optional_quantity'          => array( $extra_id => $_POST['hb_optional_quantity'][$extra_id] ),
+						'hb_optional_quantity'          => array( $extra_id => $extra_qty[$extra_id] ),
 						'hb_optional_quantity_selected' => array( $extra_id => 'on' ),
 					), true );
 				}
