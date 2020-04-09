@@ -62,17 +62,20 @@ if ( ! class_exists( 'WPHB_Admin' ) ) {
 			$plans   = hb_room_get_pricing_plans( $room_id );
 
 			$ignore = array();
-			foreach ( (array) $_POST['price'] as $t => $v ) {
-				$start  = isset( $_POST['date-start-timestamp'][ $t ] ) ? sanitize_text_field( $_POST['date-start-timestamp'][ $t ] ) : '';
-				$end    = isset( $_POST['date-end-timestamp'][ $t ] ) ? sanitize_text_field( $_POST['date-end-timestamp'][ $t ] ) : '';
-				$prices = (array) $_POST['price'][ $t ];
+
+			$prices = (array) $_POST['price'];
+			foreach ( array_keys( $prices ) as $key ) {
+				$key    = sanitize_text_field( $key );
+				$start  = isset( $_POST['date-start-timestamp'][$key] ) ? sanitize_text_field( $_POST['date-start-timestamp'][$key] ) : '';
+				$end    = isset( $_POST['date-end-timestamp'][$key] ) ? sanitize_text_field( $_POST['date-end-timestamp'][$key] ) : '';
+				$prices = (array) $_POST['price'][$key];
 
 				$plan_id  = hb_room_set_pricing_plan( array(
 					'start_time' => $start,
 					'end_time'   => $end,
 					'pricing'    => $prices,
 					'room_id'    => $room_id,
-					'plan_id'    => $t
+					'plan_id'    => $key
 				) );
 				$ignore[] = $plan_id;
 			}
