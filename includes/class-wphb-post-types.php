@@ -462,9 +462,6 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 					$when = array();
 					$ids  = array();
 					foreach ( $_POST["{$taxonomy}_ordering"] as $term_id => $ordering ) {
-						$term_id = sanitize_text_field($term_id);
-						$ordering = sanitize_text_field($ordering);
-
 						$when[] = "WHEN term_id = {$term_id} THEN {$ordering}";
 						$ids[]  = absint( $term_id );
 					}
