@@ -358,7 +358,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		 * @return bool
 		 */
 		public function is_search( $type ) {
-			$post_type = isset( $_GET['post_type'] ) ? sanitize_text_field( $_GET['post_type'] ) : '';
+			$post_type = isset( $_GET['post_type'] ) ? sanitize_text_field( wp_unslash( $_GET['post_type'] ) ) : '';
 			if ( is_admin() && $post_type === "hb_{$type}" ) {
 				return true;
 			}
@@ -456,14 +456,14 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 					'hb_room_capacity'
 				) )
 			) {
-				$taxonomy = ! empty( $_REQUEST['taxonomy'] ) ? sanitize_text_field( $_REQUEST['taxonomy'] ) : '';
+				$taxonomy = ! empty( $_REQUEST['taxonomy'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['taxonomy'] ) ) : '';
 				global $wpdb;
 				if ( ! empty( $_POST["{$taxonomy}_ordering"] ) ) {
 					$when = array();
 					$ids  = array();
 					foreach ( $_POST["{$taxonomy}_ordering"] as $term_id => $ordering ) {
-						$term_id = sanitize_text_field($term_id);
-						$ordering = sanitize_text_field($ordering);
+						$term_id  = sanitize_text_field( wp_unslash( $term_id ) );
+						$ordering = sanitize_text_field( wp_unslash( $ordering ) );
 
 						$when[] = "WHEN term_id = {$term_id} THEN {$ordering}";
 						$ids[]  = absint( $term_id );
@@ -506,7 +506,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		 * @return mixed
 		 */
 		public function taxonomy_columns( $columns ) {
-			if ( 'hb_room_type' == sanitize_text_field( $_REQUEST['taxonomy'] ) ) {
+			if ( 'hb_room_type' == sanitize_text_field( wp_unslash( $_REQUEST['taxonomy'] ) ) ) {
 				$columns['thumbnail'] = __( 'Gallery', 'wp-hotel-booking' );
 			} else {
 				$columns['capacity'] = __( 'Capacity', 'wp-hotel-booking' );
@@ -530,7 +530,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		 * @return string
 		 */
 		public function taxonomy_column_content( $content, $column_name, $term_id ) {
-			$taxonomy = sanitize_text_field( $_REQUEST['taxonomy'] );
+			$taxonomy = sanitize_text_field( wp_unslash( $_REQUEST['taxonomy'] ) );
 			$term     = get_term( $term_id, $taxonomy );
 			switch ( $column_name ) {
 				case 'ordering':

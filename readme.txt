@@ -3,7 +3,7 @@ Contributors: thimpress, leehld, phamtungpth, thoakim
 Donate link: https://thimpress.com/
 Tags: hotel, booking, hotel booking, reservation, reservations
 Requires at least: 4.2
-Tested up to: 5.3
+Tested up to: 5.4
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -82,7 +82,6 @@ Yes.
 ~ Fixed minor bugs
 ~ Add option: Redirect to page after book room
 ~ Fixed: only role Hotel manager, Booking Editor or Administrator can create manual order
-~ Compatible with Wordpress 5.x.x
 
 = 1.9.8.7 =
 + Fixed issue: not remove loading icon after the action done.

@@ -76,7 +76,7 @@ class WPHB_Ajax {
 			return;
 		}
 
-		$cart_id = sanitize_text_field( $_POST['cart_id'] );
+		$cart_id = sanitize_text_field( wp_unslash( $_POST['cart_id'] ) );
 		if ( ! $cart_id ) {
 			hb_send_json( array(
 				'status'  => 'warning',
@@ -89,13 +89,13 @@ class WPHB_Ajax {
 		$cart_item  = $cart->get_cart_item( $cart_id );
 
 		if ( isset( $_POST['hb_optional_quantity_selected'] ) ) {
-			$selected = array_map( 'sanitize_text_field', wp_unslash( $_POST['hb_optional_quantity_selected'] ) );
+			$selected  = array_map( 'sanitize_text_field', wp_unslash( $_POST['hb_optional_quantity_selected'] ) );
 			$extra_qty = array_map( 'sanitize_text_field', wp_unslash( $_POST['hb_optional_quantity'] ) );
 
 			foreach ( $selected as $extra_id => $select ) {
 				if ( $select == 'on' && $cart_item ) {
 					$extra_cart->ajax_added_cart( $cart_id, $cart_item, array(
-						'hb_optional_quantity'          => array( $extra_id => $extra_qty[$extra_id] ),
+						'hb_optional_quantity'          => array( $extra_id => $extra_qty[ $extra_id ] ),
 						'hb_optional_quantity_selected' => array( $extra_id => 'on' ),
 					), true );
 				}
@@ -145,7 +145,7 @@ class WPHB_Ajax {
 			$customer->data = array();
 			$data           = get_post_meta( $customer->ID );
 			foreach ( $data as $k => $v ) {
-				$customer->data[$k] = $v[0];
+				$customer->data[ $k ] = $v[0];
 			}
 		} else {
 			$customer = null;
@@ -301,12 +301,12 @@ class WPHB_Ajax {
 		}
 
 		$param               = array();
-		$param['product_id'] = sanitize_text_field( $room_id );
-		if ( ! isset( $_POST['hb-num-of-rooms'] ) || ! absint( sanitize_text_field( $_POST['hb-num-of-rooms'] ) ) ) {
+		$param['product_id'] = absint( $room_id );
+		if ( ! isset( $_POST['hb-num-of-rooms'] ) || ! absint( sanitize_text_field( wp_unslash( $_POST['hb-num-of-rooms'] ) ) ) ) {
 			$result['message'] = __( 'Can not select zero room.', 'wp-hotel-booking' );
 			hb_send_json( $result );
 		} else {
-			$qty = absint( sanitize_text_field( sanitize_text_field( $_POST['hb-num-of-rooms'] ) ) );
+			$qty = absint( sanitize_text_field( wp_unslash( $_POST['hb-num-of-rooms'] ) ) );
 		}
 
 		// validate checkin, checkout date
@@ -314,8 +314,8 @@ class WPHB_Ajax {
 			$result['message'] = __( 'Checkin date, checkout date is invalid.', 'wp-hotel-booking' );
 			hb_send_json( $result );
 		} else {
-			$param['check_in_date']  = sanitize_text_field( $_POST['check_in_date'] );
-			$param['check_out_date'] = sanitize_text_field( $_POST['check_out_date'] );
+			$param['check_in_date']  = sanitize_text_field( wp_unslash( $_POST['check_in_date'] ) );
+			$param['check_out_date'] = sanitize_text_field( wp_unslash( $_POST['check_out_date'] ) );
 		}
 
 		$param = apply_filters( 'hotel_booking_add_cart_params', $param );
@@ -381,14 +381,14 @@ class WPHB_Ajax {
 
 		$cart = WP_Hotel_Booking::instance()->cart;
 
-		if ( empty( $cart->cart_contents ) || ! isset( $_POST['cart_id'] ) || ! array_key_exists( sanitize_text_field( $_POST['cart_id'] ), $cart->cart_contents ) ) {
+		if ( empty( $cart->cart_contents ) || ! isset( $_POST['cart_id'] ) || ! array_key_exists( sanitize_text_field( wp_unslash( $_POST['cart_id'] ) ), $cart->cart_contents ) ) {
 			hb_send_json( array(
 				'status'  => 'warning',
 				'message' => __( 'Cart item is not exists.', 'wp-hotel-booking' )
 			) );
 		}
 
-		if ( $cart->remove_cart_item( sanitize_text_field( $_POST['cart_id'] ) ) ) {
+		if ( $cart->remove_cart_item( sanitize_text_field( wp_unslash( $_POST['cart_id'] ) ) ) ) {
 			$return = apply_filters( 'hotel_booking_ajax_remove_cart_item', array(
 				'status'          => 'success',
 				'sub_total'       => hb_format_price( $cart->sub_total ),
@@ -402,11 +402,11 @@ class WPHB_Ajax {
 
 	// ajax load user in booking details
 	static function load_order_user() {
-		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) || ! isset( $_POST['user_name'] ) ) {
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['nonce'] ), 'hb_booking_nonce_action' ) || ! isset( $_POST['user_name'] ) ) {
 			return;
 		}
 
-		$user_name = sanitize_text_field( $_POST['user_name'] );
+		$user_name = sanitize_text_field( wp_unslash( $_POST['user_name'] ) );
 		global $wpdb;
 		$sql = $wpdb->prepare( "
 				SELECT user.ID, user.user_email, user.user_login FROM $wpdb->users AS user
@@ -421,7 +421,7 @@ class WPHB_Ajax {
 
 	// ajax load room in booking details
 	static function load_room_ajax() {
-		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) || ! isset( $_POST['room'] ) ) {
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['nonce'] ), 'hb_booking_nonce_action' ) || ! isset( $_POST['room'] ) ) {
 			return;
 		}
 
@@ -444,7 +444,7 @@ class WPHB_Ajax {
 	// ajax check available room in booking details
 	static function check_room_available() {
 
-		if ( ! isset( $_POST['hotel-admin-check-room-available'] ) || ! wp_verify_nonce( $_POST['hotel-admin-check-room-available'], 'hotel_admin_check_room_available' ) ) {
+		if ( ! isset( $_POST['hotel-admin-check-room-available'] ) || ! wp_verify_nonce( sanitize_key( $_POST['hotel-admin-check-room-available'] ), 'hotel_admin_check_room_available' ) ) {
 			return;
 		}
 
@@ -465,8 +465,8 @@ class WPHB_Ajax {
 
 		$product_id = absint( $_POST['product_id'] );
 		$qty        = hotel_booking_get_room_available( $product_id, array(
-			'check_in_date'  => sanitize_text_field( $_POST['check_in_date_timestamp'] ),
-			'check_out_date' => sanitize_text_field( $_POST['check_out_date_timestamp'] )
+			'check_in_date'  => sanitize_text_field( wp_unslash( $_POST['check_in_date_timestamp'] ) ),
+			'check_out_date' => sanitize_text_field( wp_unslash( $_POST['check_out_date_timestamp'] ) )
 		) );
 
 		if ( $qty && ! is_wp_error( $qty ) ) {
@@ -494,7 +494,7 @@ class WPHB_Ajax {
 
 	// ajax load oder item to edit
 	static function load_order_item() {
-		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) ) {
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['nonce'] ), 'hb_booking_nonce_action' ) ) {
 			return;
 		}
 
@@ -536,11 +536,11 @@ class WPHB_Ajax {
 
 	// ajax load coupons code
 	static function load_coupon_ajax() {
-		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) ) {
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['nonce'] ), 'hb_booking_nonce_action' ) ) {
 			return;
 		}
 
-		$code = sanitize_text_field( $_POST['coupon'] );
+		$code = sanitize_text_field( wp_unslash( $_POST['coupon'] ) );
 		$time = time();
 
 		global $wpdb;
@@ -576,7 +576,7 @@ class WPHB_Ajax {
 			wp_send_json( $result );
 		}
 
-		if ( ! isset( $_POST['hotel-admin-check-room-available'] ) && ! wp_verify_nonce( $_POST['hotel-admin-check-room-available'], 'hotel_admin_check_room_available' ) ) {
+		if ( ! isset( $_POST['hotel-admin-check-room-available'] ) && ! wp_verify_nonce( sanitize_key( $_POST['hotel-admin-check-room-available'] ), 'hotel_admin_check_room_available' ) ) {
 			$result['message'] = __( 'nonce is invalid', 'wp-hotel-booking' );
 			wp_send_json( $result );
 		}
@@ -587,7 +587,7 @@ class WPHB_Ajax {
 		}
 
 		$order_id       = isset( $_POST['order_id'] ) ? absint( $_POST['order_id'] ) : 0;
-		$product_id     = isset( $_POST['product_id'] ) ? $_POST['product_id'] : 0;
+		$product_id     = isset( $_POST['product_id'] ) ? absint( $_POST['product_id'] ) : 0;
 		$qty            = isset( $_POST['qty'] ) ? absint( $_POST['qty'] ) : 0;
 		$check_in_date  = absint( $_POST['check_in_date_timestamp'] );
 		$check_out_date = absint( $_POST['check_out_date_timestamp'] );
@@ -698,6 +698,7 @@ class WPHB_Ajax {
 
 		if ( isset( $_POST['order_item_id'] ) && is_array( $_POST['order_item_id'] ) ) {
 			foreach ( $_POST['order_item_id'] as $key => $o_i_d ) {
+				$o_i_d = sanitize_text_field( wp_unslash( $o_i_d ) );
 				hb_remove_order_item( $o_i_d );
 			}
 		}
@@ -788,7 +789,7 @@ class WPHB_Ajax {
 				'message' => __( 'Date is not exists.', 'wp-hotel-booking' )
 			) );
 		}
-		$date = sanitize_text_field( $_POST['date'] );
+		$date = sanitize_text_field( wp_unslash( $_POST['date'] ) );
 
 		wp_send_json( array(
 			'status'     => true,

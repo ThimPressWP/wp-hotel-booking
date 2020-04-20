@@ -117,7 +117,7 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 	 * @return bool
 	 */
 	function process_booking_paypal_standard() {
-		if ( ! empty( $_REQUEST['hb-transaction-method'] ) && ( 'paypal-standard' == sanitize_text_field( $_REQUEST['hb-transaction-method'] ) ) ) {
+		if ( ! empty( $_REQUEST['hb-transaction-method'] ) && ( 'paypal-standard' == sanitize_text_field( wp_unslash($_REQUEST['hb-transaction-method']) ) ) ) {
 			$cart = WPHB_Cart::instance();
 			$cart->empty_cart();
 

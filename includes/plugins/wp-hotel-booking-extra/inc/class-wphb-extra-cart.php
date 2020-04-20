@@ -201,7 +201,7 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 				) );
 			}
 
-			$cart_id = sanitize_text_field( $_POST['cart_id'] );
+			$cart_id = sanitize_text_field( wp_unslash($_POST['cart_id']) );
 
 			// cart item is exists
 			if ( $package_item = WP_Hotel_Booking::instance()->cart->get_cart_item( $cart_id ) ) {

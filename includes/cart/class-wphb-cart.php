@@ -515,7 +515,7 @@ class WPHB_Cart {
 			return;
 		}
 
-		if ( ! isset( $_POST['hb_cart_field'] ) || ! wp_verify_nonce( sanitize_text_field( $_POST['hb_cart_field'] ), 'hb_cart_field' ) ) {
+		if ( ! isset( $_POST['hb_cart_field'] ) || ! wp_verify_nonce( sanitize_key($_POST['hb_cart_field'] ), 'hb_cart_field' ) ) {
 			return;
 		}
 

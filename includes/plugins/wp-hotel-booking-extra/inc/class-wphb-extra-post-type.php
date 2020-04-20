@@ -129,6 +129,7 @@ if ( ! class_exists( 'HB_Extra_Post_Type' ) ) {
 		 */
 		public function add_extra( $post_id, $post = array() ) {
 			global $wpdb;
+			$post_id = sanitize_text_field( wp_unslash( $post_id ) );
 			$query = $wpdb->prepare( "
 				SELECT * FROM $wpdb->posts WHERE `ID` = %d AND `post_type` = %s
 			", $post_id, 'hb_extra_room' );
@@ -136,8 +137,8 @@ if ( ! class_exists( 'HB_Extra_Post_Type' ) ) {
 			$results = $wpdb->get_results( $query, OBJECT );
 
 			$args = array(
-				'post_title'   => isset( $post['name'] ) ? $post['name'] : '',
-				'post_content' => isset( $post['desc'] ) ? $post['desc'] : '',
+				'post_title'   => isset( $post['name'] ) ? sanitize_text_field( wp_unslash( $post['name'] ) )  : '',
+				'post_content' => isset( $post['desc'] ) ? sanitize_text_field( wp_unslash( $post['desc'] ) )  : '',
 				'post_type'    => 'hb_extra_room',
 				'post_status'  => 'publish'
 			);
@@ -166,6 +167,7 @@ if ( ! class_exists( 'HB_Extra_Post_Type' ) ) {
 			unset( $post['price'] );
 
 			foreach ( $post as $key => $value ) {
+				$value = sanitize_text_field( wp_unslash( $value ) );
 				if ( get_post_meta( $post_id, 'tp_hb_extra_room_' . $key, true )
 				     || get_post_meta( $post_id, 'tp_hb_extra_room_' . $key, true ) === ''
 				     || get_post_meta( $post_id, 'tp_hb_extra_room_' . $key, true ) == 0 ) {

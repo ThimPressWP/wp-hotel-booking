@@ -18,8 +18,8 @@ defined( 'ABSPATH' ) || exit;
 <?php get_header(); ?>
 
 <?php
-$booking_id = isset( $_GET['booking'] ) ? sanitize_text_field( $_GET['booking'] ) : '';
-$key        = isset( $_GET['key'] ) ? sanitize_text_field( $_GET['key'] ) : '';
+$booking_id = isset( $_GET['booking'] ) ? sanitize_text_field( wp_unslash( $_GET['booking'] ) ) : '';
+$key        = isset( $_GET['key'] ) ? sanitize_text_field( wp_unslash( $_GET['key'] ) ) : '';
 ?>
 
 <?php if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {

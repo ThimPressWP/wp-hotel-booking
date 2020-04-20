@@ -404,10 +404,10 @@ if ( ! function_exists( 'hb_parse_request' ) ) {
 		if ( $params ) {
 			$params = maybe_unserialize( base64_decode( $params ) );
 			if ( $params && is_array( $params ) ) {
-				foreach ( $params as $k => $v ) {
-					$_GET[$k]     = sanitize_text_field( $v );
-					$_POST[$k]    = sanitize_text_field( $v );
-					$_REQUEST[$k] = sanitize_text_field( $v );
+				foreach ( $params as $key => $value ) {
+					$_GET[$key]     = sanitize_text_field( wp_unslash($value) );
+					$_POST[$key]    = sanitize_text_field( wp_unslash($value) );
+					$_REQUEST[$key] = sanitize_text_field( wp_unslash($value) );
 				}
 			}
 			if ( isset( $_GET['hotel-booking-params'] ) ) {
@@ -512,17 +512,17 @@ if ( ! function_exists( 'hb_get_request' ) ) {
 		switch ( strtolower( $var ) ) {
 			case 'post':
 				if ( ! empty( $_POST[$name] ) ) {
-					$return = sanitize_text_field( $_POST[$name] );
+					$return = sanitize_text_field( wp_unslash($_POST[$name]) );
 				}
 				break;
 			case 'get':
 				if ( ! empty( $_GET[$name] ) ) {
-					$return = sanitize_text_field( $_GET[$name] );
+					$return = sanitize_text_field( wp_unslash($_GET[$name]) );
 				}
 				break;
 			default:
 				if ( ! empty( $_REQUEST[$name] ) ) {
-					$return = sanitize_text_field( $_REQUEST[$name] );
+					$return = sanitize_text_field( wp_unslash($_REQUEST[$name]) );
 				}
 		}
 
@@ -1610,7 +1610,7 @@ if ( ! function_exists( 'hb_handle_purchase_request' ) ) {
 		$cart_content = WP_Hotel_Booking::instance()->cart->cart_contents;
 		if ( ! empty( $_REQUEST[$method_var] ) ) {
 			hb_get_payment_gateways();
-			$requested_transaction_method = sanitize_text_field( $_REQUEST[$method_var] );
+			$requested_transaction_method = sanitize_text_field( wp_unslash($_REQUEST[$method_var]) );
 			hb_do_transaction( $requested_transaction_method );
 		} else if ( hb_get_page_id( 'checkout' ) && is_page( hb_get_page_id( 'checkout' ) ) && empty( $cart_content ) ) {
 			wp_redirect( hb_get_cart_url() );
