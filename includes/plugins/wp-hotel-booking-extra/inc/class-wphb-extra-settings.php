@@ -62,9 +62,12 @@ if ( ! class_exists( 'HB_Extra_Settings' ) ) {
 				return;
 			}
 
-			$post_type = HB_Extra_Post_Type::instance();
+			$post_type             = HB_Extra_Post_Type::instance();
+			$wphbExtraOpionNameArr = (array) $_POST[ WPHB_EXTRA_OPTION_NAME ];
 
-			foreach ( (array) $_POST[ WPHB_EXTRA_OPTION_NAME ] as $post_id => $post ) {
+			foreach ( $wphbExtraOpionNameArr as $post_id => $post ) {
+				$post_id = absint( $post_id );
+				$post    = array_map( 'sanitize_text_field', wp_unslash( $post ) );
 				$post_type->add_extra( $post_id, $post );
 			}
 		}

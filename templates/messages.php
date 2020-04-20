@@ -23,6 +23,6 @@ if ( $messages = get_transient( 'hb_message_' . session_id() ) ) {
         </div>
 		<?php
 	}
-}
 
-delete_transient( 'hb_message_' . session_id() );
+	delete_transient( 'hb_message_' . session_id() );
+}

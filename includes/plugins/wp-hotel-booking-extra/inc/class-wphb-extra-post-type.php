@@ -231,15 +231,13 @@ if ( ! class_exists( 'HB_Extra_Post_Type' ) ) {
 		 * Rmove extra
 		 */
 		public function tp_extra_package_remove() {
-			if ( ! isset( $_POST ) ) {
+			if ( ! isset( $_POST ) || ! isset( $_POST['package_id'] ) ) {
 				return;
 			}
 
-			if ( ! isset( $_POST['package_id'] ) ) {
-				return;
-			}
+			$packageId = absint( $_POST['package_id'] );
 
-			if ( wp_delete_post( $_POST['package_id'] ) || ! get_post( $_POST['package_id'] ) ) {
+			if ( wp_delete_post( $packageId ) || ! get_post( $packageId ) ) {
 				wp_send_json( array( 'status' => 'success' ) );
 			}
 		}

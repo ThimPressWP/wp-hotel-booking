@@ -179,9 +179,11 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 						continue;
 					}
 					if ( is_string( $v ) ) {
-						$_POST[$k] = sanitize_text_field( $v );
+						$v = sanitize_text_field( $v );
+					} else if ( is_array( $v ) ) {
+						$v = array_map( 'sanitize_text_field', wp_unslash( $v ) );
 					}
-					$this->set( $option_key, $_POST[$k] );
+					$this->set( $option_key, $v );
 				}
 			}
 			$this->update();

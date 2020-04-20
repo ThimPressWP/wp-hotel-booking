@@ -49,7 +49,8 @@ class WPHB_Admin_Metabox_Booking_Details {
 			return;
 		}
 
-		if ( ! isset( $_POST['hotel_booking_metabox_booking_details_nonce'] ) || ! wp_verify_nonce( $_POST['hotel_booking_metabox_booking_details_nonce'], 'hotel-booking-metabox-booking-details' ) ) {
+		if ( ! isset( $_POST['hotel_booking_metabox_booking_details_nonce'] )
+			|| ! wp_verify_nonce( sanitize_key( $_POST['hotel_booking_metabox_booking_details_nonce'] ), 'hotel-booking-metabox-booking-details' ) ) {
 			return;
 		}
 
