@@ -76,6 +76,9 @@ Yes.
 7. System settings
 
 == Changelog ==
+= 1.9.10 =
+~ Fixed not save Regular price and gallery when edit single room
+
 = 1.9.9 =
 ~ Fixed some bugs security.
 ~ Fixed issue: "Check Availability" case choice room hasn't Addition package

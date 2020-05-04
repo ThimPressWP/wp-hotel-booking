@@ -57,15 +57,15 @@ class WPHB_Admin_Metabox_Room_Price {
 			return;
 		}
 
-		$plan_ids = isset( $_POST['_hbpricing']['plan_id'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['_hbpricing']['plan_id'] ) ) : array();
-		$prices   = isset( $_POST['_hbpricing']['prices'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['_hbpricing']['prices'] ) ) : array();
+		$plan_ids = isset( $_POST['_hbpricing']['plan_id'] ) ? WPHB_Helpers::sanitize_params_submit( $_POST['_hbpricing']['plan_id'] ) : array();
+		$prices   = isset( $_POST['_hbpricing']['prices'] ) ? WPHB_Helpers::sanitize_params_submit( $_POST['_hbpricing']['prices'] ) : array();
 
 		foreach ( $plan_ids as $plan_id ) {
 			if ( array_key_exists( $plan_id, $prices ) ) {
 				hb_room_set_pricing_plan( array(
-					'start_time' => isset( $_POST['start_time'], $_POST['start_time'][$plan_id] ) ? sanitize_text_field( $_POST['start_time'][$plan_id] ) : null,
-					'end_time'   => isset( $_POST['end_time'], $_POST['end_time'][$plan_id] ) ? sanitize_text_field( $_POST['end_time'][$plan_id] ) : null,
-					'pricing'    => isset( $prices[$plan_id] ) ? $prices[$plan_id] : null,
+					'start_time' => isset( $_POST['start_time'], $_POST['start_time'][ $plan_id ] ) ? sanitize_text_field( $_POST['start_time'][ $plan_id ] ) : null,
+					'end_time'   => isset( $_POST['end_time'], $_POST['end_time'][ $plan_id ] ) ? sanitize_text_field( $_POST['end_time'][ $plan_id ] ) : null,
+					'pricing'    => isset( $prices[ $plan_id ] ) ? $prices[ $plan_id ] : null,
 					'room_id'    => $post_id,
 					'plan_id'    => $plan_id
 				) );

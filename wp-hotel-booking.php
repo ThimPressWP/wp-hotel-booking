@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
 define( 'WPHB_FILE', __FILE__ );
 define( 'WPHB_PLUGIN_PATH', dirname( __FILE__ ) );
 define( 'WPHB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
-define( 'WPHB_VERSION', '1.9.9' );
+define( 'WPHB_VERSION', '1.9.10' );
 define( 'WPHB_BLOG_ID', get_current_blog_id() );
 define( 'WPHB_TEMPLATES', WPHB_PLUGIN_PATH . '/templates/' );
 define( 'TP_HB_EXTRA', __FILE__ );
@@ -163,6 +163,7 @@ class WP_Hotel_Booking {
 		$this->_include( 'includes/class-wphb-install.php' );
 
 		$this->_include( 'includes/class-wphb-gdpr.php' );
+		//$this->_include( 'includes/class-wphb-helpers.php' );
 
 		if ( is_admin() ) {
 			$this->admin_includes();

@@ -1,3 +1,13 @@
+= 1.9.10 =
+~ Fixed not save Regular price and gallery when edit single room
+
+= 1.9.9 =
+~ Fixed some bugs security.
+~ Fixed issue: "Check Availability" case choice room hasn't Addition package
+~ Fixed minor bugs
+~ Add option: Redirect to page after book room
+~ Fixed: only role Hotel manager, Booking Editor or Administrator can create manual order
+
 = 1.7.8 =
 * Add Hotel Manager role to manage hotel booking
 * Add Booking Editor role to manage rooms and bookings
