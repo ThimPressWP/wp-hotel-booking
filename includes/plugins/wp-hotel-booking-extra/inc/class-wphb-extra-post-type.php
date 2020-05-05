@@ -122,14 +122,15 @@ if ( ! class_exists( 'HB_Extra_Post_Type' ) ) {
 		}
 
 		/**
-		 * @param       $post_id
+		 * @param int   $post_id
 		 * @param array $post
 		 *
 		 * @return int|WP_Error
+		 * @editor tungnx
 		 */
 		public function add_extra( $post_id, $post = array() ) {
 			global $wpdb;
-			$post_id = sanitize_text_field( wp_unslash( $post_id ) );
+			$post_id = absint( $post_id );
 			$query = $wpdb->prepare( "
 				SELECT * FROM $wpdb->posts WHERE `ID` = %d AND `post_type` = %s
 			", $post_id, 'hb_extra_room' );

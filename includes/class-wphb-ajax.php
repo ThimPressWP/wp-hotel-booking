@@ -89,8 +89,8 @@ class WPHB_Ajax {
 		$cart_item  = $cart->get_cart_item( $cart_id );
 
 		if ( isset( $_POST['hb_optional_quantity_selected'] ) ) {
-			$selected  = array_map( 'sanitize_text_field', wp_unslash( $_POST['hb_optional_quantity_selected'] ) );
-			$extra_qty = array_map( 'sanitize_text_field', wp_unslash( $_POST['hb_optional_quantity'] ) );
+			$selected  = WPHB_Helpers::sanitize_params_submitted( $_POST['hb_optional_quantity_selected'] );
+			$extra_qty = WPHB_Helpers::sanitize_params_submitted( $_POST['hb_optional_quantity'] );
 
 			foreach ( $selected as $extra_id => $select ) {
 				if ( $select == 'on' && $cart_item ) {
@@ -302,11 +302,11 @@ class WPHB_Ajax {
 
 		$param               = array();
 		$param['product_id'] = absint( $room_id );
-		if ( ! isset( $_POST['hb-num-of-rooms'] ) || ! absint( sanitize_text_field( wp_unslash( $_POST['hb-num-of-rooms'] ) ) ) ) {
+		if ( ! isset( $_POST['hb-num-of-rooms'] ) || ! absint( $_POST['hb-num-of-rooms'] ) ) {
 			$result['message'] = __( 'Can not select zero room.', 'wp-hotel-booking' );
 			hb_send_json( $result );
 		} else {
-			$qty = absint( sanitize_text_field( wp_unslash( $_POST['hb-num-of-rooms'] ) ) );
+			$qty = absint( $_POST['hb-num-of-rooms'] );
 		}
 
 		// validate checkin, checkout date
@@ -698,7 +698,7 @@ class WPHB_Ajax {
 
 		if ( isset( $_POST['order_item_id'] ) && is_array( $_POST['order_item_id'] ) ) {
 			foreach ( $_POST['order_item_id'] as $key => $o_i_d ) {
-				$o_i_d = sanitize_text_field( wp_unslash( $o_i_d ) );
+				$o_i_d = absint( $o_i_d );
 				hb_remove_order_item( $o_i_d );
 			}
 		}

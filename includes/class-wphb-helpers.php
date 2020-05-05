@@ -17,12 +17,23 @@ defined( 'ABSPATH' ) || exit;
  * Class WPHB_Helpers
  */
 class WPHB_Helpers {
-	public static function sanitize_params_submit( $value ) {
+	/**
+	 * Sanitize string and array
+	 *
+	 * @param array|string $value
+	 *
+	 * @return array|string
+	 * @since  1.9.10
+	 * @author tungnx
+	 */
+	public static function sanitize_params_submitted( $value ) {
+		$value = wp_unslash( $value );
+
 		if ( is_string( $value ) ) {
 			$value = sanitize_text_field( $value );
 		} elseif ( is_array( $value ) ) {
 			foreach ( $value as $k => $v ) {
-				$value[ $k ] = call_user_func( array( __CLASS__, 'sanitize_params_submit' ), $v );
+				$value[ $k ] = self::sanitize_params_submitted( $v );
 			}
 		}
 

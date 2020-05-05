@@ -405,9 +405,9 @@ if ( ! function_exists( 'hb_parse_request' ) ) {
 			$params = maybe_unserialize( base64_decode( $params ) );
 			if ( $params && is_array( $params ) ) {
 				foreach ( $params as $key => $value ) {
-					$_GET[$key]     = sanitize_text_field( wp_unslash($value) );
-					$_POST[$key]    = sanitize_text_field( wp_unslash($value) );
-					$_REQUEST[$key] = sanitize_text_field( wp_unslash($value) );
+					$_GET[ $key ]     = $value;
+					$_POST[ $key ]    = $value;
+					$_REQUEST[ $key ] = $value;
 				}
 			}
 			if ( isset( $_GET['hotel-booking-params'] ) ) {
@@ -511,18 +511,18 @@ if ( ! function_exists( 'hb_get_request' ) ) {
 
 		switch ( strtolower( $var ) ) {
 			case 'post':
-				if ( ! empty( $_POST[$name] ) ) {
-					$return = sanitize_text_field( wp_unslash($_POST[$name]) );
+				if ( ! empty( $_POST[ $name ] ) ) {
+					$return = WPHB_Helpers::sanitize_params_submitted( $_POST[ $name ] );
 				}
 				break;
 			case 'get':
-				if ( ! empty( $_GET[$name] ) ) {
-					$return = sanitize_text_field( wp_unslash($_GET[$name]) );
+				if ( ! empty( $_GET[ $name ] ) ) {
+					$return = WPHB_Helpers::sanitize_params_submitted( $_GET[ $name ] );
 				}
 				break;
 			default:
-				if ( ! empty( $_REQUEST[$name] ) ) {
-					$return = sanitize_text_field( wp_unslash($_REQUEST[$name]) );
+				if ( ! empty( $_REQUEST[ $name ] ) ) {
+					$return = WPHB_Helpers::sanitize_params_submitted( $_REQUEST[ $name ] );
 				}
 		}
 

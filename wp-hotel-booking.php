@@ -4,7 +4,7 @@
     Plugin URI: http://thimpress.com/
     Description: Full of professional features for a booking room system
     Author: ThimPress
-    Version: 1.9.9
+    Version: 1.9.10
     Author URI: http://thimpress.com
 */
 
@@ -163,7 +163,7 @@ class WP_Hotel_Booking {
 		$this->_include( 'includes/class-wphb-install.php' );
 
 		$this->_include( 'includes/class-wphb-gdpr.php' );
-		//$this->_include( 'includes/class-wphb-helpers.php' );
+		$this->_include( 'includes/class-wphb-helpers.php' );
 
 		if ( is_admin() ) {
 			$this->admin_includes();

@@ -57,8 +57,8 @@ class WPHB_Admin_Metabox_Room_Price {
 			return;
 		}
 
-		$plan_ids = isset( $_POST['_hbpricing']['plan_id'] ) ? WPHB_Helpers::sanitize_params_submit( $_POST['_hbpricing']['plan_id'] ) : array();
-		$prices   = isset( $_POST['_hbpricing']['prices'] ) ? WPHB_Helpers::sanitize_params_submit( $_POST['_hbpricing']['prices'] ) : array();
+		$plan_ids = isset( $_POST['_hbpricing']['plan_id'] ) ? WPHB_Helpers::sanitize_params_submitted( $_POST['_hbpricing']['plan_id'] ) : array();
+		$prices   = isset( $_POST['_hbpricing']['prices'] ) ? WPHB_Helpers::sanitize_params_submitted( $_POST['_hbpricing']['prices'] ) : array();
 
 		foreach ( $plan_ids as $plan_id ) {
 			if ( array_key_exists( $plan_id, $prices ) ) {

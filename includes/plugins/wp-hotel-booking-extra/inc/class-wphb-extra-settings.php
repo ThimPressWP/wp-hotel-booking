@@ -67,7 +67,7 @@ if ( ! class_exists( 'HB_Extra_Settings' ) ) {
 
 			foreach ( $wphbExtraOpionNameArr as $post_id => $post ) {
 				$post_id = absint( $post_id );
-				$post    = array_map( 'sanitize_text_field', wp_unslash( $post ) );
+				$post    = WPHB_Helpers::sanitize_params_submitted( $post );
 				$post_type->add_extra( $post_id, $post );
 			}
 		}

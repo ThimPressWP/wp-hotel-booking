@@ -191,9 +191,8 @@ class WPHB_Meta_Box {
 			if ( array_key_exists( $this->_args['meta_key_prefix'] . $field['name'], (array) $_POST ) ) {
 				$meta_value = $_POST[ $this->_args['meta_key_prefix'] . $field['name'] ];
 
-				$meta_value = WPHB_Helpers::sanitize_params_submit( $meta_value );
+				$meta_value = WPHB_Helpers::sanitize_params_submitted( $meta_value );
 
-				$field['name'] = sanitize_text_field( wp_unslash( $field['name']) ); 
 				$meta_value = apply_filters( 'hb_meta_box_update_meta_value', $meta_value, $field['name'], $this->_args['name'], $post_id );
 				update_post_meta( $post_id, $this->_args['meta_key_prefix'] . $field['name'], $meta_value );
 				if ( $field['name'] == 'room_capacity' ) {

@@ -178,11 +178,9 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 					if ( ! $option_key ) {
 						continue;
 					}
-					if ( is_string( $v ) ) {
-						$v = sanitize_text_field( $v );
-					} else if ( is_array( $v ) ) {
-						$v = array_map( 'sanitize_text_field', wp_unslash( $v ) );
-					}
+
+					$v = WPHB_Helpers::sanitize_params_submitted( $v );
+
 					$this->set( $option_key, $v );
 				}
 			}
