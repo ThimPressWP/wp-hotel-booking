@@ -76,6 +76,9 @@ Yes.
 7. System settings
 
 == Changelog ==
+== 1.10
+~ Fixed not save Additional Information when using HTML element
+
 = 1.9.10 =
 ~ Fixed not save Regular price and gallery when edit single room
 

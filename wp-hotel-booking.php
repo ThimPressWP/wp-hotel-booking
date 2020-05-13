@@ -4,7 +4,7 @@
     Plugin URI: http://thimpress.com/
     Description: Full of professional features for a booking room system
     Author: ThimPress
-    Version: 1.9.10
+    Version: 1.10
     Author URI: http://thimpress.com
 */
 
