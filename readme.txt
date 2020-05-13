@@ -76,7 +76,7 @@ Yes.
 7. System settings
 
 == Changelog ==
-== 1.10
+= 1.10.0 =
 ~ Fixed not save Additional Information when using HTML element
 
 = 1.9.10 =
