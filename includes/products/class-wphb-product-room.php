@@ -351,7 +351,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 		if ( $selected_plan ) {
 			$prices = $selected_plan->prices;
 			if ( $prices && isset( $prices[ date( 'w', $date ) ] ) ) {
-				$return = $prices[ date( 'w', $date ) ];
+				$return = floatval( $prices[ date( 'w', $date ) ] );
 				$return = $return + $return * $tax;
 			}
 		}
@@ -586,7 +586,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 
 			if ( $src ) {
 				return $image[0];
-			} else if ($image) {
+			} else if ( $image ) {
 				return array(
 					$image[0],
 					$image[1],

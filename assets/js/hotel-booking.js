@@ -217,14 +217,12 @@
 		return true;
 	}
 
-	function stripeSubmit(form) {
-		var pl_key = 'pk_test_HHukcwWCsD7qDFWKKpKdJeOT';
-		if (typeof TPBooking_Payment_Stripe !== 'undefined') {
-			pl_key = TPBooking_Payment_Stripe.stripe_publish;
-		}
+	var el_stripe_publish;
+	var strip_publish_string = '';
 
+	function stripeSubmit(form) {
 		var handler = StripeCheckout.configure({
-			key   : pl_key,
+			key   : strip_publish_string,
 			image : 'https://stripe.com/img/documentation/checkout/marketplace.png',
 			locale: 'auto',
 			token : function (token) {
@@ -662,6 +660,14 @@
 	};
 
 	$(document).ready(function () {
+		el_stripe_publish = $('input[name=htb_stripe_publish]');
+
+		if (el_stripe_publish.length) {
+			strip_publish_string = el_stripe_publish.val();
+
+			// el_stripe_publish.val('');
+		}
+
 		HB_Booking_Cart.init();
 		$.datepicker.setDefaults({dateFormat: hotel_booking_i18n.date_time_format});
 		// $.datepicker.setDefaults({dateFormat: 'mm/dd/yy'});

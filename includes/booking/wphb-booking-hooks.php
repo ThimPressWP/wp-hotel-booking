@@ -34,14 +34,20 @@ if ( ! function_exists( 'hotel_booking_create_booking' ) ) {
 add_action( 'hotel_booking_change_cancel_booking_status', 'hotel_booking_change_cancel_booking_status', 10, 1 );
 if ( ! function_exists( 'hotel_booking_change_cancel_booking_status' ) ) {
 	function hotel_booking_change_cancel_booking_status( $booking_id ) {
-		global $wpdb;
+ 		$booking_status = get_post_status( $booking_id );
+		$oder_woo_id =  get_post_meta( $booking_id, '_hb_woo_order_id', true );
 
-		$booking_status = get_post_status( $booking_id );
-		if ( $booking_status === 'hb-pending' ) {
-			wp_update_post( array(
+  		if ( $booking_status === 'hb-pending' ) {
+ 			wp_update_post( array(
 				'ID'          => $booking_id,
 				'post_status' => 'hb-cancelled'
 			) );
+
+ 			// cancel order woocommerce
+			if ( class_exists( 'WooCommerce' ) ) {
+				$order = new WC_Order($oder_woo_id);
+				$order->update_status('wc-cancelled', 'order_note');
+			}
 		}
 	}
 }

@@ -89,24 +89,39 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 		 * @param bool $object
 		 */
 		public function ajax_added_cart( $cart_id, $cart_item, $posts, $object = false ) {
-			if ( empty( $posts['hb_optional_quantity_selected'] ) || empty( $posts['hb_optional_quantity'] ) ) {
+			$selected_quantity = $turn_on = array();
+
+			$room_extra = HB_Room_Extra::instance( absint( $_POST['room-id'] ) );
+			$room_extra = $room_extra->get_extra();
+
+			foreach ( $room_extra as $key => $extra ) {
+				if ( $extra->required ) {
+					$selected_quantity[ $key ] = '1';
+					$turn_on[ $key ]           = 'on';
+				}
+			}
+
+			if ( ( empty( $posts['hb_optional_quantity_selected'] ) || empty( $posts['hb_optional_quantity'] ) ) && empty( $selected_quantity ) ) {
 				return;
 			}
 
 			remove_action( 'hotel_booking_added_cart', array( $this, 'ajax_added_cart' ), 10 );
 
-			if ( $posts['hb_optional_quantity_selected'] ) {
-				$selected_quantity = $posts['hb_optional_quantity'];
-				$turn_on           = $posts['hb_optional_quantity_selected'];
+			if ( $posts['hb_optional_quantity_selected'] || ! empty( $selected_quantity ) ) {
+
+				if ( $posts['hb_optional_quantity_selected'] ) {
+					$selected_quantity = $posts['hb_optional_quantity'] + $selected_quantity;
+					$turn_on           = $posts['hb_optional_quantity_selected'] + $turn_on;
+				}
 
 				foreach ( $selected_quantity as $extra_id => $qty ) {
-					// param
 					$param = array(
 						'product_id'     => $extra_id,
 						'parent_id'      => $cart_id,
 						'check_in_date'  => $object ? $cart_item->check_in_date : $cart_item['check_in_date'],
 						'check_out_date' => $object ? $cart_item->check_out_date : $cart_item['check_out_date'],
 					);
+
 					if ( array_key_exists( $extra_id, $turn_on ) ) {
 						WP_Hotel_Booking::instance()->cart->add_to_cart( $extra_id, $param, $qty );
 						do_action( 'hb_add_extra_to_cart', $extra_id, $param, $qty );
@@ -116,6 +131,7 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 					}
 				}
 			}
+
 			add_action( 'hotel_booking_added_cart', array( $this, 'ajax_added_cart' ), 10, 3 );
 		}
 
@@ -176,8 +192,8 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 				if ( ! isset( $cart_item->parent_id ) ) {
 					foreach ( $cart_contents as $id => $item ) {
 						if ( isset( $item->parent_id ) && $item->parent_id === $parent_id ) {
-							$cart_contents[$parent_id]->amount             += $item->amount;
-							$cart_contents[$parent_id]->amount_exclude_tax += $item->amount_exclude_tax;
+							$cart_contents[ $parent_id ]->amount             += $item->amount;
+							$cart_contents[ $parent_id ]->amount_exclude_tax += $item->amount_exclude_tax;
 						}
 					}
 				}
@@ -201,7 +217,7 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 				) );
 			}
 
-			$cart_id = sanitize_text_field( wp_unslash($_POST['cart_id']) );
+			$cart_id = sanitize_text_field( wp_unslash( $_POST['cart_id'] ) );
 
 			// cart item is exists
 			if ( $package_item = WP_Hotel_Booking::instance()->cart->get_cart_item( $cart_id ) ) {
@@ -330,7 +346,7 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 			$html = array();
 			ob_start();
 			WP_Hotel_Booking::instance()->_include( 'includes/admin/views/update/admin-addition-services-title.php', true, array(
-				'room'    => $cart_params[$cart_id],
+				'room'    => $cart_params[ $cart_id ],
 				'cart_id' => $cart_id
 			), false );
 			$html[] = ob_get_clean();
@@ -510,8 +526,8 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 				$sub_items = hb_get_sub_item_order_item_id( $args['order_item_id'] );
 				if ( $sub_items ) {
 					foreach ( $sub_items as $it_id ) {
-						$order_child_id[hb_get_order_item_meta( $it_id, 'product_id', true )] = hb_get_order_item_meta( $it_id, 'qty', true );
-						$order_subs[hb_get_order_item_meta( $it_id, 'product_id', true )]     = $it_id;
+						$order_child_id[ hb_get_order_item_meta( $it_id, 'product_id', true ) ] = hb_get_order_item_meta( $it_id, 'qty', true );
+						$order_subs[ hb_get_order_item_meta( $it_id, 'product_id', true ) ]     = $it_id;
 					}
 				}
 			}
@@ -524,10 +540,10 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 						'title'      => $extra->title,
 						'respondent' => $extra->respondent,
 						'selected'   => array_key_exists( $extra->ID, $order_child_id ) ? true : false,
-						'qty'        => array_key_exists( $extra->ID, $order_child_id ) ? $order_child_id[$extra->ID] : 1
+						'qty'        => array_key_exists( $extra->ID, $order_child_id ) ? $order_child_id[ $extra->ID ] : 1
 					);
-					if ( isset( $order_subs[$extra->ID] ) ) {
-						$param['order_item_id'] = $order_subs[$extra->ID];
+					if ( isset( $order_subs[ $extra->ID ] ) ) {
+						$param['order_item_id'] = $order_subs[ $extra->ID ];
 					}
 					$args['sub_items'][] = $param;
 				}
@@ -550,7 +566,7 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 
 			$check_in_date  = hb_get_order_item_meta( $order_item_id, 'check_in_date', true );
 			$check_out_date = hb_get_order_item_meta( $order_item_id, 'check_out_date', true );
-			
+
 			foreach ( $sub_items as $product_id => $optional ) {
 				if ( isset( $optional['checked'] ) && $optional['checked'] === 'on' ) {
 					$qty   = isset( $optional['qty'] ) ? $optional['qty'] : 0;
@@ -605,8 +621,8 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 		 * @return object or null
 		 */
 		static function instance( $cart_id = null ) {
-			if ( ! empty( self::$_instance[$cart_id] ) ) {
-				return self::$_instance[$cart_id];
+			if ( ! empty( self::$_instance[ $cart_id ] ) ) {
+				return self::$_instance[ $cart_id ];
 			}
 
 			return new self();
