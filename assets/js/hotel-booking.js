@@ -665,7 +665,7 @@
 		if (el_stripe_publish.length) {
 			strip_publish_string = el_stripe_publish.val();
 
-			// el_stripe_publish.val('');
+			el_stripe_publish.val('');
 		}
 
 		HB_Booking_Cart.init();
