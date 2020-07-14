@@ -213,11 +213,11 @@ if ( ! class_exists( 'HB_Extra_Package' ) ) {
 		}
 
 		function amount_include_tax() {
-			return $this->price_tax;
+			return apply_filters( 'hotel_booking_package_item_total_include_tax', $this->price_tax, $this );
 		}
 
 		function amount_exclude_tax() {
-			return $this->price;
+			return apply_filters( 'hotel_booking_package_item_total_exclude_tax', $this->price, $this );
 		}
 
 		function amount( $cart = false ) {
