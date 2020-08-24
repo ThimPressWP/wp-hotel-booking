@@ -1,12 +1,14 @@
 <?php
-/*
-    Plugin Name: WP Hotel Booking
-    Plugin URI: http://thimpress.com/
-    Description: Full of professional features for a booking room system
-    Author: ThimPress
-    Version: 1.10.2
-    Author URI: http://thimpress.com
-*/
+/**
+ * Plugin Name: WP Hotel Booking
+ * Plugin URI: http://thimpress.com/
+ * Description: Full of professional features for a booking room system
+ * Author: ThimPress
+ * Version: 1.10.2
+ * Author URI: http://thimpress.com
+ * Text Domain: wp-hotel-booking
+ * Domain Path: /languages/
+ */
 
 /**
  * Prevent loading this file directly
