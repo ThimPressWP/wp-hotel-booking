@@ -14,7 +14,7 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-if ( hb_get_request( 'page' ) == 'select-room-extra' && ! ( isset( $atts['widget_search'] ) && $atts['widget_search'] ) ) {
+if ( hb_get_request( 'is_page_room_extra' ) == 'select-room-extra' && ! ( isset( $atts['widget_search'] ) && $atts['widget_search'] ) ) {
 
 	hb_get_template( 'search/select-extra.php' );
 

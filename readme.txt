@@ -3,7 +3,7 @@ Contributors: thimpress, leehld, phamtungpth, thoakim
 Donate link: https://thimpress.com/
 Tags: hotel, booking, hotel booking, reservation, reservations
 Requires at least: 4.2
-Tested up to: 5.4.2
+Tested up to: 5.5
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -77,10 +77,14 @@ Yes.
 
 == Changelog ==
 
+= 1.10.2 =
+~ Fix compatible WP 5.5
+
 = 1.10.1 =
 - Fixed error PHP warming in cart and checkout page when empty price in Room.
 - Fixed error extra require can remove.
 - Fixed security stripe key
+- Add filter calculate tax for extra service
 
 = 1.10.0 =
 ~ Fixed not save Additional Information when using HTML element

@@ -356,7 +356,7 @@ class WPHB_Ajax {
 			} else if ( (int) get_option( 'tp_hotel_booking_custom_process', 0 ) ) {
 				// Addition package not null && custom_process
 				$results['redirect'] = get_option( 'tp_hotel_booking_custom_process' ) ? add_query_arg( array(
-					'page'    => 'select-room-extra',
+					'is_page_room_extra'    => 'select-room-extra',
 					'cart_id' => $cart_item_id,
 					'room_id' => $room_id
 				), hb_get_search_room_url() ) : '';
