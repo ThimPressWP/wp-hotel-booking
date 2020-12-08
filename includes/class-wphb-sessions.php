@@ -52,7 +52,7 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 		 * WPHB_Sessions constructor.
 		 *
 		 * @param string $prefix
-		 * @param bool   $remember
+		 * @param bool $remember
 		 */
 		public function __construct( $prefix = '', $remember = true ) {
 			if ( ! $prefix ) {
@@ -74,8 +74,8 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 		public function load() {
 			if ( isset( $_SESSION[ $this->prefix ] ) ) {
 				return $_SESSION[ $this->prefix ];
-			} else if ( $this->remember && isset( $_COOKIE[ $this->prefix ] ) ) {
-				return $_SESSION[ $this->prefix ] = maybe_unserialize( $_COOKIE[ $this->prefix ] );
+			} elseif ( $this->remember && isset( $_COOKIE[ $this->prefix ] ) ) {
+				return $_SESSION[ $this->prefix ] = maybe_unserialize( WPHB_Helpers::sanitize_params_submitted( $_COOKIE[ $this->prefix ] ) );
 			}
 
 			return array();
