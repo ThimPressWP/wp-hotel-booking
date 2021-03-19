@@ -187,8 +187,8 @@ class WPHB_Cart {
 	function load_booking() {
 		// load customer session object
 		if ( $this->booking_sessions && $this->booking_sessions->session ) {
-			if ( isset( $this->booking_sessions->session['booking_id'] ) ) {
-				$this->booking_id = $this->booking_sessions->session['booking_id'];
+			if ( isset( $this->booking_sessions->session->booking_id ) ) {
+				$this->booking_id = $this->booking_sessions->session->booking_id;
 			}
 			$this->booking_id = apply_filters( 'hotel_booking_load_booking_from_session', $this->booking_id );
 		}
