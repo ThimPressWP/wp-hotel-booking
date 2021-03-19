@@ -402,8 +402,9 @@ if ( ! function_exists( 'hb_parse_request' ) ) {
 	function hb_parse_request() {
 		$params = hb_get_request( 'hotel-booking-params' );
 		if ( $params ) {
-			$params = maybe_unserialize( base64_decode( $params ) );
-			if ( $params && is_array( $params ) ) {
+			$params = json_decode( base64_decode( $params ) );
+
+			if ( $params && is_object( $params ) ) {
 				foreach ( $params as $key => $value ) {
 					$_GET[ $key ]     = $value;
 					$_POST[ $key ]    = $value;
@@ -539,7 +540,7 @@ if ( ! function_exists( 'hb_get_request' ) ) {
  * @return float
  */
 if ( ! function_exists( 'hb_count_nights_two_dates' ) ) {
-	function hb_count_nights_two_dates( $end = null, $start ) {
+	function hb_count_nights_two_dates( $end = null, $start = null ) {
 		if ( ! $end ) {
 			$end = time();
 		} else if ( is_numeric( $end ) ) {
@@ -2084,7 +2085,7 @@ if ( ! function_exists( 'hb_get_url' ) ) {
 		global $hb_settings;
 		$query_str = '';
 		if ( ! empty( $params ) ) {
-			$query_str = '?hotel-booking-params=' . base64_encode( serialize( $params ) );
+			$query_str = '?hotel-booking-params=' . base64_encode( wp_json_encode( $params ) );
 		}
 
 		return apply_filters( 'hb_get_url', hb_get_page_permalink( 'search' ) . $query_str, hb_get_page_id( 'search' ), $params );

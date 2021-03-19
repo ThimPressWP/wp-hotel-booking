@@ -199,7 +199,7 @@ class WPHB_Ajax {
 
 		$return = apply_filters( 'hotel_booking_parse_search_param', array(
 			'success' => 1,
-			'sig'     => base64_encode( serialize( $params ) ),
+			'sig'     => base64_encode( wp_json_encode( $params ) ),
 			'params'  => $params
 		) );
 		hb_send_json( $return );
