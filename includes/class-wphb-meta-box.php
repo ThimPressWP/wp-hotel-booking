@@ -193,7 +193,7 @@ class WPHB_Meta_Box {
 		foreach ( $this->_fields as $field ) {
 			if ( array_key_exists( $this->_args['meta_key_prefix'] . $field['name'], (array) $_POST ) ) {
 				$keyPost    = $this->_args['meta_key_prefix'] . $field['name'];
-				$meta_value = $_POST[ $keyPost ];
+				$meta_value = WPHB_Helpers::sanitize_params_submitted( $_POST[ $keyPost ] );
 
 				if ( in_array( $keyPost, $fieldTypeHtmlArr ) ) {
 					$meta_value = WPHB_Helpers::sanitize_params_submitted( $meta_value, 'html' );

@@ -519,8 +519,9 @@ class WPHB_Cart {
 			return;
 		}
 
-		$cart_number   = (array) $_POST['hotel_booking_cart'];
-		$cart_contents = $this->get_cart_contents();
+		$cart_number_post = (array) $_POST['hotel_booking_cart'];
+		$cart_number      = WPHB_Helpers::sanitize_params_submitted( $cart_number_post );
+		$cart_contents    = $this->get_cart_contents();
 		foreach ( $cart_number as $cart_id => $qty ) {
 			// if not in array keys $cart_contents
 			if ( ! array_key_exists( $cart_id, $cart_contents ) ) {

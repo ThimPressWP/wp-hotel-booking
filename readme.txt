@@ -78,6 +78,9 @@ Yes.
 
 == Changelog ==
 
+= 1.10.5 =
+~ Fix sanitize.
+
 = 1.10.4 =
 ~ Fix security, use json instead of serialize.
 
