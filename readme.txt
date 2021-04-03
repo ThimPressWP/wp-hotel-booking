@@ -84,7 +84,6 @@ Yes.
 = 1.10.4 =
 ~ Fix security, use json instead of serialize.
 
-
 = 1.10.3 =
 ~ Fix security CVE AC-2020-11-17-2
 
