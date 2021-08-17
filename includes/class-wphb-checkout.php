@@ -132,7 +132,9 @@ class WPHB_Checkout {
         }
 
         if ( !empty( $result['result'] ) && $result['result'] == 'success' ) {
-            WP_Hotel_Booking::instance()->cart->empty_cart();
+            if( strpos( $result['redirect'],'confirm' ) == false ){
+                WP_Hotel_Booking::instance()->cart->empty_cart();
+            }
 
             $result = apply_filters( 'hb_payment_successful_result', $result, $booking_id );
 

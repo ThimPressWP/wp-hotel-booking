@@ -6,7 +6,7 @@
  *
  * @author  ThimPress, leehld
  * @package WP-Hotel-Booking/Templates
- * @version 1.6
+ * @version 1.6.1
  */
 
 /**
@@ -30,9 +30,9 @@ $rooms = $cart->get_rooms();
 
     <div class="hb_mini_cart_footer">
 
-        <a href="<?php echo esc_url( hb_get_checkout_url() ); ?>"
+        <a href="<?php echo esc_url( add_query_arg( 'no-cache', uniqid(), hb_get_checkout_url() ) ); ?>"
            class="hb_button hb_checkout"><?php _e( 'Check Out', 'wp-hotel-booking' ); ?></a>
-        <a href="<?php echo esc_url( hb_get_cart_url() ); ?>"
+        <a href="<?php echo esc_url( add_query_arg( 'no-cache', uniqid(), hb_get_cart_url() ) ); ?>"
            class="hb_button hb_view_cart"><?php _e( 'View Cart', 'wp-hotel-booking' ); ?></a>
 
     </div>
