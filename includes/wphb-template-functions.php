@@ -579,8 +579,11 @@ if ( ! function_exists( 'hb_setup_shortcode_page_content' ) ) {
 		} else if ( hb_get_page_id( 'account' ) == $page_id ) {
 			$content = '[' . apply_filters( 'hotel_booking_account_shortcode_tag', 'hotel_booking_account' ) . ']';
 		} else if ( hb_get_page_id( 'thankyou' ) == $page_id ) {
-			$content = '[' . apply_filters( 'hotel_booking_thankyou_shortcode_tag', 'hotel_booking_thankyou' ) . ']';
-		}
+            $current_content = get_post( $page_id )->post_content;
+            if ( strpos( $current_content, '[hotel_booking_thankyou]' ) === false ) {
+                $content = '[' . apply_filters( 'hotel_booking_thankyou_shortcode_tag', 'hotel_booking_thankyou' ) . ']';
+            }
+        }
 
 		return do_shortcode( $content );
 	}
