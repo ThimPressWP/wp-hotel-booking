@@ -49,14 +49,16 @@ class WPHB_Admin_Metabox_Booking_Details {
 			return;
 		}
 
-		if ( ! isset( $_POST['hotel_booking_metabox_booking_details_nonce'] )
-			|| ! wp_verify_nonce( sanitize_key( $_POST['hotel_booking_metabox_booking_details_nonce'] ), 'hotel-booking-metabox-booking-details' ) ) {
-			return;
-		}
+		echo '<pre>' . print_r( $_POST, true ) . '</pre>';
 
 		foreach ( $_POST as $k => $vl ) {
-			$k  = sanitize_text_field( $k );
-			$vl = sanitize_text_field( $vl );
+			$k = sanitize_text_field( $k );
+
+			if ( '_hb_room_addition_information' === $k ) {
+				$vl = WPHB_Helpers::sanitize_params_submitted( $vl, 'html' );
+			} else {
+				$vl = sanitize_text_field( $vl );
+			}
 
 			if ( strpos( $k, '_hb_' ) !== 0 ) {
 				continue;
