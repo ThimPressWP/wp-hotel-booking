@@ -49,8 +49,6 @@ class WPHB_Admin_Metabox_Booking_Details {
 			return;
 		}
 
-		echo '<pre>' . print_r( $_POST, true ) . '</pre>';
-
 		foreach ( $_POST as $k => $vl ) {
 			$k = sanitize_text_field( $k );
 
