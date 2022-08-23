@@ -8,6 +8,7 @@
  * Author URI: http://thimpress.com
  * Text Domain: wp-hotel-booking
  * Domain Path: /languages/
+ * Requires PHP: 7.0
  *
  * @package wp-hotel-booking
  */
@@ -17,14 +18,14 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-define( 'WPHB_FILE', __FILE__ );
+const WPHB_FILE = __FILE__;
 define( 'WPHB_PLUGIN_PATH', dirname( __FILE__ ) );
 define( 'WPHB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
-define( 'WPHB_VERSION', '1.10.2' );
+const WPHB_VERSION = '1.10.2';
 define( 'WPHB_BLOG_ID', get_current_blog_id() );
-define( 'WPHB_TEMPLATES', WPHB_PLUGIN_PATH . '/templates/' );
-define( 'TP_HB_EXTRA', __FILE__ );
-define( 'WPHB_DEBUG', 0 );
+const WPHB_TEMPLATES = WPHB_PLUGIN_PATH . '/templates/';
+const TP_HB_EXTRA    = __FILE__;
+const WPHB_DEBUG     = 0;
 
 /**
  * Class WP_Hotel_Booking
@@ -293,7 +294,7 @@ class WP_Hotel_Booking {
 
 		if ( file_exists( $globalFile ) ) {
 			$mofile = $globalFile;
-		} else if ( file_exists( $pluginFile ) ) {
+		} elseif ( file_exists( $pluginFile ) ) {
 			$mofile = $pluginFile;
 		}
 
@@ -313,7 +314,7 @@ class WP_Hotel_Booking {
 			'jquery',
 			'jquery-ui-sortable',
 			'jquery-ui-datepicker',
-			'wp-util'
+			'wp-util',
 		);
 
 		wp_register_style( 'wp-hotel-booking-libaries-style', $this->plugin_url( 'assets/css/libraries.css' ) );
@@ -334,7 +335,6 @@ class WP_Hotel_Booking {
 				wp_register_style( 'wp-admin-hotel-booking', $this->plugin_url( 'assets/css/admin.tp-hotel-booking.min.css' ), array(), WPHB_VERSION );
 				wp_register_script( 'wp-admin-hotel-booking', $this->plugin_url( 'assets/js/admin.hotel-booking.min.js' ), $dependencies, WPHB_VERSION );
 			}
-
 
 			wp_localize_script( 'wp-admin-hotel-booking', 'hotel_booking_i18n', hb_admin_i18n() );
 			wp_register_script( 'wp-admin-hotel-booking-moment', $this->plugin_url( 'assets/js/moment.min.js' ), $dependencies );
@@ -379,7 +379,6 @@ class WP_Hotel_Booking {
 			// rooms slider widget
 			wp_enqueue_script( 'wp-hotel-booking-owl-carousel' );
 
-
 			// room galleria
 			if ( is_singular( 'hb_room' ) ) {
 				wp_enqueue_script( 'wp-hotel-booking-gallery' );
@@ -404,13 +403,13 @@ class WP_Hotel_Booking {
 			var hotel_settings = {
 				ajax            : '<?php echo admin_url( 'admin-ajax.php' ); ?>',
 				settings        : <?php echo WPHB_Settings::instance()->toJson( apply_filters( 'hb_settings_fields', array( 'review_rating_required' ) ) ); ?>,
-				upload_base_url : '<?php echo esc_js( $upload_base_url ) ?>',
+				upload_base_url : '<?php echo esc_js( $upload_base_url ); ?>',
 				meta_key        : {
 					prefix: '_hb_'
 				},
 				nonce           : '<?php echo wp_create_nonce( 'hb_booking_nonce_action' ); ?>',
-				timezone        : '<?php echo current_time( 'timestamp' ) ?>',
-				min_booking_date: <?php echo $min_booking_date; ?>
+				timezone        : '<?php echo current_time( 'timestamp' ); ?>',
+				min_booking_date: <?php echo esc_html( $min_booking_date ); ?>
 			}
 		</script>
 		<?php

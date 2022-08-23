@@ -46,8 +46,10 @@ if ( ! class_exists( 'WPHB_Admin' ) ) {
 		 * Update pricing.
 		 */
 		public function update_pricing() {
-			if ( ! isset( $_POST['hb-update-pricing-plan-field'] ) || ! wp_verify_nonce( sanitize_text_field( $_POST['hb-update-pricing-plan-field'] ),
-					'hb-update-pricing-plan' ) ) {
+			if ( ! isset( $_POST['hb-update-pricing-plan-field'] ) || ! wp_verify_nonce(
+				sanitize_text_field( $_POST['hb-update-pricing-plan-field'] ),
+				'hb-update-pricing-plan'
+			) ) {
 				return;
 			}
 
@@ -67,18 +69,20 @@ if ( ! class_exists( 'WPHB_Admin' ) ) {
 			$prices = (array) $_POST['price'];
 			foreach ( array_keys( $prices ) as $key ) {
 				$key         = sanitize_text_field( $key );
-				$start       = isset( $_POST['date-start-timestamp'][ $key ] ) ? sanitize_text_field( $_POST['date-start-timestamp'][ $key ] ) : '';
-				$end         = isset( $_POST['date-end-timestamp'][ $key ] ) ? sanitize_text_field( $_POST['date-end-timestamp'][ $key ] ) : '';
-				$prices_post = (array) $_POST['price'][ $key ];
+				$start       = sanitize_text_field( $_POST['date-start-timestamp'][ $key ] ?? '' );
+				$end         = sanitize_text_field( $_POST['date-end-timestamp'][ $key ] ?? '' );
+				$prices_post = WPHB_Helpers::sanitize_params_submitted( (array) $_POST['price'][ $key ] ?? [] );
 				$prices      = WPHB_Helpers::sanitize_params_submitted( $prices_post );
 
-				$plan_id  = hb_room_set_pricing_plan( array(
-					'start_time' => $start,
-					'end_time'   => $end,
-					'pricing'    => $prices,
-					'room_id'    => $room_id,
-					'plan_id'    => $key
-				) );
+				$plan_id  = hb_room_set_pricing_plan(
+					array(
+						'start_time' => $start,
+						'end_time'   => $end,
+						'pricing'    => $prices,
+						'room_id'    => $room_id,
+						'plan_id'    => $key,
+					)
+				);
 				$ignore[] = $plan_id;
 			}
 

@@ -22,7 +22,8 @@ $booking_id = isset( $_GET['booking'] ) ? sanitize_text_field( wp_unslash( $_GET
 $key        = isset( $_GET['key'] ) ? sanitize_text_field( wp_unslash( $_GET['key'] ) ) : '';
 ?>
 
-<?php if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
+<?php
+if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 	$booking = WPHB_Booking::instance( $booking_id );
 	if ( $booking->booking_key === $key ) {
 		$rooms = hb_get_order_items( $booking_id );
@@ -50,7 +51,7 @@ $key        = isset( $_GET['key'] ) ? sanitize_text_field( wp_unslash( $_GET['ke
 				<thead>
 				<tr>
 					<th><?php _e( 'Item', 'wp-hotel-booking' ); ?></th>
-					<th><?php _e( 'Check in - Checkout', 'wp-hotel-booking' ) ?></th>
+					<th><?php _e( 'Check in - Checkout', 'wp-hotel-booking' ); ?></th>
 					<th><?php _e( 'Night', 'wp-hotel-booking' ); ?></th>
 					<th><?php _e( 'Qty', 'wp-hotel-booking' ); ?></th>
 					<th><?php _e( 'Total', 'wp-hotel-booking' ); ?></th>
@@ -63,16 +64,16 @@ $key        = isset( $_GET['key'] ) ? sanitize_text_field( wp_unslash( $_GET['ke
 					<?php $room_id = apply_filters( 'hotel-booking-order-room-id', hb_get_order_item_meta( $room->order_item_id, 'product_id', true ) ); ?>
 					<tr>
 						<td>
-							<?php printf( '<a href="%s">%s</a>', get_permalink( $room_id ), get_the_title( $room_id ) ) ?>
+							<?php printf( '<a href="%s">%s</a>', get_permalink( $room_id ), get_the_title( $room_id ) ); ?>
 						</td>
 						<td>
-							<?php printf( '%s - %s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_in_date', true ) ), date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_out_date', true ) ) ) ?>
+							<?php printf( '%s - %s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_in_date', true ) ), date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_out_date', true ) ) ); ?>
 						</td>
 						<td>
-							<?php printf( '%d', hb_count_nights_two_dates( hb_get_order_item_meta( $room->order_item_id, 'check_out_date', true ), hb_get_order_item_meta( $room->order_item_id, 'check_in_date', true ) ) ) ?>
+							<?php printf( '%d', hb_count_nights_two_dates( hb_get_order_item_meta( $room->order_item_id, 'check_out_date', true ), hb_get_order_item_meta( $room->order_item_id, 'check_in_date', true ) ) ); ?>
 						</td>
 						<td>
-							<?php printf( '%s', hb_get_order_item_meta( $room->order_item_id, 'qty', true ) ) ?>
+							<?php printf( '%s', hb_get_order_item_meta( $room->order_item_id, 'qty', true ) ); ?>
 						</td>
 						<td>
 							<?php printf( '%s', hb_format_price( hb_get_order_item_meta( $room->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $booking->currency ) ) ); ?>
@@ -81,10 +82,12 @@ $key        = isset( $_GET['key'] ) ? sanitize_text_field( wp_unslash( $_GET['ke
 
 					<?php $packages = hb_get_order_items( $booking->id, 'sub_item', $room->order_item_id ); ?>
 					<?php if ( $packages ) { ?>
-						<?php foreach ( $packages as $package ) {
+						<?php
+						foreach ( $packages as $package ) {
 							$extra_id = apply_filters( 'hotel-booking-order-extra-id', hb_get_order_item_meta( $package->order_item_id, 'product_id', true ) );
-							$extra    = hotel_booking_get_product_class( $extra_id ); ?>
-							<tr data-order-parent="<?php echo $extra_id; ?>">
+							$extra    = hotel_booking_get_product_class( $extra_id );
+							?>
+							<tr data-order-parent="<?php echo esc_attr( $extra_id ); ?>">
 								<td colspan="3">
 									<?php echo get_the_title( $extra_id ); ?>
 								</td>
@@ -100,21 +103,21 @@ $key        = isset( $_GET['key'] ) ? sanitize_text_field( wp_unslash( $_GET['ke
 				<?php } ?>
 
 				<tr>
-					<td colspan="4"><?php _e( 'Sub Total', 'wp-hotel-booking' ) ?></td>
+					<td colspan="4"><?php _e( 'Sub Total', 'wp-hotel-booking' ); ?></td>
 					<td>
 						<?php printf( '%s', hb_format_price( hb_booking_subtotal( $booking->id ), hb_get_currency_symbol( $booking->currency ) ) ); ?>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="4"><?php _e( 'Tax', 'wp-hotel-booking' ) ?></td>
+					<td colspan="4"><?php _e( 'Tax', 'wp-hotel-booking' ); ?></td>
 					<td>
 						<?php printf( '%s', apply_filters( 'hotel_booking_admin_booking_details', hb_format_price( hb_booking_tax_total( $booking->id ), hb_get_currency_symbol( $booking->currency ) ), $booking ) ); ?>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="4"><?php _e( 'Grand Total', 'wp-hotel-booking' ) ?></td>
+					<td colspan="4"><?php _e( 'Grand Total', 'wp-hotel-booking' ); ?></td>
 					<td>
-						<?php printf( '%s', hb_format_price( hb_booking_total( $booking->id ), hb_get_currency_symbol( $booking->currency ) ) ) ?>
+						<?php printf( '%s', hb_format_price( hb_booking_total( $booking->id ), hb_get_currency_symbol( $booking->currency ) ) ); ?>
 					</td>
 				</tr>
 
@@ -129,11 +132,12 @@ $key        = isset( $_GET['key'] ) ? sanitize_text_field( wp_unslash( $_GET['ke
 					$advance_settings = $hb_settings->get( 'advance_payment', 50 );
 				}
 
-				if ( floatval( hb_booking_total( $booking->id ) ) !== floatval( $advance_payment ) ) { ?>
+				if ( floatval( hb_booking_total( $booking->id ) ) !== floatval( $advance_payment ) ) {
+					?>
 					<tr>
-						<td colspan="4"><?php _e( 'Advance Payment', 'wp-hotel-booking' ) ?></td>
+						<td colspan="4"><?php _e( 'Advance Payment', 'wp-hotel-booking' ); ?></td>
 						<td>
-							<?php printf( '%s', hb_format_price( $advance_payment, hb_get_currency_symbol( $booking->currency ) ) ) ?>
+							<?php printf( '%s', hb_format_price( $advance_payment, hb_get_currency_symbol( $booking->currency ) ) ); ?>
 						</td>
 					</tr>
 				<?php } ?>
@@ -215,7 +219,8 @@ $key        = isset( $_GET['key'] ) ? sanitize_text_field( wp_unslash( $_GET['ke
 				<?php echo esc_html( $booking->post->post_content ); ?>
 			</div>
 
-			<?php if ( ( ! $booking->method || $booking->method == 'offline-payment' ) ) {
+			<?php
+			if ( ( ! $booking->method || $booking->method == 'offline-payment' ) ) {
 				$option = get_option( 'tp_hotel_booking_offline-payment' );
 				if ( isset( $option['instruction'] ) && $option['instruction'] ) {
 					?>
@@ -223,15 +228,19 @@ $key        = isset( $_GET['key'] ) ? sanitize_text_field( wp_unslash( $_GET['ke
 						<h3><?php echo __( 'Payment Instruction', 'wp-hotel-booking' ); ?></h3>
 						<?php echo stripslashes( $option['instruction'] ); ?>
 					</div>
-				<?php }
-			} ?>
+					<?php
+				}
+			}
+			?>
 
 		</div>
 	<?php } else { ?>
-		<p><?php echo esc_html__( 'Booking invalid', 'wp-hotel-booking' ) ?></p>
-	<?php }
-} else { ?>
-	<p><?php echo esc_html__( 'Booking invalid', 'wp-hotel-booking' ) ?></p>
+		<p><?php echo esc_html__( 'Booking invalid', 'wp-hotel-booking' ); ?></p>
+		<?php
+	}
+} else {
+	?>
+	<p><?php echo esc_html__( 'Booking invalid', 'wp-hotel-booking' ); ?></p>
 <?php } ?>
 
 <?php get_footer(); ?>
