@@ -4,7 +4,7 @@
  * Plugin URI: http://thimpress.com/
  * Description: Full of professional features for a booking room system
  * Author: ThimPress
- * Version: 1.10.6-beta-1
+ * Version: 1.10.6
  * Author URI: http://thimpress.com
  * Text Domain: wp-hotel-booking
  * Domain Path: /languages/
@@ -289,13 +289,13 @@ class WP_Hotel_Booking {
 		$dir    = $this->plugin_path( 'languages' );
 		$mofile = false;
 
-		$globalFile = WP_LANG_DIR . '/plugins/' . $prefix . '-' . $locale . '.mo';
-		$pluginFile = $dir . '/' . $prefix . '-' . $locale . '.mo';
+		$global_file = WP_LANG_DIR . '/plugins/' . $prefix . '-' . $locale . '.mo';
+		$plugin_file = $dir . '/' . $prefix . '-' . $locale . '.mo';
 
-		if ( file_exists( $globalFile ) ) {
-			$mofile = $globalFile;
-		} elseif ( file_exists( $pluginFile ) ) {
-			$mofile = $pluginFile;
+		if ( file_exists( $global_file ) ) {
+			$mofile = $global_file;
+		} elseif ( file_exists( $plugin_file ) ) {
+			$mofile = $plugin_file;
 		}
 
 		if ( $mofile ) {
@@ -337,8 +337,7 @@ class WP_Hotel_Booking {
 			}
 
 			wp_localize_script( 'wp-admin-hotel-booking', 'hotel_booking_i18n', hb_admin_i18n() );
-			wp_register_script( 'wp-admin-hotel-booking-moment', $this->plugin_url( 'assets/js/moment.min.js' ), $dependencies );
-			wp_register_script( 'wp-admin-hotel-booking-fullcalendar', $this->plugin_url( 'assets/js/fullcalendar.min.js' ), $dependencies );
+			wp_register_script( 'wp-admin-hotel-booking-fullcalendar', $this->plugin_url( 'assets/js/fullcalendar.min.js' ), array_merge( array( 'moment' ), $dependencies ) );
 			wp_register_style( 'wp-admin-hotel-booking-fullcalendar', $this->plugin_url( 'assets/css/fullcalendar.min.css' ) );
 		} else {
 			if ( WPHB_DEBUG ) {
@@ -369,7 +368,6 @@ class WP_Hotel_Booking {
 			wp_enqueue_script( 'jquery-ui-autocomplete' );
 
 			/* fullcalendar */
-			wp_enqueue_script( 'wp-admin-hotel-booking-moment' );
 			wp_enqueue_style( 'wp-admin-hotel-booking-fullcalendar' );
 			wp_enqueue_script( 'wp-admin-hotel-booking-fullcalendar' );
 		} else {
@@ -401,14 +399,14 @@ class WP_Hotel_Booking {
 		?>
 		<script type="text/javascript">
 			var hotel_settings = {
-				ajax            : '<?php echo admin_url( 'admin-ajax.php' ); ?>',
+				ajax            : '<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>',
 				settings        : <?php echo WPHB_Settings::instance()->toJson( apply_filters( 'hb_settings_fields', array( 'review_rating_required' ) ) ); ?>,
 				upload_base_url : '<?php echo esc_js( $upload_base_url ); ?>',
 				meta_key        : {
 					prefix: '_hb_'
 				},
-				nonce           : '<?php echo wp_create_nonce( 'hb_booking_nonce_action' ); ?>',
-				timezone        : '<?php echo current_time( 'timestamp' ); ?>',
+				nonce           : '<?php echo esc_html( wp_create_nonce( 'hb_booking_nonce_action' ) ); ?>',
+				timezone        : '<?php echo esc_html( current_time( 'timestamp' ) ); ?>',
 				min_booking_date: <?php echo esc_html( $min_booking_date ); ?>
 			}
 		</script>

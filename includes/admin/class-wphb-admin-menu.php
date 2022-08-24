@@ -49,7 +49,7 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 					__( 'Pricing Plans', 'wp-hotel-booking' ),
 					'manage_hb_booking',
 					'tp_hotel_booking_pricing',
-					array( $this, 'pricing_table' )
+					array( $this, 'pricing_table' ),
 				),
 				'settings'      => array(
 					'tp_hotel_booking',
@@ -57,8 +57,8 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 					__( 'Settings', 'wp-hotel-booking' ),
 					'manage_hb_booking',
 					'tp_hotel_booking_settings',
-					array( $this, 'settings_page' )
-				)
+					array( $this, 'settings_page' ),
+				),
 			);
 
 			// Third-party can be add more items
@@ -71,7 +71,7 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 					__( 'Tools', 'wp-hotel-booking' ),
 					'manage_hb_booking',
 					'wphb-tools',
-					array( $this, 'tools_page' )
+					array( $this, 'tools_page' ),
 				);
 			}
 

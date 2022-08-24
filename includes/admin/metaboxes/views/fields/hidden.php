@@ -30,8 +30,8 @@ if( is_callable( $field['filter'] ) ){
 
 printf(
     '<input type="hidden" name="%s" id="%s" value="%s" %s/>',
-    $field['name'],
-    $field['id'],
-    $value,
-    $field_attr
+    esc_attr( $field['name'] ),
+    esc_attr( $field['id'] ),
+    esc_attr( $value ),
+    $field_attr // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 );

@@ -25,8 +25,4 @@ if( is_callable( $field['filter'] ) ){
     $value = call_user_func_array( $field['filter'], array( $value ) );
 }
 
-printf(
-    '<span %s>%s</span>',
-    $field_attr,
-    $value
-);
+printf( '<span %s>%s</span>', $field_attr, $value ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

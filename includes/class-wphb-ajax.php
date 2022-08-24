@@ -154,7 +154,10 @@ class WPHB_Ajax {
 		);
 		// set_transient( 'hotel_booking_customer_email_' . WPHB_BLOG_ID, $email, DAY_IN_SECONDS );
 		WP_Hotel_Booking::instance()->cart->set_customer( 'customer_email', $email );
-		if ( $posts = get_posts( $args ) ) {
+
+		$posts = get_posts( $args );
+
+		if ( $posts ) {
 			$customer       = $posts[0];
 			$customer->data = array();
 			$data           = get_post_meta( $customer->ID );

@@ -192,13 +192,17 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 		 */
 		private function _load_options() {
 			global $wpdb;
+			
 			$query = $wpdb->prepare( "
                 SELECT option_name, option_value
                 FROM {$wpdb->options}
                 WHERE option_name LIKE %s
             ", $this->_option_prefix . '%'
 			);
-			if ( $options = $wpdb->get_results( $query ) ) {
+
+			$options = $wpdb->get_results( $query );
+
+			if ( $options ) {
 				foreach ( $options as $option ) {
 					$name                  = str_replace( $this->_option_prefix, '', $option->option_name );
 					$this->_options[$name] = maybe_unserialize( $option->option_value );

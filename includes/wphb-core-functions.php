@@ -132,7 +132,6 @@ if ( ! function_exists( 'hotel_booking_get_room_available' ) ) {
 
 // product class process
 if ( ! function_exists( 'hotel_booking_get_product_class' ) ) {
-
 	function hotel_booking_get_product_class( $product_id = null, $params = array() ) {
 
 		$post_type = get_post_type( $product_id );
@@ -147,7 +146,6 @@ if ( ! function_exists( 'hotel_booking_get_product_class' ) ) {
 
 		return apply_filters( 'hotel_booking_get_product_class', $product, $product_id, $params );
 	}
-
 }
 
 if ( ! function_exists( 'hb_create_page' ) ) {
@@ -213,7 +211,7 @@ if ( ! function_exists( 'hb_create_page' ) ) {
 				'post_title'     => $page_title,
 				'post_content'   => $page_content,
 				'post_parent'    => $post_parent,
-				'comment_status' => 'closed'
+				'comment_status' => 'closed',
 			);
 			$page_id   = wp_insert_post( $page_data );
 		}
@@ -226,13 +224,17 @@ if ( ! function_exists( 'hb_create_page' ) ) {
 	}
 }
 
+if ( ! function_exists( 'is_plugin_active' ) ) {
+	require_once ABSPATH . 'wp-admin/includes/plugin.php';
+}
+
 if ( is_multisite() ) {
-	if ( file_exists( ABSPATH . 'wp-content/plugins/tp-hotel-booking/tp-hotel-booking.php' ) && ! get_site_option( 'wphb_notice_remove_hotel_booking' ) ) {
+	if ( is_plugin_active( 'tp-hotel-booking/tp-hotel-booking.php' ) && ! get_site_option( 'wphb_notice_remove_hotel_booking' ) ) {
 		add_action( 'network_admin_notices', 'hb_notice_remove_hotel_booking' );
 		add_action( 'admin_notices', 'hb_notice_remove_hotel_booking' );
 	}
 } else {
-	if ( file_exists( ABSPATH . 'wp-content/plugins/tp-hotel-booking/tp-hotel-booking.php' ) && ! get_option( 'wphb_notice_remove_hotel_booking' ) ) {
+	if ( is_plugin_active( 'tp-hotel-booking/tp-hotel-booking.php' ) && ! get_option( 'wphb_notice_remove_hotel_booking' ) ) {
 		add_action( 'admin_notices', 'hb_notice_remove_hotel_booking' );
 	}
 }
@@ -245,11 +247,12 @@ if ( ! function_exists( 'hb_notice_remove_hotel_booking' ) ) {
 	function hb_notice_remove_hotel_booking() { ?>
 		<div class="notice notice-error hb-dismiss-notice is-dismissible">
 			<p>
-				<?php echo __( wp_kses( '<strong>WP Hotel Booking</strong> plugin version ' . WPHB_VERSION . ' is an upgrade of <strong>TP Hotel Booking</strong> plugin. Please deactivate and delete <strong>TP Hotel Booking/TP Hotel Booking add-ons</strong> and replace by <strong>WP Hotel Booking/WP Hotel Booking add-ons</strong>.', array( 'strong' => array() ) ), 'wp-hotel-booking' ); ?>
+				<?php echo wp_kses( '<strong>WP Hotel Booking</strong> plugin version ' . WPHB_VERSION . ' is an upgrade of <strong>TP Hotel Booking</strong> plugin. Please deactivate and delete <strong>TP Hotel Booking/TP Hotel Booking add-ons</strong> and replace by <strong>WP Hotel Booking/WP Hotel Booking add-ons</strong>.', array( 'strong' => array() ) ); ?>
 			</p>
 
 		</div>
-	<?php }
+	<?php 
+	}
 }
 
 if ( ! function_exists( 'hb_extra_types' ) ) {
@@ -257,9 +260,11 @@ if ( ! function_exists( 'hb_extra_types' ) ) {
 	 * @return array|mixed
 	 */
 	function hb_extra_types() {
-		$types = apply_filters( 'hb_extra_type', array(
-				'trip'   => __( 'Trip', 'wp-hotel-booking' ),
-				'number' => __( 'Number', 'wp-hotel-booking' )
+		$types = apply_filters( 
+			'hb_extra_type', 
+			array(
+				'trip'   => esc_html__( 'Trip', 'wp-hotel-booking' ),
+				'number' => esc_html__( 'Number', 'wp-hotel-booking' ),
 			)
 		);
 

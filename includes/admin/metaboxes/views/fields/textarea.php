@@ -10,17 +10,18 @@ $field = wp_parse_args(
         'name'          => '',
         'std'           => '',
         'placeholder'   => '',
-        'editor'        => false
+        'editor'        => false,
     )
 );
-if( $field['editor'] ) {
+
+if ( $field['editor'] ) {
     wp_editor($field['std'], $field['name'] );
-}else {
+} else {
     printf(
         '<textarea name="%s" id="%s" placeholder="%s">%s</textarea>',
-        $field['name'],
-        $field['id'],
-        $field['placeholder'],
-        $field['std']
+        esc_attr( $field['name'] ),
+        esc_attr( $field['id'] ),
+        esc_attr( $field['placeholder'] ),
+        esc_textarea( $field['std'] )
     );
 }

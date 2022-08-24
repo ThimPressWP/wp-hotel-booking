@@ -3,5 +3,4 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
-echo sprintf( '%s', $field['content'] );
-?>
+echo wp_kses_post( $field['content'] );

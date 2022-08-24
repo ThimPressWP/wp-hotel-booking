@@ -5,4 +5,3 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $field['selected'] = $field['std'];
 hb_dropdown_countries( $field );
-?>

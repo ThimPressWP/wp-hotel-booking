@@ -75,7 +75,7 @@ abstract class WPHB_Admin_Setting_Page {
 		$sub = array();
 		foreach( $sections as $id => $text ) {
 			$sub[] = '<li>
-						<a href="?page=tp_hotel_booking_settings&tab='.$this->id.'&section='.$id.'"'. ( $current_section === $id ? ' class="current"' : '' ) .'>'.esc_html( $text ).'</a>
+						<a href="?page=tp_hotel_booking_settings&tab='. esc_attr( $this->id ) . '&section='. esc_attr( $id ) . '"'. ( $current_section === $id ? ' class="current"' : '' ) .'>' . esc_html( $text ) . '</a>
 					</li>';
 		}
 		$html[] = implode( '&nbsp;|&nbsp;', $sub );
@@ -89,5 +89,4 @@ abstract class WPHB_Admin_Setting_Page {
 		$settings = $this->get_settings();
 		WPHB_Admin_Settings::save_fields( $settings );
 	}
-
 }

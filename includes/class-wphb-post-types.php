@@ -117,7 +117,8 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 					break;
 				case 'from':
 				case 'to':
-					if ( $from = get_post_meta( $post->ID, '_hb_coupon_date_' . $column, true ) ) {
+					$from = get_post_meta( $post->ID, '_hb_coupon_date_' . $column, true );
+					if ( $from ) {
 						echo date_i18n( hb_get_date_format(), $from );
 					} else {
 						echo '-';
@@ -125,11 +126,12 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 					break;
 				case 'minimum_spend':
 				case 'maximum_spend':
-					if ( $value = get_post_meta( $post->ID, '_hb_' . $column, true ) ) {
+					$value = get_post_meta( $post->ID, '_hb_' . $column, true );
+					if ( $value ) {
 						if ( get_post_meta( $post->ID, '_hb_coupon_discount_type', true ) == 'fixed_cart' ) {
 							echo hb_format_price( $value );
 						} else {
-							echo sprintf( '%s', $value . '%' );
+							echo esc_html( $value ) . '%';
 						}
 					} else {
 						echo '-';
@@ -137,8 +139,9 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 					break;
 				case 'limit_per_coupon':
 				case 'usage_count':
-					if ( $value = get_post_meta( $post->ID, '_hb_' . $column, true ) ) {
-						echo sprintf( '%s', $value );
+					$value = get_post_meta( $post->ID, '_hb_' . $column, true );
+					if ( $value ) {
+						echo wp_kses_post( $value );
 					} else {
 						echo '-';
 					}
@@ -421,21 +424,21 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 						foreach ( $terms as $key => $term ) {
 							$room_types[] = $term->name;
 						}
-						printf( '%s (%s)', implode( ', ', $room_types ), $cap->name );
+						printf( '%s (%s)', implode( ', ', $room_types ), esc_html( $cap->name ) );
 					}
 					break;
 				case 'room_capacity':
-					echo get_post_meta( $post->ID, '_hb_max_child_per_room', true );
+					echo esc_html( get_post_meta( $post->ID, '_hb_max_child_per_room', true ) );
 					break;
 				case 'room_price_plan':
-					echo '<a href="' . admin_url( 'admin.php?page=tp_hotel_booking_pricing&hb-room=' . $post->ID ) . '">' . __( 'View Price', 'wp-hotel-booking' ) . '</a>';
+					echo '<a href="' . esc_url( admin_url( 'admin.php?page=tp_hotel_booking_pricing&hb-room=' . $post->ID ) ) . '">' . esc_html__( 'View Price', 'wp-hotel-booking' ) . '</a>';
 					break;
 				case 'room_average_rating':
 					$room   = WPHB_Room::instance( $post->ID );
 					$rating = $room->average_rating();
 					$html   = array();
 					$html[] = '<div class="rating">';
-					if ( $rating ):
+					if ( $rating ) :
 						$html[] = '<div itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating" class="star-rating" title="' . ( sprintf( __( 'Rated %d out of 5', 'wp-hotel-booking' ), $rating ) ) . '">';
 						$html[] = '<span style="width:' . ( ( $rating / 5 ) * 100 ) . '%"></span>';
 						$html[] = '</div>';
@@ -530,8 +533,14 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		 * @return string
 		 */
 		public function taxonomy_column_content( $content, $column_name, $term_id ) {
-			$taxonomy = sanitize_text_field( wp_unslash( $_REQUEST['taxonomy'] ) );
-			$term     = get_term( $term_id, $taxonomy );
+			$taxonomy = isset( $_REQUEST['taxonomy'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['taxonomy'] ) ) : false;
+
+			if ( ! $taxonomy ) {
+				return $content;
+			}
+
+			$term = get_term( $term_id, $taxonomy );
+
 			switch ( $column_name ) {
 				case 'ordering':
 					$content = sprintf( '<input class="hb-number-field" type="number" name="%s_ordering[%d]" value="%d" size="3" />', $taxonomy, $term_id, $term->term_group );
@@ -693,12 +702,11 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 					'manage_terms' => 'manage_hb_booking',
 					'edit_terms'   => 'manage_hb_booking',
 					'delete_terms' => 'manage_hb_booking',
-					'assign_terms' => 'manage_hb_booking'
-				)
+					'assign_terms' => 'manage_hb_booking',
+				),
 			);
 			$args = apply_filters( 'hotel_booking_register_tax_room_type_arg', $args );
-			register_taxonomy( 'hb_room_type', array( 'hb_room' ), $args
-			);
+			register_taxonomy( 'hb_room_type', array( 'hb_room' ), $args );
 
 			/**
 			 * Register room capacity taxonomy
@@ -731,12 +739,11 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 					'manage_terms' => 'manage_hb_booking',
 					'edit_terms'   => 'manage_hb_booking',
 					'delete_terms' => 'manage_hb_booking',
-					'assign_terms' => 'manage_hb_booking'
-				)
+					'assign_terms' => 'manage_hb_booking',
+				),
 			);
 			$args = apply_filters( 'hotel_booking_register_tax_capacity_arg', $args );
-			register_taxonomy( 'hb_room_capacity', array( 'hb_room' ), $args
-			);
+			register_taxonomy( 'hb_room_capacity', array( 'hb_room' ), $args );
 		}
 
 		/**

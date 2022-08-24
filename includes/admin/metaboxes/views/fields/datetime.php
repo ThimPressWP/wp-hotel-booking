@@ -11,7 +11,7 @@ $field = wp_parse_args(
         'std'           => '',
         'placeholder'   => '',
         'attr'          => '',
-        'filter'        => ''
+        'filter'        => '',
     )
 );
 $field_attr = '';
@@ -27,8 +27,8 @@ if( is_callable( $field['filter'] ) ){
     $value = call_user_func_array( $field['filter'], array( $value ) );
 }
 printf('<input type="text" class="datetime-picker-metabox" id="%s" name="%s" value="%s" %s />',
-    $field['id'],
-    $field['name'],
-    $value,
-    $field_attr
+    esc_attr( $field['id'] ),
+    esc_attr( $field['name'] ),
+    esc_attr( $value ),
+    $field_attr // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 );

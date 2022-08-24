@@ -36,7 +36,7 @@ if ( $field['attr'] ) {
 			if ( ! is_object( $option ) && ! is_array( $option ) ) {
 				$option = array(
 					'value' => $k,
-					'text'  => $option
+					'text'  => $option,
 				);
 			} else {
 				$option = wp_parse_args( (array) $option, array( 'value' => '', 'text' => '' ) );

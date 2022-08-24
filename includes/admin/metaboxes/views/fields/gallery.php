@@ -3,7 +3,7 @@
         exit; // Exit if accessed directly
     }
 
-    $meta_value = get_post_meta($post->ID, $field['name'], true);
+    $meta_value = get_post_meta( $post->ID, $field['name'], true );
     $upload_dir = wp_upload_dir();
     $upload_base_url = $upload_dir['baseurl'];
 ?>
@@ -15,7 +15,7 @@
                     <div class="thumbnail">
                         <div class="centered">
                         	<?php echo wp_get_attachment_image( $id, 'thumbnail' ); ?>
-                            <input type="hidden" name="<?php echo esc_attr( $field['name'] ); ?>[]" value="<?php echo esc_attr($id); ?>" />
+                            <input type="hidden" name="<?php echo esc_attr( $field['name'] ); ?>[]" value="<?php echo esc_attr( $id ); ?>" />
                         </div>
                     </div>
                 </div>

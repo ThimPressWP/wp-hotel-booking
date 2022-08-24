@@ -40,7 +40,7 @@ class WPHB_Meta_Box {
 	 * @param array
 	 * @param array
 	 */
-	function __construct( $args = array(), $fields = array() ) {
+	public function __construct( $args = array(), $fields = array() ) {
 		$this->_args   = wp_parse_args(
 			$args, array(
 				'title'           => '',
@@ -56,7 +56,7 @@ class WPHB_Meta_Box {
 	/**
 	 * Add meta box to post
 	 */
-	function add_meta_box() {
+	public function add_meta_box() {
 		$meta_box_id    = $this->_args['name'];
 		$meta_box_title = $this->_args['title'];
 		$callback       = ! empty( $this->_args['callback'] ) ? $this->_args['callback'] : array( $this, 'render' );
@@ -69,7 +69,12 @@ class WPHB_Meta_Box {
 
 		foreach ( $post_types as $post_type ) {
 			add_meta_box(
-				$meta_box_id, $meta_box_title, $callback, $post_type, $context, $priority
+				$meta_box_id, 
+				$meta_box_title, 
+				$callback, 
+				$post_type, 
+				$context, 
+				$priority
 			);
 		}
 	}
@@ -81,7 +86,7 @@ class WPHB_Meta_Box {
 	 *
 	 * @return WPHB_Meta_Box instance
 	 */
-	function add_field( $field ) {
+	public function add_field( $field ) {
 		$args = func_get_args();
 		foreach ( $args as $f ) {
 			$this->_fields[] = (array) $f;
@@ -96,7 +101,7 @@ class WPHB_Meta_Box {
 	 * Return all fields of meta box
 	 * @return array
 	 */
-	function get_fields() {
+	public function get_fields() {
 		return $this->_fields;
 	}
 
@@ -108,7 +113,7 @@ class WPHB_Meta_Box {
 	 *
 	 * @return bool
 	 */
-	function has_post_meta( $object_id, $meta_key ) {
+	public function has_post_meta( $object_id, $meta_key ) {
 		$meta_type  = 'post';
 		$meta_cache = wp_cache_get( $object_id, $meta_type . '_meta' );
 
@@ -125,32 +130,44 @@ class WPHB_Meta_Box {
 	 *
 	 * @param int
 	 */
-	function render( $post ) {
-		if ( $fields = $this->_fields ) {
+	public function render( $post ) {
+		$fields = $this->_fields;
+
+		if ( $fields ) {
 			echo '<ul class="hb-form-table">';
+
 			foreach ( $fields as $field ) {
 				echo '<li class="hb-form-field">';
+
 				if ( isset( $field['label'] ) && $field['label'] != '' ) {
-					echo '<label class="hb-form-field-label">' . $field['label'] . '</label>';
+					echo '<label class="hb-form-field-label">' . esc_html( $field['label'] ) . '</label>';
 				}
+
 				if ( $this->has_post_meta( $post->ID, $field['name'] ) ) {
 					$field['std'] = get_post_meta( $post->ID, $this->_args['meta_key_prefix'] . $field['name'], true );
 				}
+
 				$field['name'] = $this->_args['meta_key_prefix'] . $field['name'];
+
 				if ( empty( $field['id'] ) ) {
 					$field['id'] = sanitize_title( $field['name'] );
 				}
+				
 				echo '<div class="hb-form-field-input">';
 				echo '<div class="hb-form-field-input-inner">';
+
 				$tmpl = WP_Hotel_Booking::instance()->locate( "includes/admin/metaboxes/views/fields/{$field['type']}.php" );
 				require $tmpl;
+
 				if ( ! empty( $field['desc'] ) ) {
-					printf( '<p class="description">%s</p>', $field['desc'] );
+					printf( '<p class="description">%s</p>', wp_kses_post( $field['desc'] ) );
 				}
+
 				echo '</div>';
 				echo '</div>';
 				echo '</li>';
 			}
+
 			echo '</ul>';
 		}
 		wp_nonce_field( $this->get_nonce_field_action(), $this->get_nonce_field_name() );
@@ -161,7 +178,7 @@ class WPHB_Meta_Box {
 	 *
 	 * @return string
 	 */
-	function get_nonce_field_name() {
+	public function get_nonce_field_name() {
 		return 'meta_box_' . $this->_args['name'];
 	}
 
@@ -170,7 +187,7 @@ class WPHB_Meta_Box {
 	 *
 	 * @return string
 	 */
-	function get_nonce_field_action() {
+	public function get_nonce_field_action() {
 		return 'update_meta_box_' . $this->_args['name'];
 	}
 
@@ -179,7 +196,7 @@ class WPHB_Meta_Box {
 	 *
 	 * @param int
 	 */
-	function update( $post_id ) {
+	public function update( $post_id ) {
 		if ( ! isset( $_POST[ $this->get_nonce_field_name() ] ) || ! wp_verify_nonce( sanitize_key( $_POST[ $this->get_nonce_field_name() ] ), $this->get_nonce_field_action() ) ) {
 			return;
 		}
@@ -202,7 +219,9 @@ class WPHB_Meta_Box {
 				}
 
 				$meta_value = apply_filters( 'hb_meta_box_update_meta_value', $meta_value, $field['name'], $this->_args['name'], $post_id );
+				
 				update_post_meta( $post_id, $this->_args['meta_key_prefix'] . $field['name'], $meta_value );
+
 				if ( $field['name'] == 'room_capacity' ) {
 					update_post_meta( $post_id, $this->_args['meta_key_prefix'] . 'room_origin_capacity', $meta_value );
 				}
@@ -221,15 +240,18 @@ class WPHB_Meta_Box {
 	 *
 	 * @param $post_id
 	 */
-	static function update_meta_boxes( $post_id ) {
+	public static function update_meta_boxes( $post_id ) {
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 			return;
 		}
-		if ( 'post' != strtolower( $_SERVER['REQUEST_METHOD'] ) ) {
+
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
 			return;
 		}
 
-		if ( ! ( $meta_boxes = self::$_meta_boxes ) ) {
+		$meta_boxes = self::$_meta_boxes;
+
+		if ( ! $meta_boxes ) {
 			return;
 		}
 
@@ -247,7 +269,7 @@ class WPHB_Meta_Box {
 	 *
 	 * @return WPHB_Meta_Box instance
 	 */
-	static function instance( $id, $args, $fields ) {
+	public static function instance( $id, $args, $fields ) {
 		if ( empty( self::$_meta_boxes[ $id ] ) ) {
 			if ( empty( $args['name'] ) ) {
 				$args['name'] = $id;

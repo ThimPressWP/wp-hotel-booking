@@ -21,11 +21,11 @@ $date_order   = hb_start_of_week_order();
 
 <div class="hb-pricing-table regular-price clearfix">
     <h3 class="hb-pricing-table-title">
-        <input type="hidden" name="_hbpricing[plan_id][]" value="<?php echo esc_attr( $plan_id ) ?>"/>
+        <input type="hidden" name="_hbpricing[plan_id][]" value="<?php echo esc_attr( $plan_id ); ?>"/>
     </h3>
     <div class="hb-pricing-controls">
         <a href="" class="dashicons dashicons-edit" data-action="edit"
-           title="<?php _e( 'Edit', 'wp-hotel-booking' ); ?>"></a>
+           title="<?php esc_attr_e( 'Edit', 'wp-hotel-booking' ); ?>"></a>
     </div>
     <div class="hb-pricing-list">
         <table>
@@ -43,7 +43,7 @@ $date_order   = hb_start_of_week_order();
                     <td>
 						<?php $price = ! empty( $prices[ $x ] ) ? $prices[ $x ] : ''; ?>
                         <input class="hb-pricing-price" type="number" min="0" step="any"
-                               name="_hbpricing[prices][<?php echo sprintf( '%s', $plan_id ); ?>][<?php echo esc_attr( $x ); ?>]"
+                               name="_hbpricing[prices][<?php echo esc_attr( $plan_id ); ?>][<?php echo esc_attr( $x ); ?>]"
                                value="<?php echo esc_attr( $price ); ?>" size="10" readonly="readonly"/>
                     </td>
 				<?php } ?>

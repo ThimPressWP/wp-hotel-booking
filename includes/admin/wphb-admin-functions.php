@@ -68,7 +68,7 @@ if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
 				'title'           => __( 'Room Settings', 'wp-hotel-booking' ),
 				'post_type'       => 'hb_room',
 				'meta_key_prefix' => '_hb_',
-				'priority'        => 'high'
+				'priority'        => 'high',
 			),
 			array()
 		)->add_field(
@@ -79,7 +79,7 @@ if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
 				'std'   => '100',
 				'desc'  => __( 'The number of rooms', 'wp-hotel-booking' ),
 				'min'   => 1,
-				'max'   => 100
+				'max'   => 100,
 			),
 			array(
 				'name'    => 'room_capacity',
@@ -89,10 +89,10 @@ if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
 					array(
 						'map_fields' => array(
 							'term_id' => 'value',
-							'name'    => 'text'
-						)
+							'name'    => 'text',
+						),
 					)
-				)
+				),
 			),
 			array(
 				'name'  => 'max_child_per_room',
@@ -100,14 +100,14 @@ if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
 				'type'  => 'number',
 				'std'   => 0,
 				'min'   => 0,
-				'max'   => 100
+				'max'   => 100,
 			),
 			array(
 				'name'   => 'room_addition_information',
 				'label'  => __( 'Additional Information', 'wp-hotel-booking' ),
 				'type'   => 'textarea',
 				'std'    => '',
-				'editor' => true
+				'editor' => true,
 			)
 		);
 
@@ -119,7 +119,7 @@ if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
 				'post_type'       => 'hb_coupon',
 				'meta_key_prefix' => '_hb_',
 				'context'         => 'normal',
-				'priority'        => 'high'
+				'priority'        => 'high',
 			),
 			array()
 		)->add_field(
@@ -127,7 +127,7 @@ if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
 				'name'  => 'coupon_description',
 				'label' => __( 'Description', 'wp-hotel-booking' ),
 				'type'  => 'textarea',
-				'std'   => ''
+				'std'   => '',
 			),
 			array(
 				'name'    => 'coupon_discount_type',
@@ -137,7 +137,7 @@ if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
 				'options' => array(
 					'fixed_cart'   => __( 'Cart discount', 'wp-hotel-booking' ),
 					'percent_cart' => __( 'Cart % discount', 'wp-hotel-booking' )
-				)
+				),
 			),
 			array(
 				'name'  => 'coupon_discount_value',
@@ -145,29 +145,29 @@ if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
 				'type'  => 'number',
 				'std'   => '',
 				'min'   => 0,
-				'step'  => 0.1
+				'step'  => 0.1,
 			),
 			array(
 				'name'   => 'coupon_date_from',
 				'label'  => __( 'Validate from', 'wp-hotel-booking' ),
 				'type'   => 'datetime',
-				'filter' => 'hb_meta_box_field_coupon_date'
+				'filter' => 'hb_meta_box_field_coupon_date',
 			),
 			array(
 				'name'  => 'coupon_date_from_timestamp',
 				'label' => '',
-				'type'  => 'hidden'
+				'type'  => 'hidden',
 			),
 			array(
 				'name'   => 'coupon_date_to',
 				'label'  => __( 'Validate until', 'wp-hotel-booking' ),
 				'type'   => 'datetime',
-				'filter' => 'hb_meta_box_field_coupon_date'
+				'filter' => 'hb_meta_box_field_coupon_date',
 			),
 			array(
 				'name'  => 'coupon_date_to_timestamp',
 				'label' => '',
-				'type'  => 'hidden'
+				'type'  => 'hidden',
 			),
 			array(
 				'name'  => 'minimum_spend',
@@ -175,7 +175,7 @@ if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
 				'type'  => 'number',
 				'desc'  => __( 'This field allows you to set the minimum subtotal needed to use the coupon.', 'wp-hotel-booking' ),
 				'min'   => 0,
-				'step'  => 0.1
+				'step'  => 0.1,
 			),
 			array(
 				'name'  => 'maximum_spend',
@@ -183,20 +183,20 @@ if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
 				'type'  => 'number',
 				'desc'  => __( 'This field allows you to set the maximum subtotal allowed when using the coupon.', 'wp-hotel-booking' ),
 				'min'   => 0,
-				'step'  => 0.1
+				'step'  => 0.1,
 			),
 			array(
 				'name'  => 'limit_per_coupon',
 				'label' => __( 'Usage limit per coupon', 'wp-hotel-booking' ),
 				'type'  => 'number',
 				'desc'  => __( 'How many times this coupon can be used before it is void.', 'wp-hotel-booking' ),
-				'min'   => 0
+				'min'   => 0,
 			),
 			array(
 				'name'   => 'used',
 				'label'  => __( 'Used', 'wp-hotel-booking' ),
 				'type'   => 'label',
-				'filter' => 'hb_meta_box_field_coupon_used'
+				'filter' => 'hb_meta_box_field_coupon_used',
 			)
 		);
 
@@ -206,14 +206,14 @@ if ( ! function_exists( 'hb_add_meta_boxes' ) ) {
 				'title'           => __( 'Gallery Settings', 'wp-hotel-booking' ),
 				'post_type'       => 'hb_room',
 				'meta_key_prefix' => '_hb_', // meta key prefix,
-				'priority'        => 'high'
+				'priority'        => 'high',
 				// 'callback'  => 'hb_add_meta_boxes_gallery_setings' // callback arg render meta form
 			),
 			array()
 		)->add_field(
 			array(
 				'name' => 'gallery',
-				'type' => 'gallery'
+				'type' => 'gallery',
 			)
 		);
 	}
@@ -224,7 +224,9 @@ add_action( 'admin_init', 'hb_add_meta_boxes', 50 );
 add_action( 'hb_booking_status_changed', 'hb_booking_status_completed_action', 10, 3 );
 if ( ! function_exists( 'hb_booking_status_completed_action' ) ) {
 	function hb_booking_status_completed_action( $booking_id, $old_status, $new_status ) {
-		if ( $coupons = get_post_meta( $booking_id, '_hb_coupon_id' ) ) {
+		$coupons = get_post_meta( $booking_id, '_hb_coupon_id' );
+
+		if ( $coupons ) {
 			if ( ! $coupons ) {
 				return;
 			}
@@ -252,7 +254,7 @@ if ( ! function_exists( 'hb_admin_init_metaboxes' ) ) {
 			new WPHB_Admin_Metabox_Booking_Details(), // booking details
 			new WPHB_Admin_Metabox_Booking_Items(), // booking items
 			new WPHB_Admin_Metabox_Booking_Actions(), // booking actions
-			new WPHB_Admin_Metabox_Room_Price() // room price
+			new WPHB_Admin_Metabox_Room_Price(), // room price
 		);
 
 		return apply_filters( 'hb_admin_init_metaboxes', $metaboxes );
@@ -316,7 +318,10 @@ if ( ! function_exists( 'hb_manage_booking_column' ) ) {
 				$total_with_currency = hb_format_price( $total, hb_get_currency_symbol( $currency ) );
 
 				$echo[] = $total_with_currency;
-				if ( $method = hb_get_user_payment_method( $booking->method ) ) {
+
+				$method = hb_get_user_payment_method( $booking->method );
+
+				if ( $method ) {
 					$echo[] = sprintf( __( '<br />(<small>%s</small>)', 'wp-hotel-booking' ), $method->description );
 				}
 				// display paid

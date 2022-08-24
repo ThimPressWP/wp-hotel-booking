@@ -1509,7 +1509,9 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 			)
 		);
 
-		if ( $search = $wpdb->get_results( $query ) ) {
+		$search = $wpdb->get_results( $query );
+
+		if ( $search ) {
 			foreach ( $search as $k => $p ) {
 				$room                        = WPHB_Room::instance(
 					$p,
@@ -2027,13 +2029,17 @@ if ( ! function_exists( 'hb_dropdown_countries' ) ) {
 				'required'          => false,
 			)
 		);
-		echo '<select name="' . $args['name'] . '"' . ( ( $args['required'] ) ? 'required' : '' ) . '>';
+
+		echo '<select name="' . esc_attr( $args['name'] ) . '"' . ( $args['required'] ? 'required' : '' ) . '>';
+
 		if ( $args['show_option_none'] ) {
-			echo '<option value="' . $args['option_none_value'] . '">' . $args['show_option_none'] . '</option>';
+			echo '<option value="' . esc_attr( $args['option_none_value'] ) . '">' . esc_html( $args['show_option_none'] ) . '</option>';
 		}
+
 		foreach ( $countries as $code => $name ) {
-			echo '<option value="' . $name . '" ' . selected( $name == $args['selected'] ) . '>' . $name . '</option>';
+			echo '<option value="' . esc_attr( $name ) . '" ' . selected( $name == $args['selected'] ) . '>' . esc_html( $name ) . '</option>';
 		}
+
 		echo '</select>';
 	}
 }
@@ -2335,10 +2341,13 @@ if ( ! function_exists( 'hb_dropdown_pages' ) ) {
 		$html   = array();
 		$html[] = '<select name="' . esc_attr( $args['name'] ) . '" >';
 		$html[] = '<option value="">' . esc_html( $args['show_option_none'] ) . '</option>';
+
 		foreach ( $pages as $page ) {
 			$html[] = '<option value="' . esc_attr( $page->ID ) . '"' . selected( $args['selected'], $page->ID, false ) . '>' . esc_html( $page->post_title ) . '</option>';
 		}
+
 		$html[] = '</select>';
-		echo implode( '', $html );
+
+		echo implode( '', $html ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

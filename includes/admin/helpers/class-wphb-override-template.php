@@ -27,7 +27,7 @@ if ( ! class_exists( 'WPHB_Helper_Override_Template' ) ) {
 			'all'        => 0,
 			'outdated'   => 0,
 			'up-to-date' => 0,
-			'undefined'  => 0
+			'undefined'  => 0,
 		);
 
 		/**
@@ -42,8 +42,8 @@ if ( ! class_exists( 'WPHB_Helper_Override_Template' ) ) {
 			$plugins = apply_filters( 'hb_plugins_templates_path', array(
 				'wphb' => array(
 					'folder' => hb_template_path(),
-					'path'   => WPHB_TEMPLATES
-				)
+					'path'   => WPHB_TEMPLATES,
+				),
 			) );
 
 			$template_dir   = get_template_directory();
