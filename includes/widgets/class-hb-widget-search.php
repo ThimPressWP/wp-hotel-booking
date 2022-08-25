@@ -50,8 +50,10 @@ class HB_Widget_Search extends WP_Widget {
 		if ( isset( $instance['show_label'] ) ) {
 			$show_label = $instance['show_label'];
 		}
-		echo do_shortcode( '[hotel_booking widget_search="' . true . '" show_title="' . $show_title . '" show_label="' . $show_label . '"]' );
-		echo sprintf( '%s', $args['after_widget'] );
+		WPHB_Helpers::print(
+			do_shortcode( esc_html( '[hotel_booking widget_search="' . true . '" show_title="' . $show_title . '" show_label="' . $show_label . '"]' ) )
+        );
+		WPHB_Helpers::print( sprintf( '%s', $args['after_widget'] ) );
 	}
 
 	/**

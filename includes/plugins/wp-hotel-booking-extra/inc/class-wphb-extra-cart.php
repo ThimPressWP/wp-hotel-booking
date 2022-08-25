@@ -57,7 +57,7 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 			add_action( 'hotel_booking_cart_after_item', array( $this, 'cart_package_after_item' ), 10, 2 );
 
 			// append package into cart admin
-			add_action( 'hotel_booking_admin_cart_after_item', array( $this, 'admin_cart_package_after_item' ), 10, 3 );
+			//add_action( 'hotel_booking_admin_cart_after_item', array( $this, 'admin_cart_package_after_item' ), 10, 3 );
 
 			// email new booking hook
 			add_action( 'hotel_booking_email_new_booking', array( $this, 'email_new_booking' ), 10, 3 );
@@ -341,8 +341,9 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 		 * @param $cart_params
 		 * @param $cart_id
 		 * @param $booking
+         * @depecated 1.10.7
 		 */
-		public function admin_cart_package_after_item( $cart_params, $cart_id, $booking ) {
+		/*public function admin_cart_package_after_item( $cart_params, $cart_id, $booking ) {
 			$html = array();
 			ob_start();
 			WP_Hotel_Booking::instance()->_include( 'includes/admin/views/update/admin-addition-services-title.php', true, array(
@@ -360,8 +361,8 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 					$html[] = ob_get_clean();
 				}
 			}
-			echo implode( '', $html );
-		}
+			WPHB_Helpers::print( implode( '', $html ) );
+		}*/
 
 		/**
 		 * Email new booking

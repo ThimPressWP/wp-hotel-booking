@@ -48,8 +48,8 @@ class HB_Widget_Best_Reviews extends WP_Widget{
             }
             $html[] = '][/hotel_booking_best_reviews]';
         }
-        echo do_shortcode( implode(' ', $html) );
-        echo sprintf( '%s', $args['after_widget'] );
+	    WPHB_Helpers::print( do_shortcode( esc_html( implode(' ', $html) ) ) );
+	    WPHB_Helpers::print( sprintf( '%s', $args['after_widget'] ) );
     }
 
     /**

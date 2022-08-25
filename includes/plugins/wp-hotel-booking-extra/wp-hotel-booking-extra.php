@@ -1,16 +1,4 @@
 <?php
-/*
- * Plugin Name: WP Hotel Booking Extra
- * Plugin URI: http://thimpress.com/
- * Description: Support extra room for WP Hotel Booking
- * Author: ThimPress
- * Version: 1.9.7.4
- * Author URI: http://thimpress.com
- * Text Domain: wp-hotel-booking-extra
- * Domain Path: /languages/
- * Requires PHP: 7.0
- */
-
 /**
  * Prevent loading this file directly
  */
