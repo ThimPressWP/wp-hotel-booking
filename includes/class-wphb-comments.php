@@ -146,7 +146,7 @@ class WPHB_Comments {
 				} else {
 					$html = __( 'No rating', 'wp-hotel-booking' );
 				}
-				echo sprintf( '%s', $html );
+				WPHB_Helpers::print( sprintf( '%s', $html ) );
 				break;
 		}
 	}

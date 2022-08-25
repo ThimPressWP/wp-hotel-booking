@@ -35,9 +35,9 @@ class HB_Widget_Search extends WP_Widget {
 	 * @return void
 	 */
 	public function widget( $args, $instance ) {
-		echo sprintf( '%s', $args['before_widget'] );
+		WPHB_Helpers::print( sprintf( '%s', $args['before_widget'] ) );
 		if ( $title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base ) ) {
-			echo sprintf( '%s', $args['before_title'] . $title . $args['after_title'] );
+			echo esc_html( sprintf( '%s', $args['before_title'] . $title . $args['after_title'] ) );
 		}
 
 		// check show title search form

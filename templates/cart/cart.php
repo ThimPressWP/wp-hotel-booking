@@ -61,7 +61,7 @@ global $hb_settings; ?>
 							<td class="hb_room_type">
 								<a href="<?php echo get_permalink( $room->ID ); ?>"><?php echo apply_filters( 'hb_cart_room_name', $room->name, $room->ID ); ?><?php printf( '%s', $room->capacity_title ? ' (' . $room->capacity_title . ')' : '' ); ?></a>
 							</td>
-							<td class="hb_capacity"><?php echo sprintf( _n( '%d adult', '%d adults', $room->capacity, 'wp-hotel-booking' ), $room->capacity ); ?> </td>
+							<td class="hb_capacity"><?php echo esc_html( sprintf( _n( '%d adult', '%d adults', $room->capacity, 'wp-hotel-booking' ), $room->capacity ) ); ?> </td>
 							<td class="hb_quantity">
 								<p><?php echo esc_html( $num_of_rooms ); ?></p>
 							</td>

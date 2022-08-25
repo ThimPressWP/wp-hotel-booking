@@ -144,7 +144,7 @@ if ( ! function_exists( 'hb_dropdown_room_capacities' ) ) {
 
 		$output = ob_get_clean();
 		if ( $args['echo'] ) {
-			echo sprintf( '%s', $output );
+			WPHB_Helpers::print( sprintf( '%s', $output ) );
 		}
 
 		return $output;
@@ -182,7 +182,7 @@ if ( ! function_exists( 'hb_dropdown_room_types' ) ) {
 		$output = ob_get_clean();
 
 		if ( $args['echo'] ) {
-			echo sprintf( '%s', $output );
+			WPHB_Helpers::print( sprintf( '%s', $output ) );
 		}
 
 		return $output;
@@ -396,7 +396,7 @@ if ( ! function_exists( 'hb_dropdown_child_per_room' ) ) {
 			}
 		}
 		$output .= '</select>';
-		echo sprintf( '%s', $output );
+		WPHB_Helpers::print( sprintf( '%s', $output ) );
 	}
 }
 
@@ -678,7 +678,7 @@ if ( ! function_exists( 'hb_dropdown_titles' ) ) {
 		}
 		$output .= '</select>';
 		if ( $echo ) {
-			echo sprintf( '%s', $output );
+			WPHB_Helpers::print( sprintf( '%s', $output ) );
 		}
 
 		return $output;
@@ -985,7 +985,7 @@ if ( ! function_exists( 'hb_dropdown_numbers' ) ) {
 
 		$output .= '</select>';
 		if ( $echo ) {
-			echo sprintf( '%s', $output );
+			WPHB_Helpers::print( sprintf( '%s', $output ) );
 		}
 
 		return $output;

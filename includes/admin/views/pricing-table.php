@@ -44,16 +44,16 @@ $date_order   = hb_start_of_week_order();
                 <h3 class="hb-pricing-table-title">
                     <span><?php _e( 'Regular price', 'wp-hotel-booking' ); ?></span>
                     <input type="text" class="datepicker"
-                           name="date-start[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"
+                           name="date-start[<?php echo esc_attr( sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ) ); ?>]"
                            size="10" readonly="readonly"/>
                     <input type="hidden"
-                           name="date-start-timestamp[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"/>
+                           name="date-start-timestamp[<?php echo esc_attr( sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ) ); ?>]"/>
 
                     <input type="text" class="datepicker"
-                           name="date-end[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"
+                           name="date-end[<?php echo esc_attr( sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ) ) ; ?>]"
                            size="10" readonly="readonly"/>
                     <input type="hidden"
-                           name="date-end-timestamp[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"/>
+                           name="date-end-timestamp[<?php echo esc_attr( sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ) ) ; ?>]"/>
                 </h3>
                 <div class="hb-pricing-controls">
                     <a href="" class="dashicons dashicons-edit" data-action="edit"
@@ -82,7 +82,7 @@ $date_order   = hb_start_of_week_order();
                                 <td>
 									<?php $price = ! empty( $prices[ $i ] ) ? $prices[ $i ] : ''; ?>
                                     <input class="hb-pricing-price" type="number" min="0" step="any"
-                                           name="price[<?php echo sprintf( '%s', $plan_id ? $plan_id : '__INDEX__' ); ?>][<?php echo esc_attr( $i ); ?>]"
+                                           name="price[<?php echo esc_attr( sprintf( '%s', $plan_id ? $plan_id : '__INDEX__' ) ); ?>][<?php echo esc_attr( $i ); ?>]"
                                            value="<?php echo esc_attr( $price ); ?>" size="10" readonly="readonly"/>
                                 </td>
 							<?php } ?>

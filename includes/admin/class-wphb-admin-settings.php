@@ -330,7 +330,7 @@ class WPHB_Admin_Settings {
 				if ( $tabs ) :
 					foreach ( $tabs as $slug => $title ) {
 						?>
-						<a class="nav-tab<?php echo sprintf( '%s', $selected_tab == $slug ? ' nav-tab-active' : '' ); ?>"
+						<a class="nav-tab<?php echo esc_attr( sprintf( '%s', $selected_tab == $slug ? ' nav-tab-active' : '' ) ); ?>"
 						   href="?page=tp_hotel_booking_settings&tab=<?php echo esc_attr( $slug ); ?>">
 							<?php echo esc_html( $title ); ?>
 						</a>

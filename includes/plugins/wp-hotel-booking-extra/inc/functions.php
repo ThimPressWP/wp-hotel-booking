@@ -155,7 +155,7 @@ if( ! function_exists( 'tp_hb_extra_select' ) )
 	function tp_hb_extra_select( $name = '', $options = array(), $selected = array(), $multitye = false )
 	{
 		?>
-			<select name="<?php echo esc_attr( $name ); ?>"<?php echo sprintf( '%s', $multitye ? ' multiple' : '' ) ?>>
+			<select name="<?php echo esc_attr( $name ); ?>"<?php WPHB_Helpers::print( sprintf( '%s', $multitye ? ' multiple' : '' ) ) ?>>
 				<?php if( $options['options'] ): ?>
 					<?php foreach ( $options['options'] as $key => $option ): ?>
 						<?php if ( is_array( $option['value'] ) ): ?>

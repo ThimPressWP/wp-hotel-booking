@@ -26,7 +26,7 @@ $booking = WPHB_Booking::instance( $post->ID );
 <div id="booking_details">
 	<?php wp_nonce_field( 'hotel-booking-metabox-booking-details', 'hotel_booking_metabox_booking_details_nonce' ); ?>
 	<h2 class="hb_meta_title">
-		<?php echo sprintf( esc_html__( 'Book ID %s', 'wp-hotel-booking' ), hb_format_order_number( $post->ID ) ); ?>
+		<?php echo esc_html( sprintf( esc_html__( 'Book ID %s', 'wp-hotel-booking' ), hb_format_order_number( $post->ID ) ) ) ; ?>
 	</h2>
 	<p class="description"><?php printf( esc_html__( 'Booked on %s', 'wp-hotel-booking' ), esc_html( $post->post_date ) ); ?></p>
 	<div id="booking_details_section">

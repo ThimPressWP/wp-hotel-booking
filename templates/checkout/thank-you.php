@@ -36,9 +36,9 @@ if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 
 		<div id="booking-details">
 			<div class="booking-data">
-				<h3 class="booking-data-number"><?php echo sprintf( esc_attr__( 'Booking %s', 'wp-hotel-booking' ), hb_format_order_number( $booking_id ) ); ?></h3>
+				<h3 class="booking-data-number"><?php echo esc_html( sprintf( esc_attr__( 'Booking %s', 'wp-hotel-booking' ), hb_format_order_number( $booking_id ) ) ) ; ?></h3>
 				<div class="booking-date">
-					<?php echo sprintf( __( 'Date %s', 'wp-hotel-booking' ), get_the_date( '', $booking_id ) ); ?>
+					<?php echo esc_html( sprintf( __( 'Date %s', 'wp-hotel-booking' ), get_the_date( '', $booking_id ) ) ) ; ?>
 				</div>
 			</div>
 		</div>

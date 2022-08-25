@@ -36,7 +36,7 @@ class HB_Widget_Best_Reviews extends WP_Widget{
      */
     public function widget( $args, $instance )
     {
-        echo sprintf( '%s', $args['before_widget'] );
+	    WPHB_Helpers::print( sprintf( '%s', $args['before_widget'] ) );
         $html = array();
         if( $instance )
         {
