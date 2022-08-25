@@ -116,7 +116,7 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 			}
 
 			// save session
-			$_SESSION[ $this->prefix ] = $this->session;
+			$_SESSION[ $this->prefix ] = WPHB_Helpers::sanitize_params_submitted( $this->session );
 
 			// save cookie
 			if ( $this->remember ) {

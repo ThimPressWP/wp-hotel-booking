@@ -29,7 +29,7 @@ if ( $field['attr'] ) {
 	}
 }
 ?>
-<select name="<?php echo esc_attr( $name ); ?>" multiple="multiple" <?php printf( '%s', $field_attr ) ?>>
+<select name="<?php echo esc_attr( $name ); ?>" multiple="multiple" <?php printf( '%s', esc_html( $field_attr ) ) ?>>
 	<?php if ( ! empty( $field['options'] ) ) {
 		foreach ( $field['options'] as $k => $option ) { ?>
 			<?php

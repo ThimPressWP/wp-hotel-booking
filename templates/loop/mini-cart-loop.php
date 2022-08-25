@@ -28,7 +28,7 @@ $cart = WP_Hotel_Booking::instance()->cart;
 
 	<div class="hb_mini_cart_top">
 		<h4 class="hb_title">
-			<a href="<?php echo get_permalink( $room->ID ); ?>"><?php printf( '%s %s', apply_filters( 'hb_mini_cart_room_name', $room->name, $room->ID ), $room->capacity_title ? '(' . $room->capacity_title . ')' : '' ) ?></a>
+			<a href="<?php echo get_permalink( $room->ID ); ?>"><?php printf( '%s %s', esc_html( apply_filters( 'hb_mini_cart_room_name', $room->name, $room->ID ) ), esc_html($room->capacity_title ? '(' . $room->capacity_title . ')' : '') ) ?></a>
 		</h4>
 		<span class="hb_mini_cart_remove"><i class="fa fa-times"></i></span>
 	</div>

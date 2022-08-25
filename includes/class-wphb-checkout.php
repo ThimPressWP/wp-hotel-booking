@@ -91,7 +91,7 @@ class WPHB_Checkout {
      * @throws Exception
      */
     function process_checkout() {
-        if ( strtolower( $_SERVER['REQUEST_METHOD'] ) != 'post' ) {
+        if ( strtolower( sanitize_text_field( $_SERVER['REQUEST_METHOD'] ?? '' ) ) != 'post' ) {
             return;
         }
 
