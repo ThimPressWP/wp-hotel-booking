@@ -55,7 +55,7 @@ class WPHB_Admin_Metabox_Booking_Details {
 			if ( '_hb_room_addition_information' === $k ) {
 				$vl = WPHB_Helpers::sanitize_params_submitted( $vl, 'html' );
 			} else {
-				$vl = sanitize_text_field( $vl );
+				$vl = WPHB_Helpers::sanitize_params_submitted( $vl );
 			}
 
 			if ( strpos( $k, '_hb_' ) !== 0 ) {
