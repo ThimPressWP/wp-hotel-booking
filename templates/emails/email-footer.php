@@ -1,23 +1,27 @@
 <?php
 /**
- * @Author: ducnvtt
- * @Date  :   2016-04-14 10:34:16
- * @Last  Modified by:   ducnvtt
- * @Last  Modified time: 2016-04-15 16:42:42
+ * The template for displaying email footer.
+ *
+ * This template can be overridden by copying it to yourtheme/wp-hotel-booking/emails/email-footer.php.
+ *
+ * @author  ThimPress, leehld
+ * @package WP-Hotel-Booking/Templates
+ * @version 1.6
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit();
 
 ?>
 
-</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-</table>
-</body>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </body>
 </html>

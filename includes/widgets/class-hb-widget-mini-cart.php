@@ -1,13 +1,19 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-    exit;
-}
 /**
- * Class HB_Widget_Cart
+ * WP Hotel Booking widget mini cart.
  *
- * Display form for search rooms
- * @extends WP_Widget
+ * @version       1.9.6
+ * @author        ThimPress
+ * @package       WP_Hotel_Booking/Classes/Widgets
+ * @category      Classes
+ * @author        Thimpress, leehld
  */
+
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
+
 class HB_Widget_Mini_Cart extends WP_Widget{
     /**
      * Constructor
@@ -30,7 +36,7 @@ class HB_Widget_Mini_Cart extends WP_Widget{
      */
     public function widget( $args, $instance )
     {
-        echo sprintf( '%s', $args['before_widget'] );
+        WPHB_Helpers::print( sprintf( '%s', $args['before_widget'] ) );
         $html = array();
         if( $instance )
         {
@@ -42,8 +48,8 @@ class HB_Widget_Mini_Cart extends WP_Widget{
             }
             $html[] = '][/hotel_booking_mini_cart]';
         }
-        echo do_shortcode( implode(' ', $html) );
-        echo sprintf( '%s', $args['after_widget'] );
+        WPHB_Helpers::print( do_shortcode( wp_kses_post( implode(' ', $html) ) ) );
+        WPHB_Helpers::print( sprintf( '%s', $args['after_widget'] ) );
     }
 
     /**

@@ -1,13 +1,23 @@
 <?php
+/**
+ * WP Hotel Booking product room.
+ *
+ * @version       1.9.6
+ * @author        ThimPress
+ * @package       WP_Hotel_Booking/Classes
+ * @category      Classes
+ * @author        Thimpress, leehld
+ */
 
-if ( !defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 
-	public $quantity = 1;
-	public $check_in_date = 1;
+	public $quantity       = 1;
+	public $check_in_date  = 1;
 	public $check_out_date = 1;
 
 	/**
@@ -37,6 +47,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 
 	/**
 	 * reivew detail
+	 *
 	 * @return null or array
 	 */
 	public $_review_details = null;
@@ -44,18 +55,20 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 	function __construct( $post, $params = null ) {
 		if ( is_numeric( $post ) && $post && get_post_type( $post ) == 'hb_room' ) {
 			$this->post = get_post( $post );
-		} else if ( $post instanceof WP_Post || is_object( $post ) ) {
+		} elseif ( $post instanceof WP_Post || is_object( $post ) ) {
 			$this->post = $post;
 		}
 		if ( empty( $this->post ) ) {
 			$this->post = hb_create_empty_post();
 		}
 		global $hb_settings;
-		if ( !$this->_settings )
+		if ( ! $this->_settings ) {
 			$this->_settings = $hb_settings;
+		}
 
-		if ( $params )
+		if ( $params ) {
 			$this->set_data( $params );
+		}
 	}
 
 	/**
@@ -72,8 +85,9 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 				$this->set_data( $k, $v );
 			}
 		} else {
-			$this->_external_data[$key] = $value;
+			$this->_external_data[ $key ] = $value;
 		}
+
 		return $this;
 	}
 
@@ -85,7 +99,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 	 * @return bool
 	 */
 	function get_data( $key ) {
-		return !empty( $this->_external_data[$key] ) ? $this->_external_data[$key] : ( $key === false ? $this->_external_data : false );
+		return ! empty( $this->_external_data[ $key ] ) ? $this->_external_data[ $key ] : ( $key === false ? $this->_external_data : false );
 	}
 
 	/**
@@ -97,7 +111,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 	 */
 	function __get( $key ) {
 		static $fields = array();
-		$return = '';
+		$return        = '';
 		switch ( $key ) {
 			case 'ID':
 				$return = $this->get_data( 'id' ) ? $this->get_data( 'id' ) : $this->post->ID;
@@ -116,31 +130,34 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 				$return = get_the_title( $this->ID );
 				break;
 			case 'capacity':
-				$term_id = get_post_meta( $this->post->ID, '_hb_room_capacity', true );
-				$return  = get_term_meta( $term_id, 'hb_max_number_of_adults', true );
-				if ( !$return ) {
-					$return = (int) get_option( 'hb_taxonomy_capacity_' . $term_id );
-				}
+				$return = get_post_meta( $this->ID, '_hb_room_capacity_adult', true );
+				// not use:
+				// $term_id = get_post_meta( $this->post->ID, '_hb_room_origin_capacity', true ) ? get_post_meta( $this->post->ID, '_hb_room_origin_capacity', true ) : get_post_meta( $this->post->ID, '_hb_room_capacity', true );
+				// $return  = get_term_meta( $term_id, 'hb_max_number_of_adults', true );
+				// if ( ! $return ) {
+				// $return = (int) get_option( 'hb_taxonomy_capacity_' . $term_id );
+				// }
 				break;
 			case 'capacity_title':
-				$term_id = get_post_meta( $this->ID, '_hb_room_capacity', true );
-				if ( $key == 'capacity_title' ) {
-					$term = get_term( $term_id, 'hb_room_capacity' );
-					if ( isset( $term->name ) ) {
-						$return = $term->name;
-					}
-				} else {
-					$return = get_term_meta( $term_id, 'hb_max_number_of_adults', true );
-					if ( !$return ) {
-						$return = (int) get_option( 'hb_taxonomy_capacity_' . $term_id );
-					}
-				}
+				// not use:
+				// $term_id = get_post_meta( $this->ID, '_hb_room_capacity', true );
+				// if ( $key == 'capacity_title' ) {
+				// $term = get_term( $term_id, 'hb_room_capacity' );
+				// if ( isset( $term->name ) ) {
+				// $return = $term->name;
+				// }
+				// } else {
+				// $return = get_term_meta( $term_id, 'hb_max_number_of_adults', true );
+				// if ( ! $return ) {
+				// $return = (int) get_option( 'hb_taxonomy_capacity_' . $term_id );
+				// }
+				// }
 				break;
 			case 'capacity_id':
 				$return = get_post_meta( $this->post->ID, '_hb_room_capacity', true );
 				break;
 			case 'addition_information':
-				$return = get_post_meta( $this->ID, '_hb_room_addition_information', true );
+				$return = $this->get_addition_information();
 				break;
 			case 'thumbnail':
 				if ( has_post_thumbnail( $this->ID ) ) {
@@ -165,7 +182,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 			case 'dropdown_room':
 				$max_rooms = get_post_meta( $this->post->ID, '_hb_num_of_rooms', true );
 				$return    = '<select name="hb-num-of-rooms[' . $this->post->ID . ']">';
-				$return .= '<option value="0">' . __( 'Select', 'wp-hotel-booking' ) . '</option>';
+				$return   .= '<option value="0">' . __( 'Select', 'wp-hotel-booking' ) . '</option>';
 				for ( $i = 1; $i <= $max_rooms; $i ++ ) {
 					$return .= sprintf( '<option value="%1$d">%1$d</option>', $i );
 				}
@@ -213,13 +230,38 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 			case 'extra_packages':
 				$return = $this->get_data( 'extra_packages' );
 				break;
+			case 'is_preview':
+				$return = get_post_meta( $this->post->ID, '_hb_room_preview', true );
+				break;
+			case 'content_rules':
+				$return = $this->get_rules();
+				break;
+			case 'content_faqs':
+				$return = $this->get_faqs();
+				break;
 		}
+
 		return apply_filters( 'hotel_booking_room_get_data', $return, $key, $this );
 	}
+	public function get_addition_information() {
+		$infos = get_post_meta( $this->ID, '_hb_room_addition_information', true );
+		return hb_get_template_content( 'single-room/tabs/room-infos.php', array( 'infos' => $infos ) );
+	}
+	public function get_faqs() {
+		$faqs = get_post_meta( $this->post->ID, '_wphb_room_faq', true );
+		return hb_get_template_content( 'single-room/tabs/room-faqs.php', array( 'faqs' => $faqs ) );
+	}
 
-	function get_galleries( $with_featured = true ) {
+	public function get_rules() {
+		$rules = get_post_meta( $this->post->ID, '_hb_wphb_rule_room', true );
+		return hb_get_template_content( 'single-room/tabs/room-rules.php', array( 'rules' => $rules ) );
+	}
+
+	function get_galleries( $with_featured = false, $ignore_first = true ) {
 		$gallery = array();
-		if ( $with_featured && $thumb_id = get_post_thumbnail_id( $this->post->ID ) ) {
+
+		$thumb_id = get_post_thumbnail_id( $this->post->ID );
+		if ( $with_featured && $thumb_id ) {
 			$featured_thumb = wp_get_attachment_image_src( $thumb_id, 'thumbnail' );
 			$featured_full  = wp_get_attachment_image_src( $thumb_id, 'full' );
 			$alt            = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
@@ -227,13 +269,14 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 				'id'    => $thumb_id,
 				'src'   => $featured_full[0],
 				'thumb' => $featured_thumb[0],
-				'alt'   => $alt ? $alt : get_the_title( $thumb_id )
+				'alt'   => $alt ? $alt : get_the_title( $thumb_id ),
 			);
 		}
 
 		$galleries = get_post_meta( $this->post->ID, '_hb_gallery', true );
-		if ( !$galleries )
+		if ( ! $galleries ) {
 			return $gallery;
+		}
 
 		foreach ( $galleries as $thumb_id ) {
 			$alt = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
@@ -241,30 +284,48 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 			$w = $this->_settings->get( 'room_thumbnail_width', 150 );
 			$h = $this->_settings->get( 'room_thumbnail_height', 150 );
 
-			$size  = apply_filters( 'hotel_booking_room_thumbnail_size', array( 'width' => $w, 'height' => $h ) );
+			$size  = apply_filters(
+				'hotel_booking_room_thumbnail_size',
+				array(
+					'width'  => $w,
+					'height' => $h,
+				)
+			);
 			$thumb = $this->renderImage( $thumb_id, $size, true, 'thumbnail' );
-			if ( !$thumb ) {
+			if ( ! $thumb ) {
 				$thumb_src = wp_get_attachment_image_src( $thumb_id, 'thumbnail' );
-				$thumb     = $thumb_src[0];
+				if ( $thumb_src ) {
+					$thumb = $thumb_src[0];
+				}
 			}
 
 			$w    = $this->_settings->get( 'room_image_gallery_width', 1000 );
 			$h    = $this->_settings->get( 'room_image_gallery_height', 667 );
-			$size = apply_filters( 'hotel_booking_room_gallery_size', array( 'width' => $w, 'height' => $h ) );
+			$size = apply_filters(
+				'hotel_booking_room_gallery_size',
+				array(
+					'width'  => $w,
+					'height' => $h,
+				)
+			);
 
 			$full = $this->renderImage( $thumb_id, $size, true, 'full' );
-			if ( !$full ) {
+			if ( ! $full ) {
 				$full_src = wp_get_attachment_image_src( $thumb_id, 'full' );
-				$full     = $full_src[0];
+				if ( $full_src ) {
+					$full = $full_src[0];
+				}
 			}
 			$alt       = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
+
 			$gallery[] = array(
 				'id'    => $thumb_id,
 				'src'   => $full,
 				'thumb' => $thumb,
-				'alt'   => $alt ? $alt : get_the_title( $thumb_id )
+				'alt'   => $alt ? $alt : get_the_title( $thumb_id ),
 			);
 		}
+
 		return $gallery;
 	}
 
@@ -289,17 +350,18 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 		for ( $i = 0; $i < $nights; $i ++ ) {
 			$c_date = $start_date_to_time + $i * DAY_IN_SECONDS;
 			$date   = date( 'w', $c_date );
-			if ( !isset( $details[$date] ) ) {
-				$details[$date] = array(
+			if ( ! isset( $details[ $date ] ) ) {
+				$details[ $date ] = array(
 					'count' => 0,
-					'price' => 0
+					'price' => 0,
 				);
 			}
-			$details[$date]['count'] ++;
-			$details[$date]['price'] += $this->get_total( $c_date, 1, 1, $tax );
-			$room_details_total += $details[$date]['price'];
+			$details[ $date ]['count'] ++;
+			$details[ $date ]['price'] += $this->get_total( $c_date, 1, 1, $tax );
+			$room_details_total        += $details[ $date ]['price'];
 		}
 		$this->_room_details_total = $room_details_total;
+
 		return apply_filters( 'hotel_booking_get_booking_room_details', $details, $this->post->ID );
 	}
 
@@ -321,7 +383,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 			}
 		}
 
-		if ( !$date ) {
+		if ( ! $date ) {
 			$date = time();
 		} elseif ( is_string( $date ) ) {
 			$date = @strtotime( $date );
@@ -333,8 +395,8 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 
 		if ( $selected_plan ) {
 			$prices = $selected_plan->prices;
-			if ( $prices && isset( $prices[date( 'w', $date )] ) ) {
-				$return = $prices[date( 'w', $date )];
+			if ( $prices && isset( $prices[ date( 'w', $date ) ] ) ) {
+				$return = floatval( $prices[ date( 'w', $date ) ] );
 				$return = $return + $return * $tax;
 			}
 		}
@@ -359,12 +421,12 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 			$to_time   = (int) $this->check_out_date;
 			$from_time = (int) $this->check_in_date;
 		} else {
-			if ( !is_numeric( $from ) ) {
+			if ( ! is_numeric( $from ) ) {
 				$from_time = strtotime( $from );
 			} else {
 				$from_time = $from;
 			}
-			if ( !is_numeric( $to ) ) {
+			if ( ! is_numeric( $to ) ) {
 				$to_time = strtotime( $to );
 			} else {
 				if ( $to >= DAY_IN_SECONDS ) {
@@ -375,18 +437,18 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 			}
 		}
 
-		if ( !$num_of_rooms ) {
+		if ( ! $num_of_rooms ) {
 			$num_of_rooms = intval( $this->get_data( 'quantity' ) );
 		}
 
-		if ( !$nights ) {
+		if ( ! $nights ) {
 			$nights = hb_count_nights_two_dates( $to_time, $from_time );
 		}
 
 		$from = mktime( 0, 0, 0, date( 'm', $from_time ), date( 'd', $from_time ), date( 'Y', $from_time ) );
 		for ( $i = 0; $i < $nights; $i ++ ) {
 			$total_per_night = $this->get_price( $from + $i * DAY_IN_SECONDS, false );
-			$total += $total_per_night * $num_of_rooms;
+			$total          += $total_per_night * $num_of_rooms;
 		}
 
 		$total    = apply_filters( 'hotel_booking_room_total_price_excl_tax', $total, $this );
@@ -400,31 +462,28 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 			$total     = $total + $tax_price;
 			// }
 		}
+
 		return $total;
 	}
 
 	/**
 	 * Get list of pricing plan of this room type
+	 *
 	 * @return null
 	 */
 	function get_pricing_plans() {
-		if ( !$this->_plans ) {
+		if ( ! $this->_plans ) {
 			$this->_plans = hb_room_get_pricing_plans( $this->post->ID );
 		}
+
 		return $this->_plans;
 	}
 
-	function get_related_rooms() {
-		$room_types          = get_the_terms( $this->post->ID, 'hb_room_type' );
-		$room_capacity       = (int) get_post_meta( $this->post->ID, '_hb_room_capacity', true );
-		$max_adults_per_room = get_term_meta( $room_capacity, 'hb_max_number_of_adults', true );
-		if ( !$max_adults_per_room ) {
-			$max_adults_per_room = (int) get_option( 'hb_taxonomy_capacity_' . $room_capacity );
-		}
-		if ( !$max_adults_per_room ) {
-			$max_adults_per_room = (int) get_post_meta( $this->post->ID, '_hb_max_adults_per_room', true );
-		}
-		$max_child_per_room = (int) get_post_meta( $this->post->ID, '_hb_max_child_per_room', true );
+	/**
+	 * @return WP_Query
+	 */
+	public function get_related_rooms() {
+		$room_types = get_the_terms( $this->post->ID, 'hb_room_type' );
 
 		$taxonomis = array();
 		if ( $room_types ) {
@@ -441,29 +500,18 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 		$args  = array(
 			'post_type'    => 'hb_room',
 			'status'       => 'publish',
-			'meta_query'   => array(
-				// array(
-				//     'key'       => '_hb_max_adults_per_room',
-				//     'value'     => $max_adults_per_room,
-				//     'compare'   => '>=',
-				// ),
-				array(
-					'key'     => '_hb_max_child_per_room',
-					'value'   => $max_child_per_room,
-					'compare' => '<='
-				),
-			),
 			'tax_query'    => array(
 				array(
 					'taxonomy' => 'hb_room_type',
 					'field'    => 'term_id',
-					'terms'    => $taxonomis
+					'terms'    => $taxonomis,
 				),
 			),
-			'post__not_in' => array( $this->post->ID )
+			'post__not_in' => array( $this->post->ID ),
 		);
 		$query = new WP_Query( $args );
 		wp_reset_postdata();
+
 		return $query;
 	}
 
@@ -478,16 +526,22 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 		if ( false === ( $count = get_transient( $transient_name ) ) ) {
 			$count = count( $this->get_review_details() );
 
-			//set_transient( $transient_name, $count, DAY_IN_SECONDS * 30 );
+			// set_transient( $transient_name, $count, DAY_IN_SECONDS * 30 );
 		}
 
 		return apply_filters( 'hb_room_review_count', $count, $this );
 	}
 
 	function get_review_details() {
-		if ( !$this->_review_details ) {
-			return get_comments( array( 'post_id' => $this->post->ID, 'status' => 'approve' ) );
+		if ( ! $this->_review_details ) {
+			return get_comments(
+				array(
+					'post_id' => $this->post->ID,
+					'status'  => 'approve',
+				)
+			);
 		}
+
 		return $this->_review_details;
 	}
 
@@ -495,6 +549,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 		if ( $type === 'catalog' ) {
 			return $this->get_catalog( $attachID = false, $echo = true );
 		}
+
 		return $this->get_thumbnail( $attachID = false, $echo = true );
 	}
 
@@ -509,24 +564,33 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 				$i ++;
 			}
 		}
-		if ( $comments && $i )
+		if ( $comments && $i ) {
 			return $total / $i;
+		}
 
 		return null;
 	}
 
 	/**
 	 * get thumbnail
+	 *
 	 * @return html or array atts
 	 */
 	function get_thumbnail( $attachID = false, $echo = true ) {
 		$w = $this->_settings->get( 'room_thumbnail_width', 150 );
 		$h = $this->_settings->get( 'room_thumbnail_height', 150 );
 
-		$size = apply_filters( 'hotel_booking_room_thumbnail_size', array( 'width' => $w, 'height' => $h ) );
+		$size = apply_filters(
+			'hotel_booking_room_thumbnail_size',
+			array(
+				'width'  => $w,
+				'height' => $h,
+			)
+		);
 
-		if ( $attachID == false )
+		if ( $attachID == false ) {
 			$attachID = get_post_thumbnail_id( $this->post->ID );
+		}
 
 		$alt   = get_post_meta( $attachID, '_wp_attachment_image_alt', true );
 		$image = $this->renderImage( $attachID, $size, false, 'thumbnail' );
@@ -547,10 +611,17 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 		$w = $this->_settings->get( 'catalog_image_width', 270 );
 		$h = $this->_settings->get( 'catalog_image_height', 270 );
 
-		$size = apply_filters( 'hotel_booking_room_gallery_size', array( 'width' => $w, 'height' => $h ) );
+		$size = apply_filters(
+			'hotel_booking_room_gallery_size',
+			array(
+				'width'  => $w,
+				'height' => $h,
+			)
+		);
 
-		if ( $attachID == false )
+		if ( $attachID == false ) {
 			$attachID = get_post_thumbnail_id( $this->post->ID );
+		}
 
 		$alt = get_post_meta( $attachID, '_wp_attachment_image_alt', true );
 
@@ -571,18 +642,22 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 		$resizer = WPHB_Reizer::getInstance();
 
 		$image = $resizer->process( $attachID, $size, $src );
+
 		if ( $image ) {
 			return $image;
 		} else {
 			$image = wp_get_attachment_image_src( $attachID, $default );
-			if ( $src ) {
-				return $image[0];
-			} else {
-				return array(
-					$image[0],
-					$image[1],
-					$image[2]
-				);
+
+			if ( $image ) {
+				if ( $src ) {
+					return $image[0];
+				} else {
+					return array(
+						$image[0],
+						$image[1],
+						$image[2],
+					);
+				}
 			}
 		}
 	}
@@ -590,8 +665,9 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 	function pricing_plan() {
 		$prices = array();
 		$prices = hb_get_price_plan_room( get_the_ID() );
-		if ( $prices )
+		if ( $prices ) {
 			sort( $prices );
+		}
 
 		$sort          = $prices;
 		$prices['min'] = current( $sort );
@@ -612,6 +688,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 
 	function amount( $cart = false ) {
 		$amount = hb_price_including_tax( $cart ) ? $this->amount_include_tax() : $this->amount_exclude_tax();
+
 		return apply_filters( 'hotel_booking_room_item_amount', $amount, $this );
 	}
 
@@ -625,6 +702,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 
 	function amount_singular( $cart = false ) {
 		$amount = hb_price_including_tax( $cart ) ? $this->amount_singular_include_tax() : $this->amount_singular_exclude_tax();
+
 		return apply_filters( 'hotel_booking_room_amount_singular', $amount, $this );
 	}
 
@@ -636,7 +714,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 		return '';
 	}
 
-	public function is_in_stock(){
+	public function is_in_stock() {
 
 	}
 }

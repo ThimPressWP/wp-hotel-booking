@@ -1,6 +1,0 @@
-
-== Changelog ==
-
-= 1.7.3 =
-- Update datepicker check in today
-- Update minimum booking day

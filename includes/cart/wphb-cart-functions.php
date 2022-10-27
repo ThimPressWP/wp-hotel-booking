@@ -1,17 +1,21 @@
 <?php
 /**
- * @Author: ducnvtt
- * @Date  :   2016-04-11 08:27:22
- * @Last  Modified by:   ducnvtt
- * @Last  Modified time: 2016-04-11 08:35:07
+ * WP Hotel Booking cart functions.
+ *
+ * @version     1.9.6
+ * @author      ThimPress
+ * @package     WP_Hotel_Booking/Functions
+ * @category    Core Functions
+ * @author      Thimpress, leehld
  */
 
-if ( !defined( 'ABSPATH' ) ) {
-	exit();
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 // generate cart item id
-if ( !function_exists( 'hb_generate_cart_item_id' ) ) {
+if ( ! function_exists( 'hb_generate_cart_item_id' ) ) {
 	function hb_generate_cart_item_id( $params = array() ) {
 		$cart_id = array();
 		foreach ( $params as $key => $param ) {
@@ -33,7 +37,7 @@ if ( !function_exists( 'hb_generate_cart_item_id' ) ) {
  *
  * @return bool|WPHB_Cart|mixed
  */
-if ( !function_exists( 'hb_get_cart' ) ) {
+if ( ! function_exists( 'hb_get_cart' ) ) {
 
 	function hb_get_cart( $prop = null ) {
 		return WPHB_Cart::instance( $prop );
@@ -45,7 +49,7 @@ if ( !function_exists( 'hb_get_cart' ) ) {
  *
  * @return mixed
  */
-if ( !function_exists( 'hb_uniqid' ) ) {
+if ( ! function_exists( 'hb_uniqid' ) ) {
 
 	function hb_uniqid() {
 		$hash = str_replace( '.', '', microtime( true ) . uniqid() );
@@ -58,13 +62,14 @@ if ( !function_exists( 'hb_uniqid' ) ) {
  *
  * @return string
  */
-if ( !function_exists( 'hb_get_cart_description' ) ) {
+if ( ! function_exists( 'hb_get_cart_description' ) ) {
 
 	function hb_get_cart_description() {
 		$cart        = WPHB_Cart::instance();
 		$description = array();
 		foreach ( $cart->get_rooms() as $room ) {
-			$description[] = sprintf( '%s (x %d)', $room->name, $room->quantity );
+			$quantity      = ( $room->_external_data['quantity'] ) ? $room->_external_data['quantity'] : $room->quantity;
+			$description[] = sprintf( '%s (x %d)', $room->name, $quantity );
 		}
 		return join( ', ', $description );
 	}
@@ -75,7 +80,7 @@ if ( !function_exists( 'hb_get_cart_description' ) ) {
  *
  * @return mixed
  */
-if ( !function_exists( 'hb_get_return_url' ) ) {
+if ( ! function_exists( 'hb_get_return_url' ) ) {
 
 	function hb_get_return_url() {
 		$url = hb_get_checkout_url();
@@ -89,7 +94,7 @@ if ( !function_exists( 'hb_get_return_url' ) ) {
  *
  * @return bool
  */
-if ( !function_exists( 'hb_get_coupons_active' ) ) {
+if ( ! function_exists( 'hb_get_coupons_active' ) ) {
 
 	function hb_get_coupons_active( $date, $code = false ) {
 
@@ -105,14 +110,14 @@ if ( !function_exists( 'hb_get_coupons_active' ) ) {
 					array(
 						'key'     => '_hb_coupon_date_from_timestamp',
 						'compare' => '<=',
-						'value'   => $date
+						'value'   => $date,
 					),
 					array(
 						'key'     => '_hb_coupon_date_to_timestamp',
 						'compare' => '>=',
-						'value'   => $date
-					)
-				)
+						'value'   => $date,
+					),
+				),
 			);
 
 			if ( $coupons = get_posts( $args ) ) {
@@ -124,7 +129,7 @@ if ( !function_exists( 'hb_get_coupons_active' ) ) {
 						break;
 					}
 				}
-				if ( !$found ) {
+				if ( ! $found ) {
 					$coupons = false;
 				}
 			}

@@ -1,88 +1,91 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-    exit;
-}
 /**
- * Class HB_Widget_Room_Carousel
+ * WP Hotel Booking widget latest reviews.
  *
- * Display form for search rooms
- * @extends WP_Widget
+ * @version       1.9.6
+ * @author        ThimPress
+ * @package       WP_Hotel_Booking/Classes/Widgets
+ * @category      Classes
+ * @author        Thimpress, leehld
  */
-class HB_Widget_Lastest_Reviews extends WP_Widget{
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        parent::__construct(
-            'hb_widget_lastest_reviews', // widget base id
-            __( 'HB Rooms Lastest Reviews', 'wp-hotel-booking' ), // name of widget
-            array( 'description' => __( "Display rooms have lastest reviews", 'wp-hotel-booking' ) ) // description widget
-        );
-    }
 
-    /**
-     * Display the search form in widget
-     *
-     * @param array $args
-     * @param array $instance
-     * @return void
-     */
-    public function widget( $args, $instance )
-    {
-        echo sprintf( '%s', $args['before_widget'] );
-        $html = array();
-        if( $instance )
-        {
-            $html[] = '[hotel_booking_lastest_reviews';
-            foreach ($instance as $att => $param) {
-                if( is_array($param) )
-                    continue;
-                $html[] = $att.'="'.$param.'"';
-            }
-            $html[] = '][/hotel_booking_lastest_reviews]';
-        }
-        echo do_shortcode( implode(' ', $html) );
-        echo sprintf( '%s', $args['after_widget'] );
-    }
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
-    /**
-     * Widget options
-     * @param $instance
-     */
-    public function form( $instance )
-    {
-        $title = ! empty( $instance['title'] ) ? $instance['title'] : '';
-        $number = ! empty( $instance['number'] ) ? $instance['number'] : 5;
-        ?>
-        <p>
-            <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Title:' ); ?></label>
-            <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
-        </p>
-        <p>
-            <label for="<?php echo esc_attr( $this->get_field_id( 'number' ) ); ?>"><?php _e( 'Number of items:' ); ?></label>
-            <input id="<?php echo esc_attr( $this->get_field_id( 'number' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'number' ) ); ?>" type="number" value="<?php echo esc_attr( $number ); ?>" min="1">
-        </p>
-        <?php
-    }
+class HB_Widget_Lastest_Reviews extends WP_Widget {
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		parent::__construct(
+			'hb_widget_lastest_reviews', // widget base id
+			__( 'HB Rooms Lastest Reviews', 'wp-hotel-booking' ), // name of widget
+			array( 'description' => __( 'Display rooms have lastest reviews', 'wp-hotel-booking' ) ) // description widget
+		);
+	}
 
-    /**
-     * Handle update
-     *
-     * @param $new_instance
-     * @param $old_instance
-     * @return array
-     */
-    public function update( $new_instance, $old_instance )
-    {
-        $instance = array();
-        // title
-        $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+	/**
+	 * Display the search form in widget
+	 *
+	 * @param array $args
+	 * @param array $instance
+	 * @return void
+	 */
+	public function widget( $args, $instance ) {
+		WPHB_Helpers::print( sprintf( '%s', $args['before_widget'] ) );
+		$html = array();
+		if ( $instance ) {
+			$html[] = '[hotel_booking_lastest_reviews';
+			foreach ( $instance as $att => $param ) {
+				if ( is_array( $param ) ) {
+					continue;
+				}
+				$html[] = $att . '="' . $param . '"';
+			}
+			$html[] = '][/hotel_booking_lastest_reviews]';
+		}
+		WPHB_Helpers::print( do_shortcode( wp_kses_post( implode( ' ', $html ) ) ) );
+		WPHB_Helpers::print( sprintf( '%s', $args['after_widget'] ) );
+	}
 
-        // number
-        $instance['number'] = ( ! empty( $new_instance['number'] ) ) ? strip_tags( $new_instance['number'] ) : 4;
+	/**
+	 * Widget options
+	 *
+	 * @param $instance
+	 */
+	public function form( $instance ) {
+		$title  = ! empty( $instance['title'] ) ? $instance['title'] : '';
+		$number = ! empty( $instance['number'] ) ? $instance['number'] : 5;
+		?>
+		<p>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php _e( 'Title:', 'wp-hotel-booking' ); ?></label>
+			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+		</p>
+		<p>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'number' ) ); ?>"><?php _e( 'Number of items:', 'wp-hotel-booking' ); ?></label>
+			<input id="<?php echo esc_attr( $this->get_field_id( 'number' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'number' ) ); ?>" type="number" value="<?php echo esc_attr( $number ); ?>" min="1">
+		</p>
+		<?php
+	}
 
-        return $instance;
-    }
+	/**
+	 * Handle update
+	 *
+	 * @param $new_instance
+	 * @param $old_instance
+	 * @return array
+	 */
+	public function update( $new_instance, $old_instance ) {
+		$instance = array();
+		// title
+		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+
+		// number
+		$instance['number'] = ( ! empty( $new_instance['number'] ) ) ? strip_tags( $new_instance['number'] ) : 4;
+
+		return $instance;
+	}
 
 }

@@ -1,10 +1,11 @@
 === WP Hotel Booking ===
-Contributors: thimpress, leehld
+Contributors: thimpress, leehld, phamtungpth, thoakim
 Donate link: https://thimpress.com/
 Tags: hotel, booking, hotel booking, reservation, reservations
-Requires at least: 4.2
-Tested up to: 4.7
-Stable tag: trunk
+Requires at least: 5.6
+Requires PHP: 7.0
+Tested up to: 6.0
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,13 +38,20 @@ Take a look at the Premium **[HotelWP - Hotel Wordpress Theme](https://themefore
 - Multi Currencies
 - 4 Payment Gateways (Offline Payment, Authorize.net, Paypal, Stripe)
 
+**Free add-ons for WP Hotel Booking are available in WordPress:**
+
+- <a href="https://wordpress.org/plugins/wp-hotel-booking-authorize-payment/" target="_blank">Authorize.Net Payment method for WP Hotel Booking</a> - Authorize.Net payment method for WP Hotel Booking Plugin.
+- <a href="https://wordpress.org/plugins/wp-hotel-booking-stripe-payment/" target="_blank">Stripe Payment method for WP Hotel Booking</a> - Stripe payment method for WP Hotel Booking Plugin.
+- <a href="https://wordpress.org/plugins/wp-hotel-booking-report/" target="_blank">Statistic for WP Hotel Booking</a> - Statistic booking for WP Hotel Booking Plugin.
+- <a href="https://wordpress.org/plugins/wp-hotel-booking-woocommerce/" target="_blank">Woocommerce payment method for WP Hotel Booking</a> - Support paying for booking of WP Hotel Booking plugin with the payment system provided by WooCommerce..
+- <a href="https://wordpress.org/plugins/wp-hotel-booking-wpml-support/" target="_blank">WPML for WP Hotel Booking</a> - Multilnguage CMS support for WP Hotel Booking Plugin.
+
 == Installation ==
 
 1. Upload the plugin files to the `/wp-content/plugins/wp-hotel-booking` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress
 3. Use the Settings->Plugin Name screen to configure the plugin
 4. (Make your instructions match the desired user flow for activating and installing your plugin. Include any steps that might be needed for explanatory purposes)
-
 
 == Frequently Asked Questions ==
 
@@ -67,10 +75,274 @@ Yes.
 
 == Changelog ==
 
+= 2.0.2 (2022-10-18) =
+~ Fixed: coupon function.
+~ Updated: library moment, select2 js to latest.
+~ Show dates booked on calendar by Date format.
+~ Fixed: styles Archive rooms.
+~ Fixed: styles review star on detail room.
+~ Fixed: error check available room very slow when change format date.
+
+= 2.0.1 (2022-10-08) =
+~ Fixed: the user can book a range of days that includes a disabled date.
+~ Fixed: error calendar manage.
+~ Fixed: security authorisation and CSRF checks in place when updating its settings.
+
+= 2.0.0 (2022-10-06) =
+~ Added: function check date available check booking room.
+~ Optimize code.
+~ Added: function coupon.
+~ Merged: "WP Hotel Booking Coupon", "WP Hotel Booking Room", "WP Hotel Booking Block" plugins.
+~ Sanitize, Escape, Validate.
+~ Fixed: Security issues.
+~ Fixed: styles of meta-boxes.
+~ Added: calendar booking manager.
+~ Added: page setup wizard.
+~ Added: API for booking, check available.
+~ Added: option disable dates for each room.
+~ Added: option external link.
+~ Added: function deposit.
+
+= 1.10.5 =
+~ Fix sanitize.
+
+= 1.10.4 =
+~ Fix security, use json instead of serialize.
+
+= 1.10.3 =
+~ Fix security CVE AC-2020-11-17-2
+
+= 1.10.2 =
+~ Fix compatible WP 5.5
+
+= 1.10.1 =
+- Fixed error PHP warming in cart and checkout page when empty price in Room.
+- Fixed error extra require can remove.
+- Fixed security stripe key
+- Add filter calculate tax for extra service
+
+= 1.10.0 =
+~ Fixed not save Additional Information when using HTML element
+
+= 1.9.10 =
+~ Fixed not save Regular price and gallery when edit single room
+
+= 1.9.9 =
+~ Fixed some bugs security.
+~ Fixed issue: "Check Availability" case choice room hasn't Addition package
+~ Fixed minor bugs
+~ Add option: Redirect to page after book room
+~ Fixed: only role Hotel manager, Booking Editor or Administrator can create manual order
+
+= 1.9.8.7 =
++ Fixed issue: not remove loading icon after the action done.
+
+= 1.9.8.6 =
++ Fixed bug not work with j.n.Y date format.
++ Added loading effect when searching rooms, selecting rooms, checking out.
+
+= 1.9.8.5 =
++ Fixed bug duplicate fields in settings pages.
++ Added more several hooks.
+
+= 1.9.8.4 =
++ Fixed the bug not displaying booking orders in the All tab.
+
+= 1.9.8.3 =
++ Fixed the bug when displaying the max children number in search form.
++ Minified several js and css files.
+
+= 1.9.8.2 =
++ Added couple hooks in Select Extra Options view.
+
+= 1.9.8.1 =
++ Corrected path to override the Extra options add-on.
++ Fixed the conflict issue which causes Content duplication when Yoase SEO On.
++ Fixed warning message when displaying the price with PHP7.
++ Corrected the text in Emails Settings.
++ Not display the Advanced Payment in the cart when it set as 0% or not set.
+
+= 1.9.8 =
++ Fixed bug when searching by room capacity.
++ Added loading effect to the button when choose the extra options.
+
+= 1.9.7.9 =
++ Changed the way of displaying the price when TAX included.
++ Fixed bug in Widget: Show title/label option not work.
++ Fixed bug: Required extra option not auto be added to cart when Custom Process option ON.
++ Fixed a small bug with Menu in Back End.
++ Updated several language texts.
+
+= 1.9.7.8 =
++ Fixed bug when searching rooms with other languages.
+
+= 1.9.7.7 =
++ Update cancel mail template
+
+= 1.9.7.6 =
++ Update filter search room
+
+= 1.9.7.5 =
++ Fix issue show unpublished extra room in search page
++ Update default setting room images size in single room gallery
++ Update process get related rooms
++ Update tool check override templates to check WP Hotel Booking addons
+
+= 1.9.7.4 =
++ Add tool check override templates
++ Update templates instruction
+
+= 1.9.7.3 =
++ Update offline payment instruction in thank you page template
+
+= 1.9.7.2 =
++ Update select extra in search room page with custom process
++ Improve admin booking editor
+
+= 1.9.7.1 =
++ Update maximum extra price
+
+= 1.9.7 =
++ Update compatible with WPML
+
+= 1.9.6.2 =
++ Update search room process
+
+= 1.9.6.1 =
++ Fix search room process
+
+= 1.9.6 =
++ Update search room process
++ Update search form template
+
+= 1.9.5 =
+- Update booking checkin checkout same day
+- Update admin filter booking
+- Add custom booking process option
+- Restructure extra option
+- GDPR compliance
+
+= 1.9.4 =
+- Update email booking details
+
+= 1.9.3 =
+* Add default list rooms page
+
+= 1.9.2 =
+* Optimize create default database tables process
+* Fix issue select extra with Single purchase option
+
+= 1.9.1 =
+* Fix create default database tables process
+
+= 1.9 =
+* Add option disable select quantity in Hotel Search page
+
+= 1.8.9 =
+* Fix js typo error in checkout page
+* Update pricing table base on "Week Starts On" option
+* Remove admin setting lightbox tab
+
+= 1.8.8 =
+* Update custom page body classes
+
+= 1.8.7 =
+* Update checkout thank you page
+* Update cart templates
+
+= 1.8.6 =
+* Update custom field for room and booking type
+
+= 1.8.5 =
+* Update custom class to default pages
+* Update redirect thank you page after Paypal checkout
+* Update cart template
+
+= 1.8.4 =
+* Fix duplicate admin settings
+
+= 1.8.3 =
+* Update process create database tables
+
+= 1.8.2 =
+* Update compatible with Wordpress 4.9.2
+* Update admin settings
+
+= 1.8.1 =
+* Fix duplicate image in room gallery lightbox
+
+= 1.8 =
+* Update single room template
+
+= 1.7.9.9 =
+* Disable convert currency via Google Finance and Yahoo Finance
+
+= 1.7.9.8 =
+* Add link edit in single room page
+* Update sort by capacity in search room page
+
+= 1.7.9.7 =
+* Update cart page
+* Update room pricing plan template
+
+= 1.7.9.6 =
+* Update compatible with Wordpress 4.9
+
+= 1.7.9.5 =
+* Update admin booking page
+
+= 1.7.9.4 =
+* Add cancel booking email option
+* Fix add to cart in single room of booking room add-on
+* Update deprecated functions in Woocommerce add-on
+* Update select date in booking room add-on
+
+= 1.7.9.3 =
+* Fix customer email in admin booking page
+
+= 1.7.9.2 =
+* Fix View Cart button in search room page
+
+= 1.7.9.1 =
+* Update search room template
+* Update extra room package price in Woocommerce payment add-on
+
+= 1.7.9 =
+* Update hotel roles
+
+= 1.7.8.9 =
+* Update search room when update booking status for WPML Support add-on
+* Update Woocommerce booking payment gateway
+
+= 1.7.8.8 =
+* Update compatible with PHP 5.5
+
+= 1.7.8.7 =
+* Update WP Hotel Booking WPML Support add-on
+
+= 1.7.8.6 =
+* Update thank you booking template
+
+= 1.7.8.5 =
+* Add thank you booking page
+
+= 1.7.8.4 =
+* Update language extra package add-on
+
+= 1.7.8.3 =
+* Improve auto update Woocommerce cart for Woocommerce payment add-on
+
+= 1.7.8.2 =
+* Fix query with database prefix
+
+= 1.7.8.1 =
+* Update customer place booking email
+
 = 1.7.8 =
 * Add Hotel Manager role to manage hotel booking
 * Add Booking Editor role to manage rooms and bookings
 * Update capabilities for users
+* Update add-ons
 
 = 1.7.7 =
 - Update email from when customer place booking

@@ -1,8 +1,18 @@
 <?php
+/**
+ * WP Hotel Booking search room form shortcode.
+ *
+ * @version       1.9.7
+ * @author        ThimPress
+ * @package       WP_Hotel_Booking/Classes/Shortcode
+ * @category      Classes
+ * @author        Thimpress, leehld
+ */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+/**
+ * Prevent loading this file directly
+ */
+defined( 'ABSPATH' ) || exit;
 
 class WPHB_Shortcode_Hotel_Booking extends WPHB_Shortcodes {
 
@@ -28,20 +38,30 @@ class WPHB_Shortcode_Hotel_Booking extends WPHB_Shortcodes {
 		}
 		$adults    = hb_get_request( 'adults', 1 );
 		$max_child = hb_get_request( 'max_child', 0 );
+		$paged     = hb_get_request( 'paged', 1 );
 
 		$atts = wp_parse_args(
-			$atts, array(
+			$atts,
+			array(
 				'check_in_date'  => $start_date,
 				'check_out_date' => $end_date,
 				'adults'         => $adults,
 				'max_child'      => $max_child,
-				'search_page'    => null
+				'search_page'    => null,
+				'widget_search'  => false,
+				'paged'          => $paged,
 			)
 		);
 
-		$page = hb_get_request( 'hotel-booking' );
+		// $page = hb_get_request( 'hotel-booking' );
 
-		$template      = 'search/search.php';
+		// add new template to use app
+		if ( WPHB_API_V2 ) {
+			$template = 'search/v2/search-page-v2.php'; // use api
+		} else {
+			$template = 'search/search-page.php';
+		}
+
 		$template_args = array();
 
 		// find the url for form action
@@ -64,26 +84,28 @@ class WPHB_Shortcode_Hotel_Booking extends WPHB_Shortcodes {
 		/**
 		 * Display the template based on current step
 		 */
-		switch ( $page ) {
-			case 'results':
-				if ( ! isset( $atts['page'] ) || $atts['page'] !== 'results' ) {
-					break;
-				}
 
-				$template                 = 'search/results.php';
-				$template_args['results'] = hb_search_rooms(
-					array(
-						'check_in_date'  => $start_date,
-						'check_out_date' => $end_date,
-						'adults'         => $adults,
-						'max_child'      => $max_child
-					)
-				);
-				break;
-			default:
-				$template = 'search/search.php';
-				break;
-		}
+		// switch ( $page ) {
+		// case 'results':
+		// if ( ! isset( $atts['page'] ) || $atts['page'] !== 'results' ) {
+		// break;
+		// }
+
+		// $template                 = 'search/results.php';
+		// $template_args['results'] = hb_search_rooms(
+		// array(
+		// 'check_in_date'  => $start_date,
+		// 'check_out_date' => $end_date,
+		// 'adults'         => $adults,
+		// 'max_child'      => $max_child
+		// )
+		// );
+		// break;
+		// default:
+		// $template = 'search/search-page.php';
+		// break;
+		// }
+
 		$template = apply_filters( 'hotel_booking_shortcode_template', $template );
 		ob_start();
 		do_action( 'hb_wrapper_start' );

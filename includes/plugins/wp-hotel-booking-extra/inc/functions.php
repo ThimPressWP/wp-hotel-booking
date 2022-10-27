@@ -1,7 +1,7 @@
 <?php
 
 function tp_hb_extra_template_path(){
-    return apply_filters( 'hb_extra_template_path', 'wp-hb-extra' );
+    return apply_filters( 'hb_extra_template_path', 'wp-hotel-booking-extra' );
 }
 /**
  * get template part
@@ -136,8 +136,8 @@ if( ! function_exists( 'tp_hb_extra_type' ) )
 	function tp_hb_extra_type()
 	{
 		return apply_filters( 'hb_extra_type', array(
-				'trip' 		=> __( 'Trip', 'wp-hb-extra' ),
-				'number'	=> __( 'Number', 'wp-hb-extra' )
+				'trip' 		=> __( 'Trip', 'wp-hotel-booking' ),
+				'number'	=> __( 'Number', 'wp-hotel-booking' )
 			)
 		);
 	}
@@ -155,7 +155,7 @@ if( ! function_exists( 'tp_hb_extra_select' ) )
 	function tp_hb_extra_select( $name = '', $options = array(), $selected = array(), $multitye = false )
 	{
 		?>
-			<select name="<?php echo esc_attr( $name ); ?>"<?php echo sprintf( '%s', $multitye ? ' multiple' : '' ) ?>>
+			<select name="<?php echo esc_attr( $name ); ?>"<?php WPHB_Helpers::print( sprintf( '%s', $multitye ? ' multiple' : '' ) ) ?>>
 				<?php if( $options['options'] ): ?>
 					<?php foreach ( $options['options'] as $key => $option ): ?>
 						<?php if ( is_array( $option['value'] ) ): ?>
