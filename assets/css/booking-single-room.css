@@ -1,0 +1,110 @@
+
+#hotel_booking_room_hidden {
+	margin: 0 auto;
+	max-width: 1000px;
+	min-width: 500px;
+	background: #fff;
+	overflow: hidden;
+}
+
+/* #hotel_booking_room_hidden * {
+	color: #777;
+} */
+.hotel_booking_room_errors{
+	color: #f00;
+}
+#hotel_booking_room_hidden .mfp-close {
+	display: none;
+}
+
+#hotel_booking_room_hidden .hb_button {
+	color: #fff;
+}
+
+#hotel_booking_room_hidden form > div {
+	padding: 10px;
+	overflow: hidden;
+}
+
+.hb-booking-room-form-head {
+	text-align: center;
+}
+
+.hb-booking-room-form-head h2 {
+	margin: 0;
+	padding: 10px;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.hb-search-results-form-container {
+	overflow: hidden;
+	border-bottom: 1px solid rgba(216, 212, 213, 0.62);
+	border-top: 1px solid rgba(216, 212, 213, 0.62);
+}
+.hb-search-results-form-container p.no-extra{
+	text-align: center;
+	color: #cc1818;
+}
+.hb-search-results-form-container .hb-booking-room-form-group {
+	width: 30%;
+	float: left;
+	margin-left: 3%;
+}
+
+.hb-search-room-results.hotel-booking-search {
+	padding: 15px;
+}
+
+.hb-booking-room-form-footer a {
+	float: left;
+}
+
+.hb-booking-room-form-footer button {
+	float: right;
+}
+
+#hotel_booking_room_hidden .hb_addition_package_extra {
+	display: block;
+	width: 100%;
+	float: left;
+	padding-top: 0;
+	margin-top: 20px;
+}
+
+#hotel_booking_room_hidden .hb_addition_package_extra input {
+	height: auto;
+	min-width: auto;
+}
+
+#hb_room_load_booking_form {
+	float: right;
+}
+
+/* prview rooms  */
+
+.hb_single_room #hb_room_images{
+    float: left;
+    width: 100%;
+    position: relative;
+	overflow: hidden;
+}
+.hb_single_room #hb_room_images .room-preview{
+	position: absolute;
+	width:40px;
+	height:40px;
+	right: 10px;
+	top: 10px;
+	z-index: 10;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border:2px solid #fff;
+	border-radius: 50%;
+	cursor: pointer;
+}
+.hb_single_room #hb_room_images .room-preview i{
+	color: #fff;
+}
+
+/* end preview rooms */

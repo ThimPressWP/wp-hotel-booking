@@ -77,9 +77,12 @@ if ( ! class_exists( 'HB_Extra_Settings' ) ) {
 		 */
 		public function get_extra() {
 			global $wpdb;
-			$query = $wpdb->prepare( "
+			$query = $wpdb->prepare(
+				"
 				SELECT * FROM $wpdb->posts WHERE `post_type` = %s
-			", 'hb_extra_room' );
+			",
+				'hb_extra_room'
+			);
 
 			return $wpdb->get_results( $query, OBJECT );
 		}

@@ -105,7 +105,7 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 	function column_total_content( $booking_id, $total, $total_with_currency ) {
 		if ( $total && get_post_meta( $booking_id, '_hb_method', true ) == 'paypal-standard' ) {
 			$advance_payment = get_post_meta( $booking_id, '_hb_advance_payment', true );
-			printf( __( '<br /><small>(Paid %s%% of %s via %s)</small>', 'wp-hotel-booking' ), round( $advance_payment / $total, 2 ) * 100, $total_with_currency, 'Paypal' );
+			printf( __( '<br /><small>(Paid %1$s%% of %2$s via %3$s)</small>', 'wp-hotel-booking' ), round( $advance_payment / $total, 2 ) * 100, $total_with_currency, 'Paypal' );
 		}
 	}
 
@@ -117,7 +117,7 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 	 * @return bool
 	 */
 	function process_booking_paypal_standard() {
-		if ( ! empty( $_REQUEST['hb-transaction-method'] ) && ( 'paypal-standard' == sanitize_text_field( wp_unslash($_REQUEST['hb-transaction-method']) ) ) ) {
+		if ( ! empty( $_REQUEST['hb-transaction-method'] ) && ( 'paypal-standard' == sanitize_text_field( wp_unslash( $_REQUEST['hb-transaction-method'] ) ) ) ) {
 			$cart = WPHB_Cart::instance();
 			$cart->empty_cart();
 
@@ -144,7 +144,7 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 			'httpversion' => '1.1',
 			'compress'    => false,
 			'decompress'  => false,
-			'user-agent'  => 'HotelBooking'
+			'user-agent'  => 'HotelBooking',
 		);
 		$response = wp_safe_remote_post( $paypal_api_url, $params );
 		$body     = wp_remote_retrieve_body( $response );
@@ -161,10 +161,14 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 								$request['payment_status'] = 'completed';
 							}
 							if ( method_exists( $this, 'payment_status_' . $request['payment_status'] ) ) {
-								call_user_func( array(
-									$this,
-									'payment_status_' . $request['payment_status']
-								), $booking, $request );
+								call_user_func(
+									array(
+										$this,
+										'payment_status_' . $request['payment_status'],
+									),
+									$booking,
+									$request
+								);
 							}
 						}
 						break;
@@ -198,7 +202,7 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 		}
 
 		if ( ! $booking || $booking->booking_key !== $booking_key ) {
-			printf( __( 'Error: Booking Keys do not match %s and %s.', 'wp-hotel-booking' ), $booking->booking_key, $booking_key );
+			printf( __( 'Error: Booking Keys do not match %1$s and %2$s.', 'wp-hotel-booking' ), $booking->booking_key, $booking_key );
 
 			return false;
 		}
@@ -228,7 +232,6 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 			if ( ! empty( $request['mc_fee'] ) ) {
 				update_post_meta( $booking->post->id, 'PayPal Transaction Fee', $request['mc_fee'] );
 			}
-
 		} else {
 
 		}
@@ -247,8 +250,8 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 
 	/**
 	 * @param WPHB_Booking
-	 * @param string $txn_id
-	 * @param string $note - not use
+	 * @param string       $txn_id
+	 * @param string       $note - not use
 	 */
 	function payment_complete( $booking, $txn_id = '', $note = '' ) {
 		$booking->payment_complete( $txn_id );
@@ -266,7 +269,7 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 		$args = array(
 			'meta_key'    => '_hb_method_id',
 			'meta_value'  => $txn_id,
-			'numberposts' => 1, //we should only have one, so limit to 1
+			'numberposts' => 1, // we should only have one, so limit to 1
 		);
 
 		$bookings = hb_get_bookings( $args );
@@ -302,7 +305,10 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 
 		$nonce        = wp_create_nonce( 'hb-paypal-nonce' );
 		$paypal_email = $paypal['sandbox'] === 'on' ? $paypal['sandbox_email'] : $paypal['email'];
-		$custom       = array( 'booking_id' => $booking_id, 'booking_key' => $booking->booking_key );
+		$custom       = array(
+			'booking_id'  => $booking_id,
+			'booking_key' => $booking->booking_key,
+		);
 		if ( $advance_payment && ! $pay_all ) {
 			$custom['advance_payment'] = $advance_payment;
 		}
@@ -319,7 +325,7 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 			'rm'            => '2',
 			'cancel_return' => hb_get_return_url(),
 			'custom'        => json_encode( $custom ),
-			'no_shipping'   => '1'
+			'no_shipping'   => '1',
 		);
 
 		$query = array_merge( $paypal_args, $query );
@@ -341,7 +347,7 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 	function process_checkout( $booking_id = null ) {
 		return array(
 			'result'   => 'success',
-			'redirect' => $this->_get_paypal_basic_checkout_url( $booking_id )
+			'redirect' => $this->_get_paypal_basic_checkout_url( $booking_id ),
 		);
 	}
 

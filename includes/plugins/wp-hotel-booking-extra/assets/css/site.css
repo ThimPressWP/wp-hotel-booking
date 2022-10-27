@@ -4,11 +4,11 @@
     padding-top: 30px;
 }
 
-.single-purchase .hb_addition_package_extra {
+.extra-option-loop .hb_addition_package_extra {
     display: block;
 }
 
-.single-purchase .hb_addition_package_extra .hb_addition_packages {
+.extra-option-loop .hb_addition_package_extra .hb_addition_packages {
     display: none;
 }
 
@@ -99,7 +99,7 @@
 }
 
 .hb_extra_optional_left {
-    padding-left: 30px;
+    padding-left: 35px;
 }
 
 .hb_package_title {

@@ -1,0 +1,327 @@
+.wphb-meta-box__inner{
+    display: block;
+    position: relative;
+}
+.wphb-meta-box__inner .description{
+    margin-top: 5px;
+    display:block;
+    max-width: unset !important;
+}
+.wphb-meta-box__inner .form-field.hide{
+    display: none;
+}
+.wphb-meta-box__inner input[type=number]{
+    width: 100px !important;
+}
+.wphb-meta-box__inner .hb-form-field-input textarea{
+    width: 100% !important;
+}
+.wphb-meta-box__inner .hb-form-field-input{
+    width: calc(100% - 200px);
+}
+.wphb-meta-box__inner .form-field:not(fieldset) {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    margin: 0;
+    padding: 15px 0;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.wphb-meta-box__inner .form-field:not(fieldset) label {
+    width: 180px;
+    min-width: 180px;
+    max-width: 180px;
+    padding: 0;
+    color: #23282d;
+    font-size: 14px;
+    font-weight: 600;
+    flex: 0 0 auto;
+}
+#room_settings .wphb-meta-box__room-tab {
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+#room_settings .wphb-meta-box__room-tab__tabs {
+    position: relative;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0 0 10px;
+    border-right: 1px solid #eee;
+    background-color: #fafafa;
+    line-height: 1;
+}
+#room_settings .wphb-meta-box__room-tab__tabs li {
+    display: block;
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+#room_settings .wphb-meta-box__room-tab__tabs li a {
+    display: block;
+    margin: 0;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    box-shadow: none;
+    line-height: 20px !important;
+    text-decoration: none;
+}
+#room_settings .wphb-meta-box__room-tab__tabs li.active a{
+    position: relative;
+    color: #555;
+    background-color: #eee;
+}
+
+#room_settings .wphb-meta-box__room-tab__content > div {
+    padding:20px;
+    display: none;
+}
+#room_settings .wphb-meta-box__room-tab__content > div.active{
+    display: block;
+}
+
+#room_settings .wphb-meta-box__room-tab__tabs li a i[class^=dashicon] {
+    font-family: "Dashicons";
+}
+#room_settings .wphb-meta-box__room-tab__tabs li a i{
+    margin-right: 5px;
+    font-weight: 400;
+    font-style: normal;
+    font-variant: normal;
+    line-height: 1;
+    text-decoration: none;
+    text-transform: none;
+}
+
+#room_settings .form-field.room_addition_information .hb-form-field-input,
+#room_settings .form-field.room_preview_url .hb-form-field-input,
+#rule_room ._wphb_rule_room_ele .hb-form-field-input
+{
+    width:calc(100% - 200px);
+}
+#room_settings #hb-pricing-plan-list{
+    overflow:unset;
+}
+#gallery_settings .form-field.gallery{
+	display: unset;
+}
+#room_settings  .select2-container {
+    min-width:140px;
+}
+.single-pricing-plan .mbsc-calendar-label-text{
+    text-align: center;
+    font-size: 13px;
+}
+
+/* tabs block room */
+.mbsc-datepicker .quarter-year-header-picker .mbsc-segmented {
+    max-width: 280px;
+    margin: 0 auto;
+}
+
+.quarter-year-header-picker {
+    flex: 1 0 auto;
+}
+#price_room_data .fc-toolbar-title , #block_room_data .fc-toolbar-title {
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 0;
+}
+#price_room_data .wphb-pricing-plan-event {
+    text-align: center;
+}
+#price_room_data .wphb-pricing-plan-event .fc-event-title{
+    font-weight: bold;
+    font-size: 12px;
+}
+#price_room_data .show-all-plan , #block_room_data button.button  {
+    margin-top: 15px;
+}
+#price_room_data .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events{
+    width:auto;
+    float: right;
+    max-width: 50px;
+}
+/* end block room tabs */
+
+/* faq room */
+._hb_room_faq_meta_box__content {
+    width: calc(100% - 180px);
+}
+._hb_room_faq_meta_box__field {
+    display: grid;
+    position: relative;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #c5c5c5;
+    border-radius: 4px;
+    grid-row-gap: 10px;
+}
+._hb_room_faq_meta_box__fields span{
+    margin:10px 0px;
+    display:block;
+    font-weight: bold;
+}
+._hb_room_faq_meta_box__fields a.delete {
+    display: flex;
+    position: absolute;
+    top: 15px;
+    right: 30px;
+    width: 30px;
+    height: 30px;
+    color: #666;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+}
+._hb_room_faq_meta_box__fields a.delete::after{
+    font-family: "Dashicons";
+    font-size: 20px;
+    line-height: 1;
+    content: "\f335";
+}
+._hb_room_faq_meta_box__fields .sort {
+    display: flex;
+    position: absolute;
+    top: 5px;
+    right: 0px;
+    width: 30px;
+    height: 30px;
+    color: #666;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+}
+._hb_room_faq_meta_box__fields .sort::after{
+    font-family: "Dashicons";
+    font-size: 20px;
+    line-height: 1;
+    content: "\f333";
+}
+
+/* end faq */
+
+/* calendar manager */
+#manager_booking{
+    cursor: pointer;
+}
+#tp_hotel_booking_calendar_manager > h2{
+    text-align: center;
+}
+#room_settings .form-field.hidden{
+    display: none;
+}
+.wp-hotel-booking_page_tp_hotel_booking_calender_manager #popup{
+    display: none;
+}
+.wp-hotel-booking_page_tp_hotel_booking_calender_manager #popup-container{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+.wp-hotel-booking_page_tp_hotel_booking_calender_manager .popup{
+    background-color: #ffffff;
+    padding: 20px 25px;
+    width: 30%;
+    border-radius: 15px;
+}
+.wp-hotel-booking_page_tp_hotel_booking_calender_manager #popup-events .popup > h2{
+    font-size: 18px;
+    margin:10px 0;
+}
+.wp-hotel-booking_page_tp_hotel_booking_calender_manager #popup-events .popup > p{
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+.wp-hotel-booking_page_tp_hotel_booking_calender_manager #popup-events #details{
+    font-weight: 400;
+}
+.wp-hotel-booking_page_tp_hotel_booking_calender_manager #popup-events #heading{
+    color: grey;
+    line-height: 25px;
+}
+.wp-hotel-booking_page_tp_hotel_booking_calender_manager #popup-events .info_detail {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+.wp-hotel-booking_page_tp_hotel_booking_calender_manager #popup-events .pricing{
+    background-color: #ddd3;
+    padding: 2vh 8%;
+    font-weight: 600;
+    line-height: 2.5;
+    margin-top: 10px;
+    font-size: 14px;
+}
+.wp-hotel-booking_page_tp_hotel_booking_calender_manager #popup-events .pricing_detail {
+    display: flex;
+    justify-content: space-around;
+    line-height: 22px;
+}
+.wp-hotel-booking_page_tp_hotel_booking_calender_manager #popup-events .popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.wp-hotel-booking_page_tp_hotel_booking_calender_manager #popup-events .popup-header .close-popup{
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 10px;
+    margin-right: -10px;
+}
+/* end calendar manager */
+
+/* loading */
+@keyframes wphb-rotating {
+    from {
+      -o-transform: rotate(0deg);
+      -ms-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    to {
+      -o-transform: rotate(-360deg);
+      -ms-transform: rotate(-360deg);
+      -moz-transform: rotate(-360deg);
+      -webkit-transform: rotate(-360deg);
+      transform: rotate(-360deg);
+    }
+}
+
+@-webkit-keyframes wphb-rotating {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(-360deg);
+        transform: rotate(-360deg);
+    }
+}
+button.wphb_loading::before {
+    display: inline-block;
+    font-family: 'FontAwesome';
+    font-weight: 900;
+    content: "\f110";
+    margin-right: 4px;
+    font-size: 13px;
+    -webkit-animation: wphb-rotating 1s linear infinite;
+    -moz-animation: wphb-rotating 1s linear infinite;
+    animation: wphb-rotating 1s linear infinite;
+    margin-top: 0;
+}
+
+/* end loading */

@@ -25,8 +25,10 @@ class WPHB_Install {
 			define( 'HB_INSTALLING', true );
 		}
 
-		self::$upgrade = apply_filters( 'hotel_booking_upgrade_file_vesion', array(
-				'1.1.5.1' => 'admin/update/wphb-upgrade_1.1.5.1.php'
+		self::$upgrade = apply_filters(
+			'hotel_booking_upgrade_file_vesion',
+			array(
+				'1.1.5.1' => 'admin/update/wphb-upgrade_1.1.5.1.php',
 			)
 		);
 
@@ -40,7 +42,7 @@ class WPHB_Install {
 			'tp-hotel-booking-room/tp-hotel-booking-room.php',
 			'tp-hotel-booking-stripe/tp-hotel-booking-stripe.php',
 			'tp-hotel-booking-woocommerce/tp-hotel-booking-woocommerce.php',
-			'tp-hotel-booking-wpml-support/tp-hotel-booking-wpml-support.php'
+			'tp-hotel-booking-wpml-support/tp-hotel-booking-wpml-support.php',
 		);
 
 		foreach ( $tp_plugins as $plugin ) {
@@ -84,16 +86,20 @@ class WPHB_Install {
 
 	static function do_install() {
 
-		// create pages
-//		self::create_pages();
+		// create tables
+		self::create_tables();
+
+		if ( ! WPHB_Install::tables_install_done() ) {
+			return;
+		}
 
 		// create update options
 		self::create_options();
 
 		// create term default. Eg: Room Capacities
 		// self::create_terms();
-		// create tables
-//		self::create_tables();
+		// create pages
+		self::create_pages();
 
 		// upgrade database
 		self::upgrade_database();
@@ -144,7 +150,7 @@ class WPHB_Install {
 			$pages['rooms'] = array(
 				'name'    => _x( 'hotel-rooms', 'Page Slug', 'wp-hotel-booking' ),
 				'title'   => _x( 'Hotel Rooms', 'Page Title', 'wp-hotel-booking' ),
-				'content' => '[' . apply_filters( 'hotel_booking_rooms_shortcode_tag', 'hotel_booking_rooms' ) . ']'
+				'content' => '[' . apply_filters( 'hotel_booking_rooms_shortcode_tag', 'hotel_booking_rooms' ) . ']',
 			);
 		}
 
@@ -152,7 +158,7 @@ class WPHB_Install {
 			$pages['cart'] = array(
 				'name'    => _x( 'hotel-cart', 'Page Slug', 'wp-hotel-booking' ),
 				'title'   => _x( 'Hotel Cart', 'Page Title', 'wp-hotel-booking' ),
-				'content' => '[' . apply_filters( 'hotel_booking_cart_shortcode_tag', 'hotel_booking_cart' ) . ']'
+				'content' => '[' . apply_filters( 'hotel_booking_cart_shortcode_tag', 'hotel_booking_cart' ) . ']',
 			);
 		}
 
@@ -160,7 +166,7 @@ class WPHB_Install {
 			$pages['checkout'] = array(
 				'name'    => _x( 'hotel-checkout', 'Page Slug', 'wp-hotel-booking' ),
 				'title'   => _x( 'Hotel Checkout', 'Page Title', 'wp-hotel-booking' ),
-				'content' => '[' . apply_filters( 'hotel_booking_checkout_shortcode_tag', 'hotel_booking_checkout' ) . ']'
+				'content' => '[' . apply_filters( 'hotel_booking_checkout_shortcode_tag', 'hotel_booking_checkout' ) . ']',
 			);
 		}
 
@@ -168,7 +174,7 @@ class WPHB_Install {
 			$pages['search'] = array(
 				'name'    => _x( 'hotel-search', 'Page Slug', 'wp-hotel-booking' ),
 				'title'   => _x( 'Hotel Booking Search', 'Page Title', 'wp-hotel-booking' ),
-				'content' => '[' . apply_filters( 'hotel_booking_search_shortcode_tag', 'hotel_booking' ) . ']'
+				'content' => '[' . apply_filters( 'hotel_booking_search_shortcode_tag', 'hotel_booking' ) . ']',
 			);
 		}
 
@@ -176,7 +182,7 @@ class WPHB_Install {
 			$pages['account'] = array(
 				'name'    => _x( 'hotel-account', 'Page Slug', 'wp-hotel-booking' ),
 				'title'   => _x( 'Hotel Account', 'Page Title', 'wp-hotel-booking' ),
-				'content' => '[' . apply_filters( 'hotel_booking_account_shortcode_tag', 'hotel_booking_account' ) . ']'
+				'content' => '[' . apply_filters( 'hotel_booking_account_shortcode_tag', 'hotel_booking_account' ) . ']',
 			);
 		}
 
@@ -184,7 +190,7 @@ class WPHB_Install {
 			$pages['terms'] = array(
 				'name'    => _x( 'hotel-term-condition', 'Page Slug', 'wp-hotel-booking' ),
 				'title'   => _x( 'Terms and Conditions ', 'Page Title', 'wp-hotel-booking' ),
-				'content' => apply_filters( 'hotel_booking_terms_content', 'Something notices' )
+				'content' => apply_filters( 'hotel_booking_terms_content', 'Something notices' ),
 			);
 		}
 
@@ -192,7 +198,7 @@ class WPHB_Install {
 			$pages['thankyou'] = array(
 				'name'    => _x( 'hotel-thank-you', 'Page Slug', 'wp-hotel-booking' ),
 				'title'   => _x( 'Hotel Thank You', 'Page Title', 'wp-hotel-booking' ),
-				'content' => '[' . apply_filters( 'hotel_booking_thankyou_shortcode_tag', 'hotel_booking_thankyou' ) . ']'
+				'content' => '[' . apply_filters( 'hotel_booking_thankyou_shortcode_tag', 'hotel_booking_thankyou' ) . ']',
 			);
 		}
 
@@ -216,13 +222,13 @@ class WPHB_Install {
 		$taxonomies = array(
 			'hb_room_capacity' => array(
 				'double' => array(
-					'hb_max_number_of_adults' => 2
+					'hb_max_number_of_adults' => 2,
 				),
 				'single' => array(
 					'hb_max_number_of_adults' => 1,
-					'alias_of'                => 2
-				)
-			)
+					'alias_of'                => 2,
+				),
+			),
 		);
 
 		// insert term
@@ -244,13 +250,14 @@ class WPHB_Install {
 	// create tables. Eg: booking_items
 	static function create_tables() {
 		self::schema();
+		update_option( 'wphb_check_tables', 'yes' );
 	}
 
 	// do create table
 	static function schema() {
 		global $wpdb;
 
-		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		$charset_collate = $wpdb->get_charset_collate();
 
 		$table = $wpdb->prefix . 'hotel_booking_order_items';
@@ -332,4 +339,17 @@ class WPHB_Install {
 		}
 	}
 
+	/**
+	 * Check installed all tables required for WPHB.
+	 *
+	 * @return bool
+	 */
+	static function tables_install_done(): bool {
+		$install_done = get_option( 'wphb_check_tables', 'no' );
+		if ( is_multisite() && 'yes' !== $install_done ) {
+			self::create_tables();
+		}
+
+		return $install_done;
+	}
 }

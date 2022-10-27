@@ -9,19 +9,21 @@
 ?>
 <div class="hb-form-field-input">
     <ul>
-        <?php if( $meta_value ): foreach ($meta_value as $key => $id): ?>
-            <li class="attachment">
-                <div class="attachment-preview">
-                    <div class="thumbnail">
-                        <div class="centered">
-                        	<?php echo wp_get_attachment_image( $id, 'thumbnail' ); ?>
-                            <input type="hidden" name="<?php echo esc_attr( $field['name'] ); ?>[]" value="<?php echo esc_attr( $id ); ?>" />
+        <?php if ( $meta_value ) : 
+            foreach ( $meta_value as $key => $id ) : ?>
+                <li class="attachment">
+                    <div class="attachment-preview">
+                        <div class="thumbnail">
+                            <div class="centered">
+                                <?php echo wp_get_attachment_image( $id, 'thumbnail' ); ?>
+                                <input type="hidden" name="<?php echo esc_attr( $field['name'] ); ?>[]" value="<?php echo esc_attr( $id ); ?>" />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'wp-hotel-booking' ); ?>"></a>
-            </li>
-        <?php endforeach; endif; ?>
+                    <a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'wp-hotel-booking' ); ?>"></a>
+                </li>
+            <?php endforeach; 
+        endif; ?>
         <li class="attachment add-new">
             <div class="attachment-preview">
                 <div class="thumbnail">

@@ -1,7 +1,21 @@
-;
 (function ($) {
     var $doc = $(document);
+    //room faq 
+    $(document).on( 'click' , '._hb_room_faq_meta_box__add', function(e) {
+        e.preventDefault();
+        const container = $('.faq_append').html();
+        $( this ).closest( '._hb_room_faq_meta_box__content' )
+        .find( '._hb_room_faq_meta_box__fields' )
+        .append( container );
+        return false;
+        
+	} );
 
+    $( document ).on( 'click', '._hb_room_faq_meta_box__fields a.delete', function() {
+		$( this ).closest( '._hb_room_faq_meta_box__field' ).remove();
+		return false;
+	} );
+    //end room faq
     if (Date.prototype.compareWith == undefined) {
         Date.prototype.compareWith = function (d) {
             if (typeof d == 'string') {
@@ -40,20 +54,29 @@
             dayNames: hotel_booking_i18n.dayNames,
             dayNamesShort: hotel_booking_i18n.dayNamesShort,
             dayNamesMin: hotel_booking_i18n.dayNamesMin,
+            minDate : 0,
+			maxDate : '+365D',
             onSelect: function (date) {
                 var _self = $(this),
                     _date = _self.datepicker('getDate'),
                     _timestamp = new Date(_date).getTime() / 1000 - (new Date(_date).getTimezoneOffset() * 60),
                     name = _self.attr('name');
                 var hidden_name = false;
-                if (name.indexOf('date-start') === 0) {
+                var date = $(this).datepicker('getDate');
+                if (name.indexOf('date-start') > 0) {
                     hidden_name = name.replace('date-start', 'date-start-timestamp');
-                } else if (name.indexOf('date-end') === 0) {
+                    var checkout = $('.datepicker.end_date');
+				    checkout.datepicker('option', 'minDate', date - 1 );
+                } else if (name.indexOf('date-end') > 0) {
+                    var check_in = $('.datepicker.start_date'),
                     hidden_name = name.replace('date-end', 'date-end-timestamp');
+                    check_in.datepicker('option', 'maxDate', date + 1);
                 }
+               
                 if (hidden_name) {
                     $(plan).find('input[name="' + hidden_name + '"]').val(_timestamp);
                 }
+                
             }
         });
         // $(plan).find('.datepicker').datepicker('disable');
@@ -61,13 +84,14 @@
 
     function _ready() {
         $('.wp-admin.post-type-hb_booking .search-box #post-search-input').attr("placeholder", hotel_booking_i18n.search_booking);
-
+        let i = 1;
         $doc.on('click', '.hb-pricing-controls a', function (e) {
+           
             var $button = $(this),
                 $table = $button.closest('.hb-pricing-table'),
                 action = $button.data('action');
             e.preventDefault();
-
+            i++;
             switch (action) {
                 case 'clone':
                     var clone_allow = false;
@@ -81,11 +105,23 @@
                     $table.find('.hb-pricing-price').each(function (i) {
                         $inputs.eq(i).val(this.value);
                     });
+                   
                     if ($table.hasClass('regular-price')) {
                         $cloned.removeClass('regular-price')
                         $('.hb-pricing-table-title > span', $cloned).html('Date Range');
                         $('#hb-pricing-plan-list').append($cloned);
-                    } else {
+                        
+                        $cloned.find('input[type="text"], input[type="number"], input[type="hidden"]').each(function () {
+                            var $input = $(this),
+                                name = $input.attr('name');
+                            name = name.replace(/__INDEX__/, i - 1000 );
+                            $input.attr('name', name);
+                            if ( $input.attr('name').indexOf('plan_id') > 0 ){
+                                $input.attr('value', i - 1000 );
+                            }
+                        });
+                          
+                    } else {                       
                         $cloned.insertAfter($table);
                     }
                     $cloned.fadeTo(350, 0.8).delay(1000).fadeTo(250, 1, function () {
@@ -371,11 +407,62 @@
                 $(this).parent().remove();
             });
 
-        $('form[name="hb-admin-settings-form"] select').select2();
-
         $('#hb-booking-details select').select2();
 
-        $('.hb-form-field .hb-form-field-input select').select2();
+        $('.form-field .hb-form-field-input select').select2(
+            { width: 'auto' }
+        );
+        
+        // deposit single room
+        const elemDeposit = $('#deposit_room select[name="_hb_deposit_type"]');
+        if( elemDeposit === null ) return;
+
+        const amount = $('#deposit_room input[name="_hb_deposit_amount"]');
+        if( amount === null ) return
+
+        const type = elemDeposit.find('option:selected').val();
+        if ( type == 'percent' ) {
+            amount.attr('max', '100');
+        } else {
+            amount.attr('max', '10000000000');
+        }
+
+        elemDeposit.on('change',function(e){
+            const type = $(this).find('option:selected').val();
+            if ( type == 'percent' ) {
+                amount.attr('max', '100');
+            } else {
+                amount.attr('max', '10000000000');
+            }
+        });
+
+        //end deposit single room
+
+        //coupon post type
+        const elemCoupon = $('#coupon_settings select[name="_hb_coupon_discount_type"]');
+        if( elemCoupon === null ) return;
+
+        const amountCoupon = $('#coupon_settings input[name="_hb_coupon_discount_value"]');
+        if( amountCoupon === null ) return
+
+        const typeCoupon = elemDeposit.find('option:selected').val();
+        if ( typeCoupon == 'percent_cart' ) {
+            amountCoupon.attr('max', '100');
+        } else {
+            amountCoupon.attr('max', '10000000000');
+        }
+        
+        elemCoupon.on('change',function(e){
+            const typeCoupon = $(this).find('option:selected').val();
+            if ( typeCoupon == 'percent_cart' ) {
+                amountCoupon.attr('max', '100');
+            } else {
+                amountCoupon.attr('max', '10000000000');
+            }
+        });
+        //end coupon post type
+       
+            
 
         $('input[name="tp_hotel_booking_email_new_booking_enable"]').on('change _change', function () {
             var $siblings = $(this).closest('tr').siblings('.' + $(this).attr('name'));
@@ -933,3 +1020,18 @@
 
 })(jQuery, Backbone, _);
 // end modal box
+
+//sortable faq single room
+jQuery(document).ready(function($){
+    $( '._hb_room_faq_meta_box__fields' ).sortable( {
+		items: '._hb_room_faq_meta_box__field',
+		cursor: 'grab',
+		axis: 'y',
+		handle: '.sort',
+		scrollSensitivity: 40,
+		forcePlaceholderSize: true,
+		helper: 'clone',
+		opacity: 0.65,
+	} );
+});
+// 

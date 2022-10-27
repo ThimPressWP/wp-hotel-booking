@@ -72,14 +72,14 @@ if ( ! function_exists( 'hb_process_web_hooks' ) ) {
 				$request_scheme                = is_ssl() ? 'https://' : 'http://';
 				$requested_web_hook_url        = untrailingslashit( $request_scheme . esc_url_raw( $_SERVER['HTTP_HOST'] ?? '' ) ) . esc_url_raw( $_SERVER['REQUEST_URI'] ?? '' );
 				$parsed_requested_web_hook_url = wp_parse_url( $requested_web_hook_url );
-				$required_web_hook_url         = add_query_arg( $param, '1', trailingslashit( get_site_url() ) ); //add the slash to make sure we match
+				$required_web_hook_url         = add_query_arg( $param, '1', trailingslashit( get_site_url() ) ); // add the slash to make sure we match
 				$parsed_required_web_hook_url  = wp_parse_url( $required_web_hook_url );
 				$web_hook_diff                 = array_diff_assoc( $parsed_requested_web_hook_url, $parsed_required_web_hook_url );
 
-				if ( empty( $web_hook_diff ) ) { //No differences in the requested webhook and the required webhook
+				if ( empty( $web_hook_diff ) ) { // No differences in the requested webhook and the required webhook
 					do_action( 'hb_web_hook_' . $param, $_REQUEST );
 				}
-				break; //we can stop processing here... no need to continue the foreach since we can only handle one webhook at a time
+				break; // we can stop processing here... no need to continue the foreach since we can only handle one webhook at a time
 			}
 		}
 		if ( $web_hooks_processed ) {

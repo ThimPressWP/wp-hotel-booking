@@ -29,12 +29,14 @@ if ( ! class_exists( 'HB_Extra_Field' ) ) {
 		 * HB_Extra_Field constructor.
 		 */
 		public function __construct() {
-			add_filter( 'hb_metabox_room_settings', array( $this, 'meta_fields' ) );
+
 			add_action( 'hotel_booking_loop_after_item', array( $this, 'render_extra' ), 10, 1 );
 			add_action( 'hotel_booking_after_add_room_to_cart_form', array( $this, 'render_extra' ), 10, 1 );
 
+			// settings tab single room admin v2
+			add_filter( 'wpbh_meta_box_room_settings_tabs', array( $this, 'tabs_setting' ), 10, 1 );
 			// single room cart
-			add_action( 'hotel_booking_room_before_quantity', array( $this, 'single_room_cart' ) );
+			add_action( 'hotel_booking_room_after_quantity', array( $this, 'single_room_cart' ) );
 
 			// add package details booking
 			add_action( 'hotel_booking_room_details_quantity', array( $this, 'admin_booking_room_details' ), 10, 3 );
@@ -47,16 +49,45 @@ if ( ! class_exists( 'HB_Extra_Field' ) ) {
 		 *
 		 * @return array
 		 */
-		public function meta_fields( $fields ) {
-			$fields[] = array(
-				'name'    => 'room_extra',
-				'label'   => __( 'Addition Package', 'wp-hotel-booking' ),
-				'type'    => 'multiple',
-				'options' => $this->extra_fields(),
-				'filter'  => array( $this, 'meta_value' ),
+		public function tabs_setting( $tabs ) {
+
+			$tabs['extra_settings'] = array(
+				'label'    => esc_html__( 'Facilities', 'wp-hotel-booking' ),
+				'target'   => 'addition_package',
+				'icon'     => 'dashicons-welcome-write-blog',
+				'priority' => 30,
+				'content'  => $this->wphb_extra_fields(),
 			);
 
-			return $fields;
+			return $tabs;
+		}
+
+		/**
+		 * It's a filter that adds a new tab to the room edit screen
+		 *
+		 * @return An array of arrays.
+		 */
+		public function wphb_extra_fields() {
+			$tab_extra = apply_filters(
+				'wpbh_meta_box_room_extra_fields',
+				array(
+					'room_extra' => array(
+						'name'        => 'room_extra',
+						'label'       => __( 'Facilities', 'wp-hotel-booking' ),
+						'type'        => 'multiple',
+						'options'     => $this->extra_fields(),
+						'filter'      => array( $this, 'meta_value' ),
+						'edit_option' => array(
+							'post_type' => 'hb_extra_room',
+							'admin_url' => 'edit.php',
+						),
+						'text_edit'   => __( '+ Add new.', 'wp-hotel-booking' ),
+						'desc'        => __( 'Additional options for the room.', 'wp-hotel-booking' ),
+					),
+				)
+			);
+
+			return $tab_extra;
 		}
 
 		/**
@@ -94,8 +125,8 @@ if ( ! class_exists( 'HB_Extra_Field' ) ) {
 		 */
 		public function admin_booking_room_details( $booking_params, $search_key, $room_id ) {
 			if ( ! isset( $booking_params[ $search_key ] ) ||
-			     ! isset( $booking_params[ $search_key ][ $room_id ] ) ||
-			     ! isset( $booking_params[ $search_key ][ $room_id ]['extra_packages_details'] )
+				 ! isset( $booking_params[ $search_key ][ $room_id ] ) ||
+				 ! isset( $booking_params[ $search_key ][ $room_id ]['extra_packages_details'] )
 			) {
 				return;
 			}
@@ -103,9 +134,9 @@ if ( ! class_exists( 'HB_Extra_Field' ) ) {
 			$packages = $booking_params[ $search_key ][ $room_id ]['extra_packages_details'];
 			?>
 			<ul>
-				<?php foreach ( $packages as $id => $package ): ?>
+				<?php foreach ( $packages as $id => $package ) : ?>
 					<li>
-						<small><?php printf( '%s (x%s)', $package['package_title'], $package['package_quantity'] ) ?></small>
+						<small><?php printf( '%s (x%s)', $package['package_title'], $package['package_quantity'] ); ?></small>
 					</li>
 				<?php endforeach ?>
 			</ul>

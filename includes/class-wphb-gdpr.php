@@ -33,8 +33,8 @@ class WPHB_Personal_Data {
 	 */
 	public function register_booking_personal_data_exporter( $exporters ) {
 		$exporters['wphb-booking'] = array(
-			'exporter_friendly_name' => __( 'WPHB Booking' ),
-			'callback'               => array( $this, 'exporter_personal_data' )
+			'exporter_friendly_name' => __( 'WPHB Booking', 'wp-hotel-booking' ),
+			'callback'               => array( $this, 'exporter_personal_data' ),
 		);
 
 		return $exporters;
@@ -42,8 +42,8 @@ class WPHB_Personal_Data {
 
 	public function register_booking_personal_data_eraser( $erasers ) {
 		$erasers['wphb-booking'] = array(
-			'eraser_friendly_name' => __( 'WPHB Booking' ),
-			'callback'             => array( $this, 'eraser_personal_data' )
+			'eraser_friendly_name' => __( 'WPHB Booking', 'wp-hotel-booking' ),
+			'callback'             => array( $this, 'eraser_personal_data' ),
 		);
 
 		return $erasers;
@@ -51,7 +51,7 @@ class WPHB_Personal_Data {
 
 	/**
 	 * @param $email_address
-	 * @param int $page
+	 * @param int           $page
 	 *
 	 * @return array
 	 */
@@ -82,33 +82,39 @@ class WPHB_Personal_Data {
 			};
 
 			$customer_details = hb_get_customer_fullname( $booking_id, true )
-			                    . ' - Email: ' . $booking->customer_email
-			                    . ' - Phone: ' . $booking->customer_phone
-			                    . ' - Address: ' . $booking->customer_address . ', ' . $booking->customer_city . ', ' . $booking->customer_state . ', ' . $booking->customer_country
-			                    . ' - Postal code: ' . $booking->customer_postal_code;
+								. ' - Email: ' . $booking->customer_email
+								. ' - Phone: ' . $booking->customer_phone
+								. ' - Address: ' . $booking->customer_address . ', ' . $booking->customer_city . ', ' . $booking->customer_state . ', ' . $booking->customer_country
+								. ' - Postal code: ' . $booking->customer_postal_code;
 
 			$post_data_to_export = array(
-				array( 'name' => __( 'ID', 'wp-hotel-booking' ), 'value' => hb_format_order_number( $booking_id ) ),
+				array(
+					'name'  => __( 'ID', 'wp-hotel-booking' ),
+					'value' => hb_format_order_number( $booking_id ),
+				),
 				array(
 					'name'  => __( 'Created Date', 'wp-hotel-booking' ),
-					'value' => get_the_date( get_option( 'date_format' ), $booking_id )
+					'value' => get_the_date( get_option( 'date_format' ), $booking_id ),
 				),
 				array(
 					'name'  => __( 'Customer Details', 'wp-hotel-booking' ),
-					'value' => $customer_details
+					'value' => $customer_details,
 				),
-				array( 'name' => __( 'Items', 'wp-hotel-booking' ), 'value' => nl2br( $items ) ),
+				array(
+					'name'  => __( 'Items', 'wp-hotel-booking' ),
+					'value' => nl2br( $items ),
+				),
 				array(
 					'name'  => __( 'Total', 'wp-hotel-booking' ),
-					'value' => hb_format_price( $total, hb_get_currency_symbol( $currency ) )
+					'value' => hb_format_price( $total, hb_get_currency_symbol( $currency ) ),
 				),
 				array(
 					'name'  => __( 'Payment Method', 'wp-hotel-booking' ),
-					'value' => $method->title
+					'value' => $method->title,
 				),
 				array(
 					'name'  => __( 'Status', 'wp-hotel-booking' ),
-					'value' => hb_get_booking_status_label( $booking_id )
+					'value' => hb_get_booking_status_label( $booking_id ),
 				),
 			);
 
@@ -128,7 +134,7 @@ class WPHB_Personal_Data {
 
 	/**
 	 * @param $email_address
-	 * @param int $page
+	 * @param int           $page
 	 *
 	 * @return array
 	 */
@@ -167,11 +173,19 @@ class WPHB_Personal_Data {
 		global $wpdb;
 
 		$booking = array();
-		$query   = $wpdb->get_results( $wpdb->prepare( "
+		$query   = $wpdb->get_results(
+			$wpdb->prepare(
+				"
 				SELECT booking.ID FROM {$wpdb->prefix}posts AS booking 
 				INNER JOIN {$wpdb->prefix}postmeta AS booking_meta ON booking.ID = booking_meta.post_id
 				WHERE 
-				booking.post_type = %s AND booking_meta.meta_key = %s AND booking_meta.meta_value = %s", 'hb_booking', '_hb_customer_email', $user_email ), ARRAY_A );
+				booking.post_type = %s AND booking_meta.meta_key = %s AND booking_meta.meta_value = %s",
+				'hb_booking',
+				'_hb_customer_email',
+				$user_email
+			),
+			ARRAY_A
+		);
 
 		if ( $query ) {
 			foreach ( $query as $item ) {
@@ -197,7 +211,7 @@ class WPHB_Personal_Data {
 			'customer_fax',
 			'customer_phone',
 			'customer_country',
-			'customer_email'
+			'customer_email',
 		);
 
 		$prefix = '_hb_';

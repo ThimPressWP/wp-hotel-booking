@@ -25,11 +25,11 @@ $single_purchase = get_option( 'tp_hotel_booking_single_purchase' );
 
 <li class="hb-room clearfix">
 	<form name="hb-search-results"
-		  class="hb-search-room-results <?php echo ( $single_purchase ) ? 'single-purchase' : ''; ?>">
+		  class="hb-search-room-results <?php echo isset( $single_purchase ) ? 'single-purchase' : ''; ?>">
 		<?php do_action( 'hotel_booking_loop_before_item', $room->post->ID ); ?>
 		<div class="hb-room-content">
 			<div class="hb-room-thumbnail">
-				<?php if ( $featured ): ?>
+				<?php if ( $featured ) : ?>
 					<a class="hb-room-gallery"
 					   data-lightbox="hb-room-gallery[<?php echo esc_attr( $room->post->ID ); ?>]"
 					   data-title="<?php echo esc_attr( $featured['alt'] ); ?>"
@@ -41,8 +41,8 @@ $single_purchase = get_option( 'tp_hotel_booking_single_purchase' );
 
 			<div class="hb-room-info">
 				<h4 class="hb-room-name">
-					<a href="<?php echo get_the_permalink( $room->ID ) ?>">
-						<?php echo esc_html( $room->name ); ?><?php $room->capacity_title ? printf( '(%s)', $room->capacity_title ) : ''; ?>
+					<a href="<?php echo get_the_permalink( $room->ID ); ?>">
+						<?php echo esc_html( $room->name ); ?><?php // $room->capacity_title ? printf( '(%s)', $room->capacity_title ) : ''; ?>
 					</a>
 				</h4>
 				<ul class="hb-room-meta">
@@ -75,7 +75,7 @@ $single_purchase = get_option( 'tp_hotel_booking_single_purchase' );
 										'min'              => 1,
 										'show_option_none' => __( 'Select', 'wp-hotel-booking' ),
 										'max'              => $room->post->available_rooms,
-										'class'            => 'number_room_select'
+										'class'            => 'number_room_select',
 									)
 								);
 								?>
@@ -88,7 +88,7 @@ $single_purchase = get_option( 'tp_hotel_booking_single_purchase' );
 					<?php } ?>
 					<?php do_action( 'hotel_booking_loop_before_btn_select_room', $room->post->ID ); ?>
 					<li class="hb_search_add_to_cart">
-						<button class="hb_add_to_cart"><?php _e( 'Select this room', 'wp-hotel-booking' ) ?></button>
+						<button class="hb_add_to_cart"><?php _e( 'Select this room', 'wp-hotel-booking' ); ?></button>
 					</li>
 				</ul>
 			</div>
@@ -107,6 +107,6 @@ $single_purchase = get_option( 'tp_hotel_booking_single_purchase' );
 	</form>
 
 	<?php if ( ( isset( $atts['gallery'] ) && $atts['gallery'] === 'true' ) || $hb_settings->get( 'enable_gallery_lightbox' ) ) { ?>
-		<?php hb_get_template( 'loop/gallery-lightbox.php', array( 'room' => $room ) ) ?>
+		<?php hb_get_template( 'loop/gallery-lightbox.php', array( 'room' => $room ) ); ?>
 	<?php } ?>
 </li>

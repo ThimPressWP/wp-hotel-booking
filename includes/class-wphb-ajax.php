@@ -55,6 +55,7 @@ class WPHB_Ajax {
 			'remove_coupon_on_order'   => false,
 			'load_other_full_calendar' => false,
 			'dismiss_notice'           => true,
+			'create_pages'             => false,
 		);
 
 		foreach ( $ajax_actions as $action => $priv ) {
@@ -63,8 +64,49 @@ class WPHB_Ajax {
 				add_action( "wp_ajax_nopriv_hotel_booking_{$action}", array( __CLASS__, $action ) );
 			}
 		}
-
 		self::$_loaded = true;
+	}
+
+	/**
+	 * It creates a page
+	 */
+	static function create_pages() {
+		$response = array(
+			'code'    => 0,
+			'message' => '',
+		);
+
+		if ( ! current_user_can( 'edit_pages' ) || empty( $_POST['page_name'] ) ) {
+			$response['message'] = 'Request invalid';
+			hb_send_json( $response );
+		}
+
+		$page_name = WPHB_Helpers::sanitize_params_submitted( $_POST['page_name'] );
+
+		if ( $page_name ) {
+			$args = array(
+				'post_type'   => 'page',
+				'post_title'  => $page_name,
+				'post_status' => 'publish',
+			);
+
+			$page_id = wp_insert_post( $args );
+
+			if ( $page_id ) {
+				$response['code']    = 1;
+				$response['message'] = 'create page success';
+				$response['page']    = get_post( $page_id );
+				$response['html']    = '<a href="' . get_edit_post_link( $page_id ) . '" target="_blank">' . __( 'Edit Page', 'wp-hotel-booking' ) . '</a>&nbsp;';
+				$response['html']   .= '<a href="' . get_permalink( $page_id ) . '" target="_blank">' . __( 'View Page', 'wp-hotel-booking' ) . '</a>';
+			} else {
+				$response['error'] = __( 'Error! Page creation failed. Please try again.', 'wp-hotel-booking' );
+			}
+		} else {
+			$response['error'] = __( 'Empty page name!', 'wp-hotel-booking' );
+		}
+
+		wp_send_json( $response );
+		die;
 	}
 
 	/**
@@ -154,10 +196,7 @@ class WPHB_Ajax {
 		);
 		// set_transient( 'hotel_booking_customer_email_' . WPHB_BLOG_ID, $email, DAY_IN_SECONDS );
 		WP_Hotel_Booking::instance()->cart->set_customer( 'customer_email', $email );
-
-		$posts = get_posts( $args );
-
-		if ( $posts ) {
+		if ( $posts = get_posts( $args ) ) {
 			$customer       = $posts[0];
 			$customer->data = array();
 			$data           = get_post_meta( $customer->ID );
@@ -203,7 +242,7 @@ class WPHB_Ajax {
 	 * Catch variables via post method and build a request param
 	 */
 	static function parse_search_params() {
-		check_ajax_referer( 'hb_search_nonce_action', 'nonce' );
+		check_ajax_referer( 'hb_search_nonce_action', '_nonce' );
 		$params = array(
 			'hotel-booking'     => hb_get_request( 'hotel-booking' ),
 			'check_in_date'     => hb_get_request( 'check_in_date' ),
@@ -283,7 +322,7 @@ class WPHB_Ajax {
 			'hb-num-of-rooms' => $num_of_rooms,
 		);
 
-		//print_r($params);
+		// print_r($params);
 		hb_send_json(
 			array(
 				'success' => 1,
@@ -293,6 +332,7 @@ class WPHB_Ajax {
 	}
 
 	static function ajax_add_to_cart() {
+
 		$result = array(
 			'status'  => 'error',
 			'message' => __( 'Some thing not right!', 'wp-hotel-booking' ),
@@ -330,7 +370,7 @@ class WPHB_Ajax {
 		}
 
 		// validate checkin, checkout date
-		if ( ! isset( $_POST['check_in_date'] ) || ! isset( $_POST['check_out_date'] ) ) {
+		if ( ! isset( $_POST['check_in_date'] ) || ! isset( $_POST['check_in_date'] ) ) {
 			$result['message'] = __( 'Checkin date, checkout date is invalid.', 'wp-hotel-booking' );
 			hb_send_json( $result );
 		} else {
@@ -341,6 +381,11 @@ class WPHB_Ajax {
 		$param = apply_filters( 'hotel_booking_add_cart_params', $param );
 		do_action( 'hotel_booking_before_add_to_cart', $_POST );
 
+		// add extra to cart items
+		if ( ( ! empty( $_POST['hb_optional_quantity_selected'] ) && ! empty( $_POST['hb_optional_quantity'] ) ) ) {
+			$param['hb_optional_quantity_selected'] = $_POST['hb_optional_quantity_selected'];
+			$param['hb_optional_quantity']          = $_POST['hb_optional_quantity'];
+		}
 		// add to cart
 		$cart_item_id = WP_Hotel_Booking::instance()->cart->add_to_cart( $room_id, $param, $qty );
 
@@ -357,7 +402,8 @@ class WPHB_Ajax {
 				'message'   => sprintf( '<label class="hb_success_message">%1$s</label>', __( 'Added successfully.', 'wp-hotel-booking' ) ),
 				'id'        => $room_id,
 				'permalink' => get_permalink( $room_id ),
-				'name'      => sprintf( '%s', $room->name ) . ( $room->capacity_title ? sprintf( '(%s)', $room->capacity_title ) : '' ),
+				// 'name'      => sprintf( '%s', $room->name ) . ( $room->capacity_title ? sprintf( '(%s)', $room->capacity_title ) : '' ),
+				'name'      => sprintf( '%s', $room->name ),
 				'quantity'  => $qty,
 				'cart_id'   => $cart_item_id,
 				'total'     => hb_format_price( WP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id )->amount ),
@@ -485,7 +531,7 @@ class WPHB_Ajax {
 			return;
 		}
 
-		//hotel_booking_get_room_available
+		// hotel_booking_get_room_available
 		if ( ! isset( $_POST['product_id'] ) || ! $_POST['product_id'] ) {
 			wp_send_json(
 				array(
@@ -715,6 +761,10 @@ class WPHB_Ajax {
 		do_action( 'hotel_booking_updated_order_item', $order_id, $order_item_id );
 
 		$post = get_post( $order_id );
+
+		// update booking info meta post
+		WPHB_Booking::instance( $order_id )->update_room_booking( $order_id );
+
 		ob_start();
 		require_once WPHB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items.php';
 		require_once WPHB_PLUGIN_PATH . '/includes/admin/metaboxes/views/meta-booking-items-template-js.php';

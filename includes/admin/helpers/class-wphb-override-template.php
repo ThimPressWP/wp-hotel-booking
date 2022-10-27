@@ -39,19 +39,25 @@ if ( ! class_exists( 'WPHB_Helper_Override_Template' ) ) {
 		 */
 		public static function get_theme_override_templates( $check = false ) {
 
-			$plugins = apply_filters( 'hb_plugins_templates_path', array(
-				'wphb' => array(
-					'folder' => hb_template_path(),
-					'path'   => WPHB_TEMPLATES,
-				),
-			) );
+			$plugins = apply_filters(
+				'hb_plugins_templates_path',
+				array(
+					'wphb' => array(
+						'folder' => hb_template_path(),
+						'path'   => WPHB_TEMPLATES,
+					),
+				)
+			);
 
 			$template_dir   = get_template_directory();
 			$stylesheet_dir = get_stylesheet_directory();
 			$t_folder       = basename( $template_dir );
 			$s_folder       = basename( $stylesheet_dir );
 
-			$found_files        = array( $t_folder => array(), $s_folder => array() );
+			$found_files        = array(
+				$t_folder => array(),
+				$s_folder => array(),
+			);
 			$outdated_templates = false;
 
 			if ( ! is_array( $plugins ) || ! $plugins ) {
@@ -96,7 +102,7 @@ if ( ! class_exists( 'WPHB_Helper_Override_Template' ) ) {
 								str_replace( WP_CONTENT_DIR . '/themes/', '', $theme_file ),
 								$theme_version ? $theme_version : '-',
 								$core_version,
-								true
+								true,
 							);
 							if ( empty( $theme_version ) ) {
 								self::$counts['undefined'] ++;
@@ -107,7 +113,7 @@ if ( ! class_exists( 'WPHB_Helper_Override_Template' ) ) {
 								str_replace( WP_CONTENT_DIR . '/themes/', '', $theme_file ),
 								$theme_version ? $theme_version : '?',
 								$core_version ? $core_version : '?',
-								null
+								null,
 							);
 							self::$counts['up-to-date'] ++;
 						}
@@ -142,7 +148,7 @@ if ( ! class_exists( 'WPHB_Helper_Override_Template' ) ) {
 			if ( ! empty( $files ) ) {
 				foreach ( $files as $key => $value ) {
 					// Ignore special files
-					if ( ! in_array( $value, array( ".", "..", 'index.php', 'index.html' ) ) ) {
+					if ( ! in_array( $value, array( '.', '..', 'index.php', 'index.html' ) ) ) {
 						// If path is a folder, discover it.
 						if ( is_dir( $template_path . '/' . $value ) ) {
 							$sub_files = self::_scan_template_files( $template_path . '/' . $value );

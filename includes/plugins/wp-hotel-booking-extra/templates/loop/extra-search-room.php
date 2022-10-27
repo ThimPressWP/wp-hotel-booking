@@ -33,10 +33,10 @@ if ( $room_extra ) { ?>
 					<?php foreach ( $room_extra as $key => $extra ) { ?>
 						<li data-price="<?php echo esc_attr( $extra->amount_singular ); ?>">
 							<div class="hb_extra_optional_right">
-								<input type="<?php echo esc_attr( $extra->required ? 'hidden' : 'checkbox' ); ?>"
+								<input type="<?php echo $extra->required ? 'hidden' : 'checkbox'; ?>"
 									   name="hb_optional_quantity_selected[<?php echo esc_attr( $extra->ID ); ?>]"
 									   class="hb_optional_quantity_selected"
-									   id="<?php echo esc_attr( 'hb-ex-room-' . $post_id . '-' . $key ); ?>" <?php WPHB_Helpers::print( $extra->required ? 'checked="checked" ' : '' ); ?>
+									   id="<?php echo esc_attr( 'hb-ex-room-' . $post_id . '-' . $key ); ?>" <?php echo $extra->required ? 'checked="checked" ' : ''; ?>
 								/>
 							</div>
 							<div class="hb_extra_optional_left">
@@ -44,7 +44,13 @@ if ( $room_extra ) { ?>
 									<div class="hb_package_title">
 										<label for="<?php echo esc_attr( 'hb-ex-room-' . $post_id . '-' . $key ); ?>"><?php printf( '%s', $extra->title ); ?></label>
 									</div>
-									<p><?php printf( '%s', $extra->description ); ?></p>
+									<p>
+										<?php
+											remove_all_filters('the_content');
+											$description = apply_filters( 'the_content', $extra->description );
+											echo str_replace( ']]>', ']]&gt;', $description );
+										?>
+									</p>
 								</div>
 								<div class="hb_extra_detail_price">
 									<?php if ( $extra->respondent === 'number' ) { ?>
@@ -59,7 +65,7 @@ if ( $room_extra ) { ?>
 											   value="1" />
 									<?php } ?>
 									<label>
-										<strong><?php echo wp_kses_post( $extra->price ); ?></strong>
+										<strong><?php echo $extra->price; ?></strong>
 										<small><?php printf( '/ %s', $extra->respondent_name ? $extra->respondent_name : __( 'Package', 'wp-hotel-booking' ) ); ?></small>
 									</label>
 								</div>

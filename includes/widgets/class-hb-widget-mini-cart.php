@@ -36,7 +36,7 @@ class HB_Widget_Mini_Cart extends WP_Widget{
      */
     public function widget( $args, $instance )
     {
-	    WPHB_Helpers::print( sprintf( '%s', $args['before_widget'] ) );
+        WPHB_Helpers::print( sprintf( '%s', $args['before_widget'] ) );
         $html = array();
         if( $instance )
         {
@@ -48,8 +48,8 @@ class HB_Widget_Mini_Cart extends WP_Widget{
             }
             $html[] = '][/hotel_booking_mini_cart]';
         }
-        WPHB_Helpers::print( do_shortcode( esc_html( implode(' ', $html) ) ) );
-	    WPHB_Helpers::print( sprintf( '%s', $args['after_widget'] ) );
+        WPHB_Helpers::print( do_shortcode( wp_kses_post( implode(' ', $html) ) ) );
+        WPHB_Helpers::print( sprintf( '%s', $args['after_widget'] ) );
     }
 
     /**

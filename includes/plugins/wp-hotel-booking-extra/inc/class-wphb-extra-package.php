@@ -21,42 +21,49 @@ if ( ! class_exists( 'HB_Extra_Package' ) ) {
 	class HB_Extra_Package {
 		/**
 		 * instance
+		 *
 		 * @var null
 		 */
 		static $_instance = null;
 
 		/**
 		 * package
+		 *
 		 * @var null
 		 */
 		public $_package = null;
 
 		/**
 		 * post_type = hb_extra_room
+		 *
 		 * @var null
 		 */
 		protected $_post = null;
 
 		/**
 		 * checkin room
+		 *
 		 * @var null
 		 */
 		protected $check_in_date = null;
 
 		/**
 		 * checkout room
+		 *
 		 * @var null
 		 */
 		protected $check_out_date = null;
 
 		/**
 		 * room quantity
+		 *
 		 * @var null
 		 */
 		public $parent_quantity = null;
 
 		/**
 		 * package quantity
+		 *
 		 * @var null
 		 */
 		public $quantity = null;
@@ -68,12 +75,15 @@ if ( ! class_exists( 'HB_Extra_Package' ) ) {
 		 * @param array $params
 		 */
 		public function __construct( $post, $params = array() ) {
-			$params              = wp_parse_args( $params, array(
-				'check_in_date'  => '',
-				'check_out_date' => '',
-				'room_quantity'  => 1,
-				'quantity'       => 1
-			) );
+			$params              = wp_parse_args(
+				$params,
+				array(
+					'check_in_date'  => '',
+					'check_out_date' => '',
+					'room_quantity'  => 1,
+					'quantity'       => 1,
+				)
+			);
 			$this->check_in_date = $params['check_in_date'];
 
 			if ( ! $this->check_in_date ) {
@@ -104,43 +114,43 @@ if ( ! class_exists( 'HB_Extra_Package' ) ) {
 		public function __get( $key ) {
 			switch ( $key ) {
 				case 'ID':
-					# code...
+					// code...
 					$return = $this->_post->ID;
 					break;
 				case 'title':
-					# code...
+					// code...
 					$return = $this->_post->post_title;
 					break;
 				case 'description':
-					# code...
+					// code...
 					$return = $this->_post->post_content;
 					break;
 				case 'regular_price':
-					# code...
+					// code...
 					$return = $this->get_regular_price();
 					break;
 				case 'regular_price_tax':
-					# code...
+					// code...
 					$return = $this->get_regular_price( true );
 					break;
 				case 'quantity':
-					# code...
+					// code...
 					$return = $this->quantity;
 					break;
 				case 'price':
-					# code...
+					// code...
 					$return = $this->get_price_package( false );
 					break;
 				case 'price_tax':
-					# code...
+					// code...
 					$return = $this->get_price_package();
 					break;
 				case 'respondent':
-					# code...
+					// code...
 					$return = get_post_meta( $this->_post->ID, 'tp_hb_extra_room_respondent', true );
 					break;
 				case 'respondent_name':
-					# code...
+					// code...
 					$return = get_post_meta( $this->_post->ID, 'tp_hb_extra_room_respondent_name', true );
 					break;
 				case 'required':
@@ -153,7 +163,7 @@ if ( ! class_exists( 'HB_Extra_Package' ) ) {
 					$return = $this->amount_singular();
 					break;
 				case 'amount_singular_exclude_tax':
-					# code...
+					// code...
 					$return = $this->amount_singular_exclude_tax();
 					break;
 				case 'amount_singular_include_tax':
@@ -179,6 +189,7 @@ if ( ! class_exists( 'HB_Extra_Package' ) ) {
 
 		/**
 		 * get price of package
+		 *
 		 * @return float price of package
 		 */
 		function get_price_package( $tax = true ) {
@@ -259,20 +270,23 @@ if ( ! class_exists( 'HB_Extra_Package' ) ) {
 		 * @return HB_Extra_Package
 		 */
 		static function instance( $id, $params = array() ) {
-			$params = wp_parse_args( $params, array(
-				'check_in_date'  => '',
-				'check_out_date' => '',
-				'room_quantity'  => 1,
-				'quantity'       => 1
-			) );
+			$params = wp_parse_args(
+				$params,
+				array(
+					'check_in_date'  => '',
+					'check_out_date' => '',
+					'room_quantity'  => 1,
+					'quantity'       => 1,
+				)
+			);
 
 			if ( ! empty( self::$_instance[ $id ] ) ) {
 				$package = self::$_instance[ $id ];
 
 				if ( $package->check_in_date === $params['check_in_date'] &&
-				     $package->check_out_date === $params['check_out_date'] &&
-				     $package->parent_quantity == $params['room_quantity'] &&
-				     $package->quantity == $params['quantity']
+					 $package->check_out_date === $params['check_out_date'] &&
+					 $package->parent_quantity == $params['room_quantity'] &&
+					 $package->quantity == $params['quantity']
 				) {
 					return $package;
 				}

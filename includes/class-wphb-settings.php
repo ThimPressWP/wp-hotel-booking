@@ -170,7 +170,12 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 		 * Update settings
 		 */
 		public function update_settings() {
-			if ( empty( $_POST ) ) {
+		
+			if ( empty( $_POST ) || ( empty( $_POST['wphb_meta_box_settings_nonce'] ) || ! wp_verify_nonce( wp_unslash( $_POST['wphb_meta_box_settings_nonce'] ), 'wphb_update_meta_box_settings' ) ) ) {
+				return;
+			}
+
+			if ( ! current_user_can( 'administrator' ) ) {
 				return;
 			}
 
@@ -194,7 +199,6 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 		 */
 		private function _load_options() {
 			global $wpdb;
-
 			$query = $wpdb->prepare(
 				"
                 SELECT option_name, option_value
@@ -203,10 +207,7 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
             ",
 				$this->_option_prefix . '%'
 			);
-
-			$options = $wpdb->get_results( $query );
-
-			if ( $options ) {
+			if ( $options = $wpdb->get_results( $query ) ) {
 				foreach ( $options as $option ) {
 					$name                    = str_replace( $this->_option_prefix, '', $option->option_name );
 					$this->_options[ $name ] = maybe_unserialize( $option->option_value );

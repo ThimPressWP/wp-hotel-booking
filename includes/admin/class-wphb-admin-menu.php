@@ -43,21 +43,30 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 			);
 
 			$menu_items = array(
-				'pricing_table' => array(
-					'tp_hotel_booking',
-					__( 'Pricing Plans', 'wp-hotel-booking' ),
-					__( 'Pricing Plans', 'wp-hotel-booking' ),
-					'manage_hb_booking',
-					'tp_hotel_booking_pricing',
-					array( $this, 'pricing_table' ),
-				),
-				'settings'      => array(
+				// do not use: minhpd 30-5-2022
+				// 'pricing_table' => array(
+				// 'tp_hotel_booking',
+				// __( 'Pricing Plans', 'wp-hotel-booking' ),
+				// __( 'Pricing Plans', 'wp-hotel-booking' ),
+				// 'manage_hb_booking',
+				// 'tp_hotel_booking_pricing',
+				// array( $this, 'pricing_table' )
+				// ),
+				'settings'         => array(
 					'tp_hotel_booking',
 					__( 'Settings', 'wp-hotel-booking' ),
 					__( 'Settings', 'wp-hotel-booking' ),
 					'manage_hb_booking',
 					'tp_hotel_booking_settings',
 					array( $this, 'settings_page' ),
+				),
+				'calendar_manager' => array(
+					'tp_hotel_booking',
+					__( 'Calendar Manager', 'wp-hotel-booking' ),
+					__( 'Calendar Manager', 'wp-hotel-booking' ),
+					'manage_hb_booking',
+					'tp_hotel_booking_calender_manager',
+					array( $this, 'calendar_manager' ),
 				),
 			);
 
@@ -102,12 +111,20 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 		}
 
 		/**
-		 * Pricing table view.
+		 * Calendar Manager
 		 */
-		public function pricing_table() {
-			wp_enqueue_script( 'wp-util' );
-			WP_Hotel_Booking::instance()->_include( 'includes/admin/views/pricing-table.php' );
+		public function calendar_manager() {
+			WP_Hotel_Booking::instance()->_include( 'includes/admin/views/calendar-manager.php' );
 		}
+
+		/**
+		 * Pricing table view.
+		 * do not use: minhpd 30-5-2022
+		 */
+		// public function pricing_table() {
+		// wp_enqueue_script( 'wp-util' );
+		// WP_Hotel_Booking::instance()->_include( 'includes/admin/views/pricing-table.php' );
+		// }
 
 		/**
 		 * Other settings view.

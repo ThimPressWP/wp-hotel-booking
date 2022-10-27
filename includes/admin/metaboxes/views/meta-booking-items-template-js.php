@@ -28,7 +28,7 @@ defined( 'ABSPATH' ) || exit;
 
 					<# } else { #>
 
-						<?php _e( 'Add new item', 'wp-hotel-booking' ) ?>
+						<?php _e( 'Add new item', 'wp-hotel-booking' ); ?>
 
 					<# } #>
 				</h1>
@@ -45,16 +45,16 @@ defined( 'ABSPATH' ) || exit;
 						</select>
 					</div>
 					<div class="section">
-						<input type="text" name="check_in_date" class="check_in_date" value="{{ data.check_in_date }}" placeholder="<?php esc_attr_e( 'Check in', 'wp-hotel-booking' ); ?>" />
+						<input type="text" name="check_in_date" class="check_in_date" value="{{ data.check_in_date }}" placeholder="<?php esc_attr_e( 'Check in', 'wp-hotel-booking' ); ?>" autocomplete="off"/>
 						<input type="hidden" name="check_in_date_timestamp" value="{{ data.check_in_date_timestamp }}" class="hb-room-item-field" />
-						<input type="text" name="check_out_date" class="check_out_date" value="{{ data.check_out_date }}" placeholder="<?php esc_attr_e( 'Check out', 'wp-hotel-booking' ); ?>" />
+						<input type="text" name="check_out_date" class="check_out_date" value="{{ data.check_out_date }}" placeholder="<?php esc_attr_e( 'Check out', 'wp-hotel-booking' ); ?>" autocomplete="off"/>
 						<input type="hidden" name="check_out_date_timestamp" value="{{ data.check_out_date_timestamp }}" class="hb-room-item-field" />
 					</div>
 				<# } #>
 				<div class="section">
 					<# if ( typeof data.qty !== 'undefined' ) { #>
 						<select name="qty">
-							<option value="0"><?php _e( 'Quantity' ) ?></option>
+							<option value="0"><?php _e( 'Quantity', 'wp-hotel-booking' ); ?></option>
 							<# for ( var i = 1; i <= data.qty; i++ ) { #>
 
 								<# if ( data.qty_selected == i ) { #>
@@ -114,7 +114,7 @@ defined( 'ABSPATH' ) || exit;
 				<# } #>
 				<input type="hidden" name="order_item_type" value="{{ data.order_item_type }}" />
 				<input type="hidden" name="action" value="hotel_booking_admin_add_order_item" />
-				<button type="reset" class="button hb_modal_close"><?php _e( 'Close', 'wp-hotel-booking' ) ?></button>
+				<button type="reset" class="button hb_modal_close"><?php _e( 'Close', 'wp-hotel-booking' ); ?></button>
 				<button type="submit" class="button button-primary hb_form_submit" disabled><?php _e( 'Add', 'wp-hotel-booking' ); ?></button>
 			</div>
 		</form>
@@ -151,7 +151,7 @@ defined( 'ABSPATH' ) || exit;
 				<input type="hidden" name="action" value="{{ data.action }}">
 				<input type="hidden" name="coupon_id" value="{{ data.coupon_id }}" />
 				<?php wp_nonce_field( 'hotel-booking-confirm', 'hotel_booking_confirm' ); ?>
-				<button type="reset" class="button hb_modal_close"><?php _e( 'No', 'wp-hotel-booking' ) ?></button>
+				<button type="reset" class="button hb_modal_close"><?php _e( 'No', 'wp-hotel-booking' ); ?></button>
 				<button type="submit" class="button button-primary hb_form_submit"><?php _e( 'Yes', 'wp-hotel-booking' ); ?></button>
 			</div>
 		</form>
@@ -164,7 +164,7 @@ defined( 'ABSPATH' ) || exit;
 <script type="text/html" id="tmpl-hb-qty">
 	<# if ( typeof data.qty !== 'undefined' ) { #>
 		<select name="qty">
-			<option value="0"><?php _e( 'Quantity' ) ?></option>
+			<option value="0"><?php _e( 'Quantity', 'wp-hotel-booking' ); ?></option>
 			<# for ( var i = 1; i <= data.qty; i++ ) { #>
 
 				<# if ( data.qty_selected == i ) { #>
@@ -191,7 +191,7 @@ defined( 'ABSPATH' ) || exit;
 
 					<# } else { #>
 
-						<?php _e( 'Add new coupon', 'wp-hotel-booking' ) ?>
+						<?php _e( 'Add new coupon', 'wp-hotel-booking' ); ?>
 
 					<# } #>
 				</h1>
@@ -227,7 +227,7 @@ defined( 'ABSPATH' ) || exit;
 				<input type="hidden" name="order_id" value="{{ data.order_id }}" />
 				<!-- <input type="hidden" name="coupon_id" value="{{ data.coupon_id }}" /> -->
 				<input type="hidden" name="action" value="hotel_booking_add_coupon_to_order" />
-				<button type="reset" class="button hb_modal_close"><?php _e( 'Close', 'wp-hotel-booking' ) ?></button>
+				<button type="reset" class="button hb_modal_close"><?php _e( 'Close', 'wp-hotel-booking' ); ?></button>
 				<button type="submit" class="button button-primary hb_form_submit"><?php _e( 'Add', 'wp-hotel-booking' ); ?></button>
 			</div>
 		</form>

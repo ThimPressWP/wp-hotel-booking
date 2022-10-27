@@ -25,7 +25,7 @@ global $post;
 	</div>
 	<div id="publishing-action">
 		<button name="save" type="submit" class="button button-primary" id="publish">
-			<?php echo esc_html( $post->post_status !== 'auto-draft' ? __( 'Update', 'wp-hotel-booking' ) : __( 'Save Book', 'wp-hotel-booking' ) ); ?>
+			<?php echo esc_html( sprintf( '%s', $post->post_status !== 'auto-draft' ? __( 'Update', 'wp-hotel-booking' ) : __( 'Save Book', 'wp-hotel-booking' ) ) ); ?>
 		</button>
 	</div>
 </div>

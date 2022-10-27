@@ -22,7 +22,7 @@ class HB_Widget_Search extends WP_Widget {
 		parent::__construct(
 			'hb_widget_search',
 			__( 'HB Search Rooms', 'wp-hotel-booking' ),
-			array( 'description' => __( "Display the form for search rooms.", 'wp-hotel-booking' ) )
+			array( 'description' => __( 'Display the form for search rooms.', 'wp-hotel-booking' ) )
 		);
 	}
 
@@ -36,7 +36,8 @@ class HB_Widget_Search extends WP_Widget {
 	 */
 	public function widget( $args, $instance ) {
 		WPHB_Helpers::print( sprintf( '%s', $args['before_widget'] ) );
-		if ( $title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base ) ) {
+		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
+		if ( $title ) {
 			echo wp_kses_post( sprintf( '%s', $args['before_title'] . $title . $args['after_title'] ) );
 		}
 
@@ -52,7 +53,7 @@ class HB_Widget_Search extends WP_Widget {
 		}
 		WPHB_Helpers::print(
 			do_shortcode( esc_html( '[hotel_booking widget_search="' . true . '" show_title="' . $show_title . '" show_label="' . $show_label . '"]' ) )
-        );
+		);
 		WPHB_Helpers::print( sprintf( '%s', $args['after_widget'] ) );
 	}
 
@@ -66,28 +67,28 @@ class HB_Widget_Search extends WP_Widget {
 		$checked_title = ( ! isset( $instance['show_title'] ) || $instance['show_title'] === 'true' ) ? 'checked' : '';
 		$checked_label = ( ! isset( $instance['show_label'] ) || $instance['show_label'] === 'true' ) ? 'checked' : '';
 		?>
-        <p>
+		<p>
 			<?php $title_id = $this->get_field_id( 'title' ); ?>
-            <label for="<?php echo esc_attr( $title_id ); ?>"><?php _e( 'Title:', 'wp-hotel-booking' ); ?></label>
-            <input class="widefat" id="<?php echo esc_attr( $title_id ); ?>"
-                   name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text"
-                   value="<?php echo esc_attr( $title ); ?>">
-        </p>
-        <!--show title, label form-->
-        <p>
+			<label for="<?php echo esc_attr( $title_id ); ?>"><?php _e( 'Title:', 'wp-hotel-booking' ); ?></label>
+			<input class="widefat" id="<?php echo esc_attr( $title_id ); ?>"
+				   name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text"
+				   value="<?php echo esc_attr( $title ); ?>">
+		</p>
+		<!--show title, label form-->
+		<p>
 			<?php $title_id = $this->get_field_id( 'show_title' ); ?>
-            <input type="checkbox" id="<?php echo esc_attr( $title_id ); ?>"
-                   name="<?php echo esc_attr( $this->get_field_name( 'show_title' ) ); ?>"
-                   value="true"<?php echo esc_attr( $checked_title ); ?>>
-            <label for="<?php echo esc_attr( $title_id ); ?>"><?php _e( 'Show title search form', 'wp-hotel-booking' ) ?></label>
-        </p>
-        <p>
+			<input type="checkbox" id="<?php echo esc_attr( $title_id ); ?>"
+				   name="<?php echo esc_attr( $this->get_field_name( 'show_title' ) ); ?>"
+				   value="true"<?php echo esc_attr( $checked_title ); ?>>
+			<label for="<?php echo esc_attr( $title_id ); ?>"><?php _e( 'Show title search form', 'wp-hotel-booking' ); ?></label>
+		</p>
+		<p>
 			<?php $label_id = $this->get_field_id( 'show_label' ); ?>
-            <input type="checkbox" id="<?php echo esc_attr( $label_id ); ?>"
-                   name="<?php echo esc_attr( $this->get_field_name( 'show_label' ) ); ?>"
-                   value="true"<?php echo esc_attr( $checked_label ); ?>>
-            <label for="<?php echo esc_attr( $label_id ); ?>"><?php _e( 'Show label search form', 'wp-hotel-booking' ) ?></label>
-        </p>
+			<input type="checkbox" id="<?php echo esc_attr( $label_id ); ?>"
+				   name="<?php echo esc_attr( $this->get_field_name( 'show_label' ) ); ?>"
+				   value="true"<?php echo esc_attr( $checked_label ); ?>>
+			<label for="<?php echo esc_attr( $label_id ); ?>"><?php _e( 'Show label search form', 'wp-hotel-booking' ); ?></label>
+		</p>
 		<?php
 	}
 

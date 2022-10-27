@@ -36,9 +36,9 @@ if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 
 		<div id="booking-details">
 			<div class="booking-data">
-				<h3 class="booking-data-number"><?php echo esc_html( sprintf( esc_attr__( 'Booking %s', 'wp-hotel-booking' ), hb_format_order_number( $booking_id ) ) ) ; ?></h3>
+				<h3 class="booking-data-number"><?php echo esc_html( sprintf( esc_attr__( 'Booking %s', 'wp-hotel-booking' ), hb_format_order_number( $booking_id ) ) ); ?></h3>
 				<div class="booking-date">
-					<?php echo esc_html( sprintf( __( 'Date %s', 'wp-hotel-booking' ), get_the_date( '', $booking_id ) ) ) ; ?>
+					<?php echo esc_html( sprintf( __( 'Date %s', 'wp-hotel-booking' ), get_the_date( '', $booking_id ) ) ); ?>
 				</div>
 			</div>
 		</div>
@@ -87,7 +87,7 @@ if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 							$extra_id = apply_filters( 'hotel-booking-order-extra-id', hb_get_order_item_meta( $package->order_item_id, 'product_id', true ) );
 							$extra    = hotel_booking_get_product_class( $extra_id );
 							?>
-							<tr data-order-parent="<?php echo esc_attr( $extra_id ); ?>">
+							<tr data-order-parent="<?php echo $extra_id; ?>">
 								<td colspan="3">
 									<?php echo get_the_title( $extra_id ); ?>
 								</td>
@@ -205,12 +205,6 @@ if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 						<label for="_hb_customer_email"><?php echo __( 'Email:', 'wp-hotel-booking' ); ?></label>
 						<?php echo esc_html( $booking->customer_email ); ?>
 					</li>
-
-					<li>
-						<label for="_hb_customer_fax"><?php echo __( 'Fax:', 'wp-hotel-booking' ); ?></label>
-						<?php echo esc_html( $booking->customer_tax ); ?>
-					</li>
-
 				</ul>
 			</div>
 

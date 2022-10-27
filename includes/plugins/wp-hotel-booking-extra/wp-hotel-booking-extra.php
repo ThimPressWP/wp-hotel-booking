@@ -1,4 +1,16 @@
 <?php
+/*
+ * Plugin Name: WP Hotel Booking Extra
+ * Plugin URI: http://thimpress.com/
+ * Description: Support extra room for WP Hotel Booking
+ * Author: ThimPress
+ * Version: 1.9.7.4
+ * Author URI: http://thimpress.com
+ * Text Domain: wp-hotel-booking-extra
+ * Domain Path: /languages/
+ * Requires PHP: 7.0
+ */
+
 /**
  * Prevent loading this file directly
  */
@@ -74,14 +86,14 @@ if ( ! class_exists( 'WPHB_Extra_Factory' ) ) {
 				foreach ( $file as $key => $f ) {
 					if ( file_exists( $f ) ) {
 						require_once $f;
-					} else if ( file_exists( untrailingslashit( WPHB_EXTRA_FILE ) . '/' . $f ) ) {
+					} elseif ( file_exists( untrailingslashit( WPHB_EXTRA_FILE ) . '/' . $f ) ) {
 						require_once untrailingslashit( WPHB_EXTRA_FILE ) . '/' . $f;
 					}
 				}
 			} else {
 				if ( file_exists( $file ) ) {
 					require_once $file;
-				} else if ( file_exists( untrailingslashit( WPHB_EXTRA_FILE ) . '/' . $file ) ) {
+				} elseif ( file_exists( untrailingslashit( WPHB_EXTRA_FILE ) . '/' . $file ) ) {
 					require_once untrailingslashit( WPHB_EXTRA_FILE ) . '/' . $file;
 				}
 			}
@@ -101,19 +113,22 @@ if ( ! class_exists( 'WPHB_Extra_Factory' ) ) {
 			$parent_quantity = 1;
 			if ( isset( $params['order_item_id'] ) ) {
 				$parent_quantity = hb_get_order_item_meta( hb_get_parent_order_item( $params['order_item_id'] ), 'quantity', true );
-			} else if ( ! is_admin() && isset( $params['parent_id'] ) && WP_Hotel_Booking::instance()->cart ) {
+			} elseif ( ! is_admin() && isset( $params['parent_id'] ) && WP_Hotel_Booking::instance()->cart ) {
 				$parent = WP_Hotel_Booking::instance()->cart->get_cart_item( $params['parent_id'] );
 				if ( $parent ) {
 					$parent_quantity = $parent->quantity;
 				}
 			}
 
-			return new HB_Extra_Package( $product_id, array(
-				'check_in_date'  => isset( $params['check_in_date'] ) ? $params['check_in_date'] : '',
-				'check_out_date' => isset( $params['check_out_date'] ) ? $params['check_out_date'] : '',
-				'room_quantity'  => $parent_quantity,
-				'quantity'       => isset( $params['quantity'] ) ? $params['quantity'] : 1
-			) );
+			return new HB_Extra_Package(
+				$product_id,
+				array(
+					'check_in_date'  => isset( $params['check_in_date'] ) ? $params['check_in_date'] : '',
+					'check_out_date' => isset( $params['check_out_date'] ) ? $params['check_out_date'] : '',
+					'room_quantity'  => $parent_quantity,
+					'quantity'       => isset( $params['quantity'] ) ? $params['quantity'] : 1,
+				)
+			);
 		}
 
 		/**
@@ -144,7 +159,7 @@ if ( ! class_exists( 'WPHB_Extra_Factory' ) ) {
 
 			$plugins['wphb-extra'] = array(
 				'folder' => 'wp-hotel-booking-extra',
-				'path'   => WPHB_EXTRA_TEMPLATES
+				'path'   => WPHB_EXTRA_TEMPLATES,
 			);
 
 			return $plugins;

@@ -1,3 +1,14 @@
+.hb-form-field.hb-form-field-select_page .quick-add-page-actions a {
+    font-size: 13px;
+    text-decoration: none;
+	display: inline-block;
+	margin-top: 5px;
+}
+.hb-form-field  a.edit_meta {
+	display: block;
+    margin-top: 8px;
+    font-size: 14px;
+}
 .wp-admin.post-type-hb_booking .search-box #post-search-input {
 	width: 280px;
 }
@@ -11,6 +22,18 @@
 form[name="hb-admin-settings-form"] select,
 form[name="hb-admin-settings-form"] input[type="text"] {
 	width: 25em;
+}
+form[name="hb-admin-settings-form"] button.select2-selection__clear{
+	margin-right: 18px;
+    border: unset;
+    background: none;
+    top: 3px;
+} 
+
+form[name="hb-admin-settings-form"] ul.hb-admin-sub-tab{
+	display: block;
+	width: 100%;
+	margin-bottom: 20px;
 }
 
 .hb-form-field {
@@ -70,10 +93,12 @@ form[name="hb-admin-settings-form"] input[type="text"] {
 .hb-pricing-table {
 	border: 1px solid #DDD;
 	position: relative;
+	width: 50%;
+}
+#room_settings .hb-pricing-table{
+	width: 100%;
 	margin-bottom: 20px;
-	background-color: #FFF;
-	float: left;
-	clear: both;
+	overflow-x: scroll;
 }
 
 .hb-pricing-table-title {
@@ -87,6 +112,9 @@ form[name="hb-admin-settings-form"] input[type="text"] {
 .hb-pricing-list {
 	border-top: 1px solid #EEE;
 	padding: 10px 5px 5px 10px;
+}
+#room_settings .hb-pricing-list table {
+    width: 100%;
 }
 
 .hb-pricing-list th,
@@ -159,7 +187,7 @@ th.column-room_type {
 }
 
 .post-type-hb_room td.column-room_capacity {
-	text-align: right;
+	text-align: center;
 }
 
 .post-type-hb_booking .column-title {
@@ -295,6 +323,7 @@ th.column-room_type {
 }*/
 #gallery_settings .hb-form-field-input {
 	margin-left: 0;
+	width: 100%;
 }
 
 /*
@@ -440,7 +469,7 @@ th.column-room_type {
 .wp-admin.post-type-hb_room .star-rating {
 	float: left;
 	position: relative;
-	width: 75px;
+	width: 65px;
 	height: 18px;
 	line-height: 1;
 }
@@ -823,6 +852,7 @@ th.column-room_type {
 
 #booking_items table .name {
 	min-width: 200px;
+	text-align: left;
 }
 
 #booking_items table .left {
@@ -1020,10 +1050,13 @@ th.column-room_type {
 	margin: 15px 0 -10px !important;
 }
 
-.wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates {
+.wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates,
+.wp-hotel-booking_page_wphb-tools #wphb-update-db
+{
 	margin-top: 25px; }
 
-.wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates thead h4 {
+.wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates thead h4,
+.wp-hotel-booking_page_wphb-tools #wphb-update-db thead h4{
 	margin: 8px 0; }
 
 .wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates tbody th {
@@ -1066,3 +1099,122 @@ th.column-room_type {
 
 .wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates tbody .template-row.outdated .template-version, .wp-hotel-booking_page_wphb-tools #wphb-theme-override-templates tbody .template-row.undefined .template-version {
 	color: #FF0000; }
+
+
+/* admin block room */
+.hotel_booking_calendar {
+    padding: 15px;
+}
+
+.calendar_setup {
+    width: 100%;
+    clear: both;
+    border-bottom: 1px solid #ccc;
+    overflow: hidden;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    position: relative;
+}
+
+.calendar_setup .remove-plan {
+    position: absolute;
+    right: 15px;
+    bottom: 20px;
+    color: #999;
+}
+
+.calendar_setup .remove-plan:hover {
+    color: #d05d5d;
+}
+
+.hotel-calendar {
+    margin-left: 50px;
+    width: 75%;
+    display: inline-block;
+}
+
+.hotel_block_pull_left {
+    float: left;
+    width: 50%;
+}
+
+.pull_room {
+    float: left;
+    width: 50%
+}
+
+.block-message {
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 30px;
+    margin-left: 20px;
+}
+
+.block-message.success {
+    color: #28A220;
+}
+
+.block-message.error {
+    color: #E66A12;
+}
+
+.remove-plan {
+    display: block;
+}
+
+.hotel_booking_calendar .text-center.picker-day.picker-empty {
+    visibility: hidden;
+}
+
+.button.text-center.picker-navigate {
+    width: 40px;
+    font-weight: bold;
+}
+
+.hotel_booking_calendar .text-center.picker-month {
+    width: calc(100% - 80px);
+    font-weight: bold;
+}
+
+.hotel_booking_calendar .select-block-rooms {
+    vertical-align: top;
+    width: 20%;
+}
+#calender_block ._hb_event_selected{
+	background-color:unset !important;
+}
+
+#calender_block .fc-daygrid-day.selected{
+	background-color:#27262261 !important;
+}
+#calender_block .fc-daygrid-day.fc-day-today{
+	background-color:#ffdc2826 !important;
+}
+#calender_block.fc .fc-button .fc-icon{
+	top: -3px;
+}
+#calender_block.fc .fc-button-primary{
+	line-height: 15px;
+}
+/* end admin block room*/
+
+
+
+/* admin deposit room */
+#room_settings #deposit_room {
+	position: relative;
+}
+#room_settings #deposit_room.blocked::before{
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 70%;
+	background: #fff;
+	opacity: 0.5;
+	z-index: 1;
+	top: 30%;
+	left: 0;
+}
+
+/* end admin deposit room*/

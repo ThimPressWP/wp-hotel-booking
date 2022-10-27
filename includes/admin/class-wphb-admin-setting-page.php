@@ -33,6 +33,7 @@ abstract class WPHB_Admin_Setting_Page {
 
 	/**
 	 * get_settings field
+	 *
 	 * @return array settings fields
 	 */
 	public function get_settings() {
@@ -51,6 +52,7 @@ abstract class WPHB_Admin_Setting_Page {
 
 	// output setting page
 	public function output() {
+		wp_nonce_field( 'wphb_update_meta_box_settings', 'wphb_meta_box_settings_nonce' );
 		$settings = $this->get_settings();
 		WPHB_Admin_Settings::render_fields( $settings );
 	}
@@ -59,7 +61,7 @@ abstract class WPHB_Admin_Setting_Page {
 	public function setting_sections() {
 		$sections = $this->get_sections();
 
-		if ( count( $sections ) === 1 ) {
+		if ( count( $sections ) === 0 ) {
 			return;
 		}
 
@@ -72,10 +74,10 @@ abstract class WPHB_Admin_Setting_Page {
 		$html = array();
 
 		$html[] = '<ul class="hb-admin-sub-tab subsubsub">';
-		$sub = array();
-		foreach( $sections as $id => $text ) {
+		$sub    = array();
+		foreach ( $sections as $id => $text ) {
 			$sub[] = '<li>
-						<a href="?page=tp_hotel_booking_settings&tab='. esc_attr( $this->id ) . '&section='. esc_attr( $id ) . '"'. ( $current_section === $id ? ' class="current"' : '' ) .'>' . esc_html( $text ) . '</a>
+						<a href="?page=tp_hotel_booking_settings&tab=' . esc_attr( $this->id ) . '&section=' . esc_attr( $id ) . '"' . ( $current_section === $id ? ' class="current"' : '' ) . '>' . esc_html( $text ) . '</a>
 					</li>';
 		}
 		$html[] = implode( '&nbsp;|&nbsp;', $sub );
@@ -89,4 +91,5 @@ abstract class WPHB_Admin_Setting_Page {
 		$settings = $this->get_settings();
 		WPHB_Admin_Settings::save_fields( $settings );
 	}
+
 }

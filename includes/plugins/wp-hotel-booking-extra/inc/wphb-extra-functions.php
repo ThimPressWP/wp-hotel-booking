@@ -37,11 +37,13 @@ if ( ! function_exists( 'tp_hb_extra_get_template_part' ) ) {
 
 		// Look in yourtheme/slug-name.php and yourtheme/courses-manage/slug-name.php
 		if ( $name ) {
-			$template = locate_template( array(
-				"{$slug}-{$name}.php",
-				tp_hb_extra_template_path() . "/{$slug}-{$name}.php",
-				hb_template_path() . '/' . tp_hb_extra_template_path() . "/{$slug}-{$name}.php",
-			) );
+			$template = locate_template(
+				array(
+					"{$slug}-{$name}.php",
+					tp_hb_extra_template_path() . "/{$slug}-{$name}.php",
+					hb_template_path() . '/' . tp_hb_extra_template_path() . "/{$slug}-{$name}.php",
+				)
+			);
 		}
 
 		// Get default slug-name.php
@@ -51,11 +53,13 @@ if ( ! function_exists( 'tp_hb_extra_get_template_part' ) ) {
 
 		// If template file doesn't exist, look in yourtheme/slug.php and yourtheme/courses-manage/slug.php
 		if ( ! $template ) {
-			$template = locate_template( array(
-				"{$slug}.php",
-				tp_hb_extra_template_path() . "{$slug}.php",
-				hb_template_path() . '/' . tp_hb_extra_template_path() . "{$slug}.php",
-			) );
+			$template = locate_template(
+				array(
+					"{$slug}.php",
+					tp_hb_extra_template_path() . "{$slug}.php",
+					hb_template_path() . '/' . tp_hb_extra_template_path() . "{$slug}.php",
+				)
+			);
 		}
 
 		// Allow 3rd party plugin filter template file from their plugin
@@ -98,7 +102,7 @@ if ( ! function_exists( 'tp_hb_extra_get_template' ) ) {
 
 		do_action( 'hb_extra_before_template_part', $template_name, $template_path, $located, $args );
 
-		include( $located );
+		include $located;
 
 		do_action( 'hb_extra_after_template_part', $template_name, $template_path, $located, $args );
 	}
@@ -138,7 +142,7 @@ if ( ! function_exists( 'tp_hb_extra_locate_template' ) ) {
 			array(
 				trailingslashit( $template_path ) . $template_name,
 				trailingslashit( hb_template_path() . '/' . $template_path ) . $template_name,
-				$template_name
+				$template_name,
 			)
 		);
 		// Get default template
@@ -154,9 +158,9 @@ if ( ! function_exists( 'tp_hb_extra_locate_template' ) ) {
 if ( ! function_exists( 'tp_hb_extra_get_template_content' ) ) {
 	/**
 	 * @param        $template_name
-	 * @param array  $args
-	 * @param string $template_path
-	 * @param string $default_path
+	 * @param array         $args
+	 * @param string        $template_path
+	 * @param string        $default_path
 	 *
 	 * @return string
 	 */
@@ -173,9 +177,11 @@ if ( ! function_exists( 'tp_hb_extra_type' ) ) {
 	 * @return mixed
 	 */
 	function tp_hb_extra_type() {
-		return apply_filters( 'hb_extra_type', array(
+		return apply_filters(
+			'hb_extra_type',
+			array(
 				'trip'   => __( 'Trip', 'wp-hotel-booking' ),
-				'number' => __( 'Number', 'wp-hotel-booking' )
+				'number' => __( 'Number', 'wp-hotel-booking' ),
 			)
 		);
 	}
@@ -189,20 +195,20 @@ if ( ! function_exists( 'tp_hb_extra_select' ) ) {
 	 * @param bool   $multitye
 	 */
 	function tp_hb_extra_select( $name = '', $options = array(), $selected = array(), $multitye = false ) { ?>
-		<select name="<?php echo esc_attr( $name ); ?>"<?php WPHB_Helpers::print( sprintf( '%s', $multitye ? ' multiple' : '' ) );  ?>>
-			<?php if ( $options['options'] ): ?>
-				<?php foreach ( $options['options'] as $key => $option ): ?>
-					<?php if ( is_array( $option['value'] ) ): ?>
+		<select name="<?php echo esc_attr( $name ); ?>"<?php WPHB_Helpers::print( sprintf( '%s', $multitye ? ' multiple' : '' ) ); ?>>
+			<?php if ( $options['options'] ) : ?>
+				<?php foreach ( $options['options'] as $key => $option ) : ?>
+					<?php if ( is_array( $option['value'] ) ) : ?>
 						<optgroup label="">
-							<?php foreach ( $option['value'] as $key => $value ): ?>
-								<option value="<?php printf( '%s', $value['value'] ) ?>" <?php selected( $selected, $value['value'], 1 ); ?>>
-									<?php printf( '%s', $value['text'] ) ?>
+							<?php foreach ( $option['value'] as $key => $value ) : ?>
+								<option value="<?php printf( '%s', $value['value'] ); ?>" <?php selected( $selected, $value['value'], 1 ); ?>>
+									<?php printf( '%s', $value['text'] ); ?>
 								</option>
 							<?php endforeach; ?>
 						</optgroup>
-					<?php else: ?>
-						<option value="<?php printf( '%s', $option['value'] ) ?>" <?php selected( $selected, $option['value'], 1 ); ?>>
-							<?php printf( '%s', $option['text'] ) ?>
+					<?php else : ?>
+						<option value="<?php printf( '%s', $option['value'] ); ?>" <?php selected( $selected, $option['value'], 1 ); ?>>
+							<?php printf( '%s', $option['text'] ); ?>
 						</option>
 					<?php endif ?>
 				<?php endforeach ?>

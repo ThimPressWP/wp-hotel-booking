@@ -50,7 +50,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
-			//		add_filter( 'pre_get_posts', array( $this, 'filter_post_type' ) );
+			// add_filter( 'pre_get_posts', array( $this, 'filter_post_type' ) );
 
 			add_filter( 'posts_fields', array( $this, 'posts_fields' ) );
 			add_filter( 'posts_join_paged', array( $this, 'posts_join_paged' ) );
@@ -58,8 +58,8 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			add_filter( 'posts_groupby', array( $this, 'posts_groupby' ), 999 );
 			add_filter( 'posts_orderby', array( $this, 'posts_orderby' ), 999 );
 
-			add_filter( 'get_terms_orderby', array( $this, 'terms_orderby' ), 100, 3 );
-			add_filter( 'get_terms_args', array( $this, 'terms_args' ), 100, 2 );
+			// add_filter( 'get_terms_orderby', array( $this, 'terms_orderby' ), 100, 3 );
+			// add_filter( 'get_terms_args', array( $this, 'terms_args' ), 100, 2 );
 
 			add_filter( 'manage_hb_coupon_posts_columns', array( $this, 'custom_coupon_columns' ) );
 			add_action( 'manage_hb_coupon_posts_custom_column', array( $this, 'custom_coupon_columns_filter' ) );
@@ -117,17 +117,15 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 					break;
 				case 'from':
 				case 'to':
-					$from = get_post_meta( $post->ID, '_hb_coupon_date_' . $column, true );
-					if ( $from ) {
-						echo date_i18n( hb_get_date_format(), $from );
+					if ( $from = get_post_meta( $post->ID, '_hb_coupon_date_' . $column, true ) ) {
+						echo date_i18n( hb_get_date_format(), strtotime( $from ) );
 					} else {
 						echo '-';
 					}
 					break;
 				case 'minimum_spend':
 				case 'maximum_spend':
-					$value = get_post_meta( $post->ID, '_hb_' . $column, true );
-					if ( $value ) {
+					if ( $value = get_post_meta( $post->ID, '_hb_' . $column, true ) ) {
 						if ( get_post_meta( $post->ID, '_hb_coupon_discount_type', true ) == 'fixed_cart' ) {
 							echo hb_format_price( $value );
 						} else {
@@ -139,9 +137,8 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 					break;
 				case 'limit_per_coupon':
 				case 'usage_count':
-					$value = get_post_meta( $post->ID, '_hb_' . $column, true );
-					if ( $value ) {
-						echo wp_kses_post( $value );
+					if ( $value = get_post_meta( $post->ID, '_hb_' . $column, true ) ) {
+						echo sprintf( '%s', $value );
 					} else {
 						echo '-';
 					}
@@ -344,9 +341,9 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 				if ( in_array( $order_by, array( 'check_in_date', 'check_out_date' ) ) && $order ) {
 					switch ( $order_by ) {
-						case  'check_in_date':
+						case 'check_in_date':
 							return "pm_check_in_order.meta_value {$order}";
-						case  'check_out_date':
+						case 'check_out_date':
 							return "pm_check_out_order.meta_value {$order}";
 					}
 				}
@@ -374,10 +371,14 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		 */
 		public function enqueue_scripts() {
 			if ( in_array( hb_get_request( 'taxonomy' ), array( 'hb_room_type', 'hb_room_capacity' ) ) ) {
-				wp_enqueue_script( 'hb-edit-tags', WP_Hotel_Booking::instance()->plugin_url( 'assets/js/edit-tags.min.js' ), array(
-					'jquery',
-					'jquery-ui-sortable'
-				) );
+				wp_enqueue_script(
+					'hb-edit-tags',
+					WP_Hotel_Booking::instance()->plugin_url( 'assets/js/edit-tags.min.js' ),
+					array(
+						'jquery',
+						'jquery-ui-sortable',
+					)
+				);
 			}
 		}
 
@@ -415,23 +416,23 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				case 'room_type':
 					$terms = wp_get_post_terms( $post->ID, 'hb_room_type' );
 
-					$cap_id = get_post_meta( $post->ID, '_hb_room_capacity', true );
-					$cap    = get_term( $cap_id, 'hb_room_capacity' );
+					// $cap_id = get_post_meta( $post->ID, '_hb_room_capacity', true );
+					// $cap    = get_term( $cap_id, 'hb_room_capacity' );
 
-					if ( $cap && isset( $cap->name ) ) {
+					// if ( $cap && isset( $cap->name ) ) {
 						// printf( '%s (%s)', $type->name, $cap->name );
 						$room_types = array();
-						foreach ( $terms as $key => $term ) {
-							$room_types[] = $term->name;
-						}
-						printf( '%s (%s)', implode( ', ', $room_types ), esc_html( $cap->name ) );
+					foreach ( $terms as $key => $term ) {
+						$room_types[] = $term->name;
 					}
+						printf( '%s', implode( ', ', $room_types ) );
+					// }
 					break;
 				case 'room_capacity':
 					echo esc_html( get_post_meta( $post->ID, '_hb_max_child_per_room', true ) );
 					break;
 				case 'room_price_plan':
-					echo '<a href="' . esc_url( admin_url( 'admin.php?page=tp_hotel_booking_pricing&hb-room=' . $post->ID ) ) . '">' . esc_html__( 'View Price', 'wp-hotel-booking' ) . '</a>';
+					echo '<a href="' . esc_url( admin_url( 'post.php?post=' . $post->ID . '&action=edit&tab=price_room_data' ) ) . '" target="_blank">' . esc_html__( 'View Price', 'wp-hotel-booking' ) . '</a>';
 					break;
 				case 'room_average_rating':
 					$room   = WPHB_Room::instance( $post->ID );
@@ -454,17 +455,20 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		 */
 		public function update_taxonomy() {
 
-			if ( ! empty( $_REQUEST['action'] ) && in_array( hb_get_request( 'taxonomy' ), array(
+			if ( ! empty( $_REQUEST['action'] ) && in_array(
+				hb_get_request( 'taxonomy' ),
+				array(
 					'hb_room_type',
-					'hb_room_capacity'
-				) )
+					'hb_room_capacity',
+				)
+			)
 			) {
 				$taxonomy = ! empty( $_REQUEST['taxonomy'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['taxonomy'] ) ) : '';
 				global $wpdb;
-				if ( ! empty( $_POST["{$taxonomy}_ordering"] ) ) {
+				if ( ! empty( $_POST[ "{$taxonomy}_ordering" ] ) ) {
 					$when = array();
 					$ids  = array();
-					foreach ( $_POST["{$taxonomy}_ordering"] as $term_id => $ordering ) {
+					foreach ( $_POST[ "{$taxonomy}_ordering" ] as $term_id => $ordering ) {
 						$term_id  = sanitize_text_field( wp_unslash( $term_id ) );
 						$ordering = sanitize_text_field( wp_unslash( $ordering ) );
 
@@ -472,18 +476,22 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 						$ids[]  = absint( $term_id );
 					}
 
-					$query = sprintf( "
+					$query = sprintf(
+						"
                     UPDATE {$wpdb->terms}
                     SET term_group = CASE
                        %s
                     END
                     WHERE term_id IN(%s)
-                ", join( "\n", $when ), join( ', ', $ids ) );
+                ",
+						join( "\n", $when ),
+						join( ', ', $ids )
+					);
 					$wpdb->query( $query );
 				}
 
-				if ( ! empty( $_POST["{$taxonomy}_capacity"] ) ) {
-					foreach ( (array) $_POST["{$taxonomy}_capacity"] as $term_id => $capacity ) {
+				if ( ! empty( $_POST[ "{$taxonomy}_capacity" ] ) ) {
+					foreach ( (array) $_POST[ "{$taxonomy}_capacity" ] as $term_id => $capacity ) {
 						if ( $capacity ) {
 							// update_option( 'hb_taxonomy_capacity_' . $term_id, $capacity );
 							update_term_meta( $term_id, 'hb_max_number_of_adults', absint( sanitize_text_field( $capacity ) ) );
@@ -533,14 +541,8 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		 * @return string
 		 */
 		public function taxonomy_column_content( $content, $column_name, $term_id ) {
-			$taxonomy = isset( $_REQUEST['taxonomy'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['taxonomy'] ) ) : false;
-
-			if ( ! $taxonomy ) {
-				return $content;
-			}
-
-			$term = get_term( $term_id, $taxonomy );
-
+			$taxonomy = sanitize_text_field( wp_unslash( $_REQUEST['taxonomy'] ) );
+			$term     = get_term( $term_id, $taxonomy );
 			switch ( $column_name ) {
 				case 'ordering':
 					$content = sprintf( '<input class="hb-number-field" type="number" name="%s_ordering[%d]" value="%d" size="3" />', $taxonomy, $term_id, $term->term_group );
@@ -612,20 +614,20 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 					'title',
 					'editor',
 					'thumbnail',
-					'revisions',
+					// 'revisions',
 					'comments',
 					'author',
-					'custom-fields'
+					'custom-fields',
 				),
 				'hierarchical'       => false,
 				'rewrite'            => array(
 					'slug'       => _x( 'rooms', 'URL slug', 'wp-hotel-booking' ),
 					'with_front' => false,
-					'feeds'      => true
+					'feeds'      => true,
 				),
 				// 'can_export'         => false,
 				'menu_position'      => 3,
-				'menu_icon'          => 'dashicons-admin-home'
+				'menu_icon'          => 'dashicons-admin-home',
 			);
 
 			$args = apply_filters( 'hotel_booking_register_post_type_room_arg', $args );
@@ -636,11 +638,11 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			 */
 			$args = array(
 				'labels'             => array(
-					'name'               => _x( 'Bookings', 'post type general name', 'wp-hotel-booking' ),
-					'singular_name'      => _x( 'Booking', 'post type singular name', 'wp-hotel-booking' ),
-					'menu_name'          => __( 'Bookings', 'wp-hotel-booking' ),
+					'name'               => _x( 'Bookings Order', 'post type general name', 'wp-hotel-booking' ),
+					'singular_name'      => _x( 'Booking Order', 'post type singular name', 'wp-hotel-booking' ),
+					'menu_name'          => __( 'Bookings Order', 'wp-hotel-booking' ),
 					'parent_item_colon'  => __( 'Parent Item:', 'wp-hotel-booking' ),
-					'all_items'          => __( 'Bookings', 'wp-hotel-booking' ),
+					'all_items'          => __( 'Bookings Order', 'wp-hotel-booking' ),
 					'view_item'          => __( 'View Booking', 'wp-hotel-booking' ),
 					'add_new_item'       => __( 'Add New Booking', 'wp-hotel-booking' ),
 					'add_new'            => __( 'Add New', 'wp-hotel-booking' ),
@@ -679,9 +681,9 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			 * Register room type taxonomy
 			 */
 			$args = array(
-				'hierarchical' => true,
-				'label'        => __( 'Room Type', 'wp-hotel-booking' ),
-				'labels'       => array(
+				'hierarchical'       => true,
+				'label'              => __( 'Room Type', 'wp-hotel-booking' ),
+				'labels'             => array(
 					'name'              => _x( 'Room Types', 'taxonomy general name', 'wp-hotel-booking' ),
 					'singular_name'     => _x( 'Room Type', 'taxonomy singular name', 'wp-hotel-booking' ),
 					'menu_name'         => _x( 'Room Types', 'Room Types', 'wp-hotel-booking' ),
@@ -692,21 +694,28 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 					'edit_item'         => __( 'Edit Room Type', 'wp-hotel-booking' ),
 					'update_item'       => __( 'Update Room Type', 'wp-hotel-booking' ),
 					'add_new_item'      => __( 'Add New Room Type', 'wp-hotel-booking' ),
-					'new_item_name'     => __( 'New Room Type Name', 'wp-hotel-booking' )
+					'new_item_name'     => __( 'New Room Type Name', 'wp-hotel-booking' ),
 				),
-				'public'       => true,
-				'show_ui'      => true,
-				'query_var'    => true,
-				'rewrite'      => array( 'slug' => _x( 'room-type', 'URL slug', 'wp-hotel-booking' ) ),
-				'capabilities' => array(
+				'public'             => true,
+				'show_ui'            => true,
+				'query_var'          => true,
+				'rewrite'            => array( 'slug' => _x( 'room-type', 'URL slug', 'wp-hotel-booking' ) ),
+				'capabilities'       => array(
 					'manage_terms' => 'manage_hb_booking',
 					'edit_terms'   => 'manage_hb_booking',
 					'delete_terms' => 'manage_hb_booking',
 					'assign_terms' => 'manage_hb_booking',
 				),
+				'publicly_queryable' => true,
+				'sort'               => true,
+
 			);
 			$args = apply_filters( 'hotel_booking_register_tax_room_type_arg', $args );
-			register_taxonomy( 'hb_room_type', array( 'hb_room' ), $args );
+			register_taxonomy(
+				'hb_room_type',
+				array( 'hb_room' ),
+				$args
+			);
 
 			/**
 			 * Register room capacity taxonomy
@@ -726,7 +735,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 					'edit_item'         => __( 'Edit Room Capacity', 'wp-hotel-booking' ),
 					'update_item'       => __( 'Update Room Capacity', 'wp-hotel-booking' ),
 					'add_new_item'      => __( 'Add New Room Capacity', 'wp-hotel-booking' ),
-					'new_item_name'     => __( 'New Room Type Capacity', 'wp-hotel-booking' )
+					'new_item_name'     => __( 'New Room Type Capacity', 'wp-hotel-booking' ),
 				),
 				'show_ui'      => true,
 				'query_var'    => true,
@@ -743,7 +752,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				),
 			);
 			$args = apply_filters( 'hotel_booking_register_tax_capacity_arg', $args );
-			register_taxonomy( 'hb_room_capacity', array( 'hb_room' ), $args );
+			// register_taxonomy( 'hb_room_capacity', array( 'hb_room' ), $args);
 		}
 
 		/**
@@ -756,7 +765,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				'exclude_from_search'       => false,
 				'show_in_admin_all_list'    => true,
 				'show_in_admin_status_list' => true,
-				'label_count'               => _n_noop( 'Cancelled <span class="count">(%s)</span>', 'Cancelled <span class="count">(%s)</span>', 'wp-hotel-booking' )
+				'label_count'               => _n_noop( 'Cancelled <span class="count">(%s)</span>', 'Cancelled <span class="count">(%s)</span>', 'wp-hotel-booking' ),
 			);
 			register_post_status( 'hb-cancelled', $args );
 
@@ -766,7 +775,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				'exclude_from_search'       => false,
 				'show_in_admin_all_list'    => true,
 				'show_in_admin_status_list' => true,
-				'label_count'               => _n_noop( 'Pending <span class="count">(%s)</span>', 'Pending <span class="count">(%s)</span>', 'wp-hotel-booking' )
+				'label_count'               => _n_noop( 'Pending <span class="count">(%s)</span>', 'Pending <span class="count">(%s)</span>', 'wp-hotel-booking' ),
 			);
 			register_post_status( 'hb-pending', $args );
 
@@ -776,7 +785,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				'exclude_from_search'       => false,
 				'show_in_admin_all_list'    => true,
 				'show_in_admin_status_list' => true,
-				'label_count'               => _n_noop( 'Processing <span class="count">(%s)</span>', 'Processing <span class="count">(%s)</span>', 'wp-hotel-booking' )
+				'label_count'               => _n_noop( 'Processing <span class="count">(%s)</span>', 'Processing <span class="count">(%s)</span>', 'wp-hotel-booking' ),
 			);
 			register_post_status( 'hb-processing', $args );
 
@@ -786,7 +795,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				'exclude_from_search'       => false,
 				'show_in_admin_all_list'    => true,
 				'show_in_admin_status_list' => true,
-				'label_count'               => _n_noop( 'Completed <span class="count">(%s)</span>', 'Completed <span class="count">(%s)</span>', 'wp-hotel-booking' )
+				'label_count'               => _n_noop( 'Completed <span class="count">(%s)</span>', 'Completed <span class="count">(%s)</span>', 'wp-hotel-booking' ),
 			);
 			register_post_status( 'hb-completed', $args );
 		}

@@ -57,6 +57,6 @@ class WPHB_Helpers {
 	 * @return void
 	 */
 	public static function print( $string ) {
-		printf( '%s', $string ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		printf( '%s', $string );
 	}
 }

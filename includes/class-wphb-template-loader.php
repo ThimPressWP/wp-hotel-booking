@@ -45,7 +45,7 @@ if ( ! class_exists( 'WPHB_TemplateLoader' ) ) {
 				$file   = 'archive-room.php';
 				$find[] = $file;
 				$find[] = hb_template_path() . '/' . $file;
-			} else if ( is_room_taxonomy() ) {
+			} elseif ( is_room_taxonomy() ) {
 				$term     = get_queried_object();
 				$taxonomy = $term->taxonomy;
 				if ( strpos( $term->taxonomy, 'hb_' ) === 0 ) {
@@ -63,7 +63,7 @@ if ( ! class_exists( 'WPHB_TemplateLoader' ) ) {
 				$find[] = 'taxonomy-' . $term->taxonomy . '.php';
 				$find[] = hb_template_path() . '/taxonomy-' . $taxonomy . '.php';
 				$find[] = $file;
-			} else if ( is_single() ) {
+			} elseif ( is_single() ) {
 				$file   = 'single-room.php';
 				$find[] = $file;
 				$find[] = hb_template_path() . '/' . $file;

@@ -77,7 +77,7 @@ class WPHB_Comments {
 	 * @param int $comment_id
 	 */
 	public static function add_comment_rating( $comment_id, $approved ) {
-		if ( isset( $_POST['rating'] ) && 'hb_room' === get_post_type( WPHB_Helpers::sanitize_params_submitted( $_POST['comment_post_ID'] ?? '' ) ) ) {
+		if ( isset( $_POST['rating'] ) && 'hb_room' === get_post_type( $_POST['comment_post_ID'] ) ) {
 			$rating = absint( sanitize_text_field( $_POST['rating'] ) );
 			if ( $rating && $rating <= 5 && $rating > 0 ) {
 				// save comment rating

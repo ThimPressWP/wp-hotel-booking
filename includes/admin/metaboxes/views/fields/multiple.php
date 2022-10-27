@@ -23,15 +23,18 @@ $name = $field['name'] . '[]';
 $field_attr = '';
 if ( $field['attr'] ) {
 	if ( is_array( $field['attr'] ) ) {
-		$field_attr = join( " ", $field['attr'] );
+		$field_attr = join( ' ', $field['attr'] );
 	} else {
 		$field_attr = $field['attr'];
 	}
 }
+
 ?>
-<select name="<?php echo esc_attr( $name ); ?>" multiple="multiple" <?php printf( '%s', esc_html( $field_attr ) ) ?>>
-	<?php if ( ! empty( $field['options'] ) ) {
-		foreach ( $field['options'] as $k => $option ) { ?>
+<select name="<?php echo esc_attr( $name ); ?>" multiple="multiple" <?php printf( '%s', esc_html( $field_attr ) ); ?>>
+	<?php
+	if ( ! empty( $field['options'] ) ) {
+		foreach ( $field['options'] as $k => $option ) {
+			?>
 			<?php
 			if ( ! is_object( $option ) && ! is_array( $option ) ) {
 				$option = array(
@@ -39,17 +42,27 @@ if ( $field['attr'] ) {
 					'text'  => $option,
 				);
 			} else {
-				$option = wp_parse_args( (array) $option, array( 'value' => '', 'text' => '' ) );
+				$option = wp_parse_args(
+					(array) $option,
+					array(
+						'value' => '',
+						'text'  => '',
+					)
+				);
 			}
 			?>
-			<?php if ( ! ( $value ) ) {
+			<?php
+			if ( ! ( $value ) ) {
 				?>
-                <option value="<?php echo esc_attr( $option['value'] ); ?>"><?php echo esc_html( $option['text'] ); ?></option>
-			<?php } else {
+				<option value="<?php echo esc_attr( $option['value'] ); ?>"><?php echo esc_html( $option['text'] ); ?></option>
+				<?php
+			} else {
 				?>
-                <option value="<?php echo esc_attr( $option['value'] ); ?>"<?php echo is_array( $value ) && in_array( $option['value'], $value ) ? ' selected' : '' ?>><?php echo esc_html( $option['text'] ); ?></option>
+				<option value="<?php echo esc_attr( $option['value'] ); ?>"<?php echo is_array( $value ) && in_array( $option['value'], $value ) ? ' selected' : ''; ?>><?php echo esc_html( $option['text'] ); ?></option>
 			<?php } ?>
 
-		<?php }
-	} ?>
+			<?php
+		}
+	}
+	?>
 </select>

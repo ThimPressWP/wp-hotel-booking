@@ -42,8 +42,5 @@ if ( is_callable( $field['filter'] ) ) {
 }
 ?>
 
-<input type="hidden" name="<?php echo esc_attr( $field['name'] ); ?>" value="0" />
-<input type="checkbox" name="<?php echo esc_attr( $field['name'] ); ?>"
-	id="<?php echo esc_attr( $field['id'] ); ?>"
-	value="1" <?php WPHB_Helpers::print( $field_attr ); ?>
-	<?php checked( $value, 1 ); ?>/>
+<input type="hidden" name="<?php echo $field['name']; ?>" value="0" />
+<input type="checkbox" name="<?php echo $field['name']; ?>" id="<?php echo $field['id']; ?>" value="1" <?php echo $field_attr; ?><?php checked( $value, 1 ); ?>/>

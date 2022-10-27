@@ -69,13 +69,13 @@ if ( ! class_exists( 'WPHB_Admin_Tool_Override_Template' ) ) {
 							<?php _e( 'File', 'wp-hotel-booking' ); ?>
 							<p>
 								<a href="" class="template-filter current"
-								   data-template=""><?php printf( __( 'All (%d)', 'wp-hotel-booking' ), esc_html( $counts['all'] ) ); ?></a>
+								   data-template=""><?php printf( __( 'All (%d)', 'wp-hotel-booking' ), $counts['all'] ); ?></a>
 								<a href="" class="template-filter"
-								   data-filter="up-to-date"><?php printf( __( 'Up to date (%d)', 'wp-hotel-booking' ), esc_html( $counts['up-to-date'] ) ); ?></a>
+								   data-filter="up-to-date"><?php printf( __( 'Up to date (%d)', 'wp-hotel-booking' ), $counts['up-to-date'] ); ?></a>
 								<a href="" class="template-filter"
-								   data-filter="outdated"><?php printf( __( 'Outdated (%d)', 'wp-hotel-booking' ), esc_html( $counts['outdated'] ) ); ?></a>
+								   data-filter="outdated"><?php printf( __( 'Outdated (%d)', 'wp-hotel-booking' ), $counts['outdated'] ); ?></a>
 								<a href="" class="template-filter"
-								   data-filter="undefined"><?php printf( __( 'Undefined (%d)', 'wp-hotel-booking' ), esc_html( $counts['undefined'] ) ); ?></a>
+								   data-filter="undefined"><?php printf( __( 'Undefined (%d)', 'wp-hotel-booking' ), $counts['undefined'] ); ?></a>
 							</p>
 						</th>
 						<th class="template-version">
@@ -84,26 +84,24 @@ if ( ! class_exists( 'WPHB_Admin_Tool_Override_Template' ) ) {
 						<th class="core-version"><?php _e( 'Plugin version', 'wp-hotel-booking' ); ?></th>
 					</tr>
 					<?php foreach ( $templates as $template ) { ?>
-						<?php
-						if ( $child_theme_folder && strpos( $template[0], $child_theme_folder ) !== false ) {
+						<?php if ( $child_theme_folder && strpos( $template[0], $child_theme_folder ) !== false ) {
 							$template_folder = $child_theme_folder;
 						} else {
 							$template_folder = $theme_folder;
 						}
-						$template_class = ( $template[1] == '-' ? 'undefined' : ( $template[3] ? 'outdated' : 'up-to-date' ) );
-						?>
+						$template_class = ( $template[1] == '-' ? 'undefined' : ( $template[3] ? 'outdated' : 'up-to-date' ) ); ?>
 
 						<tr data-template="<?php echo esc_attr( $template_folder ); ?>"
-							class="template-row <?php echo esc_attr( $template_class ); ?>"
-							data-filter-<?php echo esc_attr( $template_class ); ?>="yes">
-							<td class="template-file"><code><?php echo esc_html( $template[0] ); ?></code></td>
-							<td class="template-version"><span><?php echo esc_html( $template[1] ); ?></span></td>
-							<td class="plugin-version"><span><?php echo esc_html( $template[2] ); ?></span></td>
+						    class="template-row <?php echo $template_class; ?>"
+						    data-filter-<?php echo esc_attr( $template_class ); ?>="yes">
+							<td class="template-file"><code><?php echo $template[0]; ?></code></td>
+							<td class="template-version"><span><?php echo $template[1]; ?></span></td>
+							<td class="plugin-version"><span><?php echo $template[2]; ?></span></td>
 						</tr>
 					<?php } ?>
 				<?php } ?>
 
-				<tr class="no-templates <?php echo esc_attr( $templates ? 'hide-if-js' : '' ); ?>">
+				<tr class="no-templates <?php echo $templates ? 'hide-if-js' : ''; ?>">
 					<td colspan="3">
 						<p><?php _e( 'There is no template file has overwritten', 'wp-hotel-booking' ); ?></p>
 					</td>

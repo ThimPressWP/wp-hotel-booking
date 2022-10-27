@@ -5,7 +5,7 @@ Tags: hotel, booking, hotel booking, reservation, reservations
 Requires at least: 5.6
 Requires PHP: 7.0
 Tested up to: 6.0
-Stable tag: 1.10.9
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,10 +42,7 @@ Take a look at the Premium **[HotelWP - Hotel Wordpress Theme](https://themefore
 
 - <a href="https://wordpress.org/plugins/wp-hotel-booking-authorize-payment/" target="_blank">Authorize.Net Payment method for WP Hotel Booking</a> - Authorize.Net payment method for WP Hotel Booking Plugin.
 - <a href="https://wordpress.org/plugins/wp-hotel-booking-stripe-payment/" target="_blank">Stripe Payment method for WP Hotel Booking</a> - Stripe payment method for WP Hotel Booking Plugin.
-- <a href="https://wordpress.org/plugins/wp-hotel-booking-block-room/" target="_blank">Block booking for WP Hotel Booking</a> - Block booking rooms of WP Hotel Booking for specific dates.
-- <a href="https://wordpress.org/plugins/wp-hotel-booking-booking-room/" target="_blank">Booking in single room for WP Hotel Booking</a> - Support booking in single room page for WP Hotel Booking.
 - <a href="https://wordpress.org/plugins/wp-hotel-booking-report/" target="_blank">Statistic for WP Hotel Booking</a> - Statistic booking for WP Hotel Booking Plugin.
-- <a href="https://wordpress.org/plugins/wp-hotel-booking-coupon/" target="_blank">Coupon for WP Hotel Booking</a> - Coupon for WP Hotel Booking Plugin.
 - <a href="https://wordpress.org/plugins/wp-hotel-booking-woocommerce/" target="_blank">Woocommerce payment method for WP Hotel Booking</a> - Support paying for booking of WP Hotel Booking plugin with the payment system provided by WooCommerce..
 - <a href="https://wordpress.org/plugins/wp-hotel-booking-wpml-support/" target="_blank">WPML for WP Hotel Booking</a> - Multilnguage CMS support for WP Hotel Booking Plugin.
 
@@ -78,11 +75,33 @@ Yes.
 
 == Changelog ==
 
-= 1.10.9 =
-~ Fixed: error save gallery images.
+= 2.0.2 (2022-10-18) =
+~ Fixed: coupon function.
+~ Updated: library moment, select2 js to latest.
+~ Show dates booked on calendar by Date format.
+~ Fixed: styles Archive rooms.
+~ Fixed: styles review star on detail room.
+~ Fixed: error check available room very slow when change format date.
 
-= 1.10.6 =
-~ Fixed: ESC, Sanitize, require PHP 7.0
+= 2.0.1 (2022-10-08) =
+~ Fixed: the user can book a range of days that includes a disabled date.
+~ Fixed: error calendar manage.
+~ Fixed: security authorisation and CSRF checks in place when updating its settings.
+
+= 2.0.0 (2022-10-06) =
+~ Added: function check date available check booking room.
+~ Optimize code.
+~ Added: function coupon.
+~ Merged: "WP Hotel Booking Coupon", "WP Hotel Booking Room", "WP Hotel Booking Block" plugins.
+~ Sanitize, Escape, Validate.
+~ Fixed: Security issues.
+~ Fixed: styles of meta-boxes.
+~ Added: calendar booking manager.
+~ Added: page setup wizard.
+~ Added: API for booking, check available.
+~ Added: option disable dates for each room.
+~ Added: option external link.
+~ Added: function deposit.
 
 = 1.10.5 =
 ~ Fix sanitize.

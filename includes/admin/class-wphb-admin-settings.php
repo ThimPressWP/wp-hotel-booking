@@ -23,6 +23,7 @@ class WPHB_Admin_Settings {
 
 		// use WP_Hotel_Booking::instance() return null active hook
 		$tabs[] = include 'settings/class-wphb-admin-setting-general.php';
+		$tabs[] = include 'settings/class-wphb-admin-setting-pages.php';
 		$tabs[] = include 'settings/class-wphb-admin-setting-emails.php';
 		$tabs[] = include 'settings/class-wphb-admin-setting-payments.php';
 		$tabs[] = include 'settings/class-wphb-admin-setting-room.php';
@@ -97,7 +98,7 @@ class WPHB_Admin_Settings {
 						</th>
 						<td class="hb-form-field hb-form-field-<?php echo esc_attr( $field['type'] ); ?>">
 							<?php if ( isset( $field['options'] ) ) : ?>
-								<select name="<?php echo isset( $field['id'] ) ? esc_attr( $field['id'] ) : ''; ?><?php WPHB_Helpers::print( $field['type'] === 'multiselect' ? '[]' : '' ); ?>"
+								<select name="<?php echo isset( $field['id'] ) ? esc_attr( $field['id'] ) : ''; ?><?php echo $field['type'] === 'multiselect' ? '[]' : ''; ?>"
 										id="<?php echo isset( $field['id'] ) ? esc_attr( $field['id'] ) : ''; ?>"
 									<?php echo ( $field['type'] === 'multiple' ) ? 'multiple="multiple"' : ''; ?>
 								>
@@ -280,21 +281,40 @@ class WPHB_Admin_Settings {
 							<?php endif; ?>
 						</th>
 						<td class="hb-form-field hb-form-field-<?php echo esc_attr( $field['type'] ); ?>">
-							<?php if ( isset( $field['id'] ) ) : ?>
-								<?php
-								hb_dropdown_pages(
-									array(
-										'show_option_none' => __( '---Select page---', 'wp-hotel-booking' ),
-										'option_none_value' => 0,
-										'name'             => $field['id'],
-										'selected'         => $selected,
-									)
-								);
-								?>
-							<?php endif; ?>
-							<?php if ( isset( $field['desc'] ) ) : ?>
-								<p class="description"><?php echo esc_html( $field['desc'] ); ?></p>
-							<?php endif; ?>
+							<div class="list-pages-wrapper">
+								<?php if ( isset( $field['id'] ) ) : ?>
+									<?php
+									hb_dropdown_pages(
+										array(
+											'show_option_none' => __( '---Select page---', 'wp-hotel-booking' ),
+											'option_none_value' => '',
+											'add_new_title' => __( '[ Add new page ]', 'wp-hotel-booking' ),
+											'add_new_value' => 'add_new_page',
+											'name'     => $field['id'],
+											'selected' => $selected,
+										)
+									);
+									?>
+								<?php endif; ?>
+								<?php echo esc_html( _x( 'or', 'drop down pages', 'wp-hotel-booking' ) ); ?>
+								<button class="button button-quick-add-page" data-id="<?php echo $field['id']; ?>" type="button">
+									<?php esc_html_e( 'Create new', 'wp-hotel-booking' ); ?>
+								</button>
+							</div>
+							<p class="quick-add-page-inline <?php echo $field['id']; ?> hide-if-js">
+								<input type="text" placeholder="<?php esc_attr_e( 'New page title', 'wp-hotel-booking' ); ?>"/>
+								<button class="button" type="button">
+									<?php esc_html_e( 'Ok [Enter]', 'wp-hotel-booking' ); ?>
+								</button>
+								<a href=""><?php esc_html_e( 'Cancel [ESC]', 'wp-hotel-booking' ); ?></a>
+							</p>
+							<p class="quick-add-page-actions <?php echo $field['id']; ?><?php echo $selected ? '' : ' hide-if-js'; ?>">
+								<a class="edit-page" href="<?php echo get_edit_post_link( $selected ); ?>"
+								target="_blank"><?php esc_html_e( 'Edit page', 'wp-hotel-booking' ); ?></a>
+								&#124;
+								<a class="view-page" href="<?php echo get_permalink( $selected ); ?>"
+								target="_blank"><?php esc_html_e( 'View page', 'wp-hotel-booking' ); ?></a>
+							</p>
 						</td>
 					</tr>
 					<?php
@@ -342,6 +362,7 @@ class WPHB_Admin_Settings {
 				<?php do_action( 'hb_admin_settings_sections_' . $selected_tab ); ?>
 				<?php do_action( 'hb_admin_settings_tab_' . $selected_tab ); ?>
 				<?php wp_nonce_field( 'hb_admin_settings_tab_' . $selected_tab, 'hb_admin_settings_tab_' . $selected_tab . '_field' ); ?>
+				<?php wp_nonce_field( 'wphb_update_meta_box_settings', 'wphb_meta_box_settings_nonce' );?>
 				<?php do_action( 'hb_admin_settings_tab_after', $selected_tab ); ?>
 				<div class="clearfix"></div>
 				<p class="clearfix">

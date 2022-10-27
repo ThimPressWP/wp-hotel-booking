@@ -198,7 +198,7 @@
 
 		var $tos = $form.find('input[name="tos"]');
 		if ($tos.length && !$tos.is(':checked')) {
-			// alert(hotel_booking_i18n.confirm_tos);
+			alert(hotel_booking_i18n.confirm_tos);
 			mesgs.push(hotel_booking_i18n.confirm_tos);
 			$tos.addClass('error');
 		}
@@ -374,7 +374,7 @@
 		init                        : function () {
 			this.add_to_cart();
 			this.remove_cart();
-			this.add_extra_to_cart();
+			// this.add_extra_to_cart();
 		},
 		hb_add_to_cart_callback     : function (data, callback) {
 			var mini_cart = $('.hotel_booking_mini_cart');
@@ -494,6 +494,11 @@
 					number_room_select = _form.find('.number_room_select option:selected').val(),
 					room_title = _form.find('.hb-room-name');
 
+                if ( ! hotel_settings?.cart_page_url && button.length > 0) {
+                    alert('Please set Cart page url in settings');
+                    return;
+                }
+
 				$('.number_room_select').removeClass('hotel_booking_invalid_quantity');
 				if (typeof number_room_select === 'undefined' || number_room_select === '') {
 					select.addClass('hotel_booking_invalid_quantity');
@@ -521,7 +526,6 @@
 					},
 					success   : function (result) {
 						var rs = parseJSON(result);
-
 						if (typeof rs.status !== 'undefined') {
 							if (typeof rs.message !== 'undefined') {
 								room_title.find('.hb-message').remove();
@@ -538,7 +542,10 @@
 								if (typeof rs.redirect !== 'undefined' && rs.redirect) {
 									window.location.href = rs.redirect;
 								}
-							}
+							} else {
+                                alert(rs.message);
+                                button.find('span.lds-ring').remove();
+                            }
 						}
 
 						if (typeof rs.id !== 'undefined') {
@@ -660,6 +667,7 @@
 	};
 
 	$(document).ready(function () {
+
 		el_stripe_publish = $('input[name=htb_stripe_publish]');
 
 		if (el_stripe_publish.length) {
@@ -751,96 +759,96 @@
 			$('#txtToDate').datepicker('show');
 		});
 
-		$('form[class^="hb-search-form"]').submit(function (e) {
-			e.preventDefault();
-			var _self = $(this),
-				unique = _self.attr('class'),
-				button = _self.find('button[type="submit"]');
+		// $('form[class^="hb-search-form"]').submit(function (e) {
+		// 	e.preventDefault();
+		// 	var _self = $(this),
+		// 		unique = _self.attr('class'),
+		// 		button = _self.find('button[type="submit"]');
 
-			unique = unique.replace('hb-search-form-', '');
+		// 	unique = unique.replace('hb-search-form-', '');
 
-			_self.find('input, select').removeClass('error');
-			var $check_in = $('#check_in_date_' + unique);
-			if ($check_in.val() === '' || !isDate($check_in.datepicker('getDate'))) {
-				$check_in.addClass('error');
-				return false;
-			}
+		// 	_self.find('input, select').removeClass('error');
+		// 	var $check_in = $('#check_in_date_' + unique);
+		// 	if ($check_in.val() === '' || !isDate($check_in.datepicker('getDate'))) {
+		// 		$check_in.addClass('error');
+		// 		return false;
+		// 	}
 
-			var $check_out = $('#check_out_date_' + unique);
-			if ($check_out.val() === '' || !isDate($check_out.datepicker('getDate'))) {
-				$check_out.addClass('error');
-				return false;
-			}
+		// 	var $check_out = $('#check_out_date_' + unique);
+		// 	if ($check_out.val() === '' || !isDate($check_out.datepicker('getDate'))) {
+		// 		$check_out.addClass('error');
+		// 		return false;
+		// 	}
 
-			if ($check_in.datepicker('getDate') === null) {
-				$check_in.addClass('error');
-				return false;
-			}
+		// 	if ($check_in.datepicker('getDate') === null) {
+		// 		$check_in.addClass('error');
+		// 		return false;
+		// 	}
 
-			if ($check_out.datepicker('getDate') === null) {
-				$check_out.addClass('error');
-				return false;
-			}
+		// 	if ($check_out.datepicker('getDate') === null) {
+		// 		$check_out.addClass('error');
+		// 		return false;
+		// 	}
 
-			var check_in = new Date($check_in.datepicker('getDate')),
-				check_out = new Date($check_out.datepicker('getDate')),
-				current = new Date();
-			// if (check_in.compareWith(current) == -1) {
-			// 	$check_in.addClass('error');
-			// 	return false;
-			// }
+		// 	var check_in = new Date($check_in.datepicker('getDate')),
+		// 		check_out = new Date($check_out.datepicker('getDate')),
+		// 		current = new Date();
+		// 	// if (check_in.compareWith(current) == -1) {
+		// 	// 	$check_in.addClass('error');
+		// 	// 	return false;
+		// 	// }
 
-			if (check_in.compareWith(check_out) >= 0) {
-				$check_in.addClass('error');
-				error = true;
-				return false;
-			}
+		// 	if (check_in.compareWith(check_out) >= 0) {
+		// 		$check_in.addClass('error');
+		// 		error = true;
+		// 		return false;
+		// 	}
 
-			var action = $(this).attr('action') || window.location.href;
-			var data = $(this).serializeArray();
-			for (var i = 0; i < data.length; i++) {
-				var input = data[i];
-				if (input.name === 'check_in_date' || input.name === 'check_out_date') {
-					var time = $(this).find('input[name="' + input.name + '"]').datepicker('getDate');
-					time = new Date(time);
-					data.push({
-						name : 'hb_' + input.name,
-						value: time.getTime() / 1000 - (time.getTimezoneOffset() * 60)
-					})
-				}
-			}
+		// 	var action = $(this).attr('action') || window.location.href;
+		// 	var data = $(this).serializeArray();
+		// 	for (var i = 0; i < data.length; i++) {
+		// 		var input = data[i];
+		// 		if (input.name === 'check_in_date' || input.name === 'check_out_date') {
+		// 			var time = $(this).find('input[name="' + input.name + '"]').datepicker('getDate');
+		// 			time = new Date(time);
+		// 			data.push({
+		// 				name : 'hb_' + input.name,
+		// 				value: time.getTime() / 1000 - (time.getTimezoneOffset() * 60)
+		// 			})
+		// 		}
+		// 	}
 
-			$.ajax({
-				url       : hotel_settings.ajax,
-				type      : 'post',
-				dataType  : 'html',
-				data      : data,
-				beforeSend: function () {
-					button.attr('disabled', 'disabled');
-					button.html('<span class="lds-ring"><span></span><span></span><span></span><span></span></span>' + button.html());
-				},
-				success   : function (response) {
-					response = parseJSON(response);
-					if (typeof response.success === 'undefined' || !response.success) {
-						return;
-					}
+		// 	$.ajax({
+		// 		url       : hotel_settings.ajax,
+		// 		type      : 'post',
+		// 		dataType  : 'html',
+		// 		data      : data,
+		// 		beforeSend: function () {
+		// 			button.attr('disabled', 'disabled');
+		// 			button.html('<span class="lds-ring"><span></span><span></span><span></span><span></span></span>' + button.html());
+		// 		},
+		// 		success   : function (response) {
+		// 			response = parseJSON(response);
+		// 			if (typeof response.success === 'undefined' || !response.success) {
+		// 				return;
+		// 			}
 
-					// redirect if url is ! undefined
-					if (typeof response.url !== 'undefined') {
-						window.location.href = response.url;
-					} else if (response.sig) {
-						if (action.indexOf('?') === -1) {
-							action += '?hotel-booking-params=' + response.sig;
-						} else {
-							action += '&hotel-booking-params=' + response.sig;
-						}
-						window.location.href = action;
-					}
-					// button.removeClass('hb_loading');
-				}
-			});
-			return false;
-		});
+		// 			// redirect if url is ! undefined
+		// 			if (typeof response.url !== 'undefined') {
+		// 				window.location.href = response.url;
+		// 			} else if (response.sig) {
+		// 				if (action.indexOf('?') === -1) {
+		// 					action += '?hotel-booking-params=' + response.sig;
+		// 				} else {
+		// 					action += '&hotel-booking-params=' + response.sig;
+		// 				}
+		// 				window.location.href = action;
+		// 			}
+		// 			// button.removeClass('hb_loading');
+		// 		}
+		// 	});
+		// 	return false;
+		// });
 
 		$('form#hb-payment-form').submit(function (e) {
 			e.preventDefault();
@@ -948,11 +956,29 @@
 
 		$('#commentform').submit(function () {
 			var rate = $('#rating'),
+                comment = $('#comment');
+                author = $('#author');
+                email = $('#email');
 				val = rate.val();
+
+            if ( email.length === 1 && author.val() === '') {
+                window.alert(hotel_booking_i18n.review_author_required);
+                return false;
+            }
+
+            if (email.length === 1 && ( email.val() === '' || isEmail(email.val()) === false) ) {
+                window.alert(hotel_booking_i18n.review_email_required);
+                return false;
+            }
 			if (rate.length === 1 && typeof val !== 'undefined' && val === '') {
 				window.alert(hotel_booking_i18n.review_rating_required);
 				return false;
 			}
+            if (comment.val() === '') {
+				window.alert(hotel_booking_i18n.review_content_required);
+				return false;
+			}
+            
 			$(this).submit();
 		});
 	});

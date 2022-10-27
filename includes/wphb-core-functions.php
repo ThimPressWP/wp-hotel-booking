@@ -42,7 +42,7 @@ if ( ! function_exists( 'hotel_booking_get_room_available' ) ) {
 
 	function hotel_booking_get_room_available( $room_id = null, $args = array() ) {
 		$valid  = true;
-		$errors = new WP_Error;
+		$errors = new WP_Error();
 
 		// for search room in single with wpml
 		$room_id = apply_filters( 'hotel_booking_get_available_room', $room_id );
@@ -52,13 +52,16 @@ if ( ! function_exists( 'hotel_booking_get_room_available' ) ) {
 			$errors->add( 'room_id_invalid', __( 'Room not found.', 'wp-hotel-booking' ) );
 		}
 
-		$args = wp_parse_args( $args, array(
-			'check_in_date'  => '',
-			'check_out_date' => '',
-			'excerpt'        => array(
-				0
+		$args = wp_parse_args(
+			$args,
+			array(
+				'check_in_date'  => '',
+				'check_out_date' => '',
+				'excerpt'        => array(
+					0,
+				),
 			)
-		) );
+		);
 
 		if ( ! $args['check_in_date'] ) {
 			$valid = false;
@@ -78,46 +81,49 @@ if ( ! function_exists( 'hotel_booking_get_room_available' ) ) {
 			}
 		}
 
+		
+
 		// $valid is false
 		if ( $valid === false ) {
 			return $errors;
 		} else {
-			global $wpdb;
+			$room_available_date = WPHB_Room::instance( $room_id )->get_dates_available();
+			$arr_qty_available   = array();
+			
+			$checkin   = gmdate( 'Y-m-d', absint( $args['check_in_date'] ) );
+			$checkout  = gmdate( 'Y-m-d', absint( $args['check_out_date'] ) );
+			$date_next = $checkin;
+			
+			while ( $date_next <= $checkout ) {
+				$timeStamp = strtotime( $date_next );
+				if ( array_key_exists( $timeStamp, $room_available_date ) ) {
+					if ( $room_available_date[ $timeStamp ] >= 1 ) {
+						$room_available_date[ $timeStamp ] = $room_available_date[ $timeStamp ] - 1;
+						$arr_qty_available[]               = $room_available_date[ $timeStamp ];
+					}
+				}
+				$date_next = gmdate( 'Y-m-d', strtotime( $date_next . ' +1 day' ) );
+			}
 
-			$not = $wpdb->prepare( "
-					SELECT SUM( meta.meta_value ) FROM {$wpdb->hotel_booking_order_itemmeta} AS meta
-						LEFT JOIN {$wpdb->hotel_booking_order_items} AS order_item ON order_item.order_item_id = meta.hotel_booking_order_item_id
-						LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS room ON order_item.order_item_id = room.hotel_booking_order_item_id
-						LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS checkin ON order_item.order_item_id = checkin.hotel_booking_order_item_id
-						LEFT JOIN {$wpdb->hotel_booking_order_itemmeta} AS checkout ON order_item.order_item_id = checkout.hotel_booking_order_item_id
-						LEFT JOIN {$wpdb->posts} AS booking ON booking.ID = order_item.order_id
-					WHERE
-						meta.meta_key = %s
-						AND room.meta_value = %d
-						AND room.meta_key = %s
-						AND checkin.meta_key = %s
-						AND checkout.meta_key = %s
-						AND (
-								( checkin.meta_value >= %d AND checkin.meta_value < %d )
-							OR 	( checkout.meta_value > %d AND checkout.meta_value <= %d )
-							OR 	( checkin.meta_value <= %d AND checkout.meta_value > %d )
-						)
-						AND booking.post_type = %s
-						AND booking.post_status IN ( %s, %s, %s )
-						AND order_item.order_id NOT IN( %s )
-				", 'qty', $room_id, 'product_id', 'check_in_date', 'check_out_date', $args['check_in_date'], $args['check_out_date'], $args['check_in_date'], $args['check_out_date'], $args['check_in_date'], $args['check_out_date'], 'hb_booking', 'hb-completed', 'hb-processing', 'hb-pending', implode( ',', $args['excerpt'] )
-			);
+			$qty = get_post_meta( $room_id, '_hb_num_of_rooms', true );
 
-			$sql = $wpdb->prepare( "
-					SELECT number.meta_value AS qty FROM $wpdb->postmeta AS number
-						INNER JOIN $wpdb->posts AS hb_room ON hb_room.ID = number.post_id
-					WHERE
-						number.meta_key = %s
-						AND hb_room.ID = %d
-						AND hb_room.post_type = %s
-				", '_hb_num_of_rooms', $room_id, 'hb_room' );
+			if ( ! empty( $arr_qty_available ) ) {
+				$qty = ! empty( min( $arr_qty_available ) ) ? min( $arr_qty_available ) : 1;
+			}
 
-			$qty = absint( $wpdb->get_var( $sql ) ) - absint( $wpdb->get_var( $not ) );
+			$blocked_id = get_post_meta( $room_id, 'hb_blocked_id', true );
+			if ( ! empty( $blocked_id ) ) {
+				$date_blocked = get_post_meta( $blocked_id, 'hb_blocked_time', false );
+				if ( ! empty( $date_blocked ) ) {
+					foreach ( $date_blocked as $date ) {
+						if ( $date >= strtotime( $checkin ) && $date <= strtotime( $checkout ) ){
+							$qty = 0;
+							break;
+						}
+					}
+				}
+			}
+
 			if ( $qty === 0 ) {
 				$errors->add( 'zero', __( 'This room is not available.', 'wp-hotel-booking' ) );
 
@@ -127,7 +133,6 @@ if ( ! function_exists( 'hotel_booking_get_room_available' ) ) {
 			return apply_filters( 'hotel_booking_get_room_available', $qty, $room_id, $args );
 		}
 	}
-
 }
 
 // product class process
@@ -157,12 +162,15 @@ if ( ! function_exists( 'hb_create_page' ) ) {
 		if ( $option_value > 0 ) {
 			$page_object = get_post( $option_value );
 
-			if ( $page_object && 'page' === $page_object->post_type && ! in_array( $page_object->post_status, array(
+			if ( $page_object && 'page' === $page_object->post_type && ! in_array(
+				$page_object->post_status,
+				array(
 					'pending',
 					'trash',
 					'future',
-					'auto-draft'
-				) ) ) {
+					'auto-draft',
+				)
+			) ) {
 				// Valid page is already in place
 				return $page_object->ID;
 			}
@@ -247,11 +255,11 @@ if ( ! function_exists( 'hb_notice_remove_hotel_booking' ) ) {
 	function hb_notice_remove_hotel_booking() { ?>
 		<div class="notice notice-error hb-dismiss-notice is-dismissible">
 			<p>
-				<?php echo wp_kses( '<strong>WP Hotel Booking</strong> plugin version ' . WPHB_VERSION . ' is an upgrade of <strong>TP Hotel Booking</strong> plugin. Please deactivate and delete <strong>TP Hotel Booking/TP Hotel Booking add-ons</strong> and replace by <strong>WP Hotel Booking/WP Hotel Booking add-ons</strong>.', array( 'strong' => array() ) ); ?>
+				<?php echo wp_kses( '<strong>WP Hotel Booking</strong> plugin version ' . WPHB_VERSION . ' is an upgrade of <strong>TP Hotel Booking</strong> plugin. Please deactivate and delete <strong>TP Hotel Booking/TP Hotel Booking add-ons</strong> and replace by <strong>WP Hotel Booking/WP Hotel Booking add-ons</strong>.', array( 'strong' => array() ), 'wp-hotel-booking' ); ?>
 			</p>
 
 		</div>
-	<?php 
+		<?php
 	}
 }
 
@@ -260,11 +268,11 @@ if ( ! function_exists( 'hb_extra_types' ) ) {
 	 * @return array|mixed
 	 */
 	function hb_extra_types() {
-		$types = apply_filters( 
-			'hb_extra_type', 
+		$types = apply_filters(
+			'hb_extra_type',
 			array(
-				'trip'   => esc_html__( 'Trip', 'wp-hotel-booking' ),
-				'number' => esc_html__( 'Number', 'wp-hotel-booking' ),
+				'trip'   => __( 'Trip', 'wp-hotel-booking' ),
+				'number' => __( 'Number', 'wp-hotel-booking' ),
 			)
 		);
 

@@ -23,27 +23,30 @@ class WPHB_Cart {
 
 	/**
 	 * $sessions object
+	 *
 	 * @var null
 	 */
 	public $sessions = null;
 
 	/**
 	 * $customer_sessions object
+	 *
 	 * @var null
 	 */
 	private $customer_sessions = null;
 
 	/**
 	 * $customer_sessions object
+	 *
 	 * @var null
 	 */
 	private $booking_sessions = null;
 	// load cart contents
-	public $cart_contents = array();
+	public $cart_contents          = array();
 	public $cart_total_include_tax = 0;
-	public $cart_total = 0;
+	public $cart_total             = 0;
 	public $cart_total_exclude_tax = 0;
-	public $cart_items_count = 0;
+	public $cart_items_count       = 0;
 	// customer
 	public $customer_id = null;
 	// customer
@@ -117,20 +120,23 @@ class WPHB_Cart {
 		return $return;
 	}
 
-	// load cart contents
+	/**
+	 * Get cart contents.
+	 *
+	 * @return array
+	 */
 	function get_cart_contents() {
 		// load cart session object
 		if ( $this->sessions && $this->sessions->session ) {
 			foreach ( $this->sessions->session as $cart_id => $param ) {
-				$cart_item = new stdClass;
+				$cart_item = new stdClass();
 				if ( is_array( $param ) || is_object( $param ) ) {
 					foreach ( $param as $k => $v ) {
 						$cart_item->{$k} = $v;
 					}
-
 					if ( $cart_item->product_id ) {
 						// product class
-						$product = hotel_booking_get_product_class( $cart_item->product_id, $param );
+						$product = hotel_booking_get_product_class( $cart_item->product_id, ( array )$param );
 						// set product data
 						$cart_item->product_data = $product;
 						// amount item include tax
@@ -197,11 +203,11 @@ class WPHB_Cart {
 	/**
 	 * Add to cart
 	 *
-	 * @param null $post_id
+	 * @param null  $post_id
 	 * @param array $params
-	 * @param int $qty
-	 * @param null $group_post_id
-	 * @param bool $asc
+	 * @param int   $qty
+	 * @param null  $group_post_id
+	 * @param bool  $asc
 	 *
 	 * @return mixed|null|string|WP_Error
 	 */
@@ -287,7 +293,7 @@ class WPHB_Cart {
 			$remove_params = array(
 				'product_id'     => $item->product_id,
 				'check_in_date'  => $item->check_in_date,
-				'check_out_date' => $item->check_out_date
+				'check_out_date' => $item->check_out_date,
 			);
 			if ( isset( $item->parent_id ) ) {
 				$remove_params['parent_id'] = $item->parent_id;
@@ -311,7 +317,7 @@ class WPHB_Cart {
 					$param = array(
 						'product_id'     => $item->product_id,
 						'check_in_date'  => $item->check_in_date,
-						'check_out_date' => $item->check_out_date
+						'check_out_date' => $item->check_out_date,
 					);
 					if ( isset( $item->parent_id ) ) {
 						$param['parent_id'] = $item->parent_id;
@@ -515,7 +521,7 @@ class WPHB_Cart {
 			return;
 		}
 
-		if ( ! isset( $_POST['hb_cart_field'] ) || ! wp_verify_nonce( sanitize_key($_POST['hb_cart_field'] ), 'hb_cart_field' ) ) {
+		if ( ! isset( $_POST['hb_cart_field'] ) || ! wp_verify_nonce( sanitize_key( $_POST['hb_cart_field'] ), 'hb_cart_field' ) ) {
 			return;
 		}
 
@@ -542,7 +548,7 @@ class WPHB_Cart {
 		}
 
 		do_action( 'hotel_booking_cart_update', (array) $_POST );
-		//refresh
+		// refresh
 		$this->refresh();
 
 		return;
@@ -569,27 +575,27 @@ class WPHB_Cart {
 		if ( is_array( $rooms ) && $rooms ) {
 			foreach ( $rooms as $cart_id => $room ) {
 				$cart_item = WP_Hotel_Booking::instance()->cart->get_cart_item( $cart_id );
-				$total     += ( hb_get_tax_settings() ) ? $cart_item->amount_exclude_tax : $cart_item->amount;
+				$total    += ( hb_get_tax_settings() ) ? $cart_item->amount_exclude_tax : $cart_item->amount;
 			}
 		}
 
-		/*if ( $tax = hb_get_tax_settings() ) {
+		/*
+		if ( $tax = hb_get_tax_settings() ) {
 			$total = $total / ( 1 + $tax );
 		}*/
 
-		//		echo '<pre>';
-		//		var_dump( $this->get_rooms() );
-		//		echo '</pre>';
-		//		die();
+		// echo '<pre>';
+		// var_dump( $this->get_rooms() );
+		// echo '</pre>';
+		// die();
 
+		// $total = 0;
 
-		//        $total = 0;
-
-		//        if ( !empty( $this->cart_contents ) ) {
-		//            foreach ( $this->cart_contents as $cart_item_id => $cart_item ) {
-		//                $total = $total + $cart_item->amount_exclude_tax;
-		//            }
-		//        }
+		// if ( !empty( $this->cart_contents ) ) {
+		// foreach ( $this->cart_contents as $cart_item_id => $cart_item ) {
+		// $total = $total + $cart_item->amount_exclude_tax;
+		// }
+		// }
 		return apply_filters( 'hotel_booking_cart_total_exclude_tax', $total );
 	}
 
@@ -617,9 +623,39 @@ class WPHB_Cart {
 	 * @return float|int
 	 */
 	function get_advance_payment() {
-		$total = $this->get_total();
-		if ( ! empty( hb_get_advance_payment() ) && ( $advance_payment = hb_get_advance_payment() ) < 100 ) {
-			$total = $total * $advance_payment / 100;
+		$total = 0;
+
+		if ( $this->cart_contents ) {
+			foreach ( $this->cart_contents as $cart_id => $cart_item ) {
+				$room_id   = $cart_item->product_id;
+				$enable    = get_post_meta( $room_id, '_hb_enable_deposit', true );
+				$post_type = get_post_type( $room_id );
+
+				if ( $post_type == 'hb_room' ) {
+					if ( $enable ) {
+						if ( get_post_type( $cart_item->product_id ) != 'hb_room' ) {
+							$parent  = $this->get_cart_item( $cart_item->parent_id );
+							$room_id = $parent->product_id;
+						};
+						// check deposit type room
+						$deposit_type = get_post_meta( $room_id, '_hb_deposit_type', true );
+						switch ( $deposit_type ) {
+							case 'fixed':
+								$total += get_post_meta( $room_id, '_hb_deposit_amount', true );
+								break;
+							case 'percent':
+								$total += ( $cart_item->amount * get_post_meta( $room_id, '_hb_deposit_amount', true ) ) / 100;
+								break;
+							default:
+								break;
+						};
+					} else {
+						if ( ! empty( hb_get_advance_payment() ) && ( $advance_payment = hb_get_advance_payment() ) < 100 ) {
+							$total += $cart_item->amount * $advance_payment / 100;
+						}
+					}
+				}
+			}
 		}
 
 		return $total;
@@ -636,9 +672,11 @@ class WPHB_Cart {
 
 	/**
 	 * generate transaction object payment
+	 *
 	 * @return object
 	 */
 	function generate_transaction( $payment_method = null ) {
+
 		if ( $this->is_empty ) {
 			return new WP_Error( 'hotel_booking_transaction_error', __( 'Your cart is empty.', 'wp-hotel-booking' ) );
 		}
@@ -657,29 +695,31 @@ class WPHB_Cart {
 		}
 
 		// booking info array param
-		$booking_info = array_merge( $booking_info, array(
-			'_hb_tax'                     => $this->cart_total_include_tax - $this->cart_total_exclude_tax,
-			'_hb_advance_payment'         => $this->hb_get_cart_total( ! hb_get_request( 'pay_all' ) ),
-			'_hb_advance_payment_setting' => hb_settings()->get( 'advance_payment', 50 ),
-			'_hb_currency'                => apply_filters( 'hotel_booking_payment_currency', hb_get_currency() ),
-			// '_hb_customer_id'               => $customer_id,
-			'_hb_user_id'                 => get_current_blog_id(),
-			'_hb_method'                  => $payment_method->slug,
-			'_hb_method_title'            => $payment_method->title,
-			'_hb_method_id'               => $payment_method->method_id,
-			// customer
-			'_hb_customer_title'          => hb_get_request( 'title' ),
-			'_hb_customer_first_name'     => hb_get_request( 'first_name' ),
-			'_hb_customer_last_name'      => hb_get_request( 'last_name' ),
-			'_hb_customer_address'        => hb_get_request( 'address' ),
-			'_hb_customer_city'           => hb_get_request( 'city' ),
-			'_hb_customer_state'          => hb_get_request( 'state' ),
-			'_hb_customer_postal_code'    => hb_get_request( 'postal_code' ),
-			'_hb_customer_country'        => hb_get_request( 'country' ),
-			'_hb_customer_phone'          => hb_get_request( 'phone' ),
-			'_hb_customer_email'          => hb_get_request( 'email' ),
-			'_hb_customer_fax'            => hb_get_request( 'fax' )
-		) );
+		$booking_info = array_merge(
+			$booking_info,
+			array(
+				'_hb_tax'                     => $this->cart_total_include_tax - $this->cart_total_exclude_tax,
+				'_hb_advance_payment'         => $this->hb_get_cart_total( ! hb_get_request( 'pay_all' ) ),
+				'_hb_advance_payment_setting' => hb_settings()->get( 'advance_payment', 50 ),
+				'_hb_currency'                => apply_filters( 'hotel_booking_payment_currency', hb_get_currency() ),
+				// '_hb_customer_id'               => $customer_id,
+				'_hb_user_id'                 => get_current_user_id(),
+				'_hb_method'                  => $payment_method->slug,
+				'_hb_method_title'            => $payment_method->title,
+				'_hb_method_id'               => $payment_method->method_id,
+				// customer
+				'_hb_customer_title'          => hb_get_request( 'title' ),
+				'_hb_customer_first_name'     => hb_get_request( 'first_name' ),
+				'_hb_customer_last_name'      => hb_get_request( 'last_name' ),
+				'_hb_customer_address'        => hb_get_request( 'address' ),
+				'_hb_customer_city'           => hb_get_request( 'city' ),
+				'_hb_customer_state'          => hb_get_request( 'state' ),
+				'_hb_customer_postal_code'    => hb_get_request( 'postal_code' ),
+				'_hb_customer_country'        => hb_get_request( 'country' ),
+				'_hb_customer_phone'          => hb_get_request( 'phone' ),
+				'_hb_customer_email'          => hb_get_request( 'email' ),
+			)
+		);
 
 		// set booking info
 		$transaction->booking_info = $booking_info;
@@ -693,16 +733,20 @@ class WPHB_Cart {
 			$total     = $product->amount_include_tax();
 			$sub_total = $product->amount_exclude_tax();
 
-			$_products[ $k ] = apply_filters( 'hb_generate_transaction_object_room', array(
-				'parent_id'      => isset( $product->parent_id ) ? $product->parent_id : null,
-				'product_id'     => $product->ID,
-				'qty'            => $product->get_data( 'quantity' ),
-				'check_in_date'  => $check_in,
-				'check_out_date' => $check_out,
-				'subtotal'       => $sub_total,
-				'total'          => $total,
-				'tax_total'      => $total - $sub_total
-			), $product );
+			$_products[ $k ] = apply_filters(
+				'hb_generate_transaction_object_room',
+				array(
+					'parent_id'      => isset( $product->parent_id ) ? $product->parent_id : null,
+					'product_id'     => $product->ID,
+					'qty'            => $product->get_data( 'quantity' ),
+					'check_in_date'  => $check_in,
+					'check_out_date' => $check_out,
+					'subtotal'       => $sub_total,
+					'total'          => $total,
+					'tax_total'      => $total - $sub_total,
+				),
+				$product
+			);
 		}
 
 		$transaction->order_items = $_products;

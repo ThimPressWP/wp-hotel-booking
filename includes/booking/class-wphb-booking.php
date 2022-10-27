@@ -39,7 +39,7 @@ class WPHB_Booking {
 	/**
 	 * @var int
 	 */
-	public $total = 0;
+	public $total     = 0;
 	public $sub_total = 0;
 	public $tax_total = 0;
 
@@ -65,7 +65,7 @@ class WPHB_Booking {
 	function __construct( $post ) {
 		if ( is_numeric( $post ) && $post && get_post_type( $post ) == 'hb_booking' ) {
 			$this->post = get_post( $post );
-		} else if ( $post instanceof WP_Post || is_object( $post ) ) {
+		} elseif ( $post instanceof WP_Post || is_object( $post ) ) {
 			$this->post = $post;
 		}
 		if ( empty( $this->post ) ) {
@@ -111,13 +111,17 @@ class WPHB_Booking {
 			return;
 		}
 		global $wpdb;
-		$query = $wpdb->prepare( "
+		$query = $wpdb->prepare(
+			"
                     SELECT SUM( meta.meta_value ) FROM $wpdb->hotel_booking_order_items AS booking
                         RIGHT JOIN $wpdb->posts AS post ON booking.order_id = post.ID
                         INNER JOIN $wpdb->hotel_booking_order_itemmeta AS meta ON meta.hotel_booking_order_item_id = booking.order_item_id
                     WHERE post.ID = %d
                         AND meta.meta_key = %s
-                ", $this->id, 'subtotal' );
+                ",
+			$this->id,
+			'subtotal'
+		);
 
 		$this->sub_total = $wpdb->get_var( $query );
 		if ( $with_coupon ) {
@@ -132,14 +136,20 @@ class WPHB_Booking {
 			return;
 		}
 		global $wpdb;
-		$query = $wpdb->prepare( "
+		$query = $wpdb->prepare(
+			"
                     SELECT SUM( meta.meta_value ) FROM $wpdb->hotel_booking_order_items AS booking
                         RIGHT JOIN $wpdb->posts AS post ON booking.order_id = post.ID
                         INNER JOIN $wpdb->hotel_booking_order_itemmeta AS meta ON meta.hotel_booking_order_item_id = booking.order_item_id
                     WHERE post.ID = %d
                         AND booking.order_item_type IN ( %s, %s )
                         AND meta.meta_key = %s
-                ", $this->id, 'line_item', 'sub_item', 'tax_total' );
+                ",
+			$this->id,
+			'line_item',
+			'sub_item',
+			'tax_total'
+		);
 
 		$this->tax_total = $wpdb->get_var( $query );
 		if ( $with_coupon ) {
@@ -195,7 +205,6 @@ class WPHB_Booking {
 					}
 				}
 			}
-
 		}
 		$this->id = $this->post->ID;
 
@@ -249,7 +258,12 @@ class WPHB_Booking {
 		if ( $new_status !== $old_status || ! in_array( $this->post_status, array_keys( hb_get_booking_statuses() ) ) ) {
 
 			// Update the order
-			wp_update_post( array( 'ID' => $this->id, 'post_status' => 'hb-' . $new_status ) );
+			wp_update_post(
+				array(
+					'ID'          => $this->id,
+					'post_status' => 'hb-' . $new_status,
+				)
+			);
 			$this->post_status = 'hb-' . $new_status;
 
 			// Status was changed
@@ -259,7 +273,7 @@ class WPHB_Booking {
 
 			switch ( $new_status ) {
 
-				case 'completed' :
+				case 'completed':
 					$payment_complete_date = get_post_meta( $this->post->ID, '_hb_booking_payment_completed', true );
 					if ( ! $payment_complete_date ) {
 						add_post_meta( $this->post->ID, '_hb_booking_payment_completed', current_time( 'mysql' ) );
@@ -268,8 +282,7 @@ class WPHB_Booking {
 					}
 					break;
 
-				case 'processing' :
-
+				case 'processing':
 					break;
 			}
 		}
@@ -277,6 +290,7 @@ class WPHB_Booking {
 
 	/**
 	 * Format booking number id
+	 *
 	 * @return string
 	 */
 	function get_booking_number() {
@@ -328,13 +342,16 @@ class WPHB_Booking {
 		if ( ! empty( $order_items ) ) {
 			$parents = array();
 			// insert line_item
-			foreach ( $order_items AS $k => $order_item ) {
+			foreach ( $order_items as $k => $order_item ) {
 				if ( ! isset( $order_item['parent_id'] ) || ! $order_item['parent_id'] ) {
 					$product_id    = $order_item['product_id'];
-					$order_item_id = hb_add_order_item( $this->id, array(
-						'order_item_name' => get_the_title( $product_id ),
-						'order_item_type' => 'line_item'
-					) );
+					$order_item_id = hb_add_order_item(
+						$this->id,
+						array(
+							'order_item_name' => get_the_title( $product_id ),
+							'order_item_type' => 'line_item',
+						)
+					);
 					$parents[ $k ] = $order_item_id;
 
 					// add order items meta
@@ -347,14 +364,17 @@ class WPHB_Booking {
 			}
 
 			// insert sub_item
-			foreach ( $order_items AS $k => $order_item ) {
+			foreach ( $order_items as $k => $order_item ) {
 				if ( isset( $order_item['parent_id'] ) && array_key_exists( $order_item['parent_id'], $parents ) ) {
 					$product_id    = $order_item['product_id'];
-					$order_item_id = hb_add_order_item( $this->id, array(
-						'order_item_name'   => get_the_title( $product_id ),
-						'order_item_type'   => 'sub_item',
-						'order_item_parent' => $parents[ $order_item['parent_id'] ]
-					) );
+					$order_item_id = hb_add_order_item(
+						$this->id,
+						array(
+							'order_item_name'   => get_the_title( $product_id ),
+							'order_item_type'   => 'sub_item',
+							'order_item_parent' => $parents[ $order_item['parent_id'] ],
+						)
+					);
 					// add order items meta
 					foreach ( $order_item as $meta_key => $meta_value ) {
 						if ( $meta_key !== 'parent_id' ) {
@@ -364,6 +384,52 @@ class WPHB_Booking {
 				}
 			}
 		}
+	}
+
+	/**
+	 * It updates the room booking data for a given booking ID
+	 *
+	 * @param booking_id The ID of the booking to update.
+	 */
+	public function update_room_booking( $booking_id ) {
+		if ( empty( $booking_id ) ) {
+			return;
+		}
+
+		$order_items    = hb_get_order_items( $booking_id );
+		$booking_status = get_post_status( $booking_id );
+		$list_rooms     = array();
+		if ( ! empty( $order_items ) ) {
+			foreach ( $order_items as $item ) {
+				$room_id = hb_get_order_item_meta( $item->order_item_id, 'product_id', true );
+
+				if ( $room_id ) {
+					$dates_booked      = array();
+					$order_date_booked = get_post_meta( $room_id, '_hb_dates_booked', true ) ?: array();
+					$quantity          = absint( get_post_meta( $room_id, '_hb_num_of_rooms', true ) );
+					$quantity_booking  = absint( hb_get_order_item_meta( $item->order_item_id, 'qty', true ) );
+
+					if ( $quantity >= $quantity_booking ) {
+						$checkin   = gmdate( 'Y-m-d', absint( hb_get_order_item_meta( $item->order_item_id, 'check_in_date' ) ) );
+						$checkout  = gmdate( 'Y-m-d', absint( hb_get_order_item_meta( $item->order_item_id, 'check_out_date' ) ) );
+						$date_next = $checkin;
+						while ( $date_next <= $checkout ) {
+							$dates_booked[] = strtotime( $date_next );
+							$date_next      = gmdate( 'Y-m-d', strtotime( $date_next . ' +1 day' ) );
+						}
+
+						$order_date_booked[ $booking_id ]['dates_booked'] = $dates_booked;
+						$order_date_booked[ $booking_id ]['quantity']     = $quantity_booking;
+						$order_date_booked[ $booking_id ]['status']       = $booking_status;
+
+						update_post_meta( $room_id, '_hb_dates_booked', $order_date_booked );
+					}
+					$list_rooms[] = $room_id;
+				}
+			}
+			update_post_meta( $booking_id, '_hb_order_list_rooms', $list_rooms );
+		}
+
 	}
 
 	/**

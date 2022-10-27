@@ -25,13 +25,13 @@ if ( ! class_exists( 'WPHB_Roles' ) ) {
 		 * WPHB_Roles constructor.
 		 */
 		public function __construct() {
-			add_action( 'plugins_loaded', array( $this, 'add_roles' ) );
+			$this->add_roles();
 		}
 
 		/**
 		 * Add user roles.
 		 */
-		public static function add_roles() {
+		public function add_roles() {
 
 			add_role(
 				'wphb_hotel_manager',
@@ -107,7 +107,6 @@ if ( ! class_exists( 'WPHB_Roles' ) ) {
 			$booking_editor->add_cap( 'edit_others_' . $booking_cap );
 
 			$booking_editor->add_cap( 'upload_files' );
-
 
 			$admin = get_role( 'administrator' );
 

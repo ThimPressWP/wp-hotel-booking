@@ -12,12 +12,22 @@
 /**
  * Prevent loading this file directly
  */
-defined( 'ABSPATH' ) || exit(); ?>
+defined( 'ABSPATH' ) || exit();
+if ( empty( $results ) || empty( $atts ) ) {
+	return;
+}
+?>
 
 <ul class="hb-search-results">
-
-	<?php foreach ( $results as $room ) {
-		hb_get_template( 'search/loop.php', array( 'room' => $room, 'atts' => $atts ) );
-	} ?>
-    
+	<?php
+	foreach ( $results as $room ) {
+		hb_get_template_content(
+			'search/loop.php',
+			array(
+				'room' => $room,
+				'atts' => $atts,
+			)
+		);
+	}
+	?>
 </ul>

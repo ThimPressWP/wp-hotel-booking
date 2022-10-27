@@ -28,7 +28,8 @@ if ( ! function_exists( 'hb_room_get_pricing_plans' ) ) {
 			hotel_booking_set_table_name();
 		}
 
-		$sql = $wpdb->prepare( "
+		$sql = $wpdb->prepare(
+			"
 				SELECT plans.* FROM $wpdb->hotel_booking_plans AS plans
 					INNER JOIN $wpdb->posts AS room ON room.ID = plans.room_id
 				WHERE
@@ -36,25 +37,28 @@ if ( ! function_exists( 'hb_room_get_pricing_plans' ) ) {
 					AND room.post_type = %s
 					AND room.post_status = %s
 				ORDER BY plan_id DESC
-			", $room_id, 'hb_room', 'publish' );
+			",
+			$room_id,
+			'hb_room',
+			'publish'
+		);
 
 		$cols  = $wpdb->get_results( $sql );
 		$plans = array();
 
 		foreach ( $cols as $k => $plan ) {
-			$pl = new stdClass;
+			$pl = new stdClass();
 
-			$pl->ID    = $plan->plan_id;
-			$pl->start = $plan->start_time;
-			$pl->end   = $plan->end_time;
-			$pl->prices    = maybe_unserialize( $plan->pricing );
+			$pl->ID     = $plan->plan_id;
+			$pl->start  = $plan->start_time;
+			$pl->end    = $plan->end_time;
+			$pl->prices = maybe_unserialize( $plan->pricing );
 
 			$plans[ $plan->plan_id ] = $pl;
 		}
 
 		return apply_filters( 'hb_room_get_pricing_plans', $plans, $room_id );
 	}
-
 }
 
 if ( ! function_exists( 'hb_room_set_pricing_plan' ) ) {
@@ -71,13 +75,17 @@ if ( ! function_exists( 'hb_room_set_pricing_plan' ) ) {
 	 * @return plan id
 	 */
 	function hb_room_set_pricing_plan( $args = array() ) {
-		$args = wp_parse_args( $args, array(
-			'start_time' => null,
-			'end_time'   => null,
-			'pricing'    => null,
-			'room_id'    => null,
-			'plan_id'    => null
-		) );
+
+		$args = wp_parse_args(
+			$args,
+			array(
+				'start_time' => null,
+				'end_time'   => null,
+				'pricing'    => null,
+				'room_id'    => null,
+				'plan_id'    => null,
+			)
+		);
 
 		global $wpdb;
 
@@ -87,7 +95,7 @@ if ( ! function_exists( 'hb_room_set_pricing_plan' ) ) {
 				array(
 					'start_time' => $args['start_time'] ? date( 'Y-m-d H:i:s', $args['start_time'] ) : null,
 					'end_time'   => $args['end_time'] ? date( 'Y-m-d H:i:s', $args['end_time'] ) : null,
-					'pricing'    => maybe_serialize( $args['pricing'] )
+					'pricing'    => maybe_serialize( $args['pricing'] ),
 				),
 				array( 'plan_id' => $args['plan_id'] ),
 				array( '%s', '%s', '%s' ),
@@ -101,7 +109,7 @@ if ( ! function_exists( 'hb_room_set_pricing_plan' ) ) {
 					'start_time' => $args['start_time'] ? date( 'Y-m-d H:i:s', $args['start_time'] ) : null,
 					'end_time'   => $args['end_time'] ? date( 'Y-m-d H:i:s', $args['end_time'] ) : null,
 					'pricing'    => maybe_serialize( $args['pricing'] ),
-					'room_id'    => $args['room_id']
+					'room_id'    => $args['room_id'],
 				),
 				array( '%s', '%s', '%s', '%d' )
 			);
@@ -113,7 +121,6 @@ if ( ! function_exists( 'hb_room_set_pricing_plan' ) ) {
 
 		return $plan_id;
 	}
-
 }
 
 if ( ! function_exists( 'hb_room_get_selected_plan' ) ) {
@@ -140,7 +147,7 @@ if ( ! function_exists( 'hb_room_get_selected_plan' ) ) {
 						$selected_plan = $plan;
 						break;
 					}
-				} else if ( ! $regular_plan ) {
+				} elseif ( ! $regular_plan ) {
 					$selected_plan = $regular_plan = $plan;
 				}
 			}
@@ -148,7 +155,6 @@ if ( ! function_exists( 'hb_room_get_selected_plan' ) ) {
 
 		return apply_filters( 'hb_room_get_selected_plan', $selected_plan );
 	}
-
 }
 
 if ( ! function_exists( 'hb_room_get_regular_plan' ) ) {
@@ -170,7 +176,6 @@ if ( ! function_exists( 'hb_room_get_regular_plan' ) ) {
 
 		return apply_filters( 'hb_room_get_regular_plan', $regular_plan );
 	}
-
 }
 
 if ( ! function_exists( 'hb_room_remove_pricing' ) ) {
@@ -196,7 +201,6 @@ if ( ! function_exists( 'hb_room_remove_pricing' ) ) {
 
 		return $plan_id;
 	}
-
 }
 
 if ( ! function_exists( 'hotel_booking_print_pricing_json' ) ) {
@@ -216,14 +220,18 @@ if ( ! function_exists( 'hotel_booking_print_pricing_json' ) ) {
 			$day   = strtotime( $start ) + $i * 24 * HOUR_IN_SECONDS;
 			$price = $room->get_price( $day, false );
 
+			// $json[] = array(
+			// 'title' => $price ? floatval( $price ) : '0',
+			// 'start' => date( 'Y-m-d', $day ),
+			// 'end'   => date( 'Y-m-d', strtotime( '+1 day', $day ) )
+			// );
 			$json[] = array(
-				'title' => $price ? floatval( $price ) : '0',
-				'start' => date( 'Y-m-d', $day ),
-				'end'   => date( 'Y-m-d', strtotime( '+1 day', $day ) )
+				'price' => $price ? floatval( $price ) : '0',
+				'd'     => date( 'Y-m-d\TH:i:s\Z', $day ),
+				// 'end'   => date( 'Y-m-d', strtotime( '+1 day', $day ) )
 			);
 		}
 
 		return json_encode( $json );
 	}
-
 }

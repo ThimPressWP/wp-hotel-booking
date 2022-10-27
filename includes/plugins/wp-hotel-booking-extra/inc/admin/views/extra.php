@@ -19,7 +19,10 @@ $field_name  = WPHB_EXTRA_OPTION_NAME;
 $extra_types = tp_hb_extra_type();
 $respondent  = array();
 foreach ( $extra_types as $key => $value ) {
-	$respondent[] = array( 'text' => $value, 'value' => $key );
+	$respondent[] = array(
+		'text'  => $value,
+		'value' => $key,
+	);
 } ?>
 
 <!-- Email Sender Options block -->
@@ -38,13 +41,13 @@ foreach ( $extra_types as $key => $value ) {
 					</div>
 					<div class="desc">
 						<h4><?php _e( 'Description', 'wp-hotel-booking' ); ?></h4>
-						<textarea name="<?php echo esc_attr( $field_name ) ?>[<?php echo esc_attr( $post->ID ); ?>][desc]"><?php printf( '%s', $post->post_content ) ?></textarea>
+						<textarea name="<?php echo esc_attr( $field_name ); ?>[<?php echo esc_attr( $post->ID ); ?>][desc]"><?php printf( '%s', $post->post_content ); ?></textarea>
 					</div>
 					<div class="price">
 						<h4><?php _e( 'Price', 'wp-hotel-booking' ); ?></h4>
 						<input type="number" step="any" name="<?php echo esc_attr( $field_name ); ?>[<?php echo esc_attr( $post->ID ); ?>][price]" value="<?php echo esc_attr( get_post_meta( $post->ID, 'tp_hb_extra_room_price', true ) ); ?>" />
 						<span>/</span>
-						<input type="text" name="<?php echo esc_attr( $field_name ); ?>[<?php echo esc_attr( $post->ID ); ?>][respondent_name]" value="<?php echo esc_attr( get_post_meta( $post->ID, 'tp_hb_extra_room_respondent_name', true ) ); ?>" placeholder="<?php esc_attr_e( 'Package', 'wp-hotel-booking' ) ?>" />
+						<input type="text" name="<?php echo esc_attr( $field_name ); ?>[<?php echo esc_attr( $post->ID ); ?>][respondent_name]" value="<?php echo esc_attr( get_post_meta( $post->ID, 'tp_hb_extra_room_respondent_name', true ) ); ?>" placeholder="<?php esc_attr_e( 'Package', 'wp-hotel-booking' ); ?>" />
 					</div>
 					<div class="type">
 						<h4><?php _e( 'Price Type', 'wp-hotel-booking' ); ?></h4>
@@ -63,13 +66,13 @@ foreach ( $extra_types as $key => $value ) {
 				</div>
 				<div class="desc">
 					<h4><?php _e( 'Description', 'wp-hotel-booking' ); ?></h4>
-					<textarea name="<?php echo esc_attr( $field_name ) ?>[0][desc]"></textarea>
+					<textarea name="<?php echo esc_attr( $field_name ); ?>[0][desc]"></textarea>
 				</div>
 				<div class="price">
 					<h4><?php _e( 'Price', 'wp-hotel-booking' ); ?></h4>
 					<input type="number" step="any" name="<?php echo esc_attr( $field_name ); ?>[0][price]" value="" />
 					<span>/</span>
-					<input type="text" name="<?php echo esc_attr( $field_name ); ?>[0][respondent_name]" value="" placeholder="<?php esc_attr_e( 'Package', 'wp-hotel-booking' ) ?>" />
+					<input type="text" name="<?php echo esc_attr( $field_name ); ?>[0][respondent_name]" value="" placeholder="<?php esc_attr_e( 'Package', 'wp-hotel-booking' ); ?>" />
 				</div>
 				<div class="type">
 					<h4><?php _e( 'Price Type', 'wp-hotel-booking' ); ?></h4>
@@ -92,17 +95,17 @@ foreach ( $extra_types as $key => $value ) {
 	<div class="tp_extra_form_fields">
 		<div class="name">
 			<h4><?php _e( 'Name', 'wp-hotel-booking' ); ?></h4>
-			<input type="text" name="<?php echo esc_attr( $field_name ); ?>[{{ data.id }}][name]" value="" placeholder="<?php echo esc_attr( 'Package name' ) ?>" />
+			<input type="text" name="<?php echo esc_attr( $field_name ); ?>[{{ data.id }}][name]" value="" placeholder="<?php echo esc_attr( 'Package name' ); ?>" />
 		</div>
 		<div class="desc">
 			<h4><?php _e( 'Description', 'wp-hotel-booking' ); ?></h4>
-			<textarea name="<?php echo esc_attr( $field_name ) ?>[{{ data.id }}][desc]" placeholder="<?php esc_attr_e( 'Enter description here', 'wp-hotel-booking' ) ?>"></textarea>
+			<textarea name="<?php echo esc_attr( $field_name ); ?>[{{ data.id }}][desc]" placeholder="<?php esc_attr_e( 'Enter description here', 'wp-hotel-booking' ); ?>"></textarea>
 		</div>
 		<div class="price">
 			<h4><?php _e( 'Price', 'wp-hotel-booking' ); ?></h4>
-			<input type="number" step="any" name="<?php echo esc_attr( $field_name ); ?>[{{ data.id }}][price]" value="" placeholder="<?php echo esc_attr( '10.5' ) ?>" />
+			<input type="number" step="any" name="<?php echo esc_attr( $field_name ); ?>[{{ data.id }}][price]" value="" placeholder="<?php echo esc_attr( '10.5' ); ?>" />
 			<span>/</span>
-			<input type="text" name="<?php echo esc_attr( $field_name ); ?>[{{ data.id }}][respondent_name]" value="" placeholder="<?php esc_attr_e( 'Package', 'wp-hotel-booking' ) ?>" />
+			<input type="text" name="<?php echo esc_attr( $field_name ); ?>[{{ data.id }}][respondent_name]" value="" placeholder="<?php esc_attr_e( 'Package', 'wp-hotel-booking' ); ?>" />
 		</div>
 		<div class="type">
 			<h4><?php _e( 'Price Type', 'wp-hotel-booking' ); ?></h4>

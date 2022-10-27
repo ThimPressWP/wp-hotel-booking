@@ -12,7 +12,8 @@
 /**
  * Prevent loading this file directly
  */
-defined( 'ABSPATH' ) || exit(); ?>
+defined( 'ABSPATH' ) || exit();
+?>
 
 <li id="room-<?php the_ID(); ?>" <?php post_class(); ?>>
 
@@ -20,9 +21,10 @@ defined( 'ABSPATH' ) || exit(); ?>
 	/**
 	 * hotel_booking_before_loop_room_item hook
 	 */
-	do_action( 'hotel_booking_before_loop_room_item' ); ?>
+	do_action( 'hotel_booking_before_loop_room_item' );
+	?>
 
-    <div class="summary entry-summary">
+	<div class="summary entry-summary">
 
 		<?php
 		/**
@@ -43,9 +45,10 @@ defined( 'ABSPATH' ) || exit(); ?>
 		/**
 		 * hotel_booking_loop_room_price hook
 		 */
-		do_action( 'hotel_booking_loop_room_rating' ); ?>
+		do_action( 'hotel_booking_loop_room_rating' );
+		?>
 
-    </div><!-- .summary -->
+	</div><!-- .summary -->
 
 	<?php
 	/**

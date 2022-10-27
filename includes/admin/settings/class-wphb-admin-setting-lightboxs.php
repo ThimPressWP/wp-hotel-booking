@@ -30,29 +30,32 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Lightboxs' ) ) {
 		}
 
 		public function get_settings() {
-			return apply_filters( 'hotel_booking_admin_setting_fields_' . $this->id, array(
+			return apply_filters(
+				'hotel_booking_admin_setting_fields_' . $this->id,
+				array(
 
 					array(
-							'type'		=> 'section_start',
-							'id'		=> 'lightbox_settings',
-							'title'		=> __( 'Lightbox options', 'wp-hotel-booking' ),
-							'desc'		=> __( 'General options for Lightbox system.', 'wp-hotel-booking' )
-						),
+						'type'  => 'section_start',
+						'id'    => 'lightbox_settings',
+						'title' => __( 'Lightbox options', 'wp-hotel-booking' ),
+						'desc'  => __( 'General options for Lightbox system.', 'wp-hotel-booking' ),
+					),
 
 					array(
-							'type'		=> 'select',
-							'id'		=> 'tp_hotel_booking_lightbox',
-							'options'	=> hb_get_support_lightboxs(),
-							'title'		=> __( 'Lightbox type', 'wp-hotel-booking' ),
-							'default'	=> 'lightbox2'
-						),
+						'type'    => 'select',
+						'id'      => 'tp_hotel_booking_lightbox',
+						'options' => hb_get_support_lightboxs(),
+						'title'   => __( 'Lightbox type', 'wp-hotel-booking' ),
+						'default' => 'lightbox2',
+					),
 
 					array(
-							'type'		=> 'section_end',
-							'id'		=> 'lightbox_settings'
-						)
+						'type' => 'section_end',
+						'id'   => 'lightbox_settings',
+					),
 
-				) );
+				)
+			);
 		}
 
 	}

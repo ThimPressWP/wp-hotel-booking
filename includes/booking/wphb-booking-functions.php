@@ -45,28 +45,30 @@ if ( ! function_exists( 'hb_update_booking_status' ) ) {
 if ( ! function_exists( 'hb_create_booking' ) ) {
 	function hb_create_booking( $booking_info = array(), $order_items = array() ) {
 
-		$booking_info = wp_parse_args( $booking_info, array(
-			'_hb_tax'                     => '',
-			'_hb_advance_payment'         => '',
-			'_hb_advance_payment_setting' => '',
-			'_hb_currency'                => '',
-			'_hb_user_id'                 => get_current_blog_id(),
-			'_hb_method'                  => '',
-			'_hb_method_title'            => '',
-			'_hb_method_id'               => '',
-			// customer
-			'_hb_customer_title'          => '',
-			'_hb_customer_first_name'     => '',
-			'_hb_customer_last_name'      => '',
-			'_hb_customer_address'        => '',
-			'_hb_customer_city'           => '',
-			'_hb_customer_state'          => '',
-			'_hb_customer_postal_code'    => '',
-			'_hb_customer_country'        => '',
-			'_hb_customer_phone'          => '',
-			'_hb_customer_email'          => '',
-			'_hb_customer_fax'            => ''
-		) );
+		$booking_info = wp_parse_args(
+			$booking_info,
+			array(
+				'_hb_tax'                     => '',
+				'_hb_advance_payment'         => '',
+				'_hb_advance_payment_setting' => '',
+				'_hb_currency'                => '',
+				'_hb_user_id'                 => get_current_user_id(),
+				'_hb_method'                  => '',
+				'_hb_method_title'            => '',
+				'_hb_method_id'               => '',
+				// customer
+				'_hb_customer_title'          => '',
+				'_hb_customer_first_name'     => '',
+				'_hb_customer_last_name'      => '',
+				'_hb_customer_address'        => '',
+				'_hb_customer_city'           => '',
+				'_hb_customer_state'          => '',
+				'_hb_customer_postal_code'    => '',
+				'_hb_customer_country'        => '',
+				'_hb_customer_phone'          => '',
+				'_hb_customer_email'          => '',
+			)
+		);
 		// return WP_Error if cart is empty
 		if ( WP_Hotel_Booking::instance()->cart->cart_items_count === 0 ) {
 			return new WP_Error( 'hotel_booking_cart_empty', __( 'Your cart is empty.', 'wp-hotel-booking' ) );
@@ -77,7 +79,7 @@ if ( ! function_exists( 'hb_create_booking' ) ) {
 			'user_id'       => get_current_user_id(),
 			'customer_note' => null,
 			'booking_id'    => 0,
-			'parent'        => 0
+			'parent'        => 0,
 		);
 
 		WP_Hotel_Booking::instance()->_include( 'includes/class-wphb-room.php' );
@@ -110,7 +112,7 @@ if ( ! function_exists( 'hb_create_booking' ) ) {
 		$booking_id = $booking->update( $order_items );
 
 		// set session booking id
-		WP_Hotel_Booking::instance()->cart->set_booking( 'booking_id', $booking_id );
+		// WP_Hotel_Booking::instance()->cart->set_booking( 'booking_id', $booking_id );
 
 		// do action
 		do_action( 'hotel_booking_create_booking', $booking_id, $booking_info, $order_items );
@@ -149,20 +151,29 @@ if ( ! function_exists( 'hb_get_order_items' ) ) {
 		global $wpdb;
 
 		if ( ! $parent ) {
-			$query = $wpdb->prepare( "
+			$query = $wpdb->prepare(
+				"
                     SELECT booking.* FROM $wpdb->hotel_booking_order_items AS booking
                         RIGHT JOIN $wpdb->posts AS post ON booking.order_id = post.ID
                     WHERE post.ID = %d
                         AND booking.order_item_type = %s
-                ", $order_id, $item_type );
+                ",
+				$order_id,
+				$item_type
+			);
 		} else {
-			$query = $wpdb->prepare( "
+			$query = $wpdb->prepare(
+				"
                     SELECT booking.* FROM $wpdb->hotel_booking_order_items AS booking
                         RIGHT JOIN $wpdb->posts AS post ON booking.order_id = post.ID
                     WHERE post.ID = %d
                         AND booking.order_item_type = %s
                         AND booking.order_item_parent = %d
-                ", $order_id, $item_type, $parent );
+                ",
+				$order_id,
+				$item_type,
+				$parent
+			);
 		}
 
 		return $wpdb->get_results( $query );
@@ -193,13 +204,13 @@ if ( ! function_exists( 'hb_add_order_item' ) ) {
 				'order_item_name'   => $param['order_item_name'],
 				'order_item_type'   => $param['order_item_type'],
 				'order_item_parent' => isset( $param['order_item_parent'] ) ? $param['order_item_parent'] : null,
-				'order_id'          => $booking_id
+				'order_id'          => $booking_id,
 			),
 			array(
 				'%s',
 				'%s',
 				'%d',
-				'%d'
+				'%d',
 			)
 		);
 
@@ -232,14 +243,21 @@ if ( ! function_exists( 'hb_remove_order_item' ) ) {
 	function hb_remove_order_item( $order_item_id = null ) {
 		global $wpdb;
 
-		$wpdb->delete( $wpdb->hotel_booking_order_items, array(
-			'order_item_id' => $order_item_id
-		), array( '%d' ) );
+		$wpdb->delete(
+			$wpdb->hotel_booking_order_items,
+			array(
+				'order_item_id' => $order_item_id,
+			),
+			array( '%d' )
+		);
 
-
-		$wpdb->delete( $wpdb->hotel_booking_order_itemmeta, array(
-			'hotel_booking_order_item_id' => $order_item_id
-		), array( '%d' ) );
+		$wpdb->delete(
+			$wpdb->hotel_booking_order_itemmeta,
+			array(
+				'hotel_booking_order_item_id' => $order_item_id,
+			),
+			array( '%d' )
+		);
 
 		do_action( 'hotel_booking_remove_order_item', $order_item_id );
 	}
@@ -248,12 +266,15 @@ if ( ! function_exists( 'hb_remove_order_item' ) ) {
 if ( ! function_exists( 'hb_get_parent_order_item' ) ) {
 	function hb_get_parent_order_item( $order_item_id = null ) {
 		global $wpdb;
-		$query = $wpdb->prepare( "
+		$query = $wpdb->prepare(
+			"
                 SELECT order_item.order_item_parent FROM $wpdb->hotel_booking_order_items AS order_item
                 WHERE
                     order_item.order_item_id = %d
                     LIMIT 1
-            ", $order_item_id );
+            ",
+			$order_item_id
+		);
 
 		return $wpdb->get_var( $query );
 	}
@@ -262,11 +283,14 @@ if ( ! function_exists( 'hb_get_parent_order_item' ) ) {
 if ( ! function_exists( 'hb_get_sub_item_order_item_id' ) ) {
 	function hb_get_sub_item_order_item_id( $order_item_id = null ) {
 		global $wpdb;
-		$query = $wpdb->prepare( "
+		$query = $wpdb->prepare(
+			"
                 SELECT order_item.order_item_id FROM $wpdb->hotel_booking_order_items AS order_item
                 WHERE
                     order_item.order_item_parent = %d
-            ", $order_item_id );
+            ",
+			$order_item_id
+		);
 
 		return $wpdb->get_col( $query );
 	}
@@ -276,13 +300,16 @@ if ( ! function_exists( 'hb_empty_booking_order_items' ) ) {
 	function hb_empty_booking_order_items( $booking_id = null ) {
 		global $wpdb;
 
-		$sql = $wpdb->prepare( "
+		$sql = $wpdb->prepare(
+			"
                 DELETE hb_order_item, hb_order_itemmeta
                     FROM $wpdb->hotel_booking_order_items as hb_order_item
                     LEFT JOIN $wpdb->hotel_booking_order_itemmeta as hb_order_itemmeta ON hb_order_item.order_item_id = hb_order_itemmeta.hotel_booking_order_item_id
                 WHERE
                     hb_order_item.order_id = %d
-            ", $booking_id );
+            ",
+			$booking_id
+		);
 
 		return $wpdb->query( $sql );
 	}

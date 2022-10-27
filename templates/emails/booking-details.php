@@ -45,7 +45,7 @@ defined( 'ABSPATH' ) || exit(); ?>
 	</tr>
 	<tr>
 		<td colspan="4"><b><?php _e( 'Payment method', 'wp-hotel-booking' ); ?></b></td>
-		<td><?php echo esc_html( $booking->method_title ? $booking->method_title : __( 'Offline Payment', 'wp-hotel-booking' ) ); ?></td>
+		<td><?php echo ! empty( $booking->method_title ) ? esc_html( $booking->method_title ) : __( 'Offline Payment', 'wp-hotel-booking' ); ?></td>
 	</tr>
 	<tr>
 		<td colspan="4"><b><?php _e( 'Total', 'wp-hotel-booking' ); ?></b></td>

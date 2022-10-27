@@ -40,7 +40,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 					'type'  => 'section_start',
 					'id'    => 'email_options',
 					'title' => __( 'Email Sender', 'wp-hotel-booking' ),
-					'desc'  => __( 'The name and email address of the sender displays in email', 'wp-hotel-booking' )
+					'desc'  => __( 'The name and email address of the sender displays in email', 'wp-hotel-booking' ),
 				),
 
 				array(
@@ -48,7 +48,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 					'id'          => 'tp_hotel_booking_email_general_from_name',
 					'title'       => __( 'From name', 'wp-hotel-booking' ),
 					'default'     => get_option( 'blogname' ),
-					'placeholder' => get_option( 'blogname' )
+					'placeholder' => get_option( 'blogname' ),
 				),
 
 				array(
@@ -56,7 +56,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 					'id'          => 'tp_hotel_booking_email_general_from_email',
 					'title'       => __( 'From Email', 'wp-hotel-booking' ),
 					'default'     => get_option( 'admin_email' ),
-					'placeholder' => get_option( 'admin_email' )
+					'placeholder' => get_option( 'admin_email' ),
 				),
 
 				array(
@@ -64,13 +64,13 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 					'id'          => 'tp_hotel_booking_email_general_subject',
 					'title'       => __( 'Email subject', 'wp-hotel-booking' ),
 					'default'     => __( 'Reservation', 'wp-hotel-booking' ),
-					'placeholder' => __( 'Reservation', 'wp-hotel-booking' )
+					'placeholder' => __( 'Reservation', 'wp-hotel-booking' ),
 				),
 
 				array(
 					'type' => 'section_end',
-					'id'   => 'email_options'
-				)
+					'id'   => 'email_options',
+				),
 			);
 			if ( $section === 'complete-booking' ) {
 				$settings = array(
@@ -78,7 +78,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 						'type'  => 'section_start',
 						'id'    => 'complete_booking',
 						'title' => __( 'Complete Booking', 'wp-hotel-booking' ),
-						'desc'  => __( 'New booking emails are sent to chosen recipient(s) when a booking is completed.', 'wp-hotel-booking' )
+						'desc'  => __( 'New booking emails are sent to chosen recipient(s) when a booking is completed.', 'wp-hotel-booking' ),
 					),
 
 					array(
@@ -94,7 +94,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 						'title'       => __( 'Recipient(s)', 'wp-hotel-booking' ),
 						'desc'        => sprintf( __( 'Enter recipients (comma separated) for this email. Defaults to %s.', 'wp-hotel-booking' ), get_option( 'admin_email' ) ),
 						'default'     => get_option( 'admin_email' ),
-						'placeholder' => get_option( 'admin_email' )
+						'placeholder' => get_option( 'admin_email' ),
 					),
 
 					array(
@@ -103,7 +103,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 						'title'       => __( 'Subject', 'wp-hotel-booking' ),
 						'desc'        => __( 'Enter the subject of this email.', 'wp-hotel-booking' ),
 						'default'     => '[{site_title}] Reservation completed ({booking_number}) - {booking_date}',
-						'placeholder' => '[{site_title}] Reservation completed ({booking_number}) - {booking_date}'
+						'placeholder' => '[{site_title}] Reservation completed ({booking_number}) - {booking_date}',
 					),
 
 					array(
@@ -112,7 +112,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 						'title'       => __( 'Email Heading', 'wp-hotel-booking' ),
 						'desc'        => __( 'The main heading displays in the top of email. Default heading: Completed booking', 'wp-hotel-booking' ),
 						'default'     => 'Completed Payment',
-						'placeholder' => 'Completed Payment'
+						'placeholder' => 'Completed Payment',
 					),
 
 					array(
@@ -120,7 +120,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 						'id'          => 'tp_hotel_booking_email_new_booking_heading_desc',
 						'title'       => __( 'Email Heading Description', 'wp-hotel-booking' ),
 						'default'     => __( 'The customer has completed the transaction', 'wp-hotel-booking' ),
-						'placeholder' => __( 'The customer has completed the transaction', 'wp-hotel-booking' )
+						'placeholder' => __( 'The customer has completed the transaction', 'wp-hotel-booking' ),
 					),
 
 					array(
@@ -130,14 +130,14 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 						'default' => 'html',
 						'options' => array(
 							'plain' => __( 'Plain Text', 'wp-hotel-booking' ),
-							'html'  => __( 'HTML', 'wp-hotel-booking' )
-						)
+							'html'  => __( 'HTML', 'wp-hotel-booking' ),
+						),
 					),
 
 					array(
 						'type' => 'section_end',
-						'id'   => 'complete_booking'
-					)
+						'id'   => 'complete_booking',
+					),
 				);
 			}
 
@@ -147,7 +147,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 						'type'  => 'section_start',
 						'id'    => 'cancel_booking',
 						'title' => __( 'Cancel Booking', 'wp-hotel-booking' ),
-						'desc'  => __( 'Cancel booking emails are sent to chosen recipient(s) when booking has been marked cancelled.', 'wp-hotel-booking' )
+						'desc'  => __( 'Cancel booking emails are sent to chosen recipient(s) when booking has been marked cancelled.', 'wp-hotel-booking' ),
 					),
 
 					array(
@@ -163,7 +163,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 						'title'       => __( 'Recipient(s)', 'wp-hotel-booking' ),
 						'desc'        => sprintf( __( 'Enter recipients (comma separated) for this email. Defaults to %s.', 'wp-hotel-booking' ), get_option( 'admin_email' ) ),
 						'default'     => get_option( 'admin_email' ),
-						'placeholder' => get_option( 'admin_email' )
+						'placeholder' => get_option( 'admin_email' ),
 					),
 
 					array(
@@ -172,7 +172,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 						'title'       => __( 'Subject', 'wp-hotel-booking' ),
 						'desc'        => sprintf( __( 'Enter recipients (comma separated) for this email. Defaults to %s.', 'wp-hotel-booking' ), get_option( 'admin_email' ) ),
 						'default'     => '[{site_title}] Cancelled Reservation ({booking_number}) - {booking_date}',
-						'placeholder' => '[{site_title}] Cancelled Reservation  ({booking_number}) - {booking_date}'
+						'placeholder' => '[{site_title}] Cancelled Reservation  ({booking_number}) - {booking_date}',
 					),
 
 					array(
@@ -181,7 +181,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 						'title'       => __( 'Email Heading', 'wp-hotel-booking' ),
 						'desc'        => __( 'The main heading displays in the top of email. Default heading: Cancelled booking', 'wp-hotel-booking' ),
 						'default'     => 'Cancelled booking',
-						'placeholder' => 'Cancelled booking'
+						'placeholder' => 'Cancelled booking',
 					),
 
 					array(
@@ -189,7 +189,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 						'id'          => 'tp_hotel_booking_email_cancel_booking_heading_desc',
 						'title'       => __( 'Email Heading Description', 'wp-hotel-booking' ),
 						'default'     => __( 'Booking has been marked cancelled', 'wp-hotel-booking' ),
-						'placeholder' => __( 'Booking has been marked cancelled', 'wp-hotel-booking' )
+						'placeholder' => __( 'Booking has been marked cancelled', 'wp-hotel-booking' ),
 					),
 
 					array(
@@ -199,14 +199,14 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 						'default' => 'html',
 						'options' => array(
 							'plain' => __( 'Plain Text', 'wp-hotel-booking' ),
-							'html'  => __( 'HTML', 'wp-hotel-booking' )
-						)
+							'html'  => __( 'HTML', 'wp-hotel-booking' ),
+						),
 					),
 
 					array(
 						'type' => 'section_end',
-						'id'   => 'cancel_booking'
-					)
+						'id'   => 'cancel_booking',
+					),
 				);
 			}
 
@@ -215,9 +215,9 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 
 		public function get_sections() {
 			$sections = array(
-				'email-options'  => __( 'Email Options', 'wp-hotel-booking' ),
-				'complete-booking'    => __( 'Complete Booking', 'wp-hotel-booking' ),
-				'cancel-booking' => __( 'Cancel Booking', 'wp-hotel-booking' )
+				'email-options'    => __( 'Email Options', 'wp-hotel-booking' ),
+				'complete-booking' => __( 'Complete Booking', 'wp-hotel-booking' ),
+				'cancel-booking'   => __( 'Cancel Booking', 'wp-hotel-booking' ),
 			);
 
 			return apply_filters( 'hotel_booking_admin_setting_sections_' . $this->id, $sections );

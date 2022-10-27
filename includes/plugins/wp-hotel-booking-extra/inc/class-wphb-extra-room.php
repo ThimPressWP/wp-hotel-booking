@@ -46,7 +46,6 @@ if ( ! class_exists( 'HB_Room_Extra' ) ) {
 
 			$extras = get_post_meta( $this->ID, $this->_meta_key, true );
 
-
 			$results = array();
 			if ( ! empty( $extras ) ) {
 				foreach ( $extras as $k => $post_id ) {
@@ -64,9 +63,8 @@ if ( ! class_exists( 'HB_Room_Extra' ) ) {
 					$ext->price           = hb_format_price( $ext->amount_singular );
 					$ext->selected        = get_post_meta( $post_id, 'tp_hb_extra_room_selected', true );
 					$ext->required        = $package->required;
-					$results[$post_id]    = $ext;
+					$results[ $post_id ]  = $ext;
 				}
-
 			}
 
 			return $results;
@@ -88,10 +86,10 @@ if ( ! class_exists( 'HB_Room_Extra' ) ) {
 				$id = $room;
 			}
 
-			if ( empty( self::$_instance[$id] ) ) {
-				return self::$_instance[$id] = new self( $post, $options );
-			} else if ( isset( $options ) ) {
-				$room = self::$_instance[$id];
+			if ( empty( self::$_instance[ $id ] ) ) {
+				return self::$_instance[ $id ] = new self( $post, $options );
+			} elseif ( isset( $options ) ) {
+				$room = self::$_instance[ $id ];
 
 				if ( isset( $options['check_in_date'], $options['check_out_date'] )
 					&& ( ( $options['check_in_date'] !== $room->check_in_date ) || ( $options['check_out_date'] !== $room->check_out_date ) )
@@ -101,7 +99,7 @@ if ( ! class_exists( 'HB_Room_Extra' ) ) {
 				}
 			}
 
-			return self::$_instance[$id];
+			return self::$_instance[ $id ];
 		}
 	}
 }

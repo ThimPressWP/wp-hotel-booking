@@ -15,24 +15,22 @@
 defined( 'ABSPATH' ) || exit;
 
 // get user
-if ( !function_exists( 'hb_get_user' ) ) {
+if ( ! function_exists( 'hb_get_user' ) ) {
 
-    function hb_get_user( $user = null ) {
-        return WPHB_User::get_user( $user );
-    }
-
+	function hb_get_user( $user = null ) {
+		return WPHB_User::get_user( $user );
+	}
 }
 
 // get current user
-if ( !function_exists( 'hb_get_current_user' ) ) {
+if ( ! function_exists( 'hb_get_current_user' ) ) {
 
-    function hb_get_current_user() {
-        global $hb_curent_user;
+	function hb_get_current_user() {
+		global $hb_curent_user;
 
-        if ( !$hb_curent_user ) {
-            $hb_curent_user = WPHB_User::get_current_user();
-        }
-        return $hb_curent_user;
-    }
-
+		if ( ! $hb_curent_user ) {
+			$hb_curent_user = WPHB_User::get_current_user();
+		}
+		return $hb_curent_user;
+	}
 }

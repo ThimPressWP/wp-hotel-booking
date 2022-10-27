@@ -17,22 +17,12 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Class WPHB_Meta_Box
  */
-class WPHB_Meta_Box {
+abstract class WPHB_Meta_Box {
+	private static $saved_meta_boxes = false;
 
-	/**
-	 * @var object
-	 */
-	protected static $_meta_boxes = array();
+	public $post_type = 'hb_room';
 
-	/**
-	 * @var array
-	 */
-	protected $_args = array();
-
-	/**
-	 * @var array
-	 */
-	protected $_fields = array();
+	public $meta_key_prefix = '_hb_';
 
 	/**
 	 * Construction
@@ -40,43 +30,28 @@ class WPHB_Meta_Box {
 	 * @param array
 	 * @param array
 	 */
-	public function __construct( $args = array(), $fields = array() ) {
-		$this->_args   = wp_parse_args(
-			$args, array(
-				'title'           => '',
-				'post_type'       => 'post',
-				'meta_key_prefix' => ''
-			)
-		);
-		$this->_fields = $fields;
+	public function __construct() {
+
+		// add_action( 'admin_print_scripts', array( $this, 'remove_auto_save_script' ) );
 
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
+		add_action( 'save_post', array( $this, 'save_meta_boxes' ), 100, 2 );
+		add_action( 'wphb_save_' . $this->post_type . '_metabox', array( $this, 'save' ) );
+	}
+
+	public function remove_auto_save_script() {
+		global $post;
+
+		// if ( $post && in_array( get_post_type( $post->ID ), array( $this->post_type ) ) ) {
+			wp_dequeue_script( 'autosave' );
+		// }
 	}
 
 	/**
 	 * Add meta box to post
 	 */
 	public function add_meta_box() {
-		$meta_box_id    = $this->_args['name'];
-		$meta_box_title = $this->_args['title'];
-		$callback       = ! empty( $this->_args['callback'] ) ? $this->_args['callback'] : array( $this, 'render' );
-		$post_types     = ! empty( $this->_args['post_type'] ) ? $this->_args['post_type'] : 'post';
-		$priority       = ! empty( $this->_args['priority'] ) ? $this->_args['priority'] : 'default';
-		$context        = ! empty( $this->_args['context'] ) ? $this->_args['context'] : 'normal';
-		if ( is_string( $post_types ) ) {
-			$post_types = explode( ',', $post_types );
-		}
 
-		foreach ( $post_types as $post_type ) {
-			add_meta_box(
-				$meta_box_id, 
-				$meta_box_title, 
-				$callback, 
-				$post_type, 
-				$context, 
-				$priority
-			);
-		}
 	}
 
 	/**
@@ -86,23 +61,8 @@ class WPHB_Meta_Box {
 	 *
 	 * @return WPHB_Meta_Box instance
 	 */
-	public function add_field( $field ) {
-		$args = func_get_args();
-		foreach ( $args as $f ) {
-			$this->_fields[] = (array) $f;
-		}
-		// metabox hook
-		$this->_fields = apply_filters( 'hb_metabox_' . $this->_args['name'], $this->_fields );
-
-		return $this;
-	}
-
-	/**
-	 * Return all fields of meta box
-	 * @return array
-	 */
-	public function get_fields() {
-		return $this->_fields;
+	public function metabox( $post_id ) {
+		return array();
 	}
 
 	/**
@@ -122,7 +82,7 @@ class WPHB_Meta_Box {
 			$meta_cache = $meta_cache[ $object_id ];
 		}
 
-		return array_key_exists( $this->_args['meta_key_prefix'] . $meta_key, $meta_cache );
+		return array_key_exists( $this->meta_key_prefix . $meta_key, $meta_cache );
 	}
 
 	/**
@@ -131,117 +91,42 @@ class WPHB_Meta_Box {
 	 * @param int
 	 */
 	public function render( $post ) {
-		$fields = $this->_fields;
-
-		if ( $fields ) {
-			echo '<ul class="hb-form-table">';
-
-			foreach ( $fields as $field ) {
-				echo '<li class="hb-form-field">';
-
-				if ( isset( $field['label'] ) && $field['label'] != '' ) {
-					echo '<label class="hb-form-field-label">' . esc_html( $field['label'] ) . '</label>';
-				}
-
-				if ( $this->has_post_meta( $post->ID, $field['name'] ) ) {
-					$field['std'] = get_post_meta( $post->ID, $this->_args['meta_key_prefix'] . $field['name'], true );
-				}
-
-				$field['name'] = $this->_args['meta_key_prefix'] . $field['name'];
-
-				if ( empty( $field['id'] ) ) {
-					$field['id'] = sanitize_title( $field['name'] );
-				}
-				
-				echo '<div class="hb-form-field-input">';
-				echo '<div class="hb-form-field-input-inner">';
-
-				$tmpl = WP_Hotel_Booking::instance()->locate( "includes/admin/metaboxes/views/fields/{$field['type']}.php" );
-				require $tmpl;
-
-				if ( ! empty( $field['desc'] ) ) {
-					printf( '<p class="description">%s</p>', wp_kses_post( $field['desc'] ) );
-				}
-
-				echo '</div>';
-				echo '</div>';
-				echo '</li>';
-			}
-
-			echo '</ul>';
-		}
-		wp_nonce_field( $this->get_nonce_field_action(), $this->get_nonce_field_name() );
+		wp_nonce_field( 'wphb_update_meta_box', 'wphb_meta_box_nonce' );
 	}
 
-	/**
-	 * Get name of nonce field for this meta box
-	 *
-	 * @return string
-	 */
-	public function get_nonce_field_name() {
-		return 'meta_box_' . $this->_args['name'];
-	}
-
-	/**
-	 * Get name of nonce field action for this meta box
-	 *
-	 * @return string
-	 */
-	public function get_nonce_field_action() {
-		return 'update_meta_box_' . $this->_args['name'];
-	}
-
-	/**
-	 * Update meta data when saving post
-	 *
-	 * @param int
-	 */
-	public function update( $post_id ) {
-		if ( ! isset( $_POST[ $this->get_nonce_field_name() ] ) || ! wp_verify_nonce( sanitize_key( $_POST[ $this->get_nonce_field_name() ] ), $this->get_nonce_field_action() ) ) {
-			return;
-		}
-		if ( ! $this->_fields ) {
-			return;
-		}
-
-
+	public function save( $post_id ) {
 		$fieldTypeHtmlArr = array( '_hb_room_addition_information' );
 
-		foreach ( $this->_fields as $field ) {
-			if ( array_key_exists( $this->_args['meta_key_prefix'] . $field['name'], (array) $_POST ) ) {
-				$keyPost    = $this->_args['meta_key_prefix'] . $field['name'];
-				$meta_value = WPHB_Helpers::sanitize_params_submitted( $_POST[ $keyPost ] );
+		if ( ! empty( $this->metabox( $post_id ) ) ) {
+			foreach ( $this->metabox( $post_id ) as $key => $field ) {
+				if ( array_key_exists( $this->meta_key_prefix . $field['name'], (array) $_POST ) ) {
+					$keyPost    = $this->meta_key_prefix . $field['name'];
+					$meta_value = WPHB_Helpers::sanitize_params_submitted( $_POST[ $keyPost ] );
 
-				if ( in_array( $keyPost, $fieldTypeHtmlArr ) ) {
-					$meta_value = WPHB_Helpers::sanitize_params_submitted( $meta_value, 'html' );
+					if ( in_array( $keyPost, $fieldTypeHtmlArr ) ) {
+						$meta_value = WPHB_Helpers::sanitize_params_submitted( $meta_value, 'html' );
+					} else {
+						$meta_value = WPHB_Helpers::sanitize_params_submitted( $meta_value );
+					}
+
+					$meta_value = apply_filters( 'hb_meta_box_update_meta_value', $meta_value, $field['name'], $post_id );
+					update_post_meta( $post_id, $this->meta_key_prefix . $field['name'], $meta_value );
 				} else {
-					$meta_value = WPHB_Helpers::sanitize_params_submitted( $meta_value );
+					update_post_meta( $post_id, $this->meta_key_prefix . $field['name'], '' );
 				}
-
-				$meta_value = apply_filters( 'hb_meta_box_update_meta_value', $meta_value, $field['name'], $this->_args['name'], $post_id );
-				
-				update_post_meta( $post_id, $this->_args['meta_key_prefix'] . $field['name'], $meta_value );
-
-				if ( $field['name'] == 'room_capacity' ) {
-					update_post_meta( $post_id, $this->_args['meta_key_prefix'] . 'room_origin_capacity', $meta_value );
-				}
-			}
-
-			if ( ! isset( $_POST[ $this->_args['meta_key_prefix'] . 'room_extra' ] ) || ! $_POST[ $this->_args['meta_key_prefix'] . 'room_extra' ] ) {
-				update_post_meta( $post_id, $this->_args['meta_key_prefix'] . 'room_extra', '' );
 			}
 		}
-
-		do_action( 'hb_update_meta_box_' . $this->_args['name'], $post_id );
 	}
 
 	/**
-	 * Update all meta boxes registered
-	 *
-	 * @param $post_id
+	 * @param id      $post_id
+	 * @param WP_Post $post
 	 */
-	public static function update_meta_boxes( $post_id ) {
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+	public function save_meta_boxes( $post_id = 0, $post = null ) {
+
+		$post_id = absint( $post_id );
+
+		if ( empty( $_POST['wphb_meta_box_nonce'] ) || ! wp_verify_nonce( wp_unslash( $_POST['wphb_meta_box_nonce'] ), 'wphb_update_meta_box' ) ) {
 			return;
 		}
 
@@ -249,40 +134,10 @@ class WPHB_Meta_Box {
 			return;
 		}
 
-		$meta_boxes = self::$_meta_boxes;
-
-		if ( ! $meta_boxes ) {
-			return;
+		if ( $post->post_type == $this->post_type ) {
+			do_action( 'wphb_save_' . $post->post_type . '_metabox', $post_id, $post );
 		}
 
-		foreach ( $meta_boxes as $meta_box ) {
-			$meta_box->update( $post_id );
-		}
 	}
-
-	/**
-	 * Get an instance of a meta box, create a new one if it is not exists
-	 *
-	 * @param string $id
-	 * @param array  $args
-	 * @param array  $fields
-	 *
-	 * @return WPHB_Meta_Box instance
-	 */
-	public static function instance( $id, $args, $fields ) {
-		if ( empty( self::$_meta_boxes[ $id ] ) ) {
-			if ( empty( $args['name'] ) ) {
-				$args['name'] = $id;
-			}
-			self::$_meta_boxes[ $id ] = new self( $args, $fields );
-		}
-
-		return self::$_meta_boxes[ $id ];
-	}
-
 }
 
-/**
- * Save post action
- */
-add_action( 'save_post', array( 'WPHB_Meta_Box', 'update_meta_boxes' ) );

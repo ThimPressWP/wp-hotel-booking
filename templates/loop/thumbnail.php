@@ -21,5 +21,5 @@ global $hb_room;
 ?>
 
 <div class="media">
-    <a href="<?php the_permalink(); ?>"><?php $hb_room->getImage( 'catalog' ); ?></a>
+	<a href="<?php the_permalink(); ?>"><?php $hb_room->getImage( 'catalog' ); ?></a>
 </div>

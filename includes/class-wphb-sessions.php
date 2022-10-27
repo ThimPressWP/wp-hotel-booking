@@ -105,14 +105,22 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 			if ( ! $name ) {
 				return;
 			}
-
 			$time = time();
 			if ( ! $value ) {
-				unset( $this->session[ $name ] );
+				if ( is_array( $this->session ) ) {
+					unset( $this->session[ $name ] );
+				} else {
+					unset( $this->session->{$name} );
+				}
 				$time = $time - $this->live_item;
 			} else {
-				$this->session[ $name ] = $value;
-				$time                   = $time + $this->live_item;
+				if ( is_array( $this->session ) ) {
+					$this->session[ $name ] = $value;
+				} else {
+					$this->session->{$name} = $value;
+				}
+
+				$time = $time + $this->live_item;
 			}
 
 			// save session
