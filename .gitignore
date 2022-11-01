@@ -1,2 +1,5 @@
-.idea/
+/.idea
 /node_modules
+/releases
+/.DS_Store
+package-lock.json

@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
-    "@wordpress/url": "^3.16.0",
-    "moment": "^2.29.4"
+    "@wordpress/url": "^3.16.0"
   },
   "devDependencies": {
     "@automattic/wp-babel-makepot": "^1.0.2",

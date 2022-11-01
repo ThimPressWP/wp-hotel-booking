@@ -75,6 +75,10 @@ Yes.
 
 == Changelog ==
 
+= 2.0.3 (2022-11-01) =
+~ Fixed: error search page with Safari browser.
+~ Fixed: error meta_box admin.
+
 = 2.0.2 (2022-10-18) =
 ~ Fixed: coupon function.
 ~ Updated: library moment, select2 js to latest.

@@ -37,6 +37,7 @@ $room_extra = $room_extra->get_extra();
 								   name="hb_optional_quantity_selected[<?php echo esc_attr( $extra->ID ); ?>]"
 								   class="hb_optional_quantity_selected" id="<?php echo esc_attr( 'hb-ex-room-' . $post->id . '-' . $key ); ?>"
 								   <?php echo $extra->required ? 'checked="checked" ' : ''; ?>
+								   data-id = "<?php echo esc_attr( $extra->ID ); ?>"
 							/>
 						</div>
 						<div class="hb_extra_optional_left">

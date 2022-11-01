@@ -34,6 +34,7 @@ $cart_item = $cart->get_cart_item( $cart_id );
 						   name="hb_optional_quantity_selected[<?php echo esc_attr( $extra->ID ); ?>]"
 						   class="hb_optional_quantity_selected"
 						   id="<?php echo esc_attr( 'hb-ex-room-' . $extra->ID . '-' . $key ); ?>" <?php echo $extra->required ? 'checked="checked" value="on"' : ''; ?>
+						   data-id = "<?php echo esc_attr( $extra->ID ); ?>"
 					/>
 					<div class="hb_package_title">
 						<label

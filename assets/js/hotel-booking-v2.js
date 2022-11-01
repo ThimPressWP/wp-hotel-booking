@@ -202,9 +202,10 @@ const bookingRoomsPages = ( formsCheck ) => {
         const hotelOption = form.querySelectorAll('input.hb_optional_quantity_selected');
         
         hotelOption && hotelOption.forEach( ( ele ) => {
-        if ( ele.checked ) { 
-                const eleName = ele.getAttribute('name');
-                const extraID = eleName?.match(/(?<=\[).+?(?=\])/)?.[0] || null;
+            if ( ele.checked ) {
+                // const eleName = ele.getAttribute('name');
+                // const extraID = eleName?.match(/(?<=\[).+?(?=\])/)?.[0] || null;
+                const extraID = ele.dataset.id;
                 const qty = parseInt( ele.parentElement?.nextElementSibling?.querySelector('input[class="hb_optional_quantity"]')?.value ) || 1;
                 if ( extraID ) {
                     extraData.push( { extraID, qty } );
@@ -275,8 +276,9 @@ const addExtraToCart = () => {
     
         hotelOption && hotelOption.forEach( ( ele ) => {
             if ( ele.checked ) { 
-                const eleName = ele.getAttribute('name');
-                const extraID = eleName?.match(/(?<=\[).+?(?=\])/)?.[0] || null;
+                // const eleName = ele.getAttribute('name');
+                // const extraID = eleName?.match(/(?<=\[).+?(?=\])/)?.[0] || null;
+                const extraID = ele?.dataset.id || null;
                 const qty = parseInt( ele.parentElement?.nextElementSibling?.querySelector('input[class="hb_optional_quantity"]')?.value ) || 1;
         
                 if ( extraID ) {
