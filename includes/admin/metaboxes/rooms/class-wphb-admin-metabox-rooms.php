@@ -110,7 +110,7 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 						),
 						'wrapper_class'   => '_wphb_rule_room_ele',
 					),
-				),
+				)
 			);
 
 			return $tab_rule;
@@ -151,7 +151,7 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 						'desc'  => __( 'Enter deposit amount', 'wp-hotel-booking' ),
 						// 'attr'  => 'required',
 					),
-				),
+				)
 			);
 
 			return $tab_deposit;

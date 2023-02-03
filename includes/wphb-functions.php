@@ -2701,6 +2701,7 @@ if ( ! function_exists( 'wp_hote_booking_blocked_days' ) ) {
 					add_post_meta( $post_id, 'hb_blocked_id', $block_id );
 				}
 			}
+			$block_time = get_post_meta($block_id, 'hb_blocked_time', false);
 			foreach ( $room_booked as $date => $count ) {
 				if ( $count <= 0 ) {
 					$data             = new stdClass();
@@ -2709,6 +2710,9 @@ if ( ! function_exists( 'wp_hote_booking_blocked_days' ) ) {
 					$data->selected   = $date;
 					$data->post_title = get_the_title( $post_id );
 					$results[]        = $data;
+					if( ! in_array( $date, $block_time ) ) {
+						add_post_meta( $block_id, 'hb_blocked_time', $date );
+					}
 				}
 			}
 		}
