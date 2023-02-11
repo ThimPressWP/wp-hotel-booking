@@ -1,17 +1,17 @@
-# Copyright (C) 2022 ThimPress
+# Copyright (C) 2023 ThimPress
 # This file is distributed under the same license as the WP Hotel Booking plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Hotel Booking 2.0.2-beta-1\n"
+"Project-Id-Version: WP Hotel Booking 2.0.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-hotel-booking\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-10-18T06:07:14+03:00\n"
+"POT-Creation-Date: 2023-02-08T02:12:30+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: wp-hotel-booking\n"
 
 #. Plugin Name of the plugin
@@ -229,10 +229,10 @@ msgstr ""
 #: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:50
 #: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:75
 #: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:108
-#: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-search-room.php:69
-#: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-single-search-room.php:66
-#: templates/search/select-extra.php:54
-#: templates/search/v2/select-extra-v2.php:55
+#: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-search-room.php:70
+#: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-single-search-room.php:67
+#: templates/search/select-extra.php:55
+#: templates/search/v2/select-extra-v2.php:56
 msgid "Package"
 msgstr ""
 
@@ -946,22 +946,22 @@ msgid "Pages options for system."
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:44
-#: includes/wphb-functions.php:2768
+#: includes/wphb-functions.php:2772
 msgid "Rooms Page"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:49
-#: includes/wphb-functions.php:2774
+#: includes/wphb-functions.php:2778
 msgid "Search Page"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:54
-#: includes/wphb-functions.php:2780
+#: includes/wphb-functions.php:2784
 msgid "Checkout Page"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:59
-#: includes/wphb-functions.php:2786
+#: includes/wphb-functions.php:2790
 msgid "Cart Page"
 msgstr ""
 
@@ -970,7 +970,7 @@ msgid "Redirect to page after book"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:69
-#: includes/wphb-functions.php:2796
+#: includes/wphb-functions.php:2800
 msgid "Account Page"
 msgstr ""
 
@@ -979,7 +979,7 @@ msgid "Terms And Conditions Page"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:79
-#: includes/wphb-functions.php:2808
+#: includes/wphb-functions.php:2812
 msgid "Thank You Page"
 msgstr ""
 
@@ -1112,6 +1112,13 @@ msgstr ""
 msgid "PayPal"
 msgstr ""
 
+#: includes/admin/views/admin-metabox-rooms.php:90
+#: includes/admin/views/pricing-table.php:60
+#: includes/admin/views/pricing-table.php:127
+#: includes/wphb-template-functions.php:599
+msgid "Edit"
+msgstr ""
+
 #: includes/admin/views/pricing-table.php:36
 #: includes/wphb-template-functions.php:585
 msgid "Pricing Plans"
@@ -1119,12 +1126,6 @@ msgstr ""
 
 #: includes/admin/views/pricing-table.php:39
 msgid "Select name of room"
-msgstr ""
-
-#: includes/admin/views/pricing-table.php:60
-#: includes/admin/views/pricing-table.php:127
-#: includes/wphb-template-functions.php:599
-msgid "Edit"
 msgstr ""
 
 #: includes/admin/wphb-admin-functions.php:75
@@ -1414,15 +1415,15 @@ msgstr ""
 msgid "Sorry, your session has expired. <a href=\"%s\">Return to homepage</a>"
 msgstr ""
 
-#: includes/class-wphb-checkout.php:101
+#: includes/class-wphb-checkout.php:106
 msgid "You have to Login to process checkout."
 msgstr ""
 
-#: includes/class-wphb-checkout.php:108
+#: includes/class-wphb-checkout.php:113
 msgid "The payment method is not available"
 msgstr ""
 
-#: includes/class-wphb-checkout.php:151
+#: includes/class-wphb-checkout.php:153
 msgid "can not create booking"
 msgstr ""
 
@@ -2047,7 +2048,7 @@ msgstr ""
 msgid "Facilities"
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra.php:83
+#: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra.php:84
 msgid "+ Add new."
 msgstr ""
 
@@ -2072,7 +2073,7 @@ msgstr ""
 msgid "Optional Extras"
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-single-search-room.php:76
+#: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-single-search-room.php:77
 msgid "No packages ( optional ) is available at the moment. "
 msgstr ""
 
@@ -4248,11 +4249,11 @@ msgstr ""
 msgid "Select a page&hellip;"
 msgstr ""
 
-#: includes/wphb-functions.php:2792
+#: includes/wphb-functions.php:2796
 msgid " Redirect to page after book"
 msgstr ""
 
-#: includes/wphb-functions.php:2802
+#: includes/wphb-functions.php:2806
 msgid "Terms Page"
 msgstr ""
 
@@ -4640,20 +4641,20 @@ msgstr ""
 msgid "Children"
 msgstr ""
 
-#: templates/search/select-extra.php:67
-#: templates/search/select-extra.php:75
-#: templates/search/v2/select-extra-v2.php:74
-#: templates/search/v2/select-extra-v2.php:83
+#: templates/search/select-extra.php:68
+#: templates/search/select-extra.php:76
+#: templates/search/v2/select-extra-v2.php:75
+#: templates/search/v2/select-extra-v2.php:84
 msgid "Back to search"
 msgstr ""
 
-#: templates/search/select-extra.php:69
-#: templates/search/v2/select-extra-v2.php:76
+#: templates/search/select-extra.php:70
+#: templates/search/v2/select-extra-v2.php:77
 msgid "Next step"
 msgstr ""
 
-#: templates/search/select-extra.php:72
-#: templates/search/v2/select-extra-v2.php:80
+#: templates/search/select-extra.php:73
+#: templates/search/v2/select-extra-v2.php:81
 msgid "There is no extra option of this room"
 msgstr ""
 

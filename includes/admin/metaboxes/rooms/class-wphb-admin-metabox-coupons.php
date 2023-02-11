@@ -80,7 +80,7 @@ if ( ! class_exists( 'WPHB_Meta_Box_Coupons' ) ) {
 						'desc'  => __( 'This field allows you to set the minimum subtotal needed to use the coupon.', 'wp-hotel-booking' ),
 						'min'   => 0,
 						'step'  => 0.1,
-						'max'   => 100,
+						// 'max'   => 100,
 					),
 					'maximum_spend'              => array(
 						'name'  => 'maximum_spend',
@@ -89,7 +89,7 @@ if ( ! class_exists( 'WPHB_Meta_Box_Coupons' ) ) {
 						'desc'  => __( 'This field allows you to set the maximum subtotal allowed when using the coupon.', 'wp-hotel-booking' ),
 						'min'   => 0,
 						'step'  => 0.1,
-						'max'   => 100,
+						// 'max'   => 100,
 					),
 					'limit_per_coupon'           => array(
 						'name'  => 'limit_per_coupon',

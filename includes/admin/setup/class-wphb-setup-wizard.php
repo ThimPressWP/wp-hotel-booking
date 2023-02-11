@@ -132,7 +132,7 @@ class WPHB_Setup_Wizard {
 		wp_enqueue_style( 'widgets' );
 
 		wp_enqueue_style( 'wp-admin-setup-wizard-style', WPHB_PLUGIN_URL . '/assets/css/admin/admin-setup.css' );
-		wp_enqueue_style( 'wp-admin-setup-wizard-select2', WPHB_PLUGIN_URL . '/assets/css/select2.min.css' );
+		wp_enqueue_style( 'wp-admin-setup-wizard-select2', WPHB_PLUGIN_URL . '/assets/css/libraries.css' );
 
 		wp_enqueue_script( 'wphb-utils', WPHB_PLUGIN_URL . '/assets/js/utils/jquery.plugins.js ' );
 		wp_enqueue_script( 'wphb-dropdown-pages', WPHB_PLUGIN_URL . '/assets/js/admin/dropdown-pages.js ' );
