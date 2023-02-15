@@ -113,6 +113,11 @@
                     return [false, "", "Booked Out"];
                 }
             }
+
+            function unavailableCheckIn(date) {
+                return [true, "", "Book Now"];
+            }
+            
             checkin.datepicker({
                 dateFormat: hotel_booking_i18n.date_time_format,
                 monthNames: hotel_booking_i18n.monthNames,
@@ -144,7 +149,7 @@
                 dayNamesMin: hotel_booking_i18n.dayNamesMin,
                 minDate: tomorrow,
                 maxDate: '+365D',
-                beforeShowDay: unavailable,
+                beforeShowDay: unavailableCheckIn,
                 onSelect: function (selected) {
                     var checkin_date = checkout.datepicker('getDate'),
                         time = new Date(checkin_date);

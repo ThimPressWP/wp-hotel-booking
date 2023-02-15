@@ -116,7 +116,7 @@ if ( ! function_exists( 'hotel_booking_get_room_available' ) ) {
 				$date_blocked = get_post_meta( $blocked_id, 'hb_blocked_time', false );
 				if ( ! empty( $date_blocked ) ) {
 					foreach ( $date_blocked as $date ) {
-						if ( $date >= strtotime( $checkin ) && $date <= strtotime( $checkout ) ){
+						if ( $date >= strtotime( $checkin ) && $date < strtotime( $checkout ) ){
 							$qty = 0;
 							break;
 						}
