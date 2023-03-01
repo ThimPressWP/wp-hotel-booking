@@ -20,7 +20,6 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 		 * @return WPHB_Meta_Box instance
 		 */
 		function metabox( $post_id = 0 ) {
-
 			return apply_filters(
 				'wpbh_meta_box_room_settings_tabs',
 				array(
@@ -227,6 +226,7 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 							'editor_height' => 5,
 							'editor_class'  => 'wphb_width_editor',
 						),
+						'condition_html' => true,
 					),
 					'room_preview'              => array(
 						'name'  => 'room_preview',
@@ -325,7 +325,6 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 
 		public function save( $post_id ) {
 			$fieldTypeHtmlArr = array();
-
 			foreach ( $this->metabox( $post_id ) as $key => $tab_content ) {
 				if ( isset( $tab_content['content'] ) ) {
 					foreach ( $tab_content['content'] as $field ) {
@@ -345,9 +344,10 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 							if ( $keyPost == '_hb_wphb_rule_room' ) {
 								$meta_value = sanitize_post_field( '_hb_wphb_rule_room', $_POST[ $keyPost ], $post_id );
 							}
-							if ( $keyPost == '_hb_room_addition_information' ) {
+							if( isset( $field['condition_html'] ) ) {
 								$meta_value = $_POST[ $keyPost ];
 							}
+
 							if ( $keyPost == '_hb_room_preview_url' ) {
 								$meta_value = $_POST[ $keyPost ];
 							}
@@ -376,5 +376,3 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 	}
 	WPHB_Meta_Box_Room::instance();
 }
-
-
