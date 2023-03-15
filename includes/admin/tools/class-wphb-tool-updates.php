@@ -47,7 +47,7 @@ if ( ! class_exists( 'WPHB_Updates' ) ) {
 				<thead>
 				<tr>
 					<th colspan="3">
-						<h4><?php echo __( 'Info Update', 'wp-hotel-booking' ); ?></h4>
+						<h4><?php echo __( 'Info Update 2.0.0', 'wp-hotel-booking' ); ?></h4>
 					</th>
 				</tr>
 				</thead>
@@ -56,7 +56,7 @@ if ( ! class_exists( 'WPHB_Updates' ) ) {
 					<tr>
 						<td>
 							<p>
-							<?php _e( 'Template version', 'wp-hotel-booking' ); ?>
+							<?php _e( '- Update field single rooms.', 'wp-hotel-booking' ); ?>
 							</p>
 						</td>
 					</tr>
