@@ -41,7 +41,7 @@ if ( ! class_exists( 'WPHB_Updates' ) ) {
 		 * Output.
 		 */
 		public function output() {
-			$flag = version_compare( get_option( 'hotel_booking_version' ), WPHB_VERSION, '<' );
+			$flag = get_option( 'hotel_booking_update_meta_field_rooms', 0 );
 			?>
 			<table id="wphb-update-db" class="widefat" cellspacing="0">
 				<thead>
@@ -52,7 +52,7 @@ if ( ! class_exists( 'WPHB_Updates' ) ) {
 				</tr>
 				</thead>
 				<tbody>
-				<?php if ( $flag ) { ?>
+				<?php if ( empty( $flag ) ) { ?>
 					<tr>
 						<td>
 							<p>

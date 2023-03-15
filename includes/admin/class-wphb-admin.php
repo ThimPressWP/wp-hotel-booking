@@ -127,9 +127,9 @@ if ( ! class_exists( 'WPHB_Admin' ) ) {
 		 * @return the  array.
 		 */
 		public function wphb_update_field_max_adult( $settings, $room_id ) {
-			$flag = version_compare( get_option( 'hotel_booking_version' ), WPHB_VERSION, '>=' );
+			$flag = get_option( 'hotel_booking_update_meta_field_rooms', 0 );
 
-			if ( $flag ) {
+			if ( ! empty( $flag ) ) {
 				$max_adult = get_post_meta( $room_id, '_hb_room_capacity_adult', true );
 				unset( $settings['room_origin_capacity'] );
 
@@ -151,8 +151,8 @@ if ( ! class_exists( 'WPHB_Admin' ) ) {
 		 * It displays a warning message to the user if the database needs to be updated.
 		 */
 		public function wphb_update_field_max_adult_notice() {
-			$flag = version_compare( get_option( 'hotel_booking_version' ), WPHB_VERSION, '<' );
-			if ( $flag ) {
+			$flag = get_option( 'hotel_booking_update_meta_field_rooms', 0 );
+			if ( empty( $flag ) ) {
 				echo '<div class="notice notice-warning">';
 				printf(
 					'<p>' . __( '<strong>Warning:</strong> Plugin <strong>WP Hotel Booking </strong> database needs to be updated to function properly. <a href="%s" target="_blank">Click</a> to go to update page. ', 'wp-hotel-booking' ) . '</p>',

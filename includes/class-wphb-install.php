@@ -350,6 +350,6 @@ class WPHB_Install {
 			self::create_tables();
 		}
 
-		return $install_done;
+		return $install_done === 'yes';
 	}
 }

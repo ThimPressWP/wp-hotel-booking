@@ -1779,6 +1779,8 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 		);
 
 		if ( $search = $wpdb->get_results( $query ) ) {
+			$allow_checkout_date_blocked = get_option( 'tp_hotel_booking_allow_checkout_date_blocked' );
+			
 			foreach ( $search as $k => $p ) {
 				$blocked_id = get_post_meta( $p->ID, 'hb_blocked_id', true );
 				if ( ! empty( $blocked_id ) ) {
@@ -1793,8 +1795,10 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 						}
 					}
 					if ( $flag ) {
-						unset( $search[$k] );
-						continue;
+						if( ! $allow_checkout_date_blocked ) {
+							unset( $search[$k] );
+							continue;
+						}
 					}
 				}
 

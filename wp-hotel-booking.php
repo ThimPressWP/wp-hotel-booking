@@ -75,10 +75,6 @@ class WP_Hotel_Booking {
 
 		$this->includes();
 
-		if ( ! WPHB_Install::tables_install_done() ) {
-			return;
-		}
-
 		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
@@ -201,10 +197,6 @@ class WP_Hotel_Booking {
 	public function includes() {
 
 		$this->include_files_global();
-
-		if ( ! WPHB_Install::tables_install_done() ) {
-			return;
-		}
 
 		if ( is_admin() ) {
 			$this->admin_includes();

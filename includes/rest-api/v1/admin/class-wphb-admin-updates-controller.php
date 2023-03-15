@@ -71,7 +71,7 @@ class WPHB_REST_Admin_Update_Controller extends WPHB_Abstract_REST_Controller {
 			wp_reset_postdata();
 
 			// update option after change value max aldult of room
-			update_option( 'hotel_booking_version', WPHB_VERSION );
+			update_option( 'hotel_booking_update_meta_field_rooms', 1 );
 			$response->status  = 'success';
 			$response->message = __( 'Update Success ! ', 'wp-hotel-booking' );
 
