@@ -9,7 +9,10 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 		private static $instance = null;
 
 		public function add_meta_box() {
-			add_meta_box( 'room_settings', esc_html__( 'Room Settings', 'wp-hotel-booking' ), array( $this, 'render' ), $this->post_type, 'normal', 'high' );
+			add_meta_box( 'room_settings', esc_html__( 'Room Settings', 'wp-hotel-booking' ), array(
+				$this,
+				'render'
+			), $this->post_type, 'normal', 'high' );
 		}
 
 		/**
@@ -114,6 +117,7 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 
 			return $tab_rule;
 		}
+
 		/**
 		 * It returns an array of objects.
 		 *
@@ -226,7 +230,7 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 							'editor_height' => 5,
 							'editor_class'  => 'wphb_width_editor',
 						),
-						'condition_html' => true,
+						'condition_html'  => true,
 					),
 					'room_preview'              => array(
 						'name'  => 'room_preview',
@@ -245,6 +249,21 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 						),
 						'wrapper_class'   => $class_prview,
 					),
+					'room_beds'                 => array(
+						'name'  => 'room_beds',
+						'label' => __( 'Beds', 'wp-hotel-booking' ),
+						'type'  => 'number',
+						'std'   => '1',
+						'desc'  => __( 'The number of beds', 'wp-hotel-booking' ),
+						'min'   => 0,
+						'step'  => 1
+					),
+					'room_area'                 => array(
+						'name'  => 'room_area',
+						'label' => __( 'Area', 'wp-hotel-booking' ),
+						'type'  => 'text',
+						'desc'  => ''
+					)
 				),
 				$post_id
 			);
@@ -344,7 +363,7 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 							if ( $keyPost == '_hb_wphb_rule_room' ) {
 								$meta_value = sanitize_post_field( '_hb_wphb_rule_room', $_POST[ $keyPost ], $post_id );
 							}
-							if( isset( $field['condition_html'] ) ) {
+							if ( isset( $field['condition_html'] ) ) {
 								$meta_value = $_POST[ $keyPost ];
 							}
 
@@ -361,6 +380,7 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 				}
 			}
 		}
+
 		/**
 		 * Get instance
 		 *
@@ -374,5 +394,6 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 			return self::$instance;
 		}
 	}
+
 	WPHB_Meta_Box_Room::instance();
 }
