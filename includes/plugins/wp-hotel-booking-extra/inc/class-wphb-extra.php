@@ -52,7 +52,7 @@ if ( ! class_exists( 'HB_Extra_Field' ) ) {
 		public function tabs_setting( $tabs ) {
 
 			$tabs['extra_settings'] = array(
-				'label'    => esc_html__( 'Facilities', 'wp-hotel-booking' ),
+				'label'    => esc_html__( 'Extra Options', 'wp-hotel-booking' ),
 				'target'   => 'addition_package',
 				'icon'     => 'dashicons-welcome-write-blog',
 				'priority' => 30,
@@ -73,7 +73,7 @@ if ( ! class_exists( 'HB_Extra_Field' ) ) {
 				array(
 					'room_extra' => array(
 						'name'        => 'room_extra',
-						'label'       => __( 'Facilities', 'wp-hotel-booking' ),
+						'label'       => __( 'Extra Options', 'wp-hotel-booking' ),
 						'type'        => 'multiple',
 						'options'     => $this->extra_fields(),
 						'filter'      => array( $this, 'meta_value' ),
