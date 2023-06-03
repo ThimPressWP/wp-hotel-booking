@@ -1,20 +1,20 @@
 (function ($) {
     var $doc = $(document);
-    //room faq 
-    $(document).on( 'click' , '._hb_room_faq_meta_box__add', function(e) {
+    //room faq
+    $(document).on('click', '._hb_room_faq_meta_box__add', function (e) {
         e.preventDefault();
         const container = $('.faq_append').html();
-        $( this ).closest( '._hb_room_faq_meta_box__content' )
-        .find( '._hb_room_faq_meta_box__fields' )
-        .append( container );
+        $(this).closest('._hb_room_faq_meta_box__content')
+            .find('._hb_room_faq_meta_box__fields')
+            .append(container);
         return false;
-        
-	} );
 
-    $( document ).on( 'click', '._hb_room_faq_meta_box__fields a.delete', function() {
-		$( this ).closest( '._hb_room_faq_meta_box__field' ).remove();
-		return false;
-	} );
+    });
+
+    $(document).on('click', '._hb_room_faq_meta_box__fields a.delete', function () {
+        $(this).closest('._hb_room_faq_meta_box__field').remove();
+        return false;
+    });
     //end room faq
     if (Date.prototype.compareWith == undefined) {
         Date.prototype.compareWith = function (d) {
@@ -54,8 +54,8 @@
             dayNames: hotel_booking_i18n.dayNames,
             dayNamesShort: hotel_booking_i18n.dayNamesShort,
             dayNamesMin: hotel_booking_i18n.dayNamesMin,
-            minDate : 0,
-			maxDate : '+365D',
+            minDate: 0,
+            maxDate: '+365D',
             onSelect: function (date) {
                 var _self = $(this),
                     _date = _self.datepicker('getDate'),
@@ -66,17 +66,17 @@
                 if (name.indexOf('date-start') > 0) {
                     hidden_name = name.replace('date-start', 'date-start-timestamp');
                     var checkout = $('.datepicker.end_date');
-				    checkout.datepicker('option', 'minDate', date - 1 );
+                    checkout.datepicker('option', 'minDate', date - 1);
                 } else if (name.indexOf('date-end') > 0) {
                     var check_in = $('.datepicker.start_date'),
-                    hidden_name = name.replace('date-end', 'date-end-timestamp');
+                        hidden_name = name.replace('date-end', 'date-end-timestamp');
                     check_in.datepicker('option', 'maxDate', date + 1);
                 }
-               
+
                 if (hidden_name) {
                     $(plan).find('input[name="' + hidden_name + '"]').val(_timestamp);
                 }
-                
+
             }
         });
         // $(plan).find('.datepicker').datepicker('disable');
@@ -86,7 +86,7 @@
         $('.wp-admin.post-type-hb_booking .search-box #post-search-input').attr("placeholder", hotel_booking_i18n.search_booking);
         let i = 1;
         $doc.on('click', '.hb-pricing-controls a', function (e) {
-           
+
             var $button = $(this),
                 $table = $button.closest('.hb-pricing-table'),
                 action = $button.data('action');
@@ -105,23 +105,23 @@
                     $table.find('.hb-pricing-price').each(function (i) {
                         $inputs.eq(i).val(this.value);
                     });
-                   
+
                     if ($table.hasClass('regular-price')) {
                         $cloned.removeClass('regular-price')
                         $('.hb-pricing-table-title > span', $cloned).html('Date Range');
                         $('#hb-pricing-plan-list').append($cloned);
-                        
+
                         $cloned.find('input[type="text"], input[type="number"], input[type="hidden"]').each(function () {
                             var $input = $(this),
                                 name = $input.attr('name');
-                            name = name.replace(/__INDEX__/, i - 1000 );
+                            name = name.replace(/__INDEX__/, i - 1000);
                             $input.attr('name', name);
-                            if ( $input.attr('name').indexOf('plan_id') > 0 ){
-                                $input.attr('value', i - 1000 );
+                            if ($input.attr('name').indexOf('plan_id') > 0) {
+                                $input.attr('value', i - 1000);
                             }
                         });
-                          
-                    } else {                       
+
+                    } else {
                         $cloned.insertAfter($table);
                     }
                     $cloned.fadeTo(350, 0.8).delay(1000).fadeTo(250, 1, function () {
@@ -410,26 +410,26 @@
         $('#hb-booking-details select').select2();
 
         $('.form-field .hb-form-field-input select').select2(
-            { width: 'auto' }
+            {width: 'auto'}
         );
-        
+
         // deposit single room
         const elemDeposit = $('#deposit_room select[name="_hb_deposit_type"]');
-        if( elemDeposit === null ) return;
+        if (elemDeposit === null) return;
 
         const amount = $('#deposit_room input[name="_hb_deposit_amount"]');
-        if( amount === null ) return
+        if (amount === null) return
 
         const type = elemDeposit.find('option:selected').val();
-        if ( type == 'percent' ) {
+        if (type == 'percent') {
             amount.attr('max', '100');
         } else {
             amount.attr('max', '10000000000');
         }
 
-        elemDeposit.on('change',function(e){
+        elemDeposit.on('change', function (e) {
             const type = $(this).find('option:selected').val();
-            if ( type == 'percent' ) {
+            if (type == 'percent') {
                 amount.attr('max', '100');
             } else {
                 amount.attr('max', '10000000000');
@@ -440,29 +440,28 @@
 
         //coupon post type
         const elemCoupon = $('#coupon_settings select[name="_hb_coupon_discount_type"]');
-        if( elemCoupon === null ) return;
+        if (elemCoupon === null) return;
 
         const amountCoupon = $('#coupon_settings input[name="_hb_coupon_discount_value"]');
-        if( amountCoupon === null ) return
+        if (amountCoupon === null) return
 
         const typeCoupon = elemDeposit.find('option:selected').val();
-        if ( typeCoupon == 'percent_cart' ) {
+        if (typeCoupon == 'percent_cart') {
             amountCoupon.attr('max', '100');
         } else {
             amountCoupon.attr('max', '10000000000');
         }
-        
-        elemCoupon.on('change',function(e){
+
+        elemCoupon.on('change', function (e) {
             const typeCoupon = $(this).find('option:selected').val();
-            if ( typeCoupon == 'percent_cart' ) {
+            if (typeCoupon == 'percent_cart') {
                 amountCoupon.attr('max', '100');
             } else {
                 amountCoupon.attr('max', '10000000000');
             }
         });
         //end coupon post type
-       
-            
+
 
         $('input[name="tp_hotel_booking_email_new_booking_enable"]').on('change _change', function () {
             var $siblings = $(this).closest('tr').siblings('.' + $(this).attr('name'));
@@ -511,34 +510,34 @@
             }
         });
 
-	    $(document).on('click', '#wphb-theme-override-templates .template-filter', function (event) {
-		    var $link = $(this),
-			    template = $link.data('template'),
-			    filter = $link.data('filter');
-		    if ($link.hasClass('current')) {
-			    return false;
-		    }
-		    $link.addClass('current').siblings('a').removeClass('current');
-		    var $templatesList = $('#wphb-theme-override-templates'),
-			    $templates = $templatesList.find('tr[data-template]');
+        $(document).on('click', '#wphb-theme-override-templates .template-filter', function (event) {
+            var $link = $(this),
+                template = $link.data('template'),
+                filter = $link.data('filter');
+            if ($link.hasClass('current')) {
+                return false;
+            }
+            $link.addClass('current').siblings('a').removeClass('current');
+            var $templatesList = $('#wphb-theme-override-templates'),
+                $templates = $templatesList.find('tr[data-template]');
 
-		    if (!template) {
-			    if (!filter) {
-				    $templates.removeClass('hide-if-js');
-			    } else {
-				    $templates.map(function () {
-					    $(this).toggleClass('hide-if-js', $(this).data('filter-' + filter) !== 'yes');
-				    })
-			    }
-		    } else {
-			    $templates.map(function () {
-				    $(this).toggleClass('hide-if-js', $(this).data('template') !== template);
-			    })
-		    }
+            if (!template) {
+                if (!filter) {
+                    $templates.removeClass('hide-if-js');
+                } else {
+                    $templates.map(function () {
+                        $(this).toggleClass('hide-if-js', $(this).data('filter-' + filter) !== 'yes');
+                    })
+                }
+            } else {
+                $templates.map(function () {
+                    $(this).toggleClass('hide-if-js', $(this).data('template') !== template);
+                })
+            }
 
-		    $('.no-templates').toggleClass('hide-if-js', !!$templatesList.find('tr.template-row:not(.hide-if-js):first').length);
-		    return false;
-	    });
+            $('.no-templates').toggleClass('hide-if-js', !!$templatesList.find('tr.template-row:not(.hide-if-js):first').length);
+            return false;
+        });
     }
 
     $doc.ready(_ready);
@@ -556,7 +555,7 @@
             _doc.on('change', '#booking-item-checkall', _self.toggle_checkbox)
             // add room
             _doc.on('click', '#add_room_item', _self.add_room_item)
-            // add coupon
+                // add coupon
                 .on('click', '#add_coupon', _self.add_coupon)
                 //remove coupon
                 .on('click', '#remove_coupon', _self.remove_coupon)
@@ -583,7 +582,7 @@
 
         update_item: function (e) {
             var _button = $('.form_footer button.hb_form_submit');
-             _button.removeAttr('disabled');
+            _button.removeAttr('disabled');
         },
         edit_customer: function (e) {
             e.preventDefault();
@@ -1022,16 +1021,269 @@
 // end modal box
 
 //sortable faq single room
-jQuery(document).ready(function($){
-    $( '._hb_room_faq_meta_box__fields' ).sortable( {
-		items: '._hb_room_faq_meta_box__field',
-		cursor: 'grab',
-		axis: 'y',
-		handle: '.sort',
-		scrollSensitivity: 40,
-		forcePlaceholderSize: true,
-		helper: 'clone',
-		opacity: 0.65,
-	} );
+jQuery(document).ready(function ($) {
+    $('._hb_room_faq_meta_box__fields').sortable({
+        items: '._hb_room_faq_meta_box__field',
+        cursor: 'grab',
+        axis: 'y',
+        handle: '.sort',
+        scrollSensitivity: 40,
+        forcePlaceholderSize: true,
+        helper: 'clone',
+        opacity: 0.65,
+    });
 });
-// 
+//
+
+jQuery(document).ready(function ($) {
+    const uploadImage = () => {
+        const {__} = wp.i18n;
+
+        document.addEventListener('click', function (event) {
+            const target = event.target;
+
+            if (!target.classList.contains('hb-image-add')) {
+                return;
+            }
+
+            event.preventDefault();
+            const mediaElNode = target.closest('.hb-image-info');
+
+
+            const hbUploader = wp.media({
+                title: __('Select Images', 'wp-hotel-booking'), button: {
+                    text: __('Use this image', 'wp-hotel-booking'),
+                },
+                multiple: false,
+                library: {
+                    type: 'image',
+                },
+            });
+
+            hbUploader.on('select', function () {
+                const selection = hbUploader.state().get('selection');
+                const attachment = selection.first().toJSON();
+
+                mediaElNode.querySelector('input[type=text]').value = attachment.url;
+                mediaElNode.querySelector('input[type=hidden]').value = attachment.id;
+                mediaElNode.querySelector('.hb-image-preview img').style.display = 'block';
+                mediaElNode.querySelector('.hb-image-preview img').src = attachment.url;
+            });
+            hbUploader.on('open', function () {
+                const selection = hbUploader.state().get('selection');
+
+                const id = mediaElNode.querySelector('input[type=hidden]').value;
+                const attachment = wp.media.attachment(id);
+                attachment.fetch();
+                selection.add(attachment ? [attachment] : []);
+            });
+
+            hbUploader.open();
+        });
+
+        document.addEventListener('click', function (event) {
+            const target = event.target;
+
+            if (!target.classList.contains('hb-image-remove')) {
+                return;
+            }
+            event.preventDefault();
+
+            const mediaElNode = target.closest('.hb-form-field-image');
+            mediaElNode.querySelector('input[type=text]').value = '';
+            mediaElNode.querySelector('input[type=hidden]').value = '';
+            mediaElNode.querySelector('.hb-image-preview img').style.display = 'none';
+        });
+    }
+
+    const reOrderElement = () => {
+        const facPanels = document.querySelectorAll('._hb_room_fac_panel');
+
+        [...facPanels].map((facPanel, index) => {
+            const facAttrPanels = facPanel.querySelectorAll('._hb_fac_attr_panel');
+
+            [...facAttrPanels].map(facAttrPanel => {
+                const label = facAttrPanel.querySelector('._hb_fac_attr_label input');
+                const image = facAttrPanel.querySelector('.hb-form-field-image .hb-image-control input[type="hidden"]');
+
+                label.name = label.name.replace(/(\d+)/, function ($el1, $el2) {
+                    return Number(index);
+                });
+
+                image.name = image.name.replace(/(\d+)/, function ($el1, $el2) {
+                    return Number(index);
+                });
+            });
+        });
+    }
+
+    const sortFacAttr  = () => {
+        $('._hb_room_fac_panel').sortable({
+            items: '._hb_fac_attr_panel',
+            cursor: 'grab',
+            axis: 'y',
+            handle: '._hb_fac_attr_panel_title',
+            scrollSensitivity: 40,
+            forcePlaceholderSize: true,
+            helper: 'clone',
+            opacity: 0.65,
+            stop: function (evt, ui) {
+                reOrderElement();
+            }
+        });
+    }
+
+    const facility = () => {
+        const facility = document.querySelector('#room_facilities');
+
+        if (!facility) {
+            return;
+        }
+
+        const facAddMoreBtn = facility.querySelector('._hb_room_fac_meta_box__add');
+        const facPanelAppend = facility.querySelector('.fac_append');
+
+        const facPanelAppendHTML = facPanelAppend.innerHTML;
+        facPanelAppend.remove();
+        sortFacAttr();
+
+        //Add more facility
+        facAddMoreBtn.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            facAddMoreBtn.insertAdjacentHTML('beforebegin', facPanelAppendHTML);
+            reOrderElement();
+            sortFacAttr();
+        });
+
+        //Remove and toggle facility panel
+        document.addEventListener('click', function (event) {
+            const target = event.target;
+
+            const panelRemove = target.closest('._hb_room_fac_panel_remove');
+            if (panelRemove) {
+                const facPanel = panelRemove.closest('._hb_room_fac_panel');
+                facPanel.remove();
+
+                reOrderElement();
+                return;
+            }
+
+            const panelTitle = target.closest('._hb_room_fac_panel_title');
+
+            if (panelTitle) {
+                $(target).closest('._hb_room_fac_panel').find('._hb_room_fac_panel_content').slideToggle();
+                const downIcon = panelTitle.querySelector('.dashicons-arrow-down-alt2');
+                if (downIcon) {
+                    downIcon.classList.remove('dashicons-arrow-down-alt2');
+                    downIcon.classList.add('dashicons-arrow-up-alt2');
+                } else {
+                    const upIcon = panelTitle.querySelector('.dashicons-arrow-up-alt2');
+                    upIcon.classList.remove('dashicons-arrow-up-alt2');
+                    upIcon.classList.add('dashicons-arrow-down-alt2');
+                }
+
+                return;
+            }
+        });
+
+        //sort facility panel
+        $('._hb_room_fac_panel_inner').sortable({
+            items: '._hb_room_fac_panel',
+            cursor: 'grab',
+            axis: 'y',
+            handle: '._hb_room_fac_panel_title',
+            scrollSensitivity: 40,
+            forcePlaceholderSize: true,
+            helper: 'clone',
+            opacity: 0.65,
+            stop: function (evt, ui) {
+                reOrderElement()
+            }
+        });
+
+        //Change Label input
+        document.addEventListener('input', function (event) {
+            const target = event.target;
+
+            if (target.name === '_hb_room_fac_label[]') {
+                const titleTextNode = target.closest('._hb_room_fac_panel').querySelector('._hb_room_fac_panel_title_text');
+
+                titleTextNode.innerHTML = target.value;
+            }
+        });
+    }
+
+    const facilityAttr = () => {
+        const facility = document.querySelector('#room_facilities');
+
+        if (!facility) {
+            return;
+        }
+
+        const facAttrPanelAppend = facility.querySelector('.fac_attr_append');
+        const facAttrPanelAppendHtml = facAttrPanelAppend.innerHTML;
+        facAttrPanelAppend.remove();
+
+        //Add more facility
+        document.addEventListener('click', function (event) {
+            const target = event.target;
+            if (target.classList.contains('_hb_fac_attr_meta_box__add')) {
+                event.preventDefault();
+                target.insertAdjacentHTML('beforebegin', facAttrPanelAppendHtml);
+
+                reOrderElement();
+                sortFacAttr();
+            }
+        });
+
+        //Remove and toggle facility panel
+        document.addEventListener('click', function (event) {
+
+            const target = event.target;
+            const panelRemove = target.closest('._hb_fac_panel_remove');
+            if (panelRemove) {
+                const facAttrPanel = panelRemove.closest('._hb_fac_attr_panel');
+                facAttrPanel.remove();
+
+                reOrderElement();
+                return;
+            }
+
+            const panelTitle = target.closest('._hb_fac_attr_panel_title');
+
+            if (panelTitle) {
+                $(target).closest('._hb_fac_attr_panel').find('._hb_fac_attr_panel_content').slideToggle();
+
+                const downIcon = panelTitle.querySelector('.dashicons-arrow-down-alt2');
+                if (downIcon) {
+                    downIcon.classList.remove('dashicons-arrow-down-alt2');
+                    downIcon.classList.add('dashicons-arrow-up-alt2');
+                } else {
+                    const upIcon = panelTitle.querySelector('.dashicons-arrow-up-alt2');
+                    upIcon.classList.remove('dashicons-arrow-up-alt2');
+                    upIcon.classList.add('dashicons-arrow-down-alt2');
+                }
+
+                return;
+            }
+        });
+
+
+        //Change Label input
+        document.addEventListener('input', function (event) {
+            const target = event.target;
+
+            if (target.name === '_hb_room_fac_attr_label[]') {
+                const titleTextNode = target.closest('._hb_fac_attr_panel').querySelector('._hb_fac_attr_panel_title_text');
+
+                titleTextNode.innerHTML = target.value;
+            }
+        });
+    }
+
+
+    facility();
+    facilityAttr()
+    uploadImage();
+});

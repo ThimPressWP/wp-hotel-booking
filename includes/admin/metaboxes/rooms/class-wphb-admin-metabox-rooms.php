@@ -76,6 +76,13 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 						'priority' => 70,
 						'content'  => $this->wphb_faq( $post_id ),
 					),
+					'room_facilities'     => array(
+						'label'    => esc_html__( 'Facilities', 'wp-hotel-booking' ),
+						'target'   => 'room_facilities',
+						'icon'     => 'dashicons-admin-generic',
+						'priority' => 80,
+						'content'  => $this->wphb_facilities( $post_id ),
+					),
 				)
 			);
 		}
@@ -85,6 +92,17 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 				'wpbh_meta_box_room_faq_fields',
 				array(
 					'_wphb_room_faq' => new WPHB_Admin_Metabox_Room_FAQ(),
+				)
+			);
+
+			return $tab_faq;
+		}
+
+		public function wphb_facilities( $post_id ) {
+			$tab_faq = apply_filters(
+				'wpbh_meta_box_room_facilities_fields',
+				array(
+					'_wphb_room_facilities' => new WPHB_Admin_Metabox_Room_Facilities()
 				)
 			);
 
