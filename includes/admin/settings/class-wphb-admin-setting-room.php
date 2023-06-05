@@ -101,6 +101,18 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 					),
 
 					array(
+						'type'    => 'select',
+						'id'      => 'tp_hotel_booking_reservation hold',
+						'title'   => __( 'Reservation Hold', 'wp-hotel-booking' ),
+						'options' => array(
+							'completed ' => __( 'Completed ', 'wp-hotel-booking' ),
+							'pending'    => __( 'Pending', 'wp-hotel-booking' ),
+							'processing'    => __( 'Processing', 'wp-hotel-booking' ),
+						),
+						'default' => 'completed',
+					),
+
+					array(
 						'id'      => 'tp_hotel_booking_room_image_gallery',
 						'type'    => 'image_size',
 						'default' => array(
@@ -144,7 +156,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 							'onchange' => "jQuery('.enable_ratings_on_reviews').toggleClass( 'hide-if-js', ! this.checked );",
 						),
 					),
-	
+
 					// do not use in plugin
 					// array(
 					// 	'id'      => 'tp_hotel_booking_review_rating_required',
@@ -153,7 +165,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 					// 	'default' => 1,
 					// 	'trclass' => array( 'enable_ratings_on_reviews' ),
 					// ),
-					
+
 					// do not use in plugin
 					// array(
 					// 	'id'      => 'tp_hotel_booking_enable_gallery_lightbox',
@@ -174,4 +186,5 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 	}
 
 }
+
 return new WPHB_Admin_Setting_Room();

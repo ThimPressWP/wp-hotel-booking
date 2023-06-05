@@ -39,7 +39,7 @@ class WPHB_Booking {
 	/**
 	 * @var int
 	 */
-	public $total     = 0;
+	public $total = 0;
 	public $sub_total = 0;
 	public $tax_total = 0;
 
@@ -271,19 +271,16 @@ class WPHB_Booking {
 			do_action( 'hb_booking_status_' . $old_status . '_to_' . $new_status, $this->id );
 			do_action( 'hb_booking_status_changed', $this->id, $old_status, $new_status );
 
-			switch ( $new_status ) {
+			$settings         = WPHB_Settings::instance();
+			$reservation_hold = $settings->get( 'reservation_hold', 'completed' );
 
-				case 'completed':
-					$payment_complete_date = get_post_meta( $this->post->ID, '_hb_booking_payment_completed', true );
-					if ( ! $payment_complete_date ) {
-						add_post_meta( $this->post->ID, '_hb_booking_payment_completed', current_time( 'mysql' ) );
-					} else {
-						update_post_meta( $this->post->ID, '_hb_booking_payment_completed', current_time( 'mysql' ) );
-					}
-					break;
-
-				case 'processing':
-					break;
+			if ( $reservation_hold === $new_status ) {
+				$payment_complete_date = get_post_meta( $this->post->ID, '_hb_booking_payment_completed', true );
+				if ( ! $payment_complete_date ) {
+					add_post_meta( $this->post->ID, '_hb_booking_payment_completed', current_time( 'mysql' ) );
+				} else {
+					update_post_meta( $this->post->ID, '_hb_booking_payment_completed', current_time( 'mysql' ) );
+				}
 			}
 		}
 	}

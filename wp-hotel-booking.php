@@ -93,7 +93,6 @@ class WP_Hotel_Booking {
 		add_filter( 'wpmu_drop_tables', array( $this, 'delete_blog_table' ) );
 
 		add_action( 'admin_init', array( $this, 'deactivate_plugins_old' ) );
-
 	}
 
 	public function init() {
