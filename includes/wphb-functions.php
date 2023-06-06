@@ -53,7 +53,7 @@ if ( ! function_exists( 'hb_get_max_capacity_of_rooms' ) ) {
 
 		$args      = array(
 			'post_type'      => 'hb_room',
-			'posts_per_page' => -1,
+			'posts_per_page' => - 1,
 		);
 		$the_query = new WP_Query( $args );
 
@@ -64,7 +64,7 @@ if ( ! function_exists( 'hb_get_max_capacity_of_rooms' ) ) {
 				if ( intval( $adult ) > $max ) {
 					$max = $adult;
 				}
-		endwhile;
+			endwhile;
 		endif;
 		wp_reset_postdata();
 
@@ -116,7 +116,7 @@ if ( ! function_exists( 'hb_get_min_capacity_of_rooms' ) ) {
 
 		$args      = array(
 			'post_type'      => 'hb_room',
-			'posts_per_page' => -1,
+			'posts_per_page' => - 1,
 		);
 		$the_query = new WP_Query( $args );
 
@@ -127,7 +127,7 @@ if ( ! function_exists( 'hb_get_min_capacity_of_rooms' ) ) {
 				if ( intval( $adult ) < $min ) {
 					$min = $adult;
 				}
-		endwhile;
+			endwhile;
 		endif;
 		wp_reset_postdata();
 
@@ -140,8 +140,6 @@ if ( ! function_exists( 'hb_get_min_capacity_of_rooms' ) ) {
 		return apply_filters( 'get_min_capacity_of_rooms', $min );
 	}
 }
-
-
 
 
 // if ( ! function_exists( 'hb_get_capacity_of_rooms' ) ) {
@@ -186,7 +184,7 @@ if ( ! function_exists( 'hb_get_capacity_of_rooms' ) ) {
 		$max_adult = $hb_settings->get( 'max_adults_all_room' );
 		$return    = array();
 		if ( $max_adult ) {
-			for ( $i = 1; $i <= $max_adult; $i++ ) {
+			for ( $i = 1; $i <= $max_adult; $i ++ ) {
 				$return[ $i ] = array(
 					'value' => $i,
 					'text'  => $i,
@@ -484,7 +482,7 @@ if ( ! function_exists( 'hb_dropdown_child_per_room' ) ) {
 		);
 		$max_child = hb_get_max_child_of_rooms();
 		$output    = '<select name="' . $args['name'] . '">';
-		$output   .= '<option value="0">' . __( 'Select', 'wp-hotel-booking' ) . '</option>';
+		$output    .= '<option value="0">' . __( 'Select', 'wp-hotel-booking' ) . '</option>';
 		if ( $max_child > 0 ) {
 			for ( $i = 1; $i <= $max_child; $i ++ ) {
 				$output .= sprintf( '<option value="%1$d"%2$s>%1$d</option>', $i, $args['selected'] == $i ? ' selected="selected"' : '' );
@@ -1018,7 +1016,7 @@ if ( ! function_exists( 'hb_date_time_format_js' ) ) {
 			case 'F j, Y':
 				$return = 'MM dd, yy';
 				break;
-				
+
 			case 'j F Y':
 				$return = 'dd MM yy';
 				break;
@@ -1435,6 +1433,7 @@ if ( ! function_exists( 'hb_get_currency_symbols' ) ) {
 				'ZMW' => 'ZK',
 			)
 		);
+
 		return $symbols;
 	}
 }
@@ -1486,12 +1485,12 @@ if ( ! function_exists( 'hb_format_price' ) ) {
 		}
 
 		$price_format = $before
-			. number_format(
-				$price,
-				$price_number_of_decimal,
-				$price_decimals_separator,
-				$price_thousands_separator
-			) . $after;
+		                . number_format(
+			                $price,
+			                $price_number_of_decimal,
+			                $price_decimals_separator,
+			                $price_thousands_separator
+		                ) . $after;
 
 		return apply_filters( 'hb_price_format', $price_format, $price, $with_currency );
 	}
@@ -1780,29 +1779,29 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 
 		if ( $search = $wpdb->get_results( $query ) ) {
 			$allow_checkout_date_blocked = get_option( 'tp_hotel_booking_allow_checkout_date_blocked' );
-			
+
 			foreach ( $search as $k => $p ) {
 				$blocked_id = get_post_meta( $p->ID, 'hb_blocked_id', true );
 				if ( ! empty( $blocked_id ) ) {
-					$flag = false;
+					$flag         = false;
 					$date_blocked = get_post_meta( $blocked_id, 'hb_blocked_time', false );
 					if ( ! empty( $date_blocked ) ) {
 						foreach ( $date_blocked as $date ) {
-							if ( $date >= $check_in_date_to_time && $date <= $check_out_date_to_time ){
+							if ( $date >= $check_in_date_to_time && $date <= $check_out_date_to_time ) {
 								$flag = true;
 								break;
 							}
 						}
 					}
 					if ( $flag ) {
-						if( ! $allow_checkout_date_blocked ) {
-							unset( $search[$k] );
+						if ( ! $allow_checkout_date_blocked ) {
+							unset( $search[ $k ] );
 							continue;
 						}
 					}
 				}
 
-				$room = WPHB_Room::instance(
+				$room                        = WPHB_Room::instance(
 					$p,
 					array(
 						'check_in_date'  => date( 'm/d/Y', $check_in_date_to_time ),
@@ -2007,7 +2006,8 @@ if ( ! function_exists( 'hb_get_bookings' ) ) {
 if ( ! function_exists( 'hb_maybe_modify_page_content' ) ) {
 	function hb_maybe_modify_page_content( $content ) {
 		global $post;
-		if ( is_page() && ( $post->ID == hb_get_page_id( 'search' ) || has_shortcode( $content, 'hotel_booking' ) ) ) {
+		if ( is_page() && ( $post->ID == hb_get_page_id( 'search' ) ||
+		                    ( has_shortcode( $content, 'hotel_booking' ) && has_shortcode( $content, 'hotel_booking_filter' ) ) ) ) {
 
 			// params search result
 			$page       = hb_get_request( 'hotel-booking' );
@@ -2017,6 +2017,7 @@ if ( ! function_exists( 'hb_maybe_modify_page_content' ) ) {
 			$max_child  = hb_get_request( 'max_child' );
 
 			$content = '[hotel_booking page="' . $page . '" check_in_date="' . $start_date . '" check_in_date="' . $end_date . '" adults="' . $adults . '" max_child="' . $max_child . '"]';
+			$content .= '[hotel_booking_filter]';
 		}
 
 		return $content;
@@ -2529,6 +2530,7 @@ if ( ! function_exists( 'hb_get_checkout_url' ) ) {
 		if ( $id ) {
 			$url = get_the_permalink( $id );
 		}
+
 		return apply_filters( 'hb_checkout_url', $url );
 	}
 }
@@ -2705,7 +2707,7 @@ if ( ! function_exists( 'wp_hote_booking_blocked_days' ) ) {
 					add_post_meta( $post_id, 'hb_blocked_id', $block_id );
 				}
 			}
-			$block_time = get_post_meta($block_id, 'hb_blocked_time', false);
+			$block_time = get_post_meta( $block_id, 'hb_blocked_time', false );
 			foreach ( $room_booked as $date => $count ) {
 				if ( $count <= 0 ) {
 					$data             = new stdClass();
@@ -2714,13 +2716,13 @@ if ( ! function_exists( 'wp_hote_booking_blocked_days' ) ) {
 					$data->selected   = $date;
 					$data->post_title = get_the_title( $post_id );
 					$results[]        = $data;
-					if( ! in_array( $date, $block_time ) ) {
+					if ( ! in_array( $date, $block_time ) ) {
 						add_post_meta( $block_id, 'hb_blocked_time', $date );
 					}
 				}
 			}
 		}
-		
+
 		// end compare
 
 		if ( is_array( $results ) && count( $results ) > 0 ) {
@@ -2746,7 +2748,7 @@ if ( ! function_exists( 'wp_hote_booking_blocked_days' ) ) {
 if ( ! function_exists( 'hotel_block_convert_current_time' ) ) {
 	/**
 	 * @param null $time
-	 * @param int  $gmt
+	 * @param int $gmt
 	 *
 	 * @return float|int|null
 	 */

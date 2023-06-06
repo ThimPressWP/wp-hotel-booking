@@ -561,6 +561,7 @@ if ( ! function_exists( 'hb_setup_shortcode_page_content' ) ) {
 			$content = '[' . apply_filters( 'hotel_booking_checkout_shortcode_tag', 'hotel_booking_checkout' ) . ']';
 		} elseif ( hb_get_page_id( 'search' ) == $page_id ) {
 			$content = '[' . apply_filters( 'hotel_booking_search_shortcode_tag', 'hotel_booking' ) . ']';
+			$content .= '[' . apply_filters( 'hotel_booking_search_filter_shortcode_tag', 'hotel_booking_filter' ) . ']';
 		} elseif ( hb_get_page_id( 'account' ) == $page_id ) {
 			$content = '[' . apply_filters( 'hotel_booking_account_shortcode_tag', 'hotel_booking_account' ) . ']';
 		} elseif ( hb_get_page_id( 'thankyou' ) == $page_id ) {
