@@ -2824,3 +2824,31 @@ if ( ! function_exists( 'tp_hotel_booking_pages_required' ) ) {
 		);
 	}
 }
+
+if ( ! function_exists( 'wp_hotel_booking_get_count_rating' ) ) {
+	function wp_hotel_booking_get_count_rating( $rating = 1 ) {
+		global $wpdb;
+
+		$post_tbl         = $wpdb->posts;
+		$comment_meta_tbl = $wpdb->commentmeta;
+
+		if ( $rating === 'unrated' ) {
+			$count = $wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT COUNT($post_tbl.ID) FROM $post_tbl WHERE $post_tbl.post_type='hb_room' 
+					AND $post_tbl.comment_count='0'",
+				)
+			);
+		} else {
+			$count = $wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT COUNT($comment_meta_tbl.comment_id) FROM $comment_meta_tbl WHERE $comment_meta_tbl.meta_key='rating' 
+					AND $comment_meta_tbl.meta_value='%s'",
+					$rating
+				)
+			);
+		}
+
+		return empty( $count ) ? 0 : $count;
+	}
+}
