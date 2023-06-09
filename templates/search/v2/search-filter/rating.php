@@ -4,14 +4,15 @@ if ( ! isset( $data ) ) {
 }
 ?>
     <div class="hb-rating-field">
-        <ul class="reating-list">
+        <h4><?php esc_html_e( ' Star rating', 'wp-hotel-booking' ); ?></h4>
+        <ul class="rating-list">
 			<?php
 			for ( $i = 1; $i <= 5; $i ++ ) {
 				?>
                 <li class="list-item">
                     <div class="rating">
                         <label>
-                            <input type="checkbox" name="rating" value="<?php echo esc_attr($i);?>">
+                            <input type="checkbox" name="rating" value="<?php echo esc_attr( $i ); ?>">
                             <span>
                                 <?php
                                 printf( esc_html( _n( '%s star', '%s stars', $i, 'wp-hotel-booking' ) ), $i );

@@ -3,7 +3,7 @@ if ( ! isset( $data ) ) {
 	return;
 }
 
-$args  = wp_parse_args(
+$args = wp_parse_args(
 	$data['number'],
 	array(
 		'hide_empty' => false,
@@ -19,14 +19,21 @@ if ( empty( $terms ) || is_wp_error( $terms ) ) {
 
 ?>
 <div class="hb-type-field">
-    <ul class="list">
+    <h4><?php esc_html_e( ' Room types', 'wp-hotel-booking' ); ?></h4>
+    <ul class="room-type-list">
 		<?php
 		foreach ( $terms as $term ) {
 			?>
             <li class="list-item">
-                <div><a href="<?php echo get_term_link( $term->term_id ); ?>"><?php echo esc_html( $term->name ); ?></a>
+                <div class="room-type">
+                    <label>
+                        <input type="checkbox" name="room_type" value="<?php echo esc_attr( $term->term_id ); ?>">
+                        <span><?php echo esc_html( $term->name ); ?></span>
+                    </label>
                 </div>
-                <div><?php echo esc_html( $term->count ); ?></div>
+                <div class="room-type-number">
+                    <a href="<?php echo get_term_link( $term->term_id ); ?>"><?php echo esc_html( $term->count ); ?></a>
+                </div>
             </li>
 			<?php
 		}

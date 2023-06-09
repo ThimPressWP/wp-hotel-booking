@@ -91,7 +91,7 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 				'min_price'      => $params['min_price'] ?? '',
 				'max_price'      => $params['max_price'] ?? '',
 				'rating'         => $params['rating'] ?? '',
-				'type'           => $params['type'] ?? ''
+				'room_type'      => $params['room_type'] ?? ''
 			);
 
 			$results = hb_search_rooms( $atts );

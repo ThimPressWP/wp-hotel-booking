@@ -1769,18 +1769,67 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 		$order_by = " ORDER BY rooms.post_title ASC";
 
 		if ( isset( $args['min_price'] ) && $args['max_price'] && $args['min_price'] !== '' && $args['max_price'] !== '' ) {
-			$sql.= $wpdb->prepare(
+			$sql .= $wpdb->prepare(
 				" LEFT JOIN {$wpdb->postmeta} AS pm4 ON pm4.post_id = rooms.ID AND pm4.meta_key = %s",
 				'hb_price'
 			);
 
-			$where.= $wpdb->prepare(
+			$where .= $wpdb->prepare(
 				" AND pm4.meta_value BETWEEN %d AND %d",
 				$args['min_price'],
 				$args['max_price']
 			);
 		}
 
+		if ( isset( $args['rating'] ) && $args['rating'] !== '' ) {
+			$rating       = explode( ',', $args['rating'] );
+			$unrate_index = array_search( 'unrated', $rating );
+
+			if ( $unrate_index !== false ) {
+				unset( $rating[ $unrate_index ] );
+				$rating = array_values( $rating );
+			}
+
+			$sql .= $wpdb->prepare(
+				" LEFT JOIN {$wpdb->comments} ON $wpdb->comments.comment_post_ID = rooms.ID
+						LEFT JOIN {$wpdb->commentmeta} ON $wpdb->comments.comment_ID = $wpdb->commentmeta.comment_id"
+			);
+
+			if ( count( $rating ) ) {
+				$rating = '"' . implode( '","', $rating ) . '"';
+
+				if ( $unrate_index === false ) {
+					$where .= $wpdb->prepare(
+						" AND $wpdb->commentmeta.meta_key = %s AND $wpdb->commentmeta.meta_value IN ($rating)",
+						'rating'
+					);
+				} else {
+					$where .= $wpdb->prepare(
+						" AND (($wpdb->commentmeta.meta_key = %s AND $wpdb->commentmeta.meta_value IN ($rating)) OR $wpdb->commentmeta.meta_key = %s IS NULL)",
+						'rating',
+							'rating'
+					);
+				}
+			} elseif ( $unrate_index !== false ) {
+				$where .= $wpdb->prepare(
+					" AND $wpdb->commentmeta.meta_key = %s IS NULL",
+					'rating',
+				);
+			}
+		}
+
+		if ( isset( $args['room_type'] ) && $args['room_type'] !== '' ) {
+			$roomType       = explode( ',', $args['room_type'] );
+			$roomType = '"' . implode( '","', $roomType ) . '"';
+			$sql .= $wpdb->prepare(
+				" LEFT JOIN 
+                            $wpdb->term_relationships ON rooms.ID = $wpdb->term_relationships.object_id"
+			);
+
+			$where .= $wpdb->prepare(
+				" AND $wpdb->term_relationships.term_taxonomy_id  IN ($roomType)"
+			);
+		}
 		$query = $sql . $where . $group_by . $order_by;
 
 		$query = apply_filters(

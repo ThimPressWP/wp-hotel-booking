@@ -2015,7 +2015,7 @@ input[type="submit"],
     #hotel-booking-cart td.hb_gross_total, #hotel-booking-payment td.hb_gross_total {
         width: auto;
     }
-    
+
 }
 
 @media (min-width: 768px) and (max-width: 992px) {
@@ -2851,7 +2851,7 @@ input[type="submit"],
     list-style: none;
     animation: wphb-skeleton-loading 1.4s ease infinite;
 }
-  
+
 @keyframes wphb-skeleton-loading {
     0% {
       background-position: 100% 50%;
@@ -2985,7 +2985,7 @@ button.wphb_loading::before {
     }
     #hotel_booking_room_hidden .hb_button{
         width: 100%;
-        
+
     }
     #hotel_booking_room_hidden .hb-booking-room-form-footer .hb_button{
         margin-bottom: 10px;
@@ -3037,4 +3037,42 @@ button.wphb_loading::before {
     margin: 0;
     max-width: 100%;
     padding: 15px;
+}
+
+#hotel-booking-search-filter{
+    padding: 35px;
+}
+
+button.apply{
+    font-size: 14px;
+    font-weight: 600;
+    padding: 5px 20px;
+}
+
+.hb-price-field, .hb-rating-field, .hb-type-field{
+    margin-top: 30px;
+}
+
+ul.rating-list, ul.room-type-list {
+    margin-top: 10px;
+    list-style: none;
+    padding: 0;
+}
+
+ul.rating-list li,  ul.room-type-list li {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+ul.rating-list li label,  ul.room-type-list li label{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+ul.rating-list li label span,  ul.room-type-list li label span{
+    margin-left: 10px;
 }

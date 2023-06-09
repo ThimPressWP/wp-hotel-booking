@@ -66,7 +66,7 @@ const requestSearchRoom = (forms, args, btn = false) => {
             }
 
             if (typeField) {
-                args.type = '';
+                args.room_type = '';
             }
         }
     }
@@ -114,9 +114,9 @@ const requestSearchRoom = (forms, args, btn = false) => {
         wrapperResult.innerHTML = '';
         const errorNode = document.querySelector('.wphb-message.error');
 
-        if(errorNode){
+        if (errorNode) {
             errorNode.innerHTML = error.message || 'Error: Query wphb/v1/rooms/search-room';
-        }else{
+        } else {
             wrapperResult.insertAdjacentHTML('beforeend', `<p class="wphb-message error" style="display:block">${error.message || 'Error: Query wphb/v1/rooms/search-room'}</p>`);
         }
     }).finally(() => {
@@ -446,10 +446,12 @@ const priceSlider = () => {
 
     const minPriceNode = priceField.querySelector('#hb-min-price');
     const maxPriceNode = priceField.querySelector('#hb-max-price');
+
+
     const priceSliderNode = priceField.querySelector('#hb-price-range');
 
-    const start = minPriceNode.value || minPrice;
-    const end = maxPriceNode.value || maxPrice;
+    const start = filterRooms.min_price || minPrice;
+    const end = filterRooms.max_price || maxPrice;
     step = parseInt(step);
 
     noUiSlider.create(priceSliderNode, {
@@ -468,8 +470,6 @@ const priceSlider = () => {
         maxPriceNode.value = parseInt(values[1]);
         priceField.querySelector('.min').innerHTML = values[0];
         priceField.querySelector('.max').innerHTML = values[1];
-
-
     });
 
     const applyBtn = priceField.querySelector('button.apply');
@@ -492,12 +492,86 @@ const priceSlider = () => {
     });
 }
 
+const rating = () => {
+    const ratingField = document.querySelector('.hb-rating-field');
+    if (!ratingField) {
+        return;
+    }
+
+    const allInputs = ratingField.querySelectorAll('input[type="checkbox"]');
+
+    const rating = filterRooms.rating || [];
+    [...rating].map(value => {
+        ratingField.querySelector(`input[name ="rating"][value ="${value}"]`).checked = true;
+    });
+
+    for (let i = 0; i < allInputs.length; i++) {
+        const input = allInputs[i];
+
+        input.addEventListener('change', function (event) {
+            const allCheckedInput = ratingField.querySelectorAll('input[type="checkbox"]:checked');
+
+            let value = [];
+            [...allCheckedInput].map(checkedInput => {
+                value.push(checkedInput.value);
+            });
+
+            filterRooms = {
+                ...filterRooms,
+                rating: value
+            };
+
+            window.localStorage.setItem('wphb_filter_rooms', JSON.stringify(filterRooms));
+
+            searchRoomsPages();
+        });
+    }
+}
+
+const roomType = () => {
+    const roomTypeField = document.querySelector('.hb-type-field');
+    if (!roomTypeField) {
+        return;
+    }
+
+    const allInputs = roomTypeField.querySelectorAll('input[type="checkbox"]');
+
+    const roomTypesValue = filterRooms.room_type || [];
+    [...roomTypesValue].map(value => {
+        roomTypeField.querySelector(`input[name ="room_type"][value ="${value}"]`).checked = true;
+    });
+
+    for (let i = 0; i < allInputs.length; i++) {
+        const input = allInputs[i];
+
+        input.addEventListener('change', function (event) {
+            const allCheckedInput = roomTypeField.querySelectorAll('input[type="checkbox"]:checked');
+
+            let value = [];
+            [...allCheckedInput].map(checkedInput => {
+                value.push(checkedInput.value);
+            });
+
+            filterRooms = {
+                ...filterRooms,
+                room_type: value
+            };
+
+            window.localStorage.setItem('wphb_filter_rooms', JSON.stringify(filterRooms));
+
+            searchRoomsPages();
+        });
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     searchRoomsPages();//use in page search room
     addExtraToCart();
     checkAvaliableRooms(); // use multi form search will redirect to page search room with data valid :
     processCheckout();
     priceSlider();
+    rating();
+    roomType();
 });
 
 
