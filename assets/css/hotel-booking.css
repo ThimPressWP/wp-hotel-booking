@@ -3071,6 +3071,7 @@ ul.rating-list li label,  ul.room-type-list li label{
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    margin-bottom: 0;
 }
 
 ul.rating-list li label span,  ul.room-type-list li label span{

@@ -276,6 +276,9 @@ class WP_Hotel_Booking {
 
 		//meta boxes
 		$this->_include( 'includes/class-wphb-meta-box.php' );
+
+        //template-hook
+		$this->_include( 'includes/template-hooks/class-wphb-search.php' );
 	}
 
 
