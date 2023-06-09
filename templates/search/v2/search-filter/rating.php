@@ -11,7 +11,7 @@ if ( ! isset( $data ) ) {
                 <li class="list-item">
                     <div class="rating">
                         <label>
-                            <input type="checkbox">
+                            <input type="checkbox" name="rating" value="<?php echo esc_attr($i);?>">
                             <span>
                                 <?php
                                 printf( esc_html( _n( '%s star', '%s stars', $i, 'wp-hotel-booking' ) ), $i );
@@ -29,7 +29,7 @@ if ( ! isset( $data ) ) {
             <li class="list-item unrated">
                 <div class="rating">
                     <label>
-                        <input type="checkbox">
+                        <input type="checkbox" name="rating" value="unrated">
                         <span><?php esc_html_e( 'Unrated', 'wp-hotel-booking' ); ?></span>
                     </label>
                 </div>

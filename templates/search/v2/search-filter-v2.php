@@ -7,8 +7,8 @@ $fields = apply_filters( 'hotel_booking/shortcode/search-filter-v2/field/fields'
 		'price'  => array(
 			'min_price' => $atts['min_price'] ?? 0,
 			'max_price' => $atts['max_price'] ?? 1500,
-			'min_value' => hb_get_request( 'min-price' ),
-			'max_value' => hb_get_request( 'max-price' )
+			'min_value' => hb_get_request( 'min_price' ),
+			'max_value' => hb_get_request( 'max_price' )
 		),
 		'rating' => array(
 			'value' => hb_get_request( 'rating' )

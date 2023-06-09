@@ -19,14 +19,14 @@ const searchRoomsPages = () => {
 
     const forms = document.querySelector('.wp-hotel-booking-search-rooms .hotel-booking-search form#hb-form-search-page');
 
-    if (forms === null) return;
+    if (forms === null) {
+        return;
+    }
 
     requestSearchRoom(forms, filterRooms);
-
 }
 
 const requestSearchRoom = (forms, args, btn = false) => {
-
     const skeleton = document.querySelector('.wp-hotel-booking-search-rooms .hotel-booking-search ul.wphb-skeleton-animation');
     const wrapperResult = document.querySelector('.wp-hotel-booking-search-rooms .hotel-booking-search .detail__booking-rooms');
     const wpRestUrl = hotel_settings.wphb_rest_url;
@@ -47,6 +47,28 @@ const requestSearchRoom = (forms, args, btn = false) => {
         args.adults = null;
         args.max_child = null;
         args.paged = 1;
+
+        //Filter - Price, rating, type
+        const searchFilter = document.querySelector('#hotel-booking-search-filter');
+
+        if (searchFilter) {
+            const priceField = searchFilter.querySelector('.hb-price-field');
+            const ratingField = searchFilter.querySelector('.hb-rating-field');
+            const typeField = searchFilter.querySelector('.hb-type-field');
+
+            if (priceField) {
+                args.min_price = '';
+                args.max_price = '';
+            }
+
+            if (ratingField) {
+                args.rating = '';
+            }
+
+            if (typeField) {
+                args.type = '';
+            }
+        }
     }
 
     const urlWphbSearch = wphbAddQueryArgs(wpRestUrl + 'wphb/v1/rooms/search-rooms', {...args});
@@ -89,7 +111,14 @@ const requestSearchRoom = (forms, args, btn = false) => {
         }
 
     }).catch((error) => {
-        wrapperResult.insertAdjacentHTML('beforeend', `<p class="wphb-message error" style="display:block">${error.message || 'Error: Query wphb/v1/rooms/search-room'}</p>`);
+        wrapperResult.innerHTML = '';
+        const errorNode = document.querySelector('.wphb-message.error');
+
+        if(errorNode){
+            errorNode.innerHTML = error.message || 'Error: Query wphb/v1/rooms/search-room';
+        }else{
+            wrapperResult.insertAdjacentHTML('beforeend', `<p class="wphb-message error" style="display:block">${error.message || 'Error: Query wphb/v1/rooms/search-room'}</p>`);
+        }
     }).finally(() => {
         skeleton.style.display = 'none';
         // Save filter courses to Storage
@@ -146,18 +175,18 @@ const formSearchRooms = (forms, skeleton, wrapperResult) => {
         wrapperResult.innerHTML = '';
         skeleton.style.display = 'block';
 
-        const data = {
+        filterRooms = {
+            ...filterRooms,
             check_in_date: checkinDate,
             check_out_date: checkoutDate,
             adults: countAdults,
             max_child: maxChild,
-            paged: paged,
-        }
+            paged: paged
+        };
 
-        window.localStorage.setItem('wphb_filter_rooms', JSON.stringify(data));
+        window.localStorage.setItem('wphb_filter_rooms', JSON.stringify(filterRooms));
 
-        requestSearchRoom(forms, data, btn);
-
+        requestSearchRoom(forms, filterRooms, btn);
     });
 }
 const wphbPaginationRoom = (forms, skeleton, wrapperResult) => {
@@ -411,35 +440,56 @@ const priceSlider = () => {
     const maxPrice = priceField.getAttribute('data-max');
     let step = priceField.getAttribute('data-step');
 
-    if ( minPrice === '' || maxPrice === '' || step === '' ) {
+    if (minPrice === '' || maxPrice === '' || step === '') {
         return;
     }
 
-    const minPriceNode = priceField.querySelector( '#hb-min-price' );
-    const maxPriceNode = priceField.querySelector( '#hb-max-price' );
-    const priceSliderNode = priceField.querySelector( '#hb-price-range' );
+    const minPriceNode = priceField.querySelector('#hb-min-price');
+    const maxPriceNode = priceField.querySelector('#hb-max-price');
+    const priceSliderNode = priceField.querySelector('#hb-price-range');
 
     const start = minPriceNode.value || minPrice;
     const end = maxPriceNode.value || maxPrice;
-    step = parseInt( step );
+    step = parseInt(step);
 
-    noUiSlider.create( priceSliderNode, {
-        start: [ parseInt( start ), parseInt( end ) ],
+    noUiSlider.create(priceSliderNode, {
+        start: [parseInt(start), parseInt(end)],
         connect: true,
         step,
         tooltips: false,
         range: {
-            min: parseInt( minPrice ), max: parseInt( maxPrice ),
+            min: parseInt(minPrice), max: parseInt(maxPrice),
         },
         // direction: 'lt',
-    } );
+    });
 
-    priceSliderNode.noUiSlider.on( 'update', function( values, handle, unencoded ) {
-        minPriceNode.value = parseInt( values[ 0 ] );
-        maxPriceNode.value = parseInt( values[ 1 ] );
-        priceField.querySelector( '.min' ).innerHTML = values[ 0 ];
-        priceField.querySelector( '.max' ).innerHTML = values[ 1 ];
-    } );
+    priceSliderNode.noUiSlider.on('update', function (values, handle, unencoded) {
+        minPriceNode.value = parseInt(values[0]);
+        maxPriceNode.value = parseInt(values[1]);
+        priceField.querySelector('.min').innerHTML = values[0];
+        priceField.querySelector('.max').innerHTML = values[1];
+
+
+    });
+
+    const applyBtn = priceField.querySelector('button.apply');
+
+    //apply btn click event
+    applyBtn.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        const minPrice = minPriceNode.value;
+        const maxPrice = maxPriceNode.value;
+        filterRooms = {
+            ...filterRooms,
+            min_price: parseInt(minPrice),
+            max_price: parseInt(maxPrice)
+        };
+
+        window.localStorage.setItem('wphb_filter_rooms', JSON.stringify(filterRooms));
+
+        searchRoomsPages();
+    });
 }
 
 document.addEventListener('DOMContentLoaded', () => {

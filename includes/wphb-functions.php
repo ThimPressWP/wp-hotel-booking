@@ -1742,29 +1742,46 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 			'hb-pending'
 		);
 
-		$query = $wpdb->prepare(
+		$sql = $wpdb->prepare(
 			"
 			SELECT rooms.*, ( number.meta_value - {$not} ) AS available_rooms FROM $wpdb->posts AS rooms
                                 LEFT JOIN {$wpdb->postmeta} AS number ON rooms.ID = number.post_id AND number.meta_key = %s
 				LEFT JOIN {$wpdb->postmeta} AS pm2 ON pm2.post_id = rooms.ID AND pm2.meta_key = %s
-				LEFT JOIN {$wpdb->postmeta} AS pm3 ON pm3.post_id = rooms.ID AND pm3.meta_key = %s
-			WHERE
-				rooms.post_type = %s
-				AND rooms.post_status = %s
-				AND pm2.meta_value >= %d
-				AND pm3.meta_value >= %d
-			GROUP BY rooms.post_name
-			HAVING available_rooms > 0
-			ORDER BY rooms.post_title ASC
-		",
+				LEFT JOIN {$wpdb->postmeta} AS pm3 ON pm3.post_id = rooms.ID AND pm3.meta_key = %s",
 			'_hb_num_of_rooms',
 			'_hb_max_child_per_room',
 			'_hb_room_capacity_adult',
+		);
+
+		$where = $wpdb->prepare(
+			" WHERE
+				rooms.post_type = %s
+				AND rooms.post_status = %s
+				AND pm2.meta_value >= %d
+				AND pm3.meta_value >= %d",
 			'hb_room',
 			'publish',
 			$max_child,
 			$adults
 		);
+
+		$group_by = " GROUP BY rooms.post_name HAVING available_rooms > 0";
+		$order_by = " ORDER BY rooms.post_title ASC";
+
+		if ( isset( $args['min_price'] ) && $args['max_price'] && $args['min_price'] !== '' && $args['max_price'] !== '' ) {
+			$sql.= $wpdb->prepare(
+				" LEFT JOIN {$wpdb->postmeta} AS pm4 ON pm4.post_id = rooms.ID AND pm4.meta_key = %s",
+				'hb_price'
+			);
+
+			$where.= $wpdb->prepare(
+				" AND pm4.meta_value BETWEEN %d AND %d",
+				$args['min_price'],
+				$args['max_price']
+			);
+		}
+
+		$query = $sql . $where . $group_by . $order_by;
 
 		$query = apply_filters(
 			'hb_search_query',
@@ -2835,14 +2852,14 @@ if ( ! function_exists( 'wp_hotel_booking_get_count_rating' ) ) {
 		if ( $rating === 'unrated' ) {
 			$count = $wpdb->get_var(
 				$wpdb->prepare(
-					"SELECT COUNT($post_tbl.ID) FROM $post_tbl WHERE $post_tbl.post_type='hb_room' 
+					"SELECT COUNT($post_tbl.ID) FROM $post_tbl WHERE $post_tbl.post_type='hb_room'
 					AND $post_tbl.comment_count='0'",
 				)
 			);
 		} else {
 			$count = $wpdb->get_var(
 				$wpdb->prepare(
-					"SELECT COUNT($comment_meta_tbl.comment_id) FROM $comment_meta_tbl WHERE $comment_meta_tbl.meta_key='rating' 
+					"SELECT COUNT($comment_meta_tbl.comment_id) FROM $comment_meta_tbl WHERE $comment_meta_tbl.meta_key='rating'
 					AND $comment_meta_tbl.meta_value='%s'",
 					$rating
 				)
