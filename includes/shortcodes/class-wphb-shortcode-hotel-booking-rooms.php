@@ -43,6 +43,22 @@ class WPHB_Shortcode_Hotel_Booking_Rooms extends WPHB_Shortcodes {
 			'post_status'    => 'publish',
 		);
 
+		$sort_by = hb_get_request( 'sort_by' );
+		if ( $sort_by ) {
+			if ( $sort_by === 'date-desc' ) {
+				$args['orderby'] = 'date';
+				$args['order']   = 'DESC';
+			} elseif ( $sort_by === 'date-asc' ) {
+				$args['orderby'] = 'date';
+				$args['order']   = 'ASC';
+			} elseif ( $sort_by === 'title-asc' ) {
+				$args['orderby'] = 'title';
+				$args['order']   = 'ASC';
+			} elseif ( $sort_by === 'title-desc' ) {
+				$args['orderby'] = 'title';
+				$args['order']   = 'DESC';
+			}
+		}
 		if ( isset( $atts['room_type'] ) && $atts['room_type'] ) {
 			$args['tax_query'] = array(
 				array(
@@ -63,31 +79,46 @@ class WPHB_Shortcode_Hotel_Booking_Rooms extends WPHB_Shortcodes {
 
 		/* remove action */
 		remove_action( 'pre_get_posts', 'hotel_booking_num_room_archive', 999 );
+
 		$query = new WP_Query( $args );
 
 		ob_start();
-		if ( $query->have_posts() ) :
-			hotel_booking_room_loop_start();
+		?>
+        <div class="container">
+			<?php
+			$data = array(
+				'sort_by' => hb_get_request( 'sort_by' )
+			);
 
-			while ( $query->have_posts() ) :
-				$query->the_post();
+			$room_number = $query->post_count;
+			if ( $room_number ) {
+				$data['show_number'] = sprintf( esc_html__( 'Show 1 - %1s of %2s' ), $room_number, $room_number );
 
-				hb_get_template_part( 'content', 'room' );
+			}
 
-			endwhile; // end of the loop.
+			hb_get_template( 'search/v2/sort-by.php', compact( 'data' ) );
+			if ( $query->have_posts() ) :
+				hotel_booking_room_loop_start();
 
-			hotel_booking_room_loop_end();
-		else :
+				while ( $query->have_posts() ) :
+					$query->the_post();
 
-			_e( 'No room found', 'wp-hotel-booking' );
+					hb_get_template_part( 'content', 'room' );
 
-		endif;
-		wp_reset_postdata();
-		/* add action again */
-		add_action( 'pre_get_posts', 'hotel_booking_num_room_archive', 999 );
+				endwhile; // end of the loop.
+
+				hotel_booking_room_loop_end();
+			else :
+				_e( 'No room found', 'wp-hotel-booking' );
+			endif;
+			wp_reset_postdata();
+			/* add action again */
+			add_action( 'pre_get_posts', 'hotel_booking_num_room_archive', 999 );
+			?>
+        </div>
+		<?php
 		return ob_get_clean();
 	}
-
 }
 
 new WPHB_Shortcode_Hotel_Booking_Rooms();

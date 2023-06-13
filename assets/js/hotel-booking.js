@@ -1,4 +1,3 @@
-;
 (function ($) {
 	var $doc = $(document);
 
@@ -978,7 +977,7 @@
 				window.alert(hotel_booking_i18n.review_content_required);
 				return false;
 			}
-            
+
 			$(this).submit();
 		});
 	});

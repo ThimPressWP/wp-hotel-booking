@@ -277,7 +277,7 @@ class WP_Hotel_Booking {
 		//meta boxes
 		$this->_include( 'includes/class-wphb-meta-box.php' );
 
-        //template-hook
+		//template-hook
 		$this->_include( 'includes/template-hooks/class-wphb-search.php' );
 	}
 
@@ -392,7 +392,7 @@ class WP_Hotel_Booking {
 		// dropdown pages
 		wp_register_script( 'wphb-dropdown-pages', $this->plugin_url( 'assets/js/admin/dropdown-pages.js' ) );
 
-        //nouiSlider
+		//nouiSlider
 		wp_register_script( 'wphb-ui-slider', $this->plugin_url( 'assets/lib/slider/nouislider.min.js' ) );
 
 		if ( is_admin() ) {
@@ -422,6 +422,8 @@ class WP_Hotel_Booking {
 				wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.css' ), array(), $v_rand );
 				wp_register_script( 'wp-hotel-booking', $this->plugin_url( 'assets/js/hotel-booking.js' ), $dependencies, $v_rand, true );
 				wp_register_script( 'wp-hotel-booking-v2', $this->plugin_url( 'assets/js/hotel-booking-v2.js' ), $dependencies, $v_rand, true );
+				wp_register_script( 'wp-hotel-booking-sort-by', $this->plugin_url( 'assets/js/frontend/sort-by.js' ), array(), $v_rand, true );
+				wp_register_script( 'wp-hotel-booking-hotel-room', $this->plugin_url( 'assets/js/frontend/hotel-room.js' ), array(), $v_rand, true );
 			} else {
 				wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.min.css' ), array(), WPHB_VERSION );
 				wp_register_script( 'wp-hotel-booking', $this->plugin_url( 'assets/js/hotel-booking.min.js' ), $dependencies, WPHB_VERSION, true );
@@ -458,10 +460,13 @@ class WP_Hotel_Booking {
 			wp_enqueue_script( 'wp-admin-hotel-booking-fullcalendar' );
 
 		} else {
-            wp_enqueue_style('wphb-ui-slider');
+			wp_enqueue_style( 'wphb-ui-slider' );
 			wp_enqueue_style( 'wp-hotel-booking' );
 			wp_enqueue_script( 'wp-hotel-booking' );
 			wp_enqueue_script( 'wp-hotel-booking-v2' );
+			wp_enqueue_script( 'wp-hotel-booking-sort-by' );
+			wp_enqueue_script( 'wp-hotel-booking-hotel-room' );
+
 
 			// rooms slider widget
 			wp_enqueue_script( 'wp-hotel-booking-owl-carousel' );
