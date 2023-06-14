@@ -5,7 +5,6 @@ const roomSortBy = () => {
         return;
     }
 
-    const showNumber = sortByWrapper.querySelector('.show-number');
     const toggle = sortByWrapper.querySelector('.toggle');
     const list = sortByWrapper.querySelector('ul');
     const listOptions = list.querySelectorAll('li');

@@ -1807,7 +1807,7 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 					$where .= $wpdb->prepare(
 						" AND (($wpdb->commentmeta.meta_key = %s AND $wpdb->commentmeta.meta_value IN ($rating)) OR $wpdb->commentmeta.meta_key = %s IS NULL)",
 						'rating',
-							'rating'
+						'rating'
 					);
 				}
 			} elseif ( $unrate_index !== false ) {
@@ -1819,9 +1819,9 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 		}
 
 		if ( isset( $args['room_type'] ) && $args['room_type'] !== '' ) {
-			$roomType       = explode( ',', $args['room_type'] );
+			$roomType = explode( ',', $args['room_type'] );
 			$roomType = '"' . implode( '","', $roomType ) . '"';
-			$sql .= $wpdb->prepare(
+			$sql      .= $wpdb->prepare(
 				" LEFT JOIN 
                             $wpdb->term_relationships ON rooms.ID = $wpdb->term_relationships.object_id"
 			);
@@ -1830,6 +1830,16 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 				" AND $wpdb->term_relationships.term_taxonomy_id  IN ($roomType)"
 			);
 		}
+
+
+		if ( $args['sort_by'] === 'date-desc' ) {
+			$order_by = " ORDER BY rooms.post_date DESC";
+		} elseif ( $args['sort_by'] === 'date-asc' ) {
+			$order_by = " ORDER BY rooms.post_date ASC";
+		} elseif ( $args['sort_by'] === 'title-desc' ) {
+			$order_by = " ORDER BY rooms.post_title DESC";
+		}
+
 		$query = $sql . $where . $group_by . $order_by;
 
 		$query = apply_filters(

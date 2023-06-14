@@ -29,6 +29,7 @@ const searchRoomsPages = () => {
 const requestSearchRoom = (forms, args, btn = false) => {
     const skeleton = document.querySelector('.wp-hotel-booking-search-rooms .hotel-booking-search ul.wphb-skeleton-animation');
     const wrapperResult = document.querySelector('.wp-hotel-booking-search-rooms .hotel-booking-search .detail__booking-rooms');
+    const showNumber = document.querySelector('.wp-hotel-booking-search-rooms .sort-by-wrapper .show-number');
     const wpRestUrl = hotel_settings.wphb_rest_url;
 
     if (!wpRestUrl) {
@@ -98,6 +99,9 @@ const requestSearchRoom = (forms, args, btn = false) => {
         }
         wrapperResult.style.display = 'block';
         wrapperResult.innerHTML = data.content;
+        if(showNumber){
+            showNumber.innerHTML = data.show_number;
+        }
         const pagination = data.pagination;
 
         if (typeof pagination !== 'undefined') {
@@ -240,8 +244,6 @@ const bookingRoomsPages = (formsCheck) => {
                     extraData.push({extraID, qty});
                 }
             }
-            ;
-
         });
 
         try {
@@ -564,6 +566,39 @@ const roomType = () => {
     }
 }
 
+const sortBy = () => {
+    const sortByWrapper = document.querySelector('.sort-by-wrapper');
+    if (!sortByWrapper) {
+        return;
+    }
+
+    const sortBy = filterRooms.sort_by || '';
+    const listOptions = sortByWrapper.querySelectorAll('ul li');
+    const toggle = sortByWrapper.querySelector('.toggle');
+
+    [...listOptions].map(element => {
+        if (element.getAttribute('data-value') === sortBy) {
+            toggle.innerHTML = element.innerHTML;
+            element.classList.add('active');
+        } else {
+            element.classList.remove('active');
+        }
+
+        element.addEventListener('click', function (event) {
+            const value = element.getAttribute('data-value');
+
+            filterRooms = {
+                ...filterRooms,
+                'sort_by': value
+            };
+
+            window.localStorage.setItem('wphb_filter_rooms', JSON.stringify(filterRooms));
+
+            searchRoomsPages();
+        });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     searchRoomsPages();//use in page search room
     addExtraToCart();
@@ -572,6 +607,7 @@ document.addEventListener('DOMContentLoaded', () => {
     priceSlider();
     rating();
     roomType();
+    sortBy();
 });
 
 

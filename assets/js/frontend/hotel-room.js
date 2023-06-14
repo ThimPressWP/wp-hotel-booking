@@ -5,6 +5,12 @@ const hotelRoom = () => {
         return;
     }
 
+    const formSearch = document.querySelector('#hb-form-search-page');
+
+    if (formSearch) {
+        return;
+    }
+
     const list = sortByWrapper.querySelector('ul');
     const listOptions = list.querySelectorAll('li');
 

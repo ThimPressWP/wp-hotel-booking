@@ -22,7 +22,6 @@ $uniqid         = uniqid();
 $page_search    = hb_get_page_id( 'search' );
 
 ?>
-
 <div id="hotel-booking-search-<?php echo uniqid(); ?>" class="hotel-booking-search">
 	<?php
 	// display title widget or shortcode
@@ -108,6 +107,10 @@ $page_search    = hb_get_page_id( 'search' );
 			<button type="submit" class="wphb-button"><?php _e( 'Check Availability', 'wp-hotel-booking' ); ?></button>
 		</p>
 	</form>
+    <?php
+    $data = array();
+    hb_get_template( 'search/v2/sort-by.php', compact( 'data' ) );
+    ?>
 	<?php
 	if ( is_page( $page_search ) ) :
 		?>
