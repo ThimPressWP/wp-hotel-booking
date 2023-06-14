@@ -50,7 +50,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
-			// add_filter( 'pre_get_posts', array( $this, 'filter_post_type' ) );
+			add_action( 'pre_get_posts', array( $this, 'set_order' ) );
 
 			add_filter( 'posts_fields', array( $this, 'posts_fields' ) );
 			add_filter( 'posts_join_paged', array( $this, 'posts_join_paged' ) );
@@ -66,6 +66,28 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 			// update sortable columns
 			add_filter( 'manage_edit-hb_booking_sortable_columns', array( $this, 'sortable_columns' ) );
+		}
+
+		public function set_order( $query ) {
+			if ( ! is_post_type_archive( 'hb_room' ) && ! is_room_taxonomy() ) {
+				return;
+			}
+
+			$sort_by = hb_get_request( 'sort_by' );
+
+			if ( $sort_by === 'date-desc' ) {
+				$query->set( 'orderby', 'date' );
+				$query->set( 'order', 'DESC' );
+			} elseif ( $sort_by === 'date-asc' ) {
+				$query->set( 'orderby', 'date' );
+				$query->set( 'order', 'ASC' );
+			} elseif ( $sort_by === 'title-asc' ) {
+				$query->set( 'orderby', 'title' );
+				$query->set( 'order', 'ASC' );
+			} elseif ( $sort_by === 'title-desc' ) {
+				$query->set( 'orderby', 'title' );
+				$query->set( 'order', 'DESC' );
+			}
 		}
 
 		/**
@@ -420,12 +442,12 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 					// $cap    = get_term( $cap_id, 'hb_room_capacity' );
 
 					// if ( $cap && isset( $cap->name ) ) {
-						// printf( '%s (%s)', $type->name, $cap->name );
-						$room_types = array();
+					// printf( '%s (%s)', $type->name, $cap->name );
+					$room_types = array();
 					foreach ( $terms as $key => $term ) {
 						$room_types[] = $term->name;
 					}
-						printf( '%s', implode( ', ', $room_types ) );
+					printf( '%s', implode( ', ', $room_types ) );
 					// }
 					break;
 				case 'room_capacity':
@@ -456,19 +478,19 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		public function update_taxonomy() {
 
 			if ( ! empty( $_REQUEST['action'] ) && in_array(
-				hb_get_request( 'taxonomy' ),
-				array(
-					'hb_room_type',
-					'hb_room_capacity',
+					hb_get_request( 'taxonomy' ),
+					array(
+						'hb_room_type',
+						'hb_room_capacity',
+					)
 				)
-			)
 			) {
 				$taxonomy = ! empty( $_REQUEST['taxonomy'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['taxonomy'] ) ) : '';
 				global $wpdb;
-				if ( ! empty( $_POST[ "{$taxonomy}_ordering" ] ) ) {
+				if ( ! empty( $_POST["{$taxonomy}_ordering"] ) ) {
 					$when = array();
 					$ids  = array();
-					foreach ( $_POST[ "{$taxonomy}_ordering" ] as $term_id => $ordering ) {
+					foreach ( $_POST["{$taxonomy}_ordering"] as $term_id => $ordering ) {
 						$term_id  = sanitize_text_field( wp_unslash( $term_id ) );
 						$ordering = sanitize_text_field( wp_unslash( $ordering ) );
 
@@ -490,8 +512,8 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 					$wpdb->query( $query );
 				}
 
-				if ( ! empty( $_POST[ "{$taxonomy}_capacity" ] ) ) {
-					foreach ( (array) $_POST[ "{$taxonomy}_capacity" ] as $term_id => $capacity ) {
+				if ( ! empty( $_POST["{$taxonomy}_capacity"] ) ) {
+					foreach ( (array) $_POST["{$taxonomy}_capacity"] as $term_id => $capacity ) {
 						if ( $capacity ) {
 							// update_option( 'hb_taxonomy_capacity_' . $term_id, $capacity );
 							update_term_meta( $term_id, 'hb_max_number_of_adults', absint( sanitize_text_field( $capacity ) ) );

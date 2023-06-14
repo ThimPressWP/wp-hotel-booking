@@ -26,7 +26,7 @@ do_action( 'wphb/sort-by/wrapper/before' );
         </div>
 
         <div class="sort-by">
-            <span class="sort-by__label"><?php esc_html_e( 'Sort By:', 'wp-hotel-booking' ); ?></span>
+            <span class="sort-by__label"><?php esc_html_e( 'Sort By :', 'wp-hotel-booking' ); ?></span>
             <div class="select">
                 <div class="toggle">
 					<?php

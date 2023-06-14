@@ -84,16 +84,21 @@ class WPHB_Shortcode_Hotel_Booking_Rooms extends WPHB_Shortcodes {
 
 		ob_start();
 		?>
-        <div class="container">
+        <div class="container room-container">
 			<?php
 			$data = array(
-				'sort_by' => hb_get_request( 'sort_by' )
+				'sort_by' => $sort_by
 			);
 
-			$room_number = $query->post_count;
-			if ( $room_number ) {
-				$data['show_number'] = sprintf( esc_html__( 'Show 1 - %1s of %2s' ), $room_number, $room_number );
 
+			if ( $query->post_count ) {
+				$data['show_number'] = hb_get_show_room_text(
+					array(
+						'total'         => $query->post_count,
+						'paged'         => 1,
+						'item_per_page' => $query->post_count
+					)
+				);
 			}
 
 			hb_get_template( 'search/v2/sort-by.php', compact( 'data' ) );

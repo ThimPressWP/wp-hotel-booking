@@ -3115,7 +3115,6 @@ ul.rating-list li label span, ul.room-type-list li label span {
     margin-left: 10px;
 }
 
-
 /*sort by*/
 div.sort-by-wrapper, .sort-by-wrapper .sort-by {
     display: flex;
@@ -3126,6 +3125,7 @@ div.sort-by-wrapper, .sort-by-wrapper .sort-by {
 
 .sort-by-wrapper {
     margin-bottom: 30px;
+    padding: 0 15px;
 }
 
 .sort-by-wrapper .sort-by__label {
@@ -3182,3 +3182,9 @@ div.sort-by-wrapper, .sort-by-wrapper .sort-by {
 .sort-by-wrapper li:hover {
     cursor: pointer;
 }
+
+/*Container*/
+.room-container {
+    margin: 0 auto;
+}
+
