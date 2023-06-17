@@ -74,6 +74,23 @@ class WPHB_Install {
 
 		// set booking received endpoint transient
 		set_transient( 'wphb_booking_received_endpoint', 1, 60 );
+
+		//Require update database if not
+		$flag = get_option( 'hotel_booking_update_meta_field_rooms', 0 );
+
+		if ( empty( $flag ) ) {
+			$args  = array(
+				'post_type'      => 'hb_room',
+				'posts_per_page' => 1,
+			);
+			$query = new WP_Query( $args );
+
+			if ( ! $query->have_posts() ) {
+				update_option( 'hotel_booking_update_meta_field_rooms', 1 );
+			}
+
+			wp_reset_postdata();
+		}
 	}
 
 	static function uninstall() {
@@ -175,7 +192,7 @@ class WPHB_Install {
 				'name'    => _x( 'hotel-search1111', 'Page Slug', 'wp-hotel-booking' ),
 				'title'   => _x( 'Hotel Booking Search', 'Page Title', 'wp-hotel-booking' ),
 				'content' => '[' . apply_filters( 'hotel_booking_search_shortcode_tag', 'hotel_booking' ) . ']'
-							.'[' . apply_filters( 'hotel_booking_search_filter_shortcode_tag', 'hotel_booking_filter' ) . ']',
+				             . '[' . apply_filters( 'hotel_booking_search_filter_shortcode_tag', 'hotel_booking_filter' ) . ']',
 			);
 		}
 
