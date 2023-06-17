@@ -66,7 +66,7 @@ if ( ! function_exists( 'hb_room_set_pricing_plan' ) ) {
 	/**
 	 * hb_room_set_pricing_plan set new pricing plans
 	 *
-	 * @param  array $args
+	 * @param array $args
 	 *
 	 * @start_time
 	 * @end_time
@@ -137,6 +137,7 @@ if ( ! function_exists( 'hb_room_get_selected_plan' ) ) {
 		$selected_plan = null;
 
 		$plans = hb_room_get_pricing_plans( $room_id );
+
 		if ( $plans ) {
 			foreach ( $plans as $plan ) {
 				if ( $plan->start && $plan->end ) {
@@ -152,6 +153,12 @@ if ( ! function_exists( 'hb_room_get_selected_plan' ) ) {
 				}
 			}
 		}
+//		echo '<pre>';
+//		print_r( $plans );
+//		echo '</pre>';
+//		echo '<pre>';
+//		print_r( $selected_plan );
+//		echo '</pre>';
 
 		return apply_filters( 'hb_room_get_selected_plan', $selected_plan );
 	}
@@ -235,3 +242,20 @@ if ( ! function_exists( 'hotel_booking_print_pricing_json' ) ) {
 		return json_encode( $json );
 	}
 }
+
+if ( ! function_exists( 'hb_room_update_room_price_meta' ) ) {
+	function hb_room_update_room_price_meta( $room_id = null ) {
+		if ( $room_id === null ) {
+			return;
+		}
+
+		$price     = WPHB_Room::instance( $room_id )->get_price();
+
+		$old_price = get_post_meta( $room_id, 'hb_price', true );
+
+		if ( $price !== $old_price ) {
+			update_post_meta( $room_id, 'hb_price', $price );
+		}
+	}
+}
+

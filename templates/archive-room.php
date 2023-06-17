@@ -15,7 +15,7 @@
 defined( 'ABSPATH' ) || exit();
 
 // if ( ! wp_is_block_theme() ) {
-	get_header();
+get_header();
 // };
 ?>
 
@@ -32,40 +32,61 @@ do_action( 'hotel_booking_before_main_content' );
  */
 do_action( 'hotel_booking_archive_description' );
 ?>
+    <div class="container room-container">
+		<?php
+		global $wp_query;
 
-<?php if ( have_posts() ) : ?>
+		$total          = $wp_query->queried_object->count;
+		$posts_per_page = $wp_query->query_vars['posts_per_page'];
+		$sort_by        = hb_get_request( 'sort_by' );
 
-	<?php
-	/**
-	 * hotel_booking_before_room_loop hook
-	 */
-	do_action( 'hotel_booking_before_room_loop' );
-	?>
+		$data = array(
+			'sort_by' => $sort_by
+		);
 
-	<?php hotel_booking_room_loop_start(); ?>
+		if ( $total ) {
+			$data['show_number'] = hb_get_show_room_text(
+				array(
+					'paged'         =>(get_query_var('paged')) ? get_query_var('paged') : 1,
+					'total'         => $total,
+					'item_per_page' => $posts_per_page
+				)
+			);
+		}
 
-	<?php hotel_booking_room_subcategories(); ?>
-
-	<?php
-	while ( have_posts() ) :
-		the_post();
+		hb_get_template( 'search/v2/sort-by.php', compact( 'data' ) );
 		?>
+		<?php if ( have_posts() ) : ?>
 
-		<?php hb_get_template_part( 'content', 'room' ); ?>
+			<?php
+			/**
+			 * hotel_booking_before_room_loop hook
+			 */
+			do_action( 'hotel_booking_before_room_loop' );
 
-	<?php endwhile; ?>
+			?>
+			<?php hotel_booking_room_loop_start(); ?>
+			<?php hotel_booking_room_subcategories(); ?>
+			<?php
+			while ( have_posts() ) :
+				the_post();
+				?>
 
-	<?php hotel_booking_room_loop_end(); ?>
+				<?php hb_get_template_part( 'content', 'room' ); ?>
 
-	<?php
-	/**
-	 * hotel_booking_after_room_loop hook
-	 */
-	do_action( 'hotel_booking_after_room_loop' );
-	?>
+			<?php endwhile; ?>
 
-<?php endif; ?>
+			<?php hotel_booking_room_loop_end(); ?>
 
+			<?php
+			/**
+			 * hotel_booking_after_room_loop hook
+			 */
+			do_action( 'hotel_booking_after_room_loop' );
+			?>
+
+		<?php endif; ?>
+    </div>
 <?php
 /**
  * hotel_booking_after_main_content hook
@@ -82,5 +103,5 @@ do_action( 'hotel_booking_sidebar' );
 
 <?php
 // if ( ! wp_is_block_theme() ) {
-	get_footer();
+get_footer();
 // }

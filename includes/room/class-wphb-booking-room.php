@@ -32,7 +32,6 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 		 * Init.
 		 */
 		public function init() {
-
 			add_action( 'hotel_booking_single_room_title', array( $this, 'single_add_button' ), 9 );
 
 			add_action( 'wp_footer', array( $this, 'wp_footer' ) );

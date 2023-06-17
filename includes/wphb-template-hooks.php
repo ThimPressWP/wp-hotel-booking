@@ -52,3 +52,9 @@ add_filter( 'hotel_booking_single_room_infomation_tabs', 'hotel_display_pricing_
 add_action( 'hotel_booking_single_room_before_tabs_content_hb_room_pricing_plans', 'hotel_show_pricing' );
 
 add_action( 'hotel_booking_after_single_room', 'hotel_booking_edit_room_link' );
+
+//update price for room
+add_action( 'hotel_booking_before_single_product', function () {
+	$room_id = get_the_ID();
+	hb_room_update_room_price_meta( $room_id );
+} );

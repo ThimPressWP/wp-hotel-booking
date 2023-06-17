@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class WPHB_REST_Rooms_Controller
  */
@@ -57,7 +58,8 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 	 */
 	public function search_rooms( WP_REST_Request $request ) {
 
-		$params           = $request->get_params();
+		$params = $request->get_params();
+
 		$response         = new WPHB_REST_RESPONSE();
 		$response->status = 'success';
 
@@ -69,14 +71,14 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 		$limit           = hb_settings()->get( 'posts_per_page', 8 );
 
 		try {
-			$date_format = get_option('date_format');
+			$date_format = get_option( 'date_format' );
 
-			if ( strpos($check_in_date, '/' ) !== false ) {
-				$check_in_date = DateTime::createFromFormat( $date_format , $check_in_date)->format('F j, Y');
+			if ( strpos( $check_in_date, '/' ) !== false ) {
+				$check_in_date = DateTime::createFromFormat( $date_format, $check_in_date )->format( 'F j, Y' );
 			}
 
 			if ( strpos( $check_out_date, '/' ) !== false ) {
-				$check_out_date = DateTime::createFromFormat( $date_format, $check_out_date)->format('F j, Y');
+				$check_out_date = DateTime::createFromFormat( $date_format, $check_out_date )->format( 'F j, Y' );
 			}
 
 			$atts = array(
@@ -87,9 +89,14 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 				'search_page'    => null,
 				'widget_search'  => false,
 				'hb_page'        => $paged,
+				'min_price'      => $params['min_price'] ?? '',
+				'max_price'      => $params['max_price'] ?? '',
+				'rating'         => $params['rating'] ?? '',
+				'room_type'      => $params['room_type'] ?? '',
+				'sort_by'        => $params['sort_by'] ?? ''
 			);
-			
-			$results    = hb_search_rooms( $atts );
+
+			$results = hb_search_rooms( $atts );
 			// print_r($results);die;
 			$total_page = ceil( $results['total'] / $limit );
 
@@ -111,6 +118,14 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 				array(
 					'results' => $results,
 					'atts'    => $atts,
+				)
+			);
+
+			$response->data->show_number = hb_get_show_room_text(
+				array(
+					'paged'         => $results['page'] ?? 1,
+					'total'         => $results['total'],
+					'item_per_page' => $limit
 				)
 			);
 		} catch ( Exception $e ) {
@@ -146,14 +161,14 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 			}
 		}
 
-		$date_format = get_option('date_format');
+		$date_format = get_option( 'date_format' );
 
-		if ( strpos($check_in_date, '/' ) !== false ) {
-			$check_in_date = DateTime::createFromFormat( $date_format , $check_in_date)->format('F j, Y');
+		if ( strpos( $check_in_date, '/' ) !== false ) {
+			$check_in_date = DateTime::createFromFormat( $date_format, $check_in_date )->format( 'F j, Y' );
 		}
 
 		if ( strpos( $check_out_date, '/' ) !== false ) {
-			$check_out_date = DateTime::createFromFormat( $date_format, $check_out_date)->format('F j, Y');
+			$check_out_date = DateTime::createFromFormat( $date_format, $check_out_date )->format( 'F j, Y' );
 		}
 
 		$args_room = array(
