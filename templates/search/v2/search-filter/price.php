@@ -13,12 +13,12 @@ $max_formatted_price = number_format( $data['max_price'], 2, '.', ',' );
          data-max="<?php echo esc_attr( $data['max_price'] ); ?>"
          data-step="1">
         <div class=" title"><?php esc_html_e( 'Price', 'wp-hotel-booking' ); ?></div>
-        <input type="hidden" id="hb-min-price" name="min-price"
+        <input type="hidden" class="hb-min-price" name="min-price"
                value="<?php echo esc_attr( $data['min_value'] ); ?>">
-        <input type="hidden" id="hb-max-price" name="max-price"
+        <input type="hidden" class="hb-max-price" name="max-price"
                value="<?php echo esc_attr( $data['max_value'] ); ?>">
         <div class="hb-search-price">
-            <div id="hb-price-range"></div>
+            <div class="hb-price-range"></div>
             <div>
                 <span class="min"><?php echo esc_html( $min_formatted_price ); ?></span>
                 -

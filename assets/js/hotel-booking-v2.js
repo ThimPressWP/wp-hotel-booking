@@ -99,7 +99,7 @@ const requestSearchRoom = (forms, args, btn = false) => {
         }
         wrapperResult.style.display = 'block';
         wrapperResult.innerHTML = data.content;
-        if(showNumber){
+        if (showNumber) {
             showNumber.innerHTML = data.show_number;
         }
         const pagination = data.pagination;
@@ -122,6 +122,10 @@ const requestSearchRoom = (forms, args, btn = false) => {
             errorNode.innerHTML = error.message || 'Error: Query wphb/v1/rooms/search-room';
         } else {
             wrapperResult.insertAdjacentHTML('beforeend', `<p class="wphb-message error" style="display:block">${error.message || 'Error: Query wphb/v1/rooms/search-room'}</p>`);
+        }
+
+        if (showNumber) {
+            showNumber.innerHTML = '';
         }
     }).finally(() => {
         skeleton.style.display = 'none';
@@ -433,136 +437,146 @@ const toggleExtravalue = () => {
 }
 
 const priceSlider = () => {
-    const priceField = document.querySelector('.hb-price-field');
-    if (!priceField) {
+    const priceFields = document.querySelectorAll('.hb-price-field');
+    if (!priceFields) {
         return;
     }
 
-    const minPrice = priceField.getAttribute('data-min');
-    const maxPrice = priceField.getAttribute('data-max');
-    let step = priceField.getAttribute('data-step');
+    for (let i = 0; i < priceFields.length; i++) {
+        const priceField = priceFields[i];
+        const minPrice = priceField.getAttribute('data-min');
+        const maxPrice = priceField.getAttribute('data-max');
+        let step = priceField.getAttribute('data-step');
 
-    if (minPrice === '' || maxPrice === '' || step === '') {
-        return;
-    }
+        if (minPrice === '' || maxPrice === '' || step === '') {
+            continue;
+        }
 
-    const minPriceNode = priceField.querySelector('#hb-min-price');
-    const maxPriceNode = priceField.querySelector('#hb-max-price');
+        const minPriceNode = priceField.querySelector('.hb-min-price');
+        const maxPriceNode = priceField.querySelector('.hb-max-price');
 
 
-    const priceSliderNode = priceField.querySelector('#hb-price-range');
+        const priceSliderNode = priceField.querySelector('.hb-price-range');
 
-    const start = filterRooms.min_price || minPrice;
-    const end = filterRooms.max_price || maxPrice;
-    step = parseInt(step);
+        const start = filterRooms.min_price || minPrice;
+        const end = filterRooms.max_price || maxPrice;
+        step = parseInt(step);
 
-    noUiSlider.create(priceSliderNode, {
-        start: [parseInt(start), parseInt(end)],
-        connect: true,
-        step,
-        tooltips: false,
-        range: {
-            min: parseInt(minPrice), max: parseInt(maxPrice),
-        },
-        // direction: 'lt',
-    });
+        noUiSlider.create(priceSliderNode, {
+            start: [parseInt(start), parseInt(end)],
+            connect: true,
+            step,
+            tooltips: false,
+            range: {
+                min: parseInt(minPrice), max: parseInt(maxPrice),
+            },
+            // direction: 'lt',
+        });
 
-    priceSliderNode.noUiSlider.on('update', function (values, handle, unencoded) {
-        minPriceNode.value = parseInt(values[0]);
-        maxPriceNode.value = parseInt(values[1]);
-        priceField.querySelector('.min').innerHTML = values[0];
-        priceField.querySelector('.max').innerHTML = values[1];
-    });
+        priceSliderNode.noUiSlider.on('update', function (values, handle, unencoded) {
+            minPriceNode.value = parseInt(values[0]);
+            maxPriceNode.value = parseInt(values[1]);
+            priceField.querySelector('.min').innerHTML = values[0];
+            priceField.querySelector('.max').innerHTML = values[1];
+        });
 
-    const applyBtn = priceField.querySelector('button.apply');
+        const applyBtn = priceField.querySelector('button.apply');
 
-    //apply btn click event
-    applyBtn.addEventListener('click', function (event) {
-        event.preventDefault();
+        //apply btn click event
+        applyBtn.addEventListener('click', function (event) {
+            event.preventDefault();
 
-        const minPrice = minPriceNode.value;
-        const maxPrice = maxPriceNode.value;
-        filterRooms = {
-            ...filterRooms,
-            min_price: parseInt(minPrice),
-            max_price: parseInt(maxPrice)
-        };
-
-        window.localStorage.setItem('wphb_filter_rooms', JSON.stringify(filterRooms));
-
-        searchRoomsPages();
-    });
-}
-
-const rating = () => {
-    const ratingField = document.querySelector('.hb-rating-field');
-    if (!ratingField) {
-        return;
-    }
-
-    const allInputs = ratingField.querySelectorAll('input[type="checkbox"]');
-
-    const rating = filterRooms.rating || [];
-    [...rating].map(value => {
-        ratingField.querySelector(`input[name ="rating"][value ="${value}"]`).checked = true;
-    });
-
-    for (let i = 0; i < allInputs.length; i++) {
-        const input = allInputs[i];
-
-        input.addEventListener('change', function (event) {
-            const allCheckedInput = ratingField.querySelectorAll('input[type="checkbox"]:checked');
-
-            let value = [];
-            [...allCheckedInput].map(checkedInput => {
-                value.push(checkedInput.value);
-            });
-
+            const minPrice = minPriceNode.value;
+            const maxPrice = maxPriceNode.value;
             filterRooms = {
                 ...filterRooms,
-                rating: value
+                min_price: parseInt(minPrice),
+                max_price: parseInt(maxPrice)
             };
 
             window.localStorage.setItem('wphb_filter_rooms', JSON.stringify(filterRooms));
 
             searchRoomsPages();
         });
+    }
+}
+
+const rating = () => {
+    const ratingFields = document.querySelectorAll('.hb-rating-field');
+    if (!ratingFields) {
+        return;
+    }
+
+    for (let i = 0; i < ratingFields.length; i++) {
+        const ratingField = ratingFields[i];
+
+        const allInputs = ratingField.querySelectorAll('input[type="checkbox"]');
+        const rating = filterRooms.rating || [];
+        [...rating].map(value => {
+            ratingField.querySelector(`input[name ="rating"][value ="${value}"]`).checked = true;
+        });
+
+        for (let i = 0; i < allInputs.length; i++) {
+            const input = allInputs[i];
+
+            input.addEventListener('change', function (event) {
+                const allCheckedInput = ratingField.querySelectorAll('input[type="checkbox"]:checked');
+
+                let value = [];
+                [...allCheckedInput].map(checkedInput => {
+                    value.push(checkedInput.value);
+                });
+
+                filterRooms = {
+                    ...filterRooms,
+                    rating: value
+                };
+
+                window.localStorage.setItem('wphb_filter_rooms', JSON.stringify(filterRooms));
+
+                searchRoomsPages();
+            });
+        }
     }
 }
 
 const roomType = () => {
-    const roomTypeField = document.querySelector('.hb-type-field');
-    if (!roomTypeField) {
+    const roomTypeFields = document.querySelectorAll('.hb-type-field');
+    if (!roomTypeFields) {
         return;
     }
 
-    const allInputs = roomTypeField.querySelectorAll('input[type="checkbox"]');
+    for(let i = 0 ; i < roomTypeFields.length; i++){
+        const roomTypeField = roomTypeFields[i];
 
-    const roomTypesValue = filterRooms.room_type || [];
-    [...roomTypesValue].map(value => {
-        roomTypeField.querySelector(`input[name ="room_type"][value ="${value}"]`).checked = true;
-    });
+        const allInputs = roomTypeField.querySelectorAll('input[type="checkbox"]');
 
-    for (let i = 0; i < allInputs.length; i++) {
-        const input = allInputs[i];
-
-        input.addEventListener('change', function (event) {
-            const allCheckedInput = roomTypeField.querySelectorAll('input[type="checkbox"]:checked');
-
-            let value = [];
-            [...allCheckedInput].map(checkedInput => {
-                value.push(checkedInput.value);
-            });
-
-            filterRooms = {
-                ...filterRooms,
-                room_type: value
-            };
-
-            window.localStorage.setItem('wphb_filter_rooms', JSON.stringify(filterRooms));
-
-            searchRoomsPages();
+        const roomTypesValue = filterRooms.room_type || [];
+        [...roomTypesValue].map(value => {
+            roomTypeField.querySelector(`input[name ="room_type"][value ="${value}"]`).checked = true;
         });
+
+        for (let i = 0; i < allInputs.length; i++) {
+            const input = allInputs[i];
+
+            input.addEventListener('change', function (event) {
+                const allCheckedInput = roomTypeField.querySelectorAll('input[type="checkbox"]:checked');
+
+                let value = [];
+                [...allCheckedInput].map(checkedInput => {
+                    value.push(checkedInput.value);
+                });
+
+                filterRooms = {
+                    ...filterRooms,
+                    room_type: value
+                };
+
+                window.localStorage.setItem('wphb_filter_rooms', JSON.stringify(filterRooms));
+
+                searchRoomsPages();
+            });
+        }
     }
 }
 
