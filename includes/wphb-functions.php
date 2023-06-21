@@ -1782,39 +1782,53 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 		}
 
 		if ( isset( $args['rating'] ) && $args['rating'] !== '' ) {
-			$rating       = explode( ',', $args['rating'] );
-			$unrate_index = array_search( 'unrated', $rating );
+			$rating = explode( ',', $args['rating'] );
 
-			if ( $unrate_index !== false ) {
-				unset( $rating[ $unrate_index ] );
-				$rating = array_values( $rating );
-			}
 
 			$sql .= $wpdb->prepare(
-				" LEFT JOIN {$wpdb->comments} ON $wpdb->comments.comment_post_ID = rooms.ID
-						LEFT JOIN {$wpdb->commentmeta} ON $wpdb->comments.comment_ID = $wpdb->commentmeta.comment_id"
+				" LEFT JOIN {$wpdb->postmeta} AS pm5 ON pm5.post_id = rooms.ID AND pm5.meta_key = %s",
+				'hb_average_rating'
 			);
 
-			if ( count( $rating ) ) {
-				$rating = '"' . implode( '","', $rating ) . '"';
+			$unrated_index = array_search( 'unrated', $rating );
 
-				if ( $unrate_index === false ) {
+			if ( $unrated_index !== false ) {
+				$rating[ $unrated_index ] = 0;
+			}
+
+			$rating_count = count( $rating );
+			if ( ! empty( $rating_count ) ) {
+				if ( $rating_count === 1 ) {
 					$where .= $wpdb->prepare(
-						" AND $wpdb->commentmeta.meta_key = %s AND $wpdb->commentmeta.meta_value IN ($rating)",
-						'rating'
+						" AND pm5.meta_value >= %d AND pm5.meta_value < %d",
+						$rating[0],
+						$rating[0] + 1
 					);
 				} else {
-					$where .= $wpdb->prepare(
-						" AND (($wpdb->commentmeta.meta_key = %s AND $wpdb->commentmeta.meta_value IN ($rating)) OR $wpdb->commentmeta.meta_key = %s IS NULL)",
-						'rating',
-						'rating'
-					);
+					for ( $i = 0; $i < $rating_count; $i ++ ) {
+						if ( $i === 0 ) {
+							$where .= $wpdb->prepare(
+								" AND ((pm5.meta_value >= %d AND pm5.meta_value < %d)",
+								$rating[0],
+								$rating[0] + 1
+							);
+
+
+						} elseif ( ( $i + 1 ) === $rating_count ) {
+							$where .= $wpdb->prepare(
+								" OR (pm5.meta_value >= %d AND pm5.meta_value < %d))",
+								$rating[ $i ],
+								$rating[ $i ] + 1
+							);
+						} else {
+							$where .= $wpdb->prepare(
+								" OR (pm5.meta_value >= %d AND pm5.meta_value < %d)",
+								$rating[ $i ],
+								$rating[ $i ] + 1
+							);
+						}
+					}
 				}
-			} elseif ( $unrate_index !== false ) {
-				$where .= $wpdb->prepare(
-					" AND $wpdb->commentmeta.meta_key = %s IS NULL",
-					'rating',
-				);
 			}
 		}
 
@@ -2905,25 +2919,26 @@ if ( ! function_exists( 'wp_hotel_booking_get_count_rating' ) ) {
 	function wp_hotel_booking_get_count_rating( $rating = 1 ) {
 		global $wpdb;
 
-		$post_tbl         = $wpdb->posts;
-		$comment_meta_tbl = $wpdb->commentmeta;
+		$post_tbl      = $wpdb->posts;
+		$post_meta_tbl = $wpdb->postmeta;
 
 		if ( $rating === 'unrated' ) {
-			$count = $wpdb->get_var(
-				$wpdb->prepare(
-					"SELECT COUNT($post_tbl.ID) FROM $post_tbl WHERE $post_tbl.post_type='hb_room'
-					AND $post_tbl.comment_count='0'",
-				)
-			);
-		} else {
-			$count = $wpdb->get_var(
-				$wpdb->prepare(
-					"SELECT COUNT($comment_meta_tbl.comment_id) FROM $comment_meta_tbl WHERE $comment_meta_tbl.meta_key='rating'
-					AND $comment_meta_tbl.meta_value='%s'",
-					$rating
-				)
-			);
+			$rating = 0;
 		}
+
+		$count = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT COUNT($post_tbl.ID) FROM $post_tbl INNER JOIN $post_meta_tbl ON  
+    					$post_tbl.ID = $post_meta_tbl.post_id WHERE $post_tbl.post_type = %s AND 
+                       $post_tbl.post_status = %s AND $post_meta_tbl.meta_key = %s AND 
+                       $post_meta_tbl.meta_value >= %d AND $post_meta_tbl.meta_value < %d",
+				'hb_room',
+				'publish',
+				'hb_average_rating',
+				$rating,
+				$rating + 1
+			)
+		);
 
 		return empty( $count ) ? 0 : $count;
 	}

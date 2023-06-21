@@ -259,3 +259,25 @@ if ( ! function_exists( 'hb_room_update_room_price_meta' ) ) {
 	}
 }
 
+
+if ( ! function_exists( 'hb_room_update_room_average_rating' ) ) {
+	function hb_room_update_room_average_rating( $room_id = null ) {
+		if ( $room_id === null ) {
+			return;
+		}
+
+		$room           = WPHB_Room::instance( $room_id );
+		$average_rating = $room->average_rating();
+
+		$old_rating = get_post_meta( $room_id, 'hb_average_rating', true );
+
+		if ( $old_rating !== $average_rating ) {
+			if(empty($average_rating)){
+				$average_rating = 0;
+			}
+
+			update_post_meta( $room_id, 'hb_average_rating', $average_rating );
+		}
+	}
+}
+
