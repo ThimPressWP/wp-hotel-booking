@@ -423,7 +423,6 @@ class WP_Hotel_Booking {
 				wp_register_script( 'wp-hotel-booking', $this->plugin_url( 'assets/js/hotel-booking.js' ), $dependencies, $v_rand, true );
 				wp_register_script( 'wp-hotel-booking-v2', $this->plugin_url( 'assets/js/hotel-booking-v2.js' ), $dependencies, $v_rand, true );
 				wp_register_script( 'wp-hotel-booking-sort-by', $this->plugin_url( 'assets/js/frontend/sort-by.js' ), array(), $v_rand, true );
-				wp_register_script( 'wp-hotel-booking-hotel-room', $this->plugin_url( 'assets/js/frontend/hotel-room.js' ), array(), $v_rand, true );
 			} else {
 				wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.min.css' ), array(), WPHB_VERSION );
 				wp_register_script( 'wp-hotel-booking', $this->plugin_url( 'assets/js/hotel-booking.min.js' ), $dependencies, WPHB_VERSION, true );
@@ -465,7 +464,6 @@ class WP_Hotel_Booking {
 			wp_enqueue_script( 'wp-hotel-booking' );
 			wp_enqueue_script( 'wp-hotel-booking-v2' );
 			wp_enqueue_script( 'wp-hotel-booking-sort-by' );
-			wp_enqueue_script( 'wp-hotel-booking-hotel-room' );
 
 			// rooms slider widget
 			wp_enqueue_script( 'wp-hotel-booking-owl-carousel' );
