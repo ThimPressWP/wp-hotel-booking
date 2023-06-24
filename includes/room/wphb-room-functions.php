@@ -267,7 +267,7 @@ if ( ! function_exists( 'hb_room_update_room_average_rating' ) ) {
 		}
 
 		$room           = WPHB_Room::instance( $room_id );
-		$average_rating = $room->average_rating();
+		$average_rating = number_format($room->average_rating(), 2);
 
 		$old_rating = get_post_meta( $room_id, 'hb_average_rating', true );
 

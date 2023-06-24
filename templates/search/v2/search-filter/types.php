@@ -4,7 +4,7 @@ if ( ! isset( $data ) ) {
 }
 
 $args = wp_parse_args(
-	$data['number'],
+	$data,
 	array(
 		'hide_empty' => false,
 		'taxonomy'   => 'hb_room_type'
