@@ -40,9 +40,7 @@ const hotelRoom = () => {
     [...listOptions].map(element => {
         element.addEventListener('click', function (event) {
             const url = new URL(window.location.href);
-
             url.searchParams.set('sort_by', element.getAttribute('data-value'));
-
             window.location.href = url;
         });
     });

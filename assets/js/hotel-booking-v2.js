@@ -3,7 +3,7 @@ const urlCurrent = document.location.href;
 const urlPageSearch = hotel_settings?.url_page_search;
 let filterRooms = JSON.parse(window.localStorage.getItem('wphb_filter_rooms')) || {};
 let firstLoad = true;
-
+const hotelBookingSearchNode = document.querySelector('.hotel-booking-search');
 
 const wphbAddQueryArgs = (endpoint, args) => {
     const url = new URL(endpoint);
@@ -473,6 +473,10 @@ const renderPriceNumber = (price) => {
 };
 
 const priceSlider = () => {
+    if (!hotelBookingSearchNode) {
+        return;
+    }
+
     const priceFields = document.querySelectorAll('.hb-price-field');
     if (!priceFields) {
         return;
@@ -524,6 +528,7 @@ const priceSlider = () => {
 
             const minPrice = minPriceNode.value;
             const maxPrice = maxPriceNode.value;
+
             filterRooms = {
                 ...filterRooms,
                 min_price: parseInt(minPrice),
@@ -538,6 +543,10 @@ const priceSlider = () => {
 }
 
 const rating = () => {
+    if (!hotelBookingSearchNode) {
+        return;
+    }
+
     const ratingFields = document.querySelectorAll('.hb-rating-field');
     if (!ratingFields) {
         return;
@@ -577,6 +586,10 @@ const rating = () => {
 }
 
 const roomType = () => {
+    if (!hotelBookingSearchNode) {
+        return;
+    }
+
     const roomTypeFields = document.querySelectorAll('.hb-type-field');
     if (!roomTypeFields) {
         return;
@@ -617,6 +630,10 @@ const roomType = () => {
 }
 
 const sortBy = () => {
+    if (!hotelBookingSearchNode) {
+        return;
+    }
+
     const sortByWrapper = document.querySelector('.sort-by-wrapper');
     if (!sortByWrapper) {
         return;

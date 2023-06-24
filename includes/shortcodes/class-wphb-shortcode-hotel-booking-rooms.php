@@ -43,6 +43,7 @@ class WPHB_Shortcode_Hotel_Booking_Rooms extends WPHB_Shortcodes {
 			'post_status'    => 'publish',
 		);
 
+		//Sort By
 		$sort_by = hb_get_request( 'sort_by' );
 		if ( $sort_by ) {
 			if ( $sort_by === 'date-desc' ) {
@@ -59,6 +60,92 @@ class WPHB_Shortcode_Hotel_Booking_Rooms extends WPHB_Shortcodes {
 				$args['order']   = 'DESC';
 			}
 		}
+
+		//Price
+		$min_price = hb_get_request( 'min_price' );
+		$max_price = hb_get_request( 'max_price' );
+		if ( $min_price && $max_price ) {
+			$args['meta_query'][] = array(
+				'key'     => 'hb_price',
+				'value'   => array( $min_price, $max_price ),
+				'type'    => 'DECIMAL',
+				'compare' => 'BETWEEN',
+			);
+		}
+
+		//Rating
+		$rating = hb_get_request( 'rating' );
+
+		if ( $rating ) {
+			$rating = explode( ',', $rating );
+
+			$unrated_index = array_search( 'unrated', $rating );
+
+			if ( $unrated_index !== false ) {
+				$rating[ $unrated_index ] = 0;
+			}
+
+			$rating_count = count( $rating );
+			if ( ! empty( $rating_count ) ) {
+				$rating_query = array();
+
+				if ( $rating_count === 1 ) {
+					$rating_query[] = array(
+						'key'     => 'hb_average_rating',
+						'value'   => $rating[0],
+						'type'    => 'DECIMAL',
+						'compare' => '>=',
+					);
+
+					$rating_query[] = array(
+						'key'     => 'hb_average_rating',
+						'value'   => $rating[0] + 1,
+						'type'    => 'DECIMAL',
+						'compare' => '<',
+					);
+
+					$rating_query ['relation'] = 'AND';
+				} else {
+					for ( $i = 0; $i < $rating_count; $i ++ ) {
+						$rating_query[ $i ][] = array(
+							'key'     => 'hb_average_rating',
+							'value'   => $rating[ $i ],
+							'type'    => 'DECIMAL',
+							'compare' => '>=',
+						);
+						$rating_query[ $i ][] = array(
+							'key'     => 'hb_average_rating',
+							'value'   => $rating[ $i ] + 1,
+							'type'    => 'DECIMAL',
+							'compare' => '<',
+						);
+
+						$rating_query[ $i ]['raltion'] = 'AND';
+					}
+
+					$rating_query ['relation'] = 'OR';
+				}
+
+				$args['meta_query'][] = $rating_query;
+			}
+		}
+
+		if ( isset( $args['meta_query'] ) ) {
+			$args['meta_query']['relation'] = 'AND';
+		}
+
+		//Room type
+		$room_type = hb_get_request( 'room_type' );
+		if ( $room_type ) {
+			$args['tax_query'] = array(
+				array(
+					'taxonomy' => 'hb_room_type',
+					'field'    => 'id',
+					'terms'    => explode( ',', $room_type ),
+				),
+			);
+		}
+
 		if ( isset( $atts['room_type'] ) && $atts['room_type'] ) {
 			$args['tax_query'] = array(
 				array(
@@ -67,6 +154,11 @@ class WPHB_Shortcode_Hotel_Booking_Rooms extends WPHB_Shortcodes {
 					'terms'    => $atts['room_type'],
 				),
 			);
+		}
+
+
+		if ( isset( $args['tax_query'] ) ) {
+			$args['tax_query']['relation'] = 'AND';
 		}
 
 		if ( isset( $atts['room_in'] ) && $atts['room_in'] ) {
