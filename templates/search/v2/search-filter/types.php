@@ -3,6 +3,10 @@ if ( ! isset( $data ) ) {
 	return;
 }
 
+if ( is_tax( 'hb_room_type' ) ) {
+	return;
+}
+
 $args = wp_parse_args(
 	$data,
 	array(
