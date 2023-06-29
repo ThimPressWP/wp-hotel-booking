@@ -42,6 +42,7 @@ do_action( 'hotel_booking_archive_description' );
 		//Search Filter
 		hb_get_template( 'search/v2/search-filter-v2.php', array( 'atts' => array() ) );
 
+
 		//Sort By
 		$sort_by = hb_get_request( 'sort_by' );
 

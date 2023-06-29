@@ -158,9 +158,10 @@ const hbRoomType = () => {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    if (hotelBookingSearchNode) {
+    if (hotel_settings && hotel_settings.is_page_search) {
         return;
     }
+
     hbPriceSlider();
     hbRating();
     hbRoomType();

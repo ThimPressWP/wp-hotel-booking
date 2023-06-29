@@ -473,10 +473,6 @@ const renderPriceNumber = (price) => {
 };
 
 const priceSlider = () => {
-    if (!hotelBookingSearchNode) {
-        return;
-    }
-
     const priceFields = document.querySelectorAll('.hb-price-field');
     if (!priceFields) {
         return;
@@ -543,10 +539,6 @@ const priceSlider = () => {
 }
 
 const rating = () => {
-    if (!hotelBookingSearchNode) {
-        return;
-    }
-
     const ratingFields = document.querySelectorAll('.hb-rating-field');
     if (!ratingFields) {
         return;
@@ -586,10 +578,6 @@ const rating = () => {
 }
 
 const roomType = () => {
-    if (!hotelBookingSearchNode) {
-        return;
-    }
-
     const roomTypeFields = document.querySelectorAll('.hb-type-field');
     if (!roomTypeFields) {
         return;
@@ -630,10 +618,6 @@ const roomType = () => {
 }
 
 const sortBy = () => {
-    if (!hotelBookingSearchNode) {
-        return;
-    }
-
     const sortByWrapper = document.querySelector('.sort-by-wrapper');
     if (!sortByWrapper) {
         return;
@@ -671,10 +655,13 @@ document.addEventListener('DOMContentLoaded', () => {
     addExtraToCart();
     checkAvaliableRooms(); // use multi form search will redirect to page search room with data valid :
     processCheckout();
-    priceSlider();
-    rating();
-    roomType();
-    sortBy();
+
+    if (hotelBookingSearchNode && hotel_settings && hotel_settings.is_page_search) {
+        priceSlider();
+        rating();
+        roomType();
+        sortBy();
+    }
 });
 
 
