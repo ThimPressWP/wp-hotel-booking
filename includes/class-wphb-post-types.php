@@ -75,18 +75,20 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 			$sort_by = hb_get_request( 'sort_by' );
 
-			if ( $sort_by === 'date-desc' ) {
-				$query->set( 'orderby', 'date' );
-				$query->set( 'order', 'DESC' );
-			} elseif ( $sort_by === 'date-asc' ) {
-				$query->set( 'orderby', 'date' );
-				$query->set( 'order', 'ASC' );
-			} elseif ( $sort_by === 'title-asc' ) {
-				$query->set( 'orderby', 'title' );
-				$query->set( 'order', 'ASC' );
-			} elseif ( $sort_by === 'title-desc' ) {
-				$query->set( 'orderby', 'title' );
-				$query->set( 'order', 'DESC' );
+			if ( $sort_by ) {
+				if ( $sort_by === 'date-desc' ) {
+					$query->set( 'orderby', 'date' );
+					$query->set( 'order', 'DESC' );
+				} elseif ( $sort_by === 'date-asc' ) {
+					$query->set( 'orderby', 'date' );
+					$query->set( 'order', 'ASC' );
+				} elseif ( $sort_by === 'title-asc' ) {
+					$query->set( 'orderby', 'title' );
+					$query->set( 'order', 'ASC' );
+				} elseif ( $sort_by === 'title-desc' ) {
+					$query->set( 'orderby', 'title' );
+					$query->set( 'order', 'DESC' );
+				}
 			}
 
 			$meta_query = [];
@@ -164,9 +166,9 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 			if ( count( $meta_query ) > 0 ) {
 				$meta_query['relation'] = 'AND';
-			}
 
-			$query->set('meta_query',$meta_query);
+				$query->set( 'meta_query', $meta_query );
+			}
 
 			//Room type
 			$room_type = hb_get_request( 'room_type' );
@@ -190,11 +192,10 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				);
 			}
 
-			if ( count($tax_query ) > 0 ) {
+			if ( count( $tax_query ) > 0 ) {
 				$tax_query['relation'] = 'AND';
+				$query->set( 'tax_query', $tax_query );
 			}
-
-			$query->set('tax_query',$tax_query);
 		}
 
 		/**
