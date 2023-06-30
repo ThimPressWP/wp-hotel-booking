@@ -73,6 +73,10 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				return;
 			}
 
+			if ( !isset( $query->query_vars['post_type'] ) || $query->query_vars['post_type'] !== 'hb_room' || !$query->is_post_type_archive ) {
+				return;
+			}
+
 			$sort_by = hb_get_request( 'sort_by' );
 
 			if ( $sort_by ) {
