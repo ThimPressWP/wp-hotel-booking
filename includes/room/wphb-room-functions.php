@@ -153,12 +153,12 @@ if ( ! function_exists( 'hb_room_get_selected_plan' ) ) {
 				}
 			}
 		}
-//		echo '<pre>';
-//		print_r( $plans );
-//		echo '</pre>';
-//		echo '<pre>';
-//		print_r( $selected_plan );
-//		echo '</pre>';
+		//      echo '<pre>';
+		//      print_r( $plans );
+		//      echo '</pre>';
+		//      echo '<pre>';
+		//      print_r( $selected_plan );
+		//      echo '</pre>';
 
 		return apply_filters( 'hb_room_get_selected_plan', $selected_plan );
 	}
@@ -249,7 +249,7 @@ if ( ! function_exists( 'hb_room_update_room_price_meta' ) ) {
 			return;
 		}
 
-		$price     = WPHB_Room::instance( $room_id )->get_price();
+		$price = WPHB_Room::instance( $room_id )->get_price();
 
 		$old_price = get_post_meta( $room_id, 'hb_price', true );
 
@@ -267,15 +267,12 @@ if ( ! function_exists( 'hb_room_update_room_average_rating' ) ) {
 		}
 
 		$room           = WPHB_Room::instance( $room_id );
-		$average_rating = number_format($room->average_rating(), 2);
+		$average_rating = floatval( $room->average_rating() );
+		$average_rating = number_format( $average_rating, 2 );
 
 		$old_rating = get_post_meta( $room_id, 'hb_average_rating', true );
 
 		if ( $old_rating !== $average_rating ) {
-			if(empty($average_rating)){
-				$average_rating = 0;
-			}
-
 			update_post_meta( $room_id, 'hb_average_rating', $average_rating );
 		}
 	}

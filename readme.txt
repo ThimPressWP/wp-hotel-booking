@@ -4,7 +4,7 @@ Donate link: https://thimpress.com/
 Tags: hotel, booking, hotel booking, reservation, reservations
 Requires at least: 5.6
 Requires PHP: 7.0
-Tested up to: 6.1
+Tested up to: 6.2.2
 Stable tag: 2.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -74,6 +74,15 @@ Yes.
 7. System settings
 
 == Changelog ==
+
+= 2.0.5 (2023-07-0x) =
+~ Fixed: addition information display HTML.
+~ Fixed: error search Room.
+~ Remove: library jquery mobile.
+~ Change: label "Facilities" to "Extra Options".
+~ Added: feature config info Facilities.
+~ Added: shortcode [hotel_booking_filter]
+
 
 = 2.0.4 (2023-02-15) =
 ~ Fixed: error date checkin is available, but checkout right after (unavailable), can't book.
