@@ -4,11 +4,12 @@
  * Plugin URI: http://thimpress.com/
  * Description: Full of professional features for a booking room system
  * Author: ThimPress
- * Version: 2.0.4
+ * Version: 2.0.5-beta-1
  * Author URI: http://thimpress.com
  * Text Domain: wp-hotel-booking
  * Domain Path: /languages/
- *
+ * Requires PHP: 7.0
+ * Tested up to: 6.2.2
  * @package wp-hotel-booking
  */
 

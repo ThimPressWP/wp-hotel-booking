@@ -10,13 +10,8 @@ $fields = apply_filters( 'hotel_booking/shortcode/search-filter-v2/field/fields'
 			'min_value' => hb_get_request( 'min_price' ),
 			'max_value' => hb_get_request( 'max_price' )
 		),
-		'rating' => array(
-			'value' => hb_get_request( 'rating' )
-		),
-		'types'  => array(
-			'number' => $atts['type_number'] ?? 10,
-			'value'  => hb_get_request( 'types' )
-		)
+		'rating' => array(),
+		'types'  => array()
 	)
 );
 ?>

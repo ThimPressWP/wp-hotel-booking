@@ -57,9 +57,7 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 	 * @param WP_REST_Request request The request object.
 	 */
 	public function search_rooms( WP_REST_Request $request ) {
-
 		$params = $request->get_params();
-
 		$response         = new WPHB_REST_RESPONSE();
 		$response->status = 'success';
 

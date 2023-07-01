@@ -3,8 +3,12 @@ if ( ! isset( $data ) ) {
 	return;
 }
 
+if ( is_tax( 'hb_room_type' ) ) {
+	return;
+}
+
 $args = wp_parse_args(
-	$data['number'],
+	$data,
 	array(
 		'hide_empty' => false,
 		'taxonomy'   => 'hb_room_type'

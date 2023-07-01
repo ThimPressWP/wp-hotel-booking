@@ -50,7 +50,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
-			add_action( 'pre_get_posts', array( $this, 'set_order' ) );
+			add_action( 'pre_get_posts', array( $this, 'filter_sort_rooms' ) );
 
 			add_filter( 'posts_fields', array( $this, 'posts_fields' ) );
 			add_filter( 'posts_join_paged', array( $this, 'posts_join_paged' ) );
@@ -68,25 +68,137 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			add_filter( 'manage_edit-hb_booking_sortable_columns', array( $this, 'sortable_columns' ) );
 		}
 
-		public function set_order( $query ) {
+		public function filter_sort_rooms( $query ) {
 			if ( ! is_post_type_archive( 'hb_room' ) && ! is_room_taxonomy() ) {
+				return;
+			}
+
+			if ( !isset( $query->query_vars['post_type'] ) || $query->query_vars['post_type'] !== 'hb_room' || !$query->is_post_type_archive ) {
 				return;
 			}
 
 			$sort_by = hb_get_request( 'sort_by' );
 
-			if ( $sort_by === 'date-desc' ) {
-				$query->set( 'orderby', 'date' );
-				$query->set( 'order', 'DESC' );
-			} elseif ( $sort_by === 'date-asc' ) {
-				$query->set( 'orderby', 'date' );
-				$query->set( 'order', 'ASC' );
-			} elseif ( $sort_by === 'title-asc' ) {
-				$query->set( 'orderby', 'title' );
-				$query->set( 'order', 'ASC' );
-			} elseif ( $sort_by === 'title-desc' ) {
-				$query->set( 'orderby', 'title' );
-				$query->set( 'order', 'DESC' );
+			if ( $sort_by ) {
+				if ( $sort_by === 'date-desc' ) {
+					$query->set( 'orderby', 'date' );
+					$query->set( 'order', 'DESC' );
+				} elseif ( $sort_by === 'date-asc' ) {
+					$query->set( 'orderby', 'date' );
+					$query->set( 'order', 'ASC' );
+				} elseif ( $sort_by === 'title-asc' ) {
+					$query->set( 'orderby', 'title' );
+					$query->set( 'order', 'ASC' );
+				} elseif ( $sort_by === 'title-desc' ) {
+					$query->set( 'orderby', 'title' );
+					$query->set( 'order', 'DESC' );
+				}
+			}
+
+			$meta_query = [];
+			$tax_query  = [];
+
+			//Price
+			$min_price = hb_get_request( 'min_price' );
+			$max_price = hb_get_request( 'max_price' );
+
+			if ( $min_price && $max_price ) {
+				$meta_query[] = array(
+					'key'     => 'hb_price',
+					'value'   => array( $min_price, $max_price ),
+					'type'    => 'DECIMAL',
+					'compare' => 'BETWEEN',
+				);
+			}
+
+			//Rating
+			$rating = hb_get_request( 'rating' );
+
+			if ( $rating ) {
+				$rating = explode( ',', $rating );
+
+				$unrated_index = array_search( 'unrated', $rating );
+
+				if ( $unrated_index !== false ) {
+					$rating[ $unrated_index ] = 0;
+				}
+
+				$rating_count = count( $rating );
+				if ( ! empty( $rating_count ) ) {
+					$rating_query = array();
+
+					if ( $rating_count === 1 ) {
+						$rating_query[] = array(
+							'key'     => 'hb_average_rating',
+							'value'   => $rating[0],
+							'type'    => 'NUMERIC',
+							'compare' => '>=',
+						);
+
+						$rating_query[] = array(
+							'key'     => 'hb_average_rating',
+							'value'   => $rating[0] + 1,
+							'type'    => 'NUMERIC',
+							'compare' => '<',
+						);
+
+						$rating_query ['relation'] = 'AND';
+					} else {
+						for ( $i = 0; $i < $rating_count; $i ++ ) {
+							$rating_query[ $i ][] = array(
+								'key'     => 'hb_average_rating',
+								'value'   => $rating[ $i ],
+								'type'    => 'NUMERIC',
+								'compare' => '>=',
+							);
+							$rating_query[ $i ][] = array(
+								'key'     => 'hb_average_rating',
+								'value'   => $rating[ $i ] + 1,
+								'type'    => 'NUMERIC',
+								'compare' => '<',
+							);
+
+							$rating_query[ $i ]['raltion'] = 'AND';
+						}
+
+						$rating_query ['relation'] = 'OR';
+					}
+
+					$meta_query[] = $rating_query;
+				}
+			}
+
+			if ( count( $meta_query ) > 0 ) {
+				$meta_query['relation'] = 'AND';
+
+				$query->set( 'meta_query', $meta_query );
+			}
+
+			//Room type
+			$room_type = hb_get_request( 'room_type' );
+			if ( $room_type ) {
+				$tax_query = array(
+					array(
+						'taxonomy' => 'hb_room_type',
+						'field'    => 'id',
+						'terms'    => explode( ',', $room_type ),
+					),
+				);
+			}
+
+			if ( isset( $atts['room_type'] ) && $atts['room_type'] ) {
+				$tax_query = array(
+					array(
+						'taxonomy' => 'hb_room_type',
+						'field'    => 'slug',
+						'terms'    => $atts['room_type'],
+					),
+				);
+			}
+
+			if ( count( $tax_query ) > 0 ) {
+				$tax_query['relation'] = 'AND';
+				$query->set( 'tax_query', $tax_query );
 			}
 		}
 

@@ -36,9 +36,15 @@ do_action( 'hotel_booking_archive_description' );
 		<?php
 		global $wp_query;
 
-		$total          = $wp_query->queried_object->count;
+		$total          = $wp_query->queried_object->count ?? 0;
 		$posts_per_page = $wp_query->query_vars['posts_per_page'];
-		$sort_by        = hb_get_request( 'sort_by' );
+
+		//Search Filter
+		hb_get_template( 'search/v2/search-filter-v2.php', array( 'atts' => array() ) );
+
+
+		//Sort By
+		$sort_by = hb_get_request( 'sort_by' );
 
 		$data = array(
 			'sort_by' => $sort_by
@@ -47,7 +53,7 @@ do_action( 'hotel_booking_archive_description' );
 		if ( $total ) {
 			$data['show_number'] = hb_get_show_room_text(
 				array(
-					'paged'         =>(get_query_var('paged')) ? get_query_var('paged') : 1,
+					'paged'         => ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1,
 					'total'         => $total,
 					'item_per_page' => $posts_per_page
 				)

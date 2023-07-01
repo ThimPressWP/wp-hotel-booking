@@ -573,7 +573,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 			return $total / $i;
 		}
 
-		return null;
+		return 0;
 	}
 
 	/**
