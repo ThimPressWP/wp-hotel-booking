@@ -3188,3 +3188,26 @@ div.sort-by-wrapper, .sort-by-wrapper .sort-by {
     margin: 0 auto;
 }
 
+.__hb_room_facility__attr{
+    display: flex;
+    align-items: center;
+}
+
+.__hb_room_facility__attr .facility_attr{
+    flex-basis: 25%;
+    display: flex;
+    align-items: center;
+}
+
+.facility_attr__icon{
+    width: 16px;
+    height: 16px;
+}
+
+.facility_attr__icon img{
+    display: block;
+}
+
+.facility_attr__label{
+    margin-left: 4px;
+}

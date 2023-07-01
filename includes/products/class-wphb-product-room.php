@@ -257,6 +257,11 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 		return hb_get_template_content( 'single-room/tabs/room-rules.php', array( 'rules' => $rules ) );
 	}
 
+	public function get_facilities(  ) {
+		$facilities = get_post_meta( $this->post->ID, '_wphb_room_facilities', true );
+		return hb_get_template_content( 'single-room/tabs/room-facilities.php', array( 'facilities' => $facilities ) );
+	}
+
 	function get_galleries( $with_featured = false, $ignore_first = true ) {
 		$gallery = array();
 
