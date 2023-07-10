@@ -3081,6 +3081,22 @@ button.wphb_loading::before {
     padding: 35px;
 }
 
+#hotel-booking-search-filter h3{
+    margin-bottom: 20px;
+}
+
+#hotel-booking-search-filter .clear-filter button{
+    position: relative;
+    height: 40px;
+    min-width: 200px;
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    padding: 7px 8px;
+    line-height: 24px;
+    font-size: 14px;
+}
+
+
 button.apply {
     font-size: 14px;
     font-weight: 600;

@@ -100,9 +100,9 @@ const hbRating = () => {
                 });
 
                 const url = new URL(window.location.href);
-                if(value.length){
+                if (value.length) {
                     url.searchParams.set('rating', value);
-                }else{
+                } else {
                     url.searchParams.delete('rating');
                 }
 
@@ -145,15 +145,45 @@ const hbRoomType = () => {
 
                 const url = new URL(window.location.href);
 
-                if(value.length){
+                if (value.length) {
                     url.searchParams.set('room_type', value);
-                }else{
+                } else {
                     url.searchParams.delete('room_type', value);
                 }
 
                 window.location.href = url;
             });
         }
+    }
+}
+
+const clearFieldFilter = () => {
+    const filterForms = document.querySelectorAll('.search-filter-form');
+    if (!filterForms) {
+        return;
+    }
+
+    for (let i = 0; i < filterForms.length; i++) {
+        const filterForm = filterForms[i];
+        const clearFilterBtn = filterForm.querySelector('.clear-filter button');
+
+        if (!clearFilterBtn) {
+            return;
+        }
+
+        clearFilterBtn.addEventListener('click', function () {
+            const url = new URL(window.location.href);
+
+            const filterArgs = ['min_price', 'max_price', 'rating', 'room_type'];
+
+            [...filterArgs].map(filterArg => {
+                if (url.searchParams.get(filterArg)) {
+                    url.searchParams.delete(filterArg);
+                }
+            });
+
+            window.location.href = url;
+        });
     }
 }
 
@@ -165,4 +195,5 @@ document.addEventListener('DOMContentLoaded', () => {
     hbPriceSlider();
     hbRating();
     hbRoomType();
+    clearFieldFilter();
 });

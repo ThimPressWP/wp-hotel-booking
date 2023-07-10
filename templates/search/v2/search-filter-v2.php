@@ -19,6 +19,11 @@ $fields = apply_filters( 'hotel_booking/shortcode/search-filter-v2/field/fields'
     <h3><?php esc_html_e( 'Filter By', 'wp-hotel-booking' ); ?></h3>
     <form class="search-filter-form" action="">
         <div class="hb-form-table">
+            <div class="clear-filter">
+                <button type="button">
+	                <?php esc_html_e( 'Clear all fields', 'wp-hotel-booking' ); ?>
+                </button>
+            </div>
 			<?php
 			foreach ( $fields as $key => $data ) {
 				hb_get_template( 'search/v2/search-filter/' . $key . '.php', compact( 'data' ) );
