@@ -75,7 +75,10 @@ Yes.
 
 == Changelog ==
 
-= 2.0.5 (2023-07-0x) =
+= 2.0.6 (2023-07-15) =
+~ Added: button reset filter
+
+= 2.0.5 (2023-07-07) =
 ~ Fixed: addition information display HTML.
 ~ Fixed: error search Room.
 ~ Remove: library jquery mobile.
