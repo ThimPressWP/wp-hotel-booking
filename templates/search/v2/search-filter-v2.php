@@ -2,11 +2,15 @@
 if ( ! isset( $atts ) ) {
 	return;
 }
+defined( 'ABSPATH' ) || exit();
+
+global $hb_settings;
+
 $fields = apply_filters( 'hotel_booking/shortcode/search-filter-v2/field/fields',
 	array(
 		'price'  => array(
-			'min_price' => $atts['min_price'] ?? 0,
-			'max_price' => $atts['max_price'] ?? 1500,
+			'min_price' => $atts['min_price'] ?? $hb_settings->get( 'filter_price_min', 0 ) ,
+			'max_price' => $atts['max_price'] ?? $hb_settings->get( 'filter_price_max', 0 ) ,
 			'min_value' => hb_get_request( 'min_price' ),
 			'max_value' => hb_get_request( 'max_price' )
 		),

@@ -27,6 +27,7 @@ class WPHB_Admin_Settings {
 		$tabs[] = include 'settings/class-wphb-admin-setting-emails.php';
 		$tabs[] = include 'settings/class-wphb-admin-setting-payments.php';
 		$tabs[] = include 'settings/class-wphb-admin-setting-room.php';
+		$tabs[] = include 'settings/class-wphb-admin-setting-advanced.php';
 
 		return apply_filters( 'hotel_booking_admin_setting_pages', $tabs );
 	}

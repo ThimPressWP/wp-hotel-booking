@@ -512,7 +512,7 @@ class WP_Hotel_Booking {
         $currency_symbol = hb_get_currency_symbol($currency);
         $thousands_separator = get_option( 'tp_hotel_booking_price_thousands_separator' ) ? get_option( 'tp_hotel_booking_price_thousands_separator' ) : ',';
         $decimals_separator  = get_option( 'tp_hotel_booking_price_decimals_separator' ) ? get_option( 'tp_hotel_booking_price_decimals_separator' ) : '.';
-		$number_decimal  = get_option( 'tp_hotel_booking_price_number_of_decimal' ) ? get_option( 'tp_hotel_booking_price_number_of_decimal' ) : '1';
+		$number_decimal  = get_option( 'tp_hotel_booking_price_number_of_decimal' ) ? get_option( 'tp_hotel_booking_price_number_of_decimal' ) : '0';
 		?>
         <script type="text/javascript">
             var hotel_settings = {
