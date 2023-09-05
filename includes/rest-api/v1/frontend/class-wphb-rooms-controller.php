@@ -145,7 +145,7 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 		$room_id        = absint( $params['roomID'] ) ?? 0;
 		$check_in_date  = sanitize_text_field( wp_unslash( $params['checkinDate'] ) ) ?? '';
 		$check_out_date = sanitize_text_field( wp_unslash( $params['checkoutDate'] ) ) ?? '';
-		$num_room       = absint( $params['numRoom'] ) ?? 1;
+		$num_room       = isset($params['numRoom']) ? absint( $params['numRoom'] ) : 1;
 
 		// add extra room when disable option :tp_hotel_booking_custom_process
 		$extra_data         = $params['extraData'] ?? array();
