@@ -57,7 +57,7 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 	 * @param WP_REST_Request request The request object.
 	 */
 	public function search_rooms( WP_REST_Request $request ) {
-		$params = $request->get_params();
+		$params           = $request->get_params();
 		$response         = new WPHB_REST_RESPONSE();
 		$response->status = 'success';
 
@@ -91,7 +91,7 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 				'max_price'      => $params['max_price'] ?? '',
 				'rating'         => $params['rating'] ?? '',
 				'room_type'      => $params['room_type'] ?? '',
-				'sort_by'        => $params['sort_by'] ?? ''
+				'sort_by'        => $params['sort_by'] ?? '',
 			);
 
 			$results = hb_search_rooms( $atts );
@@ -123,7 +123,7 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 				array(
 					'paged'         => $results['page'] ?? 1,
 					'total'         => $results['total'],
-					'item_per_page' => $limit
+					'item_per_page' => $limit,
 				)
 			);
 		} catch ( Exception $e ) {
@@ -143,9 +143,9 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 		$response->status = 'error';
 
 		$room_id        = absint( $params['roomID'] ) ?? 0;
-		$check_in_date  = sanitize_text_field( wp_unslash( $params['checkinDate'] ) ) ?? '';
-		$check_out_date = sanitize_text_field( wp_unslash( $params['checkoutDate'] ) ) ?? '';
-		$num_room       = isset($params['numRoom']) ? absint( $params['numRoom'] ) : 1;
+		$check_in_date  = sanitize_text_field( wp_unslash( $params['checkinDate'] ?? '' ) );
+		$check_out_date = sanitize_text_field( wp_unslash( $params['checkoutDate'] ?? '' ) );
+		$num_room       = absint( $params['numRoom'] ?? 1 );
 
 		// add extra room when disable option :tp_hotel_booking_custom_process
 		$extra_data         = $params['extraData'] ?? array();

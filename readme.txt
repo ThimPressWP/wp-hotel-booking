@@ -4,8 +4,8 @@ Donate link: https://thimpress.com/
 Tags: hotel, booking, hotel booking, reservation, reservations
 Requires at least: 5.6
 Requires PHP: 7.0
-Tested up to: 6.2.2
-Stable tag: 2.0.4
+Tested up to: 6.3.1
+Stable tag: 2.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,9 @@ Yes.
 7. System settings
 
 == Changelog ==
+
+= 2.0.7 (2023-09-22) =
+~ Fixed: bug empty cart when book room on page search.
 
 = 2.0.6 (2023-07-14) =
 ~ Added: button reset filter
