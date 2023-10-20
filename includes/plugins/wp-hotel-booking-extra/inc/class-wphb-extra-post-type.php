@@ -239,7 +239,11 @@ if ( ! class_exists( 'HB_Extra_Post_Type' ) ) {
 		 * Rmove extra
 		 */
 		public function tp_extra_package_remove() {
-			if ( ! isset( $_POST ) || ! isset( $_POST['package_id'] ) ) {
+			if ( ! isset( $_POST ) 
+				|| ! isset( $_POST['package_id'] ) 
+				|| ! isset( $_POST['nonce'] )
+				|| ! wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' )
+				|| ! current_user_can( 'delete_posts' ) ) {
 				return;
 			}
 

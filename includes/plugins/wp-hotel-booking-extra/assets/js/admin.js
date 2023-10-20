@@ -39,7 +39,8 @@
                     type: 'POST',
                     data: {
                         package_id: package_id,
-                        action: 'tp_extra_package_remove'
+                        action: 'tp_extra_package_remove',
+                        nonce: hotel_settings.nonce
                     }
                 }).done(function (res) {
                     if (typeof res.status !== 'undefined' && res.status === 'success') {

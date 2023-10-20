@@ -32,7 +32,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			add_action( 'init', array( $this, 'register_post_types' ) );
 			add_action( 'init', array( $this, 'register_post_statues' ) );
 			add_action( 'init', array( __CLASS__, 'register_taxonomies' ) );
-			add_action( 'admin_init', array( $this, 'update_taxonomy' ) );
+			// add_action( 'admin_init', array( $this, 'update_taxonomy' ) );
 
 			add_action( 'admin_menu', array( $this, 'remove_meta_boxes' ) );
 			add_action( 'admin_head-edit-tags.php', array( $this, 'fix_menu_parent_file' ) );
@@ -586,6 +586,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 		/**
 		 * Update custom fields for taxonomy
+		 * @deprecated 2.0.8
 		 */
 		public function update_taxonomy() {
 
@@ -606,7 +607,8 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 						$term_id  = sanitize_text_field( wp_unslash( $term_id ) );
 						$ordering = sanitize_text_field( wp_unslash( $ordering ) );
 
-						$when[] = "WHEN term_id = {$term_id} THEN {$ordering}";
+						// $when[] = "WHEN term_id = {$term_id} THEN {$ordering}";
+						$when[] = $wpdb->prepare( 'WHEN term_id = %d THEN %d', array( $term_id, $ordering ) );
 						$ids[]  = absint( $term_id );
 					}
 
