@@ -242,12 +242,13 @@ if ( ! class_exists( 'HB_Extra_Post_Type' ) ) {
 			if ( ! isset( $_POST ) 
 				|| ! isset( $_POST['package_id'] ) 
 				|| ! isset( $_POST['nonce'] )
-				|| ! wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' )
-				|| ! current_user_can( 'delete_posts' ) ) {
+				|| ! wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) ) {
 				return;
 			}
-
 			$packageId = absint( $_POST['package_id'] );
+			if ( ! current_user_can( 'delete_posts', $packageId ) ) {
+				return;
+			}
 
 			if ( wp_delete_post( $packageId ) || ! get_post( $packageId ) ) {
 				wp_send_json( array( 'status' => 'success' ) );

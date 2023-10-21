@@ -588,6 +588,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		 * Update custom fields for taxonomy
 		 * @deprecated 2.0.8
 		 */
+		/*
 		public function update_taxonomy() {
 
 			if ( ! empty( $_REQUEST['action'] ) && in_array(
@@ -638,7 +639,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 					}
 				}
 			}
-		}
+		}*/
 
 		/**
 		 * @param $term_id
