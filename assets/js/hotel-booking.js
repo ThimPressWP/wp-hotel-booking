@@ -65,7 +65,8 @@
 			type      : 'post',
 			data      : {
 				action: 'hotel_booking_fetch_customer_info',
-				email : $email.val()
+				email : $email.val(),
+				nonce : hotel_settings.nonce
 			},
 			beforeSend: function () {
 				customer_table.hb_overlay_ajax_start();
@@ -339,7 +340,8 @@
 			url       : hotel_settings.ajax,
 			data      : {
 				action: 'hotel_booking_apply_coupon',
-				code  : $coupon.val()
+				code  : $coupon.val(),
+				nonce : hotel_settings.nonce
 			},
 			dataType  : 'text',
 			beforeSend: function () {

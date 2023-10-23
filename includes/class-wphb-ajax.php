@@ -77,7 +77,7 @@ class WPHB_Ajax {
 		);
 
 		if ( ! current_user_can( 'edit_pages' ) || empty( $_POST['page_name'] ) ) {
-			$response['message'] = 'Request invalid';
+			$response['message'] = __( 'Request invalid', 'wp-hotel-booking' );
 			hb_send_json( $response );
 		}
 
@@ -171,6 +171,12 @@ class WPHB_Ajax {
 	 * Dismiss remove TP Hotel Booking plugin notice
 	 */
 	static function dismiss_notice() {
+
+		if ( ! isset( hb_get_request( 'nonce' ) )
+			|| ! wp_verify_nonce( hb_get_request( 'nonce' ), 'hb_booking_nonce_action' ) ) {
+			wp_die();
+		}
+
 		if ( is_multisite() ) {
 			update_site_option( 'wphb_notice_remove_hotel_booking', 1 );
 		} else {
@@ -187,6 +193,10 @@ class WPHB_Ajax {
 	 * Fetch customer information with user email
 	 */
 	static function fetch_customer_info() {
+		if ( ! isset( hb_get_request( 'nonce' ) )
+			|| ! wp_verify_nonce( hb_get_request( 'nonce' ), 'hb_booking_nonce_action' ) ) {
+			die();
+		}
 		$email = hb_get_request( 'email' );
 		$args  = array(
 			'post_type'   => 'hb_booking',
@@ -267,6 +277,10 @@ class WPHB_Ajax {
 	static function apply_coupon() {
 		! session_id() && session_start();
 		$code = hb_get_request( 'code' );
+		if ( ! isset( hb_get_request( 'nonce' ) )
+			|| ! wp_verify_nonce( hb_get_request( 'nonce' ), 'hb_booking_nonce_action' ) ) {
+			wp_die( __( 'Require Nonce!', 'wp-hotel-booking' ) );
+		}
 		ob_start();
 		$today  = strtotime( date( 'm/d/Y' ) );
 		$coupon = hb_get_coupons_active( $today, $code );

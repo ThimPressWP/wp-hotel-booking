@@ -229,6 +229,10 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 				return;
 			}
 
+			if ( ! wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) ) {
+				return;
+			}
+
 			if ( ! isset( $_POST['cart_id'] ) || ! $_POST['cart_id'] ) {
 				wp_send_json(
 					array(

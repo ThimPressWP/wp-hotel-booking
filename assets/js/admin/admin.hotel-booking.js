@@ -504,7 +504,8 @@
                     url: ajaxurl,
                     type: 'POST',
                     data: {
-                        action: 'hotel_booking_dismiss_notice'
+                        action: 'hotel_booking_dismiss_notice',
+                        nonce : hotel_settings.nonce
                     }
                 })
             }
