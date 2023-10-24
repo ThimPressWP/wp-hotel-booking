@@ -187,66 +187,17 @@ if ( ! class_exists( 'HB_Extra_Post_Type' ) ) {
 		}
 
 		/**
-		 * Extra room meta box
-		 * do not use : minhpd 30-5-2022
-		 */
-		// public function settings_meta_box() {
-		// 	WPHB_Meta_Box::instance(
-		// 		'extra_settings',
-		// 		array(
-		// 			'title'           => __( 'Extra Settings', 'wp-hotel-booking' ),
-		// 			'post_type'       => 'hb_extra_room',
-		// 			'meta_key_prefix' => 'tp_hb_extra_room_',
-		// 			'priority'        => 'high',
-		// 			'type'            => 'vertical',
-		// 		),
-		// 		array()
-		// 	)->add_field(
-		// 		array(
-		// 			'name'  => 'price',
-		// 			'label' => __( 'Price', 'wp-hotel-booking' ),
-		// 			'type'  => 'number',
-		// 			'std'   => '10',
-		// 			'desc'  => __( 'Price of extra room option', 'wp-hotel-booking' ),
-		// 			'min'   => 0,
-		// 			'step'  => 0.01,
-		// 		),
-		// 		array(
-		// 			'name'    => 'respondent_name',
-		// 			'label'   => __( 'Unit', 'wp-hotel-booking' ),
-		// 			'desc'    => __( 'Unit of extra room option', 'wp-hotel-booking' ),
-		// 			'type'    => 'text',
-		// 			'default' => __( 'Package', 'wp-hotel-booking' ),
-		// 		),
-		// 		array(
-		// 			'name'    => 'respondent',
-		// 			'label'   => __( 'Type', 'wp-hotel-booking' ),
-		// 			'desc'    => __( 'Type of extra room option', 'wp-hotel-booking' ),
-		// 			'type'    => 'select',
-		// 			'options' => hb_extra_types(),
-		// 		),
-		// 		array(
-		// 			'name'  => 'required',
-		// 			'label' => __( 'Required', 'wp-hotel-booking' ),
-		// 			'desc'  => __( 'Required include for all booking', 'wp-hotel-booking' ),
-		// 			'type'  => 'checkbox',
-		// 			'std'   => '',
-		// 		)
-		// 	);
-		// }
-
-		/**
 		 * Rmove extra
 		 */
 		public function tp_extra_package_remove() {
-			if ( ! isset( $_POST ) 
-				|| ! isset( $_POST['package_id'] ) 
+			if ( ! isset( $_POST )
+				|| ! isset( $_POST['package_id'] )
 				|| ! isset( $_POST['nonce'] )
 				|| ! wp_verify_nonce( $_POST['nonce'], 'hb_booking_nonce_action' ) ) {
 				return;
 			}
 			$packageId = absint( $_POST['package_id'] );
-			if ( ! current_user_can( 'delete_posts', $packageId ) ) {
+			if ( ! current_user_can( 'delete_post', $packageId ) ) {
 				return;
 			}
 

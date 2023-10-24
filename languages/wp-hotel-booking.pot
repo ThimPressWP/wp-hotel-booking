@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WP Hotel Booking plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Hotel Booking 2.0.8\n"
+"Project-Id-Version: WP Hotel Booking 2.0.8.2-beta-1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-hotel-booking\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-10-24T05:37:18+03:00\n"
+"POT-Creation-Date: 2023-10-24T11:09:31+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wp-hotel-booking\n"
@@ -1427,95 +1427,95 @@ msgstr ""
 msgid "Cart ID is invalid."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:282
+#: includes/class-wphb-ajax.php:281
 msgid "Require Nonce!"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:302
+#: includes/class-wphb-ajax.php:301
 msgid "Coupon code applied"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:305
+#: includes/class-wphb-ajax.php:304
 msgid "Coupon does not exist!"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:316
+#: includes/class-wphb-ajax.php:315
 msgid "Coupon code removed"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:352
+#: includes/class-wphb-ajax.php:351
 msgid "Some thing not right!"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:360
-#: includes/class-wphb-ajax.php:373
+#: includes/class-wphb-ajax.php:359
+#: includes/class-wphb-ajax.php:372
 msgid "Room ID is not exists."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:380
+#: includes/class-wphb-ajax.php:379
 msgid "Can not select zero room."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:388
+#: includes/class-wphb-ajax.php:387
 msgid "Checkin date, checkout date is invalid."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:416
+#: includes/class-wphb-ajax.php:415
 #: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:214
 msgid "Added successfully."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:454
+#: includes/class-wphb-ajax.php:453
 msgid "Room selected. Please View Cart to change order"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:472
+#: includes/class-wphb-ajax.php:471
 #: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-cart.php:297
 msgid "Cart item is not exists."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:553
+#: includes/class-wphb-ajax.php:552
 #: includes/wphb-core-functions.php:52
 msgid "Room not found."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:562
+#: includes/class-wphb-ajax.php:561
 msgid "Please select check in date and checkout date."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:625
+#: includes/class-wphb-ajax.php:624
 msgid "Edit order item"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:691
+#: includes/class-wphb-ajax.php:690
 msgid "Something when wrong!"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:697
+#: includes/class-wphb-ajax.php:696
 msgid "Request not valid"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:702
+#: includes/class-wphb-ajax.php:701
 msgid "nonce is invalid"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:707
+#: includes/class-wphb-ajax.php:706
 msgid "Date check-in or date check-out is invalid"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:721
+#: includes/class-wphb-ajax.php:720
 msgid "Id room is invalid"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:726
+#: includes/class-wphb-ajax.php:725
 msgid "Can not add item with zero quantity."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:918
+#: includes/class-wphb-ajax.php:917
 msgid "Room is not exists."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:928
+#: includes/class-wphb-ajax.php:927
 msgid "Date is not exists."
 msgstr ""
 
