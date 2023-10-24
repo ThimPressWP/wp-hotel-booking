@@ -171,8 +171,7 @@ class WPHB_Ajax {
 	 * Dismiss remove TP Hotel Booking plugin notice
 	 */
 	static function dismiss_notice() {
-
-		if ( ! isset( hb_get_request( 'nonce' ) )
+		if ( empty( hb_get_request('nonce', false ) )
 			|| ! wp_verify_nonce( hb_get_request( 'nonce' ), 'hb_booking_nonce_action' ) ) {
 			wp_die();
 		}
@@ -193,7 +192,7 @@ class WPHB_Ajax {
 	 * Fetch customer information with user email
 	 */
 	static function fetch_customer_info() {
-		if ( ! isset( hb_get_request( 'nonce' ) )
+		if ( empty( hb_get_request('nonce', false ) )
 			|| ! wp_verify_nonce( hb_get_request( 'nonce' ), 'hb_booking_nonce_action' ) ) {
 			die();
 		}
@@ -277,7 +276,7 @@ class WPHB_Ajax {
 	static function apply_coupon() {
 		! session_id() && session_start();
 		$code = hb_get_request( 'code' );
-		if ( ! isset( hb_get_request( 'nonce' ) )
+		if ( empty( hb_get_request('nonce', false ) )
 			|| ! wp_verify_nonce( hb_get_request( 'nonce' ), 'hb_booking_nonce_action' ) ) {
 			wp_die( __( 'Require Nonce!', 'wp-hotel-booking' ) );
 		}
