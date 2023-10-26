@@ -18,16 +18,16 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-define( 'WPHB_FILE', __FILE__ );
-define( 'WPHB_PLUGIN_PATH', __DIR__ );
+const WPHB_FILE = __FILE__;
+const WPHB_PLUGIN_PATH = __DIR__;
 define( 'WPHB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
-define( 'WPHB_VERSION', '2.0.0' );
+const WPHB_VERSION = '2.0.9';
 define( 'WPHB_BLOG_ID', get_current_blog_id() );
 define( 'WPHB_TEMPLATES', WPHB_PLUGIN_PATH . '/templates/' );
-define( 'TP_HB_EXTRA', __FILE__ );
-define( 'WPHB_DEBUG', 1 );
-define( 'WPHB_API_V2', 1 );
-define( 'WPHB_SHOW_FORM', 0 );
+const TP_HB_EXTRA = __FILE__;
+const WPHB_DEBUG = 1;
+const WPHB_API_V2 = 1;
+const WPHB_SHOW_FORM = 0;
 
 /**
  * Class WP_Hotel_Booking

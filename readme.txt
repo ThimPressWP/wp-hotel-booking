@@ -75,6 +75,10 @@ Yes.
 
 == Changelog ==
 
+= 2.0.9 (2023-10-26) =
+~ Fixed: security.
+~ Compatible: WP 6.4
+
 = 2.0.8.1 (2023-10-24) =
 ~ Fixed: security.
 
