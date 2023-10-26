@@ -81,19 +81,17 @@ if ( ! function_exists( 'hotel_booking_get_room_available' ) ) {
 			}
 		}
 
-		
-
 		// $valid is false
 		if ( $valid === false ) {
 			return $errors;
 		} else {
 			$room_available_date = WPHB_Room::instance( $room_id )->get_dates_available();
 			$arr_qty_available   = array();
-			
+
 			$checkin   = gmdate( 'Y-m-d', absint( $args['check_in_date'] ) );
 			$checkout  = gmdate( 'Y-m-d', absint( $args['check_out_date'] ) );
 			$date_next = $checkin;
-			
+
 			while ( $date_next <= $checkout ) {
 				$timeStamp = strtotime( $date_next );
 				if ( array_key_exists( $timeStamp, $room_available_date ) ) {
@@ -116,7 +114,7 @@ if ( ! function_exists( 'hotel_booking_get_room_available' ) ) {
 				$date_blocked = get_post_meta( $blocked_id, 'hb_blocked_time', false );
 				if ( ! empty( $date_blocked ) ) {
 					foreach ( $date_blocked as $date ) {
-						if ( $date >= strtotime( $checkin ) && $date < strtotime( $checkout ) ){
+						if ( $date >= strtotime( $checkin ) && $date < strtotime( $checkout ) ) {
 							$qty = 0;
 							break;
 						}
@@ -252,7 +250,8 @@ if ( is_multisite() ) {
  */
 
 if ( ! function_exists( 'hb_notice_remove_hotel_booking' ) ) {
-	function hb_notice_remove_hotel_booking() { ?>
+	function hb_notice_remove_hotel_booking() {
+		?>
 		<div class="notice notice-error hb-dismiss-notice is-dismissible">
 			<p>
 				<?php echo wp_kses( '<strong>WP Hotel Booking</strong> plugin version ' . WPHB_VERSION . ' is an upgrade of <strong>TP Hotel Booking</strong> plugin. Please deactivate and delete <strong>TP Hotel Booking/TP Hotel Booking add-ons</strong> and replace by <strong>WP Hotel Booking/WP Hotel Booking add-ons</strong>.', array( 'strong' => array() ), 'wp-hotel-booking' ); ?>

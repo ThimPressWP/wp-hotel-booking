@@ -98,7 +98,7 @@ if ( ! class_exists( 'HB_Extra_Post_Type' ) ) {
 				case 'required':
 					?>
 					<input type="checkbox" name="required-extra"
-						   data-extra-id="<?php echo esc_attr( $post_id ); ?>" <?php checked( get_post_meta( $post_id, 'tp_hb_extra_room_required', true ), 1 ); ?> disabled>
+							data-extra-id="<?php echo esc_attr( $post_id ); ?>" <?php checked( get_post_meta( $post_id, 'tp_hb_extra_room_required', true ), 1 ); ?> disabled>
 					<?php
 					break;
 				default:
@@ -175,8 +175,8 @@ if ( ! class_exists( 'HB_Extra_Post_Type' ) ) {
 			foreach ( $post as $key => $value ) {
 				$value = sanitize_text_field( wp_unslash( $value ) );
 				if ( get_post_meta( $post_id, 'tp_hb_extra_room_' . $key, true )
-					 || get_post_meta( $post_id, 'tp_hb_extra_room_' . $key, true ) === ''
-					 || get_post_meta( $post_id, 'tp_hb_extra_room_' . $key, true ) == 0 ) {
+					|| get_post_meta( $post_id, 'tp_hb_extra_room_' . $key, true ) === ''
+					|| get_post_meta( $post_id, 'tp_hb_extra_room_' . $key, true ) == 0 ) {
 					update_post_meta( $post_id, 'tp_hb_extra_room_' . $key, $value );
 				} else {
 					add_post_meta( $post_id, 'tp_hb_extra_room_' . $key, $value );

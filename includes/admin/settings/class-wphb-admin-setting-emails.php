@@ -222,7 +222,6 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 
 			return apply_filters( 'hotel_booking_admin_setting_sections_' . $this->id, $sections );
 		}
-
 	}
 
 }

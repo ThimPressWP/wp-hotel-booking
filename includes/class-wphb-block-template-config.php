@@ -34,7 +34,6 @@ class Block_Template_Config {
 
 		add_filter( 'get_block_templates', array( $this, 'add_block_templates' ), 10, 3 );
 		add_action( 'init', array( $this, 'register_tag_block' ) );
-
 	}
 
 	public function add_block_templates( array $query_result, array $query, $template_type ): array {
@@ -126,5 +125,3 @@ class Block_Template_Config {
 }
 
 Block_Template_Config::instance();
-
-

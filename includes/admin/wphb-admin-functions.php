@@ -264,10 +264,10 @@ if ( ! function_exists( 'hb_booking_status_completed_action' ) ) {
 			foreach ( $coupons as $coupon ) {
 				$usage_count = get_post_meta( $coupon, '_hb_usage_count', true );
 				if ( strpos( $new_status, 'completed' ) == 0 ) {
-					$usage_count ++;
+					++$usage_count;
 				} else {
 					if ( $usage_count > 0 ) {
-						$usage_count --;
+						--$usage_count;
 					} else {
 						$usage_count = 0;
 					}
@@ -457,10 +457,10 @@ if ( ! function_exists( 'hb_booking_restrict_manage_posts' ) ) {
 			?>
 			<span><?php _e( 'Date Range', 'wp-hotel-booking' ); ?></span>
 			<input type="text" id="hb-booking-date-from" class="hb-date-field" value="<?php echo esc_attr( $from ); ?>"
-				   name="date-from" readonly placeholder="<?php _e( 'From', 'wp-hotel-booking' ); ?>"/>
+					name="date-from" readonly placeholder="<?php _e( 'From', 'wp-hotel-booking' ); ?>"/>
 			<input type="hidden" value="<?php echo esc_attr( $from_timestamp ); ?>" name="date-from-timestamp"/>
 			<input type="text" id="hb-booking-date-to" class="hb-date-field" value="<?php echo esc_attr( $to ); ?>"
-				   name="date-to" readonly placeholder="<?php _e( 'To', 'wp-hotel-booking' ); ?>"/>
+					name="date-to" readonly placeholder="<?php _e( 'To', 'wp-hotel-booking' ); ?>"/>
 			<input type="hidden" value="<?php echo esc_attr( $to_timestamp ); ?>" name="date-to-timestamp"/>
 			<select name="filter-type">
 				<option value=""><?php _e( '---Filter By---', 'wp-hotel-booking' ); ?></option>
@@ -510,12 +510,12 @@ if ( ! function_exists( 'hb_admin_js_template' ) ) {
 										<div class="centered">
 											<img src="{{attachment.src}}" alt="">
 											<input type="hidden" name="hb-gallery[{{data.id}}][gallery][]"
-												   value="{{attachment.id}}"/>
+													value="{{attachment.id}}"/>
 										</div>
 									</div>
 								</div>
 								<a class="dashicons dashicons-trash"
-								   title="<?php _e( 'Remove this image', 'wp-hotel-booking' ); ?>"></a>
+									title="<?php _e( 'Remove this image', 'wp-hotel-booking' ); ?>"></a>
 							</li>
 							<# }); #>
 							<li class="attachment add-new">
@@ -543,7 +543,7 @@ if ( ! function_exists( 'hb_admin_js_template' ) ) {
 					</div>
 				</div>
 				<a class="dashicons dashicons-trash"
-				   title="<?php _e( 'Remove this image', 'wp-hotel-booking' ); ?>"></a>
+					title="<?php _e( 'Remove this image', 'wp-hotel-booking' ); ?>"></a>
 			</li>
 		</script>
 		<?php

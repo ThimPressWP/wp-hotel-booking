@@ -136,7 +136,7 @@ class WPHB_Cart {
 					}
 					if ( $cart_item->product_id ) {
 						// product class
-						$product = hotel_booking_get_product_class( $cart_item->product_id, ( array )$param );
+						$product = hotel_booking_get_product_class( $cart_item->product_id, (array) $param );
 						// set product data
 						$cart_item->product_data = $product;
 						// amount item include tax
@@ -636,7 +636,7 @@ class WPHB_Cart {
 						if ( get_post_type( $cart_item->product_id ) != 'hb_room' ) {
 							$parent  = $this->get_cart_item( $cart_item->parent_id );
 							$room_id = $parent->product_id;
-						};
+						}
 						// check deposit type room
 						$deposit_type = get_post_meta( $room_id, '_hb_deposit_type', true );
 						switch ( $deposit_type ) {
@@ -648,7 +648,7 @@ class WPHB_Cart {
 								break;
 							default:
 								break;
-						};
+						}
 					} else {
 						if ( ! empty( hb_get_advance_payment() ) && ( $advance_payment = hb_get_advance_payment() ) < 100 ) {
 							$total += $cart_item->amount * $advance_payment / 100;
@@ -779,7 +779,6 @@ class WPHB_Cart {
 
 		return self::$instance[ $appfix ];
 	}
-
 }
 
 if ( ! is_admin() ) {

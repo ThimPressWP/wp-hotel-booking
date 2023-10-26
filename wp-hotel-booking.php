@@ -4,7 +4,7 @@
  * Plugin URI: http://thimpress.com/
  * Description: Full of professional features for a booking room system
  * Author: ThimPress
- * Version: 2.0.8.2-beta-1
+ * Version: 2.0.9-beta-1
  * Author URI: http://thimpress.com
  * Text Domain: wp-hotel-booking
  * Domain Path: /languages/
@@ -19,7 +19,7 @@
 defined( 'ABSPATH' ) || exit;
 
 define( 'WPHB_FILE', __FILE__ );
-define( 'WPHB_PLUGIN_PATH', dirname( __FILE__ ) );
+define( 'WPHB_PLUGIN_PATH', __DIR__ );
 define( 'WPHB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
 define( 'WPHB_VERSION', '2.0.0' );
 define( 'WPHB_BLOG_ID', get_current_blog_id() );
@@ -502,57 +502,58 @@ class WP_Hotel_Booking {
 
 		if ( is_user_logged_in() && is_admin() ) {
 			$screen = get_current_screen();
-		};
+		}
 		$upload_dir          = wp_upload_dir();
 		$upload_base_url     = $upload_dir['baseurl'];
 		$min_booking_date    = get_option( 'tp_hotel_booking_minimum_booking_day' ) ? get_option( 'tp_hotel_booking_minimum_booking_day' ) : 0;
 		$cart_page_url       = ! empty( hb_settings()->get( 'cart_page_id' ) ) ? get_permalink( hb_settings()->get( 'cart_page_id' ) ) : '';
 		$checkout_page_url   = ! empty( hb_settings()->get( 'checkout_page_id' ) ) ? get_permalink( hb_settings()->get( 'checkout_page_id' ) ) : '';
-		$currency  = get_option( 'tp_hotel_booking_currency', 'USD' );
-        $currency_symbol = hb_get_currency_symbol($currency);
-        $thousands_separator = get_option( 'tp_hotel_booking_price_thousands_separator' ) ? get_option( 'tp_hotel_booking_price_thousands_separator' ) : ',';
-        $decimals_separator  = get_option( 'tp_hotel_booking_price_decimals_separator' ) ? get_option( 'tp_hotel_booking_price_decimals_separator' ) : '.';
-		$number_decimal  = get_option( 'tp_hotel_booking_price_number_of_decimal' ) ? get_option( 'tp_hotel_booking_price_number_of_decimal' ) : '0';
+		$currency            = get_option( 'tp_hotel_booking_currency', 'USD' );
+		$currency_symbol     = hb_get_currency_symbol( $currency );
+		$thousands_separator = get_option( 'tp_hotel_booking_price_thousands_separator' ) ? get_option( 'tp_hotel_booking_price_thousands_separator' ) : ',';
+		$decimals_separator  = get_option( 'tp_hotel_booking_price_decimals_separator' ) ? get_option( 'tp_hotel_booking_price_decimals_separator' ) : '.';
+		$number_decimal      = get_option( 'tp_hotel_booking_price_number_of_decimal' ) ? get_option( 'tp_hotel_booking_price_number_of_decimal' ) : '0';
 		?>
-        <script type="text/javascript">
-            var hotel_settings = {
-                cart_page_url: '<?php echo esc_url( $cart_page_url ); ?>',
-                checkout_page_url: '<?php echo esc_url( $checkout_page_url ); ?>',
-                site_url: '<?php echo esc_url( site_url() ); ?>',
-                ajax: '<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>',
-                settings: <?php echo WPHB_Settings::instance()->toJson( apply_filters( 'hb_settings_fields', array( 'review_rating_required' ) ) ); ?>,
-                upload_base_url: '<?php echo esc_js( $upload_base_url ); ?>',
-                meta_key: {
-                    prefix: '_hb_'
-                },
-                date_format: '<?php echo get_option( 'date_format' ); ?>',
-                nonce: '<?php echo esc_html( wp_create_nonce( 'hb_booking_nonce_action' ) ); ?>',
-                timezone: '<?php echo esc_html( current_time( 'timestamp' ) ); ?>',
-                min_booking_date: <?php echo esc_html( $min_booking_date ); ?>,
-                wphb_rest_url: '<?php echo get_rest_url(); ?>',
-                is_page_search: <?php echo is_page( hb_get_page_id( 'search' ) ) ? 1 : 0; ?>,
-                url_page_search: '<?php echo get_permalink( hb_get_page_id( 'search' ) ); ?>',
-                room_id: <?php echo isset( $screen->id ) && $screen->id == 'hb_room' ? get_the_ID() : 0; ?>,
-                block_dates:
+		<script type="text/javascript">
+			var hotel_settings = {
+				cart_page_url: '<?php echo esc_url( $cart_page_url ); ?>',
+				checkout_page_url: '<?php echo esc_url( $checkout_page_url ); ?>',
+				site_url: '<?php echo esc_url( site_url() ); ?>',
+				ajax: '<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>',
+				settings: <?php echo WPHB_Settings::instance()->toJson( apply_filters( 'hb_settings_fields', array( 'review_rating_required' ) ) ); ?>,
+				upload_base_url: '<?php echo esc_js( $upload_base_url ); ?>',
+				meta_key: {
+					prefix: '_hb_'
+				},
+				date_format: '<?php echo get_option( 'date_format' ); ?>',
+				nonce: '<?php echo esc_html( wp_create_nonce( 'hb_booking_nonce_action' ) ); ?>',
+				timezone: '<?php echo esc_html( current_time( 'timestamp' ) ); ?>',
+				min_booking_date: <?php echo esc_html( $min_booking_date ); ?>,
+				wphb_rest_url: '<?php echo get_rest_url(); ?>',
+				is_page_search: <?php echo is_page( hb_get_page_id( 'search' ) ) ? 1 : 0; ?>,
+				url_page_search: '<?php echo get_permalink( hb_get_page_id( 'search' ) ); ?>',
+				room_id: <?php echo isset( $screen->id ) && $screen->id == 'hb_room' ? get_the_ID() : 0; ?>,
+				block_dates:
 				<?php
-				$room_id = get_the_ID();
+				$room_id        = get_the_ID();
 				$selected_block = array();
 				if ( $room_id ) {
 					$calendar_id = get_post_meta( $room_id, 'hb_blocked_id', true );
 					if ( $calendar_id ) {
 						$selected_block = get_post_meta( $calendar_id, 'hb_blocked_time' );
-					};
-				};
+					}
+				}
 				echo json_encode( $selected_block );
-				?>,
-                currency: '<?php echo $currency; ?>',
-                currency_symbol: '<?php echo $currency_symbol; ?>',
-                currency_position: '<?php echo get_option( 'tp_hotel_booking_price_currency_position', 'left' ); ?>',
-                thousands_separator: '<?php echo $thousands_separator; ?>',
-                decimals_separator: '<?php echo $decimals_separator; ?>',
-                number_decimal: '<?php echo $number_decimal; ?>',
-            }
-        </script>
+				?>
+				,
+				currency: '<?php echo $currency; ?>',
+				currency_symbol: '<?php echo $currency_symbol; ?>',
+				currency_position: '<?php echo get_option( 'tp_hotel_booking_price_currency_position', 'left' ); ?>',
+				thousands_separator: '<?php echo $thousands_separator; ?>',
+				decimals_separator: '<?php echo $decimals_separator; ?>',
+				number_decimal: '<?php echo $number_decimal; ?>',
+			}
+		</script>
 		<?php
 	}
 

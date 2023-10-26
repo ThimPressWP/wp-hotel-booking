@@ -223,7 +223,7 @@ if ( ! function_exists( 'hotel_booking_print_pricing_json' ) ) {
 
 		$month_day = date( 't', strtotime( $end ) );
 		$room      = WPHB_Room::instance( $room_id );
-		for ( $i = 0; $i < $month_day; $i ++ ) {
+		for ( $i = 0; $i < $month_day; $i++ ) {
 			$day   = strtotime( $start ) + $i * 24 * HOUR_IN_SECONDS;
 			$price = $room->get_price( $day, false );
 
@@ -277,4 +277,3 @@ if ( ! function_exists( 'hb_room_update_room_average_rating' ) ) {
 		}
 	}
 }
-

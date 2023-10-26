@@ -91,5 +91,4 @@ abstract class WPHB_Admin_Setting_Page {
 		$settings = $this->get_settings();
 		WPHB_Admin_Settings::save_fields( $settings );
 	}
-
 }

@@ -16,12 +16,12 @@ defined( 'ABSPATH' ) || exit();
 
 ?>
 
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-        </table>
-    </body>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</body>
 </html>

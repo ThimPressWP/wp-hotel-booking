@@ -22,8 +22,8 @@ class WPHB_Admin_Core_API extends WPHB_Abstract_API {
 
 		$path_version = DIRECTORY_SEPARATOR . $this->version . DIRECTORY_SEPARATOR . 'admin';
 
-		include_once dirname( __FILE__ ) . $path_version . '/class-wphb-admin-rooms-controller.php';
-		include_once dirname( __FILE__ ) . $path_version . '/class-wphb-admin-updates-controller.php';
+		include_once __DIR__ . $path_version . '/class-wphb-admin-rooms-controller.php';
+		include_once __DIR__ . $path_version . '/class-wphb-admin-updates-controller.php';
 
 		do_action( 'wphb/core-api/includes' );
 	}

@@ -50,7 +50,7 @@ defined( 'ABSPATH' ) || exit; ?>
 									<# } #>
 								</div>
 							</li>
-					 <# } #>
+					<# } #>
 				</ul>
 			</div>
 		<# } #>

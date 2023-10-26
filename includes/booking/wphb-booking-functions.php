@@ -438,7 +438,6 @@ if ( ! function_exists( 'hb_booking_get_check_in_date' ) ) {
 		sort( $data );
 
 		return array_shift( $data );
-
 	}
 }
 
@@ -457,6 +456,5 @@ if ( ! function_exists( 'hb_booking_get_check_out_date' ) ) {
 		sort( $data );
 
 		return array_pop( $data );
-
 	}
 }

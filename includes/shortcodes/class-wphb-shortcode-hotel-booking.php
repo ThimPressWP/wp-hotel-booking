@@ -114,7 +114,6 @@ class WPHB_Shortcode_Hotel_Booking extends WPHB_Shortcodes {
 
 		return ob_get_clean();
 	}
-
 }
 
 new WPHB_Shortcode_Hotel_Booking();

@@ -23,7 +23,10 @@ get_header(); ?>
 do_action( 'hotel_booking_before_main_content' );
 ?>
 
-<?php while ( have_posts() ) : the_post(); ?>
+<?php
+while ( have_posts() ) :
+	the_post();
+	?>
 
 	<?php hb_get_template_part( 'content', 'single-room' ); ?>
 
@@ -45,4 +48,5 @@ do_action( 'hotel_booking_after_main_content' );
 // do_action( 'hotel_booking_sidebar' );
 ?>
 
-<?php get_footer(); ?>
+<?php
+get_footer();

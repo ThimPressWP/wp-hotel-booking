@@ -79,7 +79,7 @@ class WPHB_Personal_Data {
 			$items = '';
 			foreach ( $rooms as $room ) {
 				$items .= $room->order_item_name . ' (x' . hb_get_order_item_meta( $room->order_item_id, 'qty', true ) . ') ' . date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_in_date', true ) ) . ' - ' . date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_out_date', true ) ) . "\n";
-			};
+			}
 
 			$customer_details = hb_get_customer_fullname( $booking_id, true )
 								. ' - Email: ' . $booking->customer_email

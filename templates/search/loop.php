@@ -25,15 +25,15 @@ $single_purchase = get_option( 'tp_hotel_booking_single_purchase' );
 
 <li class="hb-room clearfix">
 	<form name="hb-search-results"
-		  class="hb-search-room-results <?php echo isset( $single_purchase ) ? 'single-purchase' : ''; ?>">
+			class="hb-search-room-results <?php echo isset( $single_purchase ) ? 'single-purchase' : ''; ?>">
 		<?php do_action( 'hotel_booking_loop_before_item', $room->post->ID ); ?>
 		<div class="hb-room-content">
 			<div class="hb-room-thumbnail">
 				<?php if ( $featured ) : ?>
 					<a class="hb-room-gallery"
-					   data-lightbox="hb-room-gallery[<?php echo esc_attr( $room->post->ID ); ?>]"
-					   data-title="<?php echo esc_attr( $featured['alt'] ); ?>"
-					   href="<?php echo esc_attr( $featured['src'] ); ?>">
+						data-lightbox="hb-room-gallery[<?php echo esc_attr( $room->post->ID ); ?>]"
+						data-title="<?php echo esc_attr( $featured['alt'] ); ?>"
+						href="<?php echo esc_attr( $featured['src'] ); ?>">
 						<?php $room->getImage( 'catalog' ); ?>
 					</a>
 				<?php endif; ?>
@@ -60,7 +60,7 @@ $single_purchase = get_option( 'tp_hotel_booking_single_purchase' );
 							class="hb_search_item_price"><?php echo hb_format_price( $room->amount_singular ); ?></span>
 						<div class="hb_view_price">
 							<a href=""
-							   class="hb-view-booking-room-details"><?php _e( '(View price breakdown)', 'wp-hotel-booking' ); ?></a>
+								class="hb-view-booking-room-details"><?php _e( '(View price breakdown)', 'wp-hotel-booking' ); ?></a>
 							<?php hb_get_template( 'search/booking-room-details.php', array( 'room' => $room ) ); ?>
 						</div>
 					</li>
@@ -96,9 +96,9 @@ $single_purchase = get_option( 'tp_hotel_booking_single_purchase' );
 
 		<?php wp_nonce_field( 'hb_booking_nonce_action', 'nonce' ); ?>
 		<input type="hidden" name="check_in_date"
-			   value="<?php echo hb_get_request( 'check_in_date' ); ?>"/>
+				value="<?php echo hb_get_request( 'check_in_date' ); ?>"/>
 		<input type="hidden" name="check_out_date"
-			   value="<?php echo hb_get_request( 'check_out_date' ); ?>">
+				value="<?php echo hb_get_request( 'check_out_date' ); ?>">
 		<input type="hidden" name="room-id" value="<?php echo esc_attr( $room->post->ID ); ?>">
 		<input type="hidden" name="hotel-booking" value="cart">
 		<input type="hidden" name="action" value="hotel_booking_ajax_add_to_cart"/>

@@ -34,10 +34,10 @@ if ( $room_extra ) { ?>
 						<li data-price="<?php echo esc_attr( $extra->amount_singular ); ?>">
 							<div class="hb_extra_optional_right">
 								<input type="<?php echo $extra->required ? 'hidden' : 'checkbox'; ?>"
-									   name="hb_optional_quantity_selected[<?php echo esc_attr( $extra->ID ); ?>]"
-									   class="hb_optional_quantity_selected"
-									   id="<?php echo esc_attr( 'hb-ex-room-' . $post_id . '-' . $key ); ?>" <?php echo $extra->required ? 'checked="checked" ' : ''; ?>
-									   data-id = "<?php echo esc_attr( $extra->ID ); ?>"
+										name="hb_optional_quantity_selected[<?php echo esc_attr( $extra->ID ); ?>]"
+										class="hb_optional_quantity_selected"
+										id="<?php echo esc_attr( 'hb-ex-room-' . $post_id . '-' . $key ); ?>" <?php echo $extra->required ? 'checked="checked" ' : ''; ?>
+										data-id = "<?php echo esc_attr( $extra->ID ); ?>"
 								/>
 							</div>
 							<div class="hb_extra_optional_left">
@@ -47,7 +47,7 @@ if ( $room_extra ) { ?>
 									</div>
 									<p>
 										<?php
-											remove_all_filters('the_content');
+											remove_all_filters( 'the_content' );
 											$description = apply_filters( 'the_content', $extra->description );
 											echo str_replace( ']]>', ']]&gt;', $description );
 										?>
@@ -56,14 +56,14 @@ if ( $room_extra ) { ?>
 								<div class="hb_extra_detail_price">
 									<?php if ( $extra->respondent === 'number' ) { ?>
 										<input type="number" step="1" min="1"
-											   name="hb_optional_quantity[<?php echo esc_attr( $extra->ID ); ?>]"
-											   value="1"
-											   class="hb_optional_quantity"
+												name="hb_optional_quantity[<?php echo esc_attr( $extra->ID ); ?>]"
+												value="1"
+												class="hb_optional_quantity"
 										/>
 									<?php } else { ?>
 										<input type="hidden" step="1" min="1"
-											   name="hb_optional_quantity[<?php echo esc_attr( $extra->ID ); ?>]"
-											   value="1" />
+												name="hb_optional_quantity[<?php echo esc_attr( $extra->ID ); ?>]"
+												value="1" />
 									<?php } ?>
 									<label>
 										<strong><?php echo $extra->price; ?></strong>

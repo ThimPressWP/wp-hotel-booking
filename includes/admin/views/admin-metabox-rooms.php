@@ -82,12 +82,12 @@ $post_id = $post->ID;
 						}
 						if ( ! empty( $field['edit_option'] ) ) {
 							printf(
-								'<a href="%s" class="edit_meta" target="_blank">%s</a>', 
-								add_query_arg( 
-									$field['edit_option'], 
-									admin_url( $field['edit_option']['admin_url'] ) 
+								'<a href="%s" class="edit_meta" target="_blank">%s</a>',
+								add_query_arg(
+									$field['edit_option'],
+									admin_url( $field['edit_option']['admin_url'] )
 								),
-								$field['text_edit'] ?? esc_html__( 'Edit', 'wp-hotel-booking' ) 
+								$field['text_edit'] ?? esc_html__( 'Edit', 'wp-hotel-booking' )
 							);
 						}
 						echo '</div>';

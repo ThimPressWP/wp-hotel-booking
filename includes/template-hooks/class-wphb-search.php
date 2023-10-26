@@ -2,9 +2,9 @@
 
 class WPHB_Search_Template_Hook {
 	public function __construct() {
-		add_action('wphb/loop-v2/room-content', array($this, 'content_section'));
-		add_action('wphb/loop-v2/room-info', array($this, 'room_info_section'));
-		add_action('wphb/loop-v2/room-meta', array($this, 'room_meta_section'));
+		add_action( 'wphb/loop-v2/room-content', array( $this, 'content_section' ) );
+		add_action( 'wphb/loop-v2/room-info', array( $this, 'room_info_section' ) );
+		add_action( 'wphb/loop-v2/room-meta', array( $this, 'room_meta_section' ) );
 	}
 
 	public function content_section( $room ) {
@@ -12,11 +12,11 @@ class WPHB_Search_Template_Hook {
 			'wphb/filter/room-content',
 			array(
 				'search/v2/loop-v2/thumbnail.php',
-				'search/v2/loop-v2/room-info.php'
+				'search/v2/loop-v2/room-info.php',
 			)
 		);
 
-		foreach ($sections as $section){
+		foreach ( $sections as $section ) {
 			hb_get_template(
 				$section,
 				array(
@@ -35,7 +35,7 @@ class WPHB_Search_Template_Hook {
 			)
 		);
 
-		foreach ($sections as $section){
+		foreach ( $sections as $section ) {
 			hb_get_template(
 				$section,
 				array(
@@ -53,11 +53,11 @@ class WPHB_Search_Template_Hook {
 				'search/v2/loop-v2/room-info/room-meta/max-child.php',
 				'search/v2/loop-v2/room-info/room-meta/price.php',
 				'search/v2/loop-v2/room-info/room-meta/quanity.php',
-				'search/v2/loop-v2/room-info/room-meta/add-to-cart.php'
+				'search/v2/loop-v2/room-info/room-meta/add-to-cart.php',
 			)
 		);
 
-		foreach ($sections as $section){
+		foreach ( $sections as $section ) {
 			hb_get_template(
 				$section,
 				array(

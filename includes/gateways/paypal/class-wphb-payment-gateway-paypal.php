@@ -235,7 +235,6 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 		} else {
 
 		}
-
 	}
 
 	/**

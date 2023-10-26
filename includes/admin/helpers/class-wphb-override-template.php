@@ -90,7 +90,7 @@ if ( ! class_exists( 'WPHB_Helper_Override_Template' ) ) {
 					}
 
 					if ( ! empty( $theme_file ) ) {
-						self::$counts['all'] ++;
+						++self::$counts['all'];
 						$core_version  = self::_get_file_version( $template_path . $file );
 						$theme_version = self::_get_file_version( $theme_file );
 						// If core-template define version number then compare with it.
@@ -105,9 +105,9 @@ if ( ! class_exists( 'WPHB_Helper_Override_Template' ) ) {
 								true,
 							);
 							if ( empty( $theme_version ) ) {
-								self::$counts['undefined'] ++;
+								++self::$counts['undefined'];
 							}
-							self::$counts['outdated'] ++;
+							++self::$counts['outdated'];
 						} else {
 							$found_files[ $theme_folder ][] = array(
 								str_replace( WP_CONTENT_DIR . '/themes/', '', $theme_file ),
@@ -115,7 +115,7 @@ if ( ! class_exists( 'WPHB_Helper_Override_Template' ) ) {
 								$core_version ? $core_version : '?',
 								null,
 							);
-							self::$counts['up-to-date'] ++;
+							++self::$counts['up-to-date'];
 						}
 					}
 					if ( $check && $outdated_templates ) {

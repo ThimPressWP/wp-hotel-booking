@@ -28,7 +28,7 @@ if ( $total <= 1 ) {
 	global $wp;
 	$base = esc_url_raw( str_replace( 999999999, '%#%', get_pagenum_link( 999999999, false ) ) );
 	// $base = str_replace( home_url( $wp->request ) . '/', hb_get_page_permalink( 'search' ), $base );
-	
+
 	echo paginate_links(
 		apply_filters(
 			'hb_pagination_args',

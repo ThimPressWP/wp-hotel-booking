@@ -171,13 +171,13 @@ class WPHB_REST_Admin_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 			if ( empty( $start ) || empty( $end ) ) {
 				throw new Exception( esc_html__( 'Error: Timer invalid.', 'wp-hotel-booking' ) );
 			}
-			$args      = array(
-				'post_type'  => 'hb_booking',
-				'posts_per_page' => -1
+			$args = array(
+				'post_type'      => 'hb_booking',
+				'posts_per_page' => -1,
 			);
 
-			$format_time = get_option('date_format');
-			$the_query = new WP_Query( $args );
+			$format_time = get_option( 'date_format' );
+			$the_query   = new WP_Query( $args );
 			if ( $the_query->have_posts() ) :
 				while ( $the_query->have_posts() ) :
 					$the_query->the_post();
@@ -188,9 +188,9 @@ class WPHB_REST_Admin_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 							$data_item = hb_get_order_item_meta( $room->order_item_id );
 							$status    = get_post_status( $room->ID ?? 0 );
 							// if ( $data_item['check_in_date'][0] < strtotime($start) || $data_item['check_out_date'][0] > strtotime($end) ) {
-							// 	continue;
-							// } 
-							$data[]    = array(
+							//  continue;
+							// }
+							$data[] = array(
 								'title'           => $room->order_item_name,
 								'start'           => date( 'Y-m-d', ( $data_item['check_in_date'][0] ) ),
 								'end'             => date( 'Y-m-d', ( $data_item['check_out_date'][0] + ( 24 * 60 * 60 ) ) ),
@@ -198,16 +198,16 @@ class WPHB_REST_Admin_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 								'backgroundColor' => array_key_exists( $status, $color_status ) ? $color_status[ $status ] : '#2eb0d1',
 								'borderColor'     => array_key_exists( $status, $color_status ) ? $color_status[ $status ] : '#2eb0d1',
 								'data_order'      => array(
-									'id'         => $order->ID,
-									'link_edit'  => get_edit_post_link( $order->ID ),
-									'order_date' => gmdate( $format_time, strtotime( $order->post_date ) ),
-									'title'      => $room->order_item_name,
-									'total'      => hb_format_price( hb_get_order_item_meta( $room->order_item_id, 'total', true ), hb_get_currency_symbol( get_option( 'tp_hotel_booking_currency', 'USD' ) ) ),
+									'id'               => $order->ID,
+									'link_edit'        => get_edit_post_link( $order->ID ),
+									'order_date'       => gmdate( $format_time, strtotime( $order->post_date ) ),
+									'title'            => $room->order_item_name,
+									'total'            => hb_format_price( hb_get_order_item_meta( $room->order_item_id, 'total', true ), hb_get_currency_symbol( get_option( 'tp_hotel_booking_currency', 'USD' ) ) ),
 									'start_date_popup' => gmdate( $format_time, $data_item['check_in_date'][0] ),
 									'end_date_popup'   => gmdate( $format_time, $data_item['check_out_date'][0] ),
 								),
 							);
-						};
+						}
 					}
 				endwhile;
 			endif;

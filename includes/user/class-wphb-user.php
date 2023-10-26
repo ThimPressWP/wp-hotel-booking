@@ -34,5 +34,4 @@ class WPHB_User extends WPHB_User_Abstract {
 		$user_id = get_current_user_id();
 		return self::get_user( $user_id );
 	}
-
 }

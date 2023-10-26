@@ -9,10 +9,17 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 		private static $instance = null;
 
 		public function add_meta_box() {
-			add_meta_box( 'room_settings', esc_html__( 'Room Settings', 'wp-hotel-booking' ), array(
-				$this,
-				'render'
-			), $this->post_type, 'normal', 'high' );
+			add_meta_box(
+				'room_settings',
+				esc_html__( 'Room Settings', 'wp-hotel-booking' ),
+				array(
+					$this,
+					'render',
+				),
+				$this->post_type,
+				'normal',
+				'high'
+			);
 		}
 
 		/**
@@ -102,7 +109,7 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 			$tab_faq = apply_filters(
 				'wpbh_meta_box_room_facilities_fields',
 				array(
-					'_wphb_room_facilities' => new WPHB_Admin_Metabox_Room_Facilities()
+					'_wphb_room_facilities' => new WPHB_Admin_Metabox_Room_Facilities(),
 				)
 			);
 
@@ -274,14 +281,14 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 						'std'   => '1',
 						'desc'  => __( 'The number of beds', 'wp-hotel-booking' ),
 						'min'   => 0,
-						'step'  => 1
+						'step'  => 1,
 					),
 					'room_area'                 => array(
 						'name'  => 'room_area',
 						'label' => __( 'Area', 'wp-hotel-booking' ),
 						'type'  => 'text',
-						'desc'  => ''
-					)
+						'desc'  => '',
+					),
 				),
 				$post_id
 			);
@@ -321,7 +328,6 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 			);
 
 			return $tab_gallery;
-
 		}
 
 		/**

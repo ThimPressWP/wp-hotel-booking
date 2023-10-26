@@ -73,7 +73,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				return;
 			}
 
-			if ( !isset( $query->query_vars['post_type'] ) || $query->query_vars['post_type'] !== 'hb_room' || !$query->is_post_type_archive ) {
+			if ( ! isset( $query->query_vars['post_type'] ) || $query->query_vars['post_type'] !== 'hb_room' || ! $query->is_post_type_archive ) {
 				return;
 			}
 
@@ -144,7 +144,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 						$rating_query ['relation'] = 'AND';
 					} else {
-						for ( $i = 0; $i < $rating_count; $i ++ ) {
+						for ( $i = 0; $i < $rating_count; $i++ ) {
 							$rating_query[ $i ][] = array(
 								'key'     => 'hb_average_rating',
 								'value'   => $rating[ $i ],
@@ -615,12 +615,12 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 					$query = sprintf(
 						"
-                    UPDATE {$wpdb->terms}
-                    SET term_group = CASE
-                       %s
-                    END
-                    WHERE term_id IN(%s)
-                ",
+					UPDATE {$wpdb->terms}
+					SET term_group = CASE
+						%s
+					END
+					WHERE term_id IN(%s)
+				",
 						join( "\n", $when ),
 						join( ', ', $ids )
 					);

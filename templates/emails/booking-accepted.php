@@ -20,10 +20,11 @@ defined( 'ABSPATH' ) || exit();
  */
 
 // email heading
-hb_get_template( 'emails/email-header.php',
+hb_get_template(
+	'emails/email-header.php',
 	array(
 		'email_heading'      => $email_heading,
-		'email_heading_desc' => $email_heading_desc
+		'email_heading_desc' => $email_heading_desc,
 	)
 );
 

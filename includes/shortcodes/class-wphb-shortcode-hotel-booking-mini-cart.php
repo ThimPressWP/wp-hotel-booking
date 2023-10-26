@@ -56,7 +56,6 @@ class WPHB_Shortcode_Hotel_Booking_Mini_Cart extends WPHB_Shortcodes {
 	function utils() {
 		wp_enqueue_script( 'wp-util' );
 	}
-
 }
 
 new WPHB_Shortcode_Hotel_Booking_Mini_Cart();

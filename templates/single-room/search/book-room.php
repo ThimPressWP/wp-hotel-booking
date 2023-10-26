@@ -23,7 +23,7 @@ if ( ! $post ) {
 <script type="text/html" id="tmpl-hb-room-load-form-cart">
 
 	<form action="POST" name="hb-search-results"
-		  class="hb-search-room-results hotel-booking-search hotel-booking-single-room-action">
+			class="hb-search-room-results hotel-booking-search hotel-booking-single-room-action">
 
 		<div class="hb-booking-room-form-head">
 			<h2 class="hb-room-name"><?php printf( '%s', $post->post_title ); ?></h2>
@@ -55,7 +55,7 @@ if ( ! $post ) {
 
 		<div class="hb-booking-room-form-footer">
 			<a href="#" data-template="hb-room-load-form"
-			   class="hb_previous_step hb_button"><?php _e( 'Previous', 'wp-hotel-booking' ); ?></a>
+				class="hb_previous_step hb_button"><?php _e( 'Previous', 'wp-hotel-booking' ); ?></a>
 			<button type="submit"
 					class="hb_add_to_cart hb_button"><?php _e( 'Add To Cart', 'wp-hotel-booking' ); ?></button>
 			<input type="hidden" name="check_in_date_text" value="{{ data.check_in_date_text }}" />

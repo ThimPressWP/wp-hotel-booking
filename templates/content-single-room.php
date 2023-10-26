@@ -24,7 +24,8 @@ if ( post_password_required() ) {
 	echo get_the_password_form();
 
 	return;
-} ?>
+}
+?>
 
 <div id="room-<?php the_ID(); ?>" <?php post_class( 'hb_single_room' ); ?>>
 
@@ -35,7 +36,7 @@ if ( post_password_required() ) {
 	do_action( 'hotel_booking_before_single_room' );
 	?>
 
-    <div class="summary entry-summary">
+	<div class="summary entry-summary">
 
 		<?php
 		/**
@@ -59,7 +60,7 @@ if ( post_password_required() ) {
 		do_action( 'hotel_booking_single_room_infomation' );
 		?>
 
-    </div>
+	</div>
 
 	<?php
 	/**

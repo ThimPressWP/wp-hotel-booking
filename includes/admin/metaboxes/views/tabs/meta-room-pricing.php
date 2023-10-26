@@ -176,15 +176,15 @@ $date_order   = hb_start_of_week_order();
 		</h3>
 		<div class="hb-pricing-controls">
 			<!-- <a href="" class="dashicons dashicons-edit" data-action="edit"
-			   title="<?php _e( 'Clone', 'wp-hotel-booking' ); ?>"></a> -->
+				title="<?php _e( 'Clone', 'wp-hotel-booking' ); ?>"></a> -->
 
 			<# if( typeof data.clone !== 'undefined' && data.clone === true ) { #>
 			<a href="" class="dashicons dashicons-admin-page" data-action="clone"
-			   title="<?php _e( 'Clone', 'wp-hotel-booking' ); ?>"></a>
+				title="<?php _e( 'Clone', 'wp-hotel-booking' ); ?>"></a>
 			<# } #>
 
 			<a href="" class="dashicons dashicons-trash" data-action="remove"
-			   title="<?php _e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
+				title="<?php _e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
 		</div>
 
 		<div class="hb-pricing-list">
@@ -201,7 +201,7 @@ $date_order   = hb_start_of_week_order();
 					<?php foreach ( $date_order as $i ) { ?>
 						<td>
 							<input class="hb-pricing-price" type="number" min="0" step="any"
-								   name="_hbpricing[prices][__INDEX__][<?php echo esc_attr( $i ); ?>]" value="" size="10"/>
+									name="_hbpricing[prices][__INDEX__][<?php echo esc_attr( $i ); ?>]" value="" size="10"/>
 						</td>
 					<?php } ?>
 				</tr>

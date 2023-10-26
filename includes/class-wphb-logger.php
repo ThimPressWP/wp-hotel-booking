@@ -97,5 +97,4 @@ class WPHB_Logger {
 
 		do_action( 'hotel_booking_log_clear', $handle );
 	}
-
 }

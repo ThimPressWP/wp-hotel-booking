@@ -31,7 +31,7 @@ if ( $packages ) {
 						<?php if ( ! get_post_meta( $cart->product_id, 'tp_hb_extra_room_required' ) ) { ?>
 							<span>(<?php printf( 'x%s', $cart->quantity ); ?>)
 							<a href="#" class="hb_package_remove"
-							   data-cart-id="<?php echo esc_attr( $cart->cart_id ); ?>"><i class="fa fa-times"></i></a>
+								data-cart-id="<?php echo esc_attr( $cart->cart_id ); ?>"><i class="fa fa-times"></i></a>
 						</span>
 						<?php } ?>
 					</div>

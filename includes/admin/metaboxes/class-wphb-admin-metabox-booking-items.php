@@ -37,10 +37,18 @@ class WPHB_Admin_Metabox_Booking_Items {
 	}
 
 	public function add_meta_box() {
-		add_meta_box( $this->id, $this->title, array(
-			$this,
-			'render'
-		), $this->screen, $this->context, $this->priority, $this->callback_args );
+		add_meta_box(
+			$this->id,
+			$this->title,
+			array(
+				$this,
+				'render',
+			),
+			$this->screen,
+			$this->context,
+			$this->priority,
+			$this->callback_args
+		);
 	}
 
 	public function render( $post ) {
@@ -56,5 +64,4 @@ class WPHB_Admin_Metabox_Booking_Items {
 			return;
 		}
 	}
-
 }

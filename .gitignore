@@ -3,3 +3,4 @@
 /releases
 /.DS_Store
 package-lock.json
+/vendor

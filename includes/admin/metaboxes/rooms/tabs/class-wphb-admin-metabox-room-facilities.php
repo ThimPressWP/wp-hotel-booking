@@ -19,26 +19,25 @@ class WPHB_Admin_Metabox_Room_Facilities extends WPHB_Meta_Box {
 		if ( ! empty( $fac_label ) ) {
 			$fac_size = count( $fac_label );
 
-			for ( $i = 0; $i < $fac_size; $i ++ ) {
+			for ( $i = 0; $i < $fac_size; $i++ ) {
 				if ( ! empty( $fac_label[ $i ] ) ) {
 					$fac_attr_size = count( $fac_attr_label[ $i ] );
 
 					$attr = array();
 
-					for ( $j = 0; $j < $fac_attr_size; $j ++ ) {
+					for ( $j = 0; $j < $fac_attr_size; $j++ ) {
 						$attr[] = array(
 							'label' => $fac_attr_label[ $i ][ $j ],
-							'image' => $fac_attr_image[ $i ][ $j ]
+							'image' => $fac_attr_image[ $i ][ $j ],
 						);
 					}
 					$facs[] = array(
 						'label' => $fac_label[ $i ],
-						'attr'  => $attr
+						'attr'  => $attr,
 					);
 				}
 			}
 		}
-
 
 		update_post_meta( $post_id, '_wphb_room_facilities', $facs );
 	}

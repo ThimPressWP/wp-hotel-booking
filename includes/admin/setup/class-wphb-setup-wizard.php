@@ -277,7 +277,7 @@ class WPHB_Setup_Wizard {
 		$steps   = $this->get_step_keys();
 		$at      = array_search( $current, $steps );
 		if ( $at < sizeof( $steps ) - 1 ) {
-			$at ++;
+			++$at;
 		}
 
 		return esc_url_raw( add_query_arg( 'step', $steps[ $at ], admin_url( $this->_base_url ) ) );
@@ -293,7 +293,7 @@ class WPHB_Setup_Wizard {
 		$steps   = $this->get_step_keys();
 		$at      = array_search( $current, $steps );
 		if ( $at > 0 ) {
-			$at --;
+			--$at;
 		}
 
 		return esc_url_raw( add_query_arg( 'step', $steps[ $at ], admin_url( $this->_base_url ) ) );

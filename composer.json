@@ -1,0 +1,36 @@
+{
+	"name": "wp-hotel-booking/wp-hotel-booking",
+	"description": "Coding Starndard for WP Hotel Booking.",
+	"type": "library",
+	"license": "GPL-3.0-or-later",
+	"homepage": "https://wordpress.org/plugins/wp-hotel-booking",
+	"authors": [
+		{
+			"name": "LearnPress team",
+			"email": "learnpress@thimpress.com",
+			"homepage": "https://thimpress.com"
+		}
+	],
+	"support": {
+		"issues": "https://thimpress.com"
+	},
+	"require-dev": {
+		"squizlabs/php_codesniffer": "^3.7.2",
+		"wp-coding-standards/wpcs": "^3.0.1"
+	},
+	"scripts": {
+		"format": "phpcbf --standard=phpcs.xml --report-summary --report-source",
+		"lint": "phpcs --standard=phpcs.xml",
+		"phpcs": "phpcs --standard=phpcs.xml"
+	},
+	"autoload": {
+		"psr-4": {
+			"LearnPress\\": "inc/"
+		}
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	}
+}

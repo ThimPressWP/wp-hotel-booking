@@ -258,7 +258,6 @@ if ( ! class_exists( 'HB_Extra_Package' ) ) {
 		}
 
 		public function is_in_stock() {
-
 		}
 
 		/**
@@ -284,9 +283,9 @@ if ( ! class_exists( 'HB_Extra_Package' ) ) {
 				$package = self::$_instance[ $id ];
 
 				if ( $package->check_in_date === $params['check_in_date'] &&
-					 $package->check_out_date === $params['check_out_date'] &&
-					 $package->parent_quantity == $params['room_quantity'] &&
-					 $package->quantity == $params['quantity']
+					$package->check_out_date === $params['check_out_date'] &&
+					$package->parent_quantity == $params['room_quantity'] &&
+					$package->quantity == $params['quantity']
 				) {
 					return $package;
 				}

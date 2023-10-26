@@ -28,7 +28,7 @@ class WPHB_Admin_Metabox_Room_FAQ extends WPHB_Meta_Box {
 		if ( ! empty( $faq_title ) ) {
 			$faq_title_size = count( $faq_title );
 
-			for ( $i = 0; $i < $faq_title_size; $i ++ ) {
+			for ( $i = 0; $i < $faq_title_size; $i++ ) {
 				if ( ! empty( $faq_title[ $i ] ) ) {
 					$faqs[] = array( $faq_title[ $i ], $faq_content[ $i ] );
 				}
@@ -36,7 +36,5 @@ class WPHB_Admin_Metabox_Room_FAQ extends WPHB_Meta_Box {
 		}
 
 		update_post_meta( $post_id, '_wphb_room_faq', $faqs );
-
 	}
-
 }

@@ -81,7 +81,7 @@ class WPHB_Checkout {
 			// initialize Booking object
 			$booking = WPHB_Booking::instance( $booking_id );
 		}
-		
+
 		if ( $booking_id ) {
 			// update booking info meta post
 			WPHB_Booking::instance( $booking_id )->update_room_booking( $booking_id );
@@ -179,7 +179,6 @@ class WPHB_Checkout {
 				)
 			);
 		}
-
 	}
 
 	/**
@@ -224,5 +223,4 @@ class WPHB_Checkout {
 		}
 		return self::$_instance;
 	}
-
 }

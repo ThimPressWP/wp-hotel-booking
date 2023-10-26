@@ -43,7 +43,6 @@ abstract class WPHB_Abstract_API {
 		$this->rest_api_includes();
 
 		add_action( 'rest_api_init', array( $this, 'rest_api_register_routes' ), 10 );
-
 	}
 
 	public function rest_api_includes() {
@@ -78,4 +77,3 @@ abstract class WPHB_Abstract_API {
 		$this->controllers = $controllers;
 	}
 }
-

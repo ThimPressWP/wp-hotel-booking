@@ -26,7 +26,7 @@ $booking = WPHB_Booking::instance( $post->ID );
 <div id="booking_details">
 	<?php wp_nonce_field( 'hotel-booking-metabox-booking-details', 'hotel_booking_metabox_booking_details_nonce' ); ?>
 	<h2 class="hb_meta_title">
-		<?php echo esc_html( sprintf( esc_html__( 'Book ID %s', 'wp-hotel-booking' ), hb_format_order_number( $post->ID ) ) ) ; ?>
+		<?php echo esc_html( sprintf( esc_html__( 'Book ID %s', 'wp-hotel-booking' ), hb_format_order_number( $post->ID ) ) ); ?>
 	</h2>
 	<p class="description"><?php printf( esc_html__( 'Booked on %s', 'wp-hotel-booking' ), esc_html( $post->post_date ) ); ?></p>
 	<div id="booking_details_section">
@@ -106,30 +106,30 @@ $booking = WPHB_Booking::instance( $post->ID );
 						);
 						?>
 						<input type="text" name="_hb_customer_first_name" id="_hb_customer_first_name"
-							   value="<?php echo esc_attr( $booking->customer_first_name ); ?>"
-							   placeholder="<?php esc_attr_e( 'First name', 'wp-hotel-booking' ); ?>"/>
+								value="<?php echo esc_attr( $booking->customer_first_name ); ?>"
+								placeholder="<?php esc_attr_e( 'First name', 'wp-hotel-booking' ); ?>"/>
 						<input type="text" name="_hb_customer_last_name" id="_hb_customer_last_name"
-							   value="<?php echo esc_attr( $booking->customer_last_name ); ?>"
-							   placeholder="<?php esc_attr_e( 'Last name', 'wp-hotel-booking' ); ?>"/>
+								value="<?php echo esc_attr( $booking->customer_last_name ); ?>"
+								placeholder="<?php esc_attr_e( 'Last name', 'wp-hotel-booking' ); ?>"/>
 						<input type="text" name="_hb_customer_address" id="_hb_customer_address"
-							   value="<?php echo esc_attr( $booking->customer_address ); ?>"
-							   placeholder="<?php esc_attr_e( 'Address', 'wp-hotel-booking' ); ?>"/>
+								value="<?php echo esc_attr( $booking->customer_address ); ?>"
+								placeholder="<?php esc_attr_e( 'Address', 'wp-hotel-booking' ); ?>"/>
 						<input type="text" name="_hb_customer_city" id="_hb_customer_city"
-							   value="<?php echo esc_attr( $booking->customer_city ); ?>"
-							   placeholder="<?php esc_attr_e( 'City', 'wp-hotel-booking' ); ?>"/>
+								value="<?php echo esc_attr( $booking->customer_city ); ?>"
+								placeholder="<?php esc_attr_e( 'City', 'wp-hotel-booking' ); ?>"/>
 					</div>
 					<div class="edit_col">
 						<input type="text" name="_hb_customer_state" id="_hb_customer_state"
-							   value="<?php echo esc_attr( $booking->customer_state ); ?>"
-							   placeholder="<?php esc_attr_e( 'State', 'wp-hotel-booking' ); ?>"/>
+								value="<?php echo esc_attr( $booking->customer_state ); ?>"
+								placeholder="<?php esc_attr_e( 'State', 'wp-hotel-booking' ); ?>"/>
 						<input type="text" name="_hb_customer_postal_code" id="_hb_customer_postal_code"
-							   value="<?php echo esc_attr( $booking->customer_postal_code ); ?>"
-							   placeholder="<?php esc_attr_e( 'Postl code', 'wp-hotel-booking' ); ?>"/>
+								value="<?php echo esc_attr( $booking->customer_postal_code ); ?>"
+								placeholder="<?php esc_attr_e( 'Postl code', 'wp-hotel-booking' ); ?>"/>
 						<input type="email" placeholder="<?php esc_attr_e( 'Email address', 'wp-hotel-booking' ); ?>"
-							   name="_hb_customer_email" value="<?php echo esc_attr( $booking->customer_email ); ?>"/>
+								name="_hb_customer_email" value="<?php echo esc_attr( $booking->customer_email ); ?>"/>
 						<input type="text" name="_hb_customer_phone"
-							   placeholder="<?php esc_attr_e( 'Phone', 'wp-hotel-booking' ); ?>"
-							   value="<?php echo esc_attr( $booking->customer_phone ); ?>"/>
+								placeholder="<?php esc_attr_e( 'Phone', 'wp-hotel-booking' ); ?>"
+								value="<?php echo esc_attr( $booking->customer_phone ); ?>"/>
 						<?php
 						hb_dropdown_countries(
 							array(
@@ -158,8 +158,8 @@ $booking = WPHB_Booking::instance( $post->ID );
 				</div>
 				<div class="edit_details">
 					<textarea name="content"
-							  placeholder="<?php esc_attr_e( 'Empty Booking Notes', 'wp-hotel-booking' ); ?>" rows="5"
-							  cols="10"><?php echo esc_html( $booking->post->post_content ); ?></textarea>
+								placeholder="<?php esc_attr_e( 'Empty Booking Notes', 'wp-hotel-booking' ); ?>" rows="5"
+								cols="10"><?php echo esc_html( $booking->post->post_content ); ?></textarea>
 				</div>
 			</div>
 

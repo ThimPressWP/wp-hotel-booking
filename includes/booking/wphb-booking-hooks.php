@@ -181,7 +181,6 @@ if ( ! function_exists( 'hb_customer_place_order_email' ) ) {
 		$admin_send = wp_mail( $admin_email, $subject, $body, $headers );
 
 		return ( $customer_send && $admin_send );
-
 	}
 }
 add_action( 'hb_booking_status_changed', 'hb_customer_email_order_changes_status', 10, 3 );

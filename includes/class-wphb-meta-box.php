@@ -51,7 +51,6 @@ abstract class WPHB_Meta_Box {
 	 * Add meta box to post
 	 */
 	public function add_meta_box() {
-
 	}
 
 	/**
@@ -137,7 +136,5 @@ abstract class WPHB_Meta_Box {
 		if ( $post->post_type == $this->post_type ) {
 			do_action( 'wphb_save_' . $post->post_type . '_metabox', $post_id, $post );
 		}
-
 	}
 }
-

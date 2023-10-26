@@ -150,7 +150,6 @@ class WPHB_Comments {
 				break;
 		}
 	}
-
 }
 
 new WPHB_Comments();

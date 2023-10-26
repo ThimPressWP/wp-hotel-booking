@@ -28,7 +28,7 @@ if ( ! class_exists( 'WPHB_Meta_Box_Extra_Options' ) ) {
 			return apply_filters(
 				'wpbh_meta_box_room_extra_settings',
 				array(
-					'price'     => array(
+					'price'           => array(
 						'name'  => 'price',
 						'label' => esc_html__( 'Price', 'wp-hotel-booking' ),
 						'type'  => 'number',

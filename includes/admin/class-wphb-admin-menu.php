@@ -25,7 +25,6 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 		 */
 		public function __construct() {
 			add_action( 'admin_menu', array( $this, 'register' ) );
-
 		}
 
 		/**

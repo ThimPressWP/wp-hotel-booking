@@ -45,7 +45,6 @@ class WPHB_Shortcode_Hotel_Booking_Slider extends WPHB_Shortcodes {
 			);
 		endif;
 	}
-
 }
 
 new WPHB_Shortcode_Hotel_Booking_Slider();

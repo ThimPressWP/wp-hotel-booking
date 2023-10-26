@@ -94,11 +94,11 @@ if ( ! class_exists( 'WPHB_COUPON_HOOKS' ) ) {
 					<th><?php _e( 'Enable Coupon', 'wp-hotel-booking' ); ?></th>
 					<td>
 						<input type="hidden"
-							   name="<?php echo esc_attr( $settings->get_field_name( 'enable_coupon' ) ); ?>"
-							   value="0"/>
+								name="<?php echo esc_attr( $settings->get_field_name( 'enable_coupon' ) ); ?>"
+								value="0"/>
 						<input type="checkbox"
-							   name="<?php echo esc_attr( $settings->get_field_name( 'enable_coupon' ) ); ?>" <?php checked( $settings->get( 'enable_coupon' ) ? 1 : 0, 1 ); ?>
-							   value="1"/>
+								name="<?php echo esc_attr( $settings->get_field_name( 'enable_coupon' ) ); ?>" <?php checked( $settings->get( 'enable_coupon' ) ? 1 : 0, 1 ); ?>
+								value="1"/>
 					</td>
 				</tr>
 			</table>
@@ -130,8 +130,8 @@ if ( ! class_exists( 'WPHB_COUPON_HOOKS' ) ) {
 					<tr class="hb_coupon">
 						<td colspan="9" class="hb-align-center">
 							<input type="text" name="hb-coupon-code" value=""
-								   placeholder="<?php _e( 'Coupon', 'wp-hotel-booking' ); ?>"
-								   style="width: 150px; vertical-align: top;"/>
+									placeholder="<?php _e( 'Coupon', 'wp-hotel-booking' ); ?>"
+									style="width: 150px; vertical-align: top;"/>
 							<button type="button"
 									id="hb-apply-coupon"><?php _e( 'Apply Coupon', 'wp-hotel-booking' ); ?></button>
 						</td>

@@ -28,7 +28,7 @@ defined( 'ABSPATH' ) || exit();
 		<?php
 		echo esc_html( $booking->customer_phone );
 		?>
- </span>
+</span>
 	</li>
 </ul>
 

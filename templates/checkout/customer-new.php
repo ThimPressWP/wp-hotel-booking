@@ -44,7 +44,7 @@ defined( 'ABSPATH' ) || exit;
 
 				<div class="hb-form-field-input">
 					<input type="text" name="first_name" value="<?php echo esc_attr( $customer->first_name ); ?>"
-						   placeholder="<?php _e( 'First name', 'wp-hotel-booking' ); ?>" required/>
+							placeholder="<?php _e( 'First name', 'wp-hotel-booking' ); ?>" required/>
 				</div>
 			</li>
 			<li class="hb-form-field">
@@ -53,7 +53,7 @@ defined( 'ABSPATH' ) || exit;
 
 				<div class="hb-form-field-input">
 					<input type="text" name="last_name" value="<?php echo esc_attr( $customer->last_name ); ?>"
-						   placeholder="<?php _e( 'Last name', 'wp-hotel-booking' ); ?>" required/>
+							placeholder="<?php _e( 'Last name', 'wp-hotel-booking' ); ?>" required/>
 				</div>
 			</li>
 			<li class="hb-form-field">
@@ -62,7 +62,7 @@ defined( 'ABSPATH' ) || exit;
 
 				<div class="hb-form-field-input">
 					<input type="text" name="address" value="<?php echo esc_attr( $customer->address ); ?>"
-						   placeholder="<?php _e( 'Address', 'wp-hotel-booking' ); ?>" required/>
+							placeholder="<?php _e( 'Address', 'wp-hotel-booking' ); ?>" required/>
 				</div>
 			</li>
 			<li class="hb-form-field">
@@ -71,7 +71,7 @@ defined( 'ABSPATH' ) || exit;
 
 				<div class="hb-form-field-input">
 					<input type="text" name="city" value="<?php echo esc_attr( $customer->city ); ?>"
-						   placeholder="<?php _e( 'City', 'wp-hotel-booking' ); ?>" required/>
+							placeholder="<?php _e( 'City', 'wp-hotel-booking' ); ?>" required/>
 				</div>
 			</li>
 			<li class="hb-form-field">
@@ -80,7 +80,7 @@ defined( 'ABSPATH' ) || exit;
 
 				<div class="hb-form-field-input">
 					<input type="text" name="state" value="<?php echo esc_attr( $customer->state ); ?>"
-						   placeholder="<?php _e( 'State', 'wp-hotel-booking' ); ?>" required/>
+							placeholder="<?php _e( 'State', 'wp-hotel-booking' ); ?>" required/>
 				</div>
 			</li>
 		</ul>
@@ -91,7 +91,7 @@ defined( 'ABSPATH' ) || exit;
 
 				<div class="hb-form-field-input">
 					<input type="text" name="postal_code" value="<?php echo esc_attr( $customer->postal_code ); ?>"
-						   placeholder="<?php _e( 'Postal code', 'wp-hotel-booking' ); ?>" required/>
+							placeholder="<?php _e( 'Postal code', 'wp-hotel-booking' ); ?>" required/>
 				</div>
 			</li>
 			<li class="hb-form-field">
@@ -117,7 +117,7 @@ defined( 'ABSPATH' ) || exit;
 
 				<div class="hb-form-field-input">
 					<input type="text" name="phone" value="<?php echo esc_attr( $customer->phone ); ?>"
-						   placeholder="<?php _e( 'Phone Number', 'wp-hotel-booking' ); ?>" required/>
+							placeholder="<?php _e( 'Phone Number', 'wp-hotel-booking' ); ?>" required/>
 				</div>
 			</li>
 			<li class="hb-form-field">
@@ -126,7 +126,7 @@ defined( 'ABSPATH' ) || exit;
 
 				<div class="hb-form-field-input">
 					<input type="email" name="email" value="<?php echo esc_attr( $customer->email ); ?>"
-						   placeholder="<?php _e( 'Email address', 'wp-hotel-booking' ); ?>" required/>
+							placeholder="<?php _e( 'Email address', 'wp-hotel-booking' ); ?>" required/>
 				</div>
 			</li>
 		</ul>

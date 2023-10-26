@@ -170,7 +170,7 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 		 * Update settings
 		 */
 		public function update_settings() {
-		
+
 			if ( empty( $_POST ) || ( empty( $_POST['wphb_meta_box_settings_nonce'] ) || ! wp_verify_nonce( wp_unslash( $_POST['wphb_meta_box_settings_nonce'] ), 'wphb_update_meta_box_settings' ) ) ) {
 				return;
 			}

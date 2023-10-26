@@ -21,7 +21,5 @@ class WPHB_Admin_Metabox_Room_Block_Date extends WPHB_Meta_Box {
 	}
 
 	public function save( $post_id ) {
-
 	}
-
 }

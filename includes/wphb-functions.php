@@ -184,7 +184,7 @@ if ( ! function_exists( 'hb_get_capacity_of_rooms' ) ) {
 		$max_adult = $hb_settings->get( 'max_adults_all_room' );
 		$return    = array();
 		if ( $max_adult ) {
-			for ( $i = 1; $i <= $max_adult; $i ++ ) {
+			for ( $i = 1; $i <= $max_adult; $i++ ) {
 				$return[ $i ] = array(
 					'value' => $i,
 					'text'  => $i,
@@ -482,9 +482,9 @@ if ( ! function_exists( 'hb_dropdown_child_per_room' ) ) {
 		);
 		$max_child = hb_get_max_child_of_rooms();
 		$output    = '<select name="' . $args['name'] . '">';
-		$output    .= '<option value="0">' . __( 'Select', 'wp-hotel-booking' ) . '</option>';
+		$output   .= '<option value="0">' . __( 'Select', 'wp-hotel-booking' ) . '</option>';
 		if ( $max_child > 0 ) {
-			for ( $i = 1; $i <= $max_child; $i ++ ) {
+			for ( $i = 1; $i <= $max_child; $i++ ) {
 				$output .= sprintf( '<option value="%1$d"%2$s>%1$d</option>', $i, $args['selected'] == $i ? ' selected="selected"' : '' );
 			}
 		}
@@ -816,11 +816,11 @@ if ( ! function_exists( 'hb_start_of_week_order' ) ) {
 
 		$order = array();
 
-		for ( $i = (int) $start; $i < 7; $i ++ ) {
+		for ( $i = (int) $start; $i < 7; $i++ ) {
 			$order[] = $i;
 		}
 
-		for ( $j = 0; $j < $start; $j ++ ) {
+		for ( $j = 0; $j < $start; $j++ ) {
 			$order[] = $j;
 		}
 
@@ -1194,7 +1194,7 @@ if ( ! function_exists( 'hb_dropdown_numbers' ) ) {
 		}
 		if ( empty( $options ) ) {
 
-			for ( $i = $min; $i <= $max; $i ++ ) {
+			for ( $i = $min; $i <= $max; $i++ ) {
 				$output .= sprintf( '<option value="%1$d"%2$s>%1$d</option>', $i, $selected == $i ? ' selected="selected"' : '' );
 			}
 		} else {
@@ -1485,12 +1485,12 @@ if ( ! function_exists( 'hb_format_price' ) ) {
 		}
 
 		$price_format = $before
-		                . number_format(
-			                $price,
-			                $price_number_of_decimal,
-			                $price_decimals_separator,
-			                $price_thousands_separator
-		                ) . $after;
+						. number_format(
+							$price,
+							$price_number_of_decimal,
+							$price_decimals_separator,
+							$price_thousands_separator
+						) . $after;
 
 		return apply_filters( 'hb_price_format', $price_format, $price, $with_currency );
 	}
@@ -1754,19 +1754,19 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 		);
 
 		$where = $wpdb->prepare(
-			" WHERE
+			' WHERE
 				rooms.post_type = %s
 				AND rooms.post_status = %s
 				AND pm2.meta_value >= %d
-				AND pm3.meta_value >= %d",
+				AND pm3.meta_value >= %d',
 			'hb_room',
 			'publish',
 			$max_child,
 			$adults
 		);
 
-		$group_by = " GROUP BY rooms.post_name HAVING available_rooms > 0";
-		$order_by = " ORDER BY rooms.post_title ASC";
+		$group_by = ' GROUP BY rooms.post_name HAVING available_rooms > 0';
+		$order_by = ' ORDER BY rooms.post_title ASC';
 
 		if ( isset( $args['min_price'] ) && $args['max_price'] && $args['min_price'] !== '' && $args['max_price'] !== '' ) {
 			$sql .= $wpdb->prepare(
@@ -1775,7 +1775,7 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 			);
 
 			$where .= $wpdb->prepare(
-				" AND pm4.meta_value BETWEEN %d AND %d",
+				' AND pm4.meta_value BETWEEN %d AND %d',
 				$args['min_price'],
 				$args['max_price']
 			);
@@ -1783,7 +1783,6 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 
 		if ( isset( $args['rating'] ) && $args['rating'] !== '' ) {
 			$rating = explode( ',', $args['rating'] );
-
 
 			$sql .= $wpdb->prepare(
 				" LEFT JOIN {$wpdb->postmeta} AS pm5 ON pm5.post_id = rooms.ID AND pm5.meta_key = %s",
@@ -1800,29 +1799,28 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 			if ( ! empty( $rating_count ) ) {
 				if ( $rating_count === 1 ) {
 					$where .= $wpdb->prepare(
-						" AND pm5.meta_value >= %d AND pm5.meta_value < %d",
+						' AND pm5.meta_value >= %d AND pm5.meta_value < %d',
 						$rating[0],
 						$rating[0] + 1
 					);
 				} else {
-					for ( $i = 0; $i < $rating_count; $i ++ ) {
+					for ( $i = 0; $i < $rating_count; $i++ ) {
 						if ( $i === 0 ) {
 							$where .= $wpdb->prepare(
-								" AND ((pm5.meta_value >= %d AND pm5.meta_value < %d)",
+								' AND ((pm5.meta_value >= %d AND pm5.meta_value < %d)',
 								$rating[0],
 								$rating[0] + 1
 							);
 
-
 						} elseif ( ( $i + 1 ) === $rating_count ) {
 							$where .= $wpdb->prepare(
-								" OR (pm5.meta_value >= %d AND pm5.meta_value < %d))",
+								' OR (pm5.meta_value >= %d AND pm5.meta_value < %d))',
 								$rating[ $i ],
 								$rating[ $i ] + 1
 							);
 						} else {
 							$where .= $wpdb->prepare(
-								" OR (pm5.meta_value >= %d AND pm5.meta_value < %d)",
+								' OR (pm5.meta_value >= %d AND pm5.meta_value < %d)',
 								$rating[ $i ],
 								$rating[ $i ] + 1
 							);
@@ -1835,7 +1833,7 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 		if ( isset( $args['room_type'] ) && $args['room_type'] !== '' ) {
 			$roomType = explode( ',', $args['room_type'] );
 			$roomType = '"' . implode( '","', $roomType ) . '"';
-			$sql      .= $wpdb->prepare(
+			$sql     .= $wpdb->prepare(
 				" LEFT JOIN 
                             $wpdb->term_relationships ON rooms.ID = $wpdb->term_relationships.object_id"
 			);
@@ -1845,13 +1843,12 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 			);
 		}
 
-
 		if ( $args['sort_by'] === 'date-desc' ) {
-			$order_by = " ORDER BY rooms.post_date DESC";
+			$order_by = ' ORDER BY rooms.post_date DESC';
 		} elseif ( $args['sort_by'] === 'date-asc' ) {
-			$order_by = " ORDER BY rooms.post_date ASC";
+			$order_by = ' ORDER BY rooms.post_date ASC';
 		} elseif ( $args['sort_by'] === 'title-desc' ) {
-			$order_by = " ORDER BY rooms.post_title DESC";
+			$order_by = ' ORDER BY rooms.post_title DESC';
 		}
 
 		$query = $sql . $where . $group_by . $order_by;
@@ -2097,7 +2094,7 @@ if ( ! function_exists( 'hb_maybe_modify_page_content' ) ) {
 	function hb_maybe_modify_page_content( $content ) {
 		global $post;
 		if ( is_page() && ( $post->ID == hb_get_page_id( 'search' ) ||
-		                    ( has_shortcode( $content, 'hotel_booking' ) && has_shortcode( $content, 'hotel_booking_filter' ) ) ) ) {
+							( has_shortcode( $content, 'hotel_booking' ) && has_shortcode( $content, 'hotel_booking_filter' ) ) ) ) {
 
 			// params search result
 			$page       = hb_get_request( 'hotel-booking' );
@@ -2106,7 +2103,7 @@ if ( ! function_exists( 'hb_maybe_modify_page_content' ) ) {
 			$adults     = hb_get_request( 'adults' );
 			$max_child  = hb_get_request( 'max_child' );
 
-			$content = '[hotel_booking page="' . $page . '" check_in_date="' . $start_date . '" check_in_date="' . $end_date . '" adults="' . $adults . '" max_child="' . $max_child . '"]';
+			$content  = '[hotel_booking page="' . $page . '" check_in_date="' . $start_date . '" check_in_date="' . $end_date . '" adults="' . $adults . '" max_child="' . $max_child . '"]';
 			$content .= '[hotel_booking_filter]';
 		}
 

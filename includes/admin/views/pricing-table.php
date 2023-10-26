@@ -44,24 +44,24 @@ $date_order   = hb_start_of_week_order();
 				<h3 class="hb-pricing-table-title">
 					<span><?php _e( 'Regular price', 'wp-hotel-booking' ); ?></span>
 					<input type="text" class="datepicker"
-						   name="date-start[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"
-						   size="10" readonly="readonly"/>
+							name="date-start[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"
+							size="10" readonly="readonly"/>
 					<input type="hidden"
-						   name="date-start-timestamp[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"/>
+							name="date-start-timestamp[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"/>
 
 					<input type="text" class="datepicker"
-						   name="date-end[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"
-						   size="10" readonly="readonly"/>
+							name="date-end[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"
+							size="10" readonly="readonly"/>
 					<input type="hidden"
-						   name="date-end-timestamp[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"/>
+							name="date-end-timestamp[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"/>
 				</h3>
 				<div class="hb-pricing-controls">
 					<a href="" class="dashicons dashicons-edit" data-action="edit"
-					   title="<?php _e( 'Edit', 'wp-hotel-booking' ); ?>"></a>
+						title="<?php _e( 'Edit', 'wp-hotel-booking' ); ?>"></a>
 					<a href="" class="dashicons dashicons-admin-page" data-action="clone"
-					   title="<?php _e( 'Clone', 'wp-hotel-booking' ); ?>"></a>
+						title="<?php _e( 'Clone', 'wp-hotel-booking' ); ?>"></a>
 					<a href="" class="dashicons dashicons-trash" data-action="remove"
-					   title="<?php _e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
+						title="<?php _e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
 				</div>
 				<div class="hb-pricing-list">
 					<table>
@@ -82,8 +82,8 @@ $date_order   = hb_start_of_week_order();
 								<td>
 									<?php $price = ! empty( $prices[ $i ] ) ? $prices[ $i ] : ''; ?>
 									<input class="hb-pricing-price" type="number" min="0" step="any"
-										   name="price[<?php echo sprintf( '%s', $plan_id ? $plan_id : '__INDEX__' ); ?>][<?php echo esc_attr( $i ); ?>]"
-										   value="<?php echo esc_attr( $price ); ?>" size="10" readonly="readonly"/>
+											name="price[<?php echo sprintf( '%s', $plan_id ? $plan_id : '__INDEX__' ); ?>][<?php echo esc_attr( $i ); ?>]"
+											value="<?php echo esc_attr( $price ); ?>" size="10" readonly="readonly"/>
 								</td>
 							<?php } ?>
 						</tr>
@@ -109,25 +109,25 @@ $date_order   = hb_start_of_week_order();
 							<h3 class="hb-pricing-table-title">
 								<span><?php _e( 'Date Range', 'wp-hotel-booking' ); ?></span>
 								<input type="text" class="datepicker"
-									   name="date-start[<?php echo esc_attr( $plan->ID ); ?>]" size="10"
-									   value="<?php printf( '%s', date_i18n( hb_get_date_format(), $start ) ); ?>"
-									   readonly="readonly"/>
+										name="date-start[<?php echo esc_attr( $plan->ID ); ?>]" size="10"
+										value="<?php printf( '%s', date_i18n( hb_get_date_format(), $start ) ); ?>"
+										readonly="readonly"/>
 								<input type="hidden" name="date-start-timestamp[<?php echo esc_attr( $plan->ID ); ?>]"
-									   value="<?php echo esc_attr( $start ); ?>"/>
+										value="<?php echo esc_attr( $start ); ?>"/>
 
 								<input type="text" class="datepicker"
-									   name="date-end[<?php echo esc_attr( $plan->ID ); ?>]" size="10"
-									   value="<?php printf( '%s', date_i18n( hb_get_date_format(), $end ) ); ?>"
-									   readonly="readonly"/>
+										name="date-end[<?php echo esc_attr( $plan->ID ); ?>]" size="10"
+										value="<?php printf( '%s', date_i18n( hb_get_date_format(), $end ) ); ?>"
+										readonly="readonly"/>
 								<input type="hidden" name="date-end-timestamp[<?php echo esc_attr( $plan->ID ); ?>]"
-									   value="<?php echo esc_attr( $end ); ?>"/>
+										value="<?php echo esc_attr( $end ); ?>"/>
 							</h3>
 							<div class="hb-pricing-controls">
 								<a href="" class="dashicons dashicons-edit" data-action="edit"
-								   title="<?php _e( 'Edit', 'wp-hotel-booking' ); ?>"></a>
+									title="<?php _e( 'Edit', 'wp-hotel-booking' ); ?>"></a>
 								<!-- <a href="" class="dashicons dashicons-admin-page" data-action="clone" title="<?php // _e( 'Clone', 'wp-hotel-booking' ); ?>"></a> -->
 								<a href="" class="dashicons dashicons-trash" data-action="remove"
-								   title="<?php _e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
+									title="<?php _e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
 							</div>
 
 							<div class="hb-pricing-list">
@@ -146,9 +146,9 @@ $date_order   = hb_start_of_week_order();
 											<td>
 												<?php $price = ! empty( $prices[ $i ] ) ? $prices[ $i ] : ''; ?>
 												<input class="hb-pricing-price" type="number" min="0" step="any"
-													   name="price[<?php echo esc_attr( $plan->ID ); ?>][<?php echo esc_attr( $i ); ?>]"
-													   value="<?php echo esc_attr( $price ); ?>" size="10"
-													   readonly="readonly"/>
+														name="price[<?php echo esc_attr( $plan->ID ); ?>][<?php echo esc_attr( $i ); ?>]"
+														value="<?php echo esc_attr( $price ); ?>" size="10"
+														readonly="readonly"/>
 											</td>
 										<?php } ?>
 									</tr>
@@ -187,15 +187,15 @@ $date_order   = hb_start_of_week_order();
 		</h3>
 		<div class="hb-pricing-controls">
 			<a href="" class="dashicons dashicons-edit" data-action="edit"
-			   title="<?php _e( 'Clone', 'wp-hotel-booking' ); ?>"></a>
+				title="<?php _e( 'Clone', 'wp-hotel-booking' ); ?>"></a>
 
 			<# if( typeof data.clone !== 'undefined' && data.clone === true ) { #>
 			<a href="" class="dashicons dashicons-admin-page" data-action="clone"
-			   title="<?php _e( 'Clone', 'wp-hotel-booking' ); ?>"></a>
+				title="<?php _e( 'Clone', 'wp-hotel-booking' ); ?>"></a>
 			<# } #>
 
 			<a href="" class="dashicons dashicons-trash" data-action="remove"
-			   title="<?php _e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
+				title="<?php _e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
 		</div>
 
 		<div class="hb-pricing-list">
@@ -212,8 +212,8 @@ $date_order   = hb_start_of_week_order();
 					<?php foreach ( $date_order as $i ) { ?>
 						<td>
 							<input class="hb-pricing-price" type="number" min="0" step="any"
-								   name="price[__INDEX__][<?php echo esc_attr( $i ); ?>]" value="" size="10"
-								   readonly="readonly"/>
+									name="price[__INDEX__][<?php echo esc_attr( $i ); ?>]" value="" size="10"
+									readonly="readonly"/>
 						</td>
 					<?php } ?>
 				</tr>
@@ -242,5 +242,5 @@ $date_order   = hb_start_of_week_order();
 		</div>
 	</div>
 	<div class="hotel-booking-fullcalendar"
-		 data-events="<?php echo esc_attr( hotel_booking_print_pricing_json( $room_id, date( 'm/d/Y' ) ) ); ?>"></div>
+		data-events="<?php echo esc_attr( hotel_booking_print_pricing_json( $room_id, date( 'm/d/Y' ) ) ); ?>"></div>
 <?php endif; ?>

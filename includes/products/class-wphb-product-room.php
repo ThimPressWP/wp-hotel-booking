@@ -183,7 +183,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 				$max_rooms = get_post_meta( $this->post->ID, '_hb_num_of_rooms', true );
 				$return    = '<select name="hb-num-of-rooms[' . $this->post->ID . ']">';
 				$return   .= '<option value="0">' . __( 'Select', 'wp-hotel-booking' ) . '</option>';
-				for ( $i = 1; $i <= $max_rooms; $i ++ ) {
+				for ( $i = 1; $i <= $max_rooms; $i++ ) {
 					$return .= sprintf( '<option value="%1$d">%1$d</option>', $i );
 				}
 				$return .= '</select>';
@@ -257,7 +257,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 		return hb_get_template_content( 'single-room/tabs/room-rules.php', array( 'rules' => $rules ) );
 	}
 
-	public function get_facilities(  ) {
+	public function get_facilities() {
 		$facilities = get_post_meta( $this->post->ID, '_wphb_room_facilities', true );
 		return hb_get_template_content( 'single-room/tabs/room-facilities.php', array( 'facilities' => $facilities ) );
 	}
@@ -321,7 +321,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 					$full = $full_src[0];
 				}
 			}
-			$alt       = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
+			$alt = get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
 
 			$gallery[] = array(
 				'id'    => $thumb_id,
@@ -352,7 +352,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 		}
 
 		$nights = hb_count_nights_two_dates( $end_date, $start_date );
-		for ( $i = 0; $i < $nights; $i ++ ) {
+		for ( $i = 0; $i < $nights; $i++ ) {
 			$c_date = $start_date_to_time + $i * DAY_IN_SECONDS;
 			$date   = date( 'w', $c_date );
 			if ( ! isset( $details[ $date ] ) ) {
@@ -361,7 +361,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 					'price' => 0,
 				);
 			}
-			$details[ $date ]['count'] ++;
+			++$details[ $date ]['count'];
 			$details[ $date ]['price'] += $this->get_total( $c_date, 1, 1, $tax );
 			$room_details_total        += $details[ $date ]['price'];
 		}
@@ -451,7 +451,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 		}
 
 		$from = mktime( 0, 0, 0, date( 'm', $from_time ), date( 'd', $from_time ), date( 'Y', $from_time ) );
-		for ( $i = 0; $i < $nights; $i ++ ) {
+		for ( $i = 0; $i < $nights; $i++ ) {
 			$total_per_night = $this->get_price( $from + $i * DAY_IN_SECONDS, false );
 			$total          += $total_per_night * $num_of_rooms;
 		}
@@ -566,7 +566,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 			$rating = get_comment_meta( $comment->comment_ID, 'rating', true );
 			if ( $rating ) {
 				$total = $total + $rating;
-				$i ++;
+				++$i;
 			}
 		}
 		if ( $comments && $i ) {
@@ -720,6 +720,5 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 	}
 
 	public function is_in_stock() {
-
 	}
 }

@@ -21,7 +21,6 @@ class WPHB_Abstract_REST_Controller extends WP_REST_Controller {
 	public $routes = array();
 
 	public function __construct() {
-
 	}
 
 	/**

@@ -77,13 +77,13 @@ $rooms      = hb_get_order_items( $post->ID );
 				</td>
 				<td class="actions">
 					<a href="#" class="edit" data-order-id="<?php echo esc_attr( $hb_booking->id ); ?>"
-					   data-order-item-id="<?php echo esc_attr( $room->order_item_id ); ?>"
-					   data-order-item-type="line_item">
+						data-order-item-id="<?php echo esc_attr( $room->order_item_id ); ?>"
+						data-order-item-type="line_item">
 						<i class="fa fa-pencil"></i>
 					</a>
 					<a href="#" class="remove" data-order-id="<?php echo esc_attr( $hb_booking->id ); ?>"
-					   data-order-item-id="<?php echo esc_attr( $room->order_item_id ); ?>"
-					   data-order-item-type="line_item">
+						data-order-item-id="<?php echo esc_attr( $room->order_item_id ); ?>"
+						data-order-item-type="line_item">
 						<i class="fa fa-times-circle"></i>
 					</a>
 				</td>
@@ -100,23 +100,23 @@ $rooms      = hb_get_order_items( $post->ID );
 					<option><?php _e( 'Delete select item(s)', 'wp-hotel-booking' ); ?></option>
 				</select>
 				<a href="#" class="button button-primary" id="action_sync"
-				   data-order-id="<?php echo esc_attr( $hb_booking->id ); ?>"><?php _e( 'Sync', 'wp-hotel-booking' ); ?></a>
+					data-order-id="<?php echo esc_attr( $hb_booking->id ); ?>"><?php _e( 'Sync', 'wp-hotel-booking' ); ?></a>
 			</th>
 			<th class="right" colspan="4">
 				<?php if ( ! $hb_booking->coupon_id ) : ?>
 
 					<a href="#" class="button" id="add_coupon"
-					   data-order-id="<?php echo esc_attr( $hb_booking->id ); ?>"><?php _e( 'Add Coupon', 'wp-hotel-booking' ); ?></a>
+						data-order-id="<?php echo esc_attr( $hb_booking->id ); ?>"><?php _e( 'Add Coupon', 'wp-hotel-booking' ); ?></a>
 
 				<?php else : ?>
 
 					<a href="#" class="button" id="remove_coupon"
-					   data-order-id="<?php echo esc_attr( $hb_booking->id ); ?>"
-					   data-coupon-id="<?php echo esc_attr( $hb_booking->coupon_id ); ?>"><?php _e( 'Remove Coupon', 'wp-hotel-booking' ); ?></a>
+						data-order-id="<?php echo esc_attr( $hb_booking->id ); ?>"
+						data-coupon-id="<?php echo esc_attr( $hb_booking->coupon_id ); ?>"><?php _e( 'Remove Coupon', 'wp-hotel-booking' ); ?></a>
 
 				<?php endif; ?>
 				<a href="#" class="button" id="add_room_item"
-				   data-order-id="<?php echo esc_attr( $hb_booking->id ); ?>"><?php _e( 'Add Room Item', 'wp-hotel-booking' ); ?></a>
+					data-order-id="<?php echo esc_attr( $hb_booking->id ); ?>"><?php _e( 'Add Room Item', 'wp-hotel-booking' ); ?></a>
 			</th>
 		</tr>
 		</tfoot>

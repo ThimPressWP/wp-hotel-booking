@@ -25,5 +25,3 @@ hb_get_template(
 		'atts'    => $atts,
 	)
 );
-?>
-

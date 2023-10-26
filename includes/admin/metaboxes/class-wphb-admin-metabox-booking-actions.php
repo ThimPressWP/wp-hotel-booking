@@ -49,5 +49,4 @@ class WPHB_Admin_Metabox_Booking_Actions {
 			return;
 		}
 	}
-
 }

@@ -33,8 +33,8 @@ $field_name = $settings->get_field_name( 'offline-payment' );
 		<td>
 			<input type="hidden" name="<?php echo esc_attr( $field_name ); ?>[enable]" value="off"/>
 			<input type="checkbox"
-				   name="<?php echo esc_attr( $field_name ); ?>[enable]" <?php checked( $payment['enable'] == 'on' ? 1 : 0, 1 ); ?>
-				   value="on"/>
+					name="<?php echo esc_attr( $field_name ); ?>[enable]" <?php checked( $payment['enable'] == 'on' ? 1 : 0, 1 ); ?>
+					value="on"/>
 			<p class="description"><?php _e( 'Enable checkout booking via Offline payment', 'wp-hotel-booking' ); ?></p>
 		</td>
 	</tr>

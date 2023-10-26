@@ -57,7 +57,7 @@ if ( ! class_exists( 'WPHB_Admin_Tools' ) ) {
 					<?php if ( $tabs ) { ?>
 						<?php foreach ( $tabs as $slug => $title ) { ?>
 							<a class="nav-tab<?php echo esc_attr( sprintf( '%s', $selected_tab == $slug ? ' nav-tab-active' : '' ) ); ?>"
-							   href="?page=wphb-tools&tab=<?php echo esc_attr( $slug ); ?>">
+								href="?page=wphb-tools&tab=<?php echo esc_attr( $slug ); ?>">
 								<?php echo esc_html( $title ); ?>
 							</a>
 						<?php } ?>

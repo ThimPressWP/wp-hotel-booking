@@ -106,7 +106,7 @@ class WPHB_Shortcode_Hotel_Booking_Rooms extends WPHB_Shortcodes {
 
 					$rating_query ['relation'] = 'AND';
 				} else {
-					for ( $i = 0; $i < $rating_count; $i ++ ) {
+					for ( $i = 0; $i < $rating_count; $i++ ) {
 						$rating_query[ $i ][] = array(
 							'key'     => 'hb_average_rating',
 							'value'   => $rating[ $i ],
@@ -174,19 +174,18 @@ class WPHB_Shortcode_Hotel_Booking_Rooms extends WPHB_Shortcodes {
 		$query = new WP_Query( $args );
 		ob_start();
 		?>
-        <div class="container room-container">
+		<div class="container room-container">
 			<?php
 			$data = array(
-				'sort_by' => $sort_by
+				'sort_by' => $sort_by,
 			);
-
 
 			if ( $query->post_count ) {
 				$data['show_number'] = hb_get_show_room_text(
 					array(
 						'total'         => $query->post_count,
 						'paged'         => 1,
-						'item_per_page' => $query->post_count
+						'item_per_page' => $query->post_count,
 					)
 				);
 			}
@@ -210,7 +209,7 @@ class WPHB_Shortcode_Hotel_Booking_Rooms extends WPHB_Shortcodes {
 			/* add action again */
 			add_action( 'pre_get_posts', 'hotel_booking_num_room_archive', 999 );
 			?>
-        </div>
+		</div>
 		<?php
 		return ob_get_clean();
 	}

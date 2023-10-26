@@ -29,7 +29,7 @@ $settings = WPHB_Settings::instance();
 
 			<?php if ( $rating && $settings->get( 'enable_review_rating' ) ) { ?>
 				<div itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating" class="star-rating"
-					 title="<?php echo esc_html( sprintf( __( 'Rated %d out of 5', 'wp-hotel-booking' ), $rating ) ); ?>">
+					title="<?php echo esc_html( sprintf( __( 'Rated %d out of 5', 'wp-hotel-booking' ), $rating ) ); ?>">
 					<span style="width:<?php echo ( ( $rating / 5 ) * 100 ); ?>%"></span>
 				</div>
 			<?php } ?>
@@ -40,7 +40,7 @@ $settings = WPHB_Settings::instance();
 				<p class="meta">
 					<strong itemprop="author"><?php comment_author(); ?></strong>&ndash;
 					<time itemprop="datePublished"
-						  datetime="<?php echo get_comment_date( 'c' ); ?>"><?php echo get_comment_date( hb_date_format() ); ?></time>
+							datetime="<?php echo get_comment_date( 'c' ); ?>"><?php echo get_comment_date( hb_date_format() ); ?></time>
 					:
 				</p>
 			<?php } ?>

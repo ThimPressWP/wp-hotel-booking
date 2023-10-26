@@ -68,35 +68,35 @@ do_action( 'hotel_booking_before_single_room_infomation' );
 
 <div class="hb_single_room_details">
 
-    <ul class="hb_single_room_tabs">
+	<ul class="hb_single_room_tabs">
 		<?php foreach ( $tabs as $key => $tab ) { ?>
-            <li>
-                <a href="#<?php echo esc_attr( $tab['id'] ); ?>">
+			<li>
+				<a href="#<?php echo esc_attr( $tab['id'] ); ?>">
 					<?php do_action( 'hotel_booking_single_room_before_tabs_' . $tab['id'] ); ?>
 					<?php printf( '%s', $tab['title'] ); ?>
 					<?php do_action( 'hotel_booking_single_room_after_tabs_' . $tab['id'] ); ?>
-                </a>
-            </li>
+				</a>
+			</li>
 		<?php } ?>
-    </ul>
+	</ul>
 
 	<?php
 	// append after li tabs single
 	do_action( 'hotel_booking_after_single_room_infomation' );
 	?>
 
-    <div class="hb_single_room_tabs_content">
+	<div class="hb_single_room_tabs_content">
 
 		<?php foreach ( $tabs as $key => $tab ) { ?>
-            <div id="<?php echo esc_attr( $tab['id'] ); ?>" class="hb_single_room_tab_details">
+			<div id="<?php echo esc_attr( $tab['id'] ); ?>" class="hb_single_room_tab_details">
 
 				<?php do_action( 'hotel_booking_single_room_before_tabs_content_' . $tab['id'] ); ?>
 
 				<?php printf( '%s', $tab['content'] ); ?>
 
 				<?php do_action( 'hotel_booking_single_room_after_tabs_content_' . $tab['id'] ); ?>
-            </div>
+			</div>
 		<?php } ?>
-    </div>
+	</div>
 
 </div>

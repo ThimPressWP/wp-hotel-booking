@@ -98,7 +98,6 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 			}
 			return apply_filters( 'hotel_booking_admin_setting_sections_' . $this->id, $sections );
 		}
-
 	}
 
 }

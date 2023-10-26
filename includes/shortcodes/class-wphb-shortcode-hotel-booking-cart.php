@@ -30,7 +30,6 @@ class WPHB_Shortcode_Hotel_Booking_Cart extends WPHB_Shortcodes {
 		do_action( 'hb_wrapper_end' );
 		return ob_get_clean();
 	}
-
 }
 
 new WPHB_Shortcode_Hotel_Booking_Cart();

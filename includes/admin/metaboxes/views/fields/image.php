@@ -6,7 +6,7 @@ if ( ! isset( $field ) ) {
 }
 ?>
 	<div class="hb-form-field-image form-field">
-        <label><?php echo esc_html( $field['title'] ); ?></label>
+		<label><?php echo esc_html( $field['title'] ); ?></label>
 		<?php
 		$image_id            = $field['value'];
 		$image_full_url      = wp_get_attachment_image_url( $image_id, 'full' );
@@ -19,13 +19,13 @@ if ( ! isset( $field ) ) {
 				</div>
 				<div class="hb-image-control">
 					<input type="hidden" name="<?php echo esc_attr( $field['name'] ); ?>"
-					       value="<?php echo esc_attr( $image_id ); ?>" readonly/>
+							value="<?php echo esc_attr( $image_id ); ?>" readonly/>
 					<input type="text" id="<?php echo esc_attr( $field['id'] ); ?>"
-					       value="<?php echo esc_attr( $image_full_url ); ?>" readonly/>
+							value="<?php echo esc_attr( $image_full_url ); ?>" readonly/>
 					<button type="button" href="#"
-					        class="button button-secondary hb-image-add"><?php esc_html_e( 'Select Image', 'wp-hotel-booking' ); ?></button>
+							class="button button-secondary hb-image-add"><?php esc_html_e( 'Select Image', 'wp-hotel-booking' ); ?></button>
 					<button type="button" href="#"
-					        class="button button-secondary hb-image-remove"><?php esc_html_e( 'Remove', 'wp-hotel-booking' ); ?></button>
+							class="button button-secondary hb-image-remove"><?php esc_html_e( 'Remove', 'wp-hotel-booking' ); ?></button>
 				</div>
 			</div>
 			<?php

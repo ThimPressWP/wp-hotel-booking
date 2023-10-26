@@ -125,8 +125,8 @@ if ( ! class_exists( 'HB_Extra_Field' ) ) {
 		 */
 		public function admin_booking_room_details( $booking_params, $search_key, $room_id ) {
 			if ( ! isset( $booking_params[ $search_key ] ) ||
-				 ! isset( $booking_params[ $search_key ][ $room_id ] ) ||
-				 ! isset( $booking_params[ $search_key ][ $room_id ]['extra_packages_details'] )
+				! isset( $booking_params[ $search_key ][ $room_id ] ) ||
+				! isset( $booking_params[ $search_key ][ $room_id ]['extra_packages_details'] )
 			) {
 				return;
 			}

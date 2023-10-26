@@ -71,22 +71,22 @@ class HB_Widget_Search extends WP_Widget {
 			<?php $title_id = $this->get_field_id( 'title' ); ?>
 			<label for="<?php echo esc_attr( $title_id ); ?>"><?php _e( 'Title:', 'wp-hotel-booking' ); ?></label>
 			<input class="widefat" id="<?php echo esc_attr( $title_id ); ?>"
-				   name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text"
-				   value="<?php echo esc_attr( $title ); ?>">
+					name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text"
+					value="<?php echo esc_attr( $title ); ?>">
 		</p>
 		<!--show title, label form-->
 		<p>
 			<?php $title_id = $this->get_field_id( 'show_title' ); ?>
 			<input type="checkbox" id="<?php echo esc_attr( $title_id ); ?>"
-				   name="<?php echo esc_attr( $this->get_field_name( 'show_title' ) ); ?>"
-				   value="true"<?php echo esc_attr( $checked_title ); ?>>
+					name="<?php echo esc_attr( $this->get_field_name( 'show_title' ) ); ?>"
+					value="true"<?php echo esc_attr( $checked_title ); ?>>
 			<label for="<?php echo esc_attr( $title_id ); ?>"><?php _e( 'Show title search form', 'wp-hotel-booking' ); ?></label>
 		</p>
 		<p>
 			<?php $label_id = $this->get_field_id( 'show_label' ); ?>
 			<input type="checkbox" id="<?php echo esc_attr( $label_id ); ?>"
-				   name="<?php echo esc_attr( $this->get_field_name( 'show_label' ) ); ?>"
-				   value="true"<?php echo esc_attr( $checked_label ); ?>>
+					name="<?php echo esc_attr( $this->get_field_name( 'show_label' ) ); ?>"
+					value="true"<?php echo esc_attr( $checked_label ); ?>>
 			<label for="<?php echo esc_attr( $label_id ); ?>"><?php _e( 'Show label search form', 'wp-hotel-booking' ); ?></label>
 		</p>
 		<?php

@@ -37,7 +37,6 @@ class WPHB_Payment_Gateway_Base {
 	 * Construction
 	 */
 	function __construct() {
-
 	}
 
 	function __get( $key ) {
@@ -68,5 +67,4 @@ class WPHB_Payment_Gateway_Base {
 			'result' => '',
 		);
 	}
-
 }

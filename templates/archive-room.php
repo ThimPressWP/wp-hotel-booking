@@ -32,7 +32,7 @@ do_action( 'hotel_booking_before_main_content' );
  */
 do_action( 'hotel_booking_archive_description' );
 ?>
-    <div class="container room-container">
+	<div class="container room-container">
 		<?php
 		global $wp_query;
 
@@ -47,7 +47,7 @@ do_action( 'hotel_booking_archive_description' );
 		$sort_by = hb_get_request( 'sort_by' );
 
 		$data = array(
-			'sort_by' => $sort_by
+			'sort_by' => $sort_by,
 		);
 
 		if ( $total ) {
@@ -55,7 +55,7 @@ do_action( 'hotel_booking_archive_description' );
 				array(
 					'paged'         => ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1,
 					'total'         => $total,
-					'item_per_page' => $posts_per_page
+					'item_per_page' => $posts_per_page,
 				)
 			);
 		}
@@ -92,7 +92,7 @@ do_action( 'hotel_booking_archive_description' );
 			?>
 
 		<?php endif; ?>
-    </div>
+	</div>
 <?php
 /**
  * hotel_booking_after_main_content hook

@@ -116,11 +116,9 @@ class WPHB_REST_Authentication {
 	}
 
 	public function get_user_by_consumer_key() {
-
 	}
 
 	public function check_user_permissions() {
-
 	}
 
 	/**

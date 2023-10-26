@@ -57,7 +57,6 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Lightboxs' ) ) {
 				)
 			);
 		}
-
 	}
 
 }

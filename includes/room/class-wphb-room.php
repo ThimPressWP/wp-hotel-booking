@@ -129,5 +129,4 @@ class WPHB_Room extends WPHB_Product_Room_Base {
 		}
 		return self::$_instance[ $id ];
 	}
-
 }

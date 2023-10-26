@@ -107,7 +107,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 						'options' => array(
 							'completed ' => __( 'Completed ', 'wp-hotel-booking' ),
 							'pending'    => __( 'Pending', 'wp-hotel-booking' ),
-							'processing'    => __( 'Processing', 'wp-hotel-booking' ),
+							'processing' => __( 'Processing', 'wp-hotel-booking' ),
 						),
 						'default' => 'completed',
 					),
@@ -159,19 +159,19 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 
 					// do not use in plugin
 					// array(
-					// 	'id'      => 'tp_hotel_booking_review_rating_required',
-					// 	'title'   => __( 'Ratings are required to leave a review', 'wp-hotel-booking' ),
-					// 	'type'    => 'checkbox',
-					// 	'default' => 1,
-					// 	'trclass' => array( 'enable_ratings_on_reviews' ),
+					//  'id'      => 'tp_hotel_booking_review_rating_required',
+					//  'title'   => __( 'Ratings are required to leave a review', 'wp-hotel-booking' ),
+					//  'type'    => 'checkbox',
+					//  'default' => 1,
+					//  'trclass' => array( 'enable_ratings_on_reviews' ),
 					// ),
 
 					// do not use in plugin
 					// array(
-					// 	'id'      => 'tp_hotel_booking_enable_gallery_lightbox',
-					// 	'title'   => __( 'Enable gallery lightbox', 'wp-hotel-booking' ),
-					// 	'type'    => 'checkbox',
-					// 	'default' => 1,
+					//  'id'      => 'tp_hotel_booking_enable_gallery_lightbox',
+					//  'title'   => __( 'Enable gallery lightbox', 'wp-hotel-booking' ),
+					//  'type'    => 'checkbox',
+					//  'default' => 1,
 					// ),
 
 					array(
@@ -182,7 +182,6 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 				)
 			);
 		}
-
 	}
 
 }

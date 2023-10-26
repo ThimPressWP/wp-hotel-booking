@@ -20,7 +20,7 @@ if ( ! defined( 'WPHB_PLUGIN_PATH' ) ) {
 	return;
 }
 
-define( 'WPHB_EXTRA_FILE', dirname( __FILE__ ) );
+define( 'WPHB_EXTRA_FILE', __DIR__ );
 define( 'WPHB_EXTRA_URI', WPHB_PLUGIN_URL . '/includes/plugins/wp-hotel-booking-extra' );
 define( 'WPHB_EXTRA_INC', WPHB_EXTRA_FILE . '/inc' );
 define( 'WPHB_EXTRA_TEMPLATES', WPHB_EXTRA_FILE . '/templates/' );

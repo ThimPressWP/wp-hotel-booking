@@ -42,7 +42,6 @@ class WPHB_Admin_Metabox_Room_Price extends WPHB_Meta_Box {
 		$start    = isset( $_POST['_hbpricing']['date-start-timestamp'] ) ? WPHB_Helpers::sanitize_params_submitted( $_POST['_hbpricing']['date-start-timestamp'] ) : array();
 		$end      = isset( $_POST['_hbpricing']['date-end-timestamp'] ) ? WPHB_Helpers::sanitize_params_submitted( $_POST['_hbpricing']['date-end-timestamp'] ) : array();
 
-
 		foreach ( $plan_ids as $plan_id ) {
 			hb_room_set_pricing_plan(
 				array(

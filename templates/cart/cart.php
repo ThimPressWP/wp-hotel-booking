@@ -68,7 +68,7 @@ global $hb_settings;
 						<tr class="hb_checkout_item" data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
 							<td<?php echo defined( 'WPHB_EXTRA_FILE' ) && $cart_extra ? ' rowspan="' . ( count( $cart_extra ) + 2 ) . '"' : ''; ?>>
 								<a href="javascript:void(0)" class="hb_remove_cart_item"
-								   data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
+									data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
 									<i class="fa fa-times"></i>
 								</a>
 							</td>
@@ -136,7 +136,7 @@ global $hb_settings;
 			</table>
 			<p>
 				<a href="<?php echo hb_get_checkout_url(); ?>"
-				   class="hb_button hb_checkout"><?php _e( 'Check Out', 'wp-hotel-booking' ); ?></a>
+					class="hb_button hb_checkout"><?php _e( 'Check Out', 'wp-hotel-booking' ); ?></a>
 			</p>
 		</form>
 	</div>

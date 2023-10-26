@@ -101,7 +101,6 @@ class WPHB_Payment_Gateway_Offline_Payment extends WPHB_Payment_Gateway_Base {
 			'result'   => 'success',
 			'redirect' => hb_get_thank_you_url( $booking_id, $booking->booking_key ),
 		);
-
 	}
 
 	function form() {

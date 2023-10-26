@@ -92,7 +92,6 @@ class WPHB_Autoloader {
 
 		$this->load_file( $path . $file );
 	}
-
 }
 
 new WPHB_Autoloader();

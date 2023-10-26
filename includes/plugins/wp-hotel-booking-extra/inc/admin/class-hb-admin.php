@@ -4,11 +4,10 @@
  * admin extra class
  * menu, tab, room setting extra field
  */
-class HB_Extra_Admin
-{
+class HB_Extra_Admin {
 
-	function __construct()
-	{
+
+	function __construct() {
 		/**
 		 * tp_hotel_booking_addon_menus recive addon menus
 		 */
@@ -21,17 +20,14 @@ class HB_Extra_Admin
 	 * @param $settings array
 	 * @return array with key is unique
 	 */
-	function extra_settings( $settings )
-	{
+	function extra_settings( $settings ) {
 		$settings['hotel_booking_extra_settings'] = __( 'Extra Room Packages', 'wp-hotel-booking' );
 		return $settings;
 	}
 
-	function extra_settings_build()
-	{
+	function extra_settings_build() {
 		WPHB_Extra_Factory::instance()->_include( TP_HB_EXTRA_INC . '/admin/views/extra.php' );
 	}
-
 }
 
 new HB_Extra_Admin();

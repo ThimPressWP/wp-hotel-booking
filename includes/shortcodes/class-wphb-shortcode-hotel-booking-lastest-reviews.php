@@ -43,7 +43,6 @@ class WPHB_Shortcode_Hotel_Booking_Lastest_Reviews extends WPHB_Shortcodes {
 			);
 		endif;
 	}
-
 }
 
 new WPHB_Shortcode_Hotel_Booking_Lastest_Reviews();

@@ -25,7 +25,7 @@ $payment_gateways = hb_get_payment_gateways( array( 'enable' => true ) ); ?>
 				<li>
 					<label>
 						<input type="radio" name="hb-payment-method"
-							   value="<?php echo esc_attr( $gateway->slug ); ?>"<?php echo ! empty( $i === 0 ) ? ' checked' : ''; ?>/>
+								value="<?php echo esc_attr( $gateway->slug ); ?>"<?php echo ! empty( $i === 0 ) ? ' checked' : ''; ?>/>
 						<?php echo esc_html( $gateway->title ); ?>
 					</label>
 					<?php if ( has_action( 'hb_payment_gateway_form_' . $gateway->slug ) ) { ?>
@@ -34,7 +34,7 @@ $payment_gateways = hb_get_payment_gateways( array( 'enable' => true ) ); ?>
 						</div>
 					<?php } ?>
 				</li>
-				<?php $i ++; ?>
+				<?php ++$i; ?>
 			<?php } ?>
 		</ul>
 	</div>

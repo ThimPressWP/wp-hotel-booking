@@ -21,6 +21,6 @@ $external_link = get_post_meta( $hb_room->ID, '_hb_external_link', true );
 ?>
 
 <a href="<?php echo $external_link ?? '#'; ?>" <?php echo ! empty( $external_link ) ? 'target="_blank"' : ''; ?> data-id="<?php echo esc_attr( $hb_room->ID ); ?>" data-name="<?php echo esc_attr( $hb_room->name ); ?>"
-   class="hb_button hb_primary" id="hb_room_load_booking_form">
+	class="hb_button hb_primary" id="hb_room_load_booking_form">
 	<?php _e( 'Check Availability This Room', 'wp-hotel-booking' ); ?>
 </a>

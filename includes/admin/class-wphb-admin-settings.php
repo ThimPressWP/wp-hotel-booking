@@ -34,7 +34,6 @@ class WPHB_Admin_Settings {
 
 	// save setting
 	public static function save() {
-
 	}
 
 	// render field
@@ -330,7 +329,6 @@ class WPHB_Admin_Settings {
 
 	// save field settings
 	public static function save_fields( $options = array() ) {
-
 	}
 
 	// output page settings
@@ -352,7 +350,7 @@ class WPHB_Admin_Settings {
 					foreach ( $tabs as $slug => $title ) {
 						?>
 						<a class="nav-tab<?php echo esc_attr( sprintf( '%s', $selected_tab == $slug ? ' nav-tab-active' : '' ) ); ?>"
-						   href="?page=tp_hotel_booking_settings&tab=<?php echo esc_attr( $slug ); ?>">
+							href="?page=tp_hotel_booking_settings&tab=<?php echo esc_attr( $slug ); ?>">
 							<?php echo esc_html( $title ); ?>
 						</a>
 					<?php } endif; ?>
@@ -363,7 +361,7 @@ class WPHB_Admin_Settings {
 				<?php do_action( 'hb_admin_settings_sections_' . $selected_tab ); ?>
 				<?php do_action( 'hb_admin_settings_tab_' . $selected_tab ); ?>
 				<?php wp_nonce_field( 'hb_admin_settings_tab_' . $selected_tab, 'hb_admin_settings_tab_' . $selected_tab . '_field' ); ?>
-				<?php wp_nonce_field( 'wphb_update_meta_box_settings', 'wphb_meta_box_settings_nonce' );?>
+				<?php wp_nonce_field( 'wphb_update_meta_box_settings', 'wphb_meta_box_settings_nonce' ); ?>
 				<?php do_action( 'hb_admin_settings_tab_after', $selected_tab ); ?>
 				<div class="clearfix"></div>
 				<p class="clearfix">
@@ -374,5 +372,4 @@ class WPHB_Admin_Settings {
 		</div>
 		<?php
 	}
-
 }

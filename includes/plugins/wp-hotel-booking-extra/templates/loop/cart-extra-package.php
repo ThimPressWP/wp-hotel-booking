@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) || exit;
 	<td colspan="<?php echo is_hb_cart() ? 2 : 1; ?>">
 		<?php if ( is_hb_cart() && ! get_post_meta( $package->product_id, 'tp_hb_extra_room_required' ) ) { ?>
 			<a href="#" class="hb_package_remove" data-cart-id="<?php echo esc_attr( $cart_id ); ?>"
-			   data-parent-id="<?php echo esc_attr( $package->parent_id ); ?>"><i class="fa fa-times"></i></a>
+				data-parent-id="<?php echo esc_attr( $package->parent_id ); ?>"><i class="fa fa-times"></i></a>
 		<?php } ?>
 	</td>
 

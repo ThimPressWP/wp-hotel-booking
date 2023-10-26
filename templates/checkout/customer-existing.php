@@ -30,8 +30,8 @@ $cart = WP_Hotel_Booking::instance()->cart;
 					<label class="hb-form-field-label"><?php _e( 'Email', 'wp-hotel-booking' ); ?></label>
 					<div class="hb-form-field-input">
 						<input type="email" name="existing-customer-email"
-							   value="<?php echo esc_attr( $cart->customer_email ); ?>"
-							   placeholder="<?php _e( 'Your email here', 'wp-hotel-booking' ); ?>"/>
+								value="<?php echo esc_attr( $cart->customer_email ); ?>"
+								placeholder="<?php _e( 'Your email here', 'wp-hotel-booking' ); ?>"/>
 					</div>
 				</li>
 				<li>

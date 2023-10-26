@@ -39,7 +39,7 @@ class WPHB_Booking {
 	/**
 	 * @var int
 	 */
-	public $total = 0;
+	public $total     = 0;
 	public $sub_total = 0;
 	public $tax_total = 0;
 
@@ -426,7 +426,6 @@ class WPHB_Booking {
 			}
 			update_post_meta( $booking_id, '_hb_order_list_rooms', $list_rooms );
 		}
-
 	}
 
 	/**

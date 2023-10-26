@@ -29,7 +29,7 @@ $cart = WP_Hotel_Booking::instance()->cart;
 	<div id="hotel-booking-payment">
 
 		<form name="hb-payment-form" id="hb-payment-form" method="post"
-			  action="<?php echo isset( $search_page ) ? $search_page : ''; ?>">
+				action="<?php echo isset( $search_page ) ? $search_page : ''; ?>">
 			<h3><?php _e( 'Booking Rooms', 'wp-hotel-booking' ); ?></h3>
 			<table class="hb_table">
 				<thead>
@@ -155,7 +155,7 @@ $cart = WP_Hotel_Booking::instance()->cart;
 				<input type="hidden" name="hotel-booking" value="place_order" />
 				<input type="hidden" name="action" value="hotel_booking_place_order" />
 				<input type="hidden" name="total_advance"
-					   value="<?php echo esc_attr( $cart->advance_payment ? $cart->advance_payment : $cart->total ); ?>" />
+						value="<?php echo esc_attr( $cart->advance_payment ? $cart->advance_payment : $cart->total ); ?>" />
 				<input type="hidden" name="total_price" value="<?php echo esc_attr( $cart->total ); ?>" />
 				<input type="hidden" name="currency" value="<?php echo esc_attr( hb_get_currency() ); ?>">
 				<?php if ( $tos_page_id = hb_get_page_id( 'terms' ) ) { ?>

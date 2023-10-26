@@ -67,5 +67,4 @@ class WPHB_Admin_Metabox_Booking_Details {
 			do_action( 'hb_booking_detail_update_meta_box', $k, $vl, $post_id );
 		}
 	}
-
 }

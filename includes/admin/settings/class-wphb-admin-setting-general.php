@@ -53,7 +53,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 						'desc'    => __( 'Allow checkout date when blocked, applicable to search forms except single room', 'wp-hotel-booking' ),
 						'default' => 1,
 					),
-					
+
 					array(
 						'type'    => 'checkbox',
 						'id'      => 'tp_hotel_booking_single_purchase',
@@ -156,7 +156,6 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 				)
 			);
 		}
-
 	}
 
 }

@@ -64,7 +64,6 @@ if ( ! class_exists( 'WPHB_Admin' ) ) {
 
 			// setup wizard
 			WP_Hotel_Booking::instance()->_include( 'includes/admin/setup/class-wphb-setup-wizard.php' );
-
 		}
 
 		/**

@@ -27,7 +27,5 @@ abstract class WPHB_Shortcodes {
 	}
 
 	function add_shortcode( $atts, $content = null ) {
-
 	}
-
 }

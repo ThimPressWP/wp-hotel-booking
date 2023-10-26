@@ -87,5 +87,4 @@ class HB_Widget_Lastest_Reviews extends WP_Widget {
 
 		return $instance;
 	}
-
 }

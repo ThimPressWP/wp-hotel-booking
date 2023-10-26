@@ -99,7 +99,7 @@ if ( ! comments_open() ) {
 
 	<?php } else { ?>
 		<p class="hb-verification-required"><?php _e( 'Only logged in customers who have purchased this product may leave a review.', 'wp-hotel-booking' ); ?></p>
-	<?php }; ?>
+	<?php } ?>
 
 	<div class="clear"></div>
 </div>
