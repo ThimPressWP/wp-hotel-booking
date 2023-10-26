@@ -4,8 +4,8 @@ Donate link: https://thimpress.com/
 Tags: hotel, booking, hotel booking, reservation, reservations
 Requires at least: 6.2
 Requires PHP: 7.0
-Tested up to: 6.3.1
-Stable tag: 2.0.8.2
+Tested up to: 6.3.2
+Stable tag: 2.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
