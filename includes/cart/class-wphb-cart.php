@@ -499,7 +499,7 @@ class WPHB_Cart {
 		$this->cart_total_include_tax = $this->cart_total = $this->cart_total_include_tax();
 
 		// refresh cart_totals_exclude_tax
-		$this->cart_totals_exclude_tax = $this->cart_total_exclude_tax();
+		$this->cart_total_exclude_tax = $this->cart_total_exclude_tax();
 
 		// refresh cart_items_count
 		$this->cart_items_count = count( $this->cart_contents );

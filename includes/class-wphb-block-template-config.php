@@ -11,7 +11,7 @@ class Block_Template_Config {
 
 	private static $instance;
 
-	protected $block_template = array();
+	protected $block_templates = array();
 
 	public static function instance() {
 		if ( is_null( self::$instance ) ) {
@@ -51,7 +51,12 @@ class Block_Template_Config {
 			if ( $block_custom ) {
 				$new->is_custom = true;
 				$new->source    = 'custom';
-				$new->content   = _inject_theme_attribute_in_block_template_content( $block_custom->post_content );
+				// $new->content   = _inject_theme_attribute_in_block_template_content( $block_custom->post_content );
+				if ( version_compare( get_bloginfo( 'version' ), '6.4-beta', '>=' ) ) {
+					$new->content = traverse_and_serialize_blocks( parse_blocks( $block_custom->post_content ) );
+				} else {
+					$new->content = _inject_theme_attribute_in_block_template_content( $block_custom->post_content );
+				}
 			}
 
 			if ( empty( $query ) ) { // For Admin and rest api call to this function, so $query is empty

@@ -46,7 +46,7 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 	/**
 	 * @var null
 	 */
-	protected $paypal_vnp_api_sandbox_url = null;
+	protected $paypal_nvp_api_sandbox_url = null;
 
 	/**
 	 * @var array
