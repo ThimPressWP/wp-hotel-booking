@@ -393,6 +393,9 @@ class WP_Hotel_Booking {
 		// dropdown pages
 		wp_register_script( 'wphb-dropdown-pages', $this->plugin_url( 'assets/js/admin/dropdown-pages.js' ) );
 
+		// daterangepicker
+		wp_register_script( 'wp-daterangepicker', $this->plugin_url( 'assets/js/daterangepicker.min.js' ) );
+
 		//nouiSlider
 		wp_register_script( 'wphb-ui-slider', $this->plugin_url( 'assets/lib/slider/nouislider.min.js' ) );
 
@@ -574,3 +577,10 @@ class WP_Hotel_Booking {
 
 $GLOBALS['wp_hotel_booking'] = WP_Hotel_Booking::instance();
 
+/*  Add Widget for Thim-ekits to build with Elementor  */
+add_action(
+	'thim_ekit_loaded',
+	function () {
+		require_once WPHB_PLUGIN_PATH . '/includes/elementor/class-init.php';
+	}
+);
