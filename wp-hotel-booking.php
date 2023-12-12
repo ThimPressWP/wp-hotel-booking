@@ -21,7 +21,8 @@ defined( 'ABSPATH' ) || exit;
 const WPHB_FILE = __FILE__;
 const WPHB_PLUGIN_PATH = __DIR__;
 define( 'WPHB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
-const WPHB_VERSION = '2.0.9';
+// const WPHB_VERSION = '2.0.9';
+define( 'WPHB_VERSION', rand() );
 define( 'WPHB_BLOG_ID', get_current_blog_id() );
 define( 'WPHB_TEMPLATES', WPHB_PLUGIN_PATH . '/templates/' );
 const TP_HB_EXTRA = __FILE__;
@@ -398,6 +399,9 @@ class WP_Hotel_Booking {
 
 		//nouiSlider
 		wp_register_script( 'wphb-ui-slider', $this->plugin_url( 'assets/lib/slider/nouislider.min.js' ) );
+
+		//multidate
+		wp_register_style( 'wp-multidate-style', $this->plugin_url( 'assets/css/multidate.min.css' ), array(), WPHB_VERSION );
 
 		if ( is_admin() ) {
 			$dependencies = array_merge( $dependencies, array( 'backbone' ) );

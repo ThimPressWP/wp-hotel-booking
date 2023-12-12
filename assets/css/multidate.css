@@ -1,0 +1,680 @@
+.hotel-booking-search-el .multidate-layout {
+    position: relative;
+	align-items: center;
+}
+.hotel-booking-search-el .multidate-layout .hb-form-table {
+    width: 86%;
+    float: left;
+    margin: 0px;
+    position: relative;
+}
+.hotel-booking-search-el .multidate-layout .hb-form-table .multidate {
+    position: absolute;
+    font-size: 16px;
+    opacity: 0;
+    height: 100%;
+    width: 40%;
+    border: none;
+    z-index: 2;
+    background: none;
+    cursor: pointer;
+    left: 0;
+}
+.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field {
+    width: 30%;
+    float: left;
+    padding: 25px 20px 25px 30px;
+    position: relative;
+    margin: 0;
+}
+.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-check-in-check-out {
+    width: 40%;
+    max-width: none;
+}
+.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-check-in-check-out .hb-form-field-input {
+    display: inline-block;
+}
+.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-check-in-check-out .hb-form-field-input #day, .hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-check-in-check-out .hb-form-field-input #day2 {
+    width: 30px;
+}
+.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-check-in-check-out .hb-form-field-input button {
+    display: none;
+}
+.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-input {
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+    z-index: 2;
+}
+.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-input input {
+    width: 100%;
+}
+.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-input.guests-number, .hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-input.child-number {
+    width: auto;
+}
+.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 1px;
+    background: #eee;
+}
+.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-list {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 30px;
+    background: #fff;
+    z-index: 9;
+    margin: 5px 0 0 0;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.07);
+    transition: all 0.5s;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-list.active {
+    opacity: 1;
+    visibility: visible;
+}
+.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-list .hb-form-field-input {
+    margin-bottom: 0;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-list .hb-form-field-input:last-child {
+    margin: 0;
+}
+.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-list .number-box .number-icons {
+    cursor: pointer;
+    float: none;
+    background: transparent;
+    color: #000;
+    margin-left: 0;
+    height: auto;
+}
+.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-list .name {
+    font-weight: 500;
+    color: #000;
+}
+.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field .label {
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 16px;
+    color: #000;
+    margin-bottom: 10px;
+}
+.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field .label label {
+    font-weight: 500;
+}
+.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field .hb_input_field input {
+    width: 150px;
+    height: auto;
+    border: none;
+    border-radius: 0;
+    line-height: 1;
+    min-width: 0;
+    background: none;
+    padding: 0;
+    font-size: 16px;
+    color: #656565;
+    cursor: pointer;
+    text-transform: capitalize;
+}
+.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field .hb_input_field input.day, .hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field .hb_input_field .getWidth {
+    padding: 0;
+}
+.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field .hb_input_field:after {
+    display: none;
+}
+.hotel-booking-search-el .multidate-layout .select2-container, .hotel-booking-search-el .multidate-layout select {
+    width: auto !important;
+    pointer-events: none;
+}
+.hotel-booking-search-el .multidate-layout .select2-container--default .select2-selection--single {
+    border: none;
+}
+.hotel-booking-search-el .multidate-layout .select2-container--default .select2-selection--single .select2-selection__arrow {
+    display: none;
+}
+.hotel-booking-search-el .multidate-layout .select2-container--default .select2-selection--single .select2-selection__rendered {
+    padding: 0;
+}
+.hotel-booking-search-el .multidate-layout .hb-submit {
+    width: 14%;
+}
+.hotel-booking-search-el .multidate-layout .hb-submit button {
+    width: 100%;
+    margin-top: 0;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px;
+    text-align: center;
+    border: none;
+    height: 100%;
+    border-radius: 0;
+    min-width: 0;
+    text-transform: uppercase;
+}
+.daterangepicker.dropdown-menu {
+    display: none;
+    width: 672px;
+    padding: 0;
+    border-radius: 0;
+    padding: 15px 24px 30px;
+    margin-top: 5px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.5s;
+}
+.daterangepicker.dropdown-menu .daterangepicker_input {
+    display: none;
+}
+.daterangepicker.dropdown-menu .calendar {
+    width: 50%;
+    margin: 0;
+    max-width: 312px;
+}
+.daterangepicker.dropdown-menu .calendar.left {
+    padding-right: 15px;
+}
+.daterangepicker.dropdown-menu .calendar.right {
+    padding-left: 15px;
+}
+.daterangepicker.dropdown-menu .calendar .calendar-table {
+    padding: 0;
+}
+.daterangepicker.dropdown-menu .calendar table {
+    border: none;
+}
+.daterangepicker.dropdown-menu .calendar tr {
+    border: none;
+}
+.daterangepicker.dropdown-menu .calendar th {
+    border: none;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    min-width: 40px;
+    font-weight: normal;
+}
+.daterangepicker.dropdown-menu .calendar th.available {
+    text-align: center;
+    font-size: 16px;
+    line-height: 40px;
+    color: #000;
+    display: inline-block;
+    float: right;
+    margin-left: 12px;
+    cursor: pointer;
+    border: none;
+    margin: 0;
+    border-radius: 0;
+    padding: 0;
+    font-weight: normal;
+}
+.daterangepicker.dropdown-menu .calendar th.available i {
+    display: none;
+}
+.daterangepicker.dropdown-menu .calendar th.available.prev:before {
+    content: "\f3cf";
+    font-family: "Ionicons";
+}
+.daterangepicker.dropdown-menu .calendar th.available.next:before {
+    content: "\f3d1";
+    font-family: "Ionicons";
+}
+.daterangepicker.dropdown-menu .calendar th.month {
+    font-weight: 600;
+    font-size: 14px;
+    color: #000;
+}
+.daterangepicker.dropdown-menu .calendar thead th {
+    font-size: 14px;
+}
+.daterangepicker.dropdown-menu .calendar tbody td {
+    border-radius: 0;
+    padding: 0;
+    font-size: 14px;
+    width: 40px;
+    height: 40px;
+    color: #636363;
+}
+.daterangepicker.dropdown-menu .calendar tbody td.off {
+    color: #999;
+}
+.daterangepicker.dropdown-menu .calendar tbody td:hover {
+    color: #636363;
+}
+.daterangepicker.dropdown-menu .calendar tbody td.active {
+    color: #fff;
+}
+.daterangepicker.dropdown-menu .calendar tbody td.in-range:hover {
+    color: #333;
+}
+.daterangepicker.dropdown-menu .calendar tbody td.active:hover {
+    color: #fff;
+}
+
+/*MultiDate*/
+/* Calendars */
+.daterangepicker {
+	position: absolute;
+	color: inherit;
+	background-color: #fff;
+
+	.label {
+		text-align: center;
+		padding-bottom: 12px;
+		border-bottom: 2px solid #78D0C5;
+		margin-bottom: 20px;
+	}
+}
+
+.daterangepicker.opensleft:before {
+	right: 9px;
+}
+
+.daterangepicker.opensleft:after {
+	right: 10px;
+}
+
+.daterangepicker.openscenter:before {
+	left: 0;
+	right: 0;
+	width: 0;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.daterangepicker.openscenter:after {
+	left: 0;
+	right: 0;
+	width: 0;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.daterangepicker.opensright:before {
+	left: 9px;
+}
+
+.daterangepicker.opensright:after {
+	left: 10px;
+}
+
+.daterangepicker.dropup {
+	margin-top: -5px;
+}
+
+.daterangepicker.dropup:before {
+	top: initial;
+	bottom: -7px;
+	border-bottom: initial;
+	border-top: 7px solid #ccc;
+}
+
+.daterangepicker.dropup:after {
+	top: initial;
+	bottom: -6px;
+	border-bottom: initial;
+	border-top: 6px solid #fff;
+}
+
+.daterangepicker.dropdown-menu {
+	max-width: none;
+	z-index: 9;
+}
+
+.daterangepicker.single .ranges,
+.daterangepicker.single .calendar {
+	float: none;
+}
+
+.daterangepicker.show-calendar .calendar {
+	display: block;
+}
+
+.daterangepicker .calendar {
+	display: none;
+	max-width: 270px;
+	margin: 4px;
+}
+
+.daterangepicker .calendar.single .calendar-table {
+	border: none;
+}
+
+.daterangepicker .calendar th,
+.daterangepicker .calendar td {
+	white-space: nowrap;
+	text-align: center;
+	min-width: 32px;
+}
+
+.daterangepicker .calendar-table {
+	border: 1px solid #fff;
+	padding: 4px;
+	border-radius: 4px;
+	background-color: #fff;
+}
+
+.daterangepicker table {
+	width: 100%;
+	margin: 0;
+}
+
+.daterangepicker td,
+.daterangepicker th {
+	text-align: center;
+	width: 20px;
+	height: 20px;
+	border-radius: 4px;
+	border: 1px solid transparent;
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+.daterangepicker td.available:hover,
+.daterangepicker th.available:hover {
+	background-color: #eee;
+	border-color: transparent;
+	color: inherit;
+}
+
+.daterangepicker td.week,
+.daterangepicker th.week {
+	font-size: 80%;
+	color: #ccc;
+}
+
+.daterangepicker td.off,
+.daterangepicker td.off.in-range,
+.daterangepicker td.off.start-date,
+.daterangepicker td.off.end-date {
+	background-color: #fff;
+	border-color: transparent;
+	color: #999;
+}
+
+.daterangepicker td.in-range {
+	background-color: #ECECEC;
+	border-color: transparent;
+	color: #000;
+	border-radius: 0;
+}
+
+.daterangepicker td.start-date {
+	border-radius: 4px 0 0 4px;
+}
+
+.daterangepicker td.end-date {
+	border-radius: 0 4px 4px 0;
+}
+
+.daterangepicker td.start-date.end-date {
+	border-radius: 4px;
+}
+
+.daterangepicker td.active,
+.daterangepicker td.active:hover {
+	background-color: #2A7AF2;
+	border-color: transparent;
+	color: #fff;
+}
+
+.daterangepicker th.month {
+	width: auto;
+}
+
+.daterangepicker td.disabled,
+.daterangepicker option.disabled {
+	color: #999;
+	cursor: not-allowed;
+	text-decoration: line-through;
+}
+
+.daterangepicker select.monthselect,
+.daterangepicker select.yearselect {
+	font-size: 12px;
+	padding: 1px;
+	height: auto;
+	margin: 0;
+	cursor: default;
+}
+
+.daterangepicker select.monthselect {
+	margin-right: 2%;
+	width: 56%;
+}
+
+.daterangepicker select.yearselect {
+	width: 40%;
+}
+
+.daterangepicker select.hourselect,
+.daterangepicker select.minuteselect,
+.daterangepicker select.secondselect,
+.daterangepicker select.ampmselect {
+	width: 50px;
+	margin-bottom: 0;
+}
+
+.daterangepicker .input-mini {
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	color: #555;
+	height: 30px;
+	line-height: 30px;
+	display: block;
+	vertical-align: middle;
+	margin: 0 0 5px 0;
+	padding: 0 6px 0 28px;
+	width: 100%;
+}
+
+.daterangepicker .input-mini.active {
+	border: 1px solid #08c;
+	border-radius: 4px;
+}
+
+.daterangepicker .daterangepicker_input {
+	position: relative;
+}
+
+.daterangepicker .daterangepicker_input i {
+	position: absolute;
+	left: 8px;
+	top: 8px;
+}
+
+.daterangepicker.rtl .input-mini {
+	padding-right: 28px;
+	padding-left: 6px;
+}
+
+.daterangepicker.rtl .daterangepicker_input i {
+	left: auto;
+	right: 8px;
+}
+
+.daterangepicker .calendar-time {
+	text-align: center;
+	margin: 5px auto;
+	line-height: 30px;
+	position: relative;
+	padding-left: 28px;
+}
+
+.daterangepicker .calendar-time select.disabled {
+	color: #ccc;
+	cursor: not-allowed;
+}
+
+.ranges {
+	font-size: 11px;
+	float: none;
+	margin: 4px;
+	text-align: left;
+}
+
+.ranges ul {
+	list-style: none;
+	margin: 0 auto;
+	padding: 0;
+	width: 100%;
+}
+
+.ranges li {
+	font-size: 13px;
+	background-color: #f5f5f5;
+	border: 1px solid #f5f5f5;
+	border-radius: 4px;
+	color: #08c;
+	padding: 3px 12px;
+	margin-bottom: 8px;
+	cursor: pointer;
+}
+
+.ranges li:hover {
+	background-color: #08c;
+	border: 1px solid #08c;
+	color: #fff;
+}
+
+.ranges li.active {
+	background-color: #08c;
+	border: 1px solid #08c;
+	color: #fff;
+}
+
+/*  Larger Screen Styling */
+@media (min-width: 564px) {
+	.daterangepicker {
+		width: auto;
+	}
+
+	.daterangepicker .ranges ul {
+		width: 160px;
+	}
+
+	.daterangepicker.single .ranges ul {
+		width: 100%;
+	}
+
+	.daterangepicker.single .calendar.left {
+		clear: none;
+	}
+
+	.daterangepicker.single.ltr .ranges,
+	.daterangepicker.single.ltr .calendar {
+		float: left;
+	}
+
+	.daterangepicker.single.rtl .ranges,
+	.daterangepicker.single.rtl .calendar {
+		float: right;
+	}
+
+	.daterangepicker.ltr {
+		direction: ltr;
+		text-align: left;
+	}
+
+	.daterangepicker.ltr .calendar.left {
+		clear: left;
+		margin-right: 0;
+	}
+
+	.daterangepicker.ltr .calendar.left .calendar-table {
+		border-right: none;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+
+	.daterangepicker.ltr .calendar.right {
+		margin-left: 0;
+	}
+
+	.daterangepicker.ltr .calendar.right .calendar-table {
+		border-left: none;
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+	}
+
+	.daterangepicker.ltr .left .daterangepicker_input {
+		padding-right: 12px;
+	}
+
+	.daterangepicker.ltr .calendar.left .calendar-table {
+		padding-right: 12px;
+	}
+
+	.daterangepicker.ltr .ranges,
+	.daterangepicker.ltr .calendar {
+		float: left;
+	}
+
+	.daterangepicker.rtl {
+		direction: rtl;
+		text-align: right;
+	}
+
+	.daterangepicker.rtl .calendar.left {
+		clear: right;
+		margin-left: 0;
+	}
+
+	.daterangepicker.rtl .calendar.left .calendar-table {
+		border-left: none;
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+	}
+
+	.daterangepicker.rtl .calendar.right {
+		margin-right: 0;
+	}
+
+	.daterangepicker.rtl .calendar.right .calendar-table {
+		border-right: none;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+
+	.daterangepicker.rtl .left .daterangepicker_input {
+		padding-left: 12px;
+	}
+
+	.daterangepicker.rtl .calendar.left .calendar-table {
+		padding-left: 12px;
+	}
+
+	.daterangepicker.rtl .ranges,
+	.daterangepicker.rtl .calendar {
+		text-align: right;
+		float: right;
+	}
+}
+
+@media (min-width: 730px) {
+	.daterangepicker .ranges {
+		width: auto;
+	}
+
+	.daterangepicker.ltr .ranges {
+		float: left;
+	}
+
+	.daterangepicker.rtl .ranges {
+		float: right;
+	}
+
+	.daterangepicker .calendar.left {
+		clear: none !important;
+	}
+}
