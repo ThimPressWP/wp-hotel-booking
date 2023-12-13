@@ -395,7 +395,7 @@ class WP_Hotel_Booking {
 		wp_register_script( 'wphb-dropdown-pages', $this->plugin_url( 'assets/js/admin/dropdown-pages.js' ) );
 
 		// daterangepicker
-		wp_register_script( 'wp-daterangepicker', $this->plugin_url( 'assets/js/daterangepicker.min.js' ) );
+		wp_register_script( 'wp-daterangepicker', $this->plugin_url( 'assets/js/daterangepicker.min.js' ), $dependencies, WPHB_VERSION );
 
 		//nouiSlider
 		wp_register_script( 'wphb-ui-slider', $this->plugin_url( 'assets/lib/slider/nouislider.min.js' ) );

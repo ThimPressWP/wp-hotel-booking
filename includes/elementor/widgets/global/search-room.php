@@ -59,6 +59,45 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'icon_date',
+			[
+				'label'         => esc_html__( 'Icon Date', 'wp-hotel-booking' ),
+				'type'          => Controls_Manager::ICONS,
+                'skin'          => 'inline',
+                'label_block'   => false,
+				'condition'     => [
+                    'layout' => 'multidate',
+				],
+			]
+		);
+
+		$this->add_control(
+			'icon_adults',
+			[
+				'label'         => esc_html__( 'Icon Adults', 'wp-hotel-booking' ),
+				'type'          => Controls_Manager::ICONS,
+                'skin'          => 'inline',
+                'label_block'   => false,
+				'condition'     => [
+                    'layout' => 'multidate',
+				],
+			]
+		);
+
+		$this->add_control(
+			'icon_children',
+			[
+				'label'         => esc_html__( 'Icon Children', 'wp-hotel-booking' ),
+				'type'          => Controls_Manager::ICONS,
+                'skin'          => 'inline',
+                'label_block'   => false,
+				'condition'     => [
+                    'layout' => 'multidate',
+				],
+			]
+		);
+
         $this->add_control(
 			'text_submit',
 			[
@@ -73,27 +112,14 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 		);
 
         $this->add_control(
-			'show_icon',
-			array(
-				'label'   => esc_html__( 'Show Icon', 'wp-hotel-booking' ),
-				'type'    => Controls_Manager::SWITCHER,
-				'default' => 'no',
-                'condition'     => [
-					'layout' => 'multidate',
-				],
-			)
-		);
-
-        $this->add_control(
 			'icon_submit',
 			[
-				'label'         => esc_html__( 'Select Icon', 'wp-hotel-booking' ),
+				'label'         => esc_html__( 'Icon Submit', 'wp-hotel-booking' ),
 				'type'          => Controls_Manager::ICONS,
                 'skin'          => 'inline',
                 'label_block'   => false,
 				'condition'     => [
                     'layout' => 'multidate',
-					'show_icon' => 'yes',
 				],
 			]
 		);
@@ -110,7 +136,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			'style_general',
 			array(
 				'label' => esc_html__( 'General', 'wp-hotel-booking' ),
-				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+				'tab'   => Controls_Manager::TAB_STYLE,
 			)
 		);
 
@@ -224,7 +250,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			'style_field',
 			array(
 				'label' => esc_html__( 'Field', 'wp-hotel-booking' ),
-				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition'     => [
 					'layout' => 'multidate',
 				],
@@ -319,7 +345,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			'style_field_list',
 			array(
 				'label' => esc_html__( 'Field List', 'wp-hotel-booking' ),
-				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition'     => [
 					'layout' => 'multidate',
 				],
@@ -345,7 +371,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
-					'{{WRAPPER}} .hotel-booking-search-el .hb-form-table .hb-form-field .hb-form-field-list, .daterangepicker.dropdown-menu' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .hotel-booking-search-el .hb-form-table .hb-form-field .hb-form-field-list, .show-calendar.daterangepicker.dropdown-menu' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -357,7 +383,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
-					'{{WRAPPER}} .hotel-booking-search-el .hb-form-table .hb-form-field .hb-form-field-list, .daterangepicker.dropdown-menu' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .hotel-booking-search-el .hb-form-table .hb-form-field .hb-form-field-list, .show-calendar.daterangepicker.dropdown-menu' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -371,10 +397,30 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 		);
 
 		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'number_box_typography',
+				'selector' => '{{WRAPPER}} .hotel-booking-search-el .hb-form-table .hb-form-field.hb-form-number .hb-form-field-list .name',
+			)
+		);
+
+		$this->add_control(
+			'number_box_color',
+			[
+				'label'     => esc_html__( 'Color', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => '',
+				'selectors' => [
+					'{{WRAPPER}} .hotel-booking-search-el .hb-form-table .hb-form-field.hb-form-number .hb-form-field-list .name' => 'color: {{VALUE}};'
+				],
+			]
+		);
+
+		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			array(
 				'name'     => 'number_box_border',
-				'label'    => esc_html__( 'Border', 'thim-elementor-kit' ),
+				'label'    => esc_html__( 'Border', 'wp-hotel-booking' ),
 				'selector' => '{{WRAPPER}} .hotel-booking-search-el .hb-form-table .number-box',
 			)
 		);
@@ -399,7 +445,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			'style_button',
 			array(
 				'label' => esc_html__( 'Button', 'wp-hotel-booking' ),
-				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition'     => [
 					'layout' => 'multidate',
 				],
@@ -409,19 +455,19 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 		$this->add_responsive_control(
 			'Button_align',
 			array(
-				'label'     => esc_html__( 'Alignment', 'thim-elementor-kit' ),
+				'label'     => esc_html__( 'Alignment', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::CHOOSE,
 				'options'   => array(
 					'left' => array(
-						'title' => esc_html__( 'Start', 'thim-elementor-kit' ),
+						'title' => esc_html__( 'Start', 'wp-hotel-booking' ),
 						'icon'  => 'eicon-h-align-left',
 					),
 					'center'     => array(
-						'title' => esc_html__( 'Center', 'thim-elementor-kit' ),
+						'title' => esc_html__( 'Center', 'wp-hotel-booking' ),
 						'icon'  => ' eicon-h-align-center',
 					),
 					'right'   => array(
-						'title' => esc_html__( 'End', 'thim-elementor-kit' ),
+						'title' => esc_html__( 'End', 'wp-hotel-booking' ),
 						'icon'  => 'eicon-h-align-right',
 					),
 				),
@@ -587,6 +633,9 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
                 ?>
                 <input type="text" id="multidate" class="multidate" value="<?php echo esc_attr($check_in_date) ?>" readonly />
                 <li class="hb-form-field hb-form-check-in-check-out">
+					<?php if ( $settings['icon_date'] ) { 
+                        Icons_Manager::render_icon( $settings['icon_date'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );        
+                    } ?>
                     <div class="label"><?php echo esc_html__('Check-in, Check-out', 'wp-hotel-booking') ?></div>
                     <div class="hb-form-field-input hb_input_field">
                         <input type="text" name="check_in_date" id="check_in_date_<?php echo  esc_attr($uniqid) ?>" class="check-date" value="<?php echo esc_attr($check_in_date) ?>" readonly />
@@ -596,6 +645,9 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
                     </div>
                 </li>
                 <li class="hb-form-field hb-form-number">
+					<?php if ( $settings['icon_adults'] ) { 
+                        Icons_Manager::render_icon( $settings['icon_adults'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );        
+                    } ?>
                     <div class="label"><?php echo $label_adults; ?></div>
                     <div id="adults" class="hb-form-field-input hb_input_field">
                         <input type="text" id="number" class="adults-input" value="<?php echo esc_attr($adults) ?>" readonly />
@@ -625,6 +677,9 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
                 </li>
 
                 <li class="hb-form-field hb-form-number">
+					<?php if ( $settings['icon_children'] ) { 
+                        Icons_Manager::render_icon( $settings['icon_children'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );        
+                    } ?>
                     <div class="label"><?php echo $label_child; ?></div>
                     <div id="child" class="hb-form-field-input hb_input_field">
                         <input type="text" id="number" class="child-input" value="<?php echo esc_attr($max_child) ?>" readonly />
@@ -655,7 +710,6 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
             <?php wp_nonce_field('hb_search_nonce_action', 'nonce'); ?>
             <input type="hidden" name="hotel-booking" value="results" />
             <input type="hidden" name="action" value="hotel_booking_parse_search_params" />
-            <input type="hidden" name="widget-search" value="true" />
             <p class="hb-submit">
                 <button type="submit" class="wphb-button">
                     <?php if ( $settings['icon_submit'] ) { 

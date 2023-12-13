@@ -27,6 +27,12 @@
     position: relative;
     margin: 0;
 }
+.hotel-booking-search-el .multidate-layout .icon-custom {
+	position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
 .hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-check-in-check-out {
     width: 40%;
     max-width: none;
@@ -267,13 +273,6 @@
 	position: absolute;
 	color: inherit;
 	background-color: #fff;
-
-	.label {
-		text-align: center;
-		padding-bottom: 12px;
-		border-bottom: 2px solid #78D0C5;
-		margin-bottom: 20px;
-	}
 }
 
 .daterangepicker.opensleft:before {
