@@ -102,6 +102,11 @@
 	overflow: hidden;
 }
 
+.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb_input_field > span {
+	position: absolute;
+	left: 15px;
+}
+
 .hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-list.active {
 	opacity: 1;
 	visibility: visible;
@@ -267,20 +272,6 @@
 	border-radius: 0;
 	padding: 0;
 	font-weight: normal;
-}
-
-.daterangepicker.dropdown-menu .calendar th.available i {
-	display: none;
-}
-
-.daterangepicker.dropdown-menu .calendar th.available.prev:before {
-	content: "\f3cf";
-	font-family: "Ionicons";
-}
-
-.daterangepicker.dropdown-menu .calendar th.available.next:before {
-	content: "\f3d1";
-	font-family: "Ionicons";
 }
 
 .daterangepicker.dropdown-menu .calendar th.month {

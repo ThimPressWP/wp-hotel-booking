@@ -396,6 +396,7 @@ class WP_Hotel_Booking {
 
 		// daterangepicker
 		wp_register_script( 'wp-daterangepicker', $this->plugin_url( 'assets/js/daterangepicker.min.js' ), $dependencies, WPHB_VERSION );
+		wp_register_script( 'wp-hotel-booking-moment', $this->plugin_url( 'assets/js/moment.min.js' ), $dependencies );
 
 		//nouiSlider
 		wp_register_script( 'wphb-ui-slider', $this->plugin_url( 'assets/lib/slider/nouislider.min.js' ) );
@@ -419,7 +420,6 @@ class WP_Hotel_Booking {
 			}
 
 			wp_localize_script( 'wp-admin-hotel-booking', 'hotel_booking_i18n', hb_admin_i18n() );
-			wp_register_script( 'wp-admin-hotel-booking-moment', $this->plugin_url( 'assets/js/moment.min.js' ), $dependencies );
 			wp_register_script( 'wp-admin-hotel-booking-fullcalendar', $this->plugin_url( 'assets/js/fullcalendar.min.js' ), $dependencies );
 			wp_register_style( 'wp-admin-hotel-booking-fullcalendar', $this->plugin_url( 'assets/css/fullcalendar.min.css' ) );
 			// style tab single room admin v2
@@ -463,7 +463,7 @@ class WP_Hotel_Booking {
 			wp_enqueue_script( 'jquery-ui-autocomplete' );
 
 			/* fullcalendar */
-			wp_enqueue_script( 'wp-admin-hotel-booking-moment' );
+			wp_enqueue_script( 'wp-hotel-booking-moment' );
 			wp_enqueue_style( 'wp-admin-hotel-booking-fullcalendar' );
 			wp_enqueue_script( 'wp-admin-hotel-booking-fullcalendar' );
 

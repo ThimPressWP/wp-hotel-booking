@@ -10,6 +10,7 @@ use Elementor\Group_Control_Typography;
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+wp_enqueue_script( 'wp-hotel-booking-moment' );
 wp_enqueue_style( 'wp-multidate-style' );
 class Thim_Ekit_Widget_Search_Room extends Widget_Base {
     use GroupControlTrait;
@@ -126,6 +127,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 
         $this->end_controls_section();
         $this->register_section_style_general();
+		$this->register_section_style_title();
         $this->register_section_style_field();
 		$this->register_section_style_field_list();
 		$this->register_section_style_button();
@@ -239,6 +241,54 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
         $this->end_controls_section();
     }
 
+	protected function register_section_style_title(){
+		$this->start_controls_section(
+			'style_title',
+			array(
+				'label' => esc_html__( 'Title', 'wp-hotel-booking' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+				'condition'     => [
+					'layout' => 'base',
+				],
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'title_typography',
+				'label'    => esc_html__( 'Typography', 'wp-hotel-booking' ),
+				'selector' => '{{WRAPPER}} .hotel-booking-search h3',
+			]
+		);
+
+		$this->add_control(
+			'title_color',
+			[
+				'label'     => esc_html__( 'Color', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => '',
+				'selectors' => [
+					'{{WRAPPER}} .hotel-booking-search h3' => 'color: {{VALUE}};'
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'title_margin',
+			[
+				'label'      => esc_html__( 'Margin', 'wp-hotel-booking' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors'  => [
+					'{{WRAPPER}} .hotel-booking-search h3' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
     protected function register_section_style_field(){
         $this->start_controls_section(
 			'style_field',
@@ -281,7 +331,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			[
 				'name'     => 'label_typography',
 				'label'    => esc_html__( 'Typography', 'wp-hotel-booking' ),
-				'selector' => '{{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field .label',
+				'selector' => '{{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field .label, {{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field label',
 			]
 		);
 
@@ -292,7 +342,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '',
 				'selectors' => [
-					'{{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field .label' => 'color: {{VALUE}};'
+					'{{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field .label, {{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field label' => 'color: {{VALUE}};'
 				],
 			]
 		);
@@ -304,7 +354,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
-					'{{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field .label' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field .label, {{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field label' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; display: block',
 				],
 			]
 		);
@@ -646,6 +696,18 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 		$this->end_controls_tabs();
 
 		$this->add_responsive_control(
+			'button_margin',
+			[
+				'label'      => esc_html__( 'Margin', 'wp-hotel-booking' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors'  => [
+					'{{WRAPPER}} .hotel-booking-search .hb-submit button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; display: block',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
 			'border_radius_button',
 			[
 				'label'      => esc_html__( 'Border Radius', 'wp-hotel-booking' ),
@@ -722,7 +784,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
                     <div class="hb-form-field-list nav-guest">
                         <span class="name"><?php echo $label_adults; ?></span>
                         <div class="number-box">
-                            <span class="number-icons goDown"><i class="ion-minus"></i></span>
+                            <span class="number-icons goDown"><i class="fa fa-minus"></i></span>
                             <span class="hb-form-field-input hb-guest-field guests-number">
                                 <?php
                                 hb_dropdown_numbers(
@@ -737,7 +799,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
                                 );
                                 ?>
                             </span>
-                            <span class="number-icons goUp"><i class="ion-plus"></i></span>
+                            <span class="number-icons goUp"><i class="fa fa-plus"></i></span>
                         </div>
                     </div>
                 </li>
@@ -754,7 +816,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
                     <div class="hb-form-field-list nav-child">
                         <span class="name"><?php echo $label_child; ?></span>
                         <div class="number-box">
-                            <span class="number-icons goDown"><i class="ion-minus"></i></span>
+                            <span class="number-icons goDown"><i class="fa fa-minus"></i></span>
                             <span class="hb-form-field-input hb-guest-field child-number">
                                 <?php
                                 hb_dropdown_numbers(
@@ -768,7 +830,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
                                 );
                                 ?>
                             </span>
-                            <span class="number-icons goUp"><i class="ion-plus"></i></span>
+                            <span class="number-icons goUp"><i class="fa fa-plus"></i></span>
                         </div>
                     </div>
                 </li>
