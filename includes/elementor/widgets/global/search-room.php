@@ -329,12 +329,24 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			array(
-				'name'     => 'field_border',
+				'name'     => 'field_border_base',
 				'label'    => esc_html__( 'Border', 'wp-hotel-booking' ),
 				'condition'     => [
 					'layout' => 'base',
 				],
 				'selector' => '{{WRAPPER}} .hotel-booking-search .hb-form-field-input input, {{WRAPPER}} .hotel-booking-search .hb-form-field-input select',
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Border::get_type(),
+			array(
+				'name'     => 'field_border_multidate',
+				'label'    => esc_html__( 'Border', 'wp-hotel-booking' ),
+				'condition'     => [
+					'layout' => 'multidate',
+				],
+				'selector' => '{{WRAPPER}} .hotel-booking-search .multidate-layout .hb-form-field',
 			)
 		);
 
@@ -344,11 +356,8 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				'label'     => esc_html__( 'Border Color Hover', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '',
-				'condition'     => [
-					'layout' => 'base',
-				],
 				'selectors' => [
-					'{{WRAPPER}} .hotel-booking-search .hb-form-field-input input:focus, {{WRAPPER}} .hotel-booking-search .hb-form-field-input select:hover' => 'border-color: {{VALUE}};'
+					'{{WRAPPER}} .hotel-booking-search .hb-form-field-input > input:focus, {{WRAPPER}} .hotel-booking-search .hb-form-field-input select:hover, {{WRAPPER}} .hotel-booking-search .multidate-layout .hb-form-field:hover' => 'border-color: {{VALUE}};'
 				],
 			]
 		);
@@ -372,6 +381,18 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
 					'{{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field .hb-form-field-input' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'border_radius_input',
+			[
+				'label'      => esc_html__( 'Border Radius', 'wp-hotel-booking' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors'  => [
+					'{{WRAPPER}} .hotel-booking-search .hb-form-field-input input, {{WRAPPER}} .hotel-booking-search .hb-form-field-input select, {{WRAPPER}} .hotel-booking-search .multidate-layout .hb-form-field' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
