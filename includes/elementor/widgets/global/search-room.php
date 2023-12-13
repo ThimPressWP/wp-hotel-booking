@@ -198,9 +198,6 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 						'max' => 100,
 					),
 				],
-				'condition'     => [
-					'display_base' => 'row',
-				],
 				'selectors'  => [
 					'{{WRAPPER}} form > .hb-form-table' => 'flex-basis: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}};'
 				]
@@ -232,9 +229,6 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 						'min' => 0,
 						'max' => 100,
 					),
-				],
-				'condition'     => [
-					'display_base' => 'row',
 				],
 				'selectors'  => [
 					'{{WRAPPER}} form > .hb-submit' => 'flex-basis: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}};'

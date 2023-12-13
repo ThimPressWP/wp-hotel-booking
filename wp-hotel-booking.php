@@ -401,7 +401,7 @@ class WP_Hotel_Booking {
 		wp_register_script( 'wphb-ui-slider', $this->plugin_url( 'assets/lib/slider/nouislider.min.js' ) );
 
 		//multidate
-		wp_register_style( 'wp-multidate-style', $this->plugin_url( 'assets/css/multidate.min.css' ), array(), WPHB_VERSION );
+		wp_register_style( 'wp-multidate-style', $this->plugin_url( 'assets/css/multidate.css' ), array(), WPHB_VERSION );
 
 		if ( is_admin() ) {
 			$dependencies = array_merge( $dependencies, array( 'backbone' ) );
