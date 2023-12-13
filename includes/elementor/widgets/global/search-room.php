@@ -245,10 +245,28 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			array(
 				'label' => esc_html__( 'Field', 'wp-hotel-booking' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
-				'condition'     => [
-					'layout' => 'multidate',
-				],
 			)
+		);
+
+		$this->add_responsive_control(
+			'field_w', [
+				'label'      => esc_html__( 'Field Width', 'wp-hotel-booking' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%' ],
+				'range'      => [
+					'%'  => array(
+						'min' => 0,
+						'max' => 100,
+					),
+				],
+				'condition'     => [
+					'layout' => 'base',
+				],
+				'selectors'  => [
+					'{{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field *' => 'width: 100%'
+				]
+			]
 		);
 
         $this->add_control(
@@ -263,7 +281,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			[
 				'name'     => 'label_typography',
 				'label'    => esc_html__( 'Typography', 'wp-hotel-booking' ),
-				'selector' => '{{WRAPPER}} .hotel-booking-search-el .hb-form-table .hb-form-field .label',
+				'selector' => '{{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field .label',
 			]
 		);
 
@@ -274,7 +292,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '',
 				'selectors' => [
-					'{{WRAPPER}} .hotel-booking-search-el .hb-form-table .hb-form-field .label' => 'color: {{VALUE}};'
+					'{{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field .label' => 'color: {{VALUE}};'
 				],
 			]
 		);
@@ -286,7 +304,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
-					'{{WRAPPER}} .hotel-booking-search-el .hb-form-table .hb-form-field .label' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field .label' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -304,7 +322,34 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			[
 				'name'     => 'input_typography',
 				'label'    => esc_html__( 'Typography', 'wp-hotel-booking' ),
-				'selector' => '{{WRAPPER}} .hotel-booking-search-el .hb-form-table .hb-form-field .hb-form-field-input',
+				'selector' => '{{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field .hb-form-field-input, {{WRAPPER}} .hotel-booking-search input, {{WRAPPER}} .hotel-booking-search select',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Border::get_type(),
+			array(
+				'name'     => 'field_border',
+				'label'    => esc_html__( 'Border', 'wp-hotel-booking' ),
+				'condition'     => [
+					'layout' => 'base',
+				],
+				'selector' => '{{WRAPPER}} .hotel-booking-search .hb-form-field-input input, {{WRAPPER}} .hotel-booking-search .hb-form-field-input select',
+			)
+		);
+
+		$this->add_control(
+			'field_border_color_hover',
+			[
+				'label'     => esc_html__( 'Border Color Hover', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => '',
+				'condition'     => [
+					'layout' => 'base',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .hotel-booking-search .hb-form-field-input input:focus, {{WRAPPER}} .hotel-booking-search .hb-form-field-input select:hover' => 'border-color: {{VALUE}};'
+				],
 			]
 		);
 
@@ -314,7 +359,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				'label'     => esc_html__( 'Color', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .hotel-booking-search-el .hb-form-table .hb-form-field .hb-form-field-input *' => 'color: {{VALUE}} !important;'
+					'{{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field .hb-form-field-input *' => 'color: {{VALUE}} !important;'
 				],
 			]
 		);
@@ -326,7 +371,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
-					'{{WRAPPER}} .hotel-booking-search-el .hb-form-table .hb-form-field .hb-form-field-input' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field .hb-form-field-input' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -440,9 +485,6 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			array(
 				'label' => esc_html__( 'Button', 'wp-hotel-booking' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
-				'condition'     => [
-					'layout' => 'multidate',
-				],
 			)
 		);
 
@@ -467,9 +509,18 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				),
 				'toggle'    => true,
 				'selectors' => array(
-					'{{WRAPPER}} .hotel-booking-search-el .hb-submit' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .hotel-booking-search .hb-submit' => 'text-align: {{VALUE}};',
 				),
 			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name'     => 'submit_button_typography',
+				'label'    => esc_html__( 'Typography', 'wp-hotel-booking' ),
+				'selector' => '{{WRAPPER}} .hotel-booking-search .hb-submit button',
+			]
 		);
 
 		$this->add_responsive_control(
@@ -484,7 +535,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 					),
 				],
 				'selectors'  => [
-					'{{WRAPPER}} .hotel-booking-search-el .hb-submit button' => 'width: {{SIZE}}{{UNIT}};'
+					'{{WRAPPER}} .hotel-booking-search .hb-submit button' => 'width: {{SIZE}}{{UNIT}};'
 				]
 			]
 		);
@@ -501,7 +552,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 					),
 				],
 				'selectors'  => [
-					'{{WRAPPER}} .hotel-booking-search-el .hb-submit button' => 'height: {{SIZE}}{{UNIT}};'
+					'{{WRAPPER}} .hotel-booking-search .hb-submit button' => 'height: {{SIZE}}{{UNIT}};'
 				]
 			]
 		);
@@ -520,8 +571,8 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				'label'     => esc_html__( 'Color', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .hotel-booking-search-el .hb-submit button'          => 'color: {{VALUE}};',
-					'{{WRAPPER}} .hotel-booking-search-el .hb-submit button svg path' => 'fill: {{VALUE}};'
+					'{{WRAPPER}} .hotel-booking-search .hb-submit button'          => 'color: {{VALUE}};',
+					'{{WRAPPER}} .hotel-booking-search .hb-submit button svg path' => 'fill: {{VALUE}};'
 				],
 			]
 		);
@@ -532,7 +583,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				'label'     => esc_html__( 'Background Color', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .hotel-booking-search-el .hb-submit button' => 'background: {{VALUE}};'
+					'{{WRAPPER}} .hotel-booking-search .hb-submit button' => 'background: {{VALUE}};'
 				],
 			]
 		);
@@ -552,8 +603,8 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				'label'     => esc_html__( 'Color', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .hotel-booking-search-el .hb-submit button:hover'    => 'color: {{VALUE}};',
-					'{{WRAPPER}} .hotel-booking-search-el .hb-submit button:hover svg path' => 'fill: {{VALUE}};'
+					'{{WRAPPER}} .hotel-booking-search .hb-submit button:hover'    => 'color: {{VALUE}};',
+					'{{WRAPPER}} .hotel-booking-search .hb-submit button:hover svg path' => 'fill: {{VALUE}};'
 				],
 			]
 		);
@@ -564,7 +615,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				'label'     => esc_html__( 'Background Color', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .hotel-booking-search-el .hb-submit button:hover' => 'background: {{VALUE}};'
+					'{{WRAPPER}} .hotel-booking-search .hb-submit button:hover' => 'background: {{VALUE}};'
 				],
 			]
 		);
@@ -580,7 +631,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
-					'{{WRAPPER}} .hotel-booking-search-el .hb-submit button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .hotel-booking-search .hb-submit button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
