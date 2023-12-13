@@ -99,6 +99,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	overflow: hidden;
 }
 
 .hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-list.active {
