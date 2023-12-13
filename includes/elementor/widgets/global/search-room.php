@@ -781,11 +781,11 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
                         <input type="text" id="number" class="adults-input" value="<?php echo esc_attr($adults) ?>" readonly />
                         <span><?php echo $label_adults; ?></span>
                     </div>
-                    <div class="hb-form-field-list nav-guest">
+                    <div class="hb-form-field-list nav-adults">
                         <span class="name"><?php echo $label_adults; ?></span>
                         <div class="number-box">
                             <span class="number-icons goDown"><i class="fa fa-minus"></i></span>
-                            <span class="hb-form-field-input hb-guest-field guests-number">
+                            <span class="hb-form-field-input hb-adults-field adults-number">
                                 <?php
                                 hb_dropdown_numbers(
                                     array(
@@ -813,11 +813,11 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
                         <input type="text" id="number" class="child-input" value="<?php echo esc_attr($max_child) ?>" readonly />
                         <span><?php echo $label_child; ?></span>
                     </div>
-                    <div class="hb-form-field-list nav-child">
+                    <div class="hb-form-field-list nav-children">
                         <span class="name"><?php echo $label_child; ?></span>
                         <div class="number-box">
                             <span class="number-icons goDown"><i class="fa fa-minus"></i></span>
-                            <span class="hb-form-field-input hb-guest-field child-number">
+                            <span class="hb-form-field-input hb-children-field children-number">
                                 <?php
                                 hb_dropdown_numbers(
                                     array(
