@@ -24,7 +24,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'thim-eicon eicon-taxonomy-filter';
+		return 'thim-eicon eicon-search-results';
 	}
 
 	public function get_categories() {
