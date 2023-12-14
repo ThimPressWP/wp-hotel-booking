@@ -187,6 +187,26 @@ const clearFieldFilter = () => {
     }
 }
 
+// Click element
+document.addEventListener( 'click', function( e ) {
+    const target = e.target;
+
+    if ( target.classList.contains( 'icon-toggle-filter' )) {
+		e.preventDefault();
+		const toggleContent = target.closest( '.toggle-content' );
+		if ( ! toggleContent ) {
+			return;
+		}
+		const toggleOn = target.closest( '.toggle-on' );
+		
+		if (  ! toggleOn ) {
+			toggleContent.classList.add("toggle-on");
+		}else {
+			toggleContent.classList.remove("toggle-on");
+		}
+	}
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     if (hotel_settings && hotel_settings.is_page_search) {
         return;

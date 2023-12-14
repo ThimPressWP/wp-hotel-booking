@@ -508,6 +508,7 @@ class WP_Hotel_Booking {
 			wp_register_script( 'wphb-daterangepicker',  WPHB_PLUGIN_URL . '/assets/js/daterangepicker.min.js', array('jquery'), WPHB_VERSION );
 
 			wp_enqueue_style( 'wphb-search-room-style',  WPHB_PLUGIN_URL . '/assets/css/widgets/search-room.css', array(), WPHB_VERSION );
+			wp_enqueue_style( 'wphb-filter-room-style',  WPHB_PLUGIN_URL . '/assets/css/widgets/filter-room.css', array(), WPHB_VERSION );
 		}
 	}
 

@@ -1,0 +1,56 @@
+#hotel-booking-search-filter .search-filter-form-el .clear-filter button {
+    min-width: unset;
+    height: auto;
+}
+
+.search-filter-form-el ul {
+    margin: 0;
+}
+
+.search-filter-form-el .field-item>div {
+    margin: 0;
+}
+
+.search-filter-form-el>.count-hide .room-type-number,
+.search-filter-form-el>.count-hide .rating-number,
+.search-filter-form-el>.heading-hide h4,
+.search-filter-form-el>.heading-hide .title {
+    display: none;
+}
+
+.search-filter-form-el .field-item {
+    position: relative;
+}
+
+.search-filter-form-el .field-item .icon-toggle-filter {
+    position: absolute;
+    top: 15px;
+    right: 0;
+    z-index: 9;
+    transition: 0.3s;
+    cursor: pointer;
+}
+.search-filter-form-el .field-item.toggle-on .fa-angle-down {
+    display: none;
+}
+.search-filter-form-el .field-item.toggle-on .fa-angle-up {
+    display: block;
+}
+.search-filter-form-el .field-item .fa-angle-down {
+    display: block;
+}
+.search-filter-form-el .field-item .fa-angle-up {
+    display: none;
+}
+.search-filter-form-el .field-item.toggle-content ul {
+    display: none;
+}
+.search-filter-form-el .field-item.toggle-content.toggle-on ul {
+    display: block;
+}
+.search-filter-form-el .noUi-handle:before, .search-filter-form-el .noUi-handle::after {
+    display: none;
+}
+.search-filter-form-el .noUi-target, .search-filter-form-el .noUi-handle {
+    border: none;
+}
