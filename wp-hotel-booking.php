@@ -95,6 +95,8 @@ class WP_Hotel_Booking {
 		add_filter( 'wpmu_drop_tables', array( $this, 'delete_blog_table' ) );
 
 		add_action( 'admin_init', array( $this, 'deactivate_plugins_old' ) );
+
+
 	}
 
 	public function init() {
@@ -394,15 +396,12 @@ class WP_Hotel_Booking {
 		// dropdown pages
 		wp_register_script( 'wphb-dropdown-pages', $this->plugin_url( 'assets/js/admin/dropdown-pages.js' ) );
 
-		// daterangepicker
-		wp_register_script( 'wp-hotel-booking-moment', $this->plugin_url( 'assets/js/moment.min.js' ), $dependencies, WPHB_VERSION );
-		wp_register_script( 'wp-daterangepicker', $this->plugin_url( 'assets/js/daterangepicker.min.js' ), $dependencies, WPHB_VERSION );
+		// moment
+		wp_register_script( 'wp-hotel-booking-moment', $this->plugin_url( 'assets/js/moment.min.js' ) );
 
 		//nouiSlider	
 		wp_register_script( 'wphb-ui-slider', $this->plugin_url( 'assets/lib/slider/nouislider.min.js' ) );
 
-		//multidate
-		wp_register_style( 'wp-multidate-style', $this->plugin_url( 'assets/css/multidate.css' ), array(), WPHB_VERSION );
 
 		if ( is_admin() ) {
 			$dependencies = array_merge( $dependencies, array( 'backbone' ) );
@@ -500,6 +499,16 @@ class WP_Hotel_Booking {
 		wp_enqueue_script( 'wp-admin-hotel-booking-calendar-v2' );
 		wp_enqueue_style( 'wp-admin-hotel-booking-calendar-v2' );
 		wp_enqueue_script( 'wp-admin-hotel-booking-v2' );
+
+		if ( ! class_exists( 'Elementor' ) ) {
+			//multidate
+			wp_enqueue_style( 'wphb-multidate-style', WPHB_PLUGIN_URL . '/assets/css/multidate.css', array(), WPHB_VERSION );
+
+			//daterangepicker
+			wp_register_script( 'wphb-daterangepicker',  WPHB_PLUGIN_URL . '/assets/js/daterangepicker.min.js', array('jquery'), WPHB_VERSION );
+
+			wp_enqueue_style( 'wphb-search-room-style',  WPHB_PLUGIN_URL . '/assets/css/widgets/search-room.css', array(), WPHB_VERSION );
+		}
 	}
 
 	/**

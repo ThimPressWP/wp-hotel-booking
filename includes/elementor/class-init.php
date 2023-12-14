@@ -31,8 +31,6 @@ class Elementor {
 		if ( ! function_exists( 'is_plugin_active' ) ) {
 			include_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
-
-
     }
 
     public function add_widgets( $widget_default ) {

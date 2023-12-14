@@ -48,26 +48,54 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
         $repeater_data->add_control(
             'meta_field',
 			array(
-				'label'   => esc_html__( 'Select Meta', 'thim-elementor-kit' ),
+				'label'   => esc_html__( 'Select Meta', 'wp-hotel-booking' ),
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'types',
 				'options' => array(
- 					'price'     => esc_html__( 'price', 'thim-elementor-kit' ),
-					'rating'    => esc_html__( 'rating', 'thim-elementor-kit' ),
-					'types'     => esc_html__( 'types', 'thim-elementor-kit' ),
+ 					'price'     => esc_html__( 'Price', 'wp-hotel-booking' ),
+					'rating'    => esc_html__( 'Rating', 'wp-hotel-booking' ),
+					'types'     => esc_html__( 'Types', 'wp-hotel-booking' ),
+					'clear'     => esc_html__( 'Clear All', 'wp-hotel-booking' ),
 				),
 			)
         );
 
+		$repeater_data->add_control(
+			'min_price',
+			[
+				'label'     => esc_html__( 'Min Price', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::NUMBER,
+				'default' 	=> 0,
+                'condition'     => [
+					'meta_field' => 'price',
+				],
+			]
+		);
+
+		$repeater_data->add_control(
+			'max_price',
+			[
+				'label'     => esc_html__( 'Max Price', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::NUMBER,
+				'default' 	=> 1000,
+                'condition'     => [
+					'meta_field' => 'price',
+				],
+			]
+		);
+
         $this->add_control(
 			'data',
             array(
-				'label'       => esc_html__( 'Filter', 'thim-elementor-kit' ),
+				'label'       => esc_html__( 'Filter', 'wp-hotel-booking' ),
 				'type'        => Controls_Manager::REPEATER,
 				'fields'      => $repeater_data->get_controls(),
 				'default'     => array(
  					array(
 						'meta_field' => 'types',
+					),
+					array(
+						'meta_field' => 'rating',
 					),
 				),
 				'title_field' => '<span style="text-transform: capitalize;">{{{ meta_field.replace("_", " ") }}}</span>',
@@ -84,8 +112,20 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
             <div id="hotel-booking-search-filter" class="hotel-booking-search-filter">
             <form class="search-filter-form" action="">
                 <?php 
-                foreach ( $settings['data'] as $item ) {
-                    hb_get_template( 'search/v2/search-filter/' . $item['meta_field'] . '.php', compact( 'data' ) );
+                foreach ( $settings['data'] as $data ) {
+					switch ( $data['meta_field'] ) {
+						case 'clear':
+							?>
+							<div class="clear-filter">
+								<button type="button">
+									<?php esc_html_e( 'Clear all fields', 'wp-hotel-booking' ); ?>
+								</button>
+							</div>
+							<?php
+							break;
+						default:
+                    	hb_get_template( 'search/v2/search-filter/' . $data['meta_field'] . '.php', compact( 'data' ) );
+					}
                 }
                 ?>
             </form>

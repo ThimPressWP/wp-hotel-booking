@@ -10,8 +10,6 @@ use Elementor\Group_Control_Typography;
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-wp_enqueue_script( 'wp-hotel-booking-moment' );
-wp_enqueue_style( 'wp-multidate-style' );
 class Thim_Ekit_Widget_Search_Room extends Widget_Base {
     use GroupControlTrait;
 
@@ -757,7 +755,8 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
         <form <?php echo is_page($page_search) ? 'id="hb-form-search-page" ' : ''; ?> name="hb-search-form" action="<?php echo hb_get_url(); ?>" class="multidate-layout hb-search-form-<?php echo esc_attr($uniqid); ?>">
             <ul class="hb-form-table">
                 <?php 
-                wp_enqueue_script( 'wp-daterangepicker');
+				wp_enqueue_script( 'wp-hotel-booking-moment' );
+                wp_enqueue_script( 'wphb-daterangepicker');
                 ?>
                 <input type="text" id="multidate" class="multidate" value="<?php echo esc_attr($check_in_date) ?>" readonly />
                 <li class="hb-form-field hb-form-check-in-check-out">
