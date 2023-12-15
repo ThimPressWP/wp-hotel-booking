@@ -205,6 +205,24 @@ document.addEventListener( 'click', function( e ) {
 			toggleContent.classList.remove("toggle-on");
 		}
 	}
+
+    const sectionBtns = document.querySelector('.hb-button-popup');
+    if ( sectionBtns.contains( e.target ) ) {
+        e.preventDefault();
+		const elhbFilter = target.closest( '.hotel-booking-search-filter' );
+		if ( ! elhbFilter ) {
+			return;
+		}
+		elhbFilter.classList.toggle("filter-popup-show");
+    }
+
+    if ( target.classList.contains( 'filter-bg' ) ) {
+		const elLpCourseFilter = target.closest( '.hotel-booking-search-filter' );
+		if ( ! elLpCourseFilter ) {
+			return;
+		}
+		elLpCourseFilter.classList.remove("filter-popup-show");
+	}
 });
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -197,7 +197,9 @@
 .hotel-booking-search-el .multidate-layout .hb-submit {
 	width: 14%;
 }
-
+.hotel-booking-search-el form:not(.multidate-layout) .hb-submit button {
+	display: block;
+}
 .hotel-booking-search-el .multidate-layout .hb-submit button {
 	width: 100%;
 	margin-top: 0;

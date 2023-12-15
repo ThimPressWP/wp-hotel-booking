@@ -3,6 +3,10 @@
     height: auto;
 }
 
+#hotel-booking-search-filter.wphb-el {
+    padding: 0;
+}
+
 .search-filter-form-el ul {
     margin: 0;
 }
@@ -30,27 +34,116 @@
     transition: 0.3s;
     cursor: pointer;
 }
-.search-filter-form-el .field-item.toggle-on .fa-angle-down {
+
+.search-filter-form-el .field-item.toggle-on .fa-angle-down,
+.search-filter-form-el .field-item .fa-angle-up,
+.search-filter-form-el .field-item.toggle-content ul,
+.search-filter-form-el .field-item.toggle-content .hb-price-field>*:not(.title) {
     display: none;
 }
-.search-filter-form-el .field-item.toggle-on .fa-angle-up {
+
+.search-filter-form-el .field-item.toggle-on .fa-angle-up,
+.search-filter-form-el .field-item .fa-angle-down,
+.search-filter-form-el .field-item.toggle-content.toggle-on ul,
+.search-filter-form-el .field-item.toggle-content.toggle-on .hb-price-field>*:not(.title) {
     display: block;
 }
-.search-filter-form-el .field-item .fa-angle-down {
-    display: block;
-}
-.search-filter-form-el .field-item .fa-angle-up {
+
+.search-filter-form-el .noUi-handle:before,
+.search-filter-form-el .noUi-handle::after {
     display: none;
 }
-.search-filter-form-el .field-item.toggle-content ul {
-    display: none;
-}
-.search-filter-form-el .field-item.toggle-content.toggle-on ul {
-    display: block;
-}
-.search-filter-form-el .noUi-handle:before, .search-filter-form-el .noUi-handle::after {
-    display: none;
-}
-.search-filter-form-el .noUi-target, .search-filter-form-el .noUi-handle {
+
+.search-filter-form-el .noUi-target,
+.search-filter-form-el .noUi-handle {
     border: none;
+    box-shadow: none;
+}
+
+.search-filter-form-el.hb-filter-popup,
+.hb-button-popup {
+    display: none;
+}
+
+.hotel-booking-search-filter .hb-button-popup .icon-align-right {
+    order: 2;
+}
+
+.hotel-booking-search-filter .search-filter-form-el {
+    transition: 0.3s;
+}
+
+.hotel-booking-search-filter.filter-popup-show .search-filter-form-el {
+    display: block;
+    z-index: 20;
+    position: relative;
+}
+
+.hb-filter-popup.hb-button-popup {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.hotel-booking-search-filter .selected-filter-number {
+    order: 3;
+}
+
+.hotel-booking-search-filter .filter-bg {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: transparent;
+    display: none;
+    z-index: -1;
+}
+.hotel-booking-search-filter.filter-popup-show .filter-bg {
+    z-index: 1;
+}
+
+.hotel-booking-search-filter.filter-popup-show .filter-bg {
+    display: block;
+}
+
+@media (max-width: 767px) {
+    /* .search-filter-form-el.hb-filter-popup-mobile {
+        display: none;
+    } */
+
+    .hb-filter-popup-mobile.hb-button-popup {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .hotel-booking-search-filter.filter-popup-show .filter-bg {
+        z-index: 10;
+        background-color: rgb(0 0 0 / 80%);
+    }
+
+    .hotel-booking-search-filter .search-filter-form-el.hb-filter-popup,
+    .hotel-booking-search-filter .search-filter-form-el.hb-filter-popup-mobile {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        overflow-y: auto;
+        display: block;
+        transform: translate3d(300px, 0, 0);
+    }
+
+    .hotel-booking-search-filter.filter-popup-show .search-filter-form-el.hb-filter-popup,
+    .hotel-booking-search-filter.filter-popup-show .search-filter-form-el.hb-filter-popup-mobile {
+        transform: none;
+    }
+
+    .hotel-booking-search-filter.filter-popup-show .search-filter-form-el::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .hotel-booking-search-filter.filter-popup-show .search-filter-form-el::-webkit-scrollbar-thumb {
+        background: #f5f5f5;
+    }
 }
