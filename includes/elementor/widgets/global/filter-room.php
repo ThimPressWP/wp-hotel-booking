@@ -199,7 +199,7 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 		$this->add_control(
 			'filter_toggle_button',
 			[
-				'label'        => esc_html__( 'Toggle Button', 'wp-hotel-booking' ),
+				'label'        => esc_html__( 'Filter Toggle Button', 'wp-hotel-booking' ),
 				'type'         => Controls_Manager::POPOVER_TOGGLE,
 				'label_off'    => esc_html__( 'Default', 'wp-hotel-booking' ),
 				'label_on'     => esc_html__( 'Custom', 'wp-hotel-booking' ),
@@ -683,6 +683,9 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 			[
 				'label' => esc_html__( 'Form Popup', 'wp-hotel-booking' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'filter_toggle_button' => 'yes',
+				]
 			]
 		);
 
@@ -693,7 +696,7 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#fff',
 				'selectors' => [
-					'{{WRAPPER}} .search-filter-form-el.hb-filter-popup' => 'background-color: {{VALUE}};'
+					'{{WRAPPER}} .search-filter-form-el.hb-filter-popup, {{WRAPPER}} .search-filter-form-el.hb-filter-popup-mobile' => 'background-color: {{VALUE}};'
 				],
 			]
 		);
@@ -705,7 +708,7 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
-					'{{WRAPPER}} .search-filter-form-el.hb-filter-popup' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .search-filter-form-el.hb-filter-popup, {{WRAPPER}} .search-filter-form-el.hb-filter-popup-mobile' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -716,6 +719,9 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 				'name'      => 'form_popup_shadow',
 				'selector'  => '{{WRAPPER}} .search-filter-form-el.hb-filter-popup',
 				'separator' => 'before',
+				'condition' => [
+					'enable_filter_button' => 'yes',
+				]
 			]
 		);
 
@@ -728,6 +734,9 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 			[
 				'label' => esc_html__( 'Button Popup', 'wp-hotel-booking' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'filter_toggle_button' => 'yes',
+				]
 			]
 		);
 
@@ -771,6 +780,7 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'filter_selected_number' => 'yes',
+					'filter_toggle_button' => 'yes',
 				]
 			]
 		);
@@ -799,13 +809,15 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
         if ( $settings['data'] ) { ?>
             <div id="hotel-booking-search-filter" class="hotel-booking-search-filter wphb-el">
 			<?php 
-				if ($settings['enable_filter_button'] == 'yes') {
-					$extraClass .= ' hb-filter-popup';
+				if ( $settings['filter_toggle_button'] == 'yes' ) {
+					if ( $settings['enable_filter_button'] == 'yes' ) {
+						$extraClass .= ' hb-filter-popup';
+					}
+					if ( $settings['enable_filter_button_mobile'] == 'yes' ) {
+						$extraClass .= ' hb-filter-popup-mobile';
+					}
+					$this->button_popup($settings, $extraClass);
 				}
-				if ($settings['enable_filter_button_mobile'] == 'yes') {
-					$extraClass .= ' hb-filter-popup-mobile';
-				}
-				$this->button_popup($settings, $extraClass);
 			?>
             <form class="search-filter-form search-filter-form-el <?php echo esc_attr($extraClass) ?>" action="">
                 <?php 
