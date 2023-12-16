@@ -312,7 +312,7 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'layout_form',
 			array(
 				'label'     => esc_html__( 'Display', 'wp-hotel-booking' ),
