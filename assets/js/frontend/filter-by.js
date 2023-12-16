@@ -127,6 +127,7 @@ const hbRoomType = () => {
         if (getParam('room_type')) {
             roomTypesValue = getParam('room_type').split(',');
         }
+        console.log(roomTypesValue);
 
         [...roomTypesValue].map(value => {
             roomTypeField.querySelector(`input[name ="room_type"][value ="${value}"]`).checked = true;
@@ -147,6 +148,8 @@ const hbRoomType = () => {
 
                 if (value.length) {
                     url.searchParams.set('room_type', value);
+                } else if ( value.length == 0 ) {
+                    url.searchParams.delete('room_type')
                 } else {
                     url.searchParams.delete('room_type', value);
                 }
@@ -190,6 +193,7 @@ const clearFieldFilter = () => {
 // Click element
 document.addEventListener( 'click', function( e ) {
     const target = e.target;
+    const sectionBtns = document.querySelector('.hb-button-popup');
 
     if ( target.classList.contains( 'icon-toggle-filter' )) {
 		e.preventDefault();
@@ -206,8 +210,7 @@ document.addEventListener( 'click', function( e ) {
 		}
 	}
 
-    const sectionBtns = document.querySelector('.hb-button-popup');
-    if ( sectionBtns.contains( e.target ) ) {
+    if ( sectionBtns && sectionBtns.contains( e.target ) ) {
         e.preventDefault();
 		const elhbFilter = target.closest( '.hotel-booking-search-filter' );
 		if ( ! elhbFilter ) {
@@ -223,7 +226,82 @@ document.addEventListener( 'click', function( e ) {
 		}
 		elLpCourseFilter.classList.remove("filter-popup-show");
 	}
+
+    if ( target.classList.contains( 'icon-remove-selected' ) ) {
+		e.preventDefault();
+		window.hbRoomFilterEl.resetSelected( target );
+	}
+
+    if ( target.classList.contains( 'clear-selected-list' ) ) {
+		e.preventDefault();
+		window.hbRoomFilterEl.resetList( target );
+	}
 });
+
+const classCourseFilter = 'search-filter-form-el';
+window.hbRoomFilterEl = {
+    resetList: ( target ) => {
+		const form = document.querySelector( `.${ classCourseFilter }` );
+		const selectedList   = document.querySelector( '.selected-list' );
+		const elSelectedList = selectedList.querySelectorAll( '.selected-item' );
+
+		if ( ! elSelectedList ) {
+			return; 
+		}
+
+		for ( let i = 0; i < elSelectedList.length; i++ ) {
+			elSelectedList[i].remove();
+		}
+
+		for ( let i = 0; i < form.elements.length; i++ ) {
+			form.elements[ i ].removeAttribute( 'checked' );
+		}
+
+		target.remove();
+        const url = new URL(window.location.href);
+        const filterArgs = ['min_price', 'max_price', 'rating', 'room_type'];
+
+        [...filterArgs].map(filterArg => {
+            if (url.searchParams.get(filterArg)) {
+                url.searchParams.delete(filterArg);
+            }
+        });
+
+        window.location.href = url;
+	},
+    resetSelected: ( target ) => {
+		const form = document.querySelector( `.${ classCourseFilter }` );
+		const lpSelected = target.closest( '.selected-item' );
+		const lpSelectedName = lpSelected.getAttribute( 'data-name' ); 
+		const lpSelectedID = lpSelected.getAttribute( 'data-value' );
+        const url = new URL(window.location.href);
+
+		if ( ! lpSelected ) {
+			return;
+		}
+
+		for ( let i = 0; i < form.elements.length; i++ ) {
+			if(form.elements[ i ].getAttribute('name') ==  lpSelectedName && form.elements[ i ].getAttribute('value') == lpSelectedID){
+                form.elements[ i ].click();
+			}
+		}
+
+        if ( lpSelectedName == 'price' ) {
+            const filterArgs = ['min_price', 'max_price'];
+
+            [...filterArgs].map(filterArg => {
+                if (url.searchParams.get(filterArg)) {
+                    url.searchParams.delete(filterArg);
+                }
+            });
+            window.location.href = url;
+        }
+
+		if ( lpSelected ) {
+			lpSelected.remove();
+		}
+	},
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     if (hotel_settings && hotel_settings.is_page_search) {

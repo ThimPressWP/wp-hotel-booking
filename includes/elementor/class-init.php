@@ -14,7 +14,8 @@ class Elementor {
     const WIDGETS = array(
 		'global'             => array(
             'search-room',
-			'filter-room'
+			'filter-room',
+			'filter-room-selected'
         ),
 	);
 

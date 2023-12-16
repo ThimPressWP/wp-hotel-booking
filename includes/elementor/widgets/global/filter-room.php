@@ -250,7 +250,7 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 		$this->add_control(
 			'icon_filter_button',
 			array(
-				'label'       => esc_html__( 'Icon', 'thim-elementor-kit' ),
+				'label'       => esc_html__( 'Icon', 'wp-hotel-booking' ),
  				'type'        => Controls_Manager::ICONS,
 				'skin'        => 'inline',
 				'label_block' => false,
@@ -260,12 +260,12 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 		$this->add_control(
 			'icon_filter_position',
 			[
-				'label'     => esc_html__( 'Icon Position', 'thim-elementor-kit' ),
+				'label'     => esc_html__( 'Icon Position', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::SELECT,
 				'default'   => 'left',
 				'options'   => [
-					'left'  => esc_html__( 'Before', 'thim-elementor-kit' ),
-					'right' => esc_html__( 'After', 'thim-elementor-kit' ),
+					'left'  => esc_html__( 'Before', 'wp-hotel-booking' ),
+					'right' => esc_html__( 'After', 'wp-hotel-booking' ),
 				],
 				'condition' => [
 					'icon_filter_button[value]!' => '',
@@ -807,7 +807,7 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 		$extraClass = '';
 
         if ( $settings['data'] ) { ?>
-            <div id="hotel-booking-search-filter" class="hotel-booking-search-filter wphb-el">
+            <div id="hotel-booking-search-filter" class="hotel-booking-search-filter hb-el">
 			<?php 
 				if ( $settings['filter_toggle_button'] == 'yes' ) {
 					if ( $settings['enable_filter_button'] == 'yes' ) {

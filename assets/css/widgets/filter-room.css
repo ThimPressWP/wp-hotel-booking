@@ -3,7 +3,7 @@
     height: auto;
 }
 
-#hotel-booking-search-filter.wphb-el {
+#hotel-booking-search-filter.hb-el {
     padding: 0;
 }
 
@@ -99,9 +99,9 @@
     display: none;
     z-index: -1;
 }
-.hotel-booking-search-filter.filter-popup-show .filter-bg {
+/* .hotel-booking-search-filter.filter-popup-show .filter-bg {
     z-index: 1;
-}
+} */
 
 .hotel-booking-search-filter.filter-popup-show .filter-bg {
     display: block;
@@ -146,4 +146,18 @@
     .hotel-booking-search-filter.filter-popup-show .search-filter-form-el::-webkit-scrollbar-thumb {
         background: #f5f5f5;
     }
+}
+
+/* filter room selected  */
+.hb-filter-room-selected .selected-list {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.hb-filter-room-selected .selected-item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
 }
