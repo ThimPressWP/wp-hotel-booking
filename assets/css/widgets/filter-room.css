@@ -49,6 +49,15 @@
     display: block;
 }
 
+.search-filter-form-el .field-item.toggle-content.dropdown {
+    position: relative;
+}
+
+.search-filter-form-el .field-item.toggle-content.dropdown ul,
+.search-filter-form-el .field-item.toggle-content.dropdown .hb-price-field>*:not(.title) {
+    position: absolute;
+}
+
 .search-filter-form-el .noUi-handle:before,
 .search-filter-form-el .noUi-handle::after {
     display: none;
@@ -99,6 +108,7 @@
     display: none;
     z-index: -1;
 }
+
 /* .hotel-booking-search-filter.filter-popup-show .filter-bg {
     z-index: 1;
 } */

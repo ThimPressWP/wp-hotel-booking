@@ -128,35 +128,33 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 		$repeater_data->add_control(
 			'toggle_content',
 			[
-				'label'        => esc_html__( 'Toggle Content', 'wp-hotel-booking' ),
-				'type'         => Controls_Manager::SWITCHER,
-				'default'      => 'no',
-				'label_on'     => esc_html__( 'Show', 'wp-hotel-booking' ),
-				'label_off'    => esc_html__( 'Hide', 'wp-hotel-booking' ),
-				'return_value' => 'yes',
+				'label'     => esc_html__( 'Show Toggle', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::SELECT,
+				'default'   => 'none',
+				'options'   => array(
+					'none' 			=> esc_html__( 'None', 'wp-hotel-booking' ),
+					'show' 			=> esc_html__( 'Show', 'wp-hotel-booking' ),
+					'always_show' 	=> esc_html__( 'Always Show', 'wp-hotel-booking' ),
+					'dropdown' 		=> esc_html__( 'Dropdown', 'wp-hotel-booking' ),
+				),
 				'condition'    => [
 					'enable_heading' => 'yes',
-				],
-			]
-		);
-
-		$repeater_data->add_control(
-			'default_toggle_on',
-			[
-				'label'        => esc_html__( 'Default Toggle On', 'wp-hotel-booking' ),
-				'type'         => Controls_Manager::SWITCHER,
-				'default'      => 'yes',
-				'label_on'     => esc_html__( 'Show', 'wp-hotel-booking' ),
-				'label_off'    => esc_html__( 'Hide', 'wp-hotel-booking' ),
-				'return_value' => 'yes',
-				'condition'    => [
-					'enable_heading' => 'yes',
-					'toggle_content' => 'yes',
 				],
 			]
 		);
 
 		$repeater_data->end_popover();
+
+		$repeater_data->add_responsive_control(
+			'width_item',
+			[
+				'label'     => esc_html__( 'Width Content', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%' ],
+				'selectors' => [
+					'{{WRAPPER}} .search-filter-form-el {{CURRENT_ITEM}}' => 'width: {{SIZE}}{{UNIT}};']
+			]
+		);
 
         $this->add_control(
 			'data',
@@ -312,6 +310,29 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 				'label' => esc_html__( 'Field', 'wp-hotel-booking' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
+		);
+
+		$this->add_control(
+			'layout_form',
+			array(
+				'label'     => esc_html__( 'Display', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::CHOOSE,
+				'options'   => array(
+					'block'        => array(
+						'title' => esc_html__( 'Default', 'wp-hotel-booking' ),
+						'icon'  => 'eicon-editor-list-ul',
+					),
+					'flex' => array(
+						'title' => esc_html__( 'Flex', 'wp-hotel-booking' ),
+						'icon'  => 'eicon-ellipsis-h',
+					),
+				),
+				'default'   => 'block',
+				'toggle'    => true,
+				'selectors' => array(
+					'{{WRAPPER}} .search-filter-form-el ' => 'display: {{VALUE}};',
+				),
+			)
 		);
 
 		$this->add_group_control(
@@ -483,6 +504,86 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'toggle_dropdown',
+			[
+				'label'     => esc_html__( 'Toggle Dropdown', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_responsive_control(
+			'toggle_dropdown_width',
+			[
+				'label'       => esc_html__( 'Width', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%' ],
+				'default' => [
+					'unit' => 'px',
+					'size' => 200,
+				],
+				'selectors'   => [
+					'{{WRAPPER}} .search-filter-form-el .field-item.toggle-content.dropdown ul, {{WRAPPER}} .search-filter-form-el .field-item.toggle-content.dropdown .hb-search-price' => 'min-width: {{SIZE}}{{UNIT}};']
+			]
+		);
+
+		$this->add_control(
+			'toggle_dropdown_bg',
+			[
+				'label'     => esc_html__( 'Background', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => '',
+				'selectors' => [
+					'{{WRAPPER}} .search-filter-form-el .field-item.toggle-content.dropdown ul' => 'background-color: {{VALUE}};'
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'toggle_dropdown_padding',
+			[
+				'label'      => esc_html__( 'Padding', 'wp-hotel-booking' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors'  => [
+					'{{WRAPPER}} .search-filter-form-el .field-item.toggle-content.dropdown ul, {{WRAPPER}} .search-filter-form-el .field-item.toggle-content.dropdown .hb-search-price' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'toggle_dropdown_margin',
+			[
+				'label'      => esc_html__( 'Margin', 'wp-hotel-booking' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors'  => [
+					'{{WRAPPER}} .search-filter-form-el .field-item.toggle-content.dropdown ul, {{WRAPPER}} .search-filter-form-el .field-item.toggle-content.dropdown .hb-search-price ' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'toggle_dropdown_radius',
+			[
+				'label'      => esc_html__( 'Border Radius', 'wp-hotel-booking' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors'  => [
+					'{{WRAPPER}} .search-filter-form-el .field-item.toggle-content.dropdown ul' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name'      => 'toggle_dropdown_shadow',
+				'selector'  => '{{WRAPPER}} .search-filter-form-el .field-item.toggle-content.dropdown ul',
+			]
+		);
+
 		$this->end_controls_section();
 	}
 
@@ -612,7 +713,7 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 		$this->add_responsive_control(
 			'handle_price_offset_h',
 			[
-				'label'       => esc_html__( 'Offset X (px)', 'wp-hotel-booking' ),
+				'label'       => esc_html__( 'Offset X', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
@@ -627,7 +728,7 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 		$this->add_responsive_control(
 			'handle_price_offset_v',
 			[
-				'label'       => esc_html__( 'Offset Y (px)', 'wp-hotel-booking' ),
+				'label'       => esc_html__( 'Offset Y', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::SLIDER,
 				'size_units' => [ 'px', '%' ],
 				'default' => [
@@ -832,14 +933,19 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 						$classes .= ' heading-hide';
 					}
 
-					if ( isset($data['toggle_content']) && $data['toggle_content'] == 'yes') {
+					if ( isset($data['toggle_content']) && $data['toggle_content'] != 'none') {
 						$classes .= ' toggle-content';
 						$icon_toggle = '<i class="icon-toggle-filter fas fa-angle-up"></i><i class="icon-toggle-filter fas fa-angle-down"></i>';
 
-						if ( isset($data['default_toggle_on']) && $data['default_toggle_on'] == 'yes') {
+						if ( $data['toggle_content'] == 'always_show') {
 							$classes .= ' toggle-on';
 						}
+						if ( $data['toggle_content'] == 'dropdown') {
+							$classes .= ' dropdown';
+						}
 					}
+
+					$classes .= ' elementor-repeater-item-'.$data['_id'];
 
 					switch ( $data['meta_field'] ) {
 						case 'clear':
