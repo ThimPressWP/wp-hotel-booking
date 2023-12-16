@@ -127,7 +127,6 @@ const hbRoomType = () => {
         if (getParam('room_type')) {
             roomTypesValue = getParam('room_type').split(',');
         }
-        console.log(roomTypesValue);
 
         [...roomTypesValue].map(value => {
             roomTypeField.querySelector(`input[name ="room_type"][value ="${value}"]`).checked = true;
