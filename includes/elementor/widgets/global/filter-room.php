@@ -330,7 +330,7 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 				'default'   => 'block',
 				'toggle'    => true,
 				'selectors' => array(
-					'{{WRAPPER}} .search-filter-form-el ' => 'display: {{VALUE}};',
+					'{{WRAPPER}} .search-filter-form-el ' => '--display-form-filter: {{VALUE}};',
 				),
 			)
 		);
@@ -428,22 +428,22 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 		$this->add_responsive_control(
 			'icon_toggle_offset_h',
 			[
-				'label'       => esc_html__( 'Offset X (px)', 'wp-hotel-booking' ),
-				'type'        => Controls_Manager::NUMBER,
-				'label_block' => false,
-				'selectors'   => [
-					'{{WRAPPER}} .field-item .icon-toggle-filter' => 'right:{{VALUE}}px']
+				'label'     => esc_html__( 'Offset Icon X', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%' ],
+				'selectors' => [
+					'{{WRAPPER}} .field-item .icon-toggle-filter' => 'right: {{SIZE}}{{UNIT}};']
 			]
 		);
 
 		$this->add_responsive_control(
 			'icon_toggle_offset_v',
 			[
-				'label'       => esc_html__( 'Offset Y (px)', 'wp-hotel-booking' ),
-				'type'        => Controls_Manager::NUMBER,
-				'label_block' => false,
-				'selectors'   => [
-					'{{WRAPPER}} .field-item .icon-toggle-filter' => 'top:{{VALUE}}px']
+				'label'     => esc_html__( 'Offset Icon Y', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%' ],
+				'selectors' => [
+					'{{WRAPPER}} .field-item .icon-toggle-filter' => 'top: {{SIZE}}{{UNIT}};']
 			]
 		);
 

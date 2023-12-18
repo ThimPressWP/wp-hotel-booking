@@ -84,7 +84,7 @@
 }
 
 .hotel-booking-search-filter.filter-popup-show .search-filter-form-el {
-    display: block;
+    display: var(--display-form-filter, block);
     z-index: 20;
     position: relative;
 }

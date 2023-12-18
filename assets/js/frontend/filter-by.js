@@ -197,10 +197,21 @@ document.addEventListener( 'click', function( e ) {
     if ( target.classList.contains( 'icon-toggle-filter' )) {
 		e.preventDefault();
 		const toggleContent = target.closest( '.toggle-content' );
+        const form = document.querySelector( '.search-filter-form-el' );
+        const toggleOn = target.closest( '.toggle-on' );
+
 		if ( ! toggleContent ) {
 			return;
 		}
-		const toggleOn = target.closest( '.toggle-on' );
+
+        const contentdropdown = form.querySelectorAll( '.dropdown' );
+        if (contentdropdown.length > 0){
+            for (let i = 0; i < contentdropdown.length; i++) {
+                if(contentdropdown[i].classList.contains( 'toggle-on' )) {
+                    contentdropdown[i].classList.remove( 'toggle-on' );
+                }
+            }
+        }
 		
 		if (  ! toggleOn ) {
 			toggleContent.classList.add("toggle-on");

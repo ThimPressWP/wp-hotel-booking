@@ -296,7 +296,7 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 			}
 		}
 
-		if (!empty($_GET['min_price']) && !empty($_GET['min_price'])) {
+		if (!empty($_GET['min_price']) || !empty($_GET['max_price'])) {
 			echo '<span class="' . $classListItem . '" data-name="price" data-value="price">' ;
 			echo esc_html__('Price', 'wp-hotel-booking').': '. $_GET['min_price'] . $currency_symbol .' - '. $_GET['max_price']. $currency_symbol;
 			echo '' . $icon_move . '</span>';
