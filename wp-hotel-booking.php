@@ -600,7 +600,7 @@ if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 		}
 	);
 } else {
-	if ( ! class_exists( 'Thim_EL_Kit' )) {
+	if ( ! class_exists( 'Elementor' )) {
 		require_once WPHB_PLUGIN_PATH . '/includes/elementor/class-init.php';
 	}
 }
