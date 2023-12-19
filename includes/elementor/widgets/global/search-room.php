@@ -583,15 +583,6 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			)
 		);
 
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'submit_button_typography',
-				'label'    => esc_html__( 'Typography', 'wp-hotel-booking' ),
-				'selector' => '{{WRAPPER}} .hotel-booking-search .hb-submit button',
-			]
-		);
-
 		$this->add_responsive_control(
 			'button_w', [
 				'label'      => esc_html__( 'Width', 'wp-hotel-booking' ),
@@ -626,72 +617,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			]
 		);
 
-		$this->start_controls_tabs( 'tabs_button_style' );
-		$this->start_controls_tab(
-			'tab_button_normal',
-			[
-				'label' => esc_html__( 'Normal', 'wp-hotel-booking' ),
-			]
-		);
-
-		$this->add_control(
-			'button_color',
-			[
-				'label'     => esc_html__( 'Color', 'wp-hotel-booking' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .hotel-booking-search .hb-submit button'          => 'color: {{VALUE}};',
-					'{{WRAPPER}} .hotel-booking-search .hb-submit button svg path' => 'fill: {{VALUE}};'
-				],
-			]
-		);
-
-		$this->add_control(
-			'button_bg_color',
-			[
-				'label'     => esc_html__( 'Background Color', 'wp-hotel-booking' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .hotel-booking-search .hb-submit button' => 'background: {{VALUE}};'
-				],
-			]
-		);
-
-		$this->end_controls_tab();
-
-		$this->start_controls_tab(
-			'tab_button__hover',
-			[
-				'label' => esc_html__( 'Hover', 'wp-hotel-booking' ),
-			]
-		);
-
-		$this->add_control(
-			'button_color_hover',
-			[
-				'label'     => esc_html__( 'Color', 'wp-hotel-booking' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .hotel-booking-search .hb-submit button:hover'    => 'color: {{VALUE}};',
-					'{{WRAPPER}} .hotel-booking-search .hb-submit button:hover svg path' => 'fill: {{VALUE}};'
-				],
-			]
-		);
-
-		$this->add_control(
-			'button_bg_color_hover',
-			[
-				'label'     => esc_html__( 'Background Color', 'wp-hotel-booking' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .hotel-booking-search .hb-submit button:hover' => 'background: {{VALUE}};'
-				],
-			]
-		);
-
-
-		$this->end_controls_tab();
-		$this->end_controls_tabs();
+		$this->register_button_style( 'submit_search_button', '.hotel-booking-search .hb-submit button' );
 
 		$this->add_responsive_control(
 			'button_margin',
@@ -701,18 +627,6 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
 					'{{WRAPPER}} .hotel-booking-search .hb-submit button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'border_radius_button',
-			[
-				'label'      => esc_html__( 'Border Radius', 'wp-hotel-booking' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
-				'selectors'  => [
-					'{{WRAPPER}} .hotel-booking-search .hb-submit button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
