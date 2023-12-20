@@ -7,6 +7,7 @@ use Elementor\Widget_Base;
 use Elementor\Icons_Manager;
 use Elementor\Group_Control_Typography;
 use WPHB\HBGroupControlTrait;
+use Elementor\Repeater;
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -47,8 +48,23 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			)
 		);
 
-        $this->add_control(
-			'layout',
+		$repeater_data = new Repeater();
+		$repeater_data->add_control(
+            'meta_field',
+			[
+				'label'   => esc_html__( 'Select Field', 'wp-hotel-booking' ),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'types',
+				'options' => [
+ 					'date'      	=> esc_html__( 'Date', 'wp-hotel-booking' ),
+					'adults'    	=> esc_html__( 'Adults', 'wp-hotel-booking' ),
+					'children'     	=> esc_html__( 'Children', 'wp-hotel-booking' ),
+					'submit'     	=> esc_html__( 'Submit', 'wp-hotel-booking' )
+				]
+			]
+        );
+        $repeater_data->add_control(
+			'layout_date',
 			array(
 				'label'     => esc_html__( 'Layout', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::SELECT,
@@ -57,73 +73,106 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 					'base'      => esc_html__( 'Base', 'wp-hotel-booking' ),
 					'multidate' => esc_html__( 'Multidate', 'wp-hotel-booking' ),
 				),
+				'condition'     => [
+					'meta_field' => 'date',
+				]
 			)
 		);
 
-		$this->add_control(
-			'icon_date',
-			[
-				'label'         => esc_html__( 'Icon Date', 'wp-hotel-booking' ),
-				'type'          => Controls_Manager::ICONS,
-                'skin'          => 'inline',
-                'label_block'   => false,
+		$repeater_data->add_control(
+			'layout_guest',
+			array(
+				'label'     => esc_html__( 'Layout', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::SELECT,
+				'default'   => 'select',
+				'options'   => array(
+					'select'       => esc_html__( 'Select', 'wp-hotel-booking' ),
+					'number_box'   => esc_html__( 'Number Box', 'wp-hotel-booking' ),
+				),
 				'condition'     => [
-                    'layout' => 'multidate',
-				],
-			]
+					'meta_field' => ['adults', 'children'],
+				]
+			)
 		);
 
-		$this->add_control(
-			'icon_adults',
+		$repeater_data->add_control(
+			'label_field_date',
 			[
-				'label'         => esc_html__( 'Icon Adults', 'wp-hotel-booking' ),
-				'type'          => Controls_Manager::ICONS,
-                'skin'          => 'inline',
-                'label_block'   => false,
-				'condition'     => [
-                    'layout' => 'multidate',
-				],
-			]
-		);
-
-		$this->add_control(
-			'icon_children',
-			[
-				'label'         => esc_html__( 'Icon Children', 'wp-hotel-booking' ),
-				'type'          => Controls_Manager::ICONS,
-                'skin'          => 'inline',
-                'label_block'   => false,
-				'condition'     => [
-                    'layout' => 'multidate',
-				],
-			]
-		);
-
-        $this->add_control(
-			'text_submit',
-			[
-				'label'     => esc_html__( 'Text Submit', 'wp-hotel-booking' ),
+				'label'     => esc_html__( 'Label (Check in text)', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::TEXT,
                 'placeholder'   => esc_html__( 'Add your text here', 'wp-hotel-booking' ),
-				'default'       => esc_html__( 'Check Availability', 'wp-hotel-booking' ),
-                'condition'     => [
-					'layout' => 'multidate',
-				],
+				'condition'     => [
+					'meta_field' => 'date',
+				]
 			]
 		);
 
-        $this->add_control(
-			'icon_submit',
+		$repeater_data->add_control(
+			'label_field_check_out',
 			[
-				'label'         => esc_html__( 'Icon Submit', 'wp-hotel-booking' ),
+				'label'     => esc_html__( 'Check out text', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::TEXT,
+                'placeholder'   => esc_html__( 'Add your text here', 'wp-hotel-booking' ),
+				'condition'     => [
+					'meta_field' => 'date',
+					'layout_date'=>	'base'
+				]
+			]
+		);
+
+		$repeater_data->add_control(
+			'label_field',
+			[
+				'label'     => esc_html__( 'Label', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::TEXT,
+                'placeholder'   => esc_html__( 'Add your text here', 'wp-hotel-booking' ),
+				'condition'     => [
+					'meta_field!' => 'date',
+				]
+			]
+		);
+
+		$repeater_data->add_control(
+			'icons_field',
+			[
+				'label'         => esc_html__( 'Icon', 'wp-hotel-booking' ),
 				'type'          => Controls_Manager::ICONS,
                 'skin'          => 'inline',
                 'label_block'   => false,
-				'condition'     => [
-                    'layout' => 'multidate',
-				],
 			]
 		);
+
+		$repeater_data->add_responsive_control(
+			'width_item',
+			[
+				'label'     => esc_html__( 'Width Content', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%' ],
+				'selectors' => [
+					'{{WRAPPER}} .hotel-booking-search-el {{CURRENT_ITEM}}' => 'width: {{SIZE}}{{UNIT}};']
+			]
+		);
+
+		$this->add_control(
+			'data',
+            [
+				'label'       => esc_html__( 'Search', 'wp-hotel-booking' ),
+				'type'        => Controls_Manager::REPEATER,
+				'fields'      => $repeater_data->get_controls(),
+				'default'     => [
+ 					[
+						'meta_field' => 'date',
+					],
+					[
+						'meta_field' => 'adults',
+					],
+					[
+						'meta_field' => 'submit',
+					],
+				],
+				'title_field' => '<span style="text-transform: capitalize;">{{{ meta_field.replace("_", " ") }}}</span>',
+			]
+        );
 
         $this->end_controls_section();
         $this->register_section_style_general();
@@ -159,7 +208,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 					),
 				),
 				'selectors'   => array(
-					'{{WRAPPER}} form, {{WRAPPER}} form > .hb-form-table' => 'flex-direction: {{VALUE}};display: flex;',
+					'{{WRAPPER}} form > .hb-form-table' => 'flex-direction: {{VALUE}};display: flex;align-items: center;',
 				),
 			)
 		);
@@ -189,55 +238,6 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			)
 		);
 
-        $this->add_responsive_control(
-			'form_w', [
-				'label'      => esc_html__( 'Form Width', 'wp-hotel-booking' ),
-				'type'       => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%' ],
-				'range'      => [
-					'%'  => array(
-						'min' => 0,
-						'max' => 100,
-					),
-				],
-				'selectors'  => [
-					'{{WRAPPER}} form > .hb-form-table' => 'flex-basis: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}};'
-				]
-			]
-		);
-
-		$this->add_responsive_control(
-			'form_padding',
-			[
-				'label'      => esc_html__( 'Padding Form', 'wp-hotel-booking' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
-				'condition'     => [
-					'layout' => 'multidate',
-				],
-				'selectors'  => [
-					'{{WRAPPER}} .hotel-booking-search-el .hb-form-table .hb-form-field' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
-        $this->add_responsive_control(
-			'submit_w', [
-				'label'      => esc_html__( 'Submit Width', 'wp-hotel-booking' ),
-				'type'       => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%' ],
-				'range'      => [
-					'%'  => array(
-						'min' => 0,
-						'max' => 100,
-					),
-				],
-				'selectors'  => [
-					'{{WRAPPER}} form > .hb-submit' => 'flex-basis: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}};'
-				]
-			]
-		);
-
         $this->end_controls_section();
     }
 
@@ -253,7 +253,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			)
 		);
 
-		$this->register_style_typo_color_margin('title_search', '.hotel-booking-search h3');
+		$this->register_style_typo_color_margin('title_search', '.hotel-booking-search-el h3');
 
 		$this->end_controls_section();
 	}
@@ -267,24 +267,17 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			)
 		);
 
+		$this->register_button_style( 'field_search', '.hotel-booking-search-el .hb-form-field' );
+
 		$this->add_responsive_control(
-			'field_w', [
-				'label'      => esc_html__( 'Field Width', 'wp-hotel-booking' ),
-				'type'       => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%' ],
-				'range'      => [
-					'%'  => array(
-						'min' => 0,
-						'max' => 100,
-					),
-				],
-				'condition'     => [
-					'layout' => 'base',
-				],
+			'field_margin',
+			[
+				'label'      => esc_html__( 'Margin', 'wp-hotel-booking' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
-					'{{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field' => 'width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field *' => 'width: 100%'
-				]
+					'{{WRAPPER}} .hotel-booking-search-el .hb-form-field' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
 			]
 		);
 
@@ -295,7 +288,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			]
 		);
 
-		$this->register_style_typo_color_margin('label_style', '.hotel-booking-search .hb-form-table .hb-form-field .label,  .hotel-booking-search .hb-form-table .hb-form-field label ');
+		$this->register_style_typo_color_margin('label_style', '.hotel-booking-search-el .hb-form-table .hb-form-field .label');
 
         $this->add_control(
 			'input_heading', [
@@ -305,85 +298,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			]
 		);
 
-        $this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'input_typography',
-				'label'    => esc_html__( 'Typography', 'wp-hotel-booking' ),
-				'selector' => '{{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field .hb-form-field-input, {{WRAPPER}} .hotel-booking-search input, {{WRAPPER}} .hotel-booking-search select',
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Border::get_type(),
-			array(
-				'name'     => 'field_border_base',
-				'label'    => esc_html__( 'Border', 'wp-hotel-booking' ),
-				'condition'     => [
-					'layout' => 'base',
-				],
-				'selector' => '{{WRAPPER}} .hotel-booking-search .hb-form-field-input input, {{WRAPPER}} .hotel-booking-search .hb-form-field-input select',
-			)
-		);
-
-		$this->add_group_control(
-			Group_Control_Border::get_type(),
-			array(
-				'name'     => 'field_border_multidate',
-				'label'    => esc_html__( 'Border', 'wp-hotel-booking' ),
-				'condition'     => [
-					'layout' => 'multidate',
-				],
-				'selector' => '{{WRAPPER}} .hotel-booking-search .multidate-layout .hb-form-field',
-			)
-		);
-
-		$this->add_control(
-			'field_border_color_hover',
-			[
-				'label'     => esc_html__( 'Border Color Hover', 'wp-hotel-booking' ),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '',
-				'selectors' => [
-					'{{WRAPPER}} .hotel-booking-search .hb-form-field-input > input:focus, {{WRAPPER}} .hotel-booking-search .hb-form-field-input select:hover, {{WRAPPER}} .hotel-booking-search .multidate-layout .hb-form-field:hover' => 'border-color: {{VALUE}};'
-				],
-			]
-		);
-
-        $this->add_control(
-			'input_color',
-			[
-				'label'     => esc_html__( 'Color', 'wp-hotel-booking' ),
-				'type'      => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field .hb-form-field-input *' => 'color: {{VALUE}} !important;'
-				],
-			]
-		);
-
-        $this->add_responsive_control(
-			'input_padding',
-			[
-				'label'      => esc_html__( 'Padding', 'wp-hotel-booking' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
-				'selectors'  => [
-					'{{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field .hb-form-field-input' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'border_radius_input',
-			[
-				'label'      => esc_html__( 'Border Radius', 'wp-hotel-booking' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
-				'selectors'  => [
-					'{{WRAPPER}} .hotel-booking-search .hb-form-field-input input, {{WRAPPER}} .hotel-booking-search .hb-form-field-input select, {{WRAPPER}} .hotel-booking-search .multidate-layout .hb-form-field' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
+		$this->register_button_style( 'input_search', '.hotel-booking-search-el .hb-form-field input, .hotel-booking-search-el .hb-form-field select' );
 
         $this->end_controls_section();
     }
@@ -394,9 +309,6 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			array(
 				'label' => esc_html__( 'Field List', 'wp-hotel-booking' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
-				'condition'     => [
-					'layout' => 'multidate',
-				],
 			)
 		);
 
@@ -498,32 +410,6 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'Button_align',
-			array(
-				'label'     => esc_html__( 'Alignment', 'wp-hotel-booking' ),
-				'type'      => Controls_Manager::CHOOSE,
-				'options'   => array(
-					'left' => array(
-						'title' => esc_html__( 'Start', 'wp-hotel-booking' ),
-						'icon'  => 'eicon-h-align-left',
-					),
-					'center'     => array(
-						'title' => esc_html__( 'Center', 'wp-hotel-booking' ),
-						'icon'  => ' eicon-h-align-center',
-					),
-					'right'   => array(
-						'title' => esc_html__( 'End', 'wp-hotel-booking' ),
-						'icon'  => 'eicon-h-align-right',
-					),
-				),
-				'toggle'    => true,
-				'selectors' => array(
-					'{{WRAPPER}} .hotel-booking-search .hb-submit' => 'text-align: {{VALUE}};',
-				),
-			)
-		);
-
-		$this->add_responsive_control(
 			'button_w', [
 				'label'      => esc_html__( 'Width', 'wp-hotel-booking' ),
 				'type'       => Controls_Manager::SLIDER,
@@ -535,7 +421,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 					),
 				],
 				'selectors'  => [
-					'{{WRAPPER}} .hotel-booking-search .hb-submit button' => 'width: {{SIZE}}{{UNIT}};'
+					'{{WRAPPER}} .hotel-booking-search-el .hb-submit button' => 'width: {{SIZE}}{{UNIT}};'
 				]
 			]
 		);
@@ -552,12 +438,12 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 					),
 				],
 				'selectors'  => [
-					'{{WRAPPER}} .hotel-booking-search .hb-submit button' => 'height: {{SIZE}}{{UNIT}};'
+					'{{WRAPPER}} .hotel-booking-search-el .hb-submit button' => 'height: {{SIZE}}{{UNIT}};'
 				]
 			]
 		);
 
-		$this->register_button_style( 'submit_search_button', '.hotel-booking-search .hb-submit button' );
+		$this->register_button_style( 'submit_search_button', '.hotel-booking-search-el .hb-submit button' );
 
 		$this->add_responsive_control(
 			'button_margin',
@@ -566,7 +452,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
-					'{{WRAPPER}} .hotel-booking-search .hb-submit button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .hotel-booking-search-el .hb-submit button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -575,133 +461,254 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 	}
 
     protected function render() {
-        $settings    = $this->get_settings_for_display();
+        $settings    	= $this->get_settings_for_display();
+		$uniqid         = uniqid();
+		wp_enqueue_script( 'wp-hotel-booking-moment' );
+		wp_enqueue_script( 'wphb-daterangepicker');
 
-        if ( isset($settings['layout']) && $settings['layout'] == 'multidate' ) {
-            ?>
-            <div class="hotel-booking-search hotel-booking-search-el">
-                <?php $this->wphb_multidate( $settings ); ?>
-            </div>
-           <?php
-        }else {
-            hb_get_template( 'search/search-form.php', $settings );
-        }
+		if ( $settings['data'] ) {
+			?>
+            <div class="hotel-booking-search-el">
+				<form name="hb-search-form" action="<?php echo hb_get_url(); ?>" class="hb-search-form-<?php echo esc_attr($uniqid); ?>">
+					<ul class="hb-form-table"> 
+					<?php
+					foreach ( $settings['data'] as $data ) {
+						$classes = 'elementor-repeater-item-'.$data['_id'];
+
+						switch ( $data['meta_field'] ) {
+							case 'date':
+								$this->hb_render_check_the_date($data, $classes);
+								break;
+							case 'adults':	
+								$this->hb_render_adults($data, $classes);
+								break;
+							case 'children':
+								$this->hb_render_children($data, $classes);	
+								break;
+							case 'submit':
+								$this->hb_render_submit($data, $classes);	
+								break;
+						}
+					}
+					?>
+					</ul>
+					<?php
+					wp_nonce_field('hb_search_nonce_action', 'nonce'); ?>
+					<input type="hidden" name="hotel-booking" value="results" />
+					<input type="hidden" name="action" value="hotel_booking_parse_search_params" />
+				</form>
+			</div>
+			<?php
+		}
     }
 
-    protected function wphb_multidate( $settings ){
-        $datetime = new \DateTime('NOW');
-        $tomorrow = new \DateTime('tomorrow');
-        $format = get_option('date_format');
+	protected function hb_render_check_the_date($settings, $classes) {
+		$uniqid          = uniqid();
+		$datetime 		 = new \DateTime('NOW');
+        $tomorrow 		 = new \DateTime('tomorrow');
+        $format 		 = get_option('date_format');
+		$check_in_date   = $datetime->format($format);
+        $check_out_date  = $tomorrow->format($format);
+		$label_check_in  = $settings['label_field_date'] ?? esc_html__('Arrival Date', 'wp-hotel-booking');
+		$label_check_out = $settings['label_field_check_out'] ?? esc_html__('Departure Date', 'wp-hotel-booking');
 
-        $check_in_date = $datetime->format($format);
-        $check_out_date = $tomorrow->format($format);
-        $adults         = hb_get_request('adults', '1');
-        $max_child      = hb_get_request('max_child', '0');
+		if ($settings['layout_date'] == 'base') {
+			?>
+			<li class="hb-form-field <?php echo esc_attr($classes); ?>">
+				<?php if ( $label_check_in != '' ) :?>
+					<div class="label"><?php echo $label_check_in; ?></div>
+				<?php endif; ?>
+				<div class="hb-form-field-input hb_input_field">
+					<?php if ( $settings['icons_field'] ) { 
+						Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );        
+					} ?>
+					<input type="text" name="check_in_date" id="check_in_date_<?php echo esc_attr($uniqid); ?>" class="hb_input_date_check" value="<?php echo esc_attr($check_in_date); ?>" placeholder="<?php echo $label_check_in; ?>" autocomplete="off" />
+				</div>
+			</li>
 
-        $search         = hb_get_page_permalink( 'search' );
-        $page_search    = hb_get_page_id('search');
-        $uniqid         = uniqid();
+			<li class="hb-form-field <?php echo esc_attr($classes); ?>">
+				<?php if ( $label_check_out != '' ) :?>
+					<div class="label"><?php echo $label_check_out; ?></div>
+				<?php endif; ?>
+				<div class="hb-form-field-input hb_input_field">
+					<?php if ( $settings['icons_field'] ) { 
+						Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );        
+					} ?>
+					<input type="text" name="check_out_date" id="check_out_date_<?php echo esc_attr($uniqid); ?>" class="hb_input_date_check" value="<?php echo esc_attr($check_out_date); ?>" placeholder="<?php echo $label_check_out; ?>" autocomplete="off" />
+				</div>
+			</li>
+			<?php
+		}else {
+			?>
+			<input type="text" id="multidate" class="multidate <?php echo esc_attr($classes); ?>" value="<?php echo esc_attr($check_in_date) ?>" readonly />
+			<li class="hb-form-field hb-form-check-in-check-out <?php echo esc_attr($classes); ?>">
+				<?php if ( $settings['icons_field'] ) { 
+					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );        
+				} ?>
+				<?php if ( $label_check_in != '' ) :?>
+					<div class="label"><?php echo $label_check_in; ?></div>
+				<?php endif; ?>
+				<div class="hb-form-field-input hb_input_field">
+					<input type="text" name="check_in_date" id="check_in_date_<?php echo  esc_attr($uniqid) ?>" class="check-date" value="<?php echo esc_attr($check_in_date) ?>" readonly />
+				</div>
+				<div class="hb-form-field-input hb_input_field">
+					<input type="text" name="check_out_date" id="check_out_date_<?php echo esc_attr($uniqid) ?>" class="check-date" value="<?php echo esc_attr($check_out_date) ?>" readonly />
+				</div>
+			</li>
+			<?php
+		}
+	}
 
-        $label_adults   = esc_html__('Adults', 'wp-hotel-booking');
-        $label_child    = esc_html__('Children', 'wp-hotel-booking');
-        $text_submit    = $settings['text_submit'] ?? esc_html__('Check Availability', 'wp-hotel-booking');
-        ?>
-        <form <?php echo is_page($page_search) ? 'id="hb-form-search-page" ' : ''; ?> name="hb-search-form" action="<?php echo hb_get_url(); ?>" class="multidate-layout hb-search-form-<?php echo esc_attr($uniqid); ?>">
-            <ul class="hb-form-table">
-                <?php 
-				wp_enqueue_script( 'wp-hotel-booking-moment' );
-                wp_enqueue_script( 'wphb-daterangepicker');
-                ?>
-                <input type="text" id="multidate" class="multidate" value="<?php echo esc_attr($check_in_date) ?>" readonly />
-                <li class="hb-form-field hb-form-check-in-check-out">
-					<?php if ( $settings['icon_date'] ) { 
-                        Icons_Manager::render_icon( $settings['icon_date'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );        
-                    } ?>
-                    <div class="label"><?php echo esc_html__('Check-in, Check-out', 'wp-hotel-booking') ?></div>
-                    <div class="hb-form-field-input hb_input_field">
-                        <input type="text" name="check_in_date" id="check_in_date_<?php echo  esc_attr($uniqid) ?>" class="check-date" value="<?php echo esc_attr($check_in_date) ?>" readonly />
-                    </div>
-                    <div class="hb-form-field-input hb_input_field">
-                        <input type="text" name="check_out_date" id="check_out_date_<?php echo esc_attr($uniqid) ?>" class="check-date" value="<?php echo esc_attr($check_out_date) ?>" readonly />
-                    </div>
-                </li>
-                <li class="hb-form-field hb-form-number">
-					<?php if ( $settings['icon_adults'] ) { 
-                        Icons_Manager::render_icon( $settings['icon_adults'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );        
-                    } ?>
-                    <div class="label"><?php echo $label_adults; ?></div>
-                    <div id="adults" class="hb-form-field-input hb_input_field">
-                        <input type="text" id="number" class="adults-input" value="<?php echo esc_attr($adults) ?>" readonly />
-                        <span><?php echo $label_adults; ?></span>
-                    </div>
-                    <div class="hb-form-field-list nav-adults">
-                        <span class="name"><?php echo $label_adults; ?></span>
-                        <div class="number-box">
-                            <span class="number-icons goDown"><i class="fa fa-minus"></i></span>
-                            <span class="hb-form-field-input hb-adults-field adults-number">
-                                <?php
-                                hb_dropdown_numbers(
-                                    array(
-                                        'name'              => 'adults_capacity',
-                                        'min'               => 1,
-                                        'max'               => hb_get_max_capacity_of_rooms(),
-                                        'selected'          => $adults,
-                                        'option_none_value' => '',
-                                        'options'           => hb_get_capacity_of_rooms(),
-                                    )
-                                );
-                                ?>
-                            </span>
-                            <span class="number-icons goUp"><i class="fa fa-plus"></i></span>
-                        </div>
-                    </div>
-                </li>
+	protected function hb_render_adults($settings, $classes) {
+		$adults         = hb_get_request('adults', '1');
+		$label_adults   = $settings['label_field'] ?? esc_html__('Adults', 'wp-hotel-booking');
 
-                <li class="hb-form-field hb-form-number">
-					<?php if ( $settings['icon_children'] ) { 
-                        Icons_Manager::render_icon( $settings['icon_children'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );        
-                    } ?>
-                    <div class="label"><?php echo $label_child; ?></div>
-                    <div id="child" class="hb-form-field-input hb_input_field">
-                        <input type="text" id="number" class="child-input" value="<?php echo esc_attr($max_child) ?>" readonly />
-                        <span><?php echo $label_child; ?></span>
-                    </div>
-                    <div class="hb-form-field-list nav-children">
-                        <span class="name"><?php echo $label_child; ?></span>
-                        <div class="number-box">
-                            <span class="number-icons goDown"><i class="fa fa-minus"></i></span>
-                            <span class="hb-form-field-input hb-children-field children-number">
-                                <?php
-                                hb_dropdown_numbers(
-                                    array(
-                                        'name'              => 'max_child',
-                                        'min'               => 0,
-                                        'max'               => hb_get_max_child_of_rooms(),
-                                        'option_none_value' => '',
-                                        'selected'          => $max_child,
-                                    )
-                                );
-                                ?>
-                            </span>
-                            <span class="number-icons goUp"><i class="fa fa-plus"></i></span>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-            <?php wp_nonce_field('hb_search_nonce_action', 'nonce'); ?>
-            <input type="hidden" name="hotel-booking" value="results" />
-            <input type="hidden" name="action" value="hotel_booking_parse_search_params" />
-            <p class="hb-submit">
-                <button type="submit" class="wphb-button">
-                    <?php if ( $settings['icon_submit'] ) { 
-                        Icons_Manager::render_icon( $settings['icon_submit'], array( 'aria-hidden' => 'true' ) );        
-                    } ?>
-                    <?php if ( $settings['text_submit'] != '' ) :?>
-                        <?php echo $text_submit; ?>
-                    <?php endif; ?>
-                </button>
-            </p>
-        </form>
-        <?php
-    }
+		if ( $settings['layout_guest'] == 'select') {
+		?>
+			<li class="hb-form-field <?php echo esc_attr($classes); ?>">
+				<?php if ( $settings['icons_field'] ) { 
+					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );        
+				} ?>
+				<?php if ( $label_adults != '' ) :?>
+					<div class="label"><?php echo $label_adults; ?></div>
+				<?php endif; ?>
+				<div class="hb-form-field-input">
+					<?php
+					hb_dropdown_numbers(
+						array(
+							'name'              => 'adults_capacity',
+							'min'               => 1,
+							'max'               => hb_get_max_capacity_of_rooms(),
+							'show_option_none'  => $label_adults,
+							'selected'          => $adults,
+							'option_none_value' => 0,
+							'options'           => hb_get_capacity_of_rooms()
+						)
+					);
+					?>
+				</div>
+			</li>
+		<?php
+		} else {
+			?>
+			<li class="hb-form-field hb-form-number <?php echo esc_attr($classes); ?>">
+				<?php if ( $settings['icons_field'] ) { 
+					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );        
+				} ?>
+				<?php if ( $label_adults != '' ) :?>
+					<div class="label"><?php echo $label_adults; ?></div>
+				<?php endif; ?>
+				<div id="adults" class="hb-form-field-input hb_input_field">
+					<input type="text" id="number" class="adults-input" value="<?php echo esc_attr($adults) ?>" readonly />
+					<span><?php echo $label_adults; ?></span>
+				</div>
+				<div class="hb-form-field-list nav-adults">
+					<span class="name"><?php echo $label_adults; ?></span>
+					<div class="number-box">
+						<span class="number-icons goDown"><i class="fa fa-minus"></i></span>
+						<span class="hb-adults-field adults-number">
+							<?php
+							hb_dropdown_numbers(
+								array(
+									'name'              => 'adults_capacity',
+									'min'               => 1,
+									'max'               => hb_get_max_capacity_of_rooms(),
+									'selected'          => $adults,
+									'option_none_value' => '',
+									'options'           => hb_get_capacity_of_rooms(),
+								)
+							);
+							?>
+						</span>
+						<span class="number-icons goUp"><i class="fa fa-plus"></i></span>
+					</div>
+				</div>
+			</li>
+			<?php
+		}
+	}
+
+	protected function hb_render_children($settings, $classes) {
+		$max_child      = hb_get_request('max_child', '0');
+		$label_child   = $settings['label_field'] ?? esc_html__('Adults', 'wp-hotel-booking');
+
+		if ( $settings['layout_guest'] == 'select') {
+			?>
+			<li class="hb-form-field <?php echo esc_attr($classes); ?>">
+				<?php if ( $settings['icons_field'] ) { 
+					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );        
+				} ?>
+				<?php if ( $label_child != '' ) :?>
+					<div class="label"><?php echo $label_child; ?></div>
+				<?php endif; ?>
+				<div class="hb-form-field-input">
+					<?php
+					hb_dropdown_numbers(
+						array(
+							'name'              => 'max_child',
+							'min'               => 1,
+							'max'               => hb_get_max_child_of_rooms(),
+							'show_option_none'  => $label_child,
+							'option_none_value' => 0,
+							'selected'          => $max_child,
+						)
+					);
+					?>
+				</div>
+			</li>
+			<?php
+		} else {
+			?>
+			<li class="hb-form-field hb-form-number <?php echo esc_attr($classes); ?>">
+				<?php if ( $settings['icons_field'] ) { 
+					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );        
+				} ?>
+				<?php if ( $label_child != '' ) :?>
+					<div class="label"><?php echo $label_child; ?></div>
+				<?php endif; ?>
+				<div id="child" class="hb-form-field-input hb_input_field">
+					<input type="text" id="number" class="child-input" value="<?php echo esc_attr($max_child) ?>" readonly />
+					<span><?php echo $label_child; ?></span>
+				</div>
+				<div class="hb-form-field-list nav-children">
+					<span class="name"><?php echo $label_child; ?></span>
+					<div class="number-box">
+						<span class="number-icons goDown"><i class="fa fa-minus"></i></span>
+						<span class="hb-children-field children-number">
+							<?php
+							hb_dropdown_numbers(
+								array(
+									'name'              => 'max_child',
+									'min'               => 0,
+									'max'               => hb_get_max_child_of_rooms(),
+									'option_none_value' => '',
+									'selected'          => $max_child,
+								)
+							);
+							?>
+						</span>
+						<span class="number-icons goUp"><i class="fa fa-plus"></i></span>
+					</div>
+				</div>
+			</li>
+			<?php
+		}
+	}
+
+	protected function hb_render_submit($settings, $classes) {
+		?>
+		<p class="hb-submit <?php echo esc_attr($classes); ?>">
+			<button type="submit" class="wphb-button">
+				<?php if ( $settings['icons_field'] ) { 
+					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true' ) );        
+				} ?>
+				<?php if ( $settings['label_field'] != '' ) :?>
+					<?php echo $settings['label_field']; ?>
+				<?php else : ?>
+					<?php esc_html_e( 'Check Availability', 'wp-hotel-booking' ) ;?>
+				<?php endif; ?>
+			</button>
+		</p>
+		<?php
+	}
 }

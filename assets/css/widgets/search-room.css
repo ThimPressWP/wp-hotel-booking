@@ -1,16 +1,14 @@
-.hotel-booking-search-el .multidate-layout {
+.hotel-booking-search.hotel-booking-search-el {
 	position: relative;
 	align-items: center;
+	padding: 0;
 }
 
-.hotel-booking-search-el .multidate-layout .hb-form-table {
-	width: 86%;
-	float: left;
-	margin: 0px;
+.hotel-booking-search-el .hb-form-table {
 	position: relative;
 }
 
-.hotel-booking-search-el .multidate-layout .hb-form-table .multidate {
+.hotel-booking-search-el .multidate {
 	position: absolute;
 	font-size: 16px;
 	opacity: 0;
@@ -23,56 +21,52 @@
 	left: 0;
 }
 
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field {
-	width: 30%;
-	float: left;
-	padding: 25px 20px 25px 30px;
+.hotel-booking-search-el .hb-form-field {
 	position: relative;
-	margin: 0;
 }
 
-.hotel-booking-search-el .multidate-layout .icon-custom {
+.hotel-booking-search-el .icon-custom {
 	position: absolute;
 	left: 15px;
 	top: 50%;
 	transform: translateY(-50%);
 }
 
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-check-in-check-out {
+.hotel-booking-search-el .hb-form-field.hb-form-check-in-check-out {
 	width: 40%;
 	max-width: none;
 }
 
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-check-in-check-out .hb-form-field-input {
+.hotel-booking-search-el .hb-form-field.hb-form-check-in-check-out .hb-form-field-input {
 	display: inline-block;
 }
 
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-check-in-check-out .hb-form-field-input #day,
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-check-in-check-out .hb-form-field-input #day2 {
+.hotel-booking-search-el .hb-form-field.hb-form-check-in-check-out .hb-form-field-input #day,
+.hotel-booking-search-el .hb-form-field.hb-form-check-in-check-out .hb-form-field-input #day2 {
 	width: 30px;
 }
 
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-check-in-check-out .hb-form-field-input button {
+.hotel-booking-search-el .hb-form-field.hb-form-check-in-check-out .hb-form-field-input button {
 	display: none;
 }
 
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-input {
+.hotel-booking-search-el .hb-form-field.hb-form-number .hb-form-field-input {
 	display: inline-block;
 	width: 100%;
 	cursor: pointer;
 	z-index: 2;
 }
 
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-input input {
+.hotel-booking-search-el .hb-form-field.hb-form-number .hb-form-field-input input {
 	width: 100%;
 }
 
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-input.guests-number,
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-input.child-number {
+.hotel-booking-search-el .hb-form-field.hb-form-number .adults-number,
+.hotel-booking-search-el .hb-form-field.hb-form-number .child-number {
 	width: auto;
 }
 
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number:before {
+.hotel-booking-search-el .hb-form-field.hb-form-number:before {
 	content: '';
 	position: absolute;
 	top: 0;
@@ -82,7 +76,7 @@
 	background: #eee;
 }
 
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-list {
+.hotel-booking-search-el .hb-form-field.hb-form-number .hb-form-field-list {
 	opacity: 0;
 	visibility: hidden;
 	position: absolute;
@@ -102,27 +96,22 @@
 	overflow: hidden;
 }
 
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb_input_field > span {
+.hotel-booking-search-el .hb-form-field.hb-form-number .hb_input_field > span {
 	position: absolute;
 	left: 15px;
+	top: 0;
 }
 
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-list.active {
+.hotel-booking-search-el .hb-form-field.hb-form-number .hb-form-field-list.active {
 	opacity: 1;
 	visibility: visible;
 }
 
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-list .hb-form-field-input {
-	margin-bottom: 0;
-	margin-left: 25px;
-	margin-right: 25px;
-}
-
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-list .hb-form-field-input:last-child {
+.hotel-booking-search-el .hb-form-field.hb-form-number .hb-form-field-list .hb-form-field-input:last-child {
 	margin: 0;
 }
 
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-list .number-box .number-icons {
+.hotel-booking-search-el .hb-form-field.hb-form-number .hb-form-field-list .number-box .number-icons {
 	cursor: pointer;
 	float: none;
 	background: transparent;
@@ -131,16 +120,17 @@
 	height: auto;
 }
 
-.hotel-booking-search-el .multidate-layout .number-box {
+.hotel-booking-search-el .hb-form-number .number-box {
 	display: flex;
+	gap: 10px;
 }
 
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-list .name {
+.hotel-booking-search-el .hb-form-field.hb-form-number .hb-form-field-list .name {
 	font-weight: 500;
 	color: #000;
 }
 
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field .label {
+.hotel-booking-search-el .hb-form-field .label {
 	text-transform: uppercase;
 	font-weight: 500;
 	font-size: 16px;
@@ -148,11 +138,8 @@
 	margin-bottom: 10px;
 }
 
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field .label label {
-	font-weight: 500;
-}
-
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field .hb_input_field input {
+.hotel-booking-search-el .hb-form-field.hb-form-check-in-check-out .hb_input_field input,
+.hotel-booking-search-el .hb-form-field.hb-form-number .hb_input_field input {
 	width: 150px;
 	height: auto;
 	border: none;
@@ -167,40 +154,38 @@
 	text-transform: capitalize;
 }
 
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field .hb_input_field input.day,
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field .hb_input_field .getWidth {
+.hotel-booking-search-el .hb-form-field .hb_input_field input.day,
+.hotel-booking-search-el .hb-form-field .hb_input_field .getWidth {
 	padding: 0;
 }
 
-.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field .hb_input_field:after {
+.hotel-booking-search-el .hb-form-field .hb_input_field:after {
 	display: none;
 }
 
-.hotel-booking-search-el .multidate-layout .select2-container,
-.hotel-booking-search-el .multidate-layout select {
+.hotel-booking-search-el .hb-form-number .select2-container,
+.hotel-booking-search-el .hb-form-number select {
 	width: auto !important;
 	pointer-events: none;
 }
 
-.hotel-booking-search-el .multidate-layout .select2-container--default .select2-selection--single {
+.hotel-booking-search-el .hb-form-number .select2-container--default .select2-selection--single {
 	border: none;
 }
 
-.hotel-booking-search-el .multidate-layout .select2-container--default .select2-selection--single .select2-selection__arrow {
+.hotel-booking-search-el .hb-form-number .select2-container--default .select2-selection--single .select2-selection__arrow {
 	display: none;
 }
 
-.hotel-booking-search-el .multidate-layout .select2-container--default .select2-selection--single .select2-selection__rendered {
+.hotel-booking-search-el .hb-form-number .select2-container--default .select2-selection--single .select2-selection__rendered {
 	padding: 0;
 }
 
-.hotel-booking-search-el .multidate-layout .hb-submit {
-	width: 14%;
+.hotel-booking-search-el select {
+	width: 100%;
 }
-.hotel-booking-search-el form:not(.multidate-layout) .hb-submit button {
-	display: block;
-}
-.hotel-booking-search-el .multidate-layout .hb-submit button {
+
+.hotel-booking-search-el .hb-submit button {
 	width: 100%;
 	margin-top: 0;
 	font-size: 16px;
@@ -212,6 +197,9 @@
 	border-radius: 0;
 	min-width: 0;
 	text-transform: uppercase;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .daterangepicker.dropdown-menu {
@@ -319,125 +307,9 @@
 	color: #fff;
 }
 
-@media (max-width: 1024px) {
-
-	.hotel-booking-search-el .multidate-layout .hb-form-table .multidate,
-	.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-check-in-check-out {
-		width: 50%;
-	}
-
-	.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field {
-		width: 25%;
-	}
-
-	.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-list {
-		padding: 15px;
-	}
-
-	.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-list .number-box {
-		padding: 4px 0px;
-	}
-
-	.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-list .hb-form-field-input {
-		margin-left: 10px;
-		margin-right: 10px;
-	}
-}
-
-@media (max-width: 992px) {
-	.hotel-booking-search-el .multidate-layout .hb-form-table {
-		width: 82%;
-	}
-
-	.hotel-booking-search-el .multidate-layout .hb-submit {
-		width: 18%;
-	}
-
-	.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-check-in-check-out::after {
-		right: 15px;
-	}
-
-	.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field {
-		padding: 20px 10px 20px 20px;
-	}
-
-	.hotel-booking-search-el .multidate-layout .hb-form-table {
-		width: 82%;
-		float: left;
-	}
-
-	.hotel-booking-search-el .multidate-layout .hb-submit {
-		width: 18%;
-	}
-
-	.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-check-in-check-out::after {
-		right: 15px;
-	}
-
-	.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field {
-		padding: 20px 10px 20px 20px;
-		width: 25% !important;
-		float: left;
-		margin-bottom: 0;
-	}
-
-	.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-check-in-check-out {
-		width: 50% !important;
-	}
-
-	.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-list {
-		display: block;
-	}
-
-	.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-list .number-box {
-		display: flex;
-		justify-content: center;
-		margin-top: 10px;
-	}
-}
-
 @media (max-width: 767px) {
 
-	.hotel-booking-search-el .multidate-layout .hb-form-table .multidate,
-	.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-check-in-check-out,
-	.hotel-booking-search-el .multidate-layout .hb-form-table {
-		width: 100%;
-	}
-
-	.hotel-booking-search-el .multidate-layout .hb-form-table .multidate {
-		height: 33%;
-	}
-
-	.hotel-booking-search-el .multidate-layout .hb-submit {
-		width: 100%;
-		position: unset;
-	}
-
-	.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field {
-		width: 100%;
-	}
-
 	.daterangepicker.dropdown-menu {
-		width: 100%;
-	}
-
-	.hotel-booking-search-el .multidate-layout .hb-form-table .multidate,
-	.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-check-in-check-out,
-	.hotel-booking-search-el .multidate-layout .hb-form-table {
-		width: 100% !important;
-	}
-
-	.hotel-booking-search-el .multidate-layout .hb-submit {
-		width: 100%;
-		position: unset;
-	}
-
-	.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field {
-		width: 100% !important;
-	}
-
-	.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number:before {
-		height: 1px;
 		width: 100%;
 	}
 
@@ -470,18 +342,7 @@
 		width: 40px;
 	}
 
-	.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-list {
-		display: flex;
-		padding: 20px;
-		margin: 0;
-	}
-
-	.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-number .hb-form-field-list .number-box {
-		margin-top: 0;
-		padding: 5px 10px;
-	}
-
-	.hotel-booking-search-el .multidate-layout .hb-form-table .hb-form-field.hb-form-check-in-check-out::after {
-		right: 27px;
+	.hotel-booking-search-el .hb-form-field.hb-form-number .hb-form-field-list .name {
+		display: none;
 	}
 }
