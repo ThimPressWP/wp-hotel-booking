@@ -283,6 +283,9 @@ class WP_Hotel_Booking {
 
 		//template-hook
 		$this->_include( 'includes/template-hooks/class-wphb-search.php' );
+
+		// Modules
+		$this->_include( '/includes/elementor/modules/class-init.php' );
 	}
 
 
