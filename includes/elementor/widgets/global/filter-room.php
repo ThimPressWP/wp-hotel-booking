@@ -8,10 +8,12 @@ use Elementor\Repeater;
 use Elementor\Icons_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Box_Shadow;
+use WPHB\HBGroupControlTrait;
 // Exit if accessed directly
 
 class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
     use GroupControlTrait;
+	use HBGroupControlTrait;
 
     public function get_name() {
 		return 'wphb-filter-room';
@@ -392,38 +394,7 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 			]
 		);
 
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'title_typography',
-				'label'    => esc_html__( 'Typography', 'wp-hotel-booking' ),
-				'selector' => '{{WRAPPER}} .hotel-booking-search-filter h4, {{WRAPPER}} .hotel-booking-search-filter .title',
-			]
-		);
-
-		$this->add_control(
-			'title_color',
-			[
-				'label'     => esc_html__( 'Color', 'wp-hotel-booking' ),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '',
-				'selectors' => [
-					'{{WRAPPER}} .hotel-booking-search-filter h4, {{WRAPPER}} .hotel-booking-search-filter .title' => 'color: {{VALUE}};'
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'title_margin',
-			[
-				'label'      => esc_html__( 'Margin', 'wp-hotel-booking' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
-				'selectors'  => [
-					'{{WRAPPER}} .hotel-booking-search-filter h4, {{WRAPPER}} .hotel-booking-search-filter .title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
+		$this->register_style_typo_color_margin('title_filter', '.hotel-booking-search-filter h4, .hotel-booking-search-filter .title');
 
 		$this->add_responsive_control(
 			'icon_toggle_offset_h',
@@ -459,26 +430,7 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 			]
 		);
 
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'item_typography',
-				'label'    => esc_html__( 'Typography', 'wp-hotel-booking' ),
-				'selector' => '{{WRAPPER}} .hotel-booking-search-filter .list-item *',
-			]
-		);
-
-		$this->add_control(
-			'item_color',
-			[
-				'label'     => esc_html__( 'Color', 'wp-hotel-booking' ),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '',
-				'selectors' => [
-					'{{WRAPPER}} .hotel-booking-search-filter .list-item *' => 'color: {{VALUE}};'
-				],
-			]
-		);
+		$this->register_style_typo_color_margin('item_filter', '.hotel-booking-search-filter .list-item');
 
 		$this->add_control(
 			'item_color_hover',
@@ -487,19 +439,7 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '',
 				'selectors' => [
-					'{{WRAPPER}} .hotel-booking-search-filter .list-item:hover *' => 'color: {{VALUE}};'
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'item_margin',
-			[
-				'label'      => esc_html__( 'Margin', 'wp-hotel-booking' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
-				'selectors'  => [
-					'{{WRAPPER}} .hotel-booking-search-filter .list-item' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .hotel-booking-search-filter .list-item:hover' => 'color: {{VALUE}};'
 				],
 			]
 		);

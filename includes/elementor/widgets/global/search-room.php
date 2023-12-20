@@ -6,12 +6,14 @@ use Thim_EL_Kit\GroupControlTrait;
 use Elementor\Widget_Base;
 use Elementor\Icons_Manager;
 use Elementor\Group_Control_Typography;
+use WPHB\HBGroupControlTrait;
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 class Thim_Ekit_Widget_Search_Room extends Widget_Base {
     use GroupControlTrait;
+	use HBGroupControlTrait;
 
     public function get_name() {
 		return 'wphb-search-room';
@@ -251,38 +253,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			)
 		);
 
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'title_typography',
-				'label'    => esc_html__( 'Typography', 'wp-hotel-booking' ),
-				'selector' => '{{WRAPPER}} .hotel-booking-search h3',
-			]
-		);
-
-		$this->add_control(
-			'title_color',
-			[
-				'label'     => esc_html__( 'Color', 'wp-hotel-booking' ),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '',
-				'selectors' => [
-					'{{WRAPPER}} .hotel-booking-search h3' => 'color: {{VALUE}};'
-				],
-			]
-		);
-
-		$this->add_responsive_control(
-			'title_margin',
-			[
-				'label'      => esc_html__( 'Margin', 'wp-hotel-booking' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
-				'selectors'  => [
-					'{{WRAPPER}} .hotel-booking-search h3' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
+		$this->register_style_typo_color_margin('title_search', '.hotel-booking-search h3');
 
 		$this->end_controls_section();
 	}
@@ -324,38 +295,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			]
 		);
 
-        $this->add_group_control(
-			Group_Control_Typography::get_type(),
-			[
-				'name'     => 'label_typography',
-				'label'    => esc_html__( 'Typography', 'wp-hotel-booking' ),
-				'selector' => '{{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field .label, {{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field label',
-			]
-		);
-
-        $this->add_control(
-			'label_color',
-			[
-				'label'     => esc_html__( 'Color', 'wp-hotel-booking' ),
-				'type'      => Controls_Manager::COLOR,
-				'default'   => '',
-				'selectors' => [
-					'{{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field .label, {{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field label' => 'color: {{VALUE}};'
-				],
-			]
-		);
-
-        $this->add_responsive_control(
-			'label_margin',
-			[
-				'label'      => esc_html__( 'Margin', 'wp-hotel-booking' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
-				'selectors'  => [
-					'{{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field .label, {{WRAPPER}} .hotel-booking-search .hb-form-table .hb-form-field label' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; display: block',
-				],
-			]
-		);
+		$this->register_style_typo_color_margin('label_style', '.hotel-booking-search .hb-form-table .hb-form-field .label,  .hotel-booking-search .hb-form-table .hb-form-field label ');
 
         $this->add_control(
 			'input_heading', [
