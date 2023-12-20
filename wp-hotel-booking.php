@@ -283,9 +283,6 @@ class WP_Hotel_Booking {
 
 		//template-hook
 		$this->_include( 'includes/template-hooks/class-wphb-search.php' );
-
-		// Modules
-		$this->_include( '/includes/elementor/modules/class-init.php' );
 	}
 
 
@@ -600,10 +597,12 @@ if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 		'thim_ekit_loaded',
 		function () {
 			require_once WPHB_PLUGIN_PATH . '/includes/elementor/class-init.php';
+			require_once WPHB_PLUGIN_PATH . '/includes/elementor/modules/class-init.php';
 		}
 	);
 } else {
 	if ( ! class_exists( 'Elementor' )) {
 		require_once WPHB_PLUGIN_PATH . '/includes/elementor/class-init.php';
+		require_once WPHB_PLUGIN_PATH . '/includes/elementor/modules/class-init.php';
 	}
 }
