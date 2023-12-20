@@ -12,9 +12,9 @@ class Elementor {
 	const CATEGORY_SINGLE_ROOM  = 'thim_ekit_single_room';
 
 	const WIDGETS = array(
-		'archive-room' => array(
-            'archive-rooms',
-        ),
+		// 'archive-room' => array(
+        //     'archive-rooms',
+        // ),
 		// 'single-room'  => array(
 		// ),
 		// 'loop-item'        => array(
