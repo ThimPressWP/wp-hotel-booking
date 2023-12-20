@@ -147,7 +147,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			[
 				'label'     => esc_html__( 'Width Content', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%' ],
+				'size_units' => [ '%', 'px' ],
 				'selectors' => [
 					'{{WRAPPER}} .hotel-booking-search-el {{CURRENT_ITEM}}' => 'width: {{SIZE}}{{UNIT}};']
 			]
@@ -697,7 +697,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 
 	protected function hb_render_submit($settings, $classes) {
 		?>
-		<p class="hb-submit <?php echo esc_attr($classes); ?>">
+		<li class="hb-submit <?php echo esc_attr($classes); ?>">
 			<button type="submit" class="wphb-button">
 				<?php if ( $settings['icons_field'] ) { 
 					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true' ) );        
@@ -708,7 +708,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 					<?php esc_html_e( 'Check Availability', 'wp-hotel-booking' ) ;?>
 				<?php endif; ?>
 			</button>
-		</p>
+		</li>
 		<?php
 	}
 }
