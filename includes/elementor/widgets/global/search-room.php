@@ -541,7 +541,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 		}else {
 			?>
 			<li class="hb-form-field hb-form-check-in-check-out <?php echo esc_attr($classes); ?>">
-				<input type="text" id="multidate" class="multidate <?php echo esc_attr($classes); ?>" value="<?php echo esc_attr($check_in_date) ?>" readonly />
+				<input type="text" id="multidate" class="multidate" value="<?php echo esc_attr($check_in_date) ?>" readonly />
 				<?php if ( $settings['icons_field'] ) { 
 					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );        
 				} ?>
