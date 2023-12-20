@@ -68,9 +68,9 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			array(
 				'label'     => esc_html__( 'Layout', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::SELECT,
-				'default'   => 'base',
+				'default'   => 'single',
 				'options'   => array(
-					'base'      => esc_html__( 'Base', 'wp-hotel-booking' ),
+					'single'    => esc_html__( 'Single', 'wp-hotel-booking' ),
 					'multidate' => esc_html__( 'Multidate', 'wp-hotel-booking' ),
 				),
 				'condition'     => [
@@ -115,7 +115,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
                 'placeholder'   => esc_html__( 'Add your text here', 'wp-hotel-booking' ),
 				'condition'     => [
 					'meta_field' => 'date',
-					'layout_date'=>	'base'
+					'layout_date'=>	'single'
 				]
 			]
 		);
@@ -248,7 +248,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				'label' => esc_html__( 'Title', 'wp-hotel-booking' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition'     => [
-					'layout' => 'base',
+					'layout' => 'single',
 				],
 			)
 		);
@@ -512,7 +512,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 		$label_check_in  = $settings['label_field_date'] ?? esc_html__('Arrival Date', 'wp-hotel-booking');
 		$label_check_out = $settings['label_field_check_out'] ?? esc_html__('Departure Date', 'wp-hotel-booking');
 
-		if ($settings['layout_date'] == 'base') {
+		if ($settings['layout_date'] == 'single') {
 			?>
 			<li class="hb-form-field <?php echo esc_attr($classes); ?>">
 				<?php if ( $label_check_in != '' ) :?>
