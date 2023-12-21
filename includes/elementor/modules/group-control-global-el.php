@@ -21,7 +21,7 @@ trait HBGroupControlTrait {
         $this->add_responsive_control(
 			$prefix_name.'_margin',
 			array(
-				'label'      => esc_html__( 'Margin', 'realpress' ),
+				'label'      => esc_html__( 'Margin', 'wp-hotel-booking' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', '%' ),
 				'selectors'  => array(
@@ -33,7 +33,7 @@ trait HBGroupControlTrait {
 		$this->add_control(
 			$prefix_name.'_color',
 			array(
-				'label'     => esc_html__( 'Color', 'realpress' ),
+				'label'     => esc_html__( 'Color', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array(
 					"{{WRAPPER}} $selector" => 'color: {{VALUE}};',

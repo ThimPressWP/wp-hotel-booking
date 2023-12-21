@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
-    "@wordpress/url": "^3.16.0"
+    "@wordpress/url": "^3.16.0",
+    "gulp-postcss": "^9.0.1",
+    "postcss": "^8.4.32",
+    "postcss-minify": "^1.1.0"
   },
   "devDependencies": {
     "@automattic/wp-babel-makepot": "^1.0.2",

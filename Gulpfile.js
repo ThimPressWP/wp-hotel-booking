@@ -9,6 +9,8 @@ const plumber = require( 'gulp-plumber' );
 const uglifycss = require( 'gulp-uglifycss' );
 const del = require( 'del' );
 const readFile = require( 'read-file' );
+const postcss = require( 'gulp-postcss' );
+const css_minify = require( 'postcss-minify' );
 const rtlcss = require( 'gulp-rtlcss' );
 
 // Clear cache.
@@ -17,6 +19,27 @@ gulp.task( 'clearCache', ( done ) => {
 } );
 
 /******************************************* Build styles *******************************************/
+const srcFrontendScssFiles = [
+	'assets/scss/frontend/frontend-el-style.scss',
+];
+gulp.task( 'build_frontend_css', () => {
+	return gulp
+	.src( srcFrontendScssFiles )
+		.pipe( sass.sync().on( 'error', sass.logError ) )
+		.on( 'error', sass.logError )
+		.pipe( postcss( [ css_minify() ] ) )
+		.pipe( lineec() )
+		.pipe( gulp.dest( 'assets/css/frontend' ) )
+} );
+
+gulp.task( 'styles', gulp.series( 'build_frontend_css' ) );
+// Watch sass
+const srcFiles = [ 'assets/src/scss/**/*.scss' ];
+
+gulp.task( 'watch', gulp.series( 'clearCache', () => {
+	gulp.watch( srcFiles, gulp.parallel( 'styles' ) );
+} ) );
+
 gulp.task( 'mincss', () => {
 	return '';
 } );

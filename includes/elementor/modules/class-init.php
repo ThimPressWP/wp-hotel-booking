@@ -18,7 +18,8 @@ class Elementor {
 			'filter-room-selected'
         ),
         'single-room' => array(
-            'room-price'
+            'room-price',
+			'room-thumb'
         )
 	);
 
