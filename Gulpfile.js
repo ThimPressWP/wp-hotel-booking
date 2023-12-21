@@ -32,14 +32,6 @@ gulp.task( 'build_frontend_css', () => {
 		.pipe( gulp.dest( 'assets/css/frontend' ) )
 } );
 
-gulp.task( 'styles', gulp.series( 'build_frontend_css' ) );
-// Watch sass
-const srcFiles = [ 'assets/src/scss/**/*.scss' ];
-
-gulp.task( 'watch', gulp.series( 'clearCache', () => {
-	gulp.watch( srcFiles, gulp.parallel( 'styles' ) );
-} ) );
-
 gulp.task( 'mincss', () => {
 	return '';
 } );

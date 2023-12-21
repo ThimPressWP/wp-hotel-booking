@@ -1,2 +1,12 @@
+@mixin flexbox {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+// widgets global
 @import "./widgets/filter-room";
-@import "./widgets/search-room"
+@import "./widgets/search-room";
+
+// single room
+@import "./single-room/room-thumb";

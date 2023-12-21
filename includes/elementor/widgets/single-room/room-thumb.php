@@ -59,8 +59,7 @@ class Thim_Ekit_Widget_Room_Thumb extends Widget_Base {
     }
 
     protected function render() {
-        wp_enqueue_script( 'magnific-popup' );
-
+        wp_enqueue_script( 'wphb-magnific-popup' );
         do_action( 'WPHB/modules/single-room/before-preview-query' );
 
         $settings    	= $this->get_settings_for_display();
@@ -93,7 +92,6 @@ class Thim_Ekit_Widget_Room_Thumb extends Widget_Base {
     }
 
     protected function _render_thumb_gallery_and_popup_slide($galleries){
-
         if( !empty($galleries) ) {
             $gallery_img = $galleries;
             $class = '';

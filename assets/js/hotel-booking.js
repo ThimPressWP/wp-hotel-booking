@@ -1085,4 +1085,32 @@
 		}, 400);
 	}
 
+	$(document).ready(function () {
+		if (jQuery().magnificPopup) {
+			$('.gallery-img-item').magnificPopup({
+				type     : 'image',
+				gallery:	{
+					enabled:true
+				},
+				zoom: {
+					enabled: false,
+					opener: function(openerElement) {
+						return openerElement.is('img') ? openerElement : openerElement.find('img');
+					}
+				},
+			});
+		}
+
+		if (jQuery().flexslider) {
+			jQuery('#slider-gallery').flexslider({
+				animation    : "slide",
+				controlNav   : false,
+				animationLoop: true,
+				slideshow    : false,
+				directionNav : true,
+				maxItems: 1,
+			});
+		}
+	});
+
 })((jQuery));
