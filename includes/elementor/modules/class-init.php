@@ -17,6 +17,9 @@ class Elementor {
 			'filter-room',
 			'filter-room-selected'
         ),
+        'single-room' => array(
+            'room-price'
+        )
 	);
 
     public function __construct() {
@@ -46,7 +49,7 @@ class Elementor {
 			include_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 
-		require_once WPHB_PLUGIN_PATH . '/includes/elementor/group-control-global-el.php';
+		require_once WPHB_PLUGIN_PATH . '/includes/elementor/modules/group-control-global-el.php';
 		require_once WPHB_PLUGIN_PATH . '/includes/elementor/modules/archive-room/class-init.php';
 		require_once WPHB_PLUGIN_PATH . '/includes/elementor/modules/archive-room/class-rest-api.php';
 		require_once WPHB_PLUGIN_PATH . '/includes/elementor/modules/single-room/class-init.php';

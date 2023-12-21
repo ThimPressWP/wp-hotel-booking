@@ -594,13 +594,11 @@ if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 	add_action(
 		'thim_ekit_loaded',
 		function () {
-			require_once WPHB_PLUGIN_PATH . '/includes/elementor/class-init.php';
-			//require_once WPHB_PLUGIN_PATH . '/includes/elementor/modules/class-init.php';
+			require_once WPHB_PLUGIN_PATH . '/includes/elementor/modules/class-init.php';
 		}
 	);
 } else {
 	if ( ! class_exists( 'Elementor' )) {
-		require_once WPHB_PLUGIN_PATH . '/includes/elementor/class-init.php';
-		// require_once WPHB_PLUGIN_PATH . '/includes/elementor/modules/class-init.php';
+		require_once WPHB_PLUGIN_PATH . '/includes/elementor/modules/class-init.php';
 	}
 }
