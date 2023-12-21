@@ -26,6 +26,19 @@ class Elementor {
 		add_filter( 'thim_ekit/elementor/widgets/list', array( $this, 'add_widgets' ), 20 );
 		add_filter( 'thim_ekit/elementor/widget/file_path', array( $this, 'change_widget_path' ), 10, 2 );
 		add_filter( 'thim_ekit_elementor_category', array( $this, 'add_categories' ) );
+
+		add_filter(
+			'thim_ekit/admin/enqueue/localize',
+			function( $localize ) {
+				$localize['loop_item']['post_type'][] = array(
+					'label' => 'Room Types',
+					'value' => 'hb_room',
+				);
+
+				return $localize;
+
+			},10,1
+		);
 	}
 
     public function includes() {
@@ -34,6 +47,9 @@ class Elementor {
 		}
 
 		require_once WPHB_PLUGIN_PATH . '/includes/elementor/group-control-global-el.php';
+		require_once WPHB_PLUGIN_PATH . '/includes/elementor/modules/archive-room/class-init.php';
+		require_once WPHB_PLUGIN_PATH . '/includes/elementor/modules/archive-room/class-rest-api.php';
+		require_once WPHB_PLUGIN_PATH . '/includes/elementor/modules/single-room/class-init.php';
     }
 
     public function add_widgets( $widget_default ) {

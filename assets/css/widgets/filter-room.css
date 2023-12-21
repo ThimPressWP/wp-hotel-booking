@@ -82,11 +82,13 @@
 .hotel-booking-search-filter .search-filter-form-el {
     transition: 0.3s;
 }
-
-.hotel-booking-search-filter.filter-popup-show .search-filter-form-el {
+.hotel-booking-search-filter .search-filter-form-el {
     display: var(--display-form-filter, block);
     z-index: 20;
     position: relative;
+}
+.hotel-booking-search-filter.filter-popup-show .search-filter-form-el {
+    display: var(--display-form-filter, block);
 }
 
 .hb-filter-popup.hb-button-popup {
