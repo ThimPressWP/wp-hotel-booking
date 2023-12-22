@@ -153,6 +153,9 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 				'label'     => esc_html__( 'Width Content', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::SLIDER,
 				'size_units' => [ '%', 'px' ],
+				'default'   => [
+                    'unit'  => '%'
+                ],
 				'selectors' => [
 					'{{WRAPPER}} .search-filter-form-el {{CURRENT_ITEM}}' => 'width: {{SIZE}}{{UNIT}};'
 				]

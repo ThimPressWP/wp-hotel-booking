@@ -4,6 +4,33 @@
 	justify-content: center;
 }
 
+// Adds a browser prefix to the property
+@mixin css3-prefix($property, $value) {
+	-webkit-#{$property}: #{$value};
+	-khtml-#{$property}: #{$value};
+	-moz-#{$property}: #{$value};
+	-ms-#{$property}: #{$value};
+	-o-#{$property}: #{$value};
+	#{$property}: #{$value};
+}
+
+// Transition
+@mixin transition($properties...) {
+	@if length($properties) >= 1 {
+		@include css3-prefix('transition', $properties);
+	} @else {
+		@include css3-prefix('transition', "all 0.2s ease-in-out 0s");
+	}
+}
+
+// Transform {string}
+@mixin transform($string) {
+	-webkit-transform: $string;
+	-moz-transform: $string;
+	-ms-transform: $string;
+	-o-transform: $string;
+}
+
 // widgets global
 @import "./widgets/filter-room";
 @import "./widgets/search-room";

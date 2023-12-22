@@ -60,18 +60,18 @@
 		$email.attr('disabled', true);
 		var customer_table = $('.hb-col-padding.hb-col-border');
 		$.ajax({
-			url       : hotel_settings.ajax,
-			dataType  : 'html',
-			type      : 'post',
-			data      : {
+			url: hotel_settings.ajax,
+			dataType: 'html',
+			type: 'post',
+			data: {
 				action: 'hotel_booking_fetch_customer_info',
-				email : $email.val(),
-				nonce : hotel_settings.nonce
+				email: $email.val(),
+				nonce: hotel_settings.nonce
 			},
 			beforeSend: function () {
 				customer_table.hb_overlay_ajax_start();
 			},
-			success   : function (response) {
+			success: function (response) {
 				customer_table.hb_overlay_ajax_stop();
 				response = parseJSON(response);
 				if (response && response.ID) {
@@ -92,7 +92,7 @@
 				$email.removeAttr('disabled');
 
 			},
-			error     : function () {
+			error: function () {
 				customer_table.hb_overlay_ajax_stop();
 				hotel_checkout_fetch_error([hotel_booking_i18n.ajax_error]);
 				$button.removeAttr('disabled');
@@ -222,10 +222,10 @@
 
 	function stripeSubmit(form) {
 		var handler = StripeCheckout.configure({
-			key   : strip_publish_string,
-			image : 'https://stripe.com/img/documentation/checkout/marketplace.png',
+			key: strip_publish_string,
+			image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
 			locale: 'auto',
-			token : function (token) {
+			token: function (token) {
 				// Use the token to create the charge with a server-side script.
 				// You can access the token ID with `token.id`
 				stripe_payment_process(form, token);
@@ -245,10 +245,10 @@
 
 		// Open Checkout with further options
 		handler.open({
-			name       : first_name + ' ' + last_name,
+			name: first_name + ' ' + last_name,
 			description: email,
-			currency   : currency,
-			amount     : price * 100
+			currency: currency,
+			amount: price * 100
 		});
 	}
 
@@ -264,10 +264,10 @@
 		$.extend(token, data);
 
 		$.ajax({
-			url       : hotel_settings.ajax,
-			data      : token,
-			type      : 'POST',
-			dataType  : 'html',
+			url: hotel_settings.ajax,
+			data: token,
+			type: 'POST',
+			dataType: 'html',
 			beforeSend: function () {
 				button.attr('disabled', 'disabled');
 				button.html('<span class="lds-ring"><span></span><span></span><span></span><span></span></span>' + button.html());
@@ -294,15 +294,15 @@
 		var old_text = button.html();
 		if (form.triggerHandler('hotel_booking_place_order') !== false) {
 			$.ajax({
-				type      : 'POST',
-				url       : hotel_settings.ajax,
-				data      : form.serialize(),
-				dataType  : 'text',
+				type: 'POST',
+				url: hotel_settings.ajax,
+				data: form.serialize(),
+				dataType: 'text',
 				beforeSend: function () {
 					button.attr('disabled', 'disabled');
 					button.html('<span class="lds-ring"><span></span><span></span><span></span><span></span></span>' + button.html());
 				},
-				success   : function (code) {
+				success: function (code) {
 					button.html(old_text);
 					try {
 						var response = parseJSON(code);
@@ -317,7 +317,7 @@
 						alert(e)
 					}
 				},
-				error     : function () {
+				error: function () {
 					button.html(old_text);
 					hotel_checkout_fetch_error([hotel_booking_i18n.waring.try_again]);
 				}
@@ -336,18 +336,18 @@
 			return false;
 		}
 		$.ajax({
-			type      : 'POST',
-			url       : hotel_settings.ajax,
-			data      : {
+			type: 'POST',
+			url: hotel_settings.ajax,
+			data: {
 				action: 'hotel_booking_apply_coupon',
-				code  : $coupon.val(),
-				nonce : hotel_settings.nonce
+				code: $coupon.val(),
+				nonce: hotel_settings.nonce
 			},
-			dataType  : 'text',
+			dataType: 'text',
 			beforeSend: function () {
 				table.hb_overlay_ajax_start();
 			},
-			success   : function (code) {
+			success: function (code) {
 				table.hb_overlay_ajax_stop();
 				try {
 					var response = parseJSON(code);
@@ -360,7 +360,7 @@
 					alert(e)
 				}
 			},
-			error     : function () {
+			error: function () {
 				table.hb_overlay_ajax_stop();
 				alert('error')
 			}
@@ -372,12 +372,12 @@
 	 * @type {Object}
 	 */
 	HB_Booking_Cart = {
-		init                        : function () {
+		init: function () {
 			this.add_to_cart();
 			this.remove_cart();
 			// this.add_extra_to_cart();
 		},
-		hb_add_to_cart_callback     : function (data, callback) {
+		hb_add_to_cart_callback: function (data, callback) {
 			var mini_cart = $('.hotel_booking_mini_cart');
 			var length = mini_cart.length;
 			var template = wp.template('hb-minicart-item');
@@ -483,7 +483,7 @@
 
 			}
 		},
-		add_to_cart                 : function () {
+		add_to_cart: function () {
 			var searchResult = $('form.hb-search-room-results');
 
 			$(document).on('submit', 'form.hb-search-room-results', function (event) {
@@ -495,10 +495,10 @@
 					number_room_select = _form.find('.number_room_select option:selected').val(),
 					room_title = _form.find('.hb-room-name');
 
-                if ( ! hotel_settings?.cart_page_url && button.length > 0) {
-                    alert('Please set Cart page url in settings');
-                    return;
-                }
+				if (!hotel_settings?.cart_page_url && button.length > 0) {
+					alert('Please set Cart page url in settings');
+					return;
+				}
 
 				$('.number_room_select').removeClass('hotel_booking_invalid_quantity');
 				if (typeof number_room_select === 'undefined' || number_room_select === '') {
@@ -515,17 +515,17 @@
 				var data = $(this).serializeArray();
 
 				$.ajax({
-					url       : hotel_settings.ajax,
-					type      : 'POST',
-					data      : data,
-					dataType  : 'html',
+					url: hotel_settings.ajax,
+					type: 'POST',
+					data: data,
+					dataType: 'html',
 					beforeSend: function () {
 						// _form.hb_overlay_ajax_start();
 						button.attr('disabled', 'disabled');
 						button.html('<span class="lds-ring"><span></span><span></span><span></span><span></span></span>' + button.html());
 						//button.addClass('hb_loading');
 					},
-					success   : function (result) {
+					success: function (result) {
 						var rs = parseJSON(result);
 						if (typeof rs.status !== 'undefined') {
 							if (typeof rs.message !== 'undefined') {
@@ -544,9 +544,9 @@
 									window.location.href = rs.redirect;
 								}
 							} else {
-                                alert(rs.message);
-                                button.find('span.lds-ring').remove();
-                            }
+								alert(rs.message);
+								button.find('span.lds-ring').remove();
+							}
 						}
 
 						if (typeof rs.id !== 'undefined') {
@@ -561,18 +561,18 @@
 							}
 						}
 					},
-					error     : function () {
+					error: function () {
 						button.html(old_text);
 						alert(hotel_booking_i18n.waring.try_again);
 					},
-					complete  : function () {
+					complete: function () {
 						_form.hb_overlay_ajax_stop();
 					}
 				});
 				return false;
 			});
 		},
-		add_extra_to_cart           : function () {
+		add_extra_to_cart: function () {
 			$(document).on('submit', 'form.hb-select-extra-results', function (event) {
 				event.preventDefault();
 				var submit_button = $(document).find('button.hb_button');
@@ -581,18 +581,18 @@
 				var data = $(this).serializeArray();
 
 				$.ajax({
-					url     : hotel_settings.ajax,
-					type    : 'POST',
-					data    : data,
+					url: hotel_settings.ajax,
+					type: 'POST',
+					data: data,
 					dataType: 'html',
-					success : function (code) {
+					success: function (code) {
 						code = parseJSON(code);
 						window.location.href = code.redirect;
 					}
 				});
 			});
 		},
-		remove_cart                 : function () {
+		remove_cart: function () {
 			// var updateOrderButton
 			$(document).on('click', '.hb_remove_cart_item', function (e) {
 				e.preventDefault();
@@ -600,14 +600,14 @@
 				var tr = $(this).parents('tr'),
 					cart_item = $(this).attr('data-cart-id');
 				$.ajax({
-					url       : hotel_settings.ajax,
-					type      : 'POST',
-					data      : {
+					url: hotel_settings.ajax,
+					type: 'POST',
+					data: {
 						cart_id: cart_item,
-						nonce  : hotel_settings.nonce,
-						action : 'hotel_booking_ajax_remove_item_cart'
+						nonce: hotel_settings.nonce,
+						action: 'hotel_booking_ajax_remove_item_cart'
 					},
-					dataType  : 'html',
+					dataType: 'html',
 					beforeSend: function () {
 						tr.hb_overlay_ajax_start();
 					}
@@ -641,14 +641,14 @@
 				var cart_id = item.attr('data-cart-id');
 
 				$.ajax({
-					url       : hotel_settings.ajax,
-					type      : 'POST',
-					data      : {
+					url: hotel_settings.ajax,
+					type: 'POST',
+					data: {
 						cart_id: cart_id,
-						nonce  : hotel_settings.nonce,
-						action : 'hotel_booking_ajax_remove_item_cart'
+						nonce: hotel_settings.nonce,
+						action: 'hotel_booking_ajax_remove_item_cart'
 					},
-					dataType  : 'html',
+					dataType: 'html',
 					beforeSend: function () {
 						item.addClass('before_remove');
 						item.hb_overlay_ajax_start();
@@ -678,7 +678,7 @@
 		}
 
 		HB_Booking_Cart.init();
-		$.datepicker.setDefaults({dateFormat: hotel_booking_i18n.date_time_format});
+		$.datepicker.setDefaults({ dateFormat: hotel_booking_i18n.date_time_format });
 		// $.datepicker.setDefaults({dateFormat: 'mm/dd/yy'});
 		var today = new Date();
 		var tomorrow = new Date();
@@ -692,17 +692,17 @@
 		tomorrow.setDate(today.getDate() + start_plus);
 
 		$('input[id^="check_in_date"]').datepicker({
-			dateFormat     : hotel_booking_i18n.date_time_format,
-			firstDay       : hotel_booking_i18n.date_start,
-			monthNames     : hotel_booking_i18n.monthNames,
+			dateFormat: hotel_booking_i18n.date_time_format,
+			firstDay: hotel_booking_i18n.date_start,
+			monthNames: hotel_booking_i18n.monthNames,
 			monthNamesShort: hotel_booking_i18n.monthNamesShort,
-			dayNames       : hotel_booking_i18n.dayNames,
-			dayNamesShort  : hotel_booking_i18n.dayNamesShort,
-			dayNamesMin    : hotel_booking_i18n.dayNamesMin,
-			minDate        : today,
-			maxDate        : '+365D',
-			numberOfMonths : 1,
-			onSelect       : function () {
+			dayNames: hotel_booking_i18n.dayNames,
+			dayNamesShort: hotel_booking_i18n.dayNamesShort,
+			dayNamesMin: hotel_booking_i18n.dayNamesMin,
+			minDate: today,
+			maxDate: '+365D',
+			numberOfMonths: 1,
+			onSelect: function () {
 				var unique = $(this).attr('id');
 				unique = unique.replace('check_in_date_', '');
 				var date = $(this).datepicker('getDate');
@@ -724,16 +724,16 @@
 		});
 
 		$('input[id^="check_out_date"]').datepicker({
-			dateFormat     : hotel_booking_i18n.date_time_format,
-			monthNames     : hotel_booking_i18n.monthNames,
+			dateFormat: hotel_booking_i18n.date_time_format,
+			monthNames: hotel_booking_i18n.monthNames,
 			monthNamesShort: hotel_booking_i18n.monthNamesShort,
-			dayNames       : hotel_booking_i18n.dayNames,
-			dayNamesShort  : hotel_booking_i18n.dayNamesShort,
-			dayNamesMin    : hotel_booking_i18n.dayNamesMin,
-			minDate        : tomorrow,
-			maxDate        : '+365D',
-			numberOfMonths : 1,
-			onSelect       : function () {
+			dayNames: hotel_booking_i18n.dayNames,
+			dayNamesShort: hotel_booking_i18n.dayNamesShort,
+			dayNamesMin: hotel_booking_i18n.dayNamesMin,
+			minDate: tomorrow,
+			maxDate: '+365D',
+			numberOfMonths: 1,
+			onSelect: function () {
 				var unique = $(this).attr('id');
 				unique = unique.replace('check_out_date_', '');
 				var check_in = $('#check_in_date_' + unique),
@@ -903,16 +903,16 @@
 			evt.preventDefault();
 			var table = $(this).parents('table');
 			$.ajax({
-				url       : hotel_settings.ajax,
-				type      : 'post',
-				dataType  : 'html',
-				data      : {
+				url: hotel_settings.ajax,
+				type: 'post',
+				dataType: 'html',
+				data: {
 					action: 'hotel_booking_remove_coupon'
 				},
 				beforeSend: function () {
 					table.hb_overlay_ajax_start();
 				},
-				success   : function (response) {
+				success: function (response) {
 					table.hb_overlay_ajax_stop();
 					response = parseJSON(response)
 					if (response.result == 'success') {
@@ -957,25 +957,25 @@
 
 		$('#commentform').submit(function () {
 			var rate = $('#rating'),
-                comment = $('#comment');
-                author = $('#author');
-                email = $('#email');
-				val = rate.val();
+				comment = $('#comment');
+			author = $('#author');
+			email = $('#email');
+			val = rate.val();
 
-            if ( email.length === 1 && author.val() === '') {
-                window.alert(hotel_booking_i18n.review_author_required);
-                return false;
-            }
+			if (email.length === 1 && author.val() === '') {
+				window.alert(hotel_booking_i18n.review_author_required);
+				return false;
+			}
 
-            if (email.length === 1 && ( email.val() === '' || isEmail(email.val()) === false) ) {
-                window.alert(hotel_booking_i18n.review_email_required);
-                return false;
-            }
+			if (email.length === 1 && (email.val() === '' || isEmail(email.val()) === false)) {
+				window.alert(hotel_booking_i18n.review_email_required);
+				return false;
+			}
 			if (rate.length === 1 && typeof val !== 'undefined' && val === '') {
 				window.alert(hotel_booking_i18n.review_rating_required);
 				return false;
 			}
-            if (comment.val() === '') {
+			if (comment.val() === '') {
 				window.alert(hotel_booking_i18n.review_content_required);
 				return false;
 			}
@@ -1088,27 +1088,16 @@
 	$(document).ready(function () {
 		if (jQuery().magnificPopup) {
 			$('.gallery-img-item').magnificPopup({
-				type     : 'image',
-				gallery:	{
-					enabled:true
+				type: 'image',
+				gallery: {
+					enabled: true
 				},
 				zoom: {
 					enabled: false,
-					opener: function(openerElement) {
+					opener: function (openerElement) {
 						return openerElement.is('img') ? openerElement : openerElement.find('img');
 					}
 				},
-			});
-		}
-
-		if (jQuery().flexslider) {
-			jQuery('#slider-gallery').flexslider({
-				animation    : "slide",
-				controlNav   : false,
-				animationLoop: true,
-				slideshow    : false,
-				directionNav : true,
-				maxItems: 1,
 			});
 		}
 	});
