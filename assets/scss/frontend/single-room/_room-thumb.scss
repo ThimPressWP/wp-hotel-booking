@@ -120,107 +120,77 @@
             -o-transform: translateX(-50%);
             max-width: 680px;
             overflow: unset;
-        }
 
-        .flex-prev {
-            left: -30px;
-
-            &:before {
-                content: "\f104";
-            }
-        }
-
-        .flex-next {
-            right: -30px;
-
-            &:before {
-                content: "\f105";
+            @media (min-width: 1200px) {
+                min-width: 680px;
             }
         }
     }
-
-    .hb-thumbnail-slide {
-        position: relative;
-
-        .flex-prev {
-            left: 20px;
-
-            &:before {
-                content: "\f104";
-            }
-        }
-
-        .flex-next {
-            right: 20px;
-
-            &:before {
-                content: "\f105";
-            }
-        }
-    }
-
-    .flex-control-nav {
-        position: absolute;
-        display: flex;
-        z-index: 10;
-        top: 95%;
-        bottom: auto;
-        left: 50%;
-        gap: var(--thim-pagination-space, 10px);
-        @include transform(translateX(-50%));
-
-        a {
-            font-size: 0;
-            display: block;
-            background-color: #fff;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-
-            &.flex-active {
-                background-color: #000;
-            }
-        }
-    }
-
     .flex-direction-nav {
-        margin: 0;
-        position: absolute;
-        top: 50%;
-        @include transform(translateY(-50%));
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        z-index: 10;
-        @include transition(all .3s ease-in-out);
-
         a {
             position: absolute;
-            z-index: 9;
             top: 50%;
-            @include transform(translateY(-50%));
-            cursor: pointer;
+            transform: translateY(-50%);
+            left: var(--ekits-nav-slider-offset-v, -30px);
+            margin-top: var(--ekits-nav-slider-offset-h, 0);
+            width: var(--ekits-nav-slider-width, 24px);
+            height: var(--ekits-nav-slider-height, 24px);
+            border-style: var(--ekits-nav-slider-border-style, none);
+            border-width: var(--ekits-nav-slider-border-width, 0);
+            border-color: var(--ekits-nav-slider-border-color, #000);
+            background: var(--ekits-nav-slider-bg-color, #FFFFFF00);
+            color: var(--ekits-nav-slider-color, #fff);
+            border-radius: var(--ekits-nav-slider-border-radius, 0);
+            display: flex;
             font-size: 0;
-            margin: 0;
-            text-align: center;
-            overflow: hidden;
-            @include transition(all .3s ease-in-out);
-            @include flexbox();
+            justify-content: center;
+            align-items: center;
 
             &:before {
-                color: #fff;
-                font-family: thim-ekits!important;
+                font-family: thim-ekits;
                 font-style: normal;
                 font-weight: 400;
-                font-variant: normal;
-                text-transform: none;
-                line-height: 1;
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-                font-size: 16px;
-                line-height: 32px;
-                @include transition(.3s);
+                content: "\f104";
+                font-size: var(--ekits-nav-slider-font-size, 20px);
+            }
 
+            &.flex-next {
+                right: var(--ekits-nav-slider-offset-v, -30px);
+                left: auto;
+
+                &:before {
+                    content: "\f105";
+                }
+            }
+            &:hover {
+                color: var(--ekits-nav-slider-color-hover, #000);
+                background: var(--ekits-nav-slider-bg-color-hover, #FFFFFF00);
+                border-color: var(--ekits-nav-slider-border-color-hover, #000);
+            }
+        }
+    }
+    .hb-thumbnail-slide {
+        .flex-control-nav {
+            position: absolute;
+            display: flex;
+            z-index: 10;
+            top: 95%;
+            bottom: auto;
+            left: 50%;
+            gap: var(--thim-pagination-space, 10px);
+            @include transform(translateX(-50%));
+    
+            a {
+                font-size: 0;
+                display: block;
+                background-color: #fff;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+    
+                &.flex-active {
+                    background-color: #000;
+                }
             }
         }
     }
