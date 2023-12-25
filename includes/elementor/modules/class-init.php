@@ -19,7 +19,9 @@ class Elementor {
         ),
         'single-room' => array(
             'room-price',
-			'room-thumb'
+			'room-thumb',
+			'room-content',
+			'room-facilities'
         )
 	);
 
@@ -35,7 +37,7 @@ class Elementor {
 			'thim_ekit/admin/enqueue/localize',
 			function( $localize ) {
 				$localize['loop_item']['post_type'][] = array(
-					'label' => 'Room Types',
+					'label' => 'Room',
 					'value' => 'hb_room',
 				);
 

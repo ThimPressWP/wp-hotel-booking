@@ -41,4 +41,38 @@ trait HBGroupControlTrait {
 			)
 		);
 	}
+
+	protected function register_style_border_padding_margin(string $prefix_name, string $selector) {
+		$this->add_group_control(
+			Group_Control_Border::get_type(),
+			array(
+				'name'     => $prefix_name.'_typography',
+				'selector' => "{{WRAPPER}} $selector",
+			)
+		);
+
+		$this->add_responsive_control(
+			$prefix_name.'_margin',
+			array(
+				'label'      => esc_html__( 'Margin', 'wp-hotel-booking' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', '%' ),
+				'selectors'  => array(
+					"{{WRAPPER}} $selector" => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->add_responsive_control(
+			$prefix_name.'_padding',
+			array(
+				'label'      => esc_html__( 'Padding', 'wp-hotel-booking' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', '%' ),
+				'selectors'  => array(
+					"{{WRAPPER}} $selector" => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+	}
 }
