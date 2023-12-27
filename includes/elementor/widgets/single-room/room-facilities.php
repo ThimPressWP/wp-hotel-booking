@@ -114,6 +114,10 @@ class Thim_Ekit_Widget_Room_Facilities extends Widget_Base
         do_action('WPHB/modules/single-room/before-preview-query');
 
         $room = \WPHB_Room::instance(get_the_ID());
+        if (empty($room)) {
+            return;
+        }
+
         $facilities = get_post_meta($room->ID, '_wphb_room_facilities', true);
 
         if (!empty($facilities)) {

@@ -284,8 +284,7 @@ class Thim_Ekit_Widget_Room_Thumb extends Thim_Ekit_Widget_Product_Image {
 
     protected function add_js_gallery_and_slide() {
         ?>
-        <script>
-        (function ($) {
+        <script type="text/javascript">
            jQuery(document).ready(function ($) {
                 if (jQuery().flexslider) {
 
@@ -316,17 +315,13 @@ class Thim_Ekit_Widget_Room_Thumb extends Thim_Ekit_Widget_Product_Image {
                     });
                 }
             });
-                        
-        })((jQuery));
-
         </script>
         <?php
     }
 
     protected function add_js_slide() {
         ?>
-        <script>
-        (function ($) {
+        <script type="text/javascript">
            jQuery(document).ready(function ($) {
                 if (jQuery().flexslider) {
                     jQuery('#slide-single').flexslider({
@@ -341,9 +336,6 @@ class Thim_Ekit_Widget_Room_Thumb extends Thim_Ekit_Widget_Product_Image {
                     });
                 }
             });
-                        
-        })((jQuery));
-
         </script>
         <?php
     }

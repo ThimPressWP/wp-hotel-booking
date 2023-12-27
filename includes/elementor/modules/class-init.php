@@ -21,7 +21,10 @@ class Elementor {
             'room-price',
 			'room-thumb',
 			'room-content',
-			'room-facilities'
+			'room-facilities',
+			'room-infos',
+			'room-rules',
+			'room-faqs'
         )
 	);
 
