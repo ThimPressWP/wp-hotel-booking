@@ -6,134 +6,230 @@ use Thim_EL_Kit\GroupControlTrait;
 use WPHB\HBGroupControlTrait;
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+if (!defined('ABSPATH')) {
+    exit;
 }
 
-class Thim_Ekit_Widget_Room_Price extends Widget_Base {
-	use GroupControlTrait;
+class Thim_Ekit_Widget_Room_Price extends Widget_Base
+{
+    use GroupControlTrait;
     use HBGroupControlTrait;
 
-    public function get_name() {
-		return 'room-price';
-	}
+    public function get_name()
+    {
+        return 'room-price';
+    }
 
-	public function get_title() {
-		return esc_html__( 'Room Price', 'wp-hotel-booking' );
-	}
+    public function get_title()
+    {
+        return esc_html__('Room Price', 'wp-hotel-booking');
+    }
 
-	public function get_icon() {
-		return 'thim-eicon eicon-price-list';
-	}
+    public function get_icon()
+    {
+        return 'thim-eicon eicon-price-list';
+    }
 
-	public function get_categories() {
-		return array( \WPHB\Elementor::CATEGORY_SINGLE_ROOM );
-	}
+    public function get_categories()
+    {
+        return array(\WPHB\Elementor::CATEGORY_SINGLE_ROOM);
+    }
 
-	public function get_base() {
-		return basename( __FILE__, '.php' );
-	}
+    public function get_base()
+    {
+        return basename(__FILE__, '.php');
+    }
 
-    protected function register_controls() {
+    protected function register_controls()
+    {
         $this->start_controls_section(
-			'section_tabs',
-			[
-				'label' => __( 'General', 'wp-hotel-booking' ),
-			]
-		);
+            'section_tabs',
+            [
+                'label' => __('General', 'wp-hotel-booking'),
+            ]
+        );
 
         $this->add_control(
-			'icon_unit',
-			[
-				'label'         => esc_html__( 'Icon Unit', 'wp-hotel-booking' ),
-				'type'          => Controls_Manager::ICONS,
-                'skin'          => 'inline',
-                'label_block'   => false,
-			]
-		);
+            'layout',
+            array(
+                'label'   => esc_html__('Select Price', 'wp-hotel-booking'),
+                'type'    => Controls_Manager::SELECT,
+                'default' => 'regular',
+                'options' => array(
+                    'regular'           => esc_html__('Regular Price', 'wp-hotel-booking'),
+                    'pricing_plans'     => esc_html__('Pricing Plans', 'wp-hotel-booking'),
+                ),
+            )
+        );
 
         $this->end_controls_section();
-        $this->register_section_style_price();
+        $this->_register_section_style_price_regular();
+        $this->_register_section_style_pricing_plans_title();
+        $this->_register_section_style_pricing_plans_table();
     }
 
-    protected function register_section_style_price(){
+    protected function _register_section_style_price_regular()
+    {
         $this->start_controls_section(
-			'style_price',
-			[
-				'label' => esc_html__( 'Price', 'wp-hotel-booking' ),
-				'tab'   => Controls_Manager::TAB_STYLE,
+            'style_price',
+            [
+                'label' => esc_html__('Price', 'wp-hotel-booking'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+                'condition' => [
+                    'layout' => 'regular',
+                ]
+            ]
+        );
+
+        $this->register_style_typo_color_margin('price_room', '.price .price_value');
+
+        $this->add_control(
+			'before_price', [
+				'label'     => esc_html__( 'Before Price', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::HEADING,
+                'separator' => 'before',
 			]
 		);
 
-        $this->register_button_style( 'price_room', '.hb-room-price .price_value' );
+        $this->register_style_typo_color_margin('before_value_price', '.price .title-price');
+
+        $this->add_control(
+			'after_price', [
+				'label'     => esc_html__( 'After Price', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::HEADING,
+                'separator' => 'before',
+			]
+		);
+
+        $this->register_style_typo_color_margin('after_value_price', '.price .unit');
 
         $this->end_controls_section();
+    }
 
+    protected function _register_section_style_pricing_plans_title()
+    {
         $this->start_controls_section(
-			'style_unit',
+            'style_title',
+            [
+                'label' => esc_html__('Title', 'wp-hotel-booking'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+                'condition' => [
+                    'layout' => 'pricing_plans',
+                ]
+            ]
+        );
+
+        $this->register_style_typo_color_margin('title_pricing_plans', '.hb_room_pricing_plan_data');
+
+        $this->add_control(
+			'title_pricing_plans_bg',
 			[
-				'label' => esc_html__( 'Unit', 'wp-hotel-booking' ),
-				'tab'   => Controls_Manager::TAB_STYLE,
+				'label'     => esc_html__( 'Background', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => '',
+				'selectors' => [
+					'{{WRAPPER}} .hb_room_pricing_plan_data' => 'background-color: {{VALUE}};'
+				],
 			]
 		);
 
-        $this->register_style_typo_color_margin('unit_price', '.hb-room-price .price_value .unit');
+        $this->add_responsive_control(
+			'title_pricing_plans_padding',
+			[
+				'label'      => esc_html__( 'Padding', 'wp-hotel-booking' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors'  => [
+					'{{WRAPPER}} .hb_room_pricing_plan_data' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
 
         $this->end_controls_section();
     }
 
-    protected function render() {
+    protected function _register_section_style_pricing_plans_table()
+    {
+        $this->start_controls_section(
+            'style_table',
+            [
+                'label' => esc_html__('Table', 'wp-hotel-booking'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+                'condition' => [
+                    'layout' => 'pricing_plans',
+                ]
+            ]
+        ); 
 
-        do_action( 'WPHB/modules/single-room/before-preview-query' );
+        $this->add_responsive_control(
+			'table_align',
+			array(
+				'label'     => esc_html__( 'Alignment', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::CHOOSE,
+				'options'   => array(
+					'left' => array(
+						'title' => esc_html__( 'Start', 'wp-hotel-booking' ),
+						'icon'  => 'eicon-h-align-left',
+					),
+					'center'     => array(
+						'title' => esc_html__( 'Center', 'wp-hotel-booking' ),
+						'icon'  => ' eicon-h-align-center',
+					),
+					'right'   => array(
+						'title' => esc_html__( 'End', 'wp-hotel-booking' ),
+						'icon'  => 'eicon-h-align-right',
+					),
+				),
+				'toggle'    => true,
+				'selectors' => array(
+					'{{WRAPPER}} .hb_room_pricing_plans th, {{WRAPPER}} .hb_room_pricing_plans td' => 'text-align: {{VALUE}};',
+				),
+			)
+		);
 
-        $settings    	= $this->get_settings_for_display();
-        global $hb_settings;
+        $this->register_style_typo_color_margin('table_pricing_plans', '.hb_room_pricing_plans');
 
-        $price_display  = apply_filters( 'hotel_booking_loop_room_price_display_style', $hb_settings->get( 'price_display' ) );
-        $prices         = hb_room_get_selected_plan( get_the_ID() );
-        $prices         = isset( $prices->prices ) ? $prices->prices : array();
-        $html_icon_unit = '';
 
-        if ( $settings['icon_unit'] ){
-			ob_start();
-			Icons_Manager::render_icon( $settings['icon_unit'],
-				array(
-					'aria-hidden' => 'true',
-				)
-			);
-			$html_icon_unit = ob_get_contents();
-			ob_end_clean();
-		}
+        $this->add_responsive_control(
+			'table_pricing_plans_item_padding',
+			[
+				'label'      => esc_html__( 'Padding', 'wp-hotel-booking' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors'  => [
+					'{{WRAPPER}} .hb_room_pricing_plans th, {{WRAPPER}} .hb_room_pricing_plans td' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
 
-        if ( $prices ) {
-            $min_price = is_numeric( min( $prices ) ) ? min( $prices ) : 0;
-            $max_price = is_numeric( max( $prices ) ) ? max( $prices ) : 0;
-            $min = $min_price + ( hb_price_including_tax() ? ( $min_price * hb_get_tax_settings() ) : 0 );
-            $max = $max_price + ( hb_price_including_tax() ? ( $max_price * hb_get_tax_settings() ) : 0 );
-            ?>
-    
-            <div class="hb-room-price">
-                <?php if ( $price_display === 'max' ) { ?>
-                    <span class="price_value price_max">
-                    <?php echo hb_format_price( $max ) ?><span class="unit"><?php echo $html_icon_unit; esc_html_e( 'night', 'wp-hotel-booking' ); ?></span>
-                </span>
-    
-                <?php } elseif ( $price_display === 'min_to_max' && $min !== $max ) { ?>
-                    <span class="price_value price_min_to_max">
-                    <?php echo hb_format_price( $min ) ?> - <?php echo hb_format_price( $max ) ?>
-                        <span class="unit"><?php echo $html_icon_unit; esc_html_e( 'night', 'wp-hotel-booking' ); ?></span>
-                </span>
-    
-                <?php } else { ?>
-                    <span class="price_value price_min">
-                    <?php echo hb_format_price( $min ) ?><span class="unit"><?php echo $html_icon_unit;  esc_html_e( 'night', 'wp-hotel-booking' ); ?></span>
-                </span>
-                <?php } ?>
-    
-            </div>
-        <?php }
+        $this->add_responsive_control(
+			'table_pricing_plans_item_border',
+			[
+				'label'      => esc_html__( 'Border Width Item', 'wp-hotel-booking' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px' ],
+				'selectors'  => [
+					'{{WRAPPER}} .hb_room_pricing_plans th, {{WRAPPER}} .hb_room_pricing_plans td' => 'border-width: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
 
-       do_action( 'WPHB/modules/single-room/after-preview-query' );
+        $this->end_controls_section();
     }
 
+    protected function render()
+    {
+
+        do_action('WPHB/modules/single-room/before-preview-query');
+
+        $settings        = $this->get_settings_for_display();
+
+        if ( $settings['layout'] == 'regular' ){
+            echo hb_get_template('loop/price.php');
+        }else {
+            echo hb_get_template('loop/pricing_plan.php');
+        }
+
+        do_action('WPHB/modules/single-room/after-preview-query');
+    }
 }

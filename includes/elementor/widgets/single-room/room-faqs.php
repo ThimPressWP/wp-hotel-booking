@@ -25,7 +25,7 @@ class Thim_Ekit_Widget_Room_Faqs extends Thim_Ekit_Widget_Accordion
 
     public function get_title()
     {
-        return esc_html__('Room faqs', 'wp-hotel-booking');
+        return esc_html__('Room FAQs', 'wp-hotel-booking');
     }
 
     public function get_icon()
