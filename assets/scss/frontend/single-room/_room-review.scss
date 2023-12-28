@@ -1,0 +1,284 @@
+.hb-room-single__review {
+    #reviews {
+		.commentlist {
+            margin: 0;
+            padding: 20px 0 0;
+			.comment {
+				padding: 24px;
+				margin-bottom: 16px;
+				overflow: hidden;
+				border-radius: var(--border-radius-item, 8px);
+				background: #F2F4F4;
+
+				.avatar {
+					width: 70px;
+					height: 70px;
+					border: 0;
+					padding: 0;
+					background: 0 0;
+					border-radius: 50%;
+					margin-right: 30px;
+					float: left;
+					position: relative;
+					top: auto;
+					left: auto;
+					right: auto;
+					bottom: auto;
+				}
+
+				.comment-text {
+					width: calc(#{"100% - 100px"});
+					width: -webkit-calc(#{"100% - 100px"});
+					width: -moz-calc(#{"100% - 100px"});
+                    display: flex;
+                    flex-direction: column;
+				}
+
+				.meta {
+					display: inline-block;
+					float: left;
+					margin-right: 40px;
+                    margin-bottom: 10px;
+
+					strong {
+						display: inline-block;
+						margin: 0;
+						text-transform: capitalize;
+                        margin-right: 10px;
+					}
+
+					time {
+						margin-left: 5px;
+						display: inline-block;
+					}
+				}
+
+				.star-rating {
+					position: relative;
+					width: 80px;
+					height: 18px;
+					line-height: 1;
+                    display: flex;
+                    margin-bottom: 10px;
+
+					&:before {
+						content: "\e601\e601\e601\e601\e601";
+						float: left;
+						top: 0;
+						left: 0;
+                        font-size: 16px;
+						position: absolute;
+						font-family: hotel-booking-star;
+						color: var(--room-single-rating-star-color, #FC961B);
+					}
+
+					span {
+						overflow: hidden;
+						position: relative;
+						display: inline-block;
+						height: 18px;
+
+						&:before {
+							content: "\e600\e600\e600\e600\e600";
+							float: left;
+							top: 0;
+                            font-size: 16px;
+							left: 0;
+							position: absolute;
+							font-family: hotel-booking-star;
+							color: var(--room-single-rating-star-color, #FC961B);
+						}
+					}
+				}
+
+				.description {
+					clear: both;
+				}
+			}
+		}
+
+		#review_form_wrapper {
+			clear: both;
+
+			.comment-form {
+				label {
+					margin-bottom: 10px;
+					display: inline-block;
+				}
+
+				.comment-form-rating {
+					margin-bottom: 10px;
+
+					label {
+						margin-bottom: 5px;
+					}
+				}
+			}
+		}
+	}
+    .review-star {
+        .star-rating {
+            position: relative;
+            width: 100px;
+            height: 18px;
+            line-height: 1;
+            display: flex;
+    
+            &:before {
+                content: "\e601\e601\e601\e601\e601";
+                float: left;
+                top: 0;
+                left: 0;
+                position: absolute;
+                font-family: hotel-booking-star;
+				color: var(--room-single-rating-star-color, #FC961B);
+            }
+    
+            span {
+                overflow: hidden;
+                position: relative;
+                display: inline-block;
+                height: 18px;
+    
+                &:before {
+                    content: "\e600\e600\e600\e600\e600";
+                    float: left;
+                    top: 0;
+                    left: 0;
+                    position: absolute;
+                    font-family: hotel-booking-star;
+					color: var(--room-single-rating-star-color, #FC961B);
+                }
+            }
+        }
+    }
+    .hb-rating-input {
+        flex-basis: 80px;
+
+		.rating-input::before {
+			color: var(--room-single-rating-star-color, #FC961B);
+		}
+    }
+
+	&__header {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+
+		&__left {
+			display: flex;
+    		align-items: center;
+			flex-wrap: wrap;
+			column-gap: 16px;
+			row-gap: 5px;
+
+			.average-value {
+				font-size: 40px;
+				font-weight: bold;
+				line-height: 1.3em;
+			}
+
+			.review-star {
+				.star-rating {
+					width: 160px;
+					height: 32px;
+	
+					&::before {
+						font-size: 32px;
+					}
+	
+					span {
+						height: 32px;
+	
+						&::before {
+							font-size: 32px;
+						}
+					}
+				}
+			} 
+
+			.review-amount {
+				width: 100%;
+			}
+		}
+
+		&__right {
+			.stars {
+				display: flex;
+				align-items: center;
+
+				.key {
+					width: 65px;
+					margin-right: 30px;
+				}
+
+				.bar {
+					background-color: #E8EDF1;
+					height: 8px;
+					position: relative;
+					width: 350px;
+					border-radius: 200px;
+					overflow: hidden;
+
+					.full_bar {
+						position: absolute;
+						top: 0;
+						left: 0;
+						background-color: var(--e-global-color-primary, #ffb606);
+						bottom: 0;
+					}
+				}
+				.count {
+					margin-left: 30px;
+				}
+			}
+		}
+	}
+
+	&__form {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 999;
+		text-align: center;
+		background: rgba(0,0,0,0.7);
+		display: none;
+		cursor: zoom-out;
+
+		&.active {
+			display: block;
+		}
+
+		#review_form_wrapper {
+			background-color: #fff;
+			padding: 20px;
+			position: relative;
+			width: 80%;
+			max-width: 600px;
+			margin-top: 10%;
+			display: inline-block;
+			text-align: left;
+			cursor: initial;
+
+			.comment-respond, .comment-form {
+				margin: 0;
+			}
+
+			.comment-form-rating {
+				margin: 0;
+			}
+
+			textarea {
+				height: 100px;
+			}
+		}
+	}
+
+	&.hide-avatar {
+		.avatar {
+			display: none;
+		}
+	}
+}
