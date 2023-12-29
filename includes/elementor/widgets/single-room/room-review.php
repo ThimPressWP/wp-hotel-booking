@@ -4,7 +4,6 @@ namespace Elementor;
 
 use WPHB\HBGroupControlTrait;
 use Thim_EL_Kit\GroupControlTrait;
-use WPHB_Room;
 
 // Exit if accessed directly
 if (!defined('ABSPATH')) {
@@ -73,6 +72,9 @@ class Thim_Ekit_Widget_Room_Review extends Widget_Base
 				'label_on'     => esc_html__( 'Show', 'wp-hotel-booking' ),
 				'label_off'    => esc_html__( 'Hide', 'wp-hotel-booking' ),
 				'return_value' => 'yes',
+                'condition'     => [
+					'layout!' => 'review_form',
+				]
 			]
 		);
 
@@ -92,7 +94,9 @@ class Thim_Ekit_Widget_Room_Review extends Widget_Base
         $this->end_controls_section();
 
         $this->_register_style_review();
-        $this->_register_style_button_popup();
+        $this->_register_style_review_base();
+        $this->_register_style_button();
+        $this->_register_style_form();
     }
 
     protected function _register_style_review()
@@ -151,19 +155,92 @@ class Thim_Ekit_Widget_Room_Review extends Widget_Base
         $this->end_controls_section();
     }
 
-    protected function _register_style_button_popup(){
+    protected function _register_style_review_base()
+    {
+        $this->start_controls_section(
+            'section_base_title',
+            array(
+                'label' => esc_html__('Title', 'wp-hotel-booking'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+                'condition'     => [
+					'layout!' => 'review_list',
+				]
+            )
+        );
+
+        $this->register_style_typo_color_margin('room_base_title_review', '.hb-room-single__review h2, .hb-room-single__review .comment-reply-title');
+
+        $this->end_controls_section();
+    }
+
+    protected function _register_style_button()
+    {
         $this->start_controls_section(
             'section_button',
             array(
                 'label' => esc_html__('Button', 'wp-hotel-booking'),
                 'tab'   => Controls_Manager::TAB_STYLE,
                 'condition'     => [
-					'layout' => 'review_form',
+					'layout!' => 'review_list',
 				]
             )
         );
 
-        $this->register_button_style( 'button_popup_review', '.hb-room-single__review__button, .hb-room-single__review .form-submit .submit' );
+        $this->add_control(
+			'button_popup', [
+				'label'     => esc_html__( 'Popup', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::HEADING,
+                'separator' => 'before',
+			]
+		);
+
+        $this->register_button_style( 'button_popup_review', '.hb-room-single__review__button' );
+
+        $this->add_control(
+			'button_submit', [
+				'label'     => esc_html__( 'Submit', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::HEADING,
+                'separator' => 'before',
+			]
+		);
+
+        $this->register_button_style( 'button_submit_review', '.hb-room-single__review .form-submit .submit' );
+
+        $this->end_controls_section();
+    }
+
+    protected function _register_style_form()
+    {
+        $this->start_controls_section(
+            'section_form',
+            array(
+                'label' => esc_html__('Form', 'wp-hotel-booking'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+                'condition'     => [
+					'layout!' => 'review_list',
+				]
+            )
+        );
+
+        $this->add_control(
+			'form_label_head', [
+				'label'     => esc_html__( 'Label', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::HEADING,
+                'separator' => 'before',
+			]
+		);
+
+        $this->register_style_typo_color_margin('room_form_label', '.hb-room-single__review #review_form_wrapper .comment-form label');
+
+        $this->add_control(
+			'form_input', [
+				'label'     => esc_html__( 'Input', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::HEADING,
+                'separator' => 'before',
+			]
+		);
+
+        $this->register_style_border_padding_margin('room_form_input', '.hb-room-single__review input, .hb-room-single__review textarea');
 
         $this->end_controls_section();
     }
@@ -248,8 +325,11 @@ class Thim_Ekit_Widget_Room_Review extends Widget_Base
                 </div>
             </div>
             <div class="hb-room-single__review__content" id="reviews">
+                <div class="hb-room-single__review__content__bar">
+                    
+                </div>
                 <div id="comments">
-                <?php if ( !empty($comments) ) { ?>
+                    <?php if ( !empty($comments) ) { ?>
                     <ol class="commentlist">
                         <?php
                         wp_list_comments( apply_filters( 'hb_room_review_list_args', array( 'callback' => 'hb_comments' )), $comments ); 
@@ -291,7 +371,7 @@ class Thim_Ekit_Widget_Room_Review extends Widget_Base
                         <?php
                         $commenter    = wp_get_current_commenter();
                         $comment_form = array(
-                            'title_reply'          =>  __( 'Write a review', 'wp-hotel-booking' ),
+                            'title_reply'          =>  __( 'Write a review', 'wp-hotel-booking' ).'<i class="close-popup fas fa-times"></i>',
                             'comment_notes_before' => '',
                             'comment_notes_after'  => '',
                             'fields'               => array(

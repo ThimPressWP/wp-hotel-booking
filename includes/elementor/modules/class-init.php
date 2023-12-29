@@ -25,7 +25,8 @@ class Elementor {
 			'room-infos',
 			'room-rules',
 			'room-faqs',
-			'room-review'
+			'room-review',
+			'room-booking'
         )
 	);
 

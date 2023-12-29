@@ -1,173 +1,211 @@
 .hb-room-single__review {
-    #reviews {
-		.commentlist {
-            margin: 0;
-            padding: 20px 0 0;
-			.comment {
-				padding: 24px;
-				margin-bottom: 16px;
-				overflow: hidden;
-				border-radius: var(--border-radius-item, 8px);
-				background: #F2F4F4;
+	.commentlist {
+		margin: 0;
+		padding: 20px 0 0;
 
-				.avatar {
-					width: 70px;
-					height: 70px;
-					border: 0;
-					padding: 0;
-					background: 0 0;
-					border-radius: 50%;
-					margin-right: 30px;
-					float: left;
-					position: relative;
-					top: auto;
-					left: auto;
-					right: auto;
-					bottom: auto;
-				}
+		.comment {
+			padding: 24px;
+			margin-bottom: 16px;
+			overflow: hidden;
+			border-radius: var(--border-radius-item, 8px);
+			background: #F2F4F4;
 
-				.comment-text {
-					width: calc(#{"100% - 100px"});
-					width: -webkit-calc(#{"100% - 100px"});
-					width: -moz-calc(#{"100% - 100px"});
-                    display: flex;
-                    flex-direction: column;
-				}
+			.avatar {
+				width: 70px;
+				height: 70px;
+				border: 0;
+				padding: 0;
+				background: 0 0;
+				border-radius: 50%;
+				margin-right: 30px;
+				float: left;
+				position: relative;
+				top: auto;
+				left: auto;
+				right: auto;
+				bottom: auto;
+			}
 
-				.meta {
+			.comment-text {
+				width: calc(#{"100% - 100px"});
+				width: -webkit-calc(#{"100% - 100px"});
+				width: -moz-calc(#{"100% - 100px"});
+				display: flex;
+				flex-direction: column;
+			}
+
+			.meta {
+				display: inline-block;
+				float: left;
+				margin-right: 40px;
+				margin-bottom: 10px;
+
+				strong {
 					display: inline-block;
-					float: left;
-					margin-right: 40px;
-                    margin-bottom: 10px;
-
-					strong {
-						display: inline-block;
-						margin: 0;
-						text-transform: capitalize;
-                        margin-right: 10px;
-					}
-
-					time {
-						margin-left: 5px;
-						display: inline-block;
-					}
+					margin: 0;
+					text-transform: capitalize;
+					margin-right: 10px;
 				}
 
-				.star-rating {
+				time {
+					margin-left: 5px;
+					display: inline-block;
+				}
+			}
+
+			.star-rating {
+				position: relative;
+				width: 80px;
+				height: 18px;
+				line-height: 1;
+				display: flex;
+				margin-bottom: 10px;
+
+				&:before {
+					content: "\e601\e601\e601\e601\e601";
+					float: left;
+					top: 0;
+					left: 0;
+					font-size: 16px;
+					position: absolute;
+					font-family: hotel-booking-star;
+					color: var(--room-single-rating-star-color, #FC961B);
+				}
+
+				span {
+					overflow: hidden;
 					position: relative;
-					width: 80px;
+					display: inline-block;
 					height: 18px;
-					line-height: 1;
-                    display: flex;
-                    margin-bottom: 10px;
 
 					&:before {
-						content: "\e601\e601\e601\e601\e601";
+						content: "\e600\e600\e600\e600\e600";
 						float: left;
 						top: 0;
+						font-size: 16px;
 						left: 0;
-                        font-size: 16px;
 						position: absolute;
 						font-family: hotel-booking-star;
 						color: var(--room-single-rating-star-color, #FC961B);
 					}
-
-					span {
-						overflow: hidden;
-						position: relative;
-						display: inline-block;
-						height: 18px;
-
-						&:before {
-							content: "\e600\e600\e600\e600\e600";
-							float: left;
-							top: 0;
-                            font-size: 16px;
-							left: 0;
-							position: absolute;
-							font-family: hotel-booking-star;
-							color: var(--room-single-rating-star-color, #FC961B);
-						}
-					}
-				}
-
-				.description {
-					clear: both;
 				}
 			}
+
+			.description {
+				clear: both;
+			}
 		}
+	}
 
-		#review_form_wrapper {
-			clear: both;
+	#review_form_wrapper {
+		clear: both;
+		border-radius: var(--border-radius-item, 0);
 
-			.comment-form {
+		.comment-form {
+			display: flex;
+			flex-wrap: wrap;
+
+			>* {
+				flex-basis: 100%;
+			}
+
+			label {
+				margin-bottom: 10px;
+				display: inline-block;
+			}
+
+			.hb-rating-input {
+				flex-basis: 80px;
+			}
+
+			.comment-form-rating {
+				margin: 0;
+
 				label {
-					margin-bottom: 10px;
-					display: inline-block;
+					margin-bottom: 5px;
+				}
+			}
+
+			.comment-form-comment,
+			.comment-form-author,
+			.comment-form-email {
+				display: flex;
+				flex-wrap: wrap;
+				margin-bottom: 0;
+
+				>* {
+					flex-basis: 100%;
 				}
 
-				.comment-form-rating {
-					margin-bottom: 10px;
+				input {
+					height: 45px;
+					border-radius: var(--border-radius-item, 0);
+				}
+			}
 
-					label {
-						margin-bottom: 5px;
-					}
+			.form-submit {
+				margin-top: 15px;
+			}
+
+			textarea {
+				height: 100px;
+				border-radius: var(--border-radius-item, 0);
+			}
+		}
+	}
+
+	.review-star {
+		.star-rating {
+			position: relative;
+			width: 100px;
+			height: 18px;
+			line-height: 1;
+			display: flex;
+
+			&:before {
+				content: "\e601\e601\e601\e601\e601";
+				float: left;
+				top: 0;
+				left: 0;
+				position: absolute;
+				font-family: hotel-booking-star;
+				color: var(--room-single-rating-star-color, #FC961B);
+			}
+
+			span {
+				overflow: hidden;
+				position: relative;
+				display: inline-block;
+				height: 18px;
+
+				&:before {
+					content: "\e600\e600\e600\e600\e600";
+					float: left;
+					top: 0;
+					left: 0;
+					position: absolute;
+					font-family: hotel-booking-star;
+					color: var(--room-single-rating-star-color, #FC961B);
 				}
 			}
 		}
 	}
-    .review-star {
-        .star-rating {
-            position: relative;
-            width: 100px;
-            height: 18px;
-            line-height: 1;
-            display: flex;
-    
-            &:before {
-                content: "\e601\e601\e601\e601\e601";
-                float: left;
-                top: 0;
-                left: 0;
-                position: absolute;
-                font-family: hotel-booking-star;
-				color: var(--room-single-rating-star-color, #FC961B);
-            }
-    
-            span {
-                overflow: hidden;
-                position: relative;
-                display: inline-block;
-                height: 18px;
-    
-                &:before {
-                    content: "\e600\e600\e600\e600\e600";
-                    float: left;
-                    top: 0;
-                    left: 0;
-                    position: absolute;
-                    font-family: hotel-booking-star;
-					color: var(--room-single-rating-star-color, #FC961B);
-                }
-            }
-        }
-    }
-    .hb-rating-input {
-        flex-basis: 80px;
 
+	.hb-rating-input {
 		.rating-input::before {
 			color: var(--room-single-rating-star-color, #FC961B);
 		}
-    }
+	}
 
 	&__header {
 		display: flex;
 		justify-content: space-between;
 		align-items: flex-start;
+		flex-wrap: wrap;
 
 		&__left {
 			display: flex;
-    		align-items: center;
+			align-items: center;
 			flex-wrap: wrap;
 			column-gap: 16px;
 			row-gap: 5px;
@@ -182,20 +220,20 @@
 				.star-rating {
 					width: 160px;
 					height: 32px;
-	
+
 					&::before {
 						font-size: 32px;
 					}
-	
+
 					span {
 						height: 32px;
-	
+
 						&::before {
 							font-size: 32px;
 						}
 					}
 				}
-			} 
+			}
 
 			.review-amount {
 				width: 100%;
@@ -214,7 +252,7 @@
 
 				.bar {
 					background-color: #E8EDF1;
-					height: 8px;
+					height: 10px;
 					position: relative;
 					width: 350px;
 					border-radius: 200px;
@@ -228,6 +266,7 @@
 						bottom: 0;
 					}
 				}
+
 				.count {
 					margin-left: 30px;
 				}
@@ -249,12 +288,14 @@
 		bottom: 0;
 		z-index: 999;
 		text-align: center;
-		background: rgba(0,0,0,0.7);
+		background: rgba(0, 0, 0, 0.7);
 		display: none;
 		cursor: zoom-out;
+		align-items: center;
+		justify-content: center;
 
 		&.active {
-			display: block;
+			display: flex;
 		}
 
 		#review_form_wrapper {
@@ -263,21 +304,26 @@
 			position: relative;
 			width: 80%;
 			max-width: 600px;
-			margin-top: 10%;
 			display: inline-block;
 			text-align: left;
 			cursor: initial;
 
-			.comment-respond, .comment-form {
+			.comment-respond,
+			.comment-form {
 				margin: 0;
 			}
 
-			.comment-form-rating {
-				margin: 0;
-			}
+			.comment-reply-title {
+				display: flex;
+    			justify-content: space-between;
 
-			textarea {
-				height: 100px;
+				small {
+					display: none;
+				}
+
+				.close-popup {
+					cursor: pointer;
+				}
 			}
 		}
 	}
