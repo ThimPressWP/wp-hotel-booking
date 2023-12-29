@@ -235,6 +235,12 @@
 		}
 	}
 
+	&__button {
+		font-size: 1em;
+		padding: 15px 30px;
+		cursor: pointer;
+	}
+
 	&__form {
 		position: fixed;
 		top: 0;

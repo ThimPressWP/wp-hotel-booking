@@ -499,19 +499,7 @@ class WP_Hotel_Booking {
 		wp_enqueue_script( 'wp-admin-hotel-booking-calendar-v2' );
 		wp_enqueue_style( 'wp-admin-hotel-booking-calendar-v2' );
 		wp_enqueue_script( 'wp-admin-hotel-booking-v2' );
-		
-		if ( class_exists( 'Elementor\Plugin' ) ) {
-			//multidate
-			wp_enqueue_style( 'wphb-multidate-style', WPHB_PLUGIN_URL . '/assets/css/multidate.css', array(), WPHB_VERSION );
-			//daterangepicker
-			wp_register_script( 'wphb-daterangepicker',  WPHB_PLUGIN_URL . '/assets/js/daterangepicker.min.js', array('jquery'), WPHB_VERSION );
-			//magnific popup
-			wp_register_script( 'wphb-magnific-popup', WPHB_PLUGIN_URL . '/assets/js/jquery.magnific-popup.min.js', array( 'jquery' ), WPHB_VERSION );
-			//flexslide
-			wp_register_script( 'wphb-flexslide', WPHB_PLUGIN_URL . '/assets/js/jquery.flexslider.min.js', array( 'jquery' ), WPHB_VERSION );
-
-			wp_enqueue_style( 'wphb-frontend-style',  WPHB_PLUGIN_URL . '/assets/css/frontend/frontend-el-style.css', array(), WPHB_VERSION );
-		}
+	
 	}
 
 	/**

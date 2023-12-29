@@ -33,6 +33,10 @@ class Thim_Ekit_Widget_Room_Thumb extends Thim_Ekit_Widget_Product_Image {
 		return array( \WPHB\Elementor::CATEGORY_SINGLE_ROOM );
 	}
 
+    public function get_script_depends() {
+		return [ 'wphb-flexslide', 'wphb-magnific-popup' ];
+	}
+
 	public function get_base() {
 		return basename( __FILE__, '.php' );
 	}
@@ -184,7 +188,6 @@ class Thim_Ekit_Widget_Room_Thumb extends Thim_Ekit_Widget_Product_Image {
     }
 
     protected function _render_thumb_gallery_and_popup_slide($galleries, $settings){
-        wp_enqueue_script( 'wphb-magnific-popup' );
         $gallery_img = $galleries;
         $class = $html_icon = '';
 
@@ -227,7 +230,6 @@ class Thim_Ekit_Widget_Room_Thumb extends Thim_Ekit_Widget_Product_Image {
     }
 
     protected function _render_thumb_gallery_and_slide($galleries, $settings){
-        wp_enqueue_script( 'wphb-flexslide');
         ?>
         <div class="hb-main-gallery" id="slider-gallery">
             <ul class="slides">
@@ -256,13 +258,12 @@ class Thim_Ekit_Widget_Room_Thumb extends Thim_Ekit_Widget_Product_Image {
                 ?>
             </ul>
         </div>
-        <?php $this->add_js_gallery_and_slide($settings); ?>
+        <?php 
+        $this->add_js_gallery_and_slide($settings); ?>
         <?php
     }
 
     protected function _render_thumb_slide($galleries, $settings){
-        wp_enqueue_script( 'wphb-flexslide');
-
         ?>
         <div class="hb-thumbnail-slide" id="slide-single">
             <ul class="slides">

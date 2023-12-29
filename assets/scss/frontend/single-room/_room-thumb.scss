@@ -147,10 +147,10 @@
             align-items: center;
 
             &:before {
-                font-family: thim-ekits;
+                font-family: 'Font Awesome 5 Free';
                 font-style: normal;
-                font-weight: 400;
-                content: "\f104";
+                font-weight: 900;
+                content: "\f053";
                 font-size: var(--ekits-nav-slider-font-size, 20px);
             }
 
@@ -159,7 +159,7 @@
                 left: auto;
 
                 &:before {
-                    content: "\f105";
+                    content: "\f054";
                 }
             }
             &:hover {
@@ -193,15 +193,6 @@
                 }
             }
         }
-    }
-}
-
-.elementor-editor-active .slides {
-    display: flex;
-    overflow: hidden;
-    flex-wrap: wrap;
-    li {
-        flex-basis: 20%;
     }
 }
 

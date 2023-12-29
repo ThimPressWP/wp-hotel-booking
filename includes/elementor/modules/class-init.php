@@ -49,6 +49,7 @@ class Elementor {
 
 			},10,1
 		);
+		add_action( 'wp_enqueue_scripts', array( $this, 'add_elementor_widgets_dependencies') );
 	}
 
     public function includes() {
@@ -111,6 +112,19 @@ class Elementor {
 			),
 		) + $categories;
 	}
+
+	public function add_elementor_widgets_dependencies() {
+		//daterangepicker
+		wp_register_script( 'wphb-daterangepicker',  WPHB_PLUGIN_URL . '/assets/js/daterangepicker.min.js', array('jquery'), WPHB_VERSION );
+		//magnific popup
+		wp_register_script( 'wphb-magnific-popup', WPHB_PLUGIN_URL . '/assets/js/jquery.magnific-popup.min.js', array( 'jquery' ), WPHB_VERSION );
+		//flexslide
+		wp_register_script( 'wphb-flexslide', WPHB_PLUGIN_URL . '/assets/js/jquery.flexslider.min.js', array( 'jquery' ), WPHB_VERSION );
+
+		//style
+		wp_register_style( 'wphb-multidate-style', WPHB_PLUGIN_URL . '/assets/css/multidate.css', array(), WPHB_VERSION );
+		wp_enqueue_style( 'wphb-frontend-style',  WPHB_PLUGIN_URL . '/assets/css/frontend/frontend-el-style.css', array(), WPHB_VERSION );
+	} 
 }
 
 Elementor::instance();

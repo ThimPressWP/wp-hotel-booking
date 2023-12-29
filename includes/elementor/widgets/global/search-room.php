@@ -36,6 +36,14 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 		return array( 'search', 'room' );
 	}
 
+	public function get_script_depends() {
+		return [ 'wp-hotel-booking-moment', 'wphb-daterangepicker' ];
+	}
+
+	public function get_style_depends() {
+		return [ 'wphb-multidate-style' ];
+	}
+
     public function get_base() {
 		return basename( __FILE__, '.php' );
 	}
@@ -466,8 +474,6 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
     protected function render() {
         $settings    	= $this->get_settings_for_display();
 		$uniqid         = uniqid();
-		wp_enqueue_script( 'wp-hotel-booking-moment' );
-		wp_enqueue_script( 'wphb-daterangepicker');
 
 		if ( $settings['data'] ) {
 			?>
