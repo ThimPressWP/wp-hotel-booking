@@ -261,7 +261,7 @@ class Thim_Ekit_Widget_Room_Review extends Widget_Base
             <div class="hb-room-single__review <?php echo esc_attr($extra_class) ?>">
                 <?php 
                 if ( $settings['layout'] == 'base' ) {
-                   echo comments_template(); 
+                    echo comments_template(); 
                 }elseif ( $settings['layout'] == 'review_list' ) {
                     $this->_render_comment_review_list($hb_room);
                 }elseif ( $settings['layout'] == 'review_form' ) {
@@ -353,6 +353,7 @@ class Thim_Ekit_Widget_Room_Review extends Widget_Base
                     }
                     ?>
                 </div>
+            </div>
             <?php
         }
     }

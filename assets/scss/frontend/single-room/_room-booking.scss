@@ -1,0 +1,112 @@
+.hb-room-single__booking {
+    #hb_room_load_booking_form {
+        float: none;
+    }
+
+    &__form {
+        #hotel_booking_room_hidden {
+            min-width: auto;
+            background-color: transparent;
+
+            form>div {
+                padding: 0;
+            }
+
+            .hb_addition_package_extra {
+                margin-top: 0;
+
+                input[type="checkbox"] {
+                    margin: 0;
+                    width: 18px;
+                    height: 18px;
+                    border-radius: 0;
+                }
+            }
+        }
+
+        .hb-booking-room-form-head .title {
+            padding: 0;
+        }
+
+        .hb-booking-room-form-group {
+            width: 100%;
+            float: none;
+            margin: 0 0 5px 0;
+
+            .hb-booking-room-form-field input {
+                border-radius: var(--border-radius-item, 0);
+                width: 100%;
+                margin: 0;
+                height: auto;
+            }
+
+            .hb_button {
+                width: 100%;
+            }
+        }
+
+        .hotel-booking-search {
+            padding: 0;
+        }
+
+        .hb-search-results-form-container {
+            border: none;
+        }
+
+        .hb-booking-room-form-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+
+            .hb_button {
+                flex-basis: 47%;
+            }
+        }
+
+        .hb_button {
+            min-width: unset;
+            height: auto;
+            text-align: center;
+        }
+
+        .hb_addition_package_title {
+            display: none;
+        }
+
+        .hb_addition_packages {
+            border: none;
+            padding: 0;
+            margin: 0;
+
+            .hb_extra_title p {
+                display: none;
+            }
+        }
+
+        .hb_addition_packages_ul {
+            padding: 0;
+
+            li {
+                border: none;
+                padding: 0;
+            }
+        }
+
+        .hb_extra_detail_price {
+            input {
+                float: right;
+            }
+        }
+    }
+}
+
+.thim-ekit-template {
+    .hotel-booking-single-room-action .hb-search-results-form-container {
+        @media (max-width: 767px) {
+            flex-wrap: wrap;
+        }
+    }
+}
