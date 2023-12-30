@@ -32,12 +32,7 @@ class Thim_Ekit_Widget_Room_Facilities extends Widget_Base
     {
         return array(\WPHB\Elementor::CATEGORY_SINGLE_ROOM);
     }
-
-    public function get_base()
-    {
-        return basename(__FILE__, '.php');
-    }
-
+    
     protected function register_controls()
     {
         $this->_register_style_facilities_item();

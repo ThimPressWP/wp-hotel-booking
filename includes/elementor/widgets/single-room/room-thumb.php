@@ -37,10 +37,6 @@ class Thim_Ekit_Widget_Room_Thumb extends Thim_Ekit_Widget_Product_Image {
 		return [ 'wphb-flexslide', 'wphb-magnific-popup' ];
 	}
 
-	public function get_base() {
-		return basename( __FILE__, '.php' );
-	}
-
     protected function register_controls() {
 
         $this->start_controls_section(

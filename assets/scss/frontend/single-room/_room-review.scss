@@ -334,3 +334,41 @@
 		}
 	}
 }
+
+.thim-ekits-loop-ratting .elementor-widget-container .rating {
+	.star-rating {
+		position: relative;
+		width: 100px;
+		height: 18px;
+		line-height: 1;
+		display: flex;
+		float: none;
+
+		&:before {
+			content: "\e601\e601\e601\e601\e601";
+			float: left;
+			top: 0;
+			left: 0;
+			position: absolute;
+			font-family: hotel-booking-star;
+			color: var(--room-single-rating-star-color, #FC961B);
+		}
+
+		span {
+			overflow: hidden;
+			position: relative;
+			display: inline-block;
+			height: 18px;
+
+			&:before {
+				content: "\e600\e600\e600\e600\e600";
+				float: left;
+				top: 0;
+				left: 0;
+				position: absolute;
+				font-family: hotel-booking-star;
+				color: var(--room-single-rating-star-color, #FC961B);
+			}
+		}
+	}
+}

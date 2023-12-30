@@ -7,7 +7,6 @@ use Thim_EL_Kit\Custom_Post_Type;
 class Elementor {
 	use SingletonTrait;
 
-    const CATEGORY              = 'thim-hotel-booking';
     const CATEGORY_ARCHIVE_ROOM = 'thim_ekit_archive_room';
 	const CATEGORY_SINGLE_ROOM  = 'thim_ekit_single_room';
 
@@ -17,6 +16,9 @@ class Elementor {
 			'filter-room',
 			'filter-room-selected'
         ),
+		'loop-item'  => array(
+			'loop-room-rating'
+		),
         'single-room' => array(
             'room-price',
 			'room-thumb',
@@ -99,10 +101,6 @@ class Elementor {
 
     public function add_categories( $categories ) {
 		return array(
-            self::CATEGORY => array(
-				'title' => esc_html__( 'Thim Hotel Booking', 'wp-hotel-booking' ),
-				'icon'  => 'fa fa-plug',
-			),
 			self::CATEGORY_ARCHIVE_ROOM => array(
 				'title' => esc_html__( 'Thim Archive Room', 'wp-hotel-booking' ),
 				'icon'  => 'fa fa-plug',

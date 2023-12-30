@@ -21,7 +21,7 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return [ \WPHB\Elementor::CATEGORY ];
+		return [ \Thim_EL_Kit\Elementor::CATEGORY ];
 	}
 
     public function get_keywords() {

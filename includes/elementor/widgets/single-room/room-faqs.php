@@ -38,11 +38,6 @@ class Thim_Ekit_Widget_Room_Faqs extends Thim_Ekit_Widget_Accordion
         return array(\WPHB\Elementor::CATEGORY_SINGLE_ROOM);
     }
 
-    public function get_base()
-    {
-        return basename(__FILE__, '.php');
-    }
-
     protected function register_controls()
     {
         $this->start_controls_section(

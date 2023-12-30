@@ -29,7 +29,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 	}
 
 	public function get_categories() {
-		return array( \WPHB\Elementor::CATEGORY );
+		return array( \Thim_EL_Kit\Elementor::CATEGORY );
 	}
 
     public function get_keywords() {
