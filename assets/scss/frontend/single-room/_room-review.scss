@@ -372,3 +372,18 @@
 		}
 	}
 }
+
+.hb-room-single__price {
+	.price {
+		display: flex;
+		align-items: baseline;
+
+		.unit {
+			margin-left: 5px;
+
+			&::before {
+				content: "/";
+			}
+		}
+	}
+}

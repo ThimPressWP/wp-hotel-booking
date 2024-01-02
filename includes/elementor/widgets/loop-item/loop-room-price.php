@@ -3,6 +3,7 @@
 namespace Elementor;
 
 use Thim_EL_Kit\GroupControlTrait;
+use Thim_EL_Kit\Custom_Post_Type;
 use WPHB\HBGroupControlTrait;
 
 // Exit if accessed directly
@@ -10,14 +11,26 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Thim_Ekit_Widget_Room_Price extends Widget_Base
+class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
 {
     use GroupControlTrait;
     use HBGroupControlTrait;
 
     public function get_name()
     {
-        return 'room-price';
+        return 'loop-room-price';
+    }
+
+    public function show_in_panel()
+    {
+        $post_type = get_post_meta( get_the_ID(), 'thim_loop_item_post_type', true );
+		$type      = get_post_meta( get_the_ID(), Custom_Post_Type::TYPE, true );
+
+		if ( ! empty( $post_type ) && $post_type == 'hb_room' && $type == 'loop_item' || $type == 'single-room' ) {
+			return true;
+		}
+
+        return false;
     }
 
     public function get_title()
@@ -32,7 +45,7 @@ class Thim_Ekit_Widget_Room_Price extends Widget_Base
 
     public function get_categories()
     {
-        return array(\WPHB\Elementor::CATEGORY_SINGLE_ROOM);
+        return array(\Thim_EL_Kit\Elementor::CATEGORY_RECOMMENDED);
     }
 
     protected function register_controls()
@@ -217,14 +230,16 @@ class Thim_Ekit_Widget_Room_Price extends Widget_Base
 
         do_action('WPHB/modules/single-room/before-preview-query');
 
-        $settings        = $this->get_settings_for_display();
+        $settings        = $this->get_settings_for_display(); ?>
 
-        if ( $settings['layout'] == 'regular' ){
-            echo hb_get_template('loop/price.php');
-        }else {
-            echo hb_get_template('loop/pricing_plan.php');
-        }
+        <div class="hb-room-single__price">
+            <?php if ( $settings['layout'] == 'regular' ){
+                echo hb_get_template('loop/price.php');
+            }else {
+                echo hb_get_template('loop/pricing_plan.php');
+            } ?>
+        </div>
 
-        do_action('WPHB/modules/single-room/after-preview-query');
+        <?php do_action('WPHB/modules/single-room/after-preview-query');
     }
 }

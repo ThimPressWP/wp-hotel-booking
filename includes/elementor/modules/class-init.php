@@ -17,10 +17,10 @@ class Elementor {
 			'filter-room-selected'
         ),
 		'loop-item'  => array(
-			'loop-room-rating'
+			'loop-room-rating',
+			'loop-room-price'
 		),
         'single-room' => array(
-            'room-price',
 			'room-thumb',
 			'room-content',
 			'room-facilities',
