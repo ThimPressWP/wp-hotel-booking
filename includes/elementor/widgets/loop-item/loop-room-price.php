@@ -58,6 +58,30 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
             )
         );
 
+        $this->add_control(
+			'text_before',
+			array(
+				'label'       => esc_html__( 'Custom Text Before', 'wp-hotel-booking' ),
+				'type'        => Controls_Manager::TEXT,
+				'label_block' => true,
+                'condition' => array(
+					'layout' => 'regular',
+				),
+			)
+        );
+
+        $this->add_control(
+			'text_unit',
+			array(
+				'label'       => esc_html__( 'Custom Unit', 'wp-hotel-booking' ),
+				'type'        => Controls_Manager::TEXT,
+				'label_block' => true,
+                'condition' => array(
+					'layout' => 'regular',
+				),
+			)
+        );
+
         $this->end_controls_section();
         $this->_register_section_style_price_regular();
         $this->_register_section_style_pricing_plans_title();
@@ -219,11 +243,33 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
 
         <div class="hb-room-single__price">
             <?php if ( $settings['layout'] == 'regular' ){
+                if ( !empty( $settings['text_before'] ) ) {
+                    add_filter( 'hotel_booking_loop_room_price_display_before', array( $this, 'render_text_before'));
+                }
+                if ( !empty( $settings['text_unit'] ) ) {
+                    add_filter( 'hotel_booking_loop_room_price_display_after', array( $this, 'render_text_after'));
+                }
                 echo hb_get_template('loop/price.php');
             }else {
                 echo hb_get_template('loop/pricing_plan.php');
             } ?>
         </div>
         <?php
+    }
+
+    public function render_text_before($text_before) {
+        $settings        = $this->get_settings_for_display();
+
+        $text_before = $settings['text_before'];
+
+        return $text_before;
+    }
+
+    public function render_text_after($text_after) {
+        $settings        = $this->get_settings_for_display();
+
+        $text_after = $settings['text_unit'];
+
+        return $text_after;
     }
 }

@@ -32,7 +32,7 @@ if ( $prices ) {
 	?>
 
 	<div class="price">
-		<span class="title-price"><?php _e( 'Price from', 'wp-hotel-booking' ); ?></span>
+		<span class="title-price"><?php _e( apply_filters( 'hotel_booking_loop_room_price_display_before', 'Price from' ), 'wp-hotel-booking' ); ?></span>
 
 		<?php if ( $price_display === 'max' ) { ?>
 			<span class="price_value price_max"><?php echo hb_format_price( $max ); ?></span>
@@ -46,6 +46,6 @@ if ( $prices ) {
 			<span class="price_value price_min"><?php echo hb_format_price( $min ); ?></span>
 		<?php } ?>
 
-		<span class="unit"><?php _e( 'Night', 'wp-hotel-booking' ); ?></span>
+		<span class="unit"><?php _e( apply_filters( 'hotel_booking_loop_room_price_display_after', 'Night' ), 'wp-hotel-booking' ); ?></span>
 	</div>
 <?php } ?>

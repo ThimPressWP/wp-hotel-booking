@@ -97,6 +97,9 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
 				'ai'          => [
 					'active' => false,
 				],
+                'condition' => array(
+					'type!' => 'types',
+				),
 			)
         );
 
@@ -263,8 +266,28 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
         <?php
     }
 
-    protected function render_types() {
+    protected function render_types( $repeater_item ) {
+        $terms = get_the_terms( get_the_ID(), 'hb_room_type' );
 
+        if ( empty( $terms ) || is_wp_error( $terms ) ) {
+			return false;
+		}
+
+        $terms_list = [];
+        // check render icon
+		$this->render_icon( $repeater_item );
+
+        foreach ( $terms as $term ) {
+            $terms_list[] = '<a href="' . esc_url( get_term_link( $term ) ) . '" class="loop-item-term elementor-icon-list-text">' . esc_html( $term->name ) . '</a>';
+        }
+
+        if ( 'yes' == $repeater_item['show_one'] ) {
+			$value = $terms_list[0];
+		} else {
+			$value = implode( $repeater_item['term_separator'], $terms_list );
+		}
+
+		echo wp_kses_post( '<span class="elementor-icon-list-text">'. $value .'</span>' );
     }
 
     protected function render_icon( $repeater_item ) {
