@@ -247,6 +247,10 @@ class Thim_Ekit_Widget_Room_Review extends Widget_Base
         $settings        = $this->get_settings_for_display();
         global $hb_room;
         $hb_room = \WPHB_Room::instance(get_the_ID());
+        if (empty($hb_room)) {
+            return;
+        }
+    
         $extra_class = '';
 
         if ( $settings['show_avatar'] != 'yes' ) {
@@ -309,7 +313,7 @@ class Thim_Ekit_Widget_Room_Review extends Widget_Base
                                 }
                             ?>
                             <div class="bar">
-                                <div class="full_bar" style="width:<?php echo round( $total / $total_count, 2 ) * 100; ?>% "></div>
+                                <div class="full_bar" style="width:<?php if( $total_count > 0 ){ echo round( $total / $total_count, 2 ) * 100;}else { echo 0; } ?>% "></div>
                             </div>
                             <span class="count"><?php echo $total; ?></span>
                         </div>
