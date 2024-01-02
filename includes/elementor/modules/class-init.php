@@ -18,7 +18,8 @@ class Elementor {
         ),
 		'loop-item'  => array(
 			'loop-room-rating',
-			'loop-room-price'
+			'loop-room-price',
+			'loop-room-info'
 		),
         'single-room' => array(
 			'room-thumb',
@@ -28,7 +29,8 @@ class Elementor {
 			'room-rules',
 			'room-faqs',
 			'room-review',
-			'room-booking'
+			'room-booking',
+			'room-preview'
         )
 	);
 

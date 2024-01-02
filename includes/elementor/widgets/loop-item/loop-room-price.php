@@ -3,8 +3,8 @@
 namespace Elementor;
 
 use Thim_EL_Kit\GroupControlTrait;
-use Thim_EL_Kit\Custom_Post_Type;
 use WPHB\HBGroupControlTrait;
+use Thim_EL_Kit\Utilities\Widget_Loop_Trait;
 
 // Exit if accessed directly
 if (!defined('ABSPATH')) {
@@ -15,22 +15,11 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
 {
     use GroupControlTrait;
     use HBGroupControlTrait;
+    use Widget_Loop_Trait;
 
     public function get_name()
     {
         return 'loop-room-price';
-    }
-
-    public function show_in_panel()
-    {
-        $post_type = get_post_meta( get_the_ID(), 'thim_loop_item_post_type', true );
-		$type      = get_post_meta( get_the_ID(), Custom_Post_Type::TYPE, true );
-
-		if ( ! empty( $post_type ) && $post_type == 'hb_room' && $type == 'loop_item' || $type == 'single-room' ) {
-			return true;
-		}
-
-        return false;
     }
 
     public function get_title()
@@ -43,10 +32,9 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
         return 'thim-eicon eicon-price-list';
     }
 
-    public function get_categories()
-    {
-        return array(\Thim_EL_Kit\Elementor::CATEGORY_RECOMMENDED);
-    }
+    public function get_keywords() {
+		return array( 'room', 'price' );
+	}
 
     protected function register_controls()
     {
@@ -227,9 +215,6 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
 
     protected function render()
     {
-
-        do_action('WPHB/modules/single-room/before-preview-query');
-
         $settings        = $this->get_settings_for_display(); ?>
 
         <div class="hb-room-single__price">
@@ -239,7 +224,6 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
                 echo hb_get_template('loop/pricing_plan.php');
             } ?>
         </div>
-
-        <?php do_action('WPHB/modules/single-room/after-preview-query');
+        <?php
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Elementor;
 
-use Thim_EL_Kit\Custom_Post_Type;
+use Thim_EL_Kit\Utilities\Widget_Loop_Trait;
 use WPHB\HBGroupControlTrait;
 
 defined('ABSPATH') || exit;
@@ -14,22 +14,11 @@ if (!class_exists('\Elementor\Thim_Ekit_Widget_Loop_Product_Ratting')) {
 class Thim_Ekit_Widget_Loop_Room_Rating extends Thim_Ekit_Widget_Loop_Product_Ratting
 {
     use HBGroupControlTrait;
+    use Widget_Loop_Trait;
 
     public function get_name()
     {
         return 'loop-room-rating';
-    }
-
-    public function show_in_panel()
-    {
-        $post_type = get_post_meta( get_the_ID(), 'thim_loop_item_post_type', true );
-		$type      = get_post_meta( get_the_ID(), Custom_Post_Type::TYPE, true );
-
-		if ( ! empty( $post_type ) && $post_type == 'hb_room' && $type == 'loop_item' || $type == 'single-room' ) {
-			return true;
-		}
-
-        return false;
     }
 
     public function get_title()
@@ -46,10 +35,9 @@ class Thim_Ekit_Widget_Loop_Room_Rating extends Thim_Ekit_Widget_Loop_Product_Ra
 		return 'thim-ekits-loop-ratting';
 	}
 
-    public function get_categories()
-    {
-        return array(\Thim_EL_Kit\Elementor::CATEGORY_RECOMMENDED);
-    }
+    public function get_keywords() {
+		return array( 'room', 'ratting' );
+	}
 
     protected function register_controls()
     {
@@ -143,7 +131,17 @@ class Thim_Ekit_Widget_Loop_Room_Rating extends Thim_Ekit_Widget_Loop_Product_Ra
             <i class="fas fa-star"></i>
             <span class="average-rating"><?php printf( '%s/5', $rating_total ); ?></span>
         <?php } else {
-            hb_get_template( 'loop/rating.php', array( 'rating' => $hb_room->average_rating() ) );
+            $rating = $hb_room->average_rating();
+            if ( comments_open( $hb_room->ID ) ) { ?>
+                <div class="rating">
+                    <?php if ( $rating ) { ?>
+                        <div itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating" class="star-rating"
+                            title="<?php echo esc_html( sprintf( __( 'Rated %d out of 5', 'wp-hotel-booking' ), $rating ) ); ?>">
+                            <span style="width:<?php echo ( ( $rating / 5 ) * 100 ); ?>%"></span>
+                        </div>
+                    <?php } ?>
+                </div>
+            <?php }  
         }
 
         if ( $settings['show_number'] == 'yes' ) {
