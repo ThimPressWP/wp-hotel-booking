@@ -251,7 +251,7 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
                 $prices        = isset( $prices->prices ) ? $prices->prices : array();
                 $text_before   = isset( $settings['text_before'] ) ? $settings['text_before'] : '';
                 $text_after    = isset( $settings['text_unit'] ) ? $settings['text_unit'] : '';
-                
+
                 if ( $prices ) {
                     $min_price = is_numeric( min( $prices ) ) ? min( $prices ) : 0;
                     $max_price = is_numeric( max( $prices ) ) ? max( $prices ) : 0;
@@ -282,21 +282,5 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
             } ?>
         </div>
         <?php
-    }
-
-    public function render_text_before($text_before) {
-        $settings        = $this->get_settings_for_display();
-
-        $text_before = $settings['text_before'];
-
-        return $text_before;
-    }
-
-    public function render_text_after($text_after) {
-        $settings        = $this->get_settings_for_display();
-
-        $text_after = $settings['text_unit'];
-
-        return $text_after;
     }
 }
