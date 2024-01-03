@@ -211,9 +211,9 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
     }
 
     protected function render_adults( $repeater_item ) {
-        // check render icon
-		$this->render_icon( $repeater_item );
-        ?>
+
+		$this->render_icon( $repeater_item ); ?>
+
         <span class="elementor-icon-list-text">
             <?php 
             if ( ! empty( $repeater_item['text'] ) ) {
@@ -221,13 +221,14 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
             }
             printf( esc_html( _n( '%s Adult', '%s Adults', get_post_meta( get_the_ID(),'_hb_room_capacity_adult', true ), 'wp-hotel-booking' ) ), get_post_meta( get_the_ID(),'_hb_room_capacity_adult', true ) ); ?>
         </span>
+
         <?php
     }
 
     protected function render_children( $repeater_item ) {
-        // check render icon
-		$this->render_icon( $repeater_item );
-        ?>
+
+		$this->render_icon( $repeater_item ); ?>
+
         <span class="elementor-icon-list-text">
             <?php 
             if ( ! empty( $repeater_item['text'] ) ) {
@@ -235,13 +236,14 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
             }
             printf( esc_html( _n( '%s Child', '%s Children', get_post_meta( get_the_ID(),'_hb_max_child_per_room', true ), 'wp-hotel-booking' ) ), get_post_meta( get_the_ID(),'_hb_max_child_per_room', true ) ); ?>
         </span>
+
         <?php
     }
 
     protected function render_size( $repeater_item ) {
-        // check render icon
-		$this->render_icon( $repeater_item );
-        ?>
+
+		$this->render_icon( $repeater_item ); ?>
+
         <span class="elementor-icon-list-text">
             <?php 
             if ( ! empty( $repeater_item['text'] ) ) {
@@ -249,13 +251,14 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
             }
             printf( esc_html( _n( '%s', get_post_meta( get_the_ID(),'_hb_room_area', true ), 'wp-hotel-booking' ) ) ); ?>
         </span>
+
         <?php
     }
 
     protected function render_beds( $repeater_item ) {
-        // check render icon
-		$this->render_icon( $repeater_item );
-        ?>
+
+		$this->render_icon( $repeater_item ); ?>
+
         <span class="elementor-icon-list-text">
             <?php 
             if ( ! empty( $repeater_item['text'] ) ) {
@@ -263,6 +266,7 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
             }
             printf( esc_html( _n( '%s Bed', '%s Beds', get_post_meta( get_the_ID(),'_hb_room_beds', true ), 'wp-hotel-booking' ) ), get_post_meta( get_the_ID(),'_hb_room_beds', true ) ); ?>
         </span>
+
         <?php
     }
 
@@ -274,7 +278,7 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
 		}
 
         $terms_list = [];
-        // check render icon
+
 		$this->render_icon( $repeater_item );
 
         foreach ( $terms as $term ) {
@@ -284,7 +288,11 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
         if ( 'yes' == $repeater_item['show_one'] ) {
 			$value = $terms_list[0];
 		} else {
-			$value = implode( $repeater_item['term_separator'], $terms_list );
+			if ( !empty($repeater_item['term_separator']) ) {
+				$value = implode( $repeater_item['term_separator'], $terms_list );
+			} else {
+				$value = implode( ',', $terms_list );
+			}
 		}
 
 		echo wp_kses_post( '<span class="elementor-icon-list-text">'. $value .'</span>' );
@@ -292,9 +300,11 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
 
     protected function render_icon( $repeater_item ) {
         if ( ! empty( $repeater_item['selected_icon']['value'] ) ) : ?>
+
 			<span class="elementor-icon-list-icon">
 				<?php Icons_Manager::render_icon( $repeater_item['selected_icon'], [ 'aria-hidden' => 'true' ] ); ?>
 			</span>
+
 		<?php endif;
     }
 

@@ -1,0 +1,8 @@
+.hb-room-archive {
+    &__inner {
+        display: grid;
+		grid-template-columns: var(--thim-ekits-archive-post-columns, repeat(3, 1fr));
+		row-gap: var(--thim-ekits-archive-post-row-gap, 30px);
+		column-gap: var(--thim-ekits-archive-post-column-gap, 30px);
+    }
+}

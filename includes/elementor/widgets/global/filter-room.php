@@ -10,7 +10,9 @@ use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Box_Shadow;
 use WPHB\HBGroupControlTrait;
 // Exit if accessed directly
-
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
     use GroupControlTrait;
 	use HBGroupControlTrait;

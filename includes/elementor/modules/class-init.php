@@ -14,7 +14,8 @@ class Elementor {
 		'global'             => array(
             'search-room',
 			'filter-room',
-			'filter-room-selected'
+			'filter-room-selected',
+			'list-room'
         ),
 		'loop-item'  => array(
 			'loop-room-rating',
@@ -31,7 +32,10 @@ class Elementor {
 			'room-review',
 			'room-booking',
 			'room-preview'
-        )
+		),
+		'archive-room' => array(
+			'archive-room'
+		)
 	);
 
     public function __construct() {

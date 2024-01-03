@@ -14,6 +14,10 @@
  */
 defined( 'ABSPATH' ) || exit;
 
+if (!class_exists('Aq_Resize')) {
+    include WPHB_PLUGIN_PATH . '/includes/aq_resizer.php';
+}
+
 if ( ! class_exists( 'WPHB_Reizer' ) ) {
 	/**
 	 * Class WPHB_Reizer

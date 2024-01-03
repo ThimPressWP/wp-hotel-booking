@@ -5,6 +5,10 @@ namespace Elementor;
 use Thim_EL_Kit\GroupControlTrait;
 use Elementor\Plugin;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
     use GroupControlTrait;
 
