@@ -2,8 +2,11 @@
     min-width: unset;
     height: auto;
 }
+.wp-hotel-booking-page .elementor-widget-container #hotel-booking-search-filter.hb-el {
+    display: block;
+} 
 
-#hotel-booking-search-filter.hb-el {
+.elementor-widget-container #hotel-booking-search-filter.hb-el {
     padding: 0;
 }
 

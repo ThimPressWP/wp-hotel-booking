@@ -50,7 +50,7 @@ class Thim_Ekit_Widget_Archive_Room extends Thim_Ekit_Widget_Archive_Post {
         $this->update_control(
 			'build_loop_item',
 			array(
-				'label'     => esc_html__( 'Build Loop Item', 'thim-elementor-kit' ),
+				'label'     => esc_html__( 'Build Loop Item', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::SWITCHER,
 				'default'   => 'yes',
 				'separator' => 'before',
@@ -60,10 +60,10 @@ class Thim_Ekit_Widget_Archive_Room extends Thim_Ekit_Widget_Archive_Post {
         $this->update_control(
 			'template_id',
 			array(
-				'label'   => esc_html__( 'Choose a template', 'thim-elementor-kit' ),
+				'label'   => esc_html__( 'Choose a template', 'wp-hotel-booking' ),
 				'type'    => Controls_Manager::SELECT2,
 				'default' => '0',
-				'options' => array( '0' => esc_html__( 'None', 'thim-elementor-kit' ) ) + \Thim_EL_Kit\Functions::instance()->get_pages_loop_item( 'hb_room' ),
+				'options' => array( '0' => esc_html__( 'None', 'wp-hotel-booking' ) ) + \Thim_EL_Kit\Functions::instance()->get_pages_loop_item( 'hb_room' ),
 				'condition'   => array(
 					'build_loop_item' => 'yes',
 				),
@@ -73,18 +73,22 @@ class Thim_Ekit_Widget_Archive_Room extends Thim_Ekit_Widget_Archive_Post {
 
     public function render(){
 
-        $args = array(
-			'post_type'      => 'hb_room',
-			'posts_per_page' => - 1,
-			'order'          => 'ASC',
-			'orderby'        => 'title',
-		);
+        global $wp_query;
 
-        $rooms = new \WP_Query( $args );
+		$query_vars = $wp_query->query_vars;
 
-        if( empty($rooms) ) {
-            return;
-        }
+		$query_vars = apply_filters( 'WPHB/modules/archive_room/query_posts/query_vars', $query_vars );
+
+		if ( $query_vars !== $wp_query->query_vars ) {
+			$rooms = new \WP_Query( $query_vars );
+		} else {
+			$rooms = $wp_query;
+		}
+
+		if ( ! $rooms->found_posts ) {
+            echo '<p class="message message-error">' . esc_html__( 'No room found !', 'wp-hotel-booking' ) . '</p>';
+			return;
+		}
 
         $settings = $this->get_settings_for_display(); 
         $class_item  = 'hb-room-archive__article'; ?>

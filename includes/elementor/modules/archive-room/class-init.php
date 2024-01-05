@@ -48,7 +48,7 @@ class Inits extends Modules {
 
 		switch ( $condition['type'] ) {
 			case 'all':
-				return is_post_type_archive( 'hb_room' ) || is_page(hb_get_page_id( 'rooms' )) || is_room_taxonomy();
+				return is_post_type_archive( 'hb_room' ) || is_page(hb_get_page_id( 'rooms' )) || is_room_taxonomy() || is_page(hb_get_page_id( 'search' ));
 			case 'hb_room_type':
 				$object      = get_queried_object();
 				$taxonomy_id = is_object( $object ) && property_exists( $object, 'term_id' ) ? $object->term_id : false;
