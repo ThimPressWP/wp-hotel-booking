@@ -16,3 +16,11 @@
 		column-gap: var(--hb-room-archive-column-gap, 30px);
     }
 }
+.hb-room-list {
+    &__inner {
+        display: grid;
+		grid-template-columns: var(--hb-room-list-columns, repeat(3, 1fr));
+		row-gap: var(--hb-room-list-row-gap, 30px);
+		column-gap: var(--hb-room-list-column-gap, 30px);
+    }
+}
