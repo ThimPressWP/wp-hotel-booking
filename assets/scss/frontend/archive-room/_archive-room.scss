@@ -1,8 +1,18 @@
 .hb-room-archive {
+    &__topbar {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        .room-order-by {
+            border: none;
+        }
+    }
+
     &__inner {
         display: grid;
-		grid-template-columns: var(--thim-ekits-archive-post-columns, repeat(3, 1fr));
-		row-gap: var(--thim-ekits-archive-post-row-gap, 30px);
-		column-gap: var(--thim-ekits-archive-post-column-gap, 30px);
+		grid-template-columns: var(--hb-room-archive-columns, repeat(3, 1fr));
+		row-gap: var(--hb-room-archive-row-gap, 30px);
+		column-gap: var(--hb-room-archive-column-gap, 30px);
     }
 }
