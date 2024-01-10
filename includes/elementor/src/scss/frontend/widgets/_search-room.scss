@@ -66,16 +66,6 @@
 	width: auto;
 }
 
-.hotel-booking-search-el .hb-form-field.hb-form-number:before {
-	content: '';
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	width: 1px;
-	background: #eee;
-}
-
 .hotel-booking-search-el .hb-form-field.hb-form-number .hb-form-field-list {
 	opacity: 0;
 	visibility: hidden;

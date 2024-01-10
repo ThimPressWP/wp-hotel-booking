@@ -74,6 +74,19 @@ class Thim_Ekit_Widget_List_Room extends Thim_Ekit_Widget_List_Blog {
 				'options' => \Thim_EL_Kit\Elementor::get_cat_taxonomy( 'hb_room_type', array( 'all' => esc_html__( 'All', 'wp-hotel-booking' ) ), false ),
 			)
 		);
+
+		$this->update_control(
+			'order',
+			array(
+				'label'   => esc_html__( 'Order', 'wp-hotel-booking' ),
+				'type'    => Controls_Manager::SELECT,
+				'options' => array(
+					'asc'  => esc_html__( 'ASC', 'wp-hotel-booking' ),
+					'desc' => esc_html__( 'DESC', 'wp-hotel-booking' ),
+				),
+				'default' => 'asc',
+			)
+		);
     }
 
     public function render()
@@ -117,7 +130,7 @@ class Thim_Ekit_Widget_List_Room extends Thim_Ekit_Widget_List_Blog {
 		$class_inner = 'thim-ekits-post__inner';
 		$class_item  = 'thim-ekits-post__article';
 
-		if ( $query_vars->have_posts() ) { // It's the global `wp_query` it self. and the loop was started from the theme.
+		if ( $query_vars->have_posts() ) { 
 			if ( isset( $settings['blog_layout'] ) && $settings['blog_layout'] == 'slider' ) {
 				$swiper_class = \Elementor\Plugin::$instance->experiments->is_feature_active( 'e_swiper_latest' ) ? 'swiper' : 'swiper-container';
 				$class       .= ' thim-ekits-sliders ' . $swiper_class;
@@ -141,7 +154,7 @@ class Thim_Ekit_Widget_List_Room extends Thim_Ekit_Widget_List_Blog {
 
 			<?php
 		} else {
-			echo '<div class="message-info">' . __( 'No data were found matching your selection, you need to create Post or select Category of Widget.', 'thim-elementor-kit' ) . '</div>';
+			echo '<div class="message-info">' . __( 'No data were found matching your selection, you need to create Post or select Category of Widget.', 'wp-hotel-booking' ) . '</div>';
 		}
 
 		wp_reset_postdata();

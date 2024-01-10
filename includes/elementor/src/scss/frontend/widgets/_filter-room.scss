@@ -73,10 +73,12 @@
     box-shadow: none;
 }
 
-.search-filter-form-el.hb-filter-popup,
-.hb-button-popup {
-    display: none;
-}
+.hotel-booking-search-filter {
+    .search-filter-form-el.hb-filter-popup,
+    .hb-button-popup {
+        display: none;
+    }
+} 
 
 .hotel-booking-search-filter .hb-button-popup .icon-align-right {
     order: 2;

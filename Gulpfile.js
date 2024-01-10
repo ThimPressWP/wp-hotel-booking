@@ -20,7 +20,7 @@ gulp.task( 'clearCache', ( done ) => {
 
 /******************************************* Build styles *******************************************/
 const srcFrontendScssFiles = [
-	'assets/scss/frontend/frontend-el-style.scss',
+	'includes/elementor/src/scss/frontend/frontend-el-style.scss',
 ];
 gulp.task( 'build_frontend_css', () => {
 	return gulp
@@ -29,7 +29,7 @@ gulp.task( 'build_frontend_css', () => {
 		.on( 'error', sass.logError )
 		.pipe( postcss( [ css_minify() ] ) )
 		.pipe( lineec() )
-		.pipe( gulp.dest( 'assets/css/frontend' ) )
+		.pipe( gulp.dest( 'includes/elementor/src/css/frontend' ) )
 } );
 
 gulp.task( 'mincss', () => {
