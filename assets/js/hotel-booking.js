@@ -871,11 +871,11 @@
 					return false;
 				}
 
-				if (_method === 'stripe') {
-					stripeSubmit(_self);
-				} else {
+				// if (_method === 'stripe') {
+				// 	stripeSubmit(_self);
+				// } else {
 					orderSubmit(_self);
-				}
+				// }
 
 			} catch (e) {
 				alert(e);
