@@ -20,7 +20,7 @@ gulp.task( 'clearCache', ( done ) => {
 
 /******************************************* Build styles *******************************************/
 const srcFrontendScssFiles = [
-	'includes/elementor/src/scss/frontend/frontend-el-style.scss',
+	'includes/elementor/src/scss/frontend-el-style.scss',
 ];
 gulp.task( 'build_frontend_css', () => {
 	return gulp

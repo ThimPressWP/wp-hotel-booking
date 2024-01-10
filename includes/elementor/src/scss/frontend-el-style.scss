@@ -32,8 +32,8 @@
 }
 
 // widgets global
-@import "./widgets/filter-room";
-@import "./widgets/search-room";
+@import "./global/filter-room";
+@import "./global/search-room";
 
 // single room
 @import "./single-room/room-thumb";
