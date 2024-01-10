@@ -6,4 +6,5 @@ jQuery( window ).on( 'elementor/frontend/init', () => {
 		} );
 	};
 	elementorFrontend.hooks.addAction( 'frontend/element_ready/list-room.default', addHandler );
+    elementorFrontend.hooks.addAction( 'frontend/element_ready/room-related.default', addHandler );
 } )
