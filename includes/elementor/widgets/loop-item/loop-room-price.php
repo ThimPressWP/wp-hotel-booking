@@ -54,6 +54,7 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
                 'options' => array(
                     'regular'           => esc_html__('Regular Price', 'wp-hotel-booking'),
                     'pricing_plans'     => esc_html__('Pricing Plans', 'wp-hotel-booking'),
+                    'price_breakdown'   => esc_html__('Price Breakdown', 'wp-hotel-booking'),
                 ),
             )
         );
@@ -80,6 +81,19 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
                 'default'     => esc_html__( 'Night', 'wp-hotel-booking' ),
                 'condition' => array(
 					'layout' => 'regular',
+				),
+			)
+        );
+
+        $this->add_control(
+			'text_price_breakdown',
+			array(
+				'label'       => esc_html__( 'Custom Text', 'wp-hotel-booking' ),
+				'type'        => Controls_Manager::TEXT,
+				'label_block' => true,
+                'default'     => esc_html__( 'View price breakdown', 'wp-hotel-booking' ),
+                'condition' => array(
+					'layout' => 'price_breakdown',
 				),
 			)
         );
@@ -242,6 +256,8 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
     protected function render()
     {
         global $hb_settings;
+        $hb_room = \WPHB_Room::instance(get_the_ID());
+
         $settings        = $this->get_settings_for_display(); ?>
 
         <div class="hb-room-single__price">
@@ -277,8 +293,15 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
                         <span class="unit"><?php echo $text_after; ?></span>
                     </div>
                 <?php }
-            }else {
+            }elseif ( $settings['layout'] == 'pricing_plans' ){
                 echo hb_get_template('loop/pricing_plan.php');
+            }else { 
+                $text_price_breakdown   = isset( $settings['text_price_breakdown'] ) ? $settings['text_price_breakdown'] : ''; ?>
+                <div class="hb_view_price hb-room-content">
+                    <a href="" class="hb-view-booking-room-details"><?php echo $text_price_breakdown; ?></a>
+                    <?php hb_get_template( 'search/booking-room-details.php', array( 'room' => $hb_room ) ); ?>
+                </div>
+            <?php
             } ?>
         </div>
         <?php
