@@ -92,6 +92,18 @@ if ( ! comments_open() ) {
 				}
 
 				$comment_form['comment_field'] .= '<p class="comment-form-comment"><label for="comment">' . __( 'Your Review', 'wp-hotel-booking' ) . '</label><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></p>';
+				$comment_form['comment_field'] .=
+                    '<div class="comment-form review-gallery">
+                           <div class="review-notice"></div>
+                           <div class="gallery-preview">
+                            </div>
+                            <label class="upload-images">
+                                <span>'.esc_html__( 'Upload Images', 'wp-hotel-booking' ).'</span>
+                                <input type="file" accept="image/*" multiple="multiple" name="review-image[]"
+                                       id="hb-review-image">
+                            </label>
+                    </div>';
+
 				comment_form( apply_filters( 'hb_product_review_comment_form_args', $comment_form ) );
 				?>
 			</div>

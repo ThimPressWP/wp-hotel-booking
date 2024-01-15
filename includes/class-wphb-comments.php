@@ -34,6 +34,21 @@ class WPHB_Comments {
 
 		add_filter( 'manage_edit-comments_columns', array( $this, 'comments_column' ), 10, 2 );
 		add_filter( 'manage_comments_custom_column', array( $this, 'comments_custom_column' ), 10, 2 );
+		add_action( 'comment_form_after', array( $this, 'add_form_enctype_end' ) );
+	}
+
+	/**
+	 * @return void
+	 */
+	public function add_form_enctype_end() {
+		if ( ! is_room() ) {
+			return;
+		}
+
+		$content = ob_get_clean();
+		$content = str_replace( '<form', '<form enctype="multipart/form-data"', $content );
+
+		print( $content );
 	}
 
 	/**
@@ -49,6 +64,7 @@ class WPHB_Comments {
 	 * Load template for reviews if we found a file in theme/plugin directory
 	 *
 	 * @param string $template
+	 *
 	 * @return string
 	 */
 	static function load_comments_template( $template ) {
@@ -104,6 +120,19 @@ class WPHB_Comments {
 				}
 			}
 		}
+
+		require_once( ABSPATH . "wp-admin" . '/includes/image.php' );
+		require_once( ABSPATH . "wp-admin" . '/includes/file.php' );
+		require_once( ABSPATH . "wp-admin" . '/includes/media.php' );
+
+
+		echo '<pre>';
+		print_r( $_POST );
+		echo '</pre>';
+		echo '<pre>';
+		print_r( $_FILES );
+		echo '</pre>';
+		die;
 	}
 
 	static function comments_count() {
@@ -127,6 +156,7 @@ class WPHB_Comments {
 
 	function comments_column( $columns ) {
 		$columns['hb_rating'] = __( 'Rating Room', 'wp-hotel-booking' );
+
 		return $columns;
 	}
 
