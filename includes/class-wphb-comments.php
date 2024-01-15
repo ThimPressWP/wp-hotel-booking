@@ -93,6 +93,9 @@ class WPHB_Comments {
 	 * @param int $comment_id
 	 */
 	public static function add_comment_rating( $comment_id, $approved ) {
+		$comment = get_comment( $comment_id );
+		$postID = absint( $comment->comment_post_ID );
+
 		if ( isset( $_POST['rating'] ) && 'hb_room' === get_post_type( $_POST['comment_post_ID'] ) ) {
 			$rating = absint( sanitize_text_field( $_POST['rating'] ) );
 			if ( $rating && $rating <= 5 && $rating > 0 ) {
@@ -101,9 +104,6 @@ class WPHB_Comments {
 
 				if ( $approved === 1 ) {
 					// save post meta arveger_rating
-					$comment = get_comment( $comment_id );
-
-					$postID = absint( $comment->comment_post_ID );
 
 					$room           = WPHB_Room::instance( $postID );
 					$averger_rating = $room->average_rating();
@@ -121,18 +121,36 @@ class WPHB_Comments {
 			}
 		}
 
+		//Upload images
 		require_once( ABSPATH . "wp-admin" . '/includes/image.php' );
 		require_once( ABSPATH . "wp-admin" . '/includes/file.php' );
 		require_once( ABSPATH . "wp-admin" . '/includes/media.php' );
 
+		$images = $_FILES['review-image'] ?? array();
+		$attachment_ids = array();
+		foreach ( $images['name'] as $key => $value ) {
+			if ( ! empty( $images['name'][ $key ] ) ) {
+				$file                   = array(
+					'name'     => $images['name'][ $key ],
+					'type'     => $images['type'][ $key ],
+					'tmp_name' => $images['tmp_name'][ $key ],
+					'error'    => $images['error'][ $key ],
+					'size'     => $images['size'][ $key ]
+				);
+				$_FILES ["upload_file"] = $file;
+				$attachment_id          = media_handle_upload( "upload_file", $postID );
+				if ( is_wp_error( $attachment_id ) ) {
+					wc_add_notice( sprintf( esc_html__( 'Error adding file: %s.', 'wp-hotel-booking' ), $attachment_id->get_error_message() ), 'error' );
+					break;
+				} else {
+					$attachment_ids[] = $attachment_id;
+				}
+			}
+		}
 
-		echo '<pre>';
-		print_r( $_POST );
-		echo '</pre>';
-		echo '<pre>';
-		print_r( $_FILES );
-		echo '</pre>';
-		die;
+		if ( count( $attachment_ids ) ) {
+			update_comment_meta( $comment_id, 'hb_review_images', $attachment_ids );
+		}
 	}
 
 	static function comments_count() {
