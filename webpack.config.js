@@ -14,6 +14,7 @@ module.exports = {
 	entry: {
 		// App file
 		//app: './assets/src/app/App.tsx',
+		'admin/room-review': './assets/js/admin/room-review/room-review.tsx',
 	},
 	output: {
 		filename: '[name]' + ( isProduction ? '.min.js' : '.js' ),

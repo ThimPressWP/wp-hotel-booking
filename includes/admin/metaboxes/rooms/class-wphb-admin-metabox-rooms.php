@@ -353,7 +353,6 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 			return $tab_block_date;
 		}
 
-
 		/**
 		 * Output meta box content
 		 *

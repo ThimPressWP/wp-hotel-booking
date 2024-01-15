@@ -22,7 +22,7 @@
 
 
     const uploadImages = () => {
-        if (!HB_PRODUCT_REVIEW_GALLERY) {
+        if (!HB_ROOM_REVIEW_GALLERY) {
             return;
         }
 
@@ -30,7 +30,7 @@
         const preview = reviewGallery.querySelector('.gallery-preview');
         const reviewNotice = reviewGallery.querySelector('.review-notice');
 
-        const maxImages = HB_PRODUCT_REVIEW_GALLERY.max_images || 0;
+        const maxImages = HB_ROOM_REVIEW_GALLERY.max_images || 0;
 
         uploadImage.addEventListener('change', function () {
             removeNotice();
@@ -42,18 +42,18 @@
             //Validate image number
             if (count + uploadedCount > maxImages) {
                 handleUploadError();
-                displayNotice(HB_PRODUCT_REVIEW_GALLERY.max_image_error, 'error');
+                displayNotice(HB_ROOM_REVIEW_GALLERY.max_image_error, 'error');
                 return;
             }
 
             for (let i = 0; i < count; i++) {
                 if (!allowedTypes.includes(uploadImage.files[i].type)) {
                     handleUploadError();
-                    displayNotice(HB_PRODUCT_REVIEW_GALLERY.file_type_error, 'error');
+                    displayNotice(HB_ROOM_REVIEW_GALLERY.file_type_error, 'error');
                     return;
-                } else if (uploadImage.files[i].size && uploadImage.files[i].size > HB_PRODUCT_REVIEW_GALLERY.max_file_size) {
+                } else if (uploadImage.files[i].size && uploadImage.files[i].size > HB_ROOM_REVIEW_GALLERY.max_file_size) {
                     handleUploadError();
-                    displayNotice(HB_PRODUCT_REVIEW_GALLERY.max_file_size_error, 'error');
+                    displayNotice(HB_ROOM_REVIEW_GALLERY.max_file_size_error, 'error');
                     return;
                 }
             }

@@ -18,15 +18,15 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-const WPHB_FILE = __FILE__;
+const WPHB_FILE        = __FILE__;
 const WPHB_PLUGIN_PATH = __DIR__;
 define( 'WPHB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
 const WPHB_VERSION = '2.0.9';
 define( 'WPHB_BLOG_ID', get_current_blog_id() );
 define( 'WPHB_TEMPLATES', WPHB_PLUGIN_PATH . '/templates/' );
-const TP_HB_EXTRA = __FILE__;
-const WPHB_DEBUG = 1;
-const WPHB_API_V2 = 1;
+const TP_HB_EXTRA    = __FILE__;
+const WPHB_DEBUG     = 1;
+const WPHB_API_V2    = 1;
 const WPHB_SHOW_FORM = 0;
 
 /**
@@ -406,6 +406,7 @@ class WP_Hotel_Booking {
 			if ( WPHB_DEBUG ) {
 				wp_register_style( 'wp-admin-hotel-booking', $this->plugin_url( 'assets/css/admin/admin.tp-hotel-booking.css' ), array(), $v_rand );
 				wp_register_script( 'wp-admin-hotel-booking', $this->plugin_url( 'assets/js/admin/admin.hotel-booking.js' ), array_merge( $dependencies, array( 'wphb-dropdown-pages' ) ), $v_rand );
+				wp_register_style( 'wp-admin-review-image', $this->plugin_url( 'assets/css/admin/review-image.css' ), array(), $v_rand );
 			} else {
 				wp_register_style( 'wp-admin-hotel-booking', $this->plugin_url( 'assets/css/admin/admin.tp-hotel-booking.min.css' ), array(), WPHB_VERSION );
 				wp_register_script( 'wp-admin-hotel-booking', $this->plugin_url( 'assets/js/admin/admin.hotel-booking.min.js' ), $dependencies, WPHB_VERSION );
@@ -417,17 +418,17 @@ class WP_Hotel_Booking {
 			wp_register_style( 'wp-admin-hotel-booking-fullcalendar', $this->plugin_url( 'assets/css/fullcalendar.min.css' ) );
 			// style tab single room admin v2
 			wp_register_style( 'wp-admin-single-room-v2', $this->plugin_url( 'assets/css/admin/admin-single-room.css' ) );
-
 		} else {
 			if ( WPHB_DEBUG ) {
 				wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.css' ), array(), $v_rand );
 				wp_register_style( 'wp-hotel-booking-review-gallery', $this->plugin_url( 'assets/css/review-gallery.css' ), array(), $v_rand );
 
+
 				wp_register_script( 'wp-hotel-booking', $this->plugin_url( 'assets/js/hotel-booking.js' ), $dependencies, $v_rand, true );
 				wp_register_script( 'wp-hotel-booking-v2', $this->plugin_url( 'assets/js/hotel-booking-v2.js' ), $dependencies, $v_rand, true );
 				wp_register_script( 'wp-hotel-booking-sort-by', $this->plugin_url( 'assets/js/frontend/sort-by.js' ), array(), $v_rand, true );
 				wp_register_script( 'wp-hotel-booking-filter-by', $this->plugin_url( 'assets/js/frontend/filter-by.js' ), array(), $v_rand, true );
-				wp_register_script( 'wp-hotel-booking-product-review', $this->plugin_url( 'assets/js/frontend/product-review.js' ), array(), $v_rand, true );
+				wp_register_script( 'wp-hotel-booking-room-review', $this->plugin_url( 'assets/js/frontend/room-review.js' ), array(), $v_rand, true );
 
 			} else {
 				wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.min.css' ), array(), WPHB_VERSION );
@@ -453,6 +454,7 @@ class WP_Hotel_Booking {
 			wp_enqueue_script( 'wp-admin-hotel-booking' );
 			wp_enqueue_script( 'backbone' );
 			wp_enqueue_style( 'wp-admin-single-room-v2' );
+			wp_enqueue_style( 'wp-admin-review-image' );
 
 			// report
 			wp_enqueue_script( 'jquery' );
@@ -473,12 +475,12 @@ class WP_Hotel_Booking {
 			wp_enqueue_script( 'wp-hotel-booking-v2' );
 			wp_enqueue_script( 'wp-hotel-booking-sort-by' );
 			wp_enqueue_script( 'wp-hotel-booking-filter-by' );
-			wp_enqueue_script( 'wp-hotel-booking-product-review' );
+			wp_enqueue_script( 'wp-hotel-booking-room-review' );
 
-            $max_images= 10;
-            $max_file_size = 1000000;
+			$max_images    = 10;
+			$max_file_size = 1000000;
 
-			wp_localize_script( 'wp-hotel-booking-product-review', 'HB_PRODUCT_REVIEW_GALLERY', array(
+			wp_localize_script( 'wp-hotel-booking-room-review', 'HB_ROOM_REVIEW_GALLERY', array(
 					'max_images'          => $max_images,
 					'max_file_size'       => $max_file_size,
 					'max_image_error'     => sprintf( esc_html__( 'The image number is greater than %s', 'wp-hotel-booking' ), $max_images ),
@@ -533,28 +535,28 @@ class WP_Hotel_Booking {
 		$decimals_separator  = get_option( 'tp_hotel_booking_price_decimals_separator' ) ? get_option( 'tp_hotel_booking_price_decimals_separator' ) : '.';
 		$number_decimal      = get_option( 'tp_hotel_booking_price_number_of_decimal' ) ? get_option( 'tp_hotel_booking_price_number_of_decimal' ) : '0';
 		?>
-		<script type="text/javascript">
-			var hotel_settings = {
-				cart_page_url: '<?php echo esc_url( $cart_page_url ); ?>',
-				checkout_page_url: '<?php echo esc_url( $checkout_page_url ); ?>',
-				site_url: '<?php echo esc_url( site_url() ); ?>',
-				ajax: '<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>',
-				settings: <?php echo WPHB_Settings::instance()->toJson( apply_filters( 'hb_settings_fields', array( 'review_rating_required' ) ) ); ?>,
-				upload_base_url: '<?php echo esc_js( $upload_base_url ); ?>',
-				meta_key: {
-					prefix: '_hb_'
-				},
-				date_format: '<?php echo get_option( 'date_format' ); ?>',
-				nonce: '<?php echo esc_html( wp_create_nonce( 'hb_booking_nonce_action' ) ); ?>',
-				timezone: '<?php echo esc_html( current_time( 'timestamp' ) ); ?>',
-				min_booking_date: <?php echo esc_html( $min_booking_date ); ?>,
-				wphb_rest_url: '<?php echo get_rest_url(); ?>',
-				is_page_search: <?php echo is_page( hb_get_page_id( 'search' ) ) ? 1 : 0; ?>,
-				url_page_search: '<?php echo get_permalink( hb_get_page_id( 'search' ) ); ?>',
-				room_id: <?php echo isset( $screen->id ) && $screen->id == 'hb_room' ? get_the_ID() : 0; ?>,
-				block_dates:
+        <script type="text/javascript">
+            var hotel_settings = {
+                cart_page_url: '<?php echo esc_url( $cart_page_url ); ?>',
+                checkout_page_url: '<?php echo esc_url( $checkout_page_url ); ?>',
+                site_url: '<?php echo esc_url( site_url() ); ?>',
+                ajax: '<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>',
+                settings: <?php echo WPHB_Settings::instance()->toJson( apply_filters( 'hb_settings_fields', array( 'review_rating_required' ) ) ); ?>,
+                upload_base_url: '<?php echo esc_js( $upload_base_url ); ?>',
+                meta_key: {
+                    prefix: '_hb_'
+                },
+                date_format: '<?php echo get_option( 'date_format' ); ?>',
+                nonce: '<?php echo esc_html( wp_create_nonce( 'hb_booking_nonce_action' ) ); ?>',
+                timezone: '<?php echo esc_html( current_time( 'timestamp' ) ); ?>',
+                min_booking_date: <?php echo esc_html( $min_booking_date ); ?>,
+                wphb_rest_url: '<?php echo get_rest_url(); ?>',
+                is_page_search: <?php echo is_page( hb_get_page_id( 'search' ) ) ? 1 : 0; ?>,
+                url_page_search: '<?php echo get_permalink( hb_get_page_id( 'search' ) ); ?>',
+                room_id: <?php echo isset( $screen->id ) && $screen->id == 'hb_room' ? get_the_ID() : 0; ?>,
+                block_dates:
 				<?php
-				$room_id        = get_the_ID();
+				$room_id = get_the_ID();
 				$selected_block = array();
 				if ( $room_id ) {
 					$calendar_id = get_post_meta( $room_id, 'hb_blocked_id', true );
@@ -564,15 +566,15 @@ class WP_Hotel_Booking {
 				}
 				echo json_encode( $selected_block );
 				?>
-				,
-				currency: '<?php echo $currency; ?>',
-				currency_symbol: '<?php echo $currency_symbol; ?>',
-				currency_position: '<?php echo get_option( 'tp_hotel_booking_price_currency_position', 'left' ); ?>',
-				thousands_separator: '<?php echo $thousands_separator; ?>',
-				decimals_separator: '<?php echo $decimals_separator; ?>',
-				number_decimal: '<?php echo $number_decimal; ?>',
-			}
-		</script>
+                ,
+                currency: '<?php echo $currency; ?>',
+                currency_symbol: '<?php echo $currency_symbol; ?>',
+                currency_position: '<?php echo get_option( 'tp_hotel_booking_price_currency_position', 'left' ); ?>',
+                thousands_separator: '<?php echo $thousands_separator; ?>',
+                decimals_separator: '<?php echo $decimals_separator; ?>',
+                number_decimal: '<?php echo $number_decimal; ?>',
+            }
+        </script>
 		<?php
 	}
 

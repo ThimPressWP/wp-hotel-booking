@@ -25,7 +25,9 @@
     "gulp-uglifycss": "^1.1.0",
     "gulp-vinyl-zip": "^2.5.0",
     "read-file": "^0.2.0",
-    "webpack-glob-entries": "^1.0.1"
+    "webpack-glob-entries": "^1.0.1",
+    "delegated-events": "^1.1.2",
+    "sortablejs": "^1.15.0"
   },
   "scripts": {
     "start": "wp-scripts start NODE_ENV=develop",

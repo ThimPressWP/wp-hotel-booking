@@ -34,7 +34,139 @@ class WPHB_Comments {
 
 		add_filter( 'manage_edit-comments_columns', array( $this, 'comments_column' ), 10, 2 );
 		add_filter( 'manage_comments_custom_column', array( $this, 'comments_custom_column' ), 10, 2 );
+		//Review gallery
 		add_action( 'comment_form_after', array( $this, 'add_form_enctype_end' ) );
+		add_action( 'add_meta_boxes', array( $this, 'add_comment_metaboxes' ), 10, 2 );
+		add_action( 'edit_comment', array( $this, 'save_comment_metaboxes' ), 10, 2 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+	}
+
+	/**
+	 * @param $comment_id
+	 * @param $data
+	 *
+	 * @return void
+	 */
+	public function save_comment_metaboxes( $comment_id, $data ) {
+		$value = array();
+		if ( isset( $_POST['hb_review_images'] ) && ! empty( $_POST['hb_review_images'] ) ) {
+			$value = $_POST['hb_review_images'];
+			if ( is_string( $value ) ) {
+				$value = explode( ',', $value );
+			}
+		}
+
+		update_comment_meta( $comment_id, 'hb_review_images', $value );
+	}
+
+	/**
+	 * @return void
+	 */
+	public function admin_enqueue_scripts() {
+		//date time
+		wp_register_script( 'hb-product-review', WPHB_PLUGIN_URL . '/assets/dist/js/admin/room-review.min.js',
+			array(),
+			uniqid(),
+			true
+		);
+		wp_enqueue_script( 'hb-product-review' );
+	}
+
+	/**
+	 * @param $type
+	 * @param $comment
+	 *
+	 * @return void
+	 */
+	public function add_comment_metaboxes( $type, $comment ) {
+		if ( $type !== 'comment' ) {
+			return;
+		}
+
+		if ( $comment->comment_type !== 'comment' ) {
+			return;
+		}
+
+		$room_id = $comment->comment_post_ID;
+
+		if ( empty( $room_id ) ) {
+			return;
+		}
+
+		if ( get_post_type( $room_id ) !== 'hb_room' ) {
+			return;
+		}
+
+		add_meta_box(
+			'hb-review-image',
+			esc_html__( 'Images', 'wp-hotel-booking' ),
+			array( $this, 'render_review_images' ),
+			array( 'comment' ),
+			'normal',
+			'low',
+		);
+	}
+
+	/**
+	 * @param $comment
+	 *
+	 * @return void
+	 */
+	public function render_review_images( $comment ) {
+		$comment_id = $comment->comment_ID;
+		$image_ids  = get_comment_meta( $comment_id, 'hb_review_images', true );
+		?>
+        <div class="hb-review-images">
+			<?php
+			$max_images    = 10;
+			$max_file_size = 1000000;
+
+			if ( empty( $image_ids ) ) {
+				$image_ids = array();
+			} else {
+				if ( count( $image_ids ) > $max_images ) {
+					$image_ids = array_slice( $image_ids, 0, $max_images );
+				}
+			}
+
+			$value_data = implode( ',', $image_ids );
+			?>
+            <div class="hb-image-info"
+                 data-max-file-size="<?php echo esc_attr( $max_file_size ); ?>">
+                <div class="hb-gallery-inner">
+                    <input type="hidden" name="hb_review_images"
+                           data-number="<?php echo esc_attr( $max_images ); ?>"
+                           value="<?php echo esc_attr( $value_data ); ?>" readonly/>
+					<?php
+					$count = count( $image_ids );
+					for ( $i = 0; $i < $count; $i ++ ) {
+						$data_id = empty( $image_ids[ $i ] ) ? '' : $image_ids[ $i ];
+						$img_src = '';
+						if ( ! empty( wp_get_attachment_image_url( $data_id, 'thumbnail' ) ) ) {
+							$img_src = wp_get_attachment_image_url( $data_id, 'thumbnail' );
+						}
+						$alt_text = '#';
+						?>
+                        <div class="hb-gallery-preview" data-id="<?php echo esc_attr( $data_id ); ?>">
+                            <div class="hb-gallery-centered">
+                                <img src="<?php echo esc_url_raw( $img_src ); ?>"
+                                     alt="<?php echo esc_attr( $alt_text ); ?>">
+                            </div>
+                            <span class="hb-gallery-remove dashicons dashicons dashicons-no-alt"></span>
+                        </div>
+						<?php
+					}
+					?>
+                    <button type="button"
+                            class="button hb-gallery-add"><?php esc_html_e( 'Add Images' ); ?></button>
+                </div>
+            </div>
+        </div>
+
+		<?php
+		if ( ! did_action( 'wp_enqueue_media' ) ) {
+			wp_enqueue_media();
+		}
 	}
 
 	/**
@@ -94,7 +226,7 @@ class WPHB_Comments {
 	 */
 	public static function add_comment_rating( $comment_id, $approved ) {
 		$comment = get_comment( $comment_id );
-		$postID = absint( $comment->comment_post_ID );
+		$postID  = absint( $comment->comment_post_ID );
 
 		if ( isset( $_POST['rating'] ) && 'hb_room' === get_post_type( $_POST['comment_post_ID'] ) ) {
 			$rating = absint( sanitize_text_field( $_POST['rating'] ) );
@@ -126,7 +258,7 @@ class WPHB_Comments {
 		require_once( ABSPATH . "wp-admin" . '/includes/file.php' );
 		require_once( ABSPATH . "wp-admin" . '/includes/media.php' );
 
-		$images = $_FILES['review-image'] ?? array();
+		$images         = $_FILES['review-image'] ?? array();
 		$attachment_ids = array();
 		foreach ( $images['name'] as $key => $value ) {
 			if ( ! empty( $images['name'][ $key ] ) ) {
