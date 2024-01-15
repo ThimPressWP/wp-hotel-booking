@@ -425,8 +425,8 @@ class WP_Hotel_Booking {
 
 		} else {
             wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.css' ), array(), $version );
-            wp_register_script( 'wp-hotel-booking', $this->plugin_url( "assets/dist/js/hotel-booking{$min}.js" ), $dependencies, $version, [ 'in_footer' => true, 'strategy' => 'defer' ] );
-            wp_register_script( 'wp-hotel-booking-v2', $this->plugin_url( "assets/dist/js/hotel-booking-v2{$min}.js" ), $dependencies, $version, [ 'in_footer' => true, 'strategy' => 'defer' ] );
+            wp_register_script( 'wp-hotel-booking', $this->plugin_url( "assets/dist/js/frontend/hotel-booking{$min}.js" ), $dependencies, $version, [ 'in_footer' => true, 'strategy' => 'defer' ] );
+            wp_register_script( 'wp-hotel-booking-v2', $this->plugin_url( "assets/dist/js/frontend/hotel-booking-v2{$min}.js" ), $dependencies, $version, [ 'in_footer' => true, 'strategy' => 'defer' ] );
             wp_register_script( 'wp-hotel-booking-sort-by', $this->plugin_url( "assets/dist/js/frontend/sort-by{$min}.js" ), array(), $version, [ 'in_footer' => true, 'strategy' => 'defer' ] );
             wp_register_script( 'wp-hotel-booking-filter-by', $this->plugin_url( "assets/dist/js/frontend/filter-by{$min}.js" ), array(), $version, [ 'in_footer' => true, 'strategy' => 'defer' ] );
 
