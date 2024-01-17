@@ -102,6 +102,7 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
         $this->_register_section_style_price_regular();
         $this->_register_section_style_pricing_plans_title();
         $this->_register_section_style_pricing_plans_table();
+        $this->_register_section_style_pricing_breakdown();
     }
 
     protected function _register_section_style_price_regular()
@@ -253,10 +254,28 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
         $this->end_controls_section();
     }
 
+    protected function _register_section_style_pricing_breakdown()
+    {
+        $this->start_controls_section(
+            'style_breakdown',
+            [
+                'label' => esc_html__('Breakdown', 'wp-hotel-booking'),
+                'tab'   => Controls_Manager::TAB_STYLE,
+                'condition' => [
+                    'layout' => 'price_breakdown',
+                ]
+            ]
+        ); 
+
+        $this->register_button_style( 'price_breakdown', '.hb-view-booking-room-details' );
+
+        $this->end_controls_section();
+    }
+
     protected function render()
     {
         global $hb_settings;
-        $hb_room = \WPHB_Room::instance(get_the_ID());
+        $room = \WPHB_Room::instance(get_the_ID());
 
         $settings        = $this->get_settings_for_display(); ?>
 
@@ -299,7 +318,7 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
                 $text_price_breakdown   = isset( $settings['text_price_breakdown'] ) ? $settings['text_price_breakdown'] : ''; ?>
                 <div class="hb_view_price hb-room-content">
                     <a href="" class="hb-view-booking-room-details"><?php echo $text_price_breakdown; ?></a>
-                    <?php hb_get_template( 'search/booking-room-details.php', array( 'room' => $hb_room ) ); ?>
+                    <?php hb_get_template( 'search/booking-room-details.php', array( 'room' => $room ) ); ?>
                 </div>
             <?php
             } ?>

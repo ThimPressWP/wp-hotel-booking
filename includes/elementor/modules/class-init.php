@@ -11,7 +11,7 @@ class Elementor {
 	const CATEGORY_SINGLE_ROOM  = 'thim_ekit_single_room';
 
     const WIDGETS = array(
-		'global'             => array(
+		'global'     => array(
             'search-room',
 			'filter-room',
 			'filter-room-selected',
@@ -20,7 +20,8 @@ class Elementor {
 		'loop-item'  => array(
 			'loop-room-rating',
 			'loop-room-price',
-			'loop-room-info'
+			'loop-room-info',
+			'loop-room-add-to-cart'
 		),
         'single-room' => array(
 			'room-thumb',
@@ -35,7 +36,8 @@ class Elementor {
 			'room-related'
 		),
 		'archive-room' => array(
-			'archive-room'
+			'archive-room',
+			'list-results-room'
 		)
 	);
 
