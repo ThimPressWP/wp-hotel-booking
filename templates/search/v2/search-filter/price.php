@@ -12,7 +12,7 @@ $max_formatted_price = number_format( $data['max_price'], 2, '.', ',' );
 	<div class="hb-price-field" data-min="<?php echo esc_attr( $data['min_price'] ); ?>"
 		data-max="<?php echo esc_attr( $data['max_price'] ); ?>"
 		data-step="1">
-		<div class=" title"><?php esc_html_e( 'Price', 'wp-hotel-booking' ); ?></div>
+		<div class="title"><?php esc_html_e( 'Price', 'wp-hotel-booking' ); ?></div>
 		<input type="hidden" class="hb-min-price" name="min-price"
 				value="<?php echo esc_attr( $data['min_value'] ); ?>">
 		<input type="hidden" class="hb-max-price" name="max-price"

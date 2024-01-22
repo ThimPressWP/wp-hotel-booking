@@ -527,6 +527,12 @@ if ( ! function_exists( 'hotel_booking_loop_room_rating' ) ) {
 	}
 }
 
+if ( ! function_exists( 'hotel_booking_loop_room_feature' ) ) {
+	function hotel_booking_loop_room_feature() {
+		hb_get_template( 'loop/feature.php', array() );
+	}
+}
+
 if ( ! function_exists( 'hotel_booking_after_loop_room_item' ) ) {
 
 	function hotel_booking_after_loop_room_item() {

@@ -16,8 +16,8 @@ defined( 'ABSPATH' ) || exit;
 
 class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 
-	public $quantity       = 1;
-	public $check_in_date  = 1;
+	public $quantity = 1;
+	public $check_in_date = 1;
 	public $check_out_date = 1;
 
 	/**
@@ -111,7 +111,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 	 */
 	function __get( $key ) {
 		static $fields = array();
-		$return        = '';
+		$return = '';
 		switch ( $key ) {
 			case 'ID':
 				$return = $this->get_data( 'id' ) ? $this->get_data( 'id' ) : $this->post->ID;
@@ -182,8 +182,8 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 			case 'dropdown_room':
 				$max_rooms = get_post_meta( $this->post->ID, '_hb_num_of_rooms', true );
 				$return    = '<select name="hb-num-of-rooms[' . $this->post->ID . ']">';
-				$return   .= '<option value="0">' . __( 'Select', 'wp-hotel-booking' ) . '</option>';
-				for ( $i = 1; $i <= $max_rooms; $i++ ) {
+				$return    .= '<option value="0">' . __( 'Select', 'wp-hotel-booking' ) . '</option>';
+				for ( $i = 1; $i <= $max_rooms; $i ++ ) {
 					$return .= sprintf( '<option value="%1$d">%1$d</option>', $i );
 				}
 				$return .= '</select>';
@@ -243,22 +243,28 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 
 		return apply_filters( 'hotel_booking_room_get_data', $return, $key, $this );
 	}
+
 	public function get_addition_information() {
 		$infos = get_post_meta( $this->ID, '_hb_room_addition_information', true );
+
 		return hb_get_template_content( 'single-room/tabs/room-infos.php', array( 'infos' => $infos ) );
 	}
+
 	public function get_faqs() {
 		$faqs = get_post_meta( $this->post->ID, '_wphb_room_faq', true );
+
 		return hb_get_template_content( 'single-room/tabs/room-faqs.php', array( 'faqs' => $faqs ) );
 	}
 
 	public function get_rules() {
 		$rules = get_post_meta( $this->post->ID, '_hb_wphb_rule_room', true );
+
 		return hb_get_template_content( 'single-room/tabs/room-rules.php', array( 'rules' => $rules ) );
 	}
 
 	public function get_facilities() {
 		$facilities = get_post_meta( $this->post->ID, '_wphb_room_facilities', true );
+
 		return hb_get_template_content( 'single-room/tabs/room-facilities.php', array( 'facilities' => $facilities ) );
 	}
 
@@ -352,7 +358,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 		}
 
 		$nights = hb_count_nights_two_dates( $end_date, $start_date );
-		for ( $i = 0; $i < $nights; $i++ ) {
+		for ( $i = 0; $i < $nights; $i ++ ) {
 			$c_date = $start_date_to_time + $i * DAY_IN_SECONDS;
 			$date   = date( 'w', $c_date );
 			if ( ! isset( $details[ $date ] ) ) {
@@ -361,7 +367,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 					'price' => 0,
 				);
 			}
-			++$details[ $date ]['count'];
+			++ $details[ $date ]['count'];
 			$details[ $date ]['price'] += $this->get_total( $c_date, 1, 1, $tax );
 			$room_details_total        += $details[ $date ]['price'];
 		}
@@ -409,12 +415,16 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 		return floatval( $return );
 	}
 
+	function is_featured() {
+		return get_post_meta( $this->post->ID, '_hb_featured_list', true ) === '1';
+	}
+
 	/**
 	 * Get total price of room
 	 *
 	 * @param      $from
 	 * @param      $to
-	 * @param int  $num_of_rooms
+	 * @param int $num_of_rooms
 	 * @param bool $including_tax
 	 *
 	 * @return float|int
@@ -451,9 +461,9 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 		}
 
 		$from = mktime( 0, 0, 0, date( 'm', $from_time ), date( 'd', $from_time ), date( 'Y', $from_time ) );
-		for ( $i = 0; $i < $nights; $i++ ) {
+		for ( $i = 0; $i < $nights; $i ++ ) {
 			$total_per_night = $this->get_price( $from + $i * DAY_IN_SECONDS, false );
-			$total          += $total_per_night * $num_of_rooms;
+			$total           += $total_per_night * $num_of_rooms;
 		}
 
 		$total    = apply_filters( 'hotel_booking_room_total_price_excl_tax', $total, $this );
@@ -566,7 +576,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 			$rating = get_comment_meta( $comment->comment_ID, 'rating', true );
 			if ( $rating ) {
 				$total = $total + $rating;
-				++$i;
+				++ $i;
 			}
 		}
 		if ( $comments && $i ) {
