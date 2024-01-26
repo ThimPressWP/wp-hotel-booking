@@ -69,7 +69,7 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 		$limit           = hb_settings()->get( 'posts_per_page', 8 );
 
 		try {
-			// $date_format = get_option( 'date_format' );
+			// $date_format = get_option( 'date_format' ); 
 
 			if ( strpos( $check_in_date, '/' ) !== false ) {
 				$check_in_date = date( 'F j, Y', strtotime( $check_in_date ) );
