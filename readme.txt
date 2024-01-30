@@ -5,7 +5,7 @@ Tags: hotel, booking, hotel booking, reservation, reservations
 Requires at least: 6.3
 Requires PHP: 7.0
 Tested up to: 6.4.2
-Stable tag: 2.0.9.1
+Stable tag: 2.0.9.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,9 @@ Yes.
 7. System settings
 
 == Changelog ==
+
+= 2.0.9.2 (2024-01-30) =
+~ Fixed: minor bugs.
 
 = 2.0.9.1 (2024-01-15) =
 ~ Fixed: minor bugs.

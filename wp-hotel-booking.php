@@ -4,7 +4,7 @@
  * Plugin URI: http://thimpress.com/
  * Description: Full of professional features for a booking room system
  * Author: ThimPress
- * Version: 2.0.9.1
+ * Version: 2.0.9.2
  * Author URI: http://thimpress.com
  * Text Domain: wp-hotel-booking
  * Domain Path: /languages/
@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
 const WPHB_FILE = __FILE__;
 const WPHB_PLUGIN_PATH = __DIR__;
 define( 'WPHB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
-const WPHB_VERSION = '2.0.9.1';
+const WPHB_VERSION = '2.0.9.2';
 define( 'WPHB_BLOG_ID', get_current_blog_id() );
 define( 'WPHB_TEMPLATES', WPHB_PLUGIN_PATH . '/templates/' );
 const TP_HB_EXTRA = __FILE__;
@@ -413,7 +413,7 @@ class WP_Hotel_Booking {
 				wp_register_script( 'wp-admin-hotel-booking', $this->plugin_url( 'assets/js/admin/admin.hotel-booking.js' ), array_merge( $dependencies, array( 'wphb-dropdown-pages' ) ), $v_rand );
 			} else {
 				wp_register_style( 'wp-admin-hotel-booking', $this->plugin_url( 'assets/css/admin/admin.tp-hotel-booking.min.css' ), array(), WPHB_VERSION );
-				wp_register_script( 'wp-admin-hotel-booking', $this->plugin_url( 'assets/js/admin/admin.hotel-booking.min.js' ), $dependencies, WPHB_VERSION );
+				wp_register_script( 'wp-admin-hotel-booking', $this->plugin_url( 'assets/js/admin/admin.hotel-booking.min.js' ), array_merge( $dependencies, array( 'wphb-dropdown-pages' ) ), WPHB_VERSION );
 			}
 
 			wp_localize_script( 'wp-admin-hotel-booking', 'hotel_booking_i18n', hb_admin_i18n() );
