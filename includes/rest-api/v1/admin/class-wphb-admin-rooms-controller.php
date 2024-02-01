@@ -21,21 +21,21 @@ class WPHB_REST_Admin_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'pricing_plans' ),
-					'permission_callback' => '__return_true',
+					'permission_callback' => [ $this, 'check_admin_permission' ],
 				),
 			),
 			'block-date'       => array(
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'block_date' ),
-					'permission_callback' => '__return_true',
+					'permission_callback' => [ $this, 'check_admin_permission' ],
 				),
 			),
 			'manager-bookings' => array(
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'manager_bookings' ),
-					'permission_callback' => '__return_true',
+					'permission_callback' => [ $this, 'check_admin_permission' ],
 				),
 			),
 		);

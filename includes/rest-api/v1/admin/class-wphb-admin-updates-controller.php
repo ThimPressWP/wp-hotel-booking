@@ -21,7 +21,7 @@ class WPHB_REST_Admin_Update_Controller extends WPHB_Abstract_REST_Controller {
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'update_field_room' ),
-					'permission_callback' => '__return_true',
+					'permission_callback' => [ $this, 'check_admin_permission' ],
 				),
 			),
 		);
