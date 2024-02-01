@@ -78,6 +78,7 @@ Yes.
 = 2.0.9.3 (2024-02-01) =
 ~ Fixed: security.
 ~ Fixed: wrong data format in rest api.
+~ Fixed: error session_start.
 
 = 2.0.9.2 (2024-01-30) =
 ~ Fixed: minor bugs.
