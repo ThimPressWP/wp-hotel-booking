@@ -15,7 +15,7 @@
 defined( 'ABSPATH' ) || exit;
 
 if ( ! session_id() ) {
-	@session_start();
+	@session_start( array( 'read_and_close' => true ) );
 }
 
 if ( ! class_exists( 'WPHB_Sessions' ) ) {

@@ -17,15 +17,15 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-const WPHB_FILE = __FILE__;
+const WPHB_FILE        = __FILE__;
 const WPHB_PLUGIN_PATH = __DIR__;
 define( 'WPHB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
 const WPHB_VERSION = '2.0.9.2';
 define( 'WPHB_BLOG_ID', get_current_blog_id() );
 define( 'WPHB_TEMPLATES', WPHB_PLUGIN_PATH . '/templates/' );
-const TP_HB_EXTRA = __FILE__;
-const WPHB_DEBUG = 0;
-const WPHB_API_V2 = 1;
+const TP_HB_EXTRA    = __FILE__;
+const WPHB_DEBUG     = 0;
+const WPHB_API_V2    = 1;
 const WPHB_SHOW_FORM = 0;
 
 /**
@@ -372,13 +372,13 @@ class WP_Hotel_Booking {
 	 * Enqueue assets for the plugin
 	 */
 	public function enqueue_assets() {
-		$v_rand = uniqid();
-        $version = WPHB_VERSION;
-        $min = '.min';
-        if (WPHB_DEBUG) {
-            $min = '';
-            $version = $v_rand;
-        }
+		$v_rand  = uniqid();
+		$version = WPHB_VERSION;
+		$min     = '.min';
+		if ( WPHB_DEBUG ) {
+			$min     = '';
+			$version = $v_rand;
+		}
 
 		$dependencies = array(
 			'jquery',
@@ -424,11 +424,47 @@ class WP_Hotel_Booking {
 			wp_register_style( 'wp-admin-single-room-v2', $this->plugin_url( 'assets/css/admin/admin-single-room.css' ) );
 
 		} else {
-            wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.css' ), array(), $version );
-            wp_register_script( 'wp-hotel-booking', $this->plugin_url( "assets/dist/js/frontend/hotel-booking{$min}.js" ), $dependencies, $version, [ 'in_footer' => true, 'strategy' => 'defer' ] );
-            wp_register_script( 'wp-hotel-booking-v2', $this->plugin_url( "assets/dist/js/frontend/hotel-booking-v2{$min}.js" ), $dependencies, $version, [ 'in_footer' => true, 'strategy' => 'defer' ] );
-            wp_register_script( 'wp-hotel-booking-sort-by', $this->plugin_url( "assets/dist/js/frontend/sort-by{$min}.js" ), array(), $version, [ 'in_footer' => true, 'strategy' => 'defer' ] );
-            wp_register_script( 'wp-hotel-booking-filter-by', $this->plugin_url( "assets/dist/js/frontend/filter-by{$min}.js" ), array(), $version, [ 'in_footer' => true, 'strategy' => 'defer' ] );
+			wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.css' ), array(), $version );
+			wp_register_script(
+				'wp-hotel-booking',
+				$this->plugin_url( "assets/dist/js/frontend/hotel-booking{$min}.js" ),
+				$dependencies,
+				$version,
+				array(
+					'in_footer' => true,
+					'strategy'  => 'defer',
+				)
+			);
+			wp_register_script(
+				'wp-hotel-booking-v2',
+				$this->plugin_url( "assets/dist/js/frontend/hotel-booking-v2{$min}.js" ),
+				$dependencies,
+				$version,
+				array(
+					'in_footer' => true,
+					'strategy'  => 'defer',
+				)
+			);
+			wp_register_script(
+				'wp-hotel-booking-sort-by',
+				$this->plugin_url( "assets/dist/js/frontend/sort-by{$min}.js" ),
+				array(),
+				$version,
+				array(
+					'in_footer' => true,
+					'strategy'  => 'defer',
+				)
+			);
+			wp_register_script(
+				'wp-hotel-booking-filter-by',
+				$this->plugin_url( "assets/dist/js/frontend/filter-by{$min}.js" ),
+				array(),
+				$version,
+				array(
+					'in_footer' => true,
+					'strategy'  => 'defer',
+				)
+			);
 
 			wp_localize_script( 'wp-hotel-booking', 'hotel_booking_i18n', hb_i18n() );
 
