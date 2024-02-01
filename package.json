@@ -6,12 +6,8 @@
     "@wordpress/url": "^3.16.0"
   },
   "devDependencies": {
-    "@automattic/wp-babel-makepot": "^1.0.2",
-    "@wordpress/block-editor": "^9.7.0",
-    "@wordpress/blocks": "^11.14.0",
-    "@wordpress/i18n": "^4.15.0",
-    "@wordpress/icons": "^9.6.0",
-    "@wordpress/scripts": "^26.19.0",
+    "@automattic/wp-babel-makepot": "^1.1.1",
+    "@wordpress/scripts": "^26.13.13",
     "eslint": "^8.21.0",
     "gulp": "^4.0.2",
     "gulp-cache": "^1.1.3",
