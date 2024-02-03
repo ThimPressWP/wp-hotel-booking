@@ -183,7 +183,7 @@ class WPHB_REST_Authentication {
 	 * @return bool
 	 */
 	public static function check_admin_permission() {
-		return current_user_can( ADMIN_ROLE );
+		return current_user_can( 'administrator' );
 	}
 }
 
