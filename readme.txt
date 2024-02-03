@@ -75,6 +75,9 @@ Yes.
 
 == Changelog ==
 
+= 2.0.9.4 (2024-02-03) =
+~ Fixed: minor bugs.
+
 = 2.0.9.3 (2024-02-01) =
 ~ Fixed: security.
 ~ Fixed: wrong data format in rest api.
