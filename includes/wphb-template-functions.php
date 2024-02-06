@@ -541,6 +541,9 @@ if ( ! function_exists( 'hb_setup_shortcode_page_content' ) ) {
 
 	function hb_setup_shortcode_page_content( $content ) {
 		global $post;
+        if ( ! $post instanceof WP_Post ) {
+            return $content;
+        }
 
 		$page_id = $post->ID;
 
