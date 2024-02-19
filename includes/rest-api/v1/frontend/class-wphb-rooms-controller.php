@@ -72,10 +72,18 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 			// $date_format = get_option( 'date_format' );
 
 			if ( strpos( $check_in_date, '/' ) !== false ) {
+				//Strtotime() doesn't work with dd/mm/YYYY format
+				if ( ! strtotime( $check_in_date ) ) {
+					$check_in_date = str_replace( '/', '-', $check_in_date );
+				}
 				$check_in_date = date( 'F j, Y', strtotime( $check_in_date ) );
 			}
 
 			if ( strpos( $check_out_date, '/' ) !== false ) {
+				//Strtotime() doesn't work with dd/mm/YYYY format
+				if ( ! strtotime( $check_out_date ) ) {
+					$check_out_date = str_replace( '/', '-', $check_out_date );
+				}
 				$check_out_date = date( 'F j, Y', strtotime( $check_out_date ) );
 			}
 
@@ -162,10 +170,18 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 		// $date_format = get_option( 'date_format' );
 
 		if ( strpos( $check_in_date, '/' ) !== false ) {
+			// Strtotime() doesn't work with dd/mm/YYYY format
+			if ( ! strtotime( $check_in_date ) ) {
+				$check_in_date = str_replace( '/', '-', $check_in_date );
+			}
 			$check_in_date = date( 'F j, Y', strtotime( $check_in_date ) );
 		}
 
 		if ( strpos( $check_out_date, '/' ) !== false ) {
+			//Strtotime() doesn't work with dd/mm/YYYY format
+			if ( ! strtotime( $check_out_date ) ) {
+				$check_out_date = str_replace( '/', '-', $check_out_date );
+			}
 			$check_out_date = date( 'F j, Y', strtotime( $check_out_date ) );
 		}
 
@@ -288,15 +304,16 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 			$cart       = WPHB_Cart::instance();
 			$extra_cart = HB_Extra_Cart::instance();
 			$cart_item  = $cart->get_cart_item( $cart_id );
-			$extra_cart->ajax_added_cart(
-				$cart_id,
-				array(
+			$extra_arr  = array(
 					'product_id'                    => $cart_item->product_id,
 					'check_in_date'                 => $cart_item->check_in_date,
 					'check_out_date'                => $cart_item->check_out_date,
 					'hb_optional_quantity'          => $extra_selected_qty,
 					'hb_optional_quantity_selected' => $extra_selected,
-				),
+				);
+			$extra_cart->ajax_added_cart(
+				$cart_id,
+				$extra_arr,
 				array(),
 				false
 			);
