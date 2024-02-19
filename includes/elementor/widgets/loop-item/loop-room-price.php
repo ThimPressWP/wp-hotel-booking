@@ -275,7 +275,16 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
     protected function render()
     {
         global $hb_settings;
-        $room = \WPHB_Room::instance(get_the_ID());
+        $check_in_date  = hb_get_request('check_in_date');
+		$check_out_date = hb_get_request('check_out_date');
+
+        $room = \WPHB_Room::instance(
+            get_the_ID(),
+            array(
+                'check_in_date'  => $check_in_date,
+                'check_out_date' => $check_out_date,
+            )
+        );
 
         $settings        = $this->get_settings_for_display(); ?>
 
