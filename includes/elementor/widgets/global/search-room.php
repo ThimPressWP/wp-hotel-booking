@@ -76,7 +76,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			array(
 				'label'     => esc_html__( 'Layout', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::SELECT,
-				'default'   => 'single',
+				'default'   => 'multidate',
 				'options'   => array(
 					'single'    => esc_html__( 'Single', 'wp-hotel-booking' ),
 					'multidate' => esc_html__( 'Multidate', 'wp-hotel-booking' ),
@@ -92,7 +92,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			array(
 				'label'     => esc_html__( 'Layout', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::SELECT,
-				'default'   => 'select',
+				'default'   => 'number_box',
 				'options'   => array(
 					'select'       => esc_html__( 'Select', 'wp-hotel-booking' ),
 					'number_box'   => esc_html__( 'Number Box', 'wp-hotel-booking' ),
@@ -131,8 +131,8 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 		$repeater_data->add_control(
 			'label_field',
 			[
-				'label'     => esc_html__( 'Label', 'wp-hotel-booking' ),
-				'type'      => Controls_Manager::TEXT,
+				'label'     	=> esc_html__( 'Label', 'wp-hotel-booking' ),
+				'type'      	=> Controls_Manager::TEXT,
                 'placeholder'   => esc_html__( 'Add your text here', 'wp-hotel-booking' ),
 				'condition'     => [
 					'meta_field!' => 'date',
@@ -157,6 +157,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				'type'      => Controls_Manager::SLIDER,
 				'size_units' => [ '%', 'px' ],
 				'default'   => [
+					'size' => 25,
                     'unit'  => '%'
                 ],
 				'selectors' => [
@@ -176,6 +177,9 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 					],
 					[
 						'meta_field' => 'adults',
+					],
+					[
+						'meta_field' => 'children',
 					],
 					[
 						'meta_field' => 'submit',
@@ -208,6 +212,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				'label'       => esc_html__( 'Display', 'wp-hotel-booking' ),
 				'type'        => Controls_Manager::CHOOSE,
 				'toggle'      => false,
+				'default'     => 'row',
 				'options'     => array(
 					'column'         => array(
 						'title' => esc_html__( 'Block', 'wp-hotel-booking' ),
@@ -249,6 +254,18 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			)
 		);
 
+		$this->add_control(
+			'bg_search_form',
+			[
+				'label'     => esc_html__( 'Background', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => '#fff',
+				'selectors' => [
+					'{{WRAPPER}} .hotel-booking-search-el form' => 'background-color: {{VALUE}};'
+				],
+			]
+		);
+
         $this->end_controls_section();
     }
 
@@ -286,6 +303,13 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				'label'      => esc_html__( 'Margin', 'wp-hotel-booking' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
+				'default'    => array(
+					'unit'     => 'px',
+					'top'      => 0,
+					'right'    => 0,
+					'bottom'   => 0,
+					'left'     => 0,
+				),
 				'selectors'  => [
 					'{{WRAPPER}} .hotel-booking-search-el .hb-form-field' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
@@ -448,6 +472,10 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 						'max' => 1000,
 					),
 				],
+				'default'   => [
+					'size'	=> 90,
+					'unit'	=> 'px',
+				],
 				'selectors'  => [
 					'{{WRAPPER}} .hotel-booking-search-el .hb-submit button' => 'height: {{SIZE}}{{UNIT}};'
 				]
@@ -570,7 +598,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 
 	protected function hb_render_adults($settings, $classes) {
 		$adults         = hb_get_request('adults', '1');
-		$label_adults   = $settings['label_field'] ?? esc_html__('Adults', 'wp-hotel-booking');
+		$label_adults   = !empty($settings['label_field']) ? $settings['label_field'] : esc_html__('Adults', 'wp-hotel-booking');
 
 		if ( $settings['layout_guest'] == 'select') {
 		?>
@@ -639,7 +667,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 
 	protected function hb_render_children($settings, $classes) {
 		$max_child      = hb_get_request('max_child', '0');
-		$label_child   = $settings['label_field'] ?? esc_html__('Adults', 'wp-hotel-booking');
+		$label_child   	= !empty($settings['label_field']) ? $settings['label_field'] : esc_html__('Children', 'wp-hotel-booking');
 
 		if ( $settings['layout_guest'] == 'select') {
 			?>

@@ -23,6 +23,7 @@
 
 .hotel-booking-search-el .hb-form-field {
 	position: relative;
+	padding: 10px;
 }
 
 .hotel-booking-search-el .icon-custom {
@@ -51,29 +52,30 @@
 }
 
 .hotel-booking-search-el .hb-form-field.hb-form-number .hb-form-field-input {
-	display: inline-block;
+	display:flex;
 	width: 100%;
 	cursor: pointer;
 	z-index: 2;
+	align-items: center;
 }
 
 .hotel-booking-search-el .hb-form-field.hb-form-number .hb-form-field-input input {
 	width: 100%;
 }
 
-.hotel-booking-search-el .hb-form-field.hb-form-number .adults-number,
-.hotel-booking-search-el .hb-form-field.hb-form-number .child-number {
+.hotel-booking-search-el .adults-number,
+.hotel-booking-search-el .child-number {
 	width: auto;
 }
 
-.hotel-booking-search-el .hb-form-field.hb-form-number .hb-form-field-list {
+.hotel-booking-search-el .hb-form-field-list {
 	opacity: 0;
 	visibility: hidden;
 	position: absolute;
 	top: 100%;
 	left: 0;
 	width: 100%;
-	padding: 30px;
+	padding: 20px 30px;
 	background: #fff;
 	z-index: 9;
 	margin: 5px 0 0 0;
@@ -86,22 +88,22 @@
 	overflow: hidden;
 }
 
-.hotel-booking-search-el .hb-form-field.hb-form-number .hb_input_field > span {
+.hotel-booking-search-el .hb_input_field > span {
 	position: absolute;
 	left: 15px;
-	top: 0;
+	font-size: 16px;
 }
 
-.hotel-booking-search-el .hb-form-field.hb-form-number .hb-form-field-list.active {
+.hotel-booking-search-el .hb-form-field-list.active {
 	opacity: 1;
 	visibility: visible;
 }
 
-.hotel-booking-search-el .hb-form-field.hb-form-number .hb-form-field-list .hb-form-field-input:last-child {
+.hotel-booking-search-el .hb-form-field-list .hb-form-field-input:last-child {
 	margin: 0;
 }
 
-.hotel-booking-search-el .hb-form-field.hb-form-number .hb-form-field-list .number-box .number-icons {
+.hotel-booking-search-el .hb-form-field-list .number-box .number-icons {
 	cursor: pointer;
 	float: none;
 	background: transparent;
@@ -115,7 +117,7 @@
 	gap: 10px;
 }
 
-.hotel-booking-search-el .hb-form-field.hb-form-number .hb-form-field-list .name {
+.hotel-booking-search-el .hb-form-field-list .name {
 	font-weight: 500;
 	color: #000;
 }
@@ -128,8 +130,7 @@
 	margin-bottom: 10px;
 }
 
-.hotel-booking-search-el .hb-form-field.hb-form-check-in-check-out .hb_input_field input,
-.hotel-booking-search-el .hb-form-field.hb-form-number .hb_input_field input {
+.hotel-booking-search-el .hb_input_field input {
 	width: 150px;
 	height: auto;
 	border: none;
