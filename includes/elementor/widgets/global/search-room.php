@@ -544,16 +544,10 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 		$datetime 		 = new \DateTime('NOW');
         $tomorrow 		 = new \DateTime('tomorrow');
         $format 		 = get_option('date_format');
-		$check_in_date   = $datetime->format($format);
-        $check_out_date  = $tomorrow->format($format);
+		$check_in_date  = hb_get_request( 'check_in_date', $datetime->format($format));
+		$check_out_date = hb_get_request( 'check_out_date', $tomorrow->format($format));
 		$label_check_in  = $settings['label_field_date'] ?? esc_html__('Arrival Date', 'wp-hotel-booking');
 		$label_check_out = $settings['label_field_check_out'] ?? esc_html__('Departure Date', 'wp-hotel-booking');
-		$page_search    = hb_get_page_id( 'search' );
-
-		if( is_page( $page_search ) ){
-			$check_in_date  = hb_get_request( 'check_in_date' );
-			$check_out_date = hb_get_request( 'check_out_date' );
-		}
 
 		if ($settings['layout_date'] == 'single') {
 			?>
