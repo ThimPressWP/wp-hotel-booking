@@ -493,6 +493,7 @@
 					old_text = button.html(),
 					select = _form.find('.number_room_select'),
 					number_room_select = _form.find('.number_room_select option:selected').val(),
+					el_build = _form.find('.elementor-element'),
 					room_title = _form.find('.hb-room-name');
 
 				if (!hotel_settings?.cart_page_url && button.length > 0) {
@@ -510,6 +511,9 @@
 						room_title.find('.hb-message').remove();
 					}, 2000);
 
+					if (typeof el_build !== 'undefined') {
+						alert('Please select room number');
+					}
 					return false;
 				}
 				var data = $(this).serializeArray();
