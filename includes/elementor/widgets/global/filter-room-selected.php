@@ -55,18 +55,6 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 			]
 		);
 
-        $this->add_control(
-			'show_preview',
-			[
-				'label'        => esc_html__( 'Preview', 'wp-hotel-booking' ),
-				'type'         => Controls_Manager::SWITCHER,
-				'default'      => 'yes',
-				'label_on'     => esc_html__( 'Show', 'wp-hotel-booking' ),
-				'label_off'    => esc_html__( 'Hide', 'wp-hotel-booking' ),
-				'return_value' => 'yes',
-			]
-		);
-
 		$this->add_control(
 			'icon_remove',
 			array(
@@ -275,7 +263,7 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 			$icon_move = '<i class="icon-remove-selected fas fa-times"></i>';
 		}
 
-		if (!empty($settings['show_preview']) && Plugin::$instance->editor->is_edit_mode()) {
+		if (Plugin::$instance->editor->is_edit_mode()) {
             echo '<span class="preview selected-item" >' . esc_html__( 'Preview 1', 'wp-hotel-booking' ) . ''.$icon_move.'</span>
             <span class="preview selected-item" >' . esc_html__( 'Preview 2', 'wp-hotel-booking' ) . ''.$icon_move.'';
         }
