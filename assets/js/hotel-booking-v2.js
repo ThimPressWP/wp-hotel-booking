@@ -523,10 +523,19 @@ const priceSlider = () => {
         });
 
         priceSliderNode.noUiSlider.on('update', function (values, handle, unencoded) {
-            minPriceNode.value = parseInt(values[0]);
-            maxPriceNode.value = parseInt(values[1]);
-            priceField.querySelector('.min').innerHTML = renderPrice(values[0]);
-            priceField.querySelector('.max').innerHTML = renderPrice(values[1]);
+            let minValue = values[0], maxValue = values[1];
+
+            if (isNaN(minValue)) {
+                minValue = 0;
+            }
+            if (isNaN(maxValue)) {
+                maxValue = 0;
+            }
+
+            minPriceNode.value = parseInt(minValue);
+            maxPriceNode.value = parseInt(maxValue);
+            priceField.querySelector('.min').innerHTML = renderPrice(minValue);
+            priceField.querySelector('.max').innerHTML = renderPrice(maxValue);
         });
 
         const applyBtn = priceField.querySelector('button.apply');
@@ -564,7 +573,7 @@ const rating = () => {
         const rating = filterRooms.rating || [];
 
         [...rating].map(value => {
-             ratingField.querySelector(`input[name ="rating"][value ="${value}"]`).checked = true;
+            ratingField.querySelector(`input[name ="rating"][value ="${value}"]`).checked = true;
         });
 
         for (let i = 0; i < allInputs.length; i++) {

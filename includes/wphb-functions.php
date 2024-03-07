@@ -2093,6 +2093,8 @@ if ( ! function_exists( 'hb_get_bookings' ) ) {
 if ( ! function_exists( 'hb_maybe_modify_page_content' ) ) {
 	function hb_maybe_modify_page_content( $content ) {
 		global $post;
+		global $hb_settings;
+
 		if ( is_page() && ( $post->ID == hb_get_page_id( 'search' ) ||
 							( has_shortcode( $content, 'hotel_booking' ) && has_shortcode( $content, 'hotel_booking_filter' ) ) ) ) {
 
@@ -2104,7 +2106,9 @@ if ( ! function_exists( 'hb_maybe_modify_page_content' ) ) {
 			$max_child  = hb_get_request( 'max_child' );
 
 			$content  = '[hotel_booking page="' . $page . '" check_in_date="' . $start_date . '" check_in_date="' . $end_date . '" adults="' . $adults . '" max_child="' . $max_child . '"]';
-			$content .= '[hotel_booking_filter]';
+			if ( $hb_settings->get( 'filter_price_enable', '' ) ) {
+				$content .= '[hotel_booking_filter]';
+			}
 		}
 
 		return $content;

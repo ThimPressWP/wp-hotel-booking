@@ -45,7 +45,7 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 		/**
 		 * WPHB_Settings constructor.
 		 *
-		 * @param null  $new_prefix
+		 * @param null $new_prefix
 		 * @param array $default
 		 */
 		public function __construct( $new_prefix = null, $default = array() ) {
@@ -83,6 +83,10 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 				return $this->_options[ $name ];
 			}
 
+			if ( isset( $this->_options[ $name ] ) && in_array( $this->_options[ $name ], [ 0, '0' ] ) ) {
+				return $this->_options[ $name ];
+			}
+
 			return $default;
 		}
 
@@ -112,9 +116,9 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 		 */
 		public function notice_success() {
 			?>
-			<div class="notice notice-success is-dismissible">
-				<p><?php _e( 'Settings saved.', 'wp-hotel-booking' ); ?></p>
-			</div>
+            <div class="notice notice-success is-dismissible">
+                <p><?php _e( 'Settings saved.', 'wp-hotel-booking' ); ?></p>
+            </div>
 			<?php
 		}
 
@@ -182,6 +186,7 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 			foreach ( $_POST as $k => $v ) {
 				if ( preg_match( '!^' . $this->_option_prefix . '!', $k ) ) {
 					$option_key = preg_replace( '!^' . $this->_option_prefix . '!', '', $k );
+
 					if ( ! $option_key ) {
 						continue;
 					}

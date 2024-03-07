@@ -6,6 +6,9 @@ defined( 'ABSPATH' ) || exit();
 
 global $hb_settings;
 
+$min_value = hb_get_request( 'min_price' );
+$max_value = hb_get_request( 'max_price' );
+
 $fields = apply_filters(
 	'hotel_booking/shortcode/search-filter-v2/field/fields',
 	array(
@@ -13,6 +16,7 @@ $fields = apply_filters(
 		'price'     => array(
 			'min_price' => $atts['min_price'] ?? $hb_settings->get( 'filter_price_min', 0 ),
 			'max_price' => $atts['max_price'] ?? $hb_settings->get( 'filter_price_max', 0 ),
+			'step_price' => $atts['step_price'] ?? $hb_settings->get( 'filter_price_step', 1 ),
 			'min_value' => hb_get_request( 'min_price' ),
 			'max_value' => hb_get_request( 'max_price' ),
 		),

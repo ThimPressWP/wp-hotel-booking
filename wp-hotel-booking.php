@@ -433,6 +433,7 @@ class WP_Hotel_Booking {
 			} else {
 				wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.min.css' ), array(), WPHB_VERSION );
 				wp_register_script( 'wp-hotel-booking', $this->plugin_url( 'assets/js/hotel-booking.min.js' ), $dependencies, WPHB_VERSION, true );
+				wp_register_script( 'wp-hotel-booking-filter-by', $this->plugin_url( 'assets/js/frontend/filter-by.js' ), array(), WPHB_VERSION, true );
 			}
 
 			wp_localize_script( 'wp-hotel-booking', 'hotel_booking_i18n', hb_i18n() );
