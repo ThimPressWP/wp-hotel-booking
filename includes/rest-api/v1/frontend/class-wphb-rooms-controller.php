@@ -69,11 +69,11 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 		$limit           = hb_settings()->get( 'posts_per_page', 8 );
 
 		try {
-			// $date_format = get_option( 'date_format' );
+			$date_format = get_option( 'date_format' );
 
 			if ( strpos( $check_in_date, '/' ) !== false ) {
 				//Strtotime() doesn't work with dd/mm/YYYY format
-				if ( ! strtotime( $check_in_date ) ) {
+				if ( $date_format == 'd/m/Y' ) {
 					$check_in_date = str_replace( '/', '-', $check_in_date );
 				}
 				$check_in_date = date( 'F j, Y', strtotime( $check_in_date ) );
@@ -81,7 +81,7 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 
 			if ( strpos( $check_out_date, '/' ) !== false ) {
 				//Strtotime() doesn't work with dd/mm/YYYY format
-				if ( ! strtotime( $check_out_date ) ) {
+				if ( $date_format == 'd/m/Y' ) {
 					$check_out_date = str_replace( '/', '-', $check_out_date );
 				}
 				$check_out_date = date( 'F j, Y', strtotime( $check_out_date ) );
@@ -167,11 +167,11 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 			}
 		}
 
-		// $date_format = get_option( 'date_format' );
+		$date_format = get_option( 'date_format' );
 
 		if ( strpos( $check_in_date, '/' ) !== false ) {
 			// Strtotime() doesn't work with dd/mm/YYYY format
-			if ( ! strtotime( $check_in_date ) ) {
+			if ( $date_format == 'd/m/Y' ) {
 				$check_in_date = str_replace( '/', '-', $check_in_date );
 			}
 			$check_in_date = date( 'F j, Y', strtotime( $check_in_date ) );
@@ -179,7 +179,7 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 
 		if ( strpos( $check_out_date, '/' ) !== false ) {
 			//Strtotime() doesn't work with dd/mm/YYYY format
-			if ( ! strtotime( $check_out_date ) ) {
+			if ( $date_format == 'd/m/Y' ) {
 				$check_out_date = str_replace( '/', '-', $check_out_date );
 			}
 			$check_out_date = date( 'F j, Y', strtotime( $check_out_date ) );
