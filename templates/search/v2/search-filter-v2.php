@@ -11,7 +11,8 @@ $fields = apply_filters(
 	array(
 		'price'  => array(
 			'min_price' => $atts['min_price'] ?? $hb_settings->get( 'filter_price_min', 0 ),
-			'max_price' => $atts['max_price'] ?? $hb_settings->get( 'filter_price_max', 0 ),
+			'max_price' => $atts['max_price'] ?? $hb_settings->get( 'filter_price_max', 100 ),
+			'step_price' => $atts['step_price'] ?? $hb_settings->get( 'filter_price_step', 1 ),
 			'min_value' => hb_get_request( 'min_price' ),
 			'max_value' => hb_get_request( 'max_price' ),
 		),
