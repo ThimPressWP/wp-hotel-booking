@@ -170,11 +170,11 @@ if ( ! function_exists( 'hb_lightbox_assets_lightbox2' ) ) {
 		wp_enqueue_script( 'lightbox2', WP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/lightbox2/js/lightbox.min.js' ) );
 		wp_enqueue_style( 'lightbox2', WP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/lightbox2/css/lightbox.min.css' ) );
 		?>
-		<script type="text/javascript">
-			jQuery(function () {
+        <script type="text/javascript">
+            jQuery(function () {
 
-			});
-		</script>
+            });
+        </script>
 		<?php
 	}
 }
@@ -541,6 +541,11 @@ if ( ! function_exists( 'hb_setup_shortcode_page_content' ) ) {
 
 	function hb_setup_shortcode_page_content( $content ) {
 		global $post;
+		global $hb_settings;
+
+		if ( ! $post instanceof WP_Post ) {
+			return $content;
+		}
 
 		$page_id = $post->ID;
 
@@ -558,8 +563,11 @@ if ( ! function_exists( 'hb_setup_shortcode_page_content' ) ) {
 		} elseif ( hb_get_page_id( 'checkout' ) == $page_id ) {
 			$content = '[' . apply_filters( 'hotel_booking_checkout_shortcode_tag', 'hotel_booking_checkout' ) . ']';
 		} elseif ( hb_get_page_id( 'search' ) == $page_id ) {
-			$content  = '[' . apply_filters( 'hotel_booking_search_shortcode_tag', 'hotel_booking' ) . ']';
-			$content .= '[' . apply_filters( 'hotel_booking_search_filter_shortcode_tag', 'hotel_booking_filter' ) . ']';
+			$content = '[' . apply_filters( 'hotel_booking_search_shortcode_tag', 'hotel_booking' ) . ']';
+
+			if ( $hb_settings->get( 'filter_price_enable', '' ) ) {
+				$content .= '[' . apply_filters( 'hotel_booking_search_filter_shortcode_tag', 'hotel_booking_filter' ) . ']';
+			}
 		} elseif ( hb_get_page_id( 'account' ) == $page_id ) {
 			$content = '[' . apply_filters( 'hotel_booking_account_shortcode_tag', 'hotel_booking_account' ) . ']';
 		} elseif ( hb_get_page_id( 'thankyou' ) == $page_id ) {
@@ -595,7 +603,7 @@ if ( ! function_exists( 'hotel_booking_edit_room_link' ) ) {
 			$user = get_user_by( 'id', $user_id );
 			if ( $user->has_cap( 'edit_hb_rooms' ) ) {
 				?>
-				<a href="<?php echo esc_url( get_edit_post_link( get_the_ID() ) ); ?>"><?php _e( 'Edit', 'wp-hotel-booking' ); ?></a>
+                <a href="<?php echo esc_url( get_edit_post_link( get_the_ID() ) ); ?>"><?php _e( 'Edit', 'wp-hotel-booking' ); ?></a>
 				<?php
 			}
 		}
@@ -621,11 +629,11 @@ if ( ! function_exists( 'hb_print_mini_cart_template' ) ) {
 // add skeleton
 function wphb_skeleton_animation_html( $count_li = 3, $width = 'random', $styleli = '', $styleul = '' ) {
 	?>
-	<ul class="wphb-skeleton-animation" style="<?php echo ! empty( $styleul ) ? $styleul : ''; ?>">
-		<?php for ( $i = 0; $i < absint( $count_li ); $i++ ) : ?>
-			<li style="width: <?php echo $width === 'random' ? wp_rand( 60, 100 ) . '%' : $width; ?>; <?php echo ! empty( $styleli ) ? $styleli : ''; ?>"></li>
+    <ul class="wphb-skeleton-animation" style="<?php echo ! empty( $styleul ) ? $styleul : ''; ?>">
+		<?php for ( $i = 0; $i < absint( $count_li ); $i ++ ) : ?>
+            <li style="width: <?php echo $width === 'random' ? wp_rand( 60, 100 ) . '%' : $width; ?>; <?php echo ! empty( $styleli ) ? $styleli : ''; ?>"></li>
 		<?php endfor; ?>
-	</ul>
+    </ul>
 
 	<?php
 }
