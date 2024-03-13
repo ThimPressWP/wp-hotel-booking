@@ -136,22 +136,28 @@ class WPHB_Room_Booking_Available {
 
 			$dates_available = array();
 			if ( ! empty( $date_booked ) ) {
+				$date_booked_qty = array();
 				foreach ( $date_booked as $order_id => $data_order ) {
 					if ( isset( $data_order['dates_booked'] ) ) {
 						foreach ( $data_order['dates_booked'] as $key => $date ) {
+						    $date_booked_qty[ $date ] = $date_booked_qty[ $date ] ?? 0;
 							if ( $date < $current_date ) {
 								unset( $date_booked[ $order_id ]['dates_booked'][ $key ] );
 								continue;
 							}
 							if ( isset( $data_order['status'] ) && $data_order['status'] == 'hb-completed' ) {
 								if ( isset( $data_order['quantity'] ) && $num_of_room >= $data_order['quantity'] ) {
-									$dates_available[ $date ] = absint( $num_of_room - $data_order['quantity'] );
+									$date_booked_qty[ $date ] +=  $data_order['quantity'];
 								}
-							} else {
-								$dates_available[ $date ] = absint( $num_of_room );
 							}
 						}
 					}
+				}
+
+				if ( ! empty( $date_booked_qty ) ) {
+				    foreach ( $date_booked_qty as $date => $booked_qty ) {
+				        $dates_available[ $date ] = $num_of_room - $booked_qty < 0 ? 0 : $num_of_room - $booked_qty;
+				    }
 				}
 
 				update_post_meta( $room_id, '_hb_dates_booked', $date_booked );
