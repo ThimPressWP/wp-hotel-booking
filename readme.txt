@@ -2,10 +2,10 @@
 Contributors: thimpress, leehld, phamtungpth, thoakim
 Donate link: https://thimpress.com/
 Tags: hotel, booking, hotel booking, reservation, reservations
-Requires at least: 6.2
-Requires PHP: 7.0
-Tested up to: 6.3.2
-Stable tag: 2.0.9
+Requires at least: 6.3
+Requires PHP: 7.4
+Tested up to: 6.4.2
+Stable tag: 2.0.9.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,20 @@ Yes.
 7. System settings
 
 == Changelog ==
+
+= 2.0.9.4 (2024-02-03) =
+~ Fixed: minor bugs.
+
+= 2.0.9.3 (2024-02-01) =
+~ Fixed: security.
+~ Fixed: wrong data format in rest api.
+~ Fixed: error session_start.
+
+= 2.0.9.2 (2024-01-30) =
+~ Fixed: minor bugs.
+
+= 2.0.9.1 (2024-01-15) =
+~ Fixed: minor bugs.
 
 = 2.0.9 (2023-10-26) =
 ~ Fixed: security.

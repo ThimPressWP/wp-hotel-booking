@@ -95,8 +95,8 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				}
 			}
 
-			$meta_query = [];
-			$tax_query  = [];
+			$meta_query = array();
+			$tax_query  = array();
 
 			//Price
 			$min_price = hb_get_request( 'min_price' );

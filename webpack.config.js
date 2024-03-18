@@ -6,14 +6,13 @@ const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extrac
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-const file_single_js_not_app = entries( './assets/src/js/**/*.tsx' );
-const webpack = require( 'webpack' );
-
 module.exports = {
 	...defaultConfig,
 	entry: {
-		// App file
-		//app: './assets/src/app/App.tsx',
+		'frontend/hotel-booking': './assets/js/frontend/hotel-booking.js',
+		'frontend/hotel-booking-v2': './assets/js/frontend/hotel-booking-v2.js',
+		'frontend/filter-by': './assets/js/frontend/filter-by.js',
+		'frontend/sort-by': './assets/js/frontend/sort-by.js',
 	},
 	output: {
 		filename: '[name]' + ( isProduction ? '.min.js' : '.js' ),

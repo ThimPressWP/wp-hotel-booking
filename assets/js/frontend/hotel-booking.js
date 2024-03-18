@@ -764,97 +764,6 @@
 			$('#txtToDate').datepicker('show');
 		});
 
-		// $('form[class^="hb-search-form"]').submit(function (e) {
-		// 	e.preventDefault();
-		// 	var _self = $(this),
-		// 		unique = _self.attr('class'),
-		// 		button = _self.find('button[type="submit"]');
-
-		// 	unique = unique.replace('hb-search-form-', '');
-
-		// 	_self.find('input, select').removeClass('error');
-		// 	var $check_in = $('#check_in_date_' + unique);
-		// 	if ($check_in.val() === '' || !isDate($check_in.datepicker('getDate'))) {
-		// 		$check_in.addClass('error');
-		// 		return false;
-		// 	}
-
-		// 	var $check_out = $('#check_out_date_' + unique);
-		// 	if ($check_out.val() === '' || !isDate($check_out.datepicker('getDate'))) {
-		// 		$check_out.addClass('error');
-		// 		return false;
-		// 	}
-
-		// 	if ($check_in.datepicker('getDate') === null) {
-		// 		$check_in.addClass('error');
-		// 		return false;
-		// 	}
-
-		// 	if ($check_out.datepicker('getDate') === null) {
-		// 		$check_out.addClass('error');
-		// 		return false;
-		// 	}
-
-		// 	var check_in = new Date($check_in.datepicker('getDate')),
-		// 		check_out = new Date($check_out.datepicker('getDate')),
-		// 		current = new Date();
-		// 	// if (check_in.compareWith(current) == -1) {
-		// 	// 	$check_in.addClass('error');
-		// 	// 	return false;
-		// 	// }
-
-		// 	if (check_in.compareWith(check_out) >= 0) {
-		// 		$check_in.addClass('error');
-		// 		error = true;
-		// 		return false;
-		// 	}
-
-		// 	var action = $(this).attr('action') || window.location.href;
-		// 	var data = $(this).serializeArray();
-		// 	for (var i = 0; i < data.length; i++) {
-		// 		var input = data[i];
-		// 		if (input.name === 'check_in_date' || input.name === 'check_out_date') {
-		// 			var time = $(this).find('input[name="' + input.name + '"]').datepicker('getDate');
-		// 			time = new Date(time);
-		// 			data.push({
-		// 				name : 'hb_' + input.name,
-		// 				value: time.getTime() / 1000 - (time.getTimezoneOffset() * 60)
-		// 			})
-		// 		}
-		// 	}
-
-		// 	$.ajax({
-		// 		url       : hotel_settings.ajax,
-		// 		type      : 'post',
-		// 		dataType  : 'html',
-		// 		data      : data,
-		// 		beforeSend: function () {
-		// 			button.attr('disabled', 'disabled');
-		// 			button.html('<span class="lds-ring"><span></span><span></span><span></span><span></span></span>' + button.html());
-		// 		},
-		// 		success   : function (response) {
-		// 			response = parseJSON(response);
-		// 			if (typeof response.success === 'undefined' || !response.success) {
-		// 				return;
-		// 			}
-
-		// 			// redirect if url is ! undefined
-		// 			if (typeof response.url !== 'undefined') {
-		// 				window.location.href = response.url;
-		// 			} else if (response.sig) {
-		// 				if (action.indexOf('?') === -1) {
-		// 					action += '?hotel-booking-params=' + response.sig;
-		// 				} else {
-		// 					action += '&hotel-booking-params=' + response.sig;
-		// 				}
-		// 				window.location.href = action;
-		// 			}
-		// 			// button.removeClass('hb_loading');
-		// 		}
-		// 	});
-		// 	return false;
-		// });
-
 		$('form#hb-payment-form').submit(function (e) {
 			e.preventDefault();
 			var _self = $(this);
@@ -875,11 +784,11 @@
 					return false;
 				}
 
-				if (_method === 'stripe') {
-					stripeSubmit(_self);
-				} else {
+				// if (_method === 'stripe') {
+				// 	stripeSubmit(_self);
+				// } else {
 					orderSubmit(_self);
-				}
+				// }
 
 			} catch (e) {
 				alert(e);
