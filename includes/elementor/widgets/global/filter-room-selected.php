@@ -225,17 +225,16 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
         $text_reset         = $settings['text_reset'] ?? esc_html__('Clear', 'wp-hotel-booking');
         $title_selected     = $settings['title_selected'] ?? esc_html__('Selected', 'wp-hotel-booking');
 
-        echo '<div class="hb-filter-room-selected">';
-		if (! empty( $_GET ) || Plugin::$instance->editor->is_edit_mode()) {
-        	echo '<h4 class="title">'. $title_selected .'</h4>';
+		if (!empty($_GET['room_type']) || !empty($_GET['rating']) || !empty($_GET['min_price']) || !empty($_GET['max_price']) || Plugin::$instance->editor->is_edit_mode()) {
+			echo '<div class="hb-filter-room-selected">';
+				echo '<h4 class="title">'. $title_selected .'</h4>';
+				echo '<div class="selected-list">';
+					$this->selected_style_list($settings);
+				echo '</div>';
+				echo '<button class="clear-selected-list">'. $text_reset .'</button>';
+			echo '</div>';
 		}
-        echo '<div class="selected-list">';
-        	$this->selected_style_list($settings);
-        echo '</div>';
-		if (! empty( $_GET ) || Plugin::$instance->editor->is_edit_mode()) {
-        	echo '<button class="clear-selected-list">'. $text_reset .'</button>';
-		}
-        echo '</div>';
+        
 
     }
 
@@ -290,7 +289,7 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 
 		if (!empty($_GET['min_price']) || !empty($_GET['max_price'])) {
 			echo '<span class="' . $classListItem . '" data-name="price" data-value="price">' ;
-			echo esc_html__('Price', 'wp-hotel-booking').': '. $_GET['min_price'] . $currency_symbol .' - '. $_GET['max_price']. $currency_symbol;
+			echo esc_html__('Price', 'wp-hotel-booking').': '. hb_format_price( $_GET['min_price'],$currency_symbol ) .' - '. hb_format_price( $_GET['max_price'],$currency_symbol );
 			echo '' . $icon_move . '</span>';
 		}
 	}
