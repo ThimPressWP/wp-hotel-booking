@@ -348,7 +348,7 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 			[
 				'name'     => 'field_border',
 				'label'    => esc_html__( 'Border', 'wp-hotel-booking' ),
-				'selector' => '{{WRAPPER}} .search-filter-form-el .field-item',
+				'selector' => '{{WRAPPER}} .search-filter-form-el .hb-type-field',
 			]
 		);
 
@@ -359,7 +359,7 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
-					'{{WRAPPER}} .search-filter-form-el .field-item' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .search-filter-form-el .hb-type-field' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -371,7 +371,7 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
-					'{{WRAPPER}} .search-filter-form-el .field-item' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .search-filter-form-el .hb-type-field' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -383,7 +383,7 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
-					'{{WRAPPER}} .search-filter-form-el .field-item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .search-filter-form-el .hb-type-field' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
