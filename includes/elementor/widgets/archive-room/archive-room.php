@@ -362,10 +362,6 @@ class Thim_Ekit_Widget_Archive_Room extends Widget_Base {
 
 		$page_limit = $query->max_num_pages;
 
-		if ( '' !== $settings['pagination_page_limit'] && ! $ajax_pagination ) {
-			$page_limit = min( $settings['pagination_page_limit'], $page_limit );
-		}
-
 		if ( 2 > $page_limit ) {
 			return;
 		}
