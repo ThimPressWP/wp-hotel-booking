@@ -850,6 +850,7 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 	}
 
     protected function render() {
+		global $hb_settings;
         $settings    = $this->get_settings_for_display();
 		$extraClass = '';
 
@@ -893,12 +894,18 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 
 					$classes .= ' elementor-repeater-item-'.$data['_id'];
 
+					$data['step_price'] = $hb_settings->get( 'filter_price_step', 1 );
+					$data['min_price']  = $data['min_price'] ?? $hb_settings->get( 'filter_price_min', 0 );
+					$data['max_price']  = $data['max_price'] ?? $hb_settings->get( 'filter_price_max', 0 );
+					$data['min_value']  = hb_get_request( 'min_price' );
+					$data['max_value']  = hb_get_request( 'max_price' );
+			
 					switch ( $data['meta_field'] ) {
 						case 'clear':
 							?>
 							<div class="clear-filter">
 								<button type="button">
-									<?php esc_html_e( 'Clear all fields', 'wp-hotel-booking' ); ?>
+									<?php esc_html_e( 'Reset', 'wp-hotel-booking' ); ?>
 								</button>
 							</div>
 							<?php
@@ -955,8 +962,8 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 			$rating =  count(explode(',', $_GET['rating']));
 		}
 		if (!empty($_GET['min_price']) || !empty($_GET['max_price'])) {
-			$price =  count(explode(',', $_GET['min_price']));
-			$price =  count(explode(',', $_GET['max_price']));
+			$price =  count(explode(',', $_GET['min-price']));
+			$price =  count(explode(',', $_GET['max-price']));
 		}
 
 		$total = $types + $rating + $price;

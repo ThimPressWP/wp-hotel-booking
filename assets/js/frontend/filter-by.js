@@ -5,6 +5,42 @@ const getParam = (param) => {
     return urlParams.get(param);
 }
 
+const renderPrice = (price) => {
+    const currencySymbol = hotel_settings.currency_symbol || '';
+    const currencyPosition = hotel_settings.currency_position || 'left';
+
+    price = renderPriceNumber(price);
+
+    switch (currencyPosition) {
+        case 'left':
+            price = currencySymbol + price;
+            break;
+        case 'right':
+            price = price + currencySymbol;
+            break;
+        case 'left_with_space':
+            price = currencySymbol + ' ' + price;
+            break;
+        case 'right_with_space':
+            price = price + ' ' + currencySymbol;
+            break;
+        default:
+            break;
+    }
+
+    return price;
+};
+
+const renderPriceNumber = (price) => {
+    const numberDecimals = hotel_settings.number_decimal || 0;
+    const thousandsSeparator = hotel_settings.thousands_separator || '';
+
+    price = (price / 1).toFixed(numberDecimals);
+    price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, thousandsSeparator);
+
+    return price;
+};
+
 const hbPriceSlider = () => {
     const priceFields = document.querySelectorAll('.hb-price-field');
     if (!priceFields) {
