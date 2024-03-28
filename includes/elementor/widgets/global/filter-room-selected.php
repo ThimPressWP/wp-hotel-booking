@@ -228,7 +228,7 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 			'selected_style_clear_button', $section_args
 		);
 
-		$this->register_button_style( 'clear_selected', '.hb-filter-room-selected .clear-selected-list' );
+		$this->register_button_style( 'clear_selected', '#hotel-booking-search-filter .hb-filter-room-selected .clear-selected-list' );
 
 		$this->add_responsive_control(
 			'clear_selected_margin',
@@ -237,7 +237,7 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
-					'{{WRAPPER}} .hb-filter-room-selected .clear-selected-list' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} #hotel-booking-search-filter .hb-filter-room-selected .clear-selected-list' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
