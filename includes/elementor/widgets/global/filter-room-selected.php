@@ -93,7 +93,7 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 	protected function register_section_style_item_selected( $condition = null ){
 
 		$section_args = [
-			'label' => esc_html__( 'Item', 'wp-hotel-booking' ),
+			'label' => esc_html__( 'Selected Item', 'wp-hotel-booking' ),
 			'tab'   => Controls_Manager::TAB_STYLE,
 		];
 
@@ -150,7 +150,7 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 	protected function register_section_style_icon_selected( $condition = null ){
 
 		$section_args = [
-			'label' => esc_html__( 'Icon', 'wp-hotel-booking' ),
+			'label' => esc_html__( 'Selected Icon', 'wp-hotel-booking' ),
 			'tab'   => Controls_Manager::TAB_STYLE,
 		];
 
@@ -216,7 +216,7 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 	protected function register_section_clear_button( $condition = null ){
 
 		$section_args = [
-			'label' => esc_html__( 'Clear Button', 'wp-hotel-booking' ),
+			'label' => esc_html__( 'Selected Clear Button', 'wp-hotel-booking' ),
 			'tab'   => Controls_Manager::TAB_STYLE,
 		];
 
