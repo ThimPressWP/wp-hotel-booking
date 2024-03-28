@@ -37,11 +37,23 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 	}
 
     protected function register_controls() {
-        $this->start_controls_section(
-			'section_selected',
-			[
-				'label' => __( 'Selected Area', 'wp-hotel-booking' ),
-			]
+        $this->register_section_selected_options();
+		$this->register_section_style_item_selected();
+		$this->register_section_style_icon_selected();
+		$this->register_section_clear_button();
+    }
+	
+	protected function register_section_selected_options( $condition = null ) {
+		$section_args = [
+			'label' => __( 'Selected Area', 'wp-hotel-booking' ),
+		];
+
+		if ( is_array( $condition ) ) {
+			$section_args['condition'] = $condition;
+		}
+
+		$this->start_controls_section(
+			'section_selected', $section_args
 		);
 
         $this->add_control(
@@ -77,22 +89,24 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 		);
 
         $this->end_controls_section();
-		$this->register_section_style_item();
-		$this->register_section_style_icon();
-		$this->register_section_clear_button();
-    }
+	}
+	protected function register_section_style_item_selected( $condition = null ){
 
-	protected function register_section_style_item(){
+		$section_args = [
+			'label' => esc_html__( 'Item', 'wp-hotel-booking' ),
+			'tab'   => Controls_Manager::TAB_STYLE,
+		];
+
+		if ( is_array( $condition ) ) {
+			$section_args['condition'] = $condition;
+		}
+
 		$this->start_controls_section(
-			'style_item',
-			[
-				'label' => esc_html__( 'Item', 'wp-hotel-booking' ),
-				'tab'   => Controls_Manager::TAB_STYLE,
-			]
+			'selected_style_item', $section_args
 		);
 
 		$this->add_responsive_control(
-			'space_between',
+			'selected_space_between',
 			array(
 				'label'      => esc_html__( 'Space Between', 'wp-hotel-booking' ),
 				'type'       => Controls_Manager::SLIDER,
@@ -119,7 +133,7 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 		$this->register_button_style( 'item_selected', '.hb-filter-room-selected .selected-item' );
 
 		$this->add_responsive_control(
-			'item_selected_margin',
+			'selected_item_selected_margin',
 			[
 				'label'      => esc_html__( 'Margin', 'wp-hotel-booking' ),
 				'type'       => Controls_Manager::DIMENSIONS,
@@ -133,17 +147,23 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 		$this->end_controls_section();
 	}
 
-	protected function register_section_style_icon(){
+	protected function register_section_style_icon_selected( $condition = null ){
+
+		$section_args = [
+			'label' => esc_html__( 'Icon', 'wp-hotel-booking' ),
+			'tab'   => Controls_Manager::TAB_STYLE,
+		];
+
+		if ( is_array( $condition ) ) {
+			$section_args['condition'] = $condition;
+		}
+
 		$this->start_controls_section(
-			'style_icon',
-			[
-				'label' => esc_html__( 'Icon', 'wp-hotel-booking' ),
-				'tab'   => Controls_Manager::TAB_STYLE,
-			]
+			'selected_style_icon', $section_args
 		);
 
 		$this->add_responsive_control(
-			'icon_size',
+			'selected_icon_size',
 			[
 				'label'     => esc_html__( 'Font Size', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::SLIDER,
@@ -155,7 +175,7 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 		);
 
 		$this->add_control(
-			'icon_color',
+			'selected_icon_color',
 			[
 				'label'     => esc_html__( 'Color', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::COLOR,
@@ -167,7 +187,7 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 		);
 
 		$this->add_control(
-			'icon_color_hover',
+			'selected_icon_color_hover',
 			[
 				'label'     => esc_html__( 'Color Hover', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::COLOR,
@@ -179,7 +199,7 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 		);
 
 		$this->add_responsive_control(
-			'icon_margin',
+			'selected_icon_margin',
 			[
 				'label'      => esc_html__( 'Margin', 'wp-hotel-booking' ),
 				'type'       => Controls_Manager::DIMENSIONS,
@@ -193,13 +213,19 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 		$this->end_controls_section();
 	}
 
-	protected function register_section_clear_button(){
+	protected function register_section_clear_button( $condition = null ){
+
+		$section_args = [
+			'label' => esc_html__( 'Clear Button', 'wp-hotel-booking' ),
+			'tab'   => Controls_Manager::TAB_STYLE,
+		];
+
+		if ( is_array( $condition ) ) {
+			$section_args['condition'] = $condition;
+		}
+
 		$this->start_controls_section(
-			'style_clear_button',
-			[
-				'label' => esc_html__( 'Clear Button', 'wp-hotel-booking' ),
-				'tab'   => Controls_Manager::TAB_STYLE,
-			]
+			'selected_style_clear_button', $section_args
 		);
 
 		$this->register_button_style( 'clear_selected', '.hb-filter-room-selected .clear-selected-list' );
@@ -218,9 +244,12 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 
 		$this->end_controls_section();
 	}
+	public function render(){
+		$settings    = $this->get_settings_for_display();
+		$this->render_selected($settings);
+	}
 
-    protected function render() {
-        $settings    = $this->get_settings_for_display();
+    protected static function render_selected($settings) {
 
         $text_reset         = $settings['text_reset'] ?? esc_html__('Clear', 'wp-hotel-booking');
         $title_selected     = $settings['title_selected'] ?? esc_html__('Selected', 'wp-hotel-booking');
@@ -229,16 +258,14 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 			echo '<div class="hb-filter-room-selected">';
 				echo '<h4 class="title">'. $title_selected .'</h4>';
 				echo '<div class="selected-list">';
-					$this->selected_style_list($settings);
+					self::selected_style_list($settings);
 				echo '</div>';
 				echo '<button class="clear-selected-list">'. $text_reset .'</button>';
 			echo '</div>';
 		}
-        
-
     }
 
-	protected function selected_style_list($settings){
+	protected static function selected_style_list($settings){
 		$types = $ratings = $html_icon = '';
 		$classListItem = 'selected-item';
 		$currency            = get_option( 'tp_hotel_booking_currency', 'USD' );

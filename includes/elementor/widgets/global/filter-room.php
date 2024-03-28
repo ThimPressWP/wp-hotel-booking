@@ -9,11 +9,17 @@ use Elementor\Icons_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Box_Shadow;
 use WPHB\HBGroupControlTrait;
+use Elementor\Thim_Ekit_Widget_Filter_Room_Selected;
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
+
+if (!class_exists('Thim_Ekit_Widget_Filter_Room_Selected')){
+	require_once WPHB_PLUGIN_PATH . '/includes/elementor/widgets/global/filter-room-selected.php';
+}
+class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected {
+
     use GroupControlTrait;
 	use HBGroupControlTrait;
 
@@ -192,6 +198,21 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 		$this->register_section_style_form_popup();
 		$this->register_section_style_button_popup();
 		$this->register_section_style_selected_number();
+		$this->register_section_style_item_selected(
+			array(
+				'selected_list' => 'yes'
+			)
+		);
+		$this->register_section_style_icon_selected(
+			array(
+				'selected_list' => 'yes'
+			)
+		);
+		$this->register_section_clear_button(
+			array(
+				'selected_list' => 'yes'
+			)
+		);
     }
 
 	protected function register_section_extra(){
@@ -291,6 +312,18 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'selected_list',
+			[
+				'label'        => esc_html__( 'Selected List', 'wp-hotel-booking' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'default'      => 'no',
+				'label_on'     => esc_html__( 'Show', 'wp-hotel-booking' ),
+				'label_off'    => esc_html__( 'Hide', 'wp-hotel-booking' ),
+				'return_value' => 'yes',
+			]
+		);
+
 		$this->add_responsive_control(
 			'filter_section_width',
 			[
@@ -309,6 +342,12 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 		$this->end_popover();
 
 		$this->end_controls_section();
+
+		$this->register_section_selected_options(
+			array(
+				'selected_list' => 'yes'
+			)
+		);
 	}
 
 	protected function register_section_style_field(){
@@ -577,7 +616,7 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
-					'{{WRAPPER}} .search-filter-form-el .clear-filter' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} #hotel-booking-search-filter .clear-filter button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -849,7 +888,7 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 		$this->end_controls_section();
 	}
 
-    protected function render() {
+    public function render() {
 		global $hb_settings;
         $settings    = $this->get_settings_for_display();
 		$extraClass = '';
@@ -869,6 +908,9 @@ class Thim_Ekit_Widget_Filter_Room extends Widget_Base {
 			?>
             <form class="search-filter-form search-filter-form-el <?php echo esc_attr($extraClass) ?>" action="">
                 <?php 
+				if ( $settings['selected_list'] == 'yes' ) {
+					self::render_selected($settings);
+				}
                 foreach ( $settings['data'] as $data ) {
 					$classes = $icon_toggle = '';
 
