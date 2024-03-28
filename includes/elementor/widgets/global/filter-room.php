@@ -475,7 +475,7 @@ class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected
 			]
 		);
 
-		$this->register_style_typo_color_margin('item_filter', '.hotel-booking-search-filter .list-item');
+		$this->register_style_typo_color_margin('item_filter', '#hotel-booking-search-filter .hotel-booking-search-filter .list-item');
 
 		$this->add_control(
 			'item_color_hover',
