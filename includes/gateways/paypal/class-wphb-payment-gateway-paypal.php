@@ -91,11 +91,11 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 		$this->paypal_nvp_api_live_url    = 'https://api-3t.paypal.com/nvp';
 		$this->paypal_nvp_api_sandbox_url = 'https://api-3t.sandbox.paypal.com/nvp';
 		$settings                         = $this->_settings;
-		if ( $settings['use_paypal_rest'] == 'on' ) {
+		if ( ! empty( $this->_settings['use_paypal_rest'] ) && $settings['use_paypal_rest'] == 'on' ) {
 			$this->paypal_client_id     = $settings['app_client_id'];
 			$this->paypal_client_secret = $settings['app_client_secret'];
 		}
-		$this->api_url = $settings['sandbox'] == 'on' ? $this->api_sandbox_url : $this->api_live_url;
+		$this->api_url = ( !empty( $settings['sandbox'] ) && $settings['sandbox'] == 'on' ) ? $this->api_sandbox_url : $this->api_live_url;
 
 		$this->init();
 	}
@@ -110,7 +110,7 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 		add_action( 'hb_manage_booking_column_total', array( $this, 'column_total_content' ), 10, 3 );
 		add_filter( 'hb_payment_method_title_paypal', array( $this, 'payment_method_title' ) );
 		hb_register_web_hook( 'paypal-standard', 'hotel-booking-paypal-standard' );
-		if ( $this->_settings['use_paypal_rest'] == 'on' ) {
+		if ( ! empty( $this->_settings['use_paypal_rest'] ) && $this->_settings['use_paypal_rest'] == 'on' ) {
 			$this->capture_payment_for_order();
 		} else {
 			add_action( 'hb_do_transaction_paypal-standard', array( $this, 'process_booking_paypal_standard' ) );
