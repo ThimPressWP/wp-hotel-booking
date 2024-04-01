@@ -75,6 +75,10 @@ Yes.
 
 == Changelog ==
 
+= 2.0.9.5 (2024-04-01) =
+~ Update: calculate_dates_available _hb_dates_available with correct logic.
+~ Added: new handle PayPal payment.
+
 = 2.0.9.4 (2024-02-03) =
 ~ Fixed: minor bugs.
 
