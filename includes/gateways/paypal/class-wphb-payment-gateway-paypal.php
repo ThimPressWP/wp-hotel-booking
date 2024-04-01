@@ -418,38 +418,42 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 		if ( empty( $paypal_order_id ) ) {
 			return;
 		}
-		$data_token = $this->get_paypal_access_token();
-		if ( ! isset( $data_token->access_token ) || ! isset( $data_token->token_type ) ) {
-			throw new Exception( __( 'Invalid Paypal access token', 'wp-hotel-booking' ) );
-		}
-
-		$response = wp_remote_post(
-			$this->api_url . 'v2/checkout/orders/' . $paypal_order_id . '/capture',
-			array(
-				'headers' => array(
-					'Content-Type'  => 'application/json',
-					'Authorization' => $data_token->token_type . ' ' . $data_token->access_token,
-				),
-				'timeout' => 60,
-			)
-		);
-
-		if ( $response['response']['code'] === 201 ) {
-			$body        = wp_remote_retrieve_body( $response );
-			$transaction = json_decode( $body );
-			if ( json_last_error() !== JSON_ERROR_NONE ) {
-				throw new Exception( json_last_error_msg() );
+		try {
+			$data_token = $this->get_paypal_access_token();
+			if ( ! isset( $data_token->access_token ) || ! isset( $data_token->token_type ) ) {
+				throw new Exception( __( 'Invalid Paypal access token', 'wp-hotel-booking' ) );
 			}
-			if ( $transaction->status === 'COMPLETED' ) {
-				$booking_id  = $transaction->purchase_units[0]->payments->captures[0]->custom_id;
-				$booking     = WPHB_Booking::instance( $booking_id );
-				$paid_amount = $transaction->purchase_units[0]->payments->captures[0]->amount->value;
-				if ( (float) $paid_amount == (float) $booking->total() ) {
-					$booking->update_status( 'completed' );
-				} else {
-					$booking->update_status( 'processing' );
+
+			$response = wp_remote_post(
+				$this->api_url . 'v2/checkout/orders/' . $paypal_order_id . '/capture',
+				array(
+					'headers' => array(
+						'Content-Type'  => 'application/json',
+						'Authorization' => $data_token->token_type . ' ' . $data_token->access_token,
+					),
+					'timeout' => 60,
+				)
+			);
+
+			if ( $response['response']['code'] === 201 ) {
+				$body        = wp_remote_retrieve_body( $response );
+				$transaction = json_decode( $body );
+				if ( json_last_error() !== JSON_ERROR_NONE ) {
+					throw new Exception( json_last_error_msg() );
+				}
+				if ( $transaction->status === 'COMPLETED' ) {
+					$booking_id  = $transaction->purchase_units[0]->payments->captures[0]->custom_id;
+					$booking     = WPHB_Booking::instance( $booking_id );
+					$paid_amount = $transaction->purchase_units[0]->payments->captures[0]->amount->value;
+					if ( (float) $paid_amount == (float) $booking->total() ) {
+						$booking->update_status( 'completed' );
+					} else {
+						$booking->update_status( 'processing' );
+					}
 				}
 			}
+		} catch ( Throwable $e ) {
+			error_log( __METHOD__ . $e->getMessage() );
 		}
 	}
 
