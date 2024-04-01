@@ -4,8 +4,8 @@ Donate link: https://thimpress.com/
 Tags: hotel, booking, hotel booking, reservation, reservations
 Requires at least: 6.3
 Requires PHP: 7.4
-Tested up to: 6.4.2
-Stable tag: 2.0.9.3
+Tested up to: 6.5
+Stable tag: 2.0.9.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,7 +76,8 @@ Yes.
 == Changelog ==
 
 = 2.0.9.5 (2024-04-01) =
-~ Update: calculate_dates_available _hb_dates_available with correct logic.
+~ Compatible with WP 6.5.
+~ Update: calculate_dates_available, _hb_dates_available methods with correct logic.
 ~ Added: new handle PayPal payment.
 
 = 2.0.9.4 (2024-02-03) =
