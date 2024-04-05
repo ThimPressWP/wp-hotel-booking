@@ -511,9 +511,6 @@
 						room_title.find('.hb-message').remove();
 					}, 2000);
 
-					if (typeof el_build !== 'undefined') {
-						alert('Please select room number');
-					}
 					return false;
 				}
 				var data = $(this).serializeArray();

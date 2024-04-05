@@ -202,6 +202,7 @@
 		justify-content: space-between;
 		align-items: flex-start;
 		flex-wrap: wrap;
+		gap: 30px;
 
 		&__left {
 			display: flex;
@@ -209,6 +210,11 @@
 			flex-wrap: wrap;
 			column-gap: 16px;
 			row-gap: 5px;
+			max-width: 35%;
+
+			@media (max-width: 767px) {
+				max-width: 100%;
+			}
 
 			.average-value {
 				font-size: 40px;
@@ -241,6 +247,11 @@
 		}
 
 		&__right {
+			max-width: 60%;
+
+			@media (max-width: 767px) {
+				max-width: 100%;
+			}
 			.stars {
 				display: flex;
 				align-items: center;
@@ -257,7 +268,9 @@
 					width: 350px;
 					border-radius: 200px;
 					overflow: hidden;
-
+					@media (max-width: 767px) {
+						max-width: 60%;
+					}
 					.full_bar {
 						position: absolute;
 						top: 0;

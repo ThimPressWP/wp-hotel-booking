@@ -8,6 +8,7 @@
     .hb-room-thumbnail-gallery-popup {
         display: flex;
         justify-content: space-between;
+        flex-wrap: wrap;
     
         .first-gallery {
             display: block;
@@ -34,9 +35,13 @@
             width: 100%;
             position: relative;
             flex-wrap: wrap;
-            flex: 1;
             display: flex;
             justify-content: flex-end;
+
+            @media (max-width: 767px) {
+                max-width: var(--hb-gallery-thumbnails-width, 30%);
+                padding-top: 16px;
+            }
     
             li {
                 width: 100%;
@@ -86,21 +91,6 @@
                     object-fit: cover;
                 }
     
-            }
-    
-            @media (max-width: 767px) {
-                margin-top: 1px;
-    
-                li {
-                    max-width: calc(25% - 1px);
-    
-                    &.more {
-                        span {
-                            font-size: 0.8rem;
-                            line-height: 1.3;
-                        }
-                    }
-                }
             }
         }
     }
