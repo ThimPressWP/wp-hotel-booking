@@ -49,6 +49,27 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 	protected $paypal_nvp_api_sandbox_url = null;
 
 	/**
+	 * @var null
+	 */
+	protected $paypal_client_secret = null;
+	/**
+	 * @var null
+	 */
+	protected $paypal_client_id = null;
+	/**
+	 * @var null
+	 */
+	protected $api_sandbox_url = 'https://api-m.sandbox.paypal.com/';
+	/**
+	 * @var string
+	 */
+	protected $api_live_url = 'https://api-m.paypal.com/';
+	/**
+	 * @var string|null
+	 */
+	protected $api_url = null;
+
+	/**
 	 * @var array
 	 */
 	protected $_settings = array();
@@ -69,6 +90,12 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 		$this->paypal_payment_sandbox_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
 		$this->paypal_nvp_api_live_url    = 'https://api-3t.paypal.com/nvp';
 		$this->paypal_nvp_api_sandbox_url = 'https://api-3t.sandbox.paypal.com/nvp';
+		$settings                         = $this->_settings;
+		if ( ! empty( $this->_settings['use_paypal_rest'] ) && $settings['use_paypal_rest'] == 'on' ) {
+			$this->paypal_client_id     = $settings['app_client_id'];
+			$this->paypal_client_secret = $settings['app_client_secret'];
+		}
+		$this->api_url = ( !empty( $settings['sandbox'] ) && $settings['sandbox'] == 'on' ) ? $this->api_sandbox_url : $this->api_live_url;
 
 		$this->init();
 	}
@@ -79,11 +106,16 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 	function init() {
 		add_action( 'hb_payment_gateway_form_' . $this->slug, array( $this, 'form' ) );
 		add_action( 'hb_do_checkout_' . $this->_slug, array( $this, 'process_checkout' ) );
-		add_action( 'hb_do_transaction_paypal-standard', array( $this, 'process_booking_paypal_standard' ) );
-		add_action( 'hb_web_hook_hotel-booking-paypal-standard', array( $this, 'web_hook_process_paypal_standard' ) );
+
 		add_action( 'hb_manage_booking_column_total', array( $this, 'column_total_content' ), 10, 3 );
 		add_filter( 'hb_payment_method_title_paypal', array( $this, 'payment_method_title' ) );
 		hb_register_web_hook( 'paypal-standard', 'hotel-booking-paypal-standard' );
+		if ( ! empty( $this->_settings['use_paypal_rest'] ) && $this->_settings['use_paypal_rest'] == 'on' ) {
+			$this->capture_payment_for_order();
+		} else {
+			add_action( 'hb_do_transaction_paypal-standard', array( $this, 'process_booking_paypal_standard' ) );
+			add_action( 'hb_web_hook_hotel-booking-paypal-standard', array( $this, 'web_hook_process_paypal_standard' ) );
+		}
 	}
 
 	/**
@@ -281,6 +313,150 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 		return 0;
 	}
 
+	public function get_paypal_access_token() {
+		if ( empty( $this->paypal_client_id ) ) {
+			throw new Exception( 'Paypal App Client id is required.', 'wp-hotel-booking' );
+		}
+		if ( empty( $this->paypal_client_secret ) ) {
+			throw new Exception( 'Paypal App Client secret is required.', 'wp-hotel-booking' );
+		}
+		$params         = [ 'grant_type' => 'client_credentials' ];
+		$response       = wp_remote_post(
+			$this->api_url . 'v1/oauth2/token',
+			[
+				'body'    => $params,
+				'headers' => [
+					'Authorization' => 'Basic ' . base64_encode( $this->paypal_client_id . ':' . $this->paypal_client_secret ),
+				],
+				'timeout' => 60,
+			]
+		);
+		$data_token_str = wp_remote_retrieve_body( $response );
+		$data_token     = json_decode( $data_token_str );
+		if ( json_last_error() !== JSON_ERROR_NONE ) {
+			throw new Exception( json_last_error_msg() );
+		}
+		return $data_token;
+	}
+
+	public function get_app_payment_url( $booking_id, $amount ) {
+		$checkout_url = '';
+		if ( ! $booking_id ) {
+			throw new Exception( 'Invalid booking.', 'wp-hotel-booking' );
+		}
+		$booking      = WPHB_Booking::instance( $booking_id );
+		$success_url  = add_query_arg( 'paypay_express_checkout', 1, hb_get_thank_you_url( $booking_id, $booking->booking_key ) );
+		$cancel_url   = hb_get_checkout_url();
+		$booking_data = [
+			'intent'         => 'CAPTURE',
+			'purchase_units' => [
+				[
+					'amount'    => [
+						'currency_code' => hb_get_currency(),
+						'value'         => number_format( $amount, 2 ),
+					],
+					'custom_id' => $booking_id,
+				],
+			],
+			'payment_source' => [
+				'paypal' => [
+					'experience_context' => [
+						'payment_method_preference' => 'UNRESTRICTED',
+						'brand_name'                => get_bloginfo(),
+						'landing_page'              => 'LOGIN',
+						'user_action'               => 'PAY_NOW',
+						'return_url'                => $success_url,
+						'cancel_url'                => $cancel_url,
+					],
+				],
+			],
+		];
+		$booking_data = apply_filters( 'wp-hotel-booking/paypal-rest/args', $booking_data, $booking_id );
+		$data_token   = $this->get_paypal_access_token();
+		if ( ! isset( $data_token->access_token ) || ! isset( $data_token->token_type ) ) {
+			throw new Exception( __( 'Invalid Paypal access token', 'wp-hotel-booking' ) );
+		}
+		$response = wp_remote_post(
+			$this->api_url . 'v2/checkout/orders',
+			[
+				'body'    => json_encode( $booking_data ),
+				'headers' => [
+					'Authorization' => $data_token->token_type . ' ' . $data_token->access_token,
+					'Content-Type'  => 'application/json',
+				],
+				'timeout' => 60,
+			]
+		);
+		$result   = json_decode( wp_remote_retrieve_body( $response ) );
+		if ( json_last_error() !== JSON_ERROR_NONE ) {
+			throw new Exception( json_last_error_msg() );
+		}
+
+		if ( empty( $result->links ) ) {
+			throw new Exception( __( 'Invalid Paypal checkout url', 'wp-hotel-booking' ) );
+		}
+
+		foreach ( $result->links as $link ) {
+			if ( $link->rel === 'payer-action' ) {
+				$checkout_url = $link->href;
+				break;
+			}
+		}
+
+		if ( empty( $checkout_url ) ) {
+			throw new Exception( __( 'Invalid Paypal checkout url', 'wp-hotel-booking' ) );
+		}
+
+		return $checkout_url;
+	}
+
+	public function capture_payment_for_order() {
+		if ( ! isset( $_GET['paypay_express_checkout'] ) ) {
+			return;
+		}
+		$paypal_order_id = hb_get_request( 'token' );
+		if ( empty( $paypal_order_id ) ) {
+			return;
+		}
+		try {
+			$data_token = $this->get_paypal_access_token();
+			if ( ! isset( $data_token->access_token ) || ! isset( $data_token->token_type ) ) {
+				throw new Exception( __( 'Invalid Paypal access token', 'wp-hotel-booking' ) );
+			}
+
+			$response = wp_remote_post(
+				$this->api_url . 'v2/checkout/orders/' . $paypal_order_id . '/capture',
+				array(
+					'headers' => array(
+						'Content-Type'  => 'application/json',
+						'Authorization' => $data_token->token_type . ' ' . $data_token->access_token,
+					),
+					'timeout' => 60,
+				)
+			);
+
+			if ( $response['response']['code'] === 201 ) {
+				$body        = wp_remote_retrieve_body( $response );
+				$transaction = json_decode( $body );
+				if ( json_last_error() !== JSON_ERROR_NONE ) {
+					throw new Exception( json_last_error_msg() );
+				}
+				if ( $transaction->status === 'COMPLETED' ) {
+					$booking_id  = $transaction->purchase_units[0]->payments->captures[0]->custom_id;
+					$booking     = WPHB_Booking::instance( $booking_id );
+					$paid_amount = $transaction->purchase_units[0]->payments->captures[0]->amount->value;
+					if ( (float) $paid_amount == (float) $booking->total() ) {
+						$booking->update_status( 'completed' );
+					} else {
+						$booking->update_status( 'processing' );
+					}
+				}
+			}
+		} catch ( Throwable $e ) {
+			error_log( __METHOD__ . $e->getMessage() );
+		}
+	}
+
 	/**
 	 * Get Paypal checkout url
 	 *
@@ -344,10 +520,26 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 	 * @return array
 	 */
 	function process_checkout( $booking_id = null ) {
-		return array(
-			'result'   => 'success',
-			'redirect' => $this->_get_paypal_basic_checkout_url( $booking_id ),
-		);
+		if ( $this->_settings['use_paypal_rest'] == 'on' ) {
+			$cart        = WPHB_Cart::instance();
+			$advance_pay = $cart->get_advance_payment();
+			$cart_total  = $cart->get_total();
+			if ( ! hb_get_request( 'pay_all' ) ) {
+				// when advance pay setting = 0%, amount is cart total
+				$amount_total = $advance_pay > 0 ? $advance_pay : $cart_total;
+			} else {
+				$amount_total = $cart_total;
+			}
+			return array(
+				'result'   => 'success',
+				'redirect' => $this->get_app_payment_url( $booking_id, floatval( $amount_total ) ),
+			);
+		} else {
+			return array(
+				'result'   => 'success',
+				'redirect' => $this->_get_paypal_basic_checkout_url( $booking_id ),
+			);
+		}
 	}
 
 	/**
