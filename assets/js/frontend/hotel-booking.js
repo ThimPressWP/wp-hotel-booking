@@ -796,12 +796,27 @@
 
 		$doc.on('click', '.hb-view-booking-room-details, .hb_search_room_item_detail_price_close', function (e) {
 			e.preventDefault();
+			e.stopPropagation();
+			$('.hb-booking-room-details').removeClass('active');
 			var _self = $(this);
 			var _details = _self.parents('.hb-room-content').find('.hb-booking-room-details');
 
 			_details.toggleClass('active');
 
 			// $(this).closest('.hb-room-content').find('.hb-booking-room-details').fadeToggle();
+		}).on('click', '.wp-hotel-booking-search-rooms, .hb-view-booking-room-details', function (e) {
+			var _self = $(this);
+			var _details = _self.find('.hb-booking-room-details');
+			if(_details.hasClass('active')){
+				_details.removeClass('active');
+			}
+		}).on('click', '.hb-booking-room-details', function (e) {
+			e.stopPropagation()	
+		}).on('click', '.hb_search_room_item_detail_price_close', function (e) {
+			var _self = $(this);
+			var _details = _self.parents('.hb-room-content').find('.hb-booking-room-details');
+
+			_details.removeClass('active');
 		}).on('click', 'input[name="hb-payment-method"]', function () {
 			if (this.checked) {
 				$('.hb-payment-method-form:not(.' + this.value + ')').slideUp();
