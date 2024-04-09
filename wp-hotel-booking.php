@@ -617,15 +617,9 @@ class WP_Hotel_Booking {
 $GLOBALS['wp_hotel_booking'] = WP_Hotel_Booking::instance();
 
 /*  Add Widget for Thim-ekits to build with Elementor  */
-if ( function_exists( 'is_multisite' ) && is_multisite() ) {
-	add_action(
-		'thim_ekit_loaded',
-		function () {
-			require_once WPHB_PLUGIN_PATH . '/includes/elementor/modules/class-init.php';
-		}
-	);
-} else {
-	if ( ! class_exists( 'Elementor' )) {
+add_action(
+	'thim_ekit_loaded',
+	function () {
 		require_once WPHB_PLUGIN_PATH . '/includes/elementor/modules/class-init.php';
 	}
-}
+);
