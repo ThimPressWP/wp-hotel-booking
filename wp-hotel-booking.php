@@ -282,18 +282,8 @@ class WP_Hotel_Booking {
 		//template-hook
 		$this->_include( 'includes/template-hooks/class-wphb-search.php' );
 
-		//add widget elementor
-		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
-			add_action(
-				'thim_ekit_loaded',
-				function () {
-					require_once WPHB_PLUGIN_PATH . '/includes/elementor/modules/class-init.php';
-				}
-			);
-		}else {
-			if ( class_exists( 'Thim_EL_Kit' ) ) {
-				$this->_include( '/includes/elementor/modules/class-init.php' );
-			}
+		if ( class_exists( 'Thim_EL_Kit' ) ) {
+			$this->_include( '/includes/elementor/modules/class-init.php' );
 		}	
 	}
 
