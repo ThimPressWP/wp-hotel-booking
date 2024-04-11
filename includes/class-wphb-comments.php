@@ -259,6 +259,7 @@ class WPHB_Comments {
 		require_once( ABSPATH . "wp-admin" . '/includes/media.php' );
 
 		$images         = $_FILES['review-image'] ?? array();
+
 		$attachment_ids = array();
 		foreach ( $images['name'] as $key => $value ) {
 			if ( ! empty( $images['name'][ $key ] ) ) {
