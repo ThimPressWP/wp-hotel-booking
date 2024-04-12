@@ -157,85 +157,77 @@ class Thim_Ekit_Widget_List_Results_Room extends Widget_Base {
 
 		$paged           = isset( $params['paged'] ) ?? 1;
 
-		try {
+		if ( hb_get_request( 'is_page_room_extra' ) == 'select-room-extra' ) {
+
+			hb_get_template( 'search/v2/select-extra-v2.php' );
 			
-			if ( hb_get_request( 'is_page_room_extra' ) == 'select-room-extra' ) {
-
-				hb_get_template( 'search/v2/select-extra-v2.php' );
-				
-				return;
-			}
-			$date_format = get_option( 'date_format' );
-
-			if ( strpos( $check_in_date, '/' ) !== false ) {
-				$check_in_date = \DateTime::createFromFormat( $date_format, $check_in_date )->format( 'F j, Y' );
-			}
-
-			if ( strpos( $check_out_date, '/' ) !== false ) {
-				$check_out_date = \DateTime::createFromFormat( $date_format, $check_out_date )->format( 'F j, Y' );
-			}
-
-			$atts = array(
-				'check_in_date'  => $check_in_date,
-				'check_out_date' => $check_out_date,
-				'adults'         => $adults_capacity,
-				'max_child'      => $max_child,
-				'search_page'    => null,
-				'widget_search'  => false,
-				'hb_page'        => $paged,
-				'min_price'      => $params['min_price'] ?? '',
-				'max_price'      => $params['max_price'] ?? '',
-				'rating'         => $params['rating'] ?? '',
-				'room_type'      => $params['room_type'] ?? '',
-				'sort_by'        => $params['sort_by'] ?? '',
-			);
-
-			$results = hb_search_rooms( $atts );
-
-			if ( empty( $results ) || empty( $results['data'] ) ) {
-				$response->status = 'error';
-				throw new \Exception( esc_html__( 'Error: No rooms available!.', 'wp-hotel-booking' ) );
-			}
-			$custom_process = get_option( 'tp_hotel_booking_custom_process' );
-			$rooms = $results['data'];
-			$class_item  = 'hb-room-archive__article'; ?>
-
-        	<div class="hb-room-archive">
-				<div class="hb-room-archive__inner hb-search-results detail__booking-rooms">
-				<?php
-					foreach ($rooms as $room) {
-						$post_object = get_post($room->ID);
-						setup_postdata($GLOBALS['post'] = &$post_object);
-
-						$this->current_permalink = get_permalink(); ?>
-						<div class="hb-room clearfix">	
-							<form name="hb-search-results" class="hb-search-room-results <?php echo $class_item ?> <?php echo ! empty( $custom_process ) ? ' custom-process' : ' extra-option-loop'; ?>" >
-							<?php do_action( 'hotel_booking_loop_before_item', $room->ID ); ?>
-								<?php  
-									\Thim_EL_Kit\Utilities\Elementor::instance()->render_loop_item_content( $settings['template_id'] ); 
-								?>
-								<?php wp_nonce_field( 'hb_booking_nonce_action', 'nonce' ); ?>
-								<input type="hidden" name="check_in_date"
-										value="<?php echo hb_get_request( 'check_in_date' ); ?>"/>
-								<input type="hidden" name="check_out_date"
-										value="<?php echo hb_get_request( 'check_out_date' ); ?>">
-								<input type="hidden" name="room-id" value="<?php echo esc_attr( $room->ID ); ?>">
-								<input type="hidden" name="hotel-booking" value="cart">
-								<input type="hidden" name="action" value="hotel_booking_ajax_add_to_cart"/>
-
-								<?php do_action( 'hotel_booking_loop_after_item', $room->ID ); ?>
-							</form>
-						</div>
-					<?php } ?>
-				</div>	
-				<?php $this->render_loop_footer( $results, $settings ); ?>  
-			</div>	
-			<?php
-		} catch ( \Exception $e ) {
-			$response->message = $e->getMessage();
+			return;
 		}
-		?>
-		
+		$date_format = get_option( 'date_format' );
+
+		if ( strpos( $check_in_date, '/' ) !== false ) {
+			$check_in_date = \DateTime::createFromFormat( $date_format, $check_in_date )->format( 'F j, Y' );
+		}
+
+		if ( strpos( $check_out_date, '/' ) !== false ) {
+			$check_out_date = \DateTime::createFromFormat( $date_format, $check_out_date )->format( 'F j, Y' );
+		}
+
+		$atts = array(
+			'check_in_date'  => $check_in_date,
+			'check_out_date' => $check_out_date,
+			'adults'         => $adults_capacity,
+			'max_child'      => $max_child,
+			'search_page'    => null,
+			'widget_search'  => false,
+			'hb_page'        => $paged,
+			'min_price'      => $params['min_price'] ?? '',
+			'max_price'      => $params['max_price'] ?? '',
+			'rating'         => $params['rating'] ?? '',
+			'room_type'      => $params['room_type'] ?? '',
+			'sort_by'        => $params['sort_by'] ?? '',
+		);
+
+		$results = hb_search_rooms( $atts );
+
+		if ( empty( $results ) || empty( $results['data'] ) ) {
+			echo '<p class="message message-error">' . esc_html__( 'Error: No rooms available!.', 'wp-hotel-booking' ) . '</p>';
+			return;
+		}
+		$custom_process = get_option( 'tp_hotel_booking_custom_process' );
+		$rooms = $results['data'];
+		$class_item  = 'hb-room-archive__article'; ?>
+
+		<div class="hb-room-archive">
+			<div class="hb-room-archive__inner hb-search-results detail__booking-rooms">
+			<?php
+				foreach ($rooms as $room) {
+					$post_object = get_post($room->ID);
+					setup_postdata($GLOBALS['post'] = &$post_object);
+
+					$this->current_permalink = get_permalink(); ?>
+					<div class="hb-room clearfix">	
+						<form name="hb-search-results" class="hb-search-room-results <?php echo $class_item ?> <?php echo ! empty( $custom_process ) ? ' custom-process' : ' extra-option-loop'; ?>" >
+						<?php do_action( 'hotel_booking_loop_before_item', $room->ID ); ?>
+							<?php  
+								\Thim_EL_Kit\Utilities\Elementor::instance()->render_loop_item_content( $settings['template_id'] ); 
+							?>
+							<?php wp_nonce_field( 'hb_booking_nonce_action', 'nonce' ); ?>
+							<input type="hidden" name="check_in_date"
+									value="<?php echo hb_get_request( 'check_in_date' ); ?>"/>
+							<input type="hidden" name="check_out_date"
+									value="<?php echo hb_get_request( 'check_out_date' ); ?>">
+							<input type="hidden" name="room-id" value="<?php echo esc_attr( $room->ID ); ?>">
+							<input type="hidden" name="hotel-booking" value="cart">
+							<input type="hidden" name="action" value="hotel_booking_ajax_add_to_cart"/>
+
+							<?php do_action( 'hotel_booking_loop_after_item', $room->ID ); ?>
+						</form>
+					</div>
+				<?php } ?>
+			</div>	
+			<?php $this->render_loop_footer( $results, $settings ); ?>  
+		</div>	
 		<?php
 	}
 
