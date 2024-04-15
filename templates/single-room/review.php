@@ -34,6 +34,17 @@ $settings = WPHB_Settings::instance();
                 </div>
 			<?php } ?>
 
+            <!--            Review title-->
+            <h3 class="hb-room-review-title">
+				<?php
+
+				$review_title = get_comment_meta( $comment->comment_ID, 'hb_room_review_title', true );
+
+				if ( ! empty( $review_title ) ) {
+					echo esc_html( $review_title );
+				}
+				?>
+            </h3>
 			<?php if ( $comment->comment_approved == '0' ) { ?>
                 <p class="meta"><em><?php _e( 'Your comment is awaiting approval', 'wp-hotel-booking' ); ?></em></p>
 			<?php } else { ?>
@@ -47,23 +58,24 @@ $settings = WPHB_Settings::instance();
 
             <div itemprop="description" class="description"><?php comment_text(); ?></div>
 
+            <!--            Review Image-->
 			<?php
-			$attachment_ids = get_comment_meta( get_comment_ID(), 'hb_review_images', true );
-            if(!empty($attachment_ids) && is_array($attachment_ids)){
-                ?>
-                <ul class="hb-review-images">
-		            <?php
-		            foreach ( $attachment_ids as $id ) {
-			            ?>
+			$attachment_ids = get_comment_meta( get_comment_ID(), 'hb_room_review_images', true );
+			if ( ! empty( $attachment_ids ) && is_array( $attachment_ids ) ) {
+				?>
+                <ul class="hb-room-review-images">
+					<?php
+					foreach ( $attachment_ids as $id ) {
+						?>
                         <li>
                             <img src="<?php echo wp_get_attachment_image_url( $id ); ?>" alt="#">
                         </li>
-			            <?php
-		            }
-		            ?>
+						<?php
+					}
+					?>
                 </ul>
-                <?php
-            }
+				<?php
+			}
 			?>
             <div>
 

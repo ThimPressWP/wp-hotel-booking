@@ -157,6 +157,34 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 						),
 					),
 
+					array(
+						'id'      => 'tp_hotel_booking_enable_review_popup',
+						'title'   => __( 'Enable Tour Review Popup', 'wp-hotel-booking' ),
+						'type'    => 'checkbox',
+						'default' => 1,
+						'atts'    => array(
+//							'onchange' => "jQuery('.enable_ratings_on_reviews').toggleClass( 'hide-if-js', ! this.checked );",
+						),
+					),
+
+					array(
+						'id'      => 'tp_hotel_booking_max_review_image_number',
+						'title'   => __( 'Maximum images', 'wp-hotel-booking' ),
+						'type'    => 'number',
+						'default' => 5,
+						'min'     => 1,
+						'desc'    => __( 'Maximum images.', 'wp-hotel-booking' ),
+					),
+
+					array(
+						'id'      => 'tp_hotel_booking_max_review_image_file_size',
+						'title'   => __( 'Maximum file sizes (KB)', 'wp-hotel-booking' ),
+						'type'    => 'number',
+						'default' => 10000,
+						'min'     => 1,
+						'desc'    => __( 'Maximum file sizes', 'wp-hotel-booking' ),
+					),
+
 					// do not use in plugin
 					// array(
 					//  'id'      => 'tp_hotel_booking_review_rating_required',

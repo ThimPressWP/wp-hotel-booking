@@ -39,6 +39,282 @@ class WPHB_Comments {
 		add_action( 'add_meta_boxes', array( $this, 'add_comment_metaboxes' ), 10, 2 );
 		add_action( 'edit_comment', array( $this, 'save_comment_metaboxes' ), 10, 2 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+
+		add_action( 'wp_footer', array( $this, 'add_submit_review_form_popup' ) );
+		add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
+		add_action( 'pre_get_comments', array( $this, 'filter_comment_query' ) );
+	}
+
+	/**
+	 * @param $query
+	 *
+	 * @return void
+	 */
+	public function filter_comment_query( $query ) {
+		if ( isset( $_GET['photos_only'] ) && $_GET['photos_only'] === 'yes' ) {
+			$query->query_vars['meta_query'] = array(
+				'relation' => 'AND',
+				array(
+					'key'     => 'hb_room_review_images',
+					'compare' => 'EXISTS'
+				),
+			);
+		}
+
+
+		if ( isset( $_GET['review_sort_by'] ) && ! empty( $_GET['review_sort_by'] ) ) {
+			if ( $_GET['review_sort_by'] === 'newest' ) {
+				$query->query_vars['orderby'] = 'comment_date_gmt';
+				$query->query_vars['order']   = 'DESC';
+			}
+
+			if ( $_GET['review_sort_by'] === 'top-review' ) {
+				$query->query_vars['meta_key'] = 'rating';
+				$query->query_vars['orderby']  = 'meta_value_num';
+				$query->query_vars['order']    = 'DESC';
+			}
+		}
+	}
+
+	public function register_rest_routes() {
+		register_rest_route(
+			'hb-room/v1',
+			'/update-review',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'update_review' ),
+				'args'                => array(),
+				'permission_callback' => '__return_true',
+			),
+		);
+	}
+
+	/**
+	 * @param WP_REST_Request $request
+	 *
+	 * @return false|string|WP_REST_Response
+	 */
+	public function update_review( \WP_REST_Request $request ) {
+		if ( ! is_user_logged_in() ) {
+			return $this->error( esc_html__( 'You must log in to submit a review.', 'wp-hotel-booking' ), 401 );
+		}
+
+		$params = $request->get_params();
+
+		if ( ! isset( $params['rating'] ) ) {
+			return $this->error( esc_html__( 'The rating is required.', 'wp-hotel-booking' ), 400 );
+		}
+
+		if ( ! isset( $params['content'] ) ) {
+			return $this->error( esc_html__( 'The review content is required.', 'wp-hotel-booking' ), 400 );
+		}
+
+		if ( ! isset( $params['title'] ) ) {
+			return $this->error( esc_html__( 'The review title is required.', 'wp-hotel-booking' ), 400 );
+		}
+
+		if ( ! isset( $params['room_id'] ) ) {
+			return $this->error( esc_html__( 'The room id is required.', 'wp-hotel-booking' ), 400 );
+		}
+
+		$user_id = get_current_user_id();
+
+		$user       = get_userdata( $user_id );
+		$comment_id = wp_insert_comment( array(
+			'comment_post_ID'      => $params['room_id'],
+			'comment_author'       => $user->display_name,
+			'comment_author_email' => $user->user_email,
+			'comment_author_url'   => '',
+			'comment_content'      => sanitize_textarea_field( $params['content'] ),
+			'comment_type'         => 'comment',
+			'comment_parent'       => 0,
+			'user_id'              => $user_id,
+			'comment_author_IP'    => '',
+			'comment_agent'        => '',
+			'comment_date'         => date( 'Y-m-d H:i:s' ),
+			'comment_approved'     => 1,
+		) );
+
+		if ( ! $comment_id ) {
+			return $this->error( esc_html__( 'Could not create review.', 'wp-hotel-booking' ), 400 );
+		}
+
+		//Update comment meta
+		update_comment_meta( $comment_id, 'hb_room_review_title', sanitize_text_field( $params['title'] ) );
+		update_comment_meta( $comment_id, 'rating', sanitize_text_field( $params['rating'] ) );
+
+		$images = $params['base64_images'] ?? '';
+
+		if ( ! empty( $images ) ) {
+			$upload_dir  = wp_upload_dir();
+			$upload_path = str_replace( '/', DIRECTORY_SEPARATOR, $upload_dir['path'] ) . DIRECTORY_SEPARATOR;
+
+			$attachment_ids = array();
+
+			foreach ( $images as $image ) {
+				$img             = preg_replace( '/^data:image\/[a-z]+;base64,/', '', $image['base64'] );
+				$img             = str_replace( ' ', '+', $img );
+				$decoded         = base64_decode( $img );
+				$filename        = $image['name'];
+				$file_type       = $image['type'];
+				$hashed_filename = md5( $filename . microtime() ) . '_' . $filename;
+
+				$upload_file = file_put_contents( $upload_path . $hashed_filename, $decoded );
+
+				if ( $upload_file ) {
+					$attachment = array(
+						'post_mime_type' => $file_type,
+						'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $hashed_filename ) ),
+						'post_content'   => '',
+						'post_status'    => 'inherit',
+						'guid'           => $upload_dir['url'] . '/' . basename( $hashed_filename )
+					);
+
+					$attachment_id = wp_insert_attachment( $attachment, $upload_dir['path'] . '/' . $hashed_filename );
+
+					if ( ! is_wp_error( $attachment_id ) && $attachment_id ) {
+						$attachment_ids [] = $attachment_id;
+					}
+				}
+			}
+			if ( count( $attachment_ids ) ) {
+				update_comment_meta( $comment_id, 'hb_room_review_images', $attachment_ids );
+			}
+		}
+		wp_update_comment_count( $params['room_id'] );
+
+		return $this->success( esc_html__( 'Submit review successfully.', 'wp-hotel-booking' ), array(
+			'comment_id'   => $comment_id,
+			'redirect_url' => '#comment-' . $comment_id
+		) );
+	}
+
+	/**
+	 * @param string $msg
+	 * @param $status_code
+	 *
+	 * @return WP_REST_Response
+	 */
+	public function error( string $msg = '', $status_code = 404 ) {
+		return new WP_REST_Response(
+			array(
+				'status'      => 'error',
+				'msg'         => $msg,
+				'status_code' => $status_code,
+			),
+		//            $status_code
+		);
+	}
+
+
+	/**
+	 * @param string $msg
+	 * @param array $data
+	 *
+	 * @return WP_REST_Response
+	 */
+	public function success( string $msg = '', array $data = array() ) {
+		return new WP_REST_Response(
+			array(
+				'status' => 'success',
+				'msg'    => $msg,
+				'data'   => $data,
+			),
+			200
+		);
+	}
+
+	/**
+	 * @return false|void
+	 */
+	public function add_submit_review_form_popup() {
+		global $post;
+
+		if ( empty( $post ) && ! is_singular( 'hb_room' ) ) {
+			return false;
+		}
+
+		if ( hb_settings()->get( 'enable_review_popup' ) !== '1' ) {
+			return false;
+		}
+
+		$max_images = hb_settings()->get( 'max_review_image_number' );
+
+		if ( empty( $max_images ) ) {
+			$max_images = 10;
+		}
+
+//		$max_file_size    = hb_settings()->get( 'max_review_image_number' );
+//
+//		if(empty($max_file_size)){
+//			$max_file_size =  1000000;
+//		}
+		?>
+
+        <div id="hb-room-review-form-popup">
+            <div class="bg-overlay"></div>
+            <form id="hb-room-submit-review-form" data-room-id="<?php echo esc_attr( $post->ID ); ?>">
+                <header>
+                    <h3><?php esc_html_e( 'Write a review', 'wp-hotel-booking' ); ?></h3>
+                    <div class="close-form-btn">
+                        <span class="dashicons dashicons-no"></span>
+                    </div>
+                </header>
+                <main>
+                    <div class="review-rating field">
+                        <label for="review-rating"><?php esc_html_e( 'Rate your experience *', 'wp-hotel-booking' ); ?></label>
+                        <input type="hidden" name="review-rating" value="">
+                        <div class="rating-star">
+							<?php
+							for ( $i = 1; $i <= 5; $i ++ ) {
+								?>
+                                <a class="rating-star-item" href="#" data-star-rating="<?php echo esc_attr( $i ); ?>">
+                                </a>
+								<?php
+							}
+							?>
+                        </div>
+                    </div>
+                    <div class="review-content field">
+                        <label for="review-content"><?php esc_html_e( 'Leave a review *', 'wp-hotel-booking' ); ?></label>
+                        <textarea name="review-content" id="review-content" cols="30" rows="5"></textarea>
+                    </div>
+
+                    <div class="review-title field">
+                        <label for="review-title"><?php esc_html_e( 'Give your review a title *', 'wp-hotel-booking' ); ?></label>
+                        <input type="text" name="review-title" id="review-title">
+                    </div>
+
+
+                    <div class="hb-gallery-review" data-room-id="<?php echo esc_attr( $post->ID ); ?>">
+                        <div class="select-images">
+                            <label for="tour_review-image">
+								<?php
+								printf( esc_html( _n( 'Uploads up to %s image', 'Upload up to %s images', $max_images, 'wp-hotel-booking' ) ), $max_images );
+								?>
+                            </label>
+                            <div class="review-notice">
+                            </div>
+                            <div class="gallery-preview">
+                            </div>
+                            <label class="upload-images">
+                                <span><?php esc_html_e( 'Upload', 'wp-hotel-booking' ); ?></span>
+                                <input type="file" accept="image/*" multiple="multiple" name="review-image[]"
+                                       id="hb-room-review-image">
+                            </label>
+                        </div>
+                    </div>
+                </main>
+                <footer>
+                    <p class="notice"></p>
+                    <div class="submit">
+                        <button type="button"><?php esc_html_e( 'Send', 'wp-hotel-booking' ); ?></button>
+                        <span class="hb-room-spinner"></span>
+                    </div>
+                </footer>
+            </form>
+        </div>
+		<?php
 	}
 
 	/**
@@ -64,12 +340,12 @@ class WPHB_Comments {
 	 */
 	public function admin_enqueue_scripts() {
 		//date time
-		wp_register_script( 'hb-product-review', WPHB_PLUGIN_URL . '/assets/dist/js/admin/room-review.min.js',
+		wp_register_script( 'hb-room-review', WPHB_PLUGIN_URL . '/assets/dist/js/admin/room-review.min.js',
 			array(),
 			uniqid(),
 			true
 		);
-		wp_enqueue_script( 'hb-product-review' );
+		wp_enqueue_script( 'hb-rooom-review' );
 	}
 
 	/**
@@ -258,7 +534,7 @@ class WPHB_Comments {
 		require_once( ABSPATH . "wp-admin" . '/includes/file.php' );
 		require_once( ABSPATH . "wp-admin" . '/includes/media.php' );
 
-		$images         = $_FILES['review-image'] ?? array();
+		$images = $_FILES['review-image'] ?? array();
 
 		$attachment_ids = array();
 		foreach ( $images['name'] as $key => $value ) {
@@ -330,6 +606,27 @@ class WPHB_Comments {
 				WPHB_Helpers::print( sprintf( '%s', $html ) );
 				break;
 		}
+	}
+
+	/**
+	 * @param $rating
+	 * @param $post_id
+	 *
+	 * @return string|null
+	 */
+	public static function get_review_count_by_rating( $rating, $post_id ) {
+		global $wpdb;
+		$comment_tbl      = $wpdb->comments;
+		$comment_meta_tbl = $wpdb->commentmeta;
+
+		return $wpdb->get_var(
+			$wpdb->prepare( "SELECT COUNT(*) meta_value FROM $comment_meta_tbl LEFT JOIN $comment_tbl ON 
+                $comment_meta_tbl.comment_id = $comment_tbl.comment_ID WHERE meta_key = 'rating' AND comment_post_ID = %s 
+              AND comment_approved = '1' AND meta_value = %s",
+				$post_id,
+				$rating
+			)
+		);
 	}
 }
 

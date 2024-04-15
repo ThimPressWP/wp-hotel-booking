@@ -692,6 +692,10 @@ const clearFilter = () => {
                 delete filterRooms['room_type'];
             }
 
+            const listItemNodes = document.querySelectorAll('.hb-selection-field .list-item');
+            [...listItemNodes].map(listItemNode => {
+                listItemNode.remove();
+            });
             window.localStorage.setItem('wphb_filter_rooms', JSON.stringify(filterRooms));
 
             searchRoomsPages();

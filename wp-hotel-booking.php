@@ -434,6 +434,7 @@ class WP_Hotel_Booking {
 				wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.min.css' ), array(), WPHB_VERSION );
 				wp_register_script( 'wp-hotel-booking', $this->plugin_url( 'assets/js/hotel-booking.min.js' ), $dependencies, WPHB_VERSION, true );
 				wp_register_script( 'wp-hotel-booking-filter-by', $this->plugin_url( 'assets/js/frontend/filter-by.js' ), array(), WPHB_VERSION, true );
+				wp_register_script( 'wp-hotel-booking-room-review', $this->plugin_url( 'assets/js/frontend/room-review.js' ), array(), WPHB_VERSION, true );
 			}
 
 			wp_localize_script( 'wp-hotel-booking', 'hotel_booking_i18n', hb_i18n() );
@@ -478,17 +479,35 @@ class WP_Hotel_Booking {
 			wp_enqueue_script( 'wp-hotel-booking-filter-by' );
 			wp_enqueue_script( 'wp-hotel-booking-room-review' );
 
-			$max_images    = 10;
-			$max_file_size = 1000000;
+			if ( is_singular( 'hb_room' ) ) {
+				global $post;
 
-			wp_localize_script( 'wp-hotel-booking-room-review', 'HB_ROOM_REVIEW_GALLERY', array(
-					'max_images'          => $max_images,
-					'max_file_size'       => $max_file_size,
-					'max_image_error'     => sprintf( esc_html__( 'The image number is greater than %s', 'wp-hotel-booking' ), $max_images ),
-					'file_type_error'     => esc_html__( 'The image file type is invalid', 'wp-hotel-booking' ),
-					'max_file_size_error' => sprintf( esc_html__( 'The maximum file size is %s KB', 'wp-hotel-booking' ), $max_file_size ),
-				)
-			);
+				$max_images = hb_settings()->get( 'max_review_image_number' );
+				if ( empty( $max_images ) ) {
+					$max_images = 10;
+				}
+
+				$max_file_size = hb_settings()->get( 'max_review_image_file_size' );
+
+				if ( empty( $max_file_size ) ) {
+					$max_file_size = 1000000;
+				}
+
+				$is_enable = hb_settings()->get( 'enable_review_popup' ) === '1';
+
+
+				wp_localize_script( 'wp-hotel-booking-room-review', 'HB_ROOM_REVIEW_GALLERY', array(
+						'room_id'             => $post->ID,
+						'is_enable'           => $is_enable,
+						'max_images'          => $max_images,
+						'max_file_size'       => $max_file_size,
+						'max_image_error'     => sprintf( esc_html__( 'The image number is greater than %s', 'wp-hotel-booking' ), $max_images ),
+						'file_type_error'     => esc_html__( 'The image file type is invalid', 'wp-hotel-booking' ),
+						'max_file_size_error' => sprintf( esc_html__( 'The maximum file size is %s KB', 'wp-hotel-booking' ), $max_file_size ),
+						$max_file_size
+					)
+				);
+			}
 
 			// rooms slider widget
 			wp_enqueue_script( 'wp-hotel-booking-owl-carousel' );

@@ -67,6 +67,8 @@
                 const url = new URL(window.location.href);
                 url.searchParams.set('min_price', parseInt(minPrice));
                 url.searchParams.set('max_price', parseInt(maxPrice));
+
+                url.searchParams.set('paged', 1);
                 window.location.href = url;
             });
         }
@@ -109,6 +111,7 @@
                         url.searchParams.delete('rating');
                     }
 
+                    url.searchParams.set('paged', 1);
                     window.location.href = url;
                 });
             }
@@ -153,6 +156,8 @@
                         url.searchParams.delete('room_type', value);
                     }
 
+                    url.searchParams.set('paged', 1);
+
                     window.location.href = url;
                 });
             }
@@ -184,6 +189,7 @@
                     }
                 });
 
+                url.searchParams.set('paged', 1);
                 window.location.href = url;
             });
         }
@@ -314,6 +320,7 @@
                 url.searchParams.delete('rating');
             }
 
+            url.searchParams.set('paged', 1);
             window.location.href = url;
         });
     }
@@ -342,6 +349,7 @@
                 url.searchParams.delete('rating');
             }
 
+            url.searchParams.set('paged', 1);
             window.location.href = url;
         });
     }
@@ -369,6 +377,7 @@
             }
         });
 
+        url.searchParams.set('paged', 1);
         window.location.href = url;
     }
 

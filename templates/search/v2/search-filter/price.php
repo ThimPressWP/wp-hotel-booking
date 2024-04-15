@@ -10,12 +10,14 @@ if ( ! is_numeric( $data['min_price'] ) || ! is_numeric( $data['max_price'] ) ) 
 if ( $data['min_price'] > $data['max_price'] ) {
 	return;
 }
+
 $min_formatted_price = number_format( $data['min_price'], 2, '.', ',' );
 $max_formatted_price = number_format( $data['max_price'], 2, '.', ',' );
+
 ?>
     <div class="hb-price-field" data-min="<?php echo esc_attr( $data['min_price'] ); ?>"
          data-max="<?php echo esc_attr( $data['max_price'] ); ?>"
-         data-step="<?php echo esc_attr( $data['step_price'] ); ?>"">
+         data-step="<?php echo esc_attr( $data['step_price'] ); ?>">
     <div class="title"><?php esc_html_e( 'Price', 'wp-hotel-booking' ); ?></div>
     <input type="hidden" class="hb-min-price" name="min-price"
            value="<?php echo esc_attr( $data['min_value'] ); ?>">

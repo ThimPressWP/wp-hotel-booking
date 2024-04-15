@@ -3081,11 +3081,11 @@ button.wphb_loading::before {
     padding: 35px;
 }
 
-#hotel-booking-search-filter h3{
+#hotel-booking-search-filter h3 {
     margin-bottom: 20px;
 }
 
-#hotel-booking-search-filter .clear-filter button{
+#hotel-booking-search-filter .clear-filter button {
     position: relative;
     height: 40px;
     min-width: 200px;
@@ -3204,26 +3204,457 @@ div.sort-by-wrapper, .sort-by-wrapper .sort-by {
     margin: 0 auto;
 }
 
-.__hb_room_facility__attr{
+.__hb_room_facility__attr {
     display: flex;
     align-items: center;
 }
 
-.__hb_room_facility__attr .facility_attr{
+.__hb_room_facility__attr .facility_attr {
     flex-basis: 25%;
     display: flex;
     align-items: center;
 }
 
-.facility_attr__icon{
+.facility_attr__icon {
     width: 16px;
     height: 16px;
 }
 
-.facility_attr__icon img{
+.facility_attr__icon img {
     display: block;
 }
 
-.facility_attr__label{
+.facility_attr__label {
     margin-left: 4px;
 }
+
+
+/*Single room review*/
+#hb-room-review-form-popup .bg-overlay {
+    background: rgba(17, 17, 17, 0.8);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    display: none;
+}
+
+#hb-room-review-form-popup .bg-overlay.active {
+    display: block;
+}
+
+#hb-room-submit-review-form {
+    position: fixed;
+    top: 100px;
+    height: calc(100% - 200px);
+    max-width: 600px;
+    margin: 0 auto;
+    left: 15px;
+    right: 15px;
+    width: 100%;
+    z-index: 9999;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    overflow: auto;
+    display: none;
+}
+
+#hb-room-submit-review-form.active {
+    display: block;
+}
+
+#hb-room-submit-review-form header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#hb-room-submit-review-form header .close-form-btn {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+
+}
+
+#hb-room-submit-review-form main .field {
+    margin-bottom: 24px;
+}
+
+#hb-room-submit-review-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.875em;
+    font-weight: normal;
+}
+
+#hb-room-submit-review-form .review-rating label {
+    font-weight: 700;
+    font-size: 1em;
+    color: #000;
+}
+
+#hb-room-submit-review-form main .field input {
+    width: 100%
+}
+
+#hb-room-submit-review-form .field.review-rating a {
+    text-decoration: none;
+}
+
+#hb-room-submit-review-form textarea#review-content,
+#hb-room-submit-review-form main .field input {
+    resize: none;
+    background: #f2f4f4;
+    border: 0;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+#hb-room-submit-review-form .rating-star a {
+    position: relative;
+    height: 1em;
+    width: 1em;
+    text-indent: -999em;
+    display: inline-block;
+    text-decoration: none;
+    box-shadow: none;
+    font-size: 1.8em;
+}
+
+#hb-room-submit-review-form .rating-star a:before {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+    font-family: WooCommerce;
+    content: "\e021";
+    text-indent: 0;
+}
+
+#hb-room-submit-review-form .hb-room-gallery-review {
+    margin-bottom: 24px;
+}
+
+#hb-room-submit-review-form footer .submit button {
+    width: 100%;
+    padding: 12px 16px;
+    background: #01aa90;
+    border-radius: 200px;
+    color: #fff;
+    border: 0;
+}
+
+#hb-room-submit-review-form footer .submit button:hover {
+    opacity: 0.9;
+}
+
+#hb-room-submit-review-form .rating-star.selected a.rating-star-item:not(.selected)::before {
+    content: "\e020";
+}
+
+#hb-room-submit-review-form .rating-star.selected a.rating-star-item.selected::before {
+    content: "\e020";
+}
+
+#hb-room-submit-review-form .rating-star.selected a.rating-star-item.selected ~ a::before {
+    content: "\e021";
+}
+
+#hb-room-submit-review-form .rating-star.active a.rating-star-item:not(.active)::before {
+    content: "\e020";
+}
+
+#hb-room-submit-review-form .rating-star.active a.rating-star-item.active::before {
+    content: "\e020";
+}
+
+#hb-room-submit-review-form .rating-star.active a.rating-star-item.active ~ a::before {
+    content: "\e021";
+}
+
+#hb-room-submit-review-form label.upload-images {
+    width: 96px;
+    height: 96px;
+    position: relative;
+    cursor: pointer;
+    border: 1.5px dashed;
+    border-radius: 8px;
+    text-align: center;
+    vertical-align: middle;
+    display: grid !important;
+    align-items: center;
+    justify-content: center;
+}
+
+#hb-room-submit-review-form label.upload-images:hover {
+    background: #E8EDF1;
+}
+
+/* .upload-images::before{
+    content: "\f030";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-family: 'thim-ekits';
+    font-weight: 400;
+} */
+.upload-images span {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+
+.upload-images input, #hb-room-review-image {
+    display: none;
+}
+
+.preview-item {
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    margin: 10px 10px 10px 0;
+}
+
+.preview-item img {
+    width: 100%;
+    height: 100%;
+}
+
+#hb-room-submit-review-form p.notice.failed {
+    color: red;
+}
+
+#hb-room-submit-review-form p.notice.success {
+    color: green;
+}
+
+#hb-room-submit-review-form footer {
+    position: relative;
+}
+
+#hb-room-submit-review-form span.hb-room-spinner {
+    position: relative;
+    display: inline-block;
+    background-color: #23282d;
+    opacity: 0.75;
+    width: 24px;
+    height: 24px;
+    border: none;
+    border-radius: 100%;
+    padding: 0;
+    visibility: hidden;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+#hb-room-submit-review-form span.hb-room-spinner:before {
+    content: '';
+    position: absolute;
+    background-color: #fbfbfc;
+    top: 4px;
+    left: 4px;
+    width: 6px;
+    height: 6px;
+    border: none;
+    border-radius: 100%;
+    transform-origin: 8px 8px;
+    animation-name: spin;
+    animation-duration: 1000ms;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+#hb-room-submit-review-form span.hb-room-spinner.active {
+    visibility: visible;
+}
+
+/* #hb-room-submit-review-form   */
+.hb-room-review-images {
+    border-bottom: 0 !important;
+    margin: 0 0 1.5rem;
+    padding: 0;
+    font-family: var(--heading--font-family);
+}
+
+ul.hb-room-review-images li {
+    width: 100px;
+    height: 100px;
+    display: inline-flex !important;
+}
+
+ul.hb-room-review-images img {
+    width: 100%;
+    height: auto;
+}
+
+.review-top-section .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.review-top-section .header button {
+    border-radius: 10px;
+}
+
+.review-top-section .review-average-rating {
+    display: flex;
+    align-items: center;
+}
+
+.review-top-section .review-average-rating .rating {
+    margin-left: 10px;
+}
+
+.review-top-section .rating .star-rating {
+    margin-bottom: 0;
+}
+
+/*
+#comments .hb-room-review-title {
+    font-weight: 600;
+    margin-bottom: 1rem !important;
+} */
+
+.review-top-section .statistic {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.review-top-section .statistic-detail-item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.review-top-section .rating-label {
+    width: 100px;
+    margin-right: 10px;
+}
+
+.statistic-detail-item .full-width {
+    width: 400px;
+    margin-right: 20px;
+}
+
+.statistic-detail-item .rating-number {
+    width: 50px;
+    text-align: right;
+}
+
+.statistic-detail-item .progress {
+    height: 8px;
+    background: #E8EDF1;
+    border-radius: 200px;
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+.statistic-detail-item .progress-bar {
+    height: 100%;
+    background: #01AA90;
+}
+
+.hb-room-commentlist-sort-filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.hb-room-commentlist-sort-filter .gallery-filter a {
+    padding: 10px;
+    border-radius: 20px;
+    border: solid 1px;
+    text-decoration: none;
+}
+
+.hb-room-commentlist-sort-filter .gallery-filter a.active {
+    color: white;
+    background: #01AA90;
+}
+
+.sort-by {
+    display: flex;
+    align-items: center;
+}
+
+.sort-by .label {
+    margin-right: 10px;
+}
+
+.hb-room-commentlist-sort-filter .option {
+    position: relative;
+}
+
+.hb-room-commentlist-sort-filter .option .toggle {
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: #f2f4f4;
+    cursor: pointer;
+}
+
+.hb-room-commentlist-sort-filter .option .toggle svg {
+    margin-left: 12px;
+}
+
+.hb-room-commentlist-sort-filter #hb-room-sort-by {
+    margin: 0;
+    border-bottom: 0;
+    display: none;
+    text-wrap: nowrap;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    transition: all 2s ease-in;
+    background: #ffff;
+    padding: 20px;
+    border-radius: 6px;
+    z-index: 999;
+}
+
+.hb-room-commentlist-sort-filter #hb-room-sort-by.is-open {
+    display: block;
+}
+
+.hb-room-commentlist-sort-filter ul#hb-room-sort-by li {
+    display: block !important;
+}
+
+.hb-room-commentlist-sort-filter ul#hb-room-sort-by li:hover a {
+    color: #01AA90;
+}
+
+.hb-room-commentlist-sort-filter ul#hb-room-sort-by li a {
+    display: inline-block !important;
+    width: 100%;
+    height: 100%;
+    font-weight: normal;
+    padding: 0;
+    text-decoration: none;
+}
+
+/*End single room review*/
