@@ -126,7 +126,7 @@
             return;
         }
 
-        if (!HB_ROOM_REVIEW_GALLERY) {
+        if (typeof HB_ROOM_REVIEW_GALLERY === 'undefined') {
             return;
         }
 

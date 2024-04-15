@@ -390,7 +390,7 @@ class WPHB_Comments {
 	 */
 	public function render_review_images( $comment ) {
 		$comment_id = $comment->comment_ID;
-		$image_ids  = get_comment_meta( $comment_id, 'hb_review_images', true );
+		$image_ids  = get_comment_meta( $comment_id, 'hb_room_review_images', true );
 		?>
         <div class="hb-review-images">
 			<?php

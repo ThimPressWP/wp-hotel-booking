@@ -369,7 +369,7 @@ const addExtraToCart = () => {
 
 /** search form */
 
-const checkAvaliableRooms = () => {
+const checkAvailableRooms = () => {
 
     //remove sidebar search in page search room_select
     if (hotel_settings?.is_page_search) {
@@ -901,7 +901,6 @@ const resetPrice = () => {
     searchRoomsPages();
 }
 
-
 const changeSelectedField = (field, value, text) => {
     const listNode = document.querySelector('.hb-selection-field .list');
 
@@ -970,7 +969,7 @@ const sortBy = () => {
 document.addEventListener('DOMContentLoaded', () => {
     searchRoomsPages();//use in page search room
     addExtraToCart();
-    checkAvaliableRooms(); // use multi form search will redirect to page search room with data valid :
+    checkAvailableRooms(); // use multi form search will redirect to page search room with data valid :
     processCheckout();
 
     if (hotelBookingSearchNode && hotel_settings && hotel_settings.is_page_search) {
