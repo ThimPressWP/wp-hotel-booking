@@ -1,0 +1,26 @@
+#review_form .gallery-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#review_form .preview-item img {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+}
+
+ul.hb-review-images{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0;
+    list-style: none;
+}
+
+ul.hb-review-images li img{
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+}
+

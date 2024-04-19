@@ -39,7 +39,13 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Advanced' ) ) {
 						'title' => __( 'Room Filter Options', 'wp-hotel-booking' ),
 						'desc'  => __( 'Room filter used in room list ( room archive page, booking search page ).', 'wp-hotel-booking' ),
 					),
-
+					array(
+						'id'      => 'tp_hotel_booking_filter_price_enable',
+						'title'   => __( 'Enable room filter', 'wp-hotel-booking' ),
+						'desc'    => __( 'Enable/disable room filter in search page.', 'wp-hotel-booking' ),
+						'type'    => 'checkbox',
+						'default' => 1,
+					),
 					array(
 						'id'      => 'tp_hotel_booking_filter_price_enable',
 						'title'   => __( 'Enable room filter', 'wp-hotel-booking' ),
@@ -64,7 +70,14 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Advanced' ) ) {
 						'title'   => __( 'Max Price', 'wp-hotel-booking' ),
 						'desc'    => __( 'Maximum price for price field.', 'wp-hotel-booking' ),
 					),
-
+					array(
+						'id'      => 'tp_hotel_booking_filter_price_step',
+						'type'    => 'number',
+						'default' => 1,
+						'min'     => 1,
+						'title'   => __( 'Step Price', 'wp-hotel-booking' ),
+						'desc'    => __( 'Step price for price field.', 'wp-hotel-booking' ),
+					),
 					array(
 						'id'      => 'tp_hotel_booking_filter_price_step',
 						'type'    => 'number',

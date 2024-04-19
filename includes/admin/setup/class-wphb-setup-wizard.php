@@ -35,13 +35,14 @@ class WPHB_Setup_Wizard {
 
 	public function admin_notices() {
 		if ( ! get_option( 'wphb_setup_wizard_completed', false ) ) { ?>
-			<div id="notice-install" class="wphb-notice notice notice-info">
-				<p><?php _e( '<strong>WP Hotel Booking is ready to use.</strong>', 'wp-hotel-booking' ); ?></p>
-				<p>
-					<a class="button button-primary" href="<?php echo admin_url( 'index.php?page=wphb-setup' ); ?>"><?php _e( 'Quick Setup', 'wp-hotel-booking' ); ?></a>
-					<!-- <button class="button" data-dismiss-notice="skip-setup-wizard"><?php // _e( 'Skip', 'wp-hotel-booking' ); ?></button> -->
-				</p>
-			</div>
+            <div id="notice-install" class="wphb-notice notice notice-info">
+                <p><?php _e( '<strong>WP Hotel Booking is ready to use.</strong>', 'wp-hotel-booking' ); ?></p>
+                <p>
+                    <a class="button button-primary"
+                       href="<?php echo admin_url( 'index.php?page=wphb-setup' ); ?>"><?php _e( 'Quick Setup', 'wp-hotel-booking' ); ?></a>
+                    <!-- <button class="button" data-dismiss-notice="skip-setup-wizard"><?php // _e( 'Skip', 'wp-hotel-booking' ); ?></button> -->
+                </p>
+            </div>
 			<?php
 		}
 	}
@@ -67,6 +68,7 @@ class WPHB_Setup_Wizard {
 				}
 			}
 		}
+
 		$respon->data = hb_get_template_content( 'setup/steps/pages.php', array( 'pages' => $pages ) );
 
 		wp_send_json( $respon );
@@ -277,7 +279,7 @@ class WPHB_Setup_Wizard {
 		$steps   = $this->get_step_keys();
 		$at      = array_search( $current, $steps );
 		if ( $at < sizeof( $steps ) - 1 ) {
-			++$at;
+			++ $at;
 		}
 
 		return esc_url_raw( add_query_arg( 'step', $steps[ $at ], admin_url( $this->_base_url ) ) );
@@ -293,7 +295,7 @@ class WPHB_Setup_Wizard {
 		$steps   = $this->get_step_keys();
 		$at      = array_search( $current, $steps );
 		if ( $at > 0 ) {
-			--$at;
+			-- $at;
 		}
 
 		return esc_url_raw( add_query_arg( 'step', $steps[ $at ], admin_url( $this->_base_url ) ) );
@@ -368,4 +370,5 @@ class WPHB_Setup_Wizard {
 		return $instance;
 	}
 }
+
 return WPHB_Setup_Wizard::instance();

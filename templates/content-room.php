@@ -33,6 +33,11 @@ defined( 'ABSPATH' ) || exit();
 		do_action( 'hotel_booking_loop_room_thumbnail' );
 
 		/**
+		 * hotel_booking_loop_room_feature hook
+		 */
+		do_action( 'hotel_booking_loop_room_feature' );
+
+		/**
 		 * hotel_booking_loop_room_title hook
 		 */
 		do_action( 'hotel_booking_loop_room_title' );

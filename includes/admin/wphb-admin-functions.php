@@ -285,6 +285,7 @@ if ( ! function_exists( 'hb_admin_init_metaboxes' ) ) {
 			new WPHB_Admin_Metabox_Booking_Details(), // booking details
 			new WPHB_Admin_Metabox_Booking_Items(), // booking items
 			new WPHB_Admin_Metabox_Booking_Actions(), // booking actions
+            new WPHB_Admin_Metabox_Product_Review()
 		);
 
 		return apply_filters( 'hb_admin_init_metaboxes', $metaboxes );

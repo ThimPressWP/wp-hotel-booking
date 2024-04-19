@@ -239,6 +239,12 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 						'min'   => 0,
 						'max'   => 100,
 					),
+					'featured_list'        => array(
+						'name'  => 'featured_list',
+						'label' => __( 'Featured list', 'wp-hotel-booking' ),
+						'type'  => 'checkbox',
+						'desc'  => __( 'Add the room to the Featured List.', 'wp-hotel-booking' ),
+					),
 					'external_link'             => array(
 						'name'  => 'external_link',
 						'label' => __( 'External link', 'wp-hotel-booking' ),
@@ -346,7 +352,6 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 
 			return $tab_block_date;
 		}
-
 
 		/**
 		 * Output meta box content

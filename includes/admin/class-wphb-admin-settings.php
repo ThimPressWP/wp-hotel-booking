@@ -123,6 +123,7 @@ class WPHB_Admin_Settings {
 				case 'number':
 				case 'email':
 				case 'password':
+
 					$value = hb_settings()->get( $field['id'] );
 					?>
 					<tr valign="top">

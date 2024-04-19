@@ -347,7 +347,6 @@ const addExtraToCart = () => {
             });
 
             const {status, redirect} = response;
-            console.log(response);
             if ('success' === status && redirect) {
                 window.location.href = redirect;
             }
@@ -370,7 +369,7 @@ const addExtraToCart = () => {
 
 /** search form */
 
-const checkAvaliableRooms = () => {
+const checkAvailableRooms = () => {
 
     //remove sidebar search in page search room_select
     if (hotel_settings?.is_page_search) {
@@ -524,10 +523,19 @@ const priceSlider = () => {
         });
 
         priceSliderNode.noUiSlider.on('update', function (values, handle, unencoded) {
-            minPriceNode.value = parseInt(values[0]);
-            maxPriceNode.value = parseInt(values[1]);
-            priceField.querySelector('.min').innerHTML = renderPrice(values[0]);
-            priceField.querySelector('.max').innerHTML = renderPrice(values[1]);
+            let minValue = values[0], maxValue = values[1];
+
+            if (isNaN(minValue)) {
+                minValue = 0;
+            }
+            if (isNaN(maxValue)) {
+                maxValue = 0;
+            }
+
+            minPriceNode.value = parseInt(minValue);
+            maxPriceNode.value = parseInt(maxValue);
+            priceField.querySelector('.min').innerHTML = renderPrice(minValue);
+            priceField.querySelector('.max').innerHTML = renderPrice(maxValue);
         });
 
         const applyBtn = priceField.querySelector('button.apply');
@@ -563,6 +571,7 @@ const rating = () => {
 
         const allInputs = ratingField.querySelectorAll('input[type="checkbox"]');
         const rating = filterRooms.rating || [];
+
         [...rating].map(value => {
             ratingField.querySelector(`input[name ="rating"][value ="${value}"]`).checked = true;
         });
@@ -683,10 +692,244 @@ const clearFilter = () => {
                 delete filterRooms['room_type'];
             }
 
+            const listItemNodes = document.querySelectorAll('.hb-selection-field .list-item');
+            [...listItemNodes].map(listItemNode => {
+                listItemNode.remove();
+            });
             window.localStorage.setItem('wphb_filter_rooms', JSON.stringify(filterRooms));
 
             searchRoomsPages();
         });
+    }
+}
+
+const hbFilterSelection = () => {
+    const selectionWrapper = document.querySelector('.hb-selection-field');
+    if (!selectionWrapper) {
+        return;
+    }
+
+    const priceFields = document.querySelectorAll('.hb-price-field');
+
+    if (priceFields.length) {
+        for (let i = 0; i < priceFields.length; i++) {
+            const priceField = priceFields[i];
+
+            const priceSliderNode = priceField.querySelector('.hb-price-range');
+
+            priceSliderNode.noUiSlider.on('update', function (values, handle, unencoded) {
+                const minPrice = parseInt(values[0]);
+                const maxPrice = parseInt(values[1]);
+
+                changeSelectedField('price', minPrice + '-' + maxPrice, renderPrice(minPrice) + '-' + renderPrice(maxPrice));
+            });
+        }
+    }
+
+    const ratingFields = document.querySelectorAll('.hb-rating-field');
+
+    if (ratingFields.length) {
+        [...ratingFields].map(ratingField => {
+            const allInputs = ratingField.querySelectorAll('input[type="checkbox"]');
+            [...allInputs].map(ratingNode => {
+                if (ratingNode.checked) {
+                    const value = ratingNode.value;
+                    const label = ratingNode.closest('label').querySelector('span').innerHTML.replace('-', ' ');
+                    changeSelectedField('rating', value, label);
+                }
+
+                ratingNode.addEventListener('change', function () {
+                    const value = this.value;
+                    const label = ratingNode.closest('label').querySelector('span').innerHTML.replace('-', ' ');
+                    changeSelectedField('rating', value, label);
+                });
+            })
+        });
+    }
+
+    const roomTypeFields = document.querySelectorAll('.hb-type-field');
+    if (roomTypeFields.length) {
+        for (let i = 0; i < roomTypeFields.length; i++) {
+            const roomTypeField = roomTypeFields[i];
+
+            const allInputs = roomTypeField.querySelectorAll('input[type="checkbox"]');
+
+            [...allInputs].map(roomTypeNode => {
+                if (roomTypeNode.checked) {
+                    const value = roomTypeNode.value;
+                    const label = roomTypeNode.closest('label').querySelector('span').innerHTML.replace('-', ' ');
+                    changeSelectedField('room-type', value, label);
+                }
+
+                roomTypeNode.addEventListener('change', function () {
+                    const value = this.value;
+                    const label = roomTypeNode.closest('label').querySelector('span').innerHTML.replace('-', ' ');
+                    changeSelectedField('room-type', value, label);
+                });
+            })
+        }
+    }
+}
+
+const removeSelection = () => {
+    document.addEventListener('click', function (event) {
+        const target = event.target;
+
+        if (!target.classList.contains('remove')) {
+            return;
+        }
+
+        const selectionWrapper = target.closest('.hb-selection-field');
+
+        if (!selectionWrapper) {
+            return;
+        }
+
+        const listItem = target.closest('.list-item');
+
+        const field = listItem.getAttribute('data-field');
+        switch (field) {
+            case 'room-type':
+                resetRoomType(listItem.getAttribute('data-value'));
+                break;
+            case 'rating':
+                resetRating(listItem.getAttribute('data-value'));
+                break;
+            case 'price':
+                resetPrice();
+                break;
+            default:
+                break;
+        }
+
+        if (listItem) {
+            listItem.remove();
+        }
+    });
+}
+
+const resetRoomType = (value = 'all') => {
+    const roomTypeFields = document.querySelectorAll('.hb-type-field');
+
+    [...roomTypeFields].map(roomTypeField => {
+        const roomTypeNodes = roomTypeField.querySelectorAll('input[type="checkbox"]');
+        if (value === 'all') {
+            [...roomTypeNodes].map(roomTypeNode => {
+                roomTypeNode.checked = false;
+            })
+        } else {
+            const input = roomTypeField.querySelector(`.room-type-list input[value="${value}"]`);
+            input.checked = false;
+        }
+
+        let roomTypeVal = [];
+
+        const allCheckedInput = roomTypeField.querySelectorAll('input[type="checkbox"]:checked');
+
+        [...allCheckedInput].map(checkedInput => {
+            roomTypeVal.push(checkedInput.value);
+        });
+
+        filterRooms = {
+            ...filterRooms,
+            room_type: roomTypeVal
+        };
+
+        window.localStorage.setItem('wphb_filter_rooms', JSON.stringify(filterRooms));
+
+        searchRoomsPages();
+    });
+}
+
+const resetRating = (value = 'all') => {
+    const ratingFields = document.querySelectorAll('.hb-rating-field');
+
+    [...ratingFields].map(ratingField => {
+        const ratingNodes = ratingField.querySelectorAll('input[type="checkbox"]');
+        if (value === 'all') {
+            [...ratingNodes].map(ratingNode => {
+                ratingNode.checked = false;
+            })
+        } else {
+            const input = ratingField.querySelector(`.rating-list input[value="${value}"]`);
+            input.checked = false;
+        }
+
+        let ratingVal = [];
+        const allCheckedInput = ratingField.querySelectorAll('input[type="checkbox"]:checked');
+
+        [...allCheckedInput].map(checkedInput => {
+            ratingVal.push(checkedInput.value);
+        });
+
+        filterRooms = {
+            ...filterRooms,
+            rating: ratingVal
+        };
+
+        window.localStorage.setItem('wphb_filter_rooms', JSON.stringify(filterRooms));
+
+        searchRoomsPages();
+    });
+}
+
+const resetPrice = () => {
+    const priceFields = document.querySelectorAll('.hb-price-field');
+
+    if (priceFields.length) {
+        for (let i = 0; i < priceFields.length; i++) {
+            const priceField = priceFields[i];
+
+            const priceSliderNode = priceField.querySelector('.hb-price-range');
+
+            priceSliderNode.noUiSlider.updateOptions({
+                start: [parseInt(priceField.getAttribute('data-min')), parseInt(priceField.getAttribute('data-max'))],
+            });
+        }
+    }
+
+    if (filterRooms.hasOwnProperty('min_price')) {
+        delete filterRooms['min_price'];
+    }
+
+    if (filterRooms.hasOwnProperty('max_price')) {
+        delete filterRooms['max_price'];
+    }
+
+    window.localStorage.setItem('wphb_filter_rooms', JSON.stringify(filterRooms));
+
+    searchRoomsPages();
+}
+
+const changeSelectedField = (field, value, text) => {
+    const listNode = document.querySelector('.hb-selection-field .list');
+
+    let fieldNode = listNode.querySelector(`li[data-field="${field}"]`);
+
+    if (field === 'rating' || field === 'room-type') {
+        fieldNode = listNode.querySelector(`li[data-field="${field}"][data-value="${value}"]`);
+    }
+
+    if (fieldNode) {
+        if (field === 'rating' || field === 'room-type') {
+            fieldNode.remove();
+        } else {
+            if (value) {
+                fieldNode.setAttribute('data-value', value);
+                fieldNode.querySelector('.title').innerHTML = text;
+            } else {
+                fieldNode.remove();
+            }
+        }
+    } else {
+        const item = `<li class="list-item" data-field = "${field}" data-value="${value}">
+            <span class="title">${text}</span>
+            <svg class="remove" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M12.5 3.5L3.5 12.5" stroke="#AAAFB6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12.5 12.5L3.5 3.5" stroke="#AAAFB6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+           </svg>
+        </li>`;
+        listNode.insertAdjacentHTML('beforeend', item);
     }
 }
 
@@ -726,13 +969,15 @@ const sortBy = () => {
 document.addEventListener('DOMContentLoaded', () => {
     searchRoomsPages();//use in page search room
     addExtraToCart();
-    checkAvaliableRooms(); // use multi form search will redirect to page search room with data valid :
+    checkAvailableRooms(); // use multi form search will redirect to page search room with data valid :
     processCheckout();
 
     if (hotelBookingSearchNode && hotel_settings && hotel_settings.is_page_search) {
         priceSlider();
         rating();
         roomType();
+        hbFilterSelection();
+        removeSelection();
         clearFilter();
         sortBy();
     }
