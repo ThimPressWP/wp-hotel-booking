@@ -4,7 +4,7 @@
  * Plugin URI: http://thimpress.com/
  * Description: Full of professional features for a booking room system
  * Author: ThimPress
- * Version: 2.1.0-beta-1.1
+ * Version: 2.1.0-beta-1.2
  * Author URI: http://thimpress.com
  * Text Domain: wp-hotel-booking
  * Domain Path: /languages/
@@ -407,9 +407,11 @@ class WP_Hotel_Booking {
 				wp_register_style( 'wp-admin-hotel-booking', $this->plugin_url( 'assets/css/admin/admin.tp-hotel-booking.css' ), array(), $v_rand );
 				wp_register_script( 'wp-admin-hotel-booking', $this->plugin_url( 'assets/js/admin/admin.hotel-booking.js' ), array_merge( $dependencies, array( 'wphb-dropdown-pages' ) ), $v_rand );
 				wp_register_style( 'wp-admin-review-image', $this->plugin_url( 'assets/css/admin/review-image.css' ), array(), $v_rand );
+				wp_register_script( 'wp-admin-room-filter', $this->plugin_url( 'assets/js/admin/room-filter.js' ), array_merge( $dependencies, array() ), $v_rand );
 			} else {
 				wp_register_style( 'wp-admin-hotel-booking', $this->plugin_url( 'assets/css/admin/admin.tp-hotel-booking.min.css' ), array(), WPHB_VERSION );
 				wp_register_script( 'wp-admin-hotel-booking', $this->plugin_url( 'assets/js/admin/admin.hotel-booking.min.js' ), $dependencies, WPHB_VERSION );
+				wp_register_script( 'wp-admin-room-filter', $this->plugin_url( 'assets/js/admin/room-filter.js' ), array_merge( $dependencies, array() ), WPHB_VERSION );
 			}
 
 			wp_localize_script( 'wp-admin-hotel-booking', 'hotel_booking_i18n', hb_admin_i18n() );
@@ -454,6 +456,7 @@ class WP_Hotel_Booking {
 
 			wp_enqueue_style( 'wp-admin-hotel-booking' );
 			wp_enqueue_script( 'wp-admin-hotel-booking' );
+			wp_enqueue_script( 'wp-admin-room-filter' );
 			wp_enqueue_script( 'backbone' );
 			wp_enqueue_style( 'wp-admin-single-room-v2' );
 			wp_enqueue_style( 'wp-admin-review-image' );
