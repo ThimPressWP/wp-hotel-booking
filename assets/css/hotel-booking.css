@@ -3406,7 +3406,17 @@ div.sort-by-wrapper, .sort-by-wrapper .sort-by {
     align-items: center;
     justify-content: center;
 }
-
+#hb-room-submit-review-form label.upload-images::before {
+    position: absolute;
+    display: contents;
+    content: "+";
+    top: 0;
+    left: 0;
+    right: 0;
+    font-size: 32px;
+    bottom: 0;
+    color: #000;
+}
 #hb-room-submit-review-form label.upload-images:hover {
     background: #E8EDF1;
 }
