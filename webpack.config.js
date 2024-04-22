@@ -13,6 +13,7 @@ module.exports = {
 		'frontend/hotel-booking-v2': './assets/js/frontend/hotel-booking-v2.js',
 		'frontend/filter-by': './assets/js/frontend/filter-by.js',
 		'frontend/sort-by': './assets/js/frontend/sort-by.js',
+		'frontend/room-review': './assets/js/frontend/room-review.js',
 	},
 	output: {
 		filename: '[name]' + ( isProduction ? '.min.js' : '.js' ),
