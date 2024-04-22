@@ -1,5 +1,5 @@
 .hb-room-single__review {
-	.commentlist {
+	#reviews #comments .commentlist {
 		margin: 0;
 		padding: 20px 0 0;
 
@@ -9,6 +9,7 @@
 			overflow: hidden;
 			border-radius: var(--border-radius-item, 8px);
 			background: #F2F4F4;
+			border: none;
 
 			.avatar {
 				width: 70px;
@@ -197,46 +198,48 @@
 		}
 	}
 
-	&__header {
-		display: flex;
-		justify-content: space-between;
-		align-items: flex-start;
-		flex-wrap: wrap;
-		gap: 30px;
-
-		&__left {
-			display: flex;
-			align-items: center;
-			flex-wrap: wrap;
-			column-gap: 16px;
-			row-gap: 5px;
+	.review-top-section .statistic {
+		.statistic-general {
 			max-width: 35%;
 
 			@media (max-width: 767px) {
 				max-width: 100%;
 			}
 
-			.average-value {
-				font-size: 40px;
-				font-weight: bold;
-				line-height: 1.3em;
-			}
+			.star-rating {
+				position: relative;
+				width: 160px;
+    			height: 32px;
+				line-height: 1;
+				display: flex;
 
-			.review-star {
-				.star-rating {
-					width: 160px;
+				&:before {
+					content: "\e601\e601\e601\e601\e601";
+					float: left;
+					top: 0;
+					left: 0;
+					font-size: 32px;
+					position: absolute;
+					font-family: hotel-booking-star;
+					color: var(--room-single-rating-star-color, #FC961B);
+				}
+
+				span {
+					overflow: hidden;
+					position: relative;
+					display: inline-block;
 					height: 32px;
+					font-size: 0;
 
-					&::before {
+					&:before {
+						content: "\e600\e600\e600\e600\e600";
+						float: left;
+						top: 0;
 						font-size: 32px;
-					}
-
-					span {
-						height: 32px;
-
-						&::before {
-							font-size: 32px;
-						}
+						left: 0;
+						position: absolute;
+						font-family: hotel-booking-star;
+						color: var(--room-single-rating-star-color, #FC961B);
 					}
 				}
 			}
@@ -246,97 +249,41 @@
 			}
 		}
 
-		&__right {
+		.statistic-detail {
 			max-width: 60%;
+			.statistic-detail-item {
+				margin-bottom: 5px;
+			}
 
 			@media (max-width: 767px) {
 				max-width: 100%;
 			}
-			.stars {
-				display: flex;
-				align-items: center;
 
-				.key {
-					width: 65px;
-					margin-right: 30px;
-				}
-
-				.bar {
-					background-color: #E8EDF1;
-					height: 10px;
-					position: relative;
-					width: 350px;
-					border-radius: 200px;
-					overflow: hidden;
-					@media (max-width: 767px) {
-						max-width: 60%;
-					}
-					.full_bar {
-						position: absolute;
-						top: 0;
-						left: 0;
-						background-color: var(--e-global-color-primary, #ffb606);
-						bottom: 0;
-					}
-				}
-
-				.count {
-					margin-left: 30px;
-				}
-			}
-		}
-	}
-
-	&__button {
-		font-size: 1em;
-		padding: 15px 30px;
-		cursor: pointer;
-	}
-
-	&__form {
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		z-index: 999;
-		text-align: center;
-		background: rgba(0, 0, 0, 0.7);
-		display: none;
-		cursor: zoom-out;
-		align-items: center;
-		justify-content: center;
-
-		&.active {
-			display: flex;
-		}
-
-		#review_form_wrapper {
-			background-color: #fff;
-			padding: 20px;
-			position: relative;
-			width: 80%;
-			max-width: 600px;
-			display: inline-block;
-			text-align: left;
-			cursor: initial;
-
-			.comment-respond,
-			.comment-form {
-				margin: 0;
+			.rating-label {
+				width: 65px;
 			}
 
-			.comment-reply-title {
-				display: flex;
-    			justify-content: space-between;
-
-				small {
-					display: none;
+			.full-width {
+				background-color: #E8EDF1;
+				height: 10px;
+				position: relative;
+				width: 350px;
+				border-radius: 200px;
+				overflow: hidden;
+				@media (max-width: 992px) {
+					max-width: 60%;
 				}
-
-				.close-popup {
-					cursor: pointer;
+				.progress-bar {
+					position: absolute;
+					top: 0;
+					left: 0;
+					background-color: var(--e-global-color-primary, #ffb606);
+					bottom: 0;
 				}
+			}
+
+			.count {
+				margin-left: 30px;
 			}
 		}
 	}
@@ -345,6 +292,34 @@
 		.avatar {
 			display: none;
 		}
+		#reviews #comments .commentlist .comment .comment-text {
+			width: 100%;
+		}
+	}
+	.sort-by {
+		padding: 0;
+		border: none;
+		font-size: 1em;
+	}
+	.review-top-section .header button {
+		color: var(--e-global-color-primary);
+		border-color: var(--e-global-color-primary);
+
+		svg {
+			display: none;
+		}
+
+		&:hover, &:focus {
+			background-color: var(--e-global-color-primary);
+			color: #fff;
+		}
+	}
+	.gallery-filter a {
+		border-color: var(--e-global-color-primary);
+		height: 54px;
+		display: inline-flex;
+		line-height: 0;
+		align-items: center;
 	}
 }
 
@@ -399,4 +374,7 @@
 			}
 		}
 	}
+}
+.rating-star-item, .rating-star-item:hover, .rating-star-item:focus {
+	color: var(--room-single-rating-star-color, #FC961B);
 }

@@ -37,24 +37,19 @@ class Thim_Ekit_Widget_Room_Review extends Widget_Base
 
     protected function register_controls()
     {
-        $this->start_controls_section(
-            'section_tabs',
-            [
-                'label' => __('Reviews', 'wp-hotel-booking'),
-            ]
-        );
+        $this->_register_style_review_base();
+        $this->_register_style_review();
+        $this->_register_style_button();
+        $this->_register_style_form();
+    }
 
-        $this->add_control(
-            'layout',
+    protected function _register_style_review_base()
+    {
+        $this->start_controls_section(
+            'section_base_title',
             array(
-                'label'   => esc_html__('Select Price', 'wp-hotel-booking'),
-                'type'    => Controls_Manager::SELECT,
-                'default' => 'base',
-                'options' => array(
-                    'base'            => esc_html__('Base', 'wp-hotel-booking'),
-                    'review_list'     => esc_html__('Review List', 'wp-hotel-booking'),
-                    'review_form'     => esc_html__('Review Form', 'wp-hotel-booking'),
-                ),
+                'label' => esc_html__('Title', 'wp-hotel-booking'),
+                'tab'   => Controls_Manager::TAB_STYLE,
             )
         );
 
@@ -63,35 +58,16 @@ class Thim_Ekit_Widget_Room_Review extends Widget_Base
 			[
 				'label'        => esc_html__( 'Avatar', 'wp-hotel-booking' ),
 				'type'         => Controls_Manager::SWITCHER,
-				'default'      => 'yes',
+				'default'      => 'no',
 				'label_on'     => esc_html__( 'Show', 'wp-hotel-booking' ),
 				'label_off'    => esc_html__( 'Hide', 'wp-hotel-booking' ),
 				'return_value' => 'yes',
-                'condition'     => [
-					'layout!' => 'review_form',
-				]
 			]
 		);
 
-        $this->add_control(
-			'button_popup_review_text',
-			[
-				'label'         => esc_html__( 'Button', 'wp-hotel-booking' ),
-				'type'          => Controls_Manager::TEXT,
-                'placeholder'   => esc_html__( 'Add your text button here', 'wp-hotel-booking' ),
-                'default'       => esc_html__( 'Write a review', 'wp-hotel-booking' ),
-				'condition'     => [
-					'layout' => 'review_form',
-				]
-			]
-		);
+        $this->register_style_typo_color_margin('room_base_title_review', '.hb-room-single__review h2, .hb-room-single__review .comment-reply-title');
 
         $this->end_controls_section();
-
-        $this->_register_style_review();
-        $this->_register_style_review_base();
-        $this->_register_style_button();
-        $this->_register_style_form();
     }
 
     protected function _register_style_review()
@@ -150,24 +126,6 @@ class Thim_Ekit_Widget_Room_Review extends Widget_Base
         $this->end_controls_section();
     }
 
-    protected function _register_style_review_base()
-    {
-        $this->start_controls_section(
-            'section_base_title',
-            array(
-                'label' => esc_html__('Title', 'wp-hotel-booking'),
-                'tab'   => Controls_Manager::TAB_STYLE,
-                'condition'     => [
-					'layout!' => 'review_list',
-				]
-            )
-        );
-
-        $this->register_style_typo_color_margin('room_base_title_review', '.hb-room-single__review h2, .hb-room-single__review .comment-reply-title');
-
-        $this->end_controls_section();
-    }
-
     protected function _register_style_button()
     {
         $this->start_controls_section(
@@ -175,9 +133,6 @@ class Thim_Ekit_Widget_Room_Review extends Widget_Base
             array(
                 'label' => esc_html__('Button', 'wp-hotel-booking'),
                 'tab'   => Controls_Manager::TAB_STYLE,
-                'condition'     => [
-					'layout!' => 'review_list',
-				]
             )
         );
 
@@ -211,9 +166,6 @@ class Thim_Ekit_Widget_Room_Review extends Widget_Base
             array(
                 'label' => esc_html__('Form', 'wp-hotel-booking'),
                 'tab'   => Controls_Manager::TAB_STYLE,
-                'condition'     => [
-					'layout!' => 'review_list',
-				]
             )
         );
 

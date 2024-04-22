@@ -52,7 +52,8 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
 					'children'       => 'Children',
 					'size'           => 'Room Size',
 					'types'          => 'Room Type',
-                    'beds'           => 'Beds'   
+                    'beds'           => 'Beds',
+					'featured'       => 'Featured'    
 				),
 			)
 		);
@@ -98,7 +99,7 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
 					'active' => false,
 				],
                 'condition' => array(
-					'type!' => 'types',
+					'type!' => ['types','featured']
 				),
 			)
         );
@@ -206,7 +207,10 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
                 break;
             case 'beds':
                 $this->render_beds( $repeater_item );
-                break;   
+                break;
+			case 'featured':
+				$this->render_featured( $repeater_item );
+				break;
         }
     }
 
@@ -308,4 +312,11 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
 		<?php endif;
     }
 
+	protected function render_featured() {
+		if (get_post_meta( get_the_ID(), '_hb_featured_list', true ) === '1') : ?>
+			<span class="elementor-icon-list-text featured">
+				<?php echo esc_html( 'Featured' , 'wp-hotel-booking' ) ?>
+			</span>
+		<?php endif;
+	}
 }

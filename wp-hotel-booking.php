@@ -436,7 +436,7 @@ class WP_Hotel_Booking {
 			wp_register_style( 'wp-admin-single-room-v2', $this->plugin_url( 'assets/css/admin/admin-single-room.css' ) );
 
 		} else {
-			wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.css' ), array(), $version );
+			wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.css' ), array(), WPHB_VERSION );
 			wp_register_script(
 				'wp-hotel-booking',
 				$this->plugin_url( "assets/dist/js/frontend/hotel-booking{$min}.js" ),
