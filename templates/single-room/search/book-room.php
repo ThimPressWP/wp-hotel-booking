@@ -27,7 +27,7 @@ if ( ! $post ) {
 
 		<div class="hb-booking-room-form-head">
 			<h2 class="hb-room-name"><?php printf( '%s', $post->post_title ); ?></h2>
-			<p class="description"><?php _e( 'Please select number of room and packages(optional)', 'wp-hotel-booking' ); ?></p>
+			<p class="description"><?php _e( 'Please select number of room and packages (optional)', 'wp-hotel-booking' ); ?></p>
 		</div>
 
 		<div class="hb-search-results-form-container">
