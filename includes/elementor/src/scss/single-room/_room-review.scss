@@ -36,22 +36,21 @@
 			}
 
 			.meta {
-				display: inline-block;
-				float: left;
-				margin-right: 40px;
 				margin-bottom: 10px;
+				display: flex;
+    			flex-direction: column; 
 
-				strong {
-					display: inline-block;
-					margin: 0;
-					text-transform: capitalize;
-					margin-right: 10px;
+				.date {
+					font-size: 0.875em;
+					color: #4F5E71;
+					line-height: 1.6em;
 				}
-
-				time {
-					margin-left: 5px;
-					display: inline-block;
+				.author {
+					display: none;
 				}
+			}
+			.hb-room-review-title {
+				margin-top: 0;
 			}
 
 			.star-rating {
@@ -61,6 +60,7 @@
 				line-height: 1;
 				display: flex;
 				margin-bottom: 10px;
+				order: -1;
 
 				&:before {
 					content: "\e601\e601\e601\e601\e601";
@@ -94,6 +94,9 @@
 
 			.description {
 				clear: both;
+			}
+			.hb-room-review-images {
+				border-radius: var(--border-radius-item);
 			}
 		}
 	}

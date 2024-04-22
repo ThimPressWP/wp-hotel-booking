@@ -3513,14 +3513,15 @@ div.sort-by-wrapper, .sort-by-wrapper .sort-by {
 /* #hb-room-submit-review-form   */
 .hb-room-review-images {
     border-bottom: 0 !important;
-    margin: 0 0 1.5rem;
+    margin: 20px 0 0;
     padding: 0;
     font-family: var(--heading--font-family);
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 ul.hb-room-review-images li {
-    width: 100px;
-    height: 100px;
     display: inline-flex !important;
 }
 
