@@ -158,8 +158,8 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 					),
 
 					array(
-						'id'      => 'tp_hotel_booking_enable_review_popup',
-						'title'   => __( 'Enable Tour Review Popup', 'wp-hotel-booking' ),
+						'id'      => 'tp_hotel_booking_enable_advanced_review',
+						'title'   => __( 'Enable advanced review', 'wp-hotel-booking' ),
 						'type'    => 'checkbox',
 						'default' => 1,
 						'atts'    => array(

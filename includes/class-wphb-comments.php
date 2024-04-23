@@ -234,7 +234,7 @@ class WPHB_Comments {
 			return false;
 		}
 
-		if ( hb_settings()->get( 'enable_review_popup' ) !== '1' ) {
+		if ( hb_settings()->get( 'enable_advanced_review' ) !== '1' ) {
 			return false;
 		}
 
@@ -324,6 +324,10 @@ class WPHB_Comments {
 	 * @return void
 	 */
 	public function save_comment_metaboxes( $comment_id, $data ) {
+		if ( isset( $_POST['hb_room_review_title'] )) {
+			update_comment_meta( $comment_id, 'hb_room_review_title', sanitize_text_field( $_POST['hb_room_review_title'] ) );
+		}
+
 		$value = array();
 		if ( isset( $_POST['hb_review_images'] ) && ! empty( $_POST['hb_review_images'] ) ) {
 			$value = $_POST['hb_review_images'];
@@ -332,7 +336,7 @@ class WPHB_Comments {
 			}
 		}
 
-		update_comment_meta( $comment_id, 'hb_review_images', $value );
+		update_comment_meta( $comment_id, 'hb_room_review_images', $value );
 	}
 
 	/**
@@ -345,7 +349,7 @@ class WPHB_Comments {
 			uniqid(),
 			true
 		);
-		wp_enqueue_script( 'hb-rooom-review' );
+		wp_enqueue_script( 'hb-room-review' );
 	}
 
 	/**
@@ -373,6 +377,19 @@ class WPHB_Comments {
 			return;
 		}
 
+		if ( hb_settings()->get( 'enable_advanced_review' ) !== '1' ) {
+			return;
+		}
+
+		add_meta_box(
+			'hb_review_title',
+			esc_html__( 'Title', 'travel-booking' ),
+			array( $this, 'render_review_title' ),
+			array( 'comment' ),
+			'normal',
+			'low',
+		);
+
 		add_meta_box(
 			'hb-review-image',
 			esc_html__( 'Images', 'wp-hotel-booking' ),
@@ -381,6 +398,24 @@ class WPHB_Comments {
 			'normal',
 			'low',
 		);
+	}
+
+	/**
+	 * @param $comment
+	 *
+	 * @return void
+	 */
+	public function render_review_title( $comment ) {
+		$comment_id = $comment->comment_ID;
+		$value      = get_comment_meta( $comment_id, 'hb_room_review_title', true );
+
+		if ( empty( $value ) ) {
+			$value = '';
+		}
+		?>
+
+        <input type="text" name="hb_room_review_title" value="<?php echo esc_attr( $value ); ?>">
+		<?php
 	}
 
 	/**
@@ -527,38 +562,6 @@ class WPHB_Comments {
 					}
 				}
 			}
-		}
-
-		//Upload images
-		require_once( ABSPATH . "wp-admin" . '/includes/image.php' );
-		require_once( ABSPATH . "wp-admin" . '/includes/file.php' );
-		require_once( ABSPATH . "wp-admin" . '/includes/media.php' );
-
-		$images = $_FILES['review-image'] ?? array();
-
-		$attachment_ids = array();
-		foreach ( $images['name'] as $key => $value ) {
-			if ( ! empty( $images['name'][ $key ] ) ) {
-				$file                   = array(
-					'name'     => $images['name'][ $key ],
-					'type'     => $images['type'][ $key ],
-					'tmp_name' => $images['tmp_name'][ $key ],
-					'error'    => $images['error'][ $key ],
-					'size'     => $images['size'][ $key ]
-				);
-				$_FILES ["upload_file"] = $file;
-				$attachment_id          = media_handle_upload( "upload_file", $postID );
-				if ( is_wp_error( $attachment_id ) ) {
-					wc_add_notice( sprintf( esc_html__( 'Error adding file: %s.', 'wp-hotel-booking' ), $attachment_id->get_error_message() ), 'error' );
-					break;
-				} else {
-					$attachment_ids[] = $attachment_id;
-				}
-			}
-		}
-
-		if ( count( $attachment_ids ) ) {
-			update_comment_meta( $comment_id, 'hb_review_images', $attachment_ids );
 		}
 	}
 

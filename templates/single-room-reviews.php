@@ -29,13 +29,13 @@ $room_id             = get_the_ID();
 $room                = WPHB_Room::instance( $room_id );
 $average_rating      = round( $room->average_rating(), 2 );
 $count               = intval( $room->get_review_count() );
-$enable_review_popup = hb_settings()->get( 'enable_review_popup' ) === '1';
+$enable_advanced_review = hb_settings()->get( 'enable_advanced_review' ) === '1';
 ?>
 
 <div id="reviews">
     <!--    Review top section-->
 	<?php
-	if ( $enable_review_popup ) {
+	if ( $enable_advanced_review ) {
 		?>
         <div class="review-top-section">
             <div class="header">
@@ -119,7 +119,7 @@ $enable_review_popup = hb_settings()->get( 'enable_review_popup' ) === '1';
     <!--    End review top section-->
     <div id="comments">
 		<?php
-		if ( $enable_review_popup ) {
+		if ( $enable_advanced_review ) {
 			?>
             <div class="hb-room-commentlist-sort-filter">
 				<?php
@@ -242,7 +242,7 @@ $enable_review_popup = hb_settings()->get( 'enable_review_popup' ) === '1';
 		<?php } ?>
     </div>
 
-	<?php if ( hb_customer_booked_room( $hb_room->id ) && ! $enable_review_popup ) { ?>
+	<?php if ( hb_customer_booked_room( $hb_room->id ) && ! $enable_advanced_review ) { ?>
 
         <div id="review_form_wrapper">
             <div id="review_form">
