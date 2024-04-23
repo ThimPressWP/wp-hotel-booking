@@ -542,7 +542,7 @@ class WP_Hotel_Booking {
 					$max_file_size = 1000000;
 				}
 
-				$is_enable = hb_settings()->get( 'enable_review_popup' ) === '1';
+				$is_enable = hb_settings()->get( 'enable_advanced_review' ) === '1';
 
 
 				wp_localize_script( 'wp-hotel-booking-room-review', 'HB_ROOM_REVIEW_GALLERY', array(

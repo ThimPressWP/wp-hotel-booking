@@ -25,17 +25,17 @@ if ( ! comments_open() ) {
 	return;
 }
 
-$room_id             = get_the_ID();
-$room                = WPHB_Room::instance( $room_id );
-$average_rating      = round( $room->average_rating(), 2 );
-$count               = intval( $room->get_review_count() );
-$enable_review_popup = hb_settings()->get( 'enable_review_popup' ) === '1';
+$room_id                = get_the_ID();
+$room                   = WPHB_Room::instance( $room_id );
+$average_rating         = round( $room->average_rating(), 2 );
+$count                  = intval( $room->get_review_count() );
+$enable_advanced_review = hb_settings()->get( 'enable_advanced_review' ) === '1';
 ?>
 
 <div id="reviews">
     <!--    Review top section-->
 	<?php
-	if ( $enable_review_popup ) {
+	if ( $enable_advanced_review ) {
 		?>
         <div class="review-top-section">
             <div class="header">
@@ -62,55 +62,67 @@ $enable_review_popup = hb_settings()->get( 'enable_review_popup' ) === '1';
             </div>
             <div class="statistic">
                 <div class="statistic-general">
-                    <div class="review-average-rating">
-                        <div class="average-rating">
-							<?php
-							printf( '%s/5', $average_rating );
-							?>
+					<?php
+					if ( $hb_settings->get( 'enable_review_rating' ) ) {
+						?>
+                        <div class="review-average-rating">
+                            <div class="average-rating">
+								<?php
+								printf( '%s/5', $average_rating );
+								?>
+                            </div>
+                            <div class="rating">
+								<?php
+								echo wc_get_rating_html( $average_rating );
+								?>
+                            </div>
                         </div>
-                        <div class="rating">
-							<?php
-							echo wc_get_rating_html( $average_rating );
-							?>
-                        </div>
-                    </div>
+						<?php
+					}
+					?>
                     <div class="review-count">
 						<?php
 						printf( esc_html( _n( '%s Review', '%s Reviews', $count, 'wp-hotel-booking' ) ), $count );
 						?>
                     </div>
                 </div>
-                <div class="statistic-detail">
-					<?php
-					for ( $i = 5; $i > 0; $i -- ) {
-						$review_count = WPHB_Comments::get_review_count_by_rating( $i, $room_id );
-						if ( $count === 0 ) {
-							$percent = 0;
-						} else {
-							$percent = ( $review_count / $count ) * 100;
-						}
-						?>
-                        <div class="statistic-detail-item" data-rating="<?php echo esc_attr( $i ); ?>">
-                            <div class="rating-label">
-								<?php
-								printf( esc_html( _n( '%s star', '%s stars', $i, 'wp-hotel-booking' ) ), $i );
-								?>
-                            </div>
-                            <div class="full-width">
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar"
-                                         style="width:<?php echo esc_attr( $percent ); ?>%"></div>
+				<?php
+				if ( $hb_settings->get( 'enable_review_rating' ) ) {
+					?>
+                    <div class="statistic-detail">
+						<?php
+						for ( $i = 5; $i > 0; $i -- ) {
+							$review_count = WPHB_Comments::get_review_count_by_rating( $i, $room_id );
+							if ( $count === 0 ) {
+								$percent = 0;
+							} else {
+								$percent = ( $review_count / $count ) * 100;
+							}
+							?>
+                            <div class="statistic-detail-item" data-rating="<?php echo esc_attr( $i ); ?>">
+                                <div class="rating-label">
+									<?php
+									printf( esc_html( _n( '%s star', '%s stars', $i, 'wp-hotel-booking' ) ), $i );
+									?>
+                                </div>
+                                <div class="full-width">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar"
+                                             style="width:<?php echo esc_attr( $percent ); ?>%"></div>
+                                    </div>
+                                </div>
+
+                                <div class="rating-number">
+									<?php echo esc_html( $review_count ); ?>
                                 </div>
                             </div>
-
-                            <div class="rating-number">
-								<?php echo esc_html( $review_count ); ?>
-                            </div>
-                        </div>
-						<?php
-					}
-					?>
-                </div>
+							<?php
+						}
+						?>
+                    </div>
+					<?php
+				}
+				?>
             </div>
         </div>
 		<?php
@@ -119,7 +131,7 @@ $enable_review_popup = hb_settings()->get( 'enable_review_popup' ) === '1';
     <!--    End review top section-->
     <div id="comments">
 		<?php
-		if ( $enable_review_popup ) {
+		if ( $enable_advanced_review ) {
 			?>
             <div class="hb-room-commentlist-sort-filter">
 				<?php
@@ -159,7 +171,11 @@ $enable_review_popup = hb_settings()->get( 'enable_review_popup' ) === '1';
 						if ( $review_sort_by === 'newest' ) {
 							$toggle = __( 'Newest', 'wp-hotel-booking' );
 						} else if ( $review_sort_by === 'top-review' ) {
-							$toggle = __( 'Top Review', 'wp-hotel-booking' );
+							if ( $hb_settings->get( 'enable_review_rating' ) ) {
+								$toggle = __( 'Top Review', 'wp-hotel-booking' );
+							} else {
+								$toggle = '';
+							}
 						}
 						?>
                         <div class="toggle" data-value="top-oldest"><?php echo esc_html( $toggle );
@@ -190,14 +206,20 @@ $enable_review_popup = hb_settings()->get( 'enable_review_popup' ) === '1';
 								   ), $link ); ?>">
 									<?php esc_html_e( 'Newest', 'wp-hotel-booking' ); ?></a>
                             </li>
-                            <li class="<?php echo $review_sort_by === 'top-review' ? 'active' : ''; ?>">
-                                <a class="hb-room-sort-by-option"
-                                   href="<?php echo add_query_arg( array(
-										   'review_sort_by' => 'top-review',
-										   'tab'            => 'review'
-									   ), $link ) . '#tab-reviews'; ?>">
-									<?php esc_html_e( 'Top Review', 'wp-hotel-booking' ); ?></a>
-                            </li>
+                            <?php
+                            if ( $hb_settings->get( 'enable_review_rating' ) ) {
+                                ?>
+                                <li class="<?php echo $review_sort_by === 'top-review' ? 'active' : ''; ?>">
+                                    <a class="hb-room-sort-by-option"
+                                       href="<?php echo add_query_arg( array(
+				                               'review_sort_by' => 'top-review',
+				                               'tab'            => 'review'
+			                               ), $link ) . '#tab-reviews'; ?>">
+			                            <?php esc_html_e( 'Top Review', 'wp-hotel-booking' ); ?></a>
+                                </li>
+                                <?php
+                            }
+                            ?>
                         </ul>
                     </div>
                 </div>
@@ -242,7 +264,7 @@ $enable_review_popup = hb_settings()->get( 'enable_review_popup' ) === '1';
 		<?php } ?>
     </div>
 
-	<?php if ( hb_customer_booked_room( $hb_room->id ) && ! $enable_review_popup ) { ?>
+	<?php if ( hb_customer_booked_room( $hb_room->id ) && ! $enable_advanced_review ) { ?>
 
         <div id="review_form_wrapper">
             <div id="review_form">
