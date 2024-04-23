@@ -101,7 +101,9 @@ class WPHB_Comments {
 
 		$params = $request->get_params();
 
-		if ( ! isset( $params['rating'] ) ) {
+		$enable_review_rating = WPHB_Settings::instance()->get( 'enable_review_rating' );
+
+		if ( ! isset( $params['rating'] ) && $enable_review_rating ) {
 			return $this->error( esc_html__( 'The rating is required.', 'wp-hotel-booking' ), 400 );
 		}
 
@@ -141,7 +143,9 @@ class WPHB_Comments {
 
 		//Update comment meta
 		update_comment_meta( $comment_id, 'hb_room_review_title', sanitize_text_field( $params['title'] ) );
-		update_comment_meta( $comment_id, 'rating', sanitize_text_field( $params['rating'] ) );
+		if ( ! empty( $params['rating'] ) ) {
+			update_comment_meta( $comment_id, 'rating', sanitize_text_field( $params['rating'] ) );
+		}
 
 		$images = $params['base64_images'] ?? '';
 
@@ -261,20 +265,28 @@ class WPHB_Comments {
                     </div>
                 </header>
                 <main>
-                    <div class="review-rating field">
-                        <label for="review-rating"><?php esc_html_e( 'Rate your experience *', 'wp-hotel-booking' ); ?></label>
-                        <input type="hidden" name="review-rating" value="">
-                        <div class="rating-star">
-							<?php
-							for ( $i = 1; $i <= 5; $i ++ ) {
-								?>
-                                <a class="rating-star-item" href="#" data-star-rating="<?php echo esc_attr( $i ); ?>">
-                                </a>
+					<?php
+					if ( WPHB_Settings::instance()->get( 'enable_review_rating' ) ) {
+						?>
+                        <div class="review-rating field">
+                            <label for="review-rating"><?php esc_html_e( 'Rate your experience *', 'wp-hotel-booking' ); ?></label>
+                            <input type="hidden" name="review-rating" value="">
+                            <div class="rating-star">
 								<?php
-							}
-							?>
+								for ( $i = 1; $i <= 5; $i ++ ) {
+									?>
+                                    <a class="rating-star-item" href="#"
+                                       data-star-rating="<?php echo esc_attr( $i ); ?>">
+                                    </a>
+									<?php
+								}
+								?>
+                            </div>
                         </div>
-                    </div>
+						<?php
+					}
+					?>
+
                     <div class="review-content field">
                         <label for="review-content"><?php esc_html_e( 'Leave a review *', 'wp-hotel-booking' ); ?></label>
                         <textarea name="review-content" id="review-content" cols="30" rows="5"></textarea>
@@ -324,7 +336,7 @@ class WPHB_Comments {
 	 * @return void
 	 */
 	public function save_comment_metaboxes( $comment_id, $data ) {
-		if ( isset( $_POST['hb_room_review_title'] )) {
+		if ( isset( $_POST['hb_room_review_title'] ) ) {
 			update_comment_meta( $comment_id, 'hb_room_review_title', sanitize_text_field( $_POST['hb_room_review_title'] ) );
 		}
 

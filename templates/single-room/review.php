@@ -34,13 +34,12 @@ $settings = WPHB_Settings::instance();
                 </div>
 			<?php } ?>
 
-            <!--            Review title-->
+            <!-- Review title-->
 			<?php
 			if ( hb_settings()->get( 'enable_advanced_review' ) === '1' ) {
 				?>
                 <h3 class="hb-room-review-title">
 					<?php
-
 					$review_title = get_comment_meta( $comment->comment_ID, 'hb_room_review_title', true );
 
 					if ( ! empty( $review_title ) ) {
@@ -86,9 +85,6 @@ $settings = WPHB_Settings::instance();
 				}
 			}
 			?>
-            <div>
-
-            </div>
         </div>
     </div>
 </li>

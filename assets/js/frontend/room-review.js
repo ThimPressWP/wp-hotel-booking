@@ -78,6 +78,11 @@
 
     const ratingReview = () => {
         const reviewRatingNode = reviewForm.querySelector('#hb-room-submit-review-form input[name="review-rating"]');
+
+        if (!reviewRatingNode) {
+            return;
+        }
+
         const ratingNode = document.querySelector('#hb-room-submit-review-form .rating-star');
         const ratingStarItems = ratingNode.querySelectorAll('#hb-room-submit-review-form .rating-star-item');
 
@@ -156,7 +161,7 @@
                     handleUploadError();
                     displayNotice(HB_ROOM_REVIEW_GALLERY.file_type_error, 'error');
                     return;
-                } else if (uploadImage.files[i].size && uploadImage.files[i].size > HB_ROOM_REVIEW_GALLERY.max_file_size) {
+                } else if (uploadImage.files[i].size && uploadImage.files[i].size > parseInt(HB_ROOM_REVIEW_GALLERY.max_file_size) * 1024) {
                     handleUploadError();
                     displayNotice(HB_ROOM_REVIEW_GALLERY.max_file_size_error, 'error');
                     return;
@@ -214,7 +219,11 @@
             const contentNode = reviewFormPopup.querySelector('#review-content');
             const titleNode = reviewFormPopup.querySelector('#review-title');
 
-            const rating = ratingNode.value;
+            let rating = '';
+            if (ratingNode) {
+                rating = ratingNode.value;
+            }
+
             const content = contentNode.value;
             const title = titleNode.value;
 

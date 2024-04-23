@@ -173,7 +173,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 						'type'    => 'number',
 						'default' => 5,
 						'min'     => 1,
-						'desc'    => __( 'Maximum images.', 'wp-hotel-booking' ),
+						'desc'    => __( 'This field is used for advanced review.', 'wp-hotel-booking' ),
 					),
 
 					array(
@@ -182,7 +182,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 						'type'    => 'number',
 						'default' => 10000,
 						'min'     => 1,
-						'desc'    => __( 'Maximum file sizes', 'wp-hotel-booking' ),
+						'desc'    => __( 'This field is used for advanced review.', 'wp-hotel-booking' ),
 					),
 
 					// do not use in plugin
