@@ -10,6 +10,7 @@ use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Box_Shadow;
 use WPHB\HBGroupControlTrait;
 use Elementor\Thim_Ekit_Widget_Filter_Room_Selected;
+use WPHB_Settings;
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -889,7 +890,7 @@ class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected
 	}
 
     public function render() {
-		global $hb_settings;
+		$hb_settings = WPHB_Settings::instance();
         $settings    = $this->get_settings_for_display();
 		$extraClass = '';
 
