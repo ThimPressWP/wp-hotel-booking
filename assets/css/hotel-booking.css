@@ -3262,6 +3262,18 @@ div.sort-by-wrapper, .sort-by-wrapper .sort-by {
     display: none;
 }
 
+@media (max-width: 767px) {
+    #hb-room-submit-review-form {
+        left: 0;
+        right: 0;
+        border-radius: 0;
+    }
+}
+
+#hb-room-submit-review-form h3 {
+    margin: 0;
+}
+
 #hb-room-submit-review-form.active {
     display: block;
 }
@@ -3287,12 +3299,13 @@ div.sort-by-wrapper, .sort-by-wrapper .sort-by {
 #hb-room-submit-review-form label {
     display: block;
     margin-bottom: 8px;
-    font-size: 0.875em;
-    font-weight: normal;
+    font-weight: 600;
+    font-size: 1em;
+    color: #000;
 }
 
 #hb-room-submit-review-form .review-rating label {
-    font-weight: 700;
+    font-weight: 600;
     font-size: 1em;
     color: #000;
 }
@@ -3312,6 +3325,7 @@ div.sort-by-wrapper, .sort-by-wrapper .sort-by {
     border: 0;
     border-radius: 8px;
     padding: 12px;
+    width: 100%;
 }
 
 #hb-room-submit-review-form .rating-star a {
@@ -3344,7 +3358,7 @@ div.sort-by-wrapper, .sort-by-wrapper .sort-by {
 
 #hb-room-submit-review-form footer .submit button {
     width: 100%;
-    padding: 12px 16px;
+    padding: 16px;
     background: #01aa90;
     border-radius: 200px;
     color: #fff;
@@ -3392,7 +3406,17 @@ div.sort-by-wrapper, .sort-by-wrapper .sort-by {
     align-items: center;
     justify-content: center;
 }
-
+#hb-room-submit-review-form label.upload-images::before {
+    position: absolute;
+    display: contents;
+    content: "+";
+    top: 0;
+    left: 0;
+    right: 0;
+    font-size: 32px;
+    bottom: 0;
+    color: #000;
+}
 #hb-room-submit-review-form label.upload-images:hover {
     background: #E8EDF1;
 }
@@ -3489,14 +3513,15 @@ div.sort-by-wrapper, .sort-by-wrapper .sort-by {
 /* #hb-room-submit-review-form   */
 .hb-room-review-images {
     border-bottom: 0 !important;
-    margin: 0 0 1.5rem;
+    margin: 20px 0 0;
     padding: 0;
     font-family: var(--heading--font-family);
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 ul.hb-room-review-images li {
-    width: 100px;
-    height: 100px;
     display: inline-flex !important;
 }
 
@@ -3513,12 +3538,25 @@ ul.hb-room-review-images img {
 }
 
 .review-top-section .header button {
-    border-radius: 10px;
+    padding: 14px;
+    border-radius: 200px;
+    border: solid 2px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background-color: transparent;
+    font-weight: 600;
 }
 
 .review-top-section .review-average-rating {
     display: flex;
     align-items: center;
+}
+
+.review-top-section .review-average-rating .average-rating {
+    font-size: 40px;
+    font-weight: bold;
 }
 
 .review-top-section .review-average-rating .rating {
@@ -3540,11 +3578,15 @@ ul.hb-room-review-images img {
     justify-content: space-between;
     flex-wrap: wrap;
     margin-bottom: 20px;
+    gap: 20px;
+}
+
+.review-top-section .statistic .review-count {
+    margin-top: 10px;
 }
 
 .review-top-section .statistic-detail-item {
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
 }
@@ -3583,12 +3625,13 @@ ul.hb-room-review-images img {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    gap: 20px;
 }
 
 .hb-room-commentlist-sort-filter .gallery-filter a {
     padding: 10px;
-    border-radius: 20px;
-    border: solid 1px;
+    border-radius: 200px;
+    border: solid 2px;
     text-decoration: none;
 }
 
@@ -3615,6 +3658,7 @@ ul.hb-room-review-images img {
     border-radius: 8px;
     background: #f2f4f4;
     cursor: pointer;
+    font-weight: 600;
 }
 
 .hb-room-commentlist-sort-filter .option .toggle svg {
@@ -3634,6 +3678,7 @@ ul.hb-room-review-images img {
     padding: 20px;
     border-radius: 6px;
     z-index: 999;
+    border: 1px solid #eee;
 }
 
 .hb-room-commentlist-sort-filter #hb-room-sort-by.is-open {

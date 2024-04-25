@@ -4,11 +4,7 @@
  * Plugin URI: http://thimpress.com/
  * Description: Full of professional features for a booking room system
  * Author: ThimPress
-<<<<<<< HEAD
- * Version: 2.0.9.8
-=======
- * Version: 2.1.0-beta-1.2
->>>>>>> origin/features/v2.1.0
+ * Version: 2.1.0-beta-5
  * Author URI: http://thimpress.com
  * Text Domain: wp-hotel-booking
  * Domain Path: /languages/
@@ -24,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
 const WPHB_FILE        = __FILE__;
 const WPHB_PLUGIN_PATH = __DIR__;
 define( 'WPHB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
-const WPHB_VERSION = '2.0.9.10';
+const WPHB_VERSION = '2.1.0';
 define( 'WPHB_BLOG_ID', get_current_blog_id() );
 define( 'WPHB_TEMPLATES', WPHB_PLUGIN_PATH . '/templates/' );
 const TP_HB_EXTRA    = __FILE__;
@@ -440,7 +436,7 @@ class WP_Hotel_Booking {
 			wp_register_style( 'wp-admin-single-room-v2', $this->plugin_url( 'assets/css/admin/admin-single-room.css' ) );
 
 		} else {
-			wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.css' ), array(), $version );
+			wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.css' ), array(), WPHB_VERSION );
 			wp_register_script(
 				'wp-hotel-booking',
 				$this->plugin_url( "assets/dist/js/frontend/hotel-booking{$min}.js" ),
@@ -474,6 +470,16 @@ class WP_Hotel_Booking {
 			wp_register_script(
 				'wp-hotel-booking-filter-by',
 				$this->plugin_url( "assets/dist/js/frontend/filter-by{$min}.js" ),
+				array(),
+				$version,
+				array(
+					'in_footer' => true,
+					'strategy'  => 'defer',
+				)
+			);
+			wp_register_script(
+				'wp-hotel-booking-room-review',
+				$this->plugin_url( "assets/dist/js/frontend/room-review{$min}.js" ),
 				array(),
 				$version,
 				array(
