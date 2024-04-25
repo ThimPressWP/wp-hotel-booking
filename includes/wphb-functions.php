@@ -1455,12 +1455,10 @@ if ( ! function_exists( 'hb_format_price' ) ) {
 		$position                  = $settings->get( 'price_currency_position' );
 		$price_thousands_separator = $settings->get( 'price_thousands_separator', ',' );
 		$price_decimals_separator  = $settings->get( 'price_decimals_separator', '.' );
-		$price_number_of_decimal   = $settings->get( 'price_number_of_decimal', 2 );
-		if ( ! is_numeric( $price ) ) {
-			$price = 0;
-		}
+		$price_number_of_decimal   = (int) $settings->get( 'price_number_of_decimal', 2 );
+		$price = (float) $price;
 
-		$price  = apply_filters( 'hotel_booking_price_switcher', $price );
+		//$price  = apply_filters( 'hotel_booking_price_switcher', $price );
 		$before = $after = '';
 		if ( $with_currency ) {
 			if ( gettype( $with_currency ) != 'string' ) {

@@ -5,6 +5,7 @@ namespace Elementor;
 use Thim_EL_Kit\GroupControlTrait;
 use WPHB\HBGroupControlTrait;
 use Thim_EL_Kit\Utilities\Widget_Loop_Trait;
+use WPHB_Settings;
 
 // Exit if accessed directly
 if (!defined('ABSPATH')) {
@@ -196,7 +197,7 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
                     'layout' => 'pricing_plans',
                 ]
             ]
-        ); 
+        );
 
         $this->add_responsive_control(
 			'table_align',
@@ -265,7 +266,7 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
                     'layout' => 'price_breakdown',
                 ]
             ]
-        ); 
+        );
 
         $this->register_button_style( 'price_breakdown', '.hb-view-booking-room-details' );
 
@@ -274,7 +275,7 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
 
     protected function render()
     {
-        global $hb_settings;
+	    $hb_settings = WPHB_Settings::instance();
         $datetime 		 = new \DateTime('NOW');
         $tomorrow 		 = new \DateTime('tomorrow');
         $format 		 = get_option('date_format');
@@ -292,49 +293,49 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
         $settings        = $this->get_settings_for_display(); ?>
 
         <div class="hb-room-single__price">
-            <?php if ( $settings['layout'] == 'regular' ){
-                $price_display = apply_filters( 'hotel_booking_loop_room_price_display_style', $hb_settings->get( 'price_display' ) );
-                $prices        = hb_room_get_selected_plan( get_the_ID() );
-                $prices        = isset( $prices->prices ) ? $prices->prices : array();
-                $text_before   = isset( $settings['text_before'] ) ? $settings['text_before'] : '';
-                $text_after    = isset( $settings['text_unit'] ) ? $settings['text_unit'] : '';
+		    <?php if ( $settings['layout'] == 'regular' ) {
+			    $price_display = apply_filters( 'hotel_booking_loop_room_price_display_style', $hb_settings->get( 'price_display' ) );
+			    $plan_prices   = hb_room_get_selected_plan( get_the_ID() );
+			    $prices        = $plan_prices && isset( $plan_prices->prices ) ? $plan_prices->prices : [];
+			    $text_before   = $settings['text_before'] ?? '';
+			    $text_after    = $settings['text_unit'] ?? '';
 
-                if ( $prices ) {
-                    $min_price = is_numeric( min( $prices ) ) ? min( $prices ) : 0;
-                    $max_price = is_numeric( max( $prices ) ) ? max( $prices ) : 0;
-                    $min       = $min_price + ( hb_price_including_tax() ? ( $min_price * hb_get_tax_settings() ) : 0 );
-                    $max       = $max_price + ( hb_price_including_tax() ? ( $max_price * hb_get_tax_settings() ) : 0 );
-                    ?>
-                
+			    if ( ! empty( $prices ) ) {
+				    $min_price = min( $prices );
+				    $max_price = max( $prices );
+				    $min       = $min_price + ( hb_price_including_tax() ? ( $min_price * hb_get_tax_settings() ) : 0 );
+				    $max       = $max_price + ( hb_price_including_tax() ? ( $max_price * hb_get_tax_settings() ) : 0 );
+				    ?>
+
                     <div class="price">
                         <span class="title-price"><?php echo $text_before; ?></span>
-                
-                        <?php if ( $price_display === 'max' ) { ?>
+
+					    <?php if ( $price_display === 'max' ) { ?>
                             <span class="price_value price_max"><?php echo hb_format_price( $max ); ?></span>
-                
-                        <?php } elseif ( $price_display === 'min_to_max' && $min !== $max ) { ?>
+
+					    <?php } elseif ( $price_display === 'min_to_max' && $min !== $max ) { ?>
                             <span class="price_value price_min_to_max">
                                 <?php echo hb_format_price( $min ); ?> - <?php echo hb_format_price( $max ); ?>
                             </span>
-                
-                        <?php } else { ?>
+
+					    <?php } else { ?>
                             <span class="price_value price_min"><?php echo hb_format_price( $min ); ?></span>
-                        <?php } ?>
-                
+					    <?php } ?>
+
                         <span class="unit"><?php echo $text_after; ?></span>
                     </div>
-                <?php }
-            }elseif ( $settings['layout'] == 'pricing_plans' ){
-                echo hb_get_template('loop/pricing_plan.php');
-            }else { 
-                $text_price_breakdown   = isset( $settings['text_price_breakdown'] ) ? $settings['text_price_breakdown'] : ''; ?>
+			    <?php }
+		    } elseif ( $settings['layout'] == 'pricing_plans' ) {
+			    echo hb_get_template( 'loop/pricing_plan.php' );
+		    } else {
+			    $text_price_breakdown = isset( $settings['text_price_breakdown'] ) ? $settings['text_price_breakdown'] : ''; ?>
                 <div class="hb_view_price hb-room-content">
                     <a href="" class="hb-view-booking-room-details"><?php echo $text_price_breakdown; ?></a>
-                    <?php hb_get_template( 'search/booking-room-details.php', array( 'room' => $room ) ); ?>
+				    <?php hb_get_template( 'search/booking-room-details.php', array( 'room' => $room ) ); ?>
                 </div>
-            <?php
-            } ?>
+			    <?php
+		    } ?>
         </div>
-        <?php
+	    <?php
     }
 }

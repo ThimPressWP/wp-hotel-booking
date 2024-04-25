@@ -127,7 +127,7 @@ if ( ! function_exists( 'hb_room_get_selected_plan' ) ) {
 
 	function hb_room_get_selected_plan( $room_id = null, $date = null ) {
 		if ( ! $room_id ) {
-			return;
+			return null;
 		}
 
 		if ( ! $date ) {
