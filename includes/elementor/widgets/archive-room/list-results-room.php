@@ -240,10 +240,6 @@ class Thim_Ekit_Widget_List_Results_Room extends Widget_Base {
 
 		$page_limit = hb_settings()->get( 'posts_per_page', 8 );
 
-		if ( '' !== $settings['pagination_page_limit'] && ! $ajax_pagination ) {
-			$page_limit = min( $settings['pagination_page_limit'], $page_limit );
-		}
-
 		if ( 2 > $page_limit ) {
 			return;
 		}
