@@ -75,6 +75,9 @@ class WP_Hotel_Booking {
 
 		$this->includes();
 
+        global $wpdb;
+        $wpdb->hotel_booking_order_items = $wpdb->prefix . 'hotel_booking_order_items';
+
 		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
