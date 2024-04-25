@@ -4,7 +4,11 @@
  * Plugin URI: http://thimpress.com/
  * Description: Full of professional features for a booking room system
  * Author: ThimPress
+<<<<<<< HEAD
  * Version: 2.0.9.8
+=======
+ * Version: 2.1.0-beta-1.2
+>>>>>>> origin/features/v2.1.0
  * Author URI: http://thimpress.com
  * Text Domain: wp-hotel-booking
  * Domain Path: /languages/
@@ -284,7 +288,7 @@ class WP_Hotel_Booking {
 
 		if ( class_exists( 'Thim_EL_Kit' ) ) {
 			$this->_include( '/includes/elementor/modules/class-init.php' );
-		}	
+		}
 	}
 
 
@@ -407,7 +411,7 @@ class WP_Hotel_Booking {
 		// moment
 		wp_register_script( 'wp-hotel-booking-moment', $this->plugin_url( 'assets/js/moment.min.js' ) );
 
-		//nouiSlider	
+		//nouiSlider
 		wp_register_script( 'wphb-ui-slider', $this->plugin_url( 'assets/lib/slider/nouislider.min.js' ) );
 
 
@@ -421,9 +425,12 @@ class WP_Hotel_Booking {
 			if ( WPHB_DEBUG ) {
 				wp_register_style( 'wp-admin-hotel-booking', $this->plugin_url( 'assets/css/admin/admin.tp-hotel-booking.css' ), array(), $v_rand );
 				wp_register_script( 'wp-admin-hotel-booking', $this->plugin_url( 'assets/js/admin/admin.hotel-booking.js' ), array_merge( $dependencies, array( 'wphb-dropdown-pages' ) ), $v_rand );
+				wp_register_style( 'wp-admin-review-image', $this->plugin_url( 'assets/css/admin/review-image.css' ), array(), $v_rand );
+				wp_register_script( 'wp-admin-room-filter', $this->plugin_url( 'assets/js/admin/room-filter.js' ), array_merge( $dependencies, array() ), $v_rand );
 			} else {
 				wp_register_style( 'wp-admin-hotel-booking', $this->plugin_url( 'assets/css/admin/admin.tp-hotel-booking.min.css' ), array(), WPHB_VERSION );
 				wp_register_script( 'wp-admin-hotel-booking', $this->plugin_url( 'assets/js/admin/admin.hotel-booking.min.js' ), $dependencies, WPHB_VERSION );
+				wp_register_script( 'wp-admin-room-filter', $this->plugin_url( 'assets/js/admin/room-filter.js' ), array_merge( $dependencies, array() ), WPHB_VERSION );
 			}
 
 			wp_localize_script( 'wp-admin-hotel-booking', 'hotel_booking_i18n', hb_admin_i18n() );
@@ -492,6 +499,7 @@ class WP_Hotel_Booking {
 
 			wp_enqueue_style( 'wp-admin-hotel-booking' );
 			wp_enqueue_script( 'wp-admin-hotel-booking' );
+			wp_enqueue_script( 'wp-admin-room-filter' );
 			wp_enqueue_script( 'backbone' );
 			wp_enqueue_style( 'wp-admin-single-room-v2' );
 
@@ -512,6 +520,37 @@ class WP_Hotel_Booking {
 			wp_enqueue_script( 'wp-hotel-booking-v2' );
 			wp_enqueue_script( 'wp-hotel-booking-sort-by' );
 			wp_enqueue_script( 'wp-hotel-booking-filter-by' );
+			wp_enqueue_script( 'wp-hotel-booking-room-review' );
+
+			if ( is_singular( 'hb_room' ) ) {
+				global $post;
+
+				$max_images = hb_settings()->get( 'max_review_image_number' );
+				if ( empty( $max_images ) ) {
+					$max_images = 10;
+				}
+
+				$max_file_size = hb_settings()->get( 'max_review_image_file_size' );
+
+				if ( empty( $max_file_size ) ) {
+					$max_file_size = 1000000;
+				}
+
+				$is_enable = hb_settings()->get( 'enable_advanced_review' ) === '1';
+
+
+				wp_localize_script( 'wp-hotel-booking-room-review', 'HB_ROOM_REVIEW_GALLERY', array(
+						'room_id'             => $post->ID,
+						'is_enable'           => $is_enable,
+						'max_images'          => $max_images,
+						'max_file_size'       => $max_file_size,
+						'max_image_error'     => sprintf( esc_html__( 'The image number is greater than %s', 'wp-hotel-booking' ), $max_images ),
+						'file_type_error'     => esc_html__( 'The image file type is invalid', 'wp-hotel-booking' ),
+						'max_file_size_error' => sprintf( esc_html__( 'The maximum file size is %s KB', 'wp-hotel-booking' ), $max_file_size ),
+						$max_file_size
+					)
+				);
+			}
 
 			// rooms slider widget
 			wp_enqueue_script( 'wp-hotel-booking-owl-carousel' );
@@ -538,7 +577,7 @@ class WP_Hotel_Booking {
 		wp_enqueue_script( 'wp-admin-hotel-booking-calendar-v2' );
 		wp_enqueue_style( 'wp-admin-hotel-booking-calendar-v2' );
 		wp_enqueue_script( 'wp-admin-hotel-booking-v2' );
-	
+
 	}
 
 	/**
