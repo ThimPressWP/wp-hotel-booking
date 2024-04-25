@@ -1453,9 +1453,9 @@ if ( ! function_exists( 'hb_format_price' ) ) {
 	function hb_format_price( $price, $with_currency = true ) {
 		$settings                  = WPHB_Settings::instance();
 		$position                  = $settings->get( 'price_currency_position' );
-		$price_thousands_separator = $settings->get( 'price_thousands_separator' );
-		$price_decimals_separator  = $settings->get( 'price_decimals_separator' );
-		$price_number_of_decimal   = $settings->get( 'price_number_of_decimal' );
+		$price_thousands_separator = $settings->get( 'price_thousands_separator', ',' );
+		$price_decimals_separator  = $settings->get( 'price_decimals_separator', '.' );
+		$price_number_of_decimal   = $settings->get( 'price_number_of_decimal', 2 );
 		if ( ! is_numeric( $price ) ) {
 			$price = 0;
 		}
