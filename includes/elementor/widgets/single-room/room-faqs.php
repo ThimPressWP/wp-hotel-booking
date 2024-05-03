@@ -109,6 +109,9 @@ class Thim_Ekit_Widget_Room_Faqs extends Thim_Ekit_Widget_Accordion
             $this->register_controls_style_item();
             $this->register_controls_style_title();
             $this->register_controls_style_content();
+        }else {
+            $this->register_style_title_controls();
+		    $this->register_style_content_controls();
         }
     }
 
