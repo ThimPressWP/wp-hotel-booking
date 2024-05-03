@@ -105,11 +105,17 @@ class Thim_Ekit_Widget_Room_Faqs extends Thim_Ekit_Widget_Accordion
 
         $this->end_controls_section();
 
-        $this->register_controls_style_item();
-
-		$this->register_controls_style_title();
-
-		$this->register_controls_style_content();
+        if ( function_exists('register_controls_style_item') ){
+            $this->register_controls_style_item();
+        }
+       
+        if ( function_exists('register_controls_style_title') ){
+		    $this->register_controls_style_title();
+        }
+        
+        if ( function_exists('register_controls_style_content') ){
+		    $this->register_controls_style_content();
+        }
     }
 
     protected function render()
