@@ -195,7 +195,6 @@ class WP_Hotel_Booking {
 	 * Includes common files and libraries
 	 */
 	public function includes() {
-
 		$this->include_files_global();
 
 		if ( is_admin() ) {
@@ -424,8 +423,7 @@ class WP_Hotel_Booking {
 			if ( WPHB_DEBUG ) {
 				wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.css' ), array(), $v_rand );
 				wp_register_style( 'wp-hotel-booking-review-gallery', $this->plugin_url( 'assets/css/review-gallery.css' ), array(), $v_rand );
-
-
+                
 				wp_register_script( 'wp-hotel-booking', $this->plugin_url( 'assets/js/hotel-booking.js' ), $dependencies, $v_rand, true );
 				wp_register_script( 'wp-hotel-booking-v2', $this->plugin_url( 'assets/js/hotel-booking-v2.js' ), $dependencies, $v_rand, true );
 				wp_register_script( 'wp-hotel-booking-sort-by', $this->plugin_url( 'assets/js/frontend/sort-by.js' ), array(), $v_rand, true );
