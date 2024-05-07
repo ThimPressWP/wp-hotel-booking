@@ -98,6 +98,12 @@
     .hb-room-thumbnail-gallery-slide {
         position: relative;
 
+        .hb-main-gallery {
+            img {
+                width: 100%;
+            }
+        }
+
         .hb-thumbnail-gallery {
             position: absolute;
             z-index: 2;

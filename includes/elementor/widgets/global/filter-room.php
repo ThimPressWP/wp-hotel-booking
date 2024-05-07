@@ -78,6 +78,8 @@ class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected
 				'label'     => esc_html__( 'Min Price', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::NUMBER,
 				'default' 	=> 0,
+				'min'       => 0,
+				'step'      => 1,
                 'condition'     => [
 					'meta_field' => 'price',
 				],
@@ -90,6 +92,8 @@ class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected
 				'label'     => esc_html__( 'Max Price', 'wp-hotel-booking' ),
 				'type'      => Controls_Manager::NUMBER,
 				'default' 	=> 1000,
+				'min'       => 0,
+				'step'      => 1,
                 'condition'     => [
 					'meta_field' => 'price',
 				],
@@ -661,7 +665,7 @@ class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '',
 				'selectors' => [
-					'{{WRAPPER}} .search-filter-form-el .noUi-horizontal .noUi-connect, {{WRAPPER}} .search-filter-form-el .noUi-horizontal .noUi-handle' => 'background-color: {{VALUE}};'
+					'{{WRAPPER}} .search-filter-form-el .noUi-horizontal .noUi-connect, {{WRAPPER}} .search-filter-form-el .noUi-horizontal .noUi-handle' => 'background-color: {{VALUE}} !important;'
 				],
 			]
 		);
@@ -938,10 +942,10 @@ class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected
 					$classes .= ' elementor-repeater-item-'.$data['_id'];
 
 					$data['step_price'] = $hb_settings->get( 'filter_price_step', 1 );
-					$data['min_price']  = $data['min_price'] ?? $hb_settings->get( 'filter_price_min', 0 );
-					$data['max_price']  = $data['max_price'] ?? $hb_settings->get( 'filter_price_max', 0 );
-					$data['min_value']  = hb_get_request( 'min_price' );
-					$data['max_value']  = hb_get_request( 'max_price' );
+					$data['min_price']  = !empty($data['min_price']) ? $data['min_price'] : $hb_settings->get( 'filter_price_min', 0 );
+					$data['max_price']  = !empty($data['max_price']) ? $data['max_price'] : $hb_settings->get( 'filter_price_max', 0 );
+					$data['min_value']  = !empty($data['min_price']) ? $data['min_price'] : hb_get_request( 'min_price' );
+					$data['max_value']  = !empty($data['max_price']) ? $data['max_price'] : hb_get_request( 'max_price' );
 			
 					switch ( $data['meta_field'] ) {
 						case 'clear':
