@@ -84,6 +84,8 @@ class Thim_Ekit_Widget_List_Room extends Widget_Base {
 			array(
 				'label'   => esc_html__( 'Number Room', 'wp-hotel-booking' ),
 				'default' => '4',
+				'min'     => 0,
+				'step'    => 1,
 				'type'    => Controls_Manager::NUMBER,
 			)
 		);

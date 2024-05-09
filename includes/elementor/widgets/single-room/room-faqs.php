@@ -3,7 +3,7 @@
 namespace Elementor;
 
 use WPHB\HBGroupControlTrait;
-use Elementor\Thim_Ekit_Widget_Accordion;
+//use Elementor\Thim_Ekit_Widget_Accordion;
 
 // Exit if accessed directly
 if (!defined('ABSPATH')) {
@@ -105,11 +105,14 @@ class Thim_Ekit_Widget_Room_Faqs extends Thim_Ekit_Widget_Accordion
 
         $this->end_controls_section();
 
-        $this->register_controls_style_item();
-
-		$this->register_controls_style_title();
-
-		$this->register_controls_style_content();
+        if ( wp_get_theme()->get( 'TextDomain' ) !== 'eduma' ){
+            $this->register_controls_style_item();
+            $this->register_controls_style_title();
+            $this->register_controls_style_content();
+        }else {
+            $this->register_style_title_controls();
+		    $this->register_style_content_controls();
+        }
     }
 
     protected function render()

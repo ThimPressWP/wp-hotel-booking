@@ -98,6 +98,12 @@
     .hb-room-thumbnail-gallery-slide {
         position: relative;
 
+        .hb-main-gallery {
+            img {
+                width: 100%;
+            }
+        }
+
         .hb-thumbnail-gallery {
             position: absolute;
             z-index: 2;
@@ -135,6 +141,7 @@
             font-size: 0;
             justify-content: center;
             align-items: center;
+            z-index: 5;
 
             &:before {
                 font-family: 'Font Awesome 5 Free';
@@ -182,6 +189,18 @@
                     background-color: #000;
                 }
             }
+        }
+        .flex-direction-nav {
+            a {
+                left: var(--ekits-nav-slider-offset-v, 30px);
+                &.flex-next {
+                    right: var(--ekits-nav-slider-offset-v, 30px);
+                    left: auto;
+                }
+            }
+        }
+        img {
+            width: 100%;
         }
     }
 }

@@ -20,7 +20,12 @@
 	cursor: pointer;
 	left: 0;
 }
-
+.hotel-booking-search-el .hb-form-field-input.hb_input_field {
+	position: unset;
+}
+.hotel-booking-search-el .hb-form-number .hb_input_field {
+	position: relative;
+}
 .hotel-booking-search-el .hb-form-field {
 	position: relative;
 	padding: 10px;
