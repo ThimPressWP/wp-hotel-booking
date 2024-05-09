@@ -441,13 +441,14 @@ class WPHB_Comments {
 		?>
         <div class="hb-review-images">
 			<?php
-			$max_images    = 10;
-			$max_file_size = 1000000;
+			$max_images    = intval( hb_settings()->get( 'max_review_image_number', 0 ) );
+			$max_file_size = intval( hb_settings()->get( 'max_review_image_file_size', 0 ) );
 
 			if ( empty( $image_ids ) ) {
 				$image_ids = array();
 			} else {
 				if ( count( $image_ids ) > $max_images ) {
+
 					$image_ids = array_slice( $image_ids, 0, $max_images );
 				}
 			}
@@ -484,6 +485,14 @@ class WPHB_Comments {
                             class="button hb-gallery-add"><?php esc_html_e( 'Add Images' ); ?></button>
                 </div>
             </div>
+            <p class="image-description"><?php printf(
+					esc_html__(
+						'You can upload maximum %1$s images. The maximum file size is %2$s KB.',
+						'wp-hotel-booking'
+					),
+					$max_images,
+					$max_file_size,
+				); ?></p>
         </div>
 
 		<?php

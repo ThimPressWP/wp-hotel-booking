@@ -63,6 +63,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 		 * Single search button.
 		 */
 		public function single_add_button() {
+
 			ob_start();
 			hb_get_template( 'single-room/buttons/search.php' );
 			$html = ob_get_clean();

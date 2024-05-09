@@ -199,7 +199,6 @@ class WP_Hotel_Booking {
 	 * Includes common files and libraries
 	 */
 	public function includes() {
-
 		$this->include_files_global();
 
 		if ( is_admin() ) {
@@ -439,6 +438,7 @@ class WP_Hotel_Booking {
 			wp_register_style( 'wp-admin-single-room-v2', $this->plugin_url( 'assets/css/admin/admin-single-room.css' ) );
 
 		} else {
+<<<<<<< HEAD
 			wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.css' ), array(), WPHB_VERSION );
 			wp_register_script(
 				'wp-hotel-booking',
@@ -490,6 +490,24 @@ class WP_Hotel_Booking {
 					'strategy'  => 'defer',
 				)
 			);
+=======
+			if ( WPHB_DEBUG ) {
+				wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.css' ), array(), $v_rand );
+				wp_register_style( 'wp-hotel-booking-review-gallery', $this->plugin_url( 'assets/css/review-gallery.css' ), array(), $v_rand );
+                
+				wp_register_script( 'wp-hotel-booking', $this->plugin_url( 'assets/js/hotel-booking.js' ), $dependencies, $v_rand, true );
+				wp_register_script( 'wp-hotel-booking-v2', $this->plugin_url( 'assets/js/hotel-booking-v2.js' ), $dependencies, $v_rand, true );
+				wp_register_script( 'wp-hotel-booking-sort-by', $this->plugin_url( 'assets/js/frontend/sort-by.js' ), array(), $v_rand, true );
+				wp_register_script( 'wp-hotel-booking-filter-by', $this->plugin_url( 'assets/js/frontend/filter-by.js' ), array(), $v_rand, true );
+				wp_register_script( 'wp-hotel-booking-room-review', $this->plugin_url( 'assets/js/frontend/room-review.js' ), array(), $v_rand, true );
+
+			} else {
+				wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.min.css' ), array(), WPHB_VERSION );
+				wp_register_script( 'wp-hotel-booking', $this->plugin_url( 'assets/js/hotel-booking.min.js' ), $dependencies, WPHB_VERSION, true );
+				wp_register_script( 'wp-hotel-booking-filter-by', $this->plugin_url( 'assets/js/frontend/filter-by.js' ), array(), WPHB_VERSION, true );
+				wp_register_script( 'wp-hotel-booking-room-review', $this->plugin_url( 'assets/js/frontend/room-review.js' ), array(), WPHB_VERSION, true );
+			}
+>>>>>>> origin/features/v2.1.0
 
 			wp_localize_script( 'wp-hotel-booking', 'hotel_booking_i18n', hb_i18n() );
 
