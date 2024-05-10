@@ -493,7 +493,6 @@
 					old_text = button.html(),
 					select = _form.find('.number_room_select'),
 					number_room_select = _form.find('.number_room_select option:selected').val(),
-					el_build = _form.find('.elementor-element'),
 					room_title = _form.find('.hb-room-name');
 
 				if (!hotel_settings?.cart_page_url && button.length > 0) {
@@ -679,7 +678,7 @@
 		}
 
 		HB_Booking_Cart.init();
-		$.datepicker.setDefaults({ dateFormat: hotel_booking_i18n.date_time_format });
+		$.datepicker.setDefaults({dateFormat: hotel_booking_i18n.date_time_format});
 		// $.datepicker.setDefaults({dateFormat: 'mm/dd/yy'});
 		var today = new Date();
 		var tomorrow = new Date();
@@ -761,6 +760,97 @@
 			$('#txtToDate').datepicker('show');
 		});
 
+		// $('form[class^="hb-search-form"]').submit(function (e) {
+		// 	e.preventDefault();
+		// 	var _self = $(this),
+		// 		unique = _self.attr('class'),
+		// 		button = _self.find('button[type="submit"]');
+
+		// 	unique = unique.replace('hb-search-form-', '');
+
+		// 	_self.find('input, select').removeClass('error');
+		// 	var $check_in = $('#check_in_date_' + unique);
+		// 	if ($check_in.val() === '' || !isDate($check_in.datepicker('getDate'))) {
+		// 		$check_in.addClass('error');
+		// 		return false;
+		// 	}
+
+		// 	var $check_out = $('#check_out_date_' + unique);
+		// 	if ($check_out.val() === '' || !isDate($check_out.datepicker('getDate'))) {
+		// 		$check_out.addClass('error');
+		// 		return false;
+		// 	}
+
+		// 	if ($check_in.datepicker('getDate') === null) {
+		// 		$check_in.addClass('error');
+		// 		return false;
+		// 	}
+
+		// 	if ($check_out.datepicker('getDate') === null) {
+		// 		$check_out.addClass('error');
+		// 		return false;
+		// 	}
+
+		// 	var check_in = new Date($check_in.datepicker('getDate')),
+		// 		check_out = new Date($check_out.datepicker('getDate')),
+		// 		current = new Date();
+		// 	// if (check_in.compareWith(current) == -1) {
+		// 	// 	$check_in.addClass('error');
+		// 	// 	return false;
+		// 	// }
+
+		// 	if (check_in.compareWith(check_out) >= 0) {
+		// 		$check_in.addClass('error');
+		// 		error = true;
+		// 		return false;
+		// 	}
+
+		// 	var action = $(this).attr('action') || window.location.href;
+		// 	var data = $(this).serializeArray();
+		// 	for (var i = 0; i < data.length; i++) {
+		// 		var input = data[i];
+		// 		if (input.name === 'check_in_date' || input.name === 'check_out_date') {
+		// 			var time = $(this).find('input[name="' + input.name + '"]').datepicker('getDate');
+		// 			time = new Date(time);
+		// 			data.push({
+		// 				name : 'hb_' + input.name,
+		// 				value: time.getTime() / 1000 - (time.getTimezoneOffset() * 60)
+		// 			})
+		// 		}
+		// 	}
+
+		// 	$.ajax({
+		// 		url       : hotel_settings.ajax,
+		// 		type      : 'post',
+		// 		dataType  : 'html',
+		// 		data      : data,
+		// 		beforeSend: function () {
+		// 			button.attr('disabled', 'disabled');
+		// 			button.html('<span class="lds-ring"><span></span><span></span><span></span><span></span></span>' + button.html());
+		// 		},
+		// 		success   : function (response) {
+		// 			response = parseJSON(response);
+		// 			if (typeof response.success === 'undefined' || !response.success) {
+		// 				return;
+		// 			}
+
+		// 			// redirect if url is ! undefined
+		// 			if (typeof response.url !== 'undefined') {
+		// 				window.location.href = response.url;
+		// 			} else if (response.sig) {
+		// 				if (action.indexOf('?') === -1) {
+		// 					action += '?hotel-booking-params=' + response.sig;
+		// 				} else {
+		// 					action += '&hotel-booking-params=' + response.sig;
+		// 				}
+		// 				window.location.href = action;
+		// 			}
+		// 			// button.removeClass('hb_loading');
+		// 		}
+		// 	});
+		// 	return false;
+		// });
+
 		$('form#hb-payment-form').submit(function (e) {
 			e.preventDefault();
 			var _self = $(this);
@@ -781,11 +871,11 @@
 					return false;
 				}
 
-				// if (_method === 'stripe') {
-				// 	stripeSubmit(_self);
-				// } else {
+				if (_method === 'stripe') {
+					stripeSubmit(_self);
+				} else {
 					orderSubmit(_self);
-				// }
+				}
 
 			} catch (e) {
 				alert(e);
@@ -796,27 +886,12 @@
 
 		$doc.on('click', '.hb-view-booking-room-details, .hb_search_room_item_detail_price_close', function (e) {
 			e.preventDefault();
-			e.stopPropagation();
-			$('.hb-booking-room-details').removeClass('active');
 			var _self = $(this);
 			var _details = _self.parents('.hb-room-content').find('.hb-booking-room-details');
 
 			_details.toggleClass('active');
 
 			// $(this).closest('.hb-room-content').find('.hb-booking-room-details').fadeToggle();
-		}).on('click', '.wp-hotel-booking-search-rooms, .hb-view-booking-room-details', function (e) {
-			var _self = $(this);
-			var _details = _self.find('.hb-booking-room-details');
-			if(_details.hasClass('active')){
-				_details.removeClass('active');
-			}
-		}).on('click', '.hb-booking-room-details', function (e) {
-			e.stopPropagation()	
-		}).on('click', '.hb_search_room_item_detail_price_close', function (e) {
-			var _self = $(this);
-			var _details = _self.parents('.hb-room-content').find('.hb-booking-room-details');
-
-			_details.removeClass('active');
 		}).on('click', 'input[name="hb-payment-method"]', function () {
 			if (this.checked) {
 				$('.hb-payment-method-form:not(.' + this.value + ')').slideUp();
@@ -855,8 +930,11 @@
 		var hb_current_uri = window.location.href;
 
 		var commentID = hb_current_uri.match(/\#comment-[0-9]+/gi);
+		const params = new URL(document.location.toString()).searchParams;
+		const tab = params.get("tab");
+		const isReviewTab = tab === 'review';
 
-		if (commentID && typeof commentID[0] !== 'undefined') {
+		if ((commentID && typeof commentID[0] !== 'undefined') || isReviewTab) {
 			hb_single_details_tab.find('a').removeClass('active');
 			hb_single_details_tab.find('a[href="#hb_room_reviews"]').addClass('active');
 		} else {
@@ -1009,22 +1087,5 @@
 			clearTimeout(timeOut);
 		}, 400);
 	}
-
-	$(document).ready(function () {
-		if (jQuery().magnificPopup) {
-			$('.gallery-img-item').magnificPopup({
-				type: 'image',
-				gallery: {
-					enabled: true
-				},
-				zoom: {
-					enabled: false,
-					opener: function (openerElement) {
-						return openerElement.is('img') ? openerElement : openerElement.find('img');
-					}
-				},
-			});
-		}
-	});
 
 })((jQuery));

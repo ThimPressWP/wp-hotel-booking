@@ -9,11 +9,12 @@ const isProduction = process.env.NODE_ENV === 'production';
 module.exports = {
 	...defaultConfig,
 	entry: {
-		'frontend/hotel-booking': './assets/js/frontend/hotel-booking.js',
-		'frontend/hotel-booking-v2': './assets/js/frontend/hotel-booking-v2.js',
-		'frontend/filter-by': './assets/js/frontend/filter-by.js',
-		'frontend/sort-by': './assets/js/frontend/sort-by.js',
-		'frontend/room-review': './assets/js/frontend/room-review.js',
+		// 'frontend/hotel-booking': './assets/js/frontend/hotel-booking.js',
+		// 'frontend/hotel-booking-v2': './assets/js/frontend/hotel-booking-v2.js',
+		// 'frontend/filter-by': './assets/js/frontend/filter-by.js',
+		// 'frontend/sort-by': './assets/js/frontend/sort-by.js',
+		// 'frontend/room-review': './assets/js/frontend/room-review.js',
+		'admin/room-review': './assets/js/admin/room-review/room-review.tsx',
 	},
 	output: {
 		filename: '[name]' + ( isProduction ? '.min.js' : '.js' ),

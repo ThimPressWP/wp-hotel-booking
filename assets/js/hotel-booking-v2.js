@@ -982,5 +982,3 @@ document.addEventListener('DOMContentLoaded', () => {
         sortBy();
     }
 });
-
-
