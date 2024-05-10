@@ -47,13 +47,6 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Advanced' ) ) {
 						'default' => 1,
 					),
 					array(
-						'id'      => 'tp_hotel_booking_filter_price_enable',
-						'title'   => __( 'Enable room filter', 'wp-hotel-booking' ),
-						'desc'    => __( 'Enable/disable room filter in search page.', 'wp-hotel-booking' ),
-						'type'    => 'checkbox',
-						'default' => 1,
-					),
-					array(
 						'id'      => 'tp_hotel_booking_filter_price_min',
 						'type'    => 'number',
 						'default' => 0,
