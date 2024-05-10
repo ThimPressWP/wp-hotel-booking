@@ -72,7 +72,7 @@ do_action( 'hotel_booking_before_single_room_infomation' );
 		<?php foreach ( $tabs as $key => $tab ) {
 			?>
             <li>
-                <a href="#<?php echo esc_attr( $tab['id'] ); ?>" class="<?php echo esc_attr( $active_class ); ?>">
+                <a href="#<?php echo esc_attr( $tab['id'] ); ?>" class="<?php echo esc_attr( $active_class ?? '' ); ?>">
 					<?php do_action( 'hotel_booking_single_room_before_tabs_' . $tab['id'] ); ?>
 					<?php printf( '%s', $tab['title'] ); ?>
 					<?php do_action( 'hotel_booking_single_room_after_tabs_' . $tab['id'] ); ?>

@@ -1748,7 +1748,7 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 				LEFT JOIN {$wpdb->postmeta} AS pm3 ON pm3.post_id = rooms.ID AND pm3.meta_key = %s",
 			'_hb_num_of_rooms',
 			'_hb_max_child_per_room',
-			'_hb_room_capacity_adult',
+			'_hb_room_capacity_adult'
 		);
 
 		$where = $wpdb->prepare(
