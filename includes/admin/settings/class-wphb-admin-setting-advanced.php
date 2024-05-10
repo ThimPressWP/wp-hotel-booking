@@ -79,15 +79,6 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Advanced' ) ) {
 						'desc'    => __( 'Step price for price field.', 'wp-hotel-booking' ),
 					),
 					array(
-						'id'      => 'tp_hotel_booking_filter_price_step',
-						'type'    => 'number',
-						'default' => 1,
-						'min'     => 1,
-						'title'   => __( 'Step Price', 'wp-hotel-booking' ),
-						'desc'    => __( 'Step price for price field.', 'wp-hotel-booking' ),
-					),
-
-					array(
 						'type' => 'section_end',
 						'id'   => 'room_filter_setting',
 					),
