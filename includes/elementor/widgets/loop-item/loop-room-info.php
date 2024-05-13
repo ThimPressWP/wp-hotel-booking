@@ -286,7 +286,7 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
 		$this->render_icon( $repeater_item );
 
         foreach ( $terms as $term ) {
-            $terms_list[] = '<a href="' . esc_url( get_term_link( $term ) ) . '" class="loop-item-term elementor-icon-list-text">' . esc_html( $term->name ) . '</a>';
+            $terms_list[] = '<a href="' . esc_url( get_term_link( $term ) ) . '" class="loop-item-term elementor-icon-list-text type-' . esc_html( $term->slug ) . '">' . esc_html( $term->name ) . '</a>';
         }
 
         if ( 'yes' == $repeater_item['show_one'] ) {
