@@ -128,6 +128,8 @@ class Elementor {
 		wp_register_script( 'wphb-magnific-popup', WPHB_PLUGIN_URL . '/includes/elementor/src/js/jquery.magnific-popup.min.js', array( 'jquery' ), WPHB_VERSION );
 		//flexslide
 		wp_register_script( 'wphb-flexslide', WPHB_PLUGIN_URL . '/includes/elementor/src/js/jquery.flexslider.min.js', array( 'jquery' ), WPHB_VERSION );
+		//filter
+		wp_register_script( 'wphb-filter-el', WPHB_PLUGIN_URL . '/includes/elementor/src/js/filter-by.js', array( 'jquery' ), WPHB_VERSION );
 		
 		wp_enqueue_script( 'wphb-widget-el',  WPHB_PLUGIN_URL . '/includes/elementor/src/js/widget.js', array('jquery'), WPHB_VERSION );
 

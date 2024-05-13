@@ -36,6 +36,10 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 		return basename( __FILE__, '.php' );
 	}
 
+	public function get_script_depends() {
+		return [ 'wphb-filter-el' ];
+	}
+
     protected function register_controls() {
         $this->register_section_selected_options();
 		$this->register_section_style_item_selected();
