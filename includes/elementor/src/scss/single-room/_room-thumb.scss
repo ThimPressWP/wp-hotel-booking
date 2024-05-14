@@ -76,7 +76,6 @@
                         font-weight: 600;
                         gap: 5px;
                         @include flexbox();
-                        pointer-events: none;
     
                         @media (min-width: 768px) and (max-width: 1199px) {
                             font-size: 16px;
@@ -207,4 +206,168 @@
 
 .dialog-widget {
     display: none!important;
+}
+
+.fixed-size {
+    .lg-outer {
+        margin: 0 auto;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -40%);
+
+        .lg-thumb-outer {
+            background-color: transparent;
+        }
+
+        .lg-object {
+            border-radius: 16px;
+        }
+
+        .lg-toolbar {
+            right: 167px;
+            left: auto;
+            position: absolute;
+            top: 0;
+            // height: 100%;
+            .lg-icon {
+                font-size: 40px;
+            }
+
+            .lg-counter {
+                display: none;
+            }
+        }
+
+        .lg-prev {
+            left: 127px;
+            &::after {
+                content: "\f104";
+                font-family: thim-ekits !important;
+                font-style: normal;
+                font-weight: 400;
+                font-variant: normal;
+                text-transform: none;
+                line-height: 1;
+                font-size: 24px;
+            }
+        }
+
+        .lg-next {
+            right: 127px;
+            &::before {
+                content: "\f105";
+                font-family: thim-ekits !important;
+                font-style: normal;
+                font-weight: 400;
+                font-variant: normal;
+                text-transform: none;
+                line-height: 1;
+                font-size: 24px;
+            }
+        }
+
+        .lg-prev,
+        .lg-next {
+            height: 44px;
+            width: 44px;
+            border-radius: 200px;
+            background-color: #fff;
+
+            &:hover {
+                color: #121212;
+            }
+        }
+        .lg-close {
+            &::after {
+                content: "\f00d";
+                font-family: thim-ekits !important;
+                font-style: normal;
+                font-weight: 400;
+                font-variant: normal;
+                text-transform: none;
+                line-height: 1;
+                font-size: 24px;
+            }
+        }
+
+        .lg-thumb-item {
+            border: 2px solid transparent;
+
+            &.active,
+            &:hover {
+                border-color: #fff;
+            }
+        }
+        .lg-inner {
+            overflow: hidden;
+        }
+    }
+    .lg-backdrop {
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+}
+
+@media (min-width: 1604px) {
+    .fixed-size {
+        .lg-outer {
+            .lg-prev {
+                left: 67px;
+            }
+            .lg-next {
+                right: 67px;
+            }
+        }
+    }
+}
+@media (max-width: 1440px) {
+    .fixed-size {
+        .lg-outer {
+            .lg-toolbar {
+                right: 0px;
+            }
+            .lg-prev {
+                left: -65px;
+            }
+            .lg-next {
+                right: -65px;
+            }
+        }
+    }
+}
+@media (max-width: 1024px) {
+    .fixed-size {
+        .lg-outer {
+            .lg-toolbar {
+                right: 0px;
+            }
+            .lg-prev {
+                display: none;
+            }
+            .lg-next {
+                display: none;
+            }
+        }
+    }
+}
+@media (max-width: 880px) {
+    .fixed-size {
+        .lg-outer {
+            transform: translate(-50%, -29%);
+            .lg {
+                height: 60% !important;
+            }
+        }
+    }
+}
+@media (max-width: 766px) {
+    .fixed-size {
+        .lg-outer {
+            transform: translate(-50%, -16%);
+            .lg {
+                height: 40% !important;
+                width: 80% !important;
+            }
+        }
+    }
 }

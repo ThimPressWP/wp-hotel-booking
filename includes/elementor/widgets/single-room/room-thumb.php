@@ -33,8 +33,12 @@ class Thim_Ekit_Widget_Room_Thumb extends Thim_Ekit_Widget_Product_Image {
 		return array( \WPHB\Elementor::CATEGORY_SINGLE_ROOM );
 	}
 
+    public function get_style_depends() {
+		return [ 'wphb-light-gallery' ];
+	}
+
     public function get_script_depends() {
-		return [ 'wphb-flexslide', 'wphb-magnific-popup' ];
+		return [ 'wphb-flexslide', 'wphb-light-gallery', 'wphb-element-el' ];
 	}
 
     protected function register_controls() {
@@ -151,7 +155,7 @@ class Thim_Ekit_Widget_Room_Thumb extends Thim_Ekit_Widget_Product_Image {
         $settings    	= $this->get_settings_for_display();
         $galleries = get_post_meta( get_the_ID(), '_hb_gallery', true ); ?>
 
-        <div class="hb-room-thumbnail" > 
+        <div class="hb-room-thumbnail" id="hb-room-thumbnail"> 
         <?php if( !empty($galleries) ) {
             if ( isset($settings['layout_style']) && $settings['layout_style'] == 'gallery_popup' ){ ?>
 
@@ -184,9 +188,8 @@ class Thim_Ekit_Widget_Room_Thumb extends Thim_Ekit_Widget_Product_Image {
     }
 
     protected function _render_thumb_gallery_and_popup_slide($galleries, $settings){
-        $gallery_img = $galleries;
         $class = $html_icon = '';
-
+        $gMoreImages = array();
         if ( isset($settings['icon_gallery_popup']) && $settings['icon_gallery_popup']['value'] != '' ){
 			ob_start();
 			Icons_Manager::render_icon( $settings['icon_gallery_popup'],['aria-hidden' => 'true',]);
@@ -195,8 +198,23 @@ class Thim_Ekit_Widget_Room_Thumb extends Thim_Ekit_Widget_Product_Image {
 		}else {
             $html_icon = '<i aria-hidden="true" class="tk tk-th-large"></i>';
         }
+        $gMoreImages = array();
+        if (has_post_thumbnail()) {
+            $gMoreImages[] = array(
+                'src' => wp_get_attachment_url(get_post_thumbnail_id()),
+                'responsive' => wp_get_attachment_url(get_post_thumbnail_id()),
+                'thumb' => wp_get_attachment_url(get_post_thumbnail_id()),
+                'subHtml' => '',
+            );
+        }
         echo '<ul class="first-gallery">';
-            foreach ( $gallery_img as $key => $image_id ) {
+            foreach ( $galleries as $key => $image_id ) {
+                $gMoreImages[] = array(
+                    'src' => wp_get_attachment_url($image_id),
+                    'responsive' => wp_get_attachment_url($image_id),
+                    'thumb' => wp_get_attachment_url($image_id),
+                    'subHtml' => '',
+                );
                 if ( $key == 0 ) {
                     $image_size = array( 960, 700 );
                 } else {
@@ -207,8 +225,8 @@ class Thim_Ekit_Widget_Room_Thumb extends Thim_Ekit_Widget_Product_Image {
 
                 if ( $key == 2 ) {
                     $class       = ' more';
-                    $count_image = count( $gallery_img ) - 3;
-                    $images      .= ( $count_image > 0 ) ? '<span class="button-gallery">' . $html_icon . ' ' . esc_html__( 'Gallery', 'wp-hotel-booking' ) . '</span>' : '';
+                    $count_image = count( $galleries ) - 3;
+                    $images      .= ( $count_image > 0 ) ? '<span class="button-gallery dynamic-gal" data-dynamicPath='. json_encode($gMoreImages).'>' . $html_icon . ' ' . esc_html__( 'Gallery', 'wp-hotel-booking' ) . '</span>' : '';
                 }
 
                 if ( $key > 2 ) {
@@ -217,8 +235,8 @@ class Thim_Ekit_Widget_Room_Thumb extends Thim_Ekit_Widget_Product_Image {
                 }
 
                 echo '<li class="hb-gallery-item' . $class . '"><a href="' . esc_url( $full_url ) . '" class="gallery-img-item">' . $images . '</a></li>';
-
-                if ( count( $gallery_img ) > 1 && $key == 0 ) {
+            
+                if ( count( $galleries ) > 1 && $key == 0 ) {
                     echo '</ul><ul class="hb-gallery-thumbnails d-flex">';
                 }
             }
