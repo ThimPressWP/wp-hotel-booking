@@ -3,6 +3,7 @@
 namespace Elementor;
 
 use Thim_EL_Kit\GroupControlTrait;
+use WPHB_Post_Types;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -219,6 +220,81 @@ class Thim_Ekit_Widget_Archive_Room extends Widget_Base {
 			if (isset($orderby) && is_array($orderby)){		
 				$query_vars['orderby'] = $orderby[0];
 				$query_vars['order'] = $orderby[1];
+			}
+		}
+		
+		if ( null !== get_queried_object_id() && ! empty( get_queried_object_id() ) && get_post_type() == 'hb_room') {
+			//Price
+			$min_price = hb_get_request( 'min_price' );
+			$max_price = hb_get_request( 'max_price' );
+			if ( $min_price && $max_price ) {
+				$query_vars['meta_query'][] = array(
+					'key'     => 'hb_price',
+					'value'   => array( $min_price, $max_price ),
+					'type'    => 'DECIMAL',
+					'compare' => 'BETWEEN',
+				);
+			}
+
+			//Rating
+			$rating = hb_get_request( 'rating' );
+
+			if ( $rating ) {
+				$rating = explode( ',', $rating );
+
+				$unrated_index = array_search( 'unrated', $rating );
+
+				if ( $unrated_index !== false ) {
+					$rating[ $unrated_index ] = 0;
+				}
+
+				$rating_count = count( $rating );
+				if ( ! empty( $rating_count ) ) {
+					$rating_query = array();
+
+					if ( $rating_count === 1 ) {
+						$rating_query[] = array(
+							'key'     => 'hb_average_rating',
+							'value'   => $rating[0],
+							'type'    => 'NUMERIC',
+							'compare' => '>=',
+						);
+
+						$rating_query[] = array(
+							'key'     => 'hb_average_rating',
+							'value'   => $rating[0] + 1,
+							'type'    => 'NUMERIC',
+							'compare' => '<',
+						);
+
+						$rating_query ['relation'] = 'AND';
+					} else {
+						for ( $i = 0; $i < $rating_count; $i++ ) {
+							$rating_query[ $i ][] = array(
+								'key'     => 'hb_average_rating',
+								'value'   => $rating[ $i ],
+								'type'    => 'NUMERIC',
+								'compare' => '>=',
+							);
+							$rating_query[ $i ][] = array(
+								'key'     => 'hb_average_rating',
+								'value'   => $rating[ $i ] + 1,
+								'type'    => 'NUMERIC',
+								'compare' => '<',
+							);
+
+							$rating_query[ $i ]['raltion'] = 'AND';
+						}
+
+						$rating_query ['relation'] = 'OR';
+					}
+
+					$query_vars['meta_query'][] = $rating_query;
+				}
+			}
+
+			if ( isset( $query_vars['meta_query'] ) ) {
+				$query_vars['meta_query']['relation'] = 'AND';
 			}
 		}
 
