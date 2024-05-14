@@ -60,27 +60,6 @@
                         position: relative;
                         display: block;
                     }
-    
-                    span {
-                        position: absolute;
-                        bottom: 16px;
-                        right: 16px;
-                        font-size: 16px;
-                        text-transform: capitalize;
-                        color: #1E1E1E;
-                        background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
-                        border-radius: 200px;
-                        background: #FFF;
-                        padding: 0 16px;
-                        line-height: 44px;
-                        font-weight: 600;
-                        gap: 5px;
-                        @include flexbox();
-    
-                        @media (min-width: 768px) and (max-width: 1199px) {
-                            font-size: 16px;
-                        }
-                    }
                 }
     
                 img {
@@ -90,6 +69,28 @@
                     object-fit: cover;
                 }
     
+            }
+
+            .dynamic-gal {
+                position: absolute;
+                bottom: 16px;
+                right: 16px;
+                font-size: 16px;
+                text-transform: capitalize;
+                color: #1E1E1E;
+                background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+                border-radius: 200px;
+                background: #FFF;
+                padding: 0 16px;
+                line-height: 44px;
+                font-weight: 600;
+                gap: 5px;
+                @include flexbox();
+                cursor: pointer;
+
+                @media (min-width: 768px) and (max-width: 1199px) {
+                    font-size: 16px;
+                }
             }
         }
     }

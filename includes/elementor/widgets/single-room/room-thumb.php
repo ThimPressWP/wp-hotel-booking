@@ -226,7 +226,6 @@ class Thim_Ekit_Widget_Room_Thumb extends Thim_Ekit_Widget_Product_Image {
                 if ( $key == 2 ) {
                     $class       = ' more';
                     $count_image = count( $galleries ) - 3;
-                    $images      .= ( $count_image > 0 ) ? '<span class="button-gallery dynamic-gal" data-dynamicPath='. json_encode($gMoreImages).'>' . $html_icon . ' ' . esc_html__( 'Gallery', 'wp-hotel-booking' ) . '</span>' : '';
                 }
 
                 if ( $key > 2 ) {
@@ -240,6 +239,7 @@ class Thim_Ekit_Widget_Room_Thumb extends Thim_Ekit_Widget_Product_Image {
                     echo '</ul><ul class="hb-gallery-thumbnails d-flex">';
                 }
             }
+            echo '<span class="button-gallery dynamic-gal" data-dynamicPath='. json_encode($gMoreImages).'>' . $html_icon . ' ' . esc_html__( 'Gallery', 'wp-hotel-booking' ) . '</span>';
         echo '</ul>';
     }
 
