@@ -3,6 +3,7 @@
     const ratingFields = document.querySelectorAll('.hb-rating-field');
     const roomTypeFields = document.querySelectorAll('.hb-type-field');
 
+
     const getParam = (param) => {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
@@ -97,10 +98,9 @@
             applyBtn.addEventListener('click', function (event) {
                 event.preventDefault();
 
-                const minPrice = minPriceNode.value;
-                const maxPrice = maxPriceNode.value;
 
                 const url = new URL(window.location.href);
+
                 url.searchParams.set('min_price', parseInt(minPrice));
                 url.searchParams.set('max_price', parseInt(maxPrice));
 
@@ -141,6 +141,7 @@
                     });
 
                     const url = new URL(window.location.href);
+
                     if (value.length) {
                         url.searchParams.set('rating', value);
                     } else {
@@ -148,7 +149,7 @@
                     }
 
                     url.searchParams.set('paged', 1);
-                    window.location.href = url;
+                    // window.location.href = url;
                 });
             }
         }
@@ -194,7 +195,7 @@
 
                     url.searchParams.set('paged', 1);
 
-                    window.location.href = url;
+                    // window.location.href = url;
                 });
             }
         }
@@ -332,6 +333,7 @@
         });
     }
 
+
     const resetRoomType = (value = 'all') => {
         [...roomTypeFields].map(roomTypeField => {
             const roomTypeNodes = roomTypeField.querySelectorAll('input[type="checkbox"]');
@@ -450,6 +452,78 @@
         }
     }
 
+    const hbFilter = () => {
+        const roomFilterBtn = document.querySelector('.hb-room-filter-btn');
+
+        if (roomFilterBtn) {
+            roomFilterBtn.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                const priceFields = document.querySelectorAll('.hb-price-field');
+                const ratingFields = document.querySelectorAll('.hb-rating-field');
+                const roomTypeFields = document.querySelectorAll('.hb-type-field');
+
+
+                const url = new URL(window.location.href);
+                url.searchParams.set('paged', 1);
+
+                //Price
+                for (let i = 0; i < priceFields.length; i++) {
+                    const priceField = priceFields[i];
+                    const minPrice = priceField.getAttribute('data-min');
+                    const maxPrice = priceField.getAttribute('data-max');
+
+                    url.searchParams.set('min_price', parseInt(minPrice));
+                    url.searchParams.set('max_price', parseInt(maxPrice));
+                }
+
+                //Rating
+
+                for (let i = 0; i < ratingFields.length; i++) {
+                    const ratingField = ratingFields[i];
+
+                    const allCheckedInput = ratingField.querySelectorAll('input[type="checkbox"]:checked');
+
+                    let value = [];
+                    [...allCheckedInput].map(checkedInput => {
+                        value.push(checkedInput.value);
+                    });
+
+
+                    if (value.length) {
+                        url.searchParams.set('rating', value);
+                    }else if(url.searchParams.has('rating')){
+                        url.searchParams.delete('rating');
+                    }
+                }
+
+                //Room types
+
+                for (let i = 0; i < roomTypeFields.length; i++) {
+                    const roomTypeField = roomTypeFields[i];
+
+                    const allCheckedInput = roomTypeField.querySelectorAll('input[type="checkbox"]:checked');
+
+                    let value = [];
+                    [...allCheckedInput].map(checkedInput => {
+                        value.push(checkedInput.value);
+                    });
+
+
+                    if (value.length) {
+                        url.searchParams.set('room_type', value);
+                    }else if(url.searchParams.has('room_type')){
+                        url.searchParams.delete('room_type');
+                    }
+                }
+
+                // console.log(query);
+                // console.log(url);
+                window.location.href = url;
+            });
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         if (hotel_settings && hotel_settings.is_page_search) {
             return;
@@ -461,5 +535,6 @@
         hbFilterSelection();
         clearFieldFilter();
         removeSelection();
+        hbFilter();
     });
 })();
