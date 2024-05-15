@@ -99,10 +99,10 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			$tax_query  = array();
 
 			//Price
-			$min_price = hb_get_request( 'min_price' );
-			$max_price = hb_get_request( 'max_price' );
+			$min_price = $_GET['min_price'] ?? null;
+			$max_price = $_GET['max_price'] ?? null;
 
-			if ( $min_price && $max_price ) {
+			if ( $min_price !== null && $max_price !== null ) {
 				$meta_query[] = array(
 					'key'     => 'hb_price',
 					'value'   => array( $min_price, $max_price ),
@@ -144,7 +144,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 						$rating_query ['relation'] = 'AND';
 					} else {
-						for ( $i = 0; $i < $rating_count; $i++ ) {
+						for ( $i = 0; $i < $rating_count; $i ++ ) {
 							$rating_query[ $i ][] = array(
 								'key'     => 'hb_average_rating',
 								'value'   => $rating[ $i ],
