@@ -799,7 +799,7 @@ class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', 'em', '%' ],
 				'selectors'  => [
-					'{{WRAPPER}} .search-filter-form-el.hb-filter-popup, {{WRAPPER}} .search-filter-form-el.hb-filter-popup-mobile' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .search-filter-form-el.hb-filter-popup .wrapper-search-fields, {{WRAPPER}} .search-filter-form-el.hb-filter-popup-mobile .wrapper-search-fields' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
 			]
 		);
@@ -912,11 +912,12 @@ class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected
 				}
 			?>
             <form class="search-filter-form search-filter-form-el <?php echo esc_attr($extraClass) ?>" action="">
-                <?php 
+				<div class="wrapper-search-fields">
+				<?php 
 				if ( $settings['selected_list'] == 'yes' ) {
 					self::render_selected($settings);
 				}
-                foreach ( $settings['data'] as $data ) {
+				foreach ( $settings['data'] as $data ) {
 					$classes = $icon_toggle = '';
 
 					if ( isset($data['show_count']) && $data['show_count'] != 'yes') {
@@ -964,13 +965,14 @@ class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected
 							if ( $icon_toggle != '' ){
 								echo $icon_toggle;
 							}
-                    		hb_get_template( 'search/v2/search-filter/' . $data['meta_field'] . '.php', compact( 'data' ) );
+							hb_get_template( 'search/v2/search-filter/' . $data['meta_field'] . '.php', compact( 'data' ) );
 						?> 
 							</div> 
 						<?php
 					}
-                }
-                ?>
+				}
+				?>
+				</div>
             </form>
 			<div class="filter-bg"></div>
             </div>
