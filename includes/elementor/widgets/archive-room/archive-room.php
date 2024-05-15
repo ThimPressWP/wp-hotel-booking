@@ -225,9 +225,10 @@ class Thim_Ekit_Widget_Archive_Room extends Widget_Base {
 		
 		if ( null !== get_queried_object_id() && ! empty( get_queried_object_id() ) && get_post_type() == 'hb_room') {
 			//Price
-			$min_price = hb_get_request( 'min_price' );
-			$max_price = hb_get_request( 'max_price' );
-			if ( $min_price && $max_price ) {
+			$min_price = $_GET['min_price'] ?? null;
+			$max_price = $_GET['max_price'] ?? null;
+
+			if ( $min_price !== null && $max_price !== null ) {
 				$query_vars['meta_query'][] = array(
 					'key'     => 'hb_price',
 					'value'   => array( $min_price, $max_price ),
