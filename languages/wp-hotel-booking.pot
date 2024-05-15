@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WP Hotel Booking plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Hotel Booking 2.1.0-beta-6\n"
+"Project-Id-Version: WP Hotel Booking 2.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-hotel-booking\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-04-25T11:11:25+03:00\n"
+"POT-Creation-Date: 2024-05-15T04:53:32+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wp-hotel-booking\n"
@@ -206,9 +206,9 @@ msgstr ""
 
 #: includes/admin/metaboxes/rooms/class-wphb-admin-metabox-extra-options.php:33
 #: includes/class-wphb-post-types.php:529
-#: includes/elementor/widgets/global/filter-room-selected.php:319
-#: includes/elementor/widgets/global/filter-room.php:66
-#: includes/elementor/widgets/global/filter-room.php:631
+#: includes/elementor/widgets/global/filter-room-selected.php:323
+#: includes/elementor/widgets/global/filter-room.php:67
+#: includes/elementor/widgets/global/filter-room.php:636
 #: includes/elementor/widgets/loop-item/loop-room-price.php:114
 #: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:47
 #: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:72
@@ -245,7 +245,7 @@ msgstr ""
 
 #: includes/admin/metaboxes/rooms/class-wphb-admin-metabox-extra-options.php:49
 #: includes/class-wphb-post-types.php:224
-#: includes/elementor/widgets/archive-room/archive-room.php:86
+#: includes/elementor/widgets/archive-room/archive-room.php:87
 #: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:119
 msgid "Type"
 msgstr ""
@@ -593,7 +593,7 @@ msgid "Add new coupon"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items.php:34
-#: includes/elementor/widgets/global/filter-room.php:473
+#: includes/elementor/widgets/global/filter-room.php:478
 #: templates/checkout/thank-you.php:53
 msgid "Item"
 msgstr ""
@@ -722,9 +722,9 @@ msgstr ""
 
 #: includes/admin/metaboxes/views/tabs/meta-room-faq.php:31
 #: includes/admin/metaboxes/views/tabs/meta-room-faq.php:52
-#: includes/elementor/widgets/global/filter-room-selected.php:62
-#: includes/elementor/widgets/global/filter-room.php:437
-#: includes/elementor/widgets/global/list-room.php:122
+#: includes/elementor/widgets/global/filter-room-selected.php:66
+#: includes/elementor/widgets/global/filter-room.php:442
+#: includes/elementor/widgets/global/list-room.php:124
 #: includes/elementor/widgets/global/search-room.php:276
 #: includes/elementor/widgets/loop-item/loop-room-price.php:152
 #: includes/elementor/widgets/single-room/room-booking.php:147
@@ -799,40 +799,36 @@ msgid "Room filter used in room list ( room archive page, booking search page ).
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-advanced.php:44
-#: includes/admin/settings/class-wphb-admin-setting-advanced.php:51
 msgid "Enable room filter"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-advanced.php:45
-#: includes/admin/settings/class-wphb-admin-setting-advanced.php:52
 msgid "Enable/disable room filter in search page."
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-advanced.php:61
-#: includes/elementor/widgets/global/filter-room.php:77
+#: includes/admin/settings/class-wphb-admin-setting-advanced.php:54
+#: includes/elementor/widgets/global/filter-room.php:78
 msgid "Min Price"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-advanced.php:62
+#: includes/admin/settings/class-wphb-admin-setting-advanced.php:55
 msgid "Minimum price for price field."
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-advanced.php:70
-#: includes/elementor/widgets/global/filter-room.php:89
+#: includes/admin/settings/class-wphb-admin-setting-advanced.php:63
+#: includes/elementor/widgets/global/filter-room.php:92
 msgid "Max Price"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-advanced.php:71
+#: includes/admin/settings/class-wphb-admin-setting-advanced.php:64
 msgid "Maximum price for price field."
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-advanced.php:78
-#: includes/admin/settings/class-wphb-admin-setting-advanced.php:86
+#: includes/admin/settings/class-wphb-admin-setting-advanced.php:71
 msgid "Step Price"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-advanced.php:79
-#: includes/admin/settings/class-wphb-admin-setting-advanced.php:87
+#: includes/admin/settings/class-wphb-admin-setting-advanced.php:72
 msgid "Step price for price field."
 msgstr ""
 
@@ -1342,7 +1338,7 @@ msgid "Customer"
 msgstr ""
 
 #: includes/admin/wphb-admin-functions.php:307
-#: includes/elementor/widgets/global/list-room.php:121
+#: includes/elementor/widgets/global/list-room.php:123
 #: includes/elementor/widgets/global/search-room.php:67
 msgid "Date"
 msgstr ""
@@ -1676,16 +1672,20 @@ msgstr ""
 msgid "Images"
 msgstr ""
 
-#: includes/class-wphb-comments.php:592
+#: includes/class-wphb-comments.php:489
+msgid "You can upload maximum %1$s images. The maximum file size is %2$s KB."
+msgstr ""
+
+#: includes/class-wphb-comments.php:601
 #: templates/single-room-reviews.php:235
 msgid "Reviews"
 msgstr ""
 
-#: includes/class-wphb-comments.php:600
+#: includes/class-wphb-comments.php:609
 msgid "Rating Room"
 msgstr ""
 
-#: includes/class-wphb-comments.php:612
+#: includes/class-wphb-comments.php:621
 #: includes/class-wphb-post-types.php:577
 #: includes/elementor/widgets/loop-item/loop-room-rating.php:138
 #: templates/loop/rating.php:28
@@ -1693,7 +1693,7 @@ msgstr ""
 msgid "Rated %d out of 5"
 msgstr ""
 
-#: includes/class-wphb-comments.php:619
+#: includes/class-wphb-comments.php:628
 msgid "No rating"
 msgstr ""
 
@@ -1834,7 +1834,7 @@ msgid "View Price"
 msgstr ""
 
 #: includes/class-wphb-post-types.php:658
-#: includes/elementor/widgets/single-room/room-thumb.php:211
+#: includes/elementor/widgets/single-room/room-thumb.php:242
 msgid "Gallery"
 msgstr ""
 
@@ -2148,7 +2148,7 @@ msgid "Apply Coupon"
 msgstr ""
 
 #: includes/elementor/modules/archive-room/class-init.php:13
-#: includes/elementor/widgets/archive-room/archive-room.php:21
+#: includes/elementor/widgets/archive-room/archive-room.php:22
 msgid "Archive Room"
 msgstr ""
 
@@ -2178,16 +2178,16 @@ msgstr ""
 
 #: includes/elementor/modules/group-control-global-el.php:24
 #: includes/elementor/modules/group-control-global-el.php:57
-#: includes/elementor/widgets/global/filter-room-selected.php:138
-#: includes/elementor/widgets/global/filter-room-selected.php:204
-#: includes/elementor/widgets/global/filter-room-selected.php:236
-#: includes/elementor/widgets/global/filter-room.php:409
-#: includes/elementor/widgets/global/filter-room.php:543
-#: includes/elementor/widgets/global/filter-room.php:615
-#: includes/elementor/widgets/global/filter-room.php:731
-#: includes/elementor/widgets/global/filter-room.php:754
-#: includes/elementor/widgets/global/filter-room.php:834
-#: includes/elementor/widgets/global/filter-room.php:879
+#: includes/elementor/widgets/global/filter-room-selected.php:142
+#: includes/elementor/widgets/global/filter-room-selected.php:208
+#: includes/elementor/widgets/global/filter-room-selected.php:240
+#: includes/elementor/widgets/global/filter-room.php:414
+#: includes/elementor/widgets/global/filter-room.php:548
+#: includes/elementor/widgets/global/filter-room.php:620
+#: includes/elementor/widgets/global/filter-room.php:736
+#: includes/elementor/widgets/global/filter-room.php:759
+#: includes/elementor/widgets/global/filter-room.php:839
+#: includes/elementor/widgets/global/filter-room.php:884
 #: includes/elementor/widgets/global/search-room.php:303
 #: includes/elementor/widgets/global/search-room.php:365
 #: includes/elementor/widgets/global/search-room.php:490
@@ -2195,17 +2195,17 @@ msgid "Margin"
 msgstr ""
 
 #: includes/elementor/modules/group-control-global-el.php:36
-#: includes/elementor/widgets/global/filter-room-selected.php:180
-#: includes/elementor/widgets/global/filter-room.php:647
+#: includes/elementor/widgets/global/filter-room-selected.php:184
+#: includes/elementor/widgets/global/filter-room.php:652
 #: includes/elementor/widgets/global/search-room.php:405
 #: includes/elementor/widgets/single-room/room-content.php:74
 msgid "Color"
 msgstr ""
 
 #: includes/elementor/modules/group-control-global-el.php:69
-#: includes/elementor/widgets/global/filter-room.php:397
-#: includes/elementor/widgets/global/filter-room.php:531
-#: includes/elementor/widgets/global/filter-room.php:793
+#: includes/elementor/widgets/global/filter-room.php:402
+#: includes/elementor/widgets/global/filter-room.php:536
+#: includes/elementor/widgets/global/filter-room.php:798
 #: includes/elementor/widgets/global/search-room.php:353
 #: includes/elementor/widgets/global/search-room.php:426
 #: includes/elementor/widgets/loop-item/loop-room-price.php:177
@@ -2218,102 +2218,102 @@ msgstr ""
 msgid "Single Room"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:44
+#: includes/elementor/widgets/archive-room/archive-room.php:45
 #: includes/elementor/widgets/archive-room/list-results-room.php:44
 msgid "Options"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:51
+#: includes/elementor/widgets/archive-room/archive-room.php:52
 #: includes/elementor/widgets/archive-room/list-results-room.php:51
 #: includes/elementor/widgets/global/list-room.php:65
 msgid "Choose a template"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:54
+#: includes/elementor/widgets/archive-room/archive-room.php:55
 #: includes/elementor/widgets/archive-room/list-results-room.php:54
-#: includes/elementor/widgets/global/filter-room.php:145
+#: includes/elementor/widgets/global/filter-room.php:150
 #: includes/elementor/widgets/global/list-room.php:68
 msgid "None"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:61
+#: includes/elementor/widgets/archive-room/archive-room.php:62
 #: includes/elementor/widgets/archive-room/list-results-room.php:61
-#: includes/elementor/widgets/global/list-room.php:94
+#: includes/elementor/widgets/global/list-room.php:96
 msgid "Columns"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:99
-#: includes/elementor/widgets/archive-room/archive-room.php:174
+#: includes/elementor/widgets/archive-room/archive-room.php:100
+#: includes/elementor/widgets/archive-room/archive-room.php:175
 msgid "Top Bar"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:121
+#: includes/elementor/widgets/archive-room/archive-room.php:122
 #: includes/elementor/widgets/archive-room/list-results-room.php:92
-#: includes/elementor/widgets/global/list-room.php:170
+#: includes/elementor/widgets/global/list-room.php:172
 #: includes/elementor/widgets/global/search-room.php:77
 #: includes/elementor/widgets/global/search-room.php:93
 msgid "Layout"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:129
+#: includes/elementor/widgets/archive-room/archive-room.php:130
 #: includes/elementor/widgets/archive-room/list-results-room.php:100
-#: includes/elementor/widgets/global/list-room.php:181
+#: includes/elementor/widgets/global/list-room.php:183
 msgid "Columns Gap"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:149
+#: includes/elementor/widgets/archive-room/archive-room.php:150
 #: includes/elementor/widgets/archive-room/list-results-room.php:120
-#: includes/elementor/widgets/global/list-room.php:201
+#: includes/elementor/widgets/global/list-room.php:203
 msgid "Rows Gap"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:182
+#: includes/elementor/widgets/archive-room/archive-room.php:183
 msgid "Spacing"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:193
+#: includes/elementor/widgets/archive-room/archive-room.php:194
 msgid "Gap"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:241
+#: includes/elementor/widgets/archive-room/archive-room.php:317
 msgid "No room found !"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:297
+#: includes/elementor/widgets/archive-room/archive-room.php:373
 msgid "Showing only one result"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:308
+#: includes/elementor/widgets/archive-room/archive-room.php:384
 msgid "Showing last post of %s results"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:313
+#: includes/elementor/widgets/archive-room/archive-room.php:389
 msgid "Showing %s - %s of %s results"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:332
+#: includes/elementor/widgets/archive-room/archive-room.php:408
 #: templates/search/v2/sort-by.php:7
 msgid "Default (Newest)"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:333
+#: includes/elementor/widgets/archive-room/archive-room.php:409
 #: templates/search/v2/sort-by.php:8
 #: templates/single-room-reviews.php:167
 #: templates/single-room-reviews.php:199
 msgid "Oldest"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:334
+#: includes/elementor/widgets/archive-room/archive-room.php:410
 #: templates/search/v2/sort-by.php:9
 msgid "A to Z"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:335
+#: includes/elementor/widgets/archive-room/archive-room.php:411
 #: templates/search/v2/sort-by.php:10
 msgid "Z to A"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:346
+#: includes/elementor/widgets/archive-room/archive-room.php:422
 msgid "Room order"
 msgstr ""
 
@@ -2330,80 +2330,80 @@ msgstr ""
 msgid "Filter Room Selected"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room-selected.php:48
+#: includes/elementor/widgets/global/filter-room-selected.php:52
 msgid "Selected Area"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room-selected.php:64
-#: includes/elementor/widgets/global/filter-room-selected.php:85
-#: includes/elementor/widgets/global/filter-room.php:271
+#: includes/elementor/widgets/global/filter-room-selected.php:68
+#: includes/elementor/widgets/global/filter-room-selected.php:89
+#: includes/elementor/widgets/global/filter-room.php:276
 msgid "Add your {{text here}}"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room-selected.php:65
-#: includes/elementor/widgets/global/filter-room-selected.php:255
+#: includes/elementor/widgets/global/filter-room-selected.php:69
+#: includes/elementor/widgets/global/filter-room-selected.php:259
 #: templates/search/v2/search-filter/selection.php:7
 msgid "Selected"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room-selected.php:73
-#: includes/elementor/widgets/global/filter-room.php:280
+#: includes/elementor/widgets/global/filter-room-selected.php:77
+#: includes/elementor/widgets/global/filter-room.php:285
 #: includes/elementor/widgets/global/search-room.php:146
 #: includes/elementor/widgets/single-room/room-faqs.php:53
 #: includes/elementor/widgets/single-room/room-preview.php:58
 msgid "Icon"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room-selected.php:83
+#: includes/elementor/widgets/global/filter-room-selected.php:87
 msgid "Clear Text"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room-selected.php:86
-#: includes/elementor/widgets/global/filter-room-selected.php:254
-#: includes/elementor/widgets/global/filter-room.php:579
+#: includes/elementor/widgets/global/filter-room-selected.php:90
+#: includes/elementor/widgets/global/filter-room-selected.php:258
+#: includes/elementor/widgets/global/filter-room.php:584
 msgid "Clear"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room-selected.php:96
+#: includes/elementor/widgets/global/filter-room-selected.php:100
 msgid "Selected Item"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room-selected.php:111
+#: includes/elementor/widgets/global/filter-room-selected.php:115
 #: includes/elementor/widgets/global/search-room.php:235
 msgid "Space Between"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room-selected.php:153
+#: includes/elementor/widgets/global/filter-room-selected.php:157
 msgid "Selected Icon"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room-selected.php:168
+#: includes/elementor/widgets/global/filter-room-selected.php:172
 msgid "Font Size"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room-selected.php:192
-#: includes/elementor/widgets/global/filter-room.php:483
+#: includes/elementor/widgets/global/filter-room-selected.php:196
+#: includes/elementor/widgets/global/filter-room.php:488
 msgid "Color Hover"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room-selected.php:219
+#: includes/elementor/widgets/global/filter-room-selected.php:223
 msgid "Selected Clear Button"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room-selected.php:293
+#: includes/elementor/widgets/global/filter-room-selected.php:297
 msgid "Preview 1"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room-selected.php:294
+#: includes/elementor/widgets/global/filter-room-selected.php:298
 msgid "Preview 2"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room-selected.php:308
+#: includes/elementor/widgets/global/filter-room-selected.php:312
 #: templates/search/v2/search-filter/rating.php:34
 msgid "Unrated"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room-selected.php:311
+#: includes/elementor/widgets/global/filter-room-selected.php:315
 #: templates/search/v2/search-filter/rating.php:18
 #: templates/single-room-reviews.php:105
 msgid "%s star"
@@ -2411,262 +2411,262 @@ msgid_plural "%s stars"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/elementor/widgets/global/filter-room.php:31
+#: includes/elementor/widgets/global/filter-room.php:32
 msgid "Filter Room"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:54
+#: includes/elementor/widgets/global/filter-room.php:55
 msgid "Filter Area"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:62
+#: includes/elementor/widgets/global/filter-room.php:63
 msgid "Select Meta"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:67
+#: includes/elementor/widgets/global/filter-room.php:68
 #: includes/elementor/widgets/loop-item/loop-room-rating.php:47
 msgid "Rating"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:68
+#: includes/elementor/widgets/global/filter-room.php:69
 msgid "Types"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:69
+#: includes/elementor/widgets/global/filter-room.php:70
 msgid "Clear All"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:101
+#: includes/elementor/widgets/global/filter-room.php:106
 msgid "Show Count"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:113
+#: includes/elementor/widgets/global/filter-room.php:118
 msgid "Heading Setting"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:115
-#: includes/elementor/widgets/global/filter-room.php:231
-#: includes/elementor/widgets/global/filter-room.php:369
+#: includes/elementor/widgets/global/filter-room.php:120
+#: includes/elementor/widgets/global/filter-room.php:236
+#: includes/elementor/widgets/global/filter-room.php:374
 #: includes/elementor/widgets/global/list-room.php:56
 msgid "Default"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:116
-#: includes/elementor/widgets/global/filter-room.php:232
+#: includes/elementor/widgets/global/filter-room.php:121
+#: includes/elementor/widgets/global/filter-room.php:237
 msgid "Custom"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:129
+#: includes/elementor/widgets/global/filter-room.php:134
 msgid "Enable Heading"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:132
-#: includes/elementor/widgets/global/filter-room.php:146
-#: includes/elementor/widgets/global/filter-room.php:245
-#: includes/elementor/widgets/global/filter-room.php:257
-#: includes/elementor/widgets/global/filter-room.php:309
-#: includes/elementor/widgets/global/filter-room.php:321
+#: includes/elementor/widgets/global/filter-room.php:137
+#: includes/elementor/widgets/global/filter-room.php:151
+#: includes/elementor/widgets/global/filter-room.php:250
+#: includes/elementor/widgets/global/filter-room.php:262
+#: includes/elementor/widgets/global/filter-room.php:314
+#: includes/elementor/widgets/global/filter-room.php:326
 #: includes/elementor/widgets/single-room/room-review.php:61
 msgid "Show"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:133
-#: includes/elementor/widgets/global/filter-room.php:246
-#: includes/elementor/widgets/global/filter-room.php:258
-#: includes/elementor/widgets/global/filter-room.php:310
-#: includes/elementor/widgets/global/filter-room.php:322
+#: includes/elementor/widgets/global/filter-room.php:138
+#: includes/elementor/widgets/global/filter-room.php:251
+#: includes/elementor/widgets/global/filter-room.php:263
+#: includes/elementor/widgets/global/filter-room.php:315
+#: includes/elementor/widgets/global/filter-room.php:327
 #: includes/elementor/widgets/single-room/room-review.php:62
 msgid "Hide"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:141
+#: includes/elementor/widgets/global/filter-room.php:146
 msgid "Show Toggle"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:147
+#: includes/elementor/widgets/global/filter-room.php:152
 msgid "Always Show"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:148
+#: includes/elementor/widgets/global/filter-room.php:153
 msgid "Dropdown"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:161
+#: includes/elementor/widgets/global/filter-room.php:166
 #: includes/elementor/widgets/global/search-room.php:156
 msgid "Width Content"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:176
-#: includes/elementor/widgets/global/filter-room.php:272
-#: includes/elementor/widgets/global/filter-room.php:977
+#: includes/elementor/widgets/global/filter-room.php:181
+#: includes/elementor/widgets/global/filter-room.php:277
+#: includes/elementor/widgets/global/filter-room.php:982
 msgid "Filter"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:222
+#: includes/elementor/widgets/global/filter-room.php:227
 msgid "Extra Option"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:229
+#: includes/elementor/widgets/global/filter-room.php:234
 msgid "Filter Toggle Button"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:242
+#: includes/elementor/widgets/global/filter-room.php:247
 msgid "Enable Toggle Button"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:254
+#: includes/elementor/widgets/global/filter-room.php:259
 msgid "Enable Toggle Button Mobile"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:269
+#: includes/elementor/widgets/global/filter-room.php:274
 msgid "Text Button"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:290
+#: includes/elementor/widgets/global/filter-room.php:295
 msgid "Icon Position"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:294
+#: includes/elementor/widgets/global/filter-room.php:299
 msgid "Before"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:295
+#: includes/elementor/widgets/global/filter-room.php:300
 msgid "After"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:306
+#: includes/elementor/widgets/global/filter-room.php:311
 msgid "Filter Selected Number"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:318
+#: includes/elementor/widgets/global/filter-room.php:323
 msgid "Selected List"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:330
+#: includes/elementor/widgets/global/filter-room.php:335
 msgid "Width Form"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:357
+#: includes/elementor/widgets/global/filter-room.php:362
 #: includes/elementor/widgets/global/search-room.php:293
 msgid "Field"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:365
+#: includes/elementor/widgets/global/filter-room.php:370
 #: includes/elementor/widgets/global/search-room.php:212
 msgid "Display"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:373
+#: includes/elementor/widgets/global/filter-room.php:378
 msgid "Flex"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:389
+#: includes/elementor/widgets/global/filter-room.php:394
 #: includes/elementor/widgets/global/search-room.php:418
 msgid "Border"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:421
-#: includes/elementor/widgets/global/filter-room.php:555
+#: includes/elementor/widgets/global/filter-room.php:426
+#: includes/elementor/widgets/global/filter-room.php:560
 #: includes/elementor/widgets/global/search-room.php:377
-#: includes/elementor/widgets/single-room/room-thumb.php:126
+#: includes/elementor/widgets/single-room/room-thumb.php:130
 msgid "Border Radius"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:447
+#: includes/elementor/widgets/global/filter-room.php:452
 msgid "Offset Icon X"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:458
+#: includes/elementor/widgets/global/filter-room.php:463
 msgid "Offset Icon Y"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:495
+#: includes/elementor/widgets/global/filter-room.php:500
 msgid "Toggle Dropdown"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:504
+#: includes/elementor/widgets/global/filter-room.php:509
 #: includes/elementor/widgets/global/search-room.php:449
 msgid "Width"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:519
-#: includes/elementor/widgets/global/filter-room.php:781
+#: includes/elementor/widgets/global/filter-room.php:524
+#: includes/elementor/widgets/global/filter-room.php:786
 #: includes/elementor/widgets/global/search-room.php:260
 #: includes/elementor/widgets/loop-item/loop-room-price.php:165
 msgid "Background"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:587
+#: includes/elementor/widgets/global/filter-room.php:592
 #: includes/elementor/widgets/loop-item/loop-room-price.php:205
 #: includes/elementor/widgets/single-room/room-booking.php:110
 #: includes/elementor/widgets/single-room/room-content.php:45
 msgid "Alignment"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:591
+#: includes/elementor/widgets/global/filter-room.php:596
 #: includes/elementor/widgets/loop-item/loop-room-price.php:209
 #: includes/elementor/widgets/single-room/room-booking.php:114
 msgid "Start"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:595
+#: includes/elementor/widgets/global/filter-room.php:600
 #: includes/elementor/widgets/loop-item/loop-room-price.php:213
 #: includes/elementor/widgets/single-room/room-booking.php:118
 #: includes/elementor/widgets/single-room/room-content.php:53
 msgid "Center"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:599
+#: includes/elementor/widgets/global/filter-room.php:604
 #: includes/elementor/widgets/loop-item/loop-room-price.php:217
 #: includes/elementor/widgets/single-room/room-booking.php:122
 msgid "End"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:639
+#: includes/elementor/widgets/global/filter-room.php:644
 msgid "Range Price"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:659
+#: includes/elementor/widgets/global/filter-room.php:664
 msgid "Color Target"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:671
+#: includes/elementor/widgets/global/filter-room.php:676
 msgid "Height Range"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:686
+#: includes/elementor/widgets/global/filter-room.php:691
 msgid "Font Size Handle"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:701
+#: includes/elementor/widgets/global/filter-room.php:706
 msgid "Offset X"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:716
+#: includes/elementor/widgets/global/filter-room.php:721
 msgid "Offset Y"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:743
+#: includes/elementor/widgets/global/filter-room.php:748
 msgid "Button Apply"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:770
+#: includes/elementor/widgets/global/filter-room.php:775
 msgid "Form Popup"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:821
+#: includes/elementor/widgets/global/filter-room.php:826
 msgid "Button Popup"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:846
+#: includes/elementor/widgets/global/filter-room.php:851
 msgid "Font Size Icon"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:865
+#: includes/elementor/widgets/global/filter-room.php:870
 msgid "Selected Number"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:950
+#: includes/elementor/widgets/global/filter-room.php:955
 msgid "Reset"
 msgstr ""
 
@@ -2677,7 +2677,7 @@ msgstr ""
 #: includes/elementor/widgets/global/list-room.php:52
 #: includes/elementor/widgets/loop-item/loop-room-rating.php:54
 #: includes/elementor/widgets/single-room/room-booking.php:50
-#: includes/elementor/widgets/single-room/room-thumb.php:52
+#: includes/elementor/widgets/single-room/room-thumb.php:56
 msgid "Select Layout"
 msgstr ""
 
@@ -2698,31 +2698,31 @@ msgstr ""
 msgid "Number Room"
 msgstr ""
 
-#: includes/elementor/widgets/global/list-room.php:117
+#: includes/elementor/widgets/global/list-room.php:119
 msgid "Order by"
 msgstr ""
 
-#: includes/elementor/widgets/global/list-room.php:120
+#: includes/elementor/widgets/global/list-room.php:122
 msgid "Popular"
 msgstr ""
 
-#: includes/elementor/widgets/global/list-room.php:123
+#: includes/elementor/widgets/global/list-room.php:125
 msgid "Random"
 msgstr ""
 
-#: includes/elementor/widgets/global/list-room.php:132
+#: includes/elementor/widgets/global/list-room.php:134
 msgid "Order"
 msgstr ""
 
-#: includes/elementor/widgets/global/list-room.php:135
+#: includes/elementor/widgets/global/list-room.php:137
 msgid "ASC"
 msgstr ""
 
-#: includes/elementor/widgets/global/list-room.php:136
+#: includes/elementor/widgets/global/list-room.php:138
 msgid "DESC"
 msgstr ""
 
-#: includes/elementor/widgets/global/list-room.php:290
+#: includes/elementor/widgets/global/list-room.php:292
 msgid "No data were found matching your selection, you need to create Post or select Category of Widget."
 msgstr ""
 
@@ -3120,43 +3120,43 @@ msgstr ""
 msgid "Room Thumbnail Gallery"
 msgstr ""
 
-#: includes/elementor/widgets/single-room/room-thumb.php:45
+#: includes/elementor/widgets/single-room/room-thumb.php:49
 msgid "Thumbnail Gallery"
 msgstr ""
 
-#: includes/elementor/widgets/single-room/room-thumb.php:56
+#: includes/elementor/widgets/single-room/room-thumb.php:60
 msgid "Gallery and Popup Slide"
 msgstr ""
 
-#: includes/elementor/widgets/single-room/room-thumb.php:57
+#: includes/elementor/widgets/single-room/room-thumb.php:61
 msgid "Gallery and Slide"
 msgstr ""
 
-#: includes/elementor/widgets/single-room/room-thumb.php:58
+#: includes/elementor/widgets/single-room/room-thumb.php:62
 msgid "Only Slide"
 msgstr ""
 
-#: includes/elementor/widgets/single-room/room-thumb.php:66
+#: includes/elementor/widgets/single-room/room-thumb.php:70
 msgid "Icon Button Gallery"
 msgstr ""
 
-#: includes/elementor/widgets/single-room/room-thumb.php:79
+#: includes/elementor/widgets/single-room/room-thumb.php:83
 msgid "Nav Slide"
 msgstr ""
 
-#: includes/elementor/widgets/single-room/room-thumb.php:87
+#: includes/elementor/widgets/single-room/room-thumb.php:91
 msgid "Gallery Popup"
 msgstr ""
 
-#: includes/elementor/widgets/single-room/room-thumb.php:98
+#: includes/elementor/widgets/single-room/room-thumb.php:102
 msgid "Width Feature"
 msgstr ""
 
-#: includes/elementor/widgets/single-room/room-thumb.php:112
+#: includes/elementor/widgets/single-room/room-thumb.php:116
 msgid "Width List"
 msgstr ""
 
-#: includes/elementor/widgets/single-room/room-thumb.php:137
+#: includes/elementor/widgets/single-room/room-thumb.php:141
 msgid "Gallery Button"
 msgstr ""
 
@@ -3467,23 +3467,23 @@ msgstr ""
 msgid "Error: Cart ID is invalid."
 msgstr ""
 
-#: includes/room/class-wphb-booking-room.php:194
+#: includes/room/class-wphb-booking-room.php:195
 msgid "Check in id is required."
 msgstr ""
 
-#: includes/room/class-wphb-booking-room.php:200
+#: includes/room/class-wphb-booking-room.php:201
 msgid "Check in name is required."
 msgstr ""
 
-#: includes/room/class-wphb-booking-room.php:206
+#: includes/room/class-wphb-booking-room.php:207
 msgid "Check in date is required."
 msgstr ""
 
-#: includes/room/class-wphb-booking-room.php:213
+#: includes/room/class-wphb-booking-room.php:214
 msgid "Check out date is required."
 msgstr ""
 
-#: includes/room/class-wphb-booking-room.php:244
+#: includes/room/class-wphb-booking-room.php:245
 msgid "No room found in %1$s and %2$s"
 msgstr ""
 
@@ -6052,11 +6052,7 @@ msgstr ""
 msgid "Your Review"
 msgstr ""
 
-#: templates/single-room-reviews.php:301
-msgid "Upload Images"
-msgstr ""
-
-#: templates/single-room-reviews.php:313
+#: templates/single-room-reviews.php:302
 msgid "Only logged in customers who have purchased this product may leave a review."
 msgstr ""
 
@@ -6096,15 +6092,15 @@ msgstr ""
 msgid "--- Quantity ---"
 msgstr ""
 
-#: wp-hotel-booking.php:556
+#: wp-hotel-booking.php:551
 msgid "The image number is greater than %s"
 msgstr ""
 
-#: wp-hotel-booking.php:557
+#: wp-hotel-booking.php:552
 msgid "The image file type is invalid"
 msgstr ""
 
-#: wp-hotel-booking.php:558
+#: wp-hotel-booking.php:553
 msgid "The maximum file size is %s KB"
 msgstr ""
 
