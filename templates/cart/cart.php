@@ -135,7 +135,7 @@ global $hb_settings;
 				</tr>
 			</table>
 			<p>
-				<a href="<?php echo hb_get_checkout_url(); ?>"
+				<a href="<?php echo add_query_arg( 'no-cache', uniqid(), hb_get_checkout_url() ); ?>"
 					class="hb_button hb_checkout"><?php _e( 'Check Out', 'wp-hotel-booking' ); ?></a>
 			</p>
 		</form>

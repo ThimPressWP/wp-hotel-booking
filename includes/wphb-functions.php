@@ -2619,7 +2619,7 @@ if ( ! function_exists( 'hb_get_checkout_url' ) ) {
 			$url = get_the_permalink( $id );
 		}
 
-		return apply_filters( 'hb_checkout_url', $url );
+		return apply_filters( 'hb_checkout_url', esc_url( $url ) );
 	}
 }
 
