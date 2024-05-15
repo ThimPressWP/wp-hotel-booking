@@ -468,14 +468,14 @@
                 url.searchParams.set('paged', 1);
 
                 //Price
-                // for (let i = 0; i < priceFields.length; i++) {
-                //     const priceField = priceFields[i];
-                //     const minPrice = priceField.getAttribute('data-min');
-                //     const maxPrice = priceField.getAttribute('data-max');
-                //
-                //     url.searchParams.set('min_price', parseInt(minPrice));
-                //     url.searchParams.set('max_price', parseInt(maxPrice));
-                // }
+                for (let i = 0; i < priceFields.length; i++) {
+                    const priceField = priceFields[i];
+                    const minPrice = priceField.getAttribute('data-min');
+                    const maxPrice = priceField.getAttribute('data-max');
+
+                    url.searchParams.set('min_price', parseInt(minPrice));
+                    url.searchParams.set('max_price', parseInt(maxPrice));
+                }
 
                 //Rating
 
