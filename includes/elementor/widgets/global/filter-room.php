@@ -778,6 +778,17 @@ class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected
 			]
 		);
 
+		$this->add_responsive_control(
+			'filter_button_width',
+			[
+				'label'     => esc_html__( 'Width', 'wp-hotel-booking' ),
+				'type'      => Controls_Manager::SLIDER,
+				'size_units' => [ 'px', '%', 'custom' ],
+				'selectors' => [
+					'{{WRAPPER}} #hotel-booking-search-filter .search-filter-form .hb-room-filter-btn' => 'width: {{SIZE}}{{UNIT}};']
+			]
+		);
+
 		$this->register_button_style( 'button_filter', '#hotel-booking-search-filter .search-filter-form .hb-room-filter-btn' );
 
 		$this->add_responsive_control(
