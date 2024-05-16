@@ -200,6 +200,7 @@ class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected
 		$this->register_section_style_item();
 		$this->register_section_style_clear();
 		$this->register_section_style_price();
+		$this->register_section_style_filter_button();
 		$this->register_section_style_form_popup();
 		$this->register_section_style_button_popup();
 		$this->register_section_style_selected_number();
@@ -768,6 +769,32 @@ class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected
 		$this->end_controls_section();
 	}
 
+	protected function register_section_style_filter_button(){
+		$this->start_controls_section(
+			'style_field_filter_button',
+			[
+				'label' => esc_html__( 'Filter Button', 'wp-hotel-booking' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->register_button_style( 'button_filter', '#hotel-booking-search-filter .search-filter-form .hb-room-filter-btn' );
+
+		$this->add_responsive_control(
+			'filter_button_margin',
+			[
+				'label'      => esc_html__( 'Margin', 'wp-hotel-booking' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors'  => [
+					'{{WRAPPER}} #hotel-booking-search-filter .search-filter-form .hb-room-filter-btn' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+	}
+
 	protected function register_section_style_form_popup(){
 		$this->start_controls_section(
 			'style_form_popup',
@@ -972,6 +999,8 @@ class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected
 					}
 				}
 				?>
+				<button type="button"
+                        class="hb-room-filter-btn"><?php esc_html_e( 'Filter', 'wp-hotel-booking' ); ?></button>
 				</div>
             </form>
 			<div class="filter-bg"></div>
