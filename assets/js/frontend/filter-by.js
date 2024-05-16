@@ -470,25 +470,22 @@
                 //Price
                 for (let i = 0; i < priceFields.length; i++) {
                     const priceField = priceFields[i];
-                    const minPrice = priceField.getAttribute('data-min');
-                    const maxPrice = priceField.getAttribute('data-max');
+                    const minPrice = priceField.querySelector('.hb-min-price').value;
+                    const maxPrice = priceField.querySelector('.hb-max-price').value;
 
-                    url.searchParams.set('min_price', parseInt(minPrice));
-                    url.searchParams.set('max_price', parseInt(maxPrice));
+                    url.searchParams.set('min_price', minPrice);
+                    url.searchParams.set('max_price', maxPrice);
                 }
 
                 //Rating
-
                 for (let i = 0; i < ratingFields.length; i++) {
                     const ratingField = ratingFields[i];
-
                     const allCheckedInput = ratingField.querySelectorAll('input[type="checkbox"]:checked');
 
                     let value = [];
                     [...allCheckedInput].map(checkedInput => {
                         value.push(checkedInput.value);
                     });
-
 
                     if (value.length) {
                         url.searchParams.set('rating', value);
@@ -498,7 +495,6 @@
                 }
 
                 //Room types
-
                 for (let i = 0; i < roomTypeFields.length; i++) {
                     const roomTypeField = roomTypeFields[i];
 
@@ -509,7 +505,6 @@
                         value.push(checkedInput.value);
                     });
 
-
                     if (value.length) {
                         url.searchParams.set('room_type', value);
                     }else if(url.searchParams.has('room_type')){
@@ -517,8 +512,6 @@
                     }
                 }
 
-                // console.log(query);
-                // console.log(url);
                 window.location.href = url;
             });
         }
