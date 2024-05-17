@@ -174,7 +174,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 		 */
 		public function add_to_cart_redirect( $param, $room ) {
 			if ( isset( $param['status'] ) && $param['status'] === 'success' ) {
-				$param['redirect'] = add_query_arg( 'no-cache', uniqid(), hb_get_cart_url() );
+				$param['redirect'] = hb_get_cart_url();
 			}
 
 			return $param;

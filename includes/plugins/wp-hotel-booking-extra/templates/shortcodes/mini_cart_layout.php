@@ -67,8 +67,8 @@ defined( 'ABSPATH' ) || exit; ?>
 <script type="text/html" id="tmpl-hb-minicart-footer">
 	<div class="hb_mini_cart_footer">
 
-		<a href="<?php echo esc_url( add_query_arg( 'no-cache', uniqid(), hb_get_checkout_url() ) ); ?>" class="hb_button hb_checkout"><?php _e( 'Check Out', 'wp-hotel-booking' ); ?></a>
-		<a href="<?php echo esc_url( add_query_arg( 'no-cache', uniqid(), hb_get_cart_url() ) ); ?>" class="hb_button hb_view_cart"><?php _e( 'View Cart', 'wp-hotel-booking' ); ?></a>
+		<a href="<?php echo hb_get_checkout_url(); ?>" class="hb_button hb_checkout"><?php _e( 'Check Out', 'wp-hotel-booking' ); ?></a>
+		<a href="<?php echo hb_get_cart_url(); ?>" class="hb_button hb_view_cart"><?php _e( 'View Cart', 'wp-hotel-booking' ); ?></a>
 
 	</div>
 </script>

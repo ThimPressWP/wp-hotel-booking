@@ -2570,10 +2570,10 @@ if ( ! function_exists( 'hb_get_cart_url' ) ) {
 
 		$url = home_url();
 		if ( $id ) {
-			$url = get_the_permalink( $id );
+			$url = add_query_arg( 'no-cache', uniqid(), get_the_permalink( $id ) );
 		}
 
-		return apply_filters( 'hb_cart_url', $url );
+		return apply_filters( 'hb_cart_url', esc_url( $url ) );
 	}
 }
 
@@ -2616,7 +2616,7 @@ if ( ! function_exists( 'hb_get_checkout_url' ) ) {
 		$id  = hb_get_page_id( 'checkout' );
 		$url = '#';
 		if ( $id ) {
-			$url = get_the_permalink( $id );
+			$url = add_query_arg( 'no-cache', uniqid(), get_the_permalink( $id ) );
 		}
 
 		return apply_filters( 'hb_checkout_url', esc_url( $url ) );
