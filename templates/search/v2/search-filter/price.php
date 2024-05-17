@@ -25,7 +25,5 @@ $max_formatted_price = number_format( $data['max_price'], 2, '.', ',' );
                 <span class="max"><?php echo esc_html( $max_formatted_price ); ?></span>
             </div>
         </div>
-
-        <button class="apply "><?php esc_html_e( 'Apply', 'wp-hotel-booking' ); ?></button>
     </div>
 <?php

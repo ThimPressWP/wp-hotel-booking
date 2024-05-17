@@ -743,29 +743,6 @@ class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected
 			]
 		);
 
-		$this->add_control(
-			'button_apply',
-			[
-				'label'     => esc_html__( 'Button Apply', 'wp-hotel-booking' ),
-				'type'      => Controls_Manager::HEADING,
-				'separator' => 'before',
-			]
-		);
-
-		$this->register_button_style( 'btn_apply', '#hotel-booking-search-filter .search-filter-form-el button.apply' );
-
-		$this->add_responsive_control(
-			'button_apply_margin',
-			[
-				'label'      => esc_html__( 'Margin', 'wp-hotel-booking' ),
-				'type'       => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%' ],
-				'selectors'  => [
-					'{{WRAPPER}} #hotel-booking-search-filter .search-filter-form-el button.apply' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
 		$this->end_controls_section();
 	}
 

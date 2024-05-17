@@ -91,22 +91,6 @@
                 priceField.querySelector('.min').innerHTML = renderPrice(values[0]);
                 priceField.querySelector('.max').innerHTML = renderPrice(values[1]);
             });
-
-            const applyBtn = priceField.querySelector('button.apply');
-
-            //apply btn click event
-            applyBtn.addEventListener('click', function (event) {
-                event.preventDefault();
-
-
-                const url = new URL(window.location.href);
-
-                url.searchParams.set('min_price', parseInt(minPrice));
-                url.searchParams.set('max_price', parseInt(maxPrice));
-
-                url.searchParams.set('paged', 1);
-                window.location.href = url;
-            });
         }
     }
 
