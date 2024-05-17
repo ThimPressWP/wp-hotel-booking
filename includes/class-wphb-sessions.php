@@ -75,7 +75,7 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 			if ( isset( $_SESSION[ $this->prefix ] ) ) {
 				return $_SESSION[ $this->prefix ];
 			} elseif ( $this->remember && isset( $_COOKIE[ $this->prefix ] ) ) {
-				return $_SESSION[ $this->prefix ] = json_decode( WPHB_Helpers::sanitize_params_submitted( $_COOKIE[ $this->prefix ] ) );
+				return $_SESSION[ $this->prefix ] = json_decode( WPHB_Helpers::sanitize_params_submitted( $_COOKIE[ $this->prefix ] ), true );
 			}
 
 			return array();

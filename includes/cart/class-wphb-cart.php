@@ -58,13 +58,13 @@ class WPHB_Cart {
 
 	function __construct( $appfix = null ) {
 		// session class
-		$this->sessions = WPHB_Sessions::instance( 'thimpress_hotel_booking_' . WPHB_BLOG_ID . $appfix, true );
+		$this->sessions = WPHB_Sessions::instance( 'thimpress_hotel_booking_' . WPHB_BLOG_ID . $appfix );
 
 		// session customer object
-		$this->customer_sessions = WPHB_Sessions::instance( 'thimpress_hotel_booking_customer_' . WPHB_BLOG_ID . $appfix, true );
+		$this->customer_sessions = WPHB_Sessions::instance( 'thimpress_hotel_booking_customer_' . WPHB_BLOG_ID . $appfix );
 
 		// session booking object
-		$this->booking_sessions = WPHB_Sessions::instance( 'thimpress_hotel_booking_info_' . WPHB_BLOG_ID . $appfix, true );
+		$this->booking_sessions = WPHB_Sessions::instance( 'thimpress_hotel_booking_info_' . WPHB_BLOG_ID . $appfix );
 
 		// refresh cart session
 		add_action( 'wp_loaded', array( $this, 'wp_loaded' ) );
@@ -172,17 +172,18 @@ class WPHB_Cart {
 	// load customer
 	function load_customer() {
 		// load customer session object
+		$session = (array) $this->customer_sessions->session;
 		if ( $this->customer_sessions && $this->customer_sessions->session ) {
-			if ( isset( $this->customer_sessions->session['customer_id'] ) ) {
-				$this->customer_id = $this->customer_sessions->session['customer_id'];
+			if ( isset( $session['customer_id'] ) ) {
+				$this->customer_id = $session['customer_id'];
 			}
 
-			if ( isset( $this->customer_sessions->session['customer_email'] ) ) {
-				$this->customer_email = $this->customer_sessions->session['customer_email'];
+			if ( isset( $session['customer_email'] ) ) {
+				$this->customer_email = $session['customer_email'];
 			}
 
-			if ( isset( $this->customer_sessions->session['coupon'] ) ) {
-				$this->coupon = $this->customer_sessions->session['coupon'];
+			if ( isset( $session['coupon'] ) ) {
+				$this->coupon = $session['coupon'];
 			}
 			$this->customer_id = apply_filters( 'hotel_booking_load_customer_from_session', $this->customer_id );
 			$this->coupon      = apply_filters( 'hotel_booking_load_customer_from_session', $this->coupon );
