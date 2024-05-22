@@ -740,9 +740,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true' ) );        
 				} ?>
 				<?php if ( $settings['label_field'] != '' ) :?>
-					<?php echo $settings['label_field']; ?>
-				<?php else : ?>
-					<?php esc_html_e( 'Check Availability', 'wp-hotel-booking' ) ;?>
+					<span class="submit-text"> <?php echo $settings['label_field']; ?> </span>
 				<?php endif; ?>
 			</button>
 		</li>
