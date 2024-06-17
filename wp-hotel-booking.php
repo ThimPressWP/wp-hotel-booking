@@ -282,9 +282,12 @@ class WP_Hotel_Booking {
 		//template-hook
 		$this->_include( 'includes/template-hooks/class-wphb-search.php' );
 
-		if ( class_exists( 'Thim_EL_Kit' ) && class_exists( 'Elementor\Plugin' ) ) {
-			$this->_include( '/includes/elementor/modules/class-init.php' );
-		}
+		// Load Widgets support Elementor
+		add_action( 'plugins_loaded', function () {
+			if ( class_exists( 'Thim_EL_Kit' ) ) {
+				$this->_include( '/includes/elementor/modules/class-init.php' );
+			}
+		} );
 	}
 
 

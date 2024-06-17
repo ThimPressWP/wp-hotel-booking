@@ -1028,8 +1028,8 @@ class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected
 			$rating =  count(explode(',', $_GET['rating']));
 		}
 		if (!empty($_GET['min_price']) || !empty($_GET['max_price'])) {
-			$price =  count(explode(',', $_GET['min-price']));
-			$price =  count(explode(',', $_GET['max-price']));
+			$price =  count(explode(',', $_GET['min_price']));
+			$price =  count(explode(',', $_GET['max_price']));
 		}
 
 		$total = $types + $rating + $price;
