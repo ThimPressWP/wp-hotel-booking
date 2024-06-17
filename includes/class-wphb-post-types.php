@@ -68,12 +68,14 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			add_filter( 'manage_edit-hb_booking_sortable_columns', array( $this, 'sortable_columns' ) );
 		}
 
+
 		public function filter_sort_rooms( $query ) {
 			if ( ! is_post_type_archive( 'hb_room' ) && ! is_room_taxonomy() ) {
 				return;
 			}
 
-			if ( ! isset( $query->query_vars['post_type'] ) || $query->query_vars['post_type'] !== 'hb_room' || ! $query->is_post_type_archive ) {
+			if ( ( ! isset( $query->query_vars['post_type'] ) || $query->query_vars['post_type'] !== 'hb_room' )
+			     && ! $query->is_tax ) {
 				return;
 			}
 
