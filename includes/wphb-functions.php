@@ -1830,14 +1830,16 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 
 		if ( isset( $args['room_type'] ) && $args['room_type'] !== '' ) {
 			$roomType = explode( ',', $args['room_type'] );
-			$roomType = '"' . implode( '","', $roomType ) . '"';
+			$placeholders = implode( ',', array_fill( 0, count( $roomType ), '%s' ) );
+
 			$sql      .= $wpdb->prepare(
 				" LEFT JOIN 
                             $wpdb->term_relationships ON rooms.ID = $wpdb->term_relationships.object_id"
 			);
 
 			$where .= $wpdb->prepare(
-				" AND $wpdb->term_relationships.term_taxonomy_id  IN ($roomType)"
+				" AND $wpdb->term_relationships.term_taxonomy_id IN ($placeholders)",
+				...$roomType
 			);
 		}
 

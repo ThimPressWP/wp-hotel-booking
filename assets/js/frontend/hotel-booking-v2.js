@@ -541,22 +541,24 @@ const priceSlider = () => {
         const applyBtn = priceField.querySelector('button.apply');
 
         //apply btn click event
-        applyBtn.addEventListener('click', function (event) {
-            event.preventDefault();
+        if(applyBtn){
+            applyBtn.addEventListener('click', function (event) {
+                event.preventDefault();
 
-            const minPrice = minPriceNode.value;
-            const maxPrice = maxPriceNode.value;
+                const minPrice = minPriceNode.value;
+                const maxPrice = maxPriceNode.value;
 
-            filterRooms = {
-                ...filterRooms,
-                min_price: parseInt(minPrice),
-                max_price: parseInt(maxPrice)
-            };
+                filterRooms = {
+                    ...filterRooms,
+                    min_price: parseInt(minPrice),
+                    max_price: parseInt(maxPrice)
+                };
 
-            window.localStorage.setItem('wphb_filter_rooms', JSON.stringify(filterRooms));
+                window.localStorage.setItem('wphb_filter_rooms', JSON.stringify(filterRooms));
 
-            searchRoomsPages();
-        });
+                searchRoomsPages();
+            });
+        }
     }
 }
 
