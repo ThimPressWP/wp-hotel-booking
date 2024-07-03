@@ -1456,7 +1456,7 @@ if ( ! function_exists( 'hb_format_price' ) ) {
 		$price_thousands_separator = $settings->get( 'price_thousands_separator', ',' );
 		$price_decimals_separator  = $settings->get( 'price_decimals_separator', '.' );
 		$price_number_of_decimal   = (int) $settings->get( 'price_number_of_decimal', 2 );
-		$price = (float) $price;
+		$price                     = (float) $price;
 
 		//$price  = apply_filters( 'hotel_booking_price_switcher', $price );
 		$before = $after = '';
@@ -1829,18 +1829,14 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 		}
 
 		if ( isset( $args['room_type'] ) && $args['room_type'] !== '' ) {
-			$roomType = explode( ',', $args['room_type'] );
-			$placeholders = implode( ',', array_fill( 0, count( $roomType ), '%s' ) );
+			$roomTypes = explode( ',', $args['room_type'] );
+			$roomTypes = array_map( 'absint', $roomTypes);
 
-			$sql      .= $wpdb->prepare(
-				" LEFT JOIN 
-                            $wpdb->term_relationships ON rooms.ID = $wpdb->term_relationships.object_id"
-			);
-
-			$where .= $wpdb->prepare(
-				" AND $wpdb->term_relationships.term_taxonomy_id IN ($placeholders)",
-				...$roomType
-			);
+			$sql   .= " INNER JOIN $wpdb->term_relationships AS r_term ON rooms.ID = r_term.object_id";
+			$sql   .= " INNER JOIN $wpdb->term_taxonomy AS tx ON r_term.term_taxonomy_id = tx.term_taxonomy_id";
+			$term_ids_format = join( ',', $roomTypes );
+			$where .= $wpdb->prepare( " AND tx.term_id IN ($term_ids_format)" );
+			$where .= $wpdb->prepare( ' AND tx.taxonomy = %s', 'hb_room_type' );
 		}
 
 		if ( $args['sort_by'] === 'date-desc' ) {

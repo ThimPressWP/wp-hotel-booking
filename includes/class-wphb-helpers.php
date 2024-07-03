@@ -59,4 +59,18 @@ class WPHB_Helpers {
 	public static function print( $string ) {
 		printf( '%s', $string );
 	}
+
+	/**
+	 * Format list array string when query IN mysql
+	 *
+	 * @param array $arr
+	 * @param string $format
+	 *
+	 * @return string
+	 */
+	public static function db_format_array( array $arr, string $format = '%d' ): string {
+		$arr_formatted = array_fill( 0, sizeof( $arr ), $format );
+
+		return join( ',', $arr_formatted );
+	}
 }
