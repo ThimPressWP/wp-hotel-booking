@@ -1212,12 +1212,6 @@ jQuery(document).ready(function ($) {
 
                 titleTextNode.innerHTML = target.value;
             }
-
-            if (target.closest('._hb_fac_attr_label ') ) {
-                const titleTextNode = target.closest('._hb_fac_attr_panel').querySelector('._hb_fac_attr_panel_title_text');
-
-                titleTextNode.innerHTML = target.value;
-            }
         });
     }
 
@@ -1286,9 +1280,14 @@ jQuery(document).ready(function ($) {
 
                 titleTextNode.innerHTML = target.value;
             }
+
+            if (target.closest('._hb_fac_attr_label ') ) {
+                const titleTextNode = target.closest('._hb_fac_attr_panel').querySelector('._hb_fac_attr_panel_title_text');
+
+                titleTextNode.innerHTML = target.value;
+            }
         });
     }
-
 
     facility();
     facilityAttr()
