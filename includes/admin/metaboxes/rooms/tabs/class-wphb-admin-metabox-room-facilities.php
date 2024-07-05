@@ -31,8 +31,8 @@ class WPHB_Admin_Metabox_Room_Facilities extends WPHB_Meta_Box {
 								'image' => $fac_attr_image[ $i ][ $j ],
 							);
 						}
-
 					}
+
 					$facs[] = array(
 						'label' => $fac_label[ $i ],
 						'attr'  => $attr,
