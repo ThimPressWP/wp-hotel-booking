@@ -284,7 +284,9 @@ class WP_Hotel_Booking {
 
 		// Load Widgets support Elementor
 		add_action( 'plugins_loaded', function () {
-			if ( class_exists( 'Thim_EL_Kit' ) ) {
+            // generate check class exists elementor
+
+			if ( class_exists( 'Thim_EL_Kit' ) && defined( 'ELEMENTOR_VERSION' ) ) {
 				$this->_include( '/includes/elementor/modules/class-init.php' );
 			}
 		} );
