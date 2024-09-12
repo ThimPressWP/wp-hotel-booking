@@ -217,12 +217,12 @@ class Thim_Ekit_Widget_Archive_Room extends Widget_Base {
 			$orderby = sanitize_key( $_GET['order_by'] );
 			$orderby = explode('-', $orderby );
 
-			if (isset($orderby) && is_array($orderby)){		
+			if (isset($orderby) && is_array($orderby)){
 				$query_vars['orderby'] = $orderby[0];
 				$query_vars['order'] = $orderby[1];
 			}
 		}
-		
+
 		if ( null !== get_queried_object_id() && ! empty( get_queried_object_id() ) && get_post_type() == 'hb_room') {
 			//Price
 			$min_price = $_GET['min_price'] ?? null;
@@ -319,27 +319,27 @@ class Thim_Ekit_Widget_Archive_Room extends Widget_Base {
 			return;
 		}
 
-        $settings = $this->get_settings_for_display(); 
+        $settings = $this->get_settings_for_display();
         $class_item  = 'hb-room-archive__article'; ?>
 
         <div class="hb-room-archive">
             <?php $this->render_topbar( $rooms, $settings ); ?>
 
             <div class="hb-room-archive__inner">
-                <?php 
+                <?php
                 while ( $rooms->have_posts() ) {
                     $rooms->the_post();
                     $this->current_permalink = get_permalink(); ?>
 
                     <div <?php post_class( array( $class_item ) ); ?>>
-                        <?php  
-                            \Thim_EL_Kit\Utilities\Elementor::instance()->render_loop_item_content( $settings['template_id'] ); 
+                        <?php
+                            \Thim_EL_Kit\Utilities\Elementor::instance()->render_loop_item_content( $settings['template_id'] );
                         ?>
                     </div>
                 <?php } ?>
             </div>
 
-            <?php $this->render_loop_footer( $rooms, $settings ); ?>       
+            <?php $this->render_loop_footer( $rooms, $settings ); ?>
         </div>
 
         <?php
@@ -371,7 +371,7 @@ class Thim_Ekit_Widget_Archive_Room extends Widget_Base {
 		$total = $query->found_posts;
 
 		if ( $total == 1 ) {
-			$index = esc_html__( 'Showing only one result', 'wp-hotel-booking' );
+			$index = __( 'Showing only one result', 'wp-hotel-booking' );
 		} else {
 			$post_per_page_get = $hb_settings->get( 'posts_per_page', 8 );
 			$post_per_page     = is_numeric( $post_per_page_get ) ? $post_per_page_get : 9;
@@ -382,12 +382,12 @@ class Thim_Ekit_Widget_Archive_Room extends Widget_Base {
 
 			if ( $from == $to ) {
 				$index = sprintf(
-					esc_html__( 'Showing last post of %s results', 'wp-hotel-booking' ),
+					__( 'Showing last post of %s results', 'wp-hotel-booking' ),
 					$total
 				);
 			} else {
 				$index = sprintf(
-					esc_html__( 'Showing %s - %s of %s results', 'wp-hotel-booking' ),
+					__( 'Showing %s - %s of %s results', 'wp-hotel-booking' ),
 					$from,
 					$to,
 					$total
@@ -397,7 +397,7 @@ class Thim_Ekit_Widget_Archive_Room extends Widget_Base {
 		?>
 
 		<span class="hb-room-archive__topbar__result">
-			<?php echo( $index ); ?>
+			<?php echo esc_html( $index ); ?>
 		</span>
 		<?php
 	}

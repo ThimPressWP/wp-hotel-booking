@@ -91,7 +91,7 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 
 			if ( $this->remember && isset( $_COOKIE[ $this->prefix ] ) ) {
 				unset( $_COOKIE[ $this->prefix ] );
-				setcookie( $this->prefix, '', time() - $this->live_item, COOKIEPATH, COOKIE_DOMAIN );
+				setcookie( $this->prefix, '', time() - $this->live_item, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
 			}
 
 			return $this->session = null;
@@ -128,7 +128,7 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 
 			// save cookie
 			if ( $this->remember ) {
-				@setcookie( $this->prefix, wp_json_encode( $this->session ), $time, COOKIEPATH, COOKIE_DOMAIN );
+				@setcookie( $this->prefix, wp_json_encode( $this->session ), $time, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
 			}
 		}
 

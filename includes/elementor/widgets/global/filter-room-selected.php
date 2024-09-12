@@ -46,7 +46,7 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 		$this->register_section_style_icon_selected();
 		$this->register_section_clear_button();
     }
-	
+
 	protected function register_section_selected_options( $condition = null ) {
 		$section_args = [
 			'label' => __( 'Selected Area', 'wp-hotel-booking' ),
@@ -61,7 +61,7 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 		);
 
         $this->add_control(
-			'title_selected', 
+			'title_selected',
 			[
 				'label'       => esc_html__( 'Title', 'wp-hotel-booking' ),
 				'type'        => Controls_Manager::TEXT,
@@ -82,7 +82,7 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 		);
 
         $this->add_control(
-			'text_reset', 
+			'text_reset',
 			[
 				'label'       => esc_html__( 'Clear Text', 'wp-hotel-booking' ),
 				'type'        => Controls_Manager::TEXT,
@@ -293,35 +293,62 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 			$icon_move = '<i class="icon-remove-selected fas fa-times"></i>';
 		}
 
-		if (Plugin::$instance->editor->is_edit_mode()) {
-            echo '<span class="preview selected-item" >' . esc_html__( 'Preview 1', 'wp-hotel-booking' ) . ''.$icon_move.'</span>
-            <span class="preview selected-item" >' . esc_html__( 'Preview 2', 'wp-hotel-booking' ) . ''.$icon_move.'';
-        }
+		if ( Plugin::$instance->editor->is_edit_mode() ) {
+			echo sprintf(
+				'<span class="preview selected-item" >%s %s</span>
+				<span class="preview selected-item" >%s %s</span>',
+				esc_html__( 'Preview 1', 'wp-hotel-booking' ),
+				wp_kses_post( $icon_move ),
+				esc_html__( 'Preview 2', 'wp-hotel-booking' ),
+				wp_kses_post( $icon_move )
+			);
+		}
 
-		if (!empty($_GET['room_type'])) {
-			$types = explode(',', $_GET['room_type']);
-			foreach ($types as $type) {
-				echo '<span class="' . $classListItem . '" data-name="room_type" data-value="' . $type . '">' . get_term($type, 'hb_room_type')->name . '' . $icon_move . '</span>';
+		if ( ! empty( $_GET['room_type'] ) ) {
+			$types = explode( ',', $_GET['room_type'] );
+			foreach ( $types as $type ) {
+				sprintf(
+					'<span class="%s" data-name="room_type" data-value="%s">%s%s</span>',
+					esc_attr( $classListItem ),
+					esc_attr( $type ),
+					get_term( $type, 'hb_room_type' )->name,
+					wp_kses_post( $icon_move )
+				);
 			}
 		}
 
-		if (!empty($_GET['rating'])) {
-			$ratings = explode(',', $_GET['rating']);
-			foreach ($ratings as $rating) {
-				if ($rating == 'unrated') {
-					echo '<span class="' . $classListItem . '" data-name="rating" data-value="' . $rating . '">' . esc_html__('Unrated', 'wp-hotel-booking') . '' . $icon_move . '</span>';
-				}else {
-					echo '<span class="' . $classListItem . '" data-name="rating" data-value="' . $rating . '">' ;
-					printf( esc_html( _n( '%s star', '%s stars', $rating, 'wp-hotel-booking' ) ), $rating );
-					echo '' . $icon_move . '</span>';
+		if ( ! empty( $_GET['rating'] ) ) {
+			$ratings = explode( ',', $_GET['rating'] );
+			foreach ( $ratings as $rating ) {
+				if ( $rating == 'unrated' ) {
+					sprintf(
+						'<span class="%s" data-name="rating" data-value="%s">%s%s</span>',
+						esc_attr( $classListItem ),
+						esc_attr( $rating ),
+						esc_html__( 'Unrated', 'wp-hotel-booking' ),
+						wp_kses_post( $icon_move )
+					);
+				} else {
+					sprintf(
+						'<span class="%s" data-name="rating" data-value="%s">%s%s</span>',
+						esc_attr( $classListItem ),
+						esc_attr( $rating ),
+						sprintf( esc_html( _n( '%s star', '%s stars', $rating, 'wp-hotel-booking' ) ), $rating ),
+						wp_kses_post( $icon_move )
+					);
 				}
 			}
 		}
 
-		if (!empty($_GET['min_price']) || !empty($_GET['max_price'])) {
-			echo '<span class="' . $classListItem . '" data-name="price" data-value="price">' ;
-			echo esc_html__('Price', 'wp-hotel-booking').': '. hb_format_price( $_GET['min_price'],$currency_symbol ) .' - '. hb_format_price( $_GET['max_price'],$currency_symbol );
-			echo '' . $icon_move . '</span>';
+		if ( ! empty( $_GET['min_price'] ) || ! empty( $_GET['max_price'] ) ) {
+			echo sprintf(
+				'<span class="%s" data-name="price" data-value="price">%s: %s - %s%s</span>',
+				esc_attr( $classListItem ),
+				esc_html__( 'Price', 'wp-hotel-booking' ),
+				esc_attr( hb_format_price( $_GET['min_price'], $currency_symbol ) ),
+				esc_attr( hb_format_price( $_GET['max_price'], $currency_symbol ) ),
+				wp_kses_post( $icon_move )
+			);
 		}
 	}
 

@@ -158,9 +158,10 @@ class WPHB_Comments {
 			foreach ( $images as $image ) {
 				$img             = preg_replace( '/^data:image\/[a-z]+;base64,/', '', $image['base64'] );
 				$img             = str_replace( ' ', '+', $img );
+				$img             = LP_Helper::sanitize_params_submitted( $img );
 				$decoded         = base64_decode( $img );
-				$filename        = $image['name'];
-				$file_type       = $image['type'];
+				$filename        = sanitize_file_name( $image['name'] );
+				$file_type       = sanitize_mime_type( $image['type'] );
 				$hashed_filename = md5( $filename . microtime() ) . '_' . $filename;
 
 				$upload_file = file_put_contents( $upload_path . $hashed_filename, $decoded );

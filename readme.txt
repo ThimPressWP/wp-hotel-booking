@@ -75,6 +75,9 @@ Yes.
 
 == Changelog ==
 
+= 2.1.3 (2024-09-12) =
+~ Fixed: security.
+
 = 2.1.2 (2024-07-18) =
 ~ Tweak: facilities.
 

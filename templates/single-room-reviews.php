@@ -185,9 +185,9 @@ $enable_advanced_review = hb_settings()->get( 'enable_advanced_review' ) === '1'
 							$link = $origin_link;
 
 							if ( isset( $_GET['photos_only'] ) ) {
-								$photos_only = $_GET['photos_only'];
+								$photos_only = LP_Helper::sanitize_params_submitted( 'photos_only', 'key' );
 
-								$link = add_query_arg( 'photos_only', $photos_only, $origin_link );
+								$link = esc_url_raw( add_query_arg( 'photos_only', $photos_only, $origin_link ) );
 							}
 							?>
                             <li class="<?php echo $review_sort_by === 'oldest' ? 'active' : ''; ?>">

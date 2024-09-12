@@ -4,7 +4,7 @@
  * Plugin URI: http://thimpress.com/
  * Description: Full of professional features for a booking room system
  * Author: ThimPress
- * Version: 2.1.2
+ * Version: 2.1.3-beta.1
  * Author URI: http://thimpress.com
  * Text Domain: wp-hotel-booking
  * Domain Path: /languages/
@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
 const WPHB_FILE        = __FILE__;
 const WPHB_PLUGIN_PATH = __DIR__;
 define( 'WPHB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
-const WPHB_VERSION = '2.1.1-02';
+const WPHB_VERSION = '2.1.3';
 define( 'WPHB_BLOG_ID', get_current_blog_id() );
 define( 'WPHB_TEMPLATES', WPHB_PLUGIN_PATH . '/templates/' );
 const TP_HB_EXTRA    = __FILE__;
@@ -284,8 +284,7 @@ class WP_Hotel_Booking {
 
 		// Load Widgets support Elementor
 		add_action( 'plugins_loaded', function () {
-            // generate check class exists elementor
-
+            // Check Elementor, Thim El Kit is active.
 			if ( class_exists( 'Thim_EL_Kit' ) && defined( 'ELEMENTOR_VERSION' ) ) {
 				$this->_include( '/includes/elementor/modules/class-init.php' );
 			}
