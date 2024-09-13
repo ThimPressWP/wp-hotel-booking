@@ -14,6 +14,7 @@ module.exports = {
 		'frontend/filter-by': './assets/js/frontend/filter-by.js',
 		'frontend/sort-by': './assets/js/frontend/sort-by.js',
 		'frontend/room-review': './assets/js/frontend/room-review.js',
+		'frontend/wphb-single-room': './assets/js/frontend/wphb-single-room.js',
 		'admin/room-review': './assets/js/admin/room-review/room-review.tsx',
 	},
 	output: {

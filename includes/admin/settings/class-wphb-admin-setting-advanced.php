@@ -32,7 +32,21 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Advanced' ) ) {
 			return apply_filters(
 				'hotel_booking_admin_setting_fields_' . $this->id,
 				array(
-
+					array(
+						'type'  => 'section_start',
+						'id'    => 'tp_debug_mode',
+					),
+					array(
+						'id'      => 'tp_hotel_booking_debug',
+						'type'    => 'checkbox',
+						'default' => 0,
+						'title'   => __( 'Debug Mode', 'wp-hotel-booking' ),
+						'desc'    => __( 'Enable debug mode for the developer.', 'wp-hotel-booking' ),
+					),
+					array(
+						'type' => 'section_end',
+						'id'   => 'tp_debug_mode',
+					),
 					array(
 						'type'  => 'section_start',
 						'id'    => 'room_filter_setting',

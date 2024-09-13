@@ -295,6 +295,15 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 
 			return $redirectPage;
 		}
+
+		/**
+		 * Check enable debug mode
+		 *
+		 * @return bool
+		 */
+		public static function is_debug(): bool {
+			return get_option( 'tp_hotel_booking_debug', 0 ) == 1;
+		}
 	}
 }
 

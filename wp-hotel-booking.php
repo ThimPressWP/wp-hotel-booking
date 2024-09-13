@@ -568,7 +568,7 @@ class WP_Hotel_Booking {
 			wp_enqueue_style( 'wp-hotel-booking-single-room-css' );
 			wp_enqueue_script( 'wphb-ui-slider' );
 			wp_enqueue_script( 'wp-hotel-booking-magnific-popup-js' );
-			wp_enqueue_script( 'wp-hotel-booking-single-room-js' );
+			wp_enqueue_script( 'wpdb-single-room-js' );
 
 			// room galleria
 			if ( is_singular( 'hb_room' ) ) {

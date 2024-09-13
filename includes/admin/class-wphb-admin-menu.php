@@ -25,6 +25,7 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 		 */
 		public function __construct() {
 			add_action( 'admin_menu', array( $this, 'register' ) );
+			add_action( 'admin_bar_menu', array( $this, 'admin_bar_menus' ), 50 );
 		}
 
 		/**
@@ -137,6 +138,40 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 		 */
 		public function tools_page() {
 			WPHB_Admin_Tools::output();
+		}
+
+		/**
+		 * Added url Pages of LP.
+		 *
+		 * @param WP_Admin_Bar $wp_admin_bar
+		 *
+		 * @return void
+		 * @since 2.1.3
+		 * @version 1.0.0
+		 */
+		public function admin_bar_menus( $wp_admin_bar ) {
+			if ( ! current_user_can( 'administrator' ) ) {
+				return;
+			}
+
+			$url_pages = [
+				'wphb-rooms'     => [
+					'title'  => esc_html__( 'View Page Rooms', 'learnpress' ),
+					'href'   => get_permalink( hb_get_page_id( 'rooms' ) ),
+					'parent' => 'site-name',
+				],
+			];
+
+			foreach ( $url_pages as $id => $url_page ) {
+				$wp_admin_bar->add_node(
+					array(
+						'id'     => $id,
+						'parent' => $url_page['parent'] ?? 'appearance',
+						'title'  => sprintf( '<span class="ab-label">%s</span>', $url_page['title'] ),
+						'href'   => $url_page['href'],
+					)
+				);
+			}
 		}
 	}
 }

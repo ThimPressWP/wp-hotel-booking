@@ -88,6 +88,12 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 		 * Enqueue script.
 		 */
 		public function enqueue() {
+			$ver = WPHB_VERSION;
+			$min = '.min';
+			if ( WPHB_Settings::is_debug() ) {
+				$min = '';
+				$ver = time();
+			}
 
 			$dependencies = array(
 				'jquery',
@@ -101,7 +107,13 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 			// magnific popup
 			wp_enqueue_style( 'wp-hotel-booking-magnific-popup-css', WPHB_PLUGIN_URL . '/includes/libraries/magnific-popup/css/magnific-popup.css', array(), WPHB_VERSION );
 			wp_enqueue_script( 'wp-hotel-booking-magnific-popup-js', WPHB_PLUGIN_URL . '/includes/libraries/magnific-popup/js/jquery.magnific-popup.min.js', $dependencies );
-			wp_register_script( 'wp-hotel-booking-single-room-js', WPHB_PLUGIN_URL . '/assets/js/booking-single-room.js', $dependencies );
+			wp_register_script(
+				'wpdb-single-room-js',
+				WPHB_PLUGIN_URL . '/assets/dist/js/frontend/wphb-single-room.js',
+				$dependencies,
+				$ver,
+				[ 'strategy' => 'async' ]
+			);
 			wp_enqueue_style( 'wp-hotel-booking-single-room-css', WPHB_PLUGIN_URL . '/assets/css/booking-single-room.css', array(), WPHB_VERSION );
 
 			$l10n = apply_filters(
@@ -111,7 +123,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 					'external_link' => is_singular( 'hb_room' ) ? get_post_meta( get_the_ID(), '_hb_external_link', true ) : '',
 				)
 			);
-			wp_localize_script( 'wp-hotel-booking-single-room-js', 'Hotel_Booking_Blocked_Days', $l10n );
+			wp_localize_script( 'wpdb-single-room-js', 'Hotel_Booking_Blocked_Days', $l10n );
 		}
 
 		/**
