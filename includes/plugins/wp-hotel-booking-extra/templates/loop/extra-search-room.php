@@ -14,6 +14,10 @@
  */
 defined( 'ABSPATH' ) || exit;
 
+if ( ! isset( $post_id ) ) {
+    return;
+}
+
 // HB_Room_Extra instead of HB_Room
 $room_extra = HB_Room_Extra::instance( $post_id );
 $room_extra = $room_extra->get_extra();

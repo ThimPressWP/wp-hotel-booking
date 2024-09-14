@@ -1,10 +1,9 @@
 <?php
 
 /**
- * Class WPHB_REST_RESPONSE
+ * Class WPHB_REST_Response
  *
- * @package WPHB/Classes
- * @version 1.0.0
+ * @version 1.0
  * @since 3.2.8
  */
 
@@ -12,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class WPHB_REST_RESPONSE {
+class WPHB_REST_Response {
 	/**
 	 * Status.
 	 *

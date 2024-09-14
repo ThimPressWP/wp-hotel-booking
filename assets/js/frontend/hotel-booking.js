@@ -373,7 +373,7 @@
 	 */
 	HB_Booking_Cart = {
 		init: function () {
-			this.add_to_cart();
+			//this.add_to_cart();
 			this.remove_cart();
 			// this.add_extra_to_cart();
 		},
@@ -483,7 +483,7 @@
 
 			}
 		},
-		add_to_cart: function () {
+		/*add_to_cart: function () {
 			var searchResult = $('form.hb-search-room-results');
 
 			$(document).on('submit', 'form.hb-search-room-results', function (event) {
@@ -571,8 +571,8 @@
 				});
 				return false;
 			});
-		},
-		add_extra_to_cart: function () {
+		},*/
+		/*add_extra_to_cart: function () {
 			$(document).on('submit', 'form.hb-select-extra-results', function (event) {
 				event.preventDefault();
 				var submit_button = $(document).find('button.hb_button');
@@ -591,7 +591,7 @@
 					}
 				});
 			});
-		},
+		},*/
 		remove_cart: function () {
 			// var updateOrderButton
 			$(document).on('click', '.hb_remove_cart_item', function (e) {

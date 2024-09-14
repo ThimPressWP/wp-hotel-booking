@@ -293,7 +293,7 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 				$redirectPage = get_the_permalink( $idPageCart );
 			}
 
-			return $redirectPage;
+			return esc_url_raw( $redirectPage );
 		}
 
 		/**

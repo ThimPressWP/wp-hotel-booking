@@ -85,6 +85,19 @@ if ( ! function_exists( 'hotel_booking_get_room_available' ) ) {
 		if ( $valid === false ) {
 			return $errors;
 		} else {
+			// Get date now by timezone and check with check in date
+			/*$date_now_timestamp = current_time( 'timestamp' );
+			$check_in_date_timestamp = strtotime( $check_in_date_str );
+			if ( $check_in_date_timestamp < $date_now_timestamp ) {
+				throw new Exception(
+					sprintf(
+						__( 'Check in date must be greater than or equal to today %s %s.', 'wp-hotel-booking' ),
+						gmdate( WPHB_Datetime::$format, $date_now_timestamp ),
+						WPHB_Datetime::get_timezone_string()
+					)
+				);
+			}*/
+
 			$room_available_date = WPHB_Room::instance( $room_id )->get_dates_available();
 			$arr_qty_available   = array();
 

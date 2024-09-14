@@ -342,115 +342,65 @@ class WPHB_Ajax {
 	}
 
 	static function ajax_add_to_cart() {
+		$res = new WPHB_REST_Response();
 
-		$result = array(
-			'status'  => 'error',
-			'message' => __( 'Some thing not right!', 'wp-hotel-booking' ),
-		);
-
-		if ( ! check_ajax_referer( 'hb_booking_nonce_action', 'nonce' ) ) {
-			return;
-		}
-
-		if ( ! isset( $_POST['room-id'] ) || ! isset( $_POST['hb-num-of-rooms'] ) ) {
-			$result['message'] = __( 'Room ID is not exists.', 'wp-hotel-booking' );
-			hb_send_json( $result );
-		}
-
-		if ( ! isset( $_POST['check_in_date'] ) || ! isset( $_POST['check_out_date'] ) ) {
-			return;
-		}
-
-		$room_id = absint( $_POST['room-id'] );
-
-		$room = get_post( $room_id );
-
-		if ( ! $room || ! is_a( $room, 'WP_POST' ) || $room->post_type != 'hb_room' ) {
-			$result['message'] = __( 'Room ID is not exists.', 'wp-hotel-booking' );
-			hb_send_json( $result );
-		}
-
-		$param               = array();
-		$param['product_id'] = absint( $room_id );
-		if ( ! isset( $_POST['hb-num-of-rooms'] ) || ! absint( $_POST['hb-num-of-rooms'] ) ) {
-			$result['message'] = __( 'Can not select zero room.', 'wp-hotel-booking' );
-			hb_send_json( $result );
-		} else {
-			$qty = absint( $_POST['hb-num-of-rooms'] );
-		}
-
-		// validate checkin, checkout date
-		if ( ! isset( $_POST['check_in_date'] ) || ! isset( $_POST['check_in_date'] ) ) {
-			$result['message'] = __( 'Checkin date, checkout date is invalid.', 'wp-hotel-booking' );
-			hb_send_json( $result );
-		} else {
-			$param['check_in_date']  = sanitize_text_field( wp_unslash( $_POST['check_in_date'] ) );
-			$param['check_out_date'] = sanitize_text_field( wp_unslash( $_POST['check_out_date'] ) );
-		}
-
-		$param = apply_filters( 'hotel_booking_add_cart_params', $param );
-		do_action( 'hotel_booking_before_add_to_cart', $_POST );
-
-		// add extra to cart items
-		if ( ( ! empty( $_POST['hb_optional_quantity_selected'] ) && ! empty( $_POST['hb_optional_quantity'] ) ) ) {
-			$param['hb_optional_quantity_selected'] = $_POST['hb_optional_quantity_selected'];
-			$param['hb_optional_quantity']          = $_POST['hb_optional_quantity'];
-		}
-		// add to cart
-		$cart_item_id = WP_Hotel_Booking::instance()->cart->add_to_cart( $room_id, $param, $qty );
-
-		$cart_item_id = apply_filters( 'hotel_booking_cart_item_id', $cart_item_id, $param, $qty );
-
-		if ( ! is_wp_error( $cart_item_id ) ) {
-			$cart_item = WP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id );
-			$room      = $cart_item->product_data;
-
-			do_action( 'hotel_booking_added_cart_completed', $cart_item_id, $param, $qty );
-
-			$results = array(
-				'status'    => 'success',
-				'message'   => sprintf( '<label class="hb_success_message">%1$s</label>', __( 'Added successfully.', 'wp-hotel-booking' ) ),
-				'id'        => $room_id,
-				'permalink' => get_permalink( $room_id ),
-				// 'name'      => sprintf( '%s', $room->name ) . ( $room->capacity_title ? sprintf( '(%s)', $room->capacity_title ) : '' ),
-				'name'      => sprintf( '%s', $room->name ),
-				'quantity'  => $qty,
-				'cart_id'   => $cart_item_id,
-				'total'     => hb_format_price( WP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id )->amount ),
-				'redirect'  => '',
-			);
-
-			$pageRedirect = WPHB_Settings::instance()->getPageRedirect();
-
-			$additionPackage = get_post_meta( $room_id, '_hb_room_extra', '' );
-
-			if ( ( ! is_array( $additionPackage ) || count( $additionPackage ) == 0 || $additionPackage[0] == '' )
-				&& $pageRedirect != '' ) {
-				// Addition package null
-				$results['redirect'] = $pageRedirect;
-			} elseif ( (int) get_option( 'tp_hotel_booking_custom_process', 0 ) ) {
-				// Addition package not null && custom_process
-				$results['redirect'] = get_option( 'tp_hotel_booking_custom_process' ) ? add_query_arg(
-					array(
-						'is_page_room_extra' => 'select-room-extra',
-						'cart_id'            => $cart_item_id,
-						'room_id'            => $room_id,
-					),
-					hb_get_search_room_url()
-				) : '';
+		try {
+			if ( ! check_ajax_referer( 'hb_booking_nonce_action', 'nonce' ) ) {
+				throw new Exception( __( 'Invalid request', 'wp-hotel-booking' ) );
 			}
 
-			$results = apply_filters( 'hotel_booking_add_to_cart_results', $results, $room );
+			$qty            = WPHB_Helpers::get_param( 'hb-num-of-rooms', 1, 'int' );
+			$room_id        = WPHB_Helpers::get_param( 'room-id', 0, 'int' );
+			$check_in_date  = WPHB_Helpers::get_param( 'check_in_date' );
+			$check_out_date = WPHB_Helpers::get_param( 'check_out_date' );
 
-			hb_send_json( $results );
-		} else {
-			hb_send_json(
-				array(
-					'status'  => 'warning',
-					'message' => __( 'Room selected. Please View Cart to change order', 'wp-hotel-booking' ),
-				)
+			if ( ! $room_id ) {
+				throw new Exception( __( 'Room ID is invalid.', 'wp-hotel-booking' ) );
+			}
+
+			$room = get_post( $room_id );
+			if ( ! $room || ! is_a( $room, 'WP_POST' ) || $room->post_type != 'hb_room' ) {
+				throw new Exception( __( 'Room ID is not exists.', 'wp-hotel-booking' ) );
+			}
+
+			// Add to cart
+			$params = array(
+				'product_id'     => $room_id,
+				'check_in_date'  => $check_in_date,
+				'check_out_date' => $check_out_date,
 			);
+
+			$cart_item_id = WP_Hotel_Booking::instance()->cart->add_to_cart( $room_id, $params, $qty );
+			$is_enable_custom_process = (int) get_option( 'tp_hotel_booking_custom_process', 0 );
+
+			if ( ! is_wp_error( $cart_item_id ) ) {
+				$cart_item    = WP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id );
+				$room         = $cart_item->product_data;
+				$pageRedirect = WPHB_Settings::instance()->getPageRedirect();
+
+				if ( $is_enable_custom_process ) {
+					$res->data->redirect = add_query_arg(
+						array(
+							'is_page_room_extra' => 'select-room-extra',
+							'cart_id'            => $cart_item_id,
+							'room_id'            => $room_id,
+						),
+						hb_get_search_room_url()
+					);
+				} else {
+					$res->data->redirect = $pageRedirect;
+				}
+
+				$res->status  = 'success';
+				$res->message = sprintf( '<label class="hb_success_message">%1$s</label>', __( 'Added successfully.', 'wp-hotel-booking' ) );
+			} else {
+				throw new $cart_item_id->get_error_message();
+			}
+		} catch ( Throwable $e ) {
+			$res->message = $e->getMessage();
 		}
+
+		wp_send_json( $res );
 	}
 
 	// remove cart item

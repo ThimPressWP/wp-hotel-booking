@@ -4,7 +4,7 @@
  * Plugin URI: http://thimpress.com/
  * Description: Full of professional features for a booking room system
  * Author: ThimPress
- * Version: 2.1.3-beta.1
+ * Version: 2.1.3-beta.2
  * Author URI: http://thimpress.com
  * Text Domain: wp-hotel-booking
  * Domain Path: /languages/
@@ -24,7 +24,7 @@ const WPHB_VERSION = '2.1.3';
 define( 'WPHB_BLOG_ID', get_current_blog_id() );
 define( 'WPHB_TEMPLATES', WPHB_PLUGIN_PATH . '/templates/' );
 const TP_HB_EXTRA    = __FILE__;
-const WPHB_DEBUG     = 0;
+const WPHB_DEBUG     = 1;
 const WPHB_API_V2    = 1;
 const WPHB_SHOW_FORM = 0;
 
@@ -214,6 +214,7 @@ class WP_Hotel_Booking {
 		$this->_include( 'includes/class-wphb-template-loader.php' );
 		$this->_include( 'includes/class-wphb-ajax.php' );
 		$this->_include( 'includes/class-wphb-install.php' );
+        $this->_include( 'includes/class-wphb-rest-response.php' );
 
 		$this->_include( 'includes/class-wphb-gdpr.php' );
 		$this->_include( 'includes/class-wphb-helpers.php' );
@@ -564,6 +565,7 @@ class WP_Hotel_Booking {
 			wp_enqueue_script( 'wp-hotel-booking-owl-carousel' );
 
 			// booking in single rooms
+			wp_enqueue_style( 'flatpickr-css' );
 			wp_enqueue_style( 'wp-hotel-booking-magnific-popup-css' );
 			wp_enqueue_style( 'wp-hotel-booking-single-room-css' );
 			wp_enqueue_script( 'wphb-ui-slider' );
@@ -644,6 +646,7 @@ class WP_Hotel_Booking {
                 thousands_separator: '<?php echo $thousands_separator; ?>',
                 decimals_separator: '<?php echo $decimals_separator; ?>',
                 number_decimal: '<?php echo $number_decimal; ?>',
+                user_id: '<?php echo get_current_user_id(); ?>',
             }
         </script>
 		<?php
