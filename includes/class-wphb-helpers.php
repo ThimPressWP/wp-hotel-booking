@@ -22,11 +22,11 @@ class WPHB_Helpers {
 	 *
 	 * @param array|string $value
 	 *
-	 * @return array|string
+	 * @return array|float|int|string
 	 * @since  1.9.10
-	 * @author tungnx
+	 * @version 1.0.1
 	 */
-	public static function sanitize_params_submitted( $value, $type_content = 'text' ) {
+	public static function sanitize_params_submitted( $value, string $type_content = 'text' ) {
 		$value = wp_unslash( $value );
 
 		if ( is_string( $value ) ) {
@@ -37,16 +37,57 @@ class WPHB_Helpers {
 				case 'textarea':
 					$value = sanitize_textarea_field( $value );
 					break;
+				case 'key':
+					$value = sanitize_key( $value );
+					break;
+				case 'int':
+					$value = (int) $value;
+					break;
+				case 'float':
+					$value = (float) $value;
+					break;
 				default:
-					$value = sanitize_text_field( $value );
+					if ( is_callable( $type_content ) ) {
+						$value = call_user_func( $type_content, $value );
+					} else {
+						$value = sanitize_text_field( $value );
+					}
 			}
 		} elseif ( is_array( $value ) ) {
 			foreach ( $value as $k => $v ) {
-				$value[ $k ] = self::sanitize_params_submitted( $v, $type_content );
+				unset( $value[ $k ] );
+				$value[ sanitize_text_field( $k ) ] = self::sanitize_params_submitted( $v, $type_content );
 			}
 		}
 
 		return $value;
+	}
+
+	/**
+	 * Get value by key from $_REQUEST
+	 *
+	 * @param string $key
+	 * @param mixed $default
+	 * @param string $sanitize_type
+	 * @param string $method
+	 *
+	 * @since 2.1.3
+	 * @version 1.0.0
+	 * @return array|float|int|string
+	 */
+	public static function get_param( string $key, $default = '', string $sanitize_type = 'text', string $method = '' ) {
+		switch ( strtolower( $method ) ) {
+			case 'post':
+				$values = $_POST ?? [];
+				break;
+			case 'get':
+				$values = $_GET ?? [];
+				break;
+			default:
+				$values = $_REQUEST ?? [];
+		}
+
+		return self::sanitize_params_submitted( $values[ $key ] ?? $default, $sanitize_type );
 	}
 
 	/**
