@@ -22,7 +22,7 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 		/**
 		 * @var null
 		 */
-		static $_instance = null;
+		static $_instance = [];
 
 		/**
 		 * HB_Extra_Cart constructor.
@@ -32,7 +32,7 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 		public function __construct( $cart_id = null ) {
 
 			// new script
-			add_action( 'hotel_booking_added_cart', array( $this, 'ajax_added_cart' ), 10, 3 );
+			//add_action( 'hotel_booking_added_cart', array( $this, 'ajax_added_cart' ), 10, 3 );
 
 			// add filter add to cart results array, render object build mini cart
 			add_filter( 'hotel_booking_add_to_cart_results', array( $this, 'add_to_cart_results' ), 10, 2 );
@@ -98,15 +98,10 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 		 * @param      $posts
 		 * @param bool    $object
 		 */
-		public function ajax_added_cart( $cart_id, $params, $posts = array(), $object = false ) {
+		public function ajax_added_cart( $cart_id, $params ) {
 
 			$selected_quantity = $turn_on = array();
-
-			if ( $object ) {
-				$room_id = $params->product_id ?? $_POST['room_id'];
-			} else {
-				$room_id = $params['product_id'] ?? $_POST['room_id'];
-			}
+            $room_id = $params['product_id'] ?? $_POST['room_id'] ?? 0;
 
 			$room_extra = HB_Room_Extra::instance( absint( $room_id ) );
 			$room_extra = $room_extra->get_extra();
@@ -122,7 +117,7 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 				return;
 			}
 
-			remove_action( 'hotel_booking_added_cart', array( $this, 'ajax_added_cart' ), 10 );
+			//remove_action( 'hotel_booking_added_cart', array( $this, 'ajax_added_cart' ), 10 );
 
 			if ( isset( $params['hb_optional_quantity_selected'] ) || ! empty( $selected_quantity ) ) {
 
@@ -135,8 +130,8 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 					$param = array(
 						'product_id'     => $extra_id,
 						'parent_id'      => $cart_id,
-						'check_in_date'  => $object ? $params->check_in_date : $params['check_in_date'],
-						'check_out_date' => $object ? $params->check_out_date : $params['check_out_date'],
+						//'check_in_date'  => $params['check_in_date'] ?? '',
+						//'check_out_date' => $params['check_out_date'] ?? '',
 					);
 
 					if ( array_key_exists( $extra_id, $turn_on ) ) {
@@ -149,7 +144,7 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 				}
 			}
 
-			add_action( 'hotel_booking_added_cart', array( $this, 'ajax_added_cart' ), 10, 3 );
+			//add_action( 'hotel_booking_added_cart', array( $this, 'ajax_added_cart' ), 10, 3 );
 		}
 
 		/**
@@ -668,9 +663,9 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 		 *
 		 * @param $cart_id [description]
 		 *
-		 * @return object or null
+		 * @return HB_Extra_Cart
 		 */
-		static function instance( $cart_id = null ) {
+		static function instance( $cart_id = null ): HB_Extra_Cart {
 			if ( ! empty( self::$_instance[ $cart_id ] ) ) {
 				return self::$_instance[ $cart_id ];
 			}

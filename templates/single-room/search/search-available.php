@@ -52,7 +52,10 @@ $dates_block = get_post_meta( $block_id, 'hb_blocked_time' );
 					<input type="hidden" name="action" value="hotel_booking_single_check_room_available"/>
 					<?php wp_nonce_field( 'hb_booking_single_room_check_nonce_action', 'hb-booking-single-room-check-nonce-action' ); ?>
 					<input type="hidden" name="wpbh-dates-block" value="<?php echo htmlentities2( json_encode( $dates_block ) ); ?>">
-					<button type="submit" class="hb_button"><?php _e( 'Check Available', 'wp-hotel-booking' ); ?></button>
+					<button type="submit" class="hb_button">
+                        <span class="dashicons dashicons-update hide wphb-icon"></span>
+                        <?php _e( 'Check Available', 'wp-hotel-booking' ); ?>
+                    </button>
 				</div>
 			</div>
 		</form>
@@ -88,8 +91,10 @@ $dates_block = get_post_meta( $block_id, 'hb_blocked_time' );
 			<div class="hb-booking-room-form-footer">
 				<button href="#" data-template="hb-room-load-form"
 					class="hb_previous_step hb_button"><?php _e( 'Previous', 'wp-hotel-booking' ); ?></button>
-				<button type="submit"
-						class="hb_add_to_cart_test hb_button"><?php _e( 'Add To Cart', 'wp-hotel-booking' ); ?></button>
+				<button type="submit" class="hb_button">
+                    <span class="dashicons dashicons-update hide wphb-icon"></span>
+                    <?php _e( 'Add To Cart', 'wp-hotel-booking' ); ?>
+                </button>
 				<input type="hidden" name="action" value="hotel_booking_ajax_add_to_cart" />
 				<input type="hidden" name="is_single" value="1" />
 				<?php wp_nonce_field( 'hb_booking_nonce_action', 'nonce' ); ?>

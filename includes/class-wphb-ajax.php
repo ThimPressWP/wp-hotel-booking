@@ -140,12 +140,10 @@ class WPHB_Ajax {
 				if ( $select == 'on' && $cart_item ) {
 					$extra_cart->ajax_added_cart(
 						$cart_id,
-						$cart_item,
 						array(
 							'hb_optional_quantity' => array( $extra_id => $extra_qty[ $extra_id ] ),
 							'hb_optional_quantity_selected' => array( $extra_id => 'on' ),
 						),
-						true
 					);
 				}
 			}
@@ -371,13 +369,34 @@ class WPHB_Ajax {
 			);
 
 			$cart_item_id = WP_Hotel_Booking::instance()->cart->add_to_cart( $room_id, $params, $qty );
-			$is_enable_custom_process = (int) get_option( 'tp_hotel_booking_custom_process', 0 );
-
 			if ( ! is_wp_error( $cart_item_id ) ) {
 				$cart_item    = WP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id );
 				$room         = $cart_item->product_data;
 				$pageRedirect = WPHB_Settings::instance()->getPageRedirect();
 
+				// Check to add extra
+				$hb_optional_quantity_selected = WPHB_Helpers::get_param( 'hb_optional_quantity_selected', [] );
+				$hb_optional_quantity = WPHB_Helpers::get_param( 'hb_optional_quantity', [] );
+				if ( ! empty( $hb_optional_quantity_selected ) && ! empty( $hb_optional_quantity ) ) {
+					$extra_cart = HB_Extra_Cart::instance();
+
+					foreach ( $hb_optional_quantity_selected as $extra_id => $select ) {
+						if ( $select === 'on' && $cart_item ) {
+							$extra_cart->ajax_added_cart(
+								$cart_item_id,
+								array(
+									'product_id' => $room_id,
+									'hb_optional_quantity' => array( $extra_id => $hb_optional_quantity[ $extra_id ] ),
+									'hb_optional_quantity_selected' => array( $extra_id => 'on' ),
+									'check_in_date' => $check_in_date,
+									'check_out_date' => $check_out_date,
+								)
+							);
+						}
+					}
+				}
+
+				$is_enable_custom_process = (int) get_option( 'tp_hotel_booking_custom_process', 0 );
 				if ( $is_enable_custom_process ) {
 					$res->data->redirect = add_query_arg(
 						array(

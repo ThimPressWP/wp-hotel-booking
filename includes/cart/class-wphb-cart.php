@@ -437,9 +437,9 @@ class WPHB_Cart {
 		$cart_item = $this->get_cart_item( $cart_item_id );
 		if ( $cart_item ) {
 			$params = array(
-				'product_id'     => $cart_item->product_id,
-				'check_in_date'  => $cart_item->check_in_date,
-				'check_out_date' => $cart_item->check_out_date,
+				'product_id'     => $cart_item->product_id ?? 0,
+				'check_in_date'  => $cart_item->check_in_date ?? '',
+				'check_out_date' => $cart_item->check_out_date ?? '',
 			);
 			if ( isset( $cart_item->parent_id ) ) {
 				$params['parent_id'] = $cart_item->parent_id;

@@ -374,7 +374,8 @@ document.addEventListener( 'submit', function( e ) {
 
 	if ( target.name === 'hb-search-single-room' ) {
 		e.preventDefault();
-		e.stopPropagation();
+		const elBtnCheck = target.querySelector( 'button[type=submit]' );
+		const elLoading = target.querySelector( '.wphb-icon' );
 		const data = new FormData( target );
 		for ( const pair of data.entries() ) {
 			const key = pair[ 0 ]; // Get the field name
@@ -382,8 +383,6 @@ document.addEventListener( 'submit', function( e ) {
 
 			dataSend[ key ] = value;
 		}
-
-		//console.log( dataSend );
 
 		const dateSendFrom = new FormData();
 		Object.entries( dataSend ).forEach( ( [ key, value ] ) => {
@@ -396,6 +395,10 @@ document.addEventListener( 'submit', function( e ) {
 			option.headers[ 'X-WP-Nonce' ] = hotel_settings.nonce;
 		}
 
+		elLoading.classList.remove( 'hide' );
+		elLoading.classList.toggle( 'loading' );
+		elBtnCheck.setAttribute( 'disabled', 'disabled' );
+
 		fetch(
 			hotel_settings.ajax,
 			option
@@ -404,7 +407,19 @@ document.addEventListener( 'submit', function( e ) {
 				const { status, message, data } = res;
 
 				if ( status === 'error' ) {
-					Hotel_Booking_Room_Addon.append_messages( target, message );
+					const elMesErros = target.querySelectorAll( '.hotel_booking_room_errors' );
+					if ( elMesErros ) {
+						elMesErros.forEach( ( el ) => {
+							el.remove();
+						} );
+					}
+					target.querySelector( '.hb-booking-room-form-head' ).insertAdjacentHTML(
+						'beforeend',
+						`<div class="hotel_booking_room_errors">${ message }</div>`
+					);
+					setTimeout( () => {
+						target.querySelector( '.hotel_booking_room_errors' ).remove();
+					}, 2000 );
 					return;
 				}
 
@@ -425,14 +440,16 @@ document.addEventListener( 'submit', function( e ) {
 				console.error( 'Error:', error );
 			} )
 			.finally( () => {
-				console.log( 'done' );
+				elBtnCheck.removeAttribute( 'disabled' );
+				elLoading.classList.add( 'hide' );
+				elLoading.classList.toggle( 'loading' );
 			} );
 	}
 
 	if ( target.name === 'hb-search-results' ) {
-		console.log( 2222 );
-		e.stopPropagation();
 		e.preventDefault();
+		const elBtnSubmit = target.querySelector( 'button[type=submit]' );
+		const elLoading = target.querySelector( '.wphb-icon' );
 		const data = new FormData( target );
 		for ( const pair of data.entries() ) {
 			const key = pair[ 0 ]; // Get the field name
@@ -454,21 +471,29 @@ document.addEventListener( 'submit', function( e ) {
 			option.headers[ 'X-WP-Nonce' ] = hotel_settings.nonce;
 		}
 
+		elBtnSubmit.setAttribute( 'disabled', 'disabled' );
+		elLoading.classList.remove( 'hide' );
+		elLoading.classList.toggle( 'loading' );
+
 		fetch(
 			hotel_settings.ajax,
 			option
 		).then( ( response ) => response.json() )
-			.then( ( data ) => {
-				if ( data.status === 'error' ) {
+			.then( ( res ) => {
+				const { status, message, data } = res;
+				if ( message === 'error' ) {
 					alert( data.message );
+					elBtnSubmit.removeAttribute( 'disabled' );
 				} else {
+					window.location.href = data.redirect;
 				}
 			} )
 			.catch( ( error ) => {
-				console.error( 'Error:', error );
+				elBtnSubmit.removeAttribute( 'disabled' );
 			} )
 			.finally( () => {
-				console.log( 'done' );
+				elLoading.classList.add( 'hide' );
+				elLoading.classList.toggle( 'loading' );
 			} );
 	}
 } );
