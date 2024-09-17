@@ -174,8 +174,16 @@ class WPHB_Comments {
 				$filename        = sanitize_file_name( $image['name'] );
 				$file_type       = sanitize_mime_type( $image['type'] );
 
-                // Only allow image type
-                $image_types_allow = [ 'image/jpeg', 'image/png', 'image/gif', 'image/webp' ];
+				// Only allow image type
+				$image_types_allow = [ 'image/jpeg', 'image/png', 'image/gif', 'image/webp' ];
+
+				$validate = wp_check_filetype( $filename );
+				if ( ! $validate['type'] ) {
+					continue;
+				} elseif ( ! in_array( $validate['type'], $image_types_allow ) ) {
+                    continue;
+                }
+
 				if ( ! in_array( $file_type, $image_types_allow ) ) {
                     continue;
                 }
@@ -199,6 +207,7 @@ class WPHB_Comments {
 					}
 				}
 			}
+
 			if ( count( $attachment_ids ) ) {
 				update_comment_meta( $comment_id, 'hb_room_review_images', $attachment_ids );
 			}
