@@ -24,16 +24,20 @@ const srcFrontendScssFiles = [
 ];
 gulp.task( 'build_frontend_css', () => {
 	return gulp
-	.src( srcFrontendScssFiles )
+		.src( srcFrontendScssFiles )
 		.pipe( sass.sync().on( 'error', sass.logError ) )
 		.on( 'error', sass.logError )
 		.pipe( postcss( [ css_minify() ] ) )
 		.pipe( lineec() )
-		.pipe( gulp.dest( 'includes/elementor/src/css/frontend' ) )
+		.pipe( gulp.dest( 'includes/elementor/src/css/frontend' ) );
 } );
 
 gulp.task( 'mincss', () => {
-	return '';
+	return gulp.
+		src( [ 'assets/css/**/*.css', '!assets/css/**/*.min.css' ] )
+		.pipe( rename( { suffix: '.min' } ) )
+		.pipe( uglifycss() )
+		.pipe( gulp.dest( 'assets/css' ) );
 } );
 
 /******************************************* Release *******************************************/
@@ -99,7 +103,7 @@ gulp.task(
 	'release',
 	gulp.series(
 		'clearCache',
-		//'mincss',
+		'mincss',
 		'cleanReleases',
 		'copyReleases',
 		'updateReadme',
