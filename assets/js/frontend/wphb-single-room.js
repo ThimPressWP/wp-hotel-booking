@@ -15,11 +15,14 @@ const wphbDatePicker = () => {
 
 	const dateTimeStampsBlock = JSON.parse( elDatesBlock.value );
 	const datesBlock = [];
-	dateTimeStampsBlock.forEach( ( timeStamp ) => {
-		const date = new Date( timeStamp * 1000 );
-		const dateBlock = new Date( date.getFullYear(), date.getMonth(), date.getDate() );
-		datesBlock.push( dateBlock );
-	} );
+
+	if ( dateTimeStampsBlock ) {
+		dateTimeStampsBlock.forEach( ( timeStamp ) => {
+			const date = new Date( timeStamp * 1000 );
+			const dateBlock = new Date( date.getFullYear(), date.getMonth(), date.getDate() );
+			datesBlock.push( dateBlock );
+		} );
+	}
 
 	const calculateLastDayCanBook = ( dateSelected, datesCalendar ) => {
 		if ( datesBlock.length === 0 ) {

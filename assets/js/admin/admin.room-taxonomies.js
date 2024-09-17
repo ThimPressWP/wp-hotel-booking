@@ -7,5 +7,5 @@
         .removeClass('wp-not-current-submenu')
         .addClass('wp-has-current-submenu wp-menu-open');
 
-})(jQuery, Backbone, _);
+})(jQuery);
 // end modal box
