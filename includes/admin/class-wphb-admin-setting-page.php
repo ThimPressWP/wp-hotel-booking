@@ -24,11 +24,22 @@ abstract class WPHB_Admin_Setting_Page {
 
 	protected $title = null;
 
+	public $current_tab = null;
+
 	function __construct() {
 
 		add_filter( 'hb_admin_settings_tabs', array( $this, 'setting_tabs' ) );
 		add_action( 'hb_admin_settings_sections_' . $this->id, array( $this, 'setting_sections' ) );
 		add_action( 'hb_admin_settings_tab_' . $this->id, array( $this, 'output' ) );
+
+		// Save setting
+		$page = isset( $_GET['page'] ) ? sanitize_key( $_GET['page'] ) : '';
+		if ( $page === 'tp_hotel_booking_settings' ) {
+			$this->current_tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : 'general';
+			if ( ! empty( $_POST ) ) {
+				$this->save( $this->current_tab );
+			}
+		}
 	}
 
 	/**
@@ -87,8 +98,72 @@ abstract class WPHB_Admin_Setting_Page {
 	}
 
 	// save setting option
-	public function save() {
+	public function save( $tab = '' ) {
+		$class_name   = strtolower( static::class );
+		$class_prefix = 'wphb_admin_setting_';
+		$name_compare = str_replace( $class_prefix, '', $class_name );
+
+		if ( $name_compare != $tab ) {
+			return;
+		}
+
 		$settings = $this->get_settings();
-		WPHB_Admin_Settings::save_fields( $settings );
+		foreach ( $settings as $setting ) {
+			$id           = $setting['id'] ?? '';
+			$type         = $setting['type'] ?? '';
+			$default      = $setting['default'] ?? '';
+			$option_value = '';
+			if ( empty( $type ) || empty( $id ) ) {
+				continue;
+			}
+
+			if ( in_array( $type, array( 'section_start', 'section_end' ) ) ) {
+				continue;
+			}
+
+			$type_custom_save = apply_filters(
+				"wphb_admin_setting/{$type}/custom_save",
+				[ 'image_size' ],
+				$id,
+				$setting
+			);
+
+			switch ( $type ) {
+				case 'checkbox':
+					$option_value = isset( $_POST[ $id ] ) ? 1 : 0;
+					break;
+				case 'number':
+					$option_value = isset( $_POST[ $id ] ) ? floatval( $_POST[ $id ] ) : 0;
+					break;
+				case 'text':
+					$option_value = isset( $_POST[ $id ] ) ? sanitize_text_field( $_POST[ $id ] ) : $default;
+					break;
+				case 'textarea':
+					$option_value = isset( $_POST[ $id ] ) ? wp_kses_post( $_POST[ $id ] ) : $default;
+					break;
+				case 'image_size':
+					$option_width  = isset( $_POST[ $id . '_width' ] ) ? floatval( $_POST[ $id . '_width' ] ) : $default['width'];
+					$option_height = isset( $_POST[ $id . '_height' ] ) ? floatval( $_POST[ $id . '_height' ] ) : $default['height'];
+					WPHB_Settings::instance()->set( $id . '_width', $option_width );
+					WPHB_Settings::instance()->set( $id . '_height', $option_height );
+					break;
+				default:
+					if ( ! isset( $_POST[ $id ] ) ) {
+						break;
+					}
+
+					$option_value = $_POST[ $id ];
+					$option_value = apply_filters( "wphb_admin_setting_save/{$type}", $option_value, $id, $setting );
+					if ( ! in_array( $type, $type_custom_save ) ) {
+						$option_value = WPHB_Helpers::sanitize_params_submitted( $option_value );
+					}
+
+					break;
+			}
+
+			if ( ! in_array( $type, $type_custom_save ) ) {
+				WPHB_Settings::instance()->set( $id, $option_value );
+			}
+		}
 	}
 }

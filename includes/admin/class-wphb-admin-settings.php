@@ -57,6 +57,14 @@ class WPHB_Admin_Settings {
 				)
 			);
 
+			$field_type          = sanitize_key( $field['type'] ?? '' );
+			$field_id            = sanitize_key( $field['id'] ?? '' );
+			$field_default_value = $field['default'] ?? '';
+			$field_value         = WPHB_Settings::instance()->get( $field_id, $field_default_value );
+			if ( empty( $field_id ) || empty( $field_type ) ) {
+				continue;
+			}
+
 			$custom_attr = '';
 			if ( ! empty( $field['atts'] ) ) {
 				foreach ( $field['atts'] as $k => $val ) {
@@ -78,28 +86,28 @@ class WPHB_Admin_Settings {
 
 				case 'section_end':
 					?>
-					<?php do_action( 'hotel_booking_setting_field_' . $field['id'] . '_end' ); ?>
+					<?php do_action( 'hotel_booking_setting_field_' . $field_id . '_end' ); ?>
 					</table>
-					<?php do_action( 'hotel_booking_setting_field_' . $field['id'] . '_after' ); ?>
+					<?php do_action( 'hotel_booking_setting_field_' . $field_id . '_after' ); ?>
 					<?php
 					break;
 
 				case 'select':
 				case 'multiselect':
-					$selected = hb_settings()->get( $field['id'], isset( $field['default'] ) ? $field['default'] : array() );
+					$selected = WPHB_Settings::instance()->get( $field_id, $field['default'] ?? array() );
 					?>
 					<tr valign="top">
 						<th scope="row">
 							<?php if ( isset( $field['title'] ) ) : ?>
-								<label for="<?php echo isset( $field['id'] ) ? esc_attr( $field['id'] ) : ''; ?>">
+								<label for="<?php echo $field_id; ?>">
 									<?php echo esc_html( $field['title'] ); ?>
 								</label>
 							<?php endif; ?>
 						</th>
 						<td class="hb-form-field hb-form-field-<?php echo esc_attr( $field['type'] ); ?>">
 							<?php if ( isset( $field['options'] ) ) : ?>
-								<select name="<?php echo isset( $field['id'] ) ? esc_attr( $field['id'] ) : ''; ?><?php echo $field['type'] === 'multiselect' ? '[]' : ''; ?>"
-										id="<?php echo isset( $field['id'] ) ? esc_attr( $field['id'] ) : ''; ?>"
+								<select name="<?php echo $field_id; ?><?php echo $field['type'] === 'multiselect' ? '[]' : ''; ?>"
+										id="<?php echo $field_id; ?>"
 									<?php echo ( $field['type'] === 'multiple' ) ? 'multiple="multiple"' : ''; ?>
 								>
 									<?php foreach ( $field['options'] as $val => $text ) : ?>
@@ -123,8 +131,6 @@ class WPHB_Admin_Settings {
 				case 'number':
 				case 'email':
 				case 'password':
-
-					$value = hb_settings()->get( $field['id'] );
 					?>
 					<tr valign="top">
 						<th scope="row">
@@ -138,10 +144,10 @@ class WPHB_Admin_Settings {
 							<input
 									type="<?php echo esc_attr( $field['type'] ); ?>"
 									name="<?php echo esc_attr( $field['id'] ); ?>"
-									value="<?php echo esc_attr( $value ); ?>"
+									value="<?php echo esc_attr( $field_value ); ?>"
 									class="regular-text"
 									placeholder="<?php echo esc_attr( $field['placeholder'] ); ?>"
-								<?php if ( $field['type'] === 'number' ) : ?>
+								<?php if ( $field_type === 'number' ) : ?>
 
 									<?php echo isset( $field['min'] ) && is_numeric( $field['min'] ) ? ' min="' . esc_attr( $field['min'] ) . '"' : ''; ?>
 									<?php echo isset( $field['max'] ) && is_numeric( $field['max'] ) ? ' max="' . esc_attr( $field['max'] ) . '"' : ''; ?>
@@ -158,19 +164,21 @@ class WPHB_Admin_Settings {
 					break;
 
 				case 'checkbox':
-					$val = hb_settings()->get( $field['id'] );
+					$checked = $field_value == 1 ? 'checked="checked"' : '';
 					?>
 					<tr valign="top"<?php echo isset( $field['trclass'] ) ? ' class="' . implode( '', $field['trclass'] ) . '"' : ''; ?>>
 						<th scope="row">
 							<?php if ( isset( $field['title'] ) ) : ?>
-								<label for="<?php echo isset( $field['id'] ) ? esc_attr( $field['id'] ) : ''; ?>">
+								<label for="<?php echo $field_id; ?>">
 									<?php echo esc_html( $field['title'] ); ?>
 								</label>
 							<?php endif; ?>
 						</th>
-						<td class="hb-form-field hb-form-field-<?php echo esc_attr( $field['type'] ); ?>">
-							<input type="hidden" name="<?php echo isset( $field['id'] ) ? esc_attr( $field['id'] ) : ''; ?>" value="0"/>
-							<input type="checkbox" name="<?php echo isset( $field['id'] ) ? esc_attr( $field['id'] ) : ''; ?>" value="1" <?php WPHB_Helpers::print( $custom_attr ); ?><?php checked( $val, $field['default'] ); ?>/>
+						<td class="hb-form-field hb-form-field-<?php echo esc_attr( $field_type ); ?>">
+							<input type="checkbox" name="<?php echo esc_attr( $field_id ); ?>"
+								value="" <?php echo esc_attr( $checked ); ?>
+								<?php WPHB_Helpers::print( $custom_attr ); ?>
+							/>
 							<?php if ( isset( $field['desc'] ) ) : ?>
 								<p class="description"><?php echo esc_html( $field['desc'] ); ?></p>
 							<?php endif; ?>
@@ -210,31 +218,30 @@ class WPHB_Admin_Settings {
 					break;
 
 				case 'image_size':
-					$width  = hb_settings()->get( $field['id'] . '_width', isset( $field['default']['width'] ) ? $field['default']['width'] : 270 );
-					$height = hb_settings()->get( $field['id'] . '_height', isset( $field['default']['height'] ) ? $field['default']['height'] : 270 );
+					$width  = hb_settings()->get( "{$field_id}_width", $field['default']['width'] ?? 270 );
+					$height = hb_settings()->get( "{$field_id}_height", $field['default']['height'] ?? 270 );
 					?>
 					<tr valign="top">
 						<th scope="row">
 							<?php if ( isset( $field['title'] ) ) : ?>
-								<label for="<?php echo isset( $field['id'] ) ? esc_attr( $field['id'] ) : ''; ?>">
+								<label for="<?php echo esc_attr( $field_id ); ?>">
 									<?php echo esc_html( $field['title'] ); ?>
 								</label>
 							<?php endif; ?>
 						</th>
-						<td class="hb-form-field hb-form-field-<?php echo esc_attr( $field['type'] ); ?>">
-							<?php if ( isset( $field['id'] ) && isset( $field['options'] ) ) : ?>
-
+						<td class="hb-form-field hb-form-field-<?php echo esc_attr( $field_type ); ?>">
+							<?php if ( isset( $field['options'] ) ) : ?>
 								<?php if ( isset( $field['options']['width'] ) ) : ?>
 									<input
 											type="number"
-											name="<?php echo esc_attr( $field['id'] ); ?>_width"
+											name="<?php echo esc_attr( $field_id ); ?>_width"
 											value="<?php echo esc_attr( $width ); ?>"
 									/> x
 								<?php endif; ?>
 								<?php if ( isset( $field['options']['height'] ) ) : ?>
 									<input
 											type="number"
-											name="<?php echo esc_attr( $field['id'] ); ?>_height"
+											name="<?php echo esc_attr( $field_id ); ?>_height"
 											value="<?php echo esc_attr( $height ); ?>"
 									/> px
 								<?php endif; ?>

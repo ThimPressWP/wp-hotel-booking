@@ -30,17 +30,12 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 		 *
 		 * @var string
 		 */
-		protected $_option_prefix = 'tp_hotel_booking_';
+		protected string $_option_prefix = 'tp_hotel_booking_';
 
 		/**
-		 * @var array
+		 * @var array $_options
 		 */
-		protected $_options = array();
-
-		/**
-		 * @var array
-		 */
-		protected $_resizeImage = array();
+		protected array $_options = [];
 
 		/**
 		 * WPHB_Settings constructor.
@@ -50,7 +45,8 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 		 */
 		public function __construct( $new_prefix = null, $default = array() ) {
 
-			add_action( 'admin_init', array( $this, 'update_settings' ) );
+            // @deprecated 2.1.3
+			//add_action( 'admin_init', array( $this, 'update_settings' ) );
 
 			if ( $new_prefix ) {
 				$this->_option_prefix = $new_prefix;
@@ -65,48 +61,62 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 					add_option( $this->_option_prefix . $k, $value );
 				}
 			}
+
 			$this->_load_options();
 		}
 
 		/**
 		 * Get an option
 		 *
-		 * @param string
+		 * @param $name string option name
+		 * @param mixed $default default value
 		 *
 		 * @return mixed
 		 */
-		public function get( $name, $default = false ) {
-			if ( strpos( $name, 'tp_hotel_booking_' ) === 0 ) {
-				$name = str_replace( 'tp_hotel_booking_', '', $name );
-			}
-			if ( ! empty( $this->_options[ $name ] ) ) {
-				return $this->_options[ $name ];
+		public function get( string $name, $default = '' ) {
+            $value = $default;
+
+			try {
+				if ( strpos( $name, 'tp_hotel_booking_' ) === false ) {
+					$name = $this->_option_prefix . $name;
+				}
+
+				if ( isset( $this->_options[ $name ] ) ) {
+					return $this->_options[ $name ];
+				} else {
+					$this->_options[ $name ] = get_option( $name, $default );
+					$value = $this->_options[ $name ];
+				}
+			} catch ( Throwable $e ) {
+				error_log( __METHOD__ . " :$name: " . $e->getMessage() );
 			}
 
-			if ( isset( $this->_options[ $name ] ) && in_array( $this->_options[ $name ], [ 0, '0' ] ) ) {
-				return $this->_options[ $name ];
-			}
-
-			return $default;
+			return $value;
 		}
 
 		/**
 		 * Update new value for an option
 		 *
-		 * @param string
-		 * @param mixed
+		 * @param string $name
+		 * @param mixed $value
 		 *
 		 * @return array
 		 */
-		public function set( $name, $value ) {
-			// update option
-			update_option( $this->_option_prefix . $name, $value );
-			$this->_options[ $name ] = $value;
+		public function set( string $name, $value ): array {
+			try {
+				if ( strpos( $name, 'tp_hotel_booking_' ) === false ) {
+					$name = $this->_option_prefix . $name;
+				}
 
-			// allow hook
-			do_action( 'hb_update_settings_' . $name, $name, $value );
+				// update option
+				update_option( $name, $value );
+				$this->_options = [];
+                $this->_load_options();
 
-			add_action( 'admin_notices', array( $this, 'notice_success' ) );
+				add_action( 'admin_notices', array( $this, 'notice_success' ) );
+			} catch ( Throwable $e ) {
+				error_log( __METHOD__ . " :$name: " . $e->getMessage() );
+			}
 
 			return $this->_options;
 		}
@@ -116,9 +126,9 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 		 */
 		public function notice_success() {
 			?>
-            <div class="notice notice-success is-dismissible">
-                <p><?php _e( 'Settings saved.', 'wp-hotel-booking' ); ?></p>
-            </div>
+			<div class="notice notice-success is-dismissible">
+				<p><?php _e( 'Settings saved.', 'wp-hotel-booking' ); ?></p>
+			</div>
 			<?php
 		}
 
@@ -139,14 +149,15 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 
 		/**
 		 * Update all options into database
+         * @deprecated 2.1.3
 		 */
-		public function update() {
+		/*public function update() {
 			if ( $this->_options ) {
 				foreach ( $this->_options as $k => $v ) {
 					update_option( $this->_option_prefix . $k, $v );
 				}
 			}
-		}
+		}*/
 
 		/**
 		 * Get the name of field
@@ -172,10 +183,12 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 
 		/**
 		 * Update settings
+         * @deprecated 2.1.3
 		 */
-		public function update_settings() {
+		/*public function update_settings() {
 
-			if ( empty( $_POST ) || ( empty( $_POST['wphb_meta_box_settings_nonce'] ) || ! wp_verify_nonce( wp_unslash( $_POST['wphb_meta_box_settings_nonce'] ), 'wphb_update_meta_box_settings' ) ) ) {
+			if ( empty( $_POST ) || ( empty( $_POST['wphb_meta_box_settings_nonce'] )
+				|| ! wp_verify_nonce( wp_unslash( $_POST['wphb_meta_box_settings_nonce'] ), 'wphb_update_meta_box_settings' ) ) ) {
 				return;
 			}
 
@@ -197,29 +210,32 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 				}
 			}
 			$this->update();
-		}
+		}*/
 
 		/**
-		 * @return array
+		 * Get/Set all options from database
 		 */
 		private function _load_options() {
-			global $wpdb;
-			$query = $wpdb->prepare(
-				"
-                SELECT option_name, option_value
-                FROM {$wpdb->options}
-                WHERE option_name LIKE %s
-            ",
-				$this->_option_prefix . '%'
-			);
-			if ( $options = $wpdb->get_results( $query ) ) {
-				foreach ( $options as $option ) {
-					$name                    = str_replace( $this->_option_prefix, '', $option->option_name );
-					$this->_options[ $name ] = maybe_unserialize( $option->option_value );
-				}
-			}
+			try {
+				global $wpdb;
+				$query = $wpdb->prepare(
+					"
+                    SELECT option_name, option_value
+                    FROM {$wpdb->options}
+                    WHERE option_name LIKE %s
+                    ",
+					$this->_option_prefix . '%'
+				);
 
-			return $this->_options;
+				if ( $options = $wpdb->get_results( $query ) ) {
+					foreach ( $options as $option ) {
+						$name                    = $this->_option_prefix . $option->option_name;
+						$this->_options[ $name ] = maybe_unserialize( $option->option_value );
+					}
+				}
+			} catch ( Throwable $e ) {
+				error_log( __METHOD__ . ': ' . $e->getMessage() );
+			}
 		}
 
 		/**
