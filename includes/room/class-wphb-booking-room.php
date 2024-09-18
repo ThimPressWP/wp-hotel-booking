@@ -220,6 +220,11 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 					throw new Exception( __( 'Check in date and check out date is required.', 'wp-hotel-booking' ) );
 				}
 
+				$room = get_post( $room_id );
+				if ( ! $room || $room->post_type !== WPHB_ROOM_CT ) {
+					throw new Exception( __( 'Room not found', 'wp-hotel-booking' ) );
+				}
+
 				// valid request and require field
 				$qty = hotel_booking_get_room_available(
 					$room_id,
@@ -238,11 +243,16 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 					$check_out_date->format( WPHB_Datetime::I18N_FORMAT )
 				);
 
+				ob_start();
+				wphb_get_template_no_override( 'single-room/search/add-to-cart.php', compact( 'room' ) );
+				$html_add_to_cart = ob_get_clean();
+
 				if ( $qty && ! is_wp_error( $qty ) ) {
 					// room has been found
 					$res->status = 'success';
 					$res->data   = array(
 						'dates_booked' => $dates_checked,
+						'html_extra' => $html_add_to_cart,
 						'room_id'      => $room_id,
 						'room_name'    => $room_name,
 						'qty'          => $qty,
