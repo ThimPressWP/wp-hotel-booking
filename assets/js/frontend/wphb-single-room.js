@@ -1,4 +1,5 @@
 import flatpickr from 'flatpickr';
+
 'use strict';
 
 let elTmplDateAvailable, elAddToCart;
@@ -12,16 +13,18 @@ const wphbDatePicker = () => {
 	const elDateCheckOut = elForm.querySelector( 'input[name="check_out_date"]' );
 	const elDatesBlock = elForm.querySelector( 'input[name="wpbh-dates-block"]' );
 	let datePickerCheckIn, datePickerCheckOut;
-
-	const dateTimeStampsBlock = JSON.parse( elDatesBlock.value );
 	const datesBlock = [];
 
-	if ( dateTimeStampsBlock ) {
-		dateTimeStampsBlock.forEach( ( timeStamp ) => {
-			const date = new Date( timeStamp * 1000 );
-			const dateBlock = new Date( date.getFullYear(), date.getMonth(), date.getDate() );
-			datesBlock.push( dateBlock );
-		} );
+	if ( elDatesBlock ) {
+		const dateTimeStampsBlock = JSON.parse( elDatesBlock.value );
+
+		if ( dateTimeStampsBlock ) {
+			dateTimeStampsBlock.forEach( ( timeStamp ) => {
+				const date = new Date( timeStamp * 1000 );
+				const dateBlock = new Date( date.getFullYear(), date.getMonth(), date.getDate() );
+				datesBlock.push( dateBlock );
+			} );
+		}
 	}
 
 	const calculateLastDayCanBook = ( dateSelected, datesCalendar ) => {
@@ -78,6 +81,7 @@ const wphbDatePicker = () => {
 	function isInteger( a ) {
 		return Number( a ) || ( a % 1 === 0 );
 	}
+
 	window.mobileCheck = function() {
 		let check = false;
 		( function( a ) {
@@ -249,13 +253,10 @@ const wphbDatePicker = () => {
 		load_room_add_to_cart_form( e ) {
 			e.preventDefault();
 			const _self = $( this ),
-				_room_id = _self.attr( 'data-id' ),
-				_room_name = _self.attr( 'data-name' ),
 				_doc = $( document ),
 				_taget = 'hb-room-load-form',
 				_lightbox = '#hotel_booking_room_hidden';
 
-			$( _lightbox ).html( wp.template( _taget )( { _room_id, _room_name } ) );
 			$.magnificPopup.open( {
 				type: 'inline',
 				items: {
@@ -372,6 +373,7 @@ const wphbDatePicker = () => {
 	} );
 }( jQuery ) );
 
+// Events
 document.addEventListener( 'submit', function( e ) {
 	const target = e.target;
 
@@ -391,6 +393,8 @@ document.addEventListener( 'submit', function( e ) {
 		Object.entries( dataSend ).forEach( ( [ key, value ] ) => {
 			dateSendFrom.append( key, value );
 		} );
+		// For case theme override file, not have nonce
+		dateSendFrom.append( 'nonce', hotel_settings.nonce );
 
 		// Send to sever
 		const option = { method: 'POST', headers: {}, body: dateSendFrom };
@@ -398,8 +402,10 @@ document.addEventListener( 'submit', function( e ) {
 			option.headers[ 'X-WP-Nonce' ] = hotel_settings.nonce;
 		}
 
-		elLoading.classList.remove( 'hide' );
-		elLoading.classList.toggle( 'loading' );
+		if ( elLoading ) {
+			elLoading.classList.remove( 'hide' );
+			elLoading.classList.toggle( 'loading' );
+		}
 		elBtnCheck.setAttribute( 'disabled', 'disabled' );
 
 		fetch(
@@ -410,9 +416,9 @@ document.addEventListener( 'submit', function( e ) {
 				const { status, message, data } = res;
 
 				if ( status === 'error' ) {
-					const elMesErros = target.querySelectorAll( '.hotel_booking_room_errors' );
-					if ( elMesErros ) {
-						elMesErros.forEach( ( el ) => {
+					const elMesErrors = target.querySelectorAll( '.hotel_booking_room_errors' );
+					if ( elMesErrors ) {
+						elMesErrors.forEach( ( el ) => {
 							el.remove();
 						} );
 					}
@@ -428,11 +434,18 @@ document.addEventListener( 'submit', function( e ) {
 
 				// set list qty for room
 				const elNumRoom = elAddToCart.querySelector( 'select[name=hb-num-of-rooms]' );
-				console.log( elNumRoom );
 				if ( elNumRoom ) {
 					for ( let i = 1; i <= parseInt( data.qty ); i++ ) {
 						elNumRoom.insertAdjacentHTML( 'beforeend', '<option value="' + i + '">' + i + '</option>' );
 					}
+				}
+
+				// Set dates checked
+				const elDatesChecked = elAddToCart.querySelector( '.wphb-room-dates-checked' );
+				if ( elDatesChecked ) {
+					elDatesChecked.innerHTML = data.dates_booked;
+				} else {
+					target.insertAdjacentHTML( 'beforebegin', data.dates_booked );
 				}
 
 				//form.replaceWith(wp.template('hb-room-load-form-cart')(data));
@@ -444,8 +457,10 @@ document.addEventListener( 'submit', function( e ) {
 			} )
 			.finally( () => {
 				elBtnCheck.removeAttribute( 'disabled' );
-				elLoading.classList.add( 'hide' );
-				elLoading.classList.toggle( 'loading' );
+				if ( elLoading ) {
+					elLoading.classList.add( 'hide' );
+					elLoading.classList.toggle( 'loading' );
+				}
 			} );
 	}
 
@@ -500,3 +515,8 @@ document.addEventListener( 'submit', function( e ) {
 			} );
 	}
 } );
+
+document.addEventListener( 'DOMContentLoaded', function( e ) {
+	wphbDatePicker();
+} );
+

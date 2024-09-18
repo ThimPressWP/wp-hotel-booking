@@ -15,6 +15,9 @@
 /**
  * Prevent loading this file directly
  */
+
+use WPHB\TemplateHooks\CheckRoomsTemplate;
+
 defined( 'ABSPATH' ) || exit;
 
 const WPHB_FILE        = __FILE__;
@@ -197,6 +200,7 @@ class WP_Hotel_Booking {
 	 * Includes common files and libraries
 	 */
 	public function includes() {
+		include_once WPHB_PLUGIN_PATH . '/vendor/autoload.php';
 		$this->include_files_global();
 
 		if ( is_admin() ) {
@@ -206,6 +210,8 @@ class WP_Hotel_Booking {
 		if ( ! is_admin() ) {
 			$this->frontend_includes();
 		}
+
+		CheckRoomsTemplate::instance()->init();
 	}
 
 

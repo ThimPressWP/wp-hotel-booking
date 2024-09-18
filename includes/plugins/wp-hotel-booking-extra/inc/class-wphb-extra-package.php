@@ -112,6 +112,10 @@ if ( ! class_exists( 'HB_Extra_Package' ) ) {
 		}
 
 		public function __get( $key ) {
+			if ( ! $this->_post ) {
+				return '';
+			}
+
 			switch ( $key ) {
 				case 'ID':
 					// code...

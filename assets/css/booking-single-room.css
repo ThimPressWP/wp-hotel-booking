@@ -7,6 +7,10 @@
 	overflow: hidden;
 }
 
+#hotel_booking_room_hidden h2 {
+	text-align: center;
+}
+
 /* #hotel_booking_room_hidden * {
 	color: #777;
 } */

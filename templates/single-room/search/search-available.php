@@ -7,6 +7,7 @@
  * @author  ThimPress
  * @package  WP-Hotel-Booking/Booking-Room/Templates
  * @version  1.7.2
+ * @deprecated 2.1.3 Replaced to check-dates-available.php
  */
 
 /**

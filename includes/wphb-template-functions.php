@@ -97,6 +97,25 @@ if ( ! function_exists( 'hb_get_template' ) ) {
 	}
 }
 
+function wphb_get_template_no_override( $template_name, array $args = [] ) {
+	try {
+		if ( ! empty( $args ) ) {
+			extract( $args );
+		}
+
+		$default_path = WPHB_PLUGIN_PATH . '/templates/';
+		$file         = $default_path . $template_name;
+
+		if ( ! file_exists( $file ) ) {
+			throw new Exception( sprintf( '<code>%s</code> does not exist.', $file ) );
+		}
+
+		include $file;
+	} catch ( Exception $e ) {
+		echo $e->getMessage();
+	}
+}
+
 /**
  * Locate a template and return the path for inclusion.
  *
@@ -170,11 +189,11 @@ if ( ! function_exists( 'hb_lightbox_assets_lightbox2' ) ) {
 		wp_enqueue_script( 'lightbox2', WP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/lightbox2/js/lightbox.min.js' ) );
 		wp_enqueue_style( 'lightbox2', WP_Hotel_Booking::instance()->plugin_url( 'includes/libraries/lightbox/lightbox2/css/lightbox.min.css' ) );
 		?>
-        <script type="text/javascript">
-            jQuery(function () {
+		<script type="text/javascript">
+			jQuery(function () {
 
-            });
-        </script>
+			});
+		</script>
 		<?php
 	}
 }
@@ -609,7 +628,7 @@ if ( ! function_exists( 'hotel_booking_edit_room_link' ) ) {
 			$user = get_user_by( 'id', $user_id );
 			if ( $user->has_cap( 'edit_hb_rooms' ) ) {
 				?>
-                <a href="<?php echo esc_url( get_edit_post_link( get_the_ID() ) ); ?>"><?php _e( 'Edit', 'wp-hotel-booking' ); ?></a>
+				<a href="<?php echo esc_url( get_edit_post_link( get_the_ID() ) ); ?>"><?php _e( 'Edit', 'wp-hotel-booking' ); ?></a>
 				<?php
 			}
 		}
@@ -635,11 +654,11 @@ if ( ! function_exists( 'hb_print_mini_cart_template' ) ) {
 // add skeleton
 function wphb_skeleton_animation_html( $count_li = 3, $width = 'random', $styleli = '', $styleul = '' ) {
 	?>
-    <ul class="wphb-skeleton-animation" style="<?php echo ! empty( $styleul ) ? $styleul : ''; ?>">
-		<?php for ( $i = 0; $i < absint( $count_li ); $i ++ ) : ?>
-            <li style="width: <?php echo $width === 'random' ? wp_rand( 60, 100 ) . '%' : $width; ?>; <?php echo ! empty( $styleli ) ? $styleli : ''; ?>"></li>
+	<ul class="wphb-skeleton-animation" style="<?php echo ! empty( $styleul ) ? $styleul : ''; ?>">
+		<?php for ( $i = 0; $i < absint( $count_li ); $i++ ) : ?>
+			<li style="width: <?php echo $width === 'random' ? wp_rand( 60, 100 ) . '%' : $width; ?>; <?php echo ! empty( $styleli ) ? $styleli : ''; ?>"></li>
 		<?php endfor; ?>
-    </ul>
+	</ul>
 
 	<?php
 }

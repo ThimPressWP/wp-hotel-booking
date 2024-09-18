@@ -12,6 +12,9 @@
 /**
  * Prevent loading this file directly
  */
+
+use WPHB\TemplateHooks\SingleRoomTemplate;
+
 defined( 'ABSPATH' ) || exit();
 
 global $hb_room, $hb_settings;
@@ -79,7 +82,8 @@ $user_comments = get_comments( array(
                             </div>
                             <div class="rating">
 								<?php
-								echo wc_get_rating_html( $average_rating );
+								//echo wc_get_rating_html( $average_rating );
+								echo SingleRoomTemplate::instance()->html_rating_info( $average_rating );
 								?>
                             </div>
                         </div>

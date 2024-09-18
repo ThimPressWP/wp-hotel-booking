@@ -351,6 +351,7 @@ class WPHB_Ajax {
 			$room_id        = WPHB_Helpers::get_param( 'room-id', 0, 'int' );
 			$check_in_date  = WPHB_Helpers::get_param( 'check_in_date' );
 			$check_out_date = WPHB_Helpers::get_param( 'check_out_date' );
+			$from_check_dates_room = WPHB_Helpers::get_param( 'from-check-dates-room', 0, 'int' );
 
 			if ( ! $room_id ) {
 				throw new Exception( __( 'Room ID is invalid.', 'wp-hotel-booking' ) );
@@ -397,7 +398,7 @@ class WPHB_Ajax {
 				}
 
 				$is_enable_custom_process = (int) get_option( 'tp_hotel_booking_custom_process', 0 );
-				if ( $is_enable_custom_process ) {
+				if ( $is_enable_custom_process && ! $from_check_dates_room ) {
 					$res->data->redirect = add_query_arg(
 						array(
 							'is_page_room_extra' => 'select-room-extra',

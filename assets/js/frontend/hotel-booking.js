@@ -691,7 +691,7 @@
 
 		tomorrow.setDate(today.getDate() + start_plus);
 
-		$('input[id^="check_in_date"]').datepicker({
+		/*$('input[id^="check_in_date"]').datepicker({
 			dateFormat: hotel_booking_i18n.date_time_format,
 			firstDay: hotel_booking_i18n.date_start,
 			monthNames: hotel_booking_i18n.monthNames,
@@ -750,7 +750,7 @@
 			}
 		}).on('click', function () {
 			$(this).datepicker('show');
-		});
+		});*/
 
 		$('#datepickerImage').click(function () {
 			$('#txtFromDate').datepicker('show');
