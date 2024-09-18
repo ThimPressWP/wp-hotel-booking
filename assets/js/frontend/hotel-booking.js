@@ -1,3 +1,5 @@
+import flatpickr from "flatpickr";
+
 (function ($) {
 	var $doc = $(document);
 
@@ -371,7 +373,7 @@
 	 * HB_Booking_Cart object class
 	 * @type {Object}
 	 */
-	HB_Booking_Cart = {
+	const HB_Booking_Cart = {
 		init: function () {
 			//this.add_to_cart();
 			this.remove_cart();
@@ -1089,3 +1091,53 @@
 	}
 
 })((jQuery));
+
+'use strict';
+
+let datePickerCheckIn, datePickerCheckOut;
+const wphbDatePickerm = () => {
+	const elFormTable = document.querySelector( '.hb-form-table' );
+	if ( !elFormTable ) {
+		return;
+	}
+
+	const elDateCheckIn = elFormTable.querySelector( 'input[name="check_in_date"]' );
+	const elDateCheckOut = elFormTable.querySelector( 'input[name="check_out_date"]' );
+	const dateNow = new Date();
+	const dateTomorrow = new Date( dateNow.setDate( dateNow.getDate() + 1 ) );
+
+	// Check in date
+	const optionCheckIn = {
+		dateFormat: 'Y/m/d',
+		minDate: 'today',
+		//defaultDate: 'today',
+		onChange( selectedDates, dateStr, instance ) {
+			if ( datePickerCheckOut ) {
+				// calculate next day available
+				const dateSelected = selectedDates[ 0 ];
+				datePickerCheckOut.clear();
+				const dateNext = new Date( dateSelected.setDate( dateSelected.getDate() + 1 ) );
+				datePickerCheckOut.set( 'minDate', dateNext );
+				//datePickerCheckOut.set( 'date', dateNext );
+				datePickerCheckOut.open();
+			}
+		},
+	};
+
+	datePickerCheckIn = flatpickr( elDateCheckIn, optionCheckIn );
+
+	// Check out date
+	const optionCheckout = {
+		dateFormat: 'Y/m/d',
+		minDate: 'today',
+		//defaultDate: dateTomorrow,
+		onChange( selectedDates, dateStr, instance ) {
+		},
+	};
+
+	datePickerCheckOut = flatpickr( elDateCheckOut, optionCheckout );
+};
+
+document.addEventListener( 'DOMContentLoaded', function( e ) {
+	wphbDatePickerm();
+} );

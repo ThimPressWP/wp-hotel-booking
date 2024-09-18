@@ -2,13 +2,17 @@ import flatpickr from 'flatpickr';
 
 'use strict';
 
-let elTmplDateAvailable, elAddToCart;
+let elHotelBookingRoom, elTmplDateAvailable, elAddToCart, elForm;
 const dataSend = {};
 const wphbDatePicker = () => {
-	const elHotelBookingRoom = document.querySelector( '#hotel_booking_room_hidden' );
+	elHotelBookingRoom = document.querySelector( '#hotel_booking_room_hidden' );
+	if ( ! elHotelBookingRoom ) {
+		return;
+	}
+
 	elTmplDateAvailable = elHotelBookingRoom.querySelector( '.wphb-room-tmpl-dates-available' );
 	elAddToCart = elHotelBookingRoom.querySelector( '.wpdb-room-tmpl-add-to-cart' );
-	const elForm = document.querySelector( 'form[name=hb-search-single-room]' );
+	elForm = document.querySelector( 'form[name=hb-search-single-room]' );
 	const elDateCheckIn = elForm.querySelector( 'input[name="check_in_date"]' );
 	const elDateCheckOut = elForm.querySelector( 'input[name="check_out_date"]' );
 	const elDatesBlock = elForm.querySelector( 'input[name="wpbh-dates-block"]' );
@@ -119,7 +123,7 @@ const wphbDatePicker = () => {
 			//_doc.on( 'submit', '.hotel-booking-single-room-action', _self.form_submit );
 
 			// previous step
-			_doc.on( 'click', '.hb_previous_step', _self.preStep );
+			//_doc.on( 'click', '.hb_previous_step', _self.preStep );
 
 			/* Room Preview */
 			_doc.on( 'click', '#hb_room_images .room-preview', _self.room_preview );
@@ -150,11 +154,12 @@ const wphbDatePicker = () => {
 			e.preventDefault();
 			// search form
 			if ( taget === 'hb-room-load-form' ) {
-				//Hotel_Booking_Room_Addon.datepicker_init()
+				elHotelBookingRoom = document.querySelector( '#hotel_booking_room_hidden' );
+				elHotelBookingRoom.style.display = 'block';
 				wphbDatePicker();
 			}
 		},
-		form_submit( e ) {
+		/*form_submit( e ) {
 			e.preventDefault();
 			const _self = $( this ),
 				_form_name = _self.attr( 'name' ),
@@ -163,7 +168,7 @@ const wphbDatePicker = () => {
 			if ( _form_name === 'hb-search-single-room' ) {
 				Hotel_Booking_Room_Addon.check_avibility( _self, _data, _self.find( 'button[type="submit"]' ) );
 			}
-		},
+		},*/
 		datepicker_init() {
 			const checkin = $( '.hb-search-results-form-container input[name="check_in_date"]' ),
 				checkout = $( '.hb-search-results-form-container input[name="check_out_date"]' ),
@@ -270,7 +275,7 @@ const wphbDatePicker = () => {
 			} );
 			return false;
 		},
-		check_avibility( form, _data, _taget ) {
+		/*check_avibility( form, _data, _taget ) {
 			$.ajax( {
 				url: hotel_settings.ajax,
 				contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -310,12 +315,16 @@ const wphbDatePicker = () => {
 			} ).fail( function() {
 				Hotel_Booking_Room_Addon.afterAjax( _taget );
 			} );
-		},
-		preStep( e ) {
+		},*/
+		/*preStep( e ) {
 			e.preventDefault();
-			elTmplDateAvailable.style.display = 'block';
+			if ( elTmplDateAvailable ) {
+				elTmplDateAvailable.style.display = 'block';
+			} else {
+				elForm.style.display = 'block';
+			}
 			elAddToCart.style.display = 'none';
-		},
+		},*/
 		sanitize() {
 			const _form = $( 'form[name="hb-search-single-room"]' ),
 				checkin = _form.find( 'input[name="check_in_date"]' ),
@@ -380,7 +389,7 @@ document.addEventListener( 'submit', function( e ) {
 	if ( target.name === 'hb-search-single-room' ) {
 		e.preventDefault();
 		const elBtnCheck = target.querySelector( 'button[type=submit]' );
-		const elLoading = target.querySelector( '.wphb-icon' );
+		let elLoading = target.querySelector( '.wphb-icon' );
 		const data = new FormData( target );
 		for ( const pair of data.entries() ) {
 			const key = pair[ 0 ]; // Get the field name
@@ -402,10 +411,14 @@ document.addEventListener( 'submit', function( e ) {
 			option.headers[ 'X-WP-Nonce' ] = hotel_settings.nonce;
 		}
 
-		if ( elLoading ) {
-			elLoading.classList.remove( 'hide' );
-			elLoading.classList.toggle( 'loading' );
+		if ( ! elLoading ) {
+			elBtnCheck.insertAdjacentHTML( 'afterbegin', '<span class="dashicons dashicons-update hide wphb-icon"></span>' );
+			elLoading = elBtnCheck.querySelector( '.wphb-icon' );
 		}
+
+		elLoading.classList.remove( 'hide' );
+		elLoading.classList.toggle( 'loading' );
+
 		elBtnCheck.setAttribute( 'disabled', 'disabled' );
 
 		fetch(
@@ -432,6 +445,11 @@ document.addEventListener( 'submit', function( e ) {
 					return;
 				}
 
+				if ( ! elAddToCart ) {
+					elHotelBookingRoom.insertAdjacentHTML( 'beforeend', data.html_extra );
+					elAddToCart = elHotelBookingRoom.querySelector( '.wpdb-room-tmpl-add-to-cart' );
+				}
+
 				// set list qty for room
 				const elNumRoom = elAddToCart.querySelector( 'select[name=hb-num-of-rooms]' );
 				if ( elNumRoom ) {
@@ -448,8 +466,11 @@ document.addEventListener( 'submit', function( e ) {
 					target.insertAdjacentHTML( 'beforebegin', data.dates_booked );
 				}
 
-				//form.replaceWith(wp.template('hb-room-load-form-cart')(data));
-				elTmplDateAvailable.style.display = 'none';
+				if ( elTmplDateAvailable ) {
+					elTmplDateAvailable.style.display = 'none';
+				} else {
+					target.style.display = 'none';
+				}
 				elAddToCart.style.display = 'block';
 			} )
 			.catch( ( error ) => {
@@ -513,6 +534,19 @@ document.addEventListener( 'submit', function( e ) {
 				elLoading.classList.add( 'hide' );
 				elLoading.classList.toggle( 'loading' );
 			} );
+	}
+} );
+
+document.addEventListener( 'click', function( e ) {
+	const target = e.target;
+	if ( target.classList.contains( 'hb_previous_step' ) ) {
+		e.preventDefault();
+		if ( elTmplDateAvailable ) {
+			elTmplDateAvailable.style.display = 'block';
+		} else {
+			elForm.style.display = 'block';
+		}
+		elAddToCart.style.display = 'none';
 	}
 } );
 

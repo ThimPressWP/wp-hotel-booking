@@ -16,7 +16,7 @@ $block_id    = get_post_meta( $room->ID, 'hb_blocked_id', true );
 $dates_block = get_post_meta( $block_id, 'hb_blocked_time' );
 ?>
 
-<div id="hotel_booking_room_hidden">
+<div id="hotel_booking_room_hidden" style="display: none">
 	<h2><?php printf( '%s', $room->post_title ); ?></h2>
 	<div class="wphb-room-tmpl-dates-available">
 		<form action="POST" name="hb-search-single-room" class="hb-search-room-results hotel-booking-search hotel-booking-single-room-action">

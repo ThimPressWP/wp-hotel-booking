@@ -316,9 +316,9 @@ class WPHB_Cart {
 					unset( $this->cart_contents[ $cart_id ] );
 					// param generate cart id
 					$param = array(
-						'product_id'     => $item->product_id,
-						'check_in_date'  => $item->check_in_date,
-						'check_out_date' => $item->check_out_date,
+						'product_id'     => $item->product_id ?? 0,
+						'check_in_date'  => $item->check_in_date ?? '',
+						'check_out_date' => $item->check_out_date ?? '',
 					);
 					if ( isset( $item->parent_id ) ) {
 						$param['parent_id'] = $item->parent_id;
