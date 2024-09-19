@@ -6,7 +6,7 @@
  *
  * @author  ThimPress, leehld
  * @package WP-Hotel-Booking/Templates
- * @version 1.9.7.5
+ * @version 1.9.7.6
  */
 
 /**
@@ -55,7 +55,8 @@ global $hb_settings;
 							continue;
 						}
 						$cart_extra = $cart->get_extra_packages( $cart_id );
-						// check deposit each room
+
+                        // check deposit each room
 						$type_deposit = get_post_meta( $room->ID, '_hb_deposit_type', true );
 						if ( $type_deposit == 'percent' ) {
 							$deposit = get_post_meta( $room->ID, '_hb_deposit_amount', true ) . '%';
@@ -63,6 +64,10 @@ global $hb_settings;
 							$deposit = hb_format_price( get_post_meta( $room->ID, '_hb_deposit_amount', true ) );
 						}
 
+                        $check_in_date  = new WPHB_Datetime( $room->get_data( 'check_in_date' ) );
+                        $check_in_date_str  = $check_in_date->format( WPHB_Datetime::I18N_FORMAT );
+                        $check_out_date  = new WPHB_Datetime( $room->get_data( 'check_out_date' ) );
+						$check_out_date_str  = $check_out_date->format( WPHB_Datetime::I18N_FORMAT );
 						?>
 
 						<tr class="hb_checkout_item" data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
@@ -82,8 +87,12 @@ global $hb_settings;
 							<td class="hb_quantity">
 								<p><?php echo esc_html( $num_of_rooms ); ?></p>
 							</td>
-							<td class="hb_check_in"><?php echo date_i18n( hb_get_date_format(), strtotime( $room->get_data( 'check_in_date' ) ) ); ?></td>
-							<td class="hb_check_out"><?php echo date_i18n( hb_get_date_format(), strtotime( $room->get_data( 'check_out_date' ) ) ); ?></td>
+							<td class="hb_check_in">
+                                <?php echo esc_html( $check_in_date_str ); ?>
+                            </td>
+							<td class="hb_check_out">
+								<?php echo esc_html( $check_out_date_str ); ?>
+                            </td>
 							<td class="hb_night"><?php echo hb_count_nights_two_dates( $room->get_data( 'check_out_date' ), $room->get_data( 'check_in_date' ) ); ?></td>
 							<td class="hb_deposit"><?php echo $enable == 1 ? $deposit : __( 'Disable', 'wp-hotel-booking' ); ?></td>
 							<td class="hb_gross_total">
