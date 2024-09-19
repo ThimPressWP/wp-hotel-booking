@@ -257,19 +257,9 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 						'room_name'    => $room_name,
 						'qty'          => $qty,
 					);
-					wp_send_json(
-						$res,
-						200,
-						JSON_UNESCAPED_SLASHES
-					);
+					wp_send_json( $res, 200, JSON_UNESCAPED_SLASHES );
 				} else {
-					throw new Exception(
-						sprintf(
-							__( 'No room found in %1$s and %2$s', 'wp-hotel-booking' ),
-							$check_in_date_str,
-							$check_out_date_str
-						)
-					);
+					throw new Exception( $qty->get_error_message() );
 				}
 			} catch ( Throwable $e ) {
 				$res->message = $e->getMessage();

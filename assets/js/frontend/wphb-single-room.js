@@ -18,6 +18,10 @@ const wphbDatePicker = () => {
 	const elDatesBlock = elForm.querySelector( 'input[name="wpbh-dates-block"]' );
 	let datePickerCheckIn, datePickerCheckOut;
 	const datesBlock = [];
+	const dateNow = new Date();
+	const dateTomorrow = new Date( dateNow.setDate( dateNow.getDate() + 1 ) );
+	let dateMinCheckInCanBook;
+	let dateMinCheckOutCanBook;
 
 	if ( elDatesBlock ) {
 		const dateTimeStampsBlock = JSON.parse( elDatesBlock.value );
@@ -29,12 +33,34 @@ const wphbDatePicker = () => {
 				datesBlock.push( dateBlock );
 			} );
 		}
+
+		// Get date min check in can book
+		/*let dateMinCheckInCanBook;
+
+		const getDateMinCheckInCanBook = ( dateCompare, datesBlock ) => {
+			datesBlock.some( ( date ) => {
+				console.log()
+				if ( date.getTime() > dateCompare.getTime() ) {
+					dateMinCheckInCanBook = dateCompare;
+					return true;
+				}
+
+				dateCompare = new Date( dateCompare.setDate( dateCompare.getDate() + 1 ) );
+				//dateDisableNear = getDateMinCheckInCanBook( dateCompare, datesBlock );
+			} );
+		};
+
+		getDateMinCheckInCanBook( dateNow, datesBlock );*/
+	} else {
+		dateMinCheckInCanBook = dateNow;
+		dateMinCheckOutCanBook = dateTomorrow;
 	}
 
-	const calculateLastDayCanBook = ( dateSelected, datesCalendar ) => {
+	const calculateDatesCheckOutDisable = ( dateSelected, dateCalendar ) => {
 		if ( datesBlock.length === 0 ) {
-			return datesCalendar <= dateSelected;
+			return dateCalendar <= dateSelected;
 		}
+
 		let dateDisableNear;
 		datesBlock.some( ( date ) => {
 			if ( date > dateSelected ) {
@@ -44,24 +70,27 @@ const wphbDatePicker = () => {
 		} );
 
 		if ( dateDisableNear ) {
-			return datesCalendar >= dateDisableNear || datesCalendar <= dateSelected;
+			return dateCalendar > dateDisableNear || dateCalendar <= dateSelected;
 		}
-		return datesCalendar <= dateSelected;
+
+		return dateCalendar <= dateSelected;
 	};
 
 	// Check in date
 	const optionCheckIn = {
 		dateFormat: 'Y/m/d',
 		minDate: 'today',
-		disable: datesBlock,
+		//disable: datesBlock,
+		defaultDate: dateMinCheckInCanBook,
+		disableMobile: true,
 		onChange( selectedDates, dateStr, instance ) {
 			if ( datePickerCheckOut ) {
 				// calculate next day available
 				const dateSelected = selectedDates[ 0 ];
 				datePickerCheckOut.clear();
 				datePickerCheckOut.open();
-				datePickerCheckOut.set( 'disable', [ ( datesCalendar ) => {
-					return calculateLastDayCanBook( dateSelected, datesCalendar );
+				datePickerCheckOut.set( 'disable', [ ( dateCalendar ) => {
+					return calculateDatesCheckOutDisable( dateSelected, dateCalendar );
 				} ] );
 			}
 		},
@@ -74,6 +103,8 @@ const wphbDatePicker = () => {
 		dateFormat: 'Y/m/d',
 		minDate: 'today',
 		disable: datesBlock,
+		defaultDate: dateMinCheckOutCanBook,
+		disableMobile: true,
 		onChange( selectedDates, dateStr, instance ) {
 		},
 	};

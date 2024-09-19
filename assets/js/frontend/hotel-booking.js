@@ -1110,6 +1110,7 @@ const wphbDatePickerm = () => {
 	const optionCheckIn = {
 		dateFormat: 'Y/m/d',
 		minDate: 'today',
+		disableMobile: true,
 		//defaultDate: 'today',
 		onChange( selectedDates, dateStr, instance ) {
 			if ( datePickerCheckOut ) {
@@ -1130,6 +1131,7 @@ const wphbDatePickerm = () => {
 	const optionCheckout = {
 		dateFormat: 'Y/m/d',
 		minDate: 'today',
+		disableMobile: true,
 		//defaultDate: dateTomorrow,
 		onChange( selectedDates, dateStr, instance ) {
 		},
