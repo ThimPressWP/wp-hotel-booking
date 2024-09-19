@@ -70,7 +70,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 
 		public function filter_sort_rooms( $query ) {
-			if ( ! is_post_type_archive( 'hb_room' ) && ! is_room_taxonomy() ) {
+			if ( $query->query['post_type'] != WPHB_ROOM_CT || ! is_post_type_archive( 'hb_room' ) || ! is_room_taxonomy() ) {
 				return;
 			}
 
