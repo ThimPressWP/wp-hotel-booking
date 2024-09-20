@@ -551,7 +551,11 @@ class WP_Hotel_Booking {
 			wp_enqueue_script( 'wp-hotel-booking-filter-by' );
 			wp_enqueue_script( 'wp-hotel-booking-room-review' );
 
+            // Load scripts and styles for single room
 			if ( is_singular( 'hb_room' ) ) {
+				wp_enqueue_script( 'wpdb-single-room-js' );
+				wp_enqueue_script( 'wp-hotel-booking-gallery' );
+
 				global $post;
 
 				$max_images = hb_settings()->get( 'max_review_image_number' );
@@ -592,12 +596,6 @@ class WP_Hotel_Booking {
 			wp_enqueue_style( 'wp-hotel-booking-single-room-css' );
 			wp_enqueue_script( 'wphb-ui-slider' );
 			wp_enqueue_script( 'wp-hotel-booking-magnific-popup-js' );
-			wp_enqueue_script( 'wpdb-single-room-js' );
-
-			// room galleria
-			if ( is_singular( 'hb_room' ) ) {
-				wp_enqueue_script( 'wp-hotel-booking-gallery' );
-			}
 		}
 		wp_enqueue_style( 'wp-hotel-booking-libaries-style' );
 
