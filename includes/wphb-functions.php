@@ -1135,15 +1135,12 @@ if ( ! function_exists( 'hb_get_tax_settings' ) ) {
 
 	function hb_get_tax_settings() {
 		$settings = WPHB_Settings::instance();
-		if ( $tax = $settings->get( 'tax' ) ) {
-			$tax = (float) $settings->get( 'tax' ) / 100;
+		$tax = $settings->get( 'tax' );
+		if ( $tax ) {
+			$tax = (float) $tax / 100;
 		}
 
-		if ( hb_price_including_tax() ) {
-			$tax = $tax;
-		}
-
-		$tax = apply_filters( 'hotel_booking_room_tax', $tax );
+		$tax = (float) apply_filters( 'hotel_booking_room_tax', $tax );
 
 		return $tax;
 	}
@@ -1154,7 +1151,7 @@ if ( ! function_exists( 'hb_price_including_tax' ) ) {
 	function hb_price_including_tax( $cart = false ) {
 		$settings = WPHB_Settings::instance();
 
-		return apply_filters( 'hb_price_including_tax', $settings->get( 'price_including_tax' ), $cart );
+		return (float) apply_filters( 'hb_price_including_tax', $settings->get( 'price_including_tax' ), $cart );
 	}
 }
 

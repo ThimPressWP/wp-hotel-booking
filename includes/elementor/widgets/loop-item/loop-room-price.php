@@ -301,8 +301,8 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
 			    $text_after    = $settings['text_unit'] ?? '';
 
 			    if ( ! empty( $prices ) ) {
-				    $min_price = min( $prices );
-				    $max_price = max( $prices );
+				    $min_price = (float) min( $prices );
+				    $max_price = (float) max( $prices );
 				    $min       = $min_price + ( hb_price_including_tax() ? ( $min_price * hb_get_tax_settings() ) : 0 );
 				    $max       = $max_price + ( hb_price_including_tax() ? ( $max_price * hb_get_tax_settings() ) : 0 );
 				    ?>
