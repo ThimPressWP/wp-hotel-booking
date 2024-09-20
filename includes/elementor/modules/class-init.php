@@ -133,7 +133,7 @@ class Elementor {
 
 		wp_enqueue_script( 'wphb-widget-el',  WPHB_PLUGIN_URL . '/includes/elementor/src/js/widget.js', array('jquery'), WPHB_VERSION );
 
-		//wp_register_script( 'wphb-element-el',  WPHB_PLUGIN_URL . '/includes/elementor/src/js/hotel-booking-element.js', array('jquery'), WPHB_VERSION );
+		wp_register_script( 'wphb-element-el',  WPHB_PLUGIN_URL . '/includes/elementor/src/js/hotel-booking-element.js', array('jquery'), WPHB_VERSION );
 
 		//style
 		wp_register_style( 'wphb-multidate-style', WPHB_PLUGIN_URL . '/includes/elementor/src/css/multidate.css', array(), WPHB_VERSION );

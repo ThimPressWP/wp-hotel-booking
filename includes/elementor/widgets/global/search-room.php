@@ -40,7 +40,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 	}
 
 	public function get_script_depends() {
-		return [ 'wp-hotel-booking-moment' ];
+		return [ 'wp-hotel-booking-moment', 'wphb-element-el' ];
 	}
 
 	public function get_style_depends() {

@@ -136,7 +136,7 @@
 }
 
 .hotel-booking-search-el .hb_input_field input {
-	width: 150px;
+	width: 90px;
 	height: auto;
 	border: none;
 	border-radius: 0;
@@ -336,5 +336,51 @@
 		top: 15px;
 		right: 30px;
 		width: 40px;
+	}
+}
+.hb-form-check-in-check-out {
+	cursor: pointer;
+
+	> input {
+		position: absolute;
+	}
+} 
+
+.flatpickr-months {
+	.flatpickr-month {
+		height: unset;
+	
+		.flatpickr-current-month {
+			padding: 15px 0;
+			height: unset;
+			position: unset;
+		}
+	}
+
+	.flatpickr-prev-month, .flatpickr-next-month {
+		padding: 15px;
+	}
+}
+.flatpickr-innerContainer {
+	.dayContainer {
+		justify-content: flex-start;
+	}
+
+	.flatpickr-day {
+		max-width: 43px;
+		height: 43px;
+		line-height: 43px;
+	}
+}
+
+@media (max-width: 767px) {
+	.flatpickr-months .flatpickr-month:nth-child(2), 
+	.flatpickr-weekdays .flatpickr-weekdaycontainer:nth-child(2),
+	.flatpickr-innerContainer .dayContainer:nth-child(2) {
+		display: none;
+	}
+
+	.flatpickr-calendar {
+		max-width: 310px !important;
 	}
 }

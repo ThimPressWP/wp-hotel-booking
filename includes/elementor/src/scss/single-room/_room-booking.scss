@@ -24,9 +24,17 @@
             }
         }
 
-        .hb-booking-room-form-head .title {
-            padding: 0;
-        }
+        .hb-booking-room-form-head {
+            .title {
+                padding: 0;
+            }
+
+            p, .hotel_booking_room_errors {
+                font-size: 14px;
+                line-height: 1.6em;
+                margin-bottom: 10px;
+            }
+        } 
 
         .hb-booking-room-form-group {
             width: 100%;
