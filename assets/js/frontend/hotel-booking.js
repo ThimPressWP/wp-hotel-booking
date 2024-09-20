@@ -1111,7 +1111,7 @@ const wphbDatePickerm = () => {
 		dateFormat: 'Y/m/d',
 		minDate: 'today',
 		disableMobile: true,
-		//defaultDate: 'today',
+		defaultDate: 'today',
 		onChange( selectedDates, dateStr, instance ) {
 			if ( datePickerCheckOut ) {
 				// calculate next day available
@@ -1132,7 +1132,7 @@ const wphbDatePickerm = () => {
 		dateFormat: 'Y/m/d',
 		minDate: 'today',
 		disableMobile: true,
-		//defaultDate: dateTomorrow,
+		defaultDate: dateTomorrow,
 		onChange( selectedDates, dateStr, instance ) {
 		},
 	};

@@ -70,12 +70,8 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 
 		public function filter_sort_rooms( $query ) {
-			if ( $query->query['post_type'] != WPHB_ROOM_CT || ! is_post_type_archive( 'hb_room' ) || ! is_room_taxonomy() ) {
-				return;
-			}
-
-			if ( ( ! isset( $query->query_vars['post_type'] ) || $query->query_vars['post_type'] !== 'hb_room' )
-			     && ! $query->is_tax ) {
+			if ( ! isset( $query->query['post_type'] ) || $query->query['post_type'] != WPHB_ROOM_CT
+				|| ! is_post_type_archive( 'hb_room' ) || ! is_room_taxonomy() ) {
 				return;
 			}
 
@@ -146,7 +142,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 						$rating_query ['relation'] = 'AND';
 					} else {
-						for ( $i = 0; $i < $rating_count; $i ++ ) {
+						for ( $i = 0; $i < $rating_count; $i++ ) {
 							$rating_query[ $i ][] = array(
 								'key'     => 'hb_average_rating',
 								'value'   => $rating[ $i ],

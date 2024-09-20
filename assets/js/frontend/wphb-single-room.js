@@ -15,7 +15,7 @@ const wphbDatePicker = () => {
 	elForm = document.querySelector( 'form[name=hb-search-single-room]' );
 	const elDateCheckIn = elForm.querySelector( 'input[name="check_in_date"]' );
 	const elDateCheckOut = elForm.querySelector( 'input[name="check_out_date"]' );
-	const elDatesBlock = elForm.querySelector( 'input[name="wpbh-dates-block"]' );
+	//const elDatesBlock = elForm.querySelector( 'input[name="wpbh-dates-block"]' );
 	let datePickerCheckIn, datePickerCheckOut;
 	const datesBlock = [];
 	const dateNow = new Date();
@@ -23,8 +23,8 @@ const wphbDatePicker = () => {
 	let dateMinCheckInCanBook;
 	let dateMinCheckOutCanBook;
 
-	if ( elDatesBlock ) {
-		const dateTimeStampsBlock = JSON.parse( elDatesBlock.value );
+	if ( hotel_settings.block_dates ) {
+		const dateTimeStampsBlock = hotel_settings.block_dates;
 
 		if ( dateTimeStampsBlock ) {
 			dateTimeStampsBlock.forEach( ( timeStamp ) => {
@@ -80,8 +80,8 @@ const wphbDatePicker = () => {
 	const optionCheckIn = {
 		dateFormat: 'Y/m/d',
 		minDate: 'today',
-		//disable: datesBlock,
-		defaultDate: dateMinCheckInCanBook,
+		disable: datesBlock,
+		//defaultDate: dateMinCheckInCanBook,
 		disableMobile: true,
 		onChange( selectedDates, dateStr, instance ) {
 			if ( datePickerCheckOut ) {
@@ -103,7 +103,7 @@ const wphbDatePicker = () => {
 		dateFormat: 'Y/m/d',
 		minDate: 'today',
 		disable: datesBlock,
-		defaultDate: dateMinCheckOutCanBook,
+		//defaultDate: dateMinCheckOutCanBook,
 		disableMobile: true,
 		onChange( selectedDates, dateStr, instance ) {
 		},

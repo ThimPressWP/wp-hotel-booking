@@ -37,7 +37,7 @@ class WPHB_Datetime {
 	 * @throws
 	 */
 	public function __construct( $date = '', $tz = null ) {
-		if ( $date instanceof LP_Datetime ) {
+		if ( $date instanceof WPHB_Datetime ) {
 			$this->raw_date = $date->get_raw_date();
 		} else {
 			$this->raw_date = is_numeric( $date ) ? gmdate( self::$format, $date ) : $date;
