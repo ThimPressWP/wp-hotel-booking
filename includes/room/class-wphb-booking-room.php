@@ -116,7 +116,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 				WPHB_PLUGIN_URL . "/assets/dist/js/frontend/wphb-single-room{$min}.js",
 				$dependencies,
 				$ver,
-				[ 'strategy' => 'async' ]
+				[ 'strategy' => 'defer' ]
 			);
 			wp_enqueue_style( 'wp-hotel-booking-single-room-css', WPHB_PLUGIN_URL . '/assets/css/booking-single-room.css', array(), WPHB_VERSION );
 

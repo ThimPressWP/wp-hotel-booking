@@ -342,7 +342,11 @@
 	cursor: pointer;
 
 	> input {
+		top: 0;
+		right: 0;
 		position: absolute;
+		bottom: -16px;
+		left: 0;
 	}
 } 
 
@@ -354,6 +358,10 @@
 			padding: 15px 0;
 			height: unset;
 			position: unset;
+
+			> * {
+				background: transparent !important;
+			}
 		}
 	}
 
@@ -370,6 +378,11 @@
 		max-width: 43px;
 		height: 43px;
 		line-height: 43px;
+	}
+
+	.flatpickr-day.flatpickr-disabled {
+		color: rgba(57, 57, 57, 0.4);
+		text-decoration: line-through;
 	}
 }
 
