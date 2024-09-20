@@ -194,9 +194,8 @@ $user_comments = get_comments( array(
 							<?php
 							$link = $origin_link;
 
-							if ( isset( $_GET['photos_only'] ) ) {
-								$photos_only = LP_Helper::sanitize_params_submitted( 'photos_only', 'key' );
-
+							$photos_only = WPHB_Helpers::get_param( 'photos_only', '', 'key' );
+							if ( $photos_only === 'yes' ) {
 								$link = esc_url_raw( add_query_arg( 'photos_only', $photos_only, $origin_link ) );
 							}
 							?>

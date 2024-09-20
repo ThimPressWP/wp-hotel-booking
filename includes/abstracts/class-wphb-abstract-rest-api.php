@@ -24,7 +24,7 @@ abstract class WPHB_Abstract_API {
 	public $controllers = array();
 
 	/**
-	 * LP_API_Base constructor.
+	 * WPHB_Abstract_API constructor.
 	 */
 	public function __construct() {
 		$this->rest_api_init();

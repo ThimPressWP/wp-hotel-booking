@@ -32,7 +32,7 @@ class WPHB_REST_Response {
 	public $data;
 
 	/**
-	 * LP_REST_Response constructor.
+	 * WPHB_REST_Response constructor.
 	 */
 	public function __construct() {
 		$this->data = new stdClass();

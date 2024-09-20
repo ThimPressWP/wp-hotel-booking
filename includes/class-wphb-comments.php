@@ -169,7 +169,7 @@ class WPHB_Comments {
 			foreach ( $images as $image ) {
 				$img             = preg_replace( '/^data:image\/[a-z]+;base64,/', '', $image['base64'] );
 				$img             = str_replace( ' ', '+', $img );
-				$img             = LP_Helper::sanitize_params_submitted( $img );
+				$img             = WPHB_Helpers::sanitize_params_submitted( $img );
 				$decoded         = base64_decode( $img );
 				$filename        = sanitize_file_name( $image['name'] );
 				$file_type       = sanitize_mime_type( $image['type'] );

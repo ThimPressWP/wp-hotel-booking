@@ -8,6 +8,9 @@ use Elementor\Icons_Manager;
 use Elementor\Group_Control_Typography;
 use WPHB\HBGroupControlTrait;
 use Elementor\Repeater;
+use WPHB_Datetime;
+use WPHB_Helpers;
+
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -37,7 +40,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 	}
 
 	public function get_script_depends() {
-		return [ 'wp-hotel-booking-moment', 'wphb-daterangepicker' ];
+		return [ 'wp-hotel-booking-moment' ];
 	}
 
 	public function get_style_depends() {
@@ -507,7 +510,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			?>
             <div class="hotel-booking-search-el">
 				<form name="hb-search-form" action="<?php echo hb_get_url(); ?>" class="hb-search-form-<?php echo esc_attr($uniqid); ?>">
-					<ul class="hb-form-table"> 
+					<ul class="hb-form-table">
 					<?php
 					foreach ( $settings['data'] as $data ) {
 						$classes = 'elementor-repeater-item-'.$data['_id'];
@@ -516,14 +519,14 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 							case 'date':
 								$this->hb_render_check_the_date($data, $classes);
 								break;
-							case 'adults':	
+							case 'adults':
 								$this->hb_render_adults($data, $classes);
 								break;
 							case 'children':
-								$this->hb_render_children($data, $classes);	
+								$this->hb_render_children($data, $classes);
 								break;
 							case 'submit':
-								$this->hb_render_submit($data, $classes);	
+								$this->hb_render_submit($data, $classes);
 								break;
 						}
 					}
@@ -541,11 +544,11 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 
 	protected function hb_render_check_the_date($settings, $classes) {
 		$uniqid          = uniqid();
-		$datetime 		 = new \DateTime('NOW');
-        $tomorrow 		 = new \DateTime('tomorrow');
-        $format 		 = get_option('date_format');
-		$check_in_date  = hb_get_request( 'check_in_date', $datetime->format($format));
-		$check_out_date = hb_get_request( 'check_out_date', $tomorrow->format($format));
+        $format 		 = WPHB_Datetime::$format;
+        $date_now = new WPHB_Datetime();
+		$date_tomorrow  = new WPHB_Datetime( strtotime( $date_now->get_raw_date() . ' +1 day' ) );
+		$check_in_date  = WPHB_Helpers::get_param( 'check_in_date', $date_now->format( $format ) );
+		$check_out_date = WPHB_Helpers::get_param( 'check_out_date', $date_tomorrow->format( $format ) );
 		$label_check_in  = $settings['label_field_date'] ?? esc_html__('Arrival Date', 'wp-hotel-booking');
 		$label_check_out = $settings['label_field_check_out'] ?? esc_html__('Departure Date', 'wp-hotel-booking');
 
@@ -556,8 +559,8 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 					<div class="label"><?php echo $label_check_in; ?></div>
 				<?php endif; ?>
 				<div class="hb-form-field-input hb_input_field">
-					<?php if ( $settings['icons_field'] ) { 
-						Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );        
+					<?php if ( $settings['icons_field'] ) {
+						Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );
 					} ?>
 					<input type="text" name="check_in_date" id="check_in_date_<?php echo esc_attr($uniqid); ?>" class="hb_input_date_check" value="<?php echo esc_attr($check_in_date); ?>" placeholder="<?php echo $label_check_in; ?>" autocomplete="off" />
 				</div>
@@ -568,8 +571,8 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 					<div class="label"><?php echo $label_check_out; ?></div>
 				<?php endif; ?>
 				<div class="hb-form-field-input hb_input_field">
-					<?php if ( $settings['icons_field'] ) { 
-						Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );        
+					<?php if ( $settings['icons_field'] ) {
+						Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );
 					} ?>
 					<input type="text" name="check_out_date" id="check_out_date_<?php echo esc_attr($uniqid); ?>" class="hb_input_date_check" value="<?php echo esc_attr($check_out_date); ?>" placeholder="<?php echo $label_check_out; ?>" autocomplete="off" />
 				</div>
@@ -578,9 +581,9 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 		}else {
 			?>
 			<li class="hb-form-field hb-form-check-in-check-out <?php echo esc_attr($classes); ?>">
-				<input type="text" id="multidate" class="multidate" value="<?php echo esc_attr($check_in_date) ?>" readonly />
-				<?php if ( $settings['icons_field'] ) { 
-					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );        
+				<input type="text" name="check_in_out_range" value="<?php echo esc_attr($check_in_date) ?>" readonly style="visibility: hidden" />
+				<?php if ( $settings['icons_field'] ) {
+					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );
 				} ?>
 				<?php if ( $label_check_in != '' ) :?>
 					<div class="label"><?php echo $label_check_in; ?></div>
@@ -603,8 +606,8 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 		if ( $settings['layout_guest'] == 'select') {
 		?>
 			<li class="hb-form-field <?php echo esc_attr($classes); ?>">
-				<?php if ( $settings['icons_field'] ) { 
-					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );        
+				<?php if ( $settings['icons_field'] ) {
+					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );
 				} ?>
 				<?php if ( $label_adults != '' ) :?>
 					<div class="label"><?php echo $label_adults; ?></div>
@@ -629,8 +632,8 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 		} else {
 			?>
 			<li class="hb-form-field hb-form-number <?php echo esc_attr($classes); ?>">
-				<?php if ( $settings['icons_field'] ) { 
-					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );        
+				<?php if ( $settings['icons_field'] ) {
+					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );
 				} ?>
 				<?php if ( $label_adults != '' ) :?>
 					<div class="label"><?php echo $label_adults; ?></div>
@@ -672,8 +675,8 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 		if ( $settings['layout_guest'] == 'select') {
 			?>
 			<li class="hb-form-field <?php echo esc_attr($classes); ?>">
-				<?php if ( $settings['icons_field'] ) { 
-					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );        
+				<?php if ( $settings['icons_field'] ) {
+					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );
 				} ?>
 				<?php if ( $label_child != '' ) :?>
 					<div class="label"><?php echo $label_child; ?></div>
@@ -697,8 +700,8 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 		} else {
 			?>
 			<li class="hb-form-field hb-form-number <?php echo esc_attr($classes); ?>">
-				<?php if ( $settings['icons_field'] ) { 
-					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );        
+				<?php if ( $settings['icons_field'] ) {
+					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );
 				} ?>
 				<?php if ( $label_child != '' ) :?>
 					<div class="label"><?php echo $label_child; ?></div>
@@ -736,8 +739,8 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 		?>
 		<li class="hb-submit <?php echo esc_attr($classes); ?>">
 			<button type="submit" class="wphb-button">
-				<?php if ( $settings['icons_field'] ) { 
-					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true' ) );        
+				<?php if ( $settings['icons_field'] ) {
+					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true' ) );
 				} ?>
 				<?php if ( $settings['label_field'] != '' ) :?>
 					<span class="submit-text"> <?php echo $settings['label_field']; ?> </span>

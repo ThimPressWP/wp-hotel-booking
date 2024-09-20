@@ -1,7 +1,11 @@
 <?php
 
 /**
- * Class LP_Datetime
+ * Class WPHB_Datetime
+ * Copy from LearnPress
+ *
+ * @since 2.1.3
+ * @version 1.0.0
  */
 class WPHB_Datetime {
 	/**

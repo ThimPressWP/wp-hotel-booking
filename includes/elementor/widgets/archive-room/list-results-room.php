@@ -140,7 +140,7 @@ class Thim_Ekit_Widget_List_Results_Room extends Widget_Base {
 
 	protected function render()
     {
-		$settings        = $this->get_settings_for_display(); 
+		$settings        = $this->get_settings_for_display();
 		$params = $_GET;
 		$response         = new \WPHB_REST_RESPONSE();
 		$response->status = 'success';
@@ -148,29 +148,29 @@ class Thim_Ekit_Widget_List_Results_Room extends Widget_Base {
 		$datetime 		 = new \DateTime('NOW');
 		$tomorrow 		 = new \DateTime('tomorrow');
 		$format 		 = get_option('date_format');
-	
+
 		$check_in_date   = isset($params['check_in_date']) ? $params['check_in_date'] : $datetime->format($format);
 		$check_out_date  = isset($params['check_out_date']) ? $params['check_out_date'] : $tomorrow->format($format);
 		$adults_capacity = isset($params['adults']) ? $params['adults'] : hb_get_request( 'adults', 1 );
 		$max_child       = isset($params['max_child']) ? $params['max_child'] : hb_get_request( 'max_child', 0 );
-		
+
 
 		$paged           = isset( $params['paged'] ) ?? 1;
 
 		if ( hb_get_request( 'is_page_room_extra' ) == 'select-room-extra' ) {
 
 			hb_get_template( 'search/v2/select-extra-v2.php' );
-			
+
 			return;
 		}
 		$date_format = get_option( 'date_format' );
 
 		if ( strpos( $check_in_date, '/' ) !== false ) {
-			$check_in_date = \DateTime::createFromFormat( $date_format, $check_in_date )->format( 'F j, Y' );
+			//$check_in_date = \DateTime::createFromFormat( $date_format, $check_in_date )->format( 'F j, Y' );
 		}
 
 		if ( strpos( $check_out_date, '/' ) !== false ) {
-			$check_out_date = \DateTime::createFromFormat( $date_format, $check_out_date )->format( 'F j, Y' );
+			//$check_out_date = \DateTime::createFromFormat( $date_format, $check_out_date )->format( 'F j, Y' );
 		}
 
 		$atts = array(
@@ -206,11 +206,11 @@ class Thim_Ekit_Widget_List_Results_Room extends Widget_Base {
 					setup_postdata($GLOBALS['post'] = &$post_object);
 
 					$this->current_permalink = get_permalink(); ?>
-					<div class="hb-room clearfix">	
+					<div class="hb-room clearfix">
 						<form name="hb-search-results" class="hb-search-room-results <?php echo $class_item ?> <?php echo ! empty( $custom_process ) ? ' custom-process' : ' extra-option-loop'; ?>" >
 						<?php do_action( 'hotel_booking_loop_before_item', $room->ID ); ?>
-							<?php  
-								\Thim_EL_Kit\Utilities\Elementor::instance()->render_loop_item_content( $settings['template_id'] ); 
+							<?php
+								\Thim_EL_Kit\Utilities\Elementor::instance()->render_loop_item_content( $settings['template_id'] );
 							?>
 							<?php wp_nonce_field( 'hb_booking_nonce_action', 'nonce' ); ?>
 							<input type="hidden" name="check_in_date"
@@ -225,9 +225,9 @@ class Thim_Ekit_Widget_List_Results_Room extends Widget_Base {
 						</form>
 					</div>
 				<?php } ?>
-			</div>	
-			<?php $this->render_loop_footer( $results, $settings ); ?>  
-		</div>	
+			</div>
+			<?php $this->render_loop_footer( $results, $settings ); ?>
+		</div>
 		<?php
 	}
 
