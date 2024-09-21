@@ -1094,7 +1094,7 @@ import flatpickr from 'flatpickr';
 'use strict';
 
 let datePickerCheckIn, datePickerCheckOut, datePickerRange;
-const wphbDatePickerm = () => {
+const wphbDatePicker = () => {
 	const elFormTable = document.querySelector( '.hb-form-table' );
 	if ( ! elFormTable ) {
 		return;
@@ -1107,75 +1107,76 @@ const wphbDatePickerm = () => {
 	const dateNow = new Date();
 	const dateTomorrow = new Date( dateNow.setDate( dateNow.getDate() + 1 ) );
 
-	// Check in date
-	const optionCheckIn = {
-		dateFormat: 'Y/m/d',
-		minDate: 'today',
-		disableMobile: true,
-		//defaultDate: 'today',
-		onChange( selectedDates, dateStr, instance ) {
-			if ( datePickerCheckOut ) {
-				// calculate next day available
-				const dateSelected = selectedDates[ 0 ];
-				datePickerCheckOut.clear();
-				const dateNext = new Date( dateSelected.setDate( dateSelected.getDate() + 1 ) );
-				datePickerCheckOut.set( 'minDate', dateNext );
-				//datePickerCheckOut.set( 'date', dateNext );
-				datePickerCheckOut.open();
-			}
-		},
-	};
+	if ( elDateCheckIn && ! elDateCheckIn.closest( '.hb-form-check-in-check-out' ) ) {
+		// Check in date
+		const optionCheckIn = {
+			dateFormat: 'Y/m/d',
+			minDate: 'today',
+			disableMobile: true,
+			//defaultDate: 'today',
+			onChange( selectedDates, dateStr, instance ) {
+				if ( datePickerCheckOut ) {
+					// calculate next day available
+					const dateSelected = selectedDates[ 0 ];
+					datePickerCheckOut.clear();
+					const dateNext = new Date( dateSelected.setDate( dateSelected.getDate() + 1 ) );
+					datePickerCheckOut.set( 'minDate', dateNext );
+					//datePickerCheckOut.set( 'date', dateNext );
+					datePickerCheckOut.open();
+				}
+			},
+		};
 
-	if ( ! elDateCheckIn.closest( '.hb-form-check-in-check-out' ) ) {
 		datePickerCheckIn = flatpickr( elDateCheckIn, optionCheckIn );
 	}
 
-	// Check out date
-	const optionCheckout = {
-		dateFormat: 'Y/m/d',
-		minDate: 'today',
-		disableMobile: true,
-		//defaultDate: dateTomorrow,
-		onChange( selectedDates, dateStr, instance ) {
-		},
-	};
+	if ( elDateCheckOut && ! elDateCheckOut.closest( '.hb-form-check-in-check-out' ) ) {
+		// Check out date
+		const optionCheckout = {
+			dateFormat: 'Y/m/d',
+			minDate: 'today',
+			disableMobile: true,
+			//defaultDate: dateTomorrow,
+			onChange( selectedDates, dateStr, instance ) {
+			},
+		};
 
-	if ( ! elDateCheckOut.closest( '.hb-form-check-in-check-out' ) ) {
 		datePickerCheckOut = flatpickr( elDateCheckOut, optionCheckout );
 	}
 
-	// Check out date
-	const optionRange = {
-		dateFormat: 'Y/m/d',
-		minDate: 'today',
-		disableMobile: true,
-		mode: 'range',
-		showMonths: 2,
-		defaultDate: [ elDateCheckIn.value, elDateCheckOut.value ],
-		onClose( selectedDates, dateStr, instance ) {
-			const dateCheckInSelected = selectedDates[ 0 ];
-			const dateCheckOutSelected = selectedDates[ 1 ];
-			if ( ! dateCheckInSelected || ! dateCheckOutSelected ) {
-				return;
-			}
+	if ( elDateRange && ! elDateRange.closest( '.hb-form-check-in-check-out' ) ) {
+		// Check in, out dates
+		const optionRange = {
+			dateFormat: 'Y/m/d',
+			minDate: 'today',
+			disableMobile: true,
+			mode: 'range',
+			showMonths: 2,
+			defaultDate: [ elDateCheckIn.value, elDateCheckOut.value ],
+			onClose( selectedDates, dateStr, instance ) {
+				const dateCheckInSelected = selectedDates[ 0 ];
+				const dateCheckOutSelected = selectedDates[ 1 ];
+				if ( ! dateCheckInSelected || ! dateCheckOutSelected ) {
+					return;
+				}
 
-			const dateCheckInStr = wphbConvertDateToFormatDefault( dateCheckInSelected );
-			const dateCheckOutStr = wphbConvertDateToFormatDefault( dateCheckOutSelected );
-			elDateCheckIn.value = dateCheckInStr;
-			elDateCheckOut.value = dateCheckOutStr;
-		},
-		onChange( selectedDates, dateStr, instance ) {
+				const dateCheckInStr = wphbConvertDateToFormatDefault( dateCheckInSelected );
+				const dateCheckOutStr = wphbConvertDateToFormatDefault( dateCheckOutSelected );
+				elDateCheckIn.value = dateCheckInStr;
+				elDateCheckOut.value = dateCheckOutStr;
+			},
+			onChange( selectedDates, dateStr, instance ) {
 
-		},
-	};
+			},
+		};
+		datePickerRange = flatpickr( elDateRange, optionRange );
 
-	datePickerRange = flatpickr( elDateRange, optionRange );
-
-	if ( elDateCheckInOut ) {
-		elDateCheckInOut.addEventListener( 'click', ( e ) => {
-			e.preventDefault();
-			datePickerRange.open();
-		} );
+		if ( elDateCheckInOut ) {
+			elDateCheckInOut.addEventListener( 'click', ( e ) => {
+				e.preventDefault();
+				datePickerRange.open();
+			} );
+		}
 	}
 };
 
@@ -1188,5 +1189,5 @@ const wphbConvertDateToFormatDefault = ( date ) => {
 };
 
 document.addEventListener( 'DOMContentLoaded', function( e ) {
-	wphbDatePickerm();
+	wphbDatePicker();
 } );

@@ -252,15 +252,24 @@ const wphbRoomCheckDates = ( formCheckDate ) => {
 
 			if ( ! elAddToCart ) {
 				elHotelBookingRoom.insertAdjacentHTML( 'beforeend', data.html_extra );
-				elAddToCart = elHotelBookingRoom.querySelector( '.wpdb-room-tmpl-add-to-cart' );
+			}
+
+			elAddToCart = elHotelBookingRoom.querySelector( '.wpdb-room-tmpl-add-to-cart' );
+			if ( ! elAddToCart ) {
+				return;
 			}
 
 			// set list qty for room
-			const elNumRoom = elAddToCart.querySelector( 'select[name=hb-num-of-rooms]' );
+			const elNumRoom = elAddToCart.querySelector( 'input[name=hb-num-of-rooms]' );
 			if ( elNumRoom ) {
-				for ( let i = 1; i <= parseInt( data.qty ); i++ ) {
-					elNumRoom.insertAdjacentHTML( 'beforeend', '<option value="' + i + '">' + i + '</option>' );
+				const elQtyMax = elAddToCart.querySelector( '.qty-max' );
+				if ( elQtyMax ) {
+					elQtyMax.textContent = data.qty;
 				}
+				// for ( let i = 1; i <= parseInt( data.qty ); i++ ) {
+				// 	elNumRoom.insertAdjacentHTML( 'beforeend', '<option value="' + i + '">' + i + '</option>' );
+				// }
+				elNumRoom.setAttribute( 'max', data.qty );
 			}
 
 			// Set dates checked

@@ -12,7 +12,7 @@ if ( ! isset( $room ) ) {
 
 <div class="wpdb-room-tmpl-add-to-cart" style="display: none">
 	<form action="" name="hb-search-results"
-	      class="hb-search-room-results hotel-booking-search hotel-booking-single-room-action">
+			class="hb-search-room-results hotel-booking-search hotel-booking-single-room-action">
 
 		<div class="hb-booking-room-form-head">
 			<p class="description">
@@ -21,17 +21,16 @@ if ( ! isset( $room ) ) {
 		</div>
 
 		<div class="hb-search-results-form-container">
-			<div class="hb-booking-room-form-group">
-				<div class="hb-booking-room-form-field hb-form-field-input">
-					<?php if ( ! get_option( 'tp_hotel_booking_single_purchase' ) ) { ?>
-						<label>
-							<?php echo __( 'Select number of room', 'wp-hotel-booking' ); ?>
-							<select name="hb-num-of-rooms" class="number_room_select">
-								<option value="1">1</option>
-							</select>
-						</label>
-					<?php } ?>
-				</div>
+			<div class="hb-booking-room-form-field hb-form-field-input">
+				<?php if ( ! get_option( 'tp_hotel_booking_single_purchase' ) ) { ?>
+					<label><?php echo __( 'Select number of room', 'wp-hotel-booking' ); ?></label>
+					<div class="wphb-max-qty">
+						<?php _e( 'Max quantity can book:', 'wp-hotel-booking' ); ?> <span class="qty-max">1</span>
+					</div>
+					<div>
+						<input name="hb-num-of-rooms" class="number_room_select" type="number" min="1" step="1" max="1" value="1">
+					</div>
+				<?php } ?>
 			</div>
 			<?php
 			wphb_get_template_no_override(
@@ -42,7 +41,7 @@ if ( ! isset( $room ) ) {
 		</div>
 		<div class="hb-booking-room-form-footer">
 			<button href="#" data-template="hb-room-load-form"
-			        class="hb_previous_step hb_button">
+					class="hb_previous_step hb_button">
 				<?php _e( 'Previous', 'wp-hotel-booking' ); ?>
 			</button>
 			<button type="submit" class="hb_button">

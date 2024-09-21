@@ -208,7 +208,6 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 			try {
 				$nonce              = WPHB_Helpers::get_param( 'nonce' );
 				$room_id            = WPHB_Helpers::get_param( 'room-id', '', 'int' );
-				$room_name          = WPHB_Helpers::get_param( 'room-name', '', 'int' );
 				$check_in_date_str  = WPHB_Helpers::get_param( 'check_in_date' );
 				$check_out_date_str = WPHB_Helpers::get_param( 'check_out_date' );
 
@@ -254,7 +253,6 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 						'dates_booked' => $dates_checked,
 						'html_extra' => $html_add_to_cart,
 						'room_id'      => $room_id,
-						'room_name'    => $room_name,
 						'qty'          => $qty,
 					);
 					wp_send_json( $res, 200, JSON_UNESCAPED_SLASHES );

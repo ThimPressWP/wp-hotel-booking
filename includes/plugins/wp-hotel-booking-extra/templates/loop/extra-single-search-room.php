@@ -23,7 +23,7 @@ $room_extra = $room_extra->get_extra();
 	<div class="hb-booking-room-form-group hb_addition_package_extra">
 		<div class="hb_addition_package_title">
 			<h5 class="hb_addition_package_title_toggle">
-				<a href="javascript:void(0)" class="hb_package_toggle">
+				<a href="javascript:void(0)" class="hb_package_toggle active">
 					<?php esc_html_e( 'Optional Extras', 'wp-hotel-booking' ); ?>
 				</a>
 			</h5>
