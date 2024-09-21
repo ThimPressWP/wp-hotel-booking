@@ -1,83 +1,5 @@
 import flatpickr from 'flatpickr';
-
-// Code JQuery Old
-( function( $ ) {
-	function getId( url ) {
-		const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-		const match = url.match( regExp );
-
-		if ( match && match[ 2 ].length == 11 ) {
-			return match[ 2 ];
-		}
-		return 'error';
-	}
-
-	const Hotel_Booking_Room_Addon = {
-		init() {
-			// load add to cart form
-			const _self = this,
-				_doc = $( document );
-
-			// check option external link
-			if ( Hotel_Booking_Blocked_Days.external_link === '' ) {
-				_doc.on( 'click', '#hb_room_load_booking_form', _self.load_room_add_to_cart_form );
-			}
-			// trigger lightbox open
-			_doc.on( 'hotel_room_load_add_to_cart_form_open', _self.lightbox_init );
-			_doc.on( 'click', '#hb_room_images .room-preview', _self.room_preview );
-		},
-		room_preview( e ) {
-			e.preventDefault();
-			const _self = $( this );
-			let src = _self.attr( 'data-preview' );
-			if ( src.includes( 'iframe' ) ) {
-				const reg = new RegExp( '(?<=src=").*?(?=[\?"])' );
-				src = reg.exec( src )[ 0 ];
-				if ( getId( src ) != 'error' ) {
-					src = 'https://www.youtube.com/watch?v=' + getId( src );
-				}
-			}
-			$.magnificPopup.open( {
-				items: {
-					src,
-					type: 'iframe',
-				},
-			} );
-		},
-		lightbox_init( e, button, lightbox, taget ) {
-			e.preventDefault();
-			// search form
-			if ( taget === 'hb-room-load-form' ) {
-				elHotelBookingRoom = document.querySelector( '#hotel_booking_room_hidden' );
-				elHotelBookingRoom.style.display = 'block';
-			}
-		},
-		load_room_add_to_cart_form( e ) {
-			e.preventDefault();
-			const _self = $( this ),
-				_doc = $( document ),
-				_taget = 'hb-room-load-form',
-				_lightbox = '#hotel_booking_room_hidden';
-
-			$.magnificPopup.open( {
-				type: 'inline',
-				items: {
-					src: '#hotel_booking_room_hidden',
-				},
-				callbacks: {
-					open() {
-						_doc.triggerHandler( 'hotel_room_load_add_to_cart_form_open', [ _self, _lightbox, _taget ] );
-					},
-				},
-			} );
-			return false;
-		},
-	};
-
-	$( document ).ready( function() {
-		Hotel_Booking_Room_Addon.init();
-	} );
-}( jQuery ) );
+import tingle from 'tingle.js';
 
 let elHotelBookingRoom, elTmplDateAvailable, elAddToCart, elForm;
 const dataSend = {};
@@ -389,9 +311,50 @@ document.addEventListener( 'click', function( e ) {
 			elForm.style.display = 'block';
 		}
 		elAddToCart.style.display = 'none';
+	} else if ( target.id === 'hb_room_load_booking_form' ) {
+		e.preventDefault();
+
+		elHotelBookingRoom = document.querySelector( '#hotel_booking_room_hidden' );
+		if ( ! elHotelBookingRoom ) {
+			return;
+		}
+
+		// Init new modal
+		modalCheckDates = new tingle.modal( {
+			onOpen() {
+				elHotelBookingRoom.style.display = 'block';
+				wphbRoomInitDatePicker();
+			},
+			onClose() {
+				elHotelBookingRoom.style.display = 'none';
+			},
+		} );
+
+		// set content
+		modalCheckDates.setContent( elHotelBookingRoom );
+		modalCheckDates.open();
+	} else if ( target.closest( '.room-preview' ) ) {
+		e.preventDefault();
+		const elRoomPreview = target.closest( '.room-preview' );
+		let iframe = elRoomPreview.dataset.preview;
+		const regexSearchInIframe = /.*<iframe/;
+		const windowHeight = window.innerHeight / 2;
+		if ( ! regexSearchInIframe.test( iframe ) ) {
+			iframe = `<iframe class="wphb-iframe-preview" src="${ iframe }" width="100%" height="${ windowHeight }px" frameborder="0" allowfullscreen></iframe>`;
+		}
+
+		modalPreview = new tingle.modal();
+		modalPreview.setContent( iframe );
+		modalPreview.open();
 	}
 } );
+
+let modalCheckDates;
+let modalPreview;
 document.addEventListener( 'DOMContentLoaded', function( e ) {
-	wphbRoomInitDatePicker();
+	const elRoomLoadBookingForm = document.querySelector( '#hb_room_load_booking_form' );
+	if ( ! elRoomLoadBookingForm ) {
+		wphbRoomInitDatePicker();
+	}
 } );
 

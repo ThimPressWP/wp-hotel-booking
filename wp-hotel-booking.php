@@ -417,8 +417,11 @@ class WP_Hotel_Booking {
 		wp_register_style( 'wp-admin-single-room-v2', $this->plugin_url( "assets/css/admin/admin-single-room{$min}.css" ) );
 		wp_register_style( 'wp-admin-review-image', $this->plugin_url( "assets/css/admin/review-image{$min}.css" ), [], $v_rand );
 		wp_register_style( 'wp-admin-hotel-booking-fullcalendar', $this->plugin_url( 'assets/css/fullcalendar.min.css' ) );
-		wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.css' ), array(), WPHB_VERSION );
+		wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.css' ), [], WPHB_VERSION );
 		wp_register_style( 'wp-admin-hotel-booking-calendar-v2', $this->plugin_url( 'assets/css/admin/main.min.css' ) );
+		wp_register_style( 'tingle-css', $this->plugin_url( 'assets/lib/tingle.css' ) );
+		wp_register_style( 'flatpickr-css', $this->plugin_url('assets/lib/flatpickr.min.css') );
+		wp_register_style( 'wphb-single-room-css', WPHB_PLUGIN_URL . '/assets/css/booking-single-room.css', [], $version );
         // End Register styles
 
 		// Register scripts
@@ -519,6 +522,15 @@ class WP_Hotel_Booking {
 		// calendar v2 : move addon to single rooms
 		wp_register_script( 'wp-admin-hotel-booking-calendar-v2', $this->plugin_url( 'assets/js/admin/main.min.js' ), $dependencies );
 		wp_register_script( 'wp-admin-hotel-booking-v2', $this->plugin_url( 'assets/js/admin/admin.hotel-booking-v2.js' ), $dependencies, WPHB_VERSION );
+
+        // Single room script.
+		wp_register_script(
+			'wpdb-single-room-js',
+			WPHB_PLUGIN_URL . "/assets/dist/js/frontend/wphb-single-room{$min}.js",
+			[],
+			$version,
+			[ 'strategy' => 'defer' ]
+		);
         // End Register scripts
 
 		if ( is_admin() ) {
@@ -553,6 +565,9 @@ class WP_Hotel_Booking {
 
             // Load scripts and styles for single room
 			if ( is_singular( 'hb_room' ) ) {
+				wp_enqueue_style( 'flatpickr-css' );
+                wp_enqueue_style( 'tingle-css' );
+                wp_enqueue_style( 'wphb-single-room-css' );
 				wp_enqueue_script( 'wpdb-single-room-js' );
 				wp_enqueue_script( 'wp-hotel-booking-gallery' );
 
@@ -591,11 +606,9 @@ class WP_Hotel_Booking {
 			wp_enqueue_script( 'wp-hotel-booking-owl-carousel' );
 
 			// booking in single rooms
-			wp_enqueue_style( 'flatpickr-css' );
-			wp_enqueue_style( 'wp-hotel-booking-magnific-popup-css' );
-			wp_enqueue_style( 'wp-hotel-booking-single-room-css' );
+			//wp_enqueue_style( 'wp-hotel-booking-magnific-popup-css' );
 			wp_enqueue_script( 'wphb-ui-slider' );
-			wp_enqueue_script( 'wp-hotel-booking-magnific-popup-js' );
+			//wp_enqueue_script( 'wp-hotel-booking-magnific-popup-js' );
 		}
 		wp_enqueue_style( 'wp-hotel-booking-libaries-style' );
 

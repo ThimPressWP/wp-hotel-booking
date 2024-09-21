@@ -36,7 +36,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 
 			add_action( 'wp_footer', array( $this, 'wp_footer' ) );
 			// enqueue script
-			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
+			//add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
 
 			add_action( 'wp_ajax_check_room_availabel', array( $this, 'check_room_availabel' ) );
 			add_action( 'wp_ajax_nopriv_check_room_availabel', array( $this, 'check_room_availabel' ) );
@@ -84,7 +84,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 		/**
 		 * Enqueue script.
 		 */
-		public function enqueue() {
+		/*public function enqueue() {
 			$ver = WPHB_VERSION;
 			$min = '.min';
 			if ( WPHB_Settings::is_debug() ) {
@@ -131,7 +131,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 				)
 			);
 			wp_localize_script( 'wpdb-single-room-js', 'Hotel_Booking_Blocked_Days', $l10n );
-		}
+		}*/
 
 		/**
 		 * Check room available.
