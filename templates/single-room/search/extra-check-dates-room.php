@@ -28,7 +28,7 @@ if ( $room_extra ) { ?>
 				</a>
 			</h5>
 		</div>
-		<div class="hb_addition_packages">
+		<div class="hb_addition_packages active">
 			<ul class="hb_addition_packages_ul">
 				<?php foreach ( $room_extra as $key => $extra ) { ?>
 					<li data-price="<?php echo esc_attr( $extra->amount_singular ); ?>">
