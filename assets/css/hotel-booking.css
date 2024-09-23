@@ -3717,3 +3717,7 @@ ul.hb-room-review-images img {
     display: inline-block;
     animation: spin 1s linear infinite;
 }
+
+.flatpickr-calendar:after, .flatpickr-calendar:before {
+	content: none !important;
+}
