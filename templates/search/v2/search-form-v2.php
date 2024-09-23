@@ -6,7 +6,7 @@
  *
  * @author  ThimPress, leehld
  * @package WP-Hotel-Booking/Templates
- * @version 1.9.7
+ * @version 1.9.8
  */
 
 /**
@@ -109,14 +109,10 @@ $page_search    = hb_get_page_id( 'search' );
 		</p>
 	</form>
 	<?php
-	$data = array();
-	hb_get_template( 'search/v2/sort-by.php', compact( 'data' ) );
-	?>
-	<?php
 	if ( ! empty( $page_search ) && is_page( $page_search ) ) :
 		?>
 		<div id="hotel-booking-results">
-			<?php echo wphb_skeleton_animation_html( 20, '100%', 'height:20px', 'width:100%' ); ?>
+			<?php wphb_skeleton_animation_html( 20, '100%', 'height:20px', 'width:100%' ); ?>
 			<div class="detail__booking-rooms"></div>
 		</div>
 		<?php
