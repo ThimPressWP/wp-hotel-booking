@@ -562,10 +562,10 @@ class WP_Hotel_Booking {
 			wp_enqueue_script( 'wp-hotel-booking-sort-by' );
 			wp_enqueue_script( 'wp-hotel-booking-filter-by' );
 			wp_enqueue_script( 'wp-hotel-booking-room-review' );
+			wp_enqueue_style( 'flatpickr-css' );
 
             // Load scripts and styles for single room
 			if ( is_singular( 'hb_room' ) ) {
-				wp_enqueue_style( 'flatpickr-css' );
                 wp_enqueue_style( 'tingle-css' );
                 wp_enqueue_style( 'wphb-single-room-css' );
 				wp_enqueue_script( 'wpdb-single-room-js' );
