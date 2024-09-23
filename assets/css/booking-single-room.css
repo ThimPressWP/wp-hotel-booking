@@ -46,7 +46,7 @@
 	line-height: 1.6em;
 }
 
-.single-hb_room  .flatpickr-calendar {
+.single-hb_room .hb-room-single__booking .flatpickr-calendar {
 	margin-top: -30px;
 }
 
