@@ -1144,7 +1144,7 @@ const wphbDatePicker = () => {
 		datePickerCheckOut = flatpickr( elDateCheckOut, optionCheckout );
 	}
 
-	if ( elDateRange && ! elDateRange.closest( '.hb-form-check-in-check-out' ) ) {
+	if ( elDateRange && elDateRange.closest( '.hb-form-check-in-check-out' ) ) {
 		// Check in, out dates
 		const optionRange = {
 			dateFormat: 'Y/m/d',
