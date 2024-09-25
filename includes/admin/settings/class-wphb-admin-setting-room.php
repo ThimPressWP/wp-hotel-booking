@@ -41,7 +41,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 					),
 
 					array(
-						'id'      => 'tp_hotel_booking_catalog_number_column',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'catalog_number_column' ),
 						'type'    => 'number',
 						'default' => 4,
 						'min'     => 1,
@@ -50,7 +50,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 					),
 
 					array(
-						'id'      => 'tp_hotel_booking_posts_per_page',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'posts_per_page' ),
 						'type'    => 'number',
 						'default' => 8,
 						'min'     => 1,
@@ -59,7 +59,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 					),
 
 					array(
-						'id'      => 'tp_hotel_booking_catalog_image',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'catalog_image' ),
 						'type'    => 'image_size',
 						'default' => array(
 							'width'  => 270,
@@ -71,38 +71,33 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 						),
 						'title'   => __( 'Catalog images size', 'wp-hotel-booking' ),
 					),
-
 					array(
-						'id'      => 'tp_hotel_booking_catalog_display_rating',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'catalog_display_rating' ),
 						'title'   => __( 'Display rating', 'wp-hotel-booking' ),
 						'type'    => 'checkbox',
 						'default' => 1,
 					),
-
 					array(
 						'type' => 'section_end',
 						'id'   => 'catalog_room_setting',
 					),
-
 					array(
 						'type'  => 'section_start',
 						'id'    => 'room_setting',
 						'title' => __( 'Room Options', 'wp-hotel-booking' ),
 						'desc'  => __( 'Room settings display column number and image size used in gallery single page', 'wp-hotel-booking' ),
 					),
-
 					array(
-						'id'      => 'tp_hotel_booking_max_adults_all_room',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'max_adults_all_room' ),
 						'title'   => __( 'Max Adults Rooms', 'wp-hotel-booking' ),
 						'type'    => 'number',
 						'default' => 10,
 						'min'     => 1,
 						'desc'    => __( 'Set custom quantity, serve the search page.', 'wp-hotel-booking' ),
 					),
-
 					array(
 						'type'    => 'select',
-						'id'      => 'tp_hotel_booking_reservation hold',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'reservation_hold' ),
 						'title'   => __( 'Reservation Hold', 'wp-hotel-booking' ),
 						'options' => array(
 							'completed ' => __( 'Completed ', 'wp-hotel-booking' ),
@@ -113,7 +108,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 					),
 
 					array(
-						'id'      => 'tp_hotel_booking_room_image_gallery',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'room_image_gallery' ),
 						'type'    => 'image_size',
 						'default' => array(
 							'width'  => 1000,
@@ -125,9 +120,8 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 						),
 						'title'   => __( 'Room images size gallery', 'wp-hotel-booking' ),
 					),
-
 					array(
-						'id'      => 'tp_hotel_booking_room_thumbnail',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'room_thumbnail' ),
 						'type'    => 'image_size',
 						'default' => array(
 							'width'  => 150,
@@ -139,16 +133,14 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 						),
 						'title'   => __( 'Room images thumbnail', 'wp-hotel-booking' ),
 					),
-
 					array(
-						'id'      => 'tp_hotel_booking_display_pricing_plans',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'display_pricing_plans' ),
 						'title'   => __( 'Display pricing plans', 'wp-hotel-booking' ),
 						'type'    => 'checkbox',
 						'default' => 1,
 					),
-
 					array(
-						'id'      => 'tp_hotel_booking_enable_review_rating',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'enable_review_rating' ),
 						'title'   => __( 'Enable ratings on reviews', 'wp-hotel-booking' ),
 						'type'    => 'checkbox',
 						'default' => 1,
@@ -156,28 +148,25 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 							'onchange' => "jQuery('.enable_ratings_on_reviews').toggleClass( 'hide-if-js', ! this.checked );",
 						),
 					),
-
 					array(
-						'id'      => 'tp_hotel_booking_enable_advanced_review',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'enable_advanced_review' ),
 						'title'   => __( 'Enable advanced review', 'wp-hotel-booking' ),
 						'type'    => 'checkbox',
 						'default' => 1,
 						'atts'    => array(
-//							'onchange' => "jQuery('.enable_ratings_on_reviews').toggleClass( 'hide-if-js', ! this.checked );",
+						//                          'onchange' => "jQuery('.enable_ratings_on_reviews').toggleClass( 'hide-if-js', ! this.checked );",
 						),
 					),
-
 					array(
-						'id'      => 'tp_hotel_booking_max_review_image_number',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'max_review_image_number' ),
 						'title'   => __( 'Maximum images', 'wp-hotel-booking' ),
 						'type'    => 'number',
 						'default' => 5,
 						'min'     => 1,
 						'desc'    => __( 'This field is used for advanced review.', 'wp-hotel-booking' ),
 					),
-
 					array(
-						'id'      => 'tp_hotel_booking_max_review_image_file_size',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'max_review_image_file_size' ),
 						'title'   => __( 'Maximum file sizes (KB)', 'wp-hotel-booking' ),
 						'type'    => 'number',
 						'default' => 10000,

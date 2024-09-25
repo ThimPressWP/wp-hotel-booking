@@ -45,39 +45,37 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 						'title' => __( 'General Options', 'wp-hotel-booking' ),
 						'desc'  => __( 'General options for system.', 'wp-hotel-booking' ),
 					),
-
 					array(
 						'type'    => 'checkbox',
-						'id'      => 'tp_hotel_booking_allow_checkout_date_blocked',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'allow_checkout_date_blocked' ),
 						'title'   => __( 'Checkout date blocked', 'wp-hotel-booking' ),
 						'desc'    => __( 'Allow checkout date when blocked, applicable to search forms except single room', 'wp-hotel-booking' ),
 						'default' => 1,
 					),
-
 					array(
 						'type'    => 'checkbox',
-						'id'      => 'tp_hotel_booking_single_purchase',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'single_purchase' ),
 						'title'   => __( 'Single Purchase', 'wp-hotel-booking' ),
 						'desc'    => __( 'Disable select quantity in Hotel Search page (default: one at a time)', 'wp-hotel-booking' ),
 						'default' => 1,
 					),
 					array(
 						'type'    => 'checkbox',
-						'id'      => 'tp_hotel_booking_custom_process',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'custom_process' ),
 						'title'   => __( 'Custom Process', 'wp-hotel-booking' ),
 						'desc'    => __( 'Choose extra options after select room in search page', 'wp-hotel-booking' ),
 						'default' => 1,
 					),
 					array(
 						'type'    => 'select',
-						'id'      => 'tp_hotel_booking_currency',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'currency' ),
 						'title'   => __( 'Currency', 'wp-hotel-booking' ),
 						'options' => $currency_code_options,
 						'default' => 'USD',
 					),
 					array(
 						'type'    => 'select',
-						'id'      => 'tp_hotel_booking_price_currency_position',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'price_currency_position' ),
 						'title'   => __( 'Currency Position', 'wp-hotel-booking' ),
 						'options' => array(
 							'left'             => __( 'Left ( $69.99 )', 'wp-hotel-booking' ),
@@ -89,19 +87,19 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					),
 					array(
 						'type'    => 'text',
-						'id'      => 'tp_hotel_booking_price_thousands_separator',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'price_thousands_separator' ),
 						'title'   => __( 'Thousands Separator', 'wp-hotel-booking' ),
 						'default' => ',',
 					),
 					array(
 						'type'    => 'text',
-						'id'      => 'tp_hotel_booking_price_decimals_separator',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'price_decimals_separator' ),
 						'title'   => __( 'Decimals Separator', 'wp-hotel-booking' ),
 						'default' => '.',
 					),
 					array(
 						'type'    => 'number',
-						'id'      => 'tp_hotel_booking_price_number_of_decimal',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'price_number_of_decimal' ),
 						'title'   => __( 'Number of decimal', 'wp-hotel-booking' ),
 						'default' => 1,
 						'min'     => 0,
@@ -109,7 +107,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					),
 					array(
 						'type'    => 'number',
-						'id'      => 'tp_hotel_booking_minimum_booking_day',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'minimum_booking_day' ),
 						'title'   => __( 'Minimum booking nights', 'wp-hotel-booking' ),
 						'default' => 1,
 						'min'     => 0,
@@ -117,7 +115,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					),
 					array(
 						'type'    => 'number',
-						'id'      => 'tp_hotel_booking_tax',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'tax' ),
 						'title'   => __( 'Tax', 'wp-hotel-booking' ),
 						'default' => 10,
 						'min'     => 0,
@@ -125,13 +123,13 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					),
 					array(
 						'type'    => 'checkbox',
-						'id'      => 'tp_hotel_booking_price_including_tax',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'price_including_tax' ),
 						'title'   => __( 'Price including tax', 'wp-hotel-booking' ),
 						'default' => 1,
 					),
 					array(
 						'type'    => 'select',
-						'id'      => 'tp_hotel_booking_price_display',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'price_display' ),
 						'title'   => __( 'Price display', 'wp-hotel-booking' ),
 						'options' => array(
 							'min'        => __( 'Min', 'wp-hotel-booking' ),
@@ -142,7 +140,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					),
 					array(
 						'type'    => 'number',
-						'id'      => 'tp_hotel_booking_advance_payment',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'advance_payment' ),
 						'title'   => __( 'Advance Payment', 'wp-hotel-booking' ),
 						'desc'    => __( 'Advance payment, eg: 50%', 'wp-hotel-booking' ),
 						'default' => 50,
@@ -151,7 +149,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					),
 					array(
 						'type'    => 'checkbox',
-						'id'      => 'tp_hotel_booking_enable_coupon',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'enable_coupon' ),
 						'title'   => __( 'Enable Coupon', 'wp-hotel-booking' ),
 						'desc'    => '',
 						'default' => 0,
