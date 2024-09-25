@@ -33,7 +33,6 @@ if ( ! class_exists( 'WPHB_COUPON_HOOKS' ) ) {
 		 * It adds a new tab to the admin settings page.
 		 */
 		public function _init_hooks() {
-			add_action( 'hb_admin_settings_tab_after', array( $this, 'admin_settings' ) );
 			add_action( 'hotel_booking_before_cart_total', array( $this, 'hotel_booking_before_cart_total' ) );
 			add_action( 'init', array( $this, 'register_post_types_coupon' ) );
 		}
@@ -75,34 +74,6 @@ if ( ! class_exists( 'WPHB_COUPON_HOOKS' ) ) {
 			);
 			$args = apply_filters( 'hotel_booking_register_post_type_coupon_arg', $args );
 			register_post_type( 'hb_coupon', $args );
-		}
-
-		/**
-		 * It adds a checkbox to the general settings page in the admin area.
-		 *
-		 * @param settings The settings page you want to add your field to.
-		 *
-		 * @return the value of the coupon code.
-		 */
-		public function admin_settings( $settings ) {
-			if ( $settings !== 'general' ) {
-				return;
-			}
-			$settings = hb_settings(); ?>
-			<table class="form-table">
-				<tr>
-					<th><?php _e( 'Enable Coupon', 'wp-hotel-booking' ); ?></th>
-					<td>
-						<input type="hidden"
-								name="<?php echo esc_attr( $settings->get_field_name( 'enable_coupon' ) ); ?>"
-								value="0"/>
-						<input type="checkbox"
-								name="<?php echo esc_attr( $settings->get_field_name( 'enable_coupon' ) ); ?>" <?php checked( $settings->get( 'enable_coupon' ) ? 1 : 0, 1 ); ?>
-								value="1"/>
-					</td>
-				</tr>
-			</table>
-			<?php
 		}
 
 		/**

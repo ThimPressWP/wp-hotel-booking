@@ -18,6 +18,8 @@ defined( 'ABSPATH' ) || exit;
  * Class WPHB_Payment_Gateway_Paypal
  */
 class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
+	protected $_slug = 'paypal';
+
 	/**
 	 * @var null
 	 */
@@ -78,11 +80,11 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 	 * Construction
 	 */
 	function __construct() {
-		parent::__construct();
-		$this->_slug        = 'paypal';
 		$this->_title       = __( 'Paypal', 'wp-hotel-booking' );
 		$this->_description = __( 'Pay with Paypal', 'wp-hotel-booking' );
 		$this->_settings    = WPHB_Settings::instance()->get( 'paypal' );
+
+		parent::__construct();
 
 		$this->paypal_live_url            = 'https://www.paypal.com/';
 		$this->paypal_sandbox_url         = 'https://www.sandbox.paypal.com/';

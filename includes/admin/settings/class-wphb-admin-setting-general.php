@@ -150,6 +150,13 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 						'max'     => 100,
 					),
 					array(
+						'type'    => 'checkbox',
+						'id'      => 'tp_hotel_booking_enable_coupon',
+						'title'   => __( 'Enable Coupon', 'wp-hotel-booking' ),
+						'desc'    => '',
+						'default' => 0,
+					),
+					array(
 						'type' => 'section_end',
 						'id'   => 'general_settings',
 					),

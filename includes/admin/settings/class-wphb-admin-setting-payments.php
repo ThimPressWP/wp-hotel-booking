@@ -77,9 +77,16 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 
 			$payments = hb_get_payment_gateways();
 			if ( $current_section && $current_section !== 'general' ) {
+				/**
+				 * @var WPHB_Payment_Gateway_Base $payment
+				 */
 				foreach ( $payments as $payment ) {
 					if ( $payment->slug === $current_section ) {
 						$payment->admin_settings();
+						echo sprintf(
+							'<input type="hidden" name="wphb_save_section_fields_setting" value="%s" />',
+							esc_attr( $payment->key_save_settings )
+						);
 						break;
 					}
 				}

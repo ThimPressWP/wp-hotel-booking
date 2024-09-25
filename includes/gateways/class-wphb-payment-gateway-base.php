@@ -33,10 +33,13 @@ class WPHB_Payment_Gateway_Base {
 	 */
 	protected $_slug = '';
 
+	public string $key_save_settings;
+
 	/**
 	 * Construction
 	 */
-	function __construct() {
+	public function __construct() {
+		$this->key_save_settings = WPHB_Settings::instance()->get_field_name( $this->_slug );
 	}
 
 	function __get( $key ) {

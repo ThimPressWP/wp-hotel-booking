@@ -18,17 +18,20 @@ defined( 'ABSPATH' ) || exit;
  * Class HB_Payment_Gateway_Stripe
  */
 class WPHB_Payment_Gateway_Offline_Payment extends WPHB_Payment_Gateway_Base {
+	protected $_slug = 'offline-payment';
+
 	/**
 	 * @var array
 	 */
 	protected $_settings = array();
 
 	function __construct() {
-		parent::__construct();
-		$this->_slug        = 'offline-payment';
 		$this->_title       = __( 'Offline Payment', 'wp-hotel-booking' );
 		$this->_description = __( 'Pay on arrival', 'wp-hotel-booking' );
 		$this->_settings    = WPHB_Settings::instance()->get( 'offline-payment' );
+
+		parent::__construct();
+
 		$this->init();
 	}
 

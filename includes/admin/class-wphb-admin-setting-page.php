@@ -107,6 +107,16 @@ abstract class WPHB_Admin_Setting_Page {
 			return;
 		}
 
+		// Save section fields setting - sub tab setting
+		$section = WPHB_Helpers::get_param( 'section', '' );
+		$key_section_field_setting = WPHB_Helpers::get_param( 'wphb_save_section_fields_setting', '' );
+		if ( ! empty( $section ) && ! empty( $key_section_field_setting ) ) {
+			$section_fields_setting = WPHB_Helpers::get_param( $key_section_field_setting, [] );
+			WPHB_Settings::instance()->set( $key_section_field_setting, $section_fields_setting );
+
+			return;
+		}
+
 		$settings = $this->get_settings();
 		foreach ( $settings as $setting ) {
 			$id           = $setting['id'] ?? '';
