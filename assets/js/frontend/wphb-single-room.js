@@ -312,6 +312,11 @@ document.addEventListener( 'click', function( e ) {
 		}
 		elAddToCart.style.display = 'none';
 	} else if ( target.id === 'hb_room_load_booking_form' ) {
+		const href = target.href;
+		const checkHref = /.*#/;
+		if ( ! checkHref.test( href ) ) {
+			return;
+		}
 		e.preventDefault();
 
 		elHotelBookingRoom = document.querySelector( '#hotel_booking_room_hidden' );
@@ -339,8 +344,16 @@ document.addEventListener( 'click', function( e ) {
 		let iframe = elRoomPreview.dataset.preview;
 		const regexSearchInIframe = /.*<iframe/;
 		const windowHeight = window.innerHeight / 2;
+
+		// Check link youtube
+		const regexYoutube = /.*youtube.com/;
+		if ( regexYoutube.test( iframe ) ) {
+			iframe = iframe.replace( 'watch?v=', 'embed/' );
+		}
+
 		if ( ! regexSearchInIframe.test( iframe ) ) {
-			iframe = `<iframe class="wphb-iframe-preview" src="${ iframe }" width="100%" height="${ windowHeight }px" frameborder="0" allowfullscreen></iframe>`;
+			iframe = `<iframe class="wphb-iframe-preview" src="${ iframe }" 
+			width="100%" height="${ windowHeight }px" frameborder="0" allowfullscreen></iframe>`;
 		}
 
 		modalPreview = new tingle.modal();
