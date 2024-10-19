@@ -207,7 +207,7 @@ class Thim_Ekit_Widget_List_Results_Room extends Widget_Base {
 
 					$this->current_permalink = get_permalink(); ?>
 					<div class="hb-room clearfix">
-						<form name="hb-search-results" class="hb-search-room-results <?php echo $class_item ?> <?php echo ! empty( $custom_process ) ? ' custom-process' : ' extra-option-loop'; ?>" >
+						<form name="hb-page-search-results" class="hb-page-search-room-results <?php echo $class_item ?> <?php echo ! empty( $custom_process ) ? ' custom-process' : ' extra-option-loop'; ?>" >
 						<?php do_action( 'hotel_booking_loop_before_item', $room->ID ); ?>
 							<?php
 								\Thim_EL_Kit\Utilities\Elementor::instance()->render_loop_item_content( $settings['template_id'] );
