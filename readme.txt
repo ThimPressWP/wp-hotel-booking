@@ -2,10 +2,10 @@
 Contributors: thimpress, leehld, phamtungpth, thoakim
 Donate link: https://thimpress.com/
 Tags: hotel, booking, hotel booking, reservation, reservations
-Requires at least: 6.3
+Requires at least: 6.0
 Requires PHP: 7.4
-Tested up to: 6.5.5
-Stable tag: 2.1.2
+Tested up to: 6.6.2
+Stable tag: 2.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,8 +75,15 @@ Yes.
 
 == Changelog ==
 
-= 2.1.3 (2024-09-12) =
+= 2.1.3 (2024-09-26) =
+~ Change library datepicker JQuery to flatpickr.
+~ Change library magnific-popup JQuery to tingle.
+~ Tweak: save options.
+~ Tweak: UI/UX check date available.
 ~ Fixed: security.
+~ Fixed: error invalid date with firefox, safari browser.
+~ Fixed: dates available on date checkin, checkout.
+~ Fixed: error make menu config with Thim Elementor Kit.
 
 = 2.1.2 (2024-07-18) =
 ~ Tweak: facilities.
