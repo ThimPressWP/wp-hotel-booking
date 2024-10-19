@@ -236,7 +236,15 @@ const wphbPaginationRoom = (forms, skeleton, wrapperResult) => {
 };
 /** end search api */
 
+const addtocartElementor = () => {
+    const formBookingel = document.querySelector('.hotel-booking-search-el form#hb-form-search-page');
 
+    if ( !formBookingel ) {
+		return;
+	}
+
+    bookingRoomsPages(formBookingel);
+}
 /** Booking room search page */
 
 const bookingRoomsPages = (formsCheck) => {
@@ -971,6 +979,7 @@ const sortBy = () => {
 document.addEventListener('DOMContentLoaded', () => {
     searchRoomsPages();//use in page search room
     addExtraToCart();
+    addtocartElementor();
     checkAvailableRooms(); // use multi form search will redirect to page search room with data valid :
     processCheckout();
 

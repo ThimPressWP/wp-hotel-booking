@@ -1095,89 +1095,90 @@ import flatpickr from 'flatpickr';
 
 let datePickerCheckIn, datePickerCheckOut, datePickerRange;
 const wphbDatePicker = () => {
-	const elFormTable = document.querySelector( '.hb-form-table' );
-	if ( ! elFormTable ) {
+	const elFormTables = document.querySelectorAll( '.hb-form-table' );
+	if ( ! elFormTables.length ) {
 		return;
 	}
+	elFormTables.forEach(elFormTable => {
+		const elDateCheckIn = elFormTable.querySelector( 'input[name="check_in_date"]' );
+		const elDateCheckOut = elFormTable.querySelector( 'input[name="check_out_date"]' );
+		const elDateRange = elFormTable.querySelector( 'input[name="check_in_out_range"]' );
+		const elDateCheckInOut = elFormTable.querySelector( '.hb-form-check-in-check-out' );
+		const dateNow = new Date();
+		const dateTomorrow = new Date( dateNow.setDate( dateNow.getDate() + 1 ) );
 
-	const elDateCheckIn = elFormTable.querySelector( 'input[name="check_in_date"]' );
-	const elDateCheckOut = elFormTable.querySelector( 'input[name="check_out_date"]' );
-	const elDateRange = elFormTable.querySelector( 'input[name="check_in_out_range"]' );
-	const elDateCheckInOut = elFormTable.querySelector( '.hb-form-check-in-check-out' );
-	const dateNow = new Date();
-	const dateTomorrow = new Date( dateNow.setDate( dateNow.getDate() + 1 ) );
+		if ( elDateCheckIn && ! elDateCheckIn.closest( '.hb-form-check-in-check-out' ) ) {
+			// Check in date
+			const optionCheckIn = {
+				dateFormat: 'Y/m/d',
+				minDate: 'today',
+				disableMobile: true,
+				//defaultDate: 'today',
+				onChange( selectedDates, dateStr, instance ) {
+					if ( datePickerCheckOut ) {
+						// calculate next day available
+						const dateSelected = selectedDates[ 0 ];
+						datePickerCheckOut.clear();
+						const dateNext = new Date( dateSelected.setDate( dateSelected.getDate() + 1 ) );
+						datePickerCheckOut.set( 'minDate', dateNext );
+						//datePickerCheckOut.set( 'date', dateNext );
+						datePickerCheckOut.open();
+					}
+				},
+			};
 
-	if ( elDateCheckIn && ! elDateCheckIn.closest( '.hb-form-check-in-check-out' ) ) {
-		// Check in date
-		const optionCheckIn = {
-			dateFormat: 'Y/m/d',
-			minDate: 'today',
-			disableMobile: true,
-			//defaultDate: 'today',
-			onChange( selectedDates, dateStr, instance ) {
-				if ( datePickerCheckOut ) {
-					// calculate next day available
-					const dateSelected = selectedDates[ 0 ];
-					datePickerCheckOut.clear();
-					const dateNext = new Date( dateSelected.setDate( dateSelected.getDate() + 1 ) );
-					datePickerCheckOut.set( 'minDate', dateNext );
-					//datePickerCheckOut.set( 'date', dateNext );
-					datePickerCheckOut.open();
-				}
-			},
-		};
-
-		datePickerCheckIn = flatpickr( elDateCheckIn, optionCheckIn );
-	}
-
-	if ( elDateCheckOut && ! elDateCheckOut.closest( '.hb-form-check-in-check-out' ) ) {
-		// Check out date
-		const optionCheckout = {
-			dateFormat: 'Y/m/d',
-			minDate: 'today',
-			disableMobile: true,
-			//defaultDate: dateTomorrow,
-			onChange( selectedDates, dateStr, instance ) {
-			},
-		};
-
-		datePickerCheckOut = flatpickr( elDateCheckOut, optionCheckout );
-	}
-
-	if ( elDateRange && elDateRange.closest( '.hb-form-check-in-check-out' ) ) {
-		// Check in, out dates
-		const optionRange = {
-			dateFormat: 'Y/m/d',
-			minDate: 'today',
-			disableMobile: true,
-			mode: 'range',
-			showMonths: 2,
-			defaultDate: [ elDateCheckIn.value, elDateCheckOut.value ],
-			onClose( selectedDates, dateStr, instance ) {
-				const dateCheckInSelected = selectedDates[ 0 ];
-				const dateCheckOutSelected = selectedDates[ 1 ];
-				if ( ! dateCheckInSelected || ! dateCheckOutSelected ) {
-					return;
-				}
-
-				const dateCheckInStr = wphbConvertDateToFormatDefault( dateCheckInSelected );
-				const dateCheckOutStr = wphbConvertDateToFormatDefault( dateCheckOutSelected );
-				elDateCheckIn.value = dateCheckInStr;
-				elDateCheckOut.value = dateCheckOutStr;
-			},
-			onChange( selectedDates, dateStr, instance ) {
-
-			},
-		};
-		datePickerRange = flatpickr( elDateRange, optionRange );
-
-		if ( elDateCheckInOut ) {
-			elDateCheckInOut.addEventListener( 'click', ( e ) => {
-				e.preventDefault();
-				datePickerRange.open();
-			} );
+			datePickerCheckIn = flatpickr( elDateCheckIn, optionCheckIn );
 		}
-	}
+
+		if ( elDateCheckOut && ! elDateCheckOut.closest( '.hb-form-check-in-check-out' ) ) {
+			// Check out date
+			const optionCheckout = {
+				dateFormat: 'Y/m/d',
+				minDate: 'today',
+				disableMobile: true,
+				//defaultDate: dateTomorrow,
+				onChange( selectedDates, dateStr, instance ) {
+				},
+			};
+
+			datePickerCheckOut = flatpickr( elDateCheckOut, optionCheckout );
+		}
+
+		if ( elDateRange && elDateRange.closest( '.hb-form-check-in-check-out' ) ) {
+			// Check in, out dates
+			const optionRange = {
+				dateFormat: 'Y/m/d',
+				minDate: 'today',
+				disableMobile: true,
+				mode: 'range',
+				showMonths: 2,
+				defaultDate: [ elDateCheckIn.value, elDateCheckOut.value ],
+				onClose( selectedDates, dateStr, instance ) {
+					const dateCheckInSelected = selectedDates[ 0 ];
+					const dateCheckOutSelected = selectedDates[ 1 ];
+					if ( ! dateCheckInSelected || ! dateCheckOutSelected ) {
+						return;
+					}
+
+					const dateCheckInStr = wphbConvertDateToFormatDefault( dateCheckInSelected );
+					const dateCheckOutStr = wphbConvertDateToFormatDefault( dateCheckOutSelected );
+					elDateCheckIn.value = dateCheckInStr;
+					elDateCheckOut.value = dateCheckOutStr;
+				},
+				onChange( selectedDates, dateStr, instance ) {
+
+				},
+			};
+			datePickerRange = flatpickr( elDateRange, optionRange );
+
+			if ( elDateCheckInOut ) {
+				elDateCheckInOut.addEventListener( 'click', ( e ) => {
+					e.preventDefault();
+					datePickerRange.open();
+				} );
+			}
+		}
+	});
 };
 
 const wphbConvertDateToFormatDefault = ( date ) => {

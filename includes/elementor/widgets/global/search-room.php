@@ -505,11 +505,12 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
     protected function render() {
         $settings    	= $this->get_settings_for_display();
 		$uniqid         = uniqid();
+		$page_search    = hb_get_page_id( 'search' );
 
 		if ( $settings['data'] ) {
 			?>
             <div class="hotel-booking-search-el">
-				<form name="hb-search-form" action="<?php echo hb_get_url(); ?>" class="hb-search-form-<?php echo esc_attr($uniqid); ?>">
+				<form <?php echo is_page( $page_search ) ? 'id="hb-form-search-page" ' : ''; ?> name="hb-search-form" action="<?php echo hb_get_url(); ?>" class="hb-search-form-<?php echo esc_attr($uniqid); ?>">
 					<ul class="hb-form-table">
 					<?php
 					foreach ( $settings['data'] as $data ) {
