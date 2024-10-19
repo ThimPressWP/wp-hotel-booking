@@ -1099,7 +1099,7 @@ const wphbDatePicker = () => {
 	if ( ! elFormTables.length ) {
 		return;
 	}
-	elFormTables.forEach(elFormTable => {
+	elFormTables.forEach( ( elFormTable ) => {
 		const elDateCheckIn = elFormTable.querySelector( 'input[name="check_in_date"]' );
 		const elDateCheckOut = elFormTable.querySelector( 'input[name="check_out_date"]' );
 		const elDateRange = elFormTable.querySelector( 'input[name="check_in_out_range"]' );
@@ -1178,7 +1178,7 @@ const wphbDatePicker = () => {
 				} );
 			}
 		}
-	});
+	} );
 };
 
 const wphbConvertDateToFormatDefault = ( date ) => {
