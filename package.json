@@ -33,6 +33,7 @@
   },
   "scripts": {
     "start": "wp-scripts start NODE_ENV=develop",
+    "format": "wp-scripts format assets/js/frontend/wphb-single-room.js",
     "build": "wp-scripts build NODE_ENV=production",
     "makepot": "wp i18n make-pot . languages/wp-hotel-booking.pot --skip-audit --exclude=\"test,releases,build,tools,dist,node_modules,vendor,\"",
     "release": "npm run build && npm run makepot && gulp release"
