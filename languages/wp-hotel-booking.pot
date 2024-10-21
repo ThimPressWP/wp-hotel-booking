@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WP Hotel Booking plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Hotel Booking 2.1.3\n"
+"Project-Id-Version: WP Hotel Booking 2.1.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-hotel-booking\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-09-26T04:59:20+03:00\n"
+"POT-Creation-Date: 2024-10-21T06:22:11+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wp-hotel-booking\n"
@@ -2747,24 +2747,20 @@ msgid "Select Field"
 msgstr ""
 
 #: includes/elementor/widgets/global/search-room.php:71
-#: includes/elementor/widgets/global/search-room.php:604
+#: includes/elementor/widgets/global/search-room.php:605
 #: templates/search/search-form.php:63
 #: templates/search/search-form.php:71
 #: templates/search/v2/search-form-v2.php:65
 #: templates/search/v2/search-form-v2.php:73
-#: templates/search/v2/search-form-v3.php:65
-#: templates/search/v2/search-form-v3.php:73
 msgid "Adults"
 msgstr ""
 
 #: includes/elementor/widgets/global/search-room.php:72
-#: includes/elementor/widgets/global/search-room.php:673
+#: includes/elementor/widgets/global/search-room.php:674
 #: templates/search/search-form.php:82
 #: templates/search/search-form.php:90
 #: templates/search/v2/search-form-v2.php:84
 #: templates/search/v2/search-form-v2.php:92
-#: templates/search/v2/search-form-v3.php:84
-#: templates/search/v2/search-form-v3.php:92
 msgid "Children"
 msgstr ""
 
@@ -2842,27 +2838,23 @@ msgstr ""
 msgid "Height"
 msgstr ""
 
-#: includes/elementor/widgets/global/search-room.php:552
+#: includes/elementor/widgets/global/search-room.php:553
 #: includes/elementor/widgets/single-room/room-booking.php:242
 #: templates/search/search-form.php:43
 #: templates/search/search-form.php:47
 #: templates/search/v2/search-form-v2.php:45
 #: templates/search/v2/search-form-v2.php:49
-#: templates/search/v2/search-form-v3.php:45
-#: templates/search/v2/search-form-v3.php:49
 #: templates/single-room/search/check-dates-available.php:31
 #: templates/single-room/search/search-available.php:37
 msgid "Arrival Date"
 msgstr ""
 
-#: includes/elementor/widgets/global/search-room.php:553
+#: includes/elementor/widgets/global/search-room.php:554
 #: includes/elementor/widgets/single-room/room-booking.php:247
 #: templates/search/search-form.php:53
 #: templates/search/search-form.php:57
 #: templates/search/v2/search-form-v2.php:55
 #: templates/search/v2/search-form-v2.php:59
-#: templates/search/v2/search-form-v3.php:55
-#: templates/search/v2/search-form-v3.php:59
 #: templates/single-room/search/check-dates-available.php:37
 #: templates/single-room/search/search-available.php:42
 msgid "Departure Date"
@@ -3023,8 +3015,6 @@ msgstr ""
 #: templates/search/search-form.php:105
 #: templates/search/v2/search-form-v2.php:37
 #: templates/search/v2/search-form-v2.php:108
-#: templates/search/v2/search-form-v3.php:37
-#: templates/search/v2/search-form-v3.php:108
 msgid "Check Availability"
 msgstr ""
 
@@ -6127,15 +6117,15 @@ msgstr ""
 msgid "--- Quantity ---"
 msgstr ""
 
-#: wp-hotel-booking.php:597
+#: wp-hotel-booking.php:593
 msgid "The image number is greater than %s"
 msgstr ""
 
-#: wp-hotel-booking.php:598
+#: wp-hotel-booking.php:594
 msgid "The image file type is invalid"
 msgstr ""
 
-#: wp-hotel-booking.php:599
+#: wp-hotel-booking.php:595
 msgid "The maximum file size is %s KB"
 msgstr ""
 
