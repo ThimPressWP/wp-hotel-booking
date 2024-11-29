@@ -26,7 +26,9 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
     {
         return 'thim-eicon eicon-post-info';
     }
-
+	protected function is_dynamic_content(): bool {
+		return true;
+	}
     public function get_inline_css_depends() {
 		return array(
 			array(
@@ -34,7 +36,7 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
 				'is_core_dependency' => true,
 			),
 		);
-	}
+	} 
 
     public function get_keywords() {
 		return array( 'room', 'info' );
