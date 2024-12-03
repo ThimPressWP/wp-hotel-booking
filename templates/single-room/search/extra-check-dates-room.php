@@ -3,7 +3,7 @@
  * The template for displaying extra package in search room page.
  *
  * @since 2.1.3
- * @version 1.0.0
+ * @version 1.0.1
  */
 
 /**
@@ -54,13 +54,18 @@ if ( $room_extra ) { ?>
 								</p>
 							</div>
 							<div class="hb_extra_detail_price">
-								<?php if ( $extra->respondent === 'number' ) { ?>
-									<input type="number" step="1" min="1"
-											name="hb_optional_quantity[<?php echo esc_attr( $extra->ID ); ?>]"
-											value="1"
-											class="hb_optional_quantity"
-									/>
-								<?php } else { ?>
+								<?php
+								if ( $extra->respondent === 'number' ) {
+									echo apply_filters(
+										'hb_filter_extra_quantity',
+										sprintf(
+											'<input type="number" step="1" min="1" name="hb_optional_quantity[%s]" value="1" />',
+											esc_attr( $extra->ID )
+										),
+										$extra
+									);
+								} else {
+									?>
 									<input type="hidden" step="1" min="1"
 											name="hb_optional_quantity[<?php echo esc_attr( $extra->ID ); ?>]"
 											value="1" />
