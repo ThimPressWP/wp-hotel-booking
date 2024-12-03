@@ -217,77 +217,6 @@ import flatpickr from 'flatpickr';
 		return true;
 	}
 
-	let el_stripe_publish;
-	let strip_publish_string = '';
-
-	function stripeSubmit( form ) {
-		const handler = StripeCheckout.configure( {
-			key: strip_publish_string,
-			image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
-			locale: 'auto',
-			token( token ) {
-				// Use the token to create the charge with a server-side script.
-				// You can access the token ID with `token.id`
-				stripe_payment_process( form, token );
-			},
-		} );
-
-		const first_name = form.find( 'input[name="first_name"]' ).val().trim();
-		const last_name = form.find( 'input[name="last_name"]' ).val().trim();
-		const email = form.find( 'input[name="email"]' ).val().trim();
-		const currency = form.find( 'input[name="currency"]' ).val().trim();
-		let price = 0;
-		if ( form.find( 'input[name="pay_all"]' ).is( ':checked' ) ) {
-			price = form.find( 'input[name="total_price"]' ).val();
-		} else {
-			price = form.find( 'input[name="total_advance"]' ).val();
-		}
-
-		// Open Checkout with further options
-		handler.open( {
-			name: first_name + ' ' + last_name,
-			description: email,
-			currency,
-			amount: price * 100,
-		} );
-	}
-
-	function stripe_payment_process( form, token ) {
-		const data = {};
-		const payment_data = form.serializeArray();
-		const button = form.find( 'button[type="submit"]' );
-		const old_text = button.html();
-		$.each( payment_data, function( index, obj ) {
-			data[ obj.name ] = obj.value;
-		} );
-
-		$.extend( token, data );
-
-		$.ajax( {
-			url: hotel_settings.ajax,
-			data: token,
-			type: 'POST',
-			dataType: 'html',
-			beforeSend() {
-				button.attr( 'disabled', 'disabled' );
-				button.html( '<span class="lds-ring"><span></span><span></span><span></span><span></span></span>' + button.html() );
-			},
-		} ).done( function( res ) {
-			button.html( old_text );
-			res = parseJSON( res );
-
-			if ( typeof res.result !== 'undefined' && res.result == 'success' ) {
-				if ( typeof res.redirect !== 'undefined' ) {
-					window.location.href = res.redirect;
-				}
-			} else if ( typeof res.message !== 'undefined' ) {
-				alert( res.message );
-			}
-		} ).fail( function() {
-			button.html( old_text );
-		} );
-	}
-
 	function orderSubmit( form ) {
 		const action = window.location.href.replace( /\?.*/, '' );
 		form.attr( 'action', action );
@@ -675,13 +604,6 @@ import flatpickr from 'flatpickr';
 	};
 
 	$( document ).ready( function() {
-		el_stripe_publish = $( 'input[name=htb_stripe_publish]' );
-
-		if ( el_stripe_publish.length ) {
-			strip_publish_string = el_stripe_publish.val();
-
-			el_stripe_publish.val( '' );
-		}
 
 		HB_Booking_Cart.init();
 		$.datepicker.setDefaults( { dateFormat: hotel_booking_i18n.date_time_format } );
@@ -875,12 +797,7 @@ import flatpickr from 'flatpickr';
 				if ( ! validateOrder( _self ) ) {
 					return false;
 				}
-
-				if ( _method === 'stripe' ) {
-					stripeSubmit( _self );
-				} else {
-					orderSubmit( _self );
-				}
+				orderSubmit( _self );
 			} catch ( e ) {
 				alert( e );
 			}
