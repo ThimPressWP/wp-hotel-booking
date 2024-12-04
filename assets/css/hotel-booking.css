@@ -3721,3 +3721,7 @@ ul.hb-room-review-images img {
 .flatpickr-calendar:after, .flatpickr-calendar:before {
 	content: none !important;
 }
+
+body.tingle-enabled {
+    top: 0 !important;
+}
