@@ -202,91 +202,91 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 		/**
 		 * Check room available.
 		 */
-        public function hotel_booking_single_check_room_available() {
-            $res = new WPHB_REST_Response();
+		public function hotel_booking_single_check_room_available() {
+			$res = new WPHB_REST_Response();
 
-            try {
-                $nonce = WPHB_Helpers::get_param('nonce');
-                $room_id = WPHB_Helpers::get_param('room-id', '', 'int');
-                $check_in_date_str = WPHB_Helpers::get_param('check_in_date');
-                $check_out_date_str = WPHB_Helpers::get_param('check_out_date');
+			try {
+				$nonce              = WPHB_Helpers::get_param( 'nonce' );
+				$room_id            = WPHB_Helpers::get_param( 'room-id', '', 'int' );
+				$check_in_date_str  = WPHB_Helpers::get_param( 'check_in_date' );
+				$check_out_date_str = WPHB_Helpers::get_param( 'check_out_date' );
 
-                if (!wp_verify_nonce($nonce, 'hb_booking_nonce_action') || empty($room_id)) {
-                    throw new Exception(__('Invalid request', 'wp-hotel-booking'));
-                }
+				if ( ! wp_verify_nonce( $nonce, 'hb_booking_nonce_action' ) || empty( $room_id ) ) {
+					throw new Exception( __( 'Invalid request', 'wp-hotel-booking' ) );
+				}
 
-                if (empty($check_in_date_str) || empty($check_out_date_str)) {
-                    throw new Exception(__('Check in date and check out date is required.', 'wp-hotel-booking'));
-                }
+				if ( empty( $check_in_date_str ) || empty( $check_out_date_str ) ) {
+					throw new Exception( __( 'Check in date and check out date is required.', 'wp-hotel-booking' ) );
+				}
 
-                $room = get_post($room_id);
-                if (!$room || $room->post_type !== WPHB_ROOM_CT) {
-                    throw new Exception(__('Room not found', 'wp-hotel-booking'));
-                }
+				$room = get_post( $room_id );
+				if ( ! $room || $room->post_type !== WPHB_ROOM_CT ) {
+					throw new Exception( __( 'Room not found', 'wp-hotel-booking' ) );
+				}
 
-                // Get room availability for requested dates
-                $room_instance = WPHB_Room::instance($room_id);
-                $existing_bookings = $room_instance->get_dates_available();
+				// Get room availability for requested dates
+				$room_instance     = WPHB_Room::instance( $room_id );
+				$existing_bookings = $room_instance->get_dates_available();
 
-                // Check availability for date range
-                $check_in_timestamp = strtotime($check_in_date_str);
-                $check_out_timestamp = strtotime($check_out_date_str);
-                $date_check = $check_in_timestamp;
+				// Check availability for date range
+				$check_in_timestamp  = strtotime( $check_in_date_str );
+				$check_out_timestamp = strtotime( $check_out_date_str );
+				$date_check          = $check_in_timestamp;
 
-                $is_available = true;
-                while ($date_check < $check_out_timestamp) {
-                    if (isset($existing_bookings[$date_check]) && $existing_bookings[$date_check] <= 0) {
-                        $is_available = false;
-                        break;
-                    }
-                    $date_check = strtotime('+1 day', $date_check);
-                }
+				$is_available = true;
+				while ( $date_check < $check_out_timestamp ) {
+					if ( isset( $existing_bookings[ $date_check ] ) && $existing_bookings[ $date_check ] <= 0 ) {
+						$is_available = false;
+						break;
+					}
+					$date_check = strtotime( '+1 day', $date_check );
+				}
 
-                if (!$is_available) {
-                    throw new Exception(__('This room is not available.', 'wp-hotel-booking'));
-                }
+				if ( ! $is_available ) {
+					throw new Exception( __( 'This room is not available.', 'wp-hotel-booking' ) );
+				}
 
-                // Get final room quantity
-                $qty = hotel_booking_get_room_available(
-                    $room_id,
-                    array(
-                        'check_in_date' => $check_in_date_str,
-                        'check_out_date' => $check_out_date_str,
-                    )
-                );
+				// Get final room quantity
+				$qty = hotel_booking_get_room_available(
+					$room_id,
+					array(
+						'check_in_date'  => $check_in_date_str,
+						'check_out_date' => $check_out_date_str,
+					)
+				);
 
-                if (is_wp_error($qty)) {
-                    throw new Exception($qty->get_error_message());
-                }
+				if ( is_wp_error( $qty ) ) {
+					throw new Exception( $qty->get_error_message() );
+				}
 
-                $check_in_date = new WPHB_Datetime($check_in_date_str);
-                $check_out_date = new WPHB_Datetime($check_out_date_str);
-                $dates_checked = sprintf(
-                    '%s: %s - %s',
-                    __('Dates', 'wp-hotel-booking'),
-                    $check_in_date->format(WPHB_Datetime::I18N_FORMAT),
-                    $check_out_date->format(WPHB_Datetime::I18N_FORMAT)
-                );
+				$check_in_date  = new WPHB_Datetime( $check_in_date_str );
+				$check_out_date = new WPHB_Datetime( $check_out_date_str );
+				$dates_checked  = sprintf(
+					'%s: %s - %s',
+					__( 'Dates', 'wp-hotel-booking' ),
+					$check_in_date->format( WPHB_Datetime::I18N_FORMAT ),
+					$check_out_date->format( WPHB_Datetime::I18N_FORMAT )
+				);
 
-                ob_start();
-                wphb_get_template_no_override('single-room/search/add-to-cart.php', compact('room'));
-                $html_add_to_cart = ob_get_clean();
+				ob_start();
+				wphb_get_template_no_override( 'single-room/search/add-to-cart.php', compact( 'room' ) );
+				$html_add_to_cart = ob_get_clean();
 
-                $res->status = 'success';
-                $res->data = array(
-                    'dates_booked' => $dates_checked,
-                    'html_extra' => $html_add_to_cart,
-                    'room_id' => $room_id,
-                    'qty' => $qty,
-                );
-                wp_send_json($res, 200, JSON_UNESCAPED_SLASHES);
+				$res->status = 'success';
+				$res->data   = array(
+					'dates_booked' => $dates_checked,
+					'html_extra'   => $html_add_to_cart,
+					'room_id'      => $room_id,
+					'qty'          => $qty,
+				);
+				wp_send_json( $res, 200, JSON_UNESCAPED_SLASHES );
 
-            } catch (Throwable $e) {
-                $res->message = $e->getMessage();
-            }
+			} catch ( Throwable $e ) {
+				$res->message = $e->getMessage();
+			}
 
-            wp_send_json($res);
-        }
+			wp_send_json( $res );
+		}
 
 		/**
 		 * @return null|WP_Hotel_Booking_Room_Extension
@@ -299,5 +299,6 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 			return self::$instance;
 		}
 	}
+
 	WP_Hotel_Booking_Room_Extension::instance();
 }
