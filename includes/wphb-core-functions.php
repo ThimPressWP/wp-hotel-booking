@@ -119,6 +119,16 @@ if ( ! function_exists( 'hotel_booking_get_room_available' ) ) {
 
 			$qty = get_post_meta( $room_id, '_hb_num_of_rooms', true );
 
+			foreach ( $room_available_date as $date => $available ) {
+				if ( $date >= $check_in_date_timestamp && $date < $check_out_date_timestamp ) {
+					if ( $available <= 0 ) {
+						throw new Exception( __( 'This room is not available.', 'wp-hotel-booking' ) );
+					}
+					// Update qty to the lowest available amount in date range
+					$qty = min( $qty, $available );
+				}
+			}
+
 			if ( ! empty( $arr_qty_available ) ) {
 				$qty = ! empty( min( $arr_qty_available ) ) ? min( $arr_qty_available ) : 1;
 			}
