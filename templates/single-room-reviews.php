@@ -32,7 +32,7 @@ $room_id                = get_the_ID();
 $room                   = WPHB_Room::instance( $room_id );
 $average_rating         = round( $room->average_rating(), 2 );
 $count                  = intval( $room->get_review_count() );
-$enable_advanced_review = hb_settings()->get( 'enable_advanced_review' ) === '1';
+$enable_advanced_review = intval(hb_settings()->get( 'enable_advanced_review' )) === 1;
 // Check user was comment in room
 $user_comments = get_comments( array(
 	'user_id' => get_current_user_id(),
