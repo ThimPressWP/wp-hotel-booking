@@ -40,7 +40,7 @@ $settings = WPHB_Settings::instance();
 
 			<!-- Review title -->
 			<?php
-			if ( hb_settings()->get( 'enable_advanced_review' ) === '1' ) {
+			if ( intval(hb_settings()->get( 'enable_advanced_review' )) === 1 ) {
 				?>
 				<h3 class="hb-room-review-title">
 					<?php
@@ -70,7 +70,7 @@ $settings = WPHB_Settings::instance();
 
 			<!-- Review Image -->
 			<?php
-			if ( hb_settings()->get( 'enable_advanced_review' ) === '1' ) {
+			if ( intval(hb_settings()->get( 'enable_advanced_review' )) === 1 ) {
 				$attachment_ids = get_comment_meta( get_comment_ID(), 'hb_room_review_images', true );
 				if ( ! empty( $attachment_ids ) && is_array( $attachment_ids ) ) {
 					?>

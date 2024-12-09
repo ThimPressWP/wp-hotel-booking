@@ -265,7 +265,7 @@ class WPHB_Comments {
 			return false;
 		}
 
-		if ( hb_settings()->get( 'enable_advanced_review' ) !== '1' ) {
+		if ( intval(hb_settings()->get( 'enable_advanced_review' )) !== 1 ) {
 			return false;
 		}
 
@@ -416,7 +416,7 @@ class WPHB_Comments {
 			return;
 		}
 
-		if ( hb_settings()->get( 'enable_advanced_review' ) !== '1' ) {
+		if ( intval(hb_settings()->get( 'enable_advanced_review' )) !== 1 ) {
 			return;
 		}
 
