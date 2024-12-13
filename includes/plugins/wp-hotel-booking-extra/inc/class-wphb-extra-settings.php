@@ -55,7 +55,7 @@ if ( ! class_exists( 'HB_Extra_Settings' ) ) {
 		 */
 		public function admin_init() {
 			$continue = false;
-			if ( current_user_can( 'wphb_hotel_manager' ) || current_user_can( 'wphb_hotel_manager' ) || current_user_can( 'wphb_hotel_manager' ) ) {
+			if ( current_user_can( 'wphb_hotel_manager' ) || current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) ) {
 				$continue = true;
 			}
 			if ( ! $continue ) {
