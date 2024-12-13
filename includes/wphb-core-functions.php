@@ -123,6 +123,15 @@ if ( ! function_exists( 'hotel_booking_get_room_available' ) ) {
 				$qty = ! empty( min( $arr_qty_available ) ) ? min( $arr_qty_available ) : 1;
 			}
 
+			foreach ( $room_available_date as $date => $available ) {
+				if ( $date >= $check_in_date_timestamp && $date < $check_out_date_timestamp ) {
+					if ( $available <= 0 ) {
+						throw new Exception( __( 'This room is not available.', 'wp-hotel-booking' ) );
+					}
+					$qty = min( $qty, $available );
+				}
+			}
+
 			$blocked_id = get_post_meta( $room_id, 'hb_blocked_id', true );
 			if ( ! empty( $blocked_id ) ) {
 				$dates_timestamp_blocked = get_post_meta( $blocked_id, 'hb_blocked_time', false );
@@ -132,20 +141,20 @@ if ( ! function_exists( 'hotel_booking_get_room_available' ) ) {
 							throw new Exception( __( 'This room is not available.', 'wp-hotel-booking' ) );
 						}
 					}*/
-                    $dates_str_blocked = [];
-                    foreach ( $dates_timestamp_blocked as $date_timestamp_blocked ) {
-                        $dates_str_blocked[] = gmdate( WPHB_Datetime::$format, $date_timestamp_blocked );
-                    }
+					$dates_str_blocked = [];
+					foreach ( $dates_timestamp_blocked as $date_timestamp_blocked ) {
+						$dates_str_blocked[] = gmdate( WPHB_Datetime::$format, $date_timestamp_blocked );
+					}
 
-                    $date_timestamp_check = $check_in_date_timestamp;
-                    while ( $date_timestamp_check < $check_out_date_timestamp ) {
-                        $date_check = gmdate( WPHB_Datetime::$format, $date_timestamp_check );
-                        if ( in_array( $date_check, $dates_str_blocked ) ) {
-                            throw new Exception( __( 'This room is not available!', 'wp-hotel-booking' ) );
-                        }
+					$date_timestamp_check = $check_in_date_timestamp;
+					while ( $date_timestamp_check < $check_out_date_timestamp ) {
+						$date_check = gmdate( WPHB_Datetime::$format, $date_timestamp_check );
+						if ( in_array( $date_check, $dates_str_blocked ) ) {
+							throw new Exception( __( 'This room is not available!', 'wp-hotel-booking' ) );
+						}
 
-                        $date_timestamp_check = strtotime( $date_check . ' +1 day' );
-                    }
+						$date_timestamp_check = strtotime( $date_check . ' +1 day' );
+					}
 				}
 			}
 
