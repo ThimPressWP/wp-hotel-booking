@@ -54,6 +54,13 @@ if ( ! class_exists( 'HB_Extra_Settings' ) ) {
 		 * Admin init.
 		 */
 		public function admin_init() {
+			$continue = false;
+			if ( current_user_can( 'wphb_hotel_manager' ) || current_user_can( 'wphb_hotel_manager' ) || current_user_can( 'wphb_hotel_manager' ) ) {
+				$continue = true;
+			}
+			if ( ! $continue ) {
+				return;
+			}
 			if ( ! isset( $_POST ) || empty( $_POST ) ) {
 				return;
 			}
