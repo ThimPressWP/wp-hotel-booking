@@ -1030,6 +1030,9 @@ const wphbDatePicker = () => {
 				dateFormat: 'Y/m/d',
 				minDate: 'today',
 				disableMobile: true,
+				locale: {
+					firstDayOfWeek: 1,
+				},
 				//defaultDate: 'today',
 				onChange( selectedDates, dateStr, instance ) {
 					if ( datePickerCheckOut ) {
@@ -1047,12 +1050,17 @@ const wphbDatePicker = () => {
 			datePickerCheckIn = flatpickr( elDateCheckIn, optionCheckIn );
 		}
 
+		console.log(1111);
+
 		if ( elDateCheckOut && ! elDateCheckOut.closest( '.hb-form-check-in-check-out' ) ) {
 			// Check out date
 			const optionCheckout = {
 				dateFormat: 'Y/m/d',
 				minDate: 'today',
 				disableMobile: true,
+				locale: {
+					firstDayOfWeek: 1,
+				},
 				//defaultDate: dateTomorrow,
 				onChange( selectedDates, dateStr, instance ) {
 				},

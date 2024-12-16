@@ -97,6 +97,9 @@ const wphbRoomInitDatePicker = () => {
 		disable: datesBlock,
 		//defaultDate: dateMinCheckInCanBook,
 		disableMobile: true,
+		locale: {
+			firstDayOfWeek: 1,
+		},
 		onChange( selectedDates, dateStr, instance ) {
 			if ( datePickerCheckOut ) {
 				// calculate next day available
@@ -123,6 +126,9 @@ const wphbRoomInitDatePicker = () => {
 		disable: datesBlock,
 		//defaultDate: dateMinCheckOutCanBook,
 		disableMobile: true,
+		locale: {
+			firstDayOfWeek: 1,
+		},
 		onChange( selectedDates, dateStr, instance ) {},
 	};
 	datePickerCheckOut = flatpickr( elDateCheckOut, optionCheckout );
