@@ -1050,8 +1050,6 @@ const wphbDatePicker = () => {
 			datePickerCheckIn = flatpickr( elDateCheckIn, optionCheckIn );
 		}
 
-		console.log(1111);
-
 		if ( elDateCheckOut && ! elDateCheckOut.closest( '.hb-form-check-in-check-out' ) ) {
 			// Check out date
 			const optionCheckout = {
@@ -1077,6 +1075,9 @@ const wphbDatePicker = () => {
 				disableMobile: true,
 				mode: 'range',
 				showMonths: 2,
+				locale: {
+					firstDayOfWeek: 1,
+				},
 				defaultDate: [ elDateCheckIn.value, elDateCheckOut.value ],
 				onClose( selectedDates, dateStr, instance ) {
 					const dateCheckInSelected = selectedDates[ 0 ];
