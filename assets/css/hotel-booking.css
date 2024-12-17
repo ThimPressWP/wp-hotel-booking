@@ -157,6 +157,41 @@
 .hb-search-results .hb_button.hb_view_cart {
     display: none;
 }
+.hb-search-results .hb-page-search-room-results .hb_addition_package_extra {
+    display: flex;
+    flex-direction: column;
+}
+.hb-search-results .hb-page-search-room-results .hb_addition_package_extra a.hb_package_toggle {
+    font-size: 16px;
+}
+.hb-search-results .hb-page-search-room-results .hb_addition_package_extra .hb_addition_packages {
+    padding: 0;
+}
+.hb-search-results .hb-page-search-room-results .hb_addition_package_extra .hb_addition_packages_ul li {
+    padding: 0px 16px 8px 0;
+}
+.hb-search-results .hb-page-search-room-results .hb_addition_package_extra .hb_extra_optional_right {
+    width: 30px;
+}
+.hb-search-results .hb-page-search-room-results .hb_addition_package_extra .hb_extra_optional_right input[type="checkbox"] {
+    width: auto;
+    min-width: 18px;
+}
+.hb-search-results .hb-page-search-room-results .hb_addition_package_extra .hb_extra_optional_left input {
+    text-align: center;
+}
+.hb-search-results .hb-page-search-room-results .room-extra-options {
+    display: flex;
+    gap: 10px;
+}
+.hb-search-results .hb-page-search-room-results .room-extra-options a.go-to-cart.hb_button, .hb-search-results .hb-page-search-room-results .room-extra-options button {
+/*    padding: 10px;*/
+    border-radius: 10px;
+    text-align: center;
+    line-height: 1.7;
+    color: #fff;
+/*    width: auto;*/
+} 
 
 .hb-align-right {
     text-align: right;
