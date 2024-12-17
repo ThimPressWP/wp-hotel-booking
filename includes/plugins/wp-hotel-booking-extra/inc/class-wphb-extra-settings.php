@@ -58,14 +58,16 @@ if ( ! class_exists( 'HB_Extra_Settings' ) ) {
 			if ( current_user_can( 'wphb_hotel_manager' ) || current_user_can( 'manage_options' ) || current_user_can( 'administrator' ) ) {
 				$continue = true;
 			}
+
 			if ( ! $continue ) {
 				return;
 			}
-			if ( ! isset( $_POST ) || empty( $_POST ) ) {
+
+			if ( empty( $_POST ) ) {
 				return;
 			}
 
-			if ( ! isset( $_POST[ WPHB_EXTRA_OPTION_NAME ] ) || empty( $_POST[ WPHB_EXTRA_OPTION_NAME ] ) ) {
+			if ( empty( $_POST[ WPHB_EXTRA_OPTION_NAME ] ) ) {
 				return;
 			}
 
