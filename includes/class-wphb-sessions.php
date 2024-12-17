@@ -105,23 +105,20 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 			if ( ! $name ) {
 				return;
 			}
-			$time = time();
 			if ( ! $value ) {
 				if ( is_array( $this->session ) ) {
 					unset( $this->session[ $name ] );
 				} else {
 					unset( $this->session->{$name} );
 				}
-				$time = $time - $this->live_item;
 			} else {
 				if ( is_array( $this->session ) ) {
 					$this->session[ $name ] = $value;
 				} else {
 					$this->session->{$name} = $value;
 				}
-
-				$time = $time + $this->live_item;
 			}
+			$time = empty( $this->session ) ? time() - $this->live_item : time() + $this->live_item;
 
 			// save session
 			$_SESSION[ $this->prefix ] = WPHB_Helpers::sanitize_params_submitted( $this->session );

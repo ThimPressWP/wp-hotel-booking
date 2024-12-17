@@ -276,26 +276,34 @@ const bookingRoomsPages = (formsCheck) => {
             const response = await wp.apiFetch({
                 path: 'wphb/v1/rooms/book-rooms',
                 method: 'POST',
-                data: {roomID, checkinDate, checkoutDate, numRoom, extraData},
+                data: { roomID, checkinDate, checkoutDate, numRoom, extraData },
             });
 
-            const {status, data} = response;
+            const { status, data } = response;
             const redirect = data?.results?.redirect || '';
             const message = data?.results?.message || '';
+            const hasExtra = data?.results?.has_extra || false;
 
             if (btn) {
                 btn.classList.remove('wphb_loading');
             }
-
-            if ('success' === status && redirect) {
-                // if ( message != '' ) {
-                //     alert( message );
-                // }
-                window.location.href = redirect;
+            if ( 'error' === status ) {
+                throw new Error( message );
             }
-
+            if (!hasExtra) {
+                window.location.href = redirect;
+            } else {
+                const htmlExtraOptions = data?.results?.extra_html || '';
+                const addtocartWrap = form.querySelector( '.hb_search_add_to_cart' );
+                if ( addtocartWrap ) {
+                    btn.style.display = 'none';
+                    addtocartWrap.insertAdjacentHTML('beforeend', htmlExtraOptions);
+                } else {
+                    form.insertAdjacentHTML('beforeend', htmlExtraOptions);
+                }
+            }
         } catch (error) {
-            alert(error.message && error.message);
+            alert(error);
         }
     };
 
@@ -317,8 +325,50 @@ const bookingRoomsPages = (formsCheck) => {
             const btn = form.querySelector('button.hb_add_to_cart');
             btn && btn.classList.add('wphb_loading');
             submit(form, btn, numRoom, roomID);
-        })
-    })
+        });
+        form.addEventListener('click', (e) => {
+            let target = e.target;
+            if ( target.classList.contains( 'add-extra-to-cart' ) ) {
+                target.classList.add('wphb_loading');
+                const cartID = target.dataset.cartid;
+                addExtraToCartNew( form, cartID, target );
+            }
+        });
+    });
+    const addExtraToCartNew = async ( form, cartID, btn ) => {
+        const extraData = [];
+        const hotelOption = form.querySelectorAll('input.hb_optional_quantity_selected');
+
+        hotelOption && hotelOption.forEach((ele) => {
+            if (ele.checked) {
+                const extraID = ele?.dataset.id || null;
+                const qty = parseInt(ele.parentElement?.nextElementSibling?.querySelector('input[class="hb_optional_quantity"]')?.value) || 1;
+
+                if (extraID) {
+                    extraData.push({extraID, qty});
+                }
+            }
+        });
+
+        try {
+            const response = await wp.apiFetch({
+                path: 'wphb/v1/rooms/add-extra-cart',
+                method: 'POST',
+                data: {cartID, extraData},
+            });
+
+            const {status, redirect, message} = response;
+            btn.classList.remove( 'wphb_loading' );
+            if ( 'error' === status ) {
+                throw new Error( message )
+            }
+            if ('success' === status && redirect) {
+                window.location.href = redirect;
+            }
+        } catch (error) {
+            alert(error);
+        }
+    }
 }
 
 const addExtraToCart = () => {
@@ -343,8 +393,6 @@ const addExtraToCart = () => {
                     extraData.push({extraID, qty});
                 }
             }
-            ;
-
         });
 
         try {

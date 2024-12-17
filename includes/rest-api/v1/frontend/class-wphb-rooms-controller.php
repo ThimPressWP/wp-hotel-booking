@@ -72,7 +72,7 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 			$date_format = get_option( 'date_format' );
 
 			if ( strpos( $check_in_date, '/' ) !== false ) {
-				//Strtotime() doesn't work with dd/mm/YYYY format
+				// Strtotime() doesn't work with dd/mm/YYYY format
 				if ( $date_format == 'd/m/Y' ) {
 					$check_in_date = str_replace( '/', '-', $check_in_date );
 				}
@@ -80,7 +80,7 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 			}
 
 			if ( strpos( $check_out_date, '/' ) !== false ) {
-				//Strtotime() doesn't work with dd/mm/YYYY format
+				// Strtotime() doesn't work with dd/mm/YYYY format
 				if ( $date_format == 'd/m/Y' ) {
 					$check_out_date = str_replace( '/', '-', $check_out_date );
 				}
@@ -178,7 +178,7 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 		}
 
 		if ( strpos( $check_out_date, '/' ) !== false ) {
-			//Strtotime() doesn't work with dd/mm/YYYY format
+			// Strtotime() doesn't work with dd/mm/YYYY format
 			if ( $date_format == 'd/m/Y' ) {
 				$check_out_date = str_replace( '/', '-', $check_out_date );
 			}
@@ -242,9 +242,9 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 
 				$additionPackage = get_post_meta( $room_id, '_hb_room_extra', true );
 
-				if ( (int) get_option( 'tp_hotel_booking_custom_process', 0 ) && ! empty( $additionPackage ) ) {
+				if ( ! empty( $additionPackage ) ) {
 					// Addition package not null && custom_process
-					$results['redirect'] = get_option( 'tp_hotel_booking_custom_process' ) ? add_query_arg(
+					$results['redirect']  = get_option( 'tp_hotel_booking_custom_process' ) ? add_query_arg(
 						array(
 							'is_page_room_extra' => 'select-room-extra',
 							'cart_id'            => $cart_item_id,
@@ -252,9 +252,25 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 						),
 						hb_get_search_room_url()
 					) : '';
+					$results['has_extra'] = true;
+					ob_start();
+					wphb_get_template_no_override(
+						'single-room/search/extra-check-dates-room.php',
+						array( 'post_id' => $room_id )
+					);
+					echo sprintf(
+						'<div class="room-extra-options">
+					        <button class="add-extra-to-cart hb_button" data-cartid="%1$s" type="button">%2$s</button>
+					    </div>',
+						$cart_item_id,
+						__( 'Add extra to cart', 'wp-hotel-booking' )
+					);
+					// $extra_html = ob_get_clean();
+					$results['extra_html'] = ob_get_clean();
 				} else {
-					$results['redirect'] = $pageRedirect;
+					$results['has_extra'] = false;
 				}
+				$results['redirect'] = $pageRedirect;
 
 				$results = apply_filters( 'hotel_booking_add_to_cart_results', $results, $room );
 
@@ -305,12 +321,12 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 			$extra_cart = HB_Extra_Cart::instance();
 			$cart_item  = $cart->get_cart_item( $cart_id );
 			$extra_arr  = array(
-					'product_id'                    => $cart_item->product_id,
-					'check_in_date'                 => $cart_item->check_in_date,
-					'check_out_date'                => $cart_item->check_out_date,
-					'hb_optional_quantity'          => $extra_selected_qty,
-					'hb_optional_quantity_selected' => $extra_selected,
-				);
+				'product_id'                    => $cart_item->product_id,
+				'check_in_date'                 => $cart_item->check_in_date,
+				'check_out_date'                => $cart_item->check_out_date,
+				'hb_optional_quantity'          => $extra_selected_qty,
+				'hb_optional_quantity_selected' => $extra_selected,
+			);
 			$extra_cart->ajax_added_cart(
 				$cart_id,
 				$extra_arr,
