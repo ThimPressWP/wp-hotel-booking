@@ -120,7 +120,7 @@
                 }).done(function (res) {
                     res = TPHB_Extra_Site.parseJSON(res);
                     if (typeof res.status !== 'undefined' && res.status === 'success') {
-                        HB_Booking_Cart.hb_add_to_cart_callback(res, function () {
+                        TPHB_Extra_Site.hb_add_to_cart_callback(res, function () {
                             var cart_table = $('#hotel-booking-payment, #hotel-booking-cart');
 
                             for (var i = 0; i < cart_table.length; i++) {
@@ -169,6 +169,61 @@
                     _overlay.hb_overlay_ajax_stop();
                 });
             });
+        },
+        hb_add_to_cart_callback: function ( data, callback ) {
+            const mini_cart = $( '.hotel_booking_mini_cart' );
+            const length = mini_cart.length;
+            let template = wp.template( 'hb-minicart-item' );
+            template = template( data );
+
+            if ( length > 0 ) {
+                for ( let i = 0; i < length; i++ ) {
+                    let cart = $( mini_cart[ i ] ),
+                        cart_item = $( mini_cart[ i ] ).find( '.hb_mini_cart_item' ),
+                        insert = false,
+                        empty = cart.find( '.hb_mini_cart_empty' ),
+                        footer_ele = cart.find( '.hb_mini_cart_footer' ),
+                        items_length = cart_item.length;
+
+                    if ( items_length === 0 ) {
+                        const footer = wp.template( 'hb-minicart-footer' );
+                        const ele = footer_ele;
+                        if ( empty.length === 1 ) {
+                            empty.after( footer( {} ) );
+                            empty.before( template );
+                        } else {
+                            footer_ele.before( template );
+                        }
+                        insert = true;
+                        break;
+                    } else {
+                        for ( let y = 0; y < items_length; y++ ) {
+                            const item = $( cart_item[ y ] ),
+                                cart_id = item.attr( 'data-cart-id' );
+
+                            if ( data.cart_id === cart_id ) {
+                                item.replaceWith( template );
+                                insert = true;
+                                break;
+                            }
+                        }
+
+                        if ( insert === false ) {
+                            footer_ele.before( template );
+                        }
+                    }
+                }
+            }
+
+            $( '.hb_mini_cart_empty' ).remove();
+            var timeout = setTimeout( function() {
+                $( '.hb_mini_cart_item' ).removeClass( 'active' );
+                clearTimeout( timeout );
+            }, 3500 );
+
+            if ( typeof callback !== 'undefined' ) {
+                callback();
+            }
         },
 
     };

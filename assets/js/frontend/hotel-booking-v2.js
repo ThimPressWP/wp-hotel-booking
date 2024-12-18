@@ -342,7 +342,7 @@ const bookingRoomsPages = (formsCheck) => {
         hotelOption && hotelOption.forEach((ele) => {
             if (ele.checked) {
                 const extraID = ele?.dataset.id || null;
-                const qty = parseInt(ele.parentElement?.nextElementSibling?.querySelector('input[class="hb_optional_quantity"]')?.value) || 1;
+                const qty = parseInt(ele.parentElement?.nextElementSibling?.querySelector(`input[name="hb_optional_quantity[${extraID}]"]`)?.value) || 1;
 
                 if (extraID) {
                     extraData.push({extraID, qty});
