@@ -139,7 +139,7 @@ if ( ! class_exists( 'WPHB_Extra_Factory' ) ) {
 				wp_register_script( 'wphb-extra-js', WPHB_EXTRA_URI . '/assets/js/admin.js', array(), WPHB_VERSION, true );
 				wp_enqueue_style( 'wphb-extra-css', WPHB_EXTRA_URI . '/assets/css/admin.min.css', array(), WPHB_VERSION );
 			} else {
-				wp_register_script( 'wphb-extra-js', WPHB_EXTRA_URI . '/assets/js/site.min.js', array(), WPHB_VERSION, true );
+				wp_register_script( 'wphb-extra-js', WPHB_EXTRA_URI . '/assets/js/site.js', array(), time(), true );
 				wp_enqueue_style( 'wphb-extra-css', WPHB_EXTRA_URI . '/assets/css/site.css', array(), WPHB_VERSION );
 			}
 

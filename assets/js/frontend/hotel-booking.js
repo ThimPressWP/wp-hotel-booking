@@ -389,6 +389,27 @@ import flatpickr from 'flatpickr';
 
 			const cart_table = $( '#hotel-booking-payment, #hotel-booking-cart' );
 
+			if ( cart_table.length > 0 ) {
+				$(`tr[data-cart-id="${cart_id}"]`).remove();
+				$(`tr[data-parent-id="${cart_id}"]`).remove();
+
+				if ( typeof res.sub_total !== 'undefined' ) {
+					cart_table.find( 'span.hb_sub_total_value' ).html( res.sub_total );
+				}
+
+				if ( typeof res.grand_total !== 'undefined' ) {
+					cart_table.find( 'span.hb_grand_total_value' ).html( res.grand_total );
+				}
+
+				if ( typeof res.advance_payment !== 'undefined' ) {
+					cart_table.find( 'span.hb_advance_payment_value' ).html( res.advance_payment );
+				}
+				// if cart is empty. reload page
+				if ( $( 'tr.hb_checkout_item' ).length === 0 ) {
+					window.location.href = window.location.href;
+				}
+			}
+			/*
 			for ( var i = 0; i < cart_table.length; i++ ) {
 				const _table = $( cart_table[ i ] );
 				const tr = _table.find( 'table' ).find( '.hb_checkout_item, .hb_addition_services_title' );
@@ -413,7 +434,7 @@ import flatpickr from 'flatpickr';
 				if ( typeof res.advance_payment !== 'undefined' ) {
 					_table.find( 'span.hb_advance_payment_value' ).html( res.advance_payment );
 				}
-			}
+			}*/
 		},
 		/*add_to_cart: function () {
 			var searchResult = $('form.hb-search-room-results');
