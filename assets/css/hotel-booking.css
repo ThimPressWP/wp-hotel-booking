@@ -184,6 +184,62 @@
     display: flex;
     gap: 10px;
 }
+
+.hb-search-results .hb-page-search-room-results .hb_addition_package_extra .hb_extra_optional_right input[type="checkbox"] {
+    min-width: 16px;
+    height: 16px;
+}
+
+.wp-hotel-booking-search-rooms .hotel-booking-search .hb_extra_optional_right input:before {
+    content: '';
+    top: 0;
+    right: 0;
+    height: 16px;
+}
+
+.wp-hotel-booking-search-rooms .hb_extra_optional_left .hb_extra_title p {
+    display: none;
+}
+
+.wp-hotel-booking-search-rooms .hb_extra_optional_left .hb_extra_title {
+    margin-bottom: 10px;
+}
+
+.wp-hotel-booking-search-rooms .hb_extra_detail_price {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.hb-search-results .hb-page-search-room-results .hb_addition_package_extra .hb_extra_optional_left input {
+    max-width: 49px;
+    width: 50px;
+    flex-basis: 50px;
+    min-width: unset;
+    padding: 0;
+}
+
+.hb-search-results .hb-page-search-room-results .hb_addition_package_extra .hb_addition_packages {
+    margin-bottom: 0;
+    border: none;
+}
+
+.hb-search-results .hb-page-search-room-results .hb_addition_package_extra .hb_addition_packages_ul {
+    padding: 0;
+}
+
+.hb-search-results .hb-page-search-room-results .hb_addition_package_extra .hb_addition_packages_ul li {
+    margin: 0;
+}
+
+.wp-hotel-booking-search-rooms #hotel-booking-results .detail__booking-rooms .hb-search-results>.hb-room .hb-page-search-room-results .hb-room-info .hb-room-meta li>div {
+    margin-left: 0;
+}
+
+.wp-hotel-booking-search-rooms #hotel-booking-results .hb-search-results>.hb-room .hb-room-info .hb-room-meta li .hb_addition_package_extra li {
+    padding: 0 0 10px 0;
+    border: none;
+}
 .hb-search-results .hb-page-search-room-results .room-extra-options a.go-to-cart.hb_button, .hb-search-results .hb-page-search-room-results .room-extra-options button {
 /*    padding: 10px;*/
     border-radius: 10px;
