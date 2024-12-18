@@ -65,6 +65,7 @@ const releasesFiles = [
 	'!tests/**',
 	'!phpunit.xml',
 	'!README.md',
+	'!build-release.js',
 ];
 
 // Copy folder to releases.
