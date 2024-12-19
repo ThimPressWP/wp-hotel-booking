@@ -18,7 +18,13 @@ defined( 'ABSPATH' ) || exit;
 
 const WPHB_FILE        = __FILE__;
 const WPHB_PLUGIN_PATH = __DIR__;
-define( 'WPHB_PLUGIN_URL', plugins_url( '', __FILE__ ) );
+$default_headers       = array(
+	'Version'    => 'Version',
+	'TextDomain' => 'Text Domain',
+);
+$plugin_info           = get_file_data( __FILE__, $default_headers, 'plugin' );
+define( 'WPHB_VERSION', $plugin_info['Version'] );
+define( 'WPHB_PLUGIN_URL', plugins_url( '', WPHB_FILE ) );
 define( 'WPHB_BLOG_ID', get_current_blog_id() );
 define( 'WPHB_TEMPLATES', WPHB_PLUGIN_PATH . '/templates/' );
 const TP_HB_EXTRA    = __FILE__;
@@ -66,25 +72,13 @@ class WP_Hotel_Booking {
 	/**
 	 * Construction
 	 */
-	public function __construct() {
-
-		if ( self::$_instance ) {
-			return;
-		}
-
-		$default_headers = array(
-			'Version'    => 'Version',
-			'TextDomain' => 'Text Domain',
-		);
-		$plugin_info     = get_file_data( __FILE__, $default_headers, 'plugin' );
-		define( 'WPHB_VERSION', $plugin_info['Version'] );
-
+	private function __construct() {
 		$this->includes();
 
 		global $wpdb;
 		$wpdb->hotel_booking_order_items = $wpdb->prefix . 'hotel_booking_order_items';
 
-		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
+		//add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_action( 'wp_print_scripts', array( $this, 'global_js' ) );
@@ -105,6 +99,8 @@ class WP_Hotel_Booking {
 	}
 
 	public function init() {
+		// load text domain
+		$this->load_text_domain();
 		// cart
 		$this->cart = WPHB_Cart::instance();
 		// user
@@ -331,10 +327,10 @@ class WP_Hotel_Booking {
 	}
 
 	// load payments addons
-	public function plugins_loaded() {
+	/*public function plugins_loaded() {
 		// load text domain
 		$this->load_text_domain();
-	}
+	}*/
 
 	/**
 	 * Get the path of the plugin with sub path
@@ -411,7 +407,7 @@ class WP_Hotel_Booking {
 			'wp-api-fetch',
 		);
 
-        // Register styles
+		// Register styles
 		wp_register_style( 'wphb-ui-slider', $this->plugin_url( 'assets/lib/slider/nouislider.min.css' ) );
 		wp_register_style( 'wp-hotel-booking-libaries-style', $this->plugin_url( 'assets/css/libraries.css' ) );
 		wp_register_style( 'wp-hotel-booking-review-gallery', $this->plugin_url( "assets/css/review-gallery{$min}.css" ), [], $version );
@@ -422,9 +418,9 @@ class WP_Hotel_Booking {
 		wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.css' ), [], WPHB_VERSION );
 		wp_register_style( 'wp-admin-hotel-booking-calendar-v2', $this->plugin_url( 'assets/css/admin/main.min.css' ) );
 		wp_register_style( 'tingle-css', $this->plugin_url( 'assets/lib/tingle.css' ) );
-		wp_register_style( 'flatpickr-css', $this->plugin_url('assets/lib/flatpickr.min.css') );
+		wp_register_style( 'flatpickr-css', $this->plugin_url( 'assets/lib/flatpickr.min.css' ) );
 		wp_register_style( 'wphb-single-room-css', WPHB_PLUGIN_URL . '/assets/css/booking-single-room.css', [], $version );
-        // End Register styles
+		// End Register styles
 
 		// Register scripts
 		// select2
@@ -437,18 +433,18 @@ class WP_Hotel_Booking {
 		wp_register_script( 'wphb-ui-slider', $this->plugin_url( 'assets/lib/slider/nouislider.min.js' ) );
 
 		$dependencies = array_merge( $dependencies, array( 'backbone' ) );
-        if ( is_admin() ) {
-	        $screen       = get_current_screen();
-	        if ( $screen->base === 'edit-tags' && ( $screen->taxonomy === 'hb_room_type' || $screen->taxonomy === 'hb_room_capacity' ) ) {
-		        wp_register_script(
-			        'wp-admin-hotel-booking',
-			        $this->plugin_url( 'assets/js/admin/admin.room-taxonomies.js' ),
-			        $dependencies,
-			        false,
-			        true
-		        );
-	        }
-        }
+		if ( is_admin() ) {
+			$screen = get_current_screen();
+			if ( $screen->base === 'edit-tags' && ( $screen->taxonomy === 'hb_room_type' || $screen->taxonomy === 'hb_room_capacity' ) ) {
+				wp_register_script(
+					'wp-admin-hotel-booking',
+					$this->plugin_url( 'assets/js/admin/admin.room-taxonomies.js' ),
+					$dependencies,
+					false,
+					true
+				);
+			}
+		}
 
 		wp_register_script(
 			'wp-admin-hotel-booking',
@@ -525,7 +521,7 @@ class WP_Hotel_Booking {
 		wp_register_script( 'wp-admin-hotel-booking-calendar-v2', $this->plugin_url( 'assets/js/admin/main.min.js' ), $dependencies );
 		wp_register_script( 'wp-admin-hotel-booking-v2', $this->plugin_url( 'assets/js/admin/admin.hotel-booking-v2.js' ), $dependencies, WPHB_VERSION );
 
-        // Single room script.
+		// Single room script.
 		wp_register_script(
 			'wpdb-single-room-js',
 			WPHB_PLUGIN_URL . "/assets/dist/js/frontend/wphb-single-room{$min}.js",
@@ -533,7 +529,7 @@ class WP_Hotel_Booking {
 			$version,
 			[ 'strategy' => 'defer' ]
 		);
-        // End Register scripts
+		// End Register scripts
 
 		if ( is_admin() ) {
 			wp_enqueue_style( 'wp-admin-hotel-booking' );
@@ -566,10 +562,10 @@ class WP_Hotel_Booking {
 			wp_enqueue_script( 'wp-hotel-booking-room-review' );
 			wp_enqueue_style( 'flatpickr-css' );
 
-            // Load scripts and styles for single room
+			// Load scripts and styles for single room
 			if ( is_singular( 'hb_room' ) ) {
-                wp_enqueue_style( 'tingle-css' );
-                wp_enqueue_style( 'wphb-single-room-css' );
+				wp_enqueue_style( 'tingle-css' );
+				wp_enqueue_style( 'wphb-single-room-css' );
 				wp_enqueue_script( 'wpdb-single-room-js' );
 				wp_enqueue_script( 'wp-hotel-booking-gallery' );
 
@@ -586,7 +582,7 @@ class WP_Hotel_Booking {
 					$max_file_size = 1000000;
 				}
 
-				$is_enable = intval(hb_settings()->get( 'enable_advanced_review' )) === 1;
+				$is_enable = intval( hb_settings()->get( 'enable_advanced_review' ) ) === 1;
 
 				wp_localize_script(
 					'wp-hotel-booking-room-review',
@@ -693,8 +689,8 @@ class WP_Hotel_Booking {
 	 * @static
 	 * @return object|WP_Hotel_Booking
 	 */
-	static function instance() {
-		if ( ! self::$_instance ) {
+	public static function instance() {
+		if ( is_null( self::$_instance ) ) {
 			self::$_instance = new self();
 		}
 
@@ -702,5 +698,5 @@ class WP_Hotel_Booking {
 	}
 }
 
-$GLOBALS['wp_hotel_booking'] = WP_Hotel_Booking::instance();
+WP_Hotel_Booking::instance();
 
