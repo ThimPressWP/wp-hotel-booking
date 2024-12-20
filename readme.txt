@@ -4,8 +4,8 @@ Donate link: https://thimpress.com/
 Tags: hotel, booking, hotel booking, reservation, reservations
 Requires at least: 6.0
 Requires PHP: 7.4
-Tested up to: 6.6.2
-Stable tag: 2.1.4
+Tested up to: 6.7.1
+Stable tag: 2.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,6 +74,15 @@ Yes.
 7. System settings
 
 == Changelog ==
+
+= 2.1.5 (2024-12-20) =
+~ Added: feature show "option extra", when select room form list search room.
+~ Fixed: security.
+~ Fixed: cache for widget loop item.
+~ Fixed: style.
+~ Fixed: get enable advanced review.
+~ Tweak: check room available.
+~ Tweak: datepicker first day of week is Monday.
 
 = 2.1.4 (2024-10-21) =
 ~ Fixed: minor bugs.
