@@ -341,8 +341,8 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 				$pageRedirect = $cart_url;
 			}
 
-			$response->status   = 'success';
-			$response->redirect = $pageRedirect;
+			$response->status         = 'success';
+			$response->data->redirect = $pageRedirect;
 
 		} catch ( Exception $e ) {
 			$response->message = $e->getMessage();

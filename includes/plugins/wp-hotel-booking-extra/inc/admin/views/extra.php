@@ -85,6 +85,7 @@ foreach ( $extra_types as $key => $value ) {
 		<?php } ?>
 
 		<div class="tp_extra_form_foot">
+			<input type="hidden" name="wphb_nonce" value="<?php echo esc_attr( wp_create_nonce( 'hb_booking_nonce_action' ) ); ?>" />
 			<button type="submit" class="button button-primary"><?php _e( 'Save Extra', 'wp-hotel-booking' ); ?></button>
 			<a class="button tp_extra_add_item"><?php _e( 'Add another item', 'wp-hotel-booking' ); ?></a>
 		</div>

@@ -67,6 +67,10 @@ if ( ! class_exists( 'HB_Extra_Settings' ) ) {
 				return;
 			}
 
+			if ( empty( $_POST['wphb_nonce'] ) || ! wp_verify_nonce( $_POST['wphb_nonce'], 'hb_booking_nonce_action' ) ) {
+				return;
+			}
+
 			if ( empty( $_POST[ WPHB_EXTRA_OPTION_NAME ] ) ) {
 				return;
 			}
