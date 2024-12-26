@@ -370,18 +370,8 @@
 	}
 }
 .flatpickr-innerContainer {
-	.dayContainer {
-		justify-content: flex-start;
-
-		.flatpickr-day.hidden {
-			display: inline-block !important;
-		}
-	}
-
-	.flatpickr-day {
-		max-width: 43px;
-		height: 43px;
-		line-height: 43px;
+	.flatpickr-day.hidden {
+		display: inline-block !important;
 	}
 
 	.flatpickr-day.flatpickr-disabled {
