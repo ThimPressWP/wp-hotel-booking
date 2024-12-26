@@ -381,7 +381,7 @@
 }
 
 @media (max-width: 767px) {
-	.flatpickr-months .flatpickr-month:nth-child(2), 
+	.flatpickr-months .flatpickr-month:nth-child(3), 
 	.flatpickr-weekdays .flatpickr-weekdaycontainer:nth-child(2),
 	.flatpickr-innerContainer .dayContainer:nth-child(2) {
 		display: none;
@@ -389,5 +389,9 @@
 
 	.flatpickr-calendar {
 		max-width: 310px !important;
+	}
+
+	.flatpickr-rContainer {
+		width: 100%;
 	}
 }
