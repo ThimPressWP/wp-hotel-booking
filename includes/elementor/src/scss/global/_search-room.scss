@@ -372,6 +372,10 @@
 .flatpickr-innerContainer {
 	.dayContainer {
 		justify-content: flex-start;
+
+		.flatpickr-day.hidden {
+			display: inline-block !important;
+		}
 	}
 
 	.flatpickr-day {
