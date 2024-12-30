@@ -75,6 +75,10 @@ Yes.
 
 == Changelog ==
 
+= 2.1.6 (2024-12-30) =
+~ Fixed: security.
+~ Fixed: wrong day of date range picker.
+
 = 2.1.5 (2024-12-20) =
 ~ Added: feature show "option extra", when select room form list search room.
 ~ Fixed: security.
