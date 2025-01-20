@@ -461,6 +461,10 @@ class WPHB_Ajax {
 			return;
 		}
 
+		if ( ! current_user_can( 'administrator' ) ) {
+			return;
+		}
+
 		$user_name = sanitize_text_field( wp_unslash( $_POST['user_name'] ) );
 		global $wpdb;
 		$sql = $wpdb->prepare(

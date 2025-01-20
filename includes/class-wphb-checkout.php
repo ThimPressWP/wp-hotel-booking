@@ -41,6 +41,8 @@ class WPHB_Checkout {
 	/**
 	 * Creates temp new booking if needed
 	 *
+	 * @param null $order
+	 *
 	 * @return mixed|WP_Error
 	 * @throws Exception
 	 */
