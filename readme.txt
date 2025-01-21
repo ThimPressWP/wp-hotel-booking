@@ -75,6 +75,9 @@ Yes.
 
 == Changelog ==
 
+= 2.1.7 (2025-01-21) =
+~ Fixed: security.
+
 = 2.1.6 (2024-12-30) =
 ~ Fixed: security.
 ~ Fixed: wrong day of date range picker.
