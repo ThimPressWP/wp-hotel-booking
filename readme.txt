@@ -3,9 +3,8 @@ Contributors: thimpress, leehld, phamtungpth, thoakim
 Donate link: https://thimpress.com/
 Tags: hotel, booking, hotel booking, reservation, reservations
 Requires at least: 6.0
-Requires PHP: 7.4
-Tested up to: 6.7.1
-Stable tag: 2.1.5
+Tested up to: 6.7
+Stable tag: 2.1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,18 +12,30 @@ WordPress Hotel Booking Plugin - A complete hotel booking reservation plugin for
 
 == Description ==
 
-A complete **hotel booking plugin** for WordPress.
+WP Hotel Booking is a comprehensive solution for hotel owners, lodges, or any accommodation providers who need a professional booking system directly on their WordPress website. With an intuitive and user-friendly interface, this plugin helps you efficiently manage every aspect of bookings.
 
-> **One-Time Discount - 10 Days Left**
+###How to get help from us###
 
-> ** Announcing:** NEW [Hotel WP Theme](https://themeforest.net/item/travel-booking-hotel-wordpress-theme-hotel-wp/18828322?utm_source=wporg&utm_medium=wphotelbookingDC&ref=thimpress&utm_campaign=wphotelbooking) - 100% Woocommerce compatible, only $64
-or [The Ultimate Sailing Hotel](http://themeforest.net/item/hotel-wordpress-theme-sailing/13321455?utm_source=wporg&utm_medium=wphotelbookingDC&ref=thimpress&utm_campaign=wphotelbooking), using by 1500 hotels, $64 Only
+- [Demo](https://sailing.thimpress.com/demo-11/)
+- [Documentation](https://docs.thimpress.com/wp-hotel-booking/)
+- [Get Support](https://help.thimpress.com/)
 
-###Hotel WordPress Themes###
+Discover the best WordPress themes designed specifically for hotel booking and reservations. Our themes are built to work seamlessly with the powerful WP Hotel Booking plugin, making it easy for hotel owners to manage bookings effortlessly. Developers are also welcome to create new WordPress hotel themes using this robust plugin.
 
-Take a look at the Premium **[HotelWP - Hotel Wordpress Theme](https://themeforest.net/item/travel-booking-hotel-wordpress-theme-hotel-wp/18828322?utm_source=wporg&utm_medium=wphotelbookingDC&ref=thimpress&utm_campaign=wphotelbooking)** and **[Hotel Sailing Theme](http://themeforest.net/item/hotel-wordpress-theme-sailing/13321455?utm_source=wporg&utm_medium=wphotelbookingDC&ref=thimpress&utm_campaign=wphotelbooking)** we designed to work with WP Hotel Booking, all developers are welcome to develop WordPress Hotel Theme based on this awesome Hotel Booking plugin for WordPress. More WordPress Hotel Themes will come soon, both free WordPress themes as well as premium WordPress themes for this hotel booking / reservation plugin.
+Explore our premium hotel WordPress themes that use the WP Hotel Booking plugin:
 
-###Features###
+- [Sailing - Hotel WordPress Theme](https://themeforest.net/item/hotel-wordpress-theme-sailing/13321455)
+- [LuxStay - Hotel & BnB WordPress Theme](https://themeforest.net/item/travel-booking-hotel-wordpress-theme-hotel-wp/18828322)
+
+**WP Hotel Booking is ideal for:**
+
+- Independent hotel owners looking for a seamless online booking solution.
+- Resort and lodge managers who need an all-in-one reservation system.
+- Hostel and B&B operators want to streamline their booking process.
+- Large hotel chains require a scalable and professional booking management system.
+- Developers building hotel-related WordPress themes with robust booking features.
+
+###WP Hotel Booking Features###
 
 - Complete Hotel Booking System
 - Room Management
@@ -37,6 +48,8 @@ Take a look at the Premium **[HotelWP - Hotel Wordpress Theme](https://themefore
 - Reports + Multilingual Ready
 - Multi Currencies
 - 4 Payment Gateways (Offline Payment, Authorize.net, Paypal, Stripe)
+
+WP Hotel Booking not only saves you time but also provides a smooth booking experience for your customers. This plugin is suitable for businesses of all sizes, from small hotels to large hotel chains.
 
 **Free add-ons for WP Hotel Booking are available in WordPress:**
 
