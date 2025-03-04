@@ -17,6 +17,8 @@ defined( 'ABSPATH' ) || exit();
 $room    = WPHB_Room::instance( get_the_ID() );
 $related = $room->get_related_rooms();
 
+global $hb_settings;
+
 /**
  * @var $related WP_Query
  */
@@ -53,7 +55,7 @@ $related = $room->get_related_rooms();
 				thimpress_hotel_booking_carousel_related.owlCarousel({
 					navigation: false,
 					pagination: false,
-					items: 3,
+					items: <?php echo $hb_settings->get( 'related_carousel_items', 3 ); ?>,
 					paginationSpeed: 600,
 					slideSpeed: 600,
 					autoPlay: true,

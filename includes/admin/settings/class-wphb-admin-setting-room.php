@@ -59,6 +59,15 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 					),
 
 					array(
+						'id'      => WPHB_Settings::instance()->get_field_name( 'related_carousel_items' ),
+						'type'    => 'number',
+						'default' => 3,
+						'min'     => 1,
+						'title'   => __( 'Number of related post display in single room', 'wp-hotel-booking' ),
+						'desc'    => __( 'Settings limit related room show ( single page ).', 'wp-hotel-booking' ),
+					),
+
+					array(
 						'id'      => WPHB_Settings::instance()->get_field_name( 'catalog_image' ),
 						'type'    => 'image_size',
 						'default' => array(

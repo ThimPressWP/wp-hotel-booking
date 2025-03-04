@@ -1,0 +1,140 @@
+/* Adjust style for some theme default */
+$hb_primary: var(--hb-primary, #ffb606);
+
+// general
+body {
+    &.post-type-archive-hb_room, &.wp-hotel-booking-page, &.wp-hotel-booking {
+        a {
+            text-decoration: none;
+        }
+        button, button[type="button"], button[type="submit"], input[type="submit"] {
+            cursor: pointer;
+        }
+        h1, h2 {
+            font-weight: bold;
+        }
+        h3, h4, h5, h6, .title {
+            font-weight: 600;
+        }
+        input {
+            box-sizing: border-box;
+        }
+        input[type="checkbox"]{
+            width: 18px;
+            height: 18px;
+            border: 1px solid #5d5d5d;
+            border-radius: 2px;
+            appearance: none;
+            -webkit-appearance: none; 
+
+            &:checked {
+                position: relative;
+                background-color: #111;
+                
+                &:after {
+                    content: "";
+                    position: absolute;
+                    left: 5px;
+                    width: 5px;
+                    height: 10px;
+                    border: solid #fff;
+                    border-width: 0 2px 2px 0;
+                    transform: rotate(45deg);
+                }
+            }
+        }
+    }
+}
+
+// filter
+.hotel-booking-search-filter {
+    h3 {
+        font-size: 20px;
+    }
+
+    h4, .title {
+        margin: 0 0 8px 0;
+        font-size: 18px;
+    }
+
+    .hb-search-price {
+        .noUi-target {
+            flex: 1;
+            position: relative;
+            background: #e3e3e3;
+            border-radius: 50px;
+        
+            &.noUi-horizontal {
+                margin-bottom: 3px;
+                height: 6px;
+                border: none;
+            }
+        
+            .noUi-connects {
+                .noUi-connect {
+                    background-color: #111;
+                }
+            }
+        
+            .noUi-origin {
+                will-change: transform;
+                position: absolute;
+                z-index: 1;
+                top: 0;
+                right: 0;
+                height: 0;
+                width: 100%;
+        
+                .noUi-handle {
+                    border-radius: 50px;
+                    background-color: #111;
+                    backface-visibility: hidden;
+                    position: absolute;
+                    right: -7px;
+                    top: -3px;
+                    width: 10px;
+                    height: 10px;
+                    box-shadow: none;
+                    border: none;
+                    cursor: default;
+        
+                    &:before, &:after {
+                        content: none;
+                    }
+                }
+            }
+        }
+        
+        .noUi-draggable {
+            cursor: ew-resize;
+        }
+    
+        .min, .max {
+            font-size: medium;
+        }
+    }
+
+    .hb-room-filter-btn {
+        margin: 40px 0 0 0;
+        padding: 12px 20px;
+        border-radius: 3px;
+        border: none;
+        background-color: $hb_primary;
+        font-size: 16px;
+        font-weight: 600;
+        color: #fff;
+        min-width: 129px;
+    }
+}
+
+// single room
+body.single-hb_room {
+    #page {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: var(--hb-container-width, 1200px);
+    }
+    .hb_single_room {
+        margin-top: 40px;
+    }
+}

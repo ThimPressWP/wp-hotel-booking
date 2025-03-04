@@ -416,6 +416,7 @@ class WP_Hotel_Booking {
 		wp_register_style( 'wp-admin-review-image', $this->plugin_url( "assets/css/admin/review-image{$min}.css" ), [], $v_rand );
 		wp_register_style( 'wp-admin-hotel-booking-fullcalendar', $this->plugin_url( 'assets/css/fullcalendar.min.css' ) );
 		wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.css' ), [], WPHB_VERSION );
+		wp_register_style( 'wp-hotel-booking-theme-default', $this->plugin_url( 'assets/css/theme-default.css' ), [], WPHB_VERSION );
 		wp_register_style( 'wp-admin-hotel-booking-calendar-v2', $this->plugin_url( 'assets/css/admin/main.min.css' ) );
 		wp_register_style( 'tingle-css', $this->plugin_url( 'assets/lib/tingle.css' ) );
 		wp_register_style( 'flatpickr-css', $this->plugin_url( 'assets/lib/flatpickr.min.css' ) );
@@ -553,6 +554,7 @@ class WP_Hotel_Booking {
 		} else {
 			wp_enqueue_style( 'wphb-ui-slider' );
 			wp_enqueue_style( 'wp-hotel-booking' );
+			wp_enqueue_style( 'wp-hotel-booking-theme-default' );
 			wp_enqueue_style( 'wp-hotel-booking-review-gallery' );
 
 			wp_enqueue_script( 'wp-hotel-booking' );

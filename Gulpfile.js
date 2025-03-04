@@ -32,6 +32,23 @@ gulp.task( 'build_frontend_css', () => {
 		.pipe( gulp.dest( 'includes/elementor/src/css/frontend' ) );
 } );
 
+const srcDefaultScssFiles = [
+	'assets/scss/theme-default.scss',
+];
+gulp.task( 'build_default_frontend_css', () => {
+	return gulp
+		.src( srcDefaultScssFiles )
+		.pipe( sass.sync().on( 'error', sass.logError ) )
+		.on( 'error', sass.logError )
+		.pipe( postcss( [ css_minify() ] ) )
+		.pipe( lineec() )
+		.pipe( gulp.dest( 'assets/css' ) );
+} );
+
+gulp.task( 'watch_scss', () => {
+    gulp.watch( srcDefaultScssFiles, gulp.series( 'build_default_frontend_css' ) );
+});
+
 gulp.task( 'mincss', () => {
 	return gulp.
 		src( [ 'assets/css/**/*.css', '!assets/css/**/*.min.css' ] )

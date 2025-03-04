@@ -36,10 +36,11 @@
 }
 
 .hotel-booking-search button {
-    background-color: #2eb0d1;
+    background-color: var(--hb-primary, #ffb606);
     font-size: 14px;
     font-weight: 600;
     color: #fff;
+    border: none;
 }
 
 .hotel-booking-search input:hover,
@@ -51,10 +52,6 @@
 .hotel-booking-search textarea:focus,
 .hotel-booking-search button:focus {
     outline: 0;
-}
-
-.hb-search-form {
-
 }
 
 .hb-form-table {
@@ -72,9 +69,13 @@
     margin: 0 0 20px 0;
 }
 
+.hb-form-field label {
+    display: block;
+}
+
 .entry-content .hb-form-field,
 .entry-content .hotel-booking-search form button {
-    max-width: 300px;
+    max-width: 400px;
 }
 
 .entry-content .hotel-booking-search input,
@@ -93,7 +94,6 @@
 
 .hb_input_field {
     position: relative;
-    display: inline-block;
 }
 
 .hb_input_field:after {
@@ -241,12 +241,10 @@
     border: none;
 }
 .hb-search-results .hb-page-search-room-results .room-extra-options a.go-to-cart.hb_button, .hb-search-results .hb-page-search-room-results .room-extra-options button {
-/*    padding: 10px;*/
     border-radius: 10px;
     text-align: center;
     line-height: 1.7;
     color: #fff;
-/*    width: auto;*/
 } 
 
 .hb-align-right {
@@ -343,7 +341,6 @@
 
 .hb-message-content {
     margin: 10px;
-    /* font-size: 14px; */
     color: #43A7FF;
 }
 
@@ -399,7 +396,7 @@
 .tp-hotel-booking .star-rating:before,
 .tp-hotel-booking .star-rating span:before {
     content: "\e601\e601\e601\e601\e601";
-    color: #ffb606;
+    color: var(--hb-primary, #ffb606);
     float: left;
     top: 0;
     left: 0;
@@ -450,7 +447,7 @@
 
 .rating-input:before {
     content: "\e601";
-    color: #ffb606;
+    color: var(--hb-primary, #ffb606);
     float: left;
     top: 0;
     left: 0;
@@ -466,7 +463,7 @@
 /*.rating-input:before,
 .rating-input span:before{
     content: "\e601\e601\e601\e601\e601";
-    color: #ffb606;
+    color: var(--hb-primary, #ffb606);
     float: left;
     top: 0;
     left: 0;
@@ -500,17 +497,15 @@
 /*** NEW CSS STYLE FOR PLUGIN HOTEL BOOKING ROOM ***/
 /** hb-button **/
 .hb_button {
-    text-decoration: none;
-    padding: 10px 25px;
-    line-height: 40px;
-    border: 0;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    background: #ffb606;
-    color: #fff;
-    min-height: 40px;
     display: inline-block;
+    padding: 12px 25px;
+    border: 0;
+    border-radius: 3px;
+    background: var(--hb-primary, #ffb606);
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    line-height: 1.3;
 }
 
 .hb_button:hover {
@@ -594,9 +589,9 @@
     clear: both;
     overflow: hidden;
     max-width: 100% !important;
+    margin: 0;
     padding: 0;
     display: flex;
-    /* justify-content: space-between; */
     flex-wrap: wrap;
 }
 
@@ -630,9 +625,13 @@
 
 .rooms .hb_room .media {
     position: relative;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .rooms .hb_room .media img {
+    display: block;
     width: 100%;
     height: auto;
 }
@@ -642,7 +641,7 @@
     position: absolute;
     width: 0;
     height: 0;
-    border-bottom: 137px solid #ffb606;
+    border-bottom: 137px solid var(--hb-primary, #ffb606);
     border-left: 137px solid transparent;
     bottom: 0;
     right: 0;
@@ -657,6 +656,15 @@
     -o-transition: all 0.3s;
     -ms-transition: all 0.3s;
     transition: all 0.3s;
+}
+
+.rooms .hb_room .feature {
+    font-size: 12px;
+    padding: 2px 8px;
+    color: #007AFF;
+    background-color: #E2EFFD;
+    text-transform: uppercase;
+    width: fit-content;
 }
 
 .rooms .hb_room .summary {
@@ -685,17 +693,18 @@
 }
 
 .rooms .hb_room .title h4 {
-    line-height: 30px;
-    margin: 16px 0 0;
+    margin: 12px 0 0;
+    font-size: 18px;
+    line-height: 1.3;
 }
 
 .rooms .hb_room .title h4 a {
+    display: block;
     color: #2a2a2a;
     white-space: nowrap;
     max-width: 100%;
-    display: block;
-    overflow: hidden;
     text-overflow: ellipsis;
+    text-decoration: none;
 }
 
 .rooms .hb_room .price {
@@ -736,26 +745,27 @@
 
 /** Rooms pagination **/
 .rooms-pagination .page-numbers {
+    margin: 15px 0 0 0;
+    padding: 0;
     list-style: none;
-    margin: 15px 0 5px;
     text-align: center;
 }
 
 .rooms-pagination .page-numbers li {
     display: inline-block;
     line-height: 30px;
-    padding: 0 13px;
+    padding: 0 5px;
 }
 
 .rooms-pagination .page-numbers li span {
-    font-size: 13px;
+    font-size: 14px;
     width: 30px;
     height: 30px;
     text-align: center;
     line-height: 30px;
     display: inline-block;
     overflow: hidden;
-    color: #5a5a5a;
+    color: #000;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
@@ -763,8 +773,7 @@
 }
 
 .rooms-pagination .page-numbers li span.current {
-    background: #ffb606;
-    color: #2a2a2a;
+    background: var(--hb-primary, #ffb606);
 }
 
 .rooms-pagination .page-numbers li a {
@@ -774,7 +783,7 @@
     text-align: center;
     line-height: 30px;
     display: inline-block;
-    color: #5a5a5a;
+    color: #000;
     overflow: hidden;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -784,7 +793,7 @@
 }
 
 .rooms-pagination .page-numbers li a:hover {
-    background: #ffb606;
+    background: var(--hb-primary, #ffb606);
     color: #2a2a2a;
 }
 
@@ -797,7 +806,7 @@
 .rooms-pagination .page-numbers li a.next:hover,
 .rooms-pagination .page-numbers li a.prev:hover {
     background: transparent;
-    color: #ffb606;
+    color: var(--hb-primary, #ffb606);
 }
 
 /** Single rooms **/
@@ -814,17 +823,16 @@
 
 .hb_single_room .price {
     float: right;
-    /* margin-top: -65px; */
-    line-height: 30px;
     font-weight: 600;
     font-size: 30px;
-    color: #ffb606;
+    line-height: 1;
+    color: var(--hb-primary, #ffb606);
 }
 
 .hb_single_room .price span.title-price {
     margin-right: 5px;
     color: #2a2a2a;
-    font-size: 15px;
+    font-size: var(--hb-font-size-base, 16px);
     font-weight: 400;
 }
 
@@ -940,7 +948,7 @@
 }
 
 .hb_single_room .hb_room_gallery .camera_thumbs .camera_thumbs_cont ul li.cameracurrent:before {
-    border-color: #ffb606;
+    border-color: var(--hb-primary, #ffb606);
     z-index: 2;
 }
 
@@ -985,12 +993,12 @@
 
 .hb_single_room .hb_single_room_details {
     clear: both;
-    padding: 10px;
 }
 
 .hb_single_room .hb_single_room_details .hb_single_room_tabs {
     clear: both;
     margin: 0;
+    padding: 0;
     list-style: none;
     border-bottom: 1px solid #ddd;
 }
@@ -1003,12 +1011,12 @@
 }
 
 .hb_single_room .hb_single_room_details .hb_single_room_tabs > li a {
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 13px;
-    color: #5a5a5a;
     position: relative;
     display: block;
+    font-weight: 700;
+    font-size: var(--hb-font-size-base, 16px);
+    color: #5a5a5a;
+    text-decoration: none;
     line-height: 30px;
     padding-bottom: 9px;
 }
@@ -1029,7 +1037,7 @@
 }
 
 .hb_single_room .hb_single_room_details .hb_single_room_tabs > li a.active:after {
-    background: #ffb606;
+    background: var(--hb-primary, #ffb606);
 }
 
 .hb_single_room .hb_single_room_details .hb_single_room_tabs_content {
@@ -1075,7 +1083,7 @@
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
-    background: #ffb606;
+    background: var(--hb-primary, #ffb606);
     color: #2a2a2a;
 }
 
@@ -1183,7 +1191,7 @@
 
 /** Other room slider **/
 .hb_related_other_room {
-    margin: 0 -15px;
+    margin: 0 -15px 40px -15px;
 }
 
 .hb_related_other_room .tp-hotel-booking {
@@ -1192,9 +1200,9 @@
 
 .hb_related_other_room > .title {
     position: relative;
-    line-height: 40px;
+    font-size: 30px;
     padding-bottom: 11px;
-    margin: 20px 15px 40px;
+    margin: 20px 15px;
 }
 
 .hb_related_other_room > .title:after {
@@ -1204,7 +1212,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    background: #ffb606;
+    background: var(--hb-primary, #ffb606);
 }
 
 .hb_related_other_room .rooms li.hb_room {
@@ -1257,16 +1265,15 @@
 #hotel-booking-results form .hb_button.hb_checkout,
 #hotel-booking-results form button.hb_add_to_cart,
 #hotel-booking-results form button[type="submit"] {
-    text-decoration: none;
+    margin-right: 5px;
     padding: 10px 25px;
     line-height: 20px;
     border: 0;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
     border-radius: 3px;
-    background: #ffb606;
+    background: var(--hb-primary, #ffb606);
     color: #2a2a2a;
-    margin-right: 5px;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 #hotel-booking-results form .hb_button.hb_checkout:hover,
@@ -1305,7 +1312,7 @@
 }
 
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-name a:hover {
-    color: #ffb606;
+    color: var(--hb-primary, #ffb606);
 }
 
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-name label {
@@ -1463,16 +1470,14 @@
 #hotel-booking-payment button[type="submit"],
 #hotel-booking-cart button[type="button"],
 #hotel-booking-payment button[type="button"] {
+    font-size: var(--hb-font-size-base, 16px);
     text-decoration: none;
-    padding: 10px 25px;
-    line-height: 20px;
     border: 0;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
+    padding: 12px 25px;
     border-radius: 3px;
-    background: #ffb606;
+    background: var(--hb-primary, #ffb606);
     color: #2a2a2a;
-    min-height: 20px;
+    line-height: 1.3;
 }
 
 #hotel-booking-cart .hb_button.hb_checkout:hover,
@@ -1735,7 +1740,7 @@
 
 .ui-datepicker.ui-widget .ui-datepicker-calendar .ui-state-default:hover {
     color: #fff;
-    background: #ffb606;
+    background: var(--hb-primary, #ffb606);
 }
 
 /** Room detail when click view price breakdown **/
@@ -1787,7 +1792,7 @@
 }
 
 .hb-booking-room-details .hb_search_room_item_detail_price_close:hover {
-    background: #ffb606;
+    background: var(--hb-primary, #ffb606);
 }
 
 .hb-booking-room-details table {
@@ -1810,7 +1815,7 @@
 }
 
 .hb-booking-room-details table tr td.hb_search_item_price {
-    color: #ffb606;
+    color: var(--hb-primary, #ffb606);
     font-weight: 700;
 }
 
@@ -1873,7 +1878,7 @@
 }
 
 .hotel_booking_mini_cart .hb_mini_cart_item .hb_mini_cart_remove:hover {
-    background: #ffb606;
+    background: var(--hb-primary, #ffb606);
     color: #fff;
 }
 
@@ -1899,7 +1904,7 @@
 }
 
 .hotel_booking_mini_cart .hb_mini_cart_item .hb_mini_cart_price span {
-    color: #ffb606;
+    color: var(--hb-primary, #ffb606);
 }
 
 .hotel_booking_mini_cart .hb_mini_cart_footer {
@@ -2022,7 +2027,8 @@ input[type="submit"],
     }
 
     .container {
-        width: 1200px;
+        width: var(--hb-container-width, 1200px);
+        max-width: 100%;
     }
 
     .siteorigin-panels-stretch {
@@ -3178,13 +3184,12 @@ button.wphb_loading::before {
 
 #hotel-booking-search-filter .clear-filter button {
     position: relative;
-    height: 40px;
-    min-width: 200px;
     border: 1px solid #cccccc;
     border-radius: 3px;
-    padding: 7px 8px;
-    line-height: 24px;
-    font-size: 14px;
+    padding: 12px 20px;
+    font-size: 16px;
+    line-height: 1.4;
+    background-color: transparent;
 }
 
 
@@ -3199,16 +3204,18 @@ button.apply {
 }
 
 ul.rating-list, ul.room-type-list {
-    margin-top: 10px;
+    margin: 10px 0 0 0;
     list-style: none;
     padding: 0;
 }
 
 ul.rating-list li, ul.room-type-list li {
+    margin: 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+    font-size: medium;
 }
 
 ul.rating-list li label, ul.room-type-list li label {
@@ -3216,10 +3223,11 @@ ul.rating-list li label, ul.room-type-list li label {
     flex-wrap: wrap;
     align-items: center;
     margin-bottom: 0;
+    font-size: medium;
 }
 
 ul.rating-list li label span, ul.room-type-list li label span {
-    margin-left: 10px;
+    margin-left: 8px;
 }
 
 /*sort by*/
@@ -3631,7 +3639,7 @@ ul.hb-room-review-images img {
 .review-top-section .header button {
     padding: 14px;
     border-radius: 200px;
-    border: solid 2px;
+    border: 1px solid;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
@@ -3721,8 +3729,8 @@ ul.hb-room-review-images img {
 
 .hb-room-commentlist-sort-filter .gallery-filter a {
     padding: 10px;
-    border-radius: 200px;
-    border: solid 2px;
+    border-radius: 4px;
+    border: 1px solid;
     text-decoration: none;
 }
 

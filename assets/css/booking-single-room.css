@@ -11,9 +11,6 @@
 	text-align: center;
 }
 
-/* #hotel_booking_room_hidden * {
-	color: #777;
-} */
 .hotel_booking_room_errors{
 	color: #f00;
 }
@@ -109,6 +106,7 @@
     width: 100%;
     position: relative;
 	overflow: hidden;
+	margin: 40px 0;
 }
 .hb_single_room #hb_room_images .room-preview{
 	position: absolute;
