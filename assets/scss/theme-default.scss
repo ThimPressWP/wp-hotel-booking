@@ -4,6 +4,8 @@ $hb_primary: var(--hb-primary, #ffb606);
 // general
 body {
     &.post-type-archive-hb_room, &.wp-hotel-booking-page, &.wp-hotel-booking {
+        font-size: var(--hb-font-size-base, 16px);
+
         a {
             text-decoration: none;
         }
@@ -16,34 +18,60 @@ body {
         h3, h4, h5, h6, .title {
             font-weight: 600;
         }
-        input {
+        input, textarea {
             box-sizing: border-box;
         }
-        input[type="checkbox"]{
-            width: 18px;
-            height: 18px;
-            border: 1px solid #5d5d5d;
-            border-radius: 2px;
-            appearance: none;
-            -webkit-appearance: none; 
+    }
+    // table
+    table {
+        &.hb_table, &.hb_room_pricing_plans {
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-collapse: collapse;
+            border-spacing: 0;
+            empty-cells: show;
+            font-size: var(--hb-font-size-base, 16px);
+            max-width: 100%;
+            overflow: hidden;
+            width: 100%;
 
-            &:checked {
-                position: relative;
-                background-color: #111;
-                
-                &:after {
-                    content: "";
-                    position: absolute;
-                    left: 5px;
-                    width: 5px;
-                    height: 10px;
-                    border: solid #fff;
-                    border-width: 0 2px 2px 0;
-                    transform: rotate(45deg);
+            th, td {
+                border: 1px solid rgba(0, 0, 0, 0.1);
+            }
+        }
+    }
+    // form
+    form {
+        &.search-filter-form {
+            input[type="checkbox"]{
+                margin: 0;
+                padding: 0;
+                width: 18px;
+                height: 18px;
+                border: 1px solid #5d5d5d;
+                border-radius: 2px;
+                appearance: none;
+                -webkit-appearance: none; 
+    
+                &:checked {
+                    position: relative;
+                    background-color: #111;
+                    
+                    &:after {
+                        content: "";
+                        position: absolute;
+                        left: 5px;
+                        bottom: 4px;
+                        width: 5px;
+                        height: 10px;
+                        border: solid #fff;
+                        border-width: 0 2px 2px 0;
+                        transform: rotate(45deg);
+                    }
                 }
             }
         }
     }
+       
 }
 
 // filter
@@ -65,7 +93,7 @@ body {
             border-radius: 50px;
         
             &.noUi-horizontal {
-                margin-bottom: 3px;
+                margin-bottom: 6px;
                 height: 6px;
                 border: none;
             }
@@ -124,17 +152,65 @@ body {
         font-weight: 600;
         color: #fff;
         min-width: 129px;
+        text-decoration: none;
     }
 }
 
 // single room
 body.single-hb_room {
-    #page {
-        margin-left: auto;
-        margin-right: auto;
-        max-width: var(--hb-container-width, 1200px);
-    }
     .hb_single_room {
         margin-top: 40px;
+        max-width: var(--hb-container-width, 1200px);
+    }
+    .hb_related_other_room {
+        max-width: calc( var(--hb-container-width, 1200px) + 30px ) ;
+    } 
+    .hb_single_room, .hb_related_other_room {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .hb_single_room_tabs_content {
+        h1, h2, h3, h4, h5, h6, p {
+            &:first-child {
+                margin-top: 0;
+            }
+        }
+
+        #hb_room_reviews {
+            #comments {
+                .commentlist {
+                    list-style: none;
+                    margin: 0;
+                    padding: 0;
+
+                    & > li {
+                        margin-bottom: 20px;
+                        padding: 20px;
+                        border: 1px solid var(--hb-border-color, #e7e7e7);
+                        border-radius: 8px;
+                    }
+
+                    .avatar {
+                        float: left;
+                        margin-right: 20px;
+                    }
+
+                    .hb-room-review-title {
+                        margin: 0;
+                        font-size: 18px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// astra theme
+.ast-container {
+    &:has(.hb_related_other_room) {
+        flex-wrap: wrap;
+    }
+    .hb_related_other_room {
+        width: 100%;
     }
 }

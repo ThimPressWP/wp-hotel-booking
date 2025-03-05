@@ -42,7 +42,6 @@ $user_comments = get_comments( array(
 ?>
 
 <div id="reviews">
-    <!--    Review top section-->
 	<?php
 	if ( $enable_advanced_review ) {
 		?>
@@ -138,7 +137,7 @@ $user_comments = get_comments( array(
 		<?php
 	}
 	?>
-    <!--    End review top section-->
+	
     <div id="comments">
 		<?php
 		if ( $enable_advanced_review ) {
