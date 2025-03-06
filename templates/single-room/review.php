@@ -59,10 +59,11 @@ $settings = WPHB_Settings::instance();
 				<p class="meta"><em><?php _e( 'Your comment is awaiting approval', 'wp-hotel-booking' ); ?></em></p>
 			<?php } else { ?>
 				<p class="meta">
-					<strong itemprop="author"><?php comment_author(); ?></strong>&ndash;
+					<strong itemprop="author"><?php comment_author(); ?></strong>
 					<time itemprop="datePublished"
-							datetime="<?php echo get_comment_date( 'c' ); ?>"><?php echo get_comment_date( hb_date_format() ); ?></time>
-					:
+						datetime="<?php echo get_comment_date( 'c' ); ?>">
+						<?php echo get_comment_date( hb_date_format() ); ?>
+					</time>
 				</p>
 			<?php } ?>
 

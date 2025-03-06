@@ -51,7 +51,7 @@ gulp.task( 'watch_scss', () => {
 
 gulp.task( 'mincss', () => {
 	return gulp.
-		src( [ 'assets/css/**/*.css', '!assets/css/**/*.min.css' ] )
+		src( [ 'assets/css/**/*.css', '!assets/css/**/*.min.css', '!assets/css/theme-default.css' ] )
 		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( uglifycss() )
 		.pipe( gulp.dest( 'assets/css' ) );

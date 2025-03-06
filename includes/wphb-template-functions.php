@@ -483,6 +483,23 @@ if ( ! function_exists( 'hb_body_class' ) ) {
 			$classes[] = 'wp-hotel-booking-room-page';
 		}
 
+		// theme default wp
+		$default_themes = [
+			'Twenty Twenty-Five', 
+			'Twenty Twenty-Four', 
+			'Twenty Twenty-Three', 
+			'Twenty Twenty-Two',   
+			'Twenty Twenty-One',   
+			'Twenty Twenty'        
+		];
+	
+		$current_theme = wp_get_theme()->get('Name');
+	
+		if ( in_array( $current_theme, $default_themes )) {
+			$classes[] = 'wp-default-theme';
+		}
+		// end theme default wp
+
 		return array_unique( $classes );
 	}
 }

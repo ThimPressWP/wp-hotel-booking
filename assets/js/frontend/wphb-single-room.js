@@ -409,6 +409,12 @@ document.addEventListener( 'click', function ( e ) {
 		modalPreview.setContent( iframe );
 		modalPreview.open();
 	}
+
+	// faq toggle
+	const targetFAQ = target.closest('._hb_room_faqs__detail');
+    if ( targetFAQ ) {
+        targetFAQ.classList.toggle('toggled');
+    }
 } );
 
 let modalCheckDates;

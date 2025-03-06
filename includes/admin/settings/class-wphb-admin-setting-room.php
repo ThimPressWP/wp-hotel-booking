@@ -63,8 +63,8 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 						'type'    => 'number',
 						'default' => 3,
 						'min'     => 1,
-						'title'   => __( 'Number of related post display in single room', 'wp-hotel-booking' ),
-						'desc'    => __( 'Settings limit related room show ( single page ).', 'wp-hotel-booking' ),
+						'title'   => __( 'Number of column related display in single room', 'wp-hotel-booking' ),
+						'desc'    => __( "Settings number of column related show ( doesn't work if theme overrides related template ).", 'wp-hotel-booking' ),
 					),
 
 					array(
