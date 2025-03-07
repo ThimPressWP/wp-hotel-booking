@@ -2,6 +2,54 @@
 body {
     &.wp-default-theme {
         --hb-primary: #E64B50;
+        font-family: "Inter var";
+
+        @font-face {
+            font-family: "Inter var";
+            font-weight: 100 900;
+            font-style: normal;
+            font-display: swap;
+            src: url(../fonts/inter/Inter-upright-var.woff2) format("woff2");
+        }
+        
+        @font-face {
+            font-family: "Inter var";
+            font-weight: 100 900;
+            font-style: italic;
+            font-display: swap;
+            src: url(../fonts/inter/Inter-italic-var.woff2) format("woff2");
+        }
+
+        .entry-content {
+            font-family: "Inter var";
+
+            .hotel-booking-search { // hotel search
+                .hb-form-table {
+                    max-width: 455px;
+
+                    input, select {
+                        padding: 12px 8px;
+                    }
+                    .hb_input_field {
+                        &:after {
+                            right: 12px;
+                        }
+                    }
+                }
+                
+                .hb-submit {
+                    button {
+                        width: auto;
+                    }
+                }
+            }
+
+            .rooms-pagination {
+                ul.page-numbers {
+                    text-align: initial;
+                }
+            }
+        }
 
         h1 {
             font-size: 48px;
@@ -20,6 +68,27 @@ body {
         }
         h6 {
             font-size: var(--hb-font-size-base, 16px);
+        }
+
+        h1, h2 {
+            font-family: "Inter var";
+            font-weight: bold;
+        }
+        h3, h4, h5, h6, .title {
+            font-family: "Inter var"; 
+            font-weight: 600;
+        }
+
+        select {
+            font-size: var(--hb-font-size-base, 16px);
+        }
+
+        button:not(:hover):not(:active):not(.has-background) {
+            background-color: var(--hb-primary, #ffb606);
+        }
+
+        button:not(:hover):not(:active):not(.has-text-color) {
+            color: #fff;
         }
 
         .hb_single_room {
@@ -58,30 +127,33 @@ body {
         }
 
         #hotel-booking-search-filter {
-            padding: 15px;
-
             .clear-filter {
                 button {
                     border-color: var(--hb-heading, #111);
+
+                    &:hover {
+                        text-decoration: none;
+                    }
                 }
             } 
         } 
     }
 
+    &.post-type-archive-hb_room {
+        #hotel-booking-search-filter {
+            padding: 15px;
+        }
+    }
+
     &.post-type-archive-hb_room, &.wp-hotel-booking-page, &.wp-hotel-booking {
         font-size: var(--hb-font-size-base, 16px);
+        background-color: #fff;
 
         a {
             text-decoration: none;
         }
         button, button[type="button"], button[type="submit"], input[type="submit"] {
             cursor: pointer;
-        }
-        h1, h2 {
-            font-weight: bold;
-        }
-        h3, h4, h5, h6, .title {
-            font-weight: 600;
         }
         input, textarea {
             box-sizing: border-box;
@@ -225,6 +297,7 @@ body {
             color: #fff;
             min-width: 149px;
             text-decoration: none;
+            text-transform: none;
         }
     }    
 }

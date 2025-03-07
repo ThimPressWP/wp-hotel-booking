@@ -81,6 +81,10 @@
     width: 100%;
 }
 
+.entry-content .hotel-booking-search .hb-submit button {
+    width: 100%;
+}
+
 .entry-content .hb-search-results, .entry-content .hb-form-table {
     margin: 0;
     padding: 0;
@@ -615,21 +619,15 @@
     border-left: 137px solid transparent;
     bottom: 0;
     right: 0;
-    -moz-opacity: 0.7;
-    -khtml-opacity: 0.7;
-    -webkit-opacity: 0.7;
     opacity: 0.7;
     -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=70);
     filter: alpha(opacity=70);
     -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    -ms-transition: all 0.3s;
     transition: all 0.3s;
 }
 
 .rooms .hb_room .feature {
-    margin-top: 20px;
+    margin-top: 16px;
     font-size: 12px;
     padding: 2px 8px;
     color: #007AFF;
@@ -683,7 +681,7 @@
     font-weight: 700;
     font-size: 24px;
     color: #fff;
-    line-height: 27px;
+    line-height: 1.4;
 }
 
 .rooms .hb_room .price span {
@@ -726,14 +724,14 @@
 }
 
 .rooms-pagination .page-numbers li span.current {
-    background: var(--hb-primary, #ffb606);
+    background: #e7e7e7;
 }
 
 .rooms-pagination .page-numbers li .page-numbers {
     font-size: var(--hb-font-size-base, 16px);
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
     text-align: center;
     display: inline-block;
     color: #000;
@@ -744,7 +742,7 @@
 }
 
 .rooms-pagination .page-numbers li a:hover {
-    background: var(--hb-primary, #ffb606);
+    background: #e7e7e7;
     color: var(--hb-heading, #111);
 }
 
@@ -1228,19 +1226,18 @@
 }
 
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-name {
-    color: var(--hb-heading, #111);
+    margin: 0 0 23px 0;
     font-size: 30px;
     font-weight: 600;
-    margin-top: 0;
-    margin-bottom: 23px;
-    line-height: 30px;
+    line-height: 1.2;
+    color: var(--hb-heading, #111);
 }
 
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-name a {
-    line-height: 30px;
     display: inline-block;
     color: var(--hb-heading, #111);
     text-decoration: none;
+    line-height: 30px;
 }
 
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-name a:hover {
@@ -1249,11 +1246,11 @@
 
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-name label {
     display: inline-block;
-    line-height: 30px;
     margin: 0;
     font-style: italic;
     font-weight: 400;
     font-size: 20px;
+    line-height: 1.5;
 }
 
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-thumbnail {
@@ -1341,6 +1338,7 @@
 }
 
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li .hb-view-booking-room-details {
+    font-size: var(--hb-font-size-base, 16px);
     color: var(--hb-heading, #111);
     font-weight: 500;
 }
@@ -3557,7 +3555,6 @@ ul.hb-room-review-images img {
 }
 
 .hb-room-commentlist-sort-filter .gallery-filter a.active {
-    border: none;
     background: #e7e7e7;
 }
 
