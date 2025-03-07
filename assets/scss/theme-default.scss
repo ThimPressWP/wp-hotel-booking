@@ -1,8 +1,8 @@
 /* Adjust style for some theme default */
 body {
     &.wp-default-theme {
-        --hb-primary: #E64B50;
         font-family: "Inter var";
+        --hb-primary: #E64B50;
 
         @font-face {
             font-family: "Inter var";
@@ -18,6 +18,11 @@ body {
             font-style: italic;
             font-display: swap;
             src: url(../fonts/inter/Inter-italic-var.woff2) format("woff2");
+        }
+
+        @media (max-width: 1200px) {
+            padding-left: 15px;
+            padding-right: 15px;
         }
 
         .entry-content {
@@ -304,12 +309,17 @@ body {
 
 // single room
 body.single-hb_room {
+    &.wp-default-theme {
+        .hb_related_other_room {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+    
     // adjust width container for default theme
-    & > .hb_related_other_room, & > .hb_single_room {
+    & > .hb_single_room {
         margin-left: auto;
         margin-right: auto;
-    } 
-    & > .hb_single_room {
         max-width: var(--hb-container-width, 1200px);
     }
     & > .hb_related_other_room {
@@ -317,11 +327,9 @@ body.single-hb_room {
     }
 
     & > #page, & #main{ 
-        & > .hb_single_room, .hb_related_other_room {
+        & > .hb_single_room {
             margin-left: auto;
             margin-right: auto;
-        }
-        & > .hb_single_room {
             max-width: var(--hb-container-width, 1200px);
         }
         & > .hb_related_other_room {

@@ -3548,14 +3548,15 @@ ul.hb-room-review-images img {
 }
 
 .hb-room-commentlist-sort-filter .gallery-filter a {
-    color: var(--hb-heading, #111);
-    padding: 6px 12px;
-    border-radius: 8px;
-    border: 1px solid var(--hb-border-color, #e7e7e7);
+    padding: 10px;
+    border-radius: 200px;
+    border: solid 2px;
+    text-decoration: none;
 }
 
 .hb-room-commentlist-sort-filter .gallery-filter a.active {
-    background: #e7e7e7;
+    color: white;
+    background: #01AA90;
 }
 
 .sort-by {
