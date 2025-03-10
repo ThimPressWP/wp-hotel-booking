@@ -46,11 +46,11 @@ body {
                     max-width: 455px;
 
                     input, select {
-                        padding: 12px 8px;
+                        padding: 12px;
                     }
                     .hb_input_field {
                         &:after {
-                            right: 12px;
+                            right: 14px;
                         }
                     }
                 }
@@ -97,7 +97,8 @@ body {
             font-weight: 600;
         }
 
-        select {
+        input, select, button {
+            font-family: "Inter var";
             font-size: var(--hb-font-size-base, 16px);
         }
 
@@ -136,6 +137,15 @@ body {
                         font-size: 18px;
                     }
                 }
+            }
+        }
+
+        .hb-form-field {
+            label {
+                margin-bottom: 5px;
+                font-size: 14px;
+                line-height: 1;
+                color: #5D5D5D;
             }
         }
 
@@ -392,6 +402,41 @@ body.single-hb_room {
     .hb_single_room {
         margin-top: 40px;
         padding: 0;
+
+        .hb_room_gallery {
+            .camera_prev, .camera_next {
+                position: absolute;
+                transform: translateY(-50%);
+                top: 50%;
+                background-color: #f6f6f6;
+                border-radius: 3px;
+                line-height: 1;
+                cursor: pointer;
+
+                & > span {
+                    display: inline-flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 40px;
+                    width: 45px;
+                    z-index: 1;
+                }
+            }
+            .camera_prev {
+                left: 10px;
+
+                & > span {
+                    background: url(../images/prev.png) no-repeat center center;
+                }
+            } 
+            .camera_next {
+                right: 10px;
+
+                & > span {
+                    background: url(../images/next.png) no-repeat center center;
+                }
+            }
+        }
     }
 
     .hb_single_room_tabs_content {

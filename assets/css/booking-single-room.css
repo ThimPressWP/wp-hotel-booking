@@ -125,6 +125,10 @@
 	cursor: pointer;
 }
 
+.hb_single_room #hb_room_images img{
+    width: 100%;
+}
+
 .hb_single_room #hb_room_images .room-preview i, .hb_single_room #hb_room_images .room-preview svg{
 	color: #fff;
 	fill: #fff;
