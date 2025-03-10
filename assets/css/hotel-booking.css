@@ -703,6 +703,10 @@
     padding: 0;
 }
 
+.rooms .hb_room .price span.unit:before {
+    content: "/";
+}
+
 .rooms .hb_room .price span.title-price {
     display: none;
 }
