@@ -556,11 +556,15 @@
     width: 300px;
     min-height: 290px;
     position: relative;
-    padding: 0 15px;
+    padding: 0;
     margin: 0;
 }
 
 /** Archive rooms **/
+.entry-content ul.rooms {
+    margin: 0;
+    padding: 0;
+}
 .rooms {
     list-style: none;
     clear: both;
@@ -593,11 +597,11 @@
 }
 
 .rooms .hb_room {
-    list-style: none;
     position: relative;
     margin: 0 0 50px 0;
     padding: 0 15px;
     border: none;
+    list-style: none;
 }
 
 .rooms .hb_room .media {
@@ -610,7 +614,7 @@
     height: auto;
 }
 
-.rooms .hb_room .media a:before {
+.rooms .hb_room .media a:has(img):before {
     content: '';
     position: absolute;
     width: 0;
@@ -667,10 +671,7 @@
 .rooms .hb_room .title h4 a {
     display: block;
     color: var(--hb-heading, #111);
-    white-space: nowrap;
     max-width: 100%;
-    text-overflow: ellipsis;
-    text-decoration: none;
 }
 
 .rooms .hb_room .price {
@@ -2990,7 +2991,6 @@ button.wphb_loading::before {
     width: 100%;
     margin: 0;
     max-width: 100%;
-    padding: 15px;
 }
 
 #hotel-booking-search-filter h3 {

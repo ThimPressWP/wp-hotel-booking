@@ -56,6 +56,7 @@
 }
 
 .hb-search-results-form-container {
+	margin-top: 20px;
 	display: flex;
 	flex-wrap: wrap;
 	gap: 20px;
@@ -76,6 +77,10 @@
 
 .hotel-booking-search .hb_addition_packages_ul, .hb-search-room-results.hotel-booking-search  {
 	padding: 0;
+}
+
+.hb-booking-room-form-footer{
+	text-align: center;
 }
 
 .hb-booking-room-form-footer .hb_previous_step {

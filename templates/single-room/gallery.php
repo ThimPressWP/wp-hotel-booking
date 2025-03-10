@@ -46,7 +46,13 @@ $galleries = $hb_room->get_galleries( false );
 						height: '470px',
 						loader: 'none',
 						pagination: false,
-						thumbnails: true
+						thumbnails: true,
+						onLoaded: function () {
+						setTimeout(function () { // fix thumbnails not show in first slide
+							$('.camera_fakehover').css('height', '470px');
+							$('.camera_thumbs_cont').fadeIn();
+						}, 500);
+					}
 					});
 				});
 			})(jQuery);

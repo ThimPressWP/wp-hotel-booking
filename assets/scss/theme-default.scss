@@ -1,8 +1,13 @@
 /* Adjust style for some theme default */
+* {
+    box-sizing: inherit;
+}
+
 body {
     &.wp-default-theme {
         font-family: "Inter var";
         --hb-primary: #E64B50;
+        --wp--style--global--content-size: 1200px;
 
         @font-face {
             font-family: "Inter var";
@@ -27,6 +32,14 @@ body {
 
         .entry-content {
             font-family: "Inter var";
+
+            @media (min-width: 700px) {
+                font-size: var(--hb-font-size-base, 16px);
+            }
+
+            .room-container {
+                max-width: var(--hb-container-width, 1200px) !important;
+            }
 
             .hotel-booking-search { // hotel search
                 .hb-form-table {
@@ -125,6 +138,7 @@ body {
                 }
             }
         }
+
         #hotel-booking-cart, #hotel-booking-payment {
             margin-left: auto;
             margin-right: auto;
@@ -142,6 +156,38 @@ body {
                 }
             } 
         } 
+
+        .tingle-modal-box {
+            background: transparent;
+
+            iframe {
+                width: 100%;
+                min-height: 360px;
+            }
+        }
+    }
+
+    &.wp-hotel-booking-page {
+        &.wp-default-theme {
+            .sort-by-wrapper {
+                @media (min-width: 1200px) {
+                    padding: 0;
+                }
+            }
+    
+            .rooms {
+                @media (min-width: 1200px) {
+                    column-gap: 30px;
+                    flex-wrap: nowrap;
+                }
+    
+                .hb_room {
+                    @media (min-width: 1200px) {
+                        padding: 0;
+                    }
+                }
+            } 
+        }
     }
 
     &.post-type-archive-hb_room {
@@ -171,6 +217,7 @@ body {
             margin: 0;
             border: 1px solid rgba(0, 0, 0, 0.1);
             border-collapse: collapse;
+            box-sizing: border-box;
             border-spacing: 0;
             empty-cells: show;
             font-size: var(--hb-font-size-base, 16px);
@@ -189,7 +236,7 @@ body {
 
     // form
     form {
-        &.search-filter-form {
+        &.search-filter-form, &.hotel-booking-search {
             input[type="checkbox"]{
                 margin: 0;
                 padding: 0;
@@ -242,8 +289,8 @@ body {
                 border-radius: 50px;
             
                 &.noUi-horizontal {
-                    margin-bottom: 6px;
-                    height: 6px;
+                    margin-bottom: 8px;
+                    height: 8px;
                     border: none;
                 }
             
@@ -267,13 +314,17 @@ body {
                         background-color: #111;
                         backface-visibility: hidden;
                         position: absolute;
-                        right: -7px;
-                        top: -3px;
-                        width: 10px;
-                        height: 10px;
+                        right: -14px;
+                        top: -4px;
+                        width: 16px;
+                        height: 16px;
                         box-shadow: none;
                         border: none;
                         cursor: default;
+
+                        &.noUi-handle-upper {
+                            right: -9px;
+                        }
             
                         &:before, &:after {
                             content: none;
@@ -340,6 +391,7 @@ body.single-hb_room {
 
     .hb_single_room {
         margin-top: 40px;
+        padding: 0;
     }
 
     .hb_single_room_tabs_content {

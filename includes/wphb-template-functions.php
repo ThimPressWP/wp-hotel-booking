@@ -491,7 +491,9 @@ if ( ! function_exists( 'hb_body_class' ) ) {
 			'Twenty Twenty-Two',   
 			'Twenty Twenty-One',   
 			'Twenty Twenty',
-			'Hello Elementor'        
+			'Astra',
+			'Hello Elementor',
+			'Flatsome'        
 		];
 	
 		$current_theme = wp_get_theme()->get('Name');

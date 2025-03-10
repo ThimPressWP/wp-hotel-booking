@@ -59,10 +59,10 @@
 }
 
 .hb_addition_packages .hb_package_title {
-    line-height: 30px;
     padding: 0;
     text-transform: none;
     font-size: 15px;
+    line-height: 1.5;
     font-weight: 700;
 }
 
