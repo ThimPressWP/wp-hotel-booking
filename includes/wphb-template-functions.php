@@ -576,7 +576,7 @@ if ( ! function_exists( 'hb_setup_shortcode_page_content' ) ) {
 
 		if ( ! $page_id ) {
 			return $content;
-		}//echo'<pre>';print_r(hb_get_page_id( 'rooms' ));die;
+		}
 
 		if ( hb_get_page_id( 'rooms' ) == $page_id ) {
 			$current_content = get_post( $page_id )->post_content;
@@ -589,10 +589,6 @@ if ( ! function_exists( 'hb_setup_shortcode_page_content' ) ) {
 			$content = '[' . apply_filters( 'hotel_booking_checkout_shortcode_tag', 'hotel_booking_checkout' ) . ']';
 		} elseif ( hb_get_page_id( 'search' ) == $page_id ) {
 			$content = '[' . apply_filters( 'hotel_booking_search_shortcode_tag', 'hotel_booking' ) . ']';
-
-			if ( $hb_settings->get( 'filter_price_enable', '' ) ) {
-				$content .= '[' . apply_filters( 'hotel_booking_search_filter_shortcode_tag', 'hotel_booking_filter' ) . ']';
-			}
 		} elseif ( hb_get_page_id( 'account' ) == $page_id ) {
 			$content = '[' . apply_filters( 'hotel_booking_account_shortcode_tag', 'hotel_booking_account' ) . ']';
 		} elseif ( hb_get_page_id( 'thankyou' ) == $page_id ) {
