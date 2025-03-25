@@ -25,7 +25,7 @@ if ( ! class_exists( 'WPHB_TemplateLoader' ) ) {
 		 */
 		public function __construct() {
 			// Using shortcode to show, so handle is meaningless
-			//add_filter( 'template_include', array( $this, 'template_loader' ) );
+			add_filter( 'template_include', array( $this, 'template_loader' ) );
 		}
 
 		/**
