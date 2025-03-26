@@ -5,9 +5,11 @@
 
 body {
     &.wp-default-theme {
-        font-family: "Inter var";
+        --hb-primary-font-family: "Inter var";
         --hb-primary: #E64B50;
         --wp--style--global--content-size: 1200px;
+
+        font-family: var(--hb-primary-font-family);
 
         @font-face {
             font-family: "Inter var";
@@ -31,7 +33,7 @@ body {
         }
 
         .entry-content {
-            font-family: "Inter var";
+            font-family: var(--hb-primary-font-family);
 
             @media (min-width: 700px) {
                 font-size: var(--hb-font-size-base, 16px);
@@ -89,16 +91,16 @@ body {
         }
 
         h1, h2 {
-            font-family: "Inter var";
+            font-family: var(--hb-primary-font-family);
             font-weight: bold;
         }
         h3, h4, h5, h6, .title {
-            font-family: "Inter var"; 
+            font-family: var(--hb-primary-font-family);
             font-weight: 600;
         }
 
         input, select, button {
-            font-family: "Inter var";
+            font-family: var(--hb-primary-font-family);
             font-size: var(--hb-font-size-base, 16px);
         }
 
@@ -177,7 +179,7 @@ body {
         }
     }
 
-    &.wp-hotel-booking-page {
+    &.wp-hotel-booking-rooms {
         &.wp-default-theme {
             .sort-by-wrapper {
                 @media (min-width: 1200px) {
@@ -200,7 +202,7 @@ body {
         }
     }
 
-    &.post-type-archive-hb_room {
+    &.post-type-archive-hb_room, &.tax-hb_room_type {
         #hotel-booking-search-filter {
             padding: 15px;
         }
@@ -223,7 +225,7 @@ body {
 
     // table
     table {
-        &.hb_table, &.hb_room_pricing_plans {
+        &.hb_table, &.hb_room_pricing_plans, &.hb_booking_table {
             margin: 0;
             border: 1px solid rgba(0, 0, 0, 0.1);
             border-collapse: collapse;
@@ -375,6 +377,34 @@ body.single-hb_room {
             margin-left: auto;
             margin-right: auto;
         }
+        .hb_single_room {
+            .hb_room_gallery {
+                .flex-direction-nav {
+                    a {
+
+                    &.flex-next {
+                        &:before {
+                            content: "\f061";
+                        }
+                    }
+
+                    &:before {
+                        font-size: 18px;
+                        content: "\f060";
+                    }
+                    }
+                }
+            }
+        }
+
+        // astra theme
+        .ast-container {
+            display: block;
+
+            .hb_related_other_room {
+                width: 100%;
+            }
+        }
     }
     
     // adjust width container for default theme
@@ -403,7 +433,89 @@ body.single-hb_room {
         margin-top: 40px;
         padding: 0;
 
+        .spacing-35 {
+            clear: both;
+            height: 35px;
+        }
+
+        #hb_room_video {
+            margin-bottom: 40px;
+        }
         .hb_room_gallery {
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            clear: both;
+
+            &:hover {
+                .flex-direction-nav {
+                    a {
+                        opacity: 1;
+                    }
+                }
+            }
+
+            &#carousel {
+                .slides {
+                    border: 1px solid transparent;
+
+                    .flex-active-slide {
+                        border: 1px solid var(--hb-primary);
+                    }
+                }
+            }
+
+            ul {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+
+            }
+
+            .flex-direction-nav{
+                a {
+                    transition: all 0.3s ease-in-out;
+                    position: absolute;
+                    top: 50%;
+                    width: 40px;
+                    height: 40px;
+                    color: rgba(216,216,216,0.85);
+                    background: rgba(255,255,255,0.5);
+                    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                    border-radius: 3px;
+                    color: #111;
+                    background-color: #fff;
+                    text-align: center;
+                    overflow: hidden;
+                    opacity: 0;
+                    z-index: 9;
+                    cursor: pointer;
+
+                    &.flex-prev {
+                        left: 20px;
+                    }
+                    &.flex-next {
+                        right: 20px;
+
+                        &:before {
+                            content: "\f105";
+                        }
+                    }
+
+                    &:before {
+                        margin: 0;
+                        content: "\f104";
+                        font-family: "Font Awesome 5 Free";
+                        display: inline-block;
+                        font-weight: bold;
+                        font-size: 24px;
+                        line-height: 40px;
+                        opacity: 1;
+                    }
+                }
+            }
+
+            // old camera
             .camera_prev, .camera_next {
                 position: absolute;
                 transform: translateY(-50%);
@@ -437,6 +549,12 @@ body.single-hb_room {
                 }
             }
         }
+    }
+
+    .hb_single_room_tabs {
+        &.images_video_tabs {
+            margin-bottom: 20px;
+        }   
     }
 
     .hb_single_room_tabs_content {
@@ -474,16 +592,6 @@ body.single-hb_room {
                 }
             }
         }
-    }
-}
-
-// astra theme
-.ast-container {
-    &:has(.hb_related_other_room) {
-        flex-wrap: wrap;
-    }
-    .hb_related_other_room {
-        width: 100%;
     }
 }
 

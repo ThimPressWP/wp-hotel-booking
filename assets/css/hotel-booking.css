@@ -162,6 +162,7 @@
     display: none;
 }
 .hb-search-results .hb-page-search-room-results .hb_addition_package_extra {
+    padding-top: 10px;
     display: flex;
     flex-direction: column;
 }
@@ -244,13 +245,6 @@
     padding: 0 0 10px 0;
     border: none;
 }
-.hb-search-results .hb-page-search-room-results .room-extra-options a.go-to-cart.hb_button, .hb-search-results .hb-page-search-room-results .room-extra-options button {
-    border-radius: 10px;
-    text-align: center;
-    line-height: 1.7;
-    color: #fff;
-} 
-
 .hb-align-right {
     text-align: right;
 }
@@ -479,7 +473,7 @@
 /** hb-button **/
 .hb_button {
     display: inline-block;
-    padding: 12px 25px;
+    padding: 12px 24px;
     border: 0;
     border-radius: 3px;
     background: var(--hb-primary, #ffb606);
@@ -617,22 +611,6 @@
     width: 100%;
     height: auto;
 }
-
-/* .rooms .hb_room .media a:has(img):before {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-bottom: 137px solid var(--hb-primary, #ffb606);
-    border-left: 137px solid transparent;
-    bottom: 0;
-    right: 0;
-    opacity: 0.7;
-    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=70);
-    filter: alpha(opacity=70);
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
-} */
 
 .rooms .hb_room .feature {
     margin-top: 16px;
@@ -776,6 +754,7 @@
 }
 
 .hb_single_room .title h4 a {
+    margin: 10px 0;
     color: var(--hb-heading, #111);
 }
 
@@ -939,7 +918,7 @@
     clear: both;
 }
 
-.hb_single_room .hb_single_room_details .hb_single_room_tabs {
+.hb_single_room .hb_single_room_tabs {
     clear: both;
     margin: 0;
     padding: 0;
@@ -947,7 +926,7 @@
     border-bottom: 1px solid #ddd;
 }
 
-.hb_single_room .hb_single_room_details .hb_single_room_tabs > li {
+.hb_single_room .hb_single_room_tabs > li {
     display: inline-block;
     margin: 0;
     padding-right: 40px;
@@ -955,7 +934,7 @@
     line-height: 30px;
 }
 
-.hb_single_room .hb_single_room_details .hb_single_room_tabs > li a {
+.hb_single_room .hb_single_room_tabs > li a {
     position: relative;
     display: block;
     font-weight: 700;
@@ -966,7 +945,7 @@
     padding-bottom: 9px;
 }
 
-.hb_single_room .hb_single_room_details .hb_single_room_tabs > li a:after {
+.hb_single_room .hb_single_room_tabs > li a:after {
     content: '';
     bottom: -1px;
     height: 2px;
@@ -977,15 +956,15 @@
     position: absolute;
 }
 
-.hb_single_room .hb_single_room_details .hb_single_room_tabs > li a.active {
-    color: var(--hb-heading, #111);
+.hb_single_room .hb_single_room_tabs > li a.active {
+    color: var(--hb-primary, #111);
 }
 
-.hb_single_room .hb_single_room_details .hb_single_room_tabs > li a.active:after {
+.hb_single_room .hb_single_room_tabs > li a.active:after {
     background: var(--hb-primary, #ffb606);
 }
 
-.hb_single_room .hb_single_room_details .hb_single_room_tabs_content {
+.hb_single_room .hb_single_room_tabs_content {
     padding: 30px 0;
 }
 
@@ -1187,18 +1166,6 @@
     line-height: 40px;
 }
 
-#hotel-booking-results form .hb_button.hb_checkout,
-#hotel-booking-results form button.hb_add_to_cart,
-#hotel-booking-results form button[type="submit"] {
-    margin-right: 5px;
-    padding: 10px 25px;
-    border: 0;
-    border-radius: 3px;
-    background: var(--hb-primary, #ffb606);
-    text-decoration: none;
-    cursor: pointer;
-}
-
 #hotel-booking-results form .hb_button.hb_checkout:hover,
 #hotel-booking-results form button.hb_add_to_cart:hover,
 #hotel-booking-results form button[type="submit"]:hover {
@@ -1262,7 +1229,7 @@
 }
 
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li {
-    margin: 0 0 30px 0;
+    margin: 0 0 20px 0;
     display: block;
 }
 
@@ -1282,7 +1249,7 @@
 }
 
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li .hb_search_item_price {
-    margin-left: 20px;
+    margin-left: 15px;
     margin-right: 15px;
 }
 
@@ -1394,7 +1361,7 @@
     text-decoration: none;
     text-transform: none;
     border: 0;
-    padding: 12px 25px;
+    padding: 12px 24px;
     border-radius: 3px;
     background: var(--hb-primary, #ffb606);
 }

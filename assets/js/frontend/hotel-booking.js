@@ -864,6 +864,23 @@ import flatpickr from 'flatpickr';
 			} );
 		} );
 
+		// single room tabs video & gallery
+		$(".hb_single_room .images_video_tabs a").click(function(e) {
+			e.preventDefault();
+			
+			var parentTab = $(this).closest(".images_video_tabs"); 
+			var target = $(this).attr("href"); 
+			
+			parentTab.find("a").removeClass("active"); 
+			$(this).addClass("active");
+
+			parentTab.nextAll(".room_media_content").hide(); 
+			$(target).fadeIn();
+		});
+
+		$(".images_video_tabs a.active").trigger("click");
+
+
 		// single room detail tabs
 		const hb_single_details = $( '.hb_single_room_details' );
 		const hb_single_details_tab = hb_single_details.find( '.hb_single_room_tabs' );

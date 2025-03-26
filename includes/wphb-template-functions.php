@@ -445,63 +445,72 @@ if ( ! function_exists( 'hb_body_class' ) ) {
 
 		$classes = (array) $classes;
 
-		switch ( $post->ID ) {
-			case hb_get_page_id( 'rooms' ):
-				$classes[] = 'wp-hotel-booking-page';
-				$classes[] = 'wp-hotel-booking-rooms';
-				break;
-			case hb_get_page_id( 'cart' ):
-				$classes[] = 'wp-hotel-booking-page';
-				$classes[] = 'wp-hotel-booking-cart';
-				break;
-			case hb_get_page_id( 'checkout' ):
-				$classes[] = 'wp-hotel-booking-page';
-				$classes[] = 'wp-hotel-booking-checkout';
-				break;
-			case hb_get_page_id( 'search' ):
-				$classes[] = 'wp-hotel-booking-page';
-				$classes[] = 'wp-hotel-booking-search-rooms';
-				break;
-			case hb_get_page_id( 'account' ):
-				$classes[] = 'wp-hotel-booking-page';
-				$classes[] = 'wp-hotel-booking-account';
-				break;
-			case hb_get_page_id( 'terms' ):
-				$classes[] = 'wp-hotel-booking-page';
-				$classes[] = 'wp-hotel-booking-terms';
-				break;
-			case hb_get_page_id( 'thankyou' ):
-				$classes[] = 'wp-hotel-booking-page';
-				$classes[] = 'wp-hotel-booking-thank-you';
-				break;
-			default:
-				break;
-		}
+		$post_id = (string) $post->ID;
 
-		if ( is_room() || is_room_taxonomy() ) {
-			$classes[] = 'wp-hotel-booking';
-			$classes[] = 'wp-hotel-booking-room-page';
-		}
-
-		// theme default wp
-		$default_themes = [
-			'Twenty Twenty-Five', 
-			'Twenty Twenty-Four', 
-			'Twenty Twenty-Three', 
-			'Twenty Twenty-Two',   
-			'Twenty Twenty-One',   
-			'Twenty Twenty',
-			'Astra',
-			'Hello Elementor',
-			'Flatsome'        
+		$hotel_booking_pages = [
+			hb_get_page_id( 'rooms' ),
+			hb_get_page_id( 'cart' ),
+			hb_get_page_id( 'checkout' ),
+			hb_get_page_id( 'search' ),
+			hb_get_page_id( 'account' ),
+			hb_get_page_id( 'terms' ),
+			hb_get_page_id( 'thankyou' ),
 		];
-	
-		$current_theme = wp_get_theme()->get('Name');
-	
-		if ( in_array( $current_theme, $default_themes )) {
-			$classes[] = 'wp-default-theme';
+
+		if ( in_array( $post_id, $hotel_booking_pages, true ) || is_room() || is_room_taxonomy() || is_post_type_archive('hb_room') ) {
+			$classes[] = 'wp-hotel-booking-page';
+
+			switch ( $post_id ) {
+				case hb_get_page_id( 'rooms' ):
+					$classes[] = 'wp-hotel-booking-rooms';
+					break;
+				case hb_get_page_id( 'cart' ):
+					$classes[] = 'wp-hotel-booking-cart';
+					break;
+				case hb_get_page_id( 'checkout' ):
+					$classes[] = 'wp-hotel-booking-checkout';
+					break;
+				case hb_get_page_id( 'search' ):
+					$classes[] = 'wp-hotel-booking-search-rooms';
+					break;
+				case hb_get_page_id( 'account' ):
+					$classes[] = 'wp-hotel-booking-account';
+					break;
+				case hb_get_page_id( 'terms' ):
+					$classes[] = 'wp-hotel-booking-terms';
+					break;
+				case hb_get_page_id( 'thankyou' ):
+					$classes[] = 'wp-hotel-booking-thank-you';
+					break;
+				default:
+					break;
+			}
+
+			if ( is_room() || is_room_taxonomy() ) {
+				$classes[] = 'wp-hotel-booking';
+				$classes[] = 'wp-hotel-booking-room-page';
+			}
+			
+			// some theme default
+			$default_themes = [
+				'Twenty Twenty-Five', 
+				'Twenty Twenty-Four', 
+				'Twenty Twenty-Three', 
+				'Twenty Twenty-Two',   
+				'Twenty Twenty-One',   
+				'Twenty Twenty',
+				'Astra',
+				'Hello Elementor',
+				'Flatsome'        
+			];
+
+			$current_theme = wp_get_theme()->get('Name');
+
+			if ( in_array( $current_theme, $default_themes, true ) ) {
+				$classes[] = 'wp-default-theme';
+			}
+			// end theme default
 		}
-		// end theme default wp
 
 		return array_unique( $classes );
 	}

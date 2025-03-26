@@ -102,15 +102,15 @@
 	float: right;
 }
 
-/* prview rooms  */
-
+/* preview rooms  */
 .hb_single_room #hb_room_images{
+	margin-bottom: 20px;
     float: left;
     width: 100%;
     position: relative;
 	overflow: hidden;
-	margin: 40px 0;
 }
+
 .hb_single_room #hb_room_images .room-preview{
 	position: absolute;
 	width:40px;
@@ -126,10 +126,15 @@
 }
 
 .hb_single_room #hb_room_images img{
+	display: block;
     width: 100%;
+	height: auto;
 }
 
 .hb_single_room #hb_room_images .room-preview i, .hb_single_room #hb_room_images .room-preview svg{
+	width: 30px;
+	height: 30px;
+	font-size: 30px;
 	color: #fff;
 	fill: #fff;
 }
@@ -139,5 +144,3 @@
 		width: 100%;
 	}
 }
-
-/* end preview rooms */
