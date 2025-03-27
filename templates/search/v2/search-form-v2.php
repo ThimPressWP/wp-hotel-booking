@@ -21,25 +21,25 @@ $max_child      = hb_get_request( 'max_child', '' );
 $uniqid         = uniqid();
 $page_search    = hb_get_page_id( 'search' );
 
+// display title widget or shortcode
+$atts = array();
+if ( $args && isset( $args['atts'] ) ) {
+	$atts = $args['atts'];
+} elseif ( isset( $args ) ) {
+	$atts = $args;
+}
+
 ?>
-<div id="hotel-booking-search-<?php echo uniqid(); ?>" class="hotel-booking-search">
-	<?php
-	// display title widget or shortcode
-	$atts = array();
-	if ( $args && isset( $args['atts'] ) ) {
-		$atts = $args['atts'];
-	} elseif ( isset( $args ) ) {
-		$atts = $args;
-	}
 
-	if ( ! isset( $atts['show_title'] ) || strtolower( $atts['show_title'] ) === 'true' ) {
-		?>
-		<h3><?php _e( 'Check Availability', 'wp-hotel-booking' ); ?></h3>
-	<?php } ?>
+<div id="hotel-booking-search-<?php echo uniqid(); ?>" class="hotel-booking-search has-filter">
 
-	<form <?php echo is_page( $page_search ) ? 'id="hb-form-search-page" ' : ''; ?> name="hb-search-form"
-																					action="<?php echo hb_get_url(); ?>"
-																					class="hb-search-form-<?php echo esc_attr( $uniqid ); ?>">
+	<form <?php echo is_page( $page_search ) ? 'id="hb-form-search-page" ' : ''; ?> 
+		name="hb-search-form" action="<?php echo hb_get_url(); ?>" 
+		class="hb-search-form-<?php echo esc_attr( $uniqid ); ?>"
+	>
+		<?php if ( ! isset( $atts['show_title'] ) || strtolower( $atts['show_title'] ) === 'true' ) { ?>
+			<h3><?php _e( 'Check Availability', 'wp-hotel-booking' ); ?></h3>
+		<?php } ?>
 		<ul class="hb-form-table">
 			<li class="hb-form-field">
 				<?php hb_render_label_shortcode( $atts, 'show_label', __( 'Arrival Date', 'wp-hotel-booking' ), 'true' ); ?>
@@ -98,24 +98,28 @@ $page_search    = hb_get_page_id( 'search' );
 				</div>
 			</li>
 		</ul>
+
 		<?php wp_nonce_field( 'hb_search_nonce_action', 'nonce' ); ?>
 		<input type="hidden" name="hotel-booking" value="results"/>
 		<input type="hidden" name="widget-search"
 				value="<?php echo isset( $atts['widget_search'] ) ? $atts['widget_search'] : false; ?>"/>
 		<input type="hidden" name="action" value="hotel_booking_parse_search_params"/>
 		<input type="hidden" name="paged" value="<?php echo absint( $atts['paged'] ); ?>"/>
+
 		<p class="hb-submit">
 			<button type="submit" class="wphb-button"><?php _e( 'Check Availability', 'wp-hotel-booking' ); ?></button>
 		</p>
 	</form>
+
 	<?php
-	if ( ! empty( $page_search ) && is_page( $page_search ) ) :
-		?>
-		<div id="hotel-booking-results">
-			<?php wphb_skeleton_animation_html( 20, '100%', 'height:20px', 'width:100%' ); ?>
-			<div class="detail__booking-rooms"></div>
-		</div>
-		<?php
-	endif;
+		if ( ! empty( $page_search ) && is_page( $page_search ) ) :
+			?>
+			<div id="hotel-booking-results">
+				<?php wphb_skeleton_animation_html( 20, '100%', 'height:20px', 'width:100%' ); ?>
+				<div class="detail__booking-rooms"></div>
+			</div>
+			<?php
+		endif;
 	?>
+
 </div>

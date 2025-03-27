@@ -3,6 +3,13 @@
     box-sizing: inherit;
 }
 
+html {
+    @media (max-width: 767px) {
+        overflow-x: hidden;
+    }
+
+}
+
 body {
     &.wp-default-theme {
         --hb-primary-font-family: "Inter var";
@@ -10,6 +17,11 @@ body {
         --wp--style--global--content-size: 1200px;
 
         font-family: var(--hb-primary-font-family);
+        box-sizing: border-box;
+        
+        @media (max-width: 767px) {
+            overflow-x: hidden;
+        }
 
         @font-face {
             font-family: "Inter var";
@@ -30,45 +42,6 @@ body {
         @media (max-width: 1200px) {
             padding-left: 15px;
             padding-right: 15px;
-        }
-
-        .entry-content {
-            font-family: var(--hb-primary-font-family);
-
-            @media (min-width: 700px) {
-                font-size: var(--hb-font-size-base, 16px);
-            }
-
-            .room-container {
-                max-width: var(--hb-container-width, 1200px) !important;
-            }
-
-            .hotel-booking-search { // hotel search
-                .hb-form-table {
-                    max-width: 455px;
-
-                    input, select {
-                        padding: 12px;
-                    }
-                    .hb_input_field {
-                        &:after {
-                            right: 14px;
-                        }
-                    }
-                }
-                
-                .hb-submit {
-                    button {
-                        width: auto;
-                    }
-                }
-            }
-
-            .rooms-pagination {
-                ul.page-numbers {
-                    text-align: initial;
-                }
-            }
         }
 
         h1 {
@@ -93,10 +66,20 @@ body {
         h1, h2 {
             font-family: var(--hb-primary-font-family);
             font-weight: bold;
+            outline: none;
+
+            a {
+                outline: none;
+            }
         }
         h3, h4, h5, h6, .title {
             font-family: var(--hb-primary-font-family);
             font-weight: 600;
+            outline: none;
+
+            a {
+                outline: none;
+            }
         }
 
         input, select, button {
@@ -110,6 +93,65 @@ body {
 
         button:not(:hover):not(:active):not(.has-text-color) {
             color: #fff;
+        }
+
+        .room-container {
+            max-width: var(--hb-container-width, 1200px);
+        }
+
+        // default theme wp has .entry-content wrapper
+        .entry-content {
+            font-family: var(--hb-primary-font-family);
+
+            @media (min-width: 700px) {
+                font-size: var(--hb-font-size-base, 16px);
+            }
+
+            .room-container {
+                max-width: var(--hb-container-width, 1200px);
+            }
+
+            .hotel-booking-search { // hotel search
+                .hb-form-table {
+                    max-width: 455px;
+
+                    input, select {
+                        padding: 12px;
+                    }
+                    .hb_input_field {
+                        &:after {
+                            right: 14px;
+                        }
+                    }
+                }
+                
+                .hb-submit {
+                    button {
+                        width: auto;
+                    }
+                }
+            }
+
+            .hotel-booking-search, .hotel-booking-search-filter {
+                width: auto;
+                max-width: var(--hb-container-width, 1200px);
+            }
+            
+            .hotel-booking-search-filter {
+                h3 {
+                    font-size: 20px;
+                }
+                h4, .title {
+                    margin: 0 0 8px 0;
+                    font-size: 18px;
+                }
+            }
+
+            .rooms-pagination {
+                ul.page-numbers {
+                    text-align: initial;
+                }
+            }
         }
 
         .hb_single_room {
@@ -158,6 +200,8 @@ body {
         }
 
         #hotel-booking-search-filter {
+            padding: 15px;
+
             .clear-filter {
                 button {
                     border-color: var(--hb-heading, #111);
@@ -181,30 +225,28 @@ body {
 
     &.wp-hotel-booking-rooms {
         &.wp-default-theme {
-            .sort-by-wrapper {
-                @media (min-width: 1200px) {
-                    padding: 0;
-                }
+            h1 {
+                padding-left: 15px;
+                padding-right: 15px;
             }
-    
-            .rooms {
-                @media (min-width: 1200px) {
-                    column-gap: 30px;
-                    flex-wrap: nowrap;
-                }
-    
-                .hb_room {
-                    @media (min-width: 1200px) {
-                        padding: 0;
-                    }
-                }
-            } 
         }
     }
 
-    &.post-type-archive-hb_room, &.tax-hb_room_type {
-        #hotel-booking-search-filter {
-            padding: 15px;
+    &.post-type-archive-hb_room, &.tax-hb_room_type, &.wp-hotel-booking-rooms {
+        .room-container {
+            display: flex;
+            gap: 20px;
+
+            @media (max-width: 1200px) {
+                flex-direction: column;
+            }
+
+            .hotel-booking-search-filter {
+                min-width: 24%;
+            }
+            .room-content {
+                width: 100%;
+            }
         }
     }
 
@@ -353,9 +395,23 @@ body {
                 font-size: medium;
             }
         }
-    
+        
+        .clear-reset-filter {
+            margin: 28px 0 0 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 12px;
+
+            .hb-room-filter-btn {
+                margin: 0;
+            }
+            button {
+                width: 100%;
+            }
+        }
+
         .hb-room-filter-btn {
-            margin: 30px 0 0 0;
             padding: 12px 20px;
             border-radius: 3px;
             border: none;
@@ -363,11 +419,28 @@ body {
             font-size: 16px;
             font-weight: 600;
             color: #fff;
-            min-width: 149px;
             text-decoration: none;
             text-transform: none;
         }
-    }    
+    }   
+    .hotel-booking-search {
+        &.has-filter {
+            display: flex;
+            flex-direction: row-reverse;
+            column-gap: 50px;
+
+            @media (max-width: 1200px) {
+                flex-direction: column;
+            }
+
+            form#hb-form-search-page {
+                min-width: 25%;
+            }
+            #hotel-booking-results {
+                width: 100%;
+            }
+        }
+    }
 }
 
 // single room
@@ -376,25 +449,6 @@ body.single-hb_room {
         .hb_related_other_room {
             margin-left: auto;
             margin-right: auto;
-        }
-        .hb_single_room {
-            .hb_room_gallery {
-                .flex-direction-nav {
-                    a {
-
-                    &.flex-next {
-                        &:before {
-                            content: "\f061";
-                        }
-                    }
-
-                    &:before {
-                        font-size: 18px;
-                        content: "\f060";
-                    }
-                    }
-                }
-            }
         }
 
         // astra theme
@@ -428,128 +482,6 @@ body.single-hb_room {
         }
     }
     // end adjust width container for default theme
-
-    .hb_single_room {
-        margin-top: 40px;
-        padding: 0;
-
-        .spacing-35 {
-            clear: both;
-            height: 35px;
-        }
-
-        #hb_room_video {
-            margin-bottom: 40px;
-        }
-        .hb_room_gallery {
-            margin-bottom: 20px;
-            position: relative;
-            overflow: hidden;
-            clear: both;
-
-            &:hover {
-                .flex-direction-nav {
-                    a {
-                        opacity: 1;
-                    }
-                }
-            }
-
-            &#carousel {
-                .slides {
-                    border: 1px solid transparent;
-
-                    .flex-active-slide {
-                        border: 1px solid var(--hb-primary);
-                    }
-                }
-            }
-
-            ul {
-                margin: 0;
-                padding: 0;
-                list-style: none;
-
-            }
-
-            .flex-direction-nav{
-                a {
-                    transition: all 0.3s ease-in-out;
-                    position: absolute;
-                    top: 50%;
-                    width: 40px;
-                    height: 40px;
-                    color: rgba(216,216,216,0.85);
-                    background: rgba(255,255,255,0.5);
-                    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-                    border-radius: 3px;
-                    color: #111;
-                    background-color: #fff;
-                    text-align: center;
-                    overflow: hidden;
-                    opacity: 0;
-                    z-index: 9;
-                    cursor: pointer;
-
-                    &.flex-prev {
-                        left: 20px;
-                    }
-                    &.flex-next {
-                        right: 20px;
-
-                        &:before {
-                            content: "\f105";
-                        }
-                    }
-
-                    &:before {
-                        margin: 0;
-                        content: "\f104";
-                        font-family: "Font Awesome 5 Free";
-                        display: inline-block;
-                        font-weight: bold;
-                        font-size: 24px;
-                        line-height: 40px;
-                        opacity: 1;
-                    }
-                }
-            }
-
-            // old camera
-            .camera_prev, .camera_next {
-                position: absolute;
-                transform: translateY(-50%);
-                top: 50%;
-                background-color: #f6f6f6;
-                border-radius: 3px;
-                line-height: 1;
-                cursor: pointer;
-
-                & > span {
-                    display: inline-flex;
-                    justify-content: center;
-                    align-items: center;
-                    height: 40px;
-                    width: 45px;
-                    z-index: 1;
-                }
-            }
-            .camera_prev {
-                left: 10px;
-
-                & > span {
-                    background: url(../images/prev.png) no-repeat center center;
-                }
-            } 
-            .camera_next {
-                right: 10px;
-
-                & > span {
-                    background: url(../images/next.png) no-repeat center center;
-                }
-            }
-        }
-    }
 
     .hb_single_room_tabs {
         &.images_video_tabs {
@@ -595,19 +527,134 @@ body.single-hb_room {
     }
 }
 
-// default theme wp has .entry-content wrapper
-.entry-content {
-    .hotel-booking-search, .hotel-booking-search-filter {
-        width: auto !important;
-        max-width: var(--hb-container-width, 1200px) !important;
+// new hb_single_room: room video & gallery
+.hb_single_room {
+    margin-top: 40px;
+    padding: 0;
+
+    .spacing-35 {
+        clear: both;
+        height: 35px;
     }
-    .hotel-booking-search-filter {
-        h3 {
-            font-size: 20px;
+
+    #hb_room_video {
+        margin-bottom: 40px;
+
+        iframe {
+            height: 600px;
+
+            @media (max-width: 767px) {
+                height: 420px;
+            }
         }
-        h4, .title {
-            margin: 0 0 8px 0;
-            font-size: 18px;
+    }
+    .hb_room_gallery {
+        margin-bottom: 20px;
+        position: relative;
+        overflow: hidden;
+        clear: both;
+
+        &:hover {
+            .flex-direction-nav {
+                a {
+                    opacity: 1;
+                }
+            }
+        }
+
+        &#carousel {
+            .slides {
+                border: 1px solid transparent;
+
+                .flex-active-slide {
+                    border: 1px solid var(--hb-primary);
+                }
+            }
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+        }
+
+        .flex-direction-nav{
+            a {
+                transition: all 0.3s ease-in-out;
+                position: absolute;
+                margin-top: -16px;
+                top: 50%;
+                width: 40px;
+                height: 40px;
+                color: rgba(216,216,216,0.85);
+                background: rgba(255,255,255,0.5);
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                border-radius: 3px;
+                font-size: 0;
+                background-color: #fff;
+                text-align: center;
+                overflow: hidden;
+                opacity: 0;
+                z-index: 9;
+                cursor: pointer;
+
+                &:before {
+                    margin: 0;
+                    content: "\f104";
+                    font-family: "FontAwesome";
+                    display: inline-block;
+                    color: #111;
+                    font-weight: bold;
+                    font-size: 24px;
+                    line-height: 40px;
+                    opacity: 1;
+                }
+            }
+            .flex-prev {
+                left: 20px;
+            }
+            .flex-next {
+                right: 20px;
+
+                &:before {
+                    content: "\f105";
+                }
+            }
+        }
+
+        // old camera
+        .camera_prev, .camera_next {
+            position: absolute;
+            transform: translateY(-50%);
+            top: 50%;
+            background-color: #f6f6f6;
+            border-radius: 3px;
+            line-height: 1;
+            cursor: pointer;
+
+            & > span {
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                height: 40px;
+                width: 45px;
+                z-index: 1;
+            }
+        }
+        .camera_prev {
+            left: 10px;
+
+            & > span {
+                background: url(../images/prev.png) no-repeat center center;
+            }
+        } 
+        .camera_next {
+            right: 10px;
+
+            & > span {
+                background: url(../images/next.png) no-repeat center center;
+            }
         }
     }
 }

@@ -623,7 +623,7 @@
 }
 
 .rooms .hb_room .summary {
-    cursor: default;
+    position: relative;
 }
 
 .rooms .hb_room .summary .price {
@@ -2843,7 +2843,7 @@ button.wphb_loading::before {
 }
 
 @media (max-width: 768px) {
-    .rooms > li.hb_room {
+    .rooms > .hb_room {
         width: 50% !important;
     }
 
@@ -2903,13 +2903,13 @@ button.wphb_loading::before {
         min-width: unset;
     }
 
-    .rooms.tp-hotel-booking li.hb_room {
+    .rooms.tp-hotel-booking .hb_room {
         width: 100%;
     }
 }
 
 @media (max-width: 480px) {
-    .rooms > li.hb_room {
+    .rooms > .hb_room {
         width: 100% !important;
     }
 
@@ -2953,7 +2953,7 @@ button.wphb_loading::before {
 }
 
 #hotel-booking-search-filter h3 {
-    margin-bottom: 20px;
+    margin: 0 0 20px 0;
 }
 
 #hotel-booking-search-filter .clear-filter button {
@@ -2963,7 +2963,6 @@ button.wphb_loading::before {
     padding: 12px 20px;
     font-size: var(--hb-font-size-base, 16px);
     color: #111;
-    line-height: 1.2;
     text-transform: capitalize;
     background-color: transparent;
 }

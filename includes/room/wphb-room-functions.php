@@ -259,7 +259,6 @@ if ( ! function_exists( 'hb_room_update_room_price_meta' ) ) {
 	}
 }
 
-
 if ( ! function_exists( 'hb_room_update_room_average_rating' ) ) {
 	function hb_room_update_room_average_rating( $room_id = null ) {
 		if ( $room_id === null ) {
@@ -275,5 +274,111 @@ if ( ! function_exists( 'hb_room_update_room_average_rating' ) ) {
 		if ( $old_rating !== $average_rating ) {
 			update_post_meta( $room_id, 'hb_average_rating', $average_rating );
 		}
+	}
+}
+
+if( !function_exists( 'hb_get_room_query_args' ) ) {
+	function hb_get_room_query_args( $atts = [] ) {
+		global $hb_settings;
+
+		// default posts_per_page
+		$posts_per_page = $hb_settings->get( 'posts_per_page', 8 );
+
+		// if $attrs has value passed in: set $attrs['number_room'] instead of posts_per_page
+		if ( isset($atts['number_room']) ) {
+			$posts_per_page = $atts['number_room'];
+		}
+
+		$atts = shortcode_atts(
+			array( // shortcode: default atts
+				'room_type'   => '',
+				'orderby'     => 'date',
+				'order'       => 'DESC',
+				'number_room' => -1,
+				'room_in'     => '',
+				'room_not_in' => '',
+			),
+			$atts // atts
+		);
+
+		// default args
+		$args = array(
+			'post_type'      => 'hb_room',
+			'posts_per_page' => $posts_per_page,
+			'orderby'        => $atts['orderby'],
+			'order'          => $atts['order'],
+			'post_status'    => 'publish',
+		);
+	
+		// Start get data filter from $_GET
+		// 1.Sort By
+		$sort_by = hb_get_request( 'sort_by' );
+		if ( $sort_by ) {
+			$sort_options = [
+				'date-desc' => ['date', 'DESC'],
+				'date-asc' => ['date', 'ASC'],
+				'title-asc' => ['title', 'ASC'],
+				'title-desc' => ['title', 'DESC']
+			];
+			if ( isset( $sort_options[$sort_by] ) ) {
+				$args['orderby'] = $sort_options[$sort_by][0];
+				$args['order'] = $sort_options[$sort_by][1];
+			}
+		}
+	
+		// 2.Price Filter
+		$min_price = hb_get_request( 'min_price' );
+		$max_price = hb_get_request( 'max_price' );
+		if ( $min_price && $max_price ) {
+			$args['meta_query'][] = array(
+				'key'     => 'hb_price',
+				'value'   => array( $min_price, $max_price ),
+				'type'    => 'DECIMAL',
+				'compare' => 'BETWEEN',
+			);
+		}
+	
+		// 3.Rating Filter
+		$rating = hb_get_request( 'rating' );
+		if ( $rating ) {
+			$rating_query = [];
+			foreach ( explode( ',', $rating ) as $rate ) {
+				$rating_query[] = [
+					'key'     => 'hb_average_rating',
+					'value'   => ( $rate === 'unrated' ) ? 0 : $rate,
+					'type'    => 'NUMERIC',
+					'compare' => '>=',
+				];
+			}
+			$args['meta_query'][] = [ 'relation' => 'OR' ] + $rating_query;
+		}
+	
+		if ( isset( $args['meta_query'] ) ) {
+			$args['meta_query']['relation'] = 'AND';
+		}
+	
+		// 4.Room Type Filter
+		$room_type = hb_get_request( 'room_type' ) ?: $atts['room_type'];
+		if ( $room_type ) {
+			$args['tax_query'][] = array(
+				'taxonomy' => 'hb_room_type',
+				'field'    => is_numeric( $room_type ) ? 'id' : 'slug',
+				'terms'    => explode( ',', $room_type ),
+			);
+		}
+	
+		if ( isset( $args['tax_query'] ) ) {
+			$args['tax_query']['relation'] = 'AND';
+		}
+	
+		// Include/Exclude Rooms ( for shortcode )
+		if ( $atts['room_in'] ) {
+			$args['post__in'] = explode( ',', $atts['room_in'] );
+		}
+		if ( $atts['room_not_in'] ) {
+			$args['post__not_in'] = explode( ',', $atts['room_not_in'] );
+		}
+	
+		return $args; // return $args after filter
 	}
 }

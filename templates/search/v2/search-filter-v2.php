@@ -5,6 +5,7 @@ if ( ! isset( $atts ) ) {
 defined( 'ABSPATH' ) || exit();
 
 global $hb_settings;
+global $post;
 
 $fields = apply_filters(
 	'hotel_booking/shortcode/search-filter-v2/field/fields',
@@ -21,28 +22,31 @@ $fields = apply_filters(
 	)
 );
 ?>
+
 <div id="hotel-booking-search-filter" class="hotel-booking-search-filter">
-    <h3><?php esc_html_e( 'Filter By', 'wp-hotel-booking' ); ?></h3>
+    <h3>
+		<?php esc_html_e( 'Filter By', 'wp-hotel-booking' ); ?>
+	</h3>
+
     <form class="search-filter-form" action="">
         <div class="hb-form-table">
-            <div class="clear-filter">
-                <button type="button">
-					<?php esc_html_e( 'Clear all fields', 'wp-hotel-booking' ); ?>
-                </button>
-            </div>
 			<?php
-			foreach ( $fields as $key => $data ) {
-				hb_get_template( 'search/v2/search-filter/' . $key . '.php', compact( 'data' ) );
-			}
-
-			global $post;
-			if ( ! $post || $post->ID != hb_settings()->get( 'search_page_id' ) ) {
-				?>
-                <button type="button"
-                        class="hb-room-filter-btn"><?php esc_html_e( 'Filter', 'wp-hotel-booking' ); ?></button>
-				<?php
-			}
+				foreach ( $fields as $key => $data ) {
+					hb_get_template( 'search/v2/search-filter/' . $key . '.php', compact( 'data' ) );
+				}
 			?>
+
+			<div class="clear-reset-filter">
+				<?php if ( ! $post || $post->ID != hb_settings()->get( 'search_page_id' ) ) { ?>
+					<button type="button" class="hb-room-filter-btn"><?php esc_html_e( 'Filter', 'wp-hotel-booking' ); ?></button>
+				<?php } ?>
+
+				<div class="clear-filter">
+					<button type="button">
+						<?php esc_html_e( 'Reset', 'wp-hotel-booking' ); ?>
+					</button>
+            </div>
+			</div>
         </div>
     </form>
 </div>
