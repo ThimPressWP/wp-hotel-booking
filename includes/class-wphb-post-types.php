@@ -71,15 +71,16 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 		// filter for rooms defaut archive page
 		public function filter_sort_rooms( $query ) {
-			if ( ! isset( $query->query['post_type'] ) || $query->query['post_type'] != WPHB_ROOM_CT
-				|| ! is_post_type_archive( 'hb_room' ) ) {
+			if (is_admin() || !$query->is_main_query()) {
 				return;
 			}
 
-			$query_args = hb_get_room_query_args();
+			if ($query->is_post_type_archive('hb_room') || $query->is_tax('hb_room_type')) {
+				$query_args = hb_get_room_query_args();
 
-			foreach ( $query_args as $key => $value ) {
-				$query->set( $key, $value );
+				foreach ( $query_args as $key => $value ) {
+					$query->set( $key, $value );
+				}
 			}
 		}
 

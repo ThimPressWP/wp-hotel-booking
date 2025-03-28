@@ -14,6 +14,7 @@ body {
     &.wp-default-theme {
         --hb-primary-font-family: "Inter var";
         --hb-primary: #E64B50;
+        --hb-light: #FDE3E3;
         --wp--style--global--content-size: 1200px;
 
         font-family: var(--hb-primary-font-family);
@@ -146,12 +147,12 @@ body {
                     font-size: 18px;
                 }
             }
+        }
 
-            .rooms-pagination {
-                ul.page-numbers {
-                    text-align: initial;
-                }
-            }
+        // fix twenty twenty wrap container
+        .entry-content > *:not(.alignwide):not(.alignfull):not(.alignleft):not(.alignright):not(.is-style-wide) {
+            width: auto;
+            max-width: var(--hb-container-width, 1200px);
         }
 
         .hb_single_room {
@@ -228,6 +229,14 @@ body {
             h1 {
                 padding-left: 15px;
                 padding-right: 15px;
+            }
+        }
+    }
+
+    &.wp-hotel-booking-search-rooms {
+        .rooms-pagination{
+            ul.page-numbers {
+                text-align: inherit;
             }
         }
     }
@@ -438,6 +447,26 @@ body {
             }
             #hotel-booking-results {
                 width: 100%;
+
+                .hb_view_price {
+                    margin-top: 15px;
+                    display: block;
+
+                    .hb-view-booking-room-details {
+                        font-size: 14px;
+                        text-decoration: underline;
+
+                        &:hover {
+                            color: var(--hb-primary, #ffb606);
+                        }
+                    }
+                }
+
+                .hb_add_to_cart {
+                    margin-top: 8px;
+                    color: var(--hb-primary, #ffb606);
+                    background:  var(--hb-light, #FDE3E3);
+                }
             }
         }
     }
@@ -567,7 +596,7 @@ body.single-hb_room {
                 border: 1px solid transparent;
 
                 .flex-active-slide {
-                    border: 1px solid var(--hb-primary);
+                    border: 1px solid var(--hb-primary, #ffb606);
                 }
             }
         }
@@ -577,6 +606,10 @@ body.single-hb_room {
             padding: 0;
             list-style: none;
 
+            li {
+                margin: 0;
+                padding: 0;
+            }
         }
 
         .flex-direction-nav{

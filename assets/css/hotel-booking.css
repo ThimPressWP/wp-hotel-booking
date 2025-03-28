@@ -1186,7 +1186,7 @@
 }
 
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-name {
-    margin: 0 0 23px 0;
+    margin: 0 0 20px 0;
     font-size: 30px;
     font-weight: 600;
     line-height: 1.2;
@@ -1229,8 +1229,8 @@
 }
 
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li {
-    margin: 0 0 20px 0;
     display: block;
+    margin: 0 0 15px 0;
 }
 
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li.hb_search_quantity {
@@ -1246,11 +1246,6 @@
 
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li:last-child {
     margin-bottom: 0;
-}
-
-#hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li .hb_search_item_price {
-    margin-left: 15px;
-    margin-right: 15px;
 }
 
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li select {
@@ -1277,21 +1272,26 @@
     position: relative;
 }
 
-#hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li.hb_search_capacity,
-#hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li.hb_search_max_child {
-    display: inline-block;
-}
-
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li.hb_search_capacity > div,
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li.hb_search_max_child > div {
     font-weight: 700;
 }
 
-#hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li.hb_search_capacity {
+/* #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li .hb_search_item_price {
+    margin-left: 15px;
+    margin-right: 15px;
+} */
+
+/* #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li.hb_search_capacity,
+#hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li.hb_search_max_child {
+    display: inline-block;
+} */
+
+/* #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li.hb_search_capacity {
     margin: 0 20px 0 0;
     padding: 0 20px 0 0;
     border-right: 1px solid #eee;
-}
+} */
 
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li.hb_search_price {
     font-weight: 700;
@@ -1309,10 +1309,6 @@
 
 #hotel-booking-results a:hover {
     text-decoration: underline;
-}
-
-#hotel-booking-results .rooms-pagination a:hover {
-    text-decoration: none;
 }
 
 /** hotel-booking-payment **/

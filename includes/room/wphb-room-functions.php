@@ -281,6 +281,8 @@ if( !function_exists( 'hb_get_room_query_args' ) ) {
 	function hb_get_room_query_args( $atts = [] ) {
 		global $hb_settings;
 
+		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+
 		// default posts_per_page
 		$posts_per_page = $hb_settings->get( 'posts_per_page', 8 );
 
@@ -297,6 +299,7 @@ if( !function_exists( 'hb_get_room_query_args' ) ) {
 				'number_room' => -1,
 				'room_in'     => '',
 				'room_not_in' => '',
+				'paged'       => $paged,
 			),
 			$atts // atts
 		);
@@ -308,6 +311,7 @@ if( !function_exists( 'hb_get_room_query_args' ) ) {
 			'orderby'        => $atts['orderby'],
 			'order'          => $atts['order'],
 			'post_status'    => 'publish',
+			'paged'          => $paged,
 		);
 	
 		// Start get data filter from $_GET
@@ -359,6 +363,11 @@ if( !function_exists( 'hb_get_room_query_args' ) ) {
 	
 		// 4.Room Type Filter
 		$room_type = hb_get_request( 'room_type' ) ?: $atts['room_type'];
+		if ( is_tax('hb_room_type') ) { // is taxonomy page hb_room_type
+			$term_slug = get_query_var('term');
+			$term 	   = get_term_by('slug', $term_slug, 'hb_room_type');
+			$room_type = $term->term_id;
+		}
 		if ( $room_type ) {
 			$args['tax_query'][] = array(
 				'taxonomy' => 'hb_room_type',

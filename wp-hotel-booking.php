@@ -13,6 +13,7 @@
  */
 
 use WPHB\TemplateHooks\CheckRoomsTemplate;
+use WPHB\TemplateHooks\ArchiveRoomTemplate;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -211,6 +212,7 @@ class WP_Hotel_Booking {
 		}
 
 		CheckRoomsTemplate::instance()->init();
+		ArchiveRoomTemplate::instance()->init();
 	}
 
 
