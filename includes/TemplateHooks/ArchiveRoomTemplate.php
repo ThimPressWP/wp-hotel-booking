@@ -20,7 +20,7 @@ class ArchiveRoomTemplate {
 	public function layout_rooms( $atts = [] ) {
         try {
             $html_wrapper = [
-                '<div class="room-container">' => '</div>',
+                '<div class="container room-container">' => '</div>',
             ];
     
             $args    = hb_get_room_query_args( $atts );
