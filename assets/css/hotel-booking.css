@@ -376,7 +376,7 @@
 }
 
 .tp-hotel-booking .star-rating {
-    float: right;
+    /* float: right; */
     position: relative;
     width: 80px;
 }
@@ -631,16 +631,6 @@
     transition: all 0.3s;
 }
 
-/* .rooms .hb_room .summary:hover .media a:before {
-    border-bottom-width: 167px;
-    border-left-width: 167px;
-} */
-
-/* .rooms .hb_room .summary:hover .price {
-    transform: translate(-15px, -25px);
-    -webkit-transform: translate(-15px, -25px);
-} */
-
 .rooms .hb_room .title h4 {
     margin: 12px 0 8px 0;
     font-size: 18px;
@@ -650,22 +640,12 @@
 .rooms .hb_room .title h4 a {
     color: var(--hb-heading, #111);
     max-width: 100%;
+    text-decoration: none;
 }
 
 .rooms .hb_room .title:hover h4 a {
     color: var(--hb-primary, #ffb606)
 }
-
-/* .rooms .hb_room .price {
-    position: absolute;
-    right: 25px;
-    bottom: 50px;
-    text-align: right;
-    font-weight: 700;
-    font-size: 24px;
-    color: #fff;
-    line-height: 1.4;
-} */
 
 .rooms .hb_room .price span {
     font-size: 24px;
@@ -689,11 +669,37 @@
     display: none;
 }
 
-.rooms .hb_room .rating {
+/* .rooms .hb_room .summary:hover .media a:before {
+    border-bottom-width: 167px;
+    border-left-width: 167px;
+} */
+
+/* .rooms .hb_room .summary:hover .price {
+    transform: translate(-15px, -25px);
+    -webkit-transform: translate(-15px, -25px);
+} */
+
+/* .rooms .hb_room .price {
+    position: absolute;
+    right: 25px;
+    bottom: 50px;
+    text-align: right;
+    font-weight: 700;
+    font-size: 24px;
+    color: #fff;
+    line-height: 1.4;
+} */
+
+/* .rooms .hb_room .rating {
     position: absolute;
     bottom: 5px;
     right: 15px;
-}
+} */
+
+/* #hotel-booking-results .hb-search-results > .hb-room .hb-room-info {
+    float: left;
+    width: calc(100% - 300px);
+} */
 
 /** Rooms pagination **/
 .rooms-pagination .page-numbers {
@@ -1221,11 +1227,6 @@
 
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-thumbnail img {
     max-width: 270px;
-}
-
-#hotel-booking-results .hb-search-results > .hb-room .hb-room-info {
-    float: left;
-    width: calc(100% - 300px);
 }
 
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li {

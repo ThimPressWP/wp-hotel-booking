@@ -55,7 +55,7 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 						'content'  => $this->wphb_block_date(),
 					),
 					'gallery_settings'    => array(
-						'label'    => esc_html__( 'Galary', 'wp-hotel-booking' ),
+						'label'    => esc_html__( 'Gallery', 'wp-hotel-booking' ),
 						'target'   => 'gallery_settings',
 						'icon'     => 'dashicons-excerpt-view',
 						'priority' => 40,

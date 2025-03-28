@@ -491,25 +491,17 @@ if ( ! function_exists( 'hb_body_class' ) ) {
 				$classes[] = 'wp-hotel-booking-room-page';
 			}
 			
-			// some theme default
-			$default_themes = [
-				'Twenty Twenty-Five', 
-				'Twenty Twenty-Four', 
-				'Twenty Twenty-Three', 
-				'Twenty Twenty-Two',   
-				'Twenty Twenty-One',   
-				'Twenty Twenty',
-				'Astra',
-				'Hello Elementor',
-				'Flatsome'        
+			// apply for theme default: not Sailing & Hotel WP
+			$tp_themes = [
+				'Sailing',
+				'Hotel WP'     
 			];
 
 			$current_theme = wp_get_theme()->get('Name');
 
-			if ( in_array( $current_theme, $default_themes, true ) ) {
+			if ( !in_array( $current_theme, $tp_themes, true ) ) {
 				$classes[] = 'wp-default-theme';
 			}
-			// end theme default
 		}
 
 		return array_unique( $classes );
