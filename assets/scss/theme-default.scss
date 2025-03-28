@@ -488,6 +488,12 @@ body.single-hb_room {
                 width: 100%;
             }
         }
+        // other
+        .site-content {
+            &:has(.hb_single_room) {
+                display: block;
+            }
+        }
     }
     
     // adjust width container for default theme
@@ -570,6 +576,7 @@ body.single-hb_room {
         margin-bottom: 40px;
 
         iframe {
+            width: 100%;
             height: 600px;
 
             @media (max-width: 767px) {

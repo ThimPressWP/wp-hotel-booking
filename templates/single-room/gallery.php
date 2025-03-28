@@ -18,7 +18,9 @@ global $hb_room;
 /**
  * @var $hb_room WPHB_Room
  */
-$galleries = $hb_room->get_galleries( false );
+$galleries    = $hb_room->get_galleries( false );
+$has_featured = get_the_post_thumbnail($hb_room->ID) ? true : false;
+$url 		  = get_post_meta($hb_room->ID, '_hb_room_preview_url', true);
 
 /** update new gallery replace old camera gallery 
 	* if customers still want to use camera_gallery: add_filter('wp_hotel_booking_ft_camera_gallery', '__return_true');
@@ -75,26 +77,27 @@ $camera_gallery = apply_filters('wp_hotel_booking_ft_camera_gallery', false);
 <?php else : // new gallery ?> 
 	<div class="spacing-35"></div>
 	<?php if($hb_room->is_preview) { ?>
-		<ul class="hb_single_room_tabs images_video_tabs">
-			<li>
-				<a href="#hb_room_images" class="active"> 
-					<?php if( count($galleries) > 0 ) {
-						echo esc_html__( 'All Images','wp-hotel-booking' ) . ' ' . '(' . count($galleries) .  ')';
-					} else { 
-						echo esc_html__( 'Image','wp-hotel-booking' );
-					} ?>
-				</a>
-			</li>
-			<li>
-				<a href="#hb_room_video"> 
-					<?php esc_html_e( 'Video','wp-hotel-booking' );?>
-				</a>
-			</li>
-		</ul>
+		<?php if( ( $has_featured || (count($galleries) > 0) ) && $url ) : ?>
+			<ul class="hb_single_room_tabs images_video_tabs">
+				<li>
+					<a href="#hb_room_images" class="active"> 
+						<?php if( count($galleries) > 0 ) {
+							echo esc_html__( 'All Images','wp-hotel-booking' ) . ' ' . '(' . count($galleries) .  ')';
+						} else { 
+							echo esc_html__( 'Image','wp-hotel-booking' );
+						} ?>
+					</a>
+				</li>
+				<li>
+					<a href="#hb_room_video"> 
+						<?php esc_html_e( 'Video','wp-hotel-booking' );?>
+					</a>
+				</li>
+			</ul>
+		<?php endif; ?>
 
 		<div id="hb_room_video" class="room_media_content">
 			<?php
-				$url = get_post_meta($hb_room->ID, '_hb_room_preview_url', true);
 				$video_html = '';
 
 				if (strpos($url, '<iframe') !== false) {
