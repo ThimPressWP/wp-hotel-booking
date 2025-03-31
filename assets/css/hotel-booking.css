@@ -3129,8 +3129,9 @@ div.sort-by-wrapper, .sort-by-wrapper .sort-by {
 
 #hb-room-submit-review-form {
     position: fixed;
-    top: 100px;
-    height: calc(100% - 200px);
+    top: 50%;
+    transform: translateY(-50%);
+    max-height: 85vh;
     max-width: 600px;
     margin: 0 auto;
     left: 15px;
@@ -3219,6 +3220,7 @@ div.sort-by-wrapper, .sort-by-wrapper .sort-by {
     text-decoration: none;
     box-shadow: none;
     font-size: 1.8em;
+    color: #FC961B;
 }
 
 #hb-room-submit-review-form .rating-star a:before {
