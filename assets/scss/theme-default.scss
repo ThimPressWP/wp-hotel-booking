@@ -45,6 +45,14 @@ body {
             padding-right: 15px;
         }
 
+        &.ast-single-post {
+            .entry-content{
+                a {
+                    text-decoration: none;
+                }
+            }
+        }
+
         h1 {
             font-size: 48px;
         }
@@ -97,6 +105,7 @@ body {
         }
 
         .room-container {
+            margin-top: 50px;
             max-width: var(--hb-container-width, 1200px);
         }
 
@@ -230,6 +239,25 @@ body {
                 min-height: 360px;
             }
         }
+
+        .rooms {
+            .hb_room {
+                .media {
+                    img {
+                        border-radius: 8px;
+                        box-shadow: none;
+                    }
+                }
+            }
+        }
+
+        .rooms-pagination {
+            ul.page-numbers {
+                margin-left: 15px;
+                margin-right: 15px;
+                text-align: initial;
+            }
+        } 
     }
 
     &.wp-hotel-booking-rooms {
@@ -244,7 +272,8 @@ body {
     &.wp-hotel-booking-search-rooms {
         .rooms-pagination{
             ul.page-numbers {
-                text-align: inherit;
+                margin-left: 0;
+                margin-right: 0;
             }
         }
     }
@@ -493,6 +522,7 @@ body.single-hb_room {
 
             .hb_single_room {
                 &.ast-article-single {
+                    margin-top: 60px;
                     padding: 0;
                 }
             }
@@ -514,6 +544,12 @@ body.single-hb_room {
             margin-left: auto;
             margin-right: auto;
             max-width: var(--hb-container-width, 1200px);
+
+            #hb_room_images {
+                img {
+                    border-radius: 8px;
+                }
+            }
         }
         .hb_related_other_room {
             margin-left: auto;

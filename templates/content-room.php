@@ -6,7 +6,7 @@
  *
  * @author  ThimPress, leehld
  * @package WP-Hotel-Booking/Templates
- * @version 1.6
+ * @version 1.6.1
  */
 
 /**
@@ -32,10 +32,17 @@ defined( 'ABSPATH' ) || exit();
 		 */
 		do_action( 'hotel_booking_loop_room_thumbnail' );
 
-		/**
-		 * hotel_booking_loop_room_feature hook
-		 */
-		do_action( 'hotel_booking_loop_room_feature' );
+		echo '<div class="room-rating-featured">';
+			/**
+			 * hotel_booking_loop_room_rating hook
+			 */
+			do_action( 'hotel_booking_loop_room_rating' );
+
+			/**
+			 * hotel_booking_loop_room_feature hook
+			 */
+			do_action( 'hotel_booking_loop_room_feature' );
+		echo '</div>';
 
 		/**
 		 * hotel_booking_loop_room_title hook
@@ -46,11 +53,6 @@ defined( 'ABSPATH' ) || exit();
 		 * hotel_booking_loop_room_price hook
 		 */
 		do_action( 'hotel_booking_loop_room_price' );
-
-		/**
-		 * hotel_booking_loop_room_price hook
-		 */
-		do_action( 'hotel_booking_loop_room_rating' );
 		?>
 
 	</div><!-- .summary -->

@@ -351,8 +351,12 @@ if( !function_exists( 'hb_get_room_query_args' ) ) {
 					'key'     => 'hb_average_rating',
 					'value'   => ( $rate === 'unrated' ) ? 0 : $rate,
 					'type'    => 'NUMERIC',
-					'compare' => '>=',
 				];
+				if ($rate === 'unrated' ) {
+					$rating_query['compare'] = '>';
+				} else {
+					$rating_query['compare'] = '>=';
+				}
 			}
 			$args['meta_query'][] = [ 'relation' => 'OR' ] + $rating_query;
 		}
