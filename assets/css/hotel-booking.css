@@ -23,7 +23,7 @@
     height: auto;
     border: 1px solid #cccccc;
     font-size: var(--hb-font-size-base, 16px);
-    line-height: 1.4;
+    line-height: 1.5;
     color: #111;
     background-color: #fff;
     padding: 12px 20px;
@@ -480,7 +480,7 @@
     background: var(--hb-primary, #ffb606);
     color: #fff;
     font-weight: 600;
-    line-height: 1.3;
+    line-height: 1.5;
 }
 
 .hb_button:hover {
@@ -659,14 +659,12 @@
     font-weight: 600;
     color: var(--hb-heading, #111);
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    padding-bottom: 4px;
 }
 
 .rooms .hb_room .price span.unit {
-    font-size: 13px;
-    margin-top: 0;
-    border-bottom: 0;
-    padding: 0;
+    font-size: 14px;
+    font-weight: 400;
+    color: #4f4f4f;
 }
 
 .rooms .hb_room .price span.unit:before {
@@ -1311,10 +1309,6 @@
 }
 
 #hotel-booking-results .hb-search-results > .hb-room .hb-room-meta li .hb-view-booking-room-details:hover {
-    text-decoration: underline;
-}
-
-#hotel-booking-results a:hover {
     text-decoration: underline;
 }
 
@@ -2962,9 +2956,10 @@ button.wphb_loading::before {
     position: relative;
     border: 1px solid #cccccc;
     border-radius: 3px;
-    padding: 12px 20px;
+    padding: 11px 20px;
     font-size: var(--hb-font-size-base, 16px);
     color: #111;
+    line-height: 1.5;
     text-transform: capitalize;
     background-color: transparent;
 }

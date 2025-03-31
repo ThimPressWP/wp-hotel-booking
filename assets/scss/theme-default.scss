@@ -40,6 +40,11 @@ body {
             src: url(../fonts/inter/Inter-italic-var.woff2) format("woff2");
         }
 
+        @font-face {
+            font-family: 'WooCommerce';
+            src: url('../fonts/WooCommerce.woff2') format('woff2');
+        }
+
         @media (max-width: 1200px) {
             padding-left: 15px;
             padding-right: 15px;
@@ -463,6 +468,7 @@ body {
             border: none;
             background-color: var(--hb-primary, #ffb606);
             font-size: 16px;
+            line-height: 1.5;
             font-weight: 600;
             color: #fff;
             text-decoration: none;
@@ -484,6 +490,12 @@ body {
             }
             #hotel-booking-results {
                 width: 100%;
+
+                .hb-room-thumbnail {
+                    img {
+                        border-radius: 8px;
+                    }
+                }
 
                 .hb_view_price {
                     margin-top: 15px;

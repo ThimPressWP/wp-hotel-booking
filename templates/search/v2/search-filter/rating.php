@@ -4,7 +4,7 @@ if ( ! isset( $data ) ) {
 }
 ?>
 	<div class="hb-rating-field">
-		<h4><?php esc_html_e( ' Star rating', 'wp-hotel-booking' ); ?></h4>
+		<h4><?php esc_html_e( ' Rating', 'wp-hotel-booking' ); ?></h4>
 		<ul class="rating-list">
 			<?php
 			for ( $i = 1; $i <= 5; $i++ ) {
