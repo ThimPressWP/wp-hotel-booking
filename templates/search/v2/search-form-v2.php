@@ -23,6 +23,19 @@ $page_search    = hb_get_page_id( 'search' );
 
 ?>
 <div id="hotel-booking-search-<?php echo uniqid(); ?>" class="hotel-booking-search">
+    <?php
+	if ( ! empty( $page_search ) && is_page( $page_search ) ) :
+		?>
+		<div id="hotel-booking-results">
+			<?php wphb_skeleton_animation_html( 20, '100%', 'height:20px', 'width:100%' ); ?>
+			<div class="detail__booking-rooms"></div>
+		</div>
+		<?php
+	endif;
+	?>
+<form <?php echo is_page( $page_search ) ? 'id="hb-form-search-page" ' : ''; ?> name="hb-search-form"
+	action="<?php echo hb_get_url(); ?>"
+	class="hb-search-form-<?php echo esc_attr( $uniqid ); ?>">
 	<?php
 	// display title widget or shortcode
 	$atts = array();
@@ -31,15 +44,11 @@ $page_search    = hb_get_page_id( 'search' );
 	} elseif ( isset( $args ) ) {
 		$atts = $args;
 	}
-
+	
 	if ( ! isset( $atts['show_title'] ) || strtolower( $atts['show_title'] ) === 'true' ) {
 		?>
 		<h3><?php _e( 'Check Availability', 'wp-hotel-booking' ); ?></h3>
 	<?php } ?>
-
-	<form <?php echo is_page( $page_search ) ? 'id="hb-form-search-page" ' : ''; ?> name="hb-search-form"
-																					action="<?php echo hb_get_url(); ?>"
-																					class="hb-search-form-<?php echo esc_attr( $uniqid ); ?>">
 		<ul class="hb-form-table">
 			<li class="hb-form-field">
 				<?php hb_render_label_shortcode( $atts, 'show_label', __( 'Arrival Date', 'wp-hotel-booking' ), 'true' ); ?>
@@ -108,14 +117,4 @@ $page_search    = hb_get_page_id( 'search' );
 			<button type="submit" class="wphb-button"><?php _e( 'Check Availability', 'wp-hotel-booking' ); ?></button>
 		</p>
 	</form>
-	<?php
-	if ( ! empty( $page_search ) && is_page( $page_search ) ) :
-		?>
-		<div id="hotel-booking-results">
-			<?php wphb_skeleton_animation_html( 20, '100%', 'height:20px', 'width:100%' ); ?>
-			<div class="detail__booking-rooms"></div>
-		</div>
-		<?php
-	endif;
-	?>
 </div>
