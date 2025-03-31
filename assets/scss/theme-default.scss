@@ -200,6 +200,14 @@ body {
             max-width: var(--hb-container-width, 1200px);
         }
 
+        .hb-search-results {
+            .hb-room {
+                .hb-room-content {
+                    column-gap: 30px;
+                }
+            }
+        } 
+
         #hotel-booking-search-filter {
             padding: 15px;
 
@@ -475,17 +483,18 @@ body {
 // single room
 body.single-hb_room {
     &.wp-default-theme {
-        .hb_related_other_room {
-            margin-left: auto;
-            margin-right: auto;
-        }
-
         // astra theme
         .ast-container {
             display: block;
 
-            .hb_related_other_room {
-                width: 100%;
+            &:has(.hb_single_room) {
+                max-width: 100%;
+            }
+
+            .hb_single_room {
+                &.ast-article-single {
+                    padding: 0;
+                }
             }
         }
         // other
@@ -494,29 +503,35 @@ body.single-hb_room {
                 display: block;
             }
         }
-    }
-    
-    // adjust width container for default theme
-    & > .hb_single_room {
-        margin-left: auto;
-        margin-right: auto;
-        max-width: var(--hb-container-width, 1200px);
-    }
-    & > .hb_related_other_room {
-        max-width: calc( var(--hb-container-width, 1200px) + 30px ) ;
-    }
+        .grid-container {
+            &:has(.hb_single_room) {
+                max-width: 100%;
+            }
+        }
 
-    & > #page, & #main{ 
-        & > .hb_single_room {
+        // adjust width container for default theme
+        .hb_single_room {
             margin-left: auto;
             margin-right: auto;
             max-width: var(--hb-container-width, 1200px);
         }
-        & > .hb_related_other_room {
+        .hb_related_other_room {
+            margin-left: auto;
+            margin-right: auto;
             max-width: calc( var(--hb-container-width, 1200px) + 30px ) ;
         }
+
+        #page, & #main{ 
+            & > .hb_single_room {
+                margin-left: auto;
+                margin-right: auto;
+                max-width: var(--hb-container-width, 1200px);
+            }
+            & > .hb_related_other_room {
+                max-width: calc( var(--hb-container-width, 1200px) + 30px ) ;
+            }
+        }
     }
-    // end adjust width container for default theme
 
     .hb_single_room_tabs {
         &.images_video_tabs {
@@ -603,7 +618,9 @@ body.single-hb_room {
                 border: 1px solid transparent;
 
                 .flex-active-slide {
-                    border: 1px solid var(--hb-primary, #ffb606);
+                    img {
+                        border: 1px solid var(--hb-primary, #ffb606);
+                    }
                 }
             }
         }

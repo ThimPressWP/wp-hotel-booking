@@ -128,7 +128,8 @@
 .hb_single_room #hb_room_images img{
 	display: block;
     width: 100%;
-	height: auto;
+	max-height: 700px;
+	object-fit: cover;
 }
 
 .hb_single_room #hb_room_images .room-preview i, .hb_single_room #hb_room_images .room-preview svg{
