@@ -77,12 +77,13 @@ class ArchiveRoomTemplate {
 			'wrapper_end' => '</div>',
 		];
 
-        // filter
-        $filter = hb_get_template_content( 'search/v2/search-filter-v2.php', array( 'atts' => array() ) );
-        if ( wp_get_theme()->get('Name') == 'Hotel WP') { // Not show filter in TP Luxstay theme
+        // check show filter
+        if (  get_option( 'tp_hotel_booking_filter_price_enable', 1 ) ) {
+            $filter = hb_get_template_content( 'search/v2/search-filter-v2.php', array( 'atts' => array() ) );
+        } else {
             $filter = '';
         }
-
+       
         // section ( filter + section_rooms )
 		$section = apply_filters(
 			'wbhb/layout/list-rooms/section',

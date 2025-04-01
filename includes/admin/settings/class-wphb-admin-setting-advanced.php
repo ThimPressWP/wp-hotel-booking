@@ -51,12 +51,11 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Advanced' ) ) {
 						'type'  => 'section_start',
 						'id'    => 'room_filter_setting',
 						'title' => __( 'Room Filter Options', 'wp-hotel-booking' ),
-						'desc'  => __( 'Room filter used in room list ( room archive page, booking search page ).', 'wp-hotel-booking' ),
 					),
 					array(
 						'id'      => 'tp_hotel_booking_filter_price_enable',
 						'title'   => __( 'Enable room filter', 'wp-hotel-booking' ),
-						'desc'    => __( 'Enable/disable room filter in search page.', 'wp-hotel-booking' ),
+						'desc'    => __( 'Enable/disable room filter in rooms page.', 'wp-hotel-booking' ),
 						'type'    => 'checkbox',
 						'default' => 1,
 					),

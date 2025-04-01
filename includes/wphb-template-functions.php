@@ -383,6 +383,13 @@ if ( ! function_exists( 'hotel_booking_room_title' ) ) {
 	}
 }
 
+if ( ! function_exists( 'hotel_booking_single_room_title' ) ) {
+
+	function hotel_booking_single_room_title() {
+		hb_get_template( 'single-room/title.php' );
+	}
+}
+
 if ( ! function_exists( 'hotel_booking_loop_room_price' ) ) {
 
 	function hotel_booking_loop_room_price() {
@@ -490,18 +497,19 @@ if ( ! function_exists( 'hb_body_class' ) ) {
 				$classes[] = 'wp-hotel-booking';
 				$classes[] = 'wp-hotel-booking-room-page';
 			}
-			
-			// apply for theme default: not Sailing & Hotel WP
+
+			// check tp themes premium
 			$tp_themes = [
-				'Sailing',
-				'Hotel WP'     
-			];
+                'sailing', 
+				'hotel-wp'     
+            ];
 
-			$current_theme = wp_get_theme()->get('Name');
+			$theme_slug = sanitize_html_class( basename(get_template_directory()) );
 
-			if ( !in_array( $current_theme, $tp_themes, true ) ) {
-				$classes[] = 'wp-default-theme';
-			}
+            if ( in_array( $theme_slug, $tp_themes, true ) ) {
+                $classes[] = 'tp-themes-premium';
+            }
+			
 		}
 
 		return array_unique( $classes );

@@ -27,7 +27,7 @@ add_action( 'hotel_booking_sidebar', 'hotel_booking_sidebar' );
 add_action( 'hotel_booking_loop_room_thumbnail', 'hotel_booking_loop_room_thumbnail' );
 // title
 add_action( 'hotel_booking_loop_room_title', 'hotel_booking_room_title' );
-add_action( 'hotel_booking_single_room_title', 'hotel_booking_room_title' );
+add_action( 'hotel_booking_single_room_title', 'hotel_booking_single_room_title' );
 // price display
 add_action( 'hotel_booking_loop_room_price', 'hotel_booking_loop_room_price' );
 // pagination

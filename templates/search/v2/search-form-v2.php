@@ -31,7 +31,7 @@ if ( $args && isset( $args['atts'] ) ) {
 
 ?>
 
-<div id="hotel-booking-search-<?php echo uniqid(); ?>" class="hotel-booking-search has-filter">
+<div id="hotel-booking-search-<?php echo uniqid(); ?>" class="hotel-booking-search">
 
 	<form <?php echo is_page( $page_search ) ? 'id="hb-form-search-page" ' : ''; ?> 
 		name="hb-search-form" action="<?php echo hb_get_url(); ?>" 
