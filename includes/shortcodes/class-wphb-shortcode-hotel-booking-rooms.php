@@ -175,6 +175,10 @@ class WPHB_Shortcode_Hotel_Booking_Rooms extends WPHB_Shortcodes {
 		ob_start();
 		?>
 		<div class="container room-container">
+		    <?php 
+	           hb_get_template('search/v2/search-filter-v2.php', array('atts' => array()));
+            ?>
+			<div class="">
 			<?php
 			$data = array(
 				'sort_by' => $sort_by,
@@ -209,6 +213,7 @@ class WPHB_Shortcode_Hotel_Booking_Rooms extends WPHB_Shortcodes {
 			/* add action again */
 			add_action( 'pre_get_posts', 'hotel_booking_num_room_archive', 999 );
 			?>
+			</div>
 		</div>
 		<?php
 		return ob_get_clean();

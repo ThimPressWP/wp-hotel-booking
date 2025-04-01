@@ -3190,6 +3190,22 @@ button.wphb_loading::before {
     margin-bottom: 20px;
 }
 
+#hotel-booking-search-filter .group-filter{
+   display: flex;
+}
+
+#hotel-booking-search-filter .filter button {
+    position: relative;
+    height: 40px;
+    min-width: 200px;
+    border: 1px solid #cccccc;
+    border-radius: 3px;
+    margin-right: 10px;
+    padding: 7px 8px;
+    line-height: 24px;
+    font-size: 14px;
+}
+
 #hotel-booking-search-filter .clear-filter button {
     position: relative;
     height: 40px;
@@ -3200,6 +3216,7 @@ button.wphb_loading::before {
     line-height: 24px;
     font-size: 14px;
 }
+
 
 
 button.apply {
