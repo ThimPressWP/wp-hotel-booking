@@ -23,24 +23,36 @@ add_action( 'hb_wrapper_start', 'hb_display_message' );
 add_action( 'hotel_booking_before_main_content', 'hotel_booking_before_main_content' );
 add_action( 'hotel_booking_after_main_content', 'hotel_booking_after_main_content' );
 add_action( 'hotel_booking_sidebar', 'hotel_booking_sidebar' );
-//thumbnail
+
+// thumbnail
 add_action( 'hotel_booking_loop_room_thumbnail', 'hotel_booking_loop_room_thumbnail' );
+
 // title
 add_action( 'hotel_booking_loop_room_title', 'hotel_booking_room_title' );
 add_action( 'hotel_booking_single_room_title', 'hotel_booking_single_room_title' );
+
+// check available button
+add_action( 'hotel_booking_single_room_button', 'hotel_booking_single_room_button' );
+
 // price display
 add_action( 'hotel_booking_loop_room_price', 'hotel_booking_loop_room_price' );
+
 // pagination
 add_action( 'hotel_booking_after_room_loop', 'hotel_booking_after_room_loop' );
+
 // gallery
 add_action( 'hotel_booking_single_room_gallery', 'hotel_booking_single_room_gallery' );
+
 // room details
 add_action( 'hotel_booking_single_room_infomation', 'hotel_booking_single_room_infomation' );
+
 // room related
 add_action( 'hotel_booking_after_single_product', 'hotel_booking_single_room_related' );
 add_action( 'hotel_booking_single_room_infomation', 'hotel_booking_single_room_infomation' );
+
 // room rating
 add_action( 'hotel_booking_loop_room_rating', 'hotel_booking_loop_room_rating' );
+
 // room feature
 add_action( 'hotel_booking_loop_room_feature', 'hotel_booking_loop_room_feature' );
 add_filter( 'body_class', 'hb_body_class' );

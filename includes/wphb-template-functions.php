@@ -390,6 +390,13 @@ if ( ! function_exists( 'hotel_booking_single_room_title' ) ) {
 	}
 }
 
+if ( ! function_exists( 'hotel_booking_single_room_button' ) ) {
+
+	function hotel_booking_single_room_button() {
+		hb_get_template( 'single-room/buttons/search.php' );
+	}
+}
+
 if ( ! function_exists( 'hotel_booking_loop_room_price' ) ) {
 
 	function hotel_booking_loop_room_price() {

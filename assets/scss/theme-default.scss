@@ -206,6 +206,19 @@ body {
                 & > a:last-child{
                     display: none;
                 }
+                // new room single top: since v2.1.8
+                .room-single-top {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                    column-gap: 20px;
+
+                    .price {
+                        margin-bottom: 20px;
+                        float: none;
+                    }
+                }
             }
             .hb_related_other_room {
                 .navigation {

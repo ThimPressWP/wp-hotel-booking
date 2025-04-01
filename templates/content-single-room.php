@@ -6,7 +6,7 @@
  *
  * @author  ThimPress, leehld
  * @package WP-Hotel-Booking/Templates
- * @version 1.6
+ * @version 1.6.1
  */
 
 /**
@@ -39,15 +39,25 @@ if ( post_password_required() ) {
 	<div class="summary entry-summary">
 
 		<?php
-		/**
-		 * hotel_booking_single_room_title hook
-		 */
-		do_action( 'hotel_booking_single_room_title' );
 
-		/**
-		 * hotel_booking_loop_room_price hook
-		 */
-		do_action( 'hotel_booking_loop_room_price' );
+		echo '<div class="room-single-top">';
+			/**
+			 * hotel_booking_single_room_title hook
+			 */
+			do_action( 'hotel_booking_single_room_title' );
+
+			echo '<div class="single-top-right">';
+				/**
+				 * hotel_booking_loop_room_price hook
+				 */
+				do_action( 'hotel_booking_loop_room_price' );
+
+				/**
+				 * hotel_booking_single_room_button hook
+				 */
+				do_action( 'hotel_booking_single_room_button' );
+			echo '</div>';
+		echo '</div>';
 
 		/**
 		 * hotel_booking_single_room_gallery hook
