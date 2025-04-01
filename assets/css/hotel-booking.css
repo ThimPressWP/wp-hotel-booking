@@ -268,78 +268,6 @@
     color: #43A7FF;
 }
 
-/*widget slider*/
-.tp-hotel-booking #reviews .commentlist {
-    list-style: none;
-    margin-left: 0;
-}
-
-.tp-hotel-booking #reviews .commentlist li {
-    list-style: none;
-    padding: 10px 10px 0 10px;
-    border: 1px solid #DDD;
-    margin-bottom: 20px;
-    border-radius: 0;
-}
-
-.tp-hotel-booking #reviews .commentlist p {
-    margin-bottom: 20px;
-}
-
-.tp-hotel-booking #reviews .commentlist img.avatar {
-    float: left;
-    width: 60px;
-    height: auto;
-}
-
-.tp-hotel-booking #reviews .commentlist .comment-text {
-    margin-left: 80px;
-}
-
-.tp-hotel-booking #reviews .commentlist .meta {
-    margin-bottom: 10px;
-}
-
-.tp-hotel-booking #reviews .commentlist .description {
-    color: #999;
-}
-
-.tp-hotel-booking .star-rating {
-    /* float: right; */
-    position: relative;
-    width: 80px;
-}
-
-.tp-hotel-booking .star-rating:before,
-.tp-hotel-booking .star-rating span:before {
-    content: "\e601\e601\e601\e601\e601";
-    color: #FFCC00;
-    float: left;
-    top: 0;
-    left: 0;
-    position: absolute;
-    font-family: hotel-booking-star;
-}
-
-.tp-hotel-booking .star-rating span:before {
-    content: "\e600\e600\e600\e600\e600";
-}
-
-.tp-hotel-booking .star-rating span {
-    overflow: hidden;
-    position: relative;
-    display: inline-block;
-    height: 18px;
-}
-
-.tp-hotel-booking #reviews .commentlist > li:after {
-    overflow: hidden;
-    float: left;
-    position: relative;
-    left: 0;
-    height: 18px;
-}
-
 .comment-form-rating {
     margin-bottom: 0;
 }
@@ -3230,6 +3158,7 @@ ul.hb-room-review-images img {
     height: 120px;
     object-fit: cover;
     border-radius: 8px;
+    box-shadow: none;
 }
 
 .review-top-section .header {

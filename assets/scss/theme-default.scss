@@ -209,7 +209,6 @@ body {
                 // new room single top: since v2.1.8
                 .room-single-top {
                     display: flex;
-                    align-items: center;
                     justify-content: space-between;
                     flex-wrap: wrap;
                     column-gap: 20px;
@@ -382,6 +381,94 @@ body {
                     }
                 }
             } 
+        }
+
+        /* comment list */
+        #reviews {
+            .commentlist {
+                list-style: none;
+                margin-left: 0;
+
+                & > li {
+                    &:after {
+                        overflow: hidden;
+                        float: left;
+                        position: relative;
+                        left: 0;
+                        height: 18px;
+                    }
+                }
+
+                li{
+                    margin: 0;
+                    padding: 0;
+                    list-style: none;
+                    border-radius: 0;
+                    box-shadow: none;
+                }
+                p {
+                    margin-bottom: 20px;
+                }
+                img.avatar {
+                    position: relative;
+                    float: left;
+                    width: 60px;
+                    height: auto;
+                }
+                .comment-text {
+                    margin-left: 80px;
+                    padding: 0;
+                }
+                .meta {
+                    margin-bottom: 10px;
+                }
+            }
+        } 
+
+        /* star rating */
+        .star-rating {
+            float: right;
+            position: relative;
+            width: 80px;
+
+            &:before {
+                content: "\e601\e601\e601\e601\e601";
+                color: #FFCC00;
+                float: left;
+                top: 0;
+                left: 0;
+                position: absolute;
+                font-family: hotel-booking-star;
+            }
+            span {
+                position: relative;
+                overflow: hidden;
+                display: inline-block;
+                height: 18px;
+                
+                &:before {
+                    content: "\e600\e600\e600\e600\e600";
+                    color: #FFCC00;
+                    float: left;
+                    top: 0;
+                    left: 0;
+                    position: absolute;
+                    font-family: hotel-booking-star;
+                }
+            }
+        }
+
+        .review-top-section {
+            .star-rating {
+                &:before {
+                    content: none;
+                }
+                span {
+                    &:before {
+                        content: none;
+                    }
+                }
+            }
         }
     }
 
