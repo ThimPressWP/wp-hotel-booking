@@ -343,6 +343,10 @@ body {
                     row-gap: 8px;
                     width: 100%;
 
+                    &:has(.wphb-max-qty) {
+                        margin-bottom: 20px;
+                    }
+
                     label {
                         font-size: 18px;
                         font-weight: 500;
