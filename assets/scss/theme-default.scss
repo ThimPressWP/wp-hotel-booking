@@ -7,7 +7,6 @@ html {
     @media (max-width: 767px) {
         overflow-x: hidden;
     }
-
 }
 
 body {
@@ -121,8 +120,9 @@ body {
                 border-radius: 3px;
                 background: var(--hb-primary, #ffb606);
                 color: #fff;
-                font-weight: 600;
+                font-weight: 600; 
                 line-height: 1.5;
+                text-transform: capitalize;
     
                 &:hover {
                     background: var(--hb-heading, #111);
@@ -318,6 +318,7 @@ body {
                     .hb_add_to_cart {
                         color: var(--hb-primary, #ffb606);
                         background:  var(--hb-light, #FDE3E3);
+                        text-transform: capitalize;
                     }
                 }
             }
@@ -330,7 +331,22 @@ body {
                 }
 
                 .hb-search-results-form-container {
-                    gap: 20px;
+                    column-gap: 20px;
+                }
+
+                .hb-booking-room-form-field {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    column-gap: 20px;
+                    row-gap: 8px;
+                    width: 100%;
+
+                    label {
+                        font-size: 18px;
+                        font-weight: 500;
+                    }
                 }
     
                 iframe {
@@ -470,6 +486,12 @@ body {
                 }
             }
         }
+
+        // fix style adminbar
+        #wpadminbar {
+            margin: 0;
+            max-width: 100%;
+        }
     }
 
     &.wp-hotel-booking-rooms {
@@ -499,9 +521,26 @@ body {
         }
     }
 
+    &.wp-hotel-booking-thank-you {
+        .ast-container {
+            flex-direction: column;
+        }
+        #booking-customer {
+            margin: 30px 0;
+            
+            label {
+                margin-bottom: 5px;
+                display: inline-block;
+                font-size: var(--hb-font-size-base, 16px);
+                font-weight: 500;
+                min-width: 120px;
+            }
+        }
+    }
+
     // table
     table {
-        &.hb_table, &.hb_room_pricing_plans, &.hb_booking_table {
+        &.hb_table, &.hb_room_pricing_plans, &.hb_booking_table, &.booking_item_table {
             margin: 0;
             border: 1px solid rgba(0, 0, 0, 0.1);
             border-collapse: collapse;
@@ -514,6 +553,7 @@ body {
             width: 100%;
 
             th, td {
+                padding: .7em 1em;
                 border: 1px solid rgba(0, 0, 0, 0.1);
             }
             a {
@@ -665,6 +705,7 @@ body {
         max-width: 100%;
 
         input[type="text"],
+        input[type="number"],
         input[type="email"],
         input[type="url"],
         input[type="tel"],
@@ -686,10 +727,17 @@ body {
             text-transform: none;
             transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 
+            &::placeholder {
+                font-weight: 400;
+            }
             &:hover, &:focus {
                 outline: 0;
                 text-decoration: none;
             }
+        }
+
+        input[type="number"] {
+            padding: 6px 12px;
         }
 
         select {

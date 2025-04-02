@@ -23,7 +23,7 @@ if ( empty( $terms ) || is_wp_error( $terms ) ) {
 
 ?>
 <div class="hb-type-field">
-	<h4><?php esc_html_e( ' Room types', 'wp-hotel-booking' ); ?></h4>
+	<h4><?php esc_html_e( 'Room Types', 'wp-hotel-booking' ); ?></h4>
 	<ul class="room-type-list">
 		<?php
 		foreach ( $terms as $term ) {

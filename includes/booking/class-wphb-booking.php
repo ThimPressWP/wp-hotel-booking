@@ -326,7 +326,7 @@ class WPHB_Booking {
 	 * @return mixed
 	 */
 	public function get_checkout_booking_received_url() {
-		$received_url = hb_get_page_permalink( 'search' );
+		$received_url = hb_get_page_permalink( 'thankyou' );
 
 		return apply_filters( 'hb_get_checkout_booking_received_url', $received_url, $this );
 	}
