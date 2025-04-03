@@ -175,7 +175,7 @@ $camera_gallery = apply_filters('wp_hotel_booking_ft_camera_gallery', false);
 			<div class="hb_room_gallery flexslider" id="carousel"> 
 				<ul class="slides">
 					<?php foreach ( $galleries as $key => $gallery ) : ?>
-						<li><img src="<?php echo esc_url( $gallery['src'] ); ?>"></li>
+						<li><img src="<?php echo esc_url( $gallery['thumb'] ); ?>"></li>
 					<?php endforeach; ?>
 				</ul>
 			</div>

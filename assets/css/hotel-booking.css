@@ -1454,8 +1454,8 @@
 }
 
 .hb-booking-room-details table tr td.hb_search_item_total_description {
-    font-style: italic;
-    color: #9a9a9a;
+    font-weight: 400;
+    color: #888;
     padding-left: 20px;
 }
 
@@ -1470,11 +1470,11 @@
 }
 
 .hb-booking-room-details table tbody tr:last-child td {
-    padding-bottom: 25px;
+    padding-bottom: 20px;
 }
 
 .hb-booking-room-details table tfoot tr td {
-    padding-top: 25px;
+    padding-top: 20px;
     border: 0;
     border-top: 1px solid #eee;
 }

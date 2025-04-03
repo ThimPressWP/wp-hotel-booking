@@ -6,7 +6,7 @@
  *
  * @author  ThimPress, leehld
  * @package WP-Hotel-Booking/Templates
- * @version 1.6
+ * @version 1.6.1
  */
 
 /**
@@ -15,11 +15,14 @@
 defined( 'ABSPATH' ) || exit();
 
 global $hb_room;
+$has_featured = get_the_post_thumbnail($hb_room->ID) ? true : false;
 /**
  * @var $hb_room WPHB_Room
  */
 ?>
 
-<div class="media">
-	<a href="<?php the_permalink(); ?>"><?php $hb_room->getImage( 'catalog' ); ?></a>
-</div>
+<?php if($has_featured) : ?>
+	<div class="media">
+		<a href="<?php the_permalink(); ?>"><?php $hb_room->getImage( 'catalog' ); ?></a>
+	</div>
+<?php endif; ?>
