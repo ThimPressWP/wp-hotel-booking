@@ -207,6 +207,8 @@ body {
             }
     
             .hb_single_room {
+                margin-top: 40px;
+
                 & > a:last-child{
                     display: none;
                 }
@@ -896,8 +898,6 @@ body.single-hb_room {
 
 /* new hb_single_room: room video & gallery : since v1.8.1 */
 .hb_single_room {
-    margin-top: 40px;
-    padding: 0;
 
     .spacing-35 {
         clear: both;
@@ -983,6 +983,11 @@ body.single-hb_room {
                     font-size: 24px;
                     line-height: 40px;
                     opacity: 1;
+                }
+            }
+            .flex-prev, .flex-next {
+                &.flex-disabled {
+                    display: none;
                 }
             }
             .flex-prev {
