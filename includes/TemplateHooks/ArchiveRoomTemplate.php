@@ -43,6 +43,10 @@ class ArchiveRoomTemplate {
 	public static function render_rooms( array $settings = [] ) {
         $rooms = new \WP_Query( $settings );
 
+        $total          = $rooms->post_count;
+		$posts_per_page = $rooms->query_vars['posts_per_page'];
+        $paged          = isset($settings['paged']) ? $settings['paged'] : 1;
+
 		// HTML section rooms.
 		$html_rooms = '';
 
@@ -62,16 +66,36 @@ class ArchiveRoomTemplate {
         $html_rooms = ob_get_clean();
         // end HTML section rooms
 
+        // HTML Sort By
+		$sort_by = hb_get_request( 'sort_by' );
+
+		$data = array(
+			'sort_by' => $sort_by,
+		);
+
+		if ( $total ) {
+			$data['show_number'] = hb_get_show_room_text(
+				array(
+					'paged'         => $paged,
+					'total'         => $total,
+					'item_per_page' => $posts_per_page,
+				)
+			);
+		}
+
+		$sort_by = hb_get_template_content( 'search/v2/sort-by.php', compact( 'data' ) );
+
 		// html pagination
 		$data_pagination = [
 			'total_pages' => $rooms->max_num_pages,
-			'paged'       => isset($settings['paged']) ? $settings['paged'] : 1,
+			'paged'       => $paged,
 		];
 		$html_pagination = static::instance()->html_pagination( $data_pagination );
 
         // section_rooms 
         $section_rooms = [
 			'wrapper'     => '<div class="room-content">',
+            'sort_by'     => $sort_by,
 			'rooms'       => $html_rooms,
             'pagination'  => $html_pagination,
 			'wrapper_end' => '</div>',
