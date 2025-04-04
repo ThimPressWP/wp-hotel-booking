@@ -4,7 +4,7 @@ Donate link: https://thimpress.com/
 Tags: hotel, booking, hotel booking, reservation, reservations
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 2.1.7
+Stable tag: 2.1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -87,6 +87,9 @@ Yes.
 7. System settings
 
 == Changelog ==
+
+= 2.1.8 (2025-04-04) =
+~ Tweak: layout archive room, single room.
 
 = 2.1.7 (2025-01-21) =
 ~ Fixed: security.
