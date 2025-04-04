@@ -88,6 +88,9 @@ Yes.
 
 == Changelog ==
 
+= 2.1.9 (2025-04-xx) =
+~ Tweak: logic check dates room available.
+
 = 2.1.8 (2025-04-04) =
 ~ Tweak: layout archive room, single room.
 

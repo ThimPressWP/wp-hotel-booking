@@ -51,15 +51,11 @@ if ( ! function_exists( 'hotel_booking_get_room_available' ) ) {
 		try {
 			// for search room in single with wpml
 			$room_id = apply_filters( 'hotel_booking_get_available_room', $room_id );
-
 			if ( ! $room_id ) {
 				throw new Exception( __( 'Request is invalid!', 'wp-hotel-booking' ) );
 			}
 
-			$room = get_post( $room_id );
-			if ( ! $room || WPHB_ROOM_CT !== $room->post_type ) {
-				throw new Exception( __( 'Room not found!', 'wp-hotel-booking' ) );
-			}
+			$room = new WPHB_Room( $room_id );
 
 			$args = wp_parse_args(
 				$args,
@@ -86,49 +82,21 @@ if ( ! function_exists( 'hotel_booking_get_room_available' ) ) {
 				$check_out_date_timestamp = strtotime( $args['check_out_date'] );
 			}
 
-			// Get date now by timezone and check with check in date
-			/*$date_now_timestamp = current_time( 'timestamp' );
-			$check_in_date_timestamp = strtotime( $check_in_date_str );
-			if ( $check_in_date_timestamp < $date_now_timestamp ) {
-				throw new Exception(
-					sprintf(
-						__( 'Check in date must be greater than or equal to today %s %s.', 'wp-hotel-booking' ),
-						gmdate( WPHB_Datetime::$format, $date_now_timestamp ),
-						WPHB_Datetime::get_timezone_string()
-					)
-				);
-			}*/
-
-			$room_available_date = WPHB_Room::instance( $room_id )->get_dates_available();
-			// $arr_qty_available   = array();
+			$room_available_date = $room->get_dates_available();
 
 			$checkin   = gmdate( WPHB_Datetime::$format, $check_in_date_timestamp );
 			$checkout  = gmdate( WPHB_Datetime::$format, $check_out_date_timestamp );
 			$date_next = $checkin;
 
-			// while ( $date_next <= $checkout ) {
-			// 	$timeStamp = strtotime( $date_next );
-			// 	if ( array_key_exists( $timeStamp, $room_available_date ) ) {
-			// 		if ( $room_available_date[ $timeStamp ] >= 1 ) {
-			// 			// $room_available_date[ $timeStamp ] = $room_available_date[ $timeStamp ] - 1;
-			// 			$arr_qty_available[]               = $room_available_date[ $timeStamp ];
-			// 		}
-			// 	}
-			// 	$date_next = gmdate( WPHB_Datetime::$format, strtotime( $date_next . ' +1 day' ) );
-			// }
-
-			$qty = get_post_meta( $room_id, '_hb_num_of_rooms', true );
-
-			// if ( ! empty( $arr_qty_available ) ) {
-			// 	$qty = ! empty( min( $arr_qty_available ) ) ? min( $arr_qty_available ) : 1;
-			// }
-
-			foreach ( $room_available_date as $date => $available ) {
+			$qty = $room->get_num_of_rooms();
+			// Check the dates room booked is available
+			foreach ( $room_available_date as $date => $qty_available ) {
 				if ( $date >= $check_in_date_timestamp && $date <= $check_out_date_timestamp ) {
-					if ( $available <= 0 ) {
+					if ( $qty_available <= 0 ) {
 						throw new Exception( __( 'This room is not available.', 'wp-hotel-booking' ) );
 					}
-					$qty = min( $qty, $available );
+
+					$qty = min( $qty, $qty_available );
 				}
 			}
 
@@ -136,11 +104,6 @@ if ( ! function_exists( 'hotel_booking_get_room_available' ) ) {
 			if ( ! empty( $blocked_id ) ) {
 				$dates_timestamp_blocked = get_post_meta( $blocked_id, 'hb_blocked_time', false );
 				if ( ! empty( $dates_timestamp_blocked ) ) {
-					/*foreach ( $date_blocked as $date ) {
-						if ( $date >= $check_in_date_timestamp && $date < $check_out_date_timestamp ) {
-							throw new Exception( __( 'This room is not available.', 'wp-hotel-booking' ) );
-						}
-					}*/
 					$dates_str_blocked = [];
 					foreach ( $dates_timestamp_blocked as $date_timestamp_blocked ) {
 						$dates_str_blocked[] = gmdate( WPHB_Datetime::$format, $date_timestamp_blocked );
@@ -159,7 +122,6 @@ if ( ! function_exists( 'hotel_booking_get_room_available' ) ) {
 			}
 
 			$qty = apply_filters( 'wphb/room/check_dates_available', $qty, $room, $args );
-
 			if ( $qty === 0 ) {
 				throw new Exception( __( 'This room is not available.', 'wp-hotel-booking' ) );
 			}

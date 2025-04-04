@@ -37,9 +37,15 @@ class WPHB_Room_Booking_Available {
 
 	/**
 	 * Compare room booked if change status order booking room
+	 * will store order status in meta _hb_dates_booked
+	 * to calculate available room
 	 */
 	public function order_changes_status( $booking_id = null, $old_status = null, $new_status = null ) {
 		if ( ! ( $booking_id || $new_status ) ) {
+			return;
+		}
+
+		if ( $old_status === $new_status ) {
 			return;
 		}
 
@@ -51,13 +57,12 @@ class WPHB_Room_Booking_Available {
 				if ( $room_id ) {
 					$date_booked = WPHB_Room::instance( $room_id )->get_dates_booked();
 					if ( ! empty( $date_booked ) ) {
-						if ( $old_status == 'completed' && $new_status != 'completed' ) {
-							$date_booked[ $booking_id ]['status'] = 'hb-' . $new_status;
-						} elseif ( $old_status != 'completed' && $new_status == 'completed' ) {
-							$date_booked[ $booking_id ]['status'] = 'hb-completed';
-						}
+						// Update status for date_booked.
+						$date_booked[ $booking_id ]['status'] = 'hb-' . $new_status;
+
 						update_post_meta( $room_id, '_hb_dates_booked', $date_booked );
 					}
+
 					$this->calculate_dates_available( $room_id );
 				}
 			}
@@ -77,7 +82,8 @@ class WPHB_Room_Booking_Available {
 			return;
 		}
 
-		if ( empty( $_POST['wphb_meta_box_nonce'] ) || ! wp_verify_nonce( wp_unslash( $_POST['wphb_meta_box_nonce'] ), 'wphb_update_meta_box' ) ) {
+		if ( empty( $_POST['wphb_meta_box_nonce'] )
+			|| ! wp_verify_nonce( wp_unslash( $_POST['wphb_meta_box_nonce'] ), 'wphb_update_meta_box' ) ) {
 			return;
 		}
 
@@ -114,21 +120,24 @@ class WPHB_Room_Booking_Available {
 	}
 
 	/**
-	 * Add or remove the remaining number of rooms per day of each room
-	 * Lock the room when out of stock
+	 * Calculate available dates for a room
+	 * Get the booked dates from the room and check if the order status
+	 * With order status completed, processing. The room is booked
+	 * if the order status is cancelled, failed, or refunded, the room is available
 	 *
 	 * @param int $room_id room_id The ID of the booking.
 	 *
 	 * @return void
 	 */
 	public function calculate_dates_available( int $room_id = 0 ) {
-		if ( ! $room_id ) {
-			return;
-		}
 		try {
+			if ( ! $room_id ) {
+				return;
+			}
+
 			$current_date = strtotime( gmdate( 'Y-m-d' ) );
 			$date_booked  = WPHB_Room::instance( $room_id )->get_dates_booked();
-			$num_of_room  = absint( WPHB_Room::instance( $room_id )->num_of_rooms );
+			$num_of_room  = absint( WPHB_Room::instance( $room_id )->get_num_of_rooms() );
 
 			if ( ! empty( $_POST['_hb_num_of_rooms'] ) ) {
 				$num_of_room = $_POST['_hb_num_of_rooms'];
@@ -140,14 +149,16 @@ class WPHB_Room_Booking_Available {
 				foreach ( $date_booked as $order_id => $data_order ) {
 					if ( isset( $data_order['dates_booked'] ) ) {
 						foreach ( $data_order['dates_booked'] as $key => $date ) {
-						    $date_booked_qty[ $date ] = $date_booked_qty[ $date ] ?? 0;
+							$date_booked_qty[ $date ] = $date_booked_qty[ $date ] ?? 0;
 							if ( $date < $current_date ) {
 								unset( $date_booked[ $order_id ]['dates_booked'][ $key ] );
 								continue;
 							}
-							if ( isset( $data_order['status'] ) && in_array( $data_order['status'], array( 'hb-completed', 'hb-processing', 'hb-pending' ) ) ) {
-								if ( isset( $data_order['quantity'] ) && $num_of_room >= $data_order['quantity'] ) {
-									$date_booked_qty[ $date ] +=  $data_order['quantity'];
+
+							if ( isset( $data_order['status'] )
+								&& in_array( $data_order['status'], [ 'hb-completed', 'hb-processing' ] ) ) {
+								if ( isset( $data_order['quantity'] ) ) {
+									$date_booked_qty[ $date ] += $data_order['quantity'];
 								}
 							}
 						}
@@ -155,16 +166,16 @@ class WPHB_Room_Booking_Available {
 				}
 
 				if ( ! empty( $date_booked_qty ) ) {
-				    foreach ( $date_booked_qty as $date => $booked_qty ) {
-				        $dates_available[ $date ] = $num_of_room - $booked_qty < 0 ? 0 : $num_of_room - $booked_qty;
-				    }
+					foreach ( $date_booked_qty as $date => $booked_qty ) {
+						$qty_available            = $num_of_room - $booked_qty;
+						$dates_available[ $date ] = max( $qty_available, 0 );
+					}
 				}
 
 				update_post_meta( $room_id, '_hb_dates_booked', $date_booked );
 			}
 
 			update_post_meta( $room_id, '_hb_dates_available', $dates_available );
-
 		} catch ( Throwable $e ) {
 			error_log( $e->getMessage() );
 		}

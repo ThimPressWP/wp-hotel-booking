@@ -81,6 +81,28 @@ class WPHB_Room extends WPHB_Product_Room_Base {
 	}
 
 	/**
+	 * Get the room ID.
+	 *
+	 * @return int
+	 * @since 4.1.9
+	 * @version 1.0.0
+	 */
+	public function get_id(): int {
+		return (int) $this->post ? $this->post->ID : 0;
+	}
+
+	/**
+	 * Get the config number of room.
+	 *
+	 * @return int
+	 * @since 4.1.9
+	 * @version 1.0.0
+	 */
+	public function get_num_of_rooms(): int {
+		return (int) get_post_meta( $this->get_id(), '_hb_num_of_rooms', true );
+	}
+
+	/**
 	 * Get dates booked of room.
 	 *
 	 * @return array|mixed
@@ -93,6 +115,12 @@ class WPHB_Room extends WPHB_Product_Room_Base {
 		return $dates_booked;
 	}
 
+	/**
+	 * Store list dates booked of room with quantity.
+	 * Ex: [ timestamp => 2, timestamp2 => 1 ]
+	 *
+	 * @return array|mixed
+	 */
 	public function get_dates_available() {
 		$dates_available = get_post_meta( $this->post->ID, '_hb_dates_available', true );
 		if ( ! $dates_available ) {
@@ -105,7 +133,9 @@ class WPHB_Room extends WPHB_Product_Room_Base {
 	 * Get unique instance of HB_Room
 	 *
 	 * @param $room
-	 * @return mixed
+	 * @param null $options
+	 *
+	 * @return WPHB_Room
 	 */
 	static function instance( $room, $options = null ) {
 		$post = $room;
