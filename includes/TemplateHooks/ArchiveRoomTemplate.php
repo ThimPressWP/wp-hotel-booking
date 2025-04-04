@@ -1,12 +1,13 @@
 <?php
 /**
  * Template archive rooms
- * @since 2.1.8-beta.1
+ * @since 2.1.8
  * @version 1.0.0
  */
 
 namespace WPHB\TemplateHooks;
 
+use Exception;
 use WPHB\Helpers\Singleton;
 use WPHB\Helpers\Template;
 
@@ -35,9 +36,9 @@ class ArchiveRoomTemplate {
 	/**
 	 * Render template list rooms with settings param.
 	 *
-	 * @param array $args
+	 * @param array $settings
 	 *
-	 * @return { string_html }
+	 * @return string
 
 	 */
 	public static function render_rooms( array $settings = [] ) {
@@ -45,7 +46,7 @@ class ArchiveRoomTemplate {
 
 		$total          = $rooms->post_count;
 		$posts_per_page = $settings['posts_per_page'];
-		$paged          = isset( $settings['paged'] ) ? $settings['paged'] : 1;
+		$paged          = $settings['paged'] ?? 1;
 
 		// HTML section rooms.
 		$html_rooms = '';
