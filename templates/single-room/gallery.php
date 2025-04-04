@@ -19,18 +19,18 @@ global $hb_room;
  * @var $hb_room WPHB_Room
  */
 $galleries    = $hb_room->get_galleries( false );
-$has_featured = get_the_post_thumbnail($hb_room->ID) ? true : false;
-$url 		  = get_post_meta($hb_room->ID, '_hb_room_preview_url', true);
+$has_featured = get_the_post_thumbnail( $hb_room->ID ) ? true : false;
+$url          = get_post_meta( $hb_room->ID, '_hb_room_preview_url', true );
 
-/** update new gallery replace old camera gallery 
+/** update new gallery replace old camera gallery
 	* if customers still want to use camera_gallery: add_filter('wp_hotel_booking_ft_camera_gallery', '__return_true');
 	* @see __return_true(), add_filter()
 */
-$camera_gallery = apply_filters('wp_hotel_booking_ft_camera_gallery', false);
+$camera_gallery = apply_filters( 'wp_hotel_booking_ft_camera_gallery', false );
 
 ?>
 
-<?php if ($camera_gallery ) : // camera gallery ?>
+<?php if ( $camera_gallery ) : // camera gallery ?>
 	<div class="spacing-35"></div>
 	<div id="hb_room_images"> 
 		<?php if ( $galleries ) { ?>
@@ -76,21 +76,23 @@ $camera_gallery = apply_filters('wp_hotel_booking_ft_camera_gallery', false);
 	</div>
 <?php else : // new gallery ?> 
 	<div class="spacing-35"></div>
-	<?php if($hb_room->is_preview) { ?>
-		<?php if( ( $has_featured || (count($galleries) > 0) ) && $url ) : ?>
+	<?php if ( $hb_room->is_preview ) { ?>
+		<?php if ( ( $has_featured || ( count( $galleries ) > 0 ) ) && $url ) : ?>
 			<ul class="hb_single_room_tabs images_video_tabs">
 				<li>
 					<a href="#hb_room_images" class="active"> 
-						<?php if( count($galleries) > 0 ) {
-							echo esc_html__( 'All Images','wp-hotel-booking' ) . ' ' . '(' . count($galleries) .  ')';
-						} else { 
-							echo esc_html__( 'Image','wp-hotel-booking' );
-						} ?>
+						<?php
+						if ( count( $galleries ) > 0 ) {
+							echo esc_html__( 'All Images', 'wp-hotel-booking' ) . ' ' . '(' . count( $galleries ) . ')';
+						} else {
+							echo esc_html__( 'Image', 'wp-hotel-booking' );
+						}
+						?>
 					</a>
 				</li>
 				<li>
 					<a href="#hb_room_video"> 
-						<?php esc_html_e( 'Video','wp-hotel-booking' );?>
+						<?php esc_html_e( 'Video', 'wp-hotel-booking' ); ?>
 					</a>
 				</li>
 			</ul>
@@ -100,38 +102,38 @@ $camera_gallery = apply_filters('wp_hotel_booking_ft_camera_gallery', false);
 			<?php
 				$video_html = '';
 
-				if (strpos($url, '<iframe') !== false) {
-					// If the URL contains an iframe, output the iframe
-					$video_html .= $url;
-				} elseif (preg_match('/\.(mp4|webm|ogg)$/', $url)) {
-					// If the URL is a direct video link
-					$video_html .= '<video width="600" controls>
-					<source src="' . htmlspecialchars($url) . '" type="video/mp4">
+			if ( strpos( $url, '<iframe' ) !== false ) {
+				// If the URL contains an iframe, output the iframe
+				$video_html .= $url;
+			} elseif ( preg_match( '/\.(mp4|webm|ogg)$/', $url ) ) {
+				// If the URL is a direct video link
+				$video_html .= '<video width="600" controls>
+					<source src="' . htmlspecialchars( $url ) . '" type="video/mp4">
 					Your browser does not support the video tag.
 					</video>';
-				} elseif (strpos($url, 'youtube.com') !== false || strpos($url, 'vimeo.com') !== false) {
-					// If it's a YouTube or Vimeo link, embed the video
-					$embedUrl = '';
-					if (strpos($url, 'youtube.com') !== false) {
-						// Convert YouTube link to embed format
-						preg_match('/v=([^&]+)/', $url, $matches);
-						if (isset($matches[1])) {
-							$embedUrl = 'https://www.youtube.com/embed/' . $matches[1];
-						}
-					} elseif (strpos($url, 'vimeo.com') !== false) {
-						// Convert Vimeo link to embed format
-						preg_match('/vimeo\.com\/(\d+)/', $url, $matches);
-						if (isset($matches[1])) {
-							$embedUrl = 'https://player.vimeo.com/video/' . $matches[1];
-						}
+			} elseif ( strpos( $url, 'youtube.com' ) !== false || strpos( $url, 'vimeo.com' ) !== false ) {
+				// If it's a YouTube or Vimeo link, embed the video
+				$embedUrl = '';
+				if ( strpos( $url, 'youtube.com' ) !== false ) {
+					// Convert YouTube link to embed format
+					preg_match( '/v=([^&]+)/', $url, $matches );
+					if ( isset( $matches[1] ) ) {
+						$embedUrl = 'https://www.youtube.com/embed/' . $matches[1];
 					}
-
-					if ($embedUrl) {
-						$video_html .= '<iframe width="100%" height="373" src="' . htmlspecialchars($embedUrl) . '" frameborder="0" allowfullscreen></iframe>';
+				} elseif ( strpos( $url, 'vimeo.com' ) !== false ) {
+					// Convert Vimeo link to embed format
+					preg_match( '/vimeo\.com\/(\d+)/', $url, $matches );
+					if ( isset( $matches[1] ) ) {
+						$embedUrl = 'https://player.vimeo.com/video/' . $matches[1];
 					}
-				} else {
-					$video_html .= 'Unable to display the video. The URL is not valid.';
 				}
+
+				if ( $embedUrl ) {
+					$video_html .= '<iframe width="100%" height="373" src="' . htmlspecialchars( $embedUrl ) . '" frameborder="0" allowfullscreen></iframe>';
+				}
+			} else {
+				$video_html .= 'Unable to display the video. The URL is not valid.';
+			}
 				echo $video_html;
 			?>
 		</div>
@@ -139,7 +141,7 @@ $camera_gallery = apply_filters('wp_hotel_booking_ft_camera_gallery', false);
 
 	<div id="hb_room_images" class="room_media_content">
 
-		<?php if ($galleries) { ?>
+		<?php if ( $galleries ) { ?>
 			<script type="text/javascript">
 				(function ($) {
 					"use strict";
@@ -179,8 +181,10 @@ $camera_gallery = apply_filters('wp_hotel_booking_ft_camera_gallery', false);
 					<?php endforeach; ?>
 				</ul>
 			</div>
-		<?php } else {
-			echo get_the_post_thumbnail(get_the_ID());
-		} ?>
+			<?php
+		} else {
+			echo get_the_post_thumbnail( get_the_ID() );
+		}
+		?>
 	</div>
 <?php endif; ?>

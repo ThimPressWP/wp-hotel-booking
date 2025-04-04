@@ -277,17 +277,17 @@ if ( ! function_exists( 'hb_room_update_room_average_rating' ) ) {
 	}
 }
 
-if( !function_exists( 'hb_get_room_query_args' ) ) {
+if ( ! function_exists( 'hb_get_room_query_args' ) ) {
 	function hb_get_room_query_args( $atts = [] ) {
 		$hb_settings = WPHB_Settings::instance();
 
-		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+		$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 
 		// default posts_per_page
 		$posts_per_page = $hb_settings->get( 'posts_per_page', 8 );
 
 		// if $attrs has value passed in: set $attrs['number_room'] instead of posts_per_page
-		if ( isset($atts['number_room']) ) {
+		if ( isset( $atts['number_room'] ) ) {
 			$posts_per_page = $atts['number_room'];
 		}
 
@@ -319,14 +319,14 @@ if( !function_exists( 'hb_get_room_query_args' ) ) {
 		$sort_by = hb_get_request( 'sort_by' );
 		if ( $sort_by ) {
 			$sort_options = [
-				'date-desc' => ['date', 'DESC'],
-				'date-asc' => ['date', 'ASC'],
-				'title-asc' => ['title', 'ASC'],
-				'title-desc' => ['title', 'DESC']
+				'date-desc'  => [ 'date', 'DESC' ],
+				'date-asc'   => [ 'date', 'ASC' ],
+				'title-asc'  => [ 'title', 'ASC' ],
+				'title-desc' => [ 'title', 'DESC' ],
 			];
-			if ( isset( $sort_options[$sort_by] ) ) {
-				$args['orderby'] = $sort_options[$sort_by][0];
-				$args['order'] = $sort_options[$sort_by][1];
+			if ( isset( $sort_options[ $sort_by ] ) ) {
+				$args['orderby'] = $sort_options[ $sort_by ][0];
+				$args['order']   = $sort_options[ $sort_by ][1];
 			}
 		}
 
@@ -348,11 +348,11 @@ if( !function_exists( 'hb_get_room_query_args' ) ) {
 			$rating_query = [];
 			foreach ( explode( ',', $rating ) as $rate ) {
 				$rating_query[] = [
-					'key'     => 'hb_average_rating',
-					'value'   => ( $rate === 'unrated' ) ? 0 : $rate,
-					'type'    => 'NUMERIC',
+					'key'   => 'hb_average_rating',
+					'value' => ( $rate === 'unrated' ) ? 0 : $rate,
+					'type'  => 'NUMERIC',
 				];
-				if ($rate === 'unrated' ) {
+				if ( $rate === 'unrated' ) {
 					$rating_query['compare'] = '>';
 				} else {
 					$rating_query['compare'] = '>=';
@@ -366,10 +366,10 @@ if( !function_exists( 'hb_get_room_query_args' ) ) {
 		}
 
 		// 4.Room Type Filter
-		$room_type = hb_get_request( 'room_type' ) ?: $atts['room_type'];
-		if ( is_tax('hb_room_type') ) { // is taxonomy page hb_room_type
-			$term_slug = get_query_var('term');
-			$term 	   = get_term_by('slug', $term_slug, 'hb_room_type');
+		$room_type = hb_get_request( 'room_type' ) ? $atts['room_type'] : $atts['room_type'];
+		if ( is_tax( 'hb_room_type' ) ) { // is taxonomy page hb_room_type
+			$term_slug = get_query_var( 'term' );
+			$term      = get_term_by( 'slug', $term_slug, 'hb_room_type' );
 			$room_type = $term->term_id;
 		}
 		if ( $room_type ) {

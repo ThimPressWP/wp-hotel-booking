@@ -471,7 +471,7 @@ if ( ! function_exists( 'hb_body_class' ) ) {
 			hb_get_page_id( 'thankyou' ),
 		];
 
-		if ( in_array( $post_id, $hotel_booking_pages, true ) || is_room() || is_room_taxonomy() || is_post_type_archive('hb_room') ) {
+		if ( in_array( $post_id, $hotel_booking_pages, true ) || is_room() || is_room_taxonomy() || is_post_type_archive( 'hb_room' ) ) {
 			$classes[] = 'wp-hotel-booking-page';
 
 			switch ( $post_id ) {
@@ -507,16 +507,15 @@ if ( ! function_exists( 'hb_body_class' ) ) {
 
 			// check tp themes premium
 			$tp_themes = [
-                'sailing', 
-				'hotel-wp'     
-            ];
+				'sailing',
+				'hotel-wp',
+			];
 
-			$theme_slug = sanitize_html_class( basename(get_template_directory()) );
+			$theme_slug = sanitize_html_class( basename( get_template_directory() ) );
 
-            if ( in_array( $theme_slug, $tp_themes, true ) ) {
-                $classes[] = 'tp-themes-premium';
-            }
-			
+			if ( in_array( $theme_slug, $tp_themes, true ) ) {
+				$classes[] = 'tp-themes-premium';
+			}
 		}
 
 		return array_unique( $classes );
