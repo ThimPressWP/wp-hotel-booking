@@ -145,7 +145,7 @@ class WPHB_Room_Booking_Available {
 								unset( $date_booked[ $order_id ]['dates_booked'][ $key ] );
 								continue;
 							}
-							if ( isset( $data_order['status'] ) && $data_order['status'] == 'hb-completed' ) {
+							if ( isset( $data_order['status'] ) && in_array( $data_order['status'], array( 'hb-completed', 'hb-processing', 'hb-pending' ) ) ) {
 								if ( isset( $data_order['quantity'] ) && $num_of_room >= $data_order['quantity'] ) {
 									$date_booked_qty[ $date ] +=  $data_order['quantity'];
 								}

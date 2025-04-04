@@ -100,31 +100,31 @@ if ( ! function_exists( 'hotel_booking_get_room_available' ) ) {
 			}*/
 
 			$room_available_date = WPHB_Room::instance( $room_id )->get_dates_available();
-			$arr_qty_available   = array();
+			// $arr_qty_available   = array();
 
 			$checkin   = gmdate( WPHB_Datetime::$format, $check_in_date_timestamp );
 			$checkout  = gmdate( WPHB_Datetime::$format, $check_out_date_timestamp );
 			$date_next = $checkin;
 
-			while ( $date_next <= $checkout ) {
-				$timeStamp = strtotime( $date_next );
-				if ( array_key_exists( $timeStamp, $room_available_date ) ) {
-					if ( $room_available_date[ $timeStamp ] >= 1 ) {
-						$room_available_date[ $timeStamp ] = $room_available_date[ $timeStamp ] - 1;
-						$arr_qty_available[]               = $room_available_date[ $timeStamp ];
-					}
-				}
-				$date_next = gmdate( WPHB_Datetime::$format, strtotime( $date_next . ' +1 day' ) );
-			}
+			// while ( $date_next <= $checkout ) {
+			// 	$timeStamp = strtotime( $date_next );
+			// 	if ( array_key_exists( $timeStamp, $room_available_date ) ) {
+			// 		if ( $room_available_date[ $timeStamp ] >= 1 ) {
+			// 			// $room_available_date[ $timeStamp ] = $room_available_date[ $timeStamp ] - 1;
+			// 			$arr_qty_available[]               = $room_available_date[ $timeStamp ];
+			// 		}
+			// 	}
+			// 	$date_next = gmdate( WPHB_Datetime::$format, strtotime( $date_next . ' +1 day' ) );
+			// }
 
 			$qty = get_post_meta( $room_id, '_hb_num_of_rooms', true );
 
-			if ( ! empty( $arr_qty_available ) ) {
-				$qty = ! empty( min( $arr_qty_available ) ) ? min( $arr_qty_available ) : 1;
-			}
+			// if ( ! empty( $arr_qty_available ) ) {
+			// 	$qty = ! empty( min( $arr_qty_available ) ) ? min( $arr_qty_available ) : 1;
+			// }
 
 			foreach ( $room_available_date as $date => $available ) {
-				if ( $date >= $check_in_date_timestamp && $date < $check_out_date_timestamp ) {
+				if ( $date >= $check_in_date_timestamp && $date <= $check_out_date_timestamp ) {
 					if ( $available <= 0 ) {
 						throw new Exception( __( 'This room is not available.', 'wp-hotel-booking' ) );
 					}
