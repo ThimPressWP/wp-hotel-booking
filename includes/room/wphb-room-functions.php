@@ -279,7 +279,7 @@ if ( ! function_exists( 'hb_room_update_room_average_rating' ) ) {
 
 if( !function_exists( 'hb_get_room_query_args' ) ) {
 	function hb_get_room_query_args( $atts = [] ) {
-		global $hb_settings;
+		$hb_settings = WPHB_Settings::instance();
 
 		$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
@@ -313,7 +313,7 @@ if( !function_exists( 'hb_get_room_query_args' ) ) {
 			'post_status'    => 'publish',
 			'paged'          => $paged,
 		);
-	
+
 		// Start get data filter from $_GET
 		// 1.Sort By
 		$sort_by = hb_get_request( 'sort_by' );
@@ -329,7 +329,7 @@ if( !function_exists( 'hb_get_room_query_args' ) ) {
 				$args['order'] = $sort_options[$sort_by][1];
 			}
 		}
-	
+
 		// 2.Price Filter
 		$min_price = hb_get_request( 'min_price' );
 		$max_price = hb_get_request( 'max_price' );
@@ -341,7 +341,7 @@ if( !function_exists( 'hb_get_room_query_args' ) ) {
 				'compare' => 'BETWEEN',
 			);
 		}
-	
+
 		// 3.Rating Filter
 		$rating = hb_get_request( 'rating' );
 		if ( $rating ) {
@@ -360,11 +360,11 @@ if( !function_exists( 'hb_get_room_query_args' ) ) {
 			}
 			$args['meta_query'][] = [ 'relation' => 'OR' ] + $rating_query;
 		}
-	
+
 		if ( isset( $args['meta_query'] ) ) {
 			$args['meta_query']['relation'] = 'AND';
 		}
-	
+
 		// 4.Room Type Filter
 		$room_type = hb_get_request( 'room_type' ) ?: $atts['room_type'];
 		if ( is_tax('hb_room_type') ) { // is taxonomy page hb_room_type
@@ -379,11 +379,11 @@ if( !function_exists( 'hb_get_room_query_args' ) ) {
 				'terms'    => explode( ',', $room_type ),
 			);
 		}
-	
+
 		if ( isset( $args['tax_query'] ) ) {
 			$args['tax_query']['relation'] = 'AND';
 		}
-	
+
 		// Include/Exclude Rooms ( for shortcode )
 		if ( $atts['room_in'] ) {
 			$args['post__in'] = explode( ',', $atts['room_in'] );
@@ -391,7 +391,7 @@ if( !function_exists( 'hb_get_room_query_args' ) ) {
 		if ( $atts['room_not_in'] ) {
 			$args['post__not_in'] = explode( ',', $atts['room_not_in'] );
 		}
-	
+
 		return $args; // return $args after filter
 	}
 }

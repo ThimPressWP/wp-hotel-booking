@@ -24,7 +24,7 @@ class WPHB_Shortcode_Hotel_Booking_Rooms extends WPHB_Shortcodes {
 
 	function add_shortcode( $atts, $content = null ) {
 		/* remove action */
-		remove_action( 'pre_get_posts', 'hotel_booking_num_room_archive', 999 );
+		//remove_action( 'pre_get_posts', 'hotel_booking_num_room_archive', 999 );
 		ob_start();
 	?>
 
@@ -37,7 +37,7 @@ class WPHB_Shortcode_Hotel_Booking_Rooms extends WPHB_Shortcodes {
 		?>
 
 		<?php /* readd action */
-			add_action( 'pre_get_posts', 'hotel_booking_num_room_archive', 999 ); 
+			//add_action( 'pre_get_posts', 'hotel_booking_num_room_archive', 999 );
 		?>
 
 	<?php return ob_get_clean(); }

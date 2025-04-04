@@ -14,7 +14,7 @@ class Inits extends Modules {
 
 		parent::__construct();
 
-		add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ), 10 );
+		//add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ), 10 );
 	}
 
 	public function template_include( $template ) {
@@ -24,7 +24,7 @@ class Inits extends Modules {
 	}
 
     /**
-     * 
+     *
      *
      * @param $query \WP_Query
      */
@@ -53,9 +53,9 @@ class Inits extends Modules {
 				$object      = get_queried_object();
 				$taxonomy_id = is_object( $object ) && property_exists( $object, 'term_id' ) ? $object->term_id : false;
 				return (int) $taxonomy_id === (int) $condition['query'] && ! is_search();
-			case 'search_room':	
+			case 'search_room':
 				return is_page(hb_get_page_id( 'search' ));
-			case 'room_page':	
+			case 'room_page':
 				return is_post_type_archive( 'hb_room' ) || is_page(hb_get_page_id( 'rooms' ));
 		}
 

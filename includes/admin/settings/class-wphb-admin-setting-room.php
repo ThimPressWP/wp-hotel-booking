@@ -54,7 +54,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 						'type'    => 'number',
 						'default' => 8,
 						'min'     => 1,
-						'title'   => __( 'Number of post display in page', 'wp-hotel-booking' ),
+						'title'   => __( 'Number of room display in Archive Room, Rooms Page', 'wp-hotel-booking' ),
 						'desc'    => __( 'Settings limit room show ( search page ).', 'wp-hotel-booking' ),
 					),
 

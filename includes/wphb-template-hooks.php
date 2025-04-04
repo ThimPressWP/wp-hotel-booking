@@ -57,7 +57,7 @@ add_action( 'hotel_booking_loop_room_rating', 'hotel_booking_loop_room_rating' )
 add_action( 'hotel_booking_loop_room_feature', 'hotel_booking_loop_room_feature' );
 add_filter( 'body_class', 'hb_body_class' );
 
-add_action( 'pre_get_posts', 'hotel_booking_num_room_archive', 999 );
+//add_action( 'pre_get_posts', 'hotel_booking_num_room_archive', 999 );
 
 add_action( 'the_post', array( 'WPHB_Room', 'hb_setup_room_data' ) );
 
