@@ -88,7 +88,7 @@ class WPHB_Room extends WPHB_Product_Room_Base {
 	 * @version 1.0.0
 	 */
 	public function get_id(): int {
-		return (int) $this->post ? $this->post->ID : 0;
+		return (int) ( $this->post ? $this->post->ID : 0 );
 	}
 
 	/**
