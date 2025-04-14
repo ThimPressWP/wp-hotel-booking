@@ -466,14 +466,14 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 			$total           += $total_per_night * $num_of_rooms;
 		}
 
-		$total    = apply_filters( 'hotel_booking_room_total_price_excl_tax', $total, $this );
+		$total    = (float) apply_filters( 'hotel_booking_room_total_price_excl_tax', $total, $this );
 		$settings = WPHB_Settings::instance();
 		// room price include tax
 		if ( $including_tax ) {
 			// $tax_enbale = apply_filters( 'hotel_booking_extra_tax_enable', hb_price_including_tax() );
 			// if ( $tax_enbale ) {
 			$tax_price = $total * hb_get_tax_settings();
-			$tax_price = apply_filters( 'hotel_booking_room_total_price_incl_tax', $tax_price, $this );
+			$tax_price = (float) apply_filters( 'hotel_booking_room_total_price_incl_tax', $tax_price, $this );
 			$total     = $total + $tax_price;
 			// }
 		}
