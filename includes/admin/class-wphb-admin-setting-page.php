@@ -100,9 +100,10 @@ abstract class WPHB_Admin_Setting_Page {
 	// save setting option
 	public function save( $tab = '' ) {
 		$nonce = WPHB_Helpers::get_param( 'wphb_meta_box_settings_nonce', '' );
-		if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'wphb_update_meta_box_settings' ) ){
+		if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'wphb_update_meta_box_settings' ) ) {
 			return;
 		}
+
 		$class_name   = strtolower( static::class );
 		$class_prefix = 'wphb_admin_setting_';
 		$name_compare = str_replace( $class_prefix, '', $class_name );
@@ -112,7 +113,7 @@ abstract class WPHB_Admin_Setting_Page {
 		}
 
 		// Save section fields setting - sub tab setting
-		$section = WPHB_Helpers::get_param( 'section', '' );
+		$section                   = WPHB_Helpers::get_param( 'section', '' );
 		$key_section_field_setting = WPHB_Helpers::get_param( 'wphb_save_section_fields_setting', '' );
 		if ( ! empty( $section ) && ! empty( $key_section_field_setting ) ) {
 			$section_fields_setting = WPHB_Helpers::get_param( $key_section_field_setting, [] );
