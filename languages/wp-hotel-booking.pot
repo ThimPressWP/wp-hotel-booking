@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WP Hotel Booking plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Hotel Booking 2.1.8-beta.1\n"
+"Project-Id-Version: WP Hotel Booking 2.1.9\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-hotel-booking\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-04T06:40:48+03:00\n"
+"POT-Creation-Date: 2025-04-15T05:47:38+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: wp-hotel-booking\n"
@@ -3368,13 +3368,13 @@ msgstr ""
 
 #: includes/plugins/wp-hotel-booking-extra/inc/functions.php:143
 #: includes/plugins/wp-hotel-booking-extra/inc/wphb-extra-functions.php:183
-#: includes/wphb-core-functions.php:330
+#: includes/wphb-core-functions.php:292
 msgid "Trip"
 msgstr ""
 
 #: includes/plugins/wp-hotel-booking-extra/inc/functions.php:144
 #: includes/plugins/wp-hotel-booking-extra/inc/wphb-extra-functions.php:184
-#: includes/wphb-core-functions.php:331
+#: includes/wphb-core-functions.php:293
 msgid "Number"
 msgstr ""
 
@@ -3494,7 +3494,7 @@ msgid "Error: Cart ID is invalid."
 msgstr ""
 
 #: includes/room/class-wphb-booking-room.php:219
-#: includes/wphb-core-functions.php:76
+#: includes/wphb-core-functions.php:72
 msgid "Check in date and check out date is required."
 msgstr ""
 
@@ -3601,20 +3601,16 @@ msgstr ""
 msgid "Show label search form"
 msgstr ""
 
-#: includes/wphb-core-functions.php:56
+#: includes/wphb-core-functions.php:55
 msgid "Request is invalid!"
 msgstr ""
 
-#: includes/wphb-core-functions.php:61
-msgid "Room not found!"
-msgstr ""
-
-#: includes/wphb-core-functions.php:129
-#: includes/wphb-core-functions.php:164
+#: includes/wphb-core-functions.php:96
+#: includes/wphb-core-functions.php:126
 msgid "This room is not available."
 msgstr ""
 
-#: includes/wphb-core-functions.php:153
+#: includes/wphb-core-functions.php:116
 msgid "This room is not available!"
 msgstr ""
 
