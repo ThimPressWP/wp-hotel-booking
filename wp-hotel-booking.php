@@ -106,6 +106,12 @@ class WP_Hotel_Booking {
 		$this->cart = WPHB_Cart::instance();
 		// user
 		$this->user = hb_get_current_user();
+
+		// Check Elementor, Thim El Kit is active.
+		if ( class_exists( 'Thim_EL_Kit' ) && defined( 'ELEMENTOR_VERSION' ) ) {
+			// Load Widgets support Elementor
+			$this->_include( '/includes/elementor/modules/class-init.php' );
+		}
 	}
 
 	// public function create_tables() {
@@ -289,17 +295,6 @@ class WP_Hotel_Booking {
 
 		//template-hook
 		$this->_include( 'includes/template-hooks/class-wphb-search.php' );
-
-		// Load Widgets support Elementor
-		add_action(
-			'plugins_loaded',
-			function () {
-				// Check Elementor, Thim El Kit is active.
-				if ( class_exists( 'Thim_EL_Kit' ) && defined( 'ELEMENTOR_VERSION' ) ) {
-					$this->_include( '/includes/elementor/modules/class-init.php' );
-				}
-			}
-		);
 	}
 
 
