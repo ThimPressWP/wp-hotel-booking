@@ -98,15 +98,17 @@ class WP_Hotel_Booking {
 
 		add_action( 'admin_init', array( $this, 'deactivate_plugins_old' ) );
 
-		// Load Widgets support Elementor
-		if ( version_compare( THIM_EKIT_VERSION, '1.3.0', '>' ) ) {
-			add_action(
-				'thim_ekit/modules/handle',
-				function () {
-					$this->_include( '/includes/elementor/modules/class-init.php' );
-				}
-			);
-		}
+		/**
+		 * Load Widgets support Elementor
+		 *
+		 * This hook has from THIM_EKIT_VERSION 1.3.1
+		 */
+		add_action(
+			'thim_ekit/modules/handle',
+			function () {
+				$this->_include( '/includes/elementor/modules/class-init.php' );
+			}
+		);
 	}
 
 	public function init() {
@@ -118,8 +120,8 @@ class WP_Hotel_Booking {
 		$this->user = hb_get_current_user();
 
 		// Check Elementor, Thim El Kit is active.
-		if ( version_compare( THIM_EKIT_VERSION, '1.3.0', '<=' )
-			&& class_exists( 'Thim_EL_Kit' ) && defined( 'ELEMENTOR_VERSION' ) ) {
+		if ( class_exists( 'Thim_EL_Kit' ) && defined( 'ELEMENTOR_VERSION' )
+			&& version_compare( THIM_EKIT_VERSION, '1.3.0', '<=' ) ) {
 			// Load Widgets support Elementor
 			$this->_include( '/includes/elementor/modules/class-init.php' );
 		}
