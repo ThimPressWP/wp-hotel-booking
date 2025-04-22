@@ -102,15 +102,15 @@ function wphb_get_template_no_override( $template_name, array $args = [] ) {
 		if ( ! empty( $args ) ) {
 			extract( $args );
 		}
-
 		$default_path = WPHB_PLUGIN_PATH . '/templates/';
-		$file         = $default_path . $template_name;
-
-		if ( ! file_exists( $file ) ) {
+		// Strips directory traversal attempts
+		$file = realpath( $default_path . $template_name );
+		// Verify the file is within the intended directory
+		if ( ( strpos( $file, realpath( $default_path ) ) === 0 ) && file_exists( $file ) ) {
+			include $file;
+		} else {
 			throw new Exception( sprintf( '<code>%s</code> does not exist.', $file ) );
 		}
-
-		include $file;
 	} catch ( Exception $e ) {
 		echo $e->getMessage();
 	}
