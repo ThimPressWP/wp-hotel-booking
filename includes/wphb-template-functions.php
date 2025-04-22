@@ -90,7 +90,7 @@ if ( ! function_exists( 'hb_get_template' ) ) {
 
 		do_action( 'hb_before_template_part', $template_name, $template_path, $located, $args );
 
-		if ( $located && file_exists( $located ) ) {
+		if ( $located && realpath( $located ) && file_exists( $located ) ) {
 			include $located;
 		}
 
