@@ -195,7 +195,7 @@ class WP_Hotel_Booking {
 			extract( $args );
 		}
 
-		if ( file_exists( $file ) ) {
+		if ( realpath( $file ) && file_exists( $file ) ) {
 			if ( $unique ) {
 				require_once $file;
 			} else {

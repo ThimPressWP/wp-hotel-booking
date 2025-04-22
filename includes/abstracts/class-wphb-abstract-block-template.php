@@ -25,6 +25,7 @@ abstract class AbstractBlockTemplate extends \WP_Block_Template {
 
 	public function __construct() {
 		if ( ! wp_is_block_theme() ) {
+			$this->has_theme_file = false;
 			return;
 		}
 		$this->id      = $this->theme . '//' . $this->slug;
@@ -34,7 +35,7 @@ abstract class AbstractBlockTemplate extends \WP_Block_Template {
 			$template_file = hb_locate_template( $this->path_html_block_template_file, '', WPHB_PLUGIN_PATH . '/block-templates/' );
 		}
 		// Set content from theme file.
-		if ( file_exists( $template_file ) ) {
+		if ( realpath( $template_file ) && file_exists( $template_file ) ) {
 			$content = file_get_contents( $template_file );
 			// $this->content = _inject_theme_attribute_in_block_template_content( $content );
 			if ( version_compare( get_bloginfo( 'version' ), '6.4-beta', '>=' ) ) {

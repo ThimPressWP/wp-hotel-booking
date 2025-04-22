@@ -70,7 +70,7 @@ if ( ! function_exists( 'tp_hb_extra_get_template_part' ) ) {
 			load_template( $template, false );
 		}
 
-		return $template;
+		return realpath( $template );
 	}
 }
 

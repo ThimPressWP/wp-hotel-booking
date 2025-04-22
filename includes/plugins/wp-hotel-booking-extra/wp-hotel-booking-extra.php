@@ -84,16 +84,18 @@ if ( ! class_exists( 'WPHB_Extra_Factory' ) ) {
 		public function _include( $file ) {
 			if ( is_array( $file ) ) {
 				foreach ( $file as $key => $f ) {
-					if ( file_exists( $f ) ) {
+					if ( realpath( $f ) && file_exists( $f ) ) {
 						require_once $f;
-					} elseif ( file_exists( untrailingslashit( WPHB_EXTRA_FILE ) . '/' . $f ) ) {
+					} elseif ( realpath( untrailingslashit( WPHB_EXTRA_FILE ) . '/' . $f )
+					&& file_exists( untrailingslashit( WPHB_EXTRA_FILE ) . '/' . $f ) ) {
 						require_once untrailingslashit( WPHB_EXTRA_FILE ) . '/' . $f;
 					}
 				}
 			} else {
-				if ( file_exists( $file ) ) {
+				if ( realpath( $file ) && file_exists( $file ) ) {
 					require_once $file;
-				} elseif ( file_exists( untrailingslashit( WPHB_EXTRA_FILE ) . '/' . $file ) ) {
+				} elseif ( realpath( untrailingslashit( WPHB_EXTRA_FILE ) . '/' . $file )
+				&& file_exists( untrailingslashit( WPHB_EXTRA_FILE ) . '/' . $file ) ) {
 					require_once untrailingslashit( WPHB_EXTRA_FILE ) . '/' . $file;
 				}
 			}

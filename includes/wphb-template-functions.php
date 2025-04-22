@@ -47,6 +47,7 @@ if ( ! function_exists( 'hb_get_template_part' ) ) {
 		if ( ! $template ) {
 			$template = locate_template( array( "{$slug}.php", hb_template_path() . "{$slug}.php" ) );
 		}
+		$template = realpath( $template );
 
 		// Allow 3rd party plugin filter template file from their plugin
 		if ( $template ) {
