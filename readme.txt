@@ -3,8 +3,8 @@ Contributors: thimpress, leehld, phamtungpth, thoakim
 Donate link: https://thimpress.com/
 Tags: hotel, booking, hotel booking, reservation, reservations
 Requires at least: 6.0
-Tested up to: 6.7
-Stable tag: 2.1.9
+Tested up to: 6.8
+Stable tag: 2.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -87,6 +87,10 @@ Yes.
 7. System settings
 
 == Changelog ==
+
+= 2.2.0 (2025-04-23) =
+~ Fixed: security.
+~ Tweak communicate with Thim EL Kit plugin.
 
 = 2.1.9 (2025-04-15) =
 ~ Tweak: logic check dates room available.
