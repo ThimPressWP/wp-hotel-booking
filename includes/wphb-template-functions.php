@@ -32,7 +32,7 @@ if ( ! function_exists( 'hb_get_template_part' ) ) {
 
 	function hb_get_template_part( $slug, $name = '' ) {
 		$template      = '';
-		$template_path = locate_template( hb_template_path() );
+		$template_path = realpath( locate_template( hb_template_path() ) );
 		// Look in yourtheme/slug-name.php and yourtheme/courses-manage/slug-name.php
 		if ( $name ) {
 			$template = locate_template( array( "{$slug}-{$name}.php", hb_template_path() . "/{$slug}-{$name}.php" ) );
