@@ -71,10 +71,12 @@ if ( ! class_exists( 'WPHB_TemplateLoader' ) ) {
 			}
 
 			if ( $file ) {
-				$find[]      = hb_template_path() . '/' . $file;
-				$hb_template = untrailingslashit( WPHB_PLUGIN_PATH ) . '/templates/' . $file;
-				$template    = locate_template( array_unique( $find ) );
-
+				$find[]        = trailingslashit( hb_template_path() );
+				$template_path = locate_template( array_unique( $find ) );
+				$find[]        = $file;
+				$hb_template   = untrailingslashit( WPHB_PLUGIN_PATH ) . '/templates/' . $file;
+				$template      = locate_template( array_unique( $find ) );
+				$template      = strpos( realpath( $template ), $template_path ) === 0 ? realpath( $template ) : false;
 				if ( ! $template && file_exists( $hb_template ) ) {
 					$template = $hb_template;
 				}
