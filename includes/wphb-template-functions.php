@@ -158,11 +158,12 @@ if ( ! function_exists( 'hb_locate_template' ) ) {
 		// Get default template
 		if ( ! $template ) {
 			$template_file = realpath( $default_path . $template_name );
-			$template = strpos( $template_file , realpath( $default_path ) ) === 0 ? $template_file : false;
+			$template      = strpos( $template_file , realpath( $default_path ) ) === 0 ? $template_file : false;
 		} else {
-			$locate_template_path = locate_template( $template_path );
+			$locate_template_path = realpath( locate_template( $template_path ) );
 			// Verify the file is within the locate_template_path directory
-			$template = strpos( realpath( $template ), $locate_template_path ) === 0 ? $template : false;
+			$template = realpath( $template );
+			$template = strpos( $template, $locate_template_path ) === 0 ? $template : false;
 		}
 
 		// Return what we found
