@@ -31,11 +31,12 @@ if ( ! function_exists( 'hb_template_path' ) ) {
 if ( ! function_exists( 'hb_get_template_part' ) ) {
 
 	function hb_get_template_part( $slug, $name = '' ) {
-		$template = '';
-
+		$template      = '';
+		$template_path = realpath( locate_template( hb_template_path() ) );
 		// Look in yourtheme/slug-name.php and yourtheme/courses-manage/slug-name.php
 		if ( $name ) {
 			$template = locate_template( array( "{$slug}-{$name}.php", hb_template_path() . "/{$slug}-{$name}.php" ) );
+			$template = strpos( realpath( $template ), $template_path ) === 0 ? realpath( $template ) : false;
 		}
 
 		// Get default slug-name.php
@@ -46,8 +47,9 @@ if ( ! function_exists( 'hb_get_template_part' ) ) {
 		// If template file doesn't exist, look in yourtheme/slug.php and yourtheme/courses-manage/slug.php
 		if ( ! $template ) {
 			$template = locate_template( array( "{$slug}.php", hb_template_path() . "{$slug}.php" ) );
+			// Verify the file is within the template_path directory
+			$template = strpos( realpath( $template ), $template_path ) === 0 ? realpath( $template ) : false;
 		}
-		$template = realpath( $template );
 
 		// Allow 3rd party plugin filter template file from their plugin
 		if ( $template ) {
@@ -87,10 +89,9 @@ if ( ! function_exists( 'hb_get_template' ) ) {
 		}
 		// Allow 3rd party plugin filter template file from their plugin
 		$located = apply_filters( 'hb_get_template', $located, $template_name, $args, $template_path, $default_path );
-
 		do_action( 'hb_before_template_part', $template_name, $template_path, $located, $args );
 
-		if ( $located && realpath( $located ) && file_exists( $located ) ) {
+		if ( $located && file_exists( $located ) ) {
 			include $located;
 		}
 
@@ -148,18 +149,21 @@ if ( ! function_exists( 'hb_locate_template' ) ) {
 
 		$template = null;
 		// Look within passed path within the theme - this is priority
-		// if( hb_enable_overwrite_template() ) {
 		$template = locate_template(
 			array(
 				trailingslashit( $template_path ) . $template_name,
 				$template_name,
 			)
 		);
-
-		// }
 		// Get default template
 		if ( ! $template ) {
-			$template = $default_path . $template_name;
+			$template_file = realpath( $default_path . $template_name );
+			$template      = strpos( $template_file , realpath( $default_path ) ) === 0 ? $template_file : false;
+		} else {
+			$locate_template_path = realpath( locate_template( $template_path ) );
+			// Verify the file is within the locate_template_path directory
+			$template = realpath( $template );
+			$template = strpos( $template, $locate_template_path ) === 0 ? $template : false;
 		}
 
 		// Return what we found
