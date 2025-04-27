@@ -509,7 +509,7 @@ class WPHB_Comments {
 					}
 					?>
                     <button type="button"
-                            class="button hb-gallery-add"><?php esc_html_e( 'Add Images' ); ?></button>
+                            class="button hb-gallery-add"><?php esc_html_e( 'Add Images', 'wp-hotel-booking' ); ?></button>
                 </div>
             </div>
             <p class="image-description"><?php printf(
