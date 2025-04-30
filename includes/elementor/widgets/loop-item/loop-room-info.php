@@ -317,7 +317,7 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
 	protected function render_featured() {
 		if (get_post_meta( get_the_ID(), '_hb_featured_list', true ) === '1') : ?>
 			<span class="elementor-icon-list-text featured">
-				<?php echo esc_html( 'Featured' , 'wp-hotel-booking' ) ?>
+				<?php echo esc_html__( 'Featured' , 'wp-hotel-booking' ) ?>
 			</span>
 		<?php endif;
 	}
