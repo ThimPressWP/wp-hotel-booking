@@ -22,7 +22,7 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 	/**
 	 * Class WPHB_Sessions
 	 */
-	class WPHB_Sessions {
+	final class WPHB_Sessions {
 		/**
 		 * @var null
 		 */
@@ -76,6 +76,12 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 				return $_SESSION[ $this->prefix ];
 			} elseif ( $this->remember && isset( $_COOKIE[ $this->prefix ] ) ) {
 				return $_SESSION[ $this->prefix ] = json_decode( WPHB_Helpers::sanitize_params_submitted( $_COOKIE[ $this->prefix ] ), true );
+			} else {
+				$transient_prefix = $this->prefix . '_' . session_id();
+				$transient        = get_transient( $transient_prefix );
+				if ( ! empty( $transient ) && is_array( $transient ) ) {
+					return $transient;
+				}
 			}
 
 			return array();
@@ -92,6 +98,11 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 			if ( $this->remember && isset( $_COOKIE[ $this->prefix ] ) ) {
 				unset( $_COOKIE[ $this->prefix ] );
 				setcookie( $this->prefix, '', time() - $this->live_item, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
+			}
+
+			$transient_prefix = $this->prefix . '_' . session_id();
+			if ( get_transient( $transient_prefix ) ) {
+				delete_transient( $transient_prefix );
 			}
 
 			return $this->session = null;
@@ -111,12 +122,10 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 				} else {
 					unset( $this->session->{$name} );
 				}
-			} else {
-				if ( is_array( $this->session ) ) {
+			} elseif ( is_array( $this->session ) ) {
 					$this->session[ $name ] = $value;
-				} else {
-					$this->session->{$name} = $value;
-				}
+			} else {
+				$this->session->{$name} = $value;
 			}
 			$time = empty( $this->session ) ? time() - $this->live_item : time() + $this->live_item;
 
@@ -125,6 +134,9 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 
 			// save cookie
 			if ( $this->remember ) {
+				// set transient for special case when cookie and session was removed after adding
+				$transient_prefix = $this->prefix . '_' . session_id();
+				set_transient( $transient_prefix, $this->session, $this->live_item );
 				@setcookie( $this->prefix, wp_json_encode( $this->session ), $time, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
 			}
 		}
