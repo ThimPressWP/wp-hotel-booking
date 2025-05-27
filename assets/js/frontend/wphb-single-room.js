@@ -30,6 +30,7 @@ const wphbRoomInitDatePicker = () => {
 	const datesBlock = [];
 	const dateNow = new Date();
 	const dateTomorrow = new Date( dateNow.setDate( dateNow.getDate() + 1 ) );
+	const minBookingDateNumber = hotel_settings.min_booking_date > 0 ? parseInt( hotel_settings.min_booking_date ) : 1;
 
 	if ( hotel_settings.block_dates ) {
 		const dateTimeStampsBlock = hotel_settings.block_dates;
@@ -105,6 +106,8 @@ const wphbRoomInitDatePicker = () => {
 				// calculate next day available
 				const dateSelected = selectedDates[ 0 ];
 				datePickerCheckOut.clear();
+				const dateNext = new Date( dateSelected.setDate( dateSelected.getDate() + minBookingDateNumber - 1 ) );
+				datePickerCheckOut.set( 'minDate', dateNext );
 				datePickerCheckOut.open();
 				datePickerCheckOut.set( 'disable', [
 					( dateCalendar ) => {
@@ -118,11 +121,12 @@ const wphbRoomInitDatePicker = () => {
 		},
 	};
 	datePickerCheckIn = flatpickr( elDateCheckIn, optionCheckIn );
+	// console.log( elDateCheckIn.value );
 
 	// Check out date
 	const optionCheckout = {
 		dateFormat: 'Y/m/d',
-		minDate: 'today',
+		minDate: hotel_settings.min_booking_date > 0 ?  new Date().fp_incr( hotel_settings.min_booking_date ) : 'today',
 		disable: datesBlock,
 		//defaultDate: dateMinCheckOutCanBook,
 		disableMobile: true,

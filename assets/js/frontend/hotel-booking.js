@@ -1061,6 +1061,7 @@ const wphbDatePicker = () => {
 		const elDateCheckInOut = elFormTable.querySelector( '.hb-form-check-in-check-out' );
 		const dateNow = new Date();
 		const dateTomorrow = new Date( dateNow.setDate( dateNow.getDate() + 1 ) );
+		const minBookingDateNumber = hotel_settings.min_booking_date > 0 ? parseInt( hotel_settings.min_booking_date ) : 1;
 
 		if ( elDateCheckIn && ! elDateCheckIn.closest( '.hb-form-check-in-check-out' ) ) {
 			// Check in date
@@ -1077,7 +1078,8 @@ const wphbDatePicker = () => {
 						// calculate next day available
 						const dateSelected = selectedDates[ 0 ];
 						datePickerCheckOut.clear();
-						const dateNext = new Date( dateSelected.setDate( dateSelected.getDate() + 1 ) );
+						const dateNext = new Date( dateSelected.setDate( dateSelected.getDate() + minBookingDateNumber ) );
+						console.log( dateNext );
 						datePickerCheckOut.set( 'minDate', dateNext );
 						//datePickerCheckOut.set( 'date', dateNext );
 						datePickerCheckOut.open();

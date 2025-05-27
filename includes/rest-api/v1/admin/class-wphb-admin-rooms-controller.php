@@ -35,7 +35,7 @@ class WPHB_REST_Admin_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 				array(
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'manager_bookings' ),
-					'permission_callback' => array( $this, 'check_admin_permission' ),
+					'permission_callback' => array( $this, 'can_manage_hotel' ),
 				),
 			),
 		);
@@ -50,6 +50,14 @@ class WPHB_REST_Admin_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 	 */
 	public function check_admin_permission(): bool {
 		return WPHB_REST_Authentication::check_admin_permission();
+	}
+	/**
+	 * Current user can manage hotel
+	 * @param  WP_REST_Request $request
+	 * @return boolean true|false
+	 */
+	public function can_manage_hotel( WP_REST_Request $request ): bool {
+		return current_user_can( 'administrator' ) || current_user_can( 'wphb_hotel_manager' );
 	}
 
 	/**
