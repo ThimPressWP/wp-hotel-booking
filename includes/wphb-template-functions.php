@@ -33,17 +33,22 @@ if ( ! function_exists( 'hb_get_template_part' ) ) {
 	function hb_get_template_part( $slug, $name = '' ) {
 		$template = '';
 		// Look in yourtheme/slug-name.php and yourtheme/courses-manage/slug-name.php
+		$template_path = realpath( locate_template( hb_template_path() ) );
 		if ( $name ) {
-			$template = locate_template( array( "{$slug}-{$name}.php", hb_template_path() . "/{$slug}-{$name}.php" ) );
+			$template_file = realpath( locate_template( array( "{$slug}-{$name}.php", hb_template_path() . "/{$slug}-{$name}.php" ) ) );
+			$template      = strpos( $template_file, $template_path ) === 0 ? $template_file : false;
 		}
 		// Get default slug-name.php
 		if ( ! $template && $name && file_exists( WPHB_PLUGIN_PATH . "/templates/{$slug}-{$name}.php" ) ) {
-			$template = WPHB_PLUGIN_PATH . "/templates/{$slug}-{$name}.php";
+			$default_path  = realpath( WPHB_PLUGIN_PATH );
+			$template_file = realpath( WPHB_PLUGIN_PATH . "/templates/{$slug}-{$name}.php" );
+			$template      = strpos( $template_file, $default_path ) === 0 ? $template_file : false;
 		}
 
 		// If template file doesn't exist, look in yourtheme/slug.php and yourtheme/courses-manage/slug.php
 		if ( ! $template ) {
-			$template = locate_template( array( "{$slug}.php", hb_template_path() . "{$slug}.php" ) );
+			$template_file = realpath( locate_template( array( "{$slug}.php", hb_template_path() . "{$slug}.php" ) ) );
+			$template      = strpos( $template_file, $template_path ) === 0 ? $template_file : false;
 		}
 
 		// Allow 3rd party plugin filter template file from their plugin
