@@ -403,6 +403,9 @@ class WPHB_Booking {
 				if ( $room_id ) {
 					$dates_booked      = array();
 					$order_date_booked = get_post_meta( $room_id, '_hb_dates_booked', true );
+					if ( ! is_array( $order_date_booked ) || empty( $order_date_booked ) ) {
+						$order_date_booked = array();
+					}
 					$quantity          = absint( get_post_meta( $room_id, '_hb_num_of_rooms', true ) );
 					$quantity_booking  = absint( hb_get_order_item_meta( $item->order_item_id, 'qty', true ) );
 

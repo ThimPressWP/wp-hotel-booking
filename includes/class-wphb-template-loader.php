@@ -81,7 +81,6 @@ if ( ! class_exists( 'WPHB_TemplateLoader' ) ) {
 					$template = $hb_template;
 				}
 			}
-			error_log('message-'.$template);
 
 			return $template;
 		}

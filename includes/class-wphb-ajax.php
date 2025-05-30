@@ -378,22 +378,19 @@ class WPHB_Ajax {
 				// Check to add extra
 				$hb_optional_quantity_selected = WPHB_Helpers::get_param( 'hb_optional_quantity_selected', [] );
 				$hb_optional_quantity = WPHB_Helpers::get_param( 'hb_optional_quantity', [] );
-				if ( ! empty( $hb_optional_quantity_selected ) && ! empty( $hb_optional_quantity ) ) {
+				if ( ! empty( $hb_optional_quantity_selected ) && ! empty( $hb_optional_quantity ) && $cart_item ) {
 					$extra_cart = HB_Extra_Cart::instance();
-
 					foreach ( $hb_optional_quantity_selected as $extra_id => $select ) {
-						if ( $select === 'on' && $cart_item ) {
-							$extra_cart->ajax_added_cart(
-								$cart_item_id,
-								array(
-									'product_id' => $room_id,
-									'hb_optional_quantity' => array( $extra_id => $hb_optional_quantity[ $extra_id ] ),
-									'hb_optional_quantity_selected' => array( $extra_id => 'on' ),
-									'check_in_date' => $check_in_date,
-									'check_out_date' => $check_out_date,
-								)
-							);
-						}
+						$extra_cart->ajax_added_cart(
+							$cart_item_id,
+							array(
+								'product_id'                    => $room_id,
+								'hb_optional_quantity'          => array( $extra_id => $hb_optional_quantity[ $extra_id ] ),
+								'hb_optional_quantity_selected' => array( $extra_id => 'on' ),
+								'check_in_date'                 => $check_in_date,
+								'check_out_date'                => $check_out_date,
+							)
+						);
 					}
 				}
 
