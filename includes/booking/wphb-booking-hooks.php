@@ -384,8 +384,21 @@ if ( ! function_exists( 'hb_cancel_customer_booking_email' ) ) {
 			return;
 		}
 
-		$booking       = WPHB_Booking::instance( $booking_id );
-		$email_subject = hb_settings()->get( 'email_cancel_booking_subject', 'Cancelled Reservation' );
+		$booking = WPHB_Booking::instance( $booking_id );
+		$subject = hb_settings()->get( 'email_cancel_booking_subject', 'Cancelled Reservation' );
+		$find    = array(
+			'booking-date'   => '{booking_date}',
+			'booking-number' => '{booking_number}',
+			'site-title'     => '{site_title}',
+		);
+
+		$replace = array(
+			'booking-date'   => date_i18n( 'd.m.Y', strtotime( date( 'd.m.Y' ) ) ),
+			'booking-number' => $booking->get_booking_number(),
+			'site-title'     => wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ),
+		);
+
+		$subject = str_replace( $find, $replace, $subject );
 
 		$headers[] = 'Content-Type: text/html; charset=UTF-8';
 		// set mail from email
@@ -402,7 +415,7 @@ if ( ! function_exists( 'hb_cancel_customer_booking_email' ) ) {
 			)
 		);
 
-		wp_mail( $booking->customer_email, $email_subject, stripslashes( $email_content ), $headers );
+		wp_mail( $booking->customer_email, $subject, stripslashes( $email_content ), $headers );
 		// if ( $fo = fopen( WPHB_PLUGIN_PATH . '/customer-booking.html', 'w+' ) ) {
 		// fwrite( $fo, $email_content );
 		// fclose($fo);
