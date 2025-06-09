@@ -156,8 +156,9 @@ if ( ! function_exists( 'hb_customer_place_order_email' ) ) {
 			'site-title'     => '{site_title}',
 		);
 
-		$replace = array(
-			'booking-date'   => date_i18n( 'd.m.Y', strtotime( date( 'd.m.Y' ) ) ),
+		$date_format = get_option( 'date_format' );
+		$replace     = array(
+			'booking-date'   => date_i18n( $date_format, strtotime( date( 'd.m.Y' ) ) ),
 			'booking-number' => $booking->get_booking_number(),
 			'site-title'     => wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ),
 		);
@@ -239,8 +240,9 @@ if ( ! function_exists( 'hb_completed_booking_email' ) ) {
 			'site-title'     => '{site_title}',
 		);
 
-		$replace = array(
-			'booking-date'   => date_i18n( 'd.m.Y', strtotime( date( 'd.m.Y' ) ) ),
+		$date_format = get_option( 'date_format' );
+		$replace     = array(
+			'booking-date'   => date_i18n( $date_format, strtotime( date( 'd.m.Y' ) ) ),
 			'booking-number' => $booking->get_booking_number(),
 			'site-title'     => wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ),
 		);
@@ -302,8 +304,9 @@ if ( ! function_exists( 'hb_new_customer_booking_email' ) ) {
 			'site-title'     => '{site_title}',
 		);
 
-		$replace = array(
-			'booking-date'   => date_i18n( 'd.m.Y', strtotime( date( 'd.m.Y' ) ) ),
+		$date_format = get_option( 'date_format' );
+		$replace     = array(
+			'booking-date'   => date_i18n( $date_format, strtotime( date( 'd.m.Y' ) ) ),
 			'booking-number' => $booking->get_booking_number(),
 			'site-title'     => wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ),
 		);
@@ -344,9 +347,9 @@ if ( ! function_exists( 'hb_cancel_booking_email' ) ) {
 			'booking-number' => '{booking_number}',
 			'site-title'     => '{site_title}',
 		);
-
-		$replace = array(
-			'booking-date'   => date_i18n( 'd.m.Y', strtotime( date( 'd.m.Y' ) ) ),
+		$date_format = get_option( 'date_format' );
+		$replace     = array(
+			'booking-date'   => date_i18n( $date_format, strtotime( date( 'd.m.Y' ) ) ),
 			'booking-number' => $booking->get_booking_number(),
 			'site-title'     => wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ),
 		);
@@ -391,9 +394,9 @@ if ( ! function_exists( 'hb_cancel_customer_booking_email' ) ) {
 			'booking-number' => '{booking_number}',
 			'site-title'     => '{site_title}',
 		);
-
-		$replace = array(
-			'booking-date'   => date_i18n( 'd.m.Y', strtotime( date( 'd.m.Y' ) ) ),
+		$date_format = get_option( 'date_format' );
+		$replace     = array(
+			'booking-date'   => date_i18n( $date_format, strtotime( date( 'd.m.Y' ) ) ),
 			'booking-number' => $booking->get_booking_number(),
 			'site-title'     => wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ),
 		);
