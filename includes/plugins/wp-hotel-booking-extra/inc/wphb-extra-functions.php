@@ -66,11 +66,14 @@ if ( ! function_exists( 'tp_hb_extra_get_template_part' ) ) {
 		if ( $template ) {
 			$template = apply_filters( 'hb_extra_get_template_part', $template, $slug, $name );
 		}
-		if ( $template && file_exists( $template ) ) {
+
+		if ( $template && file_exists( $template ) && realpath( $template ) ) {
 			load_template( $template, false );
+		} else {
+			_doing_it_wrong( __FUNCTION__, sprintf( '<code>%s</code> does not exist.', $template ), '2.1' );
 		}
 
-		return realpath( $template );
+		return $template;
 	}
 }
 
