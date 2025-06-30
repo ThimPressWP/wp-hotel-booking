@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title><?php esc_html_e( 'Hotel Booking &rsaquo; Setup Wizard', 'wp-hotel-booking' ); ?></title>
 	<?php wp_print_scripts( 'wphb-setup' ); ?>
-	<?php do_action( 'admin_print_styles' ); ?>
+	<?php //do_action( 'admin_print_styles' ); ?>
 	<?php do_action( 'admin_print_scripts' ); ?>
 	<?php //do_action( 'admin_head' ); ?>
 

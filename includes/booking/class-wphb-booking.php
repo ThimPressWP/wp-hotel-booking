@@ -418,6 +418,7 @@ class WPHB_Booking {
 							$date_next      = gmdate( 'Y-m-d', strtotime( $date_next . ' +1 day' ) );
 						}
 
+						$order_date_booked[ $booking_id ] = isset( $order_date_booked[ $booking_id ] ) ? $order_date_booked[ $booking_id ] : array();
 						$order_date_booked[ $booking_id ]['dates_booked'] = $dates_booked;
 						$order_date_booked[ $booking_id ]['quantity']     = $quantity_booking;
 						$order_date_booked[ $booking_id ]['status']       = $booking_status;

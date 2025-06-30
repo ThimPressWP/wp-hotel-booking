@@ -2,37 +2,42 @@
 # This file is distributed under the same license as the WP Hotel Booking plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Hotel Booking 2.2.0-beta.1\n"
+"Project-Id-Version: WP Hotel Booking 2.2.1-beta.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-hotel-booking\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-21T15:01:47+03:00\n"
+"POT-Creation-Date: 2025-06-30T08:01:49+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.8.1\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wp-hotel-booking\n"
 
 #. Plugin Name of the plugin
+#: wp-hotel-booking.php
 #: includes/admin/class-wphb-admin-menu.php:36
 #: includes/admin/class-wphb-admin-menu.php:37
 msgid "WP Hotel Booking"
 msgstr ""
 
 #. Plugin URI of the plugin
+#: wp-hotel-booking.php
 msgid "http://thimpress.com/"
 msgstr ""
 
 #. Description of the plugin
+#: wp-hotel-booking.php
 msgid "Full of professional features for a booking room system"
 msgstr ""
 
 #. Author of the plugin
+#: wp-hotel-booking.php
 msgid "ThimPress"
 msgstr ""
 
 #. Author URI of the plugin
+#: wp-hotel-booking.php
 msgid "http://thimpress.com"
 msgstr ""
 
@@ -1308,13 +1313,13 @@ msgstr ""
 #: includes/admin/views/admin-metabox-rooms.php:90
 #: includes/admin/views/pricing-table.php:60
 #: includes/admin/views/pricing-table.php:127
-#: includes/wphb-template-functions.php:662
+#: includes/wphb-template-functions.php:667
 msgid "Edit"
 msgstr ""
 
 #: includes/admin/views/pricing-table.php:36
 #: includes/elementor/widgets/loop-item/loop-room-price.php:57
-#: includes/wphb-template-functions.php:648
+#: includes/wphb-template-functions.php:653
 msgid "Pricing Plans"
 msgstr ""
 
@@ -5570,23 +5575,23 @@ msgstr ""
 msgid "Terms Page"
 msgstr ""
 
-#: includes/wphb-template-functions.php:222
+#: includes/wphb-template-functions.php:227
 msgid "Search Results: &ldquo;%s&rdquo;"
 msgstr ""
 
-#: includes/wphb-template-functions.php:225
+#: includes/wphb-template-functions.php:230
 msgid "&nbsp;&ndash; Page %s"
 msgstr ""
 
-#: includes/wphb-template-functions.php:707
+#: includes/wphb-template-functions.php:712
 msgid "Showing only one item."
 msgstr ""
 
-#: includes/wphb-template-functions.php:710
+#: includes/wphb-template-functions.php:715
 msgid "Showing the last items of %s results."
 msgstr ""
 
-#: includes/wphb-template-functions.php:713
+#: includes/wphb-template-functions.php:718
 msgid "Showing %1$s of %2$s results."
 msgstr ""
 
