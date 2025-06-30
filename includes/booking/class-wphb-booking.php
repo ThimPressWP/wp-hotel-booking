@@ -406,8 +406,8 @@ class WPHB_Booking {
 					if ( ! is_array( $order_date_booked ) || empty( $order_date_booked ) ) {
 						$order_date_booked = array();
 					}
-					$quantity          = absint( get_post_meta( $room_id, '_hb_num_of_rooms', true ) );
-					$quantity_booking  = absint( hb_get_order_item_meta( $item->order_item_id, 'qty', true ) );
+					$quantity         = absint( get_post_meta( $room_id, '_hb_num_of_rooms', true ) );
+					$quantity_booking = absint( hb_get_order_item_meta( $item->order_item_id, 'qty', true ) );
 
 					if ( $quantity >= $quantity_booking ) {
 						$checkin   = gmdate( 'Y-m-d', absint( hb_get_order_item_meta( $item->order_item_id, 'check_in_date' ) ) );
@@ -417,6 +417,7 @@ class WPHB_Booking {
 							$dates_booked[] = strtotime( $date_next );
 							$date_next      = gmdate( 'Y-m-d', strtotime( $date_next . ' +1 day' ) );
 						}
+
 						$order_date_booked[ $booking_id ] = array(
 							'dates_booked' => $dates_booked,
 							'quantity'     => $quantity_booking,
