@@ -96,7 +96,7 @@ foreach ( $extra_types as $key => $value ) {
 	<div class="tp_extra_form_fields">
 		<div class="name">
 			<h4><?php _e( 'Name', 'wp-hotel-booking' ); ?></h4>
-			<input type="text" name="<?php echo esc_attr( $field_name ); ?>[{{ data.id }}][name]" value="" placeholder="<?php echo esc_attr( 'Package name' ); ?>" />
+			<input type="text" name="<?php echo esc_attr( $field_name ); ?>[{{ data.id }}][name]" value="" placeholder="<?php esc_attr_e( 'Package name', 'wp-hotel-booking' ); ?>" />
 		</div>
 		<div class="desc">
 			<h4><?php _e( 'Description', 'wp-hotel-booking' ); ?></h4>

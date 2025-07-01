@@ -7,7 +7,7 @@ use WPHB\HBGroupControlTrait;
 
 defined('ABSPATH') || exit;
 
-class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List 
+class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
 {
     use HBGroupControlTrait;
     use Widget_Loop_Trait;
@@ -16,7 +16,7 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
     {
         return 'loop-room-info';
     }
-   
+
     public function get_title()
     {
         return esc_html__('Room Info', 'wp-hotel-booking');
@@ -36,7 +36,7 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
 				'is_core_dependency' => true,
 			),
 		);
-	} 
+	}
 
     public function get_keywords() {
 		return array( 'room', 'info' );
@@ -55,7 +55,7 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
 					'size'           => 'Room Size',
 					'types'          => 'Room Type',
                     'beds'           => 'Beds',
-					'featured'       => 'Featured'    
+					'featured'       => 'Featured'
 				),
 			)
 		);
@@ -198,13 +198,13 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
             case 'adults':
                 $this->render_adults( $repeater_item );
                 break;
-            case 'children':  
+            case 'children':
                 $this->render_children( $repeater_item );
                 break;
-            case 'size':     
+            case 'size':
                 $this->render_size( $repeater_item );
                 break;
-            case 'types': 
+            case 'types':
                 $this->render_types( $repeater_item );
                 break;
             case 'beds':
@@ -221,7 +221,7 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
 		$this->render_icon( $repeater_item ); ?>
 
         <span class="elementor-icon-list-text">
-            <?php 
+            <?php
             if ( ! empty( $repeater_item['text'] ) ) {
                 echo $repeater_item['text'];
             }
@@ -236,7 +236,7 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
 		$this->render_icon( $repeater_item ); ?>
 
         <span class="elementor-icon-list-text">
-            <?php 
+            <?php
             if ( ! empty( $repeater_item['text'] ) ) {
                 echo $repeater_item['text'];
             }
@@ -251,7 +251,7 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
 		$this->render_icon( $repeater_item ); ?>
 
         <span class="elementor-icon-list-text">
-            <?php 
+            <?php
             if ( ! empty( $repeater_item['text'] ) ) {
                 echo $repeater_item['text'];
             }
@@ -266,7 +266,7 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
 		$this->render_icon( $repeater_item ); ?>
 
         <span class="elementor-icon-list-text">
-            <?php 
+            <?php
             if ( ! empty( $repeater_item['text'] ) ) {
                 echo $repeater_item['text'];
             }
@@ -317,7 +317,7 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List
 	protected function render_featured() {
 		if (get_post_meta( get_the_ID(), '_hb_featured_list', true ) === '1') : ?>
 			<span class="elementor-icon-list-text featured">
-				<?php echo esc_html( 'Featured' , 'wp-hotel-booking' ) ?>
+				<?php echo esc_html__( 'Featured' , 'wp-hotel-booking' ) ?>
 			</span>
 		<?php endif;
 	}
