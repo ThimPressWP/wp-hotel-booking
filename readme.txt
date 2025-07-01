@@ -4,7 +4,7 @@ Donate link: https://thimpress.com/
 Tags: hotel, booking, hotel booking, reservation, reservations
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 2.2.0
+Stable tag: 2.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -87,6 +87,14 @@ Yes.
 7. System settings
 
 == Changelog ==
+
+= 2.2.1 (2025-07-01) =
+~ Fixed: security.
+~ Fixed: error save session via COOKIES and SESSION on some sites.
+~ Fixed: minimum Night option per Rooms.
+~ Fixed: bug add extra to cart in single room page when extra option is required.
+~ Fixed: bug cancel email.
+~ Fixed: print_emoji_styles is deprecated.
 
 = 2.2.0 (2025-04-23) =
 ~ Fixed: security.
