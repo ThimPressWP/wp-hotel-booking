@@ -2,7 +2,6 @@
 Contributors: thimpress, leehld, phamtungpth, thoakim
 Donate link: https://thimpress.com/
 Tags: hotel, booking, hotel booking, reservation, reservations
-Requires at least: 6.0
 Tested up to: 6.8
 Stable tag: 2.2.1
 License: GPLv2 or later

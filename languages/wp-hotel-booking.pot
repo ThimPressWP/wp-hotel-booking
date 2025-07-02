@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WP Hotel Booking plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Hotel Booking 2.2.1-beta.1\n"
+"Project-Id-Version: WP Hotel Booking 2.2.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-hotel-booking\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-06-30T08:01:49+03:00\n"
+"POT-Creation-Date: 2025-07-01T13:39:14+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wp-hotel-booking\n"
@@ -872,7 +872,7 @@ msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:66
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:67
-#: includes/booking/wphb-booking-hooks.php:282
+#: includes/booking/wphb-booking-hooks.php:284
 msgid "Reservation"
 msgstr ""
 
@@ -928,7 +928,7 @@ msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:122
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:123
-#: includes/booking/wphb-booking-hooks.php:233
+#: includes/booking/wphb-booking-hooks.php:234
 msgid "The customer has completed the transaction"
 msgstr ""
 
@@ -962,7 +962,7 @@ msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:191
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:192
-#: includes/booking/wphb-booking-hooks.php:339
+#: includes/booking/wphb-booking-hooks.php:342
 #: templates/emails/customer-cancelled.php:22
 msgid "Booking has been marked cancelled"
 msgstr ""
@@ -1313,13 +1313,13 @@ msgstr ""
 #: includes/admin/views/admin-metabox-rooms.php:90
 #: includes/admin/views/pricing-table.php:60
 #: includes/admin/views/pricing-table.php:127
-#: includes/wphb-template-functions.php:667
+#: includes/wphb-template-functions.php:660
 msgid "Edit"
 msgstr ""
 
 #: includes/admin/views/pricing-table.php:36
 #: includes/elementor/widgets/loop-item/loop-room-price.php:57
-#: includes/wphb-template-functions.php:653
+#: includes/wphb-template-functions.php:646
 msgid "Pricing Plans"
 msgstr ""
 
@@ -1486,16 +1486,16 @@ msgstr ""
 msgid "You have a new booking room"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:232
+#: includes/booking/wphb-booking-hooks.php:233
 msgid "New Booking Completed"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:338
+#: includes/booking/wphb-booking-hooks.php:341
 #: templates/emails/customer-cancelled.php:21
 msgid "Cancelled booking"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:432
+#: includes/booking/wphb-booking-hooks.php:448
 msgctxt "Admin menu name"
 msgid "Bookings"
 msgstr ""
@@ -1557,57 +1557,57 @@ msgstr ""
 msgid "Room ID is not exists."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:415
+#: includes/class-wphb-ajax.php:412
 #: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:230
 msgid "Added successfully."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:438
+#: includes/class-wphb-ajax.php:435
 #: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-cart.php:292
 msgid "Cart item is not exists."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:523
+#: includes/class-wphb-ajax.php:520
 msgid "Room not found."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:532
+#: includes/class-wphb-ajax.php:529
 msgid "Please select check in date and checkout date."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:595
+#: includes/class-wphb-ajax.php:592
 msgid "Edit order item"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:661
+#: includes/class-wphb-ajax.php:658
 msgid "Something when wrong!"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:667
+#: includes/class-wphb-ajax.php:664
 msgid "Request not valid"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:672
+#: includes/class-wphb-ajax.php:669
 msgid "nonce is invalid"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:677
+#: includes/class-wphb-ajax.php:674
 msgid "Date check-in or date check-out is invalid"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:691
+#: includes/class-wphb-ajax.php:688
 msgid "Id room is invalid"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:696
+#: includes/class-wphb-ajax.php:693
 msgid "Can not add item with zero quantity."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:888
+#: includes/class-wphb-ajax.php:885
 msgid "Room is not exists."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:898
+#: includes/class-wphb-ajax.php:895
 msgid "Date is not exists."
 msgstr ""
 
@@ -1691,6 +1691,10 @@ msgstr ""
 
 #: includes/class-wphb-comments.php:434
 msgid "Images"
+msgstr ""
+
+#: includes/class-wphb-comments.php:512
+msgid "Add Images"
 msgstr ""
 
 #: includes/class-wphb-comments.php:516
@@ -2933,6 +2937,11 @@ msgid_plural "%s Beds"
 msgstr[0] ""
 msgstr[1] ""
 
+#: includes/elementor/widgets/loop-item/loop-room-info.php:320
+#: templates/loop/feature.php:17
+msgid "Featured"
+msgstr ""
+
 #: includes/elementor/widgets/loop-item/loop-room-price.php:28
 msgid "Room Price"
 msgstr ""
@@ -3308,6 +3317,10 @@ msgstr ""
 msgid "Add another item"
 msgstr ""
 
+#: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:99
+msgid "Package name"
+msgstr ""
+
 #: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:103
 msgid "Enter description here"
 msgstr ""
@@ -3371,14 +3384,14 @@ msgstr ""
 msgid "Additional options for the room."
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/inc/functions.php:143
-#: includes/plugins/wp-hotel-booking-extra/inc/wphb-extra-functions.php:183
+#: includes/plugins/wp-hotel-booking-extra/inc/functions.php:144
+#: includes/plugins/wp-hotel-booking-extra/inc/wphb-extra-functions.php:186
 #: includes/wphb-core-functions.php:292
 msgid "Trip"
 msgstr ""
 
-#: includes/plugins/wp-hotel-booking-extra/inc/functions.php:144
-#: includes/plugins/wp-hotel-booking-extra/inc/wphb-extra-functions.php:184
+#: includes/plugins/wp-hotel-booking-extra/inc/functions.php:145
+#: includes/plugins/wp-hotel-booking-extra/inc/wphb-extra-functions.php:187
 #: includes/wphb-core-functions.php:293
 msgid "Number"
 msgstr ""
@@ -3438,27 +3451,27 @@ msgstr ""
 msgid "Consumer key is invalid."
 msgstr ""
 
-#: includes/rest-api/v1/admin/class-wphb-admin-rooms-controller.php:70
-#: includes/rest-api/v1/admin/class-wphb-admin-rooms-controller.php:98
+#: includes/rest-api/v1/admin/class-wphb-admin-rooms-controller.php:78
+#: includes/rest-api/v1/admin/class-wphb-admin-rooms-controller.php:106
 msgid "Error: Room ID is invalid."
 msgstr ""
 
-#: includes/rest-api/v1/admin/class-wphb-admin-rooms-controller.php:108
-#: includes/rest-api/v1/admin/class-wphb-admin-rooms-controller.php:109
+#: includes/rest-api/v1/admin/class-wphb-admin-rooms-controller.php:116
+#: includes/rest-api/v1/admin/class-wphb-admin-rooms-controller.php:117
 #: includes/wphb-functions.php:2785
 #: includes/wphb-functions.php:2786
 msgid "Block item"
 msgstr ""
 
-#: includes/rest-api/v1/admin/class-wphb-admin-rooms-controller.php:130
+#: includes/rest-api/v1/admin/class-wphb-admin-rooms-controller.php:138
 msgid "Open success"
 msgstr ""
 
-#: includes/rest-api/v1/admin/class-wphb-admin-rooms-controller.php:138
+#: includes/rest-api/v1/admin/class-wphb-admin-rooms-controller.php:146
 msgid "Block success"
 msgstr ""
 
-#: includes/rest-api/v1/admin/class-wphb-admin-rooms-controller.php:172
+#: includes/rest-api/v1/admin/class-wphb-admin-rooms-controller.php:180
 msgid "Error: Timer invalid."
 msgstr ""
 
@@ -5575,23 +5588,23 @@ msgstr ""
 msgid "Terms Page"
 msgstr ""
 
-#: includes/wphb-template-functions.php:227
+#: includes/wphb-template-functions.php:220
 msgid "Search Results: &ldquo;%s&rdquo;"
 msgstr ""
 
-#: includes/wphb-template-functions.php:230
+#: includes/wphb-template-functions.php:223
 msgid "&nbsp;&ndash; Page %s"
 msgstr ""
 
-#: includes/wphb-template-functions.php:712
+#: includes/wphb-template-functions.php:705
 msgid "Showing only one item."
 msgstr ""
 
-#: includes/wphb-template-functions.php:715
+#: includes/wphb-template-functions.php:708
 msgid "Showing the last items of %s results."
 msgstr ""
 
-#: includes/wphb-template-functions.php:718
+#: includes/wphb-template-functions.php:711
 msgid "Showing %1$s of %2$s results."
 msgstr ""
 
@@ -5867,10 +5880,6 @@ msgstr ""
 msgid "Additional Information:"
 msgstr ""
 
-#: templates/loop/feature.php:17
-msgid "Featured"
-msgstr ""
-
 #: templates/loop/pricing_plan.php:25
 msgid "Regular plan"
 msgstr ""
@@ -6132,15 +6141,15 @@ msgstr ""
 msgid "--- Quantity ---"
 msgstr ""
 
-#: wp-hotel-booking.php:607
+#: wp-hotel-booking.php:608
 msgid "The image number is greater than %s"
 msgstr ""
 
-#: wp-hotel-booking.php:608
+#: wp-hotel-booking.php:609
 msgid "The image file type is invalid"
 msgstr ""
 
-#: wp-hotel-booking.php:609
+#: wp-hotel-booking.php:610
 msgid "The maximum file size is %s KB"
 msgstr ""
 
