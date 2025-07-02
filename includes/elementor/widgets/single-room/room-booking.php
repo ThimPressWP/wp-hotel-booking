@@ -214,9 +214,11 @@ class Thim_Ekit_Widget_Room_Booking extends Widget_Base
                 </div> 
 
             <?php } else {
-                $external_link = get_post_meta( $hb_room->ID, '_hb_external_link', true ); ?>
+                $external_link = get_post_meta( $hb_room->ID, '_hb_external_link', true );
+                $external_link = ! empty( $external_link ) ? $external_link : '#';
+                 ?>
 
-                <a href="<?php echo $external_link ?? '#'; ?>" <?php echo ! empty( $external_link ) ? 'target="_blank"' : ''; ?> data-id="<?php echo esc_attr( $hb_room->ID ); ?>" data-name="<?php echo esc_attr( $hb_room->name ); ?>"
+                <a href="<?php echo $external_link; ?>" <?php echo ! empty( $external_link ) ? 'target="_blank"' : ''; ?> data-id="<?php echo esc_attr( $hb_room->ID ); ?>" data-name="<?php echo esc_attr( $hb_room->name ); ?>"
                     class="hb_button hb_primary" id="hb_room_load_booking_form">
                     <?php _e( $settings['text_booking'], 'wp-hotel-booking' ); ?>
                 </a>
@@ -239,7 +241,7 @@ class Thim_Ekit_Widget_Room_Booking extends Widget_Base
             <div class="hb-search-results-form-container">
                 <div class="hb-booking-room-form-group">
                     <div class="hb-booking-room-form-field hb-form-field-input">
-                        <input type="text" name="check_in_date" value id="check_in_date" placeholder="<?php _e( 'Arrival Date', 'wp-hotel-booking' ); ?>" autocomplete="off"/>
+                        <input type="text" name="check_in_date" value id="check_in_date" placeholder="<?php _e( 'Arrival Date', 'wp-hotel-booking' ); ?>" autocomplete="off"/><input type="text" name="select-date-range" style="display:none;">
                     </div>
                 </div>
                 <div class="hb-booking-room-form-group">
