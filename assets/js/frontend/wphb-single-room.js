@@ -140,25 +140,26 @@ const wphbRoomInitDatePicker = () => {
 	};
 	datePickerCheckOut = flatpickr( elDateCheckOut, optionCheckout );
 	const availabilityCalendar = document.querySelector( '.wphb-room-calendar' );
-	roomAvaibilityCalendar = flatpickr( availabilityCalendar, {
-		dateFormat: 'Y/m/d',
-		mode:'range',
-		minDate: 'today',
-		inline: true,
-		disable: datesBlock,
-		//defaultDate: dateMinCheckInCanBook,
-		showMonths: 2,
-		locale: {
-			firstDayOfWeek: 1,
-		},
-		onChange: function(selectedDates, dateStr, instance) {
-		    if (selectedDates.length === 2) {
-		    	// elDateCheckIn.value = toYmdLocal( selectedDates[0] );
-		    	// elDateCheckOut.value = toYmdLocal(selectedDates[1]);
-		    }
-		}
-	});
-	
+	if ( availabilityCalendar ) {
+		roomAvaibilityCalendar = flatpickr( availabilityCalendar, {
+			dateFormat: 'Y/m/d',
+			mode:'range',
+			minDate: 'today',
+			inline: true,
+			disable: datesBlock,
+			//defaultDate: dateMinCheckInCanBook,
+			showMonths: 2,
+			locale: {
+				firstDayOfWeek: 1,
+			},
+			onChange: function(selectedDates, dateStr, instance) {
+			    if (selectedDates.length === 2) {
+			    	// elDateCheckIn.value = toYmdLocal( selectedDates[0] );
+			    	// elDateCheckOut.value = toYmdLocal(selectedDates[1]);
+			    }
+			}
+		});
+	}
 };
 const wphbRoomCheckDates = ( formCheckDate ) => {
 	const elBtnCheck = formCheckDate.querySelector( 'button[type=submit]' );
