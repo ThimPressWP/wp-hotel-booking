@@ -94,6 +94,7 @@ const wphbRoomInitDatePicker = () => {
 	    dateFormat: 'Y/m/d',
 	    minDate: 'today',
 	    disable: datesBlock,
+	    showMonths: 2,
 	    positionElement: elDateCheckIn,
 	    locale: {
 	    	firstDayOfWeek: 1,
