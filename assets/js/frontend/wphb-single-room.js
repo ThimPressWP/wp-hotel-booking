@@ -1,9 +1,12 @@
 import flatpickr from 'flatpickr';
 import tingle from 'tingle.js';
 
-let elHotelBookingRoom, elTmplDateAvailable, elAddToCart, elForm;
+let elHotelBookingRoom, elTmplDateAvailable, elAddToCart, elForm, roomAvaibilityCalendar;
 const dataSend = {};
-
+const toYmdLocal = (date) => {
+    const z = n => ('0' + n).slice(-2);
+    return date.getFullYear() + '/' + z(date.getMonth() + 1) + '/' + z(date.getDate());
+}
 const wphbRoomInitDatePicker = () => {
 	elHotelBookingRoom = document.querySelector( '#hotel_booking_room_hidden' );
 	if ( ! elHotelBookingRoom ) {
@@ -136,6 +139,26 @@ const wphbRoomInitDatePicker = () => {
 		onChange( selectedDates, dateStr, instance ) {},
 	};
 	datePickerCheckOut = flatpickr( elDateCheckOut, optionCheckout );
+	const availabilityCalendar = document.querySelector( '.wphb-room-calendar' );
+	roomAvaibilityCalendar = flatpickr( availabilityCalendar, {
+		dateFormat: 'Y/m/d',
+		mode:'range',
+		minDate: 'today',
+		inline: true,
+		disable: datesBlock,
+		//defaultDate: dateMinCheckInCanBook,
+		showMonths: 2,
+		locale: {
+			firstDayOfWeek: 1,
+		},
+		onChange: function(selectedDates, dateStr, instance) {
+		    if (selectedDates.length === 2) {
+		    	// elDateCheckIn.value = toYmdLocal( selectedDates[0] );
+		    	// elDateCheckOut.value = toYmdLocal(selectedDates[1]);
+		    }
+		}
+	});
+	
 };
 const wphbRoomCheckDates = ( formCheckDate ) => {
 	const elBtnCheck = formCheckDate.querySelector( 'button[type=submit]' );
@@ -337,7 +360,6 @@ const wphbRoomAddToCart = ( formAddToCart ) => {
 			elLoading.classList.toggle( 'loading' );
 		} );
 };
-
 // Events
 document.addEventListener( 'submit', function ( e ) {
 	const target = e.target;
@@ -412,6 +434,32 @@ document.addEventListener( 'click', function ( e ) {
 		modalPreview = new tingle.modal();
 		modalPreview.setContent( iframe );
 		modalPreview.open();
+	} else if ( target.classList.contains( 'wphb-cancel-selected-date' ) ) {
+		if ( undefined !== roomAvaibilityCalendar ) {
+			roomAvaibilityCalendar.clear();
+		}
+	} else if ( target.classList.contains( 'wphb-check-selected-date' ) ) {
+		if ( undefined !== roomAvaibilityCalendar ) {
+			if ( roomAvaibilityCalendar.selectedDates.length === 2 && undefined !== elForm ) {
+				elForm.querySelector( 'input[name="check_in_date"]' ).value = toYmdLocal( roomAvaibilityCalendar.selectedDates[0] );
+				elForm.querySelector('input[name="check_out_date"]' ).value = toYmdLocal( roomAvaibilityCalendar.selectedDates[1] );
+				if ( document.querySelector( '#hb_room_load_booking_form' ) ) {
+					document.querySelector( '#hb_room_load_booking_form' ).click();
+					if ( elTmplDateAvailable ) {
+						elTmplDateAvailable.style.display = 'block';
+					}
+					if ( elAddToCart ) {
+						elAddToCart.style.display = 'none';
+					}
+				} else {
+					elHotelBookingRoom.scrollIntoView({ behavior: "smooth" });
+					elForm.style.display = 'block';
+					if ( elAddToCart ) {
+						elAddToCart.style.display = 'none';
+					}
+				}
+			}
+		}
 	}
 
 	// faq toggle
@@ -427,7 +475,7 @@ document.addEventListener( 'DOMContentLoaded', function ( e ) {
 	const elRoomLoadBookingForm = document.querySelector(
 		'#hb_room_load_booking_form'
 	);
-	if ( ! elRoomLoadBookingForm ) {
+	// if ( ! elRoomLoadBookingForm ) {
 		wphbRoomInitDatePicker();
-	}
+	// }
 } );
