@@ -89,13 +89,14 @@ const wphbRoomInitDatePicker = () => {
 
 		return dateCalendar <= dateSelected;
 	};
+	let positionEle = parseInt( elDateRange.getAttribute( 'data-hidden' ) ) === 1 ? elDateCheckIn : null;
 	const dateRangeSelector = flatpickr( elDateRange, {
 	    mode: "range",
 	    dateFormat: 'Y/m/d',
 	    minDate: 'today',
 	    disable: datesBlock,
 	    showMonths: 2,
-	    positionElement: elDateCheckIn,
+	    positionElement: positionEle,
 	    locale: {
 	    	firstDayOfWeek: 1,
 	    },
@@ -103,6 +104,7 @@ const wphbRoomInitDatePicker = () => {
 	        if (selectedDates.length === 2) {
 	        	elDateCheckIn.value = toYmdLocal( selectedDates[0] );
 	        	elDateCheckOut.value = toYmdLocal(selectedDates[1]);
+	        	instance._input.value = toYmdLocal( selectedDates[0] ) + ' - ' + toYmdLocal(selectedDates[1]);
 	        }
 	    }
 	});

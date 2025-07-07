@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || exit();
 if ( ! isset( $room ) ) {
 	return;
 }
-$room_id = $room->ID;
+$room_id     = $room->ID;
 $block_id    = get_post_meta( $room_id, 'hb_blocked_id', true );
 $dates_block = get_post_meta( $block_id, 'hb_blocked_time' );
 $max_adult   = (int) get_post_meta( $room_id, '_hb_room_capacity_adult', true );
@@ -31,7 +31,7 @@ $max_child   = (int) get_post_meta( $room_id, '_hb_max_child_per_room', true );
 				<div class="hb-booking-room-form-group">
 					<div class="hb-booking-room-form-field hb-form-field-input">
 						<input type="text" name="check_in_date" value="" placeholder="<?php _e( 'Arrival Date', 'wp-hotel-booking' ); ?>"/>
-						<input type="text" name="select-date-range" style="display:none;">
+						<input type="text" name="select-date-range" style="display:none;" data-hidden="1" placeholder="<?php _e( 'Select Dates', 'wp-hotel-booking' ); ?>">
 					</div>
 				</div>
 				<div class="hb-booking-room-form-group">

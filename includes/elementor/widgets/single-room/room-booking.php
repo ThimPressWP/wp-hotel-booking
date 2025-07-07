@@ -231,6 +231,10 @@ class Thim_Ekit_Widget_Room_Booking extends Widget_Base
 
     protected function _render_booking_form($hb_room)
     {
+        $room_id   = $hb_room->get_id();
+        $max_adult = (int) get_post_meta( $room_id, '_hb_room_capacity_adult', true );
+        $max_adult = $max_adult > 0 ? $max_adult : 1;
+        $max_child = (int) get_post_meta( $room_id, '_hb_max_child_per_room', true );
         ?>
         <div id="hotel_booking_room_hidden">
            <form action="POST" name="hb-search-single-room" class="hb-search-room-results hotel-booking-search hotel-booking-single-room-action">
@@ -241,12 +245,23 @@ class Thim_Ekit_Widget_Room_Booking extends Widget_Base
             <div class="hb-search-results-form-container">
                 <div class="hb-booking-room-form-group">
                     <div class="hb-booking-room-form-field hb-form-field-input">
-                        <input type="text" name="check_in_date" value id="check_in_date" placeholder="<?php _e( 'Arrival Date', 'wp-hotel-booking' ); ?>" autocomplete="off"/><input type="text" name="select-date-range" style="display:none;">
+                        <input type="text" name="check_in_date" value id="check_in_date" placeholder="<?php _e( 'Arrival Date', 'wp-hotel-booking' ); ?>" autocomplete="off"/>
+                        <input type="text" name="select-date-range" style="display:none;"  data-hidden="1" placeholder="<?php _e( 'Select Dates', 'wp-hotel-booking' ); ?>" />
                     </div>
                 </div>
                 <div class="hb-booking-room-form-group">
                     <div class="hb-booking-room-form-field hb-form-field-input">
                         <input type="text" name="check_out_date" value id="check_out_date" placeholder="<?php _e( 'Departure Date', 'wp-hotel-booking' ); ?>" autocomplete="off"/>
+                    </div>
+                </div>
+                <div class="hb-booking-room-form-group">
+                    <div class="hb-booking-room-form-field hb-form-field-input">
+                        <input type="number" name="max_adult" value="" placeholder="<?php _e( 'Adult', 'wp-hotel-booking' ); ?>" min="1" max="<?php echo esc_attr( $max_adult ) ?>" />
+                    </div>
+                </div>
+                <div class="hb-booking-room-form-group">
+                    <div class="hb-booking-room-form-field hb-form-field-input">
+                        <input type="number" name="max_child" value="" placeholder="<?php _e( 'Children', 'wp-hotel-booking' ); ?>" min="0" max="<?php echo esc_attr( $max_child ) ?>" />
                     </div>
                 </div>
                 <div class="hb-booking-room-form-group">
