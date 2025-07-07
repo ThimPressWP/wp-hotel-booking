@@ -89,31 +89,79 @@ const wphbRoomInitDatePicker = () => {
 
 		return dateCalendar <= dateSelected;
 	};
-	let positionEle = parseInt( elDateRange.getAttribute( 'data-hidden' ) ) === 1 ? elDateCheckIn : null;
-	const dateRangeSelector = flatpickr( elDateRange, {
-	    mode: "range",
-	    dateFormat: 'Y/m/d',
-	    minDate: 'today',
-	    disable: datesBlock,
-	    showMonths: 2,
-	    positionElement: positionEle,
-	    locale: {
-	    	firstDayOfWeek: 1,
-	    },
-	    onChange: function(selectedDates, dateStr, instance) {
-	        if (selectedDates.length === 2) {
-	        	elDateCheckIn.value = toYmdLocal( selectedDates[0] );
-	        	elDateCheckOut.value = toYmdLocal(selectedDates[1]);
-	        	instance._input.value = toYmdLocal( selectedDates[0] ) + ' - ' + toYmdLocal(selectedDates[1]);
-	        }
-	    }
-	});
-	elForm.addEventListener( 'click', (e) => {
-		let target = e.target;
-		if ( target === elDateCheckIn || target === elDateCheckOut ) {
-			dateRangeSelector.open();
-		}
-	} );
+	if ( elDateRange ) {
+		let positionEle = parseInt( elDateRange.getAttribute( 'data-hidden' ) ) === 1 ? elDateCheckIn : null;
+		const dateRangeSelector = flatpickr( elDateRange, {
+		    mode: "range",
+		    dateFormat: 'Y/m/d',
+		    minDate: 'today',
+		    disable: datesBlock,
+		    showMonths: 2,
+		    positionElement: positionEle,
+		    locale: {
+		    	firstDayOfWeek: 1,
+		    },
+		    onChange: function(selectedDates, dateStr, instance) {
+		        if (selectedDates.length === 2) {
+		        	elDateCheckIn.value = toYmdLocal( selectedDates[0] );
+		        	elDateCheckOut.value = toYmdLocal(selectedDates[1]);
+		        	instance._input.value = toYmdLocal( selectedDates[0] ) + ' - ' + toYmdLocal(selectedDates[1]);
+		        }
+		    }
+		});
+		elForm.addEventListener( 'click', (e) => {
+			let target = e.target;
+			if ( target === elDateCheckIn || target === elDateCheckOut ) {
+				dateRangeSelector.open();
+			}
+		} );
+	} else {
+		// Check in date
+		const optionCheckIn = {
+			dateFormat: 'Y/m/d',
+			minDate: 'today',
+			disable: datesBlock,
+			//defaultDate: dateMinCheckInCanBook,
+			disableMobile: true,
+			locale: {
+				firstDayOfWeek: 1,
+			},
+			onChange( selectedDates, dateStr, instance ) {
+				if ( datePickerCheckOut ) {
+					// calculate next day available
+					const dateSelected = selectedDates[ 0 ];
+					datePickerCheckOut.clear();
+					const dateNext = new Date( dateSelected.setDate( dateSelected.getDate() + minBookingDateNumber - 1 ) );
+					datePickerCheckOut.set( 'minDate', dateNext );
+					datePickerCheckOut.open();
+					datePickerCheckOut.set( 'disable', [
+						( dateCalendar ) => {
+							return calculateDatesCheckOutDisable(
+								dateSelected,
+								dateCalendar
+							);
+						},
+					] );
+				}
+			},
+		};
+		datePickerCheckIn = flatpickr( elDateCheckIn, optionCheckIn );
+		// console.log( elDateCheckIn.value );
+
+		// Check out date
+		const optionCheckout = {
+			dateFormat: 'Y/m/d',
+			minDate: hotel_settings.min_booking_date > 0 ?  new Date().fp_incr( hotel_settings.min_booking_date ) : 'today',
+			disable: datesBlock,
+			//defaultDate: dateMinCheckOutCanBook,
+			disableMobile: true,
+			locale: {
+				firstDayOfWeek: 1,
+			},
+			onChange( selectedDates, dateStr, instance ) {},
+		};
+		datePickerCheckOut = flatpickr( elDateCheckOut, optionCheckout );
+	}
 	const toYmdLocal = (date) => {
 	    const z = n => ('0' + n).slice(-2);
 	    return date.getFullYear() + '/' + z(date.getMonth() + 1) + '/' + z(date.getDate());
