@@ -893,6 +893,17 @@ body.single-hb_room {
                 }
             }
         }
+        #hb_room_availability {
+            .wphb-room-availability{
+                gap: 20px;
+                display: flex;
+                flex-direction: column;
+                .wphb-room-buttons {
+                    display: inline-flex;
+                    gap: 20px;
+                }
+            }
+        }
     }
 }
 
