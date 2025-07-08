@@ -1,7 +1,7 @@
 import flatpickr from 'flatpickr';
 import tingle from 'tingle.js';
 
-let elHotelBookingRoom, elTmplDateAvailable, elAddToCart, elForm, roomAvaibilityCalendar;
+let elHotelBookingRoom, elTmplDateAvailable, elAddToCart, elForm, roomAvaibilityCalendar, roomPricing;
 const dataSend = {};
 const toYmdLocal = (date) => {
     const z = n => ('0' + n).slice(-2);
@@ -157,9 +157,7 @@ const wphbRoomInitDatePicker = () => {
 			onReady: function(selectedDates, dateStr, instance) {
 			    let month = instance.currentMonth+1,
 			    	year  = instance.currentYear;
-			    setCalendarDatePrice( instance, roomId, month, year );
-			    
-			    // console.log(instance.calendarContainer);
+			    fetchAndSetCalendarDatePrice( instance, roomId, month, year );
 			},
 			onChange: function(selectedDates, dateStr, instance) {
 			    if (selectedDates.length === 2) {
@@ -169,17 +167,19 @@ const wphbRoomInitDatePicker = () => {
 			    	elDateCheckIn.value = '';
 			    	elDateCheckOut.value = '';
 			    }
+			    setCalendarDatePrice( instance, roomPricing );
 			},
 			onMonthChange: function(selectedDates, dateStr, instance) {
 			    let month = instance.currentMonth+1,
 			    	year  = instance.currentYear;
-			    setCalendarDatePrice( instance, roomId, month, year );
+			    fetchAndSetCalendarDatePrice( instance, roomId, month, year );
 			}
 		});
 	}
 };
-const setCalendarDatePrice = ( calendarInstance, roomId, month, year ) => {
+const fetchAndSetCalendarDatePrice = ( calendarInstance, roomId, month, year ) => {
 	let restUrl = `${ hotel_settings.wphb_rest_url }wphb/v1/rooms/room-pricing?roomId=${roomId}&month=${month}&year=${year}`;
+	showCalendarOverlay( calendarInstance );
 	fetch(restUrl, {
 	        method: 'GET',
 	        headers: {
@@ -192,19 +192,38 @@ const setCalendarDatePrice = ( calendarInstance, roomId, month, year ) => {
 	        	throw new Error( res.message );
 	        }
 	        const data = res.data;
-	        const dayCells = calendarInstance.calendarContainer.querySelectorAll('.flatpickr-day:not(.hidden)');
-	        dayCells.forEach( (dayElem, idx) => {
-	            const dateObj = dayElem.dateObj;
-	            // Skip if dateObj is missing
-	            if ( !dateObj || undefined === data.pricing[ idx ] ) {
-	            	return;
-	            }
-	            dayElem.setAttribute( 'title', decodeHtmlEntity( data.pricing[ idx ].price_html ) );
-	        });
+	        roomPricing = data.pricing;
+	        setCalendarDatePrice( calendarInstance, roomPricing );
 	    })
 	    .catch((err) => console.log(err))
 	    .finally(() => {
+	    	hideCalendarOverlay( calendarInstance );
 	    });
+}
+const showCalendarOverlay = ( calendarInstance ) => {
+  let calendar = calendarInstance.calendarContainer;
+  if (!calendar.querySelector('.calendar-loading-overlay')) {
+    let overlay = document.createElement('div');
+    overlay.className = 'calendar-loading-overlay';
+    overlay.innerHTML = '<div class="calendar-loading-spinner"></div>';
+    calendar.appendChild(overlay);
+  }
+}
+const hideCalendarOverlay = ( calendarInstance ) => {
+  let calendar = calendarInstance.calendarContainer;
+  let overlay = calendar.querySelector('.calendar-loading-overlay');
+  if (overlay) overlay.remove();
+}
+const setCalendarDatePrice = ( calendarInstance, pricing ) => {
+	const dayCells = calendarInstance.calendarContainer.querySelectorAll('.flatpickr-day:not(.hidden)');
+	dayCells.forEach( (dayElem, idx) => {
+	    const dateObj = dayElem.dateObj;
+	    // Skip if dateObj is missing
+	    if ( !dateObj || undefined === pricing[ idx ] ) {
+	    	return;
+	    }
+	    dayElem.setAttribute( 'title', decodeHtmlEntity( pricing[ idx ].price_html ) );
+	});
 }
 const decodeHtmlEntity = (str) => {
 	return new DOMParser().parseFromString(str, "text/html").body.textContent;
