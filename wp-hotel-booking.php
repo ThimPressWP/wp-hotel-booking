@@ -668,6 +668,7 @@ class WP_Hotel_Booking {
 				timezone: '<?php echo esc_html( current_time( 'timestamp' ) ); ?>',
 				min_booking_date: <?php echo esc_html( $min_booking_date ); ?>,
 				wphb_rest_url: '<?php echo get_rest_url(); ?>',
+				wphb_rest_nonce: '<?php echo wp_create_nonce( 'wp_rest' ); ?>',
 				is_page_search: <?php echo is_page( hb_get_page_id( 'search' ) ) ? 1 : 0; ?>,
 				url_page_search: '<?php echo get_permalink( hb_get_page_id( 'search' ) ); ?>',
 				room_id: <?php echo isset( $screen->id ) && $screen->id == 'hb_room' ? get_the_ID() : 0; ?>,

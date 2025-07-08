@@ -140,6 +140,8 @@ const wphbRoomInitDatePicker = () => {
 	};
 	datePickerCheckOut = flatpickr( elDateCheckOut, optionCheckout );
 	const availabilityCalendar = document.querySelector( '.wphb-room-calendar' );
+	const roomIdInput = elForm.querySelector( 'input[name="room-id"]' );
+	const roomId = roomIdInput ? parseInt( roomIdInput.value ) : 0;
 	if ( availabilityCalendar ) {
 		roomAvaibilityCalendar = flatpickr( availabilityCalendar, {
 			dateFormat: 'Y/m/d',
@@ -152,15 +154,61 @@ const wphbRoomInitDatePicker = () => {
 			locale: {
 				firstDayOfWeek: 1,
 			},
+			onReady: function(selectedDates, dateStr, instance) {
+			    let month = instance.currentMonth+1,
+			    	year  = instance.currentYear;
+			    setCalendarDatePrice( instance, roomId, month, year );
+			    
+			    // console.log(instance.calendarContainer);
+			},
 			onChange: function(selectedDates, dateStr, instance) {
 			    if (selectedDates.length === 2) {
-			    	// elDateCheckIn.value = toYmdLocal( selectedDates[0] );
-			    	// elDateCheckOut.value = toYmdLocal(selectedDates[1]);
+			    	elDateCheckIn.value = toYmdLocal( selectedDates[0] );
+			    	elDateCheckOut.value = toYmdLocal(selectedDates[1]);
+			    } else if ( selectedDates.length === 0 ) {
+			    	elDateCheckIn.value = '';
+			    	elDateCheckOut.value = '';
 			    }
+			},
+			onMonthChange: function(selectedDates, dateStr, instance) {
+			    let month = instance.currentMonth+1,
+			    	year  = instance.currentYear;
+			    setCalendarDatePrice( instance, roomId, month, year );
 			}
 		});
 	}
 };
+const setCalendarDatePrice = ( calendarInstance, roomId, month, year ) => {
+	let restUrl = `${ hotel_settings.wphb_rest_url }wphb/v1/rooms/room-pricing?roomId=${roomId}&month=${month}&year=${year}`;
+	fetch(restUrl, {
+	        method: 'GET',
+	        headers: {
+	            'X-WP-Nonce': hotel_settings.wphb_rest_nonce,
+	        },
+	    }) // wrapped
+	    .then((res) => res.json())
+	    .then((res) => {
+	        if( res.status === 'error' ) {
+	        	throw new Error( res.message );
+	        }
+	        const data = res.data;
+	        const dayCells = calendarInstance.calendarContainer.querySelectorAll('.flatpickr-day:not(.hidden)');
+	        dayCells.forEach( (dayElem, idx) => {
+	            const dateObj = dayElem.dateObj;
+	            // Skip if dateObj is missing
+	            if ( !dateObj || undefined === data.pricing[ idx ] ) {
+	            	return;
+	            }
+	            dayElem.setAttribute( 'title', decodeHtmlEntity( data.pricing[ idx ].price_html ) );
+	        });
+	    })
+	    .catch((err) => console.log(err))
+	    .finally(() => {
+	    });
+}
+const decodeHtmlEntity = (str) => {
+	return new DOMParser().parseFromString(str, "text/html").body.textContent;
+}
 const wphbRoomCheckDates = ( formCheckDate ) => {
 	const elBtnCheck = formCheckDate.querySelector( 'button[type=submit]' );
 	let elLoading = formCheckDate.querySelector( '.wphb-icon' );
@@ -442,8 +490,6 @@ document.addEventListener( 'click', function ( e ) {
 	} else if ( target.classList.contains( 'wphb-check-selected-date' ) ) {
 		if ( undefined !== roomAvaibilityCalendar ) {
 			if ( roomAvaibilityCalendar.selectedDates.length === 2 && undefined !== elForm ) {
-				elForm.querySelector( 'input[name="check_in_date"]' ).value = toYmdLocal( roomAvaibilityCalendar.selectedDates[0] );
-				elForm.querySelector('input[name="check_out_date"]' ).value = toYmdLocal( roomAvaibilityCalendar.selectedDates[1] );
 				if ( document.querySelector( '#hb_room_load_booking_form' ) ) {
 					document.querySelector( '#hb_room_load_booking_form' ).click();
 					if ( elTmplDateAvailable ) {
