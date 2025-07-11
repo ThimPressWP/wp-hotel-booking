@@ -222,7 +222,7 @@ const setCalendarDatePrice = ( calendarInstance, pricing ) => {
 	    if ( !dateObj || undefined === pricing[ idx ] ) {
 	    	return;
 	    }
-	    dayElem.setAttribute( 'title', decodeHtmlEntity( pricing[ idx ].price_html ) );
+	    dayElem.setAttribute( 'data-title', decodeHtmlEntity( pricing[ idx ].price_html ) );
 	});
 }
 const decodeHtmlEntity = (str) => {

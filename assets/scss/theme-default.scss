@@ -903,6 +903,22 @@ body.single-hb_room {
                     gap: 20px;
                 }
                 .flatpickr-calendar {
+                    .flatpickr-innerContainer {
+                        .dayContainer {
+                            .flatpickr-day:not(.hidden):not(.flatpickr-disabled):hover::after {
+                                content: attr(data-title);
+                                position: absolute;
+                                top: 100%;
+                                left: 0;
+                                background: #333;
+                                color: #fff;
+                                padding: 5px 10px;
+                                white-space: nowrap;
+                                z-index: 10;
+                                border-radius: 50%;
+                            }
+                        }
+                    }
                     .calendar-loading-overlay {
                         position: absolute;
                         top: 0;
