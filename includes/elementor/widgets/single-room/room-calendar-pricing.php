@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class Thim_Ekit_Widget_Room_Availability extends Widget_Base {
+class WPHB_Widget_Room_Calendar_Pricing extends Widget_Base {
 
 	use HBGroupControlTrait;
 
@@ -38,6 +38,7 @@ class Thim_Ekit_Widget_Room_Availability extends Widget_Base {
 		if ( empty( $room ) ) {
 			return;
 		}
-		hb_get_template( 'single-room/tabs/room-availability.php', array( 'room' => $room ) );
+
+		hb_get_template( 'single-room/room-calendar-pricing.php', array( 'room' => $room ) );
 	}
 }

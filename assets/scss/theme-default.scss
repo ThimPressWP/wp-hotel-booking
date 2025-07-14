@@ -45,18 +45,23 @@ body {
             h1 {
                 font-size: 48px;
             }
+
             h2 {
                 font-size: 36px;
             }
+
             h3 {
                 font-size: 30px;
             }
+
             h4 {
                 font-size: 20px;
             }
+
             h5 {
                 font-size: 18px;
             }
+
             h6 {
                 font-size: var(--hb-font-size-base, 16px);
             }
@@ -70,6 +75,7 @@ body {
                     outline: none;
                 }
             }
+
             h3,
             h4,
             h5,
@@ -144,6 +150,7 @@ body {
                     color: #fff;
                     text-decoration: none;
                 }
+
                 &:focus {
                     outline: none;
                 }
@@ -162,6 +169,7 @@ body {
                 .hotel-booking-search-filter {
                     min-width: 24%;
                 }
+
                 .room-content {
                     width: 100%;
                 }
@@ -206,6 +214,7 @@ body {
                     h3 {
                         font-size: 20px;
                     }
+
                     h4,
                     .title {
                         margin: 0 0 8px 0;
@@ -226,6 +235,7 @@ body {
                 & > a:last-child {
                     display: none;
                 }
+
                 // new room single top: since v2.1.8
                 .room-single-top {
                     display: flex;
@@ -239,6 +249,7 @@ body {
                     }
                 }
             }
+
             .hb_related_other_room {
                 .navigation {
                     & > div {
@@ -246,6 +257,7 @@ body {
                     }
                 }
             }
+
             .hb_single_room_tabs_content {
                 h1,
                 h2,
@@ -316,6 +328,7 @@ body {
                         margin-top: 12px;
                     }
                 }
+
                 #hotel-booking-results {
                     margin-top: 20px;
                     width: 100%;
@@ -325,6 +338,7 @@ body {
                             border-radius: 8px;
                         }
                     }
+
                     .hb_search_price {
                         margin-bottom: 24px;
 
@@ -342,6 +356,7 @@ body {
                             }
                         }
                     }
+
                     .hb_add_to_cart {
                         color: var(--hb-primary, #ffb606);
                         background: var(--hb-light, #fde3e3);
@@ -391,6 +406,7 @@ body {
                 .hb_room {
                     .media {
                         margin-bottom: 20px;
+
                         img {
                             border-radius: 8px;
                             box-shadow: none;
@@ -412,6 +428,7 @@ body {
             #hotel-booking-search-filter {
                 display: none;
             }
+
             .tp-hotel-booking {
                 display: block;
 
@@ -422,6 +439,7 @@ body {
                                 position: absolute;
                             }
                         }
+
                         .content-room {
                             .rating {
                                 display: none;
@@ -455,19 +473,23 @@ body {
                     border-radius: 0;
                     box-shadow: none;
                 }
+
                 p {
                     margin-bottom: 20px;
                 }
+
                 img.avatar {
                     position: relative;
                     float: left;
                     width: 60px;
                     height: auto;
                 }
+
                 .comment-text {
                     margin-left: 80px;
                     padding: 0;
                 }
+
                 .meta {
                     margin-bottom: 10px;
                 }
@@ -489,6 +511,7 @@ body {
                 position: absolute;
                 font-family: hotel-booking-star;
             }
+
             span {
                 position: relative;
                 overflow: hidden;
@@ -512,6 +535,7 @@ body {
                 &:before {
                     content: none;
                 }
+
                 span {
                     &:before {
                         content: none;
@@ -545,6 +569,7 @@ body {
                     flex-direction: column;
                 }
             }
+
             .rooms-pagination {
                 ul.page-numbers {
                     margin-left: 0;
@@ -558,6 +583,7 @@ body {
         .ast-container {
             flex-direction: column;
         }
+
         #booking-customer {
             margin: 30px 0;
 
@@ -593,6 +619,7 @@ body {
                 padding: 0.7em 1em;
                 border: 1px solid rgba(0, 0, 0, 0.1);
             }
+
             a {
                 color: var(--hb-heading, #111);
             }
@@ -721,6 +748,7 @@ body {
             .hb-room-filter-btn {
                 margin: 0;
             }
+
             button {
                 width: 100%;
             }
@@ -767,13 +795,13 @@ body {
             border-radius: 3px;
             box-shadow: inset 0 0 0 rgba(0, 0, 0, 0.075);
             text-transform: none;
-            transition:
-                border-color ease-in-out 0.15s,
-                box-shadow ease-in-out 0.15s;
+            transition: border-color ease-in-out 0.15s,
+            box-shadow ease-in-out 0.15s;
 
             &::placeholder {
                 font-weight: 400;
             }
+
             &:hover,
             &:focus {
                 outline: 0;
@@ -787,16 +815,13 @@ body {
 
         select {
             appearance: none;
-            background: white
-                url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23555'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E")
-                no-repeat right 10px center;
+            background: white url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23555'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E") no-repeat right 10px center;
             background-size: 20px;
         }
 
         button {
-            transition:
-                border-color ease-in-out 0.15s,
-                box-shadow ease-in-out 0.15s;
+            transition: border-color ease-in-out 0.15s,
+            box-shadow ease-in-out 0.15s;
             margin: 0;
             position: relative;
             min-width: 200px;
@@ -847,12 +872,14 @@ body.single-hb_room {
                     }
                 }
             }
+
             // other
             .site-content {
                 &:has(.hb_single_room) {
                     display: block;
                 }
             }
+
             .grid-container {
                 &:has(.hb_single_room) {
                     max-width: 100%;
@@ -871,6 +898,7 @@ body.single-hb_room {
                     }
                 }
             }
+
             .hb_related_other_room {
                 margin-left: auto;
                 margin-right: auto;
@@ -884,6 +912,7 @@ body.single-hb_room {
                     margin-right: auto;
                     max-width: var(--hb-container-width, 1200px);
                 }
+
                 & > .hb_related_other_room {
                     max-width: calc(var(--hb-container-width, 1200px) + 30px);
                 }
@@ -939,85 +968,87 @@ body.single-hb_room {
                 }
             }
         }
-        #hb_room_availability {
-            .wphb-room-availability {
-                gap: 20px;
-                display: flex;
-                flex-direction: column;
-                .wphb-room-buttons {
-                    display: inline-flex;
-                    gap: 20px;
-                }
-                .flatpickr-calendar {
-                    .flatpickr-innerContainer {
-                        overflow: visible;
-                        .flatpickr-days {
-                            overflow: visible;
-                        }
-                        .dayContainer {
-                            .flatpickr-day:not(.hidden):not(.flatpickr-disabled):hover {
-                                &::after {
-                                    content: attr(data-title);
-                                    position: absolute;
-                                    bottom: 120%;
-                                    left: 50%;
-                                    background: #333;
-                                    color: #fff;
-                                    padding: 10px 10px;
-                                    font-size: 14px;
-                                    line-height: 1;
-                                    white-space: nowrap;
-                                    z-index: 99999;
-                                    border-radius: 10px;
-                                    margin-bottom: 5px;
-                                    transform: translateX(-50%);
-                                    transition: opacity 0.3s;
-                                }
-                                &::before {
-                                    content: "";
-                                    position: absolute;
-                                    z-index: 99999;
-                                    bottom: 94%;
-                                    left: 40%;
-                                    transform: translateY(-50%);
-                                    border-width: 5px;
-                                    border-style: solid;
-                                    border-color: #333 transparent transparent transparent;
-                                    transition: opacity 0.3s;
-                                }
-                            }
-                        }
-                    }
-                    .calendar-loading-overlay {
+    }
+}
+
+.wphb-room-calendar-pricing-wrap {
+    .wphb-room-calendar-pricing-buttons {
+        display: inline-flex;
+        gap: 20px;
+        margin: 20px 0;
+    }
+
+    .flatpickr-calendar {
+        .flatpickr-innerContainer {
+            overflow: visible;
+
+            .flatpickr-days {
+                overflow: visible;
+            }
+
+            .dayContainer {
+                .flatpickr-day:not(.hidden):not(.flatpickr-disabled):hover {
+                    &::after {
+                        content: attr(data-title);
                         position: absolute;
-                        top: 0;
-                        left: 0;
-                        right: 0;
-                        bottom: 0;
-                        background: rgba(255, 255, 255, 0.7);
-                        z-index: 100;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        pointer-events: all;
+                        bottom: 120%;
+                        left: 50%;
+                        background: #333;
+                        color: #fff;
+                        padding: 10px 10px;
+                        font-size: 14px;
+                        line-height: 1;
+                        white-space: nowrap;
+                        z-index: 99999;
+                        border-radius: 10px;
+                        margin-bottom: 5px;
+                        transform: translateX(-50%);
+                        transition: opacity 0.3s;
                     }
-                }
 
-                .calendar-loading-spinner {
-                    border: 4px solid #f3f3f3;
-                    border-top: 4px solid #3498db;
-                    border-radius: 50%;
-                    width: 32px;
-                    height: 32px;
-                    animation: loading-spin 1s linear infinite;
-                }
-
-                @keyframes loading-spin {
-                    to {
-                        transform: rotate(360deg);
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        z-index: 99999;
+                        bottom: 94%;
+                        left: 40%;
+                        transform: translateY(-50%);
+                        border-width: 5px;
+                        border-style: solid;
+                        border-color: #333 transparent transparent transparent;
+                        transition: opacity 0.3s;
                     }
                 }
             }
+        }
+
+        .calendar-loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.7);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: all;
+        }
+    }
+
+    .calendar-loading-spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        animation: loading-spin 1s linear infinite;
+    }
+
+    @keyframes loading-spin {
+        to {
+            transform: rotate(360deg);
         }
     }
 }
@@ -1041,6 +1072,7 @@ body.single-hb_room {
             }
         }
     }
+
     .hb_room_gallery {
         margin-bottom: 20px;
         position: relative;
@@ -1110,15 +1142,18 @@ body.single-hb_room {
                     opacity: 1;
                 }
             }
+
             .flex-prev,
             .flex-next {
                 &.flex-disabled {
                     display: none;
                 }
             }
+
             .flex-prev {
                 left: 20px;
             }
+
             .flex-next {
                 right: 20px;
 
@@ -1148,6 +1183,7 @@ body.single-hb_room {
                 z-index: 1;
             }
         }
+
         .camera_prev {
             left: 10px;
 
@@ -1155,6 +1191,7 @@ body.single-hb_room {
                 background: url(../images/prev.png) no-repeat center center;
             }
         }
+
         .camera_next {
             right: 10px;
 

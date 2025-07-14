@@ -641,24 +641,14 @@ if ( ! function_exists( 'hotel_display_pricing_plans' ) ) {
 			return $tabs;
 		}
 
+		$room = WPHB_Room::instance( get_the_ID() );
+
 		$tabs[] = array(
 			'id'      => 'hb_room_pricing_plans',
 			'title'   => __( 'Pricing Plans', 'wp-hotel-booking' ),
-			'content' => '',
+			'content' => hb_get_template_content( 'single-room/room-calendar-pricing.php', array( 'room' => $room ) ),
 		);
 
-		return $tabs;
-	}
-}
-if ( ! function_exists( 'hotel_booking_room_availability' ) ) {
-	function hotel_booking_room_availability( $tabs ) {
-		// error_log('message');
-		$room   = WPHB_Room::instance( get_the_ID() );
-		$tabs[] = array(
-			'id'      => 'hb_room_availability',
-			'title'   => __( 'Availability', 'wp-hotel-booking' ),
-			'content' => hb_get_template_content( 'single-room/tabs/room-availability.php', array( 'room' => $room ) ),
-		);
 		return $tabs;
 	}
 }

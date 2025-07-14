@@ -6,7 +6,7 @@ let elHotelBookingRoom,
 	elTmplDateAvailable,
 	elAddToCart,
 	elForm,
-	roomAvaibilityCalendar,
+	roomCalendarPricing,
 	roomPricing;
 const dataSend = {};
 const toYmdLocal = ( date ) => {
@@ -162,12 +162,17 @@ const wphbRoomInitDatePicker = () => {
 	};
 	datePickerCheckOut = flatpickr( elDateCheckOut, optionCheckout );
 };
-const roomAvaibilityCalendarInit = () => {
-	const availabilityCalendar = document.querySelector(
-		'.wphb-room-calendar'
+/**
+ * Handle show calendar pricing
+ * Show price by date in calendar when hover
+ * Select date range in calendar
+ */
+const calendarPricing = () => {
+	const elRoomCalendarPricing = document.querySelector(
+		'.wphb-room-calendar-pricing'
 	);
-	if ( availabilityCalendar ) {
-		const roomId = parseInt( availabilityCalendar.dataset.roomId ) ?? 0;
+	if ( elRoomCalendarPricing ) {
+		const roomId = parseInt( elRoomCalendarPricing.dataset.roomId ) ?? 0;
 		let blockDates = [];
 		if ( hotel_settings.block_dates ) {
 			const dateTimeStampsBlock = hotel_settings.block_dates;
@@ -184,7 +189,8 @@ const roomAvaibilityCalendarInit = () => {
 				} );
 			}
 		}
-		roomAvaibilityCalendar = flatpickr( availabilityCalendar, {
+
+		roomCalendarPricing = flatpickr( elRoomCalendarPricing, {
 			dateFormat: 'Y/m/d',
 			mode: 'range',
 			minDate: 'today',
@@ -528,14 +534,14 @@ document.addEventListener( 'click', function ( e ) {
 
 		// Init new modal
 		if ( ! modalCheckDates ) {
-			modalCheckDates = new tingle.modal({
+			modalCheckDates = new tingle.modal( {
 				onOpen() {
 					elHotelBookingRoom.style.display = 'block';
 				},
 				onClose() {
 					elHotelBookingRoom.style.display = 'none';
 				},
-			});
+			} );
 		}
 
 		// set content
@@ -562,14 +568,14 @@ document.addEventListener( 'click', function ( e ) {
 		modalPreview = new tingle.modal();
 		modalPreview.setContent( iframe );
 		modalPreview.open();
-	} else if ( target.classList.contains( 'wphb-cancel-selected-date' ) ) {
-		if ( undefined !== roomAvaibilityCalendar ) {
-			roomAvaibilityCalendar.clear();
+	} else if ( target.classList.contains( 'hb-btn-cancel' ) ) {
+		if ( undefined !== roomCalendarPricing ) {
+			roomCalendarPricing.clear();
 		}
-	} else if ( target.classList.contains( 'wphb-check-selected-date' ) ) {
-		if ( undefined !== roomAvaibilityCalendar ) {
+	} else if ( target.classList.contains( 'hb-btn-apply' ) ) {
+		if ( undefined !== roomCalendarPricing ) {
 			if (
-				roomAvaibilityCalendar.selectedDates.length === 2 &&
+				roomCalendarPricing.selectedDates.length === 2 &&
 				undefined !== elForm
 			) {
 				if ( document.querySelector( '#hb_room_load_booking_form' ) ) {
@@ -603,5 +609,5 @@ document.addEventListener( 'click', function ( e ) {
 let modalPreview;
 document.addEventListener( 'DOMContentLoaded', function ( e ) {
 	wphbRoomInitDatePicker();
-	roomAvaibilityCalendarInit();
+	calendarPricing();
 } );
