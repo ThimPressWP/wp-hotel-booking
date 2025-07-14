@@ -18,7 +18,7 @@ if ( ! $room ) {
 }
 ?>
 <div class="wphb-room-availability">
-	<div class="wphb-room-calendar"></div>
+	<div class="wphb-room-calendar" data-room-id="<?php echo esc_attr( $room->ID ); ?>"></div>
 	<div class="wphb-room-buttons">
 		<button class="hb_button wphb-cancel-selected-date"><?php esc_html_e( 'Cancel', 'wp-hotel-booking' ) ?></button>
 		<button class="hb_button wphb-check-selected-date"><?php esc_html_e( 'Apply', 'wp-hotel-booking' ) ?></button>
