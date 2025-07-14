@@ -1,6 +1,7 @@
 import flatpickr from 'flatpickr';
 import tingle from 'tingle.js';
 
+let modalCheckDates;
 let elHotelBookingRoom,
 	elTmplDateAvailable,
 	elAddToCart,
@@ -526,15 +527,16 @@ document.addEventListener( 'click', function ( e ) {
 		}
 
 		// Init new modal
-		modalCheckDates = new tingle.modal( {
-			onOpen() {
-				elHotelBookingRoom.style.display = 'block';
-				wphbRoomInitDatePicker();
-			},
-			onClose() {
-				elHotelBookingRoom.style.display = 'none';
-			},
-		} );
+		if ( ! modalCheckDates ) {
+			modalCheckDates = new tingle.modal({
+				onOpen() {
+					elHotelBookingRoom.style.display = 'block';
+				},
+				onClose() {
+					elHotelBookingRoom.style.display = 'none';
+				},
+			});
+		}
 
 		// set content
 		modalCheckDates.setContent( elHotelBookingRoom );
@@ -598,14 +600,8 @@ document.addEventListener( 'click', function ( e ) {
 	}
 } );
 
-let modalCheckDates;
 let modalPreview;
 document.addEventListener( 'DOMContentLoaded', function ( e ) {
-	const elRoomLoadBookingForm = document.querySelector(
-		'#hb_room_load_booking_form'
-	);
-	// if ( ! elRoomLoadBookingForm ) {
 	wphbRoomInitDatePicker();
-	// }
 	roomAvaibilityCalendarInit();
 } );

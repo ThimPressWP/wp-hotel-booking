@@ -4,7 +4,7 @@
  * Plugin URI: http://thimpress.com/
  * Description: Full of professional features for a booking room system
  * Author: ThimPress
- * Version: 2.2.1
+ * Version: 2.2.2-beta.1
  * Author URI: http://thimpress.com
  * Text Domain: wp-hotel-booking
  * Domain Path: /languages/
@@ -534,7 +534,7 @@ class WP_Hotel_Booking {
 
 		// Single room script.
 		wp_register_script(
-			'wpdb-single-room-js',
+			'wphb-single-room-js',
 			WPHB_PLUGIN_URL . "/assets/dist/js/frontend/wphb-single-room{$min}.js",
 			[],
 			$version,
@@ -578,7 +578,7 @@ class WP_Hotel_Booking {
 			if ( is_singular( 'hb_room' ) ) {
 				wp_enqueue_style( 'tingle-css' );
 				wp_enqueue_style( 'wphb-single-room-css' );
-				wp_enqueue_script( 'wpdb-single-room-js' );
+				wp_enqueue_script( 'wphb-single-room-js' );
 				wp_enqueue_script( 'wp-hotel-booking-gallery' );
 				wp_enqueue_script( 'flexslider' );
 
