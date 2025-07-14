@@ -157,7 +157,9 @@ const wphbRoomInitDatePicker = () => {
 			onReady: function(selectedDates, dateStr, instance) {
 			    let month = instance.currentMonth+1,
 			    	year  = instance.currentYear;
-			    fetchAndSetCalendarDatePrice( instance, roomId, month, year );
+			    if ( undefined === roomPricing ) {
+			    	fetchAndSetCalendarDatePrice( instance, roomId, month, year );
+			    }
 			},
 			onChange: function(selectedDates, dateStr, instance) {
 			    if (selectedDates.length === 2) {
