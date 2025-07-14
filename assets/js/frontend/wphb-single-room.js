@@ -2,12 +2,16 @@ import flatpickr from 'flatpickr';
 import tingle from 'tingle.js';
 
 let modalCheckDates;
+const className = {
+	'elBtnsCalendarPricing': '.wphb-room-calendar-pricing-buttons',
+}
 let elHotelBookingRoom,
 	elTmplDateAvailable,
 	elAddToCart,
 	elForm,
 	roomCalendarPricing,
-	roomPricing;
+	roomPricing,
+	elBtnsCalendarPricing;
 const dataSend = {};
 const toYmdLocal = ( date ) => {
 	const z = ( n ) => ( '0' + n ).slice( -2 );
@@ -172,6 +176,7 @@ const calendarPricing = () => {
 		'.wphb-room-calendar-pricing'
 	);
 	if ( elRoomCalendarPricing ) {
+		elBtnsCalendarPricing = document.querySelector( className.elBtnsCalendarPricing );
 		const roomId = parseInt( elRoomCalendarPricing.dataset.roomId ) ?? 0;
 		let blockDates = [];
 		if ( hotel_settings.block_dates ) {
@@ -254,6 +259,7 @@ const fetchAndSetCalendarDatePrice = (
 			const data = res.data;
 			roomPricing = data.pricing;
 			setCalendarDatePrice( calendarInstance, roomPricing );
+			elBtnsCalendarPricing.style.display = 'block';
 		} )
 		.catch( ( err ) => console.log( err ) )
 		.finally( () => {
