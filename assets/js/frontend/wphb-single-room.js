@@ -1,6 +1,6 @@
 import flatpickr from 'flatpickr';
 import tingle from 'tingle.js';
-
+import 'flatpickr/dist/flatpickr.css';
 let modalCheckDates;
 const className = {
 	'elBtnsCalendarPricing': '.wphb-room-calendar-pricing-buttons',

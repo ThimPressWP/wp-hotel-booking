@@ -1,5 +1,5 @@
 import flatpickr from 'flatpickr';
-
+import 'flatpickr/dist/flatpickr.css';
 ( function( $ ) {
 	const $doc = $( document );
 
