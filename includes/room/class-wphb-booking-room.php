@@ -269,11 +269,18 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 					$expected_price = $room_product->get_total( $room_product->get_data( 'check_in_date' ), $room_product->get_data( 'check_out_date' ), $room_product->get_data( 'quantity' ), false );
 					$night          = hb_count_nights_two_dates( $room_product->get_data( 'check_out_date' ), $room_product->get_data( 'check_in_date' ) );
 					$price_html     = '<br>' . __( 'Total: ', 'wp-hotel-booking' ) . hb_format_price( $expected_price );
-					$night_html     = '<br>' . __( 'Night: ', 'wp-hotel-booking' ) . $night;
+					$night_html     = __( 'Night: ', 'wp-hotel-booking' ) . $night;
+					$adult          = __( 'Adult: ', 'wp-hotel-booking' ) . $adult_qty;
+					$child          = __( 'Child: ', 'wp-hotel-booking' ) . $child_qty;
 					// room has been found
 					$res->status = 'success';
 					$res->data   = array(
-						'dates_booked' => $dates_checked . $night_html . $price_html,
+						'dates_booked' => sprintf(
+							'<div>%s</div> %s %s',
+							$night_html,
+							"$adult, $child",
+							$price_html
+						),
 						'html_extra'   => $html_add_to_cart,
 						'room_id'      => $room_id,
 						'qty'          => $qty,

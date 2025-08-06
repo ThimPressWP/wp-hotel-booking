@@ -35,7 +35,7 @@ $cart = WP_Hotel_Booking::instance()->cart;
 				<thead>
 				<tr>
 					<th class="hb_room_type"><?php _e( 'Room type', 'wp-hotel-booking' ); ?></th>
-					<th class="hb_capacity"><?php _e( 'Capacity', 'wp-hotel-booking' ); ?></th>
+					<th class="hb_capacity"><?php _e( 'Guest', 'wp-hotel-booking' ); ?></th>
 					<th class="hb_quantity"><?php _e( 'Quantity', 'wp-hotel-booking' ); ?></th>
 					<th class="hb_check_in"><?php _e( 'Check - in', 'wp-hotel-booking' ); ?></th>
 					<th class="hb_check_out"><?php _e( 'Check - out', 'wp-hotel-booking' ); ?></th>
@@ -52,7 +52,8 @@ $cart = WP_Hotel_Booking::instance()->cart;
 						/**
 						 * @var $room WPHB_Room
 						 */
-						if ( ( $num_of_rooms = (int) $room->get_data( 'quantity' ) ) == 0 ) {
+						$num_of_rooms = (int) $room->get_data( 'quantity' );
+						if ( $num_of_rooms === 0 ) {
 							continue;
 						}
 						$cart_extra = $cart->get_extra_packages( $cart_id );
@@ -66,6 +67,9 @@ $cart = WP_Hotel_Booking::instance()->cart;
 						} elseif ( $type_deposit == 'fixed' ) {
 							$deposit = hb_format_price( get_post_meta( $room->ID, '_hb_deposit_amount', true ) );
 						}
+
+						$adult_qty = (int) $room->get_data( 'adult_qty' );
+						$child_qty = (int) $room->get_data( 'child_qty' );
 						?>
 
 						<tr class="hb_checkout_item" data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
@@ -73,8 +77,8 @@ $cart = WP_Hotel_Booking::instance()->cart;
 								<a href="<?php echo esc_url( get_permalink( $room->ID ) ); ?>"><?php echo apply_filters( 'hb_checkout_room_name', $room->name, $room->ID ); ?><?php // printf( '%s', $room->capacity_title ? ' (' . $room->capacity_title . ')' : '' ); ?></a>
 							</td>
 							<td class="hb_capacity">
-								<span><?php echo esc_html( sprintf( _n( '%d adult', '%d adults', $room->capacity, 'wp-hotel-booking' ), $room->capacity ) ); ?></span>
-								<span><?php echo esc_html( sprintf( _n( '%d child', '%d child', $room->max_child, 'wp-hotel-booking' ), $room->max_child ) ); ?></span> 
+								<span><?php echo esc_html( sprintf( _n( '%d adult', '%d adults', $adult_qty, 'wp-hotel-booking' ), $adult_qty ) ); ?></span>
+								<span><?php echo esc_html( sprintf( _n( '%d child', '%d child', $child_qty, 'wp-hotel-booking' ), $child_qty ) ); ?></span>
 							</td>
 							<td class="hb_quantity">
 								<p><?php echo esc_html( $num_of_rooms ); ?></p>

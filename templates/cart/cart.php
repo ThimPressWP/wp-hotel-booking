@@ -6,7 +6,7 @@
  *
  * @author  ThimPress, leehld
  * @package WP-Hotel-Booking/Templates
- * @version 1.9.7.6
+ * @version 1.9.7.8
  */
 
 /**
@@ -35,7 +35,7 @@ global $hb_settings;
 				<tr>
 					<th>&nbsp;</th>
 					<th class="hb_room_type"><?php _e( 'Room type', 'wp-hotel-booking' ); ?></th>
-					<th class="hb_capacity"><?php _e( 'Capacity', 'wp-hotel-booking' ); ?></th>
+					<th class="hb_capacity"><?php _e( 'Guest', 'wp-hotel-booking' ); ?></th>
 					<th class="hb_quantity"><?php _e( 'Quantity', 'wp-hotel-booking' ); ?></th>
 					<th class="hb_check_in"><?php _e( 'Check - in', 'wp-hotel-booking' ); ?></th>
 					<th class="hb_check_out"><?php _e( 'Check - out', 'wp-hotel-booking' ); ?></th>
@@ -44,19 +44,23 @@ global $hb_settings;
 					<th class="hb_gross_total"><?php _e( 'Gross Total', 'wp-hotel-booking' ); ?></th>
 				</tr>
 				</thead>
-				<?php if ( $rooms = $cart->get_rooms() ) { ?>
+				<?php
+				$rooms = $cart->get_rooms();
+				if ( $rooms ) {
+					?>
 					<?php foreach ( $rooms as $cart_id => $room ) { ?>
 						<?php
 						/**
 						 * @var $room WPHB_Room
 						 */
-						$enable = get_post_meta( $room->ID, '_hb_enable_deposit', true );
-						if ( ( $num_of_rooms = (int) $room->get_data( 'quantity' ) ) == 0 ) {
+						$enable       = get_post_meta( $room->ID, '_hb_enable_deposit', true );
+						$num_of_rooms = (int) $room->get_data( 'quantity' );
+						if ( $num_of_rooms === 0 ) {
 							continue;
 						}
 						$cart_extra = $cart->get_extra_packages( $cart_id );
 
-                        // check deposit each room
+						// check deposit each room
 						$type_deposit = get_post_meta( $room->ID, '_hb_deposit_type', true );
 						if ( $type_deposit == 'percent' ) {
 							$deposit = get_post_meta( $room->ID, '_hb_deposit_amount', true ) . '%';
@@ -64,10 +68,12 @@ global $hb_settings;
 							$deposit = hb_format_price( get_post_meta( $room->ID, '_hb_deposit_amount', true ) );
 						}
 
-                        $check_in_date  = new WPHB_Datetime( $room->get_data( 'check_in_date' ) );
-                        $check_in_date_str  = $check_in_date->format( WPHB_Datetime::I18N_FORMAT );
-                        $check_out_date  = new WPHB_Datetime( $room->get_data( 'check_out_date' ) );
-						$check_out_date_str  = $check_out_date->format( WPHB_Datetime::I18N_FORMAT );
+						$check_in_date      = new WPHB_Datetime( $room->get_data( 'check_in_date' ) );
+						$check_in_date_str  = $check_in_date->format( WPHB_Datetime::I18N_FORMAT );
+						$check_out_date     = new WPHB_Datetime( $room->get_data( 'check_out_date' ) );
+						$check_out_date_str = $check_out_date->format( WPHB_Datetime::I18N_FORMAT );
+						$adult_qty          = (int) $room->get_data( 'adult_qty' );
+						$child_qty          = (int) $room->get_data( 'child_qty' );
 						?>
 
 						<tr class="hb_checkout_item" data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
@@ -81,18 +87,18 @@ global $hb_settings;
 								<a href="<?php echo get_permalink( $room->ID ); ?>"><?php echo apply_filters( 'hb_cart_room_name', $room->name, $room->ID ); ?><?php // printf( '%s', $room->capacity_title ? ' (' . $room->capacity_title . ')' : '' ); ?></a>
 							</td>
 							<td class="hb_capacity">
-								<span><?php echo esc_html( sprintf( _n( '%d adult', '%d adults', $room->capacity, 'wp-hotel-booking' ), $room->capacity ) ); ?></span>
-								<span><?php echo esc_html( sprintf( _n( '%d child', '%d child', $room->max_child, 'wp-hotel-booking' ), $room->max_child ) ); ?></span>
+								<span><?php echo esc_html( sprintf( _n( '%d adult', '%d adults', $adult_qty, 'wp-hotel-booking' ), $adult_qty ) ); ?></span>
+								<span><?php echo esc_html( sprintf( _n( '%d child', '%d children', $child_qty, 'wp-hotel-booking' ), $child_qty ) ); ?></span>
 							</td>
 							<td class="hb_quantity">
 								<p><?php echo esc_html( $num_of_rooms ); ?></p>
 							</td>
 							<td class="hb_check_in">
-                                <?php echo esc_html( $check_in_date_str ); ?>
-                            </td>
+								<?php echo esc_html( $check_in_date_str ); ?>
+							</td>
 							<td class="hb_check_out">
 								<?php echo esc_html( $check_out_date_str ); ?>
-                            </td>
+							</td>
 							<td class="hb_night"><?php echo hb_count_nights_two_dates( $room->get_data( 'check_out_date' ), $room->get_data( 'check_in_date' ) ); ?></td>
 							<td class="hb_deposit"><?php echo $enable == 1 ? $deposit : __( 'Disable', 'wp-hotel-booking' ); ?></td>
 							<td class="hb_gross_total">

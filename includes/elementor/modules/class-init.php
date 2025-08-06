@@ -34,7 +34,7 @@ class Elementor {
 			'room-booking',
 			'room-preview',
 			'room-related',
-			'room-availability',
+			//'room-availability',
 			'room-calendar-pricing',
 		),
 		'archive-room' => array(
