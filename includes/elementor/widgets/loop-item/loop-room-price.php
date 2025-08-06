@@ -295,18 +295,20 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
         <div class="hb-room-single__price">
 		    <?php if ( $settings['layout'] == 'regular' ) {
 			    $price_display = apply_filters( 'hotel_booking_loop_room_price_display_style', $hb_settings->get( 'price_display' ) );
-			    $plan_prices   = hb_room_get_selected_plan( get_the_ID() );
-			    $prices        = $plan_prices && isset( $plan_prices->prices ) ? $plan_prices->prices : [];
 			    $text_before   = $settings['text_before'] ?? '';
 			    $text_after    = $settings['text_unit'] ?? '';
 
-			    if ( ! empty( $prices ) ) {
-				    $min_price = (float) min( $prices );
-				    $max_price = (float) max( $prices );
-				    $min       = $min_price + ( hb_price_including_tax() ? ( $min_price * hb_get_tax_settings() ) : 0 );
-				    $max       = $max_price + ( hb_price_including_tax() ? ( $max_price * hb_get_tax_settings() ) : 0 );
+			    $booking_room_details = $room->get_booking_room_details();
+			    $pricings             = [];
+			    if ( ! empty( $booking_room_details ) ) {
+			    	foreach ( $booking_room_details as $day_on_week => $day ) {
+			    		$pricings[] = $day['price'];
+			    	}
+			    }
+			    if ( ! empty( $pricings ) ) {
+				    $min = min( $pricings );
+				    $max = max( $pricings );
 				    ?>
-
                     <div class="price">
                         <span class="title-price"><?php echo $text_before; ?></span>
 
