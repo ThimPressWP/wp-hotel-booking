@@ -1,7 +1,7 @@
 === WP Hotel Booking ===
 Contributors: thimpress, leehld, phamtungpth, thoakim
 Donate link: https://thimpress.com/
-Tags: hotel, booking, hotel booking, reservation, reservations
+Tags: hotel booking, reservation, booking system, room management, accommodation
 Tested up to: 6.8
 Stable tag: 2.2.1
 License: GPLv2 or later

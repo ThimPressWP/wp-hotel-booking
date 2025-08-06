@@ -18,17 +18,33 @@ global $hb_settings;
 /**
  * @var $hb_settings WPHB_Settings
  */
-$price_display = apply_filters( 'hotel_booking_loop_room_price_display_style', $hb_settings->get( 'price_display' ) );
-$prices        = hb_room_get_selected_plan( get_the_ID() );
-$prices        = isset( $prices->prices ) ? $prices->prices : array();
-?>
+$price_display  = apply_filters( 'hotel_booking_loop_room_price_display_style', $hb_settings->get( 'price_display' ) );
+$datetime 		= new \DateTime('NOW');
+$tomorrow 		= new \DateTime('tomorrow');
+$format 		= get_option('date_format');
+$check_in_date  = hb_get_request( 'check_in_date', $datetime->format($format));
+$check_out_date = hb_get_request( 'check_out_date', $tomorrow->format($format));
 
-<?php
-if ( $prices ) {
-	$min_price = is_numeric( min( $prices ) ) ? min( $prices ) : 0;
-	$max_price = is_numeric( max( $prices ) ) ? max( $prices ) : 0;
-	$min       = $min_price + ( hb_price_including_tax() ? ( $min_price * hb_get_tax_settings() ) : 0 );
-	$max       = $max_price + ( hb_price_including_tax() ? ( $max_price * hb_get_tax_settings() ) : 0 );
+$room = \WPHB_Room::instance(
+    get_the_ID(),
+    array(
+        'check_in_date'  => $check_in_date,
+        'check_out_date' => $check_out_date,
+    )
+);
+if ( ! $room ) {
+	return;
+}
+$booking_room_details = $room->get_booking_room_details();
+$pricings             = [];
+if ( ! empty( $booking_room_details ) ) {
+	foreach ( $booking_room_details as $day_on_week => $day ) {
+		$pricings[] = $day['price'];
+	}
+}
+if ( ! empty( $pricings ) ) {
+	$min = min( $pricings );
+	$max = max( $pricings );
 	?>
 
 	<div class="price">

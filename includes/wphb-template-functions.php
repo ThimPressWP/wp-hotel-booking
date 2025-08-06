@@ -641,10 +641,12 @@ if ( ! function_exists( 'hotel_display_pricing_plans' ) ) {
 			return $tabs;
 		}
 
+		$room = WPHB_Room::instance( get_the_ID() );
+
 		$tabs[] = array(
 			'id'      => 'hb_room_pricing_plans',
 			'title'   => __( 'Pricing Plans', 'wp-hotel-booking' ),
-			'content' => '',
+			'content' => hb_get_template_content( 'single-room/room-calendar-pricing.php', array( 'room' => $room ) ),
 		);
 
 		return $tabs;

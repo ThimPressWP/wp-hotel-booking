@@ -215,8 +215,8 @@ class Thim_Ekit_Widget_Room_Booking extends Widget_Base
 
             <?php } else {
                 $external_link = get_post_meta( $hb_room->ID, '_hb_external_link', true );
-                $external_link = ! empty( $external_link ) ? $external_link : '#';
-                 ?>
+                $external_link = ! empty( $external_link ) ? esc_url( $external_link ) : '#';
+                ?>
 
                 <a href="<?php echo $external_link; ?>" <?php echo ! empty( $external_link ) ? 'target="_blank"' : ''; ?> data-id="<?php echo esc_attr( $hb_room->ID ); ?>" data-name="<?php echo esc_attr( $hb_room->name ); ?>"
                     class="hb_button hb_primary" id="hb_room_load_booking_form">
