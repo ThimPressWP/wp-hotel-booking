@@ -54,6 +54,8 @@ if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 					<th><?php _e( 'Check in - Checkout', 'wp-hotel-booking' ); ?></th>
 					<th><?php _e( 'Night', 'wp-hotel-booking' ); ?></th>
 					<th><?php _e( 'Qty', 'wp-hotel-booking' ); ?></th>
+					<th><?php _e( 'Adults', 'wp-hotel-booking' ); ?></th>
+					<th><?php _e( 'Childs', 'wp-hotel-booking' ); ?></th>
 					<th><?php _e( 'Total', 'wp-hotel-booking' ); ?></th>
 				</tr>
 				</thead>
@@ -74,6 +76,12 @@ if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 						</td>
 						<td>
 							<?php printf( '%s', hb_get_order_item_meta( $room->order_item_id, 'qty', true ) ); ?>
+						</td>
+						<td>
+							<?php echo esc_html( intval( hb_get_order_item_meta( $room->order_item_id, 'adult_qty', true ) ) ?? 1 ); ?>
+						</td>
+						<td>
+							<?php echo esc_html( intval( hb_get_order_item_meta( $room->order_item_id, 'child_qty', true ) ) ?? 0 ); ?>
 						</td>
 						<td>
 							<?php printf( '%s', hb_format_price( hb_get_order_item_meta( $room->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $booking->currency ) ) ); ?>
@@ -103,19 +111,19 @@ if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 				<?php } ?>
 
 				<tr>
-					<td colspan="4"><?php _e( 'Sub Total', 'wp-hotel-booking' ); ?></td>
+					<td colspan="6"><?php _e( 'Sub Total', 'wp-hotel-booking' ); ?></td>
 					<td>
 						<?php printf( '%s', hb_format_price( hb_booking_subtotal( $booking->id ), hb_get_currency_symbol( $booking->currency ) ) ); ?>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="4"><?php _e( 'Tax', 'wp-hotel-booking' ); ?></td>
+					<td colspan="6"><?php _e( 'Tax', 'wp-hotel-booking' ); ?></td>
 					<td>
 						<?php printf( '%s', apply_filters( 'hotel_booking_admin_booking_details', hb_format_price( hb_booking_tax_total( $booking->id ), hb_get_currency_symbol( $booking->currency ) ), $booking ) ); ?>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="4"><?php _e( 'Grand Total', 'wp-hotel-booking' ); ?></td>
+					<td colspan="6"><?php _e( 'Grand Total', 'wp-hotel-booking' ); ?></td>
 					<td>
 						<?php printf( '%s', hb_format_price( hb_booking_total( $booking->id ), hb_get_currency_symbol( $booking->currency ) ) ); ?>
 					</td>
@@ -135,7 +143,7 @@ if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 				if ( floatval( hb_booking_total( $booking->id ) ) !== floatval( $advance_payment ) ) {
 					?>
 					<tr>
-						<td colspan="4"><?php _e( 'Advance Payment', 'wp-hotel-booking' ); ?></td>
+						<td colspan="6"><?php _e( 'Advance Payment', 'wp-hotel-booking' ); ?></td>
 						<td>
 							<?php printf( '%s', hb_format_price( $advance_payment, hb_get_currency_symbol( $booking->currency ) ) ); ?>
 						</td>

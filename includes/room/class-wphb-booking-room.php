@@ -210,8 +210,8 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 				$room_id            = WPHB_Helpers::get_param( 'room-id', '', 'int' );
 				$check_in_date_str  = WPHB_Helpers::get_param( 'check_in_date' );
 				$check_out_date_str = WPHB_Helpers::get_param( 'check_out_date' );
-				$max_adult          = WPHB_Helpers::get_param( 'max_adult', 1, 'int' );
-				$max_child          = WPHB_Helpers::get_param( 'max_child', 0, 'int' );
+				$adult_qty          = WPHB_Helpers::get_param( 'adult_qty', 1, 'int' );
+				$child_qty          = WPHB_Helpers::get_param( 'child_qty', 0, 'int' );
 
 				if ( ! wp_verify_nonce( $nonce, 'hb_booking_nonce_action' ) || empty( $room_id ) ) {
 					throw new Exception( __( 'Invalid request', 'wp-hotel-booking' ) );
@@ -228,10 +228,10 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 				$room_max_adult = (int) get_post_meta( $room_id, '_hb_room_capacity_adult', true );
 				$room_max_adult = $room_max_adult > 0 ? $room_max_adult : 1;
 				$room_max_child = (int) get_post_meta( $room_id, '_hb_max_child_per_room', true );
-				if ( $max_adult > $room_max_adult ) {
+				if ( $adult_qty > $room_max_adult ) {
 					throw new Exception( sprintf( __( 'The maximum number of adults allowed per room is %s', 'wp-hotel-booking' ), $room_max_adult ) );
 				}
-				if ( $max_child > $room_max_child ) {
+				if ( $child_qty > $room_max_child ) {
 					throw new Exception( sprintf( __( 'The maximum number of children allowed per room is %s', 'wp-hotel-booking' ), $room_max_child ) );
 				}
 

@@ -41,12 +41,12 @@ $max_child   = (int) get_post_meta( $room_id, '_hb_max_child_per_room', true );
 				</div>
 				<div class="hb-booking-room-form-group">
 					<div class="hb-booking-room-form-field hb-form-field-input">
-						<input type="number" name="max_adult" value="" placeholder="<?php _e( 'Adult', 'wp-hotel-booking' ); ?>" min="1" max="<?php echo esc_attr( $max_adult ) ?>" />
+						<input type="number" name="adult_qty" value="1" placeholder="<?php _e( 'Adult', 'wp-hotel-booking' ); ?>" min="1" max="<?php echo esc_attr( $max_adult ) ?>" />
 					</div>
 				</div>
 				<div class="hb-booking-room-form-group">
 					<div class="hb-booking-room-form-field hb-form-field-input">
-						<input type="number" name="max_child" value="" placeholder="<?php _e( 'Children', 'wp-hotel-booking' ); ?>" min="0" max="<?php echo esc_attr( $max_child ) ?>" />
+						<input type="number" name="child_qty" value="0" placeholder="<?php _e( 'Children', 'wp-hotel-booking' ); ?>" min="0" max="<?php echo esc_attr( $max_child ) ?>" />
 					</div>
 				</div>
 				<div class="hb-booking-room-form-group">

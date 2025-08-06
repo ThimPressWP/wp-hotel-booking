@@ -35,6 +35,7 @@ class Elementor {
 			'room-preview',
 			'room-related',
 			'room-availability',
+			'room-calendar-pricing',
 		),
 		'archive-room' => array(
 			'archive-room',
