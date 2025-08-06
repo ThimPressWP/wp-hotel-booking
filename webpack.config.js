@@ -28,4 +28,23 @@ module.exports = {
 		// generated, and the default externals set.
 		! process.env.WP_NO_EXTERNALS && new DependencyExtractionWebpackPlugin(),
 	].filter( Boolean ),
+	resolve: {
+		// Add `.ts` and `.tsx` as a resolvable extension.
+		extensions: [ '.ts', '.tsx', '.js', '.css', '.scss' ],
+	},
+	module: {
+		rules: [
+			{
+				test: /\.(js|jsx)$/,
+				exclude: /node_modules/,
+				use: {
+					loader: 'babel-loader',
+				},
+			},
+			{
+				test: /\.css$/i,
+				use: [ 'style-loader', 'css-loader' ],
+			},
+		],
+	},
 };

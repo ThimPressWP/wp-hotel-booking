@@ -1,9 +1,30 @@
 import flatpickr from 'flatpickr';
 import tingle from 'tingle.js';
+// import 'flatpickr/dist/flatpickr.min.css';
+import * as utils from '../utils.js';
 
-let elHotelBookingRoom, elTmplDateAvailable, elAddToCart, elForm;
+let modalCheckDates;
+const className = {
+	'elBtnsCalendarPricing': '.wphb-room-calendar-pricing-buttons',
+}
+let elHotelBookingRoom,
+	elTmplDateAvailable,
+	elAddToCart,
+	elForm,
+	roomCalendarPricing,
+	roomPricing,
+	elBtnsCalendarPricing;
 const dataSend = {};
-
+const toYmdLocal = ( date ) => {
+	const z = ( n ) => ( '0' + n ).slice( -2 );
+	return (
+		date.getFullYear() +
+		'/' +
+		z( date.getMonth() + 1 ) +
+		'/' +
+		z( date.getDate() )
+	);
+};
 const wphbRoomInitDatePicker = () => {
 	elHotelBookingRoom = document.querySelector( '#hotel_booking_room_hidden' );
 	if ( ! elHotelBookingRoom ) {
@@ -30,7 +51,10 @@ const wphbRoomInitDatePicker = () => {
 	const datesBlock = [];
 	const dateNow = new Date();
 	const dateTomorrow = new Date( dateNow.setDate( dateNow.getDate() + 1 ) );
-	const minBookingDateNumber = hotel_settings.min_booking_date > 0 ? parseInt( hotel_settings.min_booking_date ) : 1;
+	const minBookingDateNumber =
+		hotel_settings.min_booking_date > 0
+			? parseInt( hotel_settings.min_booking_date )
+			: 1;
 
 	if ( hotel_settings.block_dates ) {
 		const dateTimeStampsBlock = hotel_settings.block_dates;
@@ -106,7 +130,11 @@ const wphbRoomInitDatePicker = () => {
 				// calculate next day available
 				const dateSelected = selectedDates[ 0 ];
 				datePickerCheckOut.clear();
-				const dateNext = new Date( dateSelected.setDate( dateSelected.getDate() + minBookingDateNumber - 1 ) );
+				const dateNext = new Date(
+					dateSelected.setDate(
+						dateSelected.getDate() + minBookingDateNumber - 1
+					)
+				);
 				datePickerCheckOut.set( 'minDate', dateNext );
 				datePickerCheckOut.open();
 				datePickerCheckOut.set( 'disable', [
@@ -126,7 +154,10 @@ const wphbRoomInitDatePicker = () => {
 	// Check out date
 	const optionCheckout = {
 		dateFormat: 'Y/m/d',
-		minDate: hotel_settings.min_booking_date > 0 ?  new Date().fp_incr( hotel_settings.min_booking_date ) : 'today',
+		minDate:
+			hotel_settings.min_booking_date > 0
+				? new Date().fp_incr( hotel_settings.min_booking_date )
+				: 'today',
 		disable: datesBlock,
 		//defaultDate: dateMinCheckOutCanBook,
 		disableMobile: true,
@@ -136,6 +167,139 @@ const wphbRoomInitDatePicker = () => {
 		onChange( selectedDates, dateStr, instance ) {},
 	};
 	datePickerCheckOut = flatpickr( elDateCheckOut, optionCheckout );
+};
+/**
+ * Handle show calendar pricing
+ * Show price by date in calendar when hover
+ * Select date range in calendar
+ */
+const calendarPricing = () => {
+	const elRoomCalendarPricing = document.querySelector(
+		'.wphb-room-calendar-pricing'
+	);
+	if ( elRoomCalendarPricing ) {
+		elBtnsCalendarPricing = document.querySelector( className.elBtnsCalendarPricing );
+		const roomId = parseInt( elRoomCalendarPricing.dataset.roomId ) ?? 0;
+		let blockDates = [];
+		if ( hotel_settings.block_dates ) {
+			const dateTimeStampsBlock = hotel_settings.block_dates;
+
+			if ( dateTimeStampsBlock ) {
+				dateTimeStampsBlock.forEach( ( timeStamp ) => {
+					const date = new Date( timeStamp * 1000 );
+					const dateBlock = new Date(
+						date.getFullYear(),
+						date.getMonth(),
+						date.getDate()
+					);
+					blockDates.push( dateBlock );
+				} );
+			}
+		}
+
+		roomCalendarPricing = flatpickr( elRoomCalendarPricing, {
+			dateFormat: 'Y/m/d',
+			mode: 'range',
+			minDate: 'today',
+			inline: true,
+			disable: blockDates,
+			//defaultDate: dateMinCheckInCanBook,
+			showMonths: 2,
+			locale: {
+				firstDayOfWeek: 1,
+			},
+			onReady: function ( selectedDates, dateStr, instance ) {
+				let month = instance.currentMonth + 1,
+					year = instance.currentYear;
+				fetchAndSetCalendarDatePrice( instance, roomId, month, year );
+			},
+			onChange: function ( selectedDates, dateStr, instance ) {
+				if ( selectedDates.length === 2 && elForm ) {
+					elForm.querySelector(
+						'input[name="check_in_date"]'
+					).value = toYmdLocal( selectedDates[ 0 ] );
+					elForm.querySelector(
+						'input[name="check_out_date"]'
+					).value = toYmdLocal( selectedDates[ 1 ] );
+				} else if ( selectedDates.length === 0 ) {
+					elForm.querySelector(
+						'input[name="check_in_date"]'
+					).value = '';
+					elForm.querySelector(
+						'input[name="check_out_date"]'
+					).value = '';
+				}
+				setCalendarDatePrice( instance, roomPricing );
+			},
+			onMonthChange: function ( selectedDates, dateStr, instance ) {
+				let month = instance.currentMonth + 1,
+					year = instance.currentYear;
+				fetchAndSetCalendarDatePrice( instance, roomId, month, year );
+			},
+		} );
+	}
+};
+const fetchAndSetCalendarDatePrice = (
+	calendarInstance,
+	roomId,
+	month,
+	year
+) => {
+	let restUrl = `${ hotel_settings.wphb_rest_url }wphb/v1/rooms/room-pricing?roomId=${ roomId }&month=${ month }&year=${ year }`;
+	showCalendarOverlay( calendarInstance );
+	fetch( restUrl, {
+		method: 'GET',
+		headers: {
+			'X-WP-Nonce': hotel_settings.wphb_rest_nonce,
+		},
+	} ) // wrapped
+		.then( ( res ) => res.json() )
+		.then( ( res ) => {
+			if ( res.status === 'error' ) {
+				throw new Error( res.message );
+			}
+			const data = res.data;
+			roomPricing = data.pricing;
+			setCalendarDatePrice( calendarInstance, roomPricing );
+			elBtnsCalendarPricing.style.display = 'block';
+		} )
+		.catch( ( err ) => console.log( err ) )
+		.finally( () => {
+			hideCalendarOverlay( calendarInstance );
+		} );
+};
+const showCalendarOverlay = ( calendarInstance ) => {
+	let calendar = calendarInstance.calendarContainer;
+	if ( ! calendar.querySelector( '.calendar-loading-overlay' ) ) {
+		let overlay = document.createElement( 'div' );
+		overlay.className = 'calendar-loading-overlay';
+		overlay.innerHTML = '<div class="calendar-loading-spinner"></div>';
+		calendar.appendChild( overlay );
+	}
+};
+const hideCalendarOverlay = ( calendarInstance ) => {
+	let calendar = calendarInstance.calendarContainer;
+	let overlay = calendar.querySelector( '.calendar-loading-overlay' );
+	if ( overlay ) overlay.remove();
+};
+const setCalendarDatePrice = ( calendarInstance, pricing ) => {
+	const dayCells = calendarInstance.calendarContainer.querySelectorAll(
+		'.flatpickr-day:not(.hidden)'
+	);
+	dayCells.forEach( ( dayElem, idx ) => {
+		const dateObj = dayElem.dateObj;
+		// Skip if dateObj is missing
+		if ( ! dateObj || undefined === pricing[ idx ] ) {
+			return;
+		}
+		dayElem.setAttribute(
+			'data-title',
+			decodeHtmlEntity( pricing[ idx ].price_html )
+		);
+	} );
+};
+const decodeHtmlEntity = ( str ) => {
+	return new DOMParser().parseFromString( str, 'text/html' ).body.textContent;
 };
 const wphbRoomCheckDates = ( formCheckDate ) => {
 	const elBtnCheck = formCheckDate.querySelector( 'button[type=submit]' );
@@ -337,7 +501,6 @@ const wphbRoomAddToCart = ( formAddToCart ) => {
 			elLoading.classList.toggle( 'loading' );
 		} );
 };
-
 // Events
 document.addEventListener( 'submit', function ( e ) {
 	const target = e.target;
@@ -378,15 +541,16 @@ document.addEventListener( 'click', function ( e ) {
 		}
 
 		// Init new modal
-		modalCheckDates = new tingle.modal( {
-			onOpen() {
-				elHotelBookingRoom.style.display = 'block';
-				wphbRoomInitDatePicker();
-			},
-			onClose() {
-				elHotelBookingRoom.style.display = 'none';
-			},
-		} );
+		if ( ! modalCheckDates ) {
+			modalCheckDates = new tingle.modal( {
+				onOpen() {
+					elHotelBookingRoom.style.display = 'block';
+				},
+				onClose() {
+					elHotelBookingRoom.style.display = 'none';
+				},
+			} );
+		}
 
 		// set content
 		modalCheckDates.setContent( elHotelBookingRoom );
@@ -412,22 +576,56 @@ document.addEventListener( 'click', function ( e ) {
 		modalPreview = new tingle.modal();
 		modalPreview.setContent( iframe );
 		modalPreview.open();
+	} else if ( target.classList.contains( 'hb-btn-cancel' ) ) {
+		if ( undefined !== roomCalendarPricing ) {
+			roomCalendarPricing.clear();
+		}
+	} else if ( target.classList.contains( 'hb-btn-apply' ) ) {
+		if ( undefined !== roomCalendarPricing ) {
+			if (
+				roomCalendarPricing.selectedDates.length === 2 &&
+				undefined !== elForm
+			) {
+				if ( document.querySelector( '#hb_room_load_booking_form' ) ) {
+					document
+						.querySelector( '#hb_room_load_booking_form' )
+						.click();
+					if ( elTmplDateAvailable ) {
+						elTmplDateAvailable.style.display = 'block';
+					}
+					if ( elAddToCart ) {
+						elAddToCart.style.display = 'none';
+					}
+				} else {
+					elHotelBookingRoom.scrollIntoView( { behavior: 'smooth' } );
+					elForm.style.display = 'block';
+					if ( elAddToCart ) {
+						elAddToCart.style.display = 'none';
+					}
+				}
+			}
+		}
 	}
 
 	// faq toggle
-	const targetFAQ = target.closest('._hb_room_faqs__detail');
-    if ( targetFAQ ) {
-        targetFAQ.classList.toggle('toggled');
-    }
+	const targetFAQ = target.closest( '._hb_room_faqs__detail' );
+	if ( targetFAQ ) {
+		targetFAQ.classList.toggle( 'toggled' );
+	}
 } );
 
-let modalCheckDates;
 let modalPreview;
 document.addEventListener( 'DOMContentLoaded', function ( e ) {
-	const elRoomLoadBookingForm = document.querySelector(
-		'#hb_room_load_booking_form'
-	);
-	if ( ! elRoomLoadBookingForm ) {
-		wphbRoomInitDatePicker();
-	}
+	wphbRoomInitDatePicker();
+
+	// Check view calendar pricing will load calendar pricing
+	const elRoomCalendarPricing = document.querySelector( '.wphb-room-calendar-pricing' );
+	utils.listenElementViewed( elRoomCalendarPricing, () => {
+		if ( elRoomCalendarPricing.classList.contains( 'loaded' ) ) {
+			return;
+		}
+
+		elRoomCalendarPricing.classList.add( 'loaded' );
+		calendarPricing();
+	} )
 } );

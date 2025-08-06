@@ -1,5 +1,5 @@
 import flatpickr from 'flatpickr';
-
+import 'flatpickr/dist/flatpickr.min.css';
 ( function( $ ) {
 	const $doc = $( document );
 
@@ -867,14 +867,14 @@ import flatpickr from 'flatpickr';
 		// single room tabs video & gallery
 		$(".hb_single_room .images_video_tabs a").click(function(e) {
 			e.preventDefault();
-			
-			var parentTab = $(this).closest(".images_video_tabs"); 
-			var target = $(this).attr("href"); 
-			
-			parentTab.find("a").removeClass("active"); 
+
+			var parentTab = $(this).closest(".images_video_tabs");
+			var target = $(this).attr("href");
+
+			parentTab.find("a").removeClass("active");
 			$(this).addClass("active");
 
-			parentTab.nextAll(".room_media_content").hide(); 
+			parentTab.nextAll(".room_media_content").hide();
 			$(target).fadeIn();
 		});
 

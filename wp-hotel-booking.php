@@ -4,7 +4,7 @@
  * Plugin URI: http://thimpress.com/
  * Description: Full of professional features for a booking room system
  * Author: ThimPress
- * Version: 2.2.1
+ * Version: 2.2.2-beta.1
  * Author URI: http://thimpress.com
  * Text Domain: wp-hotel-booking
  * Domain Path: /languages/
@@ -427,7 +427,7 @@ class WP_Hotel_Booking {
 		wp_register_style( 'wp-admin-review-image', $this->plugin_url( "assets/css/admin/review-image{$min}.css" ), [], $v_rand );
 		wp_register_style( 'wp-admin-hotel-booking-fullcalendar', $this->plugin_url( 'assets/css/fullcalendar.min.css' ) );
 		wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.css' ), [], WPHB_VERSION );
-		wp_register_style( 'wp-hotel-booking-theme-default', $this->plugin_url( 'assets/css/theme-default.css' ), [], WPHB_VERSION );
+		wp_register_style( 'wp-hotel-booking-theme-default', $this->plugin_url( 'assets/css/theme-default.css' ), [], rand() );
 		wp_register_style( 'wp-admin-hotel-booking-calendar-v2', $this->plugin_url( 'assets/css/admin/main.min.css' ) );
 		wp_register_style( 'tingle-css', $this->plugin_url( 'assets/lib/tingle.css' ) );
 		wp_register_style( 'flatpickr-css', $this->plugin_url( 'assets/lib/flatpickr.min.css' ) );
@@ -534,7 +534,7 @@ class WP_Hotel_Booking {
 
 		// Single room script.
 		wp_register_script(
-			'wpdb-single-room-js',
+			'wphb-single-room-js',
 			WPHB_PLUGIN_URL . "/assets/dist/js/frontend/wphb-single-room{$min}.js",
 			[],
 			$version,
@@ -578,7 +578,7 @@ class WP_Hotel_Booking {
 			if ( is_singular( 'hb_room' ) ) {
 				wp_enqueue_style( 'tingle-css' );
 				wp_enqueue_style( 'wphb-single-room-css' );
-				wp_enqueue_script( 'wpdb-single-room-js' );
+				wp_enqueue_script( 'wphb-single-room-js' );
 				wp_enqueue_script( 'wp-hotel-booking-gallery' );
 				wp_enqueue_script( 'flexslider' );
 
@@ -668,6 +668,7 @@ class WP_Hotel_Booking {
 				timezone: '<?php echo esc_html( current_time( 'timestamp' ) ); ?>',
 				min_booking_date: <?php echo esc_html( $min_booking_date ); ?>,
 				wphb_rest_url: '<?php echo get_rest_url(); ?>',
+				wphb_rest_nonce: '<?php echo wp_create_nonce( 'wp_rest' ); ?>',
 				is_page_search: <?php echo is_page( hb_get_page_id( 'search' ) ) ? 1 : 0; ?>,
 				url_page_search: '<?php echo get_permalink( hb_get_page_id( 'search' ) ); ?>',
 				room_id: <?php echo isset( $screen->id ) && $screen->id == 'hb_room' ? get_the_ID() : 0; ?>,

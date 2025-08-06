@@ -39,6 +39,13 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 					'permission_callback' => '__return_true',
 				),
 			),
+			'room-pricing'   => array(
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'room_pricing' ),
+					'permission_callback' => '__return_true',
+				),
+			),
 			// 'remove-item'    => array(
 			// array(
 			// 'methods'             => WP_REST_Server::CREATABLE,
@@ -348,5 +355,57 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 			$response->message = $e->getMessage();
 		}
 		wp_send_json( $response );
+	}
+	public function room_pricing( WP_REST_Request $request ) {
+		$params   = $request->get_params();
+		$response = new WPHB_REST_RESPONSE();
+		try {
+			$room_id = WPHB_Helpers::get_param( 'roomId', 0, 'int' );
+			if ( ! $room_id ) {
+				throw new Exception( esc_html__( 'roomId is required', 'wp-hotel-booking' ) );
+			}
+			if ( get_post_type( $room_id ) !== 'hb_room' ) {
+				throw new Exception( esc_html__( 'roomId is invalid', 'wp-hotel-booking' ) );
+			}
+			$first_month = WPHB_Helpers::get_param( 'month', intval( date( 'n' ) ), 'int' );
+			$year        = WPHB_Helpers::get_param( 'year', intval( date( 'Y' ) ), 'int' );
+
+			$first_month_date_obj  = DateTime::createFromFormat( 'Y-n', "$year-$first_month");
+			$first_month_date_str  = $first_month_date_obj->format( 'm/d/Y' );
+			$second_month_date_obj = $first_month_date_obj->modify( '+1 month' );
+			
+			$first_month_pricing  = $this->get_room_pricing( $room_id, $first_month_date_str );
+			$second_month_pricing = $this->get_room_pricing( $room_id, $second_month_date_obj->format('m/d/Y') );
+			$response->status = 'success';
+			$response->data->pricing = array_merge( $first_month_pricing, $second_month_pricing );
+		} catch (Exception $e) {
+			$response->message = $e->getMessage();
+		}
+		return rest_ensure_response( $response );
+	}
+	public function get_room_pricing( $room_id = null, $date = null ) {
+		$start = date( 'm/01/Y', strtotime( $date ) );
+		$end   = date( 'm/t/Y', strtotime( $date ) );
+
+		$pricing = array();
+		if ( ! $room_id || ! $date ) {
+			return $pricing;
+		}
+
+		$month_day = date( 't', strtotime( $end ) );
+		$room      = WPHB_Room::instance( $room_id );
+		for ( $i = 0; $i < $month_day; $i++ ) {
+			$day   = strtotime( $start ) + $i * 24 * HOUR_IN_SECONDS;
+			$price = $room->get_price( $day, false );
+			$price = $price ? floatval( $price ) : '0';
+
+			$pricing[] = array(
+				'price'      => $price,
+				'date'       => date( 'Y-m-d\TH:i:s\Z', $day ),
+				'price_html' => hb_format_price( $price, true, false ),
+			);
+		}
+
+		return $pricing;
 	}
 }

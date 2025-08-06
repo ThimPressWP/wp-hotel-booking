@@ -33,7 +33,8 @@ class Elementor {
 			'room-review',
 			'room-booking',
 			'room-preview',
-			'room-related'
+			'room-related',
+			'room-availability',
 		),
 		'archive-room' => array(
 			'archive-room',
