@@ -1,6 +1,8 @@
 import flatpickr from 'flatpickr';
 import tingle from 'tingle.js';
-import 'flatpickr/dist/flatpickr.css';
+// import 'flatpickr/dist/flatpickr.min.css';
+import * as utils from '../utils.js';
+
 let modalCheckDates;
 const className = {
 	'elBtnsCalendarPricing': '.wphb-room-calendar-pricing-buttons',
@@ -615,5 +617,15 @@ document.addEventListener( 'click', function ( e ) {
 let modalPreview;
 document.addEventListener( 'DOMContentLoaded', function ( e ) {
 	wphbRoomInitDatePicker();
-	calendarPricing();
+
+	// Check view calendar pricing will load calendar pricing
+	const elRoomCalendarPricing = document.querySelector( '.wphb-room-calendar-pricing' );
+	utils.listenElementViewed( elRoomCalendarPricing, () => {
+		if ( elRoomCalendarPricing.classList.contains( 'loaded' ) ) {
+			return;
+		}
+
+		elRoomCalendarPricing.classList.add( 'loaded' );
+		calendarPricing();
+	} )
 } );
