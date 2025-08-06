@@ -351,6 +351,9 @@ class WPHB_Ajax {
 			$room_id        = WPHB_Helpers::get_param( 'room-id', 0, 'int' );
 			$check_in_date  = WPHB_Helpers::get_param( 'check_in_date' );
 			$check_out_date = WPHB_Helpers::get_param( 'check_out_date' );
+			$adult_qty      = WPHB_Helpers::get_param( 'adult_qty', 1, 'int' );
+			$child_qty      = WPHB_Helpers::get_param( 'child_qty', 0, 'int' );
+
 			$from_check_dates_room = WPHB_Helpers::get_param( 'from-check-dates-room', 0, 'int' );
 
 			if ( ! $room_id ) {
@@ -367,6 +370,8 @@ class WPHB_Ajax {
 				'product_id'     => $room_id,
 				'check_in_date'  => $check_in_date,
 				'check_out_date' => $check_out_date,
+				'adult_qty'      => $adult_qty,
+				'child_qty'      => $child_qty,
 			);
 
 			$cart_item_id = WP_Hotel_Booking::instance()->cart->add_to_cart( $room_id, $params, $qty );

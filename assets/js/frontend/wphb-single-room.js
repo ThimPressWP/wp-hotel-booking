@@ -510,7 +510,7 @@ const wphbRoomAddToCart = ( formAddToCart ) => {
 				return;
 			}
 
-			window.location.href = data.redirect;
+			// window.location.href = data.redirect;
 		} )
 		.catch( ( error ) => {
 			showErrors( error );

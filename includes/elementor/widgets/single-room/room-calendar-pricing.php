@@ -9,16 +9,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WPHB_Widget_Room_Calendar_Pricing extends Widget_Base {
+class Thim_Ekit_Widget_Room_Calendar_Pricing extends Widget_Base {
 
 	use HBGroupControlTrait;
 
 	public function get_name() {
-		return 'room-availability';
+		return 'room-calendar-pricing';
 	}
 
 	public function get_title() {
-		return esc_html__( 'Room Availability', 'wp-hotel-booking' );
+		return esc_html__( 'Room Calendar Pricing', 'wp-hotel-booking' );
 	}
 
 	public function get_icon() {

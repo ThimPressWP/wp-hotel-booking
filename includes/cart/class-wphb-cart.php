@@ -733,6 +733,8 @@ class WPHB_Cart {
 			$check_out = strtotime( $product->get_data( 'check_out_date' ) );
 			$total     = $product->amount_include_tax();
 			$sub_total = $product->amount_exclude_tax();
+			$adult_qty = $product->get_data( 'adult_qty' ) ?? 1;
+			$child_qty = $product->get_data( 'child_qty' ) ?? 1;
 
 			$_products[ $k ] = apply_filters(
 				'hb_generate_transaction_object_room',
@@ -740,6 +742,8 @@ class WPHB_Cart {
 					'parent_id'      => isset( $product->parent_id ) ? $product->parent_id : null,
 					'product_id'     => $product->ID,
 					'qty'            => $product->get_data( 'quantity' ),
+					'adult_qty'      => $adult_qty,
+					'child_qty'      => $child_qty,
 					'check_in_date'  => $check_in,
 					'check_out_date' => $check_out,
 					'subtotal'       => $sub_total,

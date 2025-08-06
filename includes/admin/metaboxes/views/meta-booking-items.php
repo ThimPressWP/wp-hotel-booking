@@ -42,6 +42,12 @@ $rooms      = hb_get_order_items( $post->ID );
 			<th class="qty center">
 				<?php _e( 'Qty', 'wp-hotel-booking' ); ?>
 			</th>
+			<th class="adult-qty center">
+				<?php _e( 'Adults', 'wp-hotel-booking' ); ?>
+			</th>
+			<th class="child-qty center">
+				<?php _e( 'Childs', 'wp-hotel-booking' ); ?>
+			</th>
 			<th class="total center">
 				<?php _e( 'Total', 'wp-hotel-booking' ); ?>
 			</th>
@@ -71,6 +77,12 @@ $rooms      = hb_get_order_items( $post->ID );
 				</td>
 				<td class="qty center">
 					<?php echo wp_kses_post( hb_get_order_item_meta( $room->order_item_id, 'qty', true ) ); ?>
+				</td>
+				<td class="adult-qty center">
+					<?php echo wp_kses_post( intval( hb_get_order_item_meta( $room->order_item_id, 'adult_qty', true ) ) ?? 1 ); ?>
+				</td>
+				<td class="child-qty center">
+					<?php echo wp_kses_post( intval( hb_get_order_item_meta( $room->order_item_id, 'child_qty', true ) ) ?? 0 ); ?>
 				</td>
 				<td class="total center">
 					<?php echo wp_kses_post( hb_format_price( hb_get_order_item_meta( $room->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $hb_booking->currency ) ) ); ?>
