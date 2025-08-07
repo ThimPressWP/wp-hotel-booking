@@ -15,6 +15,16 @@ defined( 'ABSPATH' ) || exit;
 
 $hb_booking = WPHB_Booking::instance( $post->ID );
 $rooms      = hb_get_order_items( $post->ID );
+
+$has_adult_qty = false;
+foreach ( $rooms as $room ) {
+	$adult_qty = hb_get_order_item_meta( $room->order_item_id, 'adult_qty', true );
+	if ( $adult_qty ) {
+		$has_adult_qty = true;
+		// check if order detail contains adult qty
+		break;
+	}
+}
 ?>
 <style type="text/css">
 	#hb-booking-items .inside {
@@ -42,12 +52,14 @@ $rooms      = hb_get_order_items( $post->ID );
 			<th class="qty center">
 				<?php _e( 'Qty', 'wp-hotel-booking' ); ?>
 			</th>
+			<?php if ( $has_adult_qty ) : ?>
 			<th class="adult-qty center">
 				<?php _e( 'Adults', 'wp-hotel-booking' ); ?>
 			</th>
 			<th class="child-qty center">
 				<?php _e( 'Childs', 'wp-hotel-booking' ); ?>
 			</th>
+			<?php endif; ?>
 			<th class="total center">
 				<?php _e( 'Total', 'wp-hotel-booking' ); ?>
 			</th>
@@ -78,12 +90,14 @@ $rooms      = hb_get_order_items( $post->ID );
 				<td class="qty center">
 					<?php echo wp_kses_post( hb_get_order_item_meta( $room->order_item_id, 'qty', true ) ); ?>
 				</td>
+				<?php if ( $has_adult_qty ) : ?>
 				<td class="adult-qty center">
 					<?php echo wp_kses_post( intval( hb_get_order_item_meta( $room->order_item_id, 'adult_qty', true ) ) ?? 1 ); ?>
 				</td>
 				<td class="child-qty center">
 					<?php echo wp_kses_post( intval( hb_get_order_item_meta( $room->order_item_id, 'child_qty', true ) ) ?? 0 ); ?>
 				</td>
+				<?php endif; ?>
 				<td class="total center">
 					<?php echo wp_kses_post( hb_format_price( hb_get_order_item_meta( $room->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $hb_booking->currency ) ) ); ?>
 				</td>

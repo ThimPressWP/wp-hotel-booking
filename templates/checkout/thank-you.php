@@ -26,7 +26,16 @@ $key        = isset( $_GET['key'] ) ? sanitize_text_field( wp_unslash( $_GET['ke
 if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 	$booking = WPHB_Booking::instance( $booking_id );
 	if ( $booking->booking_key === $key ) {
-		$rooms = hb_get_order_items( $booking_id );
+		$rooms         = hb_get_order_items( $booking_id );
+		$has_adult_qty = false;
+		foreach ( $rooms as $room ) {
+			$adult_qty = hb_get_order_item_meta( $room->order_item_id, 'adult_qty', true );
+			if ( $adult_qty ) {
+				$has_adult_qty = true;
+				// check if order detail contains adult qty
+				break;
+			}
+		}
 		?>
 		<div class="hb-message message">
 			<div class="hb-message-content">
@@ -54,8 +63,10 @@ if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 					<th><?php _e( 'Check in - Checkout', 'wp-hotel-booking' ); ?></th>
 					<th><?php _e( 'Night', 'wp-hotel-booking' ); ?></th>
 					<th><?php _e( 'Qty', 'wp-hotel-booking' ); ?></th>
+					<?php if ( $has_adult_qty ) : ?>
 					<th><?php _e( 'Adults', 'wp-hotel-booking' ); ?></th>
 					<th><?php _e( 'Childs', 'wp-hotel-booking' ); ?></th>
+					<?php endif; ?>
 					<th><?php _e( 'Total', 'wp-hotel-booking' ); ?></th>
 				</tr>
 				</thead>
@@ -77,12 +88,14 @@ if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 						<td>
 							<?php printf( '%s', hb_get_order_item_meta( $room->order_item_id, 'qty', true ) ); ?>
 						</td>
+						<?php if ( $has_adult_qty ) : ?>
 						<td>
 							<?php echo esc_html( intval( hb_get_order_item_meta( $room->order_item_id, 'adult_qty', true ) ) ?? 1 ); ?>
 						</td>
 						<td>
 							<?php echo esc_html( intval( hb_get_order_item_meta( $room->order_item_id, 'child_qty', true ) ) ?? 0 ); ?>
 						</td>
+						<?php endif; ?>
 						<td>
 							<?php printf( '%s', hb_format_price( hb_get_order_item_meta( $room->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $booking->currency ) ) ); ?>
 						</td>
