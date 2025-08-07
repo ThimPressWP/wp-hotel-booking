@@ -15,7 +15,7 @@ const MetaboxRoomTabs = () => {
     const linkTabs = document.querySelectorAll('.wphb-meta-box__room-tab__tabs li a');
     const elemTabs = document.querySelectorAll('.wphb-meta-box__room-tab__tabs li');
     const elemContent = document.querySelectorAll('.wphb-meta-box-room-panels');
-    
+
 
     // show tab active when update post;
     const tabActive = window.localStorage.getItem('tabActive');
@@ -24,7 +24,7 @@ const MetaboxRoomTabs = () => {
     // end show tab active when update post;
 
     if ( linkTabs.length == 0 || elemTabs.length == 0 || elemContent.length == 0 ) return ;
-    //hide first load 
+    //hide first load
     elemTabs[0].classList.add('active');
     elemContent[0].classList.add('active');
 
@@ -32,7 +32,7 @@ const MetaboxRoomTabs = () => {
         const tabID = link.getAttribute('href');
         const tabContent = document.querySelector( '#' + tabID );
         //active tab when reload page
-       
+
         if ( url.searchParams.get('tab') == tabActive ) {
             tabContent.classList.remove('active');
             link.parentNode.classList.remove('active');
@@ -76,11 +76,11 @@ const MetaboxRoomTabs = () => {
  * It fetches the pricing plans for the current month and renders them on the calendar
  */
 const viewAllPlanSingleRoom = () => {
-    
+
     const getPrices = async ( dayElem ) => {
         const events = [];
         const roomID = hotel_settings.room_id;
-        
+
         if ( roomID == null ) return events;
 
 		try {
@@ -116,7 +116,7 @@ const viewAllPlanSingleRoom = () => {
 			alert( error.message && error.message );
 		}
     }
-   
+
     const calendarEl = document.getElementById('calendar_room_pricing');
     if ( calendarEl == null ) return;
     const calendar = new FullCalendar.Calendar(calendarEl, {
@@ -144,13 +144,13 @@ const viewAllPlanSingleRoom = () => {
     btn.addEventListener('click', function (e) {
         e.preventDefault();
         if ( calendarEl.hasChildNodes() ) {
-            btn.textContent = 'View All';
+            btn.textContent = btn.dataset.textView;
             calendar.destroy();
-        } else { 
-            btn.textContent = 'Close';
+        } else {
+            btn.textContent = btn.dataset.textClose;
             calendar.render();
         }
-       
+
     });
 }
 
@@ -163,7 +163,7 @@ const roomBlockDate = () => {
     const roomID = hotel_settings.room_id;
     let removeMonth = false;
     let argsBlock = hotel_settings.block_dates ?? [];
-        
+
     if ( roomID == null ) return;
 
     const submit = async () => {
@@ -176,7 +176,7 @@ const roomBlockDate = () => {
 			} );
 
 			const {status , message } = response;
-			if ( 'success' === status ) { 
+			if ( 'success' === status ) {
                 alert( message );
 			}
             removeMonth = false;
@@ -184,7 +184,7 @@ const roomBlockDate = () => {
 			alert( error.message && error.message );
 		}
     }
-     
+
     /**
      * It checks if the date is already selected, if it is, it removes the selected class and removes
      * the date from the array, if it isn't, it adds the selected class and adds the date to the array
@@ -225,7 +225,7 @@ const roomBlockDate = () => {
         return argsBlock;
     }
 
- 
+
     /**
      * It removes all the block dates from the calendar.
      * @param ele - The element that is clicked
@@ -249,7 +249,7 @@ const roomBlockDate = () => {
                 }
                 if ( dateEle.getFullYear() == yearCurrent && ( dateEle.getMonth()  + 1 ) == monthCurrent ) {
                     checkedBlock( dateEle, elem, argsBlock );
-                }   
+                }
             }
         }
 
@@ -272,7 +272,7 @@ const roomBlockDate = () => {
             const date = new Date(elem.getAttribute('data-date'));
             checkedBlock( date, elem, argsBlock );
         }
-  
+
     }
 
     /* The above code is a function that is used to sync the calendar with the selected dates. */
@@ -312,7 +312,7 @@ const roomBlockDate = () => {
                     eleBg.remove();
                 }
             });
-        } 
+        }
     }
 
     const events = [];
@@ -368,7 +368,7 @@ const roomBlockDate = () => {
                     addAllMonthBlockDate( this , argsBlock );
                 }
             }
-        }   
+        }
 	});
 
     const btnUpdate = document.querySelector('#tp_hotel_booking_block_date button.update_block');
@@ -378,7 +378,7 @@ const roomBlockDate = () => {
         e.preventDefault();
         submit( argsBlock );
     });
-    
+
     // render when active tab;
     calendarBlock.render();
     const selectedEvents = document.querySelectorAll('._hb_event_selected');
@@ -412,8 +412,6 @@ const CalendarManager = () => {
 			} else {
                 return [];
             }
-           
-
 		} catch ( error ) {
 			alert( error.message && error.message );
 		}
@@ -446,16 +444,16 @@ const CalendarManager = () => {
                 popup.style.display = 'block';
                 clickOutside( popup , parent);
                 closePopup( parent );
-                
+
             });
 
             const htmlShow = (info) => {
-                const html = 
-                '<div id="popup-events">' + 
-                    '<div id="popup-container">' + 
-                        '<div class="popup">' + 
+                const html =
+                '<div id="popup-events">' +
+                    '<div id="popup-container">' +
+                        '<div class="popup">' +
                             '<div class="popup-header">' +
-                                '<h2>Booking Info</h2>' + 
+                                '<h2>Booking Info</h2>' +
                                 '<div class="close-popup">X</div>' +
                             '</div>' +
                             '<div class="info">' +
@@ -488,21 +486,21 @@ const CalendarManager = () => {
                                         '</div>'+
                                     '</div>'+
                                 '</div>'+
-                            '</div>' + 
-                        '</div>' + 
-                    '</div>' + 
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
                 '</div>';
                 return html;
             }
             const clickOutside = ( popup , parent) => {
-                document.addEventListener('click', function(e) { 
+                document.addEventListener('click', function(e) {
                     if( e.target.id == 'popup-container' ) {
                         popup.style.display = 'none';
                         parent.classList.remove('active');
                     }
                 });
             }
-            
+
             const closePopup = ( parent ) => {
                 const btn = document.querySelector('#popup-events .close-popup');
                 if ( btn == null ) return;
@@ -522,7 +520,7 @@ const CalendarManager = () => {
  * checked, it removes the class `hidden` from the element with the class `room_preview_url`
  */
 const RoomPreview = () => {
-   
+
     const enablePreview = document.getElementById('_hb_room_preview');
     if( enablePreview == null ) return;
 
@@ -555,8 +553,6 @@ const adminUpdateField = () => {
 			} else {
                 throw new Error( message );
             }
-           
-
 		} catch ( error ) {
 			alert( error.message && error.message );
 		}

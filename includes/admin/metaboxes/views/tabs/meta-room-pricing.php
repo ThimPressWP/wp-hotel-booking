@@ -160,7 +160,11 @@ $date_order   = hb_start_of_week_order();
 		<p>
 			<div id='calendar_room_pricing'></div>
 			<input type="hidden" name="room_id" value="<?php echo esc_attr( $room_id ); ?>"/>
-			<button class="button button-primary show-all-plan"><?php _e( 'View Price Calendar', 'wp-hotel-booking' ); ?></button>
+			<button class="button button-primary show-all-plan"
+				data-text-view="<?php _e( 'View Price Calendar', 'wp-hotel-booking' ); ?>"
+				data-text-close="<?php _e( 'Close', 'wp-hotel-booking' ); ?>">
+				<?php _e( 'View Price Calendar', 'wp-hotel-booking' ); ?>
+			</button>
 		</p>
 		<input type="text" id="all-plan-datepicker" style="display:none">
 		<?php wp_nonce_field( 'hb-update-pricing-plan', 'hb-update-pricing-plan-field' ); ?>
