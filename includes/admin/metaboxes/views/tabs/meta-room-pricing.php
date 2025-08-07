@@ -13,6 +13,10 @@
  */
 defined( 'ABSPATH' ) || exit;
 
+if ( ! isset( $post ) ) {
+	return;
+}
+
 $room_id = $post->ID;
 if ( empty( $room_id ) ) {
 	return;
@@ -50,10 +54,9 @@ $date_order   = hb_start_of_week_order();
 				<input type="hidden" name="_hbpricing[plan_id][]" value="<?php echo esc_attr( sprintf( '%s', $regular_plan ? $regular_plan->ID : 0 ) ); ?>"/>
 			</h3>
 			<div class="hb-pricing-controls">
-				<!-- <a href="" class="dashicons dashicons-edit" data-action="edit"
-					title="<?php // _e( 'Edit', 'wp-hotel-booking' ); ?>"></a> -->
-				<a href="" class="dashicons dashicons-admin-page" data-action="clone"
-					title="<?php esc_attr_e( 'Clone', 'wp-hotel-booking' ); ?>"></a>
+				<a data-action="clone" class="button button-primary">
+					<?php _e( 'Add other pricing plan', 'wp-hotel-booking' ); ?>
+				</a>
 				<a href="" class="dashicons dashicons-trash" data-action="remove"
 					title="<?php esc_attr_e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
 			</div>
@@ -69,8 +72,8 @@ $date_order   = hb_start_of_week_order();
 					<tbody>
 					<tr>
 						<?php
-						$prices  = isset( $regular_plan->prices ) ? $regular_plan->prices : array();
-						$plan_id = isset( $regular_plan->ID ) ? $regular_plan->ID : 0;
+						$prices  = $regular_plan->prices ?? array();
+						$plan_id = $regular_plan->ID ?? 0;
 						?>
 						<?php foreach ( $date_order as $i ) { ?>
 							<td>
@@ -154,10 +157,10 @@ $date_order   = hb_start_of_week_order();
 			<?php endif; ?>
 
 		</div>
-		<p>	
+		<p>
 			<div id='calendar_room_pricing'></div>
 			<input type="hidden" name="room_id" value="<?php echo esc_attr( $room_id ); ?>"/>
-			<button class="button button-primary show-all-plan"><?php _e( 'View All', 'wp-hotel-booking' ); ?></button>
+			<button class="button button-primary show-all-plan"><?php _e( 'View Price Calendar', 'wp-hotel-booking' ); ?></button>
 		</p>
 		<input type="text" id="all-plan-datepicker" style="display:none">
 		<?php wp_nonce_field( 'hb-update-pricing-plan', 'hb-update-pricing-plan-field' ); ?>

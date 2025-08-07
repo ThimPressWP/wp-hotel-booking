@@ -221,6 +221,10 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 					throw new Exception( __( 'Check in date and check out date is required.', 'wp-hotel-booking' ) );
 				}
 
+				if ( empty( $adult_qty ) ) {
+					throw new Exception( __( 'Adult quantity is required.', 'wp-hotel-booking' ) );
+				}
+
 				$room = get_post( $room_id );
 				if ( ! $room || $room->post_type !== WPHB_ROOM_CT ) {
 					throw new Exception( __( 'Room not found', 'wp-hotel-booking' ) );
@@ -276,7 +280,8 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 					$res->status = 'success';
 					$res->data   = array(
 						'dates_booked' => sprintf(
-							'<div>%s</div> %s %s',
+							'<div>%1$s</div><div>%2$s</div> %3$s %4$s',
+							$dates_checked,
 							$night_html,
 							"$adult, $child",
 							$price_html
