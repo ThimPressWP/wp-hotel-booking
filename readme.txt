@@ -3,7 +3,7 @@ Contributors: thimpress, leehld, phamtungpth, thoakim
 Donate link: https://thimpress.com/
 Tags: hotel booking, reservation, booking system, room management, accommodation
 Tested up to: 6.8
-Stable tag: 2.2.1
+Stable tag: 2.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,11 @@ Yes.
 7. System settings
 
 == Changelog ==
+
+= 2.2.2 (2025-08-11) =
+~ Added: adult and child fields to the booking form for a single room.
+~ Tweak: display plan pricing, view price by days and select dates range to check available for a single room.
+~ Tweak: label on tab "Pricing" at the edit a room.
 
 = 2.2.1 (2025-07-01) =
 ~ Fixed: security.

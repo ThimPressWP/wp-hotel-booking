@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WP Hotel Booking plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Hotel Booking 2.2.1\n"
+"Project-Id-Version: WP Hotel Booking 2.2.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-hotel-booking\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-01T13:39:14+03:00\n"
+"POT-Creation-Date: 2025-08-11T05:44:07+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wp-hotel-booking\n"
@@ -132,7 +132,7 @@ msgid "Booking Details"
 msgstr ""
 
 #: includes/admin/metaboxes/class-wphb-admin-metabox-booking-items.php:33
-#: templates/checkout/thank-you.php:48
+#: templates/checkout/thank-you.php:57
 msgid "Booking Items"
 msgstr ""
 
@@ -427,9 +427,9 @@ msgid "Select Image"
 msgstr ""
 
 #: includes/admin/metaboxes/views/fields/image.php:28
-#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:58
-#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:122
-#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:187
+#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:61
+#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:125
+#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:194
 #: includes/admin/views/pricing-table.php:64
 #: includes/admin/views/pricing-table.php:130
 #: includes/admin/views/pricing-table.php:198
@@ -555,7 +555,7 @@ msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items-template-js.php:50
 #: includes/admin/wphb-admin-functions.php:309
-#: templates/checkout/checkout.php:170
+#: templates/checkout/checkout.php:174
 msgid "Check out"
 msgstr ""
 
@@ -565,14 +565,15 @@ msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items-template-js.php:113
 #: includes/elementor/widgets/single-room/room-booking.php:173
-#: includes/elementor/widgets/single-room/room-booking.php:255
-#: templates/single-room/search/check-dates-available.php:48
+#: includes/elementor/widgets/single-room/room-booking.php:272
+#: templates/single-room/search/check-dates-available.php:64
 #: templates/single-room/search/search-available.php:50
 msgid "Check Available"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items-template-js.php:117
 #: includes/admin/metaboxes/views/meta-booking-items-template-js.php:230
+#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:165
 msgid "Close"
 msgstr ""
 
@@ -601,96 +602,112 @@ msgstr ""
 msgid "Add new coupon"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:34
+#: includes/admin/metaboxes/views/meta-booking-items.php:44
 #: includes/elementor/widgets/global/filter-room.php:479
-#: templates/checkout/thank-you.php:53
+#: templates/checkout/thank-you.php:62
 msgid "Item"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:37
+#: includes/admin/metaboxes/views/meta-booking-items.php:47
 msgid "Checkin - Checkout"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:40
+#: includes/admin/metaboxes/views/meta-booking-items.php:50
 #: includes/elementor/widgets/loop-item/loop-room-price.php:82
 #: templates/cart/cart.php:42
 #: templates/checkout/checkout.php:42
-#: templates/checkout/thank-you.php:55
-#: templates/loop/price.php:49
+#: templates/checkout/thank-you.php:64
+#: templates/loop/price.php:65
 #: templates/search/booking-room-details.php:30
 msgid "Night"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:43
-#: templates/checkout/thank-you.php:56
+#: includes/admin/metaboxes/views/meta-booking-items.php:53
+#: templates/checkout/thank-you.php:65
 msgid "Qty"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:46
+#: includes/admin/metaboxes/views/meta-booking-items.php:57
+#: includes/elementor/widgets/global/search-room.php:71
+#: includes/elementor/widgets/global/search-room.php:605
+#: templates/checkout/thank-you.php:67
+#: templates/search/search-form.php:63
+#: templates/search/search-form.php:71
+#: templates/search/v2/search-form-v2.php:65
+#: templates/search/v2/search-form-v2.php:73
+msgid "Adults"
+msgstr ""
+
+#: includes/admin/metaboxes/views/meta-booking-items.php:60
+#: templates/checkout/thank-you.php:68
+msgid "Childs"
+msgstr ""
+
+#: includes/admin/metaboxes/views/meta-booking-items.php:64
 #: includes/admin/wphb-admin-functions.php:310
 #: includes/class-wphb-gdpr.php:108
 #: templates/account/bookings.php:38
-#: templates/checkout/thank-you.php:57
+#: templates/checkout/thank-you.php:70
 #: templates/emails/booking-details.php:51
 #: templates/search/booking-room-details.php:41
 msgid "Total"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:49
+#: includes/admin/metaboxes/views/meta-booking-items.php:67
 msgid "Actions"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:100
+#: includes/admin/metaboxes/views/meta-booking-items.php:126
 msgid "Delete select item(s)"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:103
+#: includes/admin/metaboxes/views/meta-booking-items.php:129
 msgid "Sync"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:109
+#: includes/admin/metaboxes/views/meta-booking-items.php:135
 msgid "Add Coupon"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:115
+#: includes/admin/metaboxes/views/meta-booking-items.php:141
 msgid "Remove Coupon"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:119
+#: includes/admin/metaboxes/views/meta-booking-items.php:145
 msgid "Add Room Item"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:130
+#: includes/admin/metaboxes/views/meta-booking-items.php:156
 msgid "Coupon(<a href=\"%1$s\">%2$s</a>)"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:139
-#: templates/cart/cart.php:110
-#: templates/checkout/checkout.php:100
-#: templates/checkout/thank-you.php:106
+#: includes/admin/metaboxes/views/meta-booking-items.php:165
+#: templates/cart/cart.php:116
+#: templates/checkout/checkout.php:104
+#: templates/checkout/thank-you.php:127
 msgid "Sub Total"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:147
+#: includes/admin/metaboxes/views/meta-booking-items.php:173
 #: includes/admin/settings/class-wphb-admin-setting-general.php:119
-#: templates/cart/cart.php:119
-#: templates/checkout/checkout.php:110
-#: templates/checkout/thank-you.php:112
+#: templates/cart/cart.php:125
+#: templates/checkout/checkout.php:114
+#: templates/checkout/thank-you.php:133
 msgid "Tax"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:155
-#: templates/cart/cart.php:129
-#: templates/checkout/checkout.php:121
-#: templates/checkout/thank-you.php:118
+#: includes/admin/metaboxes/views/meta-booking-items.php:181
+#: templates/cart/cart.php:135
+#: templates/checkout/checkout.php:125
+#: templates/checkout/thank-you.php:139
 msgid "Grand Total"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:173
+#: includes/admin/metaboxes/views/meta-booking-items.php:199
 #: includes/admin/settings/class-wphb-admin-setting-general.php:144
-#: templates/cart/cart.php:137
-#: templates/checkout/checkout.php:129
-#: templates/checkout/thank-you.php:138
+#: templates/cart/cart.php:143
+#: templates/checkout/checkout.php:133
+#: templates/checkout/thank-you.php:159
 #: templates/emails/booking-details.php:56
 msgid "Advance Payment"
 msgstr ""
@@ -753,47 +770,51 @@ msgstr ""
 msgid "Content"
 msgstr ""
 
-#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:39
+#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:43
 #: includes/admin/views/pricing-table.php:45
 msgid "Regular price"
 msgstr ""
 
-#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:56
-#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:179
-#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:183
-#: includes/admin/views/pricing-table.php:62
-#: includes/admin/views/pricing-table.php:190
-#: includes/admin/views/pricing-table.php:194
-msgid "Clone"
+#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:58
+msgid "Add other pricing plan"
 msgstr ""
 
-#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:89
+#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:92
 #: includes/admin/views/pricing-table.php:97
 msgid "Other plan"
 msgstr ""
 
-#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:90
+#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:93
 #: includes/admin/views/pricing-table.php:98
 msgid "(%d plan)"
 msgid_plural "(%d plans)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:102
-#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:170
+#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:105
+#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:177
 #: includes/admin/views/pricing-table.php:110
 #: includes/admin/views/pricing-table.php:182
 #: includes/admin/wphb-admin-functions.php:459
 msgid "Date Range"
 msgstr ""
 
-#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:153
+#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:156
 #: includes/admin/views/pricing-table.php:162
 msgid "No addition plans"
 msgstr ""
 
-#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:160
-msgid "View All"
+#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:164
+#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:166
+msgid "View Price Calendar"
+msgstr ""
+
+#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:186
+#: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:190
+#: includes/admin/views/pricing-table.php:62
+#: includes/admin/views/pricing-table.php:190
+#: includes/admin/views/pricing-table.php:194
+msgid "Clone"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-advanced.php:26
@@ -1313,13 +1334,13 @@ msgstr ""
 #: includes/admin/views/admin-metabox-rooms.php:90
 #: includes/admin/views/pricing-table.php:60
 #: includes/admin/views/pricing-table.php:127
-#: includes/wphb-template-functions.php:660
+#: includes/wphb-template-functions.php:662
 msgid "Edit"
 msgstr ""
 
 #: includes/admin/views/pricing-table.php:36
 #: includes/elementor/widgets/loop-item/loop-room-price.php:57
-#: includes/wphb-template-functions.php:646
+#: includes/wphb-template-functions.php:648
 msgid "Pricing Plans"
 msgstr ""
 
@@ -1545,69 +1566,69 @@ msgid "Coupon code removed"
 msgstr ""
 
 #: includes/class-wphb-ajax.php:347
-#: includes/room/class-wphb-booking-room.php:215
+#: includes/room/class-wphb-booking-room.php:217
 msgid "Invalid request"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:357
+#: includes/class-wphb-ajax.php:360
 msgid "Room ID is invalid."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:362
+#: includes/class-wphb-ajax.php:365
 msgid "Room ID is not exists."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:412
-#: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:230
+#: includes/class-wphb-ajax.php:417
+#: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:237
 msgid "Added successfully."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:435
+#: includes/class-wphb-ajax.php:440
 #: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-cart.php:292
 msgid "Cart item is not exists."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:520
+#: includes/class-wphb-ajax.php:525
 msgid "Room not found."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:529
+#: includes/class-wphb-ajax.php:534
 msgid "Please select check in date and checkout date."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:592
+#: includes/class-wphb-ajax.php:597
 msgid "Edit order item"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:658
+#: includes/class-wphb-ajax.php:663
 msgid "Something when wrong!"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:664
+#: includes/class-wphb-ajax.php:669
 msgid "Request not valid"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:669
+#: includes/class-wphb-ajax.php:674
 msgid "nonce is invalid"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:674
+#: includes/class-wphb-ajax.php:679
 msgid "Date check-in or date check-out is invalid"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:688
+#: includes/class-wphb-ajax.php:693
 msgid "Id room is invalid"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:693
+#: includes/class-wphb-ajax.php:698
 msgid "Can not add item with zero quantity."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:885
+#: includes/class-wphb-ajax.php:890
 msgid "Room is not exists."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:895
+#: includes/class-wphb-ajax.php:900
 msgid "Date is not exists."
 msgstr ""
 
@@ -1867,8 +1888,6 @@ msgid "View Price"
 msgstr ""
 
 #: includes/class-wphb-post-types.php:542
-#: templates/cart/cart.php:38
-#: templates/checkout/checkout.php:38
 msgid "Capacity"
 msgstr ""
 
@@ -2112,7 +2131,7 @@ msgstr ""
 msgid "Booking Editor"
 msgstr ""
 
-#: includes/class-wphb-settings.php:130
+#: includes/class-wphb-settings.php:136
 msgid "Settings saved."
 msgstr ""
 
@@ -2192,11 +2211,11 @@ msgstr ""
 msgid "Room Page"
 msgstr ""
 
-#: includes/elementor/modules/class-init.php:114
+#: includes/elementor/modules/class-init.php:116
 msgid "Thim Archive Room"
 msgstr ""
 
-#: includes/elementor/modules/class-init.php:118
+#: includes/elementor/modules/class-init.php:120
 msgid "Thim Single Room"
 msgstr ""
 
@@ -2346,7 +2365,7 @@ msgid "List Results Room"
 msgstr ""
 
 #: includes/elementor/widgets/archive-room/list-results-room.php:194
-#: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:111
+#: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:118
 msgid "Error: No rooms available!."
 msgstr ""
 
@@ -2758,21 +2777,14 @@ msgstr ""
 msgid "Select Field"
 msgstr ""
 
-#: includes/elementor/widgets/global/search-room.php:71
-#: includes/elementor/widgets/global/search-room.php:605
-#: templates/search/search-form.php:63
-#: templates/search/search-form.php:71
-#: templates/search/v2/search-form-v2.php:65
-#: templates/search/v2/search-form-v2.php:73
-msgid "Adults"
-msgstr ""
-
 #: includes/elementor/widgets/global/search-room.php:72
 #: includes/elementor/widgets/global/search-room.php:674
+#: includes/elementor/widgets/single-room/room-booking.php:264
 #: templates/search/search-form.php:82
 #: templates/search/search-form.php:90
 #: templates/search/v2/search-form-v2.php:84
 #: templates/search/v2/search-form-v2.php:92
+#: templates/single-room/search/check-dates-available.php:52
 msgid "Children"
 msgstr ""
 
@@ -2851,23 +2863,23 @@ msgid "Height"
 msgstr ""
 
 #: includes/elementor/widgets/global/search-room.php:553
-#: includes/elementor/widgets/single-room/room-booking.php:242
+#: includes/elementor/widgets/single-room/room-booking.php:248
 #: templates/search/search-form.php:43
 #: templates/search/search-form.php:47
 #: templates/search/v2/search-form-v2.php:45
 #: templates/search/v2/search-form-v2.php:49
-#: templates/single-room/search/check-dates-available.php:31
+#: templates/single-room/search/check-dates-available.php:33
 #: templates/single-room/search/search-available.php:37
 msgid "Arrival Date"
 msgstr ""
 
 #: includes/elementor/widgets/global/search-room.php:554
-#: includes/elementor/widgets/single-room/room-booking.php:247
+#: includes/elementor/widgets/single-room/room-booking.php:254
 #: templates/search/search-form.php:53
 #: templates/search/search-form.php:57
 #: templates/search/v2/search-form-v2.php:55
 #: templates/search/v2/search-form-v2.php:59
-#: templates/single-room/search/check-dates-available.php:37
+#: templates/single-room/search/check-dates-available.php:39
 #: templates/single-room/search/search-available.php:42
 msgid "Departure Date"
 msgstr ""
@@ -2963,7 +2975,7 @@ msgid "Custom Text Before"
 msgstr ""
 
 #: includes/elementor/widgets/loop-item/loop-room-price.php:68
-#: templates/loop/price.php:35
+#: templates/loop/price.php:51
 msgid "Price from"
 msgstr ""
 
@@ -3044,10 +3056,24 @@ msgstr ""
 msgid "Radius Item"
 msgstr ""
 
-#: includes/elementor/widgets/single-room/room-booking.php:237
-#: templates/single-room/search/check-dates-available.php:24
+#: includes/elementor/widgets/single-room/room-booking.php:243
+#: templates/single-room/search/check-dates-available.php:27
 #: templates/single-room/search/search-available.php:31
 msgid "Please set arrival date and departure date before check available."
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:249
+#: templates/single-room/search/check-dates-available.php:34
+msgid "Select Dates"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:259
+#: templates/single-room/search/check-dates-available.php:45
+msgid "Adult"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-calendar-pricing.php:21
+msgid "Room Calendar Pricing"
 msgstr ""
 
 #: includes/elementor/widgets/single-room/room-content.php:19
@@ -3426,7 +3452,7 @@ msgid "Price: "
 msgstr ""
 
 #: includes/plugins/wp-hotel-booking-extra/templates/shortcodes/mini_cart_layout.php:70
-#: templates/cart/cart.php:148
+#: templates/cart/cart.php:154
 #: templates/cart/mini_cart.php:42
 #: templates/cart/mini_cart_layout.php:40
 msgid "Check Out"
@@ -3483,45 +3509,82 @@ msgstr ""
 msgid "Update Success ! "
 msgstr ""
 
-#: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:199
+#: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:206
 msgid "Error: Room ID is not exists!."
 msgstr ""
 
-#: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:203
+#: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:210
 msgid "Error: Date incorrect !."
 msgstr ""
 
-#: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:209
+#: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:216
 msgid "Error: Room ID is not exists !."
 msgstr ""
 
-#: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:213
+#: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:220
 msgid "Error: Can not select zero room !."
 msgstr ""
 
-#: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:266
+#: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:273
 msgid "Add extra to cart"
 msgstr ""
 
-#: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:280
+#: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:287
 msgid "Warning: Room selected. Please View Cart to change order!."
 msgstr ""
 
-#: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:317
+#: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:324
 msgid "Error: Cart ID is invalid."
 msgstr ""
 
-#: includes/room/class-wphb-booking-room.php:219
+#: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:365
+msgid "roomId is required"
+msgstr ""
+
+#: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:368
+msgid "roomId is invalid"
+msgstr ""
+
+#: includes/room/class-wphb-booking-room.php:221
 #: includes/wphb-core-functions.php:72
 msgid "Check in date and check out date is required."
 msgstr ""
 
-#: includes/room/class-wphb-booking-room.php:224
+#: includes/room/class-wphb-booking-room.php:225
+msgid "Adult quantity is required."
+msgstr ""
+
+#: includes/room/class-wphb-booking-room.php:230
 msgid "Room not found"
 msgstr ""
 
-#: includes/room/class-wphb-booking-room.php:240
+#: includes/room/class-wphb-booking-room.php:236
+msgid "The maximum number of adults allowed per room is %s"
+msgstr ""
+
+#: includes/room/class-wphb-booking-room.php:239
+msgid "The maximum number of children allowed per room is %s"
+msgstr ""
+
+#: includes/room/class-wphb-booking-room.php:255
 msgid "Dates"
+msgstr ""
+
+#: includes/room/class-wphb-booking-room.php:275
+#: templates/checkout/order-pay.php:39
+msgid "Total: "
+msgstr ""
+
+#: includes/room/class-wphb-booking-room.php:276
+msgid "Night: "
+msgstr ""
+
+#: includes/room/class-wphb-booking-room.php:277
+msgid "Adult: "
+msgstr ""
+
+#: includes/room/class-wphb-booking-room.php:278
+msgid "Child: "
 msgstr ""
 
 #: includes/TemplateHooks/ArchiveRoomTemplate.php:156
@@ -3553,7 +3616,7 @@ msgstr ""
 #: includes/widgets/class-hb-widget-mini-cart.php:62
 #: includes/widgets/class-hb-widget-room-carousel.php:67
 #: includes/widgets/class-hb-widget-search.php:72
-#: templates/checkout/thank-you.php:154
+#: templates/checkout/thank-you.php:175
 msgid "Title:"
 msgstr ""
 
@@ -5596,15 +5659,15 @@ msgstr ""
 msgid "&nbsp;&ndash; Page %s"
 msgstr ""
 
-#: includes/wphb-template-functions.php:705
+#: includes/wphb-template-functions.php:707
 msgid "Showing only one item."
 msgstr ""
 
-#: includes/wphb-template-functions.php:708
+#: includes/wphb-template-functions.php:710
 msgid "Showing the last items of %s results."
 msgstr ""
 
-#: includes/wphb-template-functions.php:711
+#: includes/wphb-template-functions.php:713
 msgid "Showing %1$s of %2$s results."
 msgstr ""
 
@@ -5637,6 +5700,11 @@ msgstr ""
 msgid "Room type"
 msgstr ""
 
+#: templates/cart/cart.php:38
+#: templates/checkout/checkout.php:38
+msgid "Guest"
+msgstr ""
+
 #: templates/cart/cart.php:40
 #: templates/checkout/checkout.php:40
 msgid "Check - in"
@@ -5657,31 +5725,31 @@ msgstr ""
 msgid "Gross Total"
 msgstr ""
 
-#: templates/cart/cart.php:84
-#: templates/checkout/checkout.php:76
+#: templates/cart/cart.php:90
+#: templates/checkout/checkout.php:80
 msgid "%d adult"
 msgid_plural "%d adults"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/cart/cart.php:85
-#: templates/checkout/checkout.php:77
+#: templates/cart/cart.php:91
+#: templates/checkout/checkout.php:81
 msgid "%d child"
-msgid_plural "%d child"
+msgid_plural "%d children"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/cart/cart.php:97
-#: templates/checkout/checkout.php:85
+#: templates/cart/cart.php:103
+#: templates/checkout/checkout.php:89
 msgid "Disable"
 msgstr ""
 
-#: templates/cart/cart.php:121
-#: templates/checkout/checkout.php:112
+#: templates/cart/cart.php:127
+#: templates/checkout/checkout.php:116
 msgid "(price including tax)"
 msgstr ""
 
-#: templates/cart/cart.php:157
+#: templates/cart/cart.php:163
 #: templates/cart/mini_cart.php:50
 #: templates/cart/mini_cart_layout.php:46
 msgid "Your cart is empty!"
@@ -5691,15 +5759,15 @@ msgstr ""
 msgid "Booking Rooms"
 msgstr ""
 
-#: templates/checkout/checkout.php:139
+#: templates/checkout/checkout.php:143
 msgid "I want to pay all"
 msgstr ""
 
-#: templates/checkout/checkout.php:148
+#: templates/checkout/checkout.php:152
 msgid "You have to <strong><a href=\"%1$s\">login</a></strong> or <strong><a href=\"%2$s\">register</a></strong> to checkout."
 msgstr ""
 
-#: templates/checkout/checkout.php:165
+#: templates/checkout/checkout.php:169
 msgid "I agree with "
 msgstr ""
 
@@ -5716,6 +5784,7 @@ msgid "Your email here"
 msgstr ""
 
 #: templates/checkout/customer-existing.php:38
+#: templates/single-room/room-calendar-pricing.php:22
 msgid "Apply"
 msgstr ""
 
@@ -5751,10 +5820,6 @@ msgstr ""
 msgid "Payment Method: "
 msgstr ""
 
-#: templates/checkout/order-pay.php:39
-msgid "Total: "
-msgstr ""
-
 #: templates/checkout/order-pay.php:43
 msgid "Advance Payment: "
 msgstr ""
@@ -5763,71 +5828,71 @@ msgstr ""
 msgid "%s was pay completed"
 msgstr ""
 
-#: templates/checkout/thank-you.php:33
+#: templates/checkout/thank-you.php:42
 msgid "Thank you! Your booking has been placed. We will contact you to confirm about the booking soon."
 msgstr ""
 
-#: templates/checkout/thank-you.php:39
+#: templates/checkout/thank-you.php:48
 msgid "Booking %s"
 msgstr ""
 
-#: templates/checkout/thank-you.php:41
+#: templates/checkout/thank-you.php:50
 msgid "Date %s"
 msgstr ""
 
-#: templates/checkout/thank-you.php:54
+#: templates/checkout/thank-you.php:63
 msgid "Check in - Checkout"
 msgstr ""
 
-#: templates/checkout/thank-you.php:160
+#: templates/checkout/thank-you.php:181
 msgid "First Name:"
 msgstr ""
 
-#: templates/checkout/thank-you.php:167
+#: templates/checkout/thank-you.php:188
 msgid "Last Name:"
 msgstr ""
 
-#: templates/checkout/thank-you.php:173
+#: templates/checkout/thank-you.php:194
 #: templates/emails/customer-details.php:37
 msgid "Address:"
 msgstr ""
 
-#: templates/checkout/thank-you.php:178
+#: templates/checkout/thank-you.php:199
 msgid "City:"
 msgstr ""
 
-#: templates/checkout/thank-you.php:183
+#: templates/checkout/thank-you.php:204
 msgid "State:"
 msgstr ""
 
-#: templates/checkout/thank-you.php:189
+#: templates/checkout/thank-you.php:210
 #: templates/emails/customer-details.php:46
 msgid "Postal Code:"
 msgstr ""
 
-#: templates/checkout/thank-you.php:195
+#: templates/checkout/thank-you.php:216
 msgid "Country:"
 msgstr ""
 
-#: templates/checkout/thank-you.php:200
+#: templates/checkout/thank-you.php:221
 #: templates/emails/customer-details.php:26
 msgid "Phone:"
 msgstr ""
 
-#: templates/checkout/thank-you.php:205
+#: templates/checkout/thank-you.php:226
 msgid "Email:"
 msgstr ""
 
-#: templates/checkout/thank-you.php:212
+#: templates/checkout/thank-you.php:233
 msgid "Booking Notes:"
 msgstr ""
 
-#: templates/checkout/thank-you.php:222
+#: templates/checkout/thank-you.php:243
 msgid "Payment Instruction"
 msgstr ""
 
-#: templates/checkout/thank-you.php:232
-#: templates/checkout/thank-you.php:237
+#: templates/checkout/thank-you.php:253
+#: templates/checkout/thank-you.php:258
 msgid "Booking invalid"
 msgstr ""
 
@@ -5907,12 +5972,12 @@ msgid "Max Children:"
 msgstr ""
 
 #: templates/search/loop.php:58
-#: templates/search/v2/loop-v2/room-info/room-meta/price.php:7
+#: templates/search/v2/loop-v2/room-info/room-meta/price.php:28
 msgid "Price:"
 msgstr ""
 
 #: templates/search/loop.php:63
-#: templates/search/v2/loop-v2/room-info/room-meta/price.php:12
+#: templates/search/v2/loop-v2/room-info/room-meta/price.php:33
 msgid "(View price breakdown)"
 msgstr ""
 
@@ -6110,6 +6175,10 @@ msgstr ""
 
 #: templates/single-room/review.php:59
 msgid "Your comment is awaiting approval"
+msgstr ""
+
+#: templates/single-room/room-calendar-pricing.php:21
+msgid "Cancel"
 msgstr ""
 
 #: templates/single-room/search/add-to-cart.php:26
