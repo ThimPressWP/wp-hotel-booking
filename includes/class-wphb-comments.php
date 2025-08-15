@@ -108,7 +108,7 @@ class WPHB_Comments {
 				return $this->error( esc_html__( 'The rating is required.', 'wp-hotel-booking' ), 400 );
             }
 
-			if ( ! in_array(intval($params['rating']), [1, 2, 3, 4, 5])) {
+			if ( ! in_array($params['rating'], [1, 2, 3, 4, 5])) {
 				return $this->error(esc_html__('The rating is invalid.', 'wp-hotel-booking'), 400);
 			}
 		}
