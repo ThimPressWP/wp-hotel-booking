@@ -84,7 +84,7 @@ class WPHB_Comments {
 				'callback'            => array( $this, 'update_review' ),
 				'args'                => array(),
 				'permission_callback' => '__return_true',
-			),
+			)
 		);
 	}
 
