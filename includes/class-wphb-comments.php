@@ -244,7 +244,7 @@ class WPHB_Comments {
 				'status'      => 'error',
 				'msg'         => $msg,
 				'status_code' => $status_code,
-			),
+			)
 			//            $status_code
 		);
 	}
@@ -440,7 +440,7 @@ class WPHB_Comments {
 			array( $this, 'render_review_title' ),
 			array( 'comment' ),
 			'normal',
-			'low',
+			'low'
 		);
 
 		add_meta_box(
@@ -449,7 +449,7 @@ class WPHB_Comments {
 			array( $this, 'render_review_images' ),
 			array( 'comment' ),
 			'normal',
-			'low',
+			'low'
 		);
 	}
 
@@ -534,7 +534,7 @@ class WPHB_Comments {
 					'wp-hotel-booking'
 				),
 				$max_images,
-				$max_file_size,
+				$max_file_size
 			);
 			?>
 				</p>
