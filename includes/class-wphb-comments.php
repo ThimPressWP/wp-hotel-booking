@@ -56,11 +56,10 @@ class WPHB_Comments {
 				'relation' => 'AND',
 				array(
 					'key'     => 'hb_room_review_images',
-					'compare' => 'EXISTS'
+					'compare' => 'EXISTS',
 				),
 			);
 		}
-
 
 		if ( isset( $_GET['review_sort_by'] ) && ! empty( $_GET['review_sort_by'] ) ) {
 			if ( $_GET['review_sort_by'] === 'newest' ) {
@@ -104,12 +103,12 @@ class WPHB_Comments {
 		$enable_review_rating = WPHB_Settings::instance()->get( 'enable_review_rating' );
 
 		if ( $enable_review_rating ) {
-            if( ! isset( $params['rating'] )){
+			if ( ! isset( $params['rating'] ) ) {
 				return $this->error( esc_html__( 'The rating is required.', 'wp-hotel-booking' ), 400 );
-            }
+			}
 
-			if ( ! in_array($params['rating'], [1, 2, 3, 4, 5])) {
-				return $this->error(esc_html__('The rating is invalid.', 'wp-hotel-booking'), 400);
+			if ( ! in_array( $params['rating'], [ 1, 2, 3, 4, 5 ] ) ) {
+				return $this->error( esc_html__( 'The rating is invalid.', 'wp-hotel-booking' ), 400 );
 			}
 		}
 
@@ -127,32 +126,36 @@ class WPHB_Comments {
 
 		$user_id = get_current_user_id();
 
-        // Check user was comment in room
-        $user_comments = get_comments( array(
-            'user_id' => $user_id,
-            'post_id' => $params['room_id'],
-            'type'    => 'comment',
-        ) );
+		// Check user was comment in room
+		$user_comments = get_comments(
+			array(
+				'user_id' => $user_id,
+				'post_id' => $params['room_id'],
+				'type'    => 'comment',
+			)
+		);
 
-        if ( ! empty( $user_comments ) ) {
-            return $this->error( esc_html__( 'You have already reviewed this room.', 'wp-hotel-booking' ), 400 );
-        }
+		if ( ! empty( $user_comments ) ) {
+			return $this->error( esc_html__( 'You have already reviewed this room.', 'wp-hotel-booking' ), 400 );
+		}
 
 		$user       = get_userdata( $user_id );
-		$comment_id = wp_insert_comment( array(
-			'comment_post_ID'      => $params['room_id'],
-			'comment_author'       => $user->display_name,
-			'comment_author_email' => $user->user_email,
-			'comment_author_url'   => '',
-			'comment_content'      => sanitize_textarea_field( $params['content'] ),
-			'comment_type'         => 'comment',
-			'comment_parent'       => 0,
-			'user_id'              => $user_id,
-			'comment_author_IP'    => '',
-			'comment_agent'        => '',
-			'comment_date'         => date( 'Y-m-d H:i:s' ),
-			'comment_approved'     => 1,
-		) );
+		$comment_id = wp_insert_comment(
+			array(
+				'comment_post_ID'      => $params['room_id'],
+				'comment_author'       => $user->display_name,
+				'comment_author_email' => $user->user_email,
+				'comment_author_url'   => '',
+				'comment_content'      => sanitize_textarea_field( $params['content'] ),
+				'comment_type'         => 'comment',
+				'comment_parent'       => 0,
+				'user_id'              => $user_id,
+				'comment_author_IP'    => '',
+				'comment_agent'        => '',
+				'comment_date'         => date( 'Y-m-d H:i:s' ),
+				'comment_approved'     => 1,
+			)
+		);
 
 		if ( ! $comment_id ) {
 			return $this->error( esc_html__( 'Could not create review.', 'wp-hotel-booking' ), 400 );
@@ -173,12 +176,12 @@ class WPHB_Comments {
 			$attachment_ids = array();
 
 			foreach ( $images as $image ) {
-				$img             = preg_replace( '/^data:image\/[a-z]+;base64,/', '', $image['base64'] );
-				$img             = str_replace( ' ', '+', $img );
-				$img             = WPHB_Helpers::sanitize_params_submitted( $img );
-				$decoded         = base64_decode( $img );
-				$filename        = sanitize_file_name( $image['name'] );
-				$file_type       = sanitize_mime_type( $image['type'] );
+				$img       = preg_replace( '/^data:image\/[a-z]+;base64,/', '', $image['base64'] );
+				$img       = str_replace( ' ', '+', $img );
+				$img       = WPHB_Helpers::sanitize_params_submitted( $img );
+				$decoded   = base64_decode( $img );
+				$filename  = sanitize_file_name( $image['name'] );
+				$file_type = sanitize_mime_type( $image['type'] );
 
 				// Only allow image type
 				$image_types_allow = [ 'image/jpeg', 'image/png', 'image/gif', 'image/webp' ];
@@ -187,15 +190,15 @@ class WPHB_Comments {
 				if ( ! $validate['type'] ) {
 					continue;
 				} elseif ( ! in_array( $validate['type'], $image_types_allow ) ) {
-                    continue;
-                }
+					continue;
+				}
 
 				if ( ! in_array( $file_type, $image_types_allow ) ) {
-                    continue;
-                }
+					continue;
+				}
 
 				$hashed_filename = md5( $filename . microtime() ) . '_' . $filename;
-				$upload_file = file_put_contents( $upload_path . $hashed_filename, $decoded );
+				$upload_file     = file_put_contents( $upload_path . $hashed_filename, $decoded );
 
 				if ( $upload_file ) {
 					$attachment = array(
@@ -203,7 +206,7 @@ class WPHB_Comments {
 						'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $hashed_filename ) ),
 						'post_content'   => '',
 						'post_status'    => 'inherit',
-						'guid'           => $upload_dir['url'] . '/' . basename( $hashed_filename )
+						'guid'           => $upload_dir['url'] . '/' . basename( $hashed_filename ),
 					);
 
 					$attachment_id = wp_insert_attachment( $attachment, $upload_dir['path'] . '/' . $hashed_filename );
@@ -220,10 +223,13 @@ class WPHB_Comments {
 		}
 		wp_update_comment_count( $params['room_id'] );
 
-		return $this->success( esc_html__( 'Submit review successfully.', 'wp-hotel-booking' ), array(
-			'comment_id'   => $comment_id,
-			'redirect_url' => '#comment-' . $comment_id
-		) );
+		return $this->success(
+			esc_html__( 'Submit review successfully.', 'wp-hotel-booking' ),
+			array(
+				'comment_id'   => $comment_id,
+				'redirect_url' => '#comment-' . $comment_id,
+			)
+		);
 	}
 
 	/**
@@ -239,7 +245,7 @@ class WPHB_Comments {
 				'msg'         => $msg,
 				'status_code' => $status_code,
 			),
-		//            $status_code
+			//            $status_code
 		);
 	}
 
@@ -271,7 +277,7 @@ class WPHB_Comments {
 			return false;
 		}
 
-		if ( intval(hb_settings()->get( 'enable_advanced_review' )) !== 1 ) {
+		if ( intval( hb_settings()->get( 'enable_advanced_review' ) ) !== 1 ) {
 			return false;
 		}
 
@@ -281,84 +287,84 @@ class WPHB_Comments {
 			$max_images = 10;
 		}
 
-//		$max_file_size    = hb_settings()->get( 'max_review_image_number' );
-//
-//		if(empty($max_file_size)){
-//			$max_file_size =  1000000;
-//		}
+		//      $max_file_size    = hb_settings()->get( 'max_review_image_number' );
+		//
+		//      if(empty($max_file_size)){
+		//          $max_file_size =  1000000;
+		//      }
 		?>
 
-        <div id="hb-room-review-form-popup">
-            <div class="bg-overlay"></div>
-            <form id="hb-room-submit-review-form" data-room-id="<?php echo esc_attr( $post->ID ); ?>">
-                <header>
-                    <h3><?php esc_html_e( 'Write a review', 'wp-hotel-booking' ); ?></h3>
-                    <div class="close-form-btn">
-                        <span class="dashicons dashicons-no"></span>
-                    </div>
-                </header>
-                <main>
+		<div id="hb-room-review-form-popup">
+			<div class="bg-overlay"></div>
+			<form id="hb-room-submit-review-form" data-room-id="<?php echo esc_attr( $post->ID ); ?>">
+				<header>
+					<h3><?php esc_html_e( 'Write a review', 'wp-hotel-booking' ); ?></h3>
+					<div class="close-form-btn">
+						<span class="dashicons dashicons-no"></span>
+					</div>
+				</header>
+				<main>
 					<?php
 					if ( WPHB_Settings::instance()->get( 'enable_review_rating' ) ) {
 						?>
-                        <div class="review-rating field">
-                            <label for="review-rating"><?php esc_html_e( 'Rate your experience *', 'wp-hotel-booking' ); ?></label>
-                            <input type="hidden" name="review-rating" value="">
-                            <div class="rating-star">
+						<div class="review-rating field">
+							<label for="review-rating"><?php esc_html_e( 'Rate your experience *', 'wp-hotel-booking' ); ?></label>
+							<input type="hidden" name="review-rating" value="">
+							<div class="rating-star">
 								<?php
-								for ( $i = 1; $i <= 5; $i ++ ) {
+								for ( $i = 1; $i <= 5; $i++ ) {
 									?>
-                                    <a class="rating-star-item" href="#"
-                                       data-star-rating="<?php echo esc_attr( $i ); ?>">
-                                    </a>
+									<a class="rating-star-item" href="#"
+										data-star-rating="<?php echo esc_attr( $i ); ?>">
+									</a>
 									<?php
 								}
 								?>
-                            </div>
-                        </div>
+							</div>
+						</div>
 						<?php
 					}
 					?>
 
-                    <div class="review-content field">
-                        <label for="review-content"><?php esc_html_e( 'Leave a review *', 'wp-hotel-booking' ); ?></label>
-                        <textarea name="review-content" id="review-content" cols="30" rows="5"></textarea>
-                    </div>
+					<div class="review-content field">
+						<label for="review-content"><?php esc_html_e( 'Leave a review *', 'wp-hotel-booking' ); ?></label>
+						<textarea name="review-content" id="review-content" cols="30" rows="5"></textarea>
+					</div>
 
-                    <div class="review-title field">
-                        <label for="review-title"><?php esc_html_e( 'Give your review a title *', 'wp-hotel-booking' ); ?></label>
-                        <input type="text" name="review-title" id="review-title">
-                    </div>
+					<div class="review-title field">
+						<label for="review-title"><?php esc_html_e( 'Give your review a title *', 'wp-hotel-booking' ); ?></label>
+						<input type="text" name="review-title" id="review-title">
+					</div>
 
 
-                    <div class="hb-gallery-review" data-room-id="<?php echo esc_attr( $post->ID ); ?>">
-                        <div class="select-images">
-                            <label for="tour_review-image">
+					<div class="hb-gallery-review" data-room-id="<?php echo esc_attr( $post->ID ); ?>">
+						<div class="select-images">
+							<label for="tour_review-image">
 								<?php
 								printf( esc_html( _n( 'Uploads up to %s image', 'Upload up to %s images', $max_images, 'wp-hotel-booking' ) ), $max_images );
 								?>
-                            </label>
-                            <div class="review-notice">
-                            </div>
-                            <div class="gallery-preview">
-                            </div>
-                            <label class="upload-images">
-                                <span><?php esc_html_e( 'Upload', 'wp-hotel-booking' ); ?></span>
-                                <input type="file" accept="image/*" multiple="multiple" name="review-image[]"
-                                       id="hb-room-review-image">
-                            </label>
-                        </div>
-                    </div>
-                </main>
-                <footer>
-                    <p class="notice"></p>
-                    <div class="submit">
-                        <button type="button"><?php esc_html_e( 'Send', 'wp-hotel-booking' ); ?></button>
-                        <span class="hb-room-spinner"></span>
-                    </div>
-                </footer>
-            </form>
-        </div>
+							</label>
+							<div class="review-notice">
+							</div>
+							<div class="gallery-preview">
+							</div>
+							<label class="upload-images">
+								<span><?php esc_html_e( 'Upload', 'wp-hotel-booking' ); ?></span>
+								<input type="file" accept="image/*" multiple="multiple" name="review-image[]"
+										id="hb-room-review-image">
+							</label>
+						</div>
+					</div>
+				</main>
+				<footer>
+					<p class="notice"></p>
+					<div class="submit">
+						<button type="button"><?php esc_html_e( 'Send', 'wp-hotel-booking' ); ?></button>
+						<span class="hb-room-spinner"></span>
+					</div>
+				</footer>
+			</form>
+		</div>
 		<?php
 	}
 
@@ -389,7 +395,9 @@ class WPHB_Comments {
 	 */
 	public function admin_enqueue_scripts() {
 		//date time
-		wp_register_script( 'hb-room-review', WPHB_PLUGIN_URL . '/assets/dist/js/admin/room-review.min.js',
+		wp_register_script(
+			'hb-room-review',
+			WPHB_PLUGIN_URL . '/assets/dist/js/admin/room-review.min.js',
 			array(),
 			uniqid(),
 			true
@@ -422,7 +430,7 @@ class WPHB_Comments {
 			return;
 		}
 
-		if ( intval(hb_settings()->get( 'enable_advanced_review' )) !== 1 ) {
+		if ( intval( hb_settings()->get( 'enable_advanced_review' ) ) !== 1 ) {
 			return;
 		}
 
@@ -459,7 +467,7 @@ class WPHB_Comments {
 		}
 		?>
 
-        <input type="text" name="hb_room_review_title" value="<?php echo esc_attr( $value ); ?>">
+		<input type="text" name="hb_room_review_title" value="<?php echo esc_attr( $value ); ?>">
 		<?php
 	}
 
@@ -472,7 +480,7 @@ class WPHB_Comments {
 		$comment_id = $comment->comment_ID;
 		$image_ids  = get_comment_meta( $comment_id, 'hb_room_review_images', true );
 		?>
-        <div class="hb-review-images">
+		<div class="hb-review-images">
 			<?php
 			$max_images    = intval( hb_settings()->get( 'max_review_image_number', 0 ) );
 			$max_file_size = intval( hb_settings()->get( 'max_review_image_file_size', 0 ) );
@@ -488,15 +496,15 @@ class WPHB_Comments {
 
 			$value_data = implode( ',', $image_ids );
 			?>
-            <div class="hb-image-info"
-                 data-max-file-size="<?php echo esc_attr( $max_file_size ); ?>">
-                <div class="hb-gallery-inner">
-                    <input type="hidden" name="hb_review_images"
-                           data-number="<?php echo esc_attr( $max_images ); ?>"
-                           value="<?php echo esc_attr( $value_data ); ?>" readonly/>
+			<div class="hb-image-info"
+				data-max-file-size="<?php echo esc_attr( $max_file_size ); ?>">
+				<div class="hb-gallery-inner">
+					<input type="hidden" name="hb_review_images"
+							data-number="<?php echo esc_attr( $max_images ); ?>"
+							value="<?php echo esc_attr( $value_data ); ?>" readonly/>
 					<?php
 					$count = count( $image_ids );
-					for ( $i = 0; $i < $count; $i ++ ) {
+					for ( $i = 0; $i < $count; $i++ ) {
 						$data_id = empty( $image_ids[ $i ] ) ? '' : $image_ids[ $i ];
 						$img_src = '';
 						if ( ! empty( wp_get_attachment_image_url( $data_id, 'thumbnail' ) ) ) {
@@ -504,29 +512,33 @@ class WPHB_Comments {
 						}
 						$alt_text = '#';
 						?>
-                        <div class="hb-gallery-preview" data-id="<?php echo esc_attr( $data_id ); ?>">
-                            <div class="hb-gallery-centered">
-                                <img src="<?php echo esc_url_raw( $img_src ); ?>"
-                                     alt="<?php echo esc_attr( $alt_text ); ?>">
-                            </div>
-                            <span class="hb-gallery-remove dashicons dashicons dashicons-no-alt"></span>
-                        </div>
+						<div class="hb-gallery-preview" data-id="<?php echo esc_attr( $data_id ); ?>">
+							<div class="hb-gallery-centered">
+								<img src="<?php echo esc_url_raw( $img_src ); ?>"
+									alt="<?php echo esc_attr( $alt_text ); ?>">
+							</div>
+							<span class="hb-gallery-remove dashicons dashicons dashicons-no-alt"></span>
+						</div>
 						<?php
 					}
 					?>
-                    <button type="button"
-                            class="button hb-gallery-add"><?php esc_html_e( 'Add Images', 'wp-hotel-booking' ); ?></button>
-                </div>
-            </div>
-            <p class="image-description"><?php printf(
-					esc_html__(
-						'You can upload maximum %1$s images. The maximum file size is %2$s KB.',
-						'wp-hotel-booking'
-					),
-					$max_images,
-					$max_file_size,
-				); ?></p>
-        </div>
+					<button type="button"
+							class="button hb-gallery-add"><?php esc_html_e( 'Add Images', 'wp-hotel-booking' ); ?></button>
+				</div>
+			</div>
+			<p class="image-description">
+			<?php
+			printf(
+				esc_html__(
+					'You can upload maximum %1$s images. The maximum file size is %2$s KB.',
+					'wp-hotel-booking'
+				),
+				$max_images,
+				$max_file_size,
+			);
+			?>
+				</p>
+		</div>
 
 		<?php
 		if ( ! did_action( 'wp_enqueue_media' ) ) {
@@ -677,7 +689,8 @@ class WPHB_Comments {
 		$comment_meta_tbl = $wpdb->commentmeta;
 
 		return $wpdb->get_var(
-			$wpdb->prepare( "SELECT COUNT(*) meta_value FROM $comment_meta_tbl LEFT JOIN $comment_tbl ON 
+			$wpdb->prepare(
+				"SELECT COUNT(*) meta_value FROM $comment_meta_tbl LEFT JOIN $comment_tbl ON 
                 $comment_meta_tbl.comment_id = $comment_tbl.comment_ID WHERE meta_key = 'rating' AND comment_post_ID = %s 
               AND comment_approved = '1' AND meta_value = %s",
 				$post_id,
