@@ -87,6 +87,9 @@ Yes.
 
 == Changelog ==
 
+= 2.2.3 (2025-08-15) =
+~ Fixed: security.
+
 = 2.2.2 (2025-08-11) =
 ~ Added: adult and child fields to the booking form for a single room.
 ~ Tweak: display plan pricing, view price by days and select dates range to check available for a single room.
