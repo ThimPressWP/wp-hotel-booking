@@ -103,12 +103,14 @@ class WPHB_Comments {
 
 		$enable_review_rating = WPHB_Settings::instance()->get( 'enable_review_rating' );
 
-		if ( ! isset( $params['rating'] ) && $enable_review_rating ) {
-			return $this->error( esc_html__( 'The rating is required.', 'wp-hotel-booking' ), 400 );
-		}
+		if ( $enable_review_rating ) {
+            if( ! isset( $params['rating'] )){
+				return $this->error( esc_html__( 'The rating is required.', 'wp-hotel-booking' ), 400 );
+            }
 
-		if ( ! in_array(intval($params['rating']), [1, 2, 3, 4, 5])) {
-			return $this->error(esc_html__('The rating is invalid.', 'wp-hotel-booking'), 400);
+			if ( ! in_array(intval($params['rating']), [1, 2, 3, 4, 5])) {
+				return $this->error(esc_html__('The rating is invalid.', 'wp-hotel-booking'), 400);
+			}
 		}
 
 		if ( ! isset( $params['content'] ) ) {
