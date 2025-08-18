@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WP Hotel Booking plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Hotel Booking 2.2.2\n"
+"Project-Id-Version: WP Hotel Booking 2.2.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-hotel-booking\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-08-11T05:44:07+03:00\n"
+"POT-Creation-Date: 2025-08-18T03:58:58+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wp-hotel-booking\n"
@@ -1648,7 +1648,7 @@ msgstr ""
 msgid "can not create booking"
 msgstr ""
 
-#: includes/class-wphb-comments.php:99
+#: includes/class-wphb-comments.php:98
 msgid "You must log in to submit a review."
 msgstr ""
 
@@ -1657,81 +1657,85 @@ msgid "The rating is required."
 msgstr ""
 
 #: includes/class-wphb-comments.php:111
+msgid "The rating is invalid."
+msgstr ""
+
+#: includes/class-wphb-comments.php:116
 msgid "The review content is required."
 msgstr ""
 
-#: includes/class-wphb-comments.php:115
+#: includes/class-wphb-comments.php:120
 msgid "The review title is required."
 msgstr ""
 
-#: includes/class-wphb-comments.php:119
+#: includes/class-wphb-comments.php:124
 msgid "The room id is required."
 msgstr ""
 
-#: includes/class-wphb-comments.php:132
+#: includes/class-wphb-comments.php:139
 msgid "You have already reviewed this room."
 msgstr ""
 
-#: includes/class-wphb-comments.php:152
+#: includes/class-wphb-comments.php:161
 msgid "Could not create review."
 msgstr ""
 
-#: includes/class-wphb-comments.php:217
+#: includes/class-wphb-comments.php:227
 msgid "Submit review successfully."
 msgstr ""
 
-#: includes/class-wphb-comments.php:289
+#: includes/class-wphb-comments.php:301
 msgid "Write a review"
 msgstr ""
 
-#: includes/class-wphb-comments.php:299
+#: includes/class-wphb-comments.php:311
 msgid "Rate your experience *"
 msgstr ""
 
-#: includes/class-wphb-comments.php:318
+#: includes/class-wphb-comments.php:330
 msgid "Leave a review *"
 msgstr ""
 
-#: includes/class-wphb-comments.php:323
+#: includes/class-wphb-comments.php:335
 msgid "Give your review a title *"
 msgstr ""
 
-#: includes/class-wphb-comments.php:332
+#: includes/class-wphb-comments.php:344
 msgid "Uploads up to %s image"
 msgid_plural "Upload up to %s images"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-wphb-comments.php:340
+#: includes/class-wphb-comments.php:352
 msgid "Upload"
 msgstr ""
 
-#: includes/class-wphb-comments.php:350
+#: includes/class-wphb-comments.php:362
 msgid "Send"
 msgstr ""
 
-#: includes/class-wphb-comments.php:434
+#: includes/class-wphb-comments.php:448
 msgid "Images"
 msgstr ""
 
-#: includes/class-wphb-comments.php:512
+#: includes/class-wphb-comments.php:526
 msgid "Add Images"
 msgstr ""
 
-#: includes/class-wphb-comments.php:516
+#: includes/class-wphb-comments.php:532
 msgid "You can upload maximum %1$s images. The maximum file size is %2$s KB."
 msgstr ""
 
-#: includes/class-wphb-comments.php:628
+#: includes/class-wphb-comments.php:646
 #: templates/single-room-reviews.php:243
 msgid "Reviews"
 msgstr ""
 
-#: includes/class-wphb-comments.php:636
+#: includes/class-wphb-comments.php:654
 msgid "Rating Room"
 msgstr ""
 
-#: includes/class-wphb-comments.php:648
+#: includes/class-wphb-comments.php:666
 #: includes/class-wphb-post-types.php:459
 #: includes/elementor/widgets/loop-item/loop-room-rating.php:138
 #: templates/loop/rating.php:27
@@ -1739,7 +1743,7 @@ msgstr ""
 msgid "Rated %d out of 5"
 msgstr ""
 
-#: includes/class-wphb-comments.php:655
+#: includes/class-wphb-comments.php:673
 msgid "No rating"
 msgstr ""
 
@@ -2906,28 +2910,28 @@ msgstr ""
 msgid "Select Quantity"
 msgstr ""
 
-#: includes/elementor/widgets/loop-item/loop-room-info.php:22
+#: includes/elementor/widgets/loop-item/loop-room-info.php:19
 msgid "Room Info"
 msgstr ""
 
-#: includes/elementor/widgets/loop-item/loop-room-info.php:49
+#: includes/elementor/widgets/loop-item/loop-room-info.php:45
 msgid "Term"
 msgstr ""
 
-#: includes/elementor/widgets/loop-item/loop-room-info.php:66
+#: includes/elementor/widgets/loop-item/loop-room-info.php:62
 msgid "Seperate"
 msgstr ""
 
-#: includes/elementor/widgets/loop-item/loop-room-info.php:82
+#: includes/elementor/widgets/loop-item/loop-room-info.php:78
 msgid "Show One Type"
 msgstr ""
 
-#: includes/elementor/widgets/loop-item/loop-room-info.php:94
+#: includes/elementor/widgets/loop-item/loop-room-info.php:90
 #: includes/elementor/widgets/loop-item/loop-room-price.php:92
 msgid "Custom Text"
 msgstr ""
 
-#: includes/elementor/widgets/loop-item/loop-room-info.php:112
+#: includes/elementor/widgets/loop-item/loop-room-info.php:108
 msgid "Choose Icon"
 msgstr ""
 
@@ -2937,19 +2941,25 @@ msgid_plural "%s Adults"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/elementor/widgets/loop-item/loop-room-info.php:243
+#: includes/elementor/widgets/loop-item/loop-room-info.php:252
 msgid "%s Child"
 msgid_plural "%s Children"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/elementor/widgets/loop-item/loop-room-info.php:273
+#: includes/elementor/widgets/loop-item/loop-room-info.php:275
+msgid "%s m²"
+msgid_plural "%s m²"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/elementor/widgets/loop-item/loop-room-info.php:298
 msgid "%s Bed"
 msgid_plural "%s Beds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/elementor/widgets/loop-item/loop-room-info.php:320
+#: includes/elementor/widgets/loop-item/loop-room-info.php:348
 #: templates/loop/feature.php:17
 msgid "Featured"
 msgstr ""
