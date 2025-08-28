@@ -15,7 +15,7 @@ WP Hotel Booking is a comprehensive solution for hotel owners, lodges, or any ac
 
 ###How to get help from us###
 
-- [Demo](https://sailing.thimpress.com/demo-11/)
+- [Demo](https://sailing.thimpress.com/)
 - [Documentation](https://docs.thimpress.com/wp-hotel-booking/)
 - [Get Support](https://help.thimpress.com/)
 
