@@ -91,7 +91,7 @@ if ( ! function_exists( 'hotel_booking_get_room_available' ) ) {
 			$qty = $room->get_num_of_rooms();
 			// Check the dates room booked is available
 			foreach ( $room_available_date as $date => $qty_available ) {
-				if ( $date >= $check_in_date_timestamp && $date <= $check_out_date_timestamp ) {
+				if ( $date > $check_in_date_timestamp && $date <= $check_out_date_timestamp ) {
 					if ( $qty_available <= 0 ) {
 						throw new Exception( __( 'This room is not available.', 'wp-hotel-booking' ) );
 					}
