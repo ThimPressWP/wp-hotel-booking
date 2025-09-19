@@ -144,7 +144,7 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 	}
 
 	function form() {
-		echo _e( 'Pay with Paypal', 'wp-hotel-booking' );
+		_e( 'Pay with Paypal', 'wp-hotel-booking' );
 	}
 
 	/**
