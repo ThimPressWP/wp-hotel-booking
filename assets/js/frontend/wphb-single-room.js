@@ -639,12 +639,14 @@ document.addEventListener( 'DOMContentLoaded', function ( e ) {
 
 	// Check view calendar pricing will load calendar pricing
 	const elRoomCalendarPricing = document.querySelector( '.wphb-room-calendar-pricing' );
-	utils.listenElementViewed( elRoomCalendarPricing, () => {
-		if ( elRoomCalendarPricing.classList.contains( 'loaded' ) ) {
-			return;
-		}
+	if ( elRoomCalendarPricing ) {
+		utils.listenElementViewed( elRoomCalendarPricing, () => {
+			if ( elRoomCalendarPricing.classList.contains( 'loaded' ) ) {
+				return;
+			}
 
-		elRoomCalendarPricing.classList.add( 'loaded' );
-		calendarPricing();
-	} )
+			elRoomCalendarPricing.classList.add( 'loaded' );
+			calendarPricing();
+		} )
+	}
 } );
