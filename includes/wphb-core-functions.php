@@ -273,7 +273,14 @@ if ( ! function_exists( 'hb_notice_remove_hotel_booking' ) ) {
 		?>
         <div class="notice notice-error hb-dismiss-notice is-dismissible">
             <p>
-				<?php echo wp_kses( '<strong>WP Hotel Booking</strong> plugin version ' . WPHB_VERSION . ' is an upgrade of <strong>TP Hotel Booking</strong> plugin. Please deactivate and delete <strong>TP Hotel Booking/TP Hotel Booking add-ons</strong> and replace by <strong>WP Hotel Booking/WP Hotel Booking add-ons</strong>.', array( 'strong' => array() ), 'wp-hotel-booking' ); ?>
+				<?php 
+					$message = sprintf(
+						/* translators: %s: plugin version number */
+						__( '<strong>WP Hotel Booking</strong> plugin version %s is an upgrade of <strong>TP Hotel Booking</strong> plugin. Please deactivate and delete <strong>TP Hotel Booking/TP Hotel Booking add-ons</strong> and replace by <strong>WP Hotel Booking/WP Hotel Booking add-ons</strong>.', 'wp-hotel-booking' ),
+						esc_html( WPHB_VERSION )
+					);
+					echo wp_kses( $message, array( 'strong' => array() ) );
+				?>
             </p>
 
         </div>
