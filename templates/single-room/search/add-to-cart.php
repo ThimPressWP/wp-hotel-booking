@@ -22,15 +22,13 @@ if ( ! isset( $room ) ) {
 
 		<div class="hb-search-results-form-container">
 			<div class="hb-booking-room-form-field hb-form-field-input">
-				<?php if ( ! get_option( 'tp_hotel_booking_single_purchase' ) ) { ?>
-					<label><?php echo __( 'Select number of room', 'wp-hotel-booking' ); ?></label>
-					<div class="wphb-max-qty">
-						<?php _e( 'Max quantity can book:', 'wp-hotel-booking' ); ?> <span class="qty-max">1</span>
-					</div>
-					<div>
-						<input name="hb-num-of-rooms" class="number_room_select" type="number" min="1" step="1" max="1" value="1">
-					</div>
-				<?php } ?>
+				<label><?php echo __( 'Select number of room', 'wp-hotel-booking' ); ?></label>
+				<div class="wphb-max-qty">
+					<?php _e( 'Max quantity can book:', 'wp-hotel-booking' ); ?> <span class="qty-max">1</span>
+				</div>
+				<div>
+					<input name="hb-num-of-rooms" class="number_room_select" type="number" min="1" step="1" max="1" value="1">
+				</div>
 			</div>
 			<?php
 			wphb_get_template_no_override(

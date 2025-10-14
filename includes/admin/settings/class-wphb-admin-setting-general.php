@@ -52,13 +52,13 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 						'desc'    => __( 'Allow checkout date when blocked, applicable to search forms except single room', 'wp-hotel-booking' ),
 						'default' => 1,
 					),
-					array(
+					/*array(
 						'type'    => 'checkbox',
 						'id'      => WPHB_Settings::instance()->get_field_name( 'single_purchase' ),
 						'title'   => __( 'Single Purchase', 'wp-hotel-booking' ),
 						'desc'    => __( 'Disable select quantity in Hotel Search page (default: one at a time)', 'wp-hotel-booking' ),
 						'default' => 1,
-					),
+					),*/
 					array(
 						'type'    => 'checkbox',
 						'id'      => WPHB_Settings::instance()->get_field_name( 'custom_process' ),

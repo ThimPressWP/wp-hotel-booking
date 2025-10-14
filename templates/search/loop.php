@@ -20,12 +20,11 @@ global $hb_settings;
  */
 $gallery         = $room->gallery;
 $featured        = $gallery ? array_shift( $gallery ) : false;
-$single_purchase = get_option( 'tp_hotel_booking_single_purchase' );
 ?>
 
 <li class="hb-room clearfix">
 	<form name="hb-search-results"
-			class="hb-search-room-results <?php echo isset( $single_purchase ) ? 'single-purchase' : ''; ?>">
+			class="hb-search-room-results">
 		<?php do_action( 'hotel_booking_loop_before_item', $room->post->ID ); ?>
 		<div class="hb-room-content">
 			<div class="hb-room-thumbnail">
@@ -64,28 +63,22 @@ $single_purchase = get_option( 'tp_hotel_booking_single_purchase' );
 							<?php hb_get_template( 'search/booking-room-details.php', array( 'room' => $room ) ); ?>
 						</div>
 					</li>
-					<?php if ( ! $single_purchase ) { ?>
-						<li class="hb_search_quantity">
-							<label><?php _e( 'Quantity: ', 'wp-hotel-booking' ); ?></label>
-							<div>
-								<?php
-								hb_dropdown_numbers(
-									array(
-										'name'             => 'hb-num-of-rooms',
-										'min'              => 1,
-										'show_option_none' => __( 'Select', 'wp-hotel-booking' ),
-										'max'              => $room->post->available_rooms,
-										'class'            => 'number_room_select',
-									)
-								);
-								?>
-							</div>
-						</li>
-					<?php } else { ?>
-						<select name="hb-num-of-rooms" class="number_room_select" style="display: none;">
-							<option value="1">1</option>
-						</select>
-					<?php } ?>
+					<li class="hb_search_quantity">
+						<label><?php _e( 'Quantity: ', 'wp-hotel-booking' ); ?></label>
+						<div>
+							<?php
+							hb_dropdown_numbers(
+								array(
+									'name'             => 'hb-num-of-rooms',
+									'min'              => 1,
+									'show_option_none' => __( 'Select', 'wp-hotel-booking' ),
+									'max'              => $room->post->available_rooms,
+									'class'            => 'number_room_select',
+								)
+							);
+							?>
+						</div>
+					</li>
 					<?php do_action( 'hotel_booking_loop_before_btn_select_room', $room->post->ID ); ?>
 					<li class="hb_search_add_to_cart">
 						<button class="hb_add_to_cart"><?php _e( 'Select this room', 'wp-hotel-booking' ); ?></button>

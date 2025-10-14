@@ -81,31 +81,24 @@ class Thim_Ekit_Widget_Loop_Room_Add_To_Cart extends Widget_Base
         }
 
         $settings          = $this->get_settings_for_display(); 
-        $single_purchase = get_option( 'tp_hotel_booking_single_purchase' );
         $text_add_to_cart  = isset( $settings['text'] ) ? $settings['text'] : ''; ?>
 
         <?php do_action( 'hotel_booking_loop_before_btn_select_room', $room->post->ID ); ?>
         <div class="hb_search_add_to_cart">
             <button class="hb_add_to_cart"><?php echo $text_add_to_cart; ?></button>
-            <?php if ( ! $single_purchase ) { ?>
-                <div class="hb_search_quantity">
-                    <?php
-                    hb_dropdown_numbers(
-                        array(
-                            'name'             => 'hb-num-of-rooms',
-                            'min'              => 1,
-                            'show_option_none' => __( 'Select Quantity', 'wp-hotel-booking' ),
-                            'max'              => $room->post->available_rooms,
-                            'class'            => 'number_room_select',
-                        )
-                    );
-                    ?>
-                </div>
-            <?php } else { ?>
-                <select name="hb-num-of-rooms" class="number_room_select" style="display: none;">
-                    <option value="1">1</option>
-                </select>
-            <?php } ?>
+            <div class="hb_search_quantity">
+                <?php
+                hb_dropdown_numbers(
+                    array(
+                        'name'             => 'hb-num-of-rooms',
+                        'min'              => 1,
+                        'show_option_none' => __( 'Select Quantity', 'wp-hotel-booking' ),
+                        'max'              => $room->post->available_rooms,
+                        'class'            => 'number_room_select',
+                    )
+                );
+                ?>
+            </div>
         </div>
         
         <?php
