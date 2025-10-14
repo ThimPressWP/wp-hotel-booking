@@ -601,7 +601,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 	}
 
 	protected function hb_render_adults($settings, $classes) {
-		$adults         = hb_get_request('adults', '1');
+		$adults         = hb_get_request( 'adults_capacity', hb_get_request( 'adults', 1 ) );
 		$label_adults   = !empty($settings['label_field']) ? $settings['label_field'] : esc_html__('Adults', 'wp-hotel-booking');
 
 		if ( $settings['layout_guest'] == 'select') {

@@ -256,6 +256,12 @@ const bookingRoomsPages = (formsCheck) => {
     const checkinDate = formsCheck.querySelector('input[name="check_in_date"]')?.value;
     const checkoutDate = formsCheck.querySelector('input[name="check_out_date"]')?.value;
 
+    const formSearchPage = document.querySelector( '#hb-form-search-page' );
+    let adults = 1, maxChild = 0;
+    if ( formSearchPage ) {
+        adults = formSearchPage.querySelector('select[name="adults_capacity"]') ? formSearchPage.querySelector('select[name="adults_capacity"]').value : 1;
+        maxChild = formSearchPage.querySelector('select[name="max_child"]') ? formSearchPage.querySelector('select[name="max_child"]').value : 0;
+    }
     const submit = async (form, btn = false, numRoom, roomID) => {
         const extraData = [];
         const hotelOption = form.querySelectorAll('input.hb_optional_quantity_selected');
@@ -276,7 +282,7 @@ const bookingRoomsPages = (formsCheck) => {
             const response = await wp.apiFetch({
                 path: 'wphb/v1/rooms/book-rooms',
                 method: 'POST',
-                data: { roomID, checkinDate, checkoutDate, numRoom, extraData },
+                data: { roomID, checkinDate, checkoutDate, numRoom, extraData, adults, maxChild },
             });
 
             const { status, data } = response;
