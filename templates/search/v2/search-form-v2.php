@@ -104,7 +104,7 @@ if ( $args && isset( $args['atts'] ) ) {
 		<input type="hidden" name="widget-search"
 				value="<?php echo isset( $atts['widget_search'] ) ? $atts['widget_search'] : false; ?>"/>
 		<input type="hidden" name="action" value="hotel_booking_parse_search_params"/>
-		<input type="hidden" name="paged" value="<?php echo absint( $atts['paged'] ); ?>"/>
+		<input type="hidden" name="paged" value="<?php echo absint( $atts['paged'] ?? 1 ); ?>"/>
 
 		<p class="hb-submit">
 			<button type="submit" class="wphb-button"><?php _e( 'Check Availability', 'wp-hotel-booking' ); ?></button>

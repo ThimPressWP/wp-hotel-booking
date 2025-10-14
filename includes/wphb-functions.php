@@ -1690,6 +1690,7 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 				'check_out_date' => date( 'm/d/Y' ),
 				'adults'         => $adults,
 				'max_child'      => 0,
+				'room_qty'       => 1,
 			)
 		);
 		$adults = $args['adults'];
@@ -1886,14 +1887,16 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 					array(
 						'check_in_date'  => date( 'm/d/Y', $check_in_date_to_time ),
 						'check_out_date' => date( 'm/d/Y', $check_out_date_to_time ),
-						'quantity'       => 1,
+						'quantity'       => $args['room_qty'],
 					)
 				);
+				error_log($args['room_qty']);
 				$room->post->available_rooms = (int) $p->available_rooms;
+				error_log($room->post->available_rooms);
 
 				$room = apply_filters( 'hotel_booking_query_search_parser', $room, $args );
 
-				if ( $room && $room->post->available_rooms > 0 ) {
+				if ( $room && $room->post->available_rooms > 0 && $room->post->available_rooms >= $args['room_qty'] ) {
 					$results[ $k ] = $room;
 				}
 			}
