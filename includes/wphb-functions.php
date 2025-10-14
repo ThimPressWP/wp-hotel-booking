@@ -2107,7 +2107,7 @@ if ( ! function_exists( 'hb_maybe_modify_page_content' ) ) {
 	}
 }
 
-add_filter( 'the_content', 'hb_maybe_modify_page_content' );
+// add_filter( 'the_content', 'hb_maybe_modify_page_content' );
 
 /**
  * Init some task when wp init
@@ -2538,7 +2538,7 @@ if ( ! function_exists( 'hb_get_url' ) ) {
 			$query_str = '?hotel-booking-params=' . base64_encode( wp_json_encode( $params ) );
 		}
 
-		return apply_filters( 'hb_get_url', hb_get_page_permalink( 'search' ) . $query_str, hb_get_page_id( 'search' ), $params );
+		return apply_filters( 'hb_get_url', hb_get_page_permalink( 'rooms' ) . $query_str, hb_get_page_id( 'rooms' ), $params );
 	}
 }
 
@@ -2863,12 +2863,12 @@ if ( ! function_exists( 'tp_hotel_booking_pages_required' ) ) {
 					'id'      => 'tp_hotel_booking_rooms_page_id',
 					'content' => '[' . apply_filters( 'hotel_booking_rooms_shortcode_tag', 'hotel_booking_rooms' ) . ']',
 				),
-				'search_page_id'        => array(
+				/*'search_page_id'        => array(
 					'name'    => __( 'Search Page', 'wp-hotel-booking' ),
 					'slug'    => 'hotel-search',
 					'id'      => 'tp_hotel_booking_search_page_id',
 					'content' => '[' . apply_filters( 'hotel_booking_search_shortcode_tag', 'hotel_booking' ) . ']',
-				),
+				),*/
 				'checkout_page_id'      => array(
 					'name'    => __( 'Checkout Page', 'wp-hotel-booking' ),
 					'slug'    => 'hotel-checkout',

@@ -1,6 +1,7 @@
 /** search api */
 const urlCurrent = document.location.href;
 const urlPageSearch = hotel_settings?.url_page_search;
+const urlPageRooms = hotel_settings?.url_page_rooms;
 let filterRooms = JSON.parse(window.localStorage.getItem('wphb_filter_rooms')) || {};
 let firstLoad = true;
 const hotelBookingSearchNode = document.querySelector('.hotel-booking-search');
@@ -475,7 +476,7 @@ const checkAvailableRooms = () => {
             window.localStorage.setItem('wphb_filter_rooms', JSON.stringify(data));
             const urlPush = wphbAddQueryArgs(document.location, data);
             const urlString = urlPush.search;
-            window.location.href = urlPageSearch + urlString;
+            window.location.href = urlPageRooms + urlString;
         })
 
     });

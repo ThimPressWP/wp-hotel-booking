@@ -671,6 +671,7 @@ class WP_Hotel_Booking {
 				wphb_rest_nonce: '<?php echo wp_create_nonce( 'wp_rest' ); ?>',
 				is_page_search: <?php echo is_page( hb_get_page_id( 'search' ) ) ? 1 : 0; ?>,
 				url_page_search: '<?php echo get_permalink( hb_get_page_id( 'search' ) ); ?>',
+				url_page_rooms: '<?php echo get_permalink( hb_get_page_id( 'rooms' ) ); ?>',
 				room_id: <?php echo isset( $screen->id ) && $screen->id == 'hb_room' ? get_the_ID() : 0; ?>,
 				block_dates:
 				<?php
