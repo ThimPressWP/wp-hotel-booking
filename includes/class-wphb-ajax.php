@@ -365,6 +365,20 @@ class WPHB_Ajax {
 				throw new Exception( __( 'Room ID is not exists.', 'wp-hotel-booking' ) );
 			}
 
+			$available_qty = hotel_booking_get_room_available(
+				$room_id,
+				array(
+					'check_in_date'  => $check_in_date,
+					'check_out_date' => $check_out_date,
+				)
+			);
+			if ( is_wp_error( $available_qty ) ) {
+				throw new Exception( $available_qty->get_error_message() );
+			} elseif ( $qty > $available_qty ) {
+				$message = sprintf( __( 'You can only book up to %d rooms' ), $available_qty );
+				throw new Exception( $message );
+			}
+
 			// Add to cart
 			$params = array(
 				'product_id'     => $room_id,

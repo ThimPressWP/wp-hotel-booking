@@ -510,7 +510,7 @@ const wphbRoomAddToCart = ( formAddToCart ) => {
 				return;
 			}
 
-			window.location.href = data.redirect;
+			//window.location.href = data.redirect;
 		} )
 		.catch( ( error ) => {
 			showErrors( error );
@@ -526,7 +526,8 @@ document.addEventListener( 'submit', function ( e ) {
 
 	if ( target.name === 'hb-search-single-room' ) {
 		e.preventDefault();
-		wphbRoomCheckDates( target );
+		wphbRoomAddToCart( target );
+		// wphbRoomCheckDates( target );
 	}
 
 	if ( target.name === 'hb-search-results' ) {

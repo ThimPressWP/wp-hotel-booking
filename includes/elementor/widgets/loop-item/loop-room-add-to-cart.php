@@ -80,9 +80,11 @@ class Thim_Ekit_Widget_Loop_Room_Add_To_Cart extends Widget_Base
             return;
         }
 
-        $settings          = $this->get_settings_for_display(); 
-        $single_purchase = get_option( 'tp_hotel_booking_single_purchase' );
-        $text_add_to_cart  = isset( $settings['text'] ) ? $settings['text'] : ''; ?>
+        $settings         = $this->get_settings_for_display(); 
+        $single_purchase  = get_option( 'tp_hotel_booking_single_purchase' );
+        $text_add_to_cart = isset( $settings['text'] ) ? $settings['text'] : '';
+        $room_qty         = hb_get_request( 'room_qty', 1 );
+        ?>
 
         <?php do_action( 'hotel_booking_loop_before_btn_select_room', $room->post->ID ); ?>
         <div class="hb_search_add_to_cart">
@@ -95,6 +97,7 @@ class Thim_Ekit_Widget_Loop_Room_Add_To_Cart extends Widget_Base
                             'name'             => 'hb-num-of-rooms',
                             'min'              => 1,
                             'show_option_none' => __( 'Select Quantity', 'wp-hotel-booking' ),
+                            'selected'         => $room_qty,
                             'max'              => $room->post->available_rooms,
                             'class'            => 'number_room_select',
                         )

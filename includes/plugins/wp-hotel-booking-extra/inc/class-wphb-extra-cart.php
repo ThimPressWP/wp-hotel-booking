@@ -130,8 +130,8 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 					$param = array(
 						'product_id'     => $extra_id,
 						'parent_id'      => $cart_id,
-						//'check_in_date'  => $params['check_in_date'] ?? '',
-						//'check_out_date' => $params['check_out_date'] ?? '',
+						'check_in_date'  => $params['check_in_date'] ?? '',
+						'check_out_date' => $params['check_out_date'] ?? '',
 					);
 
 					if ( array_key_exists( $extra_id, $turn_on ) ) {

@@ -14,7 +14,20 @@
  */
 defined( 'ABSPATH' ) || exit();
 
-$room = WPHB_Room::instance( get_the_ID() );
+$check_in_date  = hb_get_request( 'check_in_date', date( 'Y-m-d' ) );
+$check_out_date = hb_get_request( 'check_out_date', date( 'Y-m-d', strtotime( '+1 day' ) ) );
+$adults         = hb_get_request( 'adults', 1 );
+$children       = hb_get_request( 'max_child', 0 );
+$room_qty       = hb_get_request( 'room_qty', 1 );
+
+$room = WPHB_Room::instance(
+	get_the_ID(),
+	array(
+		'check_in_date'  => $check_in_date,
+		'check_out_date' => $check_out_date,
+		'quantity'       => $room_qty,
+	)
+);
 
 ob_start();
 the_content();
@@ -65,39 +78,47 @@ $tabs = apply_filters( 'hotel_booking_single_room_infomation_tabs', $tabsInfo );
 // prepend after li tabs single
 do_action( 'hotel_booking_before_single_room_infomation' );
 ?>
+<div class="wphb-single-room-content">
 
-<div class="hb_single_room_details">
+	<div class="hb_single_room_details">
 
-    <ul class="hb_single_room_tabs">
-		<?php foreach ( $tabs as $key => $tab ) {
-			?>
-            <li>
-                <a href="#<?php echo esc_attr( $tab['id'] ); ?>" class="<?php echo esc_attr( $active_class ?? '' ); ?>">
-					<?php do_action( 'hotel_booking_single_room_before_tabs_' . $tab['id'] ); ?>
-					<?php printf( '%s', $tab['title'] ); ?>
-					<?php do_action( 'hotel_booking_single_room_after_tabs_' . $tab['id'] ); ?>
-                </a>
-            </li>
-		<?php } ?>
-    </ul>
+	    <ul class="hb_single_room_tabs">
+			<?php foreach ( $tabs as $key => $tab ) {
+				?>
+	            <li>
+	                <a href="#<?php echo esc_attr( $tab['id'] ); ?>" class="<?php echo esc_attr( $active_class ?? '' ); ?>">
+						<?php do_action( 'hotel_booking_single_room_before_tabs_' . $tab['id'] ); ?>
+						<?php printf( '%s', $tab['title'] ); ?>
+						<?php do_action( 'hotel_booking_single_room_after_tabs_' . $tab['id'] ); ?>
+	                </a>
+	            </li>
+			<?php } ?>
+	    </ul>
 
-	<?php
-	// append after li tabs single
-	do_action( 'hotel_booking_after_single_room_infomation' );
-	?>
+		<?php
+		// append after li tabs single
+		do_action( 'hotel_booking_after_single_room_infomation' );
+		?>
 
-    <div class="hb_single_room_tabs_content">
+	    <div class="hb_single_room_tabs_content">
 
-		<?php foreach ( $tabs as $key => $tab ) { ?>
-            <div id="<?php echo esc_attr( $tab['id'] ); ?>" class="hb_single_room_tab_details">
+			<?php foreach ( $tabs as $key => $tab ) { ?>
+	            <div id="<?php echo esc_attr( $tab['id'] ); ?>" class="hb_single_room_tab_details">
 
-				<?php do_action( 'hotel_booking_single_room_before_tabs_content_' . $tab['id'] ); ?>
+					<?php do_action( 'hotel_booking_single_room_before_tabs_content_' . $tab['id'] ); ?>
 
-				<?php printf( '%s', $tab['content'] ); ?>
+					<?php printf( '%s', $tab['content'] ); ?>
 
-				<?php do_action( 'hotel_booking_single_room_after_tabs_content_' . $tab['id'] ); ?>
-            </div>
-		<?php } ?>
-    </div>
+					<?php do_action( 'hotel_booking_single_room_after_tabs_content_' . $tab['id'] ); ?>
+	            </div>
+			<?php } ?>
+	    </div>
 
+	</div>
+	<div class="wphb-single-room-booking-container">
+		<?php 
+		wp_enqueue_script( 'wphb-single-room-js' );
+		wphb_get_template_no_override( 'single-room/booking-form.php', compact( 'room' ) );
+		 ?>
+	</div>
 </div>

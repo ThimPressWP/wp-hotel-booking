@@ -262,6 +262,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 				$html_add_to_cart = ob_get_clean();
 
 				if ( $qty && ! is_wp_error( $qty ) ) {
+
 					$room_product   = WPHB_Room::instance(
 						$room_id,
 						array(

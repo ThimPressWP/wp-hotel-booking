@@ -234,7 +234,7 @@ class ArchiveRoomTemplate {
 			'quantity'        => $quantity_html,
 			'button_search'   => $button_html,
 			'form_end'        => '</form>',
-			'wrapper_end'     => '<div>',
+			'wrapper_end'     => '</div>',
 		);
 		return Template::combine_components( $sections );
 	}

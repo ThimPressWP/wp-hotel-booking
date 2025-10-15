@@ -32,7 +32,7 @@ add_action( 'hotel_booking_loop_room_title', 'hotel_booking_room_title' );
 add_action( 'hotel_booking_single_room_title', 'hotel_booking_single_room_title' );
 
 // check available button
-add_action( 'hotel_booking_single_room_button', 'hotel_booking_single_room_button' );
+//add_action( 'hotel_booking_single_room_button', 'hotel_booking_single_room_button' );
 
 // price display
 add_action( 'hotel_booking_loop_room_price', 'hotel_booking_loop_room_price' );

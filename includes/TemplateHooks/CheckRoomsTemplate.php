@@ -11,7 +11,7 @@ class CheckRoomsTemplate {
 	use Singleton;
 
 	public function init() {
-		add_action( 'wphb/check-single-room/layout', [ $this, 'check_single_room_layout' ] );
+		// add_action( 'wphb/check-single-room/layout', [ $this, 'check_single_room_layout' ] );
 	}
 
 	public function check_single_room_layout( $room ) {
