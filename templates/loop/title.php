@@ -13,8 +13,8 @@
  * Prevent loading this file directly
  */
 defined( 'ABSPATH' ) || exit();
-$check_in_date  = hb_get_request( 'check_in_date', date( 'Y-m-d' ) );
-$check_out_date = hb_get_request( 'check_out_date', date( 'Y-m-d', strtotime( '+1 day' ) ) );
+$check_in_date  = hb_get_request( 'check_in_date', date( 'Y/m/d' ) );
+$check_out_date = hb_get_request( 'check_out_date', date( 'Y/m/d', strtotime( '+1 day' ) ) );
 $adults         = hb_get_request( 'adults', 1 );
 $children       = hb_get_request( 'children', 0 );
 $room_qty       = hb_get_request( 'room_qty', 1 );

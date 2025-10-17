@@ -11,8 +11,8 @@ $max_adult   = (int) get_post_meta( $room_id, '_hb_room_capacity_adult', true );
 $max_adult   = $max_adult > 0 ? $max_adult : 1;
 $max_child   = (int) get_post_meta( $room_id, '_hb_max_child_per_room', true );
 
-$check_in_date  = $room->get_data('check_in_date') ?? date( 'Y-m-d' );
-$check_out_date = $room->get_data( 'check_out_date' ) ?? date( 'Y-m-d', strtotime( '+1 day' ) );
+$check_in_date  = $room->get_data('check_in_date') ?? date( 'Y/m/d' );
+$check_out_date = $room->get_data( 'check_out_date' ) ?? date( 'Y/m/d', strtotime( '+1 day' ) );
 $adults         = hb_get_request( 'adults', 1 );
 $children       = hb_get_request( 'max_child', 0 );
 $room_qty       = $room->get_data( 'quantity' ) ?? 1;
@@ -29,12 +29,36 @@ if ( is_wp_error( $available_qty ) ) {
 	$error_message = $available_qty->get_error_message();
 	$available_qty = 0;
 }
+$room_extra  = HB_Room_Extra::instance( $room_id );
+$extra_items = $room_extra->get_extra();
+$extra_price = 0;
+if ( ! empty( $extra_items ) ) {
+	foreach ( $extra_items as $extra_id => $extra ) {
+		if ( $extra->required ) {
+			$extra_package = hotel_booking_get_product_class( $extra_id,
+				array(
+					'product_id'     => $extra_id,
+					'check_in_date'  => $check_in_date,
+					'check_out_date' => $check_out_date,
+					'quantity'       => 1,
+				)
+			);
+			$extra_package_price = $extra_package ? $extra_package->get_price_package() : 0;
+			$extra_price += $extra_package_price;
+		}
+	}
+}
+// get price without tax
+$room_price  = $room->get_total( $check_in_date, $check_out_date, $room_qty, false ) ?? 0;
+$include_tax = hb_price_including_tax() ? (float) WPHB_Settings::instance()->get( 'tax' ) : 0;
+$total_price = $room_price + $extra_price +	( $room_price + $extra_price ) * $include_tax / 100;
+
 ?>
 <div id="hotel_booking_room_hidden">
 	<div class="wphb-room-tmpl-dates-available">
 		<form action="POST" name="hb-search-single-room" class="hb-search-room-results hotel-booking-search hotel-booking-single-room-action">
 			<div class="hb-booking-room-form-head">
-				<p class="description"><?php _e( 'Please set arrival date and departure date before check available.', 'wp-hotel-booking' ); ?></p>
+				<p class="description"><?php _e( 'Booking form', 'wp-hotel-booking' ); ?></p>
 			</div>
 			<?php if ( $error_message ) : ?>
 				<?php echo $error_message; ?>
@@ -69,23 +93,32 @@ if ( is_wp_error( $available_qty ) ) {
 								min="0" max="<?php echo esc_attr( $max_child ); ?>" />
 					</div>
 				</div>
-				<div class="hb-booking-room-form-field hb-form-field-input">
+				<div class="hb-booking-room-form-group">
 					<?php if ( ! get_option( 'tp_hotel_booking_single_purchase' ) ) { ?>
 						<label><?php echo __( 'Select number of room', 'wp-hotel-booking' ); ?></label>
 						<div class="wphb-max-qty">
 							<?php _e( 'Max quantity can book:', 'wp-hotel-booking' ); ?> <span class="qty-max"><?php echo esc_html( $available_qty ); ?></span>
 						</div>
-						<div>
+						<div class="hb-booking-room-form-field hb-form-field-input">
 							<input name="hb-num-of-rooms" class="number_room_select" type="number" min="1" step="1" value="<?php echo esc_attr( $room_qty ) ?>">
 						</div>
 					<?php } ?>
 				</div>
-				<?php
-				wphb_get_template_no_override(
-					'single-room/search/extra-check-dates-room.php',
-					[ 'post_id' => $room->ID ]
-				);
-				?>
+				<div class="hb-booking-room-form-field">
+					<?php
+						wphb_get_template_no_override(
+							'single-room/search/extra-check-dates-room.php',
+							[ 'post_id' => $room->ID ]
+						);
+					?>
+				</div>
+				<div class="hb-booking-room-form-group hb-room-price">
+					<div class="hb-total-price"><span class="hb-total-price-text"><?php esc_html_e( 'Total:', 'wp-hotel-booking' ); ?></span><span class="hb-total-price-value"><?php echo esc_html( hb_format_price( $total_price ) ); ?></span></div>
+	                <div class="hb_view_price hb-room-content">
+	                    <a href="" class="hb-view-booking-room-details"><?php esc_html_e( 'View details', 'wp-hotel-booking' ); ?></a>
+					    <?php hb_get_template( 'search/booking-room-details.php', array( 'room' => $room ) ); ?>
+	                </div>
+				</div>
 				<div class="hb-booking-room-form-group">
 					<input type="hidden" name="room-name" value="<?php printf( '%s', $room->post_title ); ?>" />
 					<input type="hidden" name="room-id" value="<?php printf( '%s', $room_id ); ?>" />

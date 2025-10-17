@@ -45,8 +45,8 @@ class ArchiveRoomTemplate {
 	public static function render_rooms( array $settings = array() ) {
 
 		$atts = array(
-			'check_in_date'  => hb_get_request( 'check_in_date', date( 'Y-m-d' ) ),
-			'check_out_date' => hb_get_request( 'check_out_date', date( 'Y-m-d', strtotime( '+1 day' ) ) ),
+			'check_in_date'  => hb_get_request( 'check_in_date', date( 'Y/m/d' ) ),
+			'check_out_date' => hb_get_request( 'check_out_date', date( 'Y/m/d', strtotime( '+1 day' ) ) ),
 			'adults'         => hb_get_request( 'adults', 1 ),
 			'max_child'      => hb_get_request( 'max_child', 0 ),
 			'room_qty'       => hb_get_request( 'room_qty', 1 ),
@@ -195,8 +195,8 @@ class ArchiveRoomTemplate {
 
 	public function check_room_availability() {
 		$title          = sprintf( '<h3>%s</h3>', __( 'Check avaibility', 'wp-hotel-booking' ) );
-		$check_in_date  = hb_get_request( 'check_in_date', date( 'Y-m-d' ) );
-		$check_out_date = hb_get_request( 'check_out_date', date( 'Y-m-d', strtotime( '+1 day' ) ) );
+		$check_in_date  = hb_get_request( 'check_in_date', date( 'Y/m/d' ) );
+		$check_out_date = hb_get_request( 'check_out_date', date( 'Y/m/d', strtotime( '+1 day' ) ) );
 		$adults         = hb_get_request( 'adults', 1 );
 		$max_child      = hb_get_request( 'max_child', 0 );
 		$room_qty       = hb_get_request( 'room_qty', 1 );

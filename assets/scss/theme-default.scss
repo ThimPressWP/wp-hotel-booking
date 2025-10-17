@@ -1220,6 +1220,30 @@ body.single-hb_room {
     .flatpickr-days {
         gap: 10px;
     }
+    .wphb-single-room-booking-container {
+        .hb-search-results-form-container{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            max-width: 350px;
+            .hb-booking-room-form-group{
+                width: 100%;
+                text-align: left;
+                &.hb-room-price{
+                    display: flex;
+                    padding: 12px;
+                    justify-content: space-between;
+                }
+                .hb_addition_package_extra {
+                    margin: 0;
+                }
+                .hb_button {
+                    width: 100%;
+                }
+            }
+        }
+    }
 }
 
 // has .col-inner wrapper

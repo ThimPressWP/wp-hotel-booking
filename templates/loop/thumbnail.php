@@ -17,8 +17,8 @@ defined( 'ABSPATH' ) || exit();
 global $hb_room;
 $has_featured = get_the_post_thumbnail( $hb_room->ID ) ? true : false;
 
-$check_in_date  = hb_get_request( 'check_in_date', date( 'Y-m-d' ) );
-$check_out_date = hb_get_request( 'check_out_date', date( 'Y-m-d', strtotime( '+1 day' ) ) );
+$check_in_date  = hb_get_request( 'check_in_date', date( 'Y/m/d' ) );
+$check_out_date = hb_get_request( 'check_out_date', date( 'Y/m/d', strtotime( '+1 day' ) ) );
 $adults         = hb_get_request( 'adults', 1 );
 $children       = hb_get_request( 'children', 0 );
 $room_qty       = hb_get_request( 'room_qty', 1 );

@@ -13,7 +13,8 @@ let elHotelBookingRoom,
 	elForm,
 	roomCalendarPricing,
 	roomPricing,
-	elBtnsCalendarPricing;
+	elBtnsCalendarPricing,
+	roomDateRangeSelector;
 const dataSend = {};
 const toYmdLocal = ( date ) => {
 	const z = ( n ) => ( '0' + n ).slice( -2 );
@@ -114,8 +115,9 @@ const wphbRoomInitDatePicker = () => {
 		return dateCalendar <= dateSelected;
 	};
 	if ( elDateRange ) {
-		let positionEle = parseInt( elDateRange.getAttribute( 'data-hidden' ) ) === 1 ? elDateCheckIn : null;
-		const dateRangeSelector = flatpickr( elDateRange, {
+		let positionEle = parseInt( elDateRange.getAttribute( 'data-hidden' ) ) === 1 ? elDateCheckIn : null,
+			roomId = elForm.querySelector('input[name="room-id"]').value;
+		roomDateRangeSelector = flatpickr( elDateRange, {
 		    mode: "range",
 		    dateFormat: 'Y/m/d',
 		    minDate: 'today',
@@ -125,18 +127,49 @@ const wphbRoomInitDatePicker = () => {
 		    locale: {
 		    	firstDayOfWeek: 1,
 		    },
+		    defaultDate: [elDateCheckIn.value, elDateCheckOut.value],
+		    onReady: function ( selectedDates, dateStr, instance ) {
+				let month = instance.currentMonth + 1,
+					year = instance.currentYear;
+				fetchAndSetCalendarDatePrice( instance, roomId, month, year );
+			},
 		    onChange: function(selectedDates, dateStr, instance) {
 		        if (selectedDates.length === 2) {
 		        	elDateCheckIn.value = toYmdLocal( selectedDates[0] );
 		        	elDateCheckOut.value = toYmdLocal(selectedDates[1]);
 		        	instance._input.value = toYmdLocal( selectedDates[0] ) + ' - ' + toYmdLocal(selectedDates[1]);
 		        }
+		    },
+		    onMonthChange: function ( selectedDates, dateStr, instance ) {
+		    	let month = instance.currentMonth + 1,
+		    		year = instance.currentYear;
+		    	if ( undefined!==roomCalendarPricing ) {
+		    		roomCalendarPricing.jumpToDate(year + "/" + month + "/01");
+		    		roomCalendarPricing.config.onMonthChange.forEach(fn => fn(
+			    			roomCalendarPricing.selectedDates,
+			    			roomCalendarPricing.input.value,
+			    			roomCalendarPricing
+		    			)
+		    		);
+		    	} else {
+		    		fetchAndSetCalendarDatePrice( instance, roomId, month, year );
+		    	}
 		    }
 		});
 		elForm.addEventListener( 'click', (e) => {
 			let target = e.target;
 			if ( target === elDateCheckIn || target === elDateCheckOut ) {
-				dateRangeSelector.open();
+				roomDateRangeSelector.open();
+			}
+		} );
+		elForm.addEventListener( 'change', (e) => {
+			let target = e.target;
+			if ( target.closest( '.hb-booking-room-form-field' ) ) {
+				if ( ! elDateCheckIn.value || ! elDateCheckOut.value ) {
+					elForm.querySelector( '.hb-total-price-value' ).innerHTML = utils.wphbRenderPrice( 0 );
+					return;
+				}
+				calculateBookingPrice( elForm, target );
 			}
 		} );
 	} else {
@@ -215,6 +248,10 @@ const calendarPricing = () => {
 				} );
 			}
 		}
+		let calendarDefaultDate = [];
+		if ( elForm && elForm.querySelector( 'input[name="check_in_date"]' ).value && elForm.querySelector( 'input[name="check_out_date"]' ).value ) {
+			calendarDefaultDate = [elForm.querySelector( 'input[name="check_in_date"]' ).value, elForm.querySelector( 'input[name="check_out_date"]' ).value];
+		}
 
 		roomCalendarPricing = flatpickr( elRoomCalendarPricing, {
 			dateFormat: 'Y/m/d',
@@ -222,7 +259,7 @@ const calendarPricing = () => {
 			minDate: 'today',
 			inline: true,
 			disable: blockDates,
-			//defaultDate: dateMinCheckInCanBook,
+			defaultDate: calendarDefaultDate,
 			showMonths: 2,
 			locale: {
 				firstDayOfWeek: 1,
@@ -230,7 +267,11 @@ const calendarPricing = () => {
 			onReady: function ( selectedDates, dateStr, instance ) {
 				let month = instance.currentMonth + 1,
 					year = instance.currentYear;
-				fetchAndSetCalendarDatePrice( instance, roomId, month, year );
+				if ( undefined !== roomPricing ) {
+					setCalendarDatePrice( instance, roomPricing );
+				} else {
+					fetchAndSetCalendarDatePrice( instance, roomId, month, year );
+				}
 			},
 			onChange: function ( selectedDates, dateStr, instance ) {
 				if ( selectedDates.length === 2 && elForm ) {
@@ -240,6 +281,9 @@ const calendarPricing = () => {
 					elForm.querySelector(
 						'input[name="check_out_date"]'
 					).value = toYmdLocal( selectedDates[ 1 ] );
+					if ( undefined !== roomDateRangeSelector ) {
+						roomDateRangeSelector.setDate(selectedDates, true);
+					}
 				} else if ( selectedDates.length === 0 ) {
 					elForm.querySelector(
 						'input[name="check_in_date"]'
@@ -247,6 +291,9 @@ const calendarPricing = () => {
 					elForm.querySelector(
 						'input[name="check_out_date"]'
 					).value = '';
+					if ( undefined !== roomDateRangeSelector ) {
+						roomDateRangeSelector.setDate(selectedDates, true);
+					}
 				}
 				setCalendarDatePrice( instance, roomPricing );
 			},
@@ -265,7 +312,9 @@ const fetchAndSetCalendarDatePrice = (
 	year
 ) => {
 	let restUrl = `${ hotel_settings.wphb_rest_url }wphb/v1/rooms/room-pricing?roomId=${ roomId }&month=${ month }&year=${ year }`;
-	showCalendarOverlay( calendarInstance );
+	if ( undefined !== roomCalendarPricing ) {
+		showCalendarOverlay( calendarInstance );
+	}
 	fetch( restUrl, {
 		method: 'GET',
 		headers: {
@@ -280,11 +329,15 @@ const fetchAndSetCalendarDatePrice = (
 			const data = res.data;
 			roomPricing = data.pricing;
 			setCalendarDatePrice( calendarInstance, roomPricing );
-			elBtnsCalendarPricing.style.display = 'block';
+			if ( undefined !== roomCalendarPricing ) {
+				elBtnsCalendarPricing.style.display = 'block';
+			}
 		} )
 		.catch( ( err ) => console.log( err ) )
 		.finally( () => {
-			hideCalendarOverlay( calendarInstance );
+			if ( undefined !== roomCalendarPricing ) {
+				hideCalendarOverlay( calendarInstance );
+			}
 		} );
 };
 const showCalendarOverlay = ( calendarInstance ) => {
@@ -520,6 +573,49 @@ const wphbRoomAddToCart = ( formAddToCart ) => {
 			elLoading.classList.toggle( 'loading' );
 		} );
 };
+//calculate room price without tax
+const calculateBookingPrice = ( elForm, target ) => {
+	const formData = new FormData( elForm ),
+		checkInDate = formData.get( 'check_in_date' ),
+		checkOutDate = formData.get( 'check_out_date' ),
+		checkInDateObject = new Date(checkInDate),
+		checkOutDateObject = new Date(checkOutDate);
+
+	let roomBookedNight = 0, roomBookedPrice = 0;
+
+	for (var i = 0; i < roomPricing.length; i++) {
+		let date = roomPricing[i];
+		if ( date.date >= checkInDateObject.toISOString() && date.date <= checkOutDateObject.toISOString() ) {
+			roomBookedNight += 1;
+			roomBookedPrice += date.price;
+		}
+	}
+
+	const extraData = [];
+    const extraOptions = elForm.querySelectorAll('input.hb_optional_quantity_selected');
+    const roomQtyEle = elForm.querySelector( 'input[name="hb-num-of-rooms"]' );
+    const roomQty = roomQtyEle ? parseInt( roomQtyEle.value ) : 1;
+    let extraOptionsPrice = 0;
+    extraOptions && extraOptions.forEach((ele) => {
+        if (ele.checked) {
+            const extraID = ele?.dataset.id || null;
+            const respondent = ele.dataset.respondent;
+            const extraPrice = parseFloat( ele.closest( '[data-price]' ).dataset.price );
+
+            const qty = parseInt(ele.parentElement?.nextElementSibling?.querySelector(`input[name="hb_optional_quantity[${extraID}]"]`)?.value) || 1;
+            if ( respondent === 'trip' ) {
+            	extraOptionsPrice += extraPrice;
+            } else {
+            	extraOptionsPrice += extraPrice * roomBookedNight * qty;
+            }
+        }
+    });
+    let roomTotalPrice = roomBookedPrice * roomQty + extraOptionsPrice;
+    if ( undefined !== hotel_settings.include_tax && hotel_settings.include_tax > 0 ) {
+    	roomTotalPrice = roomTotalPrice + roomTotalPrice * hotel_settings.include_tax / 100;
+    }
+    elForm.querySelector( '.hb-total-price-value' ).innerHTML = utils.wphbRenderPrice( roomTotalPrice );
+}
 // Events
 document.addEventListener( 'submit', function ( e ) {
 	const target = e.target;

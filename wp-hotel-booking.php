@@ -15,6 +15,7 @@
 
 use WPHB\TemplateHooks\CheckRoomsTemplate;
 use WPHB\TemplateHooks\ArchiveRoomTemplate;
+use WPHB\TemplateHooks\Admin\AdminExternalLinkIconSetting;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -233,6 +234,7 @@ class WP_Hotel_Booking {
 
 		CheckRoomsTemplate::instance()->init();
 		ArchiveRoomTemplate::instance()->init();
+		AdminExternalLinkIconSetting::instance()->init();
 	}
 
 
@@ -693,6 +695,7 @@ class WP_Hotel_Booking {
 				decimals_separator: '<?php echo $decimals_separator; ?>',
 				number_decimal: '<?php echo $number_decimal; ?>',
 				user_id: '<?php echo get_current_user_id(); ?>',
+				include_tax:'<?php echo hb_price_including_tax() ? (float) WPHB_Settings::instance()->get( 'tax' ) : 0; ?>',
 			}
 		</script>
 		<?php

@@ -1,4 +1,5 @@
 /** search api */
+import * as utils from '../utils.js';
 const urlCurrent = document.location.href;
 const urlPageSearch = hotel_settings?.url_page_search;
 const urlPageRooms = hotel_settings?.url_page_rooms;
@@ -513,42 +514,6 @@ const toggleExtravalue = () => {
     })
 }
 
-const renderPrice = (price) => {
-    const currencySymbol = hotel_settings.currency_symbol || '';
-    const currencyPosition = hotel_settings.currency_position || 'left';
-
-    price = renderPriceNumber(price);
-
-    switch (currencyPosition) {
-        case 'left':
-            price = currencySymbol + price;
-            break;
-        case 'right':
-            price = price + currencySymbol;
-            break;
-        case 'left_with_space':
-            price = currencySymbol + ' ' + price;
-            break;
-        case 'right_with_space':
-            price = price + ' ' + currencySymbol;
-            break;
-        default:
-            break;
-    }
-
-    return price;
-};
-
-const renderPriceNumber = (price) => {
-    const numberDecimals = hotel_settings.number_decimal || 0;
-    const thousandsSeparator = hotel_settings.thousands_separator || '';
-
-    price = (price / 1).toFixed(numberDecimals);
-    price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, thousandsSeparator);
-
-    return price;
-};
-
 const priceSlider = () => {
     const priceFields = document.querySelectorAll('.hb-price-field');
     if (!priceFields) {
@@ -598,8 +563,8 @@ const priceSlider = () => {
 
             minPriceNode.value = parseInt(minValue);
             maxPriceNode.value = parseInt(maxValue);
-            priceField.querySelector('.min').innerHTML = renderPrice(minValue);
-            priceField.querySelector('.max').innerHTML = renderPrice(maxValue);
+            priceField.querySelector('.min').innerHTML = utils.wphbRenderPrice(minValue);
+            priceField.querySelector('.max').innerHTML = utils.wphbRenderPrice(maxValue);
         });
 
         const applyBtn = priceField.querySelector('button.apply');
@@ -787,7 +752,7 @@ const hbFilterSelection = () => {
                 const minPrice = parseInt(values[0]);
                 const maxPrice = parseInt(values[1]);
 
-                changeSelectedField('price', minPrice + '-' + maxPrice, renderPrice(minPrice) + '-' + renderPrice(maxPrice));
+                changeSelectedField('price', minPrice + '-' + maxPrice, utils.wphbRenderPrice(minPrice) + '-' + utils.wphbRenderPrice(maxPrice));
             });
         }
     }
