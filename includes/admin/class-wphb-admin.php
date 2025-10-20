@@ -61,6 +61,7 @@ if ( ! class_exists( 'WPHB_Admin' ) ) {
 			WP_Hotel_Booking::instance()->_include( 'includes/admin/metaboxes/rooms/tabs/class-wphb-admin-metabox-room-price.php' );
 			WP_Hotel_Booking::instance()->_include( 'includes/admin/metaboxes/rooms/tabs/class-wphb-admin-metabox-room-block-date.php' );
 			WP_Hotel_Booking::instance()->_include( 'includes/admin/metaboxes/rooms/tabs/class-wphb-admin-metabox-room-facilities.php' );
+			WP_Hotel_Booking::instance()->_include( 'includes/admin/metaboxes/rooms/tabs/class-wphb-admin-metabox-room-external-link.php' );
 
 			// setup wizard
 			WP_Hotel_Booking::instance()->_include( 'includes/admin/setup/class-wphb-setup-wizard.php' );

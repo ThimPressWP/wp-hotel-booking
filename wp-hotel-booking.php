@@ -457,7 +457,15 @@ class WP_Hotel_Booking {
 					false,
 					true
 				);
-			}
+			} else if ( $screen && WPHB_ROOM_CT === $screen->post_type && 'post' === $screen->base ) {
+		        wp_register_script(
+					'wphb-admin-room-external-link',
+					$this->plugin_url( 'assets/js/admin/admin.room-external-link.js' ),
+					$dependencies,
+					false,
+					true
+				);
+		    }
 		}
 
 		wp_register_script(

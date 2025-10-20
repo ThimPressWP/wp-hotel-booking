@@ -90,6 +90,13 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 						'priority' => 80,
 						'content'  => $this->wphb_facilities( $post_id ),
 					),
+					'room_external_link'     => array(
+						'label'    => esc_html__( 'External Link', 'wp-hotel-booking' ),
+						'target'   => 'room_external_link',
+						'icon'     => 'dashicons-admin-links',
+						'priority' => 90,
+						'content'  => $this->wphb_external_link( $post_id ),
+					),
 				)
 			);
 		}
@@ -351,6 +358,17 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 			);
 
 			return $tab_block_date;
+		}
+
+		public function wphb_external_link( $post_id ) {
+			$tabs = apply_filters(
+				'wpbh_meta_box_room_external_link_fields',
+				array(
+					'_wphb_room_external_link' => new WPHB_Admin_Metabox_Room_External_Link(),
+				)
+			);
+
+			return $tabs;
 		}
 
 		/**
