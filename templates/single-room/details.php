@@ -120,5 +120,6 @@ do_action( 'hotel_booking_before_single_room_infomation' );
 		wp_enqueue_script( 'wphb-single-room-js' );
 		wphb_get_template_no_override( 'single-room/booking-form.php', compact( 'room' ) );
 		 ?>
+		<?php do_action( 'hotel_booking_single_room_after_booking_form', $room ) ?>
 	</div>
 </div>

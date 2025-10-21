@@ -48,10 +48,9 @@ if ( ! empty( $extra_items ) ) {
 		}
 	}
 }
-// get price without tax
-$room_price  = $room->get_total( $check_in_date, $check_out_date, $room_qty, false ) ?? 0;
+
 $include_tax = hb_price_including_tax() ? (float) WPHB_Settings::instance()->get( 'tax' ) : 0;
-$total_price = $room_price + $extra_price +	( $room_price + $extra_price ) * $include_tax / 100;
+$total_price = $room->amount_singular + $extra_price * ( 1 + $include_tax / 100 );
 
 ?>
 <div id="hotel_booking_room_hidden">

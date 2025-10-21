@@ -226,7 +226,7 @@ class ArchiveRoomTemplate {
 		$sections            = array(
 			'wrapper'         => '<div class="hotel-booking-rooms-search">',
 			'title'           => $title,
-			'form_start'      => '<form name="hb-search-form" class="hb-form-table" style="display: flex;">',
+			'form_start'      => '<form name="hb-search-avaibility-form" style="display: flex;">',
 			'check_in_date'   => $check_in_date_html,
 			'check_out_date'  => $check_out_date_html,
 			'adults_capacity' => $adults_html,

@@ -1,13 +1,23 @@
+import Sortable from 'sortablejs';
+
 const roomExternalLink = () => {
     let mediaUploader;
     const container = document.querySelector( '#room_external_link' );
     if ( ! container ) {
         return;
     }
+
     const addButton = container.querySelector('.wphb-add-external-button'),
     sampleRow = container.querySelector( 'tr.wphb-sample-row' ),
     tableBody = container.querySelector( '.wphb-room-external-link-table tbody' );
+
     const iconList = wphbAdminRoomExternalLink.list_icon_ids;
+    let externalLink = container.querySelector( '#wphb_room_external_link' );
+
+    const sortExternalLinks = new Sortable(tableBody, {
+        animation  : 150,
+        handle: '.dashicons-move',
+    });
 
     const handleSelectIcon = (target) => {
         mediaUploader = wp.media({
@@ -76,6 +86,27 @@ const roomExternalLink = () => {
             if ( row ) {
                 row.remove();
             }
+        } else if ( target.classList.contains( 'wphb-save-link-button' ) ) {
+            // e.preventDefault();
+            let linkList = container.querySelectorAll( '.wphb-single-external-link' );
+            if ( linkList.length > 0 ) {
+                let data = [];
+                linkList.forEach( (ele, idx) => {
+                    let icon_id = ele.querySelector( 'input[name="link-icon-id"]' ),
+                    icon_url = ele.querySelector( 'input[name="link-icon-url"]' ),
+                    external_link = ele.querySelector( 'input[name="link-value"]' ),
+                    enable_link = ele.querySelector( 'input[name="enable-link"]' );
+                    if ( ! icon_id.value || ! icon_url.value || ! external_link.value ) {
+                        return;
+                    }
+                    data.push( { icon_id: icon_id.value, icon_url: icon_url.value, external_link:external_link.value, index:idx+1, enable:enable_link.checked } );
+                } );
+                externalLink.value = data.length > 0 ? JSON.stringify( data ) : 'test2';
+            } else {
+                externalLink.value = 'test';
+            }
+            // console.log( externalLink.value );
+            target.closest( 'form' ).submit();
         }
     } );
 }

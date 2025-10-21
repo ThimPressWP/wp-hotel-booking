@@ -35,5 +35,9 @@ class WPHB_Admin_Metabox_Room_External_Link extends WPHB_Meta_Box {
 	}
 
 	public function save( $post_id ) {
+		if ( ! isset( $_POST['_hb_room_external_link'] ) ) {
+			return;
+		}
+		update_post_meta( $post_id, '_hb_room_external_link', sanitize_text_field( $_POST['_hb_room_external_link'] ) );
 	}
 }

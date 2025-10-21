@@ -15,6 +15,7 @@
 
 use WPHB\TemplateHooks\CheckRoomsTemplate;
 use WPHB\TemplateHooks\ArchiveRoomTemplate;
+use WPHB\TemplateHooks\SingleRoomExternalLinkTemplate;
 use WPHB\TemplateHooks\Admin\AdminExternalLinkIconSetting;
 
 defined( 'ABSPATH' ) || exit;
@@ -235,6 +236,7 @@ class WP_Hotel_Booking {
 		CheckRoomsTemplate::instance()->init();
 		ArchiveRoomTemplate::instance()->init();
 		AdminExternalLinkIconSetting::instance()->init();
+		SingleRoomExternalLinkTemplate::instance()->init();
 	}
 
 
@@ -460,7 +462,7 @@ class WP_Hotel_Booking {
 			} else if ( $screen && WPHB_ROOM_CT === $screen->post_type && 'post' === $screen->base ) {
 		        wp_register_script(
 					'wphb-admin-room-external-link',
-					$this->plugin_url( 'assets/js/admin/admin.room-external-link.js' ),
+					$this->plugin_url( "assets/dist/js/admin/room-external-link{$min}.js" ),
 					$dependencies,
 					false,
 					true

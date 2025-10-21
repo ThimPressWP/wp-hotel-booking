@@ -46,6 +46,13 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 					'permission_callback' => '__return_true',
 				),
 			),
+			'single-room-price-details'   => array(
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'single_room_price_details' ),
+					'permission_callback' => '__return_true',
+				),
+			),
 			// 'remove-item'    => array(
 			// array(
 			// 'methods'             => WP_REST_Server::CREATABLE,
@@ -360,6 +367,12 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 		}
 		wp_send_json( $response );
 	}
+
+	/**
+	 * get room pricing plan per day. show on single room pricing plan calendar
+	 * @param  WP_REST_Request $request
+	 * @return WPHB_REST_RESPONSE $response
+	 */
 	public function room_pricing( WP_REST_Request $request ) {
 		$params   = $request->get_params();
 		$response = new WPHB_REST_RESPONSE();

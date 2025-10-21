@@ -16,6 +16,7 @@ module.exports = {
 		'frontend/room-review': './assets/js/frontend/room-review.js',
 		'frontend/wphb-single-room': './assets/js/frontend/wphb-single-room.js',
 		'admin/room-review': './assets/js/admin/room-review/room-review.tsx',
+		'admin/room-external-link': './assets/js/admin/admin.room-external-link.js',
 	},
 	output: {
 		filename: '[name]' + ( isProduction ? '.min.js' : '.js' ),

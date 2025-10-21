@@ -542,3 +542,18 @@ button.wphb_loading::before {
     transform: translate(-50%, -50%);
     position: absolute;
 }
+#room_external_link .button-group {
+    margin-bottom: 16px;
+}
+#room_external_link .button-group button {
+    margin-right: 16px;
+    line-height: 1.6;
+    padding: 8px 16px;
+}
+#room_external_link .wphb-room-external-link-table.wp-list-table.widefat.striped.fixed td {
+    vertical-align: middle;
+}
+#room_external_link .wphb-room-external-link-table.wp-list-table.widefat.striped.fixed span.dashicons.dashicons-move {
+    margin-right: 8px;
+    cursor: move;
+}
