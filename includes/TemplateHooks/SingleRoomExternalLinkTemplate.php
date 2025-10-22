@@ -21,8 +21,15 @@ class SingleRoomExternalLinkTemplate {
 				return;
 			}
 
+			$room_id = $room->ID;
+			$external_links = get_post_meta( $room_id, '_hb_room_external_link', true );
+			$external_links = ! empty( $external_links ) ? json_decode( $external_links, true ) : '';
+			if ( empty( $external_links ) ) {
+				return;
+			}
+
 			$title = sprintf( '<h3>%s</h3>', __( 'Reserve via our trusted partner', 'wp-hotel-booking' ) );
-			$external_link_html = $this->render_external_link( $room );
+			$external_link_html = $this->render_external_link( $room, $external_links );
 
 			$sections      = array(
 				'wrap'     => '<div class="wphb-single-room-external-link">',
@@ -37,10 +44,7 @@ class SingleRoomExternalLinkTemplate {
 		}
 	}
 
-	public function render_external_link( $room ) {
-		$room_id = $room->ID;
-		$external_links = get_post_meta( $room_id, '_hb_room_external_link', true );
-		$external_links = ! empty( $external_links ) ? json_decode( $external_links, true ) : '';
+	public function render_external_link( $room, $external_links = array() ) {
 		$external_link_html = '';
 		if ( ! empty( $external_links ) ) {
 			foreach ( $external_links as $link ) {

@@ -50,7 +50,7 @@ const wphbRoomInitDatePicker = () => {
 	let dateMinCheckOutCanBook;
 	const datesBlock = [];
 	const dateNow = new Date();
-	const dateTomorrow = new Date( dateNow.setDate( dateNow.getDate() + 1 ) );
+	const dateTomorrow = new Date( dateNow.setDate( dateNow.getDate() + 1 + hotel_settings.min_booking_date ) );
 	const minBookingDateNumber =
 		hotel_settings.min_booking_date > 0
 			? parseInt( hotel_settings.min_booking_date )
@@ -138,6 +138,9 @@ const wphbRoomInitDatePicker = () => {
 		        	elDateCheckIn.value = toYmdLocal( selectedDates[0] );
 		        	elDateCheckOut.value = toYmdLocal(selectedDates[1]);
 		        	instance._input.value = toYmdLocal( selectedDates[0] ) + ' - ' + toYmdLocal(selectedDates[1]);
+		        	if ( undefined !== roomCalendarPricing ) {
+		        		roomCalendarPricing.setDate(selectedDates, true);
+		        	}
 		        }
 		    },
 		    onMonthChange: function ( selectedDates, dateStr, instance ) {
@@ -173,12 +176,13 @@ const wphbRoomInitDatePicker = () => {
 			}
 		} );
 	} else {
+		let defaultCheckInDate = elDateCheckIn.value ? elDateCheckIn.value : dateMinCheckInCanBook;
 		// Check in date
 		const optionCheckIn = {
 			dateFormat: 'Y/m/d',
 			minDate: 'today',
 			disable: datesBlock,
-			//defaultDate: dateMinCheckInCanBook,
+			defaultDate: defaultCheckInDate,
 			disableMobile: true,
 			locale: {
 				firstDayOfWeek: 1,
@@ -204,13 +208,13 @@ const wphbRoomInitDatePicker = () => {
 		};
 		datePickerCheckIn = flatpickr( elDateCheckIn, optionCheckIn );
 		// console.log( elDateCheckIn.value );
-
+		let defaultCheckOutDate = elDateCheckOut.value ? elDateCheckOut.value : dateMinCheckOutCanBook;
 		// Check out date
 		const optionCheckout = {
 			dateFormat: 'Y/m/d',
 			minDate: hotel_settings.min_booking_date > 0 ?  new Date().fp_incr( hotel_settings.min_booking_date ) : 'today',
 			disable: datesBlock,
-			//defaultDate: dateMinCheckOutCanBook,
+			defaultDate: defaultCheckOutDate,
 			disableMobile: true,
 			locale: {
 				firstDayOfWeek: 1,
@@ -379,6 +383,7 @@ const wphbRoomCheckDates = ( formCheckDate ) => {
 	const data = new FormData( formCheckDate );
 	for ( const pair of data.entries() ) {
 		const key = pair[ 0 ]; // Get the field name
+		if ( key === 'wpbh-dates-block' ) continue;
 		const value = pair[ 1 ]; // Get the field value
 
 		dataSend[ key ] = value;
@@ -509,6 +514,8 @@ const wphbRoomAddToCart = ( formAddToCart ) => {
 	const data = new FormData( formAddToCart );
 	for ( const pair of data.entries() ) {
 		const key = pair[ 0 ]; // Get the field name
+		// remove block dates date when add to cart
+		if ( key === 'wpbh-dates-block' ) continue;
 		const value = pair[ 1 ]; // Get the field value
 
 		dataSend[ key ] = value;
@@ -563,7 +570,7 @@ const wphbRoomAddToCart = ( formAddToCart ) => {
 				return;
 			}
 
-			//window.location.href = data.redirect;
+			window.location.href = data.redirect;
 		} )
 		.catch( ( error ) => {
 			showErrors( error );
@@ -616,6 +623,41 @@ const calculateBookingPrice = ( elForm, target ) => {
     }
     elForm.querySelector( '.hb-total-price-value' ).innerHTML = utils.wphbRenderPrice( roomTotalPrice );
 }
+
+const getRoomBookingPriceDetails = ( button ) => {
+	let form = button.closest( 'form' );
+
+	const data = new FormData( form );
+	for ( const pair of data.entries() ) {
+		const key = pair[ 0 ];
+		if ( key === 'wpbh-dates-block' ) continue;
+		const value = pair[ 1 ]; // Get the field value
+
+		dataSend[ key ] = value;
+	}
+	const dateSendFrom = new FormData();
+	Object.entries( dataSend ).forEach( ( [ key, value ] ) => {
+		dateSendFrom.append( key, value );
+	} );
+
+	// Send to sever
+	const option = { method: 'POST', headers: {}, body: dateSendFrom };
+	if ( 0 !== parseInt( hotel_settings.user_id ) ) {
+		option.headers[ 'X-WP-Nonce' ] = hotel_settings.wphb_rest_nonce;
+	}
+	fetch( `${hotel_settings.wphb_rest_url}wphb/v1/rooms/single-room-price-details`, option )
+		.then( ( response ) => response.json() )
+		.then( ( res ) => {
+			const { status, message, data } = res;
+			if ( status === 'error' ) {
+				console.log( message );
+				return;
+			}
+			button.closest('.hb_view_price.hb-room-content').insertAdjacentHTML( 'beforeend', data.price_html );
+		} )
+		.catch( ( error ) => {} ) .finally( () => {} );
+};
+
 // Events
 document.addEventListener( 'submit', function ( e ) {
 	const target = e.target;
@@ -721,6 +763,11 @@ document.addEventListener( 'click', function ( e ) {
 				}
 			}
 		}
+	} else if ( target.classList.contains( 'hb-single-room-price-details' ) ) {
+		if ( target.closest( '.hb_view_price.hb-room-content' ).querySelector( '.hb-booking-room-details' ) ) {
+			target.closest( '.hb_view_price.hb-room-content' ).querySelector( '.hb-booking-room-details' ).remove();
+		}
+		getRoomBookingPriceDetails( target );
 	}
 
 	// faq toggle

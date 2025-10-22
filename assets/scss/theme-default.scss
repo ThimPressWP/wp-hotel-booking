@@ -1243,6 +1243,15 @@ body.single-hb_room {
                 }
             }
         }
+        .wphb-single-room-external-link {
+            .wphb-partner-links {
+                list-style: none;
+                display: flex;
+                gap: 16px;
+                margin: 16px;
+                padding: 0;
+            }
+        }
     }
 }
 
