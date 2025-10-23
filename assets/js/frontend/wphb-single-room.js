@@ -138,9 +138,9 @@ const wphbRoomInitDatePicker = () => {
 		        	elDateCheckIn.value = toYmdLocal( selectedDates[0] );
 		        	elDateCheckOut.value = toYmdLocal(selectedDates[1]);
 		        	instance._input.value = toYmdLocal( selectedDates[0] ) + ' - ' + toYmdLocal(selectedDates[1]);
-		        	if ( undefined !== roomCalendarPricing ) {
-		        		roomCalendarPricing.setDate(selectedDates, true);
-		        	}
+		        	// if ( undefined !== roomCalendarPricing ) {
+		        	// 	roomCalendarPricing.setDate(selectedDates, true);
+		        	// }
 		        }
 		    },
 		    onMonthChange: function ( selectedDates, dateStr, instance ) {
