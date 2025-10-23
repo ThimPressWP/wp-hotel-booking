@@ -28,7 +28,7 @@ class ArchiveRoomTemplate {
 
 			$args          = hb_get_room_query_args( $atts );
 			$rooms_content = static::render_rooms( $args );
-			echo $this->check_room_availability();
+			// echo $this->check_room_availability();
 			echo Template::instance()->nest_elements( $rooms_html_wrapper, $rooms_content );
 		} catch ( Exception $e ) {
 			echo 'Error: ' . $e->getMessage();
@@ -137,12 +137,15 @@ class ArchiveRoomTemplate {
 		} else {
 			$filter = '';
 		}
-
+		$check_room_availability = static::instance()->check_room_availability();
 		// section ( filter + section_rooms )
 		$section = apply_filters(
 			'wbhb/layout/list-rooms/section',
 			array(
+				'sidebar_wrap' => '<div class="wphb-archive-room-filter">',
+				'check_availability' => $check_room_availability,
 				'filter' => $filter,
+				'sidebar_wrap_end' => '</div>',
 				'rooms'  => Template::combine_components( $section_rooms ),
 			),
 			$rooms,
@@ -226,7 +229,7 @@ class ArchiveRoomTemplate {
 		$sections            = array(
 			'wrapper'         => '<div class="hotel-booking-rooms-search">',
 			'title'           => $title,
-			'form_start'      => '<form name="hb-search-form" class="hb-form-table" style="display: flex;">',
+			'form_start'      => '<form name="hb-search-form" class="hb-form-table" >',
 			'check_in_date'   => $check_in_date_html,
 			'check_out_date'  => $check_out_date_html,
 			'adults_capacity' => $adults_html,
