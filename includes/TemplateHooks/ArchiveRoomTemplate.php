@@ -142,11 +142,11 @@ class ArchiveRoomTemplate {
 		$section = apply_filters(
 			'wbhb/layout/list-rooms/section',
 			array(
-				'sidebar_wrap' => '<div class="wphb-archive-room-filter">',
 				'check_availability' => $check_room_availability,
+				'archive_content' => '<div>',
 				'filter' => $filter,
-				'sidebar_wrap_end' => '</div>',
 				'rooms'  => Template::combine_components( $section_rooms ),
+				'archive_content_end' => '</div>',
 			),
 			$rooms,
 			$settings
