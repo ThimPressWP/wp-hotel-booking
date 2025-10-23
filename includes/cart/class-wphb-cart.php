@@ -67,7 +67,7 @@ class WPHB_Cart {
 		$this->booking_sessions = WPHB_Sessions::instance( 'thimpress_hotel_booking_info_' . WPHB_BLOG_ID . $appfix );
 
 		// refresh cart session
-		// add_action( 'wp_loaded', array( $this, 'wp_loaded' ) );
+		add_action( 'wp_loaded', array( $this, 'wp_loaded' ) );
 
 		// update init hook
 		add_action( 'init', array( $this, 'hotel_booking_cart_update' ), 999 );
@@ -510,11 +510,11 @@ class WPHB_Cart {
 
 		// refresh cart_items_count
 		$this->cart_items_count = count( $this->cart_contents );
-
-		// refresh customer
+//
+//		// refresh customer
 		$this->load_customer();
-
-		// refresh booking
+//
+//		// refresh booking
 		$this->load_booking();
 	}
 
