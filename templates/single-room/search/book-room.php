@@ -35,18 +35,12 @@ if ( ! $post ) {
 			<# if ( typeof data.qty !== 'undefined' ) { #>
 			<div class="hb-booking-room-form-group">
 				<div class="hb-booking-room-form-field hb-form-field-input">
-					<?php if ( get_option( 'tp_hotel_booking_single_purchase' ) ) { ?>
-						<select name="hb-num-of-rooms" class="number_room_select" style="display: none;">
-							<option value="1">1</option>
-						</select>
-					<?php } else { ?>
-						<select name="hb-num-of-rooms" class="number_room_select">
-							<option value="0"><?php _e( 'Select Number Of Room', 'wp-hotel-booking' ); ?></option>
-							<# for( var i = 1; i <= data.qty; i++ ) { #>
-							<option value="{{ i }}">{{ i }}</option>
-							<# } #>
-						</select>
-					<?php } ?>
+					<select name="hb-num-of-rooms" class="number_room_select">
+						<option value="0"><?php _e( 'Select Number Of Room', 'wp-hotel-booking' ); ?></option>
+						<# for( var i = 1; i <= data.qty; i++ ) { #>
+						<option value="{{ i }}">{{ i }}</option>
+						<# } #>
+					</select>
 				</div>
 			</div>
 			<# } #>

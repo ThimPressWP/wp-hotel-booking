@@ -279,9 +279,6 @@ const calendarPricing = () => {
 					elForm.querySelector(
 						'input[name="check_out_date"]'
 					).value = toYmdLocal( selectedDates[ 1 ] );
-					if ( undefined !== roomDateRangeSelector ) {
-						roomDateRangeSelector.setDate(selectedDates, true);
-					}
 				} else if ( selectedDates.length === 0 ) {
 					elForm.querySelector(
 						'input[name="check_in_date"]'
@@ -289,9 +286,6 @@ const calendarPricing = () => {
 					elForm.querySelector(
 						'input[name="check_out_date"]'
 					).value = '';
-					if ( undefined !== roomDateRangeSelector ) {
-						roomDateRangeSelector.setDate(selectedDates, true);
-					}
 				}
 				setCalendarDatePrice( instance, roomPricing );
 			},
@@ -738,6 +732,9 @@ document.addEventListener( 'click', function ( e ) {
 					if ( elAddToCart ) {
 						elAddToCart.style.display = 'none';
 					}
+				}
+				if ( undefined !== roomDateRangeSelector ) {
+					roomDateRangeSelector.setDate(roomCalendarPricing.selectedDates, true);
 				}
 			}
 		}

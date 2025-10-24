@@ -8,7 +8,6 @@ defined( 'ABSPATH' ) || exit();
 if ( ! isset( $room ) ) {
 	return;
 }
-$room_qty = hb_get_request( 'room_qty', 1 );
 ?>
 
 <div class="wpdb-room-tmpl-add-to-cart" style="display: none">
@@ -23,15 +22,13 @@ $room_qty = hb_get_request( 'room_qty', 1 );
 
 		<div class="hb-search-results-form-container">
 			<div class="hb-booking-room-form-field hb-form-field-input">
-				<?php if ( ! get_option( 'tp_hotel_booking_single_purchase' ) ) { ?>
-					<label><?php echo __( 'Select number of room', 'wp-hotel-booking' ); ?></label>
-					<div class="wphb-max-qty">
-						<?php _e( 'Max quantity can book:', 'wp-hotel-booking' ); ?> <span class="qty-max">1</span>
-					</div>
-					<div>
-						<input name="hb-num-of-rooms" class="number_room_select" type="number" min="1" step="1" value="<?php echo esc_attr( $room_qty ) ?>">
-					</div>
-				<?php } ?>
+				<label><?php echo __( 'Select number of room', 'wp-hotel-booking' ); ?></label>
+				<div class="wphb-max-qty">
+					<?php _e( 'Max quantity can book:', 'wp-hotel-booking' ); ?> <span class="qty-max">1</span>
+				</div>
+				<div>
+					<input name="hb-num-of-rooms" class="number_room_select" type="number" min="1" step="1" value="<?php echo esc_attr( $room_qty ) ?>">
+				</div>
 			</div>
 			<?php
 			wphb_get_template_no_override(
