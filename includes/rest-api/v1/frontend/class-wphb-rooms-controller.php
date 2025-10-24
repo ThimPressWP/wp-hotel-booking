@@ -269,14 +269,7 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 
 				if ( ! empty( $additionPackage ) ) {
 					// Addition package not null && custom_process
-					$results['redirect']  = get_option( 'tp_hotel_booking_custom_process' ) ? add_query_arg(
-						array(
-							'is_page_room_extra' => 'select-room-extra',
-							'cart_id'            => $cart_item_id,
-							'room_id'            => $room_id,
-						),
-						hb_get_search_room_url()
-					) : '';
+					$results['redirect']  = '';
 					$results['has_extra'] = true;
 					ob_start();
 					wphb_get_template_no_override(

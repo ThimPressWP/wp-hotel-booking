@@ -24,12 +24,12 @@ global $hb_settings;
  */
 
 
-$custom_process = get_option( 'tp_hotel_booking_custom_process' );
+// $custom_process = get_option( 'tp_hotel_booking_custom_process' );
 ?>
 
 <li class="hb-room clearfix">
 	<form name="hb-page-search-results"
-			class="hb-page-search-room-results <?php echo ! empty( $custom_process ) ? 'custom-process' : 'extra-option-loop'; ?>">
+			class="hb-page-search-room-results 'extra-option-loop'">
 		<?php do_action( 'hotel_booking_loop_before_item', $room->post->ID ); ?>
 		<div class="hb-room-content">
 			<?php do_action( 'wphb/loop-v2/room-content', $room ); ?>

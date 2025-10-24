@@ -59,13 +59,13 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 						'desc'    => __( 'Disable select quantity in Hotel Search page (default: one at a time)', 'wp-hotel-booking' ),
 						'default' => 1,
 					),*/
-					array(
+					/*array(
 						'type'    => 'checkbox',
 						'id'      => WPHB_Settings::instance()->get_field_name( 'custom_process' ),
 						'title'   => __( 'Custom Process', 'wp-hotel-booking' ),
 						'desc'    => __( 'Choose extra options after select room in search page', 'wp-hotel-booking' ),
 						'default' => 1,
-					),
+					),*/
 					array(
 						'type'    => 'select',
 						'id'      => WPHB_Settings::instance()->get_field_name( 'currency' ),
