@@ -56,7 +56,7 @@ $external_links = ! empty( $external_links ) ? json_decode( $external_links, tru
 						<input type="hidden" name="link-icon-id" value="<?php echo esc_attr( $link['icon_id'] ) ?>">
 						<input type="hidden" name="link-icon-url" value="<?php echo esc_attr( $link['icon_url'] ) ?>">
 					</td>
-		            <td><input type="url" name="link-value" value="<?php echo esc_attr( $link['external_link'] ) ?>" placeholder="<?php esc_html_e( 'Enter Url', 'wp-hotel-booking' ) ?>" /></td>
+		            <td><input type="text" name="link-value" value="<?php echo esc_attr( $link['external_link'] ) ?>" placeholder="<?php esc_html_e( 'Enter Url', 'wp-hotel-booking' ) ?>" /></td>
 		            <td><button class="delete-external-link button" type="button"><?php esc_html_e( 'Delete', 'wp-hotel-booking' ); ?></button></td>
 				</tr>
 			<?php endforeach ?>
