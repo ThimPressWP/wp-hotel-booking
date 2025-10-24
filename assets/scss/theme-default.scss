@@ -165,6 +165,41 @@ body {
                     flex-direction: column;
                 }
 
+                // new style archive room from v2.2.4
+                &:has(.hotel-booking-rooms-search) {
+                    flex-direction: column;
+
+                    & > div:nth-child(2) {
+                        margin: 0 -15px;
+                        display: flex;
+
+                        @media (max-width: 1024px) {
+                            flex-direction: column;
+                        }
+                    }
+                }
+                .hotel-booking-rooms-search {
+                    margin-bottom: 20px;
+
+                    & > h3 {
+                        margin: 0 0 18px 0;
+                    }
+                    form.hb-form-table {
+                        display: flex;
+                        align-items: center;
+                        flex-wrap: wrap;
+                        gap: 20px;
+
+                        .hb-form-field-input {
+                            label {
+                                display: block;
+                            }
+                            
+                        }
+                    }
+                }
+                // end new style
+
                 .hotel-booking-search-filter {
                     min-width: 24%;
                 }
@@ -765,7 +800,7 @@ body {
     }
 
     // check availabiity
-    .hotel-booking-search {
+    .hotel-booking-search, .hotel-booking-rooms-search {
         width: auto;
         max-width: 100%;
 
@@ -805,10 +840,6 @@ body {
             }
         }
 
-        // input[type="number"] {
-        //     padding: 6px 12px;
-        // }
-
         select {
             appearance: none;
             background: white
@@ -818,9 +849,7 @@ body {
         }
 
         button {
-            transition:
-                border-color ease-in-out 0.15s,
-                box-shadow ease-in-out 0.15s;
+            transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
             margin: 0;
             position: relative;
             min-width: 200px;
@@ -898,6 +927,34 @@ body.single-hb_room {
                 }
             }
 
+            // new style single room from v2.2.4
+            .wphb-single-room-content {
+                display: flex;
+                gap: 30px;
+                clear: both;
+
+                @media (max-width: 767px) {
+                    flex-direction: column-reverse
+                }
+
+                .hb_single_room_details {
+                    width: 72%;
+
+                    @media (max-width: 767px) {
+                        width: 100%;
+                    }
+                }
+                .wphb-single-room-booking-container {
+                    width: 28%;
+                    min-width: 230px;
+
+                    @media (max-width: 767px) {
+                        width: 100%;
+                    }
+                }
+            }
+            // end new style
+
             .hb_related_other_room {
                 margin-left: auto;
                 margin-right: auto;
@@ -919,11 +976,11 @@ body.single-hb_room {
             .hb-search-results-form-container {
                 flex-wrap: wrap;
                 row-gap: 20px;
+
                 .hb-booking-room-form-group {
                     flex: 1 47%;
-                    text-align: center;
+
                     .hb_button {
-                        max-width: 300px;
                         text-align: center;
                         margin: 0 auto;
                     }
@@ -1193,19 +1250,19 @@ body.single-hb_room {
     }
     .wphb-single-room-booking-container {
         .hb-search-results-form-container{
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             flex-wrap: wrap;
             max-width: 350px;
-            position: relative;
-            padding: 20px;
+            
             .hb-booking-room-form-group{
                 width: 100%;
                 text-align: left;
+
                 &.hb-room-price{
                     display: flex;
-                    padding: 12px;
                     justify-content: space-between;
                 }
                 .hb_addition_package_extra {

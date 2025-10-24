@@ -25,15 +25,16 @@
 	color: #fff;
 }
 
-.hb-booking-room-form-head {
-	text-align: center;
+.hb-booking-room-form-head p {
+	margin: 0;
+	font-size: 18px;
+	font-weight: 600;
 }
 
 .hb-booking-room-form-head h2 {
 	margin: 0;
 	padding: 10px;
 	text-transform: uppercase;
-	text-align: center;
 }
 
 .hb-booking-room-form-head > * {
