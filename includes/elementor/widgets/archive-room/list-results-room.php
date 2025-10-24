@@ -191,7 +191,7 @@ class Thim_Ekit_Widget_List_Results_Room extends Widget_Base {
 			echo '<p class="message message-error">' . esc_html__( 'Error: No rooms available!.', 'wp-hotel-booking' ) . '</p>';
 			return;
 		}
-		$custom_process = get_option( 'tp_hotel_booking_custom_process' );
+		// $custom_process = get_option( 'tp_hotel_booking_custom_process' );
 		$rooms = $results['data'];
 		$class_item  = 'hb-room-archive__article'; ?>
 
@@ -204,7 +204,7 @@ class Thim_Ekit_Widget_List_Results_Room extends Widget_Base {
 
 					$this->current_permalink = get_permalink(); ?>
 					<div class="hb-room clearfix">
-						<form name="hb-page-search-results" class="hb-page-search-room-results <?php echo $class_item ?> <?php echo ! empty( $custom_process ) ? ' custom-process' : ' extra-option-loop'; ?>" >
+						<form name="hb-page-search-results" class="hb-page-search-room-results <?php echo $class_item ?> extra-option-loop" >
 						<?php do_action( 'hotel_booking_loop_before_item', $room->ID ); ?>
 							<?php
 								\Thim_EL_Kit\Utilities\Elementor::instance()->render_loop_item_content( $settings['template_id'] );

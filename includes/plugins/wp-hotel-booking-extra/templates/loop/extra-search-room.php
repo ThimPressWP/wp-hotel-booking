@@ -23,7 +23,7 @@ $room_extra = HB_Room_Extra::instance( $post_id );
 $room_extra = $room_extra->get_extra();
 
 if ( $room_extra ) { ?>
-	<?php if ( ! get_option( 'tp_hotel_booking_custom_process' ) || is_singular( 'hb_room' ) ) { ?>
+	<?php if ( is_singular( 'hb_room' ) ) { ?>
 		<div class="hb_addition_package_extra">
 			<div class="hb_addition_package_title">
 				<h5 class="hb_addition_package_title_toggle">

@@ -412,21 +412,7 @@ class WPHB_Ajax {
 						);
 					}
 				}
-				
-
-				$is_enable_custom_process = (int) get_option( 'tp_hotel_booking_custom_process', 0 );
-				if ( $is_enable_custom_process && ! $from_check_dates_room ) {
-					$res->data->redirect = add_query_arg(
-						array(
-							'is_page_room_extra' => 'select-room-extra',
-							'cart_id'            => $cart_item_id,
-							'room_id'            => $room_id,
-						),
-						hb_get_search_room_url()
-					);
-				} else {
-					$res->data->redirect = $pageRedirect;
-				}
+				$res->data->redirect = $pageRedirect;
 
 				$res->status  = 'success';
 				$res->message = sprintf( '<label class="hb_success_message">%1$s</label>', __( 'Added successfully.', 'wp-hotel-booking' ) );
