@@ -1033,35 +1033,6 @@ body.single-hb_room {
                 }
             }
         }
-
-        .calendar-loading-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.7);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: all;
-        }
-    }
-
-    .calendar-loading-spinner {
-        border: 4px solid #f3f3f3;
-        border-top: 4px solid #3498db;
-        border-radius: 50%;
-        width: 32px;
-        height: 32px;
-        animation: loading-spin 1s linear infinite;
-    }
-
-    @keyframes loading-spin {
-        to {
-            transform: rotate(360deg);
-        }
     }
 }
 
@@ -1227,6 +1198,8 @@ body.single-hb_room {
             align-items: flex-start;
             flex-wrap: wrap;
             max-width: 350px;
+            position: relative;
+            padding: 20px;
             .hb-booking-room-form-group{
                 width: 100%;
                 text-align: left;
@@ -1242,6 +1215,12 @@ body.single-hb_room {
                     width: 100%;
                 }
             }
+            .wphb-single-room-loading-overlay {
+                background: rgba(0, 0, 0, 0.3);
+            }
+            .hb-booking-room-details {
+                bottom: 120px;
+            }
         }
         .wphb-single-room-external-link {
             .wphb-partner-links {
@@ -1251,6 +1230,36 @@ body.single-hb_room {
                 margin: 16px;
                 padding: 0;
             }
+        }
+    }
+    .wphb-single-room-loading-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.7);
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: all;
+        &.hidden {
+            display: none;
+        }
+    }
+    .wphb-single-room-loading-spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        animation: loading-spin 1s linear infinite;
+    }
+
+    @keyframes loading-spin {
+        to {
+            transform: rotate(360deg);
         }
     }
 }

@@ -50,7 +50,8 @@ if ( ! empty( $extra_items ) ) {
 }
 
 $include_tax = hb_price_including_tax() ? (float) WPHB_Settings::instance()->get( 'tax' ) : 0;
-$total_price = $room->amount_singular + $extra_price * ( 1 + $include_tax / 100 );
+// $total_price = $room->amount_singular + $extra_price * ( 1 + $include_tax / 100 );
+$total_price = $room->amount_singular + $extra_price;
 
 ?>
 <div id="hotel_booking_room_hidden">
@@ -114,7 +115,10 @@ $total_price = $room->amount_singular + $extra_price * ( 1 + $include_tax / 100 
 				<div class="hb-booking-room-form-group hb-room-price">
 					<div class="hb-total-price"><span class="hb-total-price-text"><?php esc_html_e( 'Total:', 'wp-hotel-booking' ); ?></span><span class="hb-total-price-value"><?php echo esc_html( hb_format_price( $total_price ) ); ?></span></div>
 	                <div class="hb_view_price hb-room-content">
-	                    <a href="javascript:void(0)" class="hb-single-room-price-details"><?php esc_html_e( 'View details', 'wp-hotel-booking' ); ?></a>
+	                    <a href="javascript:void(0)" class="hb-single-room-price-details">
+	                    	<span class="dashicons dashicons-update hide wphb-icon"></span>
+	                    	<?php esc_html_e( 'View details', 'wp-hotel-booking' ); ?>
+	                    </a>
 	                </div>
 				</div>
 				<div class="hb-booking-room-form-group">
@@ -129,6 +133,7 @@ $total_price = $room->amount_singular + $extra_price * ( 1 + $include_tax / 100 
 						<?php _e( 'Book room', 'wp-hotel-booking' ); ?>
 					</button>
 				</div>
+				<div class="wphb-single-room-loading-overlay hidden" ><div class="wphb-single-room-loading-spinner"></div></div>
 			</div>
 		</form>
 	</div>

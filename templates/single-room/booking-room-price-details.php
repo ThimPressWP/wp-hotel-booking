@@ -22,6 +22,7 @@ $include_tax    = hb_price_including_tax() ? (float) WPHB_Settings::instance()->
 $extra_pricing  = array();
 $check_in_date  = $room->get_data( 'check_in_date' );
 $check_out_date = $room->get_data( 'check_out_date' );
+$quantity       = $room->get_data( 'quantity' );
 
 $total_extra_price = 0;
 if ( ! empty( $extra_info) ) {
@@ -60,7 +61,7 @@ if ( ! empty( $extra_info) ) {
 					<?php printf( 'x%d %s', $info['count'], __( 'Night', 'wp-hotel-booking' ) ); ?>
 				</td>
 				<td class="hb_search_item_price">
-					<?php echo hb_format_price( round( $info['price'], 2 ) ); ?>
+					<?php echo hb_format_price( round( $info['price'] * $quantity, 2 ) ); ?>
 				</td>
 			</tr>
 		<?php } ?>
@@ -90,7 +91,7 @@ if ( ! empty( $extra_info) ) {
 				?>
 			</td>
 			<td class="hb_search_item_price">
-				<?php echo hb_format_price( $room->amount_singular + $total_extra_price ); ?>
+				<?php echo hb_format_price( $room->amount_singular * $quantity + $total_extra_price ); ?>
 			</td>
 		</tr>
 		</tfoot>
