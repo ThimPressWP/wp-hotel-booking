@@ -117,6 +117,7 @@ const wphbRoomInitDatePicker = () => {
 	if ( elDateRange ) {
 		let positionEle = parseInt( elDateRange.getAttribute( 'data-hidden' ) ) === 1 ? elDateCheckIn : null,
 			roomId = elForm.querySelector('input[name="room-id"]').value;
+			let minEndDate;
 		roomDateRangeSelector = flatpickr( elDateRange, {
 		    mode: "range",
 		    dateFormat: 'Y/m/d',
@@ -128,12 +129,35 @@ const wphbRoomInitDatePicker = () => {
 		    	firstDayOfWeek: 1,
 		    },
 		    defaultDate: [elDateCheckIn.value, elDateCheckOut.value],
+		    onDayCreate: function(dObj, dStr, fpInstance, dayElem) {
+		        if (!minEndDate) return;
+		        const date = dayElem.dateObj;
+		        // disable dates which smaller than minEndDate
+		        if (date < minEndDate) {
+		        	dayElem.classList.add('flatpickr-disabled');
+		        	dayElem.setAttribute('aria-disabled', 'true');
+		        }
+		    },
 		    onChange: function(selectedDates, dateStr, instance) {
 		        if (selectedDates.length === 2) {
 		        	elDateCheckIn.value = toYmdLocal( selectedDates[0] );
 		        	elDateCheckOut.value = toYmdLocal(selectedDates[1]);
 		        	instance._input.value = toYmdLocal( selectedDates[0] ) + ' - ' + toYmdLocal(selectedDates[1]);
+		        	// reset minEndDate
+		        	minEndDate = new Date();
+		        	instance.redraw();
+		        	// Calculate booking price after selecting dates
 		        	calculateBookingPrice( elForm );
+		        } else if (selectedDates.length === 1) {
+	                const start = selectedDates[0];
+	                minEndDate = new Date(start);
+	                minEndDate.setDate(minEndDate.getDate() + hotel_settings.min_booking_date);
+	                // redraw to trigger onDayCreate
+	                instance.redraw();
+		        } else if ( selectedDates.length === 0 ) {
+		        	// reset minEndDate
+		        	minEndDate = new Date();
+		        	instance.redraw();
 		        }
 		    },
 		    onMonthChange: function ( selectedDates, dateStr, instance ) {
