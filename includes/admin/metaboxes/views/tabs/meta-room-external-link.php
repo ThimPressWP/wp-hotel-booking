@@ -17,13 +17,13 @@ $room_id = $post->ID;
 if ( empty( $room_id ) ) {
 	return;
 }
-$external_links = get_post_meta( $room_id, '_hb_room_external_link', true );
-$external_links = ! empty( $external_links ) ? json_decode( $external_links, true ) : '';
+$external_links_raw = get_post_meta( $room_id, '_hb_room_external_link', true );
+$external_links = ! empty( $external_links_raw ) ? json_decode( $external_links_raw, true ) : '';
 ?>
 <div class="button-group">
 	<button class="wphb-add-external-button button button-primary" type="button"><?php esc_html_e( 'Add external link', 'wp-hotel-booking' ); ?><span class="dashicons dashicons-plus-alt2"></span></button>
 	<button class="wphb-save-link-button button-secondary" data-id="<?php echo esc_attr( $room_id ); ?>" type="button"><?php esc_html_e( 'Save', 'wp-hotel-booking' ); ?><span class="dashicons dashicons-saved"></span></button>
-	<input type="hidden" id="wphb_room_external_link" name="_hb_room_external_link">
+	<input type="hidden" id="wphb_room_external_link" name="_hb_room_external_link" value="<?php echo esc_attr( $external_links_raw ); ?>"/>
 </div>
 <table class="wphb-room-external-link-table wp-list-table widefat striped fixed" >
 	<thead>
