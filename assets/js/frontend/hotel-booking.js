@@ -1048,7 +1048,7 @@ import flatpickr from 'flatpickr';
 
 'use strict';
 
-let datePickerCheckIn, datePickerCheckOut, datePickerRange;
+// let datePickerCheckIn, datePickerCheckOut, datePickerRange;
 const wphbDatePicker = () => {
 	const elFormTables = document.querySelectorAll( '.hb-form-table' );
 	if ( ! elFormTables.length ) {
@@ -1063,7 +1063,7 @@ const wphbDatePicker = () => {
 		const dateTomorrow = new Date( dateNow.setDate( dateNow.getDate() + 1 ) );
 		const minBookingDateNumber = hotel_settings.min_booking_date > 0 ? parseInt( hotel_settings.min_booking_date ) : 1;
 
-		if ( elDateCheckIn && ! elDateCheckIn.closest( '.hb-form-check-in-check-out' ) ) {
+		if ( elDateCheckIn && elDateCheckOut && ! elDateCheckIn.closest( '.hb-form-check-in-check-out' ) ) {
 			// Check in date
 			const optionCheckIn = {
 				dateFormat: 'Y/m/d',
@@ -1079,18 +1079,15 @@ const wphbDatePicker = () => {
 						const dateSelected = selectedDates[ 0 ];
 						datePickerCheckOut.clear();
 						const dateNext = new Date( dateSelected.setDate( dateSelected.getDate() + minBookingDateNumber ) );
-						console.log( dateNext );
+						elDateCheckOut.focus();
 						datePickerCheckOut.set( 'minDate', dateNext );
-						//datePickerCheckOut.set( 'date', dateNext );
 						datePickerCheckOut.open();
 					}
 				},
 			};
 
-			datePickerCheckIn = flatpickr( elDateCheckIn, optionCheckIn );
-		}
+			const datePickerCheckIn = flatpickr( elDateCheckIn, optionCheckIn );
 
-		if ( elDateCheckOut && ! elDateCheckOut.closest( '.hb-form-check-in-check-out' ) ) {
 			// Check out date
 			const optionCheckout = {
 				dateFormat: 'Y/m/d',
@@ -1104,7 +1101,7 @@ const wphbDatePicker = () => {
 				},
 			};
 
-			datePickerCheckOut = flatpickr( elDateCheckOut, optionCheckout );
+			const datePickerCheckOut = flatpickr( elDateCheckOut, optionCheckout );
 		}
 
 		if ( elDateRange && elDateRange.closest( '.hb-form-check-in-check-out' ) ) {
@@ -1135,7 +1132,7 @@ const wphbDatePicker = () => {
 
 				},
 			};
-			datePickerRange = flatpickr( elDateRange, optionRange );
+			const datePickerRange = flatpickr( elDateRange, optionRange );
 
 			if ( elDateCheckInOut ) {
 				elDateCheckInOut.addEventListener( 'click', ( e ) => {

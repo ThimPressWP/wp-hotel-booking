@@ -272,21 +272,6 @@ const calendarPricing = () => {
 				}
 			},
 			onChange: function ( selectedDates, dateStr, instance ) {
-				if ( selectedDates.length === 2 && elForm ) {
-					elForm.querySelector(
-						'input[name="check_in_date"]'
-					).value = toYmdLocal( selectedDates[ 0 ] );
-					elForm.querySelector(
-						'input[name="check_out_date"]'
-					).value = toYmdLocal( selectedDates[ 1 ] );
-				} else if ( selectedDates.length === 0 ) {
-					elForm.querySelector(
-						'input[name="check_in_date"]'
-					).value = '';
-					elForm.querySelector(
-						'input[name="check_out_date"]'
-					).value = '';
-				}
 				setCalendarDatePrice( instance, roomPricing );
 			},
 			onMonthChange: function ( selectedDates, dateStr, instance ) {
