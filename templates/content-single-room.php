@@ -45,18 +45,18 @@ if ( post_password_required() ) {
 			 * hotel_booking_single_room_title hook
 			 */
 			do_action( 'hotel_booking_single_room_title' );
+			
+			// echo '<div class="single-top-right">';
+			// 	/**
+			// 	 * hotel_booking_loop_room_price hook
+			// 	 */
+			// 	do_action( 'hotel_booking_loop_room_price' );
 
-			echo '<div class="single-top-right">';
-				/**
-				 * hotel_booking_loop_room_price hook
-				 */
-				do_action( 'hotel_booking_loop_room_price' );
-
-				/**
-				 * hotel_booking_single_room_button hook
-				 */
-				do_action( 'hotel_booking_single_room_button' );
-			echo '</div>';
+			// 	/**
+			// 	 * hotel_booking_single_room_button hook
+			// 	 */
+			// 	do_action( 'hotel_booking_single_room_button' );
+			// echo '</div>';
 		echo '</div>';
 
 		/**

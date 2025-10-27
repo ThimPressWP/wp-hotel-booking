@@ -60,9 +60,12 @@ $total_price = $room->amount_singular + $extra_price;
 			<div class="hb-booking-room-form-head">
 				<p class="description"><?php _e( 'Booking form', 'wp-hotel-booking' ); ?></p>
 			</div>
-			<?php if ( $error_message ) : ?>
-				<?php echo $error_message; ?>
-			<?php endif; ?>
+			<?php 
+				do_action( 'hotel_booking_loop_room_price' ); // hotel_booking_loop_room_price hook
+				if ( $error_message ) {  // show error
+					echo $error_message; 
+				} 
+			?>
 			<div class="hb-search-results-form-container">
 				<div class="hb-booking-room-form-group">
 					<label><?php esc_html_e( 'Arrival date', 'wp-hotel-booking' ); ?></label>

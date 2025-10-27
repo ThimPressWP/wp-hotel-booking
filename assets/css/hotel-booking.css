@@ -560,7 +560,6 @@
 }
 
 .hb_single_room .price {
-    float: right;
     font-weight: 600;
     font-size: 30px;
     line-height: 1;
