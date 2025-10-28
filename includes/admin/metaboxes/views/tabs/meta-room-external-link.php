@@ -30,7 +30,7 @@ $counter = 0;
 <div class="button-group">
 	<a class="wphb-add-external-button button button-primary" href="<?php echo esc_url( admin_url(
 		'admin.php?page=tp_hotel_booking_settings&tab=room#wphb-external-link-table'
-		) ); ?>" target="_blank"><?php esc_html_e( 'Add external link', 'wp-hotel-booking' ); ?><span class="dashicons dashicons-plus-alt2"></span>
+		) ); ?>" target="_blank"><?php esc_html_e( 'Add New External OTA Platforms', 'wp-hotel-booking' ); ?><span class="dashicons dashicons-plus-alt2"></span>
 	</a>
 	<input type="hidden" name="_hb_room_external_link" id="_hb_room_external_link" value="<?php echo esc_attr( $room_external_link_settings ); ?>">
 </div>

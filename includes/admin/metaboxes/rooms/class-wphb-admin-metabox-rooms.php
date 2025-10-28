@@ -91,7 +91,7 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 						'content'  => $this->wphb_facilities( $post_id ),
 					),
 					'room_external_link'     => array(
-						'label'    => esc_html__( 'External Link', 'wp-hotel-booking' ),
+						'label'    => esc_html__( 'External OTA Platforms', 'wp-hotel-booking' ),
 						'target'   => 'room_external_link',
 						'icon'     => 'dashicons-admin-links',
 						'priority' => 90,
