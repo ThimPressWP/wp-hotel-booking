@@ -545,15 +545,15 @@ button.wphb_loading::before {
 #room_external_link .button-group {
     margin-bottom: 16px;
 }
-#room_external_link .button-group button {
+#room_external_link .button-group a {
     margin-right: 16px;
     line-height: 1.6;
     padding: 8px 16px;
 }
-#room_external_link .wphb-room-external-link-table.wp-list-table.widefat.striped.fixed td {
+#room_external_link .wphb-room-external-link-table.wp-list-table.widefat.striped td {
     vertical-align: middle;
 }
-#room_external_link .wphb-room-external-link-table.wp-list-table.widefat.striped.fixed span.dashicons.dashicons-move {
+#room_external_link .wphb-room-external-link-table.wp-list-table.widefat.striped span.dashicons.dashicons-move {
     margin-right: 8px;
     cursor: move;
 }

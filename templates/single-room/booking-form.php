@@ -97,15 +97,13 @@ $total_price = $room->amount_singular + $extra_price;
 					</div>
 				</div>
 				<div class="hb-booking-room-form-group">
-					<?php if ( ! get_option( 'tp_hotel_booking_single_purchase' ) ) { ?>
-						<label><?php echo __( 'Select number of room', 'wp-hotel-booking' ); ?></label>
-						<div class="wphb-max-qty">
-							<?php _e( 'Max quantity can book:', 'wp-hotel-booking' ); ?> <span class="qty-max"><?php echo esc_html( $available_qty ); ?></span>
+						<label><?php esc_html_e( 'Room(s)', 'wp-hotel-booking' ); ?></label>
+						<div class="wphb-max-qty" hidden>
+							<?php _e( 'Max:', 'wp-hotel-booking' ); ?> <span class="qty-max"><?php echo esc_html( $available_qty ); ?></span>
 						</div>
 						<div class="hb-booking-room-form-field hb-form-field-input">
-							<input name="hb-num-of-rooms" class="number_room_select" type="number" min="1" step="1" value="<?php echo esc_attr( $room_qty ) ?>">
+							<input name="hb-num-of-rooms" class="number_room_select" type="number" min="1" step="1" max="<?php echo esc_html( $available_qty ); ?>" value="<?php echo esc_attr( $room_qty ) ?>">
 						</div>
-					<?php } ?>
 				</div>
 				<div class="hb-booking-room-form-field">
 					<?php

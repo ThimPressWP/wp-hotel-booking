@@ -110,7 +110,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 						'id'      => WPHB_Settings::instance()->get_field_name( 'minimum_booking_day' ),
 						'title'   => __( 'Minimum booking nights', 'wp-hotel-booking' ),
 						'default' => 1,
-						'min'     => 0,
+						'min'     => 1,
 						'step'    => 'any',
 					),
 					array(

@@ -183,8 +183,8 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 						'desc'    => __( 'This field is used for advanced review.', 'wp-hotel-booking' ),
 					),
 					array(
-						'id'      => WPHB_Settings::instance()->get_field_name( 'external_link_icons' ),
-						'title'   => __( 'External Link Icon', 'wp-hotel-booking' ),
+						'id'      => WPHB_Settings::instance()->get_field_name( 'external_link_settings' ),
+						'title'   => __( 'External OTA Platforms', 'wp-hotel-booking' ),
 						'type'    => 'custom_html',
 						'desc'    => __( 'The external link icon set', 'wp-hotel-booking' ),
 					),
