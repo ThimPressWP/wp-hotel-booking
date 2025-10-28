@@ -753,7 +753,8 @@ document.addEventListener( 'click', function ( e ) {
 			target.closest( '.hb_view_price.hb-room-content' ).querySelector( '.hb-booking-room-details' ).remove();
 		}
 		getRoomBookingPriceDetails( target );
-	} if ( target.closest( 'li[data-tab-id="hb_room_pricing_plans"]' ) ) {
+	} if ( target.closest( 'li[data-tab-id="hb_room_pricing_plans"]' )
+        || target.closest( 'a[href="#hb_room_pricing_plans"]' ) ) {
         calendarPricing();
     }
 
