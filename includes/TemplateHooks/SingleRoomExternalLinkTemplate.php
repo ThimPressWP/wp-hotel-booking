@@ -72,18 +72,19 @@ class SingleRoomExternalLinkTemplate {
 				}
 				$default_icon_url = WPHB_PLUGIN_URL . '/assets/images/icon-128x128.png';
 
-				$icon_id = $field['icon_id'] ? $field['icon_id'] : 0;
+				$icon_id  = $field['icon_id'] ? $field['icon_id'] : 0;
+				$title    = $field['title'] ?: __( 'Wp hotel booking', 'wp-hotel-booking' );
 				$alt_text = (string) get_post_meta( $icon_id, '_wp_attachment_image_alt', true );
 				$icon_url = $field['icon_url'] ? $field['icon_url'] : $default_icon_url;
 				$external_link = $external_links[ $field_id ]['external_link'] ? $external_links[ $field_id ]['external_link'] : $field['external_link'];
 				$external_link_html .= sprintf( '
 					<li>
-				    <a href="%1$s" target="_blank" rel="noopener noreferrer">
-				      <img src="%2$s" 
-				           alt="%3$s" 
+				    <a href="%1$s" target="_blank" rel="noopener noreferrer" title="%2$s">
+				      <img src="%3$s" 
+				           alt="%4$s" 
 				           size="50" height="50" width="50"/>
 				    </a>
-				  </li>', esc_url( $external_link ), esc_url( $icon_url ), $alt_text );
+				  </li>', esc_url( $external_link ), $title, esc_url( $icon_url ), $alt_text );
 			}
 		}
 		$sections = array(
