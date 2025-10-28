@@ -622,7 +622,7 @@ const getRoomBookingPriceDetails = ( button ) => {
 	const iconLoading = button.querySelector('.dashicons.dashicons-update.hide.wphb-icon');
 	iconLoading.classList.toggle('hide');
 	iconLoading.classList.toggle('loading');
-	
+
 	fetch( `${hotel_settings.wphb_rest_url}wphb/v1/rooms/single-room-price-details`, option )
 		.then( ( response ) => response.json() )
 		.then( ( res ) => {
@@ -656,6 +656,7 @@ document.addEventListener( 'submit', function ( e ) {
 } );
 document.addEventListener( 'click', function ( e ) {
 	const target = e.target;
+
 	if ( target.classList.contains( 'hb_previous_step' ) ) {
 		e.preventDefault();
 		if ( elTmplDateAvailable ) {
@@ -752,7 +753,9 @@ document.addEventListener( 'click', function ( e ) {
 			target.closest( '.hb_view_price.hb-room-content' ).querySelector( '.hb-booking-room-details' ).remove();
 		}
 		getRoomBookingPriceDetails( target );
-	}
+	} if ( target.closest( 'li[data-tab-id="hb_room_pricing_plans"]' ) ) {
+        calendarPricing();
+    }
 
 	// faq toggle
 	const targetFAQ = target.closest( '._hb_room_faqs__detail' );
@@ -772,6 +775,12 @@ document.addEventListener( 'DOMContentLoaded', function ( e ) {
 	// Check view calendar pricing will load calendar pricing
 	const elRoomCalendarPricing = document.querySelector( '.wphb-room-calendar-pricing' );
 	if ( elRoomCalendarPricing ) {
+        // If calendar pricing in tab content, only load when click to tab
+        const elTabContent = elRoomCalendarPricing.closest( '.hb_single_room_tabs_content' );
+        if ( elTabContent ) {
+            return;
+        }
+
 		utils.listenElementViewed( elRoomCalendarPricing, () => {
 			if ( elRoomCalendarPricing.classList.contains( 'loaded' ) ) {
 				return;

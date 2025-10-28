@@ -87,7 +87,7 @@ do_action( 'hotel_booking_before_single_room_infomation' );
 
 	    <ul class="hb_single_room_tabs">
 			<?php foreach ( $tabs as $key => $tab ) { ?>
-	            <li>
+	            <li data-tab-id="<?php echo esc_attr( $tab['id'] ); ?>">
 	                <a href="#<?php echo esc_attr( $tab['id'] ); ?>" class="<?php echo esc_attr( $active_class ?? '' ); ?>">
 						<?php do_action( 'hotel_booking_single_room_before_tabs_' . $tab['id'] ); ?>
 						<?php printf( '%s', $tab['title'] ); ?>
@@ -118,10 +118,10 @@ do_action( 'hotel_booking_before_single_room_infomation' );
 
 	</div>
 	<div class="wphb-single-room-booking-container">
-		<?php 
+		<?php
 			wp_enqueue_script( 'wphb-single-room-js' );
 			wphb_get_template_no_override( 'single-room/booking-form.php', compact( 'room' ) );
-			do_action( 'hotel_booking_single_room_after_booking_form', $room ); 
+			do_action( 'hotel_booking_single_room_after_booking_form', $room );
 		?>
 	</div>
 </div>

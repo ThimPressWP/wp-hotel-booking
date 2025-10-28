@@ -912,7 +912,7 @@ import flatpickr from 'flatpickr';
 			const tab_id = $( this ).attr( 'href' );
 			hb_single_tab_details.hide();
 			hb_single_details_content.find( tab_id ).fadeIn();
-			return false;
+			// return false;
 		} );
 
 		$( '.hb-rating-input' ).rating();
