@@ -414,12 +414,12 @@ class WPHB_Cart {
 	// generate cart item id
 	function generate_cart_id( $params = array() ) {
 		ksort( $params );
-		// if ( isset( $params['adult_qty'] ) ) {
-		// 	unset( $params['adult_qty'] );
-		// }
-		// if ( isset( $params['child_qty'] ) ) {
-		// 	unset( $params['child_qty'] );
-		// }
+		if ( isset( $params['adult_qty'] ) ) {
+			unset( $params['adult_qty'] );
+		}
+		if ( isset( $params['child_qty'] ) ) {
+			unset( $params['child_qty'] );
+		}
 
 		return hb_generate_cart_item_id( $params );
 	}
@@ -510,11 +510,11 @@ class WPHB_Cart {
 
 		// refresh cart_items_count
 		$this->cart_items_count = count( $this->cart_contents );
-
-		// refresh customer
+//
+//		// refresh customer
 		$this->load_customer();
-
-		// refresh booking
+//
+//		// refresh booking
 		$this->load_booking();
 	}
 
