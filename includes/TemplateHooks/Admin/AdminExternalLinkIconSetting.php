@@ -24,7 +24,7 @@ class AdminExternalLinkIconSetting {
 				'wphb-icon-external-link-upload',
 				WPHB_PLUGIN_URL . '/assets/js/admin/icon-external-link.js',
 				array(),
-				uniqid(),
+				false,
 				array(
 					'strategy'  => 'defer',
 					'in_footer' => 1,

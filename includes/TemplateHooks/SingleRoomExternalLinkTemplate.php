@@ -81,7 +81,7 @@ class SingleRoomExternalLinkTemplate {
 				    <a href="%1$s" target="_blank" rel="noopener noreferrer">
 				      <img src="%2$s" 
 				           alt="%3$s" 
-				           size="50"/>
+				           size="50" height="50" width="50"/>
 				    </a>
 				  </li>', esc_url( $external_link ), esc_url( $icon_url ), $alt_text );
 			}

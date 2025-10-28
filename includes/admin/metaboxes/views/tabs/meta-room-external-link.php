@@ -60,7 +60,7 @@ $counter = 0;
 						<span class="dashicons dashicons-move"></span><input type="checkbox" name="enable-link" <?php checked( $enabled, true ); ?>><label><?php esc_html_e( 'Enable', 'wp-hotel-booking' ); ?></label>
 					</td>
 					<td>
-						<img size="50" width="50" height="50" src="<?php echo esc_url( $field['icon_url'] ?? $default_icon_url ); ?>" class="wphb-select-link-icon" alt=""/>
+						<img size="50" width="50" height="50" src="<?php echo esc_url( $field['icon_url'] ?: $default_icon_url ); ?>" class="wphb-select-link-icon" alt=""/>
 						<input type="hidden" name="link-icon-id" value="<?php echo esc_attr( $field['icon_id'] ?? 0 ); ?>">
 						<input type="hidden" name="link-icon-url" value="<?php echo esc_attr( $field['icon_url'] ?? '' ); ?>">
 					</td>
