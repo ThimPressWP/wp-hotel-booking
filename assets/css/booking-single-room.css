@@ -25,9 +25,9 @@
 	color: #fff;
 }
 
-.hb-booking-room-form-head p {
-	margin: 0 0 10px 0;
-	font-size: 18px;
+.hb-booking-room-form-head p { /* title booking form */
+	margin: 0 0 15px 0;
+	font-size: 20px;
 	font-weight: 600;
 }
 
@@ -94,8 +94,7 @@
 
 /* preview rooms  */
 .hb_single_room #hb_room_images{
-	margin-bottom: 20px;
-    float: left;
+	margin-bottom: 30px;
     width: 100%;
     position: relative;
 	overflow: hidden;
@@ -103,8 +102,8 @@
 
 .hb_single_room #hb_room_images .room-preview{
 	position: absolute;
-	width:40px;
-	height:40px;
+	width: 40px;
+	height: 40px;
 	right: 10px;
 	top: 10px;
 	z-index: 10;
@@ -118,6 +117,7 @@
 .hb_single_room #hb_room_images img{
 	display: block;
     width: 100%;
+	max-width: 100% !important;
 	max-height: 700px;
 	object-fit: cover;
 	box-shadow: none;

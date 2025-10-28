@@ -14,6 +14,8 @@ body {
         &:not(.tp-themes-premium) {
             --hb-primary: #e64b50;
             --hb-light: #fde3e3;
+            --hb-background-section: #f6f6f6;
+            --hb-border-radius: 3px;
             --wp--style--global--content-size: 1200px;
 
             font-size: var(--hb-font-size-base, 16px);
@@ -45,29 +47,23 @@ body {
             h1 {
                 font-size: 48px;
             }
-
             h2 {
                 font-size: 36px;
             }
-
             h3 {
                 font-size: 30px;
             }
-
             h4 {
                 font-size: 20px;
             }
-
             h5 {
                 font-size: 18px;
             }
-
             h6 {
                 font-size: var(--hb-font-size-base, 16px);
             }
 
-            h1,
-            h2 {
+            h1, h2 {
                 font-weight: bold;
                 outline: none;
 
@@ -75,11 +71,7 @@ body {
                     outline: none;
                 }
             }
-            h3,
-            h4,
-            h5,
-            h6,
-            .title {
+            h3, h4, h5, h6, .title {
                 font-weight: 600;
                 outline: none;
 
@@ -124,12 +116,16 @@ body {
                 font-size: var(--hb-font-size-base, 16px);
             }
 
-            button:not(:hover):not(:active):not(.has-background) {
-                background-color: var(--hb-primary, #ffb606);
-            }
+            &.wp-theme-twentytwentyone { // fix for twentytwentyone
+                .room-container, .hb_single_room {
+                    button:not(:hover):not(:active):not(.has-background) {
+                        background-color: var(--hb-primary, #ffb606);
+                    }
 
-            button:not(:hover):not(:active):not(.has-text-color) {
-                color: #fff;
+                    button:not(:hover):not(:active):not(.has-text-color) {
+                        color: #fff;
+                    }
+                }
             }
 
             .hb_button {
@@ -137,7 +133,7 @@ body {
                 padding: 12px 24px;
                 width: auto;
                 border: 0;
-                border-radius: 3px;
+                border-radius: var(--hb-border-radius, 3px);
                 background: var(--hb-primary, #ffb606);
                 color: #fff;
                 font-weight: 600;
@@ -248,8 +244,7 @@ body {
                     h3 {
                         font-size: 20px;
                     }
-                    h4,
-                    .title {
+                    h4, .title {
                         margin: 0 0 8px 0;
                         font-size: 18px;
                     }
@@ -359,6 +354,7 @@ body {
 
                     h3 {
                         margin-top: 12px;
+                        margin-bottom: 20px;
                     }
                 }
 
@@ -787,7 +783,7 @@ body {
 
         .hb-room-filter-btn {
             padding: 12px 20px;
-            border-radius: 3px;
+            border-radius: var(--hb-border-radius, 3px);
             border: none;
             background-color: var(--hb-primary, #ffb606);
             font-size: 16px;
@@ -823,12 +819,12 @@ body {
             color: #111;
             background-color: #fff;
             padding: 12px;
-            border-radius: 3px;
+            border-radius: var(--hb-border-radius, 3px);
             box-shadow: inset 0 0 0 rgba(0, 0, 0, 0.075);
             text-transform: none;
             transition:
-                border-color ease-in-out 0.15s,
-                box-shadow ease-in-out 0.15s;
+            border-color ease-in-out 0.15s,
+            box-shadow ease-in-out 0.15s;
 
             &::placeholder {
                 font-weight: 400;
@@ -861,7 +857,7 @@ body {
             font-weight: 600;
             background-color: var(--hb-primary, #ffb606);
             padding: 12px 20px;
-            border-radius: 3px;
+            border-radius: var(--hb-border-radius, 3px);
             box-shadow: inset 0 0 0 rgba(0, 0, 0, 0.075);
             text-transform: none;
             border: none;
@@ -938,15 +934,21 @@ body.single-hb_room {
                 }
 
                 .hb_single_room_details {
-                    width: 72%;
+                    width: 70%;
 
                     @media (max-width: 767px) {
                         width: 100%;
                     }
                 }
                 .wphb-single-room-booking-container {
-                    width: 28%;
-                    min-width: 230px;
+                    width: 30%;
+                    min-width: 240px;
+
+                    .wphb-room-tmpl-dates-available {
+                        padding: 24px;
+                        border-radius: 10px;
+                        background-color: var(--hb-background-section, #f6f6f6);
+                    }
 
                     @media (max-width: 767px) {
                         width: 100%;
@@ -977,9 +979,15 @@ body.single-hb_room {
                 flex-wrap: wrap;
                 row-gap: 20px;
 
-                .hb-booking-room-form-group {
-                    flex: 1 47%;
+                .hb_optional_quantity {
+                    float: right;
+                    padding: 5px;
+                }
 
+                .hb-booking-room-form-group {
+                    .hb-total-price, .hb_view_price {
+                        font-weight: 600;
+                    }
                     .hb_button {
                         text-align: center;
                         margin: 0 auto;
@@ -1161,7 +1169,7 @@ body.single-hb_room {
                 color: rgba(216, 216, 216, 0.85);
                 background: rgba(255, 255, 255, 0.5);
                 box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-                border-radius: 3px;
+                border-radius:  var(--hb-border-radius, 3px);
                 font-size: 0;
                 background-color: #fff;
                 text-align: center;
@@ -1209,7 +1217,7 @@ body.single-hb_room {
             transform: translateY(-50%);
             top: 50%;
             background-color: #f6f6f6;
-            border-radius: 3px;
+            border-radius: var(--hb-border-radius, 3px);
             line-height: 1;
             cursor: pointer;
 
@@ -1259,7 +1267,12 @@ body.single-hb_room {
             
             .hb-booking-room-form-group{
                 width: 100%;
-                text-align: left;
+                text-align: initial;
+
+                label {
+                    font-size: var(--hb-font-size-base, 16px);
+                    font-weight: 400;
+                }
 
                 &.hb-room-price{
                     display: flex;
@@ -1272,6 +1285,9 @@ body.single-hb_room {
                     width: 100%;
                 }
             }
+            .hb-booking-room-form-field {
+                width: 100%;
+            }
             .wphb-single-room-loading-overlay {
                 background: rgba(0, 0, 0, 0.3);
             }
@@ -1280,12 +1296,17 @@ body.single-hb_room {
             }
         }
         .wphb-single-room-external-link {
+            margin-top: 30px;
+            padding: 24px;
+            border-radius: 10px;
+            background-color: var(--hb-background-section, #f6f6f6);
+
             .wphb-partner-links {
+                margin: 16px 0 0 0;
+                padding: 0;
                 list-style: none;
                 display: flex;
                 gap: 16px;
-                margin: 16px;
-                padding: 0;
             }
         }
     }

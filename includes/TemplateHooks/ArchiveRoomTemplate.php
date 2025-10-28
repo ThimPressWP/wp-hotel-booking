@@ -225,7 +225,7 @@ class ArchiveRoomTemplate {
 			'room_qty',
 			$room_qty,
 		);
-		$button_html         = sprintf( '<div class="hb-form-field-input button"><button type="submit" class="rooms-check-avaibility">%s</button></div>', __( 'Check avaibility', 'wp-hotel-booking' ) );
+		$button_html         = sprintf( '<div class="hb-form-field-input"><button type="submit" class="rooms-check-avaibility">%s</button></div>', __( 'Check avaibility', 'wp-hotel-booking' ) );
 		$sections            = array(
 			'wrapper'         => '<div class="hotel-booking-rooms-search">',
 			'title'           => $title,

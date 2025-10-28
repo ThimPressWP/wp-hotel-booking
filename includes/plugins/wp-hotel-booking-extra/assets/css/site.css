@@ -30,7 +30,6 @@
     content: '\f342';
     font-family: dashicon;
     font: 400 18px/1 dashicons;
-    vertical-align: top;
     display: inline-block;
     margin-left: 5px;
 }
@@ -47,8 +46,6 @@
 
 .hb_addition_packages {
     margin-top: 15px;
-    padding: 30px;
-    border: 1px solid #eee;
 }
 
 .hb_addition_packages input[type=radio],
@@ -72,9 +69,8 @@
 }
 
 .hb_addition_packages_ul li {
-    padding: 20px 20px 20px 0;
     margin: 0;
-    border-bottom: 1px solid #eee;
+    padding: 0 15px 15px 0;
 }
 
 .hb_addition_packages_ul li:first-child {
@@ -91,7 +87,11 @@
 }
 
 .hb_extra_optional_left {
-    padding-left: 35px;
+    padding-left: 30px;
+}
+
+.hb_extra_optional_left.no_left {
+    padding-left: 0;
 }
 
 .hb_package_title {
@@ -119,10 +119,8 @@
 }
 
 .hb_extra_detail_price .hb_optional_quantity {
-    box-shadow: none;
     text-align: center;
     border: 1px solid #d4d0ba;
-    font-family: inherit;
     padding: 5px;
     max-width: 60px;
     padding: 1px;

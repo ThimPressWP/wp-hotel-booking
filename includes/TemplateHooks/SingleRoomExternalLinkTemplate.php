@@ -28,7 +28,7 @@ class SingleRoomExternalLinkTemplate {
 				return;
 			}
 
-			$title = sprintf( '<h3>%s</h3>', __( 'Reserve via our trusted partner', 'wp-hotel-booking' ) );
+			$title = sprintf( '<p>%s</p>', __( 'Reserve via our trusted partner', 'wp-hotel-booking' ) );
 			$external_link_html = $this->render_external_link( $room, $external_links );
 
 			$sections      = array(

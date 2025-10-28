@@ -116,7 +116,14 @@ $total_price = $room->amount_singular + $extra_price;
 					?>
 				</div>
 				<div class="hb-booking-room-form-group hb-room-price">
-					<div class="hb-total-price"><span class="hb-total-price-text"><?php esc_html_e( 'Total:', 'wp-hotel-booking' ); ?></span><span class="hb-total-price-value"><?php echo esc_html( hb_format_price( $total_price ) ); ?></span></div>
+					<div class="hb-total-price">
+						<span class="hb-total-price-text">
+							<?php esc_html_e( 'Total: ', 'wp-hotel-booking' ); ?>
+						</span>
+						<span class="hb-total-price-value">
+							<?php echo esc_html( hb_format_price( $total_price ) ); ?>
+						</span>
+					</div>
 	                <div class="hb_view_price hb-room-content">
 	                    <a href="javascript:void(0)" class="hb-single-room-price-details">
 	                    	<span class="dashicons dashicons-update hide wphb-icon"></span>
