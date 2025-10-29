@@ -42,9 +42,9 @@
 	line-height: 1.6em;
 }
 
-.single-hb_room.elementor-default :not(.tingle-modal) .flatpickr-calendar {
+/* .single-hb_room.elementor-default :not(.tingle-modal) .flatpickr-calendar {
 	margin-top: -30px;
-}
+} */
 
 .tingle-modal__close {
 	display: none;

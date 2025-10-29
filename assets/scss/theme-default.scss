@@ -947,6 +947,7 @@ body.single-hb_room {
                     min-width: 240px;
 
                     .wphb-room-tmpl-dates-available {
+                        position: relative;
                         padding: 24px;
                         border-radius: 10px;
                         background-color: var(--hb-background-section, #f6f6f6);
@@ -991,6 +992,9 @@ body.single-hb_room {
                 }
 
                 .hb-booking-room-form-group {
+                    a {
+                        text-decoration: none !important;
+                    }
                     .hb-total-price, .hb_view_price {
                         font-weight: 600;
                     }
@@ -1264,7 +1268,6 @@ body.single-hb_room {
     }
     .wphb-single-room-booking-container {
         .hb-search-results-form-container{
-            position: relative;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
@@ -1281,6 +1284,7 @@ body.single-hb_room {
                 }
 
                 &.hb-room-price{
+                    position: relative;
                     display: flex;
                     justify-content: space-between;
                 }
@@ -1298,7 +1302,7 @@ body.single-hb_room {
                 background: rgba(0, 0, 0, 0.3);
             }
             .hb-booking-room-details {
-                bottom: 120px;
+                bottom: 40px;
             }
         }
         .wphb-single-room-external-link {
