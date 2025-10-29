@@ -75,7 +75,7 @@ $total_price = $room->amount_singular + $extra_price;
 					</div>
 				</div>
 				<div class="hb-booking-room-form-group">
-					<label><?php esc_html_e( 'Departure date', 'wp-hotel-booking' ); ?></label>
+					<label><?php esc_html_e( 'Check-out Date', 'wp-hotel-booking' ); ?></label>
 					<div class="hb-booking-room-form-field hb-form-field-input">
 						<input type="text" name="check_out_date" value="<?php echo esc_attr( $check_out_date ); ?>" placeholder="<?php _e( 'Check-out Date', 'wp-hotel-booking' ); ?>"/>
 					</div>

@@ -28,7 +28,7 @@ if ( ! $post || ! is_single( $post->ID ) || get_post_type( $post->ID ) !== 'hb_r
 
         <div class="hb-booking-room-form-head">
             <h2><?php printf( '%s', $post->post_title ); ?></h2>
-            <p class="description"><?php _e( 'Please set arrival date and departure date before check available.', 'wp-hotel-booking' ); ?></p>
+            <p class="description"><?php _e( 'Please set check-in date and check-out date before check available.', 'wp-hotel-booking' ); ?></p>
         </div>
 
         <div class="hb-search-results-form-container">

@@ -246,7 +246,7 @@ class Thim_Ekit_Widget_Room_Booking extends Widget_Base
            <form action="POST" name="hb-search-single-room" class="hb-search-room-results hotel-booking-search hotel-booking-single-room-action">
             <div class="hb-booking-room-form-head">
                 <h2 class="title"><?php echo get_the_title() ?></h2>
-                <p class="description"><?php _e( 'Please set arrival date and departure date before check available.', 'wp-hotel-booking' ); ?></p>
+                <p class="description"><?php _e( 'Please set check-in date and check-out date before check available.', 'wp-hotel-booking' ); ?></p>
             </div>
             <div class="hb-search-results-form-container">
                 <div class="hb-booking-room-form-group">

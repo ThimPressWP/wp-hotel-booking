@@ -24,7 +24,7 @@ $max_child   = (int) get_post_meta( $room_id, '_hb_max_child_per_room', true );
 	<div class="wphb-room-tmpl-dates-available">
 		<form action="POST" name="hb-search-single-room" class="hb-search-room-results hotel-booking-search hotel-booking-single-room-action">
 			<div class="hb-booking-room-form-head">
-				<p class="description"><?php _e( 'Please set arrival date and departure date before check available.', 'wp-hotel-booking' ); ?></p>
+				<p class="description"><?php _e( 'Please set check-in date and check-out date before check available.', 'wp-hotel-booking' ); ?></p>
 			</div>
 
 			<div class="hb-search-results-form-container">
