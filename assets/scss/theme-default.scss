@@ -999,6 +999,8 @@ body.single-hb_room {
                         background-color: transparent;
                     }
                     .wphb-max-qty {
+                        margin-inline-start: 3px;
+                        display: inline-block;
                         font-size: 13px;
                         color: var(--hb-text, #5d5d5d);
                     }

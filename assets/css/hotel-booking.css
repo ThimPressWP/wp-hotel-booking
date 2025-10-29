@@ -482,10 +482,14 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.rooms .hb_room .price span.unit {
+.rooms .hb_room .price span.unit, .rooms .hb_room .price span.tax-text {
     font-size: 14px;
     font-weight: 400;
     color: #4f4f4f;
+}
+
+.rooms .hb_room .price span.tax-text {
+    display: none;
 }
 
 .rooms .hb_room .price span.unit:before {
@@ -576,8 +580,6 @@
 }
 
 .hb_single_room .price span.tax-text {
-    position: relative;
-    top: 3px;
     font-size: 13px;
     font-style: italic;
     font-weight: 400;
