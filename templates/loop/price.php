@@ -63,5 +63,9 @@ if ( ! empty( $pricings ) ) {
 		<?php } ?>
 
 		<span class="unit"><?php _e( 'night', 'wp-hotel-booking' ); ?></span>
+
+		<?php if( hb_price_including_tax() ) : ?>
+			<span class="tax-text"><?php _e( '(incl tax)', 'wp-hotel-booking' ); ?></span>
+		<?php endif; ?>
 	</div>
 <?php } ?>

@@ -11,11 +11,12 @@ html {
 
 body {
     &.wp-hotel-booking-page {
+        --hb-primary: #e64b50;
+        --hb-light: #fde3e3;
+        --hb-background-section: #f6f6f6;
+        --hb-border-radius: 3px;
+
         &:not(.tp-themes-premium) {
-            --hb-primary: #e64b50;
-            --hb-light: #fde3e3;
-            --hb-background-section: #f6f6f6;
-            --hb-border-radius: 3px;
             --wp--style--global--content-size: 1200px;
 
             font-size: var(--hb-font-size-base, 16px);
@@ -993,10 +994,22 @@ body.single-hb_room {
 
                 .hb-booking-room-form-group {
                     a {
-                        text-decoration: none !important;
+                        text-decoration: none;
+                        outline: none;
+                        background-color: transparent;
+                    }
+                    .wphb-max-qty {
+                        font-size: 13px;
+                        color: var(--hb-text, #5d5d5d);
                     }
                     .hb-total-price, .hb_view_price {
                         font-weight: 600;
+                    }
+                    .hb_view_price {
+                        .wphb-icon {
+                            position: relative;
+                            top: 4px;
+                        }
                     }
                     .hb_button {
                         text-align: center;

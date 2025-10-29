@@ -36,7 +36,7 @@ global $hb_settings;
 					<th>&nbsp;</th>
 					<th class="hb_room_type"><?php _e( 'Room type', 'wp-hotel-booking' ); ?></th>
 					<th class="hb_capacity"><?php _e( 'Guest', 'wp-hotel-booking' ); ?></th>
-					<th class="hb_quantity"><?php _e( 'Quantity', 'wp-hotel-booking' ); ?></th>
+					<th class="hb_quantity"><?php _e( 'Rooms', 'wp-hotel-booking' ); ?></th>
 					<th class="hb_check_in"><?php _e( 'Check - in', 'wp-hotel-booking' ); ?></th>
 					<th class="hb_check_out"><?php _e( 'Check - out', 'wp-hotel-booking' ); ?></th>
 					<th class="hb_night"><?php _e( 'Night', 'wp-hotel-booking' ); ?></th>

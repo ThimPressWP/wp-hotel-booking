@@ -567,13 +567,19 @@
 
 .hb_single_room .price span.title-price {
     margin-right: 5px;
-    color: var(--hb-text, #5d5d5d);
+}
+
+.hb_single_room .price span.title-price, .hb_single_room .price span.unit {
     font-size: var(--hb-font-size-base, 16px);
+    color: var(--hb-text, #5d5d5d);
     font-weight: 400;
 }
 
-.hb_single_room .price span.unit {
-    font-size: var(--hb-font-size-base, 16px);
+.hb_single_room .price span.tax-text {
+    position: relative;
+    top: 3px;
+    font-size: 13px;
+    font-style: italic;
     font-weight: 400;
     color: var(--hb-text, #5d5d5d);
 }

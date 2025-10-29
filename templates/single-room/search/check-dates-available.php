@@ -30,13 +30,13 @@ $max_child   = (int) get_post_meta( $room_id, '_hb_max_child_per_room', true );
 			<div class="hb-search-results-form-container">
 				<div class="hb-booking-room-form-group">
 					<div class="hb-booking-room-form-field hb-form-field-input">
-						<input type="text" name="check_in_date" value="" placeholder="<?php _e( 'Arrival Date', 'wp-hotel-booking' ); ?>"/>
+						<input type="text" name="check_in_date" value="" placeholder="<?php _e( 'Check-in Date', 'wp-hotel-booking' ); ?>"/>
 						<input type="text" name="select-date-range" style="display:none;" data-hidden="1" placeholder="<?php _e( 'Select Dates', 'wp-hotel-booking' ); ?>">
 					</div>
 				</div>
 				<div class="hb-booking-room-form-group">
 					<div class="hb-booking-room-form-field hb-form-field-input">
-						<input type="text" name="check_out_date" value="" placeholder="<?php _e( 'Departure Date', 'wp-hotel-booking' ); ?>"/>
+						<input type="text" name="check_out_date" value="" placeholder="<?php _e( 'Check-out Date', 'wp-hotel-booking' ); ?>"/>
 					</div>
 				</div>
 				<div class="hb-booking-room-form-group">

@@ -57,7 +57,7 @@ foreach ( $rooms as $room ) {
 				<?php _e( 'Adults', 'wp-hotel-booking' ); ?>
 			</th>
 			<th class="child-qty center">
-				<?php _e( 'Childs', 'wp-hotel-booking' ); ?>
+				<?php _e( 'Children', 'wp-hotel-booking' ); ?>
 			</th>
 			<?php endif; ?>
 			<th class="total center">

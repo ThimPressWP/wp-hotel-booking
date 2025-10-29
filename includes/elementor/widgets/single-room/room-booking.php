@@ -251,13 +251,13 @@ class Thim_Ekit_Widget_Room_Booking extends Widget_Base
             <div class="hb-search-results-form-container">
                 <div class="hb-booking-room-form-group">
                     <div class="hb-booking-room-form-field hb-form-field-input">
-                        <input type="text" name="check_in_date" value="<?php echo esc_attr( $check_in_date ); ?>" id="check_in_date" placeholder="<?php _e( 'Arrival Date', 'wp-hotel-booking' ); ?>" autocomplete="off"/>
+                        <input type="text" name="check_in_date" value="<?php echo esc_attr( $check_in_date ); ?>" id="check_in_date" placeholder="<?php _e( 'Check-in Date', 'wp-hotel-booking' ); ?>" autocomplete="off"/>
                         <input type="text" name="select-date-range" style="display:none;"  data-hidden="1" placeholder="<?php _e( 'Select Dates', 'wp-hotel-booking' ); ?>" />
                     </div>
                 </div>
                 <div class="hb-booking-room-form-group">
                     <div class="hb-booking-room-form-field hb-form-field-input">
-                        <input type="text" name="check_out_date" value="<?php echo esc_attr( $check_out_date ); ?>" id="check_out_date" placeholder="<?php _e( 'Departure Date', 'wp-hotel-booking' ); ?>" autocomplete="off"/>
+                        <input type="text" name="check_out_date" value="<?php echo esc_attr( $check_out_date ); ?>" id="check_out_date" placeholder="<?php _e( 'Check-out Date', 'wp-hotel-booking' ); ?>" autocomplete="off"/>
                     </div>
                 </div>
                 <div class="hb-booking-room-form-group">

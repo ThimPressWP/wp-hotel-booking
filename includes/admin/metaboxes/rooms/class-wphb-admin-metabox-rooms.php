@@ -213,7 +213,7 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 					// ),
 					'num_of_rooms'              => array(
 						'name'  => 'num_of_rooms',
-						'label' => __( 'Quantity', 'wp-hotel-booking' ),
+						'label' => __( 'Rooms', 'wp-hotel-booking' ),
 						'type'  => 'number',
 						'std'   => '100',
 						'desc'  => __( 'The number of rooms', 'wp-hotel-booking' ),

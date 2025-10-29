@@ -68,16 +68,16 @@ $total_price = $room->amount_singular + $extra_price;
 			?>
 			<div class="hb-search-results-form-container">
 				<div class="hb-booking-room-form-group">
-					<label><?php esc_html_e( 'Arrival date', 'wp-hotel-booking' ); ?></label>
+					<label><?php esc_html_e( 'Check-in Date', 'wp-hotel-booking' ); ?></label>
 					<div class="hb-booking-room-form-field hb-form-field-input">
-						<input type="text" name="check_in_date" value="<?php echo esc_attr( $check_in_date ); ?>" placeholder="<?php _e( 'Arrival Date', 'wp-hotel-booking' ); ?>"/>
+						<input type="text" name="check_in_date" value="<?php echo esc_attr( $check_in_date ); ?>" placeholder="<?php _e( 'Check-in Date', 'wp-hotel-booking' ); ?>"/>
 						<input type="text" name="select-date-range" style="display:none;" data-hidden="1" placeholder="<?php _e( 'Select Dates', 'wp-hotel-booking' ); ?>">
 					</div>
 				</div>
 				<div class="hb-booking-room-form-group">
 					<label><?php esc_html_e( 'Departure date', 'wp-hotel-booking' ); ?></label>
 					<div class="hb-booking-room-form-field hb-form-field-input">
-						<input type="text" name="check_out_date" value="<?php echo esc_attr( $check_out_date ); ?>" placeholder="<?php _e( 'Departure Date', 'wp-hotel-booking' ); ?>"/>
+						<input type="text" name="check_out_date" value="<?php echo esc_attr( $check_out_date ); ?>" placeholder="<?php _e( 'Check-out Date', 'wp-hotel-booking' ); ?>"/>
 					</div>
 				</div>
 				<div class="hb-booking-room-form-group">
@@ -98,8 +98,8 @@ $total_price = $room->amount_singular + $extra_price;
 				</div>
 				<div class="hb-booking-room-form-group">
 						<label><?php esc_html_e( 'Room(s)', 'wp-hotel-booking' ); ?></label>
-						<div class="wphb-max-qty" hidden>
-							<?php _e( 'Max:', 'wp-hotel-booking' ); ?> <span class="qty-max"><?php echo esc_html( $available_qty ); ?></span>
+						<div class="wphb-max-qty">
+							<?php _e( 'Max rooms can book:', 'wp-hotel-booking' ); ?> <span class="qty-max"><?php echo esc_html( $available_qty ); ?></span>
 						</div>
 						<div class="hb-booking-room-form-field hb-form-field-input">
 							<input name="hb-num-of-rooms" class="number_room_select" type="number" min="1" step="1" max="<?php echo esc_html( $available_qty ); ?>" value="<?php echo esc_attr( $room_qty ) ?>">

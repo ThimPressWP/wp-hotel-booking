@@ -65,7 +65,7 @@ if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 					<th><?php _e( 'Qty', 'wp-hotel-booking' ); ?></th>
 					<?php if ( $has_adult_qty ) : ?>
 					<th><?php _e( 'Adults', 'wp-hotel-booking' ); ?></th>
-					<th><?php _e( 'Childs', 'wp-hotel-booking' ); ?></th>
+					<th><?php _e( 'Children', 'wp-hotel-booking' ); ?></th>
 					<?php endif; ?>
 					<th><?php _e( 'Total', 'wp-hotel-booking' ); ?></th>
 				</tr>

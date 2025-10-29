@@ -54,7 +54,7 @@ defined( 'ABSPATH' ) || exit;
 				<div class="section">
 					<# if ( typeof data.qty !== 'undefined' ) { #>
 						<select name="qty">
-							<option value="0"><?php _e( 'Quantity', 'wp-hotel-booking' ); ?></option>
+							<option value="0"><?php _e( 'Rooms', 'wp-hotel-booking' ); ?></option>
 							<# for ( var i = 1; i <= data.qty; i++ ) { #>
 
 								<# if ( data.qty_selected == i ) { #>
@@ -91,7 +91,7 @@ defined( 'ABSPATH' ) || exit;
 								</div>
 								<# if ( item.respondent === 'number' ) { #>
 									<div class="section">
-										<?php _e( 'Quantity', 'wp-hotel-booking' ); ?>
+										<?php _e( 'Rooms', 'wp-hotel-booking' ); ?>
 										<input name="sub_items[{{ item.ID }}][qty]" type="number" step="1" min="0" value="{{ item.qty }}" class="hb-room-item-field" />
 									</div>
 								<# } else { #>
@@ -164,7 +164,7 @@ defined( 'ABSPATH' ) || exit;
 <script type="text/html" id="tmpl-hb-qty">
 	<# if ( typeof data.qty !== 'undefined' ) { #>
 		<select name="qty">
-			<option value="0"><?php _e( 'Quantity', 'wp-hotel-booking' ); ?></option>
+			<option value="0"><?php _e( 'Rooms', 'wp-hotel-booking' ); ?></option>
 			<# for ( var i = 1; i <= data.qty; i++ ) { #>
 
 				<# if ( data.qty_selected == i ) { #>

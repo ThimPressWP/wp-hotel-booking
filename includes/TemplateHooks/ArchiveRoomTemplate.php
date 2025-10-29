@@ -204,8 +204,8 @@ class ArchiveRoomTemplate {
 		$max_child      = hb_get_request( 'max_child', 0 );
 		$room_qty       = hb_get_request( 'room_qty', 1 );
 
-		$check_in_date_html  = $this->date_field( __( 'Arrival Date', 'wp-hotel-booking' ), 'check_in_date', $check_in_date );
-		$check_out_date_html = $this->date_field( __( 'Departure Date', 'wp-hotel-booking' ), 'check_out_date', $check_out_date );
+		$check_in_date_html  = $this->date_field( __( 'Check-in Date', 'wp-hotel-booking' ), 'check_in_date', $check_in_date );
+		$check_out_date_html = $this->date_field( __( 'Check-out Date', 'wp-hotel-booking' ), 'check_out_date', $check_out_date );
 		$adults_html         = $this->dropdown_selector(
 			__( 'Adults', 'wp-hotel-booking' ),
 			'adults',
@@ -215,13 +215,13 @@ class ArchiveRoomTemplate {
 			hb_get_capacity_of_rooms()
 		);
 		$child_html          = $this->dropdown_selector(
-			__( 'Childs', 'wp-hotel-booking' ),
+			__( 'Children', 'wp-hotel-booking' ),
 			'max_child',
 			$max_child,
 			0,
 		);
 		$quantity_html       = $this->dropdown_selector(
-			__( 'Quantity', 'wp-hotel-booking' ),
+			__( 'Rooms', 'wp-hotel-booking' ),
 			'room_qty',
 			$room_qty,
 		);
