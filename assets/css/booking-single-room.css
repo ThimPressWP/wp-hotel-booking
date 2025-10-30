@@ -26,7 +26,7 @@
 }
 
 .hb-booking-room-form-head p { /* title booking form */
-	margin: 0 0 15px 0;
+	margin: 0 0 20px 0;
 	font-size: 20px;
 	font-weight: 600;
 }
@@ -41,10 +41,6 @@
 	font-size: 16px;
 	line-height: 1.6em;
 }
-
-/* .single-hb_room.elementor-default :not(.tingle-modal) .flatpickr-calendar {
-	margin-top: -30px;
-} */
 
 .tingle-modal__close {
 	display: none;

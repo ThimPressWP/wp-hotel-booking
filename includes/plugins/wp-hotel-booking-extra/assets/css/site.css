@@ -19,23 +19,16 @@
 .hb_addition_package_extra a.hb_package_toggle {
     padding: 0;
     display: block;
-    color: var(--hb-heading, #111);
     font-size: 20px;
     line-height: 1.2;
+    color: var(--hb-heading, #111);
     text-transform: none;
     text-decoration: none;
 }
 
-.hb_addition_package_extra a.hb_package_toggle:after {
-    content: '\f342';
-    font-family: dashicon;
-    font: 400 18px/1 dashicons;
-    display: inline-block;
-    margin-left: 5px;
-}
-
-.hb_addition_package_extra a.hb_package_toggle.active:after {
-    content: '\f346';
+.hb_addition_package_extra a.hb_package_toggle:focus {
+    background-color: transparent !important;
+    text-decoration: none !important;
 }
 
 .hb_addition_package_extra .hb_package_toggle:hover,
@@ -58,7 +51,7 @@
     padding: 0;
     text-transform: none;
     font-size: 15px;
-    line-height: 1.5;
+    line-height: 1.2;
     font-weight: 700;
 }
 
@@ -137,7 +130,6 @@
 
 .hb_extra_detail_price small {
     font-size: 13px;
-    font-style: italic;
     font-weight: 400;
 }
 

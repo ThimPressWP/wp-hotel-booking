@@ -581,7 +581,6 @@
 
 .hb_single_room .price span.tax-text {
     font-size: 13px;
-    font-style: italic;
     font-weight: 400;
     color: var(--hb-text, #5d5d5d);
 }
