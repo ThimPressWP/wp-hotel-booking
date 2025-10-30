@@ -599,6 +599,10 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		 * Register custom post types
 		 */
 		public function register_post_types() {
+			// Set to $has_archive return link to courses page, is_archive will check is true
+			$rooms_page_id = hb_get_page_id( 'rooms' );
+			$has_archive     = $rooms_page_id ? urldecode( get_page_uri( $rooms_page_id ) ) : 'rooms';
+
 			/**
 			 * Register custom post type for room
 			 */
@@ -622,7 +626,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				'query_var'          => true,
 				'publicly_queryable' => true,
 				'show_ui'            => true,
-				'has_archive'        => true,
+				'has_archive'        => $has_archive,
 				'capability_type'    => 'hb_room',
 				'map_meta_cap'       => true,
 				'show_in_menu'       => true,
@@ -640,7 +644,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 				),
 				'hierarchical'       => false,
 				'rewrite'            => array(
-					'slug'       => _x( 'rooms', 'URL slug', 'wp-hotel-booking' ),
+					'slug'       => _x( 'room', 'URL slug', 'wp-hotel-booking' ),
 					'with_front' => false,
 					'feeds'      => true,
 				),
