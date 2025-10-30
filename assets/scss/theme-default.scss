@@ -434,31 +434,6 @@ body {
             }
         }
 
-        &.tp-themes-premium {
-            #hotel-booking-search-filter {
-                display: none;
-            }
-            .tp-hotel-booking {
-                display: block;
-
-                .hb_room {
-                    .summary {
-                        .media {
-                            .rating {
-                                position: absolute;
-                            }
-                        }
-
-                        .content-room {
-                            .rating {
-                                display: none;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         /* comment list */
         #reviews {
             .commentlist {
