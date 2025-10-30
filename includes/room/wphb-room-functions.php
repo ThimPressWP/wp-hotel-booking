@@ -358,6 +358,11 @@ if ( ! function_exists( 'hb_get_room_query_args' ) ) {
 					$rating_query['compare'] = '>=';
 				}
 			}
+			$rating_query[] = array(
+		        'key' => 'hb_average_rating',
+		        'value' => 0,
+		        'type' => 'NUMERIC',
+		    );
 			$args['meta_query'][] = [ 'relation' => 'OR' ] + $rating_query;
 		}
 
