@@ -71,11 +71,11 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 		// filter for rooms defaut archive page
 		public function filter_sort_rooms( $query ) {
-			if (is_admin() || !$query->is_main_query()) {
+			if ( is_admin() || ! $query->is_main_query() ) {
 				return;
 			}
 
-			if ($query->is_post_type_archive('hb_room') || $query->is_tax('hb_room_type')) {
+			if ( $query->is_post_type_archive( 'hb_room' ) || $query->is_tax( 'hb_room_type' ) ) {
 				$query_args = hb_get_room_query_args();
 
 				foreach ( $query_args as $key => $value ) {
@@ -601,7 +601,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		public function register_post_types() {
 			// Set to $has_archive return link to courses page, is_archive will check is true
 			$rooms_page_id = hb_get_page_id( 'rooms' );
-			$has_archive     = $rooms_page_id ? urldecode( get_page_uri( $rooms_page_id ) ) : 'rooms';
+			$has_archive   = $rooms_page_id ? urldecode( get_page_uri( $rooms_page_id ) ) : 'rooms';
 
 			/**
 			 * Register custom post type for room
@@ -693,6 +693,10 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 			if ( is_admin() ) {
 				WP_Hotel_Booking::instance()->_include( 'includes/walkers/class-wphb-walker-room-type-dropdown.php' );
+			}
+
+			if ( is_admin() ) {
+				flush_rewrite_rules();
 			}
 		}
 
