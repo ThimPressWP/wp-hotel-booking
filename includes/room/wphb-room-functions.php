@@ -331,9 +331,10 @@ if ( ! function_exists( 'hb_get_room_query_args' ) ) {
 		}
 
 		// 2.Price Filter
-		$min_price = hb_get_request( 'min_price' );
+		$min_price = sanitize_text_field( $_GET['min_price'] );
 		$max_price = hb_get_request( 'max_price' );
-		if ( $min_price && $max_price ) {
+
+		if ( $min_price >=0 && $max_price ) {
 			$args['meta_query'][] = array(
 				'key'     => 'hb_price',
 				'value'   => array( $min_price, $max_price ),
@@ -345,25 +346,49 @@ if ( ! function_exists( 'hb_get_room_query_args' ) ) {
 		// 3.Rating Filter
 		$rating = hb_get_request( 'rating' );
 		if ( $rating ) {
-			$rating_query = [];
-			foreach ( explode( ',', $rating ) as $rate ) {
-				$rating_query[] = [
-					'key'   => 'hb_average_rating',
-					'value' => ( $rate === 'unrated' ) ? 0 : $rate,
-					'type'  => 'NUMERIC',
-				];
-				if ( $rate === 'unrated' ) {
-					$rating_query['compare'] = '>';
-				} else {
-					$rating_query['compare'] = '>=';
+			$rating = explode( ',', $rating );
+			// remap data to query
+			$rating = array_map( function( $value ) {
+			    return ( $value === 'unrated' ) ? 0 : $value;
+			}, $rating );
+			if ( count( $rating ) > 1 ) {
+				$rating_query             = array();
+				$rating_query['relation'] = 'OR';
+				foreach ( $rating as $rate ) {
+					$rating_query[] = array(
+						'relation' => 'AND',
+						array(
+							'key'   => 'hb_average_rating',
+							'value'   => $rate + 0,
+							'compare' => '>=',
+							// 'type'    => 'DECIMAL'
+						),
+						array(
+							'key'   => 'hb_average_rating',
+							'value'   => $rate + 1,
+							'compare' => '<',
+							// 'type'    => 'DECIMAL'
+						),
+					);
 				}
+				$args['meta_query'][] = $rating_query;
+			} else {
+				$args['meta_query'][] = array(
+					'relation' => 'AND',
+					array(
+						'key'   => 'hb_average_rating',
+						'value'   => $rating[0] + 0,
+						'compare' => '>=',
+						// 'type'    => 'DECIMAL'
+					),
+					array(
+						'key'   => 'hb_average_rating',
+						'value'   => $rating[0] + 1,
+						'compare' => '<',
+						// 'type'    => 'DECIMAL'
+					),
+				);
 			}
-			$rating_query[] = array(
-		        'key' => 'hb_average_rating',
-		        'value' => 0,
-		        'type' => 'NUMERIC',
-		    );
-			$args['meta_query'][] = [ 'relation' => 'OR' ] + $rating_query;
 		}
 
 		if ( isset( $args['meta_query'] ) ) {
@@ -396,7 +421,6 @@ if ( ! function_exists( 'hb_get_room_query_args' ) ) {
 		if ( $atts['room_not_in'] ) {
 			$args['post__not_in'] = explode( ',', $atts['room_not_in'] );
 		}
-
 		return $args; // return $args after filter
 	}
 }

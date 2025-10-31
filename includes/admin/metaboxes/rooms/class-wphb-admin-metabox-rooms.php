@@ -213,16 +213,16 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 					// ),
 					'num_of_rooms'              => array(
 						'name'  => 'num_of_rooms',
-						'label' => __( 'Rooms', 'wp-hotel-booking' ),
+						'label' => __( 'Number of Rooms', 'wp-hotel-booking' ),
 						'type'  => 'number',
 						'std'   => '100',
-						'desc'  => __( 'The number of rooms', 'wp-hotel-booking' ),
+						'desc'  => __( 'Number of available rooms for booking', 'wp-hotel-booking' ),
 						'min'   => 1,
 						'max'   => 100,
 					),
 					'room_origin_capacity'      => array(
 						'name'        => 'room_origin_capacity',
-						'label'       => __( 'Room Capacities', 'wp-hotel-booking' ),
+						'label'       => __( 'Max adults per room', 'wp-hotel-booking' ),
 						'type'        => 'select',
 						'options'     => hb_get_room_capacities(
 							array(

@@ -15,10 +15,12 @@
 defined( 'ABSPATH' ) || exit();
 
 global $wp_query;
-
-if ( $wp_query->max_num_pages <= 1 ) {
+$total = get_query_var( 'hb_rooms_total_page', 0 ) ?: $wp_query->max_num_pages;
+if ( $total <= 1 ) {
 	return;
-} ?>
+}
+// return;
+?>
 
 <nav class="rooms-pagination">
 	<?php
@@ -30,7 +32,7 @@ if ( $wp_query->max_num_pages <= 1 ) {
 				'format'    => '',
 				'add_args'  => '',
 				'current'   => max( 1, get_query_var( 'paged' ) ),
-				'total'     => $wp_query->max_num_pages,
+				'total'     => $total,
 				'prev_text' => __( 'Previous', 'wp-hotel-booking' ),
 				'next_text' => __( 'Next', 'wp-hotel-booking' ),
 				'type'      => 'list',

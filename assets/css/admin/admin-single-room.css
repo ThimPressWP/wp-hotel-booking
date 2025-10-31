@@ -553,6 +553,9 @@ button.wphb_loading::before {
 #room_external_link .wphb-room-external-link-table.wp-list-table.widefat.striped td {
     vertical-align: middle;
 }
+#room_external_link .wphb-room-external-link-table.wp-list-table.widefat.striped td input[type="text"] {
+    width: 100%;
+}
 #room_external_link .wphb-room-external-link-table.wp-list-table.widefat.striped span.dashicons.dashicons-move {
     margin-right: 8px;
     cursor: move;

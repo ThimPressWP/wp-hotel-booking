@@ -27,6 +27,7 @@ $room_external_link_settings_arr = ! empty( $room_external_link_settings ) ? jso
 
 $counter = 0;
 ?>
+<div><p class="description"><?php esc_html_e( 'Get more bookings from multiple sources. Connect your room with other OTA (Online Travel Agency) platforms. Guests will be redirected to these platforms instead of using the built-in booking system on website.', 'wp-hotel-booking' ) ?></p></div>
 <div class="button-group">
 	<a class="wphb-add-external-button button button-primary" href="<?php echo esc_url( admin_url(
 		'admin.php?page=tp_hotel_booking_settings&tab=room#wphb-external-link-table'

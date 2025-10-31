@@ -209,143 +209,66 @@ class Thim_Ekit_Widget_Archive_Room extends Widget_Base {
 
     public function render(){
 
-        global $wp_query;
+		$paged = get_query_var( 'paged', hb_get_request( 'paged', 1, 'int' ) );
+		$atts  = array(
+			'check_in_date'  => hb_get_request( 'check_in_date', date( 'Y/m/d' ) ),
+			'check_out_date' => hb_get_request( 'check_out_date', date( 'Y/m/d', strtotime( '+1 day' ) ) ),
+			'adults'         => hb_get_request( 'adults', 1 ),
+			'max_child'      => hb_get_request( 'max_child', 0 ),
+			'room_qty'       => hb_get_request( 'room_qty', 1 ),
+			'hb_page'        => $paged,
+			'min_price'      => hb_get_request( 'min_price', '' ),
+			'max_price'      => hb_get_request( 'max_price', '' ),
+			'rating'         => hb_get_request( 'rating', '' ),
+			'room_type'      => hb_get_request( 'room_type', '' ),
+			'sort_by'        => hb_get_request( 'sort_by', 'date-desc' ),
+		);
 
-		$query_vars = $wp_query->query_vars;
+		$results = hb_search_rooms( $atts );
 
-		if ( !empty($_GET['order_by']) ) {
-			$orderby = sanitize_key( $_GET['order_by'] );
-			$orderby = explode('-', $orderby );
-
-			if (isset($orderby) && is_array($orderby)){
-				$query_vars['orderby'] = $orderby[0];
-				$query_vars['order'] = $orderby[1];
-			}
-		}
-
-		if ( null !== get_queried_object_id() && ! empty( get_queried_object_id() ) && get_post_type() == 'hb_room') {
-			//Price
-			$min_price = $_GET['min_price'] ?? null;
-			$max_price = $_GET['max_price'] ?? null;
-
-			if ( $min_price !== null && $max_price !== null ) {
-				$query_vars['meta_query'][] = array(
-					'key'     => 'hb_price',
-					'value'   => array( $min_price, $max_price ),
-					'type'    => 'DECIMAL',
-					'compare' => 'BETWEEN',
-				);
-			}
-
-			//Rating
-			$rating = hb_get_request( 'rating' );
-
-			if ( $rating ) {
-				$rating = explode( ',', $rating );
-
-				$unrated_index = array_search( 'unrated', $rating );
-
-				if ( $unrated_index !== false ) {
-					$rating[ $unrated_index ] = 0;
-				}
-
-				$rating_count = count( $rating );
-				if ( ! empty( $rating_count ) ) {
-					$rating_query = array();
-
-					if ( $rating_count === 1 ) {
-						$rating_query[] = array(
-							'key'     => 'hb_average_rating',
-							'value'   => $rating[0],
-							'type'    => 'NUMERIC',
-							'compare' => '>=',
-						);
-
-						$rating_query[] = array(
-							'key'     => 'hb_average_rating',
-							'value'   => $rating[0] + 1,
-							'type'    => 'NUMERIC',
-							'compare' => '<',
-						);
-
-						$rating_query ['relation'] = 'AND';
-					} else {
-						for ( $i = 0; $i < $rating_count; $i++ ) {
-							$rating_query[ $i ][] = array(
-								'key'     => 'hb_average_rating',
-								'value'   => $rating[ $i ],
-								'type'    => 'NUMERIC',
-								'compare' => '>=',
-							);
-							$rating_query[ $i ][] = array(
-								'key'     => 'hb_average_rating',
-								'value'   => $rating[ $i ] + 1,
-								'type'    => 'NUMERIC',
-								'compare' => '<',
-							);
-
-							$rating_query[ $i ]['raltion'] = 'AND';
-						}
-
-						$rating_query ['relation'] = 'OR';
-					}
-
-					$query_vars['meta_query'][] = $rating_query;
-				}
-			}
-
-			if ( isset( $query_vars['meta_query'] ) ) {
-				$query_vars['meta_query']['relation'] = 'AND';
-			}
-		}
-
-		$query_vars = apply_filters( 'WPHB/modules/archive_room/query_posts/query_vars', $query_vars );
-
-		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
-			$query_vars  = array(
-				'post_type'    => 'hb_room',
-				'status'       => 'publish',
-			);
-		}
-
-		if ( $query_vars !== $wp_query->query_vars ) {
-			$rooms = new \WP_Query( $query_vars );
+		if ( empty( $results ) || empty( $results['data'] ) ) {
+			$rooms = array();
 		} else {
-			$rooms = $wp_query;
+			$rooms = $results['data'];
 		}
 
-		if ( ! $rooms->found_posts ) {
+		if ( empty( $rooms ) ) {
             echo '<p class="message message-error">' . esc_html__( 'No room found !', 'wp-hotel-booking' ) . '</p>';
 			return;
 		}
 
-        $settings = $this->get_settings_for_display();
+        $settings    = $this->get_settings_for_display();
         $class_item  = 'hb-room-archive__article'; ?>
 
         <div class="hb-room-archive">
-            <?php $this->render_topbar( $rooms, $settings ); ?>
+            <?php $this->render_topbar( $results, $settings ); ?>
 
             <div class="hb-room-archive__inner">
                 <?php
-                while ( $rooms->have_posts() ) {
-                    $rooms->the_post();
-                    $this->current_permalink = get_permalink(); ?>
-
-                    <div <?php post_class( array( $class_item ) ); ?>>
-                        <?php
-                            \Thim_EL_Kit\Utilities\Elementor::instance()->render_loop_item_content( $settings['template_id'] );
-                        ?>
-                    </div>
-                <?php } ?>
+                foreach ($rooms as $room) {
+                	global $post;
+                	$post = get_post($room->ID);
+                	setup_postdata($post);
+                	// $this->current_permalink = get_permalink();
+                	?>
+                	<div <?php post_class( array( $class_item ) ); ?>>
+                		<?php
+                		    \Thim_EL_Kit\Utilities\Elementor::instance()->render_loop_item_content( $settings['template_id'] );
+                		?>
+            		</div>
+                	<?php
+                }
+                wp_reset_postdata();
+                 ?>
             </div>
 
-            <?php $this->render_loop_footer( $rooms, $settings ); ?>
+            <?php $this->render_loop_footer( $results, $settings ); ?>
         </div>
 
         <?php
     }
 
-	protected function render_topbar( $query, $settings ) {
+	protected function render_topbar( $results, $settings ) {
 		if ( $settings['thim_header_repeater'] ) {
 			?>
 			<div class="hb-room-archive__topbar">
@@ -353,7 +276,7 @@ class Thim_Ekit_Widget_Archive_Room extends Widget_Base {
 				foreach ( $settings['thim_header_repeater'] as $item ) {
 					switch ( $item['header_key'] ) {
  						case 'result':
-							$this->render_result_count( $query );
+							$this->render_result_count( $results );
 							break;
 						case 'order':
 							$this->render_orderby( $item );
@@ -366,16 +289,15 @@ class Thim_Ekit_Widget_Archive_Room extends Widget_Base {
 		}
 	}
 
-	protected function render_result_count( $query ) {
+	protected function render_result_count( $results ) {
 		global $hb_settings;
-		$total = $query->found_posts;
+		$total = $results['total'];
 
 		if ( $total == 1 ) {
 			$index = __( 'Showing only one result', 'wp-hotel-booking' );
 		} else {
-			$post_per_page_get = $hb_settings->get( 'posts_per_page', 8 );
-			$post_per_page     = is_numeric( $post_per_page_get ) ? $post_per_page_get : 9;
-			$paged             = get_query_var( 'paged' ) ? intval( get_query_var( 'paged' ) ) : 1;
+			$post_per_page = $results['posts_per_page'];
+			$paged         = $results['page'];
 
 			$from = 1 + ( $paged - 1 ) * $post_per_page;
 			$to   = ( $paged * $post_per_page > $total ) ? $total : $paged * $post_per_page;
@@ -406,21 +328,21 @@ class Thim_Ekit_Widget_Archive_Room extends Widget_Base {
 		$catalog_orderby_options = apply_filters(
 			'hb_room_archive_orderby',
 			array(
-				'date-DESC' => esc_html__( 'Default (Newest)', 'wp-hotel-booking' ),
-				'date-ASC'  => esc_html__( 'Oldest', 'wp-hotel-booking' ),
-				'title-ASC' => esc_html__( 'A to Z', 'wp-hotel-booking' ),
-				'title-DESC'=> esc_html__( 'Z to A', 'wp-hotel-booking' ),
+				'date-desc'  => esc_html__( 'Default (Newest)', 'wp-hotel-booking' ),
+				'date-asc'   => esc_html__( 'Oldest', 'wp-hotel-booking' ),
+				'title-asc'  => esc_html__( 'A to Z', 'wp-hotel-booking' ),
+				'title-desc' => esc_html__( 'Z to A', 'wp-hotel-booking' ),
 			)
 		);
 
-		$orderby = isset( $_GET['order_by'] ) ? sanitize_text_field( wp_unslash( $_GET['order_by'] ) ) : 'post_date';
+		$orderby = isset( $_GET['sort_by'] ) ? sanitize_text_field( wp_unslash( $_GET['sort_by'] ) ) : 'post_date';
 
 		if ( ! array_key_exists( $orderby, $catalog_orderby_options ) ) {
 			$orderby = current( array_keys( $catalog_orderby_options ) );
 		}
 		?>
 		<form class="hb-room-archive__topbar__orderby " method="get">
-			<select name="order_by" class="orderby room-order-by" aria-label="<?php esc_attr_e( 'Room order', 'wp-hotel-booking' ); ?>" onchange="this.form.submit()">
+			<select name="sort_by" class="orderby room-order-by" aria-label="<?php esc_attr_e( 'Room order', 'wp-hotel-booking' ); ?>" onchange="this.form.submit()">
 				<?php foreach ( $catalog_orderby_options as $id => $name ) : ?>
 					<option value="<?php echo esc_attr( $id ); ?>" <?php selected( $orderby, $id ); ?>><?php echo esc_html( $name ); ?></option>
 				<?php endforeach; ?>
@@ -430,14 +352,14 @@ class Thim_Ekit_Widget_Archive_Room extends Widget_Base {
 		<?php
 	}
 
-	protected function render_loop_footer( $query, $settings ) {
+	protected function render_loop_footer( $results, $settings ) {
 		$ajax_pagination = in_array( $settings['pagination_type'], array( 'load_more_on_click', 'load_more_infinite_scroll' ), true );
 
 		if ( '' === $settings['pagination_type'] ) {
 			return;
 		}
 
-		$page_limit = $query->max_num_pages;
+		$page_limit = $results['max_num_pages'];
 
 		if ( 2 > $page_limit ) {
 			return;
@@ -495,7 +417,7 @@ class Thim_Ekit_Widget_Archive_Room extends Widget_Base {
 		}
 
 		if ( $only_prev_next ) {
-			$prev_next = $this->get_posts_nav_link( $query, $paged, $page_limit, $settings );
+			// $prev_next = $this->get_posts_nav_link( $results, $paged, $page_limit, $settings );
 			array_unshift( $links, $prev_next['prev'] );
 			$links[] = $prev_next['next'];
 		}
@@ -506,9 +428,9 @@ class Thim_Ekit_Widget_Archive_Room extends Widget_Base {
 		<?php
 	}
 
-	public function get_posts_nav_link( $query, $paged, $page_limit = null, $settings = array() ) {
+	public function get_posts_nav_link( $results, $paged, $page_limit = null, $settings = array() ) {
 		if ( ! $page_limit ) {
-			$page_limit = $query->max_num_pages;
+			$page_limit = $results['max_num_pages'];
 		}
 
 		$return = array();
