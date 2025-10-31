@@ -10,12 +10,12 @@ html {
 }
 
 body {
-    &.wp-hotel-booking-page {
-        --hb-primary: #e64b50;
-        --hb-light: #fde3e3;
-        --hb-background-section: #f6f6f6;
-        --hb-border-radius: 3px;
+    --hb-primary: #e64b50;
+    --hb-light: #fde3e3;
+    --hb-background-section: #f6f6f6;
+    --hb-border-radius: 3px;
 
+    &.wp-hotel-booking-page {
         &:not(.tp-themes-premium) {
             --wp--style--global--content-size: 1200px;
 
@@ -118,7 +118,7 @@ body {
             }
 
             &.wp-theme-twentytwentyone { // fix for twentytwentyone
-                .room-container, .hb_single_room {
+                .room-container, .hb_single_room, .hotel-booking-search {
                     button:not(:hover):not(:active):not(.has-background) {
                         background-color: var(--hb-primary, #ffb606);
                     }

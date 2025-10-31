@@ -131,6 +131,7 @@
 .hb_extra_detail_price small {
     font-size: 13px;
     font-weight: 400;
+    color: var(--hb-text, #5d5d5d);
 }
 
 /**

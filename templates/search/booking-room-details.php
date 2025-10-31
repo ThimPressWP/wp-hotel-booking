@@ -42,11 +42,9 @@ defined( 'ABSPATH' ) || exit();
 			</td>
 			<td class="hb_search_item_total_description">
 				<?php
-				if ( hb_price_including_tax() ) {
-					_e( '* vat is included', 'wp-hotel-booking' );
-				} else {
-					_e( '* vat is not included yet', 'wp-hotel-booking' );
-				}
+					if ( hb_price_including_tax() ) {
+						_e( 'tax incl.', 'wp-hotel-booking' );
+					}
 				?>
 			</td>
 			<td class="hb_search_item_price">

@@ -1390,11 +1390,11 @@
 /** Room detail when click view price breakdown **/
 .hb-booking-room-details {
     position: absolute;
-    left: 1px;
+    left: 0;
     margin-top: 10px;
     visibility: hidden;
     opacity: 0;
-   
+    width: 100%;
     min-width: 300px;
     padding: 20px;
     background: #fff;
@@ -1412,6 +1412,10 @@
 
 .hb-booking-room-details .hb_search_room_pricing_price {
     margin: 0;
+}
+
+.hb-booking-room-details .hb_search_room_pricing_price tfoot {
+    text-align: initial;
 }
 
 .hb-booking-room-details .hb_search_room_item_detail_price_close {
@@ -1453,6 +1457,7 @@
 .hb-booking-room-details table tr td.hb_search_item_price {
     color: var(--hb-primary, #ffb606);
     font-weight: 700;
+    text-align: right;
 }
 
 .hb-booking-room-details table tbody tr td {

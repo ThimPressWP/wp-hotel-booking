@@ -116,7 +116,8 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 					array(
 						'type'    => 'number',
 						'id'      => WPHB_Settings::instance()->get_field_name( 'tax' ),
-						'title'   => __( 'Tax', 'wp-hotel-booking' ),
+						'title'   => __( 'Tax rates', 'wp-hotel-booking' ),
+						'desc'    => __( 'unit %, set 0 to not calculate tax', 'wp-hotel-booking' ),
 						'default' => 10,
 						'min'     => 0,
 						'step'    => 'any',
