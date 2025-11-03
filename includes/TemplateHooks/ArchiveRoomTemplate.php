@@ -26,8 +26,7 @@ class ArchiveRoomTemplate {
 				'<div class="container room-container">' => '</div>',
 			);
 
-			$args          = hb_get_room_query_args( $atts );
-			$rooms_content = static::render_rooms( $args );
+			$rooms_content = static::render_rooms();
 			// echo $this->check_room_availability();
 			echo Template::instance()->nest_elements( $rooms_html_wrapper, $rooms_content );
 		} catch ( Exception $e ) {
@@ -42,7 +41,7 @@ class ArchiveRoomTemplate {
 	 *
 	 * @return string
 	 */
-	public static function render_rooms( array $settings = array() ) {
+	public static function render_rooms() {
 
 		$atts = array(
 			'check_in_date'  => hb_get_request( 'check_in_date', date( 'Y/m/d' ) ),
@@ -52,7 +51,7 @@ class ArchiveRoomTemplate {
 			'room_qty'       => hb_get_request( 'room_qty', 1 ),
 			'widget_search'  => false,
 			'hb_page'        => $settings['paged'] ?? hb_get_request( 'paged', 1, 'int' ),
-			'min_price'      => hb_get_request( 'min_price', '' ),
+			'min_price'      => hb_get_request( 'min_price', 0 ),
 			'max_price'      => hb_get_request( 'max_price', '' ),
 			'rating'         => hb_get_request( 'rating', '' ),
 			'room_type'      => hb_get_request( 'room_type', '' ),
@@ -64,16 +63,17 @@ class ArchiveRoomTemplate {
 		if ( empty( $results ) || empty( $results['data'] ) ) {
 			$rooms = array();
 			$total = 0;
+			$paged = 1;
+
+			$posts_per_page = (int) apply_filters( 'hb_number_search_rooms_per_page', $hb_settings->get( 'posts_per_page', 8 ) );
 		} else {
 			$rooms = $results['data'];
 			$total = $results['total'];
-			$max_num_pages = $results['max_num_pages'];
-		}
-		// $rooms = new \WP_Query( $settings );
+			$paged = $results['page'];
 
-		// $total          = $rooms->post_count;
-		$posts_per_page = $settings['posts_per_page'];
-		$paged          = $settings['paged'] ?? 1;
+			$posts_per_page = $results['posts_per_page'];
+			$max_num_pages  = $results['max_num_pages'];
+		}
 
 		// HTML section rooms.
 		$html_rooms = '';

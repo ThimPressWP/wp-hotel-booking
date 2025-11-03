@@ -331,7 +331,7 @@ if ( ! function_exists( 'hb_get_room_query_args' ) ) {
 		}
 
 		// 2.Price Filter
-		$min_price = sanitize_text_field( $_GET['min_price'] );
+		$min_price = sanitize_text_field( $_GET['min_price'] ?? 0 );
 		$max_price = hb_get_request( 'max_price' );
 
 		if ( $min_price >=0 && $max_price ) {
