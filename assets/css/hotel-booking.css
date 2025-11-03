@@ -98,7 +98,7 @@
     display: flex;
     flex-direction: column;
 }
-.hb-search-results .hb-page-search-room-results .hb_addition_package_extra a.hb_package_toggle {
+.hb-search-results .hb-page-search-room-results .hb_addition_package_extra .hb_package_toggle {
     font-size: 16px;
 }
 .hb-search-results .hb-page-search-room-results .hb_addition_package_extra .hb_addition_packages {
@@ -3270,8 +3270,8 @@ ul.hb-room-review-images img {
 }
 
 .hb-room-commentlist-sort-filter .gallery-filter a.active {
-    color: white;
-    background: #01AA90;
+    color: #fff;
+    background: var(--hb-primary, #ffb606);
 }
 
 .sort-by {

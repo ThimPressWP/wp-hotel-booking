@@ -16,7 +16,7 @@
     margin: 0;
 }
 
-.hb_addition_package_extra a.hb_package_toggle {
+.hb_addition_package_extra .hb_package_toggle {
     padding: 0;
     display: block;
     font-size: 20px;
@@ -26,15 +26,10 @@
     text-decoration: none;
 }
 
-.hb_addition_package_extra a.hb_package_toggle:focus {
+.hb_addition_package_extra .hb_package_toggle:focus {
+    outline: none !important;
     background-color: transparent !important;
     text-decoration: none !important;
-}
-
-.hb_addition_package_extra .hb_package_toggle:hover,
-.hb_addition_package_extra .hb_package_toggle.active {
-    border-color: var(--hb-primary, #ffb606);
-    color: var(--hb-primary, #ffb606);
 }
 
 .hb_addition_packages {

@@ -137,7 +137,7 @@ if ( ! class_exists( 'WPHB_Admin' ) ) {
 				$agrs_meta = array(
 					'room_capacity_adult' => array(
 						'name'  => 'room_capacity_adult',
-						'label' => __( 'Room Capacities', 'wp-hotel-booking' ),
+						'label' => __( 'Max adults per room', 'wp-hotel-booking' ),
 						'type'  => 'number',
 						'std'   => ! empty( $max_adult ) ?: 1,
 						'min'   => 1,

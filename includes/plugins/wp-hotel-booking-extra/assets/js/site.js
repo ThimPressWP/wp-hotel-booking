@@ -30,7 +30,6 @@
         },
 
         toggle_extra: function () {
-
             $(document).on('change', '.number_room_select', function (e) {
                 e.preventDefault();
 
@@ -52,19 +51,6 @@
 
                 _form.find('.hb_optional_quantity').val(_val);
 
-            });
-
-            $(document).on('click', '.hb_package_toggle', function (e) {
-                e.preventDefault();
-
-                var _self = $(this),
-                    parent = _self.parents('.hb_addition_package_extra');
-                toggle = parent.find('.hb_addition_packages');
-
-                _self.toggleClass('active');
-                toggle.toggleClass('active');
-
-                TPHB_Extra_Site.optional_toggle(toggle);
             });
         },
 
