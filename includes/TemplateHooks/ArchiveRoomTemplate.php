@@ -21,13 +21,11 @@ class ArchiveRoomTemplate {
 
 	public function layout_rooms( $atts = array() ) {
 		try {
-			// $search = hb_get_template_content( 'search/v2/search-form-v2.php', array( 'atts' => array() ) );
 			$rooms_html_wrapper = array(
 				'<div class="container room-container">' => '</div>',
 			);
 
 			$rooms_content = static::render_rooms();
-			// echo $this->check_room_availability();
 			echo Template::instance()->nest_elements( $rooms_html_wrapper, $rooms_content );
 		} catch ( Exception $e ) {
 			echo 'Error: ' . $e->getMessage();
@@ -36,8 +34,7 @@ class ArchiveRoomTemplate {
 
 	/**
 	 * Render template list rooms with settings param.
-	 *
-	 * @param array $settings
+	 * 
 	 *
 	 * @return string
 	 */
@@ -50,7 +47,7 @@ class ArchiveRoomTemplate {
 			'max_child'      => hb_get_request( 'max_child', 0 ),
 			'room_qty'       => hb_get_request( 'room_qty', 1 ),
 			'widget_search'  => false,
-			'hb_page'        => $settings['paged'] ?? hb_get_request( 'paged', 1, 'int' ),
+			'hb_page'        => hb_get_request( 'paged', 1, 'int' ),
 			'min_price'      => hb_get_request( 'min_price', 0 ),
 			'max_price'      => hb_get_request( 'max_price', '' ),
 			'rating'         => hb_get_request( 'rating', '' ),
@@ -149,7 +146,7 @@ class ArchiveRoomTemplate {
 				'archive_content_end' => '</div>',
 			),
 			$rooms,
-			$settings
+			$atts
 		);
 
 		$content = Template::combine_components( $section );
