@@ -121,12 +121,17 @@ class ArchiveRoomTemplate {
 		$html_pagination = static::instance()->html_pagination( $data_pagination );
 
 		// section_rooms
-		$section_rooms = array(
-			'wrapper'     => '<div class="room-content">',
-			'sort_by'     => $sort_by,
-			'rooms'       => $html_rooms,
-			'pagination'  => $html_pagination,
-			'wrapper_end' => '</div>',
+		$section_rooms = apply_filters(
+			'wbhb/layout/list-rooms/section/rooms',
+			array(
+				'wrapper'     => '<div class="room-content">',
+				'sort_by'     => $sort_by,
+				'rooms'       => $html_rooms,
+				'pagination'  => $html_pagination,
+				'wrapper_end' => '</div>',
+			),
+			$results,
+			$atts
 		);
 
 		// check show filter
