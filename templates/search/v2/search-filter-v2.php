@@ -24,7 +24,7 @@ $fields = apply_filters(
 ?>
 
 <div id="hotel-booking-search-filter" class="hotel-booking-search-filter">
-	<div class="hotel-booking-search-filter">
+	<div class="hotel-booking-search-filter-inner">
 	    <h3>
 			<?php esc_html_e( 'Filter By', 'wp-hotel-booking' ); ?>
 		</h3>
