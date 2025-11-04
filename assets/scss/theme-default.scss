@@ -152,40 +152,6 @@ body {
                 }
             }
 
-            .room-container {
-                margin-top: 50px;
-                display: flex;
-                gap: 20px;
-                max-width: var(--hb-container-width, 1200px);
-
-                @media (max-width: 1200px) {
-                    flex-direction: column;
-                }
-
-                // new style archive room from v2.2.4
-                &:has(.hotel-booking-rooms-search) {
-                    flex-direction: column;
-
-                    & > div:nth-child(2) {
-                        margin: 0 -15px;
-                        display: flex;
-
-                        @media (max-width: 1024px) {
-                            flex-direction: column;
-                        }
-                    }
-                }
-                // end new style
-
-                .hotel-booking-search-filter {
-                    min-width: 24%;
-                }
-
-                .room-content {
-                    width: 100%;
-                }
-            }
-
             // default theme wp has .entry-content wrapper
             .entry-content {
                 @media (min-width: 700px) {
@@ -236,6 +202,14 @@ body {
             .entry-content > *:not(.alignwide):not(.alignfull):not(.alignleft):not(.alignright):not(.is-style-wide) {
                 width: auto;
                 max-width: var(--hb-container-width, 1200px);
+            }
+
+            .room-container {
+                &:has(.hotel-booking-rooms-search) {
+                    & > div:nth-child(2) {
+                        margin: 0 -15px;
+                    }
+                }
             }
 
             .hb_single_room {
@@ -533,28 +507,6 @@ body {
             margin: 0;
             max-width: 100%;
         }
-
-        // new form check avaibility on hotel-rooms from v2.2.4
-        .hotel-booking-rooms-search {
-            margin-bottom: 20px;
-
-            & > h3 {
-                margin: 0 0 18px 0;
-            }
-            form.hb-form-table {
-                display: flex;
-                align-items: flex-end;
-                flex-wrap: wrap;
-                gap: 20px;
-
-                .hb-form-field-input {
-                    label {
-                        display: block;
-                    }
-                    
-                }
-            }
-        }
     }
 
     &.wp-hotel-booking-rooms {
@@ -599,6 +551,60 @@ body {
                 font-weight: 500;
                 min-width: 120px;
             }
+        }
+    }
+
+    .room-container {
+        display: flex;
+        gap: 20px;
+        max-width: var(--hb-container-width, 1200px);
+
+        @media (max-width: 1200px) {
+            flex-direction: column;
+        }
+
+        // new style archive room from v2.2.4
+        &:has(.hotel-booking-rooms-search) {
+            flex-direction: column;
+
+            & > div:nth-child(2) {
+                display: flex;
+
+                @media (max-width: 1024px) {
+                    flex-direction: column;
+                }
+            }
+        }
+
+        // form check avaibility on hotel-rooms
+        .hotel-booking-rooms-search {
+            margin-bottom: 20px;
+
+            & > h3 {
+                margin: 0 0 18px 0;
+            }
+            form.hb-form-table {
+                display: flex;
+                align-items: flex-end;
+                flex-wrap: wrap;
+                gap: 20px;
+
+                .hb-form-field-input {
+                    label {
+                        display: block;
+                    }
+                    
+                }
+            }
+        }
+        // end new style
+
+        .hotel-booking-search-filter {
+            min-width: 24%;
+        }
+
+        .room-content {
+            width: 100%;
         }
     }
 
