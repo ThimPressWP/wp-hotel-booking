@@ -39,6 +39,7 @@ class WPHB_Shortcode_Hotel_Booking extends WPHB_Shortcodes {
 		$adults    = hb_get_request( 'adults', 1 );
 		$max_child = hb_get_request( 'max_child', 0 );
 		$paged     = hb_get_request( 'paged', 1 );
+		$room_qty  = hb_get_request( 'room_qty', 1 );
 
 		$atts = wp_parse_args(
 			$atts,
@@ -50,6 +51,7 @@ class WPHB_Shortcode_Hotel_Booking extends WPHB_Shortcodes {
 				'search_page'    => null,
 				'widget_search'  => false,
 				'paged'          => $paged,
+				'room_qty'       => $room_qty,
 			)
 		);
 

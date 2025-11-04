@@ -461,6 +461,7 @@ const checkAvailableRooms = () => {
             const countAdults = form.querySelector('select[name="adults_capacity"]') ? form.querySelector('select[name="adults_capacity"]').value : 0;
             const maxChild = form.querySelector('select[name="max_child"]') ? form.querySelector('select[name="max_child"]').value : 0;
             const paged = form.querySelector('input[name="paged"]') ? form.querySelector('input[name="paged"]').value : 1;
+            const room_qty = form.querySelector('select[name="max_child"]') ? form.querySelector('select[name="number-of-rooms"]').value : 0;
 
             if (checkinDate === '' || checkoutDate === '') {
                 alert(' Please select check in and check out date and search again! ');
@@ -473,6 +474,7 @@ const checkAvailableRooms = () => {
                 adults: countAdults,
                 max_child: maxChild,
                 paged: paged,
+                room_qty
             }
             window.localStorage.setItem('wphb_filter_rooms', JSON.stringify(data));
             const urlPush = wphbAddQueryArgs(document.location, data);
