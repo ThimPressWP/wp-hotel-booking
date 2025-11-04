@@ -11,6 +11,7 @@ namespace WPHB\TemplateHooks;
 use Exception;
 use WPHB\Helpers\Singleton;
 use WPHB\Helpers\Template;
+use WPHB_Settings;
 
 class ArchiveRoomTemplate {
 	use Singleton;
@@ -62,7 +63,7 @@ class ArchiveRoomTemplate {
 			$total = 0;
 			$paged = 1;
 
-			$posts_per_page = (int) apply_filters( 'hb_number_search_rooms_per_page', $hb_settings->get( 'posts_per_page', 8 ) );
+			$posts_per_page = (int) apply_filters( 'hb_number_search_rooms_per_page', WPHB_Settings::instance()->get( 'posts_per_page', 8 ) );
 		} else {
 			$rooms = $results['data'];
 			$total = $results['total'];
