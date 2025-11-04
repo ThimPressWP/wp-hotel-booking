@@ -22,8 +22,11 @@ class ArchiveRoomTemplate {
 
 	public function layout_rooms( $atts = array() ) {
 		try {
-			$rooms_html_wrapper = array(
-				'<div class="container room-container">' => '</div>',
+			$rooms_html_wrapper = apply_filters(
+				'wphb/list-rooms/layout/wrapper',
+				array(
+					'<div class="container room-container">' => '</div>',
+				)
 			);
 
 			$rooms_content = static::render_rooms();
