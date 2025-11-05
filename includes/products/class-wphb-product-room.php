@@ -731,4 +731,16 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 
 	public function is_in_stock() {
 	}
+
+	/**
+	 * get room average price from start date to end date, quantity = 1
+	 * @return $avg_price
+	 */
+	public function get_avg_price() {
+		$start  = $this->get_data( 'check_in_date' ) ?? $this->check_in_date;
+		$end    = $this->get_data( 'check_out_date' ) ?? $this->check_out_date;
+		$nights = hb_count_nights_two_dates( $end, $start );
+
+		return (float) $this->amount_singular / $nights;
+	}
 }

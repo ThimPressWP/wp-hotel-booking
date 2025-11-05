@@ -1764,7 +1764,7 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 		$group_by = ' GROUP BY rooms.post_name HAVING available_rooms > 0';
 		$order_by = ' ORDER BY rooms.post_title ASC';
 
-		if ( isset( $args['min_price'] ) && $args['max_price'] && $args['min_price'] !== '' && $args['max_price'] !== '' ) {
+		/*if ( isset( $args['min_price'] ) && $args['max_price'] && $args['min_price'] !== '' && $args['max_price'] !== '' ) {
 			$sql .= $wpdb->prepare(
 				" LEFT JOIN {$wpdb->postmeta} AS pm4 ON pm4.post_id = rooms.ID AND pm4.meta_key = %s",
 				'hb_price'
@@ -1775,7 +1775,7 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 				$args['min_price'],
 				$args['max_price']
 			);
-		}
+		}*/
 
 		if ( isset( $args['rating'] ) && $args['rating'] !== '' ) {
 			$rating = explode( ',', $args['rating'] );
@@ -1861,6 +1861,8 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 		if ( $search = $wpdb->get_results( $query ) ) {
 			$allow_checkout_date_blocked = get_option( 'tp_hotel_booking_allow_checkout_date_blocked' );
 
+			$min_price = ( isset( $args['min_price'] ) && $args['min_price'] !== '' ) ? (float) $args['min_price'] : 0;
+			$max_price = ( isset( $args['max_price'] ) && $args['max_price'] !== '' ) ? (float) $args['max_price'] : 0;
 			foreach ( $search as $k => $p ) {
 				$blocked_id = get_post_meta( $p->ID, 'hb_blocked_id', true );
 				if ( ! empty( $blocked_id ) ) {
@@ -1882,7 +1884,7 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 					}
 				}
 
-				$room                        = WPHB_Room::instance(
+				$room           = WPHB_Room::instance(
 					$p,
 					array(
 						'check_in_date'  => date( 'm/d/Y', $check_in_date_to_time ),
@@ -1890,6 +1892,13 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 						'quantity'       => $args['room_qty'],
 					)
 				);
+
+				$room_avg_price = $room->get_avg_price();
+				// filter price
+				if ( $min_price >= 0 && $max_price > 0 && ( $room_avg_price < $min_price || $room_avg_price > $max_price ) ) {
+					unset( $search[ $k ] );
+					continue;
+				}
 
 				$room->post->available_rooms = (int) $p->available_rooms;
 				
