@@ -97,6 +97,23 @@ if ( $args && isset( $args['atts'] ) ) {
 					?>
 				</div>
 			</li>
+			<li class="hb-form-field">
+				<?php hb_render_label_shortcode( $atts, 'show_label', __( 'Number of rooms', 'wp-hotel-booking' ), 'true' ); ?>
+				<div class="hb-form-field-input">
+					<?php
+					hb_dropdown_numbers(
+						array(
+							'name'              => 'number-of-rooms',
+							'min'               => 1,
+							'max'               => 20,
+							'show_option_none'  => __( 'Number of rooms', 'wp-hotel-booking' ),
+							'option_none_value' => '',
+							'selected'          => $atts['room_qty'] ?: hb_get_request( 'room_qty', 1 ),
+						)
+					);
+					?>
+				</div>
+			</li>
 		</ul>
 
 		<?php wp_nonce_field( 'hb_search_nonce_action', 'nonce' ); ?>

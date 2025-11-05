@@ -43,15 +43,15 @@ class ArchiveRoomTemplate {
 	 * @return string
 	 */
 	public static function render_rooms() {
-
-		$atts = array(
+		$paged = get_query_var( 'paged' ) ?: hb_get_request( 'paged', 1, 'int' );
+		$atts  = array(
 			'check_in_date'  => hb_get_request( 'check_in_date', date( 'Y/m/d' ) ),
 			'check_out_date' => hb_get_request( 'check_out_date', date( 'Y/m/d', strtotime( '+1 day' ) ) ),
 			'adults'         => hb_get_request( 'adults', 1 ),
 			'max_child'      => hb_get_request( 'max_child', 0 ),
 			'room_qty'       => hb_get_request( 'room_qty', 1 ),
 			'widget_search'  => false,
-			'hb_page'        => hb_get_request( 'paged', 1, 'int' ),
+			'hb_page'        => $paged,
 			'min_price'      => hb_get_request( 'min_price', 0 ),
 			'max_price'      => hb_get_request( 'max_price', '' ),
 			'rating'         => hb_get_request( 'rating', '' ),
