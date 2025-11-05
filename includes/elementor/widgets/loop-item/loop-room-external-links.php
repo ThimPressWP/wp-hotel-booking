@@ -16,11 +16,11 @@ class Thim_Ekit_Widget_Loop_Room_External_Links extends Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'eicon-link';
+		return 'thim-eicon eicon-link';
 	}
 
 	public function get_categories() {
-		return array( \WPHB\Elementor::CATEGORY_ARCHIVE_ROOM );
+		return array( 'thim_ekit_recommended' );
 	}
 
 	public function get_keywords() {
