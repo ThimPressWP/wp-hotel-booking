@@ -21,7 +21,8 @@ class Elementor {
 			'loop-room-rating',
 			'loop-room-price',
 			'loop-room-info',
-			'loop-room-add-to-cart'
+			'loop-room-add-to-cart',
+			'loop-room-external-links',
 		),
         'single-room' => array(
 			'room-thumb',
