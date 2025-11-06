@@ -506,6 +506,27 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 			if ( get_post_type( $room_id ) !== 'hb_room' ) {
 				throw new Exception( esc_html__( 'roomId is invalid', 'wp-hotel-booking' ) );
 			}
+
+			$available_qty = hotel_booking_get_room_available(
+				$room_id,
+				array(
+					'check_in_date'  => $check_in_date,
+					'check_out_date' => $check_out_date,
+				)
+			);
+
+			if ( is_wp_error( $available_qty ) ) {
+				throw new Exception ( $available_qty->get_error_message() );
+			}
+
+			if ( $qty > $available_qty ) {
+				throw new Exception(
+					sprintf(
+						esc_html__( 'The maximum number of rooms you can book is %s', 'wp-hotel-booking' ),
+						$available_qty
+					)
+				);
+			}
 			
 			$room = WPHB_Room::instance( $room_id,
 				array(
@@ -534,6 +555,8 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 			$response->status            = 'success';
 			$response->data->amount      = $room_price + $extra_price;
 			$response->data->amount_html = hb_format_price( $room_price + $extra_price );
+
+			$response->data->available_qty = $available_qty;
 		} catch (Exception $e) {
 			$response->message = $e->getMessage();
 		}

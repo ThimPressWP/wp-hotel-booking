@@ -25,12 +25,14 @@ const srcFrontendScssFiles = [
 gulp.task( 'build_frontend_css', () => {
 	return gulp
 		.src( srcFrontendScssFiles )
-		.pipe( sass.sync().on( 'error', sass.logError ) )
-		.on( 'error', sass.logError )
+		.pipe( sass({
+			silenceDeprecations: ['legacy-js-api', 'import']
+		}).on( 'error', sass.logError ) )
 		.pipe( postcss( [ css_minify() ] ) )
 		.pipe( lineec() )
 		.pipe( gulp.dest( 'includes/elementor/src/css/frontend' ) );
 } );
+
 
 const srcDefaultScssFiles = [
 	'assets/scss/theme-default.scss',

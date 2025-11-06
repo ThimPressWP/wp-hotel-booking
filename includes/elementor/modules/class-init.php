@@ -15,7 +15,8 @@ class Elementor {
             'search-room',
 			'filter-room',
 			'filter-room-selected',
-			'list-room'
+			'list-room',
+			// 'check-avaibility', //like search room widget
         ),
 		'loop-item'  => array(
 			'loop-room-rating',
@@ -93,6 +94,10 @@ class Elementor {
 
 			if ( $type !== 'single-room' ) {
 				unset( $widgets['single-room'] );
+			}
+
+			if ( $type!== 'loop_item' ) {
+				unset( $widgets['loop-item'] );
 			}
 		}
 

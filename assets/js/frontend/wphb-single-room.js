@@ -607,10 +607,13 @@ const calculateBookingPrice = ( elForm ) => {
     	.then( ( response ) => response.json() )
     	.then( ( res ) => {
     		const { status, message, data } = res;
+    		
     		if ( status === 'error' ) {
-    			console.log( message );
+    			alert( message );
     			return;
     		}
+    		elForm.querySelector( '[name="hb-num-of-rooms"]' ).setAttribute( 'max', data.available_qty );
+    		elForm.querySelector( '.wphb-max-qty .qty-max' ).innerHTML = data.available_qty;
     		elForm.querySelector( '.hb-total-price-value' ).innerHTML = data.amount_html;
     	} )
     	.catch( ( error ) => {} ) .finally( () => { elForm.querySelector( '.wphb-single-room-loading-overlay' ).classList.add( 'hidden' ); } );
