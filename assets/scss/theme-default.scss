@@ -583,6 +583,9 @@ body {
             & > h3 {
                 margin: 0 0 18px 0;
             }
+            .hb-form-field-input{
+                flex: 1;
+            }
             form.hb-form-table {
                 display: flex;
                 align-items: flex-end;
@@ -593,7 +596,7 @@ body {
                     label {
                         display: block;
                     }
-                    
+
                 }
             }
         }
@@ -794,7 +797,7 @@ body {
         textarea {
             margin: 0;
             position: relative;
-            min-width: 200px;
+            min-width: 120px;
             width: 100%;
             height: auto;
             border: 1px solid #cccccc;
@@ -834,8 +837,7 @@ body {
             position: relative;
             min-width: 200px;
             width: 100%;
-            border: 1px solid #cccccc;
-            font-size: var(--hb-font-size-base, 16px);
+             font-size: var(--hb-font-size-base, 16px);
             line-height: 1.5;
             color: #fff;
             font-weight: 600;
@@ -1299,7 +1301,7 @@ body.single-hb_room {
         align-items: flex-start;
         flex-wrap: wrap;
         max-width: 350px;
-        
+
         .hb-booking-room-form-group{
             width: 100%;
             text-align: initial;
