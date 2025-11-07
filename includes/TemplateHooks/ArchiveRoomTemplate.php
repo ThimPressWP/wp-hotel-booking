@@ -143,7 +143,7 @@ class ArchiveRoomTemplate {
 		} else {
 			$filter = '';
 		}
-		$check_room_availability = static::instance()->check_room_availability();
+		$check_room_availability = static::instance()->check_room_availability( $atts );
 		// section ( filter + section_rooms )
 		$section = apply_filters(
 			'wbhb/layout/list-rooms/section',
@@ -202,7 +202,7 @@ class ArchiveRoomTemplate {
 		return Template::instance()->nest_elements( $html_wrapper, $pagination );
 	}
 
-	public function check_room_availability() {
+	public function check_room_availability( $atts ) {
 		$title          = sprintf( '<h3>%s</h3>', __( 'Check avaibility', 'wp-hotel-booking' ) );
 		$check_in_date  = hb_get_request( 'check_in_date', date( 'Y/m/d' ) );
 		$check_out_date = hb_get_request( 'check_out_date', date( 'Y/m/d', strtotime( '+1 day' ) ) );
@@ -210,12 +210,12 @@ class ArchiveRoomTemplate {
 		$max_child      = hb_get_request( 'max_child', 0 );
 		$room_qty       = hb_get_request( 'room_qty', 1 );
 
-		$check_in_date_html  = $this->date_field( __( 'Check-in Date', 'wp-hotel-booking' ), 'check_in_date', $check_in_date );
-		$check_out_date_html = $this->date_field( __( 'Check-out Date', 'wp-hotel-booking' ), 'check_out_date', $check_out_date );
+		$check_in_date_html  = $this->date_field( __( 'Check-in Date', 'wp-hotel-booking' ), 'check_in_date', $atts['check_in_date'] );
+		$check_out_date_html = $this->date_field( __( 'Check-out Date', 'wp-hotel-booking' ), 'check_out_date', $atts['check_out_date'] );
 		$adults_html         = $this->dropdown_selector(
 			__( 'Adults', 'wp-hotel-booking' ),
 			'adults',
-			$adults,
+			$atts['adults'],
 			1,
 			hb_get_max_capacity_of_rooms(),
 			hb_get_capacity_of_rooms()
@@ -223,27 +223,32 @@ class ArchiveRoomTemplate {
 		$child_html          = $this->dropdown_selector(
 			__( 'Children', 'wp-hotel-booking' ),
 			'max_child',
-			$max_child,
+			$atts['max_child'],
 			0,
 		);
 		$quantity_html       = $this->dropdown_selector(
 			__( 'Rooms', 'wp-hotel-booking' ),
 			'room_qty',
-			$room_qty,
+			$atts['room_qty'],
 		);
 		$button_html         = sprintf( '<div class="hb-form-field-input"><button type="submit" class="rooms-check-avaibility">%s</button></div>', __( 'Check avaibility', 'wp-hotel-booking' ) );
-		$sections            = array(
-			'wrapper'         => '<div class="hotel-booking-rooms-search">',
-			'title'           => $title,
-			'form_start'      => '<form name="hb-search-form" class="hb-form-table" >',
-			'check_in_date'   => $check_in_date_html,
-			'check_out_date'  => $check_out_date_html,
-			'adults_capacity' => $adults_html,
-			'child_capacity'  => $child_html,
-			'quantity'        => $quantity_html,
-			'button_search'   => $button_html,
-			'form_end'        => '</form>',
-			'wrapper_end'     => '</div>',
+
+		$sections            = apply_filters(
+			'wbhb/layout/list-rooms/section/check-availability-form',
+			array(
+				'wrapper'         => '<div class="hotel-booking-rooms-search">',
+				'title'           => $title,
+				'form_start'      => '<form name="hb-search-form" class="hb-form-table" >',
+				'check_in_date'   => $check_in_date_html,
+				'check_out_date'  => $check_out_date_html,
+				'adults_capacity' => $adults_html,
+				'child_capacity'  => $child_html,
+				'quantity'        => $quantity_html,
+				'button_search'   => $button_html,
+				'form_end'        => '</form>',
+				'wrapper_end'     => '</div>',
+			),
+			$atts
 		);
 		return Template::combine_components( $sections );
 	}
