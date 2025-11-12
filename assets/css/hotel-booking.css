@@ -204,7 +204,7 @@
     margin-bottom: 40px;
 }
 
-.hb-addition-information h4 {
+.hb-payment-form h4, .hb-addition-information h4 {
     margin-bottom: 20px;
 }
 
@@ -1129,11 +1129,10 @@
     color: #fff;
 }
 
-#hotel-booking-payment input[type="checkbox"] {
-    position: relative;
-    top: 3px;
+#hotel-booking-payment input[type="checkbox"], #hotel-booking-payment input[type="radio"] {
     width: 20px;
     height: 20px;
+    border-width: 1px;
 }
 
 #hotel-booking-cart input[type="number"],

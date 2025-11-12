@@ -172,6 +172,13 @@ body {
                 }
             }
 
+            #hotel-booking-payment{
+                input[type="checkbox"], input[type="radio"] {
+                    position: relative;
+                    top: 4px;
+                }
+            }
+
             // default theme wp has .entry-content wrapper
             .entry-content {
                 @media (min-width: 700px) {
