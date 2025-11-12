@@ -214,7 +214,7 @@ class ArchiveRoomTemplate {
 		$check_out_date_html = $this->date_field( __( 'Check-out Date', 'wp-hotel-booking' ), 'check_out_date', $atts['check_out_date'] );
 		$adults_html         = $this->dropdown_selector(
 			__( 'Adults', 'wp-hotel-booking' ),
-			'adults',
+			'adults_capacity',
 			$atts['adults'],
 			1,
 			hb_get_max_capacity_of_rooms(),
@@ -238,7 +238,7 @@ class ArchiveRoomTemplate {
 			array(
 				'wrapper'         => '<div class="hotel-booking-rooms-search">',
 				'title'           => $title,
-				'form_start'      => '<form name="hb-search-form" class="hb-form-table" >',
+				'form_start'      => '<form name="hb-search-form" class="hb-search-form hb-form-table" >',
 				'check_in_date'   => $check_in_date_html,
 				'check_out_date'  => $check_out_date_html,
 				'adults_capacity' => $adults_html,
