@@ -133,6 +133,20 @@ body {
                         color: #fff;
                     }
                 }
+                .hb_single_room {
+                    .wphb-room-calendar-pricing-wrap {
+                        .wphb-room-calendar-pricing-buttons {
+                            .hb_button {
+                                &.hb-btn-cancel {
+                                    padding: 11px 24px;
+                                    background-color: transparent;
+                                    border: 1px solid var(--hb-heading, #111);
+                                    color: var(--hb-heading, #111);
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             .hb_button {
@@ -1048,8 +1062,6 @@ body.single-hb_room {
 
 .wphb-room-calendar-pricing-wrap {
     .wphb-room-calendar-pricing-buttons {
-        display: inline-flex;
-        gap: 20px;
         margin: 20px 0;
     }
 
