@@ -204,6 +204,10 @@
     margin-bottom: 40px;
 }
 
+.hb-addition-information h4 {
+    margin-bottom: 20px;
+}
+
 .hb-order-new-customer .hb-form-field .hb-form-field-input select, .hb-order-new-customer .hb-form-field .hb-form-field-input input {
     width: 100%;
 }
@@ -1097,6 +1101,10 @@
     color: var(--hb-heading, #111);
 }
 
+#hotel-booking-payment p {
+    margin-bottom: 1em;
+}
+
 #hotel-booking-cart input[type="number"],
 #hotel-booking-payment input[type="number"],
 #hotel-booking-cart input[type="text"],
@@ -1107,6 +1115,7 @@
     border: 1px solid #ddd;
     box-shadow: none;
     text-shadow: none;
+    line-height: 1.3;
 }
 
 #hotel-booking-cart input[name="hb-coupon-code"],
@@ -1117,6 +1126,14 @@
 #hotel-booking-cart button#hb-apply-coupon,
 #hotel-booking-payment button#hb-apply-coupon {
     margin: 10px 0 10px 5px;
+    color: #fff;
+}
+
+#hotel-booking-payment input[type="checkbox"] {
+    position: relative;
+    top: 3px;
+    width: 20px;
+    height: 20px;
 }
 
 #hotel-booking-cart input[type="number"],
@@ -2794,10 +2811,10 @@ div.sort-by-wrapper, .sort-by-wrapper .sort-by {
 .sort-by-wrapper .toggle:after {
     position: absolute;
     content: " ";
-    width: 100%;
-    height: 100%;
+    width: 16px;
+    height: 16px;
     top: 16px;
-    right: -93%;
+    right: 6px;
     background: url(data:image/svg+xml;base64,PHN2ZyBjbGFzcz0iYmkgYmktY2hldnJvbi1kb3duIGN1cnNvci1wb2ludGVyIiBmaWxsPSIjMDAwIiBoZWlnaHQ9IjEwIiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgICAgPHBhdGggZD0iTTEuNjQ2IDQuNjQ2YS41LjUgMCAwIDEgLjcwOCAwTDggMTAuMjkzbDUuNjQ2LTUuNjQ3YS41LjUgMCAwIDEgLjcwOC43MDhsLTYgNmEuNS41IDAgMCAxLS43MDggMGwtNi02YS41LjUgMCAwIDEgMC0uNzA4eiIgZmlsbC1ydWxlPSJldmVub2RkIj48L3BhdGg+CiAgICA8L3N2Zz4=) no-repeat;
 }
 

@@ -16,6 +16,12 @@ body {
     --hb-border-radius: 3px;
 
     &.wp-hotel-booking-page {
+        // for fix form style twenty twenty one
+        --form--font-size: 16px;
+        --form--border-width: 1px;
+        --form--label-weight: 400;
+        --responsive--alignwide-width: 1200px;
+
         &:not(.tp-themes-premium) {
             --wp--style--global--content-size: 1200px;
 
@@ -138,7 +144,7 @@ body {
                 background: var(--hb-primary, #ffb606);
                 color: #fff;
                 font-weight: 600;
-                line-height: 1.5;
+                line-height: 1.4;
                 text-transform: capitalize;
 
                 &:hover {
@@ -595,6 +601,7 @@ body {
                 .hb-form-field-input {
                     label {
                         display: block;
+                        margin-bottom: 3px;
                     }
 
                 }
@@ -774,7 +781,7 @@ body {
             border: none;
             background-color: var(--hb-primary, #ffb606);
             font-size: 16px;
-            line-height: 1.5;
+            line-height: 1.4;
             font-weight: 600;
             color: #fff;
             text-decoration: none;
@@ -802,7 +809,7 @@ body {
             height: auto;
             border: 1px solid #cccccc;
             font-size: var(--hb-font-size-base, 16px);
-            line-height: 1.5;
+            line-height: 1.4;
             color: #111;
             background-color: #fff;
             padding: 12px;
@@ -837,8 +844,8 @@ body {
             position: relative;
             min-width: 200px;
             width: 100%;
-             font-size: var(--hb-font-size-base, 16px);
-            line-height: 1.5;
+            font-size: var(--hb-font-size-base, 16px);
+            line-height: 1.4;
             color: #fff;
             font-weight: 600;
             background-color: var(--hb-primary, #ffb606);
@@ -1001,13 +1008,7 @@ body.single-hb_room {
     }
 
     .hb_single_room_tabs_content {
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6,
-        p {
+        h1, h2, h3, h4, h5, h6, p {
             &:first-child {
                 margin-top: 0;
             }
