@@ -48,7 +48,13 @@ defined( 'ABSPATH' ) || exit;
 // }
 
 if ( ! function_exists( 'hb_get_max_capacity_of_rooms' ) ) {
+	/**
+	 * @deprecated 2.2.4
+	 *
+	 * It handles query db to get max capacity of rooms and set options of tag Select, don't need
+	 */
 	function hb_get_max_capacity_of_rooms() {
+		return 100;
 		global $wpdb;
 		$max = $wpdb->get_var( "SELECT MAX(meta_value) as max FROM $wpdb->postmeta WHERE meta_key = '_hb_room_capacity_adult'" );
 		$max = ! empty( $max ) ? (int) $max : 0;
@@ -162,7 +168,7 @@ if ( ! function_exists( 'hb_get_capacity_of_rooms' ) ) {
 		$max_adult = hb_get_max_capacity_of_rooms();
 		$max_adult = ! empty( $max_adult ) ? $max_adult : 10;
 
-		$return    = array();
+		$return = array();
 		if ( $max_adult ) {
 			for ( $i = 1; $i <= $max_adult; $i ++ ) {
 				$return[ $i ] = array(
@@ -462,7 +468,7 @@ if ( ! function_exists( 'hb_dropdown_child_per_room' ) ) {
 		);
 		$max_child = hb_get_max_child_of_rooms();
 		$output    = '<select name="' . $args['name'] . '">';
-		$output    .= '<option value="0">' . __( 'Select', 'wp-hotel-booking' ) . '</option>';
+		$output   .= '<option value="0">' . __( 'Select', 'wp-hotel-booking' ) . '</option>';
 		if ( $max_child > 0 ) {
 			for ( $i = 1; $i <= $max_child; $i ++ ) {
 				$output .= sprintf( '<option value="%1$d"%2$s>%1$d</option>', $i, $args['selected'] == $i ? ' selected="selected"' : '' );
@@ -1115,7 +1121,7 @@ if ( ! function_exists( 'hb_get_tax_settings' ) ) {
 
 	function hb_get_tax_settings() {
 		$settings = WPHB_Settings::instance();
-		$tax = $settings->get( 'tax' );
+		$tax      = $settings->get( 'tax' );
 		if ( $tax ) {
 			$tax = (float) $tax / 100;
 		}
@@ -1460,12 +1466,12 @@ if ( ! function_exists( 'hb_format_price' ) ) {
 		}
 
 		$price_format = $before
-		                . number_format(
-			                $price,
-			                $price_number_of_decimal,
-			                $price_decimals_separator,
-			                $price_thousands_separator
-		                ) . $after;
+						. number_format(
+							$price,
+							$price_number_of_decimal,
+							$price_decimals_separator,
+							$price_thousands_separator
+						) . $after;
 
 		return $override ? apply_filters( 'hb_price_format', $price_format, $price, $with_currency ) : $price_format;
 	}
@@ -1808,13 +1814,13 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 
 		if ( isset( $args['room_type'] ) && $args['room_type'] !== '' ) {
 			$roomTypes = explode( ',', $args['room_type'] );
-			$roomTypes = array_map( 'absint', $roomTypes);
+			$roomTypes = array_map( 'absint', $roomTypes );
 
-			$sql   .= " INNER JOIN $wpdb->term_relationships AS r_term ON rooms.ID = r_term.object_id";
-			$sql   .= " INNER JOIN $wpdb->term_taxonomy AS tx ON r_term.term_taxonomy_id = tx.term_taxonomy_id";
+			$sql            .= " INNER JOIN $wpdb->term_relationships AS r_term ON rooms.ID = r_term.object_id";
+			$sql            .= " INNER JOIN $wpdb->term_taxonomy AS tx ON r_term.term_taxonomy_id = tx.term_taxonomy_id";
 			$term_ids_format = join( ',', $roomTypes );
-			$where .= " AND tx.term_id IN ($term_ids_format)";
-			$where .= $wpdb->prepare( ' AND tx.taxonomy = %s', 'hb_room_type' );
+			$where          .= " AND tx.term_id IN ($term_ids_format)";
+			$where          .= $wpdb->prepare( ' AND tx.taxonomy = %s', 'hb_room_type' );
 		}
 
 		if ( $args['sort_by'] === 'date-desc' ) {
@@ -1864,7 +1870,7 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 					}
 				}
 
-				$room           = WPHB_Room::instance(
+				$room = WPHB_Room::instance(
 					$p,
 					array(
 						'check_in_date'  => date( 'm/d/Y', $check_in_date_to_time ),
@@ -1881,7 +1887,7 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 				}
 
 				$room->post->available_rooms = (int) $p->available_rooms;
-				
+
 				$room = apply_filters( 'hotel_booking_query_search_parser', $room, $args );
 
 				if ( $room && $room->post->available_rooms > 0 && $room->post->available_rooms >= $args['room_qty'] ) {
@@ -2079,7 +2085,7 @@ if ( ! function_exists( 'hb_maybe_modify_page_content' ) ) {
 		global $post;
 		global $hb_settings;
 		if ( is_page() && ( $post->ID == hb_get_page_id( 'search' ) ||
-		                    ( has_shortcode( $content, 'hotel_booking' ) && has_shortcode( $content, 'hotel_booking_filter' ) ) ) ) {
+							( has_shortcode( $content, 'hotel_booking' ) && has_shortcode( $content, 'hotel_booking_filter' ) ) ) ) {
 
 			// params search result
 			$page       = hb_get_request( 'hotel-booking' );
