@@ -96,14 +96,14 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 						'title' => __( 'Room Options', 'wp-hotel-booking' ),
 						'desc'  => __( 'Room settings display column number and image size used in gallery single page', 'wp-hotel-booking' ),
 					),
-					array(
+					/*array(
 						'id'      => WPHB_Settings::instance()->get_field_name( 'max_adults_all_room' ),
 						'title'   => __( 'Max Adults Rooms', 'wp-hotel-booking' ),
 						'type'    => 'number',
 						'default' => 10,
 						'min'     => 1,
 						'desc'    => __( 'Set custom quantity, serve the search page.', 'wp-hotel-booking' ),
-					),
+					),*/
 					array(
 						'type'    => 'select',
 						'id'      => WPHB_Settings::instance()->get_field_name( 'reservation_hold' ),

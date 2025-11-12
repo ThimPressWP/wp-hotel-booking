@@ -49,30 +49,9 @@ defined( 'ABSPATH' ) || exit;
 
 if ( ! function_exists( 'hb_get_max_capacity_of_rooms' ) ) {
 	function hb_get_max_capacity_of_rooms() {
-		static $max = null;
-
-		$args      = array(
-			'post_type'      => 'hb_room',
-			'posts_per_page' => - 1,
-		);
-		$the_query = new WP_Query( $args );
-
-		if ( $the_query->have_posts() ) :
-			while ( $the_query->have_posts() ) :
-				$the_query->the_post();
-				$adult = get_post_meta( get_the_ID(), '_hb_room_capacity_adult', true );
-				if ( intval( $adult ) > $max ) {
-					$max = $adult;
-				}
-			endwhile;
-		endif;
-		wp_reset_postdata();
-
-		if ( ! $max ) {
-			global $wpdb;
-			$results = $wpdb->get_results( "SELECT MAX(meta_value) as max FROM $wpdb->postmeta WHERE meta_key = '_hb_room_capacity_adult'", ARRAY_A );
-			$max     = $results[0]['max'];
-		}
+		global $wpdb;
+		$max = $wpdb->get_var( "SELECT MAX(meta_value) as max FROM $wpdb->postmeta WHERE meta_key = '_hb_room_capacity_adult'" );
+		$max = ! empty( $max ) ? (int) $max : 0;
 
 		return apply_filters( 'get_max_capacity_of_rooms', $max );
 	}
@@ -180,8 +159,9 @@ if ( ! function_exists( 'hb_get_min_capacity_of_rooms' ) ) {
 if ( ! function_exists( 'hb_get_capacity_of_rooms' ) ) {
 	// get array search
 	function hb_get_capacity_of_rooms() {
-		global $hb_settings;
-		$max_adult = $hb_settings->get( 'max_adults_all_room' );
+		$max_adult = hb_get_max_capacity_of_rooms();
+		$max_adult = ! empty( $max_adult ) ? $max_adult : 10;
+
 		$return    = array();
 		if ( $max_adult ) {
 			for ( $i = 1; $i <= $max_adult; $i ++ ) {
