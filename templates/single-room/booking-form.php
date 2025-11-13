@@ -124,7 +124,7 @@ $total_price = $room->amount_singular + $extra_price;
 							<?php esc_html_e( 'Total: ', 'wp-hotel-booking' ); ?>
 						</span>
 						<span class="hb-total-price-value">
-							<?php echo esc_html( hb_format_price( $total_price ) ); ?>
+							<?php echo esc_html( hb_format_price( $total_price, true, false ) ); ?>
 						</span>
 					</div>
 	                <div class="hb_view_price hb-room-content">

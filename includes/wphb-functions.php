@@ -165,8 +165,8 @@ if ( ! function_exists( 'hb_get_min_capacity_of_rooms' ) ) {
 if ( ! function_exists( 'hb_get_capacity_of_rooms' ) ) {
 	// get array search
 	function hb_get_capacity_of_rooms() {
-		$max_adult = hb_get_max_capacity_of_rooms();
-		$max_adult = ! empty( $max_adult ) ? $max_adult : 10;
+		global $wpdb;
+		$max_adult = (int) $wpdb->get_var( "SELECT MAX(meta_value) as max FROM $wpdb->postmeta WHERE meta_key = '_hb_room_capacity_adult'" ) ?: 1;
 
 		$return = array();
 		if ( $max_adult ) {
