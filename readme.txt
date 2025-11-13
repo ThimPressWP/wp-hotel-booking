@@ -3,7 +3,7 @@ Contributors: thimpress, leehld, phamtungpth, thoakim
 Donate link: https://thimpress.com/
 Tags: hotel booking, reservation, booking system, room management, accommodation
 Tested up to: 6.8
-Stable tag: 2.2.2
+Stable tag: 2.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,16 @@ Yes.
 7. System settings
 
 == Changelog ==
+
+= 2.2.4 (20205-11-13) =
+~ Feature: external link.
+~ Tweak: hotel_booking_get_room_available function.
+~ Tweak: layout single room page, archive room page.
+~ Fixed: render calendar pricing
+~ Remove search page, use archive room page instead.
+~ Remove setting "Single Purchase".
+~ Remove setting set "Search Page".
+~ Remove setting "Max Adults Rooms".
 
 = 2.2.3 (2025-08-18) =
 ~ Fixed: security.

@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WP Hotel Booking plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Hotel Booking 2.2.4-beta.3e\n"
+"Project-Id-Version: WP Hotel Booking 2.2.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-hotel-booking\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-11-12T09:59:06+00:00\n"
+"POT-Creation-Date: 2025-11-13T05:11:06+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wp-hotel-booking\n"
@@ -59,13 +59,13 @@ msgid "Tools"
 msgstr ""
 
 #: includes/admin/class-wphb-admin-settings.php:297
-#: includes/wphb-functions.php:2713
+#: includes/wphb-functions.php:2699
 #: templates/setup/steps/pages.php:35
 msgid "---Select page---"
 msgstr ""
 
 #: includes/admin/class-wphb-admin-settings.php:299
-#: includes/wphb-functions.php:2715
+#: includes/wphb-functions.php:2701
 #: templates/setup/steps/pages.php:37
 msgid "[ Add new page ]"
 msgstr ""
@@ -1179,17 +1179,17 @@ msgid "Pages options for system."
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:44
-#: includes/wphb-functions.php:2872
+#: includes/wphb-functions.php:2858
 msgid "Rooms Page"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:54
-#: includes/wphb-functions.php:2884
+#: includes/wphb-functions.php:2870
 msgid "Checkout Page"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:59
-#: includes/wphb-functions.php:2890
+#: includes/wphb-functions.php:2876
 msgid "Cart Page"
 msgstr ""
 
@@ -1198,7 +1198,7 @@ msgid "Redirect to page after book"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:69
-#: includes/wphb-functions.php:2900
+#: includes/wphb-functions.php:2886
 msgid "Account Page"
 msgstr ""
 
@@ -1207,7 +1207,7 @@ msgid "Terms And Conditions Page"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:79
-#: includes/wphb-functions.php:2912
+#: includes/wphb-functions.php:2898
 msgid "Thank You Page"
 msgstr ""
 
@@ -1290,14 +1290,6 @@ msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-room.php:97
 msgid "Room settings display column number and image size used in gallery single page"
-msgstr ""
-
-#: includes/admin/settings/class-wphb-admin-setting-room.php:101
-msgid "Max Adults Rooms"
-msgstr ""
-
-#: includes/admin/settings/class-wphb-admin-setting-room.php:105
-msgid "Set custom quantity, serve the search page."
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-room.php:110
@@ -2869,8 +2861,8 @@ msgstr ""
 
 #: includes/elementor/widgets/global/search-room.php:101
 #: includes/products/class-wphb-product-room.php:185
-#: includes/wphb-functions.php:485
-#: includes/wphb-functions.php:872
+#: includes/wphb-functions.php:471
+#: includes/wphb-functions.php:858
 #: templates/search/loop.php:74
 #: templates/search/v2/loop-v2/room-info/room-meta/quantity.php:14
 msgid "Select"
@@ -3537,7 +3529,7 @@ msgid "Check Out"
 msgstr ""
 
 #: includes/plugins/wp-hotel-booking-extra/templates/shortcodes/mini_cart_layout.php:71
-#: includes/wphb-functions.php:977
+#: includes/wphb-functions.php:963
 #: templates/cart/mini_cart.php:44
 #: templates/cart/mini_cart_layout.php:41
 msgid "View Cart"
@@ -3562,8 +3554,8 @@ msgstr ""
 
 #: includes/rest-api/v1/admin/class-wphb-admin-rooms-controller.php:116
 #: includes/rest-api/v1/admin/class-wphb-admin-rooms-controller.php:117
-#: includes/wphb-functions.php:2796
-#: includes/wphb-functions.php:2797
+#: includes/wphb-functions.php:2782
+#: includes/wphb-functions.php:2783
 msgid "Block item"
 msgstr ""
 
@@ -3830,1960 +3822,1960 @@ msgstr ""
 msgid "This room is not available!"
 msgstr ""
 
-#: includes/wphb-functions.php:306
+#: includes/wphb-functions.php:292
 msgid "---Select Room---"
 msgstr ""
 
-#: includes/wphb-functions.php:548
+#: includes/wphb-functions.php:534
 msgid "United Arab Emirates dirham"
 msgstr ""
 
-#: includes/wphb-functions.php:549
+#: includes/wphb-functions.php:535
 msgid "Afghan afghani"
 msgstr ""
 
-#: includes/wphb-functions.php:550
+#: includes/wphb-functions.php:536
 msgid "Albanian lek"
 msgstr ""
 
-#: includes/wphb-functions.php:551
+#: includes/wphb-functions.php:537
 msgid "Armenian dram"
 msgstr ""
 
-#: includes/wphb-functions.php:552
+#: includes/wphb-functions.php:538
 msgid "Netherlands Antillean guilder"
 msgstr ""
 
-#: includes/wphb-functions.php:553
+#: includes/wphb-functions.php:539
 msgid "Angolan kwanza"
 msgstr ""
 
-#: includes/wphb-functions.php:554
+#: includes/wphb-functions.php:540
 msgid "Argentine peso"
 msgstr ""
 
-#: includes/wphb-functions.php:555
+#: includes/wphb-functions.php:541
 msgid "Australian dollar"
 msgstr ""
 
-#: includes/wphb-functions.php:556
+#: includes/wphb-functions.php:542
 msgid "Aruban florin"
 msgstr ""
 
-#: includes/wphb-functions.php:557
+#: includes/wphb-functions.php:543
 msgid "Azerbaijani manat"
 msgstr ""
 
-#: includes/wphb-functions.php:558
+#: includes/wphb-functions.php:544
 msgid "Bosnia and Herzegovina convertible mark"
 msgstr ""
 
-#: includes/wphb-functions.php:559
+#: includes/wphb-functions.php:545
 msgid "Barbadian dollar"
 msgstr ""
 
-#: includes/wphb-functions.php:560
+#: includes/wphb-functions.php:546
 msgid "Bangladeshi taka"
 msgstr ""
 
-#: includes/wphb-functions.php:561
+#: includes/wphb-functions.php:547
 msgid "Bulgarian lev"
 msgstr ""
 
-#: includes/wphb-functions.php:562
+#: includes/wphb-functions.php:548
 msgid "Bahraini dinar"
 msgstr ""
 
-#: includes/wphb-functions.php:563
+#: includes/wphb-functions.php:549
 msgid "Burundian franc"
 msgstr ""
 
-#: includes/wphb-functions.php:564
+#: includes/wphb-functions.php:550
 msgid "Bermudian dollar"
 msgstr ""
 
-#: includes/wphb-functions.php:565
+#: includes/wphb-functions.php:551
 msgid "Brunei dollar"
 msgstr ""
 
-#: includes/wphb-functions.php:566
+#: includes/wphb-functions.php:552
 msgid "Bolivian boliviano"
 msgstr ""
 
-#: includes/wphb-functions.php:567
+#: includes/wphb-functions.php:553
 msgid "Brazilian real"
 msgstr ""
 
-#: includes/wphb-functions.php:568
+#: includes/wphb-functions.php:554
 msgid "Bahamian dollar"
 msgstr ""
 
-#: includes/wphb-functions.php:569
+#: includes/wphb-functions.php:555
 msgid "Bitcoin"
 msgstr ""
 
-#: includes/wphb-functions.php:570
+#: includes/wphb-functions.php:556
 msgid "Bhutanese ngultrum"
 msgstr ""
 
-#: includes/wphb-functions.php:571
+#: includes/wphb-functions.php:557
 msgid "Botswana pula"
 msgstr ""
 
-#: includes/wphb-functions.php:572
+#: includes/wphb-functions.php:558
 msgid "Belarusian ruble (old)"
 msgstr ""
 
-#: includes/wphb-functions.php:573
+#: includes/wphb-functions.php:559
 msgid "Belarusian ruble"
 msgstr ""
 
-#: includes/wphb-functions.php:574
+#: includes/wphb-functions.php:560
 msgid "Belize dollar"
 msgstr ""
 
-#: includes/wphb-functions.php:575
+#: includes/wphb-functions.php:561
 msgid "Canadian dollar"
 msgstr ""
 
-#: includes/wphb-functions.php:576
+#: includes/wphb-functions.php:562
 msgid "Congolese franc"
 msgstr ""
 
-#: includes/wphb-functions.php:577
+#: includes/wphb-functions.php:563
 msgid "Swiss franc"
 msgstr ""
 
-#: includes/wphb-functions.php:578
+#: includes/wphb-functions.php:564
 msgid "Chilean peso"
 msgstr ""
 
-#: includes/wphb-functions.php:579
+#: includes/wphb-functions.php:565
 msgid "Chinese yuan"
 msgstr ""
 
-#: includes/wphb-functions.php:580
+#: includes/wphb-functions.php:566
 msgid "Colombian peso"
 msgstr ""
 
-#: includes/wphb-functions.php:581
+#: includes/wphb-functions.php:567
 msgid "Costa Rican col&oacute;n"
 msgstr ""
 
-#: includes/wphb-functions.php:582
+#: includes/wphb-functions.php:568
 msgid "Cuban convertible peso"
 msgstr ""
 
-#: includes/wphb-functions.php:583
+#: includes/wphb-functions.php:569
 msgid "Cuban peso"
 msgstr ""
 
-#: includes/wphb-functions.php:584
+#: includes/wphb-functions.php:570
 msgid "Cape Verdean escudo"
 msgstr ""
 
-#: includes/wphb-functions.php:585
+#: includes/wphb-functions.php:571
 msgid "Czech koruna"
 msgstr ""
 
-#: includes/wphb-functions.php:586
+#: includes/wphb-functions.php:572
 msgid "Djiboutian franc"
 msgstr ""
 
-#: includes/wphb-functions.php:587
+#: includes/wphb-functions.php:573
 msgid "Danish krone"
 msgstr ""
 
-#: includes/wphb-functions.php:588
+#: includes/wphb-functions.php:574
 msgid "Dominican peso"
 msgstr ""
 
-#: includes/wphb-functions.php:589
+#: includes/wphb-functions.php:575
 msgid "Algerian dinar"
 msgstr ""
 
-#: includes/wphb-functions.php:590
+#: includes/wphb-functions.php:576
 msgid "Egyptian pound"
 msgstr ""
 
-#: includes/wphb-functions.php:591
+#: includes/wphb-functions.php:577
 msgid "Eritrean nakfa"
 msgstr ""
 
-#: includes/wphb-functions.php:592
+#: includes/wphb-functions.php:578
 msgid "Ethiopian birr"
 msgstr ""
 
-#: includes/wphb-functions.php:593
+#: includes/wphb-functions.php:579
 msgid "Euro"
 msgstr ""
 
-#: includes/wphb-functions.php:594
+#: includes/wphb-functions.php:580
 msgid "Fijian dollar"
 msgstr ""
 
-#: includes/wphb-functions.php:595
+#: includes/wphb-functions.php:581
 msgid "Falkland Islands pound"
 msgstr ""
 
-#: includes/wphb-functions.php:596
+#: includes/wphb-functions.php:582
 msgid "Pound sterling"
 msgstr ""
 
-#: includes/wphb-functions.php:597
+#: includes/wphb-functions.php:583
 msgid "Georgian lari"
 msgstr ""
 
-#: includes/wphb-functions.php:598
+#: includes/wphb-functions.php:584
 msgid "Guernsey pound"
 msgstr ""
 
-#: includes/wphb-functions.php:599
+#: includes/wphb-functions.php:585
 msgid "Ghana cedi"
 msgstr ""
 
-#: includes/wphb-functions.php:600
+#: includes/wphb-functions.php:586
 msgid "Gibraltar pound"
 msgstr ""
 
-#: includes/wphb-functions.php:601
+#: includes/wphb-functions.php:587
 msgid "Gambian dalasi"
 msgstr ""
 
-#: includes/wphb-functions.php:602
+#: includes/wphb-functions.php:588
 msgid "Guinean franc"
 msgstr ""
 
-#: includes/wphb-functions.php:603
+#: includes/wphb-functions.php:589
 msgid "Guatemalan quetzal"
 msgstr ""
 
-#: includes/wphb-functions.php:604
+#: includes/wphb-functions.php:590
 msgid "Guyanese dollar"
 msgstr ""
 
-#: includes/wphb-functions.php:605
+#: includes/wphb-functions.php:591
 msgid "Hong Kong dollar"
 msgstr ""
 
-#: includes/wphb-functions.php:606
+#: includes/wphb-functions.php:592
 msgid "Honduran lempira"
 msgstr ""
 
-#: includes/wphb-functions.php:607
+#: includes/wphb-functions.php:593
 msgid "Croatian kuna"
 msgstr ""
 
-#: includes/wphb-functions.php:608
+#: includes/wphb-functions.php:594
 msgid "Haitian gourde"
 msgstr ""
 
-#: includes/wphb-functions.php:609
+#: includes/wphb-functions.php:595
 msgid "Hungarian forint"
 msgstr ""
 
-#: includes/wphb-functions.php:610
+#: includes/wphb-functions.php:596
 msgid "Indonesian rupiah"
 msgstr ""
 
-#: includes/wphb-functions.php:611
+#: includes/wphb-functions.php:597
 msgid "Israeli new shekel"
 msgstr ""
 
-#: includes/wphb-functions.php:612
+#: includes/wphb-functions.php:598
 msgid "Manx pound"
 msgstr ""
 
-#: includes/wphb-functions.php:613
+#: includes/wphb-functions.php:599
 msgid "Indian rupee"
 msgstr ""
 
-#: includes/wphb-functions.php:614
+#: includes/wphb-functions.php:600
 msgid "Iraqi dinar"
 msgstr ""
 
-#: includes/wphb-functions.php:615
+#: includes/wphb-functions.php:601
 msgid "Iranian rial"
 msgstr ""
 
-#: includes/wphb-functions.php:616
+#: includes/wphb-functions.php:602
 msgid "Iranian toman"
 msgstr ""
 
-#: includes/wphb-functions.php:617
+#: includes/wphb-functions.php:603
 msgid "Icelandic kr&oacute;na"
 msgstr ""
 
-#: includes/wphb-functions.php:618
+#: includes/wphb-functions.php:604
 msgid "Jersey pound"
 msgstr ""
 
-#: includes/wphb-functions.php:619
+#: includes/wphb-functions.php:605
 msgid "Jamaican dollar"
 msgstr ""
 
-#: includes/wphb-functions.php:620
+#: includes/wphb-functions.php:606
 msgid "Jordanian dinar"
 msgstr ""
 
-#: includes/wphb-functions.php:621
+#: includes/wphb-functions.php:607
 msgid "Japanese yen"
 msgstr ""
 
-#: includes/wphb-functions.php:622
+#: includes/wphb-functions.php:608
 msgid "Kenyan shilling"
 msgstr ""
 
-#: includes/wphb-functions.php:623
+#: includes/wphb-functions.php:609
 msgid "Kyrgyzstani som"
 msgstr ""
 
-#: includes/wphb-functions.php:624
+#: includes/wphb-functions.php:610
 msgid "Cambodian riel"
 msgstr ""
 
-#: includes/wphb-functions.php:625
+#: includes/wphb-functions.php:611
 msgid "Comorian franc"
 msgstr ""
 
-#: includes/wphb-functions.php:626
+#: includes/wphb-functions.php:612
 msgid "North Korean won"
 msgstr ""
 
-#: includes/wphb-functions.php:627
+#: includes/wphb-functions.php:613
 msgid "South Korean won"
 msgstr ""
 
-#: includes/wphb-functions.php:628
+#: includes/wphb-functions.php:614
 msgid "Kuwaiti dinar"
 msgstr ""
 
-#: includes/wphb-functions.php:629
+#: includes/wphb-functions.php:615
 msgid "Cayman Islands dollar"
 msgstr ""
 
-#: includes/wphb-functions.php:630
+#: includes/wphb-functions.php:616
 msgid "Kazakhstani tenge"
 msgstr ""
 
-#: includes/wphb-functions.php:631
+#: includes/wphb-functions.php:617
 msgid "Lao kip"
 msgstr ""
 
-#: includes/wphb-functions.php:632
+#: includes/wphb-functions.php:618
 msgid "Lebanese pound"
 msgstr ""
 
-#: includes/wphb-functions.php:633
+#: includes/wphb-functions.php:619
 msgid "Sri Lankan rupee"
 msgstr ""
 
-#: includes/wphb-functions.php:634
+#: includes/wphb-functions.php:620
 msgid "Liberian dollar"
 msgstr ""
 
-#: includes/wphb-functions.php:635
+#: includes/wphb-functions.php:621
 msgid "Lesotho loti"
 msgstr ""
 
-#: includes/wphb-functions.php:636
+#: includes/wphb-functions.php:622
 msgid "Libyan dinar"
 msgstr ""
 
-#: includes/wphb-functions.php:637
+#: includes/wphb-functions.php:623
 msgid "Moroccan dirham"
 msgstr ""
 
-#: includes/wphb-functions.php:638
+#: includes/wphb-functions.php:624
 msgid "Moldovan leu"
 msgstr ""
 
-#: includes/wphb-functions.php:639
+#: includes/wphb-functions.php:625
 msgid "Malagasy ariary"
 msgstr ""
 
-#: includes/wphb-functions.php:640
+#: includes/wphb-functions.php:626
 msgid "Macedonian denar"
 msgstr ""
 
-#: includes/wphb-functions.php:641
+#: includes/wphb-functions.php:627
 msgid "Burmese kyat"
 msgstr ""
 
-#: includes/wphb-functions.php:642
+#: includes/wphb-functions.php:628
 msgid "Mongolian t&ouml;gr&ouml;g"
 msgstr ""
 
-#: includes/wphb-functions.php:643
+#: includes/wphb-functions.php:629
 msgid "Macanese pataca"
 msgstr ""
 
-#: includes/wphb-functions.php:644
+#: includes/wphb-functions.php:630
 msgid "Mauritanian ouguiya"
 msgstr ""
 
-#: includes/wphb-functions.php:645
+#: includes/wphb-functions.php:631
 msgid "Mauritian rupee"
 msgstr ""
 
-#: includes/wphb-functions.php:646
+#: includes/wphb-functions.php:632
 msgid "Maldivian rufiyaa"
 msgstr ""
 
-#: includes/wphb-functions.php:647
+#: includes/wphb-functions.php:633
 msgid "Malawian kwacha"
 msgstr ""
 
-#: includes/wphb-functions.php:648
+#: includes/wphb-functions.php:634
 msgid "Mexican peso"
 msgstr ""
 
-#: includes/wphb-functions.php:649
+#: includes/wphb-functions.php:635
 msgid "Malaysian ringgit"
 msgstr ""
 
-#: includes/wphb-functions.php:650
+#: includes/wphb-functions.php:636
 msgid "Mozambican metical"
 msgstr ""
 
-#: includes/wphb-functions.php:651
+#: includes/wphb-functions.php:637
 msgid "Namibian dollar"
 msgstr ""
 
-#: includes/wphb-functions.php:652
+#: includes/wphb-functions.php:638
 msgid "Nigerian naira"
 msgstr ""
 
-#: includes/wphb-functions.php:653
+#: includes/wphb-functions.php:639
 msgid "Nicaraguan c&oacute;rdoba"
 msgstr ""
 
-#: includes/wphb-functions.php:654
+#: includes/wphb-functions.php:640
 msgid "Norwegian krone"
 msgstr ""
 
-#: includes/wphb-functions.php:655
+#: includes/wphb-functions.php:641
 msgid "Nepalese rupee"
 msgstr ""
 
-#: includes/wphb-functions.php:656
+#: includes/wphb-functions.php:642
 msgid "New Zealand dollar"
 msgstr ""
 
-#: includes/wphb-functions.php:657
+#: includes/wphb-functions.php:643
 msgid "Omani rial"
 msgstr ""
 
-#: includes/wphb-functions.php:658
+#: includes/wphb-functions.php:644
 msgid "Panamanian balboa"
 msgstr ""
 
-#: includes/wphb-functions.php:659
+#: includes/wphb-functions.php:645
 msgid "Sol"
 msgstr ""
 
-#: includes/wphb-functions.php:660
+#: includes/wphb-functions.php:646
 msgid "Papua New Guinean kina"
 msgstr ""
 
-#: includes/wphb-functions.php:661
+#: includes/wphb-functions.php:647
 msgid "Philippine peso"
 msgstr ""
 
-#: includes/wphb-functions.php:662
+#: includes/wphb-functions.php:648
 msgid "Pakistani rupee"
 msgstr ""
 
-#: includes/wphb-functions.php:663
+#: includes/wphb-functions.php:649
 msgid "Polish z&#x142;oty"
 msgstr ""
 
-#: includes/wphb-functions.php:664
+#: includes/wphb-functions.php:650
 msgid "Transnistrian ruble"
 msgstr ""
 
-#: includes/wphb-functions.php:665
+#: includes/wphb-functions.php:651
 msgid "Paraguayan guaran&iacute;"
 msgstr ""
 
-#: includes/wphb-functions.php:666
+#: includes/wphb-functions.php:652
 msgid "Qatari riyal"
 msgstr ""
 
-#: includes/wphb-functions.php:667
+#: includes/wphb-functions.php:653
 msgid "Romanian leu"
 msgstr ""
 
-#: includes/wphb-functions.php:668
+#: includes/wphb-functions.php:654
 msgid "Serbian dinar"
 msgstr ""
 
-#: includes/wphb-functions.php:669
+#: includes/wphb-functions.php:655
 msgid "Russian ruble"
 msgstr ""
 
-#: includes/wphb-functions.php:670
+#: includes/wphb-functions.php:656
 msgid "Rwandan franc"
 msgstr ""
 
-#: includes/wphb-functions.php:671
+#: includes/wphb-functions.php:657
 msgid "Saudi riyal"
 msgstr ""
 
-#: includes/wphb-functions.php:672
+#: includes/wphb-functions.php:658
 msgid "Solomon Islands dollar"
 msgstr ""
 
-#: includes/wphb-functions.php:673
+#: includes/wphb-functions.php:659
 msgid "Seychellois rupee"
 msgstr ""
 
-#: includes/wphb-functions.php:674
+#: includes/wphb-functions.php:660
 msgid "Sudanese pound"
 msgstr ""
 
-#: includes/wphb-functions.php:675
+#: includes/wphb-functions.php:661
 msgid "Swedish krona"
 msgstr ""
 
-#: includes/wphb-functions.php:676
+#: includes/wphb-functions.php:662
 msgid "Singapore dollar"
 msgstr ""
 
-#: includes/wphb-functions.php:677
+#: includes/wphb-functions.php:663
 msgid "Saint Helena pound"
 msgstr ""
 
-#: includes/wphb-functions.php:678
+#: includes/wphb-functions.php:664
 msgid "Sierra Leonean leone"
 msgstr ""
 
-#: includes/wphb-functions.php:679
+#: includes/wphb-functions.php:665
 msgid "Somali shilling"
 msgstr ""
 
-#: includes/wphb-functions.php:680
+#: includes/wphb-functions.php:666
 msgid "Surinamese dollar"
 msgstr ""
 
-#: includes/wphb-functions.php:681
+#: includes/wphb-functions.php:667
 msgid "South Sudanese pound"
 msgstr ""
 
-#: includes/wphb-functions.php:682
+#: includes/wphb-functions.php:668
 msgid "S&atilde;o Tom&eacute; and Pr&iacute;ncipe dobra"
 msgstr ""
 
-#: includes/wphb-functions.php:683
+#: includes/wphb-functions.php:669
 msgid "Syrian pound"
 msgstr ""
 
-#: includes/wphb-functions.php:684
+#: includes/wphb-functions.php:670
 msgid "Swazi lilangeni"
 msgstr ""
 
-#: includes/wphb-functions.php:685
+#: includes/wphb-functions.php:671
 msgid "Thai baht"
 msgstr ""
 
-#: includes/wphb-functions.php:686
+#: includes/wphb-functions.php:672
 msgid "Tajikistani somoni"
 msgstr ""
 
-#: includes/wphb-functions.php:687
+#: includes/wphb-functions.php:673
 msgid "Turkmenistan manat"
 msgstr ""
 
-#: includes/wphb-functions.php:688
+#: includes/wphb-functions.php:674
 msgid "Tunisian dinar"
 msgstr ""
 
-#: includes/wphb-functions.php:689
+#: includes/wphb-functions.php:675
 msgid "Tongan pa&#x2bb;anga"
 msgstr ""
 
-#: includes/wphb-functions.php:690
+#: includes/wphb-functions.php:676
 msgid "Turkish lira"
 msgstr ""
 
-#: includes/wphb-functions.php:691
+#: includes/wphb-functions.php:677
 msgid "Trinidad and Tobago dollar"
 msgstr ""
 
-#: includes/wphb-functions.php:692
+#: includes/wphb-functions.php:678
 msgid "New Taiwan dollar"
 msgstr ""
 
-#: includes/wphb-functions.php:693
+#: includes/wphb-functions.php:679
 msgid "Tanzanian shilling"
 msgstr ""
 
-#: includes/wphb-functions.php:694
+#: includes/wphb-functions.php:680
 msgid "Ukrainian hryvnia"
 msgstr ""
 
-#: includes/wphb-functions.php:695
+#: includes/wphb-functions.php:681
 msgid "Ugandan shilling"
 msgstr ""
 
-#: includes/wphb-functions.php:696
+#: includes/wphb-functions.php:682
 msgid "United States (US) dollar"
 msgstr ""
 
-#: includes/wphb-functions.php:697
+#: includes/wphb-functions.php:683
 msgid "Uruguayan peso"
 msgstr ""
 
-#: includes/wphb-functions.php:698
+#: includes/wphb-functions.php:684
 msgid "Uzbekistani som"
 msgstr ""
 
-#: includes/wphb-functions.php:699
+#: includes/wphb-functions.php:685
 msgid "Venezuelan bol&iacute;var"
 msgstr ""
 
-#: includes/wphb-functions.php:700
+#: includes/wphb-functions.php:686
 msgid "Bol&iacute;var soberano"
 msgstr ""
 
-#: includes/wphb-functions.php:701
+#: includes/wphb-functions.php:687
 msgid "Vietnamese &#x111;&#x1ed3;ng"
 msgstr ""
 
-#: includes/wphb-functions.php:702
+#: includes/wphb-functions.php:688
 msgid "Vanuatu vatu"
 msgstr ""
 
-#: includes/wphb-functions.php:703
+#: includes/wphb-functions.php:689
 msgid "Samoan t&#x101;l&#x101;"
 msgstr ""
 
-#: includes/wphb-functions.php:704
+#: includes/wphb-functions.php:690
 msgid "Central African CFA franc"
 msgstr ""
 
-#: includes/wphb-functions.php:705
+#: includes/wphb-functions.php:691
 msgid "East Caribbean dollar"
 msgstr ""
 
-#: includes/wphb-functions.php:706
+#: includes/wphb-functions.php:692
 msgid "West African CFA franc"
 msgstr ""
 
-#: includes/wphb-functions.php:707
+#: includes/wphb-functions.php:693
 msgid "CFP franc"
 msgstr ""
 
-#: includes/wphb-functions.php:708
+#: includes/wphb-functions.php:694
 msgid "Yemeni rial"
 msgstr ""
 
-#: includes/wphb-functions.php:709
+#: includes/wphb-functions.php:695
 msgid "South African rand"
 msgstr ""
 
-#: includes/wphb-functions.php:710
+#: includes/wphb-functions.php:696
 msgid "Zambian kwacha"
 msgstr ""
 
-#: includes/wphb-functions.php:800
+#: includes/wphb-functions.php:786
 msgid "Sun"
 msgstr ""
 
-#: includes/wphb-functions.php:801
+#: includes/wphb-functions.php:787
 msgid "Mon"
 msgstr ""
 
-#: includes/wphb-functions.php:802
+#: includes/wphb-functions.php:788
 msgid "Tue"
 msgstr ""
 
-#: includes/wphb-functions.php:803
+#: includes/wphb-functions.php:789
 msgid "Wed"
 msgstr ""
 
-#: includes/wphb-functions.php:804
+#: includes/wphb-functions.php:790
 msgid "Thu"
 msgstr ""
 
-#: includes/wphb-functions.php:805
+#: includes/wphb-functions.php:791
 msgid "Fri"
 msgstr ""
 
-#: includes/wphb-functions.php:806
+#: includes/wphb-functions.php:792
 msgid "Sat"
 msgstr ""
 
-#: includes/wphb-functions.php:844
+#: includes/wphb-functions.php:830
 msgid "Mr."
 msgstr ""
 
-#: includes/wphb-functions.php:845
+#: includes/wphb-functions.php:831
 msgid "Ms."
 msgstr ""
 
-#: includes/wphb-functions.php:846
+#: includes/wphb-functions.php:832
 msgid "Mrs."
 msgstr ""
 
-#: includes/wphb-functions.php:847
+#: includes/wphb-functions.php:833
 msgid "Miss."
 msgstr ""
 
-#: includes/wphb-functions.php:848
+#: includes/wphb-functions.php:834
 msgid "Dr."
 msgstr ""
 
-#: includes/wphb-functions.php:849
+#: includes/wphb-functions.php:835
 msgid "Prof."
 msgstr ""
 
-#: includes/wphb-functions.php:942
+#: includes/wphb-functions.php:928
 msgid "Your email address is invalid."
 msgstr ""
 
-#: includes/wphb-functions.php:943
+#: includes/wphb-functions.php:929
 msgid "Please select your payment method."
 msgstr ""
 
-#: includes/wphb-functions.php:944
+#: includes/wphb-functions.php:930
 msgid "Please accept our Terms and Conditions."
 msgstr ""
 
-#: includes/wphb-functions.php:945
+#: includes/wphb-functions.php:931
 msgid "Please select at least one the room."
 msgstr ""
 
-#: includes/wphb-functions.php:946
+#: includes/wphb-functions.php:932
 msgid "Please select your title."
 msgstr ""
 
-#: includes/wphb-functions.php:947
+#: includes/wphb-functions.php:933
 msgid "Please enter your first name."
 msgstr ""
 
-#: includes/wphb-functions.php:948
+#: includes/wphb-functions.php:934
 msgid "Please enter your last name."
 msgstr ""
 
-#: includes/wphb-functions.php:949
+#: includes/wphb-functions.php:935
 msgid "Please enter your address."
 msgstr ""
 
-#: includes/wphb-functions.php:950
+#: includes/wphb-functions.php:936
 msgid "Please enter your city name."
 msgstr ""
 
-#: includes/wphb-functions.php:951
+#: includes/wphb-functions.php:937
 msgid "Please enter your state."
 msgstr ""
 
-#: includes/wphb-functions.php:952
+#: includes/wphb-functions.php:938
 msgid "Please enter your postal code."
 msgstr ""
 
-#: includes/wphb-functions.php:953
+#: includes/wphb-functions.php:939
 msgid "Please select your country."
 msgstr ""
 
-#: includes/wphb-functions.php:954
+#: includes/wphb-functions.php:940
 msgid "Please enter your phone number."
 msgstr ""
 
-#: includes/wphb-functions.php:955
+#: includes/wphb-functions.php:941
 msgid "Your email is invalid."
 msgstr ""
 
-#: includes/wphb-functions.php:956
+#: includes/wphb-functions.php:942
 msgid "Your email does not match with existing email! Ok to create a new customer information."
 msgstr ""
 
-#: includes/wphb-functions.php:957
+#: includes/wphb-functions.php:943
 msgid "Please select check in date."
 msgstr ""
 
-#: includes/wphb-functions.php:958
+#: includes/wphb-functions.php:944
 msgid "Please select check out date."
 msgstr ""
 
-#: includes/wphb-functions.php:959
+#: includes/wphb-functions.php:945
 msgid "Check in date must be greater than the current."
 msgstr ""
 
-#: includes/wphb-functions.php:960
+#: includes/wphb-functions.php:946
 msgid "Check out date must be greater than the check in."
 msgstr ""
 
-#: includes/wphb-functions.php:961
+#: includes/wphb-functions.php:947
 msgid "Please enter coupon code."
 msgstr ""
 
-#: includes/wphb-functions.php:962
+#: includes/wphb-functions.php:948
 msgid "Please select a rating."
 msgstr ""
 
-#: includes/wphb-functions.php:963
+#: includes/wphb-functions.php:949
 msgid "Please enter a review."
 msgstr ""
 
-#: includes/wphb-functions.php:964
+#: includes/wphb-functions.php:950
 msgid "Please enter your author."
 msgstr ""
 
-#: includes/wphb-functions.php:965
+#: includes/wphb-functions.php:951
 msgid "Please enter your email."
 msgstr ""
 
-#: includes/wphb-functions.php:967
+#: includes/wphb-functions.php:953
 msgid "Please select room number."
 msgstr ""
 
-#: includes/wphb-functions.php:968
+#: includes/wphb-functions.php:954
 msgid "Please try again!"
 msgstr ""
 
-#: includes/wphb-functions.php:1047
+#: includes/wphb-functions.php:1033
 msgid "January"
 msgstr ""
 
-#: includes/wphb-functions.php:1048
+#: includes/wphb-functions.php:1034
 msgid "February"
 msgstr ""
 
-#: includes/wphb-functions.php:1049
+#: includes/wphb-functions.php:1035
 msgid "March"
 msgstr ""
 
-#: includes/wphb-functions.php:1050
+#: includes/wphb-functions.php:1036
 msgid "April"
 msgstr ""
 
-#: includes/wphb-functions.php:1051
+#: includes/wphb-functions.php:1037
 msgid "May"
 msgstr ""
 
-#: includes/wphb-functions.php:1052
+#: includes/wphb-functions.php:1038
 msgid "June"
 msgstr ""
 
-#: includes/wphb-functions.php:1053
+#: includes/wphb-functions.php:1039
 msgid "July"
 msgstr ""
 
-#: includes/wphb-functions.php:1054
+#: includes/wphb-functions.php:1040
 msgid "August"
 msgstr ""
 
-#: includes/wphb-functions.php:1055
+#: includes/wphb-functions.php:1041
 msgid "September"
 msgstr ""
 
-#: includes/wphb-functions.php:1056
+#: includes/wphb-functions.php:1042
 msgid "October"
 msgstr ""
 
-#: includes/wphb-functions.php:1057
+#: includes/wphb-functions.php:1043
 msgid "November"
 msgstr ""
 
-#: includes/wphb-functions.php:1058
+#: includes/wphb-functions.php:1044
 msgid "December"
 msgstr ""
 
-#: includes/wphb-functions.php:1070
+#: includes/wphb-functions.php:1056
 msgid "Jan"
 msgstr ""
 
-#: includes/wphb-functions.php:1071
+#: includes/wphb-functions.php:1057
 msgid "Feb"
 msgstr ""
 
-#: includes/wphb-functions.php:1072
+#: includes/wphb-functions.php:1058
 msgid "Mar"
 msgstr ""
 
-#: includes/wphb-functions.php:1073
+#: includes/wphb-functions.php:1059
 msgid "Apr"
 msgstr ""
 
-#: includes/wphb-functions.php:1074
+#: includes/wphb-functions.php:1060
 msgid "Maj"
 msgstr ""
 
-#: includes/wphb-functions.php:1075
+#: includes/wphb-functions.php:1061
 msgid "Jun"
 msgstr ""
 
-#: includes/wphb-functions.php:1076
+#: includes/wphb-functions.php:1062
 msgid "Jul"
 msgstr ""
 
-#: includes/wphb-functions.php:1077
+#: includes/wphb-functions.php:1063
 msgid "Aug"
 msgstr ""
 
-#: includes/wphb-functions.php:1078
+#: includes/wphb-functions.php:1064
 msgid "Sep"
 msgstr ""
 
-#: includes/wphb-functions.php:1079
+#: includes/wphb-functions.php:1065
 msgid "Oct"
 msgstr ""
 
-#: includes/wphb-functions.php:1080
+#: includes/wphb-functions.php:1066
 msgid "Nov"
 msgstr ""
 
-#: includes/wphb-functions.php:1081
+#: includes/wphb-functions.php:1067
 msgid "Dec"
 msgstr ""
 
-#: includes/wphb-functions.php:1093
+#: includes/wphb-functions.php:1079
 msgid "Sunday"
 msgstr ""
 
-#: includes/wphb-functions.php:1094
+#: includes/wphb-functions.php:1080
 msgid "Monday"
 msgstr ""
 
-#: includes/wphb-functions.php:1095
+#: includes/wphb-functions.php:1081
 msgid "Tuesday"
 msgstr ""
 
-#: includes/wphb-functions.php:1096
+#: includes/wphb-functions.php:1082
 msgid "Wednesday"
 msgstr ""
 
-#: includes/wphb-functions.php:1097
+#: includes/wphb-functions.php:1083
 msgid "Thursday"
 msgstr ""
 
-#: includes/wphb-functions.php:1098
+#: includes/wphb-functions.php:1084
 msgid "Friday"
 msgstr ""
 
-#: includes/wphb-functions.php:1099
+#: includes/wphb-functions.php:1085
 msgid "Saturday"
 msgstr ""
 
-#: includes/wphb-functions.php:1117
+#: includes/wphb-functions.php:1103
 msgid "Su"
 msgstr ""
 
-#: includes/wphb-functions.php:1118
+#: includes/wphb-functions.php:1104
 msgid "Mo"
 msgstr ""
 
-#: includes/wphb-functions.php:1119
+#: includes/wphb-functions.php:1105
 msgid "Tu"
 msgstr ""
 
-#: includes/wphb-functions.php:1120
+#: includes/wphb-functions.php:1106
 msgid "We"
 msgstr ""
 
-#: includes/wphb-functions.php:1121
+#: includes/wphb-functions.php:1107
 msgid "Th"
 msgstr ""
 
-#: includes/wphb-functions.php:1122
+#: includes/wphb-functions.php:1108
 msgid "Fr"
 msgstr ""
 
-#: includes/wphb-functions.php:1123
+#: includes/wphb-functions.php:1109
 msgid "Sa"
 msgstr ""
 
-#: includes/wphb-functions.php:2153
+#: includes/wphb-functions.php:2139
 msgid "Afghanistan"
 msgstr ""
 
-#: includes/wphb-functions.php:2154
+#: includes/wphb-functions.php:2140
 msgid "&#197;land Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:2155
+#: includes/wphb-functions.php:2141
 msgid "Albania"
 msgstr ""
 
-#: includes/wphb-functions.php:2156
+#: includes/wphb-functions.php:2142
 msgid "Algeria"
 msgstr ""
 
-#: includes/wphb-functions.php:2157
+#: includes/wphb-functions.php:2143
 msgid "Andorra"
 msgstr ""
 
-#: includes/wphb-functions.php:2158
+#: includes/wphb-functions.php:2144
 msgid "Angola"
 msgstr ""
 
-#: includes/wphb-functions.php:2159
+#: includes/wphb-functions.php:2145
 msgid "Anguilla"
 msgstr ""
 
-#: includes/wphb-functions.php:2160
+#: includes/wphb-functions.php:2146
 msgid "Antarctica"
 msgstr ""
 
-#: includes/wphb-functions.php:2161
+#: includes/wphb-functions.php:2147
 msgid "Antigua and Barbuda"
 msgstr ""
 
-#: includes/wphb-functions.php:2162
+#: includes/wphb-functions.php:2148
 msgid "Argentina"
 msgstr ""
 
-#: includes/wphb-functions.php:2163
+#: includes/wphb-functions.php:2149
 msgid "Armenia"
 msgstr ""
 
-#: includes/wphb-functions.php:2164
+#: includes/wphb-functions.php:2150
 msgid "Aruba"
 msgstr ""
 
-#: includes/wphb-functions.php:2165
+#: includes/wphb-functions.php:2151
 msgid "Australia"
 msgstr ""
 
-#: includes/wphb-functions.php:2166
+#: includes/wphb-functions.php:2152
 msgid "Austria"
 msgstr ""
 
-#: includes/wphb-functions.php:2167
+#: includes/wphb-functions.php:2153
 msgid "Azerbaijan"
 msgstr ""
 
-#: includes/wphb-functions.php:2168
+#: includes/wphb-functions.php:2154
 msgid "Bahamas"
 msgstr ""
 
-#: includes/wphb-functions.php:2169
+#: includes/wphb-functions.php:2155
 msgid "Bahrain"
 msgstr ""
 
-#: includes/wphb-functions.php:2170
+#: includes/wphb-functions.php:2156
 msgid "Bangladesh"
 msgstr ""
 
-#: includes/wphb-functions.php:2171
+#: includes/wphb-functions.php:2157
 msgid "Barbados"
 msgstr ""
 
-#: includes/wphb-functions.php:2172
+#: includes/wphb-functions.php:2158
 msgid "Belarus"
 msgstr ""
 
-#: includes/wphb-functions.php:2173
+#: includes/wphb-functions.php:2159
 msgid "Belgium"
 msgstr ""
 
-#: includes/wphb-functions.php:2174
+#: includes/wphb-functions.php:2160
 msgid "Belau"
 msgstr ""
 
-#: includes/wphb-functions.php:2175
+#: includes/wphb-functions.php:2161
 msgid "Belize"
 msgstr ""
 
-#: includes/wphb-functions.php:2176
+#: includes/wphb-functions.php:2162
 msgid "Benin"
 msgstr ""
 
-#: includes/wphb-functions.php:2177
+#: includes/wphb-functions.php:2163
 msgid "Bermuda"
 msgstr ""
 
-#: includes/wphb-functions.php:2178
+#: includes/wphb-functions.php:2164
 msgid "Bhutan"
 msgstr ""
 
-#: includes/wphb-functions.php:2179
+#: includes/wphb-functions.php:2165
 msgid "Bolivia"
 msgstr ""
 
-#: includes/wphb-functions.php:2180
+#: includes/wphb-functions.php:2166
 msgid "Bonaire, Saint Eustatius and Saba"
 msgstr ""
 
-#: includes/wphb-functions.php:2181
+#: includes/wphb-functions.php:2167
 msgid "Bosnia and Herzegovina"
 msgstr ""
 
-#: includes/wphb-functions.php:2182
+#: includes/wphb-functions.php:2168
 msgid "Botswana"
 msgstr ""
 
-#: includes/wphb-functions.php:2183
+#: includes/wphb-functions.php:2169
 msgid "Bouvet Island"
 msgstr ""
 
-#: includes/wphb-functions.php:2184
+#: includes/wphb-functions.php:2170
 msgid "Brazil"
 msgstr ""
 
-#: includes/wphb-functions.php:2185
+#: includes/wphb-functions.php:2171
 msgid "British Indian Ocean Territory"
 msgstr ""
 
-#: includes/wphb-functions.php:2186
+#: includes/wphb-functions.php:2172
 msgid "British Virgin Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:2187
+#: includes/wphb-functions.php:2173
 msgid "Brunei"
 msgstr ""
 
-#: includes/wphb-functions.php:2188
+#: includes/wphb-functions.php:2174
 msgid "Bulgaria"
 msgstr ""
 
-#: includes/wphb-functions.php:2189
+#: includes/wphb-functions.php:2175
 msgid "Burkina Faso"
 msgstr ""
 
-#: includes/wphb-functions.php:2190
+#: includes/wphb-functions.php:2176
 msgid "Burundi"
 msgstr ""
 
-#: includes/wphb-functions.php:2191
+#: includes/wphb-functions.php:2177
 msgid "Cambodia"
 msgstr ""
 
-#: includes/wphb-functions.php:2192
+#: includes/wphb-functions.php:2178
 msgid "Cameroon"
 msgstr ""
 
-#: includes/wphb-functions.php:2193
+#: includes/wphb-functions.php:2179
 msgid "Canada"
 msgstr ""
 
-#: includes/wphb-functions.php:2194
+#: includes/wphb-functions.php:2180
 msgid "Cape Verde"
 msgstr ""
 
-#: includes/wphb-functions.php:2195
+#: includes/wphb-functions.php:2181
 msgid "Cayman Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:2196
+#: includes/wphb-functions.php:2182
 msgid "Central African Republic"
 msgstr ""
 
-#: includes/wphb-functions.php:2197
+#: includes/wphb-functions.php:2183
 msgid "Chad"
 msgstr ""
 
-#: includes/wphb-functions.php:2198
+#: includes/wphb-functions.php:2184
 msgid "Chile"
 msgstr ""
 
-#: includes/wphb-functions.php:2199
+#: includes/wphb-functions.php:2185
 msgid "China"
 msgstr ""
 
-#: includes/wphb-functions.php:2200
+#: includes/wphb-functions.php:2186
 msgid "Christmas Island"
 msgstr ""
 
-#: includes/wphb-functions.php:2201
+#: includes/wphb-functions.php:2187
 msgid "Cocos (Keeling) Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:2202
+#: includes/wphb-functions.php:2188
 msgid "Colombia"
 msgstr ""
 
-#: includes/wphb-functions.php:2203
+#: includes/wphb-functions.php:2189
 msgid "Comoros"
 msgstr ""
 
-#: includes/wphb-functions.php:2204
+#: includes/wphb-functions.php:2190
 msgid "Congo (Brazzaville)"
 msgstr ""
 
-#: includes/wphb-functions.php:2205
+#: includes/wphb-functions.php:2191
 msgid "Congo (Kinshasa)"
 msgstr ""
 
-#: includes/wphb-functions.php:2206
+#: includes/wphb-functions.php:2192
 msgid "Cook Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:2207
+#: includes/wphb-functions.php:2193
 msgid "Costa Rica"
 msgstr ""
 
-#: includes/wphb-functions.php:2208
+#: includes/wphb-functions.php:2194
 msgid "Croatia"
 msgstr ""
 
-#: includes/wphb-functions.php:2209
+#: includes/wphb-functions.php:2195
 msgid "Cuba"
 msgstr ""
 
-#: includes/wphb-functions.php:2210
+#: includes/wphb-functions.php:2196
 msgid "Cura&Ccedil;ao"
 msgstr ""
 
-#: includes/wphb-functions.php:2211
+#: includes/wphb-functions.php:2197
 msgid "Cyprus"
 msgstr ""
 
-#: includes/wphb-functions.php:2212
+#: includes/wphb-functions.php:2198
 msgid "Czech Republic"
 msgstr ""
 
-#: includes/wphb-functions.php:2213
+#: includes/wphb-functions.php:2199
 msgid "Denmark"
 msgstr ""
 
-#: includes/wphb-functions.php:2214
+#: includes/wphb-functions.php:2200
 msgid "Djibouti"
 msgstr ""
 
-#: includes/wphb-functions.php:2215
+#: includes/wphb-functions.php:2201
 msgid "Dominica"
 msgstr ""
 
-#: includes/wphb-functions.php:2216
+#: includes/wphb-functions.php:2202
 msgid "Dominican Republic"
 msgstr ""
 
-#: includes/wphb-functions.php:2217
+#: includes/wphb-functions.php:2203
 msgid "Ecuador"
 msgstr ""
 
-#: includes/wphb-functions.php:2218
+#: includes/wphb-functions.php:2204
 msgid "Egypt"
 msgstr ""
 
-#: includes/wphb-functions.php:2219
+#: includes/wphb-functions.php:2205
 msgid "El Salvador"
 msgstr ""
 
-#: includes/wphb-functions.php:2220
+#: includes/wphb-functions.php:2206
 msgid "Equatorial Guinea"
 msgstr ""
 
-#: includes/wphb-functions.php:2221
+#: includes/wphb-functions.php:2207
 msgid "Eritrea"
 msgstr ""
 
-#: includes/wphb-functions.php:2222
+#: includes/wphb-functions.php:2208
 msgid "Estonia"
 msgstr ""
 
-#: includes/wphb-functions.php:2223
+#: includes/wphb-functions.php:2209
 msgid "Ethiopia"
 msgstr ""
 
-#: includes/wphb-functions.php:2224
+#: includes/wphb-functions.php:2210
 msgid "Falkland Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:2225
+#: includes/wphb-functions.php:2211
 msgid "Faroe Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:2226
+#: includes/wphb-functions.php:2212
 msgid "Fiji"
 msgstr ""
 
-#: includes/wphb-functions.php:2227
+#: includes/wphb-functions.php:2213
 msgid "Finland"
 msgstr ""
 
-#: includes/wphb-functions.php:2228
+#: includes/wphb-functions.php:2214
 msgid "France"
 msgstr ""
 
-#: includes/wphb-functions.php:2229
+#: includes/wphb-functions.php:2215
 msgid "French Guiana"
 msgstr ""
 
-#: includes/wphb-functions.php:2230
+#: includes/wphb-functions.php:2216
 msgid "French Polynesia"
 msgstr ""
 
-#: includes/wphb-functions.php:2231
+#: includes/wphb-functions.php:2217
 msgid "French Southern Territories"
 msgstr ""
 
-#: includes/wphb-functions.php:2232
+#: includes/wphb-functions.php:2218
 msgid "Gabon"
 msgstr ""
 
-#: includes/wphb-functions.php:2233
+#: includes/wphb-functions.php:2219
 msgid "Gambia"
 msgstr ""
 
-#: includes/wphb-functions.php:2234
+#: includes/wphb-functions.php:2220
 msgid "Georgia"
 msgstr ""
 
-#: includes/wphb-functions.php:2235
+#: includes/wphb-functions.php:2221
 msgid "Germany"
 msgstr ""
 
-#: includes/wphb-functions.php:2236
+#: includes/wphb-functions.php:2222
 msgid "Ghana"
 msgstr ""
 
-#: includes/wphb-functions.php:2237
+#: includes/wphb-functions.php:2223
 msgid "Gibraltar"
 msgstr ""
 
-#: includes/wphb-functions.php:2238
+#: includes/wphb-functions.php:2224
 msgid "Greece"
 msgstr ""
 
-#: includes/wphb-functions.php:2239
+#: includes/wphb-functions.php:2225
 msgid "Greenland"
 msgstr ""
 
-#: includes/wphb-functions.php:2240
+#: includes/wphb-functions.php:2226
 msgid "Grenada"
 msgstr ""
 
-#: includes/wphb-functions.php:2241
+#: includes/wphb-functions.php:2227
 msgid "Guadeloupe"
 msgstr ""
 
-#: includes/wphb-functions.php:2242
+#: includes/wphb-functions.php:2228
 msgid "Guatemala"
 msgstr ""
 
-#: includes/wphb-functions.php:2243
+#: includes/wphb-functions.php:2229
 msgid "Guernsey"
 msgstr ""
 
-#: includes/wphb-functions.php:2244
+#: includes/wphb-functions.php:2230
 msgid "Guinea"
 msgstr ""
 
-#: includes/wphb-functions.php:2245
+#: includes/wphb-functions.php:2231
 msgid "Guinea-Bissau"
 msgstr ""
 
-#: includes/wphb-functions.php:2246
+#: includes/wphb-functions.php:2232
 msgid "Guyana"
 msgstr ""
 
-#: includes/wphb-functions.php:2247
+#: includes/wphb-functions.php:2233
 msgid "Haiti"
 msgstr ""
 
-#: includes/wphb-functions.php:2248
+#: includes/wphb-functions.php:2234
 msgid "Heard Island and McDonald Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:2249
+#: includes/wphb-functions.php:2235
 msgid "Honduras"
 msgstr ""
 
-#: includes/wphb-functions.php:2250
+#: includes/wphb-functions.php:2236
 msgid "Hong Kong"
 msgstr ""
 
-#: includes/wphb-functions.php:2251
+#: includes/wphb-functions.php:2237
 msgid "Hungary"
 msgstr ""
 
-#: includes/wphb-functions.php:2252
+#: includes/wphb-functions.php:2238
 msgid "Iceland"
 msgstr ""
 
-#: includes/wphb-functions.php:2253
+#: includes/wphb-functions.php:2239
 msgid "India"
 msgstr ""
 
-#: includes/wphb-functions.php:2254
+#: includes/wphb-functions.php:2240
 msgid "Indonesia"
 msgstr ""
 
-#: includes/wphb-functions.php:2255
+#: includes/wphb-functions.php:2241
 msgid "Iran"
 msgstr ""
 
-#: includes/wphb-functions.php:2256
+#: includes/wphb-functions.php:2242
 msgid "Iraq"
 msgstr ""
 
-#: includes/wphb-functions.php:2257
+#: includes/wphb-functions.php:2243
 msgid "Republic of Ireland"
 msgstr ""
 
-#: includes/wphb-functions.php:2258
+#: includes/wphb-functions.php:2244
 msgid "Isle of Man"
 msgstr ""
 
-#: includes/wphb-functions.php:2259
+#: includes/wphb-functions.php:2245
 msgid "Israel"
 msgstr ""
 
-#: includes/wphb-functions.php:2260
+#: includes/wphb-functions.php:2246
 msgid "Italy"
 msgstr ""
 
-#: includes/wphb-functions.php:2261
+#: includes/wphb-functions.php:2247
 msgid "Ivory Coast"
 msgstr ""
 
-#: includes/wphb-functions.php:2262
+#: includes/wphb-functions.php:2248
 msgid "Jamaica"
 msgstr ""
 
-#: includes/wphb-functions.php:2263
+#: includes/wphb-functions.php:2249
 msgid "Japan"
 msgstr ""
 
-#: includes/wphb-functions.php:2264
+#: includes/wphb-functions.php:2250
 msgid "Jersey"
 msgstr ""
 
-#: includes/wphb-functions.php:2265
+#: includes/wphb-functions.php:2251
 msgid "Jordan"
 msgstr ""
 
-#: includes/wphb-functions.php:2266
+#: includes/wphb-functions.php:2252
 msgid "Kazakhstan"
 msgstr ""
 
-#: includes/wphb-functions.php:2267
+#: includes/wphb-functions.php:2253
 msgid "Kenya"
 msgstr ""
 
-#: includes/wphb-functions.php:2268
+#: includes/wphb-functions.php:2254
 msgid "Kiribati"
 msgstr ""
 
-#: includes/wphb-functions.php:2269
+#: includes/wphb-functions.php:2255
 msgid "Kuwait"
 msgstr ""
 
-#: includes/wphb-functions.php:2270
+#: includes/wphb-functions.php:2256
 msgid "Kyrgyzstan"
 msgstr ""
 
-#: includes/wphb-functions.php:2271
+#: includes/wphb-functions.php:2257
 msgid "Laos"
 msgstr ""
 
-#: includes/wphb-functions.php:2272
+#: includes/wphb-functions.php:2258
 msgid "Latvia"
 msgstr ""
 
-#: includes/wphb-functions.php:2273
+#: includes/wphb-functions.php:2259
 msgid "Lebanon"
 msgstr ""
 
-#: includes/wphb-functions.php:2274
+#: includes/wphb-functions.php:2260
 msgid "Lesotho"
 msgstr ""
 
-#: includes/wphb-functions.php:2275
+#: includes/wphb-functions.php:2261
 msgid "Liberia"
 msgstr ""
 
-#: includes/wphb-functions.php:2276
+#: includes/wphb-functions.php:2262
 msgid "Libya"
 msgstr ""
 
-#: includes/wphb-functions.php:2277
+#: includes/wphb-functions.php:2263
 msgid "Liechtenstein"
 msgstr ""
 
-#: includes/wphb-functions.php:2278
+#: includes/wphb-functions.php:2264
 msgid "Lithuania"
 msgstr ""
 
-#: includes/wphb-functions.php:2279
+#: includes/wphb-functions.php:2265
 msgid "Luxembourg"
 msgstr ""
 
-#: includes/wphb-functions.php:2280
+#: includes/wphb-functions.php:2266
 msgid "Macao S.A.R., China"
 msgstr ""
 
-#: includes/wphb-functions.php:2281
+#: includes/wphb-functions.php:2267
 msgid "Macedonia"
 msgstr ""
 
-#: includes/wphb-functions.php:2282
+#: includes/wphb-functions.php:2268
 msgid "Madagascar"
 msgstr ""
 
-#: includes/wphb-functions.php:2283
+#: includes/wphb-functions.php:2269
 msgid "Malawi"
 msgstr ""
 
-#: includes/wphb-functions.php:2284
+#: includes/wphb-functions.php:2270
 msgid "Malaysia"
 msgstr ""
 
-#: includes/wphb-functions.php:2285
+#: includes/wphb-functions.php:2271
 msgid "Maldives"
 msgstr ""
 
-#: includes/wphb-functions.php:2286
+#: includes/wphb-functions.php:2272
 msgid "Mali"
 msgstr ""
 
-#: includes/wphb-functions.php:2287
+#: includes/wphb-functions.php:2273
 msgid "Malta"
 msgstr ""
 
-#: includes/wphb-functions.php:2288
+#: includes/wphb-functions.php:2274
 msgid "Marshall Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:2289
+#: includes/wphb-functions.php:2275
 msgid "Martinique"
 msgstr ""
 
-#: includes/wphb-functions.php:2290
+#: includes/wphb-functions.php:2276
 msgid "Mauritania"
 msgstr ""
 
-#: includes/wphb-functions.php:2291
+#: includes/wphb-functions.php:2277
 msgid "Mauritius"
 msgstr ""
 
-#: includes/wphb-functions.php:2292
+#: includes/wphb-functions.php:2278
 msgid "Mayotte"
 msgstr ""
 
-#: includes/wphb-functions.php:2293
+#: includes/wphb-functions.php:2279
 msgid "Mexico"
 msgstr ""
 
-#: includes/wphb-functions.php:2294
+#: includes/wphb-functions.php:2280
 msgid "Micronesia"
 msgstr ""
 
-#: includes/wphb-functions.php:2295
+#: includes/wphb-functions.php:2281
 msgid "Moldova"
 msgstr ""
 
-#: includes/wphb-functions.php:2296
+#: includes/wphb-functions.php:2282
 msgid "Monaco"
 msgstr ""
 
-#: includes/wphb-functions.php:2297
+#: includes/wphb-functions.php:2283
 msgid "Mongolia"
 msgstr ""
 
-#: includes/wphb-functions.php:2298
+#: includes/wphb-functions.php:2284
 msgid "Montenegro"
 msgstr ""
 
-#: includes/wphb-functions.php:2299
+#: includes/wphb-functions.php:2285
 msgid "Montserrat"
 msgstr ""
 
-#: includes/wphb-functions.php:2300
+#: includes/wphb-functions.php:2286
 msgid "Morocco"
 msgstr ""
 
-#: includes/wphb-functions.php:2301
+#: includes/wphb-functions.php:2287
 msgid "Mozambique"
 msgstr ""
 
-#: includes/wphb-functions.php:2302
+#: includes/wphb-functions.php:2288
 msgid "Myanmar"
 msgstr ""
 
-#: includes/wphb-functions.php:2303
+#: includes/wphb-functions.php:2289
 msgid "Namibia"
 msgstr ""
 
-#: includes/wphb-functions.php:2304
+#: includes/wphb-functions.php:2290
 msgid "Nauru"
 msgstr ""
 
-#: includes/wphb-functions.php:2305
+#: includes/wphb-functions.php:2291
 msgid "Nepal"
 msgstr ""
 
-#: includes/wphb-functions.php:2306
+#: includes/wphb-functions.php:2292
 msgid "Netherlands"
 msgstr ""
 
-#: includes/wphb-functions.php:2307
+#: includes/wphb-functions.php:2293
 msgid "Netherlands Antilles"
 msgstr ""
 
-#: includes/wphb-functions.php:2308
+#: includes/wphb-functions.php:2294
 msgid "New Caledonia"
 msgstr ""
 
-#: includes/wphb-functions.php:2309
+#: includes/wphb-functions.php:2295
 msgid "New Zealand"
 msgstr ""
 
-#: includes/wphb-functions.php:2310
+#: includes/wphb-functions.php:2296
 msgid "Nicaragua"
 msgstr ""
 
-#: includes/wphb-functions.php:2311
+#: includes/wphb-functions.php:2297
 msgid "Niger"
 msgstr ""
 
-#: includes/wphb-functions.php:2312
+#: includes/wphb-functions.php:2298
 msgid "Nigeria"
 msgstr ""
 
-#: includes/wphb-functions.php:2313
+#: includes/wphb-functions.php:2299
 msgid "Niue"
 msgstr ""
 
-#: includes/wphb-functions.php:2314
+#: includes/wphb-functions.php:2300
 msgid "Norfolk Island"
 msgstr ""
 
-#: includes/wphb-functions.php:2315
+#: includes/wphb-functions.php:2301
 msgid "North Korea"
 msgstr ""
 
-#: includes/wphb-functions.php:2316
+#: includes/wphb-functions.php:2302
 msgid "Norway"
 msgstr ""
 
-#: includes/wphb-functions.php:2317
+#: includes/wphb-functions.php:2303
 msgid "Oman"
 msgstr ""
 
-#: includes/wphb-functions.php:2318
+#: includes/wphb-functions.php:2304
 msgid "Pakistan"
 msgstr ""
 
-#: includes/wphb-functions.php:2319
+#: includes/wphb-functions.php:2305
 msgid "Palestinian Territory"
 msgstr ""
 
-#: includes/wphb-functions.php:2320
+#: includes/wphb-functions.php:2306
 msgid "Panama"
 msgstr ""
 
-#: includes/wphb-functions.php:2321
+#: includes/wphb-functions.php:2307
 msgid "Papua New Guinea"
 msgstr ""
 
-#: includes/wphb-functions.php:2322
+#: includes/wphb-functions.php:2308
 msgid "Paraguay"
 msgstr ""
 
-#: includes/wphb-functions.php:2323
+#: includes/wphb-functions.php:2309
 msgid "Peru"
 msgstr ""
 
-#: includes/wphb-functions.php:2324
+#: includes/wphb-functions.php:2310
 msgid "Philippines"
 msgstr ""
 
-#: includes/wphb-functions.php:2325
+#: includes/wphb-functions.php:2311
 msgid "Pitcairn"
 msgstr ""
 
-#: includes/wphb-functions.php:2326
+#: includes/wphb-functions.php:2312
 msgid "Poland"
 msgstr ""
 
-#: includes/wphb-functions.php:2327
+#: includes/wphb-functions.php:2313
 msgid "Portugal"
 msgstr ""
 
-#: includes/wphb-functions.php:2328
+#: includes/wphb-functions.php:2314
 msgid "Qatar"
 msgstr ""
 
-#: includes/wphb-functions.php:2329
+#: includes/wphb-functions.php:2315
 msgid "Reunion"
 msgstr ""
 
-#: includes/wphb-functions.php:2330
+#: includes/wphb-functions.php:2316
 msgid "Romania"
 msgstr ""
 
-#: includes/wphb-functions.php:2331
+#: includes/wphb-functions.php:2317
 msgid "Russia"
 msgstr ""
 
-#: includes/wphb-functions.php:2332
+#: includes/wphb-functions.php:2318
 msgid "Rwanda"
 msgstr ""
 
-#: includes/wphb-functions.php:2333
+#: includes/wphb-functions.php:2319
 msgid "Saint Barth&eacute;lemy"
 msgstr ""
 
-#: includes/wphb-functions.php:2334
+#: includes/wphb-functions.php:2320
 msgid "Saint Helena"
 msgstr ""
 
-#: includes/wphb-functions.php:2335
+#: includes/wphb-functions.php:2321
 msgid "Saint Kitts and Nevis"
 msgstr ""
 
-#: includes/wphb-functions.php:2336
+#: includes/wphb-functions.php:2322
 msgid "Saint Lucia"
 msgstr ""
 
-#: includes/wphb-functions.php:2337
+#: includes/wphb-functions.php:2323
 msgid "Saint Martin (French part)"
 msgstr ""
 
-#: includes/wphb-functions.php:2338
+#: includes/wphb-functions.php:2324
 msgid "Saint Martin (Dutch part)"
 msgstr ""
 
-#: includes/wphb-functions.php:2339
+#: includes/wphb-functions.php:2325
 msgid "Saint Pierre and Miquelon"
 msgstr ""
 
-#: includes/wphb-functions.php:2340
+#: includes/wphb-functions.php:2326
 msgid "Saint Vincent and the Grenadines"
 msgstr ""
 
-#: includes/wphb-functions.php:2341
+#: includes/wphb-functions.php:2327
 msgid "San Marino"
 msgstr ""
 
-#: includes/wphb-functions.php:2342
+#: includes/wphb-functions.php:2328
 msgid "S&atilde;o Tom&eacute; and Pr&iacute;ncipe"
 msgstr ""
 
-#: includes/wphb-functions.php:2343
+#: includes/wphb-functions.php:2329
 msgid "Saudi Arabia"
 msgstr ""
 
-#: includes/wphb-functions.php:2344
+#: includes/wphb-functions.php:2330
 msgid "Senegal"
 msgstr ""
 
-#: includes/wphb-functions.php:2345
+#: includes/wphb-functions.php:2331
 msgid "Serbia"
 msgstr ""
 
-#: includes/wphb-functions.php:2346
+#: includes/wphb-functions.php:2332
 msgid "Seychelles"
 msgstr ""
 
-#: includes/wphb-functions.php:2347
+#: includes/wphb-functions.php:2333
 msgid "Sierra Leone"
 msgstr ""
 
-#: includes/wphb-functions.php:2348
+#: includes/wphb-functions.php:2334
 msgid "Singapore"
 msgstr ""
 
-#: includes/wphb-functions.php:2349
+#: includes/wphb-functions.php:2335
 msgid "Slovakia"
 msgstr ""
 
-#: includes/wphb-functions.php:2350
+#: includes/wphb-functions.php:2336
 msgid "Slovenia"
 msgstr ""
 
-#: includes/wphb-functions.php:2351
+#: includes/wphb-functions.php:2337
 msgid "Solomon Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:2352
+#: includes/wphb-functions.php:2338
 msgid "Somalia"
 msgstr ""
 
-#: includes/wphb-functions.php:2353
+#: includes/wphb-functions.php:2339
 msgid "South Africa"
 msgstr ""
 
-#: includes/wphb-functions.php:2354
+#: includes/wphb-functions.php:2340
 msgid "South Georgia/Sandwich Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:2355
+#: includes/wphb-functions.php:2341
 msgid "South Korea"
 msgstr ""
 
-#: includes/wphb-functions.php:2356
+#: includes/wphb-functions.php:2342
 msgid "South Sudan"
 msgstr ""
 
-#: includes/wphb-functions.php:2357
+#: includes/wphb-functions.php:2343
 msgid "Spain"
 msgstr ""
 
-#: includes/wphb-functions.php:2358
+#: includes/wphb-functions.php:2344
 msgid "Sri Lanka"
 msgstr ""
 
-#: includes/wphb-functions.php:2359
+#: includes/wphb-functions.php:2345
 msgid "Sudan"
 msgstr ""
 
-#: includes/wphb-functions.php:2360
+#: includes/wphb-functions.php:2346
 msgid "Suriname"
 msgstr ""
 
-#: includes/wphb-functions.php:2361
+#: includes/wphb-functions.php:2347
 msgid "Svalbard and Jan Mayen"
 msgstr ""
 
-#: includes/wphb-functions.php:2362
+#: includes/wphb-functions.php:2348
 msgid "Swaziland"
 msgstr ""
 
-#: includes/wphb-functions.php:2363
+#: includes/wphb-functions.php:2349
 msgid "Sweden"
 msgstr ""
 
-#: includes/wphb-functions.php:2364
+#: includes/wphb-functions.php:2350
 msgid "Switzerland"
 msgstr ""
 
-#: includes/wphb-functions.php:2365
+#: includes/wphb-functions.php:2351
 msgid "Syria"
 msgstr ""
 
-#: includes/wphb-functions.php:2366
+#: includes/wphb-functions.php:2352
 msgid "Taiwan"
 msgstr ""
 
-#: includes/wphb-functions.php:2367
+#: includes/wphb-functions.php:2353
 msgid "Tajikistan"
 msgstr ""
 
-#: includes/wphb-functions.php:2368
+#: includes/wphb-functions.php:2354
 msgid "Tanzania"
 msgstr ""
 
-#: includes/wphb-functions.php:2369
+#: includes/wphb-functions.php:2355
 msgid "Thailand"
 msgstr ""
 
-#: includes/wphb-functions.php:2370
+#: includes/wphb-functions.php:2356
 msgid "Timor-Leste"
 msgstr ""
 
-#: includes/wphb-functions.php:2371
+#: includes/wphb-functions.php:2357
 msgid "Togo"
 msgstr ""
 
-#: includes/wphb-functions.php:2372
+#: includes/wphb-functions.php:2358
 msgid "Tokelau"
 msgstr ""
 
-#: includes/wphb-functions.php:2373
+#: includes/wphb-functions.php:2359
 msgid "Tonga"
 msgstr ""
 
-#: includes/wphb-functions.php:2374
+#: includes/wphb-functions.php:2360
 msgid "Trinidad and Tobago"
 msgstr ""
 
-#: includes/wphb-functions.php:2375
+#: includes/wphb-functions.php:2361
 msgid "Tunisia"
 msgstr ""
 
-#: includes/wphb-functions.php:2376
+#: includes/wphb-functions.php:2362
 msgid "Turkey"
 msgstr ""
 
-#: includes/wphb-functions.php:2377
+#: includes/wphb-functions.php:2363
 msgid "Turkmenistan"
 msgstr ""
 
-#: includes/wphb-functions.php:2378
+#: includes/wphb-functions.php:2364
 msgid "Turks and Caicos Islands"
 msgstr ""
 
-#: includes/wphb-functions.php:2379
+#: includes/wphb-functions.php:2365
 msgid "Tuvalu"
 msgstr ""
 
-#: includes/wphb-functions.php:2380
+#: includes/wphb-functions.php:2366
 msgid "Uganda"
 msgstr ""
 
-#: includes/wphb-functions.php:2381
+#: includes/wphb-functions.php:2367
 msgid "Ukraine"
 msgstr ""
 
-#: includes/wphb-functions.php:2382
+#: includes/wphb-functions.php:2368
 msgid "United Arab Emirates"
 msgstr ""
 
-#: includes/wphb-functions.php:2383
+#: includes/wphb-functions.php:2369
 msgid "United Kingdom (UK)"
 msgstr ""
 
-#: includes/wphb-functions.php:2384
+#: includes/wphb-functions.php:2370
 msgid "United States (US)"
 msgstr ""
 
-#: includes/wphb-functions.php:2385
+#: includes/wphb-functions.php:2371
 msgid "Uruguay"
 msgstr ""
 
-#: includes/wphb-functions.php:2386
+#: includes/wphb-functions.php:2372
 msgid "Uzbekistan"
 msgstr ""
 
-#: includes/wphb-functions.php:2387
+#: includes/wphb-functions.php:2373
 msgid "Vanuatu"
 msgstr ""
 
-#: includes/wphb-functions.php:2388
+#: includes/wphb-functions.php:2374
 msgid "Vatican"
 msgstr ""
 
-#: includes/wphb-functions.php:2389
+#: includes/wphb-functions.php:2375
 msgid "Venezuela"
 msgstr ""
 
-#: includes/wphb-functions.php:2390
+#: includes/wphb-functions.php:2376
 msgid "Vietnam"
 msgstr ""
 
-#: includes/wphb-functions.php:2391
+#: includes/wphb-functions.php:2377
 msgid "Wallis and Futuna"
 msgstr ""
 
-#: includes/wphb-functions.php:2392
+#: includes/wphb-functions.php:2378
 msgid "Western Sahara"
 msgstr ""
 
-#: includes/wphb-functions.php:2393
+#: includes/wphb-functions.php:2379
 msgid "Western Samoa"
 msgstr ""
 
-#: includes/wphb-functions.php:2394
+#: includes/wphb-functions.php:2380
 msgid "Yemen"
 msgstr ""
 
-#: includes/wphb-functions.php:2395
+#: includes/wphb-functions.php:2381
 msgid "Zambia"
 msgstr ""
 
-#: includes/wphb-functions.php:2396
+#: includes/wphb-functions.php:2382
 msgid "Zimbabwe"
 msgstr ""
 
-#: includes/wphb-functions.php:2518
+#: includes/wphb-functions.php:2504
 #, php-format
 msgid "%1$s"
 msgstr ""
 
-#: includes/wphb-functions.php:2726
+#: includes/wphb-functions.php:2712
 msgid "Select a page&hellip;"
 msgstr ""
 
-#: includes/wphb-functions.php:2896
+#: includes/wphb-functions.php:2882
 msgid " Redirect to page after book"
 msgstr ""
 
-#: includes/wphb-functions.php:2906
+#: includes/wphb-functions.php:2892
 msgid "Terms Page"
 msgstr ""
 
