@@ -203,23 +203,20 @@ class Thim_Ekit_Widget_Room_Booking extends Widget_Base
         do_action('WPHB/modules/single-room/before-preview-query');
 
         $settings        = $this->get_settings_for_display();
-        global $hb_room;
-        $hb_room = \WPHB_Room::instance(get_the_ID()); ?>
+        
+        $room_id = get_the_ID();
+        ?>
 
         <div class="hb-room-single__booking">
-            
-
-                <div class="hb-room-single__booking__form">
-                    <?php $this->_render_booking_form($hb_room); ?>
-                </div> 
-
-            
+            <div class="hb-room-single__booking__form">
+                <?php $this->_render_booking_form($room_id); ?>
+            </div>
         </div>
 
         <?php do_action('WPHB/modules/single-room/after-preview-query');
     }
 
-    protected function _render_booking_form($hb_room)
+    protected function _render_booking_form( $room_id )
     {
         $minium_booking_night = \WPHB_Settings::instance()->get( 'minimum_booking_day', 1 );
         // $minium_checkout_date = 1 + $minium_booking_night;
@@ -231,7 +228,7 @@ class Thim_Ekit_Widget_Room_Booking extends Widget_Base
         $room_qty       = hb_get_request( 'room_qty', 1 );
 
         $room = \WPHB_Room::instance(
-            $hb_room->get_id(),
+            $room_id,
             array(
                 'check_in_date'  => $check_in_date,
                 'check_out_date' => $check_out_date,
