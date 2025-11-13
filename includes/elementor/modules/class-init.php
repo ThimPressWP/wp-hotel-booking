@@ -95,10 +95,7 @@ class Elementor {
 			if ( $type !== 'single-room' ) {
 				unset( $widgets['single-room'] );
 			}
-
-			if ( $type!== 'loop_item' ) {
-				unset( $widgets['loop-item'] );
-			}
+			
 		}
 
 		$widgets = array_merge_recursive( $widget_default, $widgets );

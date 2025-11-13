@@ -56,16 +56,21 @@ $total_price = $room->amount_singular + $extra_price;
 ?>
 <div id="hotel_booking_room_hidden">
 	<div class="wphb-room-tmpl-dates-available">
-		<form action="POST" name="hb-search-single-room" class="hb-search-room-results hotel-booking-search hotel-booking-single-room-action">
+		<div class="hb-booking-room-form-header" >
 			<div class="hb-booking-room-form-head">
 				<p class="description"><?php _e( 'Booking form', 'wp-hotel-booking' ); ?></p>
 			</div>
 			<?php 
-				do_action( 'hotel_booking_loop_room_price' ); // hotel_booking_loop_room_price hook
+				if ( ! isset( $is_elementor ) ) {
+					do_action( 'hotel_booking_loop_room_price' );
+				}
+				
 				if ( $error_message ) {  // show error
 					echo $error_message; 
 				} 
 			?>
+		</div>
+		<form action="POST" name="hb-search-single-room" class="hb-search-room-results hotel-booking-search hotel-booking-single-room-action">
 			<div class="hb-search-results-form-container">
 				<div class="hb-booking-room-form-group">
 					<label><?php esc_html_e( 'Check-in Date', 'wp-hotel-booking' ); ?></label>
