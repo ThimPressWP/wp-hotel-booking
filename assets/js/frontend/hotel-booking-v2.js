@@ -451,7 +451,7 @@ const checkAvailableRooms = () => {
         }
     }
 
-    const forms = document.querySelectorAll('form[class^="hb-search-form"]:not(#hb-form-search-page)');
+    const forms = document.querySelectorAll('form[name="hb-search-form"]:not(#hb-form-search-page)');
 
     forms.length > 0 && forms.forEach((form) => {
         form.addEventListener('submit', function (e) {
