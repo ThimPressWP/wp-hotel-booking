@@ -608,9 +608,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 	protected function hb_render_adults($settings, $classes) {
 		$adults         = hb_get_request( 'adults_capacity', hb_get_request( 'adults', 1 ) );
 		$label_adults   = !empty($settings['label_field']) ? $settings['label_field'] : esc_html__('Adults', 'wp-hotel-booking');
-		global $wpdb;
-		$max_adult = (int) $wpdb->get_var( "SELECT MAX(meta_value) as max FROM $wpdb->postmeta WHERE meta_key = '_hb_room_capacity_adult'" ) ?: 1;
-
+		
 		if ( $settings['layout_guest'] == 'select') {
 		?>
 			<li class="hb-form-field <?php echo esc_attr($classes); ?>">
@@ -626,7 +624,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 						array(
 							'name'              => 'adults_capacity',
 							'min'               => 1,
-							'max'               => $max_adult,
+							'max'               => 10,
 							'show_option_none'  => $label_adults,
 							'selected'          => $adults,
 							'option_none_value' => 0,
@@ -660,7 +658,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 								array(
 									'name'              => 'adults_capacity',
 									'min'               => 1,
-									'max'               => $max_adult,
+									'max'               => 10,
 									'selected'          => $adults,
 									'option_none_value' => '',
 									'options'           => hb_get_capacity_of_rooms(),

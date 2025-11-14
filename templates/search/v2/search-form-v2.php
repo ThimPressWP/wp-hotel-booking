@@ -28,8 +28,7 @@ if ( $args && isset( $args['atts'] ) ) {
 } elseif ( isset( $args ) ) {
 	$atts = $args;
 }
-global $wpdb;
-$max_adult = (int) $wpdb->get_var( "SELECT MAX(meta_value) as max FROM $wpdb->postmeta WHERE meta_key = '_hb_room_capacity_adult'" ) ?: 1;
+
 ?>
 
 <div id="hotel-booking-search-<?php echo uniqid(); ?>" class="hotel-booking-search">
@@ -70,11 +69,11 @@ $max_adult = (int) $wpdb->get_var( "SELECT MAX(meta_value) as max FROM $wpdb->po
 						array(
 							'name'              => 'adults_capacity',
 							'min'               => 1,
-							'max'               => hb_get_max_capacity_of_rooms(),
+							'max'               => 10,
 							'show_option_none'  => __( 'Adults', 'wp-hotel-booking' ),
 							'selected'          => $adults,
 							'option_none_value' => '',
-							'options'           => $max_adult,
+							'options'           => hb_get_capacity_of_rooms(),
 						)
 					);
 					?>
