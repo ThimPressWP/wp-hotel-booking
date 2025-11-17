@@ -273,7 +273,7 @@ const calendarPricing = () => {
 		if ( elForm && elForm.querySelector( 'input[name="check_in_date"]' ).value && elForm.querySelector( 'input[name="check_out_date"]' ).value ) {
 			calendarDefaultDate = [elForm.querySelector( 'input[name="check_in_date"]' ).value, elForm.querySelector( 'input[name="check_out_date"]' ).value];
 		}
-
+		let showMonths = window.innerWidth >= 992 ? 2 : 1;
 		roomCalendarPricing = flatpickr( elRoomCalendarPricing, {
 			dateFormat: 'Y/m/d',
 			mode: 'range',
@@ -281,7 +281,7 @@ const calendarPricing = () => {
 			inline: true,
 			disable: blockDates,
 			defaultDate: calendarDefaultDate,
-			showMonths: 2,
+			showMonths: showMonths,
 			locale: {
 				firstDayOfWeek: 1,
 			},
