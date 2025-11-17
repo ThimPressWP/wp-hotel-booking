@@ -56,8 +56,9 @@ if ( ! function_exists( 'hb_get_max_capacity_of_rooms' ) ) {
 	function hb_get_max_capacity_of_rooms() {
 		return 100;
 		global $wpdb;
-		$max = $wpdb->get_var( "SELECT MAX(meta_value) as max FROM $wpdb->postmeta WHERE meta_key = '_hb_room_capacity_adult'" );
-		$max = ! empty( $max ) ? (int) $max : 0;
+		//$max = $wpdb->get_var( "SELECT MAX(meta_value) as max FROM $wpdb->postmeta WHERE meta_key = '_hb_room_capacity_adult'" );
+		//$max = ! empty( $max ) ? (int) $max : 0;
+		$max = 20;
 
 		return apply_filters( 'get_max_capacity_of_rooms', $max );
 	}
@@ -96,6 +97,9 @@ if ( ! function_exists( 'hb_get_max_capacity_of_rooms' ) ) {
 // }
 
 if ( ! function_exists( 'hb_get_min_capacity_of_rooms' ) ) {
+	/**
+	 * @deprecated 2.2.5
+	 */
 	function hb_get_min_capacity_of_rooms() {
 		static $min = null;
 
@@ -164,9 +168,13 @@ if ( ! function_exists( 'hb_get_min_capacity_of_rooms' ) ) {
 // }
 if ( ! function_exists( 'hb_get_capacity_of_rooms' ) ) {
 	// get array search
+	/**
+	 * @deprecated 2.2.5
+	 */
 	function hb_get_capacity_of_rooms() {
 		global $wpdb;
-		$max_adult = (int) $wpdb->get_var( "SELECT MAX(meta_value) as max FROM $wpdb->postmeta WHERE meta_key = '_hb_room_capacity_adult'" ) ?: 1;
+		//$max_adult = (int) $wpdb->get_var( "SELECT MAX(meta_value) as max FROM $wpdb->postmeta WHERE meta_key = '_hb_room_capacity_adult'" ) ?: 1;
+		$max_adult = 20;
 
 		$return = array();
 		if ( $max_adult ) {
@@ -1662,24 +1670,20 @@ if ( ! function_exists( 'hb_format_price' ) ) {
 if ( ! function_exists( 'hb_search_rooms' ) ) {
 	function hb_search_rooms( $args = array() ) {
 		global $wpdb;
-		$adults_term = hb_get_request( 'adults', 0 );
-		$adults      = $adults_term ? get_term_meta( $adults_term, 'hb_max_number_of_adults', true ) : hb_get_min_capacity_of_rooms();
-		if ( ! $adults ) {
-			$adults = $adults_term ? (int) get_option( 'hb_taxonomy_capacity_' . $adults_term ) : 0;
-		}
+		$adults    = hb_get_request( 'adults', 0 );
 		$max_child = hb_get_request( 'max_child', 0 );
 
 		$args   = wp_parse_args(
 			$args,
 			array(
-				'check_in_date'  => date( 'm/d/Y' ),
-				'check_out_date' => date( 'm/d/Y' ),
+				'check_in_date'  => gmdate( 'm/d/Y' ),
+				'check_out_date' => gmdate( 'm/d/Y' ),
 				'adults'         => $adults,
 				'max_child'      => 0,
 				'room_qty'       => 1,
 			)
 		);
-		$adults = $args['adults'];
+		$adults = $args['adults'] ?? 1;
 
 		$check_in_time          = strtotime( $args['check_in_date'] );
 		$check_out_time         = strtotime( $args['check_out_date'] );
