@@ -624,7 +624,87 @@ body {
                         display: block;
                         margin-bottom: 3px;
                     }
-
+                }
+                .hb-form-field.hb-form-number {
+                    position: relative;
+                    display: inline-block;
+                    margin-bottom: 0;
+                    label {
+                        display: block;
+                        margin-bottom: 8px;
+                        font-size: var( --form--font-size, 16px );
+                        font-weight: var( --form--label-weight, 400 );
+                    }
+                }
+                .hb-form-field {
+                    .hb-form-field-input {
+                        input {
+                            width: 100%;
+                            padding: 12px 16px;
+                            border-radius: 4px;
+                            cursor: pointer;
+                            box-sizing: border-box;
+                            &:focus {
+                                outline: none;
+                            }
+                        }
+                    }
+                    .hb-form-field-list {
+                        position: absolute;
+                        top: 100%;
+                        left: 0;
+                        right: 0;
+                        background: #fff;
+                        border: 1px solid #ddd;
+                        border-radius: 4px;
+                        padding: 12px 16px;
+                        margin-top: 8px;
+                        display: none;
+                        z-index: 100;
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                        .label {
+                            display: block;
+                            margin-bottom: 12px;
+                            color: #666;
+                        }
+                    }
+                    .hb-form-field-list.active {
+                        display: block;
+                    }
+                    .number-box {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        gap: 12px;
+                        border: 1px solid #ddd;
+                        border-radius: 4px;
+                        padding: 8px 12px;
+                        background: #fff;
+                        .number-icon {
+                            width: 28px;
+                            height: 28px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            cursor: pointer;
+                            border-radius: 3px;
+                            transition: background-color 0.2s;
+                            user-select: none;
+                        }
+                        .number-icons {
+                            &:hover {
+                                background-color: #f5f5f5;
+                            }
+                            i {
+                                color: #666;
+                            }
+                        }
+                    }
+                    .hb-number-field-value {
+                        flex: 1;
+                        text-align: center;
+                        color: #333;
+                    }
                 }
             }
         }

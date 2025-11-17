@@ -221,16 +221,13 @@ class ArchiveRoomTemplate {
 		$adults_html         = $this->dropdown_selector(
 			__( 'Adults', 'wp-hotel-booking' ),
 			'adults_capacity',
-			$atts['adults'],
-			1,
-			hb_get_max_capacity_of_rooms(),
-			hb_get_capacity_of_rooms()
+			$atts['adults']
 		);
 		$child_html          = $this->dropdown_selector(
 			__( 'Children', 'wp-hotel-booking' ),
 			'max_child',
 			$atts['max_child'],
-			0,
+			0
 		);
 		$quantity_html       = $this->dropdown_selector(
 			__( 'Rooms', 'wp-hotel-booking' ),
@@ -276,28 +273,36 @@ class ArchiveRoomTemplate {
 		return Template::combine_components( $sections );
 	}
 
-	public function dropdown_selector( $label = '', $name = '', $selected = 1, $min = 1, $max = 10, $options = array() ) {
-		ob_start();
-		$selector_dropdown      = hb_dropdown_numbers(
-			array(
-				'name'              => $name,
-				'min'               => $min,
-				'max'               => $max,
-				'show_option_none'  => $label,
-				'selected'          => $selected,
-				'option_none_value' => '',
-				'options'           => $options,
-			)
+	public function dropdown_selector( $label = '', $name = '', $value = 1, $min = 1 ) {
+
+		$label          = sprintf( '<label>%s</label>', $label );
+		$input_html     = sprintf(
+			'<div class="hb-form-field-input hb-input-field-number">
+		        <input type="text" min="%1$d" name="%2$s" value="%3$s" readonly />
+		    </div>',
+		    $min, $name, $value
 		);
-		$selector_dropdown_html = ob_get_clean();
-		$label                  = sprintf( '<label>%s</label>', $label );
-		// $selector = sprintf('<div class="hb-form-field-input">%s<?/div>', $selector_dropdown);
+		$nav_number_html = sprintf(
+			'<div class="hb-form-field-list nav-number-input-field">
+		        <span class="label">%s</span>
+		        <div class="number-box">
+		            <span class="number-icons hb-goDown"><i class="fa fa-minus"></i></span>
+		            <span class="hb-number-field-value">
+		            </span>
+		            <span class="number-icons hb-goUp"><i class="fa fa-plus"></i></span>
+		        </div>
+		    </div>',
+		    $label
+		);
+
 		$sections = array(
-			'wrapper'     => '<div class="hb-form-field-input">',
+			'wrapper'     => '<div class="hb-form-field hb-form-number">',
 			'label'       => $label,
-			'input'       => $selector_dropdown_html,
+			'input'       => $input_html,
+			'nav_number'  => $nav_number_html,
 			'wrapper_end' => '</div>',
 		);
+
 		return Template::combine_components( $sections );
 	}
 }

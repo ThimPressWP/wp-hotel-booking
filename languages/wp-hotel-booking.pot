@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-11-13T08:39:29+00:00\n"
+"POT-Creation-Date: 2025-11-17T02:30:44+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wp-hotel-booking\n"
@@ -567,7 +567,7 @@ msgstr ""
 #: includes/class-wphb-post-types.php:643
 #: includes/elementor/widgets/global/search-room.php:73
 #: includes/elementor/widgets/global/search-room.php:746
-#: includes/TemplateHooks/ArchiveRoomTemplate.php:230
+#: includes/TemplateHooks/ArchiveRoomTemplate.php:233
 #: templates/cart/cart.php:39
 #: templates/checkout/checkout.php:39
 msgid "Rooms"
@@ -643,10 +643,10 @@ msgstr ""
 #: includes/admin/metaboxes/views/meta-booking-items.php:57
 #: includes/elementor/widgets/global/search-room.php:71
 #: includes/elementor/widgets/global/search-room.php:610
-#: includes/TemplateHooks/ArchiveRoomTemplate.php:216
+#: includes/TemplateHooks/ArchiveRoomTemplate.php:222
 #: templates/checkout/thank-you.php:67
-#: templates/search/search-form.php:63
-#: templates/search/search-form.php:71
+#: templates/search/search-form.php:64
+#: templates/search/search-form.php:72
 #: templates/search/v2/search-form-v2.php:65
 #: templates/search/v2/search-form-v2.php:73
 #: templates/single-room/booking-form.php:89
@@ -656,10 +656,10 @@ msgstr ""
 #: includes/admin/metaboxes/views/meta-booking-items.php:60
 #: includes/elementor/widgets/global/search-room.php:72
 #: includes/elementor/widgets/global/search-room.php:679
-#: includes/TemplateHooks/ArchiveRoomTemplate.php:224
+#: includes/TemplateHooks/ArchiveRoomTemplate.php:227
 #: templates/checkout/thank-you.php:68
-#: templates/search/search-form.php:82
-#: templates/search/search-form.php:90
+#: templates/search/search-form.php:83
+#: templates/search/search-form.php:91
 #: templates/search/v2/search-form-v2.php:84
 #: templates/search/v2/search-form-v2.php:92
 #: templates/single-room/booking-form.php:97
@@ -1986,7 +1986,7 @@ msgid "Search Room"
 msgstr ""
 
 #: includes/class-wphb-post-types.php:650
-#: includes/TemplateHooks/ArchiveRoomTemplate.php:84
+#: includes/TemplateHooks/ArchiveRoomTemplate.php:90
 msgid "No room found"
 msgstr ""
 
@@ -2417,8 +2417,8 @@ msgstr ""
 
 #: includes/elementor/widgets/global/check-avaibility.php:15
 #: includes/elementor/widgets/single-room/room-booking.php:66
-#: templates/search/search-form.php:36
-#: templates/search/search-form.php:105
+#: templates/search/search-form.php:37
+#: templates/search/search-form.php:106
 #: templates/search/v2/search-form-v2.php:41
 #: templates/search/v2/search-form-v2.php:127
 msgid "Check Availability"
@@ -2899,9 +2899,9 @@ msgid "Height"
 msgstr ""
 
 #: includes/elementor/widgets/global/search-room.php:558
-#: includes/TemplateHooks/ArchiveRoomTemplate.php:213
-#: templates/search/search-form.php:43
-#: templates/search/search-form.php:47
+#: includes/TemplateHooks/ArchiveRoomTemplate.php:219
+#: templates/search/search-form.php:44
+#: templates/search/search-form.php:48
 #: templates/search/v2/search-form-v2.php:45
 #: templates/search/v2/search-form-v2.php:49
 #: templates/single-room/booking-form.php:76
@@ -2912,9 +2912,9 @@ msgid "Check-in Date"
 msgstr ""
 
 #: includes/elementor/widgets/global/search-room.php:559
-#: includes/TemplateHooks/ArchiveRoomTemplate.php:214
-#: templates/search/search-form.php:53
-#: templates/search/search-form.php:57
+#: includes/TemplateHooks/ArchiveRoomTemplate.php:220
+#: templates/search/search-form.php:54
+#: templates/search/search-form.php:58
 #: templates/search/v2/search-form-v2.php:55
 #: templates/search/v2/search-form-v2.php:59
 #: templates/single-room/booking-form.php:83
@@ -3646,7 +3646,7 @@ msgstr ""
 msgid "Enter Url"
 msgstr ""
 
-#: includes/TemplateHooks/ArchiveRoomTemplate.php:193
+#: includes/TemplateHooks/ArchiveRoomTemplate.php:199
 #: templates/pagination.php:36
 #: templates/search/results.php:43
 #: templates/search/v2/pagination-v2.php:38
@@ -3655,15 +3655,15 @@ msgstr ""
 msgid "Previous"
 msgstr ""
 
-#: includes/TemplateHooks/ArchiveRoomTemplate.php:194
+#: includes/TemplateHooks/ArchiveRoomTemplate.php:200
 #: templates/pagination.php:37
 #: templates/search/results.php:44
 #: templates/search/v2/pagination-v2.php:39
 msgid "Next"
 msgstr ""
 
-#: includes/TemplateHooks/ArchiveRoomTemplate.php:206
-#: includes/TemplateHooks/ArchiveRoomTemplate.php:234
+#: includes/TemplateHooks/ArchiveRoomTemplate.php:212
+#: includes/TemplateHooks/ArchiveRoomTemplate.php:237
 msgid "Check avaibility"
 msgstr ""
 
