@@ -14,7 +14,8 @@ let elHotelBookingRoom,
 	roomCalendarPricing,
 	roomPricing,
 	elBtnsCalendarPricing,
-	roomDateRangeSelector;
+	roomDateRangeSelector,
+	minEndDatePlan;
 const toYmdLocal = ( date ) => {
 	const z = ( n ) => ( '0' + n ).slice( -2 );
 	return (
@@ -274,6 +275,7 @@ const calendarPricing = () => {
 			calendarDefaultDate = [elForm.querySelector( 'input[name="check_in_date"]' ).value, elForm.querySelector( 'input[name="check_out_date"]' ).value];
 		}
 		let showMonths = window.innerWidth >= 992 ? 2 : 1;
+		
 		roomCalendarPricing = flatpickr( elRoomCalendarPricing, {
 			dateFormat: 'Y/m/d',
 			mode: 'range',
@@ -285,6 +287,15 @@ const calendarPricing = () => {
 			locale: {
 				firstDayOfWeek: 1,
 			},
+			onDayCreate: function(dObj, dStr, fpInstance, dayElem) {
+			    if (!minEndDatePlan) return;
+			    const date = dayElem.dateObj;
+			    // disable dates which smaller than minEndDatePlan
+			    if (date < minEndDatePlan) {
+			    	dayElem.classList.add('flatpickr-disabled');
+			    	dayElem.setAttribute('aria-disabled', 'true');
+			    }
+			},
 			onReady: function ( selectedDates, dateStr, instance ) {
 				let month = instance.currentMonth + 1,
 					year = instance.currentYear;
@@ -295,6 +306,13 @@ const calendarPricing = () => {
 				}
 			},
 			onChange: function ( selectedDates, dateStr, instance ) {
+				if (selectedDates.length === 1) {
+	                const start = selectedDates[0];
+	                minEndDatePlan = new Date(start);
+	                minEndDatePlan.setDate(minEndDatePlan.getDate() + hotel_settings.min_booking_date);
+	                // redraw to trigger onDayCreate
+	                instance.redraw();
+		        }
 				setCalendarDatePrice( instance, roomPricing );
 			},
 			onMonthChange: function ( selectedDates, dateStr, instance ) {
@@ -688,6 +706,7 @@ document.addEventListener( 'click', function ( e ) {
 		modalPreview.open();
 	} else if ( target.classList.contains( 'hb-btn-cancel' ) ) {
 		if ( undefined !== roomCalendarPricing ) {
+			minEndDatePlan = false;
 			roomCalendarPricing.clear();
 		}
 	} else if ( target.classList.contains( 'hb-btn-apply' ) ) {
