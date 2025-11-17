@@ -299,8 +299,8 @@ class ArchiveRoomTemplate {
 			'wbhb/layout/list-rooms/check-availability-form/number-input',
 			array(
 				//sửa sang wrapper này để theme hiển thị dạng +/- 
-				'wrapper'     => '<div class="hb-form-field hb-form-number hb-form-number-input">',  
-				// 'wrapper'     => '<div class="hb-form-field hb-form-number">',
+				// 'wrapper'     => '<div class="hb-form-field hb-form-number hb-form-number-input">',  
+				'wrapper'     => '<div class="hb-form-field hb-form-number">',
 				'label'       => $label,
 				'input'       => $input_html,
 				'nav_number'  => $nav_number_html,
