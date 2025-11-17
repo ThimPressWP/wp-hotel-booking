@@ -1007,7 +1007,7 @@ const initNumberInputs = () => {
     }
 
     numberFields.forEach((field) => {
-        const input = field.querySelector('input[type="text"]');
+        const input = field.querySelector('input[type="number"]');
         const dropdown = field.querySelector('.hb-form-field-list');
         const valueDisplay = field.querySelector('.hb-number-field-value');
         const btnUp = field.querySelector('.hb-goUp');
@@ -1072,6 +1072,15 @@ document.addEventListener('click', (e) => {
         });
     }
 });
+document.addEventListener( 'keyup', (e) => {
+    let target = e.target;
+    if ( target.closest( '.hb-form-number-input' ) && target.tagName === 'INPUT' ) {
+        let container = target.closest( '.hb-form-number-input' );
+        if ( container.querySelector( '.hb-number-field-value' ) ) {
+            container.querySelector( '.hb-number-field-value' ).innerText = parseInt(target.value);
+        }
+    }
+} );
 // Initialize on DOM ready
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initNumberInputs);
