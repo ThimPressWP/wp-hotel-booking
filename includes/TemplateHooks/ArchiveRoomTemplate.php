@@ -278,7 +278,7 @@ class ArchiveRoomTemplate {
 		$label          = sprintf( '<label>%s</label>', $label );
 		$input_html     = sprintf(
 			'<div class="hb-form-field-input hb-input-field-number">
-		        <input type="text" min="%1$d" name="%2$s" value="%3$s" />
+		        <input type="number" step="1" min="%1$d" name="%2$s" value="%3$s" />
 		    </div>',
 		    $min, $name, $value
 		);
@@ -295,13 +295,17 @@ class ArchiveRoomTemplate {
 		    $label
 		);
 
-		$sections = array(
-			// 'wrapper'     => '<div class="hb-form-field hb-form-number hb-form-number-input">',  //thêm class để theme hiển thị dạng +/- 
-			'wrapper'     => '<div class="hb-form-field hb-form-number">',
-			'label'       => $label,
-			'input'       => $input_html,
-			'nav_number'  => $nav_number_html,
-			'wrapper_end' => '</div>',
+		$sections = apply_filters(
+			'wbhb/layout/list-rooms/check-availability-form/number-input',
+			array(
+				//sửa sang wrapper này để theme hiển thị dạng +/- 
+				// 'wrapper'     => '<div class="hb-form-field hb-form-number hb-form-number-input">',  
+				'wrapper'     => '<div class="hb-form-field hb-form-number">',
+				'label'       => $label,
+				'input'       => $input_html,
+				'nav_number'  => $nav_number_html,
+				'wrapper_end' => '</div>',
+			)
 		);
 
 		return Template::combine_components( $sections );
