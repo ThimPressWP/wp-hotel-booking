@@ -126,4 +126,50 @@ if (jQuerydynamicgal) {
 			});
 		});
 	});
+	$(document).ready(function () {
+		$('.nav-number-of-rooms select').select2();
+		$('.nav-number-of-rooms .goUp').on('click', function () {
+			var index = $('select[name="number-of-rooms"] option:selected').index();
+			var count = $(' select[name="number-of-rooms"] option').length;
+
+			if (index + 1 >= count) {
+				return;
+			}
+
+			var selected = $($('select[name="number-of-rooms"] option')[index + 1]).val();
+
+			$('select[name="number-of-rooms"]').val(selected);
+			$('input.number-of-rooms-input').val(selected);
+
+			$('select[name="number-of-rooms"]').trigger('change.select2'); // Notify only Select2 of changes
+
+		});
+
+		$('.nav-number-of-rooms .goDown').on('click', function () {
+			var index = $('select[name="number-of-rooms"] option:selected').index();
+			if (index <= 0) {
+				return;
+			}
+			var selected = $($('select[name="number-of-rooms"] option')[index - 1]).val();
+			$('select[name="number-of-rooms"]').val(selected);
+			$('input.number-of-rooms-input').val(selected);
+
+			$('select[name="number-of-rooms"]').trigger('change.select2'); // Notify only Select2 of changes
+
+		});
+		$('#number-of-rooms').each(function () {
+			var $form_list = $('.hb-form-field-list.nav-number-of-rooms');
+			$('#number-of-rooms').on('click touch', function () {
+				$form_list.toggleClass('active');
+			});
+			$(document).on('click touch', function (event) {
+				if (!$(event.target).parents().addBack().is('#number-of-rooms')) {
+					$form_list.removeClass('active');
+				}
+			});
+			$form_list.on('click touch', function (event) {
+				event.stopPropagation();
+			});
+		});
+	});
 })(jQuery);

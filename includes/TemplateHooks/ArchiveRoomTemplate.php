@@ -296,7 +296,7 @@ class ArchiveRoomTemplate {
 		);
 
 		$sections = array(
-			'wrapper'     => '<div class="hb-form-field hb-form-number">',
+			'wrapper'     => '<div class="hb-form-field hb-form-number hb-form-number-input">',
 			'label'       => $label,
 			'input'       => $input_html,
 			'nav_number'  => $nav_number_html,

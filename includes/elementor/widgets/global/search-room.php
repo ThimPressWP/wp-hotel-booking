@@ -645,7 +645,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 					<div class="label"><?php echo $label_adults; ?></div>
 				<?php endif; ?>
 				<div id="adults" class="hb-form-field-input hb_input_field">
-					<input type="text" id="number" class="adults-input" value="<?php echo esc_attr($adults) ?>" readonly />
+					<input type="text" class="adults-input" value="<?php echo esc_attr($adults) ?>" readonly />
 					<span><?php echo $label_adults; ?></span>
 				</div>
 				<div class="hb-form-field-list nav-adults">
@@ -713,7 +713,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 					<div class="label"><?php echo $label_child; ?></div>
 				<?php endif; ?>
 				<div id="child" class="hb-form-field-input hb_input_field">
-					<input type="text" id="number" class="child-input" value="<?php echo esc_attr($max_child) ?>" readonly />
+					<input type="text" class="child-input" value="<?php echo esc_attr($max_child) ?>" readonly />
 					<span><?php echo $label_child; ?></span>
 				</div>
 				<div class="hb-form-field-list nav-children">
@@ -780,15 +780,15 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				<div class="label"><?php echo $label; ?></div>
 				<?php endif; ?>
 				<div id="number-of-rooms" class="hb-form-field-input hb_input_field">
-					<input type="text" id="number" class="room-input" value="<?php echo esc_attr($quantity); ?>" readonly />
+					<input type="text" class="number-of-rooms-input" value="<?php echo esc_attr($quantity); ?>" readonly />
 					<span><?php echo $label; ?></span>
 				</div>
-				<div class="hb-form-field-list nav-children">
+				<div class="hb-form-field-list nav-number-of-rooms">
 					<span class="name"><?php echo $label; ?></span>
 					
 					<div class="number-box">
 						<span class="number-icons goDown"><i class="fa fa-minus"></i></span>
-						<span class="hb-guest-field room-number">
+						<span class="hb-guest-field room-qty-number">
 							<?php
 							hb_dropdown_numbers(
 								array(

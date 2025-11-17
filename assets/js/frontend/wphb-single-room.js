@@ -15,7 +15,6 @@ let elHotelBookingRoom,
 	roomPricing,
 	elBtnsCalendarPricing,
 	roomDateRangeSelector;
-const dataSend = {};
 const toYmdLocal = ( date ) => {
 	const z = ( n ) => ( '0' + n ).slice( -2 );
 	return (
@@ -377,21 +376,6 @@ const decodeHtmlEntity = ( str ) => {
 const wphbRoomCheckDates = ( formCheckDate ) => {
 	const elBtnCheck = formCheckDate.querySelector( 'button[type=submit]' );
 	let elLoading = formCheckDate.querySelector( '.wphb-icon' );
-	const data = new FormData( formCheckDate );
-	for ( const pair of data.entries() ) {
-		const key = pair[ 0 ]; // Get the field name
-		if ( key === 'wpbh-dates-block' ) continue;
-		const value = pair[ 1 ]; // Get the field value
-
-		dataSend[ key ] = value;
-	}
-
-	const dateSendFrom = new FormData();
-	Object.entries( dataSend ).forEach( ( [ key, value ] ) => {
-		dateSendFrom.append( key, value );
-	} );
-	// For case theme override file, not have nonce
-	dateSendFrom.append( 'nonce', hotel_settings.nonce );
 
 	if ( ! elLoading ) {
 		elBtnCheck.insertAdjacentHTML(
@@ -430,10 +414,7 @@ const wphbRoomCheckDates = ( formCheckDate ) => {
 	};
 
 	// Send to sever
-	const option = { method: 'POST', headers: {}, body: dateSendFrom };
-	if ( 0 !== parseInt( hotel_settings.user_id ) ) {
-		option.headers[ 'X-WP-Nonce' ] = hotel_settings.nonce;
-	}
+	const option = handleBookingFormData( formCheckDate );
 
 	fetch( hotel_settings.ajax, option )
 		.then( ( response ) => response.json() )
@@ -507,16 +488,7 @@ const wphbRoomCheckDates = ( formCheckDate ) => {
 };
 const wphbRoomAddToCart = ( formAddToCart ) => {
 	const elBtnSubmit = formAddToCart.querySelector( 'button[type=submit]' );
-	const elLoading = formAddToCart.querySelector( '.wphb-icon' );
-	const data = new FormData( formAddToCart );
-	for ( const pair of data.entries() ) {
-		const key = pair[ 0 ]; // Get the field name
-		// remove block dates date when add to cart
-		if ( key === 'wpbh-dates-block' ) continue;
-		const value = pair[ 1 ]; // Get the field value
-
-		dataSend[ key ] = value;
-	}
+	const elLoading = elBtnSubmit.querySelector( '.wphb-icon' );
 
 	const showErrors = ( message ) => {
 		const elMesErrors = formAddToCart.querySelectorAll(
@@ -542,16 +514,8 @@ const wphbRoomAddToCart = ( formAddToCart ) => {
 		}, 2500 );
 	};
 
-	const dateSendFrom = new FormData();
-	Object.entries( dataSend ).forEach( ( [ key, value ] ) => {
-		dateSendFrom.append( key, value );
-	} );
-
 	// Send to sever
-	const option = { method: 'POST', headers: {}, body: dateSendFrom };
-	if ( 0 !== parseInt( hotel_settings.user_id ) ) {
-		option.headers[ 'X-WP-Nonce' ] = hotel_settings.nonce;
-	}
+	const option = handleBookingFormData( formAddToCart );
 
 	elBtnSubmit.setAttribute( 'disabled', 'disabled' );
 	elLoading.classList.remove( 'hide' );
@@ -579,6 +543,7 @@ const wphbRoomAddToCart = ( formAddToCart ) => {
 };
 
 const handleBookingFormData = ( form ) => {
+	let dataSend = {};
 	const data = new FormData( form );
 	for ( const pair of data.entries() ) {
 		const key = pair[ 0 ];
@@ -587,13 +552,15 @@ const handleBookingFormData = ( form ) => {
 
 		dataSend[ key ] = value;
 	}
-	const dateSendFrom = new FormData();
+	const dataSendFrom = new FormData();
 	Object.entries( dataSend ).forEach( ( [ key, value ] ) => {
-		dateSendFrom.append( key, value );
+		dataSendFrom.append( key, value );
 	} );
+	// For case theme override file, not have nonce
+	dataSendFrom.append( 'nonce', hotel_settings.nonce );
 
 	// Send to sever
-	const option = { method: 'POST', headers: {}, body: dateSendFrom };
+	const option = { method: 'POST', headers: {}, body: dataSendFrom };
 	if ( 0 !== parseInt( hotel_settings.user_id ) ) {
 		option.headers[ 'X-WP-Nonce' ] = hotel_settings.wphb_rest_nonce;
 	}

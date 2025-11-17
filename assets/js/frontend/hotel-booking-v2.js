@@ -1000,7 +1000,7 @@ const sortBy = () => {
 }
 
 const initNumberInputs = () => {
-    const numberFields = document.querySelectorAll('.hb-form-number');
+    const numberFields = document.querySelectorAll('.hb-form-number-input');
 
     if ( numberFields.length < 1 ) {
         return;
