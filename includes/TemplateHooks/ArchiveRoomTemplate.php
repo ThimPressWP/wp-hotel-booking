@@ -43,6 +43,12 @@ class ArchiveRoomTemplate {
 	 * @return string
 	 */
 	public static function render_rooms() {
+		global $wp_query;
+		if ( $wp_query->is_tax( 'hb_room_type' ) ) {
+			$room_type = $wp_query->queried_object_id;
+		} else {
+			$room_type = hb_get_request( 'room_type', '' );
+		}
 		$paged = get_query_var( 'paged' ) ?: hb_get_request( 'paged', 1, 'int' );
 		$atts  = array(
 			'check_in_date'  => hb_get_request( 'check_in_date', date( 'Y/m/d' ) ),
@@ -55,7 +61,7 @@ class ArchiveRoomTemplate {
 			'min_price'      => hb_get_request( 'min_price', 0 ),
 			'max_price'      => hb_get_request( 'max_price', '' ),
 			'rating'         => hb_get_request( 'rating', '' ),
-			'room_type'      => hb_get_request( 'room_type', '' ),
+			'room_type'      => $room_type,
 			'sort_by'        => hb_get_request( 'sort_by', '' ),
 		);
 
@@ -148,10 +154,10 @@ class ArchiveRoomTemplate {
 		$section = apply_filters(
 			'wbhb/layout/list-rooms/section',
 			array(
-				'check_availability' => $check_room_availability,
-				'archive_content' => '<div>',
-				'filter' => $filter,
-				'rooms'  => Template::combine_components( $section_rooms ),
+				'check_availability'  => $check_room_availability,
+				'archive_content'     => '<div>',
+				'filter'              => $filter,
+				'rooms'               => Template::combine_components( $section_rooms ),
 				'archive_content_end' => '</div>',
 			),
 			$rooms,
@@ -215,16 +221,13 @@ class ArchiveRoomTemplate {
 		$adults_html         = $this->dropdown_selector(
 			__( 'Adults', 'wp-hotel-booking' ),
 			'adults_capacity',
-			$atts['adults'],
-			1,
-			hb_get_max_capacity_of_rooms(),
-			hb_get_capacity_of_rooms()
+			$atts['adults']
 		);
 		$child_html          = $this->dropdown_selector(
 			__( 'Children', 'wp-hotel-booking' ),
 			'max_child',
 			$atts['max_child'],
-			0,
+			0
 		);
 		$quantity_html       = $this->dropdown_selector(
 			__( 'Rooms', 'wp-hotel-booking' ),
@@ -270,28 +273,41 @@ class ArchiveRoomTemplate {
 		return Template::combine_components( $sections );
 	}
 
-	public function dropdown_selector( $label = '', $name = '', $selected = 1, $min = 1, $max = 10, $options = array() ) {
-		ob_start();
-		$selector_dropdown      = hb_dropdown_numbers(
+	public function dropdown_selector( $label = '', $name = '', $value = 1, $min = 1 ) {
+
+		$label          = sprintf( '<label>%s</label>', $label );
+		$input_html     = sprintf(
+			'<div class="hb-form-field-input hb-input-field-number">
+		        <input type="number" step="1" min="%1$d" name="%2$s" value="%3$s" />
+		    </div>',
+		    $min, $name, $value
+		);
+		$nav_number_html = sprintf(
+			'<div class="hb-form-field-list nav-number-input-field">
+		        <span class="label">%s</span>
+		        <div class="number-box">
+		            <span class="number-icons hb-goDown"><i class="fa fa-minus"></i></span>
+		            <span class="hb-number-field-value">
+		            </span>
+		            <span class="number-icons hb-goUp"><i class="fa fa-plus"></i></span>
+		        </div>
+		    </div>',
+		    $label
+		);
+
+		$sections = apply_filters(
+			'wbhb/layout/list-rooms/check-availability-form/number-input',
 			array(
-				'name'              => $name,
-				'min'               => $min,
-				'max'               => $max,
-				'show_option_none'  => $label,
-				'selected'          => $selected,
-				'option_none_value' => '',
-				'options'           => $options,
+				//sửa sang wrapper này để theme hiển thị dạng +/- 
+				// 'wrapper'     => '<div class="hb-form-field hb-form-number hb-form-number-input">',  
+				'wrapper'     => '<div class="hb-form-field hb-form-number">',
+				'label'       => $label,
+				'input'       => $input_html,
+				'nav_number'  => $nav_number_html,
+				'wrapper_end' => '</div>',
 			)
 		);
-		$selector_dropdown_html = ob_get_clean();
-		$label                  = sprintf( '<label>%s</label>', $label );
-		// $selector = sprintf('<div class="hb-form-field-input">%s<?/div>', $selector_dropdown);
-		$sections = array(
-			'wrapper'     => '<div class="hb-form-field-input">',
-			'label'       => $label,
-			'input'       => $selector_dropdown_html,
-			'wrapper_end' => '</div>',
-		);
+
 		return Template::combine_components( $sections );
 	}
 }

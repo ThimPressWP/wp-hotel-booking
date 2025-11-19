@@ -19,6 +19,7 @@ $check_out_date = hb_get_request( 'check_out_date' );
 $adults         = hb_get_request( 'adults', 0 );
 $max_child      = hb_get_request( 'max_child', 0 );
 $uniqid         = uniqid();
+
 ?>
 
 <div id="hotel-booking-search-<?php echo uniqid(); ?>" class="hotel-booking-search">
@@ -67,7 +68,7 @@ $uniqid         = uniqid();
 						array(
 							'name'              => 'adults_capacity',
 							'min'               => 1,
-							'max'               => hb_get_max_capacity_of_rooms(),
+							'max'               => 10,
 							'show_option_none'  => __( 'Adults', 'wp-hotel-booking' ),
 							'selected'          => $adults,
 							'option_none_value' => 0,

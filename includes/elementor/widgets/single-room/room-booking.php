@@ -51,7 +51,7 @@ class Thim_Ekit_Widget_Room_Booking extends Widget_Base
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'base',
 				'options' => array(
-                    'base'    => esc_html__( 'Base (Popup)', 'wp-hotel-booking' ),
+                    // 'base'    => esc_html__( 'Base (Popup)', 'wp-hotel-booking' ),
                     'form'    => esc_html__( 'Form', 'wp-hotel-booking' ),
 				),
 			)
@@ -203,83 +203,40 @@ class Thim_Ekit_Widget_Room_Booking extends Widget_Base
         do_action('WPHB/modules/single-room/before-preview-query');
 
         $settings        = $this->get_settings_for_display();
-        global $hb_room;
-        $hb_room = \WPHB_Room::instance(get_the_ID()); ?>
+        
+        $room_id = get_the_ID();
+        ?>
 
         <div class="hb-room-single__booking">
-            <?php if ( $settings['layout'] == 'form' ) { ?>
-
-                <div class="hb-room-single__booking__form">
-                    <?php $this->_render_booking_form($hb_room); ?>
-                </div> 
-
-            <?php } else {
-                $external_link = get_post_meta( $hb_room->ID, '_hb_external_link', true );
-                $external_link = ! empty( $external_link ) ? esc_url( $external_link ) : '#';
-                ?>
-
-                <a href="<?php echo $external_link; ?>" <?php echo ! empty( $external_link ) ? 'target="_blank"' : ''; ?> data-id="<?php echo esc_attr( $hb_room->ID ); ?>" data-name="<?php echo esc_attr( $hb_room->name ); ?>"
-                    class="hb_button hb_primary" id="hb_room_load_booking_form">
-                    <?php _e( $settings['text_booking'], 'wp-hotel-booking' ); ?>
-                </a>
-
-            <?php } ?>
+            <div class="hb-room-single__booking__form">
+                <?php $this->_render_booking_form($room_id); ?>
+            </div>
         </div>
 
         <?php do_action('WPHB/modules/single-room/after-preview-query');
     }
 
-    protected function _render_booking_form($hb_room)
+    protected function _render_booking_form( $room_id )
     {
-        $room_id   = $hb_room->get_id();
-        $max_adult = (int) get_post_meta( $room_id, '_hb_room_capacity_adult', true );
-        $max_adult = $max_adult > 0 ? $max_adult : 1;
-        $max_child = (int) get_post_meta( $room_id, '_hb_max_child_per_room', true );
+        $minium_booking_night = \WPHB_Settings::instance()->get( 'minimum_booking_day', 1 );
+        // $minium_checkout_date = 1 + $minium_booking_night;
 
-        $check_in_date  = hb_get_request( 'check_in_date', date( 'Y-m-d' ) );
-        $check_out_date = hb_get_request( 'check_out_date', date( 'Y-m-d', strtotime( '+1 day' ) ) );
+        $check_in_date  = hb_get_request( 'check_in_date', date( 'Y/m/d' ) );
+        $check_out_date = hb_get_request( 'check_out_date', date( 'Y/m/d', strtotime( "+{$minium_booking_night} day" ) ) );
         $adults         = hb_get_request( 'adults', 1 );
-        $children       = hb_get_request( 'children', 0 );
+        $children       = hb_get_request( 'max_child', 0 );
         $room_qty       = hb_get_request( 'room_qty', 1 );
-        ?>
-        <div id="hotel_booking_room_hidden">
-           <form action="POST" name="hb-search-single-room" class="hb-search-room-results hotel-booking-search hotel-booking-single-room-action">
-            <div class="hb-booking-room-form-head">
-                <h2 class="title"><?php echo get_the_title() ?></h2>
-                <p class="description"><?php _e( 'Please set check-in date and check-out date before check available.', 'wp-hotel-booking' ); ?></p>
-            </div>
-            <div class="hb-search-results-form-container">
-                <div class="hb-booking-room-form-group">
-                    <div class="hb-booking-room-form-field hb-form-field-input">
-                        <input type="text" name="check_in_date" value="<?php echo esc_attr( $check_in_date ); ?>" id="check_in_date" placeholder="<?php _e( 'Check-in Date', 'wp-hotel-booking' ); ?>" autocomplete="off"/>
-                        <input type="text" name="select-date-range" style="display:none;"  data-hidden="1" placeholder="<?php _e( 'Select Dates', 'wp-hotel-booking' ); ?>" />
-                    </div>
-                </div>
-                <div class="hb-booking-room-form-group">
-                    <div class="hb-booking-room-form-field hb-form-field-input">
-                        <input type="text" name="check_out_date" value="<?php echo esc_attr( $check_out_date ); ?>" id="check_out_date" placeholder="<?php _e( 'Check-out Date', 'wp-hotel-booking' ); ?>" autocomplete="off"/>
-                    </div>
-                </div>
-                <div class="hb-booking-room-form-group">
-                    <div class="hb-booking-room-form-field hb-form-field-input">
-                        <input type="number" name="adult_qty" value="<?php echo esc_attr( $adults ); ?>" placeholder="<?php _e( 'Adult', 'wp-hotel-booking' ); ?>" min="1" max="<?php echo esc_attr( $max_adult ) ?>" />
-                    </div>
-                </div>
-                <div class="hb-booking-room-form-group">
-                    <div class="hb-booking-room-form-field hb-form-field-input">
-                        <input type="number" name="child_qty" value="<?php echo esc_attr( $children ); ?>" placeholder="<?php _e( 'Children', 'wp-hotel-booking' ); ?>" min="0" max="<?php echo esc_attr( $max_child ) ?>" />
-                    </div>
-                </div>
-                <div class="hb-booking-room-form-group">
-                    <input type="hidden" name="room-name" value="<?php printf( '%s', $hb_room->post_title ); ?>" />
-                    <input type="hidden" name="room-id" value="<?php printf( '%s', $hb_room->ID ); ?>" />
-                    <input type="hidden" name="action" value="hotel_booking_single_check_room_available"/>
-                    <?php wp_nonce_field( 'hb_booking_single_room_check_nonce_action', 'hb-booking-single-room-check-nonce-action' ); ?>
-                    <button type="submit" class="hb_button"><?php _e( 'Check Available', 'wp-hotel-booking' ); ?></button>
-                </div>
-            </div>
-            </form>
-        </div>
-        <?php
+
+        $room = \WPHB_Room::instance(
+            $room_id,
+            array(
+                'check_in_date'  => $check_in_date,
+                'check_out_date' => $check_out_date,
+                'quantity'       => $room_qty,
+            )
+        );
+        ob_start();
+        hb_get_template( 'single-room/booking-form.php', array( 'room' => $room, 'is_elementor' => true, ) );
+        echo ob_get_clean();
     }
 }

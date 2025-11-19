@@ -451,17 +451,17 @@ const checkAvailableRooms = () => {
         }
     }
 
-    const forms = document.querySelectorAll('form[class^="hb-search-form"]:not(#hb-form-search-page)');
+    const forms = document.querySelectorAll('form[name="hb-search-form"]:not(#hb-form-search-page)');
 
     forms.length > 0 && forms.forEach((form) => {
         form.addEventListener('submit', function (e) {
             e.preventDefault();
             const checkinDate = form.querySelector('input[name="check_in_date"]').value;
             const checkoutDate = form.querySelector('input[name="check_out_date"]').value;
-            const countAdults = form.querySelector('select[name="adults_capacity"]') ? form.querySelector('select[name="adults_capacity"]').value : 0;
-            const maxChild = form.querySelector('select[name="max_child"]') ? form.querySelector('select[name="max_child"]').value : 0;
+            const countAdults = form.querySelector('[name="adults_capacity"]') ? form.querySelector('[name="adults_capacity"]').value : 0;
+            const maxChild = form.querySelector('[name="max_child"]') ? form.querySelector('[name="max_child"]').value : 0;
             const paged = form.querySelector('input[name="paged"]') ? form.querySelector('input[name="paged"]').value : 1;
-            const room_qty = form.querySelector('select[name="number-of-rooms"]') ? form.querySelector('select[name="number-of-rooms"]').value : 1;
+            const room_qty = form.querySelector('[name="number-of-rooms"]') ? form.querySelector('[name="number-of-rooms"]').value : 1;
 
             if (checkinDate === '' || checkoutDate === '') {
                 alert(' Please select check in and check out date and search again! ');
@@ -998,6 +998,97 @@ const sortBy = () => {
         });
     });
 }
+
+const initNumberInputs = () => {
+    const numberFields = document.querySelectorAll('.hb-form-number-input');
+
+    if ( numberFields.length < 1 ) {
+        return;
+    }
+
+    numberFields.forEach((field) => {
+        const input = field.querySelector('input[type="number"]');
+        const dropdown = field.querySelector('.hb-form-field-list');
+        const valueDisplay = field.querySelector('.hb-number-field-value');
+        const btnUp = field.querySelector('.hb-goUp');
+        const btnDown = field.querySelector('.hb-goDown');
+        const minValue = parseInt(input.getAttribute('min')) || 0;
+
+        // Update display and input value
+        const updateDisplay = (value) => {
+            currentValue = value;
+            input.value = value;
+            valueDisplay.textContent = value;
+            // Disable down button if at minimum
+            if (currentValue <= minValue) {
+                btnDown.style.opacity = '0.5';
+                btnDown.style.cursor = 'not-allowed';
+            } else {
+                btnDown.style.opacity = '1';
+                btnDown.style.cursor = 'pointer';
+            }
+        }
+        // Initialize value display
+        let currentValue = parseInt(input.value) || minValue;
+        updateDisplay(currentValue);
+
+        // Toggle dropdown on input click
+        input.addEventListener('click', (e) => {
+            e.stopPropagation();
+
+            // Close all other dropdowns
+            document.querySelectorAll('.hb-form-field-list').forEach( (dd) => {
+                if (dd !== dropdown) {
+                    dd.classList.remove('active');
+                }
+            });
+
+            // Toggle current dropdown
+            dropdown.classList.toggle('active');
+        });
+
+        // Increase value
+        btnUp.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentValue++;
+            updateDisplay(currentValue);
+        });
+
+        // Decrease value
+        btnDown.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (currentValue > minValue) {
+                currentValue--;
+                updateDisplay(currentValue);
+            }
+        });
+    });
+}
+// Close dropdown when clicking outside
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.hb-form-number')) {
+        document.querySelectorAll('.hb-form-field-list').forEach((dropdown) => {
+            dropdown.classList.remove('active');
+        });
+    }
+});
+document.addEventListener( 'keyup', (e) => {
+    let target = e.target;
+    if ( target.closest( '.hb-form-number-input' ) && target.tagName === 'INPUT' ) {
+        let container = target.closest( '.hb-form-number-input' );
+        if ( container.querySelector( '.hb-number-field-value' ) ) {
+            container.querySelector( '.hb-number-field-value' ).innerText = parseInt(target.value);
+        }
+    }
+} );
+// Initialize on DOM ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNumberInputs);
+} else {
+    initNumberInputs();
+}
+// Expose reinit function for dynamically added fields
+window.hbReinitNumberInputs = initNumberInputs;
 
 document.addEventListener('DOMContentLoaded', () => {
     searchRoomsPages();//use in page search room

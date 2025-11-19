@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-11-13T05:11:06+03:00\n"
+"POT-Creation-Date: 2025-11-17T02:30:44+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wp-hotel-booking\n"
 
 #. Plugin Name of the plugin
@@ -119,7 +119,6 @@ msgid "Max adults per room"
 msgstr ""
 
 #: includes/admin/class-wphb-admin.php:159
-#, php-format
 msgid "<strong>Warning:</strong> Plugin <strong>WP Hotel Booking </strong> database needs to be updated to function properly. <a href=\"%s\" target=\"_blank\">Click</a> to go to update page. "
 msgstr ""
 
@@ -450,12 +449,10 @@ msgid "Save Book"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-details.php:29
-#, php-format
 msgid "Book ID %s"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-details.php:31
-#, php-format
 msgid "Booked on %s"
 msgstr ""
 
@@ -570,7 +567,7 @@ msgstr ""
 #: includes/class-wphb-post-types.php:643
 #: includes/elementor/widgets/global/search-room.php:73
 #: includes/elementor/widgets/global/search-room.php:746
-#: includes/TemplateHooks/ArchiveRoomTemplate.php:230
+#: includes/TemplateHooks/ArchiveRoomTemplate.php:233
 #: templates/cart/cart.php:39
 #: templates/checkout/checkout.php:39
 msgid "Rooms"
@@ -582,7 +579,6 @@ msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items-template-js.php:113
 #: includes/elementor/widgets/single-room/room-booking.php:173
-#: includes/elementor/widgets/single-room/room-booking.php:278
 #: templates/single-room/search/check-dates-available.php:64
 #: templates/single-room/search/search-available.php:50
 msgid "Check Available"
@@ -647,28 +643,27 @@ msgstr ""
 #: includes/admin/metaboxes/views/meta-booking-items.php:57
 #: includes/elementor/widgets/global/search-room.php:71
 #: includes/elementor/widgets/global/search-room.php:610
-#: includes/TemplateHooks/ArchiveRoomTemplate.php:216
+#: includes/TemplateHooks/ArchiveRoomTemplate.php:222
 #: templates/checkout/thank-you.php:67
-#: templates/search/search-form.php:63
-#: templates/search/search-form.php:71
+#: templates/search/search-form.php:64
+#: templates/search/search-form.php:72
 #: templates/search/v2/search-form-v2.php:65
 #: templates/search/v2/search-form-v2.php:73
-#: templates/single-room/booking-form.php:84
+#: templates/single-room/booking-form.php:89
 msgid "Adults"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items.php:60
 #: includes/elementor/widgets/global/search-room.php:72
 #: includes/elementor/widgets/global/search-room.php:679
-#: includes/elementor/widgets/single-room/room-booking.php:270
-#: includes/TemplateHooks/ArchiveRoomTemplate.php:224
+#: includes/TemplateHooks/ArchiveRoomTemplate.php:227
 #: templates/checkout/thank-you.php:68
-#: templates/search/search-form.php:82
-#: templates/search/search-form.php:90
+#: templates/search/search-form.php:83
+#: templates/search/search-form.php:91
 #: templates/search/v2/search-form-v2.php:84
 #: templates/search/v2/search-form-v2.php:92
-#: templates/single-room/booking-form.php:92
-#: templates/single-room/booking-form.php:95
+#: templates/single-room/booking-form.php:97
+#: templates/single-room/booking-form.php:100
 #: templates/single-room/search/check-dates-available.php:52
 msgid "Children"
 msgstr ""
@@ -709,7 +704,6 @@ msgid "Add Room Item"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items.php:156
-#, php-format
 msgid "Coupon(<a href=\"%1$s\">%2$s</a>)"
 msgstr ""
 
@@ -854,7 +848,6 @@ msgstr ""
 
 #: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:93
 #: includes/admin/views/pricing-table.php:98
-#, php-format
 msgid "(%d plan)"
 msgid_plural "(%d plans)"
 msgstr[0] ""
@@ -983,7 +976,6 @@ msgstr ""
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:95
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:164
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:173
-#, php-format
 msgid "Enter recipients (comma separated) for this email. Defaults to %s."
 msgstr ""
 
@@ -1447,12 +1439,10 @@ msgid "Status"
 msgstr ""
 
 #: includes/admin/wphb-admin-functions.php:352
-#, php-format
 msgid "<br />(<small>%s</small>)"
 msgstr ""
 
 #: includes/admin/wphb-admin-functions.php:364
-#, php-format
 msgid "<br />(<small class=\"hb_advance_payment\">Pay: = %s</small>)"
 msgstr ""
 
@@ -1681,7 +1671,6 @@ msgid "Date is not exists."
 msgstr ""
 
 #: includes/class-wphb-checkout.php:68
-#, php-format
 msgid "Sorry, your session has expired. <a href=\"%s\">Return to homepage</a>"
 msgstr ""
 
@@ -1750,7 +1739,6 @@ msgid "Give your review a title *"
 msgstr ""
 
 #: includes/class-wphb-comments.php:344
-#, php-format
 msgid "Uploads up to %s image"
 msgid_plural "Upload up to %s images"
 msgstr[0] ""
@@ -1773,7 +1761,6 @@ msgid "Add Images"
 msgstr ""
 
 #: includes/class-wphb-comments.php:532
-#, php-format
 msgid "You can upload maximum %1$s images. The maximum file size is %2$s KB."
 msgstr ""
 
@@ -1791,7 +1778,6 @@ msgstr ""
 #: includes/elementor/widgets/loop-item/loop-room-rating.php:138
 #: templates/loop/rating.php:27
 #: templates/single-room/review.php:36
-#, php-format
 msgid "Rated %d out of 5"
 msgstr ""
 
@@ -2000,7 +1986,7 @@ msgid "Search Room"
 msgstr ""
 
 #: includes/class-wphb-post-types.php:650
-#: includes/TemplateHooks/ArchiveRoomTemplate.php:84
+#: includes/TemplateHooks/ArchiveRoomTemplate.php:90
 msgid "No room found"
 msgstr ""
 
@@ -2160,28 +2146,24 @@ msgid "room-capacity"
 msgstr ""
 
 #: includes/class-wphb-post-types.php:823
-#, php-format
 msgid "Cancelled <span class=\"count\">(%s)</span>"
 msgid_plural "Cancelled <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
 #: includes/class-wphb-post-types.php:833
-#, php-format
 msgid "Pending <span class=\"count\">(%s)</span>"
 msgid_plural "Pending <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
 #: includes/class-wphb-post-types.php:843
-#, php-format
 msgid "Processing <span class=\"count\">(%s)</span>"
 msgid_plural "Processing <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
 #: includes/class-wphb-post-types.php:853
-#, php-format
 msgid "Completed <span class=\"count\">(%s)</span>"
 msgid_plural "Completed <span class=\"count\">(%s)</span>"
 msgstr[0] ""
@@ -2243,7 +2225,6 @@ msgid "No coupon found in Trash"
 msgstr ""
 
 #: includes/coupons/class-wphb-coupon-hooks.php:94
-#, php-format
 msgid "Coupon applied: %s"
 msgstr ""
 
@@ -2276,11 +2257,11 @@ msgstr ""
 msgid "Room Page"
 msgstr ""
 
-#: includes/elementor/modules/class-init.php:122
+#: includes/elementor/modules/class-init.php:119
 msgid "Thim Archive Room"
 msgstr ""
 
-#: includes/elementor/modules/class-init.php:126
+#: includes/elementor/modules/class-init.php:123
 msgid "Thim Single Room"
 msgstr ""
 
@@ -2392,12 +2373,10 @@ msgid "Showing only one result"
 msgstr ""
 
 #: includes/elementor/widgets/archive-room/archive-room.php:307
-#, php-format
 msgid "Showing last post of %s results"
 msgstr ""
 
 #: includes/elementor/widgets/archive-room/archive-room.php:312
-#, php-format
 msgid "Showing %s - %s of %s results"
 msgstr ""
 
@@ -2438,8 +2417,8 @@ msgstr ""
 
 #: includes/elementor/widgets/global/check-avaibility.php:15
 #: includes/elementor/widgets/single-room/room-booking.php:66
-#: templates/search/search-form.php:36
-#: templates/search/search-form.php:105
+#: templates/search/search-form.php:37
+#: templates/search/search-form.php:106
 #: templates/search/v2/search-form-v2.php:41
 #: templates/search/v2/search-form-v2.php:127
 msgid "Check Availability"
@@ -2517,7 +2496,6 @@ msgstr ""
 #: includes/elementor/widgets/global/filter-room-selected.php:336
 #: templates/search/v2/search-filter/rating.php:18
 #: templates/single-room-reviews.php:114
-#, php-format
 msgid "%s star"
 msgid_plural "%s stars"
 msgstr[0] ""
@@ -2921,28 +2899,26 @@ msgid "Height"
 msgstr ""
 
 #: includes/elementor/widgets/global/search-room.php:558
-#: includes/elementor/widgets/single-room/room-booking.php:254
-#: includes/TemplateHooks/ArchiveRoomTemplate.php:213
-#: templates/search/search-form.php:43
-#: templates/search/search-form.php:47
+#: includes/TemplateHooks/ArchiveRoomTemplate.php:219
+#: templates/search/search-form.php:44
+#: templates/search/search-form.php:48
 #: templates/search/v2/search-form-v2.php:45
 #: templates/search/v2/search-form-v2.php:49
-#: templates/single-room/booking-form.php:71
-#: templates/single-room/booking-form.php:73
+#: templates/single-room/booking-form.php:76
+#: templates/single-room/booking-form.php:78
 #: templates/single-room/search/check-dates-available.php:33
 #: templates/single-room/search/search-available.php:37
 msgid "Check-in Date"
 msgstr ""
 
 #: includes/elementor/widgets/global/search-room.php:559
-#: includes/elementor/widgets/single-room/room-booking.php:260
-#: includes/TemplateHooks/ArchiveRoomTemplate.php:214
-#: templates/search/search-form.php:53
-#: templates/search/search-form.php:57
+#: includes/TemplateHooks/ArchiveRoomTemplate.php:220
+#: templates/search/search-form.php:54
+#: templates/search/search-form.php:58
 #: templates/search/v2/search-form-v2.php:55
 #: templates/search/v2/search-form-v2.php:59
-#: templates/single-room/booking-form.php:78
-#: templates/single-room/booking-form.php:80
+#: templates/single-room/booking-form.php:83
+#: templates/single-room/booking-form.php:85
 #: templates/single-room/search/check-dates-available.php:39
 #: templates/single-room/search/search-available.php:42
 msgid "Check-out Date"
@@ -2996,28 +2972,24 @@ msgid "Choose Icon"
 msgstr ""
 
 #: includes/elementor/widgets/loop-item/loop-room-info.php:228
-#, php-format
 msgid "%s Adult"
 msgid_plural "%s Adults"
 msgstr[0] ""
 msgstr[1] ""
 
 #: includes/elementor/widgets/loop-item/loop-room-info.php:252
-#, php-format
 msgid "%s Child"
 msgid_plural "%s Children"
 msgstr[0] ""
 msgstr[1] ""
 
 #: includes/elementor/widgets/loop-item/loop-room-info.php:275
-#, php-format
 msgid "%s m²"
 msgid_plural "%s m²"
 msgstr[0] ""
 msgstr[1] ""
 
 #: includes/elementor/widgets/loop-item/loop-room-info.php:298
-#, php-format
 msgid "%s Bed"
 msgid_plural "%s Beds"
 msgstr[0] ""
@@ -3101,10 +3073,6 @@ msgstr ""
 msgid "Booking"
 msgstr ""
 
-#: includes/elementor/widgets/single-room/room-booking.php:54
-msgid "Base (Popup)"
-msgstr ""
-
 #: includes/elementor/widgets/single-room/room-booking.php:55
 msgid "Form"
 msgstr ""
@@ -3120,24 +3088,6 @@ msgstr ""
 #: includes/elementor/widgets/single-room/room-booking.php:136
 #: includes/elementor/widgets/single-room/room-review.php:96
 msgid "Radius Item"
-msgstr ""
-
-#: includes/elementor/widgets/single-room/room-booking.php:249
-#: templates/single-room/search/check-dates-available.php:27
-#: templates/single-room/search/search-available.php:31
-msgid "Please set check-in date and check-out date before check available."
-msgstr ""
-
-#: includes/elementor/widgets/single-room/room-booking.php:255
-#: templates/single-room/booking-form.php:74
-#: templates/single-room/search/check-dates-available.php:34
-msgid "Select Dates"
-msgstr ""
-
-#: includes/elementor/widgets/single-room/room-booking.php:265
-#: templates/single-room/booking-form.php:87
-#: templates/single-room/search/check-dates-available.php:45
-msgid "Adult"
 msgstr ""
 
 #: includes/elementor/widgets/single-room/room-calendar-pricing.php:21
@@ -3328,7 +3278,6 @@ msgid "Pay with Paypal"
 msgstr ""
 
 #: includes/gateways/paypal/class-wphb-payment-gateway-paypal.php:142
-#, php-format
 msgid "<br /><small>(Paid %1$s%% of %2$s via %3$s)</small>"
 msgstr ""
 
@@ -3337,7 +3286,6 @@ msgid "Error: Booking ID and key were not found in \"custom\"."
 msgstr ""
 
 #: includes/gateways/paypal/class-wphb-payment-gateway-paypal.php:239
-#, php-format
 msgid "Error: Booking Keys do not match %1$s and %2$s."
 msgstr ""
 
@@ -3620,7 +3568,6 @@ msgid "roomId is invalid"
 msgstr ""
 
 #: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:525
-#, php-format
 msgid "The maximum number of rooms you can book is %s"
 msgstr ""
 
@@ -3638,12 +3585,10 @@ msgid "Room not found"
 msgstr ""
 
 #: includes/room/class-wphb-booking-room.php:236
-#, php-format
 msgid "The maximum number of adults allowed per room is %s"
 msgstr ""
 
 #: includes/room/class-wphb-booking-room.php:239
-#, php-format
 msgid "The maximum number of children allowed per room is %s"
 msgstr ""
 
@@ -3653,7 +3598,7 @@ msgstr ""
 
 #: includes/room/class-wphb-booking-room.php:276
 #: templates/checkout/order-pay.php:39
-#: templates/single-room/booking-form.php:119
+#: templates/single-room/booking-form.php:124
 msgid "Total: "
 msgstr ""
 
@@ -3701,7 +3646,7 @@ msgstr ""
 msgid "Enter Url"
 msgstr ""
 
-#: includes/TemplateHooks/ArchiveRoomTemplate.php:193
+#: includes/TemplateHooks/ArchiveRoomTemplate.php:199
 #: templates/pagination.php:36
 #: templates/search/results.php:43
 #: templates/search/v2/pagination-v2.php:38
@@ -3710,15 +3655,15 @@ msgstr ""
 msgid "Previous"
 msgstr ""
 
-#: includes/TemplateHooks/ArchiveRoomTemplate.php:194
+#: includes/TemplateHooks/ArchiveRoomTemplate.php:200
 #: templates/pagination.php:37
 #: templates/search/results.php:44
 #: templates/search/v2/pagination-v2.php:39
 msgid "Next"
 msgstr ""
 
-#: includes/TemplateHooks/ArchiveRoomTemplate.php:206
-#: includes/TemplateHooks/ArchiveRoomTemplate.php:234
+#: includes/TemplateHooks/ArchiveRoomTemplate.php:212
+#: includes/TemplateHooks/ArchiveRoomTemplate.php:237
 msgid "Check avaibility"
 msgstr ""
 
@@ -5763,7 +5708,6 @@ msgid "Zimbabwe"
 msgstr ""
 
 #: includes/wphb-functions.php:2504
-#, php-format
 msgid "%1$s"
 msgstr ""
 
@@ -5780,12 +5724,10 @@ msgid "Terms Page"
 msgstr ""
 
 #: includes/wphb-template-functions.php:220
-#, php-format
 msgid "Search Results: &ldquo;%s&rdquo;"
 msgstr ""
 
 #: includes/wphb-template-functions.php:223
-#, php-format
 msgid "&nbsp;&ndash; Page %s"
 msgstr ""
 
@@ -5794,12 +5736,10 @@ msgid "Showing only one item."
 msgstr ""
 
 #: includes/wphb-template-functions.php:710
-#, php-format
 msgid "Showing the last items of %s results."
 msgstr ""
 
 #: includes/wphb-template-functions.php:713
-#, php-format
 msgid "Showing %1$s of %2$s results."
 msgstr ""
 
@@ -5808,7 +5748,6 @@ msgid "WP Hotel Booking webhook process Complete"
 msgstr ""
 
 #: templates/account/account.php:18
-#, php-format
 msgid "You must <strong><a href=\"%s\">Login<a/></strong>."
 msgstr ""
 
@@ -5860,7 +5799,6 @@ msgstr ""
 
 #: templates/cart/cart.php:90
 #: templates/checkout/checkout.php:80
-#, php-format
 msgid "%d adult"
 msgid_plural "%d adults"
 msgstr[0] ""
@@ -5868,7 +5806,6 @@ msgstr[1] ""
 
 #: templates/cart/cart.php:91
 #: templates/checkout/checkout.php:81
-#, php-format
 msgid "%d child"
 msgid_plural "%d children"
 msgstr[0] ""
@@ -5899,7 +5836,6 @@ msgid "I want to pay all"
 msgstr ""
 
 #: templates/checkout/checkout.php:152
-#, php-format
 msgid "You have to <strong><a href=\"%1$s\">login</a></strong> or <strong><a href=\"%2$s\">register</a></strong> to checkout."
 msgstr ""
 
@@ -5941,7 +5877,6 @@ msgid "Phone Number"
 msgstr ""
 
 #: templates/checkout/order-pay.php:25
-#, php-format
 msgid "Booking ID: %s"
 msgstr ""
 
@@ -5962,7 +5897,6 @@ msgid "Advance Payment: "
 msgstr ""
 
 #: templates/checkout/order-pay.php:51
-#, php-format
 msgid "%s was pay completed"
 msgstr ""
 
@@ -5971,12 +5905,10 @@ msgid "Thank you! Your booking has been placed. We will contact you to confirm a
 msgstr ""
 
 #: templates/checkout/thank-you.php:48
-#, php-format
 msgid "Booking %s"
 msgstr ""
 
 #: templates/checkout/thank-you.php:50
-#, php-format
 msgid "Date %s"
 msgstr ""
 
@@ -6185,7 +6117,6 @@ msgid "Continue"
 msgstr ""
 
 #: templates/setup/footer.php:17
-#, php-format
 msgid "WP Hotel Booking %s. Designed by @ThimPress."
 msgstr ""
 
@@ -6219,7 +6150,6 @@ msgid "The pages will display content of Wp Hotel's necessary pages, such as: Ro
 msgstr ""
 
 #: templates/setup/steps/pages.php:20
-#, php-format
 msgid "If you are not sure, click <a href=\"%s\" id=\"create-pages\">here</a> to create pages automatically."
 msgstr ""
 
@@ -6248,7 +6178,6 @@ msgid "Write a Review"
 msgstr ""
 
 #: templates/single-room-reviews.php:94
-#, php-format
 msgid "%s Review"
 msgid_plural "%s Reviews"
 msgstr[0] ""
@@ -6273,7 +6202,6 @@ msgid "Top Review"
 msgstr ""
 
 #: templates/single-room-reviews.php:241
-#, php-format
 msgid "%1$s review for %2$s"
 msgid_plural "%1$s reviews for %2$s"
 msgstr[0] ""
@@ -6292,7 +6220,6 @@ msgid "Be the first to review"
 msgstr ""
 
 #: templates/single-room-reviews.php:283
-#, php-format
 msgid "Leave a Reply to %s"
 msgstr ""
 
@@ -6312,19 +6239,29 @@ msgstr ""
 msgid "Booking form"
 msgstr ""
 
-#: templates/single-room/booking-form.php:100
+#: templates/single-room/booking-form.php:79
+#: templates/single-room/search/check-dates-available.php:34
+msgid "Select Dates"
+msgstr ""
+
+#: templates/single-room/booking-form.php:92
+#: templates/single-room/search/check-dates-available.php:45
+msgid "Adult"
+msgstr ""
+
+#: templates/single-room/booking-form.php:105
 msgid "Room(s)"
 msgstr ""
 
-#: templates/single-room/booking-form.php:102
+#: templates/single-room/booking-form.php:107
 msgid "Max:"
 msgstr ""
 
-#: templates/single-room/booking-form.php:128
+#: templates/single-room/booking-form.php:133
 msgid "View details"
 msgstr ""
 
-#: templates/single-room/booking-form.php:141
+#: templates/single-room/booking-form.php:146
 msgid "Book room"
 msgstr ""
 
@@ -6377,6 +6314,11 @@ msgstr ""
 msgid "Select Number Of Room"
 msgstr ""
 
+#: templates/single-room/search/check-dates-available.php:27
+#: templates/single-room/search/search-available.php:31
+msgid "Please set check-in date and check-out date before check available."
+msgstr ""
+
 #: templates/single-room/search/search-available.php:60
 msgid "Quantity Available"
 msgstr ""
@@ -6386,7 +6328,6 @@ msgid "--- Quantity ---"
 msgstr ""
 
 #: wp-hotel-booking.php:620
-#, php-format
 msgid "The image number is greater than %s"
 msgstr ""
 
@@ -6395,7 +6336,6 @@ msgid "The image file type is invalid"
 msgstr ""
 
 #: wp-hotel-booking.php:622
-#, php-format
 msgid "The maximum file size is %s KB"
 msgstr ""
 

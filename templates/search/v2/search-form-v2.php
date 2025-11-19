@@ -69,7 +69,7 @@ if ( $args && isset( $args['atts'] ) ) {
 						array(
 							'name'              => 'adults_capacity',
 							'min'               => 1,
-							'max'               => hb_get_max_capacity_of_rooms(),
+							'max'               => 10,
 							'show_option_none'  => __( 'Adults', 'wp-hotel-booking' ),
 							'selected'          => $adults,
 							'option_none_value' => '',
