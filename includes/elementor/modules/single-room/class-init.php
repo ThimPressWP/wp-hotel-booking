@@ -15,6 +15,7 @@ class Init extends Modules {
 
 		add_action( 'WPHB/modules/single-room/before-preview-query', array( $this, 'before_preview_query' ) );
 		add_action( 'WPHB/modules/single-room/after-preview-query', array( $this, 'after_preview_query' ) );
+		add_filter( 'thim_ekit/elementor/documents/preview_item', array( $this, 'add_preview_type' ), 10, 2 );
 	}
 
 	public function template_include( $template ) {
@@ -39,6 +40,14 @@ class Init extends Modules {
 		}
 
 		return $output;
+	}
+
+	public function add_preview_type( $post_type, $type ) {
+		if ( $type === 'single-room' ) {
+			$post_type = 'hb_room';
+		}
+
+		return $post_type;
 	}
 
 	public function before_preview_query() {
