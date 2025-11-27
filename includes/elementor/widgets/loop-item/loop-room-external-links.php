@@ -660,7 +660,9 @@ class Thim_Ekit_Widget_Loop_Room_External_Links extends Widget_Base {
 		// Get image dimensions from settings
 		$image_width  = ! empty( $settings['image_width']['size'] ) ? $settings['image_width']['size'] : 50;
 		$image_height = ! empty( $settings['image_height']['size'] ) ? $settings['image_height']['size'] : 50;
-
+		if ( empty( $external_links ) ) {
+			return;
+		}
 		?>
 		<div class="external-ota-platform-container loop-room-external-links">
 			<?php if ( ! empty( $title ) ) : ?>
