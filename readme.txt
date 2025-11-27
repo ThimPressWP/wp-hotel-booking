@@ -3,7 +3,7 @@ Contributors: thimpress, leehld, phamtungpth, thoakim
 Donate link: https://thimpress.com/
 Tags: hotel booking, reservation, booking system, room management, accommodation
 Tested up to: 6.8
-Stable tag: 2.2.4
+Stable tag: 2.2.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,14 @@ Yes.
 7. System settings
 
 == Changelog ==
+
+= 2.2.6 (2025-11-27) =
+~ Fixed: bug input select-date-range display after submit cf7.
+~ Fixed: show external link in widget loop item Elementor.
+
+= 2.2.5 (20205-11-17) =
+~ Fixed: responsive calendar in tablet and mobile.
+~ Fixed: minor bugs.
 
 = 2.2.4 (20205-11-13) =
 ~ Feature: external link.
