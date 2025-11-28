@@ -4,7 +4,7 @@
  * Plugin URI: http://thimpress.com/
  * Description: Full of professional features for a booking room system
  * Author: ThimPress
- * Version: 2.2.5.1
+ * Version: 2.2.6.1
  * Author URI: http://thimpress.com
  * Text Domain: wp-hotel-booking
  * Domain Path: /languages/
@@ -95,7 +95,7 @@ class WP_Hotel_Booking {
 		add_action( 'init', array( $this, 'init' ), 20 );
 
 		// create new blog in multisite
-		add_action( 'wpmu_new_blog', array( $this, 'create_new_blog' ), 10, 6 );
+		add_action( 'wp_initialize_site', array( $this, 'create_new_blog' ), 10, 2 );
 		// multisite delete table in multisite
 		add_filter( 'wpmu_drop_tables', array( $this, 'delete_blog_table' ) );
 
@@ -147,8 +147,8 @@ class WP_Hotel_Booking {
 	}
 
 	// create new blog table
-	public function create_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
-		WPHB_Install::create_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta );
+	public function create_new_blog( $new_site, $args ) {
+		WPHB_Install::create_new_blog( $new_site, $args );
 	}
 
 	// delete table when delete blog, multisite

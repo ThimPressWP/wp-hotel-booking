@@ -344,8 +344,9 @@ class WPHB_Install {
 	}
 
 	// create new table when create new blog multisite
-	static function create_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
-		$plugin = basename( WPHB_PLUGIN_PATH ) . '/' . basename( WPHB_PLUGIN_PATH ) . '.php';
+	static function create_new_blog( $new_site, $args ) {
+		$blog_id = $new_site->blog_id;
+		$plugin  = basename( WPHB_PLUGIN_PATH ) . '/' . basename( WPHB_PLUGIN_PATH ) . '.php';
 		if ( is_plugin_active_for_network( $plugin ) ) {
 			// switch to current blog
 			switch_to_blog( $blog_id );
