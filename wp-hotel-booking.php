@@ -90,7 +90,11 @@ class WP_Hotel_Booking {
 		// add_action( 'admin_init', array( $this, 'create_tables' ) );
 		register_activation_hook( plugin_basename( __FILE__ ), array( $this, 'install' ) );
 		register_deactivation_hook( plugin_basename( __FILE__ ), array( $this, 'uninstall' ) );
-		// add_action( 'plugin_loaded', array( $this, 'install' ) );
+		add_action( 'plugin_loaded', function() {
+			if ( ! get_option( 'hotel_booking_version', false ) ) {
+				$this->install();
+			}
+		} );
 
 		add_action( 'init', array( $this, 'init' ), 20 );
 
