@@ -223,7 +223,14 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		 */
 		public function posts_join_paged( $join ) {
 			global $wpdb;
-			$result = $wpdb->get_col( "SELECT order_item_id FROM {$wpdb->prefix}hotel_booking_order_items WHERE `order_item_id` IS NOT NULL" );
+			$table_name   = $wpdb->prefix . 'hotel_booking_order_items';
+			$table_exists = $wpdb->get_var( "SHOW TABLES LIKE '{$table_name}'" ) === $table_name;
+			
+			if ( ! $table_exists ) {
+				return $join;
+			}
+
+			$result = $wpdb->get_col( "SELECT order_item_id FROM $table_name WHERE `order_item_id` IS NOT NULL" );
 			if ( ! $this->is_search( 'booking' ) || ! $result ) {
 				return $join;
 			}
