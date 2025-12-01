@@ -62,7 +62,7 @@ class ArchiveRoomTemplate {
 			'max_price'      => hb_get_request( 'max_price', '' ),
 			'rating'         => hb_get_request( 'rating', '' ),
 			'room_type'      => $room_type,
-			'sort_by'        => hb_get_request( 'sort_by', '' ),
+			'sort_by'        => hb_get_request( 'sort_by', 'date-desc' ),
 		);
 
 		$results = hb_search_rooms( $atts );
