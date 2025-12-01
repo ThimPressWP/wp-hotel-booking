@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WP Hotel Booking plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Hotel Booking 2.2.6\n"
+"Project-Id-Version: WP Hotel Booking 2.2.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-hotel-booking\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-11-27T11:45:47+03:00\n"
+"POT-Creation-Date: 2025-12-01T08:01:27+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wp-hotel-booking\n"
@@ -210,7 +210,7 @@ msgid "Extra Settings"
 msgstr ""
 
 #: includes/admin/metaboxes/rooms/class-wphb-admin-metabox-extra-options.php:33
-#: includes/class-wphb-post-types.php:417
+#: includes/class-wphb-post-types.php:424
 #: includes/elementor/widgets/global/filter-room-selected.php:347
 #: includes/elementor/widgets/global/filter-room.php:67
 #: includes/elementor/widgets/global/filter-room.php:637
@@ -294,7 +294,7 @@ msgid "Block Special Date"
 msgstr ""
 
 #: includes/admin/metaboxes/rooms/class-wphb-admin-metabox-rooms.php:58
-#: includes/class-wphb-post-types.php:568
+#: includes/class-wphb-post-types.php:575
 #: includes/elementor/widgets/single-room/room-thumb.php:242
 msgid "Gallery"
 msgstr ""
@@ -354,7 +354,7 @@ msgid "Enter deposit amount"
 msgstr ""
 
 #: includes/admin/metaboxes/rooms/class-wphb-admin-metabox-rooms.php:216
-#: includes/class-wphb-post-types.php:418
+#: includes/class-wphb-post-types.php:425
 msgid "Number of Rooms"
 msgstr ""
 
@@ -566,8 +566,8 @@ msgstr ""
 #: includes/admin/metaboxes/views/meta-booking-items-template-js.php:57
 #: includes/admin/metaboxes/views/meta-booking-items-template-js.php:94
 #: includes/admin/metaboxes/views/meta-booking-items-template-js.php:167
-#: includes/class-wphb-post-types.php:641
-#: includes/class-wphb-post-types.php:643
+#: includes/class-wphb-post-types.php:648
+#: includes/class-wphb-post-types.php:650
 #: includes/elementor/widgets/global/search-room.php:73
 #: includes/elementor/widgets/global/search-room.php:746
 #: includes/TemplateHooks/ArchiveRoomTemplate.php:233
@@ -1496,25 +1496,25 @@ msgid "Invalid booking status"
 msgstr ""
 
 #: includes/booking/wphb-booking-functions.php:133
-#: includes/class-wphb-post-types.php:818
+#: includes/class-wphb-post-types.php:825
 msgctxt "Booking status"
 msgid "Cancelled"
 msgstr ""
 
 #: includes/booking/wphb-booking-functions.php:134
-#: includes/class-wphb-post-types.php:828
+#: includes/class-wphb-post-types.php:835
 msgctxt "Booking status"
 msgid "Pending"
 msgstr ""
 
 #: includes/booking/wphb-booking-functions.php:135
-#: includes/class-wphb-post-types.php:838
+#: includes/class-wphb-post-types.php:845
 msgctxt "Booking status"
 msgid "Processing"
 msgstr ""
 
 #: includes/booking/wphb-booking-functions.php:136
-#: includes/class-wphb-post-types.php:848
+#: includes/class-wphb-post-types.php:855
 msgctxt "Booking status"
 msgid "Completed"
 msgstr ""
@@ -1785,7 +1785,7 @@ msgid "Rating Room"
 msgstr ""
 
 #: includes/class-wphb-comments.php:666
-#: includes/class-wphb-post-types.php:471
+#: includes/class-wphb-post-types.php:478
 #: includes/elementor/widgets/loop-item/loop-room-rating.php:138
 #: templates/loop/rating.php:27
 #: templates/single-room/review.php:36
@@ -1923,262 +1923,262 @@ msgstr ""
 msgid "Percent cart"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:415
-#: includes/class-wphb-post-types.php:740
+#: includes/class-wphb-post-types.php:422
+#: includes/class-wphb-post-types.php:747
 msgid "Room Type"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:416
-#: includes/class-wphb-post-types.php:781
-#: includes/class-wphb-post-types.php:784
+#: includes/class-wphb-post-types.php:423
+#: includes/class-wphb-post-types.php:788
+#: includes/class-wphb-post-types.php:791
 msgid "Room Capacity"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:419
+#: includes/class-wphb-post-types.php:426
 #: includes/elementor/widgets/loop-item/loop-room-rating.php:107
 msgid "Average Rating"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:457
+#: includes/class-wphb-post-types.php:464
 msgid "Adults:"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:459
+#: includes/class-wphb-post-types.php:466
 msgid "Children:"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:464
+#: includes/class-wphb-post-types.php:471
 msgid "View Price"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:570
+#: includes/class-wphb-post-types.php:577
 msgid "Capacity"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:572
+#: includes/class-wphb-post-types.php:579
 msgid "Ordering"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:639
+#: includes/class-wphb-post-types.php:646
 msgctxt "post type general name"
 msgid "Rooms"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:640
+#: includes/class-wphb-post-types.php:647
 msgctxt "post type singular name"
 msgid "Room"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:642
-#: includes/class-wphb-post-types.php:695
+#: includes/class-wphb-post-types.php:649
+#: includes/class-wphb-post-types.php:702
 #: includes/coupons/class-wphb-coupon-hooks.php:50
 msgid "Parent Item:"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:644
+#: includes/class-wphb-post-types.php:651
 msgid "View Room"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:645
-#: includes/class-wphb-post-types.php:646
+#: includes/class-wphb-post-types.php:652
+#: includes/class-wphb-post-types.php:653
 msgid "Add New Room"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:647
+#: includes/class-wphb-post-types.php:654
 msgid "Edit Room"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:648
+#: includes/class-wphb-post-types.php:655
 msgid "Update Room"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:649
+#: includes/class-wphb-post-types.php:656
 #: includes/elementor/widgets/global/search-room.php:27
 msgid "Search Room"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:650
+#: includes/class-wphb-post-types.php:657
 #: includes/TemplateHooks/ArchiveRoomTemplate.php:90
 msgid "No room found"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:651
+#: includes/class-wphb-post-types.php:658
 msgid "No room found in Trash"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:675
+#: includes/class-wphb-post-types.php:682
 msgctxt "URL slug"
 msgid "room"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:692
+#: includes/class-wphb-post-types.php:699
 msgctxt "post type general name"
 msgid "Bookings Order"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:693
+#: includes/class-wphb-post-types.php:700
 msgctxt "post type singular name"
 msgid "Booking Order"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:694
-#: includes/class-wphb-post-types.php:696
+#: includes/class-wphb-post-types.php:701
+#: includes/class-wphb-post-types.php:703
 msgid "Bookings Order"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:697
+#: includes/class-wphb-post-types.php:704
 msgid "View Booking"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:698
+#: includes/class-wphb-post-types.php:705
 msgid "Add New Booking"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:699
+#: includes/class-wphb-post-types.php:706
 #: includes/coupons/class-wphb-coupon-hooks.php:54
 msgid "Add New"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:700
+#: includes/class-wphb-post-types.php:707
 msgid "Edit Booking"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:701
+#: includes/class-wphb-post-types.php:708
 msgid "Update Booking"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:702
+#: includes/class-wphb-post-types.php:709
 msgid "Search Booking"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:703
+#: includes/class-wphb-post-types.php:710
 msgid "No booking found"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:704
+#: includes/class-wphb-post-types.php:711
 msgid "No booking found in Trash"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:742
+#: includes/class-wphb-post-types.php:749
 msgctxt "taxonomy general name"
 msgid "Room Types"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:743
+#: includes/class-wphb-post-types.php:750
 msgctxt "taxonomy singular name"
 msgid "Room Type"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:744
+#: includes/class-wphb-post-types.php:751
 msgctxt "Room Types"
 msgid "Room Types"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:745
+#: includes/class-wphb-post-types.php:752
 msgid "Search Room Types"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:746
+#: includes/class-wphb-post-types.php:753
 msgid "All Room Types"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:747
+#: includes/class-wphb-post-types.php:754
 msgid "Parent Room Type"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:748
+#: includes/class-wphb-post-types.php:755
 msgid "Parent Room Type:"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:749
+#: includes/class-wphb-post-types.php:756
 msgid "Edit Room Type"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:750
+#: includes/class-wphb-post-types.php:757
 msgid "Update Room Type"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:751
+#: includes/class-wphb-post-types.php:758
 msgid "Add New Room Type"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:752
+#: includes/class-wphb-post-types.php:759
 msgid "New Room Type Name"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:757
+#: includes/class-wphb-post-types.php:764
 msgctxt "URL slug"
 msgid "room-type"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:783
+#: includes/class-wphb-post-types.php:790
 msgid "Room Capacities"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:785
+#: includes/class-wphb-post-types.php:792
 msgctxt "Room Capacities"
 msgid "Room Capacities"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:786
+#: includes/class-wphb-post-types.php:793
 msgid "Search Room Capacities"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:787
+#: includes/class-wphb-post-types.php:794
 msgid "All Room Capacity"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:788
+#: includes/class-wphb-post-types.php:795
 msgid "Parent Room Capacity"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:789
+#: includes/class-wphb-post-types.php:796
 msgid "Parent Room Capacity:"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:790
+#: includes/class-wphb-post-types.php:797
 msgid "Edit Room Capacity"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:791
+#: includes/class-wphb-post-types.php:798
 msgid "Update Room Capacity"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:792
+#: includes/class-wphb-post-types.php:799
 msgid "Add New Room Capacity"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:793
+#: includes/class-wphb-post-types.php:800
 msgid "New Room Type Capacity"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:798
+#: includes/class-wphb-post-types.php:805
 msgctxt "URL slug"
 msgid "room-capacity"
 msgstr ""
 
-#: includes/class-wphb-post-types.php:823
+#: includes/class-wphb-post-types.php:830
 #, php-format
 msgid "Cancelled <span class=\"count\">(%s)</span>"
 msgid_plural "Cancelled <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-wphb-post-types.php:833
+#: includes/class-wphb-post-types.php:840
 #, php-format
 msgid "Pending <span class=\"count\">(%s)</span>"
 msgid_plural "Pending <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-wphb-post-types.php:843
+#: includes/class-wphb-post-types.php:850
 #, php-format
 msgid "Processing <span class=\"count\">(%s)</span>"
 msgid_plural "Processing <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-wphb-post-types.php:853
+#: includes/class-wphb-post-types.php:860
 #, php-format
 msgid "Completed <span class=\"count\">(%s)</span>"
 msgid_plural "Completed <span class=\"count\">(%s)</span>"
@@ -2320,7 +2320,7 @@ msgid "Padding"
 msgstr ""
 
 #: includes/elementor/modules/single-room/class-init.php:13
-#: includes/elementor/modules/single-room/class-init.php:105
+#: includes/elementor/modules/single-room/class-init.php:114
 msgid "Single Room"
 msgstr ""
 
@@ -6380,16 +6380,16 @@ msgstr ""
 msgid "--- Quantity ---"
 msgstr ""
 
-#: wp-hotel-booking.php:620
+#: wp-hotel-booking.php:624
 #, php-format
 msgid "The image number is greater than %s"
 msgstr ""
 
-#: wp-hotel-booking.php:621
+#: wp-hotel-booking.php:625
 msgid "The image file type is invalid"
 msgstr ""
 
-#: wp-hotel-booking.php:622
+#: wp-hotel-booking.php:626
 #, php-format
 msgid "The maximum file size is %s KB"
 msgstr ""
