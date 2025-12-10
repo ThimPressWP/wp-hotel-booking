@@ -482,7 +482,7 @@ class WP_Hotel_Booking {
 		);
 		wp_register_script(
 			'wp-admin-room-filter',
-			$this->plugin_url( "assets/js/admin/room-filter{$min}.js" ),
+			$this->plugin_url( "assets/js/admin/room-filter.js" ),
 			array_merge( $dependencies, array() ),
 			$v_rand
 		);
