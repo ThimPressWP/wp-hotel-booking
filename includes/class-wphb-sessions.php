@@ -15,14 +15,25 @@
 defined( 'ABSPATH' ) || exit;
 
 if ( ! session_id() ) {
-	@session_start( array( 'read_and_close' => true ) );
+	// Skip session for REST API requests - major performance improvement
+	$skip_session = defined( 'REST_REQUEST' ) && REST_REQUEST;
+
+	// Skip for CLI/WP-CLI requests
+	$skip_session = $skip_session || php_sapi_name() === 'cli' || defined( 'WP_CLI' );
+
+	// Skip for cron requests
+	$skip_session = $skip_session || ( defined( 'DOING_CRON' ) && DOING_CRON );
+
+	if ( ! $skip_session ) {
+		@session_start( array( 'read_and_close' => true ) );
+	}
 }
 
 if ( ! class_exists( 'WPHB_Sessions' ) ) {
 	/**
 	 * Class WPHB_Sessions
 	 */
-	final class WPHB_Sessions {
+	class WPHB_Sessions {
 		/**
 		 * @var null
 		 */
@@ -77,10 +88,14 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 			} elseif ( $this->remember && isset( $_COOKIE[ $this->prefix ] ) ) {
 				return $_SESSION[ $this->prefix ] = json_decode( WPHB_Helpers::sanitize_params_submitted( $_COOKIE[ $this->prefix ] ), true );
 			} else {
-				$transient_prefix = $this->prefix . '_' . session_id();
-				$transient        = get_transient( $transient_prefix );
-				if ( ! empty( $transient ) && is_array( $transient ) ) {
-					return $transient;
+				// Only try transient if the session ID exists (sessions may be skipped for REST/CLI)
+				$session_id = session_id();
+				if ( ! empty( $session_id ) ) {
+					$transient_prefix = $this->prefix . '_' . $session_id;
+					$transient        = get_transient( $transient_prefix );
+					if ( ! empty( $transient ) && is_array( $transient ) ) {
+						return $transient;
+					}
 				}
 			}
 
@@ -100,9 +115,13 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 				setcookie( $this->prefix, '', time() - $this->live_item, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
 			}
 
-			$transient_prefix = $this->prefix . '_' . session_id();
-			if ( get_transient( $transient_prefix ) ) {
-				delete_transient( $transient_prefix );
+			// Only delete transient if session ID exists
+			$session_id = session_id();
+			if ( ! empty( $session_id ) ) {
+				$transient_prefix = $this->prefix . '_' . $session_id;
+				if ( get_transient( $transient_prefix ) ) {
+					delete_transient( $transient_prefix );
+				}
 			}
 
 			return $this->session = null;
@@ -135,8 +154,12 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 			// save cookie
 			if ( $this->remember ) {
 				// set transient for special case when cookie and session was removed after adding
-				$transient_prefix = $this->prefix . '_' . session_id();
-				set_transient( $transient_prefix, $this->session, $this->live_item );
+				// Only set transient if session ID exists (sessions may be skipped for REST/CLI)
+				$session_id = session_id();
+				if ( ! empty( $session_id ) ) {
+					$transient_prefix = $this->prefix . '_' . $session_id;
+					set_transient( $transient_prefix, $this->session, $this->live_item );
+				}
 				@setcookie( $this->prefix, wp_json_encode( $this->session ), $time, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
 			}
 		}
