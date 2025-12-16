@@ -190,10 +190,7 @@ class WPHB_Ajax {
 	 * Fetch customer information with user email
 	 */
 	static function fetch_customer_info() {
-		if ( empty( hb_get_request( 'nonce', false ) )
-			|| ! wp_verify_nonce( hb_get_request( 'nonce' ), 'hb_booking_nonce_action' ) ) {
-			die();
-		}
+		check_ajax_referer( 'wphb_get_customer_info' );
 		$email = hb_get_request( 'email' );
 		$args  = array(
 			'post_type'   => 'hb_booking',
