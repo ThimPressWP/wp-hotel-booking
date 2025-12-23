@@ -49,7 +49,7 @@ import flatpickr from 'flatpickr';
 		return data;
 	}
 
-	function fetchCustomerInfo() {
+	/*function fetchCustomerInfo() {
 		const $button = $( this ),
 			$email = $( 'input[name="existing-customer-email"]' );
 		if ( ! isEmail( $email.val() ) ) {
@@ -103,7 +103,7 @@ import flatpickr from 'flatpickr';
 				$email.removeAttr( 'disabled' );
 			},
 		} );
-	}
+	}*/
 
 	function hotel_checkout_fetch_error( msgs ) {
 		if ( msgs.length === 0 ) {
@@ -827,7 +827,7 @@ import flatpickr from 'flatpickr';
 			}
 		} );
 
-		$( '#fetch-customer-info' ).click( fetchCustomerInfo );
+		// $( '#fetch-customer-info' ).click( fetchCustomerInfo );
 
 		$doc.on( 'click', '.hb-view-booking-room-details, .hb_search_room_item_detail_price_close', function( e ) {
 			e.preventDefault();

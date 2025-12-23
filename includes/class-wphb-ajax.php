@@ -190,6 +190,7 @@ class WPHB_Ajax {
 	 * Fetch customer information with user email
 	 */
 	static function fetch_customer_info() {
+		wp_die();
 		check_ajax_referer( 'wphb_get_customer_info' );
 		$email = hb_get_request( 'email' );
 		$args  = array(
