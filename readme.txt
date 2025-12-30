@@ -2,8 +2,8 @@
 Contributors: thimpress, leehld, phamtungpth, thoakim
 Donate link: https://thimpress.com/
 Tags: hotel booking, reservation, booking system, room management, accommodation
-Tested up to: 6.8
-Stable tag: 2.2.6
+Tested up to: 6.9
+Stable tag: 2.2.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,9 @@ Yes.
 7. System settings
 
 == Changelog ==
+
+= 2.2.8 (2025-12-30) =
+~ Fixed: security.
 
 = 2.2.7 (2025-12-01) =
 ~ Fixed: minor bugs.
