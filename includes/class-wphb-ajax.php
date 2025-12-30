@@ -33,7 +33,7 @@ class WPHB_Ajax {
 		}
 
 		$ajax_actions = array(
-			'fetch_customer_info'      => true,
+			//'fetch_customer_info'      => true,
 			'place_order'              => true,
 			'load_room_type_galley'    => false,
 			'parse_search_params'      => true,
@@ -188,12 +188,12 @@ class WPHB_Ajax {
 
 	/**
 	 * Fetch customer information with user email
+	 * @deprecated 2.2.8
 	 */
 	static function fetch_customer_info() {
-		if ( empty( hb_get_request( 'nonce', false ) )
-			|| ! wp_verify_nonce( hb_get_request( 'nonce' ), 'hb_booking_nonce_action' ) ) {
-			die();
-		}
+		_deprecated_function( __METHOD__, '2.2.8' );
+		die();
+		check_ajax_referer( 'wphb_get_customer_info' );
 		$email = hb_get_request( 'email' );
 		$args  = array(
 			'post_type'   => 'hb_booking',

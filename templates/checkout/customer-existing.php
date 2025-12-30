@@ -32,6 +32,7 @@ $cart = WP_Hotel_Booking::instance()->cart;
 						<input type="email" name="existing-customer-email"
 								value="<?php echo esc_attr( $cart->customer_email ); ?>"
 								placeholder="<?php _e( 'Your email here', 'wp-hotel-booking' ); ?>"/>
+						<?php wp_nonce_field( 'wphb_get_customer_info', 'existing-customer-nonce' ); ?>
 					</div>
 				</li>
 				<li>

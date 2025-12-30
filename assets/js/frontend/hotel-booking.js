@@ -49,7 +49,7 @@ import flatpickr from 'flatpickr';
 		return data;
 	}
 
-	function fetchCustomerInfo() {
+	/*function fetchCustomerInfo() {
 		const $button = $( this ),
 			$email = $( 'input[name="existing-customer-email"]' );
 		if ( ! isEmail( $email.val() ) ) {
@@ -60,7 +60,9 @@ import flatpickr from 'flatpickr';
 		}
 		$button.attr( 'disabled', true );
 		$email.attr( 'disabled', true );
-		const customer_table = $( '.hb-col-padding.hb-col-border' );
+		const customer_table = $( '.hb-col-padding.hb-col-border' ),
+		nonceField = $email.closest( '.hb-form-field-input' ).find( '[name="existing-customer-nonce"]' );
+
 		$.ajax( {
 			url: hotel_settings.ajax,
 			dataType: 'html',
@@ -68,7 +70,8 @@ import flatpickr from 'flatpickr';
 			data: {
 				action: 'hotel_booking_fetch_customer_info',
 				email: $email.val(),
-				nonce: hotel_settings.nonce,
+				_ajax_nonce: nonceField?.val() ?? '',
+				_wp_http_referer: window.location.pathname
 			},
 			beforeSend() {
 				customer_table.hb_overlay_ajax_start();
@@ -100,7 +103,7 @@ import flatpickr from 'flatpickr';
 				$email.removeAttr( 'disabled' );
 			},
 		} );
-	}
+	}*/
 
 	function hotel_checkout_fetch_error( msgs ) {
 		if ( msgs.length === 0 ) {
@@ -824,7 +827,7 @@ import flatpickr from 'flatpickr';
 			}
 		} );
 
-		$( '#fetch-customer-info' ).click( fetchCustomerInfo );
+		// $( '#fetch-customer-info' ).click( fetchCustomerInfo );
 
 		$doc.on( 'click', '.hb-view-booking-room-details, .hb_search_room_item_detail_price_close', function( e ) {
 			e.preventDefault();
