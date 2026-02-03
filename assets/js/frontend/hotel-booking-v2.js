@@ -1064,6 +1064,23 @@ const initNumberInputs = () => {
         });
     });
 }
+const show_form_coupon = () => {
+    const couponToggle = document.querySelector('.thim-hb-show-coupon-form');
+    const couponFormWrapper = document.querySelector('.thim-hb-coupon-form-wrapper');
+
+    if (couponToggle && couponFormWrapper) {
+        couponToggle.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (couponFormWrapper.style.display === 'none' || getComputedStyle(couponFormWrapper).display === 'none') {
+                couponFormWrapper.style.display = 'block';
+                couponToggle.textContent = couponToggle.dataset.hideText || 'Hide coupon form';
+            } else {
+                couponFormWrapper.style.display = 'none';
+                couponToggle.textContent = couponToggle.dataset.showText || 'Click here to enter your code';
+            }
+        });
+    }
+};
 // Close dropdown when clicking outside
 document.addEventListener('click', (e) => {
     if (!e.target.closest('.hb-form-number')) {
@@ -1096,7 +1113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     addtocartElementor();
     checkAvailableRooms(); // use multi form search will redirect to page search room with data valid :
     processCheckout();
-
+    show_form_coupon();
     if (hotelBookingSearchNode && hotel_settings && hotel_settings.is_page_search) {
         priceSlider();
         rating();

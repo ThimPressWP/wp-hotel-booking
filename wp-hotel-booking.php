@@ -436,6 +436,7 @@ class WP_Hotel_Booking {
 		wp_register_style( 'wp-admin-hotel-booking-fullcalendar', $this->plugin_url( 'assets/css/fullcalendar.min.css' ) );
 		wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.css' ), [], WPHB_VERSION );
 		wp_register_style( 'wp-hotel-booking-theme-default', $this->plugin_url( 'assets/css/theme-default.css' ), [], rand() );
+		wp_register_style( 'wp-hotel-booking-checkout', $this->plugin_url( 'assets/css/check-out.css' ), [], rand() );
 		wp_register_style( 'wp-admin-hotel-booking-calendar-v2', $this->plugin_url( 'assets/css/admin/main.min.css' ) );
 		wp_register_style( 'tingle-css', $this->plugin_url( 'assets/lib/tingle.css' ) );
 		wp_register_style( 'flatpickr-css', $this->plugin_url( 'assets/lib/flatpickr.min.css' ) );
@@ -589,7 +590,10 @@ class WP_Hotel_Booking {
 			wp_enqueue_script( 'wp-hotel-booking-filter-by' );
 			wp_enqueue_script( 'wp-hotel-booking-room-review' );
 			wp_enqueue_style( 'flatpickr-css' );
-
+			if ( ( ! empty( hb_settings()->get( 'cart_page_id' ) ) && ! is_page( hb_settings()->get( 'cart_page_id' ) ) )
+				|| ( ! empty( hb_settings()->get( 'checkout_page_id' ) ) && ! is_page( hb_settings()->get( 'checkout_page_id' ) ) ) ) {
+				wp_enqueue_style( 'wp-hotel-booking-checkout' );
+			}
 			// Load scripts and styles for single room
 			if ( is_singular( 'hb_room' ) ) {
 				wp_enqueue_style( 'tingle-css' );
