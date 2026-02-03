@@ -705,18 +705,24 @@
 
         .hb-payment-form {
             margin-bottom: 0;
-
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--hb-color-border, #ddd);
             .hb-col-padding.hb-col-border {
                 padding: 0;
                 border: none;
 
                 h4 {
-                    display: none;
+                    font-size: 1em;
+                    font-weight: 600;
+                    margin-bottom: 12px;
                 }
 
                 input[type="radio"]:checked:before {
                     width: 10px;
                     height: 10px;
+                }
+                .hb-payment-methods li:last-child {
+                    margin-bottom: 0;
                 }
             }
         }
@@ -737,8 +743,8 @@
         }
 
         .hb-order-terms {
-            padding: 15px 0 0;
-            border-top: 1px solid var(--hb-color-border, #ddd);
+            padding: 20px 0 0;
+            // border-top: 1px solid var(--hb-color-border, #ddd);
 
             label {
                 display: flex;
