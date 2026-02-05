@@ -310,7 +310,7 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
 				    $max = max( $pricings );
 				    ?>
                     <div class="price">
-                        <span class="title-price"><?php echo $text_before; ?></span>
+                        <span class="title-price"><?php echo esc_html( $text_before ); ?></span>
 
 					    <?php if ( $price_display === 'max' ) { ?>
                             <span class="price_value price_max"><?php echo hb_format_price( $max ); ?></span>
@@ -324,7 +324,7 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
                             <span class="price_value price_min"><?php echo hb_format_price( $min ); ?></span>
 					    <?php } ?>
 
-                        <span class="unit"><?php echo $text_after; ?></span>
+                        <span class="unit"><?php echo esc_html( $text_after ); ?></span>
                     </div>
 			    <?php }
 		    } elseif ( $settings['layout'] == 'pricing_plans' ) {
@@ -332,7 +332,7 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
 		    } else {
 			    $text_price_breakdown = isset( $settings['text_price_breakdown'] ) ? $settings['text_price_breakdown'] : ''; ?>
                 <div class="hb_view_price hb-room-content">
-                    <a href="" class="hb-view-booking-room-details"><?php echo $text_price_breakdown; ?></a>
+                    <a href="" class="hb-view-booking-room-details"><?php echo esc_html( $text_price_breakdown ); ?></a>
 				    <?php hb_get_template( 'search/booking-room-details.php', array( 'room' => $room ) ); ?>
                 </div>
 			    <?php

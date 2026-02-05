@@ -87,7 +87,7 @@ class Thim_Ekit_Widget_Loop_Room_Add_To_Cart extends Widget_Base
 
         <?php do_action( 'hotel_booking_loop_before_btn_select_room', $room->post->ID ); ?>
         <div class="hb_search_add_to_cart">
-            <button class="hb_add_to_cart"><?php echo $text_add_to_cart; ?></button>
+            <button class="hb_add_to_cart"><?php echo esc_html( $text_add_to_cart ); ?></button>
             <div class="hb_search_quantity">
                 <?php
                 hb_dropdown_numbers(
