@@ -55,7 +55,7 @@ class WPHB_Ajax {
 			'remove_coupon_on_order'   => false,
 			'load_other_full_calendar' => false,
 			'dismiss_notice'           => true,
-			'create_pages'             => false,
+			'create_pages'             => true,
 		);
 
 		foreach ( $ajax_actions as $action => $priv ) {
@@ -78,10 +78,16 @@ class WPHB_Ajax {
 
 		if ( ! current_user_can( 'edit_pages' ) || empty( $_POST['page_name'] ) ) {
 			$response['message'] = __( 'Request invalid', 'wp-hotel-booking' );
-			hb_send_json( $response );
+			wp_send_json( $response );
+		}
+
+		if ( ! wp_verify_nonce( $_POST['nonce'] ?? '', 'hb_booking_nonce_action' ) ) {
+			$response['message'] = __( 'Nonce is invalid', 'wp-hotel-booking' );
+			wp_send_json( $response );
 		}
 
 		$page_name = WPHB_Helpers::sanitize_params_submitted( $_POST['page_name'] );
+		$page_type = WPHB_Helpers::sanitize_params_submitted( $_POST['page_type'] );
 
 		if ( $page_name ) {
 			$args = array(
@@ -93,6 +99,10 @@ class WPHB_Ajax {
 			$page_id = wp_insert_post( $args );
 
 			if ( $page_id ) {
+				// set page to settings
+				//hb_settings()->set( $page_type . '_page_id', $page_id );
+				update_option( $page_type, $page_id );
+
 				$response['code']    = 1;
 				$response['message'] = 'create page success';
 				$response['page']    = get_post( $page_id );
@@ -106,7 +116,6 @@ class WPHB_Ajax {
 		}
 
 		wp_send_json( $response );
-		die;
 	}
 
 	/**
@@ -396,18 +405,18 @@ class WPHB_Ajax {
 
 				// Check to add extra
 				$hb_optional_quantity_selected = WPHB_Helpers::get_param( 'hb_optional_quantity_selected', [] );
-				$hb_optional_quantity = WPHB_Helpers::get_param( 'hb_optional_quantity', [] );
+				$hb_optional_quantity          = WPHB_Helpers::get_param( 'hb_optional_quantity', [] );
 				if ( ! empty( $hb_optional_quantity_selected ) && ! empty( $hb_optional_quantity ) && $cart_item ) {
 					$extra_cart = HB_Extra_Cart::instance();
 					foreach ( $hb_optional_quantity_selected as $extra_id => $select ) {
 						$extra_cart->ajax_added_cart(
 							$cart_item_id,
 							array(
-								'product_id'                    => $room_id,
-								'hb_optional_quantity'          => array( $extra_id => $hb_optional_quantity[ $extra_id ] ),
+								'product_id'           => $room_id,
+								'hb_optional_quantity' => array( $extra_id => $hb_optional_quantity[ $extra_id ] ),
 								'hb_optional_quantity_selected' => array( $extra_id => 'on' ),
-								'check_in_date'                 => $check_in_date,
-								'check_out_date'                => $check_out_date,
+								'check_in_date'        => $check_in_date,
+								'check_out_date'       => $check_out_date,
 							)
 						);
 					}

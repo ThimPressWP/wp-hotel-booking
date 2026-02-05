@@ -31,7 +31,7 @@
 					$select.attr( 'data-selected', this.value );
 				}
 				return;
-			}           
+			}
 			$listWrap.addClass( 'hide-if-js' );
 			$form.removeClass( 'hide-if-js' ).find( 'input' ).trigger( 'focus' ).val( '' );
 		} );
@@ -62,11 +62,19 @@
 				return;
 			}
 			$button.prop( 'disabled', true );
+
+            // Get name of select
+            $parent = $button.closest( '.hb-form-field' );
+            const $el_select = $parent.find( 'select' ).first();
+            const $page_name = $el_select.attr( 'name' );
+
 			$.ajax( {
 				url: hotel_settings.ajax,
 				data:{
 					action:'hotel_booking_create_pages',
 					page_name,
+                    nonce: hotel_settings.nonce,
+                    page_type: $page_name,
 				},
 				type: 'post',
 				dataType: 'html',
@@ -82,8 +90,8 @@
 						$select.val( response.page.ID ).trigger( 'focus' );
 						$select.val( response.page.ID ).trigger( 'change' );
 						$form.addClass( 'hide-if-js' );
-					} else if ( response.error ) {
-						alert( response.error );
+					} else {
+						alert( response.message );
 					}
 					$button.prop( 'disabled', false );
 					$listWrap.removeClass( 'hide-if-js' );
