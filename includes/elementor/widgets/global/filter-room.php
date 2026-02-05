@@ -270,7 +270,7 @@ class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected
 		);
 
 		$this->add_control(
-			'text_filter_button', 
+			'text_filter_button',
 			[
 				'label'       => esc_html__( 'Text Button', 'wp-hotel-booking' ),
 				'type'        => Controls_Manager::TEXT,
@@ -915,7 +915,7 @@ class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected
 
         if ( $settings['data'] ) { ?>
             <div id="hotel-booking-search-filter" class="hotel-booking-search-filter hb-el">
-			<?php 
+			<?php
 				if ( $settings['filter_toggle_button'] == 'yes' ) {
 					if ( $settings['enable_filter_button'] == 'yes' ) {
 						$extraClass .= ' hb-filter-popup';
@@ -928,7 +928,7 @@ class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected
 			?>
             <form class="search-filter-form search-filter-form-el <?php echo esc_attr($extraClass) ?>" action="">
 				<div class="wrapper-search-fields">
-				<?php 
+				<?php
 				if ( $settings['selected_list'] == 'yes' ) {
 					self::render_selected($settings);
 				}
@@ -962,8 +962,9 @@ class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected
 					$data['max_price']  = !empty($data['max_price']) ? $data['max_price'] : $hb_settings->get( 'filter_price_max', 0 );
 					$data['min_value']  = !empty($data['min_price']) ? $data['min_price'] : hb_get_request( 'min_price' );
 					$data['max_value']  = !empty($data['max_price']) ? $data['max_price'] : hb_get_request( 'max_price' );
-			
-					switch ( $data['meta_field'] ) {
+
+                    $meta_field = sanitize_key( $data['meta_field'] ?? '' );
+					switch ( $meta_field ) {
 						case 'clear':
 							?>
 							<div class="clear-filter">
@@ -974,15 +975,15 @@ class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected
 							<?php
 							break;
 						default:
-						?> 
+						?>
 							<div class="field-item <?php echo esc_attr($classes) ?>">
 						<?php
 							if ( $icon_toggle != '' ){
 								echo $icon_toggle;
 							}
 							hb_get_template( 'search/v2/search-filter/' . $data['meta_field'] . '.php', compact( 'data' ) );
-						?> 
-							</div> 
+						?>
+							</div>
 						<?php
 					}
 				}
