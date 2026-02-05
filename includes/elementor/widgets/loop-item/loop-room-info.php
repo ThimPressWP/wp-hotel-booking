@@ -222,7 +222,7 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List {
 		<span class="elementor-icon-list-text">
 			<?php
 			if (! empty($repeater_item['text'])) {
-				echo esc_html( $repeater_item['text'] );
+				echo wp_kses_post( $repeater_item['text'] );
 			}
 			printf(
 				esc_html(_n('%s Adult', '%s Adults', $adults, 'wp-hotel-booking')),
@@ -246,7 +246,7 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List {
 		<span class="elementor-icon-list-text">
 			<?php
 			if (! empty($repeater_item['text'])) {
-				echo esc_html( $repeater_item['text'] );
+				echo wp_kses_post( $repeater_item['text'] );
 			}
 			printf(
 				esc_html(_n('%s Child', '%s Children', $children, 'wp-hotel-booking')),
@@ -269,7 +269,7 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List {
 		<span class="elementor-icon-list-text">
 			<?php
 			if (! empty($repeater_item['text'])) {
-				echo esc_html( $repeater_item['text'] );
+				echo wp_kses_post( $repeater_item['text'] );
 			}
 			printf(
 				esc_html(_n('%s m²', '%s m²', $area, 'wp-hotel-booking')),
@@ -292,7 +292,7 @@ class Thim_Ekit_Widget_Loop_Room_Info extends Widget_Icon_List {
 		<span class="elementor-icon-list-text">
 			<?php
 			if (! empty($repeater_item['text'])) {
-				echo esc_html( $repeater_item['text'] );
+				echo wp_kses_post( $repeater_item['text'] );
 			}
 			printf(
 				esc_html(_n('%s Bed', '%s Beds', $beds, 'wp-hotel-booking')),
