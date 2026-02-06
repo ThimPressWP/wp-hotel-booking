@@ -51,7 +51,11 @@ class WPHB_Comments {
 	 * @return void
 	 */
 	public function filter_comment_query( $query ) {
-		if ( isset( $_GET['photos_only'] ) && $_GET['photos_only'] === 'yes' ) {
+		// Security: Sanitize $_GET variables
+		$photos_only    = sanitize_key( $_GET['photos_only'] ?? '' );
+		$review_sort_by = sanitize_key( $_GET['review_sort_by'] ?? '' );
+
+		if ( $photos_only === 'yes' ) {
 			$query->query_vars['meta_query'] = array(
 				'relation' => 'AND',
 				array(
@@ -61,13 +65,13 @@ class WPHB_Comments {
 			);
 		}
 
-		if ( isset( $_GET['review_sort_by'] ) && ! empty( $_GET['review_sort_by'] ) ) {
-			if ( $_GET['review_sort_by'] === 'newest' ) {
+		if ( ! empty( $review_sort_by ) ) {
+			if ( $review_sort_by === 'newest' ) {
 				$query->query_vars['orderby'] = 'comment_date_gmt';
 				$query->query_vars['order']   = 'DESC';
 			}
 
-			if ( $_GET['review_sort_by'] === 'top-review' ) {
+			if ( $review_sort_by === 'top-review' ) {
 				$query->query_vars['meta_key'] = 'rating';
 				$query->query_vars['orderby']  = 'meta_value_num';
 				$query->query_vars['order']    = 'DESC';
@@ -83,7 +87,10 @@ class WPHB_Comments {
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'update_review' ),
 				'args'                => array(),
-				'permission_callback' => '__return_true',
+				// Security: Require user to be logged in at permission level
+				'permission_callback' => function () {
+					return is_user_logged_in();
+				},
 			)
 		);
 	}

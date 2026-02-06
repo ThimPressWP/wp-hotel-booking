@@ -313,6 +313,16 @@ class WPHB_Ajax {
 	}
 
 	static function remove_coupon() {
+		// Security: Add nonce verification to prevent CSRF
+		if ( ! wp_verify_nonce( $_POST['nonce'] ?? '', 'hb_booking_nonce_action' ) ) {
+			hb_send_json(
+				array(
+					'result'  => 'error',
+					'message' => __( 'Security check failed', 'wp-hotel-booking' ),
+				)
+			);
+		}
+
 		! session_id() && session_start( array( 'read_and_close' => true ) );
 		// delete_transient( 'hb_user_coupon_' . session_id() );
 		WP_Hotel_Booking::instance()->cart->set_customer( 'coupon', null );

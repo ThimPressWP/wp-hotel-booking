@@ -853,6 +853,7 @@ import flatpickr from 'flatpickr';
 				dataType: 'html',
 				data: {
 					action: 'hotel_booking_remove_coupon',
+                    nonce: hotel_settings.nonce,
 				},
 				beforeSend() {
 					table.hb_overlay_ajax_start();
