@@ -1,15 +1,15 @@
-# Copyright (C) 2025 ThimPress
+# Copyright (C) 2026 ThimPress
 # This file is distributed under the same license as the WP Hotel Booking plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Hotel Booking 2.2.8\n"
+"Project-Id-Version: WP Hotel Booking 2.2.9\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-hotel-booking\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-12-30T06:57:13+03:00\n"
+"POT-Creation-Date: 2026-02-06T05:58:55+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wp-hotel-booking\n"
@@ -219,6 +219,7 @@ msgstr ""
 #: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:72
 #: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:106
 #: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-post-type.php:117
+#: templates/cart/cart.php:58
 #: templates/emails/booking-details.php:25
 #: templates/search/v2/search-filter/price.php:15
 msgid "Price"
@@ -559,7 +560,6 @@ msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items-template-js.php:50
 #: includes/admin/wphb-admin-functions.php:309
-#: templates/checkout/checkout.php:174
 msgid "Check out"
 msgstr ""
 
@@ -571,8 +571,6 @@ msgstr ""
 #: includes/elementor/widgets/global/search-room.php:73
 #: includes/elementor/widgets/global/search-room.php:746
 #: includes/TemplateHooks/ArchiveRoomTemplate.php:233
-#: templates/cart/cart.php:39
-#: templates/checkout/checkout.php:39
 msgid "Rooms"
 msgstr ""
 
@@ -630,8 +628,6 @@ msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items.php:50
 #: includes/elementor/widgets/loop-item/loop-room-price.php:82
-#: templates/cart/cart.php:42
-#: templates/checkout/checkout.php:42
 #: templates/checkout/thank-you.php:64
 #: templates/search/booking-room-details.php:30
 #: templates/single-room/booking-room-price-details.php:61
@@ -675,6 +671,7 @@ msgstr ""
 #: includes/admin/wphb-admin-functions.php:310
 #: includes/class-wphb-gdpr.php:108
 #: templates/account/bookings.php:38
+#: templates/cart/cart.php:588
 #: templates/checkout/thank-you.php:70
 #: templates/emails/booking-details.php:51
 #: templates/search/booking-room-details.php:41
@@ -712,30 +709,24 @@ msgid "Coupon(<a href=\"%1$s\">%2$s</a>)"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items.php:165
-#: templates/cart/cart.php:116
-#: templates/checkout/checkout.php:104
 #: templates/checkout/thank-you.php:130
 msgid "Sub Total"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items.php:173
-#: templates/cart/cart.php:125
-#: templates/checkout/checkout.php:114
+#: templates/cart/cart.php:526
 #: templates/checkout/thank-you.php:136
 msgid "Tax"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items.php:181
-#: templates/cart/cart.php:135
-#: templates/checkout/checkout.php:125
 #: templates/checkout/thank-you.php:142
 msgid "Grand Total"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items.php:199
 #: includes/admin/settings/class-wphb-admin-setting-general.php:145
-#: templates/cart/cart.php:143
-#: templates/checkout/checkout.php:133
+#: templates/cart/cart.php:604
 #: templates/checkout/thank-you.php:162
 #: templates/emails/booking-details.php:56
 msgid "Advance Payment"
@@ -1238,6 +1229,7 @@ msgid "Enable the option to allow guests checkout."
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-room.php:26
+#: templates/cart/cart.php:53
 #: templates/emails/booking-details.php:21
 msgid "Room"
 msgstr ""
@@ -1575,106 +1567,114 @@ msgstr ""
 msgid "Request invalid"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:99
+#: includes/class-wphb-ajax.php:85
+msgid "Nonce is invalid"
+msgstr ""
+
+#: includes/class-wphb-ajax.php:109
 msgid "Edit Page"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:100
+#: includes/class-wphb-ajax.php:110
 msgid "View Page"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:102
+#: includes/class-wphb-ajax.php:112
 msgid "Error! Page creation failed. Please try again."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:105
+#: includes/class-wphb-ajax.php:115
 msgid "Empty page name!"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:126
+#: includes/class-wphb-ajax.php:135
 msgid "Cart ID is invalid."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:279
+#: includes/class-wphb-ajax.php:288
 msgid "Require Nonce!"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:296
+#: includes/class-wphb-ajax.php:305
 msgid "Coupon code applied"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:299
+#: includes/class-wphb-ajax.php:308
 msgid "Coupon does not exist!"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:310
+#: includes/class-wphb-ajax.php:321
+msgid "Security check failed"
+msgstr ""
+
+#: includes/class-wphb-ajax.php:329
 msgid "Coupon code removed"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:347
+#: includes/class-wphb-ajax.php:366
 #: includes/room/class-wphb-booking-room.php:217
 msgid "Invalid request"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:360
+#: includes/class-wphb-ajax.php:383
 msgid "Room ID is invalid."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:365
+#: includes/class-wphb-ajax.php:388
 msgid "Room ID is not exists."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:418
+#: includes/class-wphb-ajax.php:445
 #: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:255
 msgid "Added successfully."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:441
+#: includes/class-wphb-ajax.php:468
 #: includes/plugins/wp-hotel-booking-extra/inc/class-wphb-extra-cart.php:292
 msgid "Cart item is not exists."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:526
+#: includes/class-wphb-ajax.php:553
 msgid "Room not found."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:535
+#: includes/class-wphb-ajax.php:562
 msgid "Please select check in date and checkout date."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:598
+#: includes/class-wphb-ajax.php:625
 msgid "Edit order item"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:664
+#: includes/class-wphb-ajax.php:691
 msgid "Something when wrong!"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:670
+#: includes/class-wphb-ajax.php:697
 msgid "Request not valid"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:675
+#: includes/class-wphb-ajax.php:702
 msgid "nonce is invalid"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:680
+#: includes/class-wphb-ajax.php:707
 msgid "Date check-in or date check-out is invalid"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:694
+#: includes/class-wphb-ajax.php:721
 msgid "Id room is invalid"
 msgstr ""
 
-#: includes/class-wphb-ajax.php:699
+#: includes/class-wphb-ajax.php:726
 msgid "Can not add item with zero quantity."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:891
+#: includes/class-wphb-ajax.php:918
 msgid "Room is not exists."
 msgstr ""
 
-#: includes/class-wphb-ajax.php:901
+#: includes/class-wphb-ajax.php:928
 msgid "Date is not exists."
 msgstr ""
 
@@ -1695,96 +1695,96 @@ msgstr ""
 msgid "can not create booking"
 msgstr ""
 
-#: includes/class-wphb-comments.php:98
+#: includes/class-wphb-comments.php:105
 msgid "You must log in to submit a review."
 msgstr ""
 
-#: includes/class-wphb-comments.php:107
+#: includes/class-wphb-comments.php:114
 msgid "The rating is required."
 msgstr ""
 
-#: includes/class-wphb-comments.php:111
+#: includes/class-wphb-comments.php:118
 msgid "The rating is invalid."
 msgstr ""
 
-#: includes/class-wphb-comments.php:116
+#: includes/class-wphb-comments.php:123
 msgid "The review content is required."
 msgstr ""
 
-#: includes/class-wphb-comments.php:120
+#: includes/class-wphb-comments.php:127
 msgid "The review title is required."
 msgstr ""
 
-#: includes/class-wphb-comments.php:124
+#: includes/class-wphb-comments.php:131
 msgid "The room id is required."
 msgstr ""
 
-#: includes/class-wphb-comments.php:139
+#: includes/class-wphb-comments.php:146
 msgid "You have already reviewed this room."
 msgstr ""
 
-#: includes/class-wphb-comments.php:161
+#: includes/class-wphb-comments.php:168
 msgid "Could not create review."
 msgstr ""
 
-#: includes/class-wphb-comments.php:227
+#: includes/class-wphb-comments.php:234
 msgid "Submit review successfully."
 msgstr ""
 
-#: includes/class-wphb-comments.php:301
+#: includes/class-wphb-comments.php:308
 msgid "Write a review"
 msgstr ""
 
-#: includes/class-wphb-comments.php:311
+#: includes/class-wphb-comments.php:318
 msgid "Rate your experience *"
 msgstr ""
 
-#: includes/class-wphb-comments.php:330
+#: includes/class-wphb-comments.php:337
 msgid "Leave a review *"
 msgstr ""
 
-#: includes/class-wphb-comments.php:335
+#: includes/class-wphb-comments.php:342
 msgid "Give your review a title *"
 msgstr ""
 
-#: includes/class-wphb-comments.php:344
+#: includes/class-wphb-comments.php:351
 #, php-format
 msgid "Uploads up to %s image"
 msgid_plural "Upload up to %s images"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-wphb-comments.php:352
+#: includes/class-wphb-comments.php:359
 msgid "Upload"
 msgstr ""
 
-#: includes/class-wphb-comments.php:362
+#: includes/class-wphb-comments.php:369
 msgid "Send"
 msgstr ""
 
-#: includes/class-wphb-comments.php:448
+#: includes/class-wphb-comments.php:455
 msgid "Images"
 msgstr ""
 
-#: includes/class-wphb-comments.php:526
+#: includes/class-wphb-comments.php:533
 msgid "Add Images"
 msgstr ""
 
-#: includes/class-wphb-comments.php:532
+#: includes/class-wphb-comments.php:539
 #, php-format
 msgid "You can upload maximum %1$s images. The maximum file size is %2$s KB."
 msgstr ""
 
-#: includes/class-wphb-comments.php:646
+#: includes/class-wphb-comments.php:653
 #: templates/single-room-reviews.php:243
 msgid "Reviews"
 msgstr ""
 
-#: includes/class-wphb-comments.php:654
+#: includes/class-wphb-comments.php:661
 msgid "Rating Room"
 msgstr ""
 
-#: includes/class-wphb-comments.php:666
+#: includes/class-wphb-comments.php:673
 #: includes/class-wphb-post-types.php:478
 #: includes/elementor/widgets/loop-item/loop-room-rating.php:138
 #: templates/loop/rating.php:27
@@ -1793,7 +1793,7 @@ msgstr ""
 msgid "Rated %d out of 5"
 msgstr ""
 
-#: includes/class-wphb-comments.php:673
+#: includes/class-wphb-comments.php:680
 msgid "No rating"
 msgstr ""
 
@@ -2241,11 +2241,15 @@ msgid "No coupon found in Trash"
 msgstr ""
 
 #: includes/coupons/class-wphb-coupon-hooks.php:94
+#: templates/cart/cart.php:566
+#: templates/checkout/checkout.php:318
 #, php-format
 msgid "Coupon applied: %s"
 msgstr ""
 
 #: includes/coupons/class-wphb-coupon-hooks.php:104
+#: templates/cart/cart.php:449
+#: templates/checkout/checkout.php:95
 msgid "Coupon"
 msgstr ""
 
@@ -2608,8 +2612,8 @@ msgstr ""
 
 #: includes/elementor/widgets/global/filter-room.php:181
 #: includes/elementor/widgets/global/filter-room.php:278
-#: includes/elementor/widgets/global/filter-room.php:991
-#: includes/elementor/widgets/global/filter-room.php:1001
+#: includes/elementor/widgets/global/filter-room.php:992
+#: includes/elementor/widgets/global/filter-room.php:1002
 #: templates/search/v2/search-filter-v2.php:42
 msgid "Filter"
 msgstr ""
@@ -2779,7 +2783,7 @@ msgstr ""
 msgid "Selected Number"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:971
+#: includes/elementor/widgets/global/filter-room.php:972
 #: templates/search/v2/search-filter-v2.php:47
 msgid "Reset"
 msgstr ""
@@ -3496,7 +3500,6 @@ msgid "Price: "
 msgstr ""
 
 #: includes/plugins/wp-hotel-booking-extra/templates/shortcodes/mini_cart_layout.php:70
-#: templates/cart/cart.php:154
 #: templates/cart/mini_cart.php:42
 #: templates/cart/mini_cart_layout.php:40
 msgid "Check Out"
@@ -5804,87 +5807,101 @@ msgstr ""
 msgid "Booking Date"
 msgstr ""
 
-#: templates/cart/cart.php:31
-msgid "Cart"
+#: templates/cart/cart.php:63
+msgid "Quanlity"
 msgstr ""
 
-#: templates/cart/cart.php:37
-#: templates/checkout/checkout.php:37
-msgid "Room type"
-msgstr ""
-
-#: templates/cart/cart.php:38
-#: templates/checkout/checkout.php:38
-msgid "Guest"
-msgstr ""
-
-#: templates/cart/cart.php:40
-#: templates/checkout/checkout.php:40
-msgid "Check - in"
-msgstr ""
-
-#: templates/cart/cart.php:41
-#: templates/checkout/checkout.php:41
-msgid "Check - out"
-msgstr ""
-
-#: templates/cart/cart.php:43
-#: templates/checkout/checkout.php:43
+#: templates/cart/cart.php:71
 msgid "Deposit Payment"
 msgstr ""
 
-#: templates/cart/cart.php:44
-#: templates/checkout/checkout.php:44
-msgid "Gross Total"
+#: templates/cart/cart.php:79
+msgid "Sub total"
 msgstr ""
 
-#: templates/cart/cart.php:90
-#: templates/checkout/checkout.php:80
+#: templates/cart/cart.php:150
+msgid "Remove this item"
+msgstr ""
+
+#: templates/cart/cart.php:197
+msgid "Date:"
+msgstr ""
+
+#: templates/cart/cart.php:214
+msgid "Details:"
+msgstr ""
+
+#: templates/cart/cart.php:221
 #, php-format
-msgid "%d adult"
-msgid_plural "%d adults"
-msgstr[0] ""
-msgstr[1] ""
+msgid "Room: %d"
+msgstr ""
 
-#: templates/cart/cart.php:91
-#: templates/checkout/checkout.php:81
+#: templates/cart/cart.php:232
 #, php-format
-msgid "%d child"
-msgid_plural "%d children"
-msgstr[0] ""
-msgstr[1] ""
-
-#: templates/cart/cart.php:103
-#: templates/checkout/checkout.php:89
-msgid "Disable"
+msgid "Adults: %d"
 msgstr ""
 
-#: templates/cart/cart.php:127
-#: templates/checkout/checkout.php:116
-msgid "(price including tax)"
+#: templates/cart/cart.php:246
+#, php-format
+msgid "Children: %d"
 msgstr ""
 
-#: templates/cart/cart.php:163
+#: templates/cart/cart.php:293
+msgid "Extra Services:"
+msgstr ""
+
+#: templates/cart/cart.php:358
+msgid "Room quantity"
+msgstr ""
+
+#: templates/cart/cart.php:453
+#: templates/checkout/checkout.php:100
+#: templates/checkout/customer-existing.php:39
+#: templates/single-room/room-calendar-pricing.php:22
+msgid "Apply"
+msgstr ""
+
+#: templates/cart/cart.php:472
+msgid "Cart Total"
+msgstr ""
+
+#: templates/cart/cart.php:479
+#: templates/emails/booking-details.php:43
+msgid "Subtotal"
+msgstr ""
+
+#: templates/cart/cart.php:507
+msgid "Extra Services"
+msgstr ""
+
+#: templates/cart/cart.php:533
+msgid "included"
+msgstr ""
+
+#: templates/cart/cart.php:627
+msgid "Proceed to Checkout"
+msgstr ""
+
+#: templates/cart/cart.php:646
+msgid "Your cart is empty"
+msgstr ""
+
+#: templates/cart/cart.php:651
+msgid "Looks like you haven't added any rooms yet. Start exploring our rooms!"
+msgstr ""
+
+#: templates/cart/cart.php:660
+msgid "Browse Rooms"
+msgstr ""
+
 #: templates/cart/mini_cart.php:50
 #: templates/cart/mini_cart_layout.php:46
 msgid "Your cart is empty!"
 msgstr ""
 
-#: templates/checkout/checkout.php:33
-msgid "Booking Rooms"
-msgstr ""
-
-#: templates/checkout/checkout.php:143
-msgid "I want to pay all"
-msgstr ""
-
-#: templates/checkout/checkout.php:152
+#: templates/checkout/checkout.php:404
 #, php-format
 msgid "You have to <strong><a href=\"%1$s\">login</a></strong> or <strong><a href=\"%2$s\">register</a></strong> to checkout."
-msgstr ""
-
-#: templates/checkout/checkout.php:169
-msgid "I agree with "
 msgstr ""
 
 #: templates/checkout/customer-existing.php:25
@@ -5897,11 +5914,6 @@ msgstr ""
 
 #: templates/checkout/customer-existing.php:34
 msgid "Your email here"
-msgstr ""
-
-#: templates/checkout/customer-existing.php:39
-#: templates/single-room/room-calendar-pricing.php:22
-msgid "Apply"
 msgstr ""
 
 #: templates/checkout/customer-new.php:24
@@ -5944,6 +5956,10 @@ msgstr ""
 #: templates/checkout/order-pay.php:51
 #, php-format
 msgid "%s was pay completed"
+msgstr ""
+
+#: templates/checkout/payment-method.php:42
+msgid "No payment method"
 msgstr ""
 
 #: templates/checkout/thank-you.php:42
@@ -6027,10 +6043,6 @@ msgstr ""
 
 #: templates/emails/booking-details.php:24
 msgid "#"
-msgstr ""
-
-#: templates/emails/booking-details.php:43
-msgid "Subtotal"
 msgstr ""
 
 #: templates/emails/booking-details.php:47
@@ -6380,16 +6392,16 @@ msgstr ""
 msgid "--- Quantity ---"
 msgstr ""
 
-#: wp-hotel-booking.php:624
+#: wp-hotel-booking.php:628
 #, php-format
 msgid "The image number is greater than %s"
 msgstr ""
 
-#: wp-hotel-booking.php:625
+#: wp-hotel-booking.php:629
 msgid "The image file type is invalid"
 msgstr ""
 
-#: wp-hotel-booking.php:626
+#: wp-hotel-booking.php:630
 #, php-format
 msgid "The maximum file size is %s KB"
 msgstr ""

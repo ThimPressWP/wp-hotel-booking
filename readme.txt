@@ -87,6 +87,10 @@ Yes.
 
 == Changelog ==
 
+= 2.2.9 (2026-02-06) =
+~ Fixed: security.
+~ Update: layout checkout page.
+
 = 2.2.8 (2025-12-30) =
 ~ Fixed: security.
 
