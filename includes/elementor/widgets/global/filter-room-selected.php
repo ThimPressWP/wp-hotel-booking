@@ -260,11 +260,11 @@ class Thim_Ekit_Widget_Filter_Room_Selected extends Widget_Base {
 
 		if (!empty($_GET['room_type']) || !empty($_GET['rating']) || !empty($_GET['min_price']) || !empty($_GET['max_price']) || Plugin::$instance->editor->is_edit_mode()) {
 			echo '<div class="hb-filter-room-selected">';
-				echo '<h4 class="title">'. $title_selected .'</h4>';
+				echo '<h4 class="title">'. esc_html( $title_selected ) .'</h4>';
 				echo '<div class="selected-list">';
 					self::selected_style_list($settings);
 				echo '</div>';
-				echo '<button class="clear-selected-list">'. $text_reset .'</button>';
+				echo '<button class="clear-selected-list">'. esc_html( $text_reset ) .'</button>';
 			echo '</div>';
 		}
     }

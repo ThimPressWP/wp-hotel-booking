@@ -562,7 +562,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 			?>
 			<li class="hb-form-field <?php echo esc_attr($classes); ?>">
 				<?php if ( $label_check_in != '' ) :?>
-					<div class="label"><?php echo $label_check_in; ?></div>
+					<div class="label"><?php echo esc_html( $label_check_in ); ?></div>
 				<?php endif; ?>
 				<div class="hb-form-field-input hb_input_field">
 					<?php if ( $settings['icons_field'] ) {
@@ -574,7 +574,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 
 			<li class="hb-form-field <?php echo esc_attr($classes); ?>">
 				<?php if ( $label_check_out != '' ) :?>
-					<div class="label"><?php echo $label_check_out; ?></div>
+					<div class="label"><?php echo esc_html( $label_check_out ); ?></div>
 				<?php endif; ?>
 				<div class="hb-form-field-input hb_input_field">
 					<?php if ( $settings['icons_field'] ) {
@@ -616,7 +616,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );
 				} ?>
 				<?php if ( $label_adults != '' ) :?>
-					<div class="label"><?php echo $label_adults; ?></div>
+					<div class="label"><?php echo esc_html( $label_adults ); ?></div>
 				<?php endif; ?>
 				<div class="hb-form-field-input">
 					<?php

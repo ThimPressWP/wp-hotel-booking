@@ -1011,7 +1011,7 @@ class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected
 				)
 			);
 		}
-		echo $text_popup;
+		echo esc_html( $text_popup );
 		if ($settings['filter_selected_number'] == 'yes') {
 			echo $this->selected_style_number();
 		}
