@@ -373,6 +373,10 @@ class WPHB_Ajax {
 			$adult_qty      = WPHB_Helpers::get_param( 'adult_qty', 1, 'int' );
 			$child_qty      = WPHB_Helpers::get_param( 'child_qty', 0, 'int' );
 
+			// Check to add extra
+			$hb_optional_quantity_selected = WPHB_Helpers::get_param( 'hb_optional_quantity_selected', [] );
+			$hb_optional_quantity          = WPHB_Helpers::get_param( 'hb_optional_quantity', [] );
+
 			$from_check_dates_room = WPHB_Helpers::get_param( 'from-check-dates-room', 0, 'int' );
 
 			if ( ! $room_id ) {
@@ -407,15 +411,19 @@ class WPHB_Ajax {
 				'child_qty'      => $child_qty,
 			);
 
+			if ( ! empty( $hb_optional_quantity_selected ) && ! empty( $hb_optional_quantity ) ) {
+				foreach ( $hb_optional_quantity_selected as $extra_id => $select ) {
+					$params['hb_optional_quantity'][ $extra_id ]          = $hb_optional_quantity[ $extra_id ];
+					$params['hb_optional_quantity_selected'][ $extra_id ] = 'on';
+				}
+			}
+
 			$cart_item_id = WP_Hotel_Booking::instance()->cart->add_to_cart( $room_id, $params, $qty );
 			if ( ! is_wp_error( $cart_item_id ) ) {
 				$cart_item    = WP_Hotel_Booking::instance()->cart->get_cart_item( $cart_item_id );
 				$room         = $cart_item->product_data;
 				$pageRedirect = WPHB_Settings::instance()->getPageRedirect();
 
-				// Check to add extra
-				$hb_optional_quantity_selected = WPHB_Helpers::get_param( 'hb_optional_quantity_selected', [] );
-				$hb_optional_quantity          = WPHB_Helpers::get_param( 'hb_optional_quantity', [] );
 				if ( ! empty( $hb_optional_quantity_selected ) && ! empty( $hb_optional_quantity ) && $cart_item ) {
 					$extra_cart = HB_Extra_Cart::instance();
 					foreach ( $hb_optional_quantity_selected as $extra_id => $select ) {
