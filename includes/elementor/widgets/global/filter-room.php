@@ -981,7 +981,7 @@ class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected
 							if ( $icon_toggle != '' ){
 								echo $icon_toggle;
 							}
-							hb_get_template( 'search/v2/search-filter/' . $data['meta_field'] . '.php', compact( 'data' ) );
+							hb_get_template( 'search/v2/search-filter/' . $meta_field . '.php', compact( 'data' ) );
 						?>
 							</div>
 						<?php

@@ -79,6 +79,9 @@ if ( ! function_exists( 'hb_get_template' ) ) {
 			extract( $args );
 		}
 
+		// Fix security issue: prevent directory traversal, ../../../../wp-config.php
+		$template_name = preg_replace( '/\.\.+/', '', $template_name );
+
 		$located = hb_locate_template( $template_name, $template_path, $default_path );
 
 		if ( ! file_exists( $located ) ) {
