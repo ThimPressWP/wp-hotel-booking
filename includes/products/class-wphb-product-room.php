@@ -52,6 +52,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 	 */
 	public $_review_details = null;
 
+	public $amount_singular_exclude_tax = 0;
 	function __construct( $post, $params = null ) {
 		if ( is_numeric( $post ) && $post && get_post_type( $post ) == 'hb_room' ) {
 			$this->post = get_post( $post );
