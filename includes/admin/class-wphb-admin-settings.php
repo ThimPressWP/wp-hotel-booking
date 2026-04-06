@@ -111,8 +111,20 @@ class WPHB_Admin_Settings {
 									<?php echo ( $field['type'] === 'multiple' ) ? 'multiple="multiple"' : ''; ?>
 								>
 									<?php foreach ( $field['options'] as $val => $text ) : ?>
+										<?php
+										$is_selected = false;
+										if ( is_array( $selected ) ) {
+											$is_selected = in_array(
+												(string) $val,
+												array_map( 'strval', $selected ),
+												true
+											);
+										} else {
+											$is_selected = (string) $selected === (string) $val;
+										}
+										?>
 										<option value="<?php echo esc_attr( $val ); ?>"
-											<?php echo ( is_array( $selected ) && in_array( $val, $selected ) ) || $selected === $val ? ' selected' : ''; ?>
+											<?php echo selected( $is_selected, true, false ); ?>
 										>
 											<?php echo esc_html( $text ); ?>
 										</option>
