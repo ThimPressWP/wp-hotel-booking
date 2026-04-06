@@ -31,9 +31,27 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 		public function get_settings() {
 
 			$currency_code_options = hb_payment_currencies();
+			$date_format_options   = array();
+			$first_day_of_week_options = array(
+				'0' => __( 'Sunday', 'wp-hotel-booking' ),
+				'1' => __( 'Monday', 'wp-hotel-booking' ),
+				'2' => __( 'Tuesday', 'wp-hotel-booking' ),
+				'3' => __( 'Wednesday', 'wp-hotel-booking' ),
+				'4' => __( 'Thursday', 'wp-hotel-booking' ),
+				'5' => __( 'Friday', 'wp-hotel-booking' ),
+				'6' => __( 'Saturday', 'wp-hotel-booking' ),
+			);
+			$date_example          = current_time( 'timestamp' );
 
 			foreach ( $currency_code_options as $code => $name ) {
 				$currency_code_options[ $code ] = $name . ' (' . hb_get_currency_symbol( $code ) . ')';
+			}
+			foreach ( hb_get_supported_frontend_date_formats() as $format ) {
+				$date_format_options[ $format ] = sprintf(
+					'%1$s (%2$s)',
+					$format,
+					date_i18n( $format, $date_example )
+				);
 			}
 
 			return apply_filters(
@@ -51,6 +69,22 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 						'title'   => __( 'Checkout date blocked', 'wp-hotel-booking' ),
 						'desc'    => __( 'Allow checkout date when blocked, applicable to search forms except single room', 'wp-hotel-booking' ),
 						'default' => 1,
+					),
+					array(
+						'type'    => 'select',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'frontend_date_format' ),
+						'title'   => __( 'Calendar Date Format', 'wp-hotel-booking' ),
+						'desc'    => __( 'Date format used by booking forms on frontend.', 'wp-hotel-booking' ),
+						'options' => $date_format_options,
+						'default' => 'Y/m/d',
+					),
+					array(
+						'type'    => 'select',
+						'id'      => WPHB_Settings::instance()->get_field_name( 'first_day_of_week' ),
+						'title'   => __( 'First Day Of Week', 'wp-hotel-booking' ),
+						'desc'    => __( 'The first day shown in booking calendars on frontend.', 'wp-hotel-booking' ),
+						'options' => $first_day_of_week_options,
+						'default' => '1',
 					),
 					/*array(
 						'type'    => 'checkbox',

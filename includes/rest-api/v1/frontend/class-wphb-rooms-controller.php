@@ -90,23 +90,13 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 		$limit           = hb_settings()->get( 'posts_per_page', 8 );
 
 		try {
-			$date_format = get_option( 'date_format' );
-
-			if ( strpos( $check_in_date, '/' ) !== false ) {
-				// Strtotime() doesn't work with dd/mm/YYYY format
-				if ( $date_format == 'd/m/Y' ) {
-					$check_in_date = str_replace( '/', '-', $check_in_date );
-				}
-				$check_in_date = date( 'F j, Y', strtotime( $check_in_date ) );
+			$normalized_dates = hb_normalize_booking_date_range( $check_in_date, $check_out_date, hb_get_frontend_date_format() );
+			if ( is_wp_error( $normalized_dates ) ) {
+				throw new Exception( $normalized_dates->get_error_message() );
 			}
 
-			if ( strpos( $check_out_date, '/' ) !== false ) {
-				// Strtotime() doesn't work with dd/mm/YYYY format
-				if ( $date_format == 'd/m/Y' ) {
-					$check_out_date = str_replace( '/', '-', $check_out_date );
-				}
-				$check_out_date = date( 'F j, Y', strtotime( $check_out_date ) );
-			}
+			$check_in_date  = $normalized_dates['check_in_date'];
+			$check_out_date = $normalized_dates['check_out_date'];
 
 			$atts = array(
 				'check_in_date'  => $check_in_date,
@@ -190,23 +180,15 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 			}
 		}
 
-		$date_format = get_option( 'date_format' );
+		$normalized_dates = hb_normalize_booking_date_range( $check_in_date, $check_out_date, hb_get_frontend_date_format() );
+		if ( is_wp_error( $normalized_dates ) ) {
+			$response->message = $normalized_dates->get_error_message();
 
-		if ( strpos( $check_in_date, '/' ) !== false ) {
-			// Strtotime() doesn't work with dd/mm/YYYY format
-			if ( $date_format == 'd/m/Y' ) {
-				$check_in_date = str_replace( '/', '-', $check_in_date );
-			}
-			$check_in_date = date( 'F j, Y', strtotime( $check_in_date ) );
+			return wp_send_json( $response );
 		}
 
-		if ( strpos( $check_out_date, '/' ) !== false ) {
-			// Strtotime() doesn't work with dd/mm/YYYY format
-			if ( $date_format == 'd/m/Y' ) {
-				$check_out_date = str_replace( '/', '-', $check_out_date );
-			}
-			$check_out_date = date( 'F j, Y', strtotime( $check_out_date ) );
-		}
+		$check_in_date  = $normalized_dates['check_in_date'];
+		$check_out_date = $normalized_dates['check_out_date'];
 
 		$args_room = array(
 			'product_id'                    => $room_id,
@@ -446,6 +428,12 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 
 			$hb_optional_quantity_selected = WPHB_Helpers::get_param( 'hb_optional_quantity_selected', [] );
 			$hb_optional_quantity          = WPHB_Helpers::get_param( 'hb_optional_quantity', [] );
+			$normalized_dates              = hb_normalize_booking_date_range( $check_in_date, $check_out_date, hb_get_frontend_date_format() );
+			if ( is_wp_error( $normalized_dates ) ) {
+				throw new Exception( $normalized_dates->get_error_message() );
+			}
+			$check_in_date  = $normalized_dates['check_in_date'];
+			$check_out_date = $normalized_dates['check_out_date'];
 			if ( ! $room_id ) {
 				throw new Exception( esc_html__( 'roomId is required', 'wp-hotel-booking' ) );
 			}
@@ -500,6 +488,12 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 
 			$hb_optional_quantity_selected = WPHB_Helpers::get_param( 'hb_optional_quantity_selected', [] );
 			$hb_optional_quantity          = WPHB_Helpers::get_param( 'hb_optional_quantity', [] );
+			$normalized_dates              = hb_normalize_booking_date_range( $check_in_date, $check_out_date, hb_get_frontend_date_format() );
+			if ( is_wp_error( $normalized_dates ) ) {
+				throw new Exception( $normalized_dates->get_error_message() );
+			}
+			$check_in_date  = $normalized_dates['check_in_date'];
+			$check_out_date = $normalized_dates['check_out_date'];
 			if ( ! $room_id ) {
 				throw new Exception( esc_html__( 'roomId is required', 'wp-hotel-booking' ) );
 			}

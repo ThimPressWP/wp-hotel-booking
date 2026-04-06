@@ -6,3 +6,4 @@ package-lock.json
 /vendor
 /assets/dist/
 .dccache
+/scripts

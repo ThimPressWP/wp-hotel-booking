@@ -671,6 +671,9 @@ class WP_Hotel_Booking {
 		$thousands_separator = get_option( 'tp_hotel_booking_price_thousands_separator' ) ? get_option( 'tp_hotel_booking_price_thousands_separator' ) : ',';
 		$decimals_separator  = get_option( 'tp_hotel_booking_price_decimals_separator' ) ? get_option( 'tp_hotel_booking_price_decimals_separator' ) : '.';
 		$number_decimal      = get_option( 'tp_hotel_booking_price_number_of_decimal' ) ? get_option( 'tp_hotel_booking_price_number_of_decimal' ) : '0';
+		$frontend_date_format = hb_get_frontend_date_format();
+		$flatpickr_date_format = hb_convert_php_date_format_to_flatpickr( $frontend_date_format );
+		$first_day_of_week     = hb_get_frontend_first_day_of_week();
 		?>
 		<script type="text/javascript">
 			var hotel_settings = {
@@ -684,6 +687,10 @@ class WP_Hotel_Booking {
 					prefix: '_hb_'
 				},
 				date_format: '<?php echo get_option( 'date_format' ); ?>',
+				frontend_date_format: '<?php echo esc_js( $frontend_date_format ); ?>',
+				flatpickr_date_format: '<?php echo esc_js( $flatpickr_date_format ); ?>',
+				first_day_of_week: <?php echo (int) $first_day_of_week; ?>,
+				internal_date_format: 'Y/m/d',
 				nonce: '<?php echo esc_html( wp_create_nonce( 'hb_booking_nonce_action' ) ); ?>',
 				timezone: '<?php echo esc_html( current_time( 'timestamp' ) ); ?>',
 				min_booking_date: <?php echo esc_html( $min_booking_date ); ?>,

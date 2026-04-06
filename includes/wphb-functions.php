@@ -2674,6 +2674,234 @@ if ( ! function_exists( 'hb_get_date_format' ) ) {
 	}
 }
 
+if ( ! function_exists( 'hb_get_supported_frontend_date_formats' ) ) {
+	/**
+	 * Get supported date formats for booking forms.
+	 *
+	 * @return array<string, string>
+	 */
+	function hb_get_supported_frontend_date_formats() {
+		return apply_filters(
+			'hb_supported_frontend_date_formats',
+			array(
+				'Y/m/d' => 'Y/m/d',
+				'd/m/Y' => 'd/m/Y',
+				'm/d/Y' => 'm/d/Y',
+				'Y-m-d' => 'Y-m-d',
+				'd-m-Y' => 'd-m-Y',
+				'm-d-Y' => 'm-d-Y',
+				'd.m.Y' => 'd.m.Y',
+			)
+		);
+	}
+}
+
+if ( ! function_exists( 'hb_get_frontend_date_format' ) ) {
+	/**
+	 * Get date format for frontend booking forms.
+	 *
+	 * @return string
+	 */
+	function hb_get_frontend_date_format() {
+		$supported_formats = hb_get_supported_frontend_date_formats();
+		$default_format    = 'Y/m/d';
+		$frontend_format   = get_option( 'tp_hotel_booking_frontend_date_format', '' );
+
+		if ( ! $frontend_format ) {
+			$wp_date_format = hb_get_date_format();
+			if ( isset( $supported_formats[ $wp_date_format ] ) ) {
+				$frontend_format = $wp_date_format;
+			}
+		}
+
+		if ( ! isset( $supported_formats[ $frontend_format ] ) ) {
+			$frontend_format = $default_format;
+		}
+
+		return apply_filters( 'hb_frontend_date_format', $frontend_format );
+	}
+}
+
+if ( ! function_exists( 'hb_get_frontend_first_day_of_week' ) ) {
+	/**
+	 * Get first day of week for frontend booking calendars.
+	 *
+	 * @return int
+	 */
+	function hb_get_frontend_first_day_of_week() {
+		$default_first_day = 1;
+		$first_day         = get_option( 'tp_hotel_booking_first_day_of_week', $default_first_day );
+		$first_day         = is_numeric( $first_day ) ? (int) $first_day : $default_first_day;
+
+		if ( $first_day < 0 || $first_day > 6 ) {
+			$first_day = $default_first_day;
+		}
+
+		return (int) apply_filters( 'hb_frontend_first_day_of_week', $first_day );
+	}
+}
+
+if ( ! function_exists( 'hb_convert_php_date_format_to_flatpickr' ) ) {
+	/**
+	 * Convert PHP date format to flatpickr date format.
+	 *
+	 * @param string $php_format
+	 *
+	 * @return string
+	 */
+	function hb_convert_php_date_format_to_flatpickr( $php_format = '' ) {
+		$map = array(
+			'Y/m/d' => 'Y/m/d',
+			'd/m/Y' => 'd/m/Y',
+			'm/d/Y' => 'm/d/Y',
+			'Y-m-d' => 'Y-m-d',
+			'd-m-Y' => 'd-m-Y',
+			'm-d-Y' => 'm-d-Y',
+			'd.m.Y' => 'd.m.Y',
+		);
+
+		if ( empty( $php_format ) ) {
+			$php_format = hb_get_frontend_date_format();
+		}
+
+		return $map[ $php_format ] ?? 'Y/m/d';
+	}
+}
+
+if ( ! function_exists( 'hb_parse_booking_date_string' ) ) {
+	/**
+	 * Parse booking date string strictly by configured format and return DateTimeImmutable.
+	 *
+	 * @param string|int $date_raw
+	 * @param string $preferred_format
+	 *
+	 * @return DateTimeImmutable|false
+	 */
+	function hb_parse_booking_date_string( $date_raw, $preferred_format = '' ) {
+		try {
+			if ( is_numeric( $date_raw ) ) {
+				$timestamp = absint( $date_raw );
+				if ( ! $timestamp ) {
+					return false;
+				}
+
+				$date_time = new DateTimeImmutable( '@' . $timestamp );
+
+				return $date_time->setTimezone( wp_timezone() );
+			}
+
+			if ( ! is_string( $date_raw ) ) {
+				return false;
+			}
+
+			$date_raw = trim( $date_raw );
+			if ( $date_raw === '' ) {
+				return false;
+			}
+
+			$formats = array();
+			if ( ! empty( $preferred_format ) ) {
+				$formats[] = $preferred_format;
+			} else {
+				$formats[] = hb_get_frontend_date_format();
+			}
+
+			// Backward compatible fallback with internal canonical format.
+			if ( ! in_array( 'Y/m/d', $formats, true ) ) {
+				$formats[] = 'Y/m/d';
+			}
+
+			foreach ( $formats as $format ) {
+				$date_time = DateTimeImmutable::createFromFormat(
+					'!' . $format,
+					$date_raw,
+					wp_timezone()
+				);
+
+				if ( ! $date_time ) {
+					continue;
+				}
+
+				$errors = DateTimeImmutable::getLastErrors();
+				if ( is_array( $errors ) ) {
+					$warning_count = $errors['warning_count'] ?? 0;
+					$error_count   = $errors['error_count'] ?? 0;
+					if ( $warning_count > 0 || $error_count > 0 ) {
+						continue;
+					}
+				}
+
+				if ( $date_time->format( $format ) !== $date_raw ) {
+					continue;
+				}
+
+				return $date_time;
+			}
+		} catch ( Throwable $e ) {
+			error_log( __METHOD__ . ': ' . $e->getMessage() );
+		}
+
+		return false;
+	}
+}
+
+if ( ! function_exists( 'hb_normalize_booking_date' ) ) {
+	/**
+	 * Normalize booking date to internal format Y/m/d.
+	 *
+	 * @param string|int $date_raw
+	 * @param string $preferred_format
+	 *
+	 * @return string|false
+	 */
+	function hb_normalize_booking_date( $date_raw, $preferred_format = '' ) {
+		$date_time = hb_parse_booking_date_string( $date_raw, $preferred_format );
+		if ( ! $date_time ) {
+			return false;
+		}
+
+		return $date_time->format( 'Y/m/d' );
+	}
+}
+
+if ( ! function_exists( 'hb_normalize_booking_date_range' ) ) {
+	/**
+	 * Normalize and validate booking date range.
+	 *
+	 * @param string|int $check_in_raw
+	 * @param string|int $check_out_raw
+	 * @param string $preferred_format
+	 *
+	 * @return array<string, string>|WP_Error
+	 */
+	function hb_normalize_booking_date_range( $check_in_raw, $check_out_raw, $preferred_format = '' ) {
+		$check_in = hb_normalize_booking_date( $check_in_raw, $preferred_format );
+		if ( ! $check_in ) {
+			return new WP_Error( 'invalid_check_in_date', __( 'Check in date is invalid.', 'wp-hotel-booking' ) );
+		}
+
+		$check_out = hb_normalize_booking_date( $check_out_raw, $preferred_format );
+		if ( ! $check_out ) {
+			return new WP_Error( 'invalid_check_out_date', __( 'Check out date is invalid.', 'wp-hotel-booking' ) );
+		}
+
+		$check_in_date_time  = DateTimeImmutable::createFromFormat( '!Y/m/d', $check_in, wp_timezone() );
+		$check_out_date_time = DateTimeImmutable::createFromFormat( '!Y/m/d', $check_out, wp_timezone() );
+		if ( ! $check_in_date_time || ! $check_out_date_time ) {
+			return new WP_Error( 'invalid_date_range', __( 'Date range is invalid.', 'wp-hotel-booking' ) );
+		}
+
+		if ( $check_in_date_time >= $check_out_date_time ) {
+			return new WP_Error( 'invalid_date_range', __( 'Check out date must be greater than check in date.', 'wp-hotel-booking' ) );
+		}
+
+		return array(
+			'check_in_date'  => $check_in,
+			'check_out_date' => $check_out,
+		);
+	}
+}
+
 if ( ! function_exists( 'hb_get_pages' ) ) {
 
 	function hb_get_pages() {

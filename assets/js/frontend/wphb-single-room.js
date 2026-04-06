@@ -16,15 +16,122 @@ let elHotelBookingRoom,
 	elBtnsCalendarPricing,
 	roomDateRangeSelector,
 	minEndDatePlan;
-const toYmdLocal = ( date ) => {
-	const z = ( n ) => ( '0' + n ).slice( -2 );
-	return (
-		date.getFullYear() +
-		'/' +
-		z( date.getMonth() + 1 ) +
-		'/' +
-		z( date.getDate() )
+const INTERNAL_DATE_FORMAT = hotel_settings.internal_date_format || 'Y/m/d';
+const FRONTEND_DATE_FORMAT =
+	hotel_settings.flatpickr_date_format || INTERNAL_DATE_FORMAT;
+const normalizeFirstDayOfWeek = ( value ) => {
+	const parsed = Number.parseInt( value, 10 );
+	if ( Number.isNaN( parsed ) || parsed < 0 || parsed > 6 ) {
+		return 1;
+	}
+
+	return parsed;
+};
+const FIRST_DAY_OF_WEEK = normalizeFirstDayOfWeek(
+	hotel_settings.first_day_of_week
+);
+
+const parseDateStrict = ( value, format ) => {
+	if ( ! value || ! format ) {
+		return null;
+	}
+
+	const parsed = flatpickr.parseDate( value, format, true );
+	if ( ! parsed ) {
+		return null;
+	}
+
+	return flatpickr.formatDate( parsed, format ) === value ? parsed : null;
+};
+
+const parseBookingDateValue = ( value ) => {
+	const dateValue = String( value || '' ).trim();
+	if ( ! dateValue ) {
+		return null;
+	}
+
+	const formats = [ FRONTEND_DATE_FORMAT, INTERNAL_DATE_FORMAT ].filter(
+		( format, index, arr ) => format && arr.indexOf( format ) === index
 	);
+
+	for ( let i = 0; i < formats.length; i++ ) {
+		const parsed = parseDateStrict( dateValue, formats[ i ] );
+		if ( parsed ) {
+			return parsed;
+		}
+	}
+
+	return null;
+};
+
+const parseFlatpickrDate = ( value, format ) => {
+	if ( value instanceof Date ) {
+		return value;
+	}
+
+	const parsed = parseBookingDateValue( value );
+	if ( parsed ) {
+		return parsed;
+	}
+
+	return flatpickr.parseDate( value, format || FRONTEND_DATE_FORMAT, true );
+};
+
+const formatBookingDate = ( date, format = FRONTEND_DATE_FORMAT ) =>
+	flatpickr.formatDate( date, format );
+
+const validateAndNormalizeBookingDateRange = ( form ) => {
+	const checkInField = form.querySelector( 'input[name="check_in_date"]' );
+	const checkOutField = form.querySelector( 'input[name="check_out_date"]' );
+	const msgEmptyCheckIn =
+		window?.hotel_booking_i18n?.empty_check_in_date ||
+		'Please select check in date.';
+	const msgEmptyCheckOut =
+		window?.hotel_booking_i18n?.empty_check_out_date ||
+		'Please select check out date.';
+	const msgInvalidRange =
+		window?.hotel_booking_i18n?.check_out_date_must_be_greater ||
+		'Check out date must be greater than the check in.';
+
+	if ( ! checkInField || ! checkOutField ) {
+		return {
+			error: msgInvalidRange,
+		};
+	}
+
+	const checkInDate = parseBookingDateValue( checkInField.value );
+	if ( ! checkInDate ) {
+		return {
+			error: msgEmptyCheckIn,
+		};
+	}
+
+	const checkOutDate = parseBookingDateValue( checkOutField.value );
+	if ( ! checkOutDate ) {
+		return {
+			error: msgEmptyCheckOut,
+		};
+	}
+
+	const checkInNormalized = flatpickr.formatDate(
+		checkInDate,
+		INTERNAL_DATE_FORMAT
+	);
+	const checkOutNormalized = flatpickr.formatDate(
+		checkOutDate,
+		INTERNAL_DATE_FORMAT
+	);
+
+	if ( checkOutNormalized <= checkInNormalized ) {
+		return {
+			error: msgInvalidRange,
+		};
+	}
+
+	return {
+		checkInDate: checkInNormalized,
+		checkOutDate: checkOutNormalized,
+	};
 };
 const wphbRoomInitDatePicker = () => {
 	elHotelBookingRoom = document.querySelector( '#hotel_booking_room_hidden' );
@@ -44,6 +151,20 @@ const wphbRoomInitDatePicker = () => {
 	const elDateCheckIn = elForm.querySelector( 'input[name="check_in_date"]' );
 	const elDateCheckOut = elForm.querySelector( 'input[name="check_out_date"]' );
 	const elDateRange = elForm.querySelector( 'input[name="select-date-range"]' );
+	const parsedCheckInDate = parseBookingDateValue( elDateCheckIn?.value );
+	const parsedCheckOutDate = parseBookingDateValue( elDateCheckOut?.value );
+	if ( parsedCheckInDate && elDateCheckIn ) {
+		elDateCheckIn.value = formatBookingDate( parsedCheckInDate );
+	}
+	if ( parsedCheckOutDate && elDateCheckOut ) {
+		elDateCheckOut.value = formatBookingDate( parsedCheckOutDate );
+	}
+	if ( elDateRange && parsedCheckInDate && parsedCheckOutDate ) {
+		elDateRange.value =
+			formatBookingDate( parsedCheckInDate ) +
+			' - ' +
+			formatBookingDate( parsedCheckOutDate );
+	}
 	let datePickerCheckIn;
 	let datePickerCheckOut;
 	let dateMinCheckInCanBook;
@@ -120,13 +241,14 @@ const wphbRoomInitDatePicker = () => {
 			let minEndDate;
 		roomDateRangeSelector = flatpickr( elDateRange, {
 		    mode: "range",
-		    dateFormat: 'Y/m/d',
+		    dateFormat: FRONTEND_DATE_FORMAT,
+		    parseDate: parseFlatpickrDate,
 		    minDate: 'today',
 		    disable: datesBlock,
 		    showMonths: 2,
 		    positionElement: positionEle,
 		    locale: {
-		    	firstDayOfWeek: 1,
+		    	firstDayOfWeek: FIRST_DAY_OF_WEEK,
 		    },
 		    defaultDate: [elDateCheckIn.value, elDateCheckOut.value],
 		    onDayCreate: function(dObj, dStr, fpInstance, dayElem) {
@@ -140,9 +262,9 @@ const wphbRoomInitDatePicker = () => {
 		    },
 		    onChange: function(selectedDates, dateStr, instance) {
 		        if (selectedDates.length === 2) {
-		        	elDateCheckIn.value = toYmdLocal( selectedDates[0] );
-		        	elDateCheckOut.value = toYmdLocal(selectedDates[1]);
-		        	instance._input.value = toYmdLocal( selectedDates[0] ) + ' - ' + toYmdLocal(selectedDates[1]);
+		        	elDateCheckIn.value = formatBookingDate( selectedDates[0] );
+		        	elDateCheckOut.value = formatBookingDate( selectedDates[1] );
+		        	instance._input.value = formatBookingDate( selectedDates[0] ) + ' - ' + formatBookingDate( selectedDates[1] );
 		        	// reset minEndDate
 		        	minEndDate = new Date();
 		        	instance.redraw();
@@ -164,7 +286,7 @@ const wphbRoomInitDatePicker = () => {
 		    	let month = instance.currentMonth + 1,
 		    		year = instance.currentYear;
 		    	if ( undefined!==roomCalendarPricing ) {
-		    		roomCalendarPricing.jumpToDate(year + "/" + month + "/01");
+		    		roomCalendarPricing.jumpToDate( new Date( year, month - 1, 1 ) );
 		    		roomCalendarPricing.config.onMonthChange.forEach(fn => fn(
 			    			roomCalendarPricing.selectedDates,
 			    			roomCalendarPricing.input.value,
@@ -197,13 +319,14 @@ const wphbRoomInitDatePicker = () => {
 		let defaultCheckInDate = elDateCheckIn.value ? elDateCheckIn.value : dateMinCheckInCanBook;
 		// Check in date
 		const optionCheckIn = {
-			dateFormat: 'Y/m/d',
+			dateFormat: FRONTEND_DATE_FORMAT,
+			parseDate: parseFlatpickrDate,
 			minDate: 'today',
 			disable: datesBlock,
 			defaultDate: defaultCheckInDate,
 			disableMobile: true,
 			locale: {
-				firstDayOfWeek: 1,
+				firstDayOfWeek: FIRST_DAY_OF_WEEK,
 			},
 			onChange( selectedDates, dateStr, instance ) {
 				if ( datePickerCheckOut ) {
@@ -229,13 +352,14 @@ const wphbRoomInitDatePicker = () => {
 		let defaultCheckOutDate = elDateCheckOut.value ? elDateCheckOut.value : dateMinCheckOutCanBook;
 		// Check out date
 		const optionCheckout = {
-			dateFormat: 'Y/m/d',
+			dateFormat: FRONTEND_DATE_FORMAT,
+			parseDate: parseFlatpickrDate,
 			minDate: hotel_settings.min_booking_date > 0 ?  new Date().fp_incr( hotel_settings.min_booking_date ) : 'today',
 			disable: datesBlock,
 			defaultDate: defaultCheckOutDate,
 			disableMobile: true,
 			locale: {
-				firstDayOfWeek: 1,
+				firstDayOfWeek: FIRST_DAY_OF_WEEK,
 			},
 			onChange( selectedDates, dateStr, instance ) {},
 		};
@@ -277,7 +401,8 @@ const calendarPricing = () => {
 		let showMonths = window.innerWidth >= 992 ? 2 : 1;
 		
 		roomCalendarPricing = flatpickr( elRoomCalendarPricing, {
-			dateFormat: 'Y/m/d',
+			dateFormat: FRONTEND_DATE_FORMAT,
+			parseDate: parseFlatpickrDate,
 			mode: 'range',
 			minDate: 'today',
 			inline: true,
@@ -285,7 +410,7 @@ const calendarPricing = () => {
 			defaultDate: calendarDefaultDate,
 			showMonths: showMonths,
 			locale: {
-				firstDayOfWeek: 1,
+				firstDayOfWeek: FIRST_DAY_OF_WEEK,
 			},
 			onDayCreate: function(dObj, dStr, fpInstance, dayElem) {
 			    if (!minEndDatePlan) return;
@@ -432,7 +557,18 @@ const wphbRoomCheckDates = ( formCheckDate ) => {
 	};
 
 	// Send to sever
-	const option = handleBookingFormData( formCheckDate );
+	let option;
+	try {
+		option = handleBookingFormData( formCheckDate );
+	} catch ( error ) {
+		showErrors( error.message || String( error ) );
+		elBtnCheck.removeAttribute( 'disabled' );
+		if ( elLoading ) {
+			elLoading.classList.add( 'hide' );
+			elLoading.classList.remove( 'loading' );
+		}
+		return;
+	}
 
 	fetch( hotel_settings.ajax, option )
 		.then( ( response ) => response.json() )
@@ -533,7 +669,13 @@ const wphbRoomAddToCart = ( formAddToCart ) => {
 	};
 
 	// Send to sever
-	const option = handleBookingFormData( formAddToCart );
+	let option;
+	try {
+		option = handleBookingFormData( formAddToCart );
+	} catch ( error ) {
+		showErrors( error.message || String( error ) );
+		return;
+	}
 
 	elBtnSubmit.setAttribute( 'disabled', 'disabled' );
 	elLoading.classList.remove( 'hide' );
@@ -561,6 +703,11 @@ const wphbRoomAddToCart = ( formAddToCart ) => {
 };
 
 const handleBookingFormData = ( form ) => {
+	const normalizedDates = validateAndNormalizeBookingDateRange( form );
+	if ( normalizedDates.error ) {
+		throw new Error( normalizedDates.error );
+	}
+
 	let dataSend = {};
 	const data = new FormData( form );
 	for ( const pair of data.entries() ) {
@@ -570,6 +717,8 @@ const handleBookingFormData = ( form ) => {
 
 		dataSend[ key ] = value;
 	}
+	dataSend.check_in_date = normalizedDates.checkInDate;
+	dataSend.check_out_date = normalizedDates.checkOutDate;
 	const dataSendFrom = new FormData();
 	Object.entries( dataSend ).forEach( ( [ key, value ] ) => {
 		dataSendFrom.append( key, value );
@@ -586,7 +735,13 @@ const handleBookingFormData = ( form ) => {
 }
 //calculate room price without tax
 const calculateBookingPrice = ( elForm ) => {
-	const option = handleBookingFormData( elForm );
+	let option;
+	try {
+		option = handleBookingFormData( elForm );
+	} catch ( error ) {
+		alert( error.message || String( error ) );
+		return;
+	}
     elForm.querySelector( '.wphb-single-room-loading-overlay' ).classList.remove( 'hidden' );
     fetch( `${hotel_settings.wphb_rest_url}wphb/v1/rooms/calculate-booking-price`, option )
     	.then( ( response ) => response.json() )
@@ -606,7 +761,13 @@ const calculateBookingPrice = ( elForm ) => {
 
 const getRoomBookingPriceDetails = ( button ) => {
 	let form = button.closest( 'form' );
-	const option = handleBookingFormData( form );
+	let option;
+	try {
+		option = handleBookingFormData( form );
+	} catch ( error ) {
+		alert( error.message || String( error ) );
+		return;
+	}
 	const iconLoading = button.querySelector('.dashicons.dashicons-update.hide.wphb-icon');
 	iconLoading.classList.toggle('hide');
 	iconLoading.classList.toggle('loading');

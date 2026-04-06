@@ -372,6 +372,12 @@ class WPHB_Ajax {
 			$check_out_date = WPHB_Helpers::get_param( 'check_out_date' );
 			$adult_qty      = WPHB_Helpers::get_param( 'adult_qty', 1, 'int' );
 			$child_qty      = WPHB_Helpers::get_param( 'child_qty', 0, 'int' );
+			$normalized_dates = hb_normalize_booking_date_range( $check_in_date, $check_out_date, hb_get_frontend_date_format() );
+			if ( is_wp_error( $normalized_dates ) ) {
+				throw new Exception( $normalized_dates->get_error_message() );
+			}
+			$check_in_date  = $normalized_dates['check_in_date'];
+			$check_out_date = $normalized_dates['check_out_date'];
 
 			// Check to add extra
 			$hb_optional_quantity_selected = WPHB_Helpers::get_param( 'hb_optional_quantity_selected', [] );

@@ -1052,6 +1052,123 @@ import flatpickr from 'flatpickr';
 
 'use strict';
 
+const INTERNAL_DATE_FORMAT = hotel_settings.internal_date_format || 'Y/m/d';
+const FRONTEND_DATE_FORMAT =
+	hotel_settings.flatpickr_date_format || INTERNAL_DATE_FORMAT;
+const normalizeFirstDayOfWeek = ( value ) => {
+	const parsed = Number.parseInt( value, 10 );
+	if ( Number.isNaN( parsed ) || parsed < 0 || parsed > 6 ) {
+		return 1;
+	}
+
+	return parsed;
+};
+const FIRST_DAY_OF_WEEK = normalizeFirstDayOfWeek(
+	hotel_settings.first_day_of_week
+);
+
+const parseDateStrict = ( value, format ) => {
+	if ( ! value || ! format ) {
+		return null;
+	}
+
+	const parsed = flatpickr.parseDate( value, format, true );
+	if ( ! parsed ) {
+		return null;
+	}
+
+	return flatpickr.formatDate( parsed, format ) === value ? parsed : null;
+};
+
+const parseBookingDateValue = ( value ) => {
+	const dateValue = String( value || '' ).trim();
+	if ( ! dateValue ) {
+		return null;
+	}
+
+	const formats = [ FRONTEND_DATE_FORMAT, INTERNAL_DATE_FORMAT ].filter(
+		( format, index, arr ) => format && arr.indexOf( format ) === index
+	);
+
+	for ( let i = 0; i < formats.length; i++ ) {
+		const parsed = parseDateStrict( dateValue, formats[ i ] );
+		if ( parsed ) {
+			return parsed;
+		}
+	}
+
+	return null;
+};
+
+const parseFlatpickrDate = ( value, format ) => {
+	if ( value instanceof Date ) {
+		return value;
+	}
+
+	const parsed = parseBookingDateValue( value );
+	if ( parsed ) {
+		return parsed;
+	}
+
+	return flatpickr.parseDate( value, format || FRONTEND_DATE_FORMAT, true );
+};
+
+const formatBookingDateForUi = ( date ) =>
+	flatpickr.formatDate( date, FRONTEND_DATE_FORMAT );
+
+const formatBookingDateForSubmit = ( date ) =>
+	flatpickr.formatDate( date, INTERNAL_DATE_FORMAT );
+
+const validateAndNormalizeBookingDates = ( form ) => {
+	const checkInField = form.querySelector( 'input[name="check_in_date"]' );
+	const checkOutField = form.querySelector( 'input[name="check_out_date"]' );
+	const msgEmptyCheckIn =
+		window?.hotel_booking_i18n?.empty_check_in_date ||
+		'Please select check in date.';
+	const msgEmptyCheckOut =
+		window?.hotel_booking_i18n?.empty_check_out_date ||
+		'Please select check out date.';
+	const msgInvalidRange =
+		window?.hotel_booking_i18n?.check_out_date_must_be_greater ||
+		'Check out date must be greater than the check in.';
+
+	if ( ! checkInField || ! checkOutField ) {
+		return true;
+	}
+
+	checkInField.classList.remove( 'error' );
+	checkOutField.classList.remove( 'error' );
+
+	const checkInDate = parseBookingDateValue( checkInField.value );
+	if ( ! checkInDate ) {
+		checkInField.classList.add( 'error' );
+		alert( msgEmptyCheckIn );
+		return false;
+	}
+
+	const checkOutDate = parseBookingDateValue( checkOutField.value );
+	if ( ! checkOutDate ) {
+		checkOutField.classList.add( 'error' );
+		alert( msgEmptyCheckOut );
+		return false;
+	}
+
+	const checkInSubmit = formatBookingDateForSubmit( checkInDate );
+	const checkOutSubmit = formatBookingDateForSubmit( checkOutDate );
+
+	if ( checkOutSubmit <= checkInSubmit ) {
+		checkInField.classList.add( 'error' );
+		checkOutField.classList.add( 'error' );
+		alert( msgInvalidRange );
+		return false;
+	}
+
+	checkInField.value = checkInSubmit;
+	checkOutField.value = checkOutSubmit;
+
+	return true;
+};
+
 // let datePickerCheckIn, datePickerCheckOut, datePickerRange;
 const wphbDatePicker = () => {
 	const elFormTables = document.querySelectorAll( '.hb-form-table' );
@@ -1063,18 +1180,32 @@ const wphbDatePicker = () => {
 		const elDateCheckOut = elFormTable.querySelector( 'input[name="check_out_date"]' );
 		const elDateRange = elFormTable.querySelector( 'input[name="check_in_out_range"]' );
 		const elDateCheckInOut = elFormTable.querySelector( '.hb-form-check-in-check-out' );
+		const parsedCheckInDate = parseBookingDateValue( elDateCheckIn?.value );
+		const parsedCheckOutDate = parseBookingDateValue( elDateCheckOut?.value );
+		if ( parsedCheckInDate && elDateCheckIn ) {
+			elDateCheckIn.value = formatBookingDateForUi( parsedCheckInDate );
+		}
+		if ( parsedCheckOutDate && elDateCheckOut ) {
+			elDateCheckOut.value = formatBookingDateForUi( parsedCheckOutDate );
+		}
+		if ( elDateRange && parsedCheckInDate && parsedCheckOutDate ) {
+			elDateRange.value =
+				formatBookingDateForUi( parsedCheckInDate ) +
+				' - ' +
+				formatBookingDateForUi( parsedCheckOutDate );
+		}
 		const dateNow = new Date();
-		const dateTomorrow = new Date( dateNow.setDate( dateNow.getDate() + 1 ) );
 		const minBookingDateNumber = hotel_settings.min_booking_date > 0 ? parseInt( hotel_settings.min_booking_date ) : 1;
 
 		if ( elDateCheckIn && elDateCheckOut && ! elDateCheckIn.closest( '.hb-form-check-in-check-out' ) ) {
 			// Check in date
 			const optionCheckIn = {
-				dateFormat: 'Y/m/d',
+				dateFormat: FRONTEND_DATE_FORMAT,
+				parseDate: parseFlatpickrDate,
 				minDate: 'today',
 				disableMobile: true,
 				locale: {
-					firstDayOfWeek: 1,
+					firstDayOfWeek: FIRST_DAY_OF_WEEK,
 				},
 				//defaultDate: 'today',
 				onChange( selectedDates, dateStr, instance ) {
@@ -1094,11 +1225,12 @@ const wphbDatePicker = () => {
 
 			// Check out date
 			const optionCheckout = {
-				dateFormat: 'Y/m/d',
+				dateFormat: FRONTEND_DATE_FORMAT,
+				parseDate: parseFlatpickrDate,
 				minDate: 'today',
 				disableMobile: true,
 				locale: {
-					firstDayOfWeek: 1,
+					firstDayOfWeek: FIRST_DAY_OF_WEEK,
 				},
 				//defaultDate: dateTomorrow,
 				onChange( selectedDates, dateStr, instance ) {
@@ -1111,13 +1243,14 @@ const wphbDatePicker = () => {
 		if ( elDateRange && elDateRange.closest( '.hb-form-check-in-check-out' ) ) {
 			// Check in, out dates
 			const optionRange = {
-				dateFormat: 'Y/m/d',
+				dateFormat: FRONTEND_DATE_FORMAT,
+				parseDate: parseFlatpickrDate,
 				minDate: 'today',
 				disableMobile: true,
 				mode: 'range',
 				showMonths: 2,
 				locale: {
-					firstDayOfWeek: 1,
+					firstDayOfWeek: FIRST_DAY_OF_WEEK,
 				},
 				defaultDate: [ elDateCheckIn.value, elDateCheckOut.value ],
 				onClose( selectedDates, dateStr, instance ) {
@@ -1127,8 +1260,8 @@ const wphbDatePicker = () => {
 						return;
 					}
 
-					const dateCheckInStr = wphbConvertDateToFormatDefault( dateCheckInSelected );
-					const dateCheckOutStr = wphbConvertDateToFormatDefault( dateCheckOutSelected );
+					const dateCheckInStr = formatBookingDateForUi( dateCheckInSelected );
+					const dateCheckOutStr = formatBookingDateForUi( dateCheckOutSelected );
 					elDateCheckIn.value = dateCheckInStr;
 					elDateCheckOut.value = dateCheckOutStr;
 				},
@@ -1148,14 +1281,34 @@ const wphbDatePicker = () => {
 	} );
 };
 
-const wphbConvertDateToFormatDefault = ( date ) => {
-	const year = date.getFullYear();
-	const month = String( date.getMonth() + 1 ).padStart( 2, '0' ); // Months are zero-based
-	const day = String( date.getDate() ).padStart( 2, '0' );
-
-	return `${ year }/${ month }/${ day }`;
-};
-
 document.addEventListener( 'DOMContentLoaded', function( e ) {
 	wphbDatePicker();
+	document.addEventListener( 'submit', ( event ) => {
+		const target = event.target;
+		if ( ! target || target.tagName !== 'FORM' ) {
+			return;
+		}
+
+		const formName = target.getAttribute( 'name' ) || '';
+		const formClass = target.getAttribute( 'class' ) || '';
+		const isBookingForm =
+			formName === 'hb-search-form' ||
+			formName === 'hb-search-results' ||
+			formName === 'hb-search-single-room' ||
+			formClass.indexOf( 'hb-search-form-' ) !== -1 ||
+			formClass.indexOf( 'hotel-booking-search' ) !== -1;
+		if ( ! isBookingForm ) {
+			return;
+		}
+
+		const hasCheckInDate = target.querySelector( 'input[name="check_in_date"]' );
+		const hasCheckOutDate = target.querySelector( 'input[name="check_out_date"]' );
+		if ( ! hasCheckInDate || ! hasCheckOutDate ) {
+			return;
+		}
+
+		if ( ! validateAndNormalizeBookingDates( target ) ) {
+			event.preventDefault();
+		}
+	} );
 } );
