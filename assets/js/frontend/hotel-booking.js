@@ -1,4 +1,12 @@
 import flatpickr from 'flatpickr';
+import flatpickrLocales from 'flatpickr/dist/l10n/index.js';
+import {
+	FLATPICKR_RANGE_SEPARATOR,
+	applyFlatpickrLocaleConfig,
+	createBookingDateHelpers,
+	createFlatpickrLocaleConfig,
+	formatDateRangeValue,
+} from './flatpickr-locale-utils.js';
 //import 'flatpickr/dist/flatpickr.min.css';
 ( function( $ ) {
 	const $doc = $( document );
@@ -1055,70 +1063,24 @@ import flatpickr from 'flatpickr';
 const INTERNAL_DATE_FORMAT = hotel_settings.internal_date_format || 'Y/m/d';
 const FRONTEND_DATE_FORMAT =
 	hotel_settings.flatpickr_date_format || INTERNAL_DATE_FORMAT;
-const normalizeFirstDayOfWeek = ( value ) => {
-	const parsed = Number.parseInt( value, 10 );
-	if ( Number.isNaN( parsed ) || parsed < 0 || parsed > 6 ) {
-		return 1;
-	}
-
-	return parsed;
-};
-const FIRST_DAY_OF_WEEK = normalizeFirstDayOfWeek(
+// Global locale used by all frontend pickers: browser locale + admin-configured week start.
+const FLATPICKR_LOCALE = createFlatpickrLocaleConfig(
+	flatpickrLocales,
 	hotel_settings.first_day_of_week
 );
+applyFlatpickrLocaleConfig( flatpickr, FLATPICKR_LOCALE );
+const {
+	parseBookingDateValue,
+	parseFlatpickrDate,
+	formatBookingDateForUi,
+	formatBookingDateForSubmit,
+} = createBookingDateHelpers(
+	flatpickr,
+	FRONTEND_DATE_FORMAT,
+	INTERNAL_DATE_FORMAT
+);
 
-const parseDateStrict = ( value, format ) => {
-	if ( ! value || ! format ) {
-		return null;
-	}
-
-	const parsed = flatpickr.parseDate( value, format, true );
-	if ( ! parsed ) {
-		return null;
-	}
-
-	return flatpickr.formatDate( parsed, format ) === value ? parsed : null;
-};
-
-const parseBookingDateValue = ( value ) => {
-	const dateValue = String( value || '' ).trim();
-	if ( ! dateValue ) {
-		return null;
-	}
-
-	const formats = [ FRONTEND_DATE_FORMAT, INTERNAL_DATE_FORMAT ].filter(
-		( format, index, arr ) => format && arr.indexOf( format ) === index
-	);
-
-	for ( let i = 0; i < formats.length; i++ ) {
-		const parsed = parseDateStrict( dateValue, formats[ i ] );
-		if ( parsed ) {
-			return parsed;
-		}
-	}
-
-	return null;
-};
-
-const parseFlatpickrDate = ( value, format ) => {
-	if ( value instanceof Date ) {
-		return value;
-	}
-
-	const parsed = parseBookingDateValue( value );
-	if ( parsed ) {
-		return parsed;
-	}
-
-	return flatpickr.parseDate( value, format || FRONTEND_DATE_FORMAT, true );
-};
-
-const formatBookingDateForUi = ( date ) =>
-	flatpickr.formatDate( date, FRONTEND_DATE_FORMAT );
-
-const formatBookingDateForSubmit = ( date ) =>
-	flatpickr.formatDate( date, INTERNAL_DATE_FORMAT );
-
+// Validate and convert date values into INTERNAL_DATE_FORMAT before form submit.
 const validateAndNormalizeBookingDates = ( form ) => {
 	const checkInField = form.querySelector( 'input[name="check_in_date"]' );
 	const checkOutField = form.querySelector( 'input[name="check_out_date"]' );
@@ -1180,6 +1142,7 @@ const wphbDatePicker = () => {
 		const elDateCheckOut = elFormTable.querySelector( 'input[name="check_out_date"]' );
 		const elDateRange = elFormTable.querySelector( 'input[name="check_in_out_range"]' );
 		const elDateCheckInOut = elFormTable.querySelector( '.hb-form-check-in-check-out' );
+		// Normalize pre-filled values (URL/old input) so flatpickr always receives consistent strings.
 		const parsedCheckInDate = parseBookingDateValue( elDateCheckIn?.value );
 		const parsedCheckOutDate = parseBookingDateValue( elDateCheckOut?.value );
 		if ( parsedCheckInDate && elDateCheckIn ) {
@@ -1189,23 +1152,24 @@ const wphbDatePicker = () => {
 			elDateCheckOut.value = formatBookingDateForUi( parsedCheckOutDate );
 		}
 		if ( elDateRange && parsedCheckInDate && parsedCheckOutDate ) {
-			elDateRange.value =
-				formatBookingDateForUi( parsedCheckInDate ) +
-				' - ' +
-				formatBookingDateForUi( parsedCheckOutDate );
+			elDateRange.value = formatDateRangeValue(
+				formatBookingDateForUi( parsedCheckInDate ),
+				formatBookingDateForUi( parsedCheckOutDate ),
+				FLATPICKR_RANGE_SEPARATOR
+			);
 		}
 		const dateNow = new Date();
 		const minBookingDateNumber = hotel_settings.min_booking_date > 0 ? parseInt( hotel_settings.min_booking_date ) : 1;
 
 		if ( elDateCheckIn && elDateCheckOut && ! elDateCheckIn.closest( '.hb-form-check-in-check-out' ) ) {
-			// Check in date
+			// Two-input mode: check-in and check-out are separate flatpickr instances.
 			const optionCheckIn = {
 				dateFormat: FRONTEND_DATE_FORMAT,
 				parseDate: parseFlatpickrDate,
 				minDate: 'today',
 				disableMobile: true,
 				locale: {
-					firstDayOfWeek: FIRST_DAY_OF_WEEK,
+					...FLATPICKR_LOCALE,
 				},
 				//defaultDate: 'today',
 				onChange( selectedDates, dateStr, instance ) {
@@ -1223,14 +1187,14 @@ const wphbDatePicker = () => {
 
 			const datePickerCheckIn = flatpickr( elDateCheckIn, optionCheckIn );
 
-			// Check out date
+			// Check-out picker shares parser/locale and updates based on check-in selection.
 			const optionCheckout = {
 				dateFormat: FRONTEND_DATE_FORMAT,
 				parseDate: parseFlatpickrDate,
 				minDate: 'today',
 				disableMobile: true,
 				locale: {
-					firstDayOfWeek: FIRST_DAY_OF_WEEK,
+					...FLATPICKR_LOCALE,
 				},
 				//defaultDate: dateTomorrow,
 				onChange( selectedDates, dateStr, instance ) {
@@ -1241,7 +1205,7 @@ const wphbDatePicker = () => {
 		}
 
 		if ( elDateRange && elDateRange.closest( '.hb-form-check-in-check-out' ) ) {
-			// Check in, out dates
+			// Range mode: one flatpickr instance controls both dates.
 			const optionRange = {
 				dateFormat: FRONTEND_DATE_FORMAT,
 				parseDate: parseFlatpickrDate,
@@ -1250,7 +1214,7 @@ const wphbDatePicker = () => {
 				mode: 'range',
 				showMonths: 2,
 				locale: {
-					firstDayOfWeek: FIRST_DAY_OF_WEEK,
+					...FLATPICKR_LOCALE,
 				},
 				defaultDate: [ elDateCheckIn.value, elDateCheckOut.value ],
 				onClose( selectedDates, dateStr, instance ) {
@@ -1283,6 +1247,7 @@ const wphbDatePicker = () => {
 
 document.addEventListener( 'DOMContentLoaded', function( e ) {
 	wphbDatePicker();
+	// Final submit guard for all booking/search forms with check-in/check-out fields.
 	document.addEventListener( 'submit', ( event ) => {
 		const target = event.target;
 		if ( ! target || target.tagName !== 'FORM' ) {

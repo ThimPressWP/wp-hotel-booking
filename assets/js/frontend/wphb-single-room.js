@@ -1,7 +1,15 @@
 import flatpickr from 'flatpickr';
+import flatpickrLocales from 'flatpickr/dist/l10n/index.js';
 import tingle from 'tingle.js';
 // import 'flatpickr/dist/flatpickr.min.css';
 import * as utils from '../utils.js';
+import {
+	FLATPICKR_RANGE_SEPARATOR,
+	applyFlatpickrLocaleConfig,
+	createBookingDateHelpers,
+	createFlatpickrLocaleConfig,
+	formatDateRangeValue,
+} from './flatpickr-locale-utils.js';
 
 let modalCheckDates;
 const className = {
@@ -19,67 +27,24 @@ let elHotelBookingRoom,
 const INTERNAL_DATE_FORMAT = hotel_settings.internal_date_format || 'Y/m/d';
 const FRONTEND_DATE_FORMAT =
 	hotel_settings.flatpickr_date_format || INTERNAL_DATE_FORMAT;
-const normalizeFirstDayOfWeek = ( value ) => {
-	const parsed = Number.parseInt( value, 10 );
-	if ( Number.isNaN( parsed ) || parsed < 0 || parsed > 6 ) {
-		return 1;
-	}
-
-	return parsed;
-};
-const FIRST_DAY_OF_WEEK = normalizeFirstDayOfWeek(
+// Build one locale config for all pickers: browser locale + admin first day of week.
+const FLATPICKR_LOCALE = createFlatpickrLocaleConfig(
+	flatpickrLocales,
 	hotel_settings.first_day_of_week
 );
+applyFlatpickrLocaleConfig( flatpickr, FLATPICKR_LOCALE );
+const {
+	parseBookingDateValue,
+	parseFlatpickrDate,
+	formatBookingDate,
+	formatBookingDateForSubmit,
+} = createBookingDateHelpers(
+	flatpickr,
+	FRONTEND_DATE_FORMAT,
+	INTERNAL_DATE_FORMAT
+);
 
-const parseDateStrict = ( value, format ) => {
-	if ( ! value || ! format ) {
-		return null;
-	}
-
-	const parsed = flatpickr.parseDate( value, format, true );
-	if ( ! parsed ) {
-		return null;
-	}
-
-	return flatpickr.formatDate( parsed, format ) === value ? parsed : null;
-};
-
-const parseBookingDateValue = ( value ) => {
-	const dateValue = String( value || '' ).trim();
-	if ( ! dateValue ) {
-		return null;
-	}
-
-	const formats = [ FRONTEND_DATE_FORMAT, INTERNAL_DATE_FORMAT ].filter(
-		( format, index, arr ) => format && arr.indexOf( format ) === index
-	);
-
-	for ( let i = 0; i < formats.length; i++ ) {
-		const parsed = parseDateStrict( dateValue, formats[ i ] );
-		if ( parsed ) {
-			return parsed;
-		}
-	}
-
-	return null;
-};
-
-const parseFlatpickrDate = ( value, format ) => {
-	if ( value instanceof Date ) {
-		return value;
-	}
-
-	const parsed = parseBookingDateValue( value );
-	if ( parsed ) {
-		return parsed;
-	}
-
-	return flatpickr.parseDate( value, format || FRONTEND_DATE_FORMAT, true );
-};
-
-const formatBookingDate = ( date, format = FRONTEND_DATE_FORMAT ) =>
-	flatpickr.formatDate( date, format );
-
+// Validate and normalize before submit to avoid ambiguous string date parsing.
 const validateAndNormalizeBookingDateRange = ( form ) => {
 	const checkInField = form.querySelector( 'input[name="check_in_date"]' );
 	const checkOutField = form.querySelector( 'input[name="check_out_date"]' );
@@ -113,14 +78,8 @@ const validateAndNormalizeBookingDateRange = ( form ) => {
 		};
 	}
 
-	const checkInNormalized = flatpickr.formatDate(
-		checkInDate,
-		INTERNAL_DATE_FORMAT
-	);
-	const checkOutNormalized = flatpickr.formatDate(
-		checkOutDate,
-		INTERNAL_DATE_FORMAT
-	);
+	const checkInNormalized = formatBookingDateForSubmit( checkInDate );
+	const checkOutNormalized = formatBookingDateForSubmit( checkOutDate );
 
 	if ( checkOutNormalized <= checkInNormalized ) {
 		return {
@@ -151,6 +110,7 @@ const wphbRoomInitDatePicker = () => {
 	const elDateCheckIn = elForm.querySelector( 'input[name="check_in_date"]' );
 	const elDateCheckOut = elForm.querySelector( 'input[name="check_out_date"]' );
 	const elDateRange = elForm.querySelector( 'input[name="select-date-range"]' );
+	// Normalize existing values from DB/query params into the active frontend format.
 	const parsedCheckInDate = parseBookingDateValue( elDateCheckIn?.value );
 	const parsedCheckOutDate = parseBookingDateValue( elDateCheckOut?.value );
 	if ( parsedCheckInDate && elDateCheckIn ) {
@@ -160,10 +120,11 @@ const wphbRoomInitDatePicker = () => {
 		elDateCheckOut.value = formatBookingDate( parsedCheckOutDate );
 	}
 	if ( elDateRange && parsedCheckInDate && parsedCheckOutDate ) {
-		elDateRange.value =
-			formatBookingDate( parsedCheckInDate ) +
-			' - ' +
-			formatBookingDate( parsedCheckOutDate );
+		elDateRange.value = formatDateRangeValue(
+			formatBookingDate( parsedCheckInDate ),
+			formatBookingDate( parsedCheckOutDate ),
+			FLATPICKR_RANGE_SEPARATOR
+		);
 	}
 	let datePickerCheckIn;
 	let datePickerCheckOut;
@@ -236,10 +197,11 @@ const wphbRoomInitDatePicker = () => {
 		return dateCalendar <= dateSelected;
 	};
 	if ( elDateRange ) {
-		let positionEle = parseInt( elDateRange.getAttribute( 'data-hidden' ) ) === 1 ? elDateCheckIn : null,
-			roomId = elForm.querySelector('input[name="room-id"]').value;
-			let minEndDate;
-		roomDateRangeSelector = flatpickr( elDateRange, {
+			// Single range picker mode: one input controls both check-in and check-out.
+			let positionEle = parseInt( elDateRange.getAttribute( 'data-hidden' ) ) === 1 ? elDateCheckIn : null,
+				roomId = elForm.querySelector('input[name="room-id"]').value;
+				let minEndDate;
+			roomDateRangeSelector = flatpickr( elDateRange, {
 		    mode: "range",
 		    dateFormat: FRONTEND_DATE_FORMAT,
 		    parseDate: parseFlatpickrDate,
@@ -248,7 +210,7 @@ const wphbRoomInitDatePicker = () => {
 		    showMonths: 2,
 		    positionElement: positionEle,
 		    locale: {
-		    	firstDayOfWeek: FIRST_DAY_OF_WEEK,
+		    	...FLATPICKR_LOCALE,
 		    },
 		    defaultDate: [elDateCheckIn.value, elDateCheckOut.value],
 		    onDayCreate: function(dObj, dStr, fpInstance, dayElem) {
@@ -264,7 +226,11 @@ const wphbRoomInitDatePicker = () => {
 		        if (selectedDates.length === 2) {
 		        	elDateCheckIn.value = formatBookingDate( selectedDates[0] );
 		        	elDateCheckOut.value = formatBookingDate( selectedDates[1] );
-		        	instance._input.value = formatBookingDate( selectedDates[0] ) + ' - ' + formatBookingDate( selectedDates[1] );
+		        	instance._input.value = formatDateRangeValue(
+		        		formatBookingDate( selectedDates[0] ),
+		        		formatBookingDate( selectedDates[1] ),
+		        		FLATPICKR_RANGE_SEPARATOR
+		        	);
 		        	// reset minEndDate
 		        	minEndDate = new Date();
 		        	instance.redraw();
@@ -317,7 +283,7 @@ const wphbRoomInitDatePicker = () => {
 		} );
 	} else {
 		let defaultCheckInDate = elDateCheckIn.value ? elDateCheckIn.value : dateMinCheckInCanBook;
-		// Check in date
+		// Two-input mode: check-in picker drives minDate/disabled logic of check-out picker.
 		const optionCheckIn = {
 			dateFormat: FRONTEND_DATE_FORMAT,
 			parseDate: parseFlatpickrDate,
@@ -326,7 +292,7 @@ const wphbRoomInitDatePicker = () => {
 			defaultDate: defaultCheckInDate,
 			disableMobile: true,
 			locale: {
-				firstDayOfWeek: FIRST_DAY_OF_WEEK,
+				...FLATPICKR_LOCALE,
 			},
 			onChange( selectedDates, dateStr, instance ) {
 				if ( datePickerCheckOut ) {
@@ -350,7 +316,7 @@ const wphbRoomInitDatePicker = () => {
 		datePickerCheckIn = flatpickr( elDateCheckIn, optionCheckIn );
 		// console.log( elDateCheckIn.value );
 		let defaultCheckOutDate = elDateCheckOut.value ? elDateCheckOut.value : dateMinCheckOutCanBook;
-		// Check out date
+		// Check-out picker uses the same strict parser and locale as check-in picker.
 		const optionCheckout = {
 			dateFormat: FRONTEND_DATE_FORMAT,
 			parseDate: parseFlatpickrDate,
@@ -359,7 +325,7 @@ const wphbRoomInitDatePicker = () => {
 			defaultDate: defaultCheckOutDate,
 			disableMobile: true,
 			locale: {
-				firstDayOfWeek: FIRST_DAY_OF_WEEK,
+				...FLATPICKR_LOCALE,
 			},
 			onChange( selectedDates, dateStr, instance ) {},
 		};
@@ -399,7 +365,7 @@ const calendarPricing = () => {
 			calendarDefaultDate = [elForm.querySelector( 'input[name="check_in_date"]' ).value, elForm.querySelector( 'input[name="check_out_date"]' ).value];
 		}
 		let showMonths = window.innerWidth >= 992 ? 2 : 1;
-		
+		// Inline pricing calendar is also a flatpickr range picker sharing locale/format config.
 		roomCalendarPricing = flatpickr( elRoomCalendarPricing, {
 			dateFormat: FRONTEND_DATE_FORMAT,
 			parseDate: parseFlatpickrDate,
@@ -410,7 +376,7 @@ const calendarPricing = () => {
 			defaultDate: calendarDefaultDate,
 			showMonths: showMonths,
 			locale: {
-				firstDayOfWeek: FIRST_DAY_OF_WEEK,
+				...FLATPICKR_LOCALE,
 			},
 			onDayCreate: function(dObj, dStr, fpInstance, dayElem) {
 			    if (!minEndDatePlan) return;
@@ -691,7 +657,7 @@ const wphbRoomAddToCart = ( formAddToCart ) => {
 				return;
 			}
 
-			window.location.href = data.redirect;
+			// window.location.href = data.redirect;
 		} )
 		.catch( ( error ) => {
 			showErrors( error );
