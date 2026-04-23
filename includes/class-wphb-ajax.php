@@ -450,7 +450,7 @@ class WPHB_Ajax {
 				$res->status  = 'success';
 				$res->message = sprintf( '<label class="hb_success_message">%1$s</label>', __( 'Added successfully.', 'wp-hotel-booking' ) );
 			} else {
-				throw new $cart_item_id->get_error_message();
+				throw new Exception( $cart_item_id->get_error_message() );
 			}
 		} catch ( Throwable $e ) {
 			$res->message = $e->getMessage();

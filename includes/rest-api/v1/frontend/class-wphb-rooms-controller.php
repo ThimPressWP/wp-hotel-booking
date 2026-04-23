@@ -82,11 +82,11 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 		$response         = new WPHB_REST_RESPONSE();
 		$response->status = 'success';
 
-		$check_in_date   = $params['check_in_date'];
-		$check_out_date  = $params['check_out_date'];
-		$adults_capacity = $params['adults'];
-		$max_child       = $params['max_child'];
-		$paged           = absint( $params['paged'] ) ?? 1;
+		$check_in_date   = sanitize_text_field( $params['check_in_date'] ?? '' );
+		$check_out_date  = sanitize_text_field( $params['check_out_date'] ?? '' );
+		$adults_capacity = ! empty( $params['adults'] ) ? absint( $params['adults'] ) : 1;
+		$max_child       = ! empty( $params['max_child'] ) ? absint( $params['max_child'] ) : 0;
+		$paged           = ! empty( $params['paged'] ) ? absint( $params['paged'] ) : 1;
 		$limit           = hb_settings()->get( 'posts_per_page', 8 );
 
 		try {
@@ -114,7 +114,7 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 			);
 
 			$results = hb_search_rooms( $atts );
-			// print_r($results);die;
+
 			$total_page = ceil( $results['total'] / $limit );
 
 			if ( empty( $results ) || empty( $results['data'] ) ) {
@@ -161,12 +161,12 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 		$response         = new WPHB_REST_RESPONSE();
 		$response->status = 'error';
 
-		$room_id        = absint( $params['roomID'] ) ?? 0;
+		$room_id        = ! empty( $params['roomID'] ) ? absint( $params['roomID'] ) : 0;
 		$check_in_date  = sanitize_text_field( wp_unslash( $params['checkinDate'] ?? '' ) );
 		$check_out_date = sanitize_text_field( wp_unslash( $params['checkoutDate'] ?? '' ) );
-		$num_room       = absint( $params['numRoom'] ?? 1 );
-		$adults         = absint( $params['adults'] ) ?? 1;
-		$child          = absint( $params['maxChild'] ) ?? 0;
+		$num_room       = ! empty( $params['numRoom'] ) ? absint( $params['numRoom'] ) : 1;
+		$adults         = ! empty( $params['adults'] ) ? absint( $params['adults'] ) : 1;
+		$child          = ! empty( $params['maxChild'] ) ? absint( $params['maxChild'] ) : 0;
 
 		// add extra room when disable option :tp_hotel_booking_custom_process
 		$extra_data         = $params['extraData'] ?? array();
@@ -369,7 +369,7 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 			$first_month = WPHB_Helpers::get_param( 'month', intval( date( 'n' ) ), 'int' );
 			$year        = WPHB_Helpers::get_param( 'year', intval( date( 'Y' ) ), 'int' );
 
-			$first_month_date_obj  = DateTime::createFromFormat( 'Y-n', "$year-$first_month");
+			$first_month_date_obj  = DateTimeImmutable::createFromFormat( 'Y-n', "$year-$first_month" );
 			$first_month_date_str  = $first_month_date_obj->format( 'm/d/Y' );
 			$second_month_date_obj = $first_month_date_obj->modify( '+1 month' );
 			
@@ -402,7 +402,7 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 		$month_day = date( 't', strtotime( $end ) );
 		$room      = WPHB_Room::instance( $room_id );
 		for ( $i = 0; $i < $month_day; $i++ ) {
-			$day   = strtotime( $start ) + $i * 24 * HOUR_IN_SECONDS;
+			$day   = strtotime( "+$i days", strtotime( $start ) );
 			$price = $room->get_price( $day, false );
 			$price = $price ? floatval( $price ) : '0';
 
