@@ -1,11 +1,17 @@
 /** search api */
 import * as utils from '../utils.js';
+import {
+	normalizeBookingDateFieldsForSubmit,
+	normalizeBookingDateInputValue,
+} from './flatpickr-locale-utils.js';
 const urlCurrent = document.location.href;
 const urlPageSearch = hotel_settings?.url_page_search;
 const urlPageRooms = hotel_settings?.url_page_rooms;
 let filterRooms = JSON.parse(window.localStorage.getItem('wphb_filter_rooms')) || {};
 let firstLoad = true;
 const hotelBookingSearchNode = document.querySelector('.hotel-booking-search');
+const INTERNAL_DATE_FORMAT = hotel_settings?.internal_date_format || 'Y/m/d';
+const FRONTEND_DATE_FORMAT = hotel_settings?.flatpickr_date_format || INTERNAL_DATE_FORMAT;
 
 const wphbAddQueryArgs = (endpoint, args) => {
     const url = new URL(endpoint);
@@ -51,14 +57,19 @@ const requestSearchRoom = (forms, args, btn = false) => {
     }
 
     if (Object.keys(args).length === 0) {
-        const monthName = new Intl.DateTimeFormat("en-US", {month: "long"}).format;
         const today = new Date();
-        const stringToday = (monthName(today) + ' ' + ('0' + today.getDate()).slice(-2) + ', ' + today.getFullYear());
         const tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-        const stringTomorrow = (monthName(tomorrow) + ' ' + ('0' + tomorrow.getDate()).slice(-2) + ', ' + tomorrow.getFullYear());
 
-        args.check_in_date = stringToday;
-        args.check_out_date = stringTomorrow;
+        args.check_in_date = normalizeBookingDateInputValue(
+            `${today.getFullYear()}/${String(today.getMonth() + 1).padStart(2, '0')}/${String(today.getDate()).padStart(2, '0')}`,
+            FRONTEND_DATE_FORMAT,
+            INTERNAL_DATE_FORMAT
+        );
+        args.check_out_date = normalizeBookingDateInputValue(
+            `${tomorrow.getFullYear()}/${String(tomorrow.getMonth() + 1).padStart(2, '0')}/${String(tomorrow.getDate()).padStart(2, '0')}`,
+            FRONTEND_DATE_FORMAT,
+            INTERNAL_DATE_FORMAT
+        );
         args.adults = null;
         args.max_child = null;
         args.paged = 1;
@@ -182,8 +193,15 @@ const formSearchRooms = (forms, skeleton, wrapperResult) => {
 
     forms.addEventListener('submit', (event) => {
         event.preventDefault();
-        const checkinDate = forms.querySelector('input[name="check_in_date"]').value;
-        const checkoutDate = forms.querySelector('input[name="check_out_date"]').value;
+        const {checkInDate: checkinDate, checkOutDate: checkoutDate} = normalizeBookingDateFieldsForSubmit(
+            forms,
+            FRONTEND_DATE_FORMAT,
+            INTERNAL_DATE_FORMAT,
+            {},
+            {
+                writeBack: false,
+            }
+        );
         const countAdults = forms.querySelector('select[name="adults_capacity"]') ? forms.querySelector('select[name="adults_capacity"]').value : 0;
         const maxChild = forms.querySelector('select[name="max_child"]') ? forms.querySelector('select[name="max_child"]').value : 0;
         const paged = forms.querySelector('input[name="paged"]') ? forms.querySelector('input[name="paged"]').value : 1;
@@ -270,8 +288,6 @@ const bookingRoomsPages = (formsCheck) => {
 
         hotelOption && hotelOption.forEach((ele) => {
             if (ele.checked) {
-                // const eleName = ele.getAttribute('name');
-                // const extraID = eleName?.match(/(?<=\[).+?(?=\])/)?.[0] || null;
                 const extraID = ele.dataset.id;
                 const qty = parseInt(ele.parentElement?.nextElementSibling?.querySelector('input[class="hb_optional_quantity"]')?.value) || 1;
                 if (extraID) {
@@ -393,8 +409,6 @@ const addExtraToCart = () => {
 
         hotelOption && hotelOption.forEach((ele) => {
             if (ele.checked) {
-                // const eleName = ele.getAttribute('name');
-                // const extraID = eleName?.match(/(?<=\[).+?(?=\])/)?.[0] || null;
                 const extraID = ele?.dataset.id || null;
                 const qty = parseInt(ele.parentElement?.nextElementSibling?.querySelector('input[class="hb_optional_quantity"]')?.value) || 1;
 
@@ -456,8 +470,15 @@ const checkAvailableRooms = () => {
     forms.length > 0 && forms.forEach((form) => {
         form.addEventListener('submit', function (e) {
             e.preventDefault();
-            const checkinDate = form.querySelector('input[name="check_in_date"]').value;
-            const checkoutDate = form.querySelector('input[name="check_out_date"]').value;
+            const {checkInDate: checkinDate, checkOutDate: checkoutDate} = normalizeBookingDateFieldsForSubmit(
+                form,
+                FRONTEND_DATE_FORMAT,
+                INTERNAL_DATE_FORMAT,
+                {},
+                {
+                    writeBack: false,
+                }
+            );
             const countAdults = form.querySelector('[name="adults_capacity"]') ? form.querySelector('[name="adults_capacity"]').value : 0;
             const maxChild = form.querySelector('[name="max_child"]') ? form.querySelector('[name="max_child"]').value : 0;
             const paged = form.querySelector('input[name="paged"]') ? form.querySelector('input[name="paged"]').value : 1;
@@ -550,7 +571,7 @@ const priceSlider = () => {
             range: {
                 min: parseInt(minPrice), max: parseInt(maxPrice),
             },
-            // direction: 'lt',
+
         });
 
         priceSliderNode.noUiSlider.on('update', function (values, handle, unencoded) {

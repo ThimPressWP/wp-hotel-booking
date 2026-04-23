@@ -288,6 +288,168 @@ export const parseDateStrict = ( flatpickrInstance, value, format ) => {
 };
 
 /**
+ * Strictly parse supported booking date formats without depending on flatpickr runtime.
+ */
+export const parseDateStringStrict = ( value, format ) => {
+	const dateValue = String( value || '' ).trim();
+	const dateFormat = String( format || '' ).trim();
+
+	if ( ! dateValue || ! dateFormat ) {
+		return null;
+	}
+
+	let regexPattern = '';
+	const escapedRegexChar = /[.*+?^${}()|[\]\\]/g;
+
+	for ( let i = 0; i < dateFormat.length; i++ ) {
+		const token = dateFormat[ i ];
+
+		if ( token === 'Y' ) {
+			regexPattern += '(?<year>\\d{4})';
+		} else if ( token === 'm' ) {
+			regexPattern += '(?<month>\\d{1,2})';
+		} else if ( token === 'd' ) {
+			regexPattern += '(?<day>\\d{1,2})';
+		} else {
+			regexPattern += token.replace( escapedRegexChar, '\\$&' );
+		}
+	}
+
+	const matched = dateValue.match( new RegExp( `^${ regexPattern }$` ) );
+	if ( ! matched || ! matched.groups ) {
+		return null;
+	}
+
+	const year = Number.parseInt( matched.groups.year || '', 10 );
+	const month = Number.parseInt( matched.groups.month || '', 10 );
+	const day = Number.parseInt( matched.groups.day || '', 10 );
+	if ( ! year || ! month || ! day ) {
+		return null;
+	}
+
+	const parsed = new Date( year, month - 1, day );
+	if (
+		parsed.getFullYear() !== year ||
+		parsed.getMonth() !== month - 1 ||
+		parsed.getDate() !== day
+	) {
+		return null;
+	}
+
+	return parsed;
+};
+
+/**
+ * Normalize a raw booking date string into internal submit format.
+ */
+export const normalizeBookingDateInputValue = (
+	value,
+	frontendDateFormat,
+	internalDateFormat = 'Y/m/d'
+) => {
+	const dateValue = String( value || '' ).trim();
+	if ( ! dateValue ) {
+		return '';
+	}
+
+	const formats = [ frontendDateFormat, internalDateFormat ].filter(
+		( format, index, arr ) => format && arr.indexOf( format ) === index
+	);
+
+	for ( let i = 0; i < formats.length; i++ ) {
+		const parsed = parseDateStringStrict( dateValue, formats[ i ] );
+		if ( parsed ) {
+			const year = parsed.getFullYear();
+			const month = String( parsed.getMonth() + 1 ).padStart( 2, '0' );
+			const day = String( parsed.getDate() ).padStart( 2, '0' );
+
+			return `${ year }/${ month }/${ day }`;
+		}
+	}
+
+	return '';
+};
+
+const getBookingDateFieldSelector = ( selector, fallback ) =>
+	String( selector || fallback || '' ).trim() || fallback;
+
+/**
+ * Read check-in/check-out inputs from a form or any container node.
+ */
+export const getBookingDateFields = (
+	container,
+	{
+		checkInSelector = 'input[name="check_in_date"]',
+		checkOutSelector = 'input[name="check_out_date"]',
+	} = {}
+) => {
+	if ( ! container || typeof container.querySelector !== 'function' ) {
+		return {
+			checkInField: null,
+			checkOutField: null,
+		};
+	}
+
+	return {
+		checkInField: container.querySelector(
+			getBookingDateFieldSelector(
+				checkInSelector,
+				'input[name="check_in_date"]'
+			)
+		),
+		checkOutField: container.querySelector(
+			getBookingDateFieldSelector(
+				checkOutSelector,
+				'input[name="check_out_date"]'
+			)
+		),
+	};
+};
+
+/**
+ * Normalize booking inputs into canonical submit format and write back to the fields.
+ */
+export const normalizeBookingDateFieldsForSubmit = (
+	container,
+	frontendDateFormat,
+	internalDateFormat = 'Y/m/d',
+	selectors = {},
+	{
+		writeBack = true,
+	} = {}
+) => {
+	const { checkInField, checkOutField } = getBookingDateFields(
+		container,
+		selectors
+	);
+	const checkInDate = normalizeBookingDateInputValue(
+		checkInField?.value,
+		frontendDateFormat,
+		internalDateFormat
+	);
+	const checkOutDate = normalizeBookingDateInputValue(
+		checkOutField?.value,
+		frontendDateFormat,
+		internalDateFormat
+	);
+
+	if ( writeBack && checkInField && checkInDate ) {
+		checkInField.value = checkInDate;
+	}
+
+	if ( writeBack && checkOutField && checkOutDate ) {
+		checkOutField.value = checkOutDate;
+	}
+
+	return {
+		checkInField,
+		checkOutField,
+		checkInDate,
+		checkOutDate,
+	};
+};
+
+/**
  * Build parse/format helpers for booking fields and submit payloads.
  */
 export const createBookingDateHelpers = (
@@ -354,6 +516,170 @@ export const createBookingDateHelpers = (
 };
 
 /**
+ * Normalize prefilled booking inputs into the active UI format before flatpickr binds.
+ */
+export const syncBookingDateFieldsForUi = (
+	{
+		checkInField = null,
+		checkOutField = null,
+		rangeField = null,
+		rangeSeparator = FLATPICKR_RANGE_SEPARATOR,
+	},
+	{
+		parseBookingDateValue,
+		formatBookingDateForUi,
+	}
+) => {
+	const parsedCheckInDate = parseBookingDateValue?.( checkInField?.value );
+	const parsedCheckOutDate = parseBookingDateValue?.( checkOutField?.value );
+
+	if ( parsedCheckInDate && checkInField ) {
+		checkInField.value = formatBookingDateForUi( parsedCheckInDate );
+	}
+
+	if ( parsedCheckOutDate && checkOutField ) {
+		checkOutField.value = formatBookingDateForUi( parsedCheckOutDate );
+	}
+
+	if ( rangeField && parsedCheckInDate && parsedCheckOutDate ) {
+		rangeField.value = formatDateRangeValue(
+			formatBookingDateForUi( parsedCheckInDate ),
+			formatBookingDateForUi( parsedCheckOutDate ),
+			rangeSeparator
+		);
+	}
+
+	return {
+		parsedCheckInDate,
+		parsedCheckOutDate,
+	};
+};
+
+/**
+ * Validate booking dates with strict parsing and optionally rewrite inputs for submit.
+ */
+export const validateBookingDateRange = (
+	container,
+	{
+		parseBookingDateValue,
+		formatBookingDateForSubmit,
+		checkInSelector = 'input[name="check_in_date"]',
+		checkOutSelector = 'input[name="check_out_date"]',
+		emptyCheckInMessage = 'Please select check in date.',
+		emptyCheckOutMessage = 'Please select check out date.',
+		invalidRangeMessage = 'Check out date must be greater than the check in.',
+		toggleErrorClass = false,
+		normalizeFieldValues = false,
+	} = {}
+) => {
+	const { checkInField, checkOutField } = getBookingDateFields( container, {
+		checkInSelector,
+		checkOutSelector,
+	} );
+
+	if ( ! checkInField || ! checkOutField ) {
+		return {
+			ok: false,
+			error: invalidRangeMessage,
+			checkInField,
+			checkOutField,
+			checkInDate: '',
+			checkOutDate: '',
+		};
+	}
+
+	if ( toggleErrorClass ) {
+		checkInField.classList.remove( 'error' );
+		checkOutField.classList.remove( 'error' );
+	}
+
+	const checkInDateObject = parseBookingDateValue?.( checkInField.value );
+	if ( ! checkInDateObject ) {
+		if ( toggleErrorClass ) {
+			checkInField.classList.add( 'error' );
+		}
+
+		return {
+			ok: false,
+			error: emptyCheckInMessage,
+			checkInField,
+			checkOutField,
+			checkInDate: '',
+			checkOutDate: '',
+		};
+	}
+
+	const checkOutDateObject = parseBookingDateValue?.( checkOutField.value );
+	if ( ! checkOutDateObject ) {
+		if ( toggleErrorClass ) {
+			checkOutField.classList.add( 'error' );
+		}
+
+		return {
+			ok: false,
+			error: emptyCheckOutMessage,
+			checkInField,
+			checkOutField,
+			checkInDate: '',
+			checkOutDate: '',
+		};
+	}
+
+	const checkInDate = formatBookingDateForSubmit?.( checkInDateObject ) || '';
+	const checkOutDate =
+		formatBookingDateForSubmit?.( checkOutDateObject ) || '';
+
+	if ( ! checkInDate || ! checkOutDate || checkOutDate <= checkInDate ) {
+		if ( toggleErrorClass ) {
+			checkInField.classList.add( 'error' );
+			checkOutField.classList.add( 'error' );
+		}
+
+		return {
+			ok: false,
+			error: invalidRangeMessage,
+			checkInField,
+			checkOutField,
+			checkInDate,
+			checkOutDate,
+		};
+	}
+
+	if ( normalizeFieldValues ) {
+		checkInField.value = checkInDate;
+		checkOutField.value = checkOutDate;
+	}
+
+	return {
+		ok: true,
+		error: '',
+		checkInField,
+		checkOutField,
+		checkInDate,
+		checkOutDate,
+	};
+};
+
+/**
+ * Build a standard flatpickr config so all pickers share parser, locale, and defaults.
+ */
+export const createFlatpickrConfig = (
+	{
+		dateFormat,
+		parseDate,
+		locale,
+		disableMobile = true,
+	} = {},
+	overrides = {}
+) => ( {
+		dateFormat,
+		parseDate,
+		disableMobile,
+		locale,
+		...overrides,
+	} );
+
+/**
  * Join two date values into one range string using configured separator.
  */
 export const formatDateRangeValue = (
@@ -384,3 +710,77 @@ export const splitDateRangeValue = (
 		.map( ( value ) => value.trim() )
 		.filter( Boolean );
 };
+
+/**
+ * Convert Unix timestamps (seconds) into calendar-only Date objects for flatpickr disable lists.
+ */
+export const mapBookingTimestampsToDates = ( timestamps = [] ) =>
+	( Array.isArray( timestamps ) ? timestamps : [] )
+		.map( ( timestamp ) => {
+			const parsedTimestamp = Number.parseInt( timestamp, 10 );
+			if ( Number.isNaN( parsedTimestamp ) ) {
+				return null;
+			}
+
+			const date = new Date( parsedTimestamp * 1000 );
+			return new Date(
+				date.getFullYear(),
+				date.getMonth(),
+				date.getDate()
+			);
+		} )
+		.filter( Boolean );
+
+/**
+ * Normalize min-stay settings so `0` or invalid values fall back to one night.
+ */
+export const getMinBookingDays = ( minBookingDate, fallback = 1 ) => {
+	const parsedValue = Number.parseInt( minBookingDate, 10 );
+	if ( Number.isNaN( parsedValue ) || parsedValue <= 0 ) {
+		return fallback;
+	}
+
+	return parsedValue;
+};
+
+/**
+ * Compute the earliest allowed end date for a selected start date.
+ */
+export const getMinEndDateFromStartDate = ( startDate, minBookingDays = 1 ) => {
+	if ( ! ( startDate instanceof Date ) || Number.isNaN( startDate.getTime() ) ) {
+		return null;
+	}
+
+	const minEndDate = new Date( startDate );
+	minEndDate.setDate( minEndDate.getDate() + getMinBookingDays( minBookingDays ) );
+
+	return minEndDate;
+};
+
+/**
+ * Disable calendar cells that fall before the current minimum end date.
+ */
+export const applyMinEndDateToDayElement = ( dayElem, minEndDate ) => {
+	if (
+		! dayElem ||
+		! dayElem.dateObj ||
+		! minEndDate ||
+		! ( minEndDate instanceof Date ) ||
+		Number.isNaN( minEndDate.getTime() )
+	) {
+		return;
+	}
+
+	if ( dayElem.dateObj < minEndDate ) {
+		dayElem.classList.add( 'flatpickr-disabled' );
+		dayElem.setAttribute( 'aria-disabled', 'true' );
+	}
+};
+
+/**
+ * Create an `onDayCreate` handler that reads min-end-date state from a callback.
+ */
+export const createMinEndDateDayCreateHandler = ( getMinEndDate ) =>
+	( dObj, dStr, fpInstance, dayElem ) => {
+		applyMinEndDateToDayElement( dayElem, getMinEndDate?.() || null );
+	};
