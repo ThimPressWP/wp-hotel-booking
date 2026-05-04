@@ -209,7 +209,7 @@ class ArchiveRoomTemplate {
 	}
 
 	public function check_room_availability( $atts ) {
-		$title          = sprintf( '<h3>%s</h3>', __( 'Check avaibility', 'wp-hotel-booking' ) );
+		$title          = sprintf( '<h3>%s</h3>', __( 'Check availability', 'wp-hotel-booking' ) );
 		$check_in_date  = hb_get_request( 'check_in_date', date( 'Y/m/d' ) );
 		$check_out_date = hb_get_request( 'check_out_date', date( 'Y/m/d', strtotime( '+1 day' ) ) );
 		$adults         = hb_get_request( 'adults', 1 );
@@ -234,7 +234,7 @@ class ArchiveRoomTemplate {
 			'room_qty',
 			$atts['room_qty'],
 		);
-		$button_html         = sprintf( '<div class="hb-form-field-input"><button type="submit" class="rooms-check-avaibility">%s</button></div>', __( 'Check avaibility', 'wp-hotel-booking' ) );
+		$button_html         = sprintf( '<div class="hb-form-field-input"><button type="submit" class="rooms-check-avaibility">%s</button></div>', __( 'Check availability', 'wp-hotel-booking' ) );
 
 		$sections            = apply_filters(
 			'wbhb/layout/list-rooms/section/check-availability-form',
