@@ -301,6 +301,18 @@ if ( $cart->cart_items_count != 0 ) :
 																	<?php
 																	foreach ( $extra_packages as $extra_package ) :
 																		?>
+																		<?php 
+																		$extra_id   = $extra_package['package_id'];
+																		$extra_info = hotel_booking_get_product_class( $extra_id,
+																			array(
+																				'product_id'     => $extra_id,
+																				'check_in_date'  => $check_in_date,
+																				'check_out_date' => $check_out_date,
+																				'quantity'       => $extra_package['package_quantity'],
+																			)
+																		);
+																		$extra_price = $extra_info ? $extra_info->get_price_package() : 0;
+																		 ?>
 																		<li class="hb-extra-package-item ">
 																			<span class="hb-extra-package-title">
 																				<?php
@@ -311,11 +323,7 @@ if ( $cart->cart_items_count != 0 ) :
 																			</span>
 																			<span class="hb-extra-package-meta">
 																				(
-																				<?php
-																				echo esc_html(
-																					$extra_package['package_price']
-																				);
-																				?>
+																				<?php echo esc_html( $extra_price ); ?>
 																				×
 																				<?php
 																				echo esc_html(
@@ -343,11 +351,11 @@ if ( $cart->cart_items_count != 0 ) :
 											<?php
 											echo hb_format_price(
 												$room->get_total(
-													$room->check_in_date,
-													$room->check_out_date,
+													$check_in_date,
+													$check_out_date,
 													1,
 													false
-												) / $nights_count
+												)
 											);
 											?>
 										</td>
