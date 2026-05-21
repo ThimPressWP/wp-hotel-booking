@@ -73,6 +73,22 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 	}
 
 	/**
+	 * Check whether a room can be exposed through public frontend REST routes.
+	 *
+	 * @param int $room_id Room ID.
+	 * @return bool
+	 */
+	private function can_access_room( $room_id ) {
+		$post = $room_id ? get_post( $room_id ) : null;
+
+		if ( ! $post || 'hb_room' !== $post->post_type ) {
+			return false;
+		}
+
+		return 'publish' === $post->post_status || current_user_can( 'read_post', $room_id );
+	}
+
+	/**
 	 * It searches for rooms and returns the results in a JSON response
 	 *
 	 * @param WP_REST_Request request The request object.
@@ -210,9 +226,7 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 				throw new Exception( esc_html__( 'Error: Date incorrect !.', 'wp-hotel-booking' ) );
 			}
 
-			$room = get_post( $room_id );
-
-			if ( ! $room || ! is_a( $room, 'WP_POST' ) || $room->post_type != 'hb_room' ) {
+			if ( ! $this->can_access_room( $room_id ) ) {
 				throw new Exception( esc_html__( 'Error: Room ID is not exists !.', 'wp-hotel-booking' ) );
 			}
 
@@ -363,7 +377,7 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 			if ( ! $room_id ) {
 				throw new Exception( esc_html__( 'roomId is required', 'wp-hotel-booking' ) );
 			}
-			if ( get_post_type( $room_id ) !== 'hb_room' ) {
+			if ( ! $this->can_access_room( $room_id ) ) {
 				throw new Exception( esc_html__( 'roomId is invalid', 'wp-hotel-booking' ) );
 			}
 			$first_month = WPHB_Helpers::get_param( 'month', intval( date( 'n' ) ), 'int' );
@@ -395,7 +409,7 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 		$end   = date( 'm/t/Y', strtotime( $date ) );
 
 		$pricing = array();
-		if ( ! $room_id || ! $date ) {
+		if ( ! $room_id || ! $date || ! $this->can_access_room( $room_id ) ) {
 			return $pricing;
 		}
 
@@ -437,7 +451,7 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 			if ( ! $room_id ) {
 				throw new Exception( esc_html__( 'roomId is required', 'wp-hotel-booking' ) );
 			}
-			if ( get_post_type( $room_id ) !== 'hb_room' ) {
+			if ( ! $this->can_access_room( $room_id ) ) {
 				throw new Exception( esc_html__( 'roomId is invalid', 'wp-hotel-booking' ) );
 			}
 			
@@ -497,7 +511,7 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 			if ( ! $room_id ) {
 				throw new Exception( esc_html__( 'roomId is required', 'wp-hotel-booking' ) );
 			}
-			if ( get_post_type( $room_id ) !== 'hb_room' ) {
+			if ( ! $this->can_access_room( $room_id ) ) {
 				throw new Exception( esc_html__( 'roomId is invalid', 'wp-hotel-booking' ) );
 			}
 

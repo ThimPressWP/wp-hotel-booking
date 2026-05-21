@@ -60,6 +60,22 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 		}
 
 		/**
+		 * Check whether a room can be accessed through public booking requests.
+		 *
+		 * @param int $room_id Room ID.
+		 * @return bool
+		 */
+		private function can_access_room( $room_id ) {
+			$post = $room_id ? get_post( $room_id ) : null;
+
+			if ( ! $post || WPHB_ROOM_CT !== $post->post_type ) {
+				return false;
+			}
+
+			return 'publish' === $post->post_status || current_user_can( 'read_post', $room_id );
+		}
+
+		/**
 		 * Single search button.
 		 */
 		public function single_add_button() {
@@ -147,6 +163,15 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 				$room_id = absint( $_POST['hotel_booking_room_id'] );
 			}
 
+			if ( ! $this->can_access_room( $room_id ) ) {
+				wp_send_json(
+					array(
+						'status'  => false,
+						'message' => __( 'Room not found', 'wp-hotel-booking' ),
+					)
+				);
+			}
+
 			$check_in_date = isset( $_POST['hotel_booking_room_check_in_timestamp'] ) ? sanitize_text_field( $_POST['hotel_booking_room_check_in_timestamp'] ) : '';
 			$check_in_date = (int) $check_in_date + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS );
 
@@ -225,8 +250,7 @@ if ( ! class_exists( 'WP_Hotel_Booking_Room_Extension' ) ) {
 					throw new Exception( __( 'Adult quantity is required.', 'wp-hotel-booking' ) );
 				}
 
-				$room = get_post( $room_id );
-				if ( ! $room || $room->post_type !== WPHB_ROOM_CT ) {
+				if ( ! $this->can_access_room( $room_id ) ) {
 					throw new Exception( __( 'Room not found', 'wp-hotel-booking' ) );
 				}
 				$room_max_adult = (int) get_post_meta( $room_id, '_hb_room_capacity_adult', true );

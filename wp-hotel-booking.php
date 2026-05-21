@@ -654,6 +654,70 @@ class WP_Hotel_Booking {
 	}
 
 	/**
+	 * Check whether shared frontend nonces are needed on this request.
+	 *
+	 * @return bool
+	 */
+	private function should_print_booking_nonce() {
+		if ( is_admin() ) {
+			return current_user_can( 'edit_hb_bookings' )
+				|| current_user_can( 'manage_hb_booking' )
+				|| current_user_can( 'edit_pages' )
+				|| current_user_can( 'install_plugins' )
+				|| current_user_can( 'administrator' )
+				|| current_user_can( 'wphb_hotel_manager' )
+				|| current_user_can( 'wphb_booking_editor' );
+		}
+
+		if ( is_singular( 'hb_room' ) ) {
+			return true;
+		}
+
+		$page_ids = array_filter(
+			array_map(
+				'absint',
+				array(
+					function_exists( 'hb_get_page_id' ) ? hb_get_page_id( 'rooms' ) : 0,
+					function_exists( 'hb_get_page_id' ) ? hb_get_page_id( 'search' ) : 0,
+					function_exists( 'hb_get_page_id' ) ? hb_get_page_id( 'cart' ) : 0,
+					function_exists( 'hb_get_page_id' ) ? hb_get_page_id( 'checkout' ) : 0,
+					function_exists( 'hb_get_page_id' ) ? hb_get_page_id( 'account' ) : 0,
+					function_exists( 'hb_get_page_id' ) ? hb_get_page_id( 'thankyou' ) : 0,
+				)
+			)
+		);
+
+		if ( ! empty( $page_ids ) && is_page( $page_ids ) ) {
+			return true;
+		}
+
+		global $post;
+		if ( $post instanceof WP_Post ) {
+			$shortcodes = array(
+				'hotel_booking',
+				'hotel_booking_account',
+				'hotel_booking_best_reviews',
+				'hotel_booking_cart',
+				'hotel_booking_checkout',
+				'hotel_booking_filter',
+				'hotel_booking_lastest_reviews',
+				'hotel_booking_mini_cart',
+				'hotel_booking_rooms',
+				'hotel_booking_slider',
+				'hotel_booking_thankyou',
+			);
+
+			foreach ( $shortcodes as $shortcode ) {
+				if ( has_shortcode( $post->post_content, $shortcode ) ) {
+					return true;
+				}
+			}
+		}
+
+		return (bool) apply_filters( 'hotel_booking_should_print_global_nonce', false );
+	}
+
+	/**
 	 * Output global js settings
 	 */
 	public function global_js() {
@@ -674,6 +738,9 @@ class WP_Hotel_Booking {
 		$frontend_date_format = hb_get_frontend_date_format();
 		$flatpickr_date_format = hb_convert_php_date_format_to_flatpickr( $frontend_date_format );
 		$first_day_of_week     = hb_get_frontend_first_day_of_week();
+		$should_print_booking_nonce = $this->should_print_booking_nonce();
+		$booking_nonce              = $should_print_booking_nonce ? wp_create_nonce( 'hb_booking_nonce_action' ) : '';
+		$rest_nonce                 = $should_print_booking_nonce ? wp_create_nonce( 'wp_rest' ) : '';
 		?>
 		<script type="text/javascript">
 			var hotel_settings = {
@@ -691,11 +758,11 @@ class WP_Hotel_Booking {
 				flatpickr_date_format: '<?php echo esc_js( $flatpickr_date_format ); ?>',
 				first_day_of_week: <?php echo (int) $first_day_of_week; ?>,
 				internal_date_format: 'Y/m/d',
-				nonce: '<?php echo esc_html( wp_create_nonce( 'hb_booking_nonce_action' ) ); ?>',
+				nonce: '<?php echo esc_js( $booking_nonce ); ?>',
 				timezone: '<?php echo esc_html( current_time( 'timestamp' ) ); ?>',
 				min_booking_date: <?php echo esc_html( $min_booking_date ); ?>,
 				wphb_rest_url: '<?php echo get_rest_url(); ?>',
-				wphb_rest_nonce: '<?php echo wp_create_nonce( 'wp_rest' ); ?>',
+				wphb_rest_nonce: '<?php echo esc_js( $rest_nonce ); ?>',
 				is_page_search: <?php echo is_page( hb_get_page_id( 'search' ) ) ? 1 : 0; ?>,
 				url_page_search: '<?php echo get_permalink( hb_get_page_id( 'search' ) ); ?>',
 				url_page_rooms: '<?php echo get_permalink( hb_get_page_id( 'rooms' ) ); ?>',

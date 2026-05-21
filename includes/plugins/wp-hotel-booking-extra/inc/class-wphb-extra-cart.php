@@ -601,9 +601,15 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 		 */
 		public function admin_add_package_order( $order_id, $order_item_id ) {
 			$sub_items_data = hb_get_order_item_meta( $order_item_id, 'addition_package_items', true );
-			$sub_items      = unserialize( $sub_items_data );
+			$sub_items      = array();
 
-			if ( ! isset( $sub_items ) || $sub_items == '' || ! $sub_items ) {
+			if ( is_array( $sub_items_data ) ) {
+				$sub_items = $sub_items_data;
+			} elseif ( is_string( $sub_items_data ) && is_serialized( $sub_items_data ) ) {
+				$sub_items = unserialize( $sub_items_data, array( 'allowed_classes' => false ) );
+			}
+
+			if ( ! is_array( $sub_items ) || ! $sub_items ) {
 				return;
 			}
 
@@ -611,8 +617,13 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 			$check_out_date = hb_get_order_item_meta( $order_item_id, 'check_out_date', true );
 
 			foreach ( $sub_items as $product_id => $optional ) {
+				$product_id = absint( $product_id );
+				if ( ! $product_id || ! is_array( $optional ) ) {
+					continue;
+				}
+
 				if ( isset( $optional['checked'] ) && $optional['checked'] === 'on' ) {
-					$qty   = isset( $optional['qty'] ) ? $optional['qty'] : 0;
+					$qty   = isset( $optional['qty'] ) ? absint( $optional['qty'] ) : 0;
 					$param = array(
 						'order_item_name'   => get_the_title( $product_id ),
 						'order_item_type'   => 'sub_item',
@@ -626,7 +637,7 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 							'check_in_date'  => $check_in_date,
 							'check_out_date' => $check_out_date,
 							'room_quantity'  => hb_get_order_item_meta( $order_item_id, 'qty', true ),
-							'quantity'       => isset( $optional['qty'] ) ? $optional['qty'] : 0,
+							'quantity'       => $qty,
 						)
 					);
 
@@ -652,7 +663,7 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 					}
 				} else {
 					if ( isset( $optional['order_item_id'] ) ) {
-						hb_remove_order_item( $optional['order_item_id'] );
+						hb_remove_order_item( absint( $optional['order_item_id'] ) );
 					}
 				}
 			}

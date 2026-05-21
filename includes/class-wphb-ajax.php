@@ -68,6 +68,54 @@ class WPHB_Ajax {
 	}
 
 	/**
+	 * Check whether the current user can access booking administration AJAX data.
+	 *
+	 * @return bool
+	 */
+	private static function current_user_can_manage_booking_ajax() {
+		return current_user_can( 'edit_hb_bookings' )
+			|| current_user_can( 'manage_hb_booking' )
+			|| current_user_can( 'administrator' )
+			|| current_user_can( 'wphb_hotel_manager' )
+			|| current_user_can( 'wphb_booking_editor' );
+	}
+
+	/**
+	 * Stop sensitive booking AJAX handlers for unauthorized users.
+	 *
+	 * @return void
+	 */
+	private static function require_booking_ajax_capability() {
+		if ( self::current_user_can_manage_booking_ajax() ) {
+			return;
+		}
+
+		wp_send_json(
+			array(
+				'status'  => false,
+				'message' => __( 'Request not valid', 'wp-hotel-booking' ),
+			),
+			403
+		);
+	}
+
+	/**
+	 * Check whether a room can be accessed through public booking requests.
+	 *
+	 * @param int $room_id Room ID.
+	 * @return bool
+	 */
+	private static function current_user_can_access_room( $room_id ) {
+		$post = $room_id ? get_post( $room_id ) : null;
+
+		if ( ! $post || 'hb_room' !== $post->post_type ) {
+			return false;
+		}
+
+		return 'publish' === $post->post_status || current_user_can( 'read_post', $room_id );
+	}
+
+	/**
 	 * It creates a page
 	 */
 	static function create_pages() {
@@ -183,6 +231,8 @@ class WPHB_Ajax {
 			wp_die();
 		}
 
+		self::require_booking_ajax_capability();
+
 		if ( is_multisite() ) {
 			update_site_option( 'wphb_notice_remove_hotel_booking', 1 );
 		} else {
@@ -239,7 +289,9 @@ class WPHB_Ajax {
 	 * Get all images for a room type
 	 */
 	static function load_room_type_galley() {
-		$term_id        = hb_get_request( 'term_id' );
+		self::require_booking_ajax_capability();
+
+		$term_id        = absint( hb_get_request( 'term_id' ) );
 		$attachment_ids = get_option( 'hb_taxonomy_thumbnail_' . $term_id );
 		$attachments    = array();
 		if ( $attachment_ids ) {
@@ -389,8 +441,7 @@ class WPHB_Ajax {
 				throw new Exception( __( 'Room ID is invalid.', 'wp-hotel-booking' ) );
 			}
 
-			$room = get_post( $room_id );
-			if ( ! $room || ! is_a( $room, 'WP_POST' ) || $room->post_type != 'hb_room' ) {
+			if ( ! self::current_user_can_access_room( $room_id ) ) {
 				throw new Exception( __( 'Room ID is not exists.', 'wp-hotel-booking' ) );
 			}
 
@@ -523,6 +574,8 @@ class WPHB_Ajax {
 			return;
 		}
 
+		self::require_booking_ajax_capability();
+
 		$title = sanitize_text_field( $_POST['room'] );
 		global $wpdb;
 		$sql = $wpdb->prepare(
@@ -550,6 +603,8 @@ class WPHB_Ajax {
 		if ( ! isset( $_POST['hotel-admin-check-room-available'] ) || ! wp_verify_nonce( sanitize_key( $_POST['hotel-admin-check-room-available'] ), 'hotel_admin_check_room_available' ) ) {
 			return;
 		}
+
+		self::require_booking_ajax_capability();
 
 		// hotel_booking_get_room_available
 		if ( ! isset( $_POST['product_id'] ) || ! $_POST['product_id'] ) {
@@ -613,6 +668,8 @@ class WPHB_Ajax {
 			return;
 		}
 
+		self::require_booking_ajax_capability();
+
 		if ( ! isset( $_POST['order_item_id'] ) ) {
 			wp_send_json( array() );
 		}
@@ -661,6 +718,12 @@ class WPHB_Ajax {
 			return;
 		}
 
+		self::require_booking_ajax_capability();
+
+		if ( ! isset( $_POST['coupon'] ) ) {
+			wp_send_json( array() );
+		}
+
 		$code = sanitize_text_field( wp_unslash( $_POST['coupon'] ) );
 		$time = time();
 
@@ -697,11 +760,9 @@ class WPHB_Ajax {
 			'message' => __( 'Something when wrong!', 'wp-hotel-booking' ),
 		);
 
-		if ( ! current_user_can( 'administrator' )
-			&& ! current_user_can( 'wphb_hotel_manager' )
-			&& ! current_user_can( 'wphb_booking_editor' ) ) {
+		if ( ! self::current_user_can_manage_booking_ajax() ) {
 			$result['message'] = __( 'Request not valid', 'wp-hotel-booking' );
-			wp_send_json( $result );
+			wp_send_json( $result, 403 );
 		}
 
 		if ( ! isset( $_POST['hotel-admin-check-room-available'] ) || ! wp_verify_nonce( sanitize_key( $_POST['hotel-admin-check-room-available'] ), 'hotel_admin_check_room_available' ) ) {
@@ -759,7 +820,8 @@ class WPHB_Ajax {
 
 		// Addition package
 		if ( isset( $_POST['sub_items'] ) ) {
-			hb_update_order_item_meta( $order_item_id, 'addition_package_items', serialize( $_POST['sub_items'] ) );
+			$sub_items = WPHB_Helpers::sanitize_params_submitted( wp_unslash( $_POST['sub_items'] ) );
+			hb_update_order_item_meta( $order_item_id, 'addition_package_items', serialize( $sub_items ) );
 		}
 
 		$params        = array(
@@ -804,6 +866,8 @@ class WPHB_Ajax {
 			return;
 		}
 
+		self::require_booking_ajax_capability();
+
 		$order_item_id = isset( $_POST['order_item_id'] ) ? absint( $_POST['order_item_id'] ) : 0;
 		$order_id      = isset( $_POST['order_id'] ) ? absint( $_POST['order_id'] ) : 0;
 		if ( $order_item_id ) {
@@ -829,6 +893,8 @@ class WPHB_Ajax {
 		if ( ! check_ajax_referer( 'hotel-booking-confirm', 'hotel_booking_confirm' ) ) {
 			return;
 		}
+
+		self::require_booking_ajax_capability();
 
 		$order_id = isset( $_POST['order_id'] ) ? absint( $_POST['order_id'] ) : 0;
 
@@ -857,6 +923,8 @@ class WPHB_Ajax {
 		if ( ! check_ajax_referer( 'hotel_admin_get_coupon_available', 'hotel-admin-get-coupon-available' ) || ! class_exists( 'HB_Coupon' ) ) {
 			return;
 		}
+
+		self::require_booking_ajax_capability();
 
 		if ( ! isset( $_POST['order_id'] ) || ! isset( $_POST['coupon_id'] ) ) {
 			return;
@@ -891,6 +959,8 @@ class WPHB_Ajax {
 			return;
 		}
 
+		self::require_booking_ajax_capability();
+
 		if ( ! isset( $_POST['order_id'] ) || ! isset( $_POST['coupon_id'] ) ) {
 			return;
 		}
@@ -917,10 +987,12 @@ class WPHB_Ajax {
 	static function load_other_full_calendar() {
 		check_ajax_referer( 'hb_booking_nonce_action', 'nonce' );
 
+		self::require_booking_ajax_capability();
+
 		if ( ! isset( $_POST['room_id'] ) ) {
 			wp_send_json(
 				array(
-					'status'  => fasle,
+					'status'  => false,
 					'message' => __( 'Room is not exists.', 'wp-hotel-booking' ),
 				)
 			);
@@ -930,7 +1002,7 @@ class WPHB_Ajax {
 		if ( ! isset( $_POST['date'] ) ) {
 			wp_send_json(
 				array(
-					'status'  => fasle,
+					'status'  => false,
 					'message' => __( 'Date is not exists.', 'wp-hotel-booking' ),
 				)
 			);

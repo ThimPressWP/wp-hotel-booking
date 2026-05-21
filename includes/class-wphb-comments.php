@@ -108,13 +108,14 @@ class WPHB_Comments {
 		$params = $request->get_params();
 
 		$enable_review_rating = WPHB_Settings::instance()->get( 'enable_review_rating' );
+		$rating               = isset( $params['rating'] ) ? absint( $params['rating'] ) : 0;
 
 		if ( $enable_review_rating ) {
-			if ( ! isset( $params['rating'] ) ) {
+			if ( ! $rating ) {
 				return $this->error( esc_html__( 'The rating is required.', 'wp-hotel-booking' ), 400 );
 			}
 
-			if ( ! in_array( $params['rating'], [ 1, 2, 3, 4, 5 ] ) ) {
+			if ( ! in_array( $rating, [ 1, 2, 3, 4, 5 ], true ) ) {
 				return $this->error( esc_html__( 'The rating is invalid.', 'wp-hotel-booking' ), 400 );
 			}
 		}
@@ -131,13 +132,24 @@ class WPHB_Comments {
 			return $this->error( esc_html__( 'The room id is required.', 'wp-hotel-booking' ), 400 );
 		}
 
+		$room_id = absint( $params['room_id'] );
+		$room    = $room_id ? get_post( $room_id ) : null;
+
+		if ( ! $room || 'hb_room' !== $room->post_type || ( 'publish' !== $room->post_status && ! current_user_can( 'read_post', $room_id ) ) ) {
+			return $this->error( esc_html__( 'The room id is invalid.', 'wp-hotel-booking' ), 400 );
+		}
+
+		if ( ! comments_open( $room_id ) ) {
+			return $this->error( esc_html__( 'Reviews are closed for this room.', 'wp-hotel-booking' ), 403 );
+		}
+
 		$user_id = get_current_user_id();
 
 		// Check user was comment in room
 		$user_comments = get_comments(
 			array(
 				'user_id' => $user_id,
-				'post_id' => $params['room_id'],
+				'post_id' => $room_id,
 				'type'    => 'comment',
 			)
 		);
@@ -149,7 +161,7 @@ class WPHB_Comments {
 		$user       = get_userdata( $user_id );
 		$comment_id = wp_insert_comment(
 			array(
-				'comment_post_ID'      => $params['room_id'],
+				'comment_post_ID'      => $room_id,
 				'comment_author'       => $user->display_name,
 				'comment_author_email' => $user->user_email,
 				'comment_author_url'   => '',
@@ -170,57 +182,75 @@ class WPHB_Comments {
 
 		//Update comment meta
 		update_comment_meta( $comment_id, 'hb_room_review_title', sanitize_text_field( $params['title'] ) );
-		if ( ! empty( $params['rating'] ) ) {
-			update_comment_meta( $comment_id, 'rating', sanitize_text_field( $params['rating'] ) );
+		if ( $rating ) {
+			update_comment_meta( $comment_id, 'rating', $rating );
 		}
 
 		$images = $params['base64_images'] ?? '';
 
 		if ( ! empty( $images ) ) {
-			$upload_dir  = wp_upload_dir();
-			$upload_path = str_replace( '/', DIRECTORY_SEPARATOR, $upload_dir['path'] ) . DIRECTORY_SEPARATOR;
-
-			$attachment_ids = array();
+			$default_max_images     = absint( hb_settings()->get( 'max_review_image_number' ) );
+			$default_max_image_size = absint( hb_settings()->get( 'max_review_image_file_size' ) );
+			$default_max_images     = $default_max_images ? $default_max_images : 10;
+			$default_max_image_size = $default_max_image_size ? $default_max_image_size : 1000000;
+			$images                 = array_slice( (array) $images, 0, (int) apply_filters( 'hotel_booking_review_max_upload_images', $default_max_images ) );
+			$max_image_size         = (int) apply_filters( 'hotel_booking_review_max_upload_size', $default_max_image_size );
+			$attachment_ids         = array();
 
 			foreach ( $images as $image ) {
-				$img       = preg_replace( '/^data:image\/[a-z]+;base64,/', '', $image['base64'] );
+				if ( empty( $image['base64'] ) || empty( $image['name'] ) ) {
+					continue;
+				}
+
+				$img       = preg_replace( '/^data:image\/(?:jpeg|jpg|png|gif|webp);base64,/i', '', (string) $image['base64'] );
 				$img       = str_replace( ' ', '+', $img );
 				$img       = WPHB_Helpers::sanitize_params_submitted( $img );
-				$decoded   = base64_decode( $img );
+				$decoded   = base64_decode( $img, true );
 				$filename  = sanitize_file_name( $image['name'] );
-				$file_type = sanitize_mime_type( $image['type'] );
 
 				// Only allow image type
 				$image_types_allow = [ 'image/jpeg', 'image/png', 'image/gif', 'image/webp' ];
 
-				$validate = wp_check_filetype( $filename );
-				if ( ! $validate['type'] ) {
-					continue;
-				} elseif ( ! in_array( $validate['type'], $image_types_allow ) ) {
+				if ( false === $decoded || strlen( $decoded ) > $max_image_size ) {
 					continue;
 				}
 
-				if ( ! in_array( $file_type, $image_types_allow ) ) {
+				$image_info = getimagesizefromstring( $decoded );
+				if ( ! $image_info || empty( $image_info['mime'] ) || ! in_array( $image_info['mime'], $image_types_allow, true ) ) {
+					continue;
+				}
+
+				$file_type = sanitize_mime_type( $image_info['mime'] );
+				$validate = wp_check_filetype( $filename );
+				if ( ! $validate['type'] ) {
+					continue;
+				} elseif ( ! in_array( $validate['type'], $image_types_allow, true ) || $validate['type'] !== $file_type ) {
 					continue;
 				}
 
 				$hashed_filename = md5( $filename . microtime() ) . '_' . $filename;
-				$upload_file     = file_put_contents( $upload_path . $hashed_filename, $decoded );
+				$upload          = wp_upload_bits( $hashed_filename, null, $decoded );
 
-				if ( $upload_file ) {
-					$attachment = array(
-						'post_mime_type' => $file_type,
-						'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $hashed_filename ) ),
-						'post_content'   => '',
-						'post_status'    => 'inherit',
-						'guid'           => $upload_dir['url'] . '/' . basename( $hashed_filename ),
-					);
+				if ( ! empty( $upload['error'] ) ) {
+					continue;
+				}
 
-					$attachment_id = wp_insert_attachment( $attachment, $upload_dir['path'] . '/' . $hashed_filename );
+				$attachment = array(
+					'post_mime_type' => $file_type,
+					'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $hashed_filename ) ),
+					'post_content'   => '',
+					'post_status'    => 'inherit',
+					'guid'           => $upload['url'],
+				);
 
-					if ( ! is_wp_error( $attachment_id ) && $attachment_id ) {
-						$attachment_ids [] = $attachment_id;
+				$attachment_id = wp_insert_attachment( $attachment, $upload['file'] );
+
+				if ( ! is_wp_error( $attachment_id ) && $attachment_id ) {
+					if ( ! function_exists( 'wp_generate_attachment_metadata' ) ) {
+						require_once ABSPATH . 'wp-admin/includes/image.php';
 					}
+					wp_update_attachment_metadata( $attachment_id, wp_generate_attachment_metadata( $attachment_id, $upload['file'] ) );
+					$attachment_ids[] = $attachment_id;
 				}
 			}
 
@@ -228,7 +258,7 @@ class WPHB_Comments {
 				update_comment_meta( $comment_id, 'hb_room_review_images', $attachment_ids );
 			}
 		}
-		wp_update_comment_count( $params['room_id'] );
+		wp_update_comment_count( $room_id );
 
 		return $this->success(
 			esc_html__( 'Submit review successfully.', 'wp-hotel-booking' ),
