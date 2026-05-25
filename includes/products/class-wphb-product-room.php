@@ -16,8 +16,8 @@ defined( 'ABSPATH' ) || exit;
 
 class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 
-	public $quantity = 1;
-	public $check_in_date = 1;
+	public $quantity       = 1;
+	public $check_in_date  = 1;
 	public $check_out_date = 1;
 
 	/**
@@ -53,6 +53,8 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 	public $_review_details = null;
 
 	public $amount_singular_exclude_tax = 0;
+	public $amount_singular_include_tax = 0;
+	public $amount_singular             = 0;
 	function __construct( $post, $params = null ) {
 		if ( is_numeric( $post ) && $post && get_post_type( $post ) == 'hb_room' ) {
 			$this->post = get_post( $post );
@@ -678,7 +680,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 		}
 	}
 
-	function pricing_plan() {
+	/*function pricing_plan() {
 		$prices = array();
 		$prices = hb_get_price_plan_room( get_the_ID() );
 		if ( $prices ) {
@@ -690,7 +692,7 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 		$prices['max'] = end( $sort );
 
 		return $prices;
-	}
+	}*/
 
 	// total include tax
 	function amount_include_tax() {
