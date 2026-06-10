@@ -52,9 +52,6 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 	 */
 	public $_review_details = null;
 
-	public $amount_singular_exclude_tax = 0;
-	public $amount_singular_include_tax = 0;
-	public $amount_singular             = 0;
 	function __construct( $post, $params = null ) {
 		if ( is_numeric( $post ) && $post && get_post_type( $post ) == 'hb_room' ) {
 			$this->post = get_post( $post );
@@ -711,11 +708,15 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 	}
 
 	function amount_singular_exclude_tax() {
-		return apply_filters( 'hotel_booking_room_singular_total_exclude_tax', $this->amount_singular_exclude_tax, $this );
+		$amount = $this->get_total( $this->get_data( 'check_in_date' ), $this->get_data( 'check_out_date' ), 1, false );
+
+		return apply_filters( 'hotel_booking_room_singular_total_exclude_tax', $amount, $this );
 	}
 
 	function amount_singular_include_tax() {
-		return apply_filters( 'hotel_booking_room_singular_total_include_tax', $this->amount_singular_include_tax, $this );
+		$amount = $this->get_total( $this->get_data( 'check_in_date' ), $this->get_data( 'check_out_date' ), 1, true );
+
+		return apply_filters( 'hotel_booking_room_singular_total_include_tax', $amount, $this );
 	}
 
 	function amount_singular( $cart = false ) {
