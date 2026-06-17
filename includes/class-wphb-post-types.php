@@ -323,7 +323,14 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 
 				$search = hb_get_request( 's' );
 				if ( $search ) {
-					$where .= " OR customer_mail.meta_value LIKE '%{$search}%' OR customer_first_name.meta_value LIKE '%{$search}%' OR customer_last_name.meta_value LIKE '%{$search}%' ";
+					global $wpdb;
+					$like   = '%' . $wpdb->esc_like( $search ) . '%';
+					$where .= $wpdb->prepare(
+						' OR customer_mail.meta_value LIKE %s OR customer_first_name.meta_value LIKE %s OR customer_last_name.meta_value LIKE %s ',
+						$like,
+						$like,
+						$like
+					);
 				}
 			}
 
@@ -367,6 +374,8 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 			if ( is_admin() && hb_get_request( 'post_type' ) == 'hb_booking' ) {
 				$order_by = hb_get_request( 'orderby' );
 				$order    = hb_get_request( 'order' );
+				// Whitelist sort direction to prevent SQL injection in ORDER BY.
+				$order = strtoupper( $order ) === 'DESC' ? 'DESC' : 'ASC';
 
 				if ( in_array( $order_by, array( 'check_in_date', 'check_out_date' ) ) && $order ) {
 					switch ( $order_by ) {

@@ -137,6 +137,21 @@ class WPHB_Ajax {
 		$page_name = WPHB_Helpers::sanitize_params_submitted( $_POST['page_name'] );
 		$page_type = WPHB_Helpers::sanitize_params_submitted( $_POST['page_type'] );
 
+		// Restrict the option name to known WPHB page settings to prevent arbitrary option overwrite.
+		$allowed_page_types = array(
+			'tp_hotel_booking_rooms_page_id',
+			'tp_hotel_booking_search_page_id',
+			'tp_hotel_booking_checkout_page_id',
+			'tp_hotel_booking_cart_page_id',
+			'tp_hotel_booking_account_page_id',
+			'tp_hotel_booking_terms_page_id',
+			'tp_hotel_booking_thankyou_page_id',
+		);
+		if ( ! in_array( $page_type, $allowed_page_types, true ) ) {
+			$response['message'] = __( 'Page type is invalid', 'wp-hotel-booking' );
+			wp_send_json( $response );
+		}
+
 		if ( $page_name ) {
 			$args = array(
 				'post_type'   => 'page',

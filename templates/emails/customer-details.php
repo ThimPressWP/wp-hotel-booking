@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit();
 <h2 class="section-title"><?php _e( 'Customer details', 'wp-hotel-booking' ); ?></h2>
 <ul>
 	<li><strong><?php echo esc_html__( 'Customer Name:', 'wp-hotel-booking' ); ?></strong>
-		<span><?php printf( '%s', hb_get_customer_fullname( $booking->id ) ); ?></span>
+		<span><?php echo esc_html( hb_get_customer_fullname( $booking->id ) ); ?></span>
 	</li>
 	<li><strong><?php echo esc_html__( 'Email address:', 'wp-hotel-booking' ); ?></strong>
 		<a href="mailto:<?php echo esc_attr( $booking->customer_email ); ?>"><?php echo esc_html( $booking->customer_email ); ?></a>
@@ -36,10 +36,10 @@ defined( 'ABSPATH' ) || exit();
 <ul>
 	<li><strong><?php echo esc_html__( 'Address:', 'wp-hotel-booking' ); ?></strong>
 		<span>
-			<?php printf( '%s', $booking->customer_address ); ?><br>
-			<?php printf( '%s', $booking->customer_city ); ?><br>
-			<?php printf( '%s', $booking->customer_state ); ?><br>
-			<?php printf( '%s', $booking->customer_country ); ?><br>
+			<?php echo esc_html( $booking->customer_address ); ?><br>
+			<?php echo esc_html( $booking->customer_city ); ?><br>
+			<?php echo esc_html( $booking->customer_state ); ?><br>
+			<?php echo esc_html( $booking->customer_country ); ?><br>
 		</span>
 	</li>
 	<li>

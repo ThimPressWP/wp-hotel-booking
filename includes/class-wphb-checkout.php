@@ -104,6 +104,12 @@ class WPHB_Checkout {
 		}
 
 		try {
+			// Verify the checkout nonce to prevent CSRF (the form emits this field).
+			if ( ! isset( $_POST['hb_customer_place_order_field'] )
+				|| ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['hb_customer_place_order_field'] ) ), 'hb_customer_place_order' ) ) {
+				throw new Exception( __( 'Security check failed. Please reload the page and try again.', 'wp-hotel-booking' ) );
+			}
+
 			if ( ! is_user_logged_in() && ! hb_settings()->get( 'guest_checkout' ) ) {
 				throw new Exception( __( 'You have to Login to process checkout.', 'wp-hotel-booking' ) );
 			}

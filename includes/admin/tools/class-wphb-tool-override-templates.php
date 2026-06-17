@@ -96,9 +96,9 @@ if ( ! class_exists( 'WPHB_Admin_Tool_Override_Template' ) ) {
 						<tr data-template="<?php echo esc_attr( $template_folder ); ?>"
 							class="template-row <?php echo $template_class; ?>"
 							data-filter-<?php echo esc_attr( $template_class ); ?>="yes">
-							<td class="template-file"><code><?php echo $template[0]; ?></code></td>
-							<td class="template-version"><span><?php echo $template[1]; ?></span></td>
-							<td class="plugin-version"><span><?php echo $template[2]; ?></span></td>
+							<td class="template-file"><code><?php echo esc_html( $template[0] ); ?></code></td>
+							<td class="template-version"><span><?php echo esc_html( $template[1] ); ?></span></td>
+							<td class="plugin-version"><span><?php echo esc_html( $template[2] ); ?></span></td>
 						</tr>
 					<?php } ?>
 				<?php } ?>

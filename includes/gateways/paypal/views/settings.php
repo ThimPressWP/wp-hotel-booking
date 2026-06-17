@@ -25,8 +25,11 @@ $paypal   = wp_parse_args(
 		'app_client_id'     => '',
 		'app_client_secret' => '',
 		'use_paypal_rest'   => 'off',
+		'webhook_id'        => '',
 	)
 );
+
+$paypal_webhook_listener_url = esc_url( rest_url( 'wphb/v1/paypal/webhook' ) );
 
 $field_name = $settings->get_field_name( 'paypal' );
 ?>
@@ -90,6 +93,18 @@ $field_name = $settings->get_field_name( 'paypal' );
 				'https://developer.paypal.com/api/rest/#link-getclientidandclientsecret'
 			)
 			?>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<th><?php _e( 'Webhook ID', 'wp-hotel-booking' ); ?></th>
+		<td>
+			<input type="text" class="regular-text" name="<?php echo esc_attr( $field_name ); ?>[webhook_id]" value="<?php echo esc_attr( $paypal['webhook_id'] ); ?>" />
+			<p class="description">
+				<?php esc_html_e( 'Used with PayPal REST API to verify payment notifications (webhooks). In the PayPal Developer Dashboard, add a webhook pointing to the listener URL below, subscribe to the "PAYMENT.CAPTURE.*" events, then paste the generated Webhook ID here.', 'wp-hotel-booking' ); ?>
+				<br />
+				<?php esc_html_e( 'Listener URL:', 'wp-hotel-booking' ); ?>
+				<code><?php echo $paypal_webhook_listener_url; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped via esc_url above. ?></code>
 			</p>
 		</td>
 	</tr>

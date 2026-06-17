@@ -22,12 +22,21 @@ class WPHB_REST_Reviews_Controller extends WPHB_Abstract_REST_Controller {
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'upload_images' ),
-					'permission_callback' => '__return_true',
+					'permission_callback' => array( $this, 'check_logged_in_permission' ),
 				),
 			),
 		);
 
 		parent::register_routes();
+	}
+
+	/**
+	 * Only authenticated users may upload review images.
+	 *
+	 * @return bool
+	 */
+	public function check_logged_in_permission() {
+		return is_user_logged_in();
 	}
 
 	/**

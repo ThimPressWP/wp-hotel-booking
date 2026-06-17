@@ -59,6 +59,12 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 	 */
 	protected $paypal_client_id = null;
 	/**
+	 * PayPal webhook ID used to verify REST webhook signatures.
+	 *
+	 * @var string|null
+	 */
+	protected $paypal_webhook_id = null;
+	/**
 	 * @var null
 	 */
 	protected $api_sandbox_url = 'https://api-m.sandbox.paypal.com/';
@@ -96,8 +102,9 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 		if ( ! empty( $this->_settings['use_paypal_rest'] ) && $settings['use_paypal_rest'] == 'on' ) {
 			$this->paypal_client_id     = $settings['app_client_id'];
 			$this->paypal_client_secret = $settings['app_client_secret'];
+			$this->paypal_webhook_id    = ! empty( $settings['webhook_id'] ) ? $settings['webhook_id'] : '';
 		}
-		$this->api_url = ( !empty( $settings['sandbox'] ) && $settings['sandbox'] == 'on' ) ? $this->api_sandbox_url : $this->api_live_url;
+		$this->api_url = ( ! empty( $settings['sandbox'] ) && $settings['sandbox'] == 'on' ) ? $this->api_sandbox_url : $this->api_live_url;
 
 		$this->init();
 	}
@@ -114,6 +121,9 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 		hb_register_web_hook( 'paypal-standard', 'hotel-booking-paypal-standard' );
 		if ( ! empty( $this->_settings['use_paypal_rest'] ) && $this->_settings['use_paypal_rest'] == 'on' ) {
 			$this->capture_payment_for_order();
+			// Modern, reliable server-to-server payment confirmation (replaces IPN for REST mode)
+			// is handled by WPHB_REST_Paypal_Webhook_Controller, which delegates to
+			// $this->handle_webhook_request().
 		} else {
 			add_action( 'hb_do_transaction_paypal-standard', array( $this, 'process_booking_paypal_standard' ) );
 			add_action( 'hb_web_hook_hotel-booking-paypal-standard', array( $this, 'web_hook_process_paypal_standard' ) );
@@ -132,9 +142,11 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 	/**
 	 * Display text in total column
 	 *
-	 * @param $booking_id
-	 * @param $total
-	 * @param $total_with_currency
+	 * @param int    $booking_id          Booking ID.
+	 * @param float  $total               Booking total.
+	 * @param string $total_with_currency Formatted booking total.
+	 *
+	 * @return void
 	 */
 	function column_total_content( $booking_id, $total, $total_with_currency ) {
 		if ( $total && get_post_meta( $booking_id, '_hb_method', true ) == 'paypal-standard' ) {
@@ -143,12 +155,19 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 		}
 	}
 
+	/**
+	 * Render the frontend payment method label.
+	 *
+	 * @return void
+	 */
 	function form() {
 		_e( 'Pay with Paypal', 'wp-hotel-booking' );
 	}
 
 	/**
-	 * @return bool
+	 * Handle the customer return request after PayPal Standard checkout.
+	 *
+	 * @return void
 	 */
 	function process_booking_paypal_standard() {
 		if ( ! empty( $_REQUEST['hb-transaction-method'] ) && ( 'paypal-standard' == sanitize_text_field( wp_unslash( $_REQUEST['hb-transaction-method'] ) ) ) ) {
@@ -164,13 +183,21 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 	}
 
 	/**
-	 * Web hook to process booking with Paypal IPN
+	 * Process a PayPal Standard IPN webhook.
 	 *
-	 * @param $request
+	 * The IPN payload is verified by posting the original request body back to
+	 * the configured PayPal environment before any booking status is changed.
+	 *
+	 * @param array $request IPN request data.
+	 *
+	 * @return void
 	 */
 	function web_hook_process_paypal_standard( $request ) {
-		$payload        = array_merge_recursive( array( 'cmd' => '_notify-validate' ), wp_unslash( $_POST ) );
-		$paypal_api_url = ! empty( $_REQUEST['test_ipn'] ) ? $this->paypal_payment_sandbox_url : $this->paypal_payment_live_url;
+
+		$request        = wp_unslash( $request );
+		$payload        = wp_unslash( $_POST );
+		$payload['cmd'] = '_notify-validate';
+		$paypal_api_url = $this->is_paypal_sandbox_enabled() ? $this->paypal_payment_sandbox_url : $this->paypal_payment_live_url;
 
 		$params   = array(
 			'body'        => $payload,
@@ -181,19 +208,21 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 			'user-agent'  => 'HotelBooking',
 		);
 		$response = wp_safe_remote_post( $paypal_api_url, $params );
-		$body     = wp_remote_retrieve_body( $response );
+		if ( is_wp_error( $response ) ) {
+			return;
+		}
+
+		$body = wp_remote_retrieve_body( $response );
 
 		if ( 'VERIFIED' === $body ) {
 			if ( ! empty( $request['txn_type'] ) ) {
+				$txn_type = is_scalar( $request['txn_type'] ) ? sanitize_key( $request['txn_type'] ) : '';
 
-				switch ( $request['txn_type'] ) {
+				switch ( $txn_type ) {
 					case 'web_accept':
-						if ( ! empty( $request['custom'] ) && ( $booking = $this->get_booking( $request['custom'] ) ) ) {
-							$request['payment_status'] = strtolower( $request['payment_status'] );
+						if ( ! empty( $request['custom'] ) && is_scalar( $request['custom'] ) && ( $booking = $this->get_booking( $request['custom'] ) ) ) {
+							$request['payment_status'] = ( ! empty( $request['payment_status'] ) && is_scalar( $request['payment_status'] ) ) ? sanitize_key( $request['payment_status'] ) : '';
 
-							if ( isset( $request['test_ipn'] ) && 1 == $request['test_ipn'] && 'pending' == $request['payment_status'] ) {
-								$request['payment_status'] = 'completed';
-							}
 							if ( method_exists( $this, 'payment_status_' . $request['payment_status'] ) ) {
 								call_user_func(
 									array(
@@ -212,6 +241,13 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 		}
 	}
 
+	/**
+	 * Resolve a booking from the PayPal custom payload.
+	 *
+	 * @param string $raw_custom Raw PayPal custom payload.
+	 *
+	 * @return WPHB_Booking|false Booking instance on success, false on failure.
+	 */
 	function get_booking( $raw_custom ) {
 		$raw_custom = stripslashes( $raw_custom );
 		if ( ( $custom = json_decode( $raw_custom ) ) && is_object( $custom ) ) {
@@ -247,8 +283,10 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 	/**
 	 * Handle a completed payment
 	 *
-	 * @param WPHB_Booking
-	 * @param Paypal IPN params
+	 * @param WPHB_Booking $booking Booking instance.
+	 * @param array        $request PayPal IPN request data.
+	 *
+	 * @return void
 	 */
 	protected function payment_status_completed( $booking, $request ) {
 		// Booking status is already completed
@@ -257,14 +295,21 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 		}
 
 		if ( 'completed' === $request['payment_status'] ) {
-			if ( (float) $booking->total === (float) $request['payment_gross'] ) {
-				$this->payment_complete( $booking, ( ! empty( $request['txn_id'] ) ? $request['txn_id'] : '' ), __( 'IPN payment completed', 'wp-hotel-booking' ) );
+			if ( ! $this->validate_paypal_standard_ipn( $booking, $request ) ) {
+				return;
+			}
+
+			$payment_gross = $this->get_paypal_payment_gross( $request );
+			$txn_id        = sanitize_text_field( $request['txn_id'] );
+
+			if ( (float) $booking->total === (float) $payment_gross ) {
+				$this->payment_complete( $booking, $txn_id, __( 'IPN payment completed', 'wp-hotel-booking' ) );
 			} else {
 				$booking->update_status( 'processing' );
 			}
 			// save paypal fee
 			if ( ! empty( $request['mc_fee'] ) ) {
-				update_post_meta( $booking->post->id, 'PayPal Transaction Fee', $request['mc_fee'] );
+				update_post_meta( $booking->id, 'PayPal Transaction Fee', $request['mc_fee'] );
 			}
 		} else {
 
@@ -274,17 +319,23 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 	/**
 	 * Handle a pending payment
 	 *
-	 * @param  WPHB_Booking
-	 * @param Paypal IPN params
+	 * @param WPHB_Booking $booking Booking instance.
+	 * @param array        $request PayPal IPN request data.
+	 *
+	 * @return void
 	 */
 	protected function payment_status_pending( $booking, $request ) {
 		$this->payment_status_completed( $booking, $request );
 	}
 
 	/**
-	 * @param WPHB_Booking
-	 * @param string       $txn_id
-	 * @param string       $note - not use
+	 * Mark the booking payment as complete.
+	 *
+	 * @param WPHB_Booking $booking Booking instance.
+	 * @param string       $txn_id  PayPal transaction ID.
+	 * @param string       $note    Payment note. Unused.
+	 *
+	 * @return void
 	 */
 	function payment_complete( $booking, $txn_id = '', $note = '' ) {
 		$booking->payment_complete( $txn_id );
@@ -293,18 +344,17 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 	/**
 	 * Retrieve order by paypal txn_id
 	 *
-	 * @param $txn_id
+	 * @param string $txn_id PayPal transaction ID.
 	 *
-	 * @return int
+	 * @return int Booking ID, or 0 when no booking is found.
 	 */
 	function get_order_id( $txn_id ) {
 
-		$args = array(
-			'meta_key'    => '_hb_method_id',
+		$args     = array(
+			'meta_key'    => '_transaction_id',
 			'meta_value'  => $txn_id,
 			'numberposts' => 1, // we should only have one, so limit to 1
 		);
-
 		$bookings = hb_get_bookings( $args );
 		if ( $bookings ) {
 			foreach ( $bookings as $booking ) {
@@ -315,6 +365,112 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 		return 0;
 	}
 
+	/**
+	 * Check whether PayPal sandbox mode is enabled.
+	 *
+	 * @return bool
+	 */
+	protected function is_paypal_sandbox_enabled() {
+		return ! empty( $this->_settings['sandbox'] ) && 'on' === $this->_settings['sandbox'];
+	}
+
+	/**
+	 * Get the expected PayPal receiver email for the active environment.
+	 *
+	 * @return string PayPal account email.
+	 */
+	protected function get_paypal_receiver_email() {
+		$settings = wp_parse_args(
+			$this->_settings,
+			array(
+				'email'         => '',
+				'sandbox'       => 'off',
+				'sandbox_email' => '',
+			)
+		);
+
+		return $this->is_paypal_sandbox_enabled() ? $settings['sandbox_email'] : $settings['email'];
+	}
+
+	/**
+	 * Get the gross payment amount from the IPN payload.
+	 *
+	 * @param array $request PayPal IPN request data.
+	 *
+	 * @return string|int|float|null Gross payment amount, or null when missing.
+	 */
+	protected function get_paypal_payment_gross( $request ) {
+		if ( isset( $request['mc_gross'] ) && is_scalar( $request['mc_gross'] ) && is_numeric( $request['mc_gross'] ) ) {
+			return $request['mc_gross'];
+		}
+
+		if ( isset( $request['payment_gross'] ) && is_scalar( $request['payment_gross'] ) && is_numeric( $request['payment_gross'] ) ) {
+			return $request['payment_gross'];
+		}
+
+		return null;
+	}
+
+	/**
+	 * Validate the PayPal Standard IPN payload before completing a booking.
+	 *
+	 * @param WPHB_Booking $booking Booking instance.
+	 * @param array        $request PayPal IPN request data.
+	 *
+	 * @return bool True when the IPN matches the booking and PayPal settings.
+	 */
+	protected function validate_paypal_standard_ipn( $booking, $request ) {
+		if ( 'paypal-standard' !== $booking->get_post_meta( '_hb_method', '', true ) ) {
+			return false;
+		}
+
+		if ( ! empty( $request['test_ipn'] ) && ! $this->is_paypal_sandbox_enabled() ) {
+			return false;
+		}
+
+		$expected_receiver_email = sanitize_email( $this->get_paypal_receiver_email() );
+		$receiver_email          = '';
+		if ( ! empty( $request['receiver_email'] ) && is_scalar( $request['receiver_email'] ) ) {
+			$receiver_email = sanitize_email( $request['receiver_email'] );
+		} elseif ( ! empty( $request['business'] ) && is_scalar( $request['business'] ) ) {
+			$receiver_email = sanitize_email( $request['business'] );
+		}
+
+		if ( empty( $expected_receiver_email ) || empty( $receiver_email ) || 0 !== strcasecmp( $expected_receiver_email, $receiver_email ) ) {
+			return false;
+		}
+
+		$expected_currency = $booking->get_post_meta( '_hb_currency', '', true );
+		if ( empty( $expected_currency ) ) {
+			$expected_currency = hb_get_currency();
+		}
+
+		if ( empty( $request['mc_currency'] ) || ! is_scalar( $request['mc_currency'] ) || strtoupper( sanitize_text_field( $request['mc_currency'] ) ) !== strtoupper( sanitize_text_field( $expected_currency ) ) ) {
+			return false;
+		}
+
+		if ( null === $this->get_paypal_payment_gross( $request ) ) {
+			return false;
+		}
+
+		if ( empty( $request['txn_id'] ) || ! is_scalar( $request['txn_id'] ) ) {
+			return false;
+		}
+
+		$txn_id = sanitize_text_field( $request['txn_id'] );
+		if ( $this->get_order_id( $txn_id ) ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Request a PayPal REST API access token.
+	 *
+	 * @return stdClass PayPal token response.
+	 * @throws Exception When credentials or response data are invalid.
+	 */
 	public function get_paypal_access_token() {
 		if ( empty( $this->paypal_client_id ) ) {
 			throw new Exception( 'Paypal App Client id is required.', 'wp-hotel-booking' );
@@ -322,16 +478,16 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 		if ( empty( $this->paypal_client_secret ) ) {
 			throw new Exception( 'Paypal App Client secret is required.', 'wp-hotel-booking' );
 		}
-		$params         = [ 'grant_type' => 'client_credentials' ];
+		$params         = array( 'grant_type' => 'client_credentials' );
 		$response       = wp_remote_post(
 			$this->api_url . 'v1/oauth2/token',
-			[
+			array(
 				'body'    => $params,
-				'headers' => [
+				'headers' => array(
 					'Authorization' => 'Basic ' . base64_encode( $this->paypal_client_id . ':' . $this->paypal_client_secret ),
-				],
+				),
 				'timeout' => 60,
-			]
+			)
 		);
 		$data_token_str = wp_remote_retrieve_body( $response );
 		$data_token     = json_decode( $data_token_str );
@@ -341,6 +497,15 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 		return $data_token;
 	}
 
+	/**
+	 * Create a PayPal REST checkout order and return the approval URL.
+	 *
+	 * @param int   $booking_id Booking ID.
+	 * @param float $amount     Amount to charge.
+	 *
+	 * @return string PayPal approval URL.
+	 * @throws Exception When booking, token, or checkout response data are invalid.
+	 */
 	public function get_app_payment_url( $booking_id, $amount ) {
 		$checkout_url = '';
 		if ( ! $booking_id ) {
@@ -349,47 +514,47 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 		$booking      = WPHB_Booking::instance( $booking_id );
 		$success_url  = add_query_arg( 'paypay_express_checkout', 1, hb_get_thank_you_url( $booking_id, $booking->booking_key ) );
 		$cancel_url   = hb_get_checkout_url();
-		$booking_data = [
+		$booking_data = array(
 			'intent'         => 'CAPTURE',
-			'purchase_units' => [
-				[
-					'amount'    => [
+			'purchase_units' => array(
+				array(
+					'amount'    => array(
 						'currency_code' => hb_get_currency(),
 						'value'         => number_format( $amount, 2 ),
-					],
+					),
 					'custom_id' => $booking_id,
-				],
-			],
-			'payment_source' => [
-				'paypal' => [
-					'experience_context' => [
+				),
+			),
+			'payment_source' => array(
+				'paypal' => array(
+					'experience_context' => array(
 						'payment_method_preference' => 'UNRESTRICTED',
 						'brand_name'                => get_bloginfo(),
 						'landing_page'              => 'LOGIN',
 						'user_action'               => 'PAY_NOW',
 						'return_url'                => $success_url,
 						'cancel_url'                => $cancel_url,
-					],
-				],
-			],
-		];
+					),
+				),
+			),
+		);
 		$booking_data = apply_filters( 'wp-hotel-booking/paypal-rest/args', $booking_data, $booking_id );
 		$data_token   = $this->get_paypal_access_token();
 		if ( ! isset( $data_token->access_token ) || ! isset( $data_token->token_type ) ) {
 			throw new Exception( __( 'Invalid Paypal access token', 'wp-hotel-booking' ) );
 		}
-		$response = wp_remote_post(
+		$response   = wp_remote_post(
 			$this->api_url . 'v2/checkout/orders',
-			[
+			array(
 				'body'    => json_encode( $booking_data ),
-				'headers' => [
+				'headers' => array(
 					'Authorization' => $data_token->token_type . ' ' . $data_token->access_token,
 					'Content-Type'  => 'application/json',
-				],
+				),
 				'timeout' => 60,
-			]
+			)
 		);
-		$result   = json_decode( wp_remote_retrieve_body( $response ) );
+			$result = json_decode( wp_remote_retrieve_body( $response ) );
 		if ( json_last_error() !== JSON_ERROR_NONE ) {
 			throw new Exception( json_last_error_msg() );
 		}
@@ -412,6 +577,11 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 		return $checkout_url;
 	}
 
+	/**
+	 * Capture a PayPal REST checkout order after the customer returns.
+	 *
+	 * @return void
+	 */
 	public function capture_payment_for_order() {
 		if ( ! isset( $_GET['paypay_express_checkout'] ) ) {
 			return;
@@ -460,11 +630,193 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 	}
 
 	/**
-	 * Get Paypal checkout url
+	 * Process a verified PayPal REST webhook.
 	 *
-	 * @param $booking_id
+	 * Modern replacement for the legacy IPN flow. The listener route is registered by
+	 * WPHB_REST_Paypal_Webhook_Controller ( /wp-json/wphb/v1/paypal/webhook ), which
+	 * delegates here; we verify the signature with PayPal before changing any booking status.
 	 *
-	 * @return string
+	 * @param WP_REST_Request $request Incoming webhook request.
+	 *
+	 * @return WP_REST_Response
+	 */
+	public function handle_webhook_request( WP_REST_Request $request ) {
+		$event = json_decode( $request->get_body() );
+
+		if ( ! is_object( $event ) || empty( $event->event_type ) || empty( $event->resource ) ) {
+			return new WP_REST_Response( array( 'status' => 'ignored' ), 200 );
+		}
+
+		// Signature verification is the authentication for this endpoint.
+		if ( ! $this->verify_webhook_signature( $event, $request ) ) {
+			return new WP_REST_Response( array( 'status' => 'invalid_signature' ), 401 );
+		}
+
+		$resource = $event->resource;
+
+		// We set custom_id = booking_id when creating the PayPal order.
+		$booking_id = isset( $resource->custom_id ) ? absint( $resource->custom_id ) : 0;
+		if ( ! $booking_id && isset( $resource->purchase_units[0]->custom_id ) ) {
+			$booking_id = absint( $resource->purchase_units[0]->custom_id );
+		}
+		if ( ! $booking_id ) {
+			return new WP_REST_Response( array( 'status' => 'no_booking' ), 200 );
+		}
+
+		$booking = WPHB_Booking::instance( $booking_id );
+		if ( ! $booking || ! $booking->id ) {
+			return new WP_REST_Response( array( 'status' => 'no_booking' ), 200 );
+		}
+
+		// Idempotency: PayPal retries deliveries, so ignore events already handled.
+		$event_id = isset( $event->id ) ? sanitize_text_field( $event->id ) : '';
+		if ( $event_id ) {
+			$processed = (array) get_post_meta( $booking->id, '_hb_paypal_webhook_events', true );
+			if ( in_array( $event_id, $processed, true ) ) {
+				return new WP_REST_Response( array( 'status' => 'duplicate' ), 200 );
+			}
+		}
+
+		switch ( $event->event_type ) {
+			case 'PAYMENT.CAPTURE.COMPLETED':
+				if ( $booking->has_status( 'completed' ) ) {
+					break;
+				}
+
+				// Re-validate currency against the booking (a valid signature only proves PayPal sent it).
+				$currency          = isset( $resource->amount->currency_code ) ? strtoupper( sanitize_text_field( $resource->amount->currency_code ) ) : '';
+				$expected_currency = strtoupper( $booking->get_post_meta( '_hb_currency', hb_get_currency(), true ) );
+				if ( $currency && $expected_currency && $currency !== $expected_currency ) {
+					break;
+				}
+
+				$amount = isset( $resource->amount->value ) ? (float) $resource->amount->value : null;
+				$txn_id = isset( $resource->id ) ? sanitize_text_field( $resource->id ) : '';
+
+				// Mirror capture_payment_for_order(): full amount completes, partial keeps processing.
+				if ( null !== $amount && (float) $booking->total() === $amount ) {
+					$booking->payment_complete( $txn_id );
+				} else {
+					$booking->update_status( 'processing' );
+				}
+				break;
+
+			case 'PAYMENT.CAPTURE.REFUNDED':
+			case 'PAYMENT.CAPTURE.REVERSED':
+				$booking->update_status( 'cancelled' );
+				break;
+		}
+
+		if ( $event_id ) {
+			$processed   = (array) get_post_meta( $booking->id, '_hb_paypal_webhook_events', true );
+			$processed[] = $event_id;
+			update_post_meta( $booking->id, '_hb_paypal_webhook_events', array_slice( array_values( array_unique( $processed ) ), -50 ) );
+		}
+
+		return new WP_REST_Response( array( 'status' => 'ok' ), 200 );
+	}
+
+	/**
+	 * Verify a PayPal REST webhook signature via the PayPal API.
+	 *
+	 * @param object          $event   Decoded webhook event payload.
+	 * @param WP_REST_Request $request Incoming webhook request (supplies the PayPal transmission headers).
+	 *
+	 * @return bool True only when PayPal returns verification_status === SUCCESS.
+	 */
+	protected function verify_webhook_signature( $event, WP_REST_Request $request ) {
+		if ( empty( $this->paypal_webhook_id ) ) {
+			return false;
+		}
+
+		$cert_url = (string) $request->get_header( 'paypal-cert-url' );
+		// SSRF / cert-spoof guard: the certificate must be served from a PayPal host.
+		$cert_host = wp_parse_url( $cert_url, PHP_URL_HOST );
+		if ( ! $cert_host || ! preg_match( '/(^|\.)paypal\.com$/i', $cert_host ) ) {
+			return false;
+		}
+
+		$token = $this->get_access_token_cached();
+		if ( '' === $token ) {
+			return false;
+		}
+
+		$body = array(
+			'auth_algo'         => (string) $request->get_header( 'paypal-auth-algo' ),
+			'cert_url'          => $cert_url,
+			'transmission_id'   => (string) $request->get_header( 'paypal-transmission-id' ),
+			'transmission_sig'  => (string) $request->get_header( 'paypal-transmission-sig' ),
+			'transmission_time' => (string) $request->get_header( 'paypal-transmission-time' ),
+			'webhook_id'        => $this->paypal_webhook_id,
+			'webhook_event'     => $event,
+		);
+
+		foreach ( array( 'auth_algo', 'transmission_id', 'transmission_sig', 'transmission_time' ) as $required ) {
+			if ( empty( $body[ $required ] ) ) {
+				return false;
+			}
+		}
+
+		$response = wp_remote_post(
+			$this->api_url . 'v1/notifications/verify-webhook-signature',
+			array(
+				'headers' => array(
+					'Content-Type'  => 'application/json',
+					'Authorization' => 'Bearer ' . $token,
+				),
+				'body'    => wp_json_encode( $body ),
+				'timeout' => 60,
+			)
+		);
+
+		if ( is_wp_error( $response ) ) {
+			return false;
+		}
+
+		$result = json_decode( wp_remote_retrieve_body( $response ) );
+
+		return isset( $result->verification_status ) && 'SUCCESS' === $result->verification_status;
+	}
+
+	/**
+	 * Get a cached PayPal REST access token.
+	 *
+	 * Caches per environment + credentials so webhook verification does not request
+	 * a new token on every notification (PayPal can deliver/retry many events).
+	 *
+	 * @return string Access token, or '' on failure.
+	 */
+	protected function get_access_token_cached() {
+		$cache_key = 'wphb_pp_token_' . md5( $this->api_url . '|' . $this->paypal_client_id . '|' . $this->paypal_client_secret );
+		$cached    = get_transient( $cache_key );
+		if ( is_string( $cached ) && '' !== $cached ) {
+			return $cached;
+		}
+
+		try {
+			$data_token = $this->get_paypal_access_token();
+		} catch ( Throwable $e ) {
+			error_log( __METHOD__ . ': ' . $e->getMessage() );
+
+			return '';
+		}
+
+		if ( empty( $data_token->access_token ) ) {
+			return '';
+		}
+
+		$expires_in = isset( $data_token->expires_in ) ? max( 60, (int) $data_token->expires_in - 60 ) : 300;
+		set_transient( $cache_key, $data_token->access_token, $expires_in );
+
+		return $data_token->access_token;
+	}
+
+	/**
+	 * Get PayPal Standard checkout URL.
+	 *
+	 * @param int $booking_id Booking ID.
+	 *
+	 * @return string PayPal checkout URL.
 	 */
 	protected function _get_paypal_basic_checkout_url( $booking_id ) {
 
@@ -515,11 +867,11 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 	}
 
 	/**
-	 * Process checkout
+	 * Process checkout and return the gateway redirect response.
 	 *
-	 * @param null $booking_id
+	 * @param int|null $booking_id Booking ID.
 	 *
-	 * @return array
+	 * @return array Checkout result and redirect URL.
 	 */
 	function process_checkout( $booking_id = null ) {
 		if ( $this->_settings['use_paypal_rest'] == 'on' ) {
@@ -545,9 +897,9 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 	}
 
 	/**
-	 * Print admin settings page
+	 * Print admin settings page.
 	 *
-	 * @param $gateway
+	 * @return void
 	 */
 	function admin_settings() {
 		$template = WP_Hotel_Booking::instance()->locate( 'includes/gateways/paypal/views/settings.php' );
@@ -555,6 +907,8 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 	}
 
 	/**
+	 * Check whether this gateway is enabled.
+	 *
 	 * @return bool
 	 */
 	function is_enable() {
@@ -564,6 +918,13 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 
 add_filter( 'hb_payment_gateways', 'hotel_booking_payment_paypal' );
 if ( ! function_exists( 'hotel_booking_payment_paypal' ) ) {
+	/**
+	 * Register the PayPal gateway.
+	 *
+	 * @param array $payments Registered payment gateways.
+	 *
+	 * @return array Registered payment gateways.
+	 */
 	function hotel_booking_payment_paypal( $payments ) {
 		if ( array_key_exists( 'paypal', $payments ) ) {
 			return $payments;

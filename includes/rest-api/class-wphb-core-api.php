@@ -23,6 +23,7 @@ class WPHB_Core_API extends WPHB_Abstract_API {
 		$path_version = DIRECTORY_SEPARATOR . $this->version . DIRECTORY_SEPARATOR . 'frontend';
 
 		include_once __DIR__ . $path_version . '/class-wphb-rooms-controller.php';
+		include_once __DIR__ . $path_version . '/class-wphb-paypal-webhook-controller.php';
 
 		do_action( 'wphb/core-api/includes' );
 	}
@@ -30,6 +31,7 @@ class WPHB_Core_API extends WPHB_Abstract_API {
 	public function rest_api_register_routes() {
 		$controllers = array(
 			'WPHB_REST_Rooms_Controller',
+			'WPHB_REST_Paypal_Webhook_Controller',
 		);
 
 		$this->controllers = apply_filters( 'wphb/core-api/controllers', $controllers );

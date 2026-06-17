@@ -335,7 +335,7 @@ if ( ! function_exists( 'hb_manage_booking_column' ) ) {
 				$echo[] = hb_format_order_number( $post_id );
 				break;
 			case 'customer':
-				$echo[] = hb_get_customer_fullname( $post_id, true );
+				$echo[] = esc_html( hb_get_customer_fullname( $post_id, true ) );
 				$echo[] = $booking->user_id && ( $user = get_userdata( $booking->user_id ) ) ? sprintf( '<br /><strong><small><a href="%s">%s</a></small></strong>', get_edit_user_link( $booking->user_id ), $user->user_login ) : '';
 				break;
 			case 'total':

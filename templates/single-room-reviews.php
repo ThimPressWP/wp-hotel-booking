@@ -152,27 +152,27 @@ $user_comments = get_comments( array(
 					<?php
 					$link = $origin_link;
 					if ( isset( $_GET['review_sort_by'] ) ) {
-						$review_sort_by = $_GET['review_sort_by'];
+						$review_sort_by = sanitize_key( wp_unslash( $_GET['review_sort_by'] ) );
 						$link           = add_query_arg( 'review_sort_by', $review_sort_by, $origin_link );
 					}
-					$photos_only = $_GET['photos_only'] ?? '';
+					$photos_only = isset( $_GET['photos_only'] ) ? sanitize_key( wp_unslash( $_GET['photos_only'] ) ) : '';
 					?>
                     <a class="<?php echo empty( $photos_only ) || $photos_only === 'no' ? 'active' : ''; ?>"
-                       href="<?php echo add_query_arg( array(
+                       href="<?php echo esc_url( add_query_arg( array(
 						   'photos_only' => 'no',
 						   'tab'         => 'review'
-					   ), $link ); ?>"><?php esc_html_e( 'All', 'wp-hotel-booking' ); ?></a>
+					   ), $link ) ); ?>"><?php esc_html_e( 'All', 'wp-hotel-booking' ); ?></a>
                     <a class="<?php echo $photos_only === 'yes' ? 'active' : ''; ?>"
-                       href="<?php echo add_query_arg( array(
+                       href="<?php echo esc_url( add_query_arg( array(
 						   'photos_only' => 'yes',
 						   'tab'         => 'review'
-					   ), $link ); ?>"><?php esc_html_e( 'With Photos Only', 'wp-hotel-booking' ); ?></a>
+					   ), $link ) ); ?>"><?php esc_html_e( 'With Photos Only', 'wp-hotel-booking' ); ?></a>
                 </div>
                 <div class="sort-by">
                     <div class="label"><?php esc_html_e( 'Sort by', 'wp-hotel-booking' ); ?></div>
                     <div class="option">
 						<?php
-						$review_sort_by = $_GET['review_sort_by'] ?? '';
+						$review_sort_by = isset( $_GET['review_sort_by'] ) ? sanitize_key( wp_unslash( $_GET['review_sort_by'] ) ) : '';
 						$toggle         = __( 'Oldest', 'wp-hotel-booking' );
 						$icon_dropdown  = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
 					<path d="M13 6.92456L8 11.9246L3 6.92456" stroke="#121212" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -200,18 +200,18 @@ $user_comments = get_comments( array(
 							?>
                             <li class="<?php echo $review_sort_by === 'oldest' ? 'active' : ''; ?>">
                                 <a class="hb-room-sort-by-option"
-                                   href="<?php echo add_query_arg( array(
+                                   href="<?php echo esc_url( add_query_arg( array(
 									   'review_sort_by' => 'oldest',
 									   'tab'            => 'review'
-								   ), $link ); ?>">
+								   ), $link ) ); ?>">
 									<?php esc_html_e( 'Oldest', 'wp-hotel-booking' ); ?></a>
                             </li>
                             <li class="<?php echo $review_sort_by === 'newest' ? 'active' : ''; ?>">
                                 <a class="hb-room-sort-by-option"
-                                   href="<?php echo add_query_arg( array(
+                                   href="<?php echo esc_url( add_query_arg( array(
 									   'review_sort_by' => 'newest',
 									   'tab'            => 'review'
-								   ), $link ); ?>">
+								   ), $link ) ); ?>">
 									<?php esc_html_e( 'Newest', 'wp-hotel-booking' ); ?></a>
                             </li>
                             <?php
@@ -219,10 +219,10 @@ $user_comments = get_comments( array(
                                 ?>
                                 <li class="<?php echo $review_sort_by === 'top-review' ? 'active' : ''; ?>">
                                     <a class="hb-room-sort-by-option"
-                                       href="<?php echo add_query_arg( array(
+                                       href="<?php echo esc_url( add_query_arg( array(
 				                               'review_sort_by' => 'top-review',
 				                               'tab'            => 'review'
-			                               ), $link ) . '#tab-reviews'; ?>">
+			                               ), $link ) . '#tab-reviews' ); ?>">
 			                            <?php esc_html_e( 'Top Review', 'wp-hotel-booking' ); ?></a>
                                 </li>
                                 <?php
