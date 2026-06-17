@@ -614,11 +614,15 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 					throw new Exception( json_last_error_msg() );
 				}
 				if ( $transaction->status === 'COMPLETED' ) {
-					$booking_id  = $transaction->purchase_units[0]->payments->captures[0]->custom_id;
+					$capture     = $transaction->purchase_units[0]->payments->captures[0];
+					$booking_id  = $capture->custom_id;
 					$booking     = WPHB_Booking::instance( $booking_id );
-					$paid_amount = $transaction->purchase_units[0]->payments->captures[0]->amount->value;
+					$paid_amount = $capture->amount->value;
+					$txn_id      = isset( $capture->id ) ? sanitize_text_field( $capture->id ) : '';
+					// Use payment_complete() (saves _transaction_id + fires hb_payment_complete) so the
+					// return-capture and the webhook produce identical results regardless of which runs first.
 					if ( (float) $paid_amount == (float) $booking->total() ) {
-						$booking->update_status( 'completed' );
+						$booking->payment_complete( $txn_id );
 					} else {
 						$booking->update_status( 'processing' );
 					}
