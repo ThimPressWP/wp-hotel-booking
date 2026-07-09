@@ -37,9 +37,9 @@ global $hb_settings;
 
 		<?php wp_nonce_field( 'hb_booking_nonce_action', 'nonce' ); ?>
 		<input type="hidden" name="check_in_date"
-				value="<?php echo hb_get_request( 'check_in_date' ); ?>"/>
+				value="<?php echo esc_attr( hb_get_request( 'check_in_date' ) ); ?>"/>
 		<input type="hidden" name="check_out_date"
-				value="<?php echo hb_get_request( 'check_out_date' ); ?>">
+				value="<?php echo esc_attr( hb_get_request( 'check_out_date' ) ); ?>">
 		<input type="hidden" name="room-id" value="<?php echo esc_attr( $room->post->ID ); ?>">
 		<input type="hidden" name="hotel-booking" value="cart">
 		<input type="hidden" name="action" value="hotel_booking_ajax_add_to_cart"/>
