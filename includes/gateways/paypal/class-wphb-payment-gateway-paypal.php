@@ -299,20 +299,30 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 				return;
 			}
 
-			$payment_gross = $this->get_paypal_payment_gross( $request );
+			$payment_gross = (float) $this->get_paypal_payment_gross( $request );
 			$txn_id        = sanitize_text_field( $request['txn_id'] );
 
-			if ( (float) $booking->total === (float) $payment_gross ) {
+			// Security: the IPN must have paid the amount we actually requested from
+			// PayPal for this booking (the advance/deposit amount when enabled,
+			// otherwise the full total). We stored that charged amount in
+			// _hb_advance_payment at checkout, so compare against it (with a full
+			// total fallback). Never complete on a zero/negative gross: previously
+			// this compared against $booking->total, a declared property that is 0
+			// here, so the amount check only ever "matched" a 0.00 payment.
+			$expected_amount = (float) $booking->get_post_meta( '_hb_advance_payment', '', true );
+			if ( $expected_amount <= 0 ) {
+				$expected_amount = (float) $booking->total();
+			}
+
+			if ( $expected_amount > 0 && $payment_gross > 0 && abs( $expected_amount - $payment_gross ) < 0.01 ) {
 				$this->payment_complete( $booking, $txn_id, __( 'IPN payment completed', 'wp-hotel-booking' ) );
 			} else {
 				$booking->update_status( 'processing' );
 			}
 			// save paypal fee
-			if ( ! empty( $request['mc_fee'] ) ) {
-				update_post_meta( $booking->id, 'PayPal Transaction Fee', $request['mc_fee'] );
+			if ( ! empty( $request['mc_fee'] ) && is_scalar( $request['mc_fee'] ) ) {
+				update_post_meta( $booking->id, 'PayPal Transaction Fee', sanitize_text_field( $request['mc_fee'] ) );
 			}
-		} else {
-
 		}
 	}
 

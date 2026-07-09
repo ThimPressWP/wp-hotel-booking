@@ -460,6 +460,12 @@ class WPHB_Ajax {
 				throw new Exception( __( 'Room ID is not exists.', 'wp-hotel-booking' ) );
 			}
 
+			// Security: reject non-positive quantities before adding to the cart so
+			// a negative line can never drive the cart total below zero.
+			if ( ! is_numeric( $qty ) || (int) $qty < 1 ) {
+				throw new Exception( __( 'The number of rooms must be at least 1.', 'wp-hotel-booking' ) );
+			}
+
 			$available_qty = hotel_booking_get_room_available(
 				$room_id,
 				array(

@@ -456,6 +456,10 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 			$num_of_rooms = intval( $this->get_data( 'quantity' ) );
 		}
 
+		// Security: never let a negative quantity produce a negative amount that
+		// could drag the cart total below zero and bypass the payment step.
+		$num_of_rooms = max( 0, intval( $num_of_rooms ) );
+
 		if ( ! $nights ) {
 			$nights = hb_count_nights_two_dates( $to_time, $from_time );
 		}

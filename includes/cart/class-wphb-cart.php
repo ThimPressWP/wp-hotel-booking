@@ -129,6 +129,24 @@ class WPHB_Cart {
 		// load cart session object
 		if ( $this->sessions && $this->sessions->session ) {
 			foreach ( $this->sessions->session as $cart_id => $param ) {
+				// Security: the cart is loaded from a client-side cookie/session,
+				// so its contents cannot be trusted. Re-validate the line quantity
+				// here (not only on the add-to-cart path): a tampered cookie could
+				// inject a non-positive quantity to force the cart total to zero or
+				// below and bypass the payment step. Drop any such line.
+				$param_qty = null;
+				if ( is_array( $param ) && array_key_exists( 'quantity', $param ) ) {
+					$param_qty = $param['quantity'];
+				} elseif ( is_object( $param ) && isset( $param->quantity ) ) {
+					$param_qty = $param->quantity;
+				}
+
+				if ( null !== $param_qty && ( ! is_numeric( $param_qty ) || (int) $param_qty < 1 ) ) {
+					// Purge the invalid line from the persisted session/cookie too.
+					$this->sessions->set( $cart_id, null );
+					continue;
+				}
+
 				$cart_item = new stdClass();
 				if ( is_array( $param ) || is_object( $param ) ) {
 					foreach ( $param as $k => $v ) {
@@ -219,8 +237,16 @@ class WPHB_Cart {
 
 		$post_id = absint( $post_id );
 
+		// Security: a room quantity must be a non-negative integer. Reject
+		// tampered/negative quantities so they can never produce a negative
+		// line total that drags the cart total below zero and bypasses payment.
+		$qty = is_numeric( $qty ) ? (int) $qty : 0;
+		if ( $qty < 0 ) {
+			return new WP_Error( 'hotel_booking_add_to_cart_error', __( 'Room quantity is invalid.', 'wp-hotel-booking' ) );
+		}
+
 		$cart_item_id = $this->generate_cart_id( $params );
-		if ( $qty == 0 ) {
+		if ( $qty === 0 ) {
 			return $this->remove_cart_item( $cart_item_id );
 		}
 
@@ -262,9 +288,17 @@ class WPHB_Cart {
 			return;
 		}
 
+		// Security: normalize the quantity to a non-negative integer so a
+		// negative value submitted through the cart update form cannot create
+		// a negative line total. A zero (or lower) quantity removes the item.
+		$qty = is_numeric( $qty ) ? (int) $qty : 0;
+		if ( $qty < 0 ) {
+			$qty = 0;
+		}
+
 		if ( ! empty( $this->cart_contents[ $cart_id ] ) && $cart_item = $this->get_cart_item_param( $cart_id ) ) {
 			if ( $qty === 0 ) {
-				$this->remove_cart_item( $cart_id );
+				return $this->remove_cart_item( $cart_id );
 			}
 
 			if ( $asc === true ) {
@@ -670,7 +704,13 @@ class WPHB_Cart {
 
 	// total > 0
 	public function needs_payment() {
-		return apply_filters( 'hb_cart_needs_payment', $this->total > 0, $this );
+		// Security: clamp the total to a non-negative value before deciding
+		// whether payment is required. This is the last line of defense against
+		// a manipulated cart total (e.g. a negative-quantity line) being used to
+		// skip the payment step and confirm a booking for free.
+		$total = max( 0, (float) $this->total );
+
+		return apply_filters( 'hb_cart_needs_payment', $total > 0, $this );
 	}
 
 	function is_empty() {

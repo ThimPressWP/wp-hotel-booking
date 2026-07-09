@@ -462,6 +462,13 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 					'quantity'       => $qty,
 				)
 			);
+
+			// Security: reject non-positive quantities so this public endpoint can
+			// never render a negative price.
+			if ( ! is_numeric( $qty ) || (int) $qty < 1 ) {
+				throw new Exception( esc_html__( 'The number of rooms must be at least 1.', 'wp-hotel-booking' ) );
+			}
+
 			$extra_info = array();
 			if ( ! empty( $hb_optional_quantity_selected ) && ! empty( $hb_optional_quantity ) ) {
 				foreach ( $hb_optional_quantity_selected as $extra_id => $select ) {
@@ -513,6 +520,12 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 			}
 			if ( ! $this->can_access_room( $room_id ) ) {
 				throw new Exception( esc_html__( 'roomId is invalid', 'wp-hotel-booking' ) );
+			}
+
+			// Security: reject non-positive quantities so this public endpoint can
+			// never return a negative amount used to underpay at checkout.
+			if ( ! is_numeric( $qty ) || (int) $qty < 1 ) {
+				throw new Exception( esc_html__( 'The number of rooms must be at least 1.', 'wp-hotel-booking' ) );
 			}
 
 			$available_qty = hotel_booking_get_room_available(

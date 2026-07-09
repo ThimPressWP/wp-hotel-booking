@@ -96,7 +96,11 @@ if ( ! function_exists( 'hb_create_booking' ) ) {
 			$booking->post->post_status = 'hb-' . $args['status'];
 		}
 
-		$booking_info['_hb_booking_key'] = apply_filters( 'hb_generate_booking_key', uniqid() );
+		// Security: the booking key is the ownership token that binds a booking to
+		// its payment (e.g. it is checked against the PayPal "custom" payload before
+		// a booking is marked paid). uniqid() is time-based and predictable, so use
+		// an unguessable random key to prevent enumerating/forging another user's key.
+		$booking_info['_hb_booking_key'] = apply_filters( 'hb_generate_booking_key', wp_generate_password( 32, false ) );
 
 		if ( WP_Hotel_Booking::instance()->cart->coupon ) {
 			$booking_info['_hb_coupon_id']    = WP_Hotel_Booking::instance()->cart->coupon;
