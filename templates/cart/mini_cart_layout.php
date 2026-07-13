@@ -23,12 +23,12 @@ defined( 'ABSPATH' ) || exit; ?>
 		</div>
 
 		<div class="hb_mini_cart_number">
-			<label><?php _e( 'Quantity: ', 'wp-hotel-booking' ); ?></label>
+			<label><?php esc_html_e( 'Quantity: ', 'wp-hotel-booking' ); ?></label>
 			<span>{{ data.quantity }}</span>
 		</div>
 
 		<div class="hb_mini_cart_price">
-			<label><?php _e( 'Price: ', 'wp-hotel-booking' ); ?></label>
+			<label><?php esc_html_e( 'Price: ', 'wp-hotel-booking' ); ?></label>
 			<span>{{{ data.total }}}</span>
 		</div>
 
@@ -37,11 +37,11 @@ defined( 'ABSPATH' ) || exit; ?>
 
 <script type="text/html" id="tmpl-hb-minicart-footer">
 	<div class="hb_mini_cart_footer">
-		<a href="<?php echo hb_get_checkout_url(); ?>" class="hb_button hb_checkout"><?php _e( 'Check Out', 'wp-hotel-booking' ); ?></a>
-		<a href="<?php echo hb_get_cart_url(); ?>" class="hb_button hb_view_cart"><?php _e( 'View Cart', 'wp-hotel-booking' ); ?></a>
+		<a href="<?php echo hb_get_checkout_url(); ?>" class="hb_button hb_checkout"><?php esc_html_e( 'Check Out', 'wp-hotel-booking' ); ?></a>
+		<a href="<?php echo hb_get_cart_url(); ?>" class="hb_button hb_view_cart"><?php esc_html_e( 'View Cart', 'wp-hotel-booking' ); ?></a>
 	</div>
 </script>
 
 <script type="text/html" id="tmpl-hb-minicart-empty">
-	<p class="hb_mini_cart_empty"><?php _e( 'Your cart is empty!', 'wp-hotel-booking' ); ?></p>
+	<p class="hb_mini_cart_empty"><?php esc_html_e( 'Your cart is empty!', 'wp-hotel-booking' ); ?></p>
 </script>

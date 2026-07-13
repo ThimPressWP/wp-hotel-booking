@@ -61,8 +61,8 @@ $settings = WPHB_Settings::instance();
 				<p class="meta">
 					<strong itemprop="author"><?php comment_author(); ?></strong>
 					<time itemprop="datePublished"
-						datetime="<?php echo get_comment_date( 'c' ); ?>">
-						<?php echo get_comment_date( hb_date_format() ); ?>
+						datetime="<?php echo esc_attr( get_comment_date( 'c' ) ); ?>">
+						<?php echo esc_html( get_comment_date( hb_date_format() ) ); ?>
 					</time>
 				</p>
 			<?php } ?>

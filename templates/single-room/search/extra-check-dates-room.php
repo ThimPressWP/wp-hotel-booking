@@ -41,7 +41,7 @@ if ( $room_extra ) { ?>
 								data-respondent = "<?php echo esc_attr( $extra->respondent ); ?>"
 							/>
 						</div>
-						<div class="hb_extra_optional_left <?php echo $extra->required ? 'no_left' : ''; ?>">
+						<div class="hb_extra_optional_left <?php echo esc_attr( $extra->required ? 'no_left' : '' ); ?>">
 							<div class="hb_extra_title">
 								<div class="hb_package_title">
 									<label for="<?php echo esc_attr( 'hb-ex-room-' . $post_id . '-' . $key ); ?>"><?php printf( '%s', $extra->title ); ?></label>
@@ -58,7 +58,7 @@ if ( $room_extra ) { ?>
 							</div>
 							<div class="hb_extra_detail_price">
 								<label>
-									<strong><?php echo $extra->price; ?></strong>
+									<strong><?php echo wp_kses_post( $extra->price ); ?></strong>
 									<small><?php printf( '/ %s', $extra->respondent_name ? $extra->respondent_name : __( 'Package', 'wp-hotel-booking' ) ); ?></small>
 								</label>
 								<?php if ( $extra->respondent === 'number' ) {

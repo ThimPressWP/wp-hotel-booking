@@ -27,7 +27,7 @@ if ( ! $post ) {
 
 		<div class="hb-booking-room-form-head">
 			<h2 class="hb-room-name"><?php printf( '%s', $post->post_title ); ?></h2>
-			<p class="description"><?php _e( 'Please select number of room and packages (optional)', 'wp-hotel-booking' ); ?></p>
+			<p class="description"><?php esc_html_e( 'Please select number of room and packages (optional)', 'wp-hotel-booking' ); ?></p>
 		</div>
 
 		<div class="hb-search-results-form-container">
@@ -36,7 +36,7 @@ if ( ! $post ) {
 			<div class="hb-booking-room-form-group">
 				<div class="hb-booking-room-form-field hb-form-field-input">
 					<select name="hb-num-of-rooms" class="number_room_select">
-						<option value="0"><?php _e( 'Select Number Of Room', 'wp-hotel-booking' ); ?></option>
+						<option value="0"><?php esc_html_e( 'Select Number Of Room', 'wp-hotel-booking' ); ?></option>
 						<# for( var i = 1; i <= data.qty; i++ ) { #>
 						<option value="{{ i }}">{{ i }}</option>
 						<# } #>
@@ -49,9 +49,9 @@ if ( ! $post ) {
 
 		<div class="hb-booking-room-form-footer">
 			<a href="#" data-template="hb-room-load-form"
-				class="hb_previous_step hb_button"><?php _e( 'Previous', 'wp-hotel-booking' ); ?></a>
+				class="hb_previous_step hb_button"><?php esc_html_e( 'Previous', 'wp-hotel-booking' ); ?></a>
 			<button type="submit"
-					class="hb_add_to_cart hb_button"><?php _e( 'Add To Cart', 'wp-hotel-booking' ); ?></button>
+					class="hb_add_to_cart hb_button"><?php esc_html_e( 'Add To Cart', 'wp-hotel-booking' ); ?></button>
 			<input type="hidden" name="check_in_date_text" value="{{ data.check_in_date_text }}" />
 			<input type="hidden" name="check_out_date_text" value="{{ data.check_out_date_text }}" />
 			<input type="hidden" name="check_in_date" value="{{ data.check_in_date }}" />

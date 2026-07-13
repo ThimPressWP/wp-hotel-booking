@@ -22,8 +22,8 @@ if ( empty( $faqs ) ) {
 	<?php if ( ! empty( $faqs ) ) : ?>
 		<?php foreach ( $faqs as $rule ) : ?>
 			<div class="_hb_room_faqs__detail">
-				<p class="_hb_room_rule_title"><?php echo $rule[0]; ?></p>
-				<div class="_hb_room_rule_content"><?php echo $rule[1]; ?></div>
+				<p class="_hb_room_rule_title"><?php echo esc_html( $rule[0]); ?></p>
+				<div class="_hb_room_rule_content"><?php echo esc_html($rule[1]); ?></div>
 			</div>
 		<?php endforeach; ?>
 	<?php endif; ?>

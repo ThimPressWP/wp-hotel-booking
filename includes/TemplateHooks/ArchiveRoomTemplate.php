@@ -257,12 +257,12 @@ class ArchiveRoomTemplate {
 	}
 
 	public function date_field( $label = '', $name = '', $value = '' ) {
-		$label_html = sprintf( '<label>%s</label>', $label );
+		$label_html = sprintf( '<label>%s</label>', esc_html( $label ) );
 		$input      = sprintf(
 			'<input type="text" name="%1$s" class="hb_input_date_check" value="%2$s" placeholder="%3$s" autocomplete="off"/>',
-			$name,
-			$value,
-			$label
+			esc_attr( $name ),
+			esc_attr( $value ),
+			esc_attr( $label )
 		);
 		$sections   = array(
 			'wrapper'     => '<div class="hb-form-field-input">',
@@ -275,12 +275,12 @@ class ArchiveRoomTemplate {
 
 	public function dropdown_selector( $label = '', $name = '', $value = 1, $min = 1 ) {
 
-		$label          = sprintf( '<label>%s</label>', $label );
+		$label          = sprintf( '<label>%s</label>', esc_html( $label ) );
 		$input_html     = sprintf(
 			'<div class="hb-form-field-input hb-input-field-number">
 		        <input type="number" step="1" min="%1$d" name="%2$s" value="%3$s" />
 		    </div>',
-		    $min, $name, $value
+		    absint( $min ), esc_attr( $name ), esc_attr( $value )
 		);
 		$nav_number_html = sprintf(
 			'<div class="hb-form-field-list nav-number-input-field">
@@ -292,7 +292,7 @@ class ArchiveRoomTemplate {
 		            <span class="number-icons hb-goUp"><i class="fa fa-plus"></i></span>
 		        </div>
 		    </div>',
-		    $label
+		    esc_html( $label )
 		);
 
 		$sections = apply_filters(

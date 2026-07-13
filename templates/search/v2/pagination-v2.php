@@ -35,8 +35,8 @@ if ( $total <= 1 ) {
 			array(
 				'base'      => $base,
 				'format'    => '',
-				'prev_text' => __( 'Previous', 'wp-hotel-booking' ),
-				'next_text' => __( 'Next', 'wp-hotel-booking' ),
+				'prev_text' => esc_html__( 'Previous', 'wp-hotel-booking' ),
+				'next_text' => esc_html__( 'Next', 'wp-hotel-booking' ),
 				'total'     => $total,
 				'current'   => max( 1, $paged ),
 				'type'      => 'list',

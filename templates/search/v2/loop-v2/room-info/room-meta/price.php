@@ -27,7 +27,7 @@ if ( empty( $pricings ) ) {
 <li class="hb_search_price">
 	<label><?php _e( 'Price:', 'wp-hotel-booking' ); ?></label>
 	<span
-			class="hb_search_item_price"><?php echo $price; ?></span>
+			class="hb_search_item_price"><?php echo wp_kses_post( $price ); ?></span>
 	<div class="hb_view_price">
 		<a href=""
 			class="hb-view-booking-room-details"><?php _e( '(View price breakdown)', 'wp-hotel-booking' ); ?></a>

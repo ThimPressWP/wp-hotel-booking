@@ -50,17 +50,17 @@ if ( $cart->cart_items_count != 0 ) :
 							<tr>
 								<th class="hb-col-room" colspan="2">
 									<?php
-									_e( 'Room', 'wp-hotel-booking' );
+									esc_html_e( 'Room', 'wp-hotel-booking' );
 									?>
 								</th>
 								<th class="hb-col-price">
 									<?php
-									_e( 'Price', 'wp-hotel-booking' );
+									esc_html_e( 'Price', 'wp-hotel-booking' );
 									?>
 								</th>
 								<th class="hb-col-quantity">
 									<?php
-									_e( 'Quanlity', 'wp-hotel-booking' );
+									esc_html_e( 'Quanlity', 'wp-hotel-booking' );
 									?>
 								</th>
 								<?php
@@ -68,7 +68,7 @@ if ( $cart->cart_items_count != 0 ) :
 									?>
 									<th class="hb-col-deposit">
 										<?php
-										_e( 'Deposit Payment', 'wp-hotel-booking' );
+										esc_html_e( 'Deposit Payment', 'wp-hotel-booking' );
 										?>
 									</th>
 									<?php
@@ -76,7 +76,7 @@ if ( $cart->cart_items_count != 0 ) :
 								?>
 								<th class="hb-col-subtotal">
 									<?php
-									_e( 'Sub total', 'wp-hotel-booking' );
+									esc_html_e( 'Sub total', 'wp-hotel-booking' );
 									?>
 								</th>
 							</tr>
@@ -362,9 +362,7 @@ if ( $cart->cart_items_count != 0 ) :
 										<!-- Quantity -->
 										<td class="hb-col-quantity">
 											<div class="hb-quantity-control">
-												<?php
-												echo '<input type="number" min="0" class="hb_room_number_edit" name="hotel_booking_cart[' . esc_attr( $cart_id ) . ']" value="' . esc_attr( $num_of_rooms ) . '" aria-label="' . esc_attr__( 'Room quantity', 'wp-hotel-booking' ) . '" />';
-												?>
+												<input type="number" min="0" class="hb_room_number_edit" name="hotel_booking_cart[<?php echo esc_attr( $cart_id ); ?>]" value="<?php echo esc_attr( $num_of_rooms ); ?>" aria-label="<?php echo esc_attr__( 'Room quantity', 'wp-hotel-booking' ); ?>" />
 											</div>
 										</td>
 										<?php
@@ -427,7 +425,7 @@ if ( $cart->cart_items_count != 0 ) :
 											?>
 											<span class="hb-price-amount">
 												<?php
-												echo hb_format_price( $room_subtotal );
+												echo wp_kses_post( hb_format_price( $room_subtotal ) );
 												?>
 											</span>
 										</td>
@@ -453,12 +451,10 @@ if ( $cart->cart_items_count != 0 ) :
 							?>
 							<div class="hb_coupon">
 								<div colspan="9" class="hb-align-left">
-									<?php
-									echo '<input type="text" name="hb-coupon-code" value="' . esc_attr( $coupon ) . '" placeholder="' . esc_attr__( 'Coupon', 'wp-hotel-booking' ) . '" />';
-									?>
+									<input type="text" name="hb-coupon-code" value="<?php echo esc_attr( $coupon ); ?>" placeholder="<?php echo esc_attr__( 'Coupon', 'wp-hotel-booking' ); ?>" />
 									<button type="button" id="hb-apply-coupon">
 										<?php
-										_e( 'Apply', 'wp-hotel-booking' );
+										esc_html_e( 'Apply', 'wp-hotel-booking' );
 										?>
 									</button>
 								</div>
@@ -477,19 +473,19 @@ if ( $cart->cart_items_count != 0 ) :
 					<div class="hb-cart-total-box">
 						<h4 class="hb-cart-total-title">
 							<?php
-							_e( 'Cart Total', 'wp-hotel-booking' );
+							esc_html_e( 'Cart Total', 'wp-hotel-booking' );
 							?>
 						</h4>
 
 						<div class="hb-cart-total-row">
 							<span class="hb-cart-total-label">
 								<?php
-								_e( 'Subtotal', 'wp-hotel-booking' );
+								esc_html_e( 'Subtotal', 'wp-hotel-booking' );
 								?>
 							</span>
 							<span class="hb-cart-total-value hb_sub_total_value">
 								<?php
-								echo hb_format_price( $cart->sub_total );
+								echo wp_kses_post( hb_format_price( $cart->sub_total ) );
 								?>
 							</span>
 						</div>
@@ -512,12 +508,12 @@ if ( $cart->cart_items_count != 0 ) :
 							<div class="hb-cart-total-row hb-cart-extras-total">
 								<span class="hb-cart-total-label">
 									<?php
-									_e( 'Extra Services', 'wp-hotel-booking' );
+									esc_html_e( 'Extra Services', 'wp-hotel-booking' );
 									?>
 								</span>
 								<span class="hb-cart-total-value">
 									<?php
-									echo hb_format_price( $extra_total );
+									echo wp_kses_post( hb_format_price( $extra_total ) );
 									?>
 								</span>
 							</div>
@@ -531,14 +527,14 @@ if ( $cart->cart_items_count != 0 ) :
 							<div class="hb-cart-total-row hb-cart-tax">
 								<span class="hb-cart-total-label">
 									<?php
-									_e( 'Tax', 'wp-hotel-booking' );
+									esc_html_e( 'Tax', 'wp-hotel-booking' );
 									?>
 									<?php
 									if ( $tax < 0 ) :
 										?>
 										<small>(
 											<?php
-											_e( 'included', 'wp-hotel-booking' );
+											esc_html_e( 'included', 'wp-hotel-booking' );
 											?>
 											)</small>
 										<?php
@@ -547,10 +543,7 @@ if ( $cart->cart_items_count != 0 ) :
 								</span>
 								<span class="hb-cart-total-value">
 									<?php
-									echo apply_filters(
-										'hotel_booking_cart_tax_display',
-										abs( $tax * 100 ) . '%'
-									);
+									echo esc_html( apply_filters( 'hotel_booking_cart_tax_display', abs( $tax * 100 ) . '%' ) );
 									?>
 								</span>
 							</div>
@@ -572,7 +565,7 @@ if ( $cart->cart_items_count != 0 ) :
 											<?php
 											printf(
 												__( 'Coupon applied: %s', 'wp-hotel-booking' ),
-												$coupon->coupon_code
+												esc_html( $coupon->coupon_code )
 											);
 											?>
 										</span>
@@ -593,12 +586,12 @@ if ( $cart->cart_items_count != 0 ) :
 						<div class="hb-cart-total-row hb-cart-grand-total">
 							<span class="hb-cart-total-label">
 								<?php
-								_e( 'Total', 'wp-hotel-booking' );
+								esc_html_e( 'Total', 'wp-hotel-booking' );
 								?>
 							</span>
 							<span class="hb-cart-total-value hb_grand_total_value">
 								<?php
-								echo hb_format_price( $cart->total );
+								echo wp_kses_post( hb_format_price( $cart->total ) );
 								?>
 							</span>
 						</div>
@@ -609,12 +602,12 @@ if ( $cart->cart_items_count != 0 ) :
 							<div class="hb-cart-total-row hb-cart-advance">
 								<span class="hb-cart-total-label">
 									<?php
-									_e( 'Advance Payment', 'wp-hotel-booking' );
+									esc_html_e( 'Advance Payment', 'wp-hotel-booking' );
 									?>
 								</span>
 								<span class="hb-cart-total-value hb_advance_payment_value">
 									<?php
-									echo hb_format_price( $advance_payment );
+									echo wp_kses_post( hb_format_price( $advance_payment ) );
 									?>
 								</span>
 							</div>
@@ -632,7 +625,7 @@ if ( $cart->cart_items_count != 0 ) :
 						?>
 						" class="hb-btn hb-btn-checkout ">
 							<?php
-							_e( 'Proceed to Checkout', 'wp-hotel-booking' );
+							esc_html_e( 'Proceed to Checkout', 'wp-hotel-booking' );
 							?>
 						</a>
 					</div>
@@ -651,12 +644,12 @@ else :
 		</div>
 		<h3 class="hb-empty-cart-title">
 			<?php
-			_e( 'Your cart is empty', 'wp-hotel-booking' );
+			esc_html_e( 'Your cart is empty', 'wp-hotel-booking' );
 			?>
 		</h3>
 		<p class="hb-empty-cart-message">
 			<?php
-			_e( 'Looks like you haven\'t added any rooms yet. Start exploring our rooms!', 'wp-hotel-booking' );
+			esc_html_e( 'Looks like you haven\'t added any rooms yet. Start exploring our rooms!', 'wp-hotel-booking' );
 			?>
 		</p>
 		<a href="
@@ -665,7 +658,7 @@ else :
 		?>
 		" class="hb-btn hb-btn-primary">
 			<?php
-			_e( 'Browse Rooms', 'wp-hotel-booking' );
+			esc_html_e( 'Browse Rooms', 'wp-hotel-booking' );
 			?>
 		</a>
 	</div>

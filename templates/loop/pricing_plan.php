@@ -22,7 +22,7 @@ $date_order = hb_start_of_week_order();
 <?php foreach ( $plans as $plan ) { ?>
 	<?php if ( ! ( $plan->start && $plan->end ) ) { ?>
 		<h4 class="hb_room_pricing_plan_data">
-			<?php _e( 'Regular plan', 'wp-hotel-booking' ); ?>
+			<?php esc_html_e( 'Regular plan', 'wp-hotel-booking' ); ?>
 		</h4>
 
 		<table class="hb_room_pricing_plans">
@@ -52,7 +52,7 @@ $date_order = hb_start_of_week_order();
 	<?php if ( ( $plan->start && $plan->end ) ) { ?>
 		<h4 class="hb_room_pricing_plan_data">
 			<?php printf( '%1$s', date_i18n( hb_get_date_format(), strtotime( $plan->start ) ) ); ?>
-			<span><?php _e( 'to', 'wp-hotel-booking' ); ?></span>
+			<span><?php esc_html_e( 'to', 'wp-hotel-booking' ); ?></span>
 			<?php printf( '%1$s', date_i18n( hb_get_date_format(), strtotime( $plan->end ) ) ); ?>
 		</h4>
 

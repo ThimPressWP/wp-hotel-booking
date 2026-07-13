@@ -32,7 +32,7 @@ $featured        = $gallery ? array_shift( $gallery ) : false;
 					<a class="hb-room-gallery"
 						data-lightbox="hb-room-gallery[<?php echo esc_attr( $room->post->ID ); ?>]"
 						data-title="<?php echo esc_attr( $featured['alt'] ); ?>"
-						href="<?php echo esc_attr( $featured['src'] ); ?>">
+						href="<?php echo esc_url( $featured['src'] ); ?>">
 						<?php $room->getImage( 'catalog' ); ?>
 					</a>
 				<?php endif; ?>
@@ -46,25 +46,25 @@ $featured        = $gallery ? array_shift( $gallery ) : false;
 				</h4>
 				<ul class="hb-room-meta">
 					<li class="hb_search_capacity">
-						<label><?php _e( 'Capacity:', 'wp-hotel-booking' ); ?></label>
+						<label><?php esc_html_e( 'Capacity:', 'wp-hotel-booking' ); ?></label>
 						<div class=""><?php echo esc_html( $room->capacity ); ?></div>
 					</li>
 					<li class="hb_search_max_child">
-						<label><?php _e( 'Max Children:', 'wp-hotel-booking' ); ?></label>
+						<label><?php esc_html_e( 'Max Children:', 'wp-hotel-booking' ); ?></label>
 						<div><?php echo esc_html( $room->max_child ); ?></div>
 					</li>
 					<li class="hb_search_price">
-						<label><?php _e( 'Price:', 'wp-hotel-booking' ); ?></label>
+						<label><?php esc_html_e( 'Price:', 'wp-hotel-booking' ); ?></label>
 						<span
-							class="hb_search_item_price"><?php echo hb_format_price( $room->amount_singular ); ?></span>
+							class="hb_search_item_price"><?php echo wp_kses_post( hb_format_price( $room->amount_singular ) ); ?></span>
 						<div class="hb_view_price">
 							<a href=""
-								class="hb-view-booking-room-details"><?php _e( '(View price breakdown)', 'wp-hotel-booking' ); ?></a>
+								class="hb-view-booking-room-details"><?php esc_html_e( '(View price breakdown)', 'wp-hotel-booking' ); ?></a>
 							<?php hb_get_template( 'search/booking-room-details.php', array( 'room' => $room ) ); ?>
 						</div>
 					</li>
 					<li class="hb_search_quantity">
-						<label><?php _e( 'Quantity: ', 'wp-hotel-booking' ); ?></label>
+						<label><?php esc_html_e( 'Quantity: ', 'wp-hotel-booking' ); ?></label>
 						<div>
 							<?php
 							hb_dropdown_numbers(
@@ -81,7 +81,7 @@ $featured        = $gallery ? array_shift( $gallery ) : false;
 					</li>
 					<?php do_action( 'hotel_booking_loop_before_btn_select_room', $room->post->ID ); ?>
 					<li class="hb_search_add_to_cart">
-						<button class="hb_add_to_cart"><?php _e( 'Select this room', 'wp-hotel-booking' ); ?></button>
+						<button class="hb_add_to_cart"><?php esc_html_e( 'Select this room', 'wp-hotel-booking' ); ?></button>
 					</li>
 				</ul>
 			</div>

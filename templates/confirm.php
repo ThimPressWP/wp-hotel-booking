@@ -16,11 +16,11 @@
 defined( 'ABSPATH' ) || exit(); ?>
 
 <div id="hotel-booking-confirm">
-	<?php _e( 'Confirm', 'wp-hotel-booking' ); ?>
+	<?php esc_html_e( 'Confirm', 'wp-hotel-booking' ); ?>
 	<form name="hb-search-form">
 		<input type="hidden" name="hotel-booking" value="complete">
 		<p>
-			<button type="submit"><?php _e( 'Finish', 'wp-hotel-booking' ); ?></button>
+			<button type="submit"><?php esc_html_e( 'Finish', 'wp-hotel-booking' ); ?></button>
 		</p>
 	</form>
 </div>

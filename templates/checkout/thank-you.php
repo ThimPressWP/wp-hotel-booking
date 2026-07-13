@@ -39,7 +39,7 @@ if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 		?>
 		<div class="hb-message message">
 			<div class="hb-message-content">
-				<?php echo __( 'Thank you! Your booking has been placed. We will contact you to confirm about the booking soon.', 'wp-hotel-booking' ); ?>
+				<?php esc_html_e( 'Thank you! Your booking has been placed. We will contact you to confirm about the booking soon.', 'wp-hotel-booking' ); ?>
 			</div>
 		</div>
 
@@ -54,20 +54,20 @@ if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 
 		<div id="booking-items">
 
-			<h3><?php echo __( 'Booking Items', 'wp-hotel-booking' ); ?></h3>
+			<h3><?php esc_html_e( 'Booking Items', 'wp-hotel-booking' ); ?></h3>
 
 			<table cellpadding="0" cellspacing="0" class="booking_item_table">
 				<thead>
 				<tr>
-					<th><?php _e( 'Item', 'wp-hotel-booking' ); ?></th>
-					<th><?php _e( 'Check in - Checkout', 'wp-hotel-booking' ); ?></th>
-					<th><?php _e( 'Night', 'wp-hotel-booking' ); ?></th>
-					<th><?php _e( 'Qty', 'wp-hotel-booking' ); ?></th>
+					<th><?php esc_html_e( 'Item', 'wp-hotel-booking' ); ?></th>
+					<th><?php esc_html_e( 'Check in - Checkout', 'wp-hotel-booking' ); ?></th>
+					<th><?php esc_html_e( 'Night', 'wp-hotel-booking' ); ?></th>
+					<th><?php esc_html_e( 'Qty', 'wp-hotel-booking' ); ?></th>
 					<?php if ( $has_adult_qty ) : ?>
-					<th><?php _e( 'Adults', 'wp-hotel-booking' ); ?></th>
-					<th><?php _e( 'Children', 'wp-hotel-booking' ); ?></th>
+					<th><?php esc_html_e( 'Adults', 'wp-hotel-booking' ); ?></th>
+					<th><?php esc_html_e( 'Children', 'wp-hotel-booking' ); ?></th>
 					<?php endif; ?>
-					<th><?php _e( 'Total', 'wp-hotel-booking' ); ?></th>
+					<th><?php esc_html_e( 'Total', 'wp-hotel-booking' ); ?></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -77,7 +77,7 @@ if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 					<?php $room_id = apply_filters( 'hotel-booking-order-room-id', hb_get_order_item_meta( $room->order_item_id, 'product_id', true ) ); ?>
 					<tr>
 						<td>
-							<?php printf( '<a href="%s">%s</a>', get_permalink( $room_id ), get_the_title( $room_id ) ); ?>
+							<?php printf( '<a href="%s">%s</a>', esc_url( get_permalink( $room_id ) ), esc_html( get_the_title( $room_id ) ) ); ?>
 						</td>
 						<td>
 							<?php printf( '%s - %s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_in_date', true ) ), date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_out_date', true ) ) ); ?>
@@ -127,19 +127,19 @@ if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 				<?php } ?>
 
 				<tr>
-					<td colspan="6"><?php _e( 'Sub Total', 'wp-hotel-booking' ); ?></td>
+					<td colspan="6"><?php esc_html_e( 'Sub Total', 'wp-hotel-booking' ); ?></td>
 					<td>
 						<?php printf( '%s', hb_format_price( hb_booking_subtotal( $booking->id ), hb_get_currency_symbol( $booking->currency ) ) ); ?>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="6"><?php _e( 'Tax', 'wp-hotel-booking' ); ?></td>
+					<td colspan="6"><?php esc_html_e( 'Tax', 'wp-hotel-booking' ); ?></td>
 					<td>
 						<?php printf( '%s', apply_filters( 'hotel_booking_admin_booking_details', hb_format_price( hb_booking_tax_total( $booking->id ), hb_get_currency_symbol( $booking->currency ) ), $booking ) ); ?>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="6"><?php _e( 'Grand Total', 'wp-hotel-booking' ); ?></td>
+					<td colspan="6"><?php esc_html_e( 'Grand Total', 'wp-hotel-booking' ); ?></td>
 					<td>
 						<?php printf( '%s', hb_format_price( hb_booking_total( $booking->id ), hb_get_currency_symbol( $booking->currency ) ) ); ?>
 					</td>
@@ -159,7 +159,7 @@ if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 				if ( floatval( hb_booking_total( $booking->id ) ) !== floatval( $advance_payment ) ) {
 					?>
 					<tr>
-						<td colspan="6"><?php _e( 'Advance Payment', 'wp-hotel-booking' ); ?></td>
+						<td colspan="6"><?php esc_html_e( 'Advance Payment', 'wp-hotel-booking' ); ?></td>
 						<td>
 							<?php printf( '%s', hb_format_price( $advance_payment, hb_get_currency_symbol( $booking->currency ) ) ); ?>
 						</td>
@@ -175,65 +175,65 @@ if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 				<ul class="hb-form-table">
 
 					<li>
-						<label for="_hb_customer_title"><?php echo __( 'Title:', 'wp-hotel-booking' ); ?></label>
+						<label for="_hb_customer_title"><?php echo esc_html__( 'Title:', 'wp-hotel-booking' ); ?></label>
 						<?php echo esc_html( hb_get_title_by_slug( $booking->customer_title ) ); ?>
 					</li>
 
 					<li>
 						<label for="_hb_customer_first_name">
-							<?php echo __( 'First Name:', 'wp-hotel-booking' ); ?>
+							<?php esc_html_e( 'First Name:', 'wp-hotel-booking' ); ?>
 						</label>
 						<?php echo esc_html( $booking->customer_first_name ); ?>
 					</li>
 
 					<li>
 						<label for="_hb_customer_last_name">
-							<?php echo __( 'Last Name:', 'wp-hotel-booking' ); ?>
+							<?php esc_html_e( 'Last Name:', 'wp-hotel-booking' ); ?>
 						</label>
 						<?php echo esc_html( $booking->customer_last_name ); ?>
 					</li>
 
 					<li>
-						<label for="_hb_customer_address"><?php echo __( 'Address:', 'wp-hotel-booking' ); ?></label>
+						<label for="_hb_customer_address"><?php esc_html_e( 'Address:', 'wp-hotel-booking' ); ?></label>
 						<?php echo esc_html( $booking->customer_address ); ?>
 					</li>
 
 					<li>
-						<label for="_hb_customer_city"><?php echo __( 'City:', 'wp-hotel-booking' ); ?></label>
+						<label for="_hb_customer_city"><?php esc_html_e( 'City:', 'wp-hotel-booking' ); ?></label>
 						<?php echo esc_html( $booking->customer_city ); ?>
 					</li>
 
 					<li>
-						<label for="_hb_customer_state"><?php echo __( 'State:', 'wp-hotel-booking' ); ?></label>
+						<label for="_hb_customer_state"><?php esc_html_e( 'State:', 'wp-hotel-booking' ); ?></label>
 						<?php echo esc_html( $booking->customer_state ); ?>
 					</li>
 
 					<li>
 						<label for="_hb_customer_postal_code">
-							<?php echo __( 'Postal Code:', 'wp-hotel-booking' ); ?>
+							<?php esc_html_e( 'Postal Code:', 'wp-hotel-booking' ); ?>
 						</label>
 						<?php echo esc_html( $booking->customer_postal_code ); ?>
 					</li>
 
 					<li>
-						<label for="_hb_customer_country"><?php echo __( 'Country:', 'wp-hotel-booking' ); ?></label>
+						<label for="_hb_customer_country"><?php esc_html_e( 'Country:', 'wp-hotel-booking' ); ?></label>
 						<?php echo esc_html( $booking->customer_country ); ?>
 					</li>
 
 					<li>
-						<label for="_hb_customer_phone"><?php echo __( 'Phone:', 'wp-hotel-booking' ); ?></label>
+						<label for="_hb_customer_phone"><?php esc_html_e( 'Phone:', 'wp-hotel-booking' ); ?></label>
 						<?php echo esc_html( $booking->customer_phone ); ?>
 					</li>
 
 					<li>
-						<label for="_hb_customer_email"><?php echo __( 'Email:', 'wp-hotel-booking' ); ?></label>
+						<label for="_hb_customer_email"><?php esc_html_e( 'Email:', 'wp-hotel-booking' ); ?></label>
 						<?php echo esc_html( $booking->customer_email ); ?>
 					</li>
 				</ul>
 			</div>
 
 			<div class="booking-notes">
-				<label for="_hb_customer_notes"><?php echo __( 'Booking Notes:', 'wp-hotel-booking' ); ?></label>
+				<label for="_hb_customer_notes"><?php esc_html_e( 'Booking Notes:', 'wp-hotel-booking' ); ?></label>
 				<?php echo esc_html( $booking->post->post_content ); ?>
 			</div>
 
@@ -243,7 +243,7 @@ if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 				if ( isset( $option['instruction'] ) && $option['instruction'] ) {
 					?>
 					<div id="instruction">
-						<h3><?php echo __( 'Payment Instruction', 'wp-hotel-booking' ); ?></h3>
+						<h3><?php esc_html_e( 'Payment Instruction', 'wp-hotel-booking' ); ?></h3>
 						<?php echo stripslashes( $option['instruction'] ); ?>
 					</div>
 					<?php
@@ -253,12 +253,12 @@ if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 
 		</div>
 	<?php } else { ?>
-		<p><?php echo esc_html__( 'Booking invalid', 'wp-hotel-booking' ); ?></p>
+		<p><?php esc_html_e( 'Booking invalid', 'wp-hotel-booking' ); ?></p>
 		<?php
 	}
 } else {
 	?>
-	<p><?php echo esc_html__( 'Booking invalid', 'wp-hotel-booking' ); ?></p>
+	<p><?php esc_html_e( 'Booking invalid', 'wp-hotel-booking' ); ?></p>
 <?php } ?>
 
 <?php get_footer(); ?>

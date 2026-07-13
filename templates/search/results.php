@@ -20,7 +20,7 @@ do_action( 'hb_before_search_result' ); ?>
 
 <div id="hotel-booking-results">
 	<?php if ( $results && ! empty( $hb_search_rooms['data'] ) ) { ?>
-		<h3><?php _e( 'Search results', 'wp-hotel-booking' ); ?></h3>
+		<h3><?php esc_html_e( 'Search results', 'wp-hotel-booking' ); ?></h3>
 
 		<?php
 		hb_get_template(
@@ -40,8 +40,8 @@ do_action( 'hb_before_search_result' ); ?>
 					array(
 						'base'      => add_query_arg( 'hb_page', '%#%' ),
 						'format'    => '',
-						'prev_text' => __( 'Previous', 'wp-hotel-booking' ),
-						'next_text' => __( 'Next', 'wp-hotel-booking' ),
+						'prev_text' => esc_html__( 'Previous', 'wp-hotel-booking' ),
+						'next_text' => esc_html__( 'Next', 'wp-hotel-booking' ),
 						'total'     => $hb_search_rooms['max_num_pages'],
 						'current'   => $hb_search_rooms['page'],
 						'type'      => 'list',
@@ -53,9 +53,9 @@ do_action( 'hb_before_search_result' ); ?>
 			?>
 		</nav>
 	<?php } else { ?>
-		<p><?php _e( 'No room found.', 'wp-hotel-booking' ); ?></p>
+		<p><?php esc_html_e( 'No room found.', 'wp-hotel-booking' ); ?></p>
 		<p>
-			<a href="<?php echo hb_get_url(); ?>"><?php _e( 'Search again!', 'wp-hotel-booking' ); ?></a>
+			<a href="<?php echo esc_url( hb_get_url() ); ?>"><?php esc_html_e( 'Search again!', 'wp-hotel-booking' ); ?></a>
 		</p>
 	<?php } ?>
 </div>

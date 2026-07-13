@@ -61,7 +61,7 @@ if ( ! empty( $extra_info) ) {
 					<?php printf( 'x%d %s', $info['count'], __( 'Night', 'wp-hotel-booking' ) ); ?>
 				</td>
 				<td class="hb_search_item_price">
-					<?php echo hb_format_price( round( $info['price'] * $quantity, 2 ) ); ?>
+					<?php echo sprintf( '%s', hb_format_price( round( $info['price'] * $quantity, 2 ) ) ); ?>
 				</td>
 			</tr>
 		<?php } ?>
@@ -70,7 +70,7 @@ if ( ! empty( $extra_info) ) {
 				<tr>
 					<td class="hb_search_item_day" colspan="2"><?php echo esc_html( $extra['title'] ); ?></td>
 					<td class="hb_search_item_price">
-						<?php echo hb_format_price( round( $extra['price'], 2 ) ); ?>
+						<?php echo sprintf( '%s', hb_format_price( round( $extra['price'], 2 ) ) ); ?>
 					</td>
 				</tr>
 			<?php endforeach ?>
@@ -79,17 +79,17 @@ if ( ! empty( $extra_info) ) {
 		<tfoot>
 		<tr>
 			<td class="hb_search_item_total_bold">
-				<?php _e( 'Total', 'wp-hotel-booking' ); ?>
+				<?php esc_html_e( 'Total', 'wp-hotel-booking' ); ?>
 			</td>
 			<td class="hb_search_item_total_description">
 				<?php
 					if ( hb_price_including_tax() ) {
-						_e( 'tax incl.', 'wp-hotel-booking' );
+						esc_html_e( 'tax incl.', 'wp-hotel-booking' );
 					}
 				?>
 			</td>
 			<td class="hb_search_item_price">
-				<?php echo hb_format_price( $room->amount_singular * $quantity + $total_extra_price ); ?>
+				<?php echo sprintf( '%s', hb_format_price( $room->amount_singular * $quantity + $total_extra_price ) ); ?>
 			</td>
 		</tr>
 		</tfoot>

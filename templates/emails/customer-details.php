@@ -15,7 +15,7 @@
 defined( 'ABSPATH' ) || exit();
 ?>
 
-<h2 class="section-title"><?php _e( 'Customer details', 'wp-hotel-booking' ); ?></h2>
+<h2 class="section-title"><?php esc_html_e( 'Customer details', 'wp-hotel-booking' ); ?></h2>
 <ul>
 	<li><strong><?php echo esc_html__( 'Customer Name:', 'wp-hotel-booking' ); ?></strong>
 		<span><?php echo esc_html( hb_get_customer_fullname( $booking->id ) ); ?></span>
@@ -32,7 +32,7 @@ defined( 'ABSPATH' ) || exit();
 	</li>
 </ul>
 
-<h2 class="section-title"><?php _e( 'Billing address', 'wp-hotel-booking' ); ?></h2>
+<h2 class="section-title"><?php esc_html_e( 'Billing address', 'wp-hotel-booking' ); ?></h2>
 <ul>
 	<li><strong><?php echo esc_html__( 'Address:', 'wp-hotel-booking' ); ?></strong>
 		<span>

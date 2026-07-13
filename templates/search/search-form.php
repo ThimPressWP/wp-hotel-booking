@@ -103,7 +103,7 @@ $uniqid         = uniqid();
 				value="<?php echo isset( $atts['widget_search'] ) ? $atts['widget_search'] : false; ?>"/>
 		<input type="hidden" name="action" value="hotel_booking_parse_search_params"/>
 		<p class="hb-submit">
-			<button type="submit" class="wphb-button"><?php _e( 'Check Availability', 'wp-hotel-booking' ); ?></button>
+			<button type="submit" class="wphb-button"><?php esc_html_e( 'Check Availability', 'wp-hotel-booking' ); ?></button>
 		</p>
 	</form>
 </div>

@@ -45,8 +45,8 @@ $rooms = $cart->get_rooms();
 								'You have to <strong><a href="%1$s">login</a></strong> or <strong><a href="%2$s">register</a></strong> to checkout.',
 								'sailing'
 							),
-							wp_login_url( hb_get_checkout_url() ),
-							wp_registration_url()
+							esc_url( wp_login_url( hb_get_checkout_url() ) ),
+							esc_url( wp_registration_url() )
 						)
 					?>
 				</div>
@@ -67,11 +67,11 @@ $rooms = $cart->get_rooms();
 								stroke-linejoin="round" />
 						</svg>
 						<?php
-							_e( 'Have a coupon?', 'sailing' );
+							esc_html_e( 'Have a coupon?', 'sailing' );
 						?>
 						<a href="#" class="thim-hb-show-coupon-form">
 							<?php
-							_e( 'Click here to enter your code', 'sailing' );
+							esc_html_e( 'Click here to enter your code', 'sailing' );
 							?>
 						</a>
 					</div>
@@ -92,12 +92,12 @@ $rooms = $cart->get_rooms();
 									?>
 										" placeholder="
 									<?php
-										_e( 'Coupon', 'wp-hotel-booking' );
+										esc_html_e( 'Coupon', 'wp-hotel-booking' );
 									?>
 										" />
 								<button type="button" id="hb-apply-coupon">
 									<?php
-									_e( 'Apply', 'wp-hotel-booking' );
+									esc_html_e( 'Apply', 'wp-hotel-booking' );
 									?>
 								</button>
 							</div>
@@ -128,7 +128,7 @@ $rooms = $cart->get_rooms();
 				<div class="hb-order-summary">
 					<h3 class="hb-order-summary-title">
 						<?php
-						_e( 'Your order', 'sailing' );
+						esc_html_e( 'Your order', 'sailing' );
 						?>
 					</h3>
 
@@ -137,12 +137,12 @@ $rooms = $cart->get_rooms();
 						<div class="hb-order-summary-header">
 							<span class="hb-order-product-label">
 								<?php
-								_e( 'Product', 'sailing' );
+								esc_html_e( 'Product', 'sailing' );
 								?>
 							</span>
 							<span class="hb-order-subtotal-label">
 								<?php
-								_e( 'Subtotal', 'sailing' );
+								esc_html_e( 'Subtotal', 'sailing' );
 								?>
 							</span>
 						</div>
@@ -251,7 +251,7 @@ $rooms = $cart->get_rooms();
 									<div class="hb-order-extra-services">
 										<span class="hb-meta-label">
 											<?php
-												_e( 'Extra services:', 'sailing' );
+												esc_html_e( 'Extra services:', 'sailing' );
 											?>
 										</span>
 										<ul class="hb-extra-services-list">
@@ -293,7 +293,7 @@ $rooms = $cart->get_rooms();
 							</div>
 							<div class="hb-order-item-price">
 								<?php
-										echo hb_format_price( $room->total );
+										echo wp_kses_post( hb_format_price( $room->total ) );
 								?>
 							</div>
 						</div>
@@ -316,14 +316,14 @@ $rooms = $cart->get_rooms();
 									<?php
 										printf(
 											__( 'Coupon applied: %s', 'wp-hotel-booking' ),
-											$coupon->coupon_code
+											esc_html( $coupon->coupon_code )
 										);
 									?>
 								</span>
 								<span class="hb-align-right">
 									-
 									<?php
-											echo hb_format_price( $coupon->discount_value );
+											echo wp_kses_post( hb_format_price( $coupon->discount_value ) );
 									?>
 								</span>
 							</div>
@@ -336,12 +336,12 @@ $rooms = $cart->get_rooms();
 						<div class="hb-order-summary-row hb-order-subtotal">
 							<span class="hb-order-label">
 								<?php
-								_e( 'Sub total', 'sailing' );
+								esc_html_e( 'Sub total', 'sailing' );
 								?>
 							</span>
 							<span class="hb-order-value hb_sub_total_value">
 								<?php
-								echo hb_format_price( $cart->sub_total );
+								echo wp_kses_post( hb_format_price( $cart->sub_total ) );
 								?>
 							</span>
 						</div>
@@ -353,14 +353,14 @@ $rooms = $cart->get_rooms();
 						<div class="hb-order-summary-row hb-order-tax">
 							<span class="hb-order-label">
 								<?php
-									_e( 'Tax', 'sailing' );
+									esc_html_e( 'Tax', 'sailing' );
 								?>
 								<?php
 								if ( $tax < 0 ) :
 									?>
 								<small>(
 									<?php
-									_e( 'included', 'sailing' );
+									esc_html_e( 'included', 'sailing' );
 									?>
 									)</small>
 									<?php
@@ -386,12 +386,12 @@ $rooms = $cart->get_rooms();
 						<div class="hb-order-summary-row hb-order-total">
 							<span class="hb-order-label">
 								<?php
-								_e( 'Total', 'sailing' );
+								esc_html_e( 'Total', 'sailing' );
 								?>
 							</span>
 							<span class="hb-order-value hb_grand_total_value">
 								<?php
-								echo hb_format_price( $cart->total );
+								echo wp_kses_post( hb_format_price( $cart->total ) );
 								?>
 							</span>
 						</div>
@@ -401,7 +401,7 @@ $rooms = $cart->get_rooms();
 					<?php
 					if ( ! is_user_logged_in() && ! hb_settings()->get( 'guest_checkout' ) ) {
 						?>
-						<?php printf( __( 'You have to <strong><a href="%1$s">login</a></strong> or <strong><a href="%2$s">register</a></strong> to checkout.', 'wp-hotel-booking' ), wp_login_url( hb_get_checkout_url() ), wp_registration_url() ); ?>
+						<?php printf( __( 'You have to <strong><a href="%1$s">login</a></strong> or <strong><a href="%2$s">register</a></strong> to checkout.', 'wp-hotel-booking' ), esc_url( wp_login_url( hb_get_checkout_url() ) ), esc_url( wp_registration_url() ) ); ?>
 					<?php } else { ?>
 						<?php
 						hb_get_template( 'checkout/payment-method.php', array( 'customer' => $customer ) );
@@ -437,9 +437,9 @@ $rooms = $cart->get_rooms();
 							<input type="checkbox" name="tos" value="1" />
 							<?php
 									printf(
-										__( 'I agree with ', 'sailing' ) . '<a href="%s" target="_blank">%s</a>',
-										get_permalink( $tos_page_id ),
-										get_the_title( $tos_page_id )
+										esc_html__( 'I agree with ', 'sailing' ) . '<a href="%s" target="_blank">%s</a>',
+										esc_url( get_permalink( $tos_page_id ) ),
+										esc_html( get_the_title( $tos_page_id ) )
 									);
 							?>
 						</label>
@@ -452,7 +452,7 @@ $rooms = $cart->get_rooms();
 					<div class="hb-order-place">
 						<button type="submit" class="hb-btn hb-btn-place-order">
 							<?php
-							_e( 'Place order', 'sailing' );
+							esc_html_e( 'Place order', 'sailing' );
 							?>
 						</button>
 					</div>

@@ -12,18 +12,18 @@ $settings = hb_settings()->get( 'tp_hotel_booking_paypal', '' );
 ?>
 <table>
 	<tr>
-		<th><?php _e( 'Paypal Email', 'wp-hotel-booking' ); ?></th>
+		<th><?php esc_html_e( 'Paypal Email', 'wp-hotel-booking' ); ?></th>
 		<td>
 			<input class="regular-text" type="email" name="settings[paypal][email]" id="settings-paypal-email" value="<?php echo $settings['email'] ?? ''; ?>">
 			<p class="description">
-				<?php _e( 'Your Paypal email in live mode.', 'wp-hotel-booking' ); ?>
+				<?php esc_html_e( 'Your Paypal email in live mode.', 'wp-hotel-booking' ); ?>
 			</p>
 			<input type="hidden" name="settings[paypal][enable]" value="on"/>
 		</td>
 	</tr>
 
 	<tr>
-		<th><?php _e( 'Currency', 'wp-hotel-booking' ); ?></th>
+		<th><?php esc_html_e( 'Currency', 'wp-hotel-booking' ); ?></th>
 		<td>
 			<select id="currency" name="settings[currency][currency]" class="wphb-select-2">
 			<?php

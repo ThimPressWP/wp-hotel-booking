@@ -30,7 +30,7 @@ defined( 'ABSPATH' ) || exit();
 					<?php printf( 'x%d %s', $info['count'], __( 'Night', 'wp-hotel-booking' ) ); ?>
 				</td>
 				<td class="hb_search_item_price">
-					<?php echo hb_format_price( round( $info['price'], 2 ) ); ?>
+					<?php echo wp_kses_post( hb_format_price( round( $info['price'], 2 ) ) ); ?>
 				</td>
 			</tr>
 		<?php } ?>
@@ -38,17 +38,17 @@ defined( 'ABSPATH' ) || exit();
 		<tfoot>
 		<tr>
 			<td class="hb_search_item_total_bold">
-				<?php _e( 'Total', 'wp-hotel-booking' ); ?>
+				<?php esc_html_e( 'Total', 'wp-hotel-booking' ); ?>
 			</td>
 			<td class="hb_search_item_total_description">
 				<?php
 					if ( hb_price_including_tax() ) {
-						_e( 'tax incl.', 'wp-hotel-booking' );
+						esc_html_e( 'tax incl.', 'wp-hotel-booking' );
 					}
 				?>
 			</td>
 			<td class="hb_search_item_price">
-				<?php echo hb_format_price( $room->amount_singular ); ?>
+				<?php echo wp_kses_post( hb_format_price( $room->amount_singular ) ); ?>
 			</td>
 		</tr>
 		</tfoot>

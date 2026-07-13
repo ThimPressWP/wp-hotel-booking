@@ -22,9 +22,9 @@ if ( ! isset( $room ) ) {
 
 		<div class="hb-search-results-form-container">
 			<div class="hb-booking-room-form-field hb-form-field-input">
-				<label><?php echo __( 'Select number of room', 'wp-hotel-booking' ); ?></label>
+				<label><?php esc_html_e( 'Select number of room', 'wp-hotel-booking' ); ?></label>
 				<div class="wphb-max-qty">
-					<?php _e( 'Max quantity can book:', 'wp-hotel-booking' ); ?> <span class="qty-max">1</span>
+					<?php esc_html_e( 'Max quantity can book:', 'wp-hotel-booking' ); ?> <span class="qty-max">1</span>
 				</div>
 				<div>
 					<input name="hb-num-of-rooms" class="number_room_select" type="number" min="1" step="1" value="<?php echo esc_attr( $room_qty ) ?>">
@@ -40,11 +40,11 @@ if ( ! isset( $room ) ) {
 		<div class="hb-booking-room-form-footer">
 			<button href="#" data-template="hb-room-load-form"
 					class="hb_previous_step hb_button">
-				<?php _e( 'Previous', 'wp-hotel-booking' ); ?>
+				<?php esc_html_e( 'Previous', 'wp-hotel-booking' ); ?>
 			</button>
 			<button type="submit" class="hb_button">
 				<span class="dashicons dashicons-update hide wphb-icon"></span>
-				<?php _e( 'Add To Cart', 'wp-hotel-booking' ); ?>
+				<?php esc_html_e( 'Add To Cart', 'wp-hotel-booking' ); ?>
 			</button>
 			<input type="hidden" name="action" value="hotel_booking_ajax_add_to_cart" />
 			<input type="hidden" name="nonce" value="<?php echo wp_create_nonce( 'hb_booking_nonce_action' ); ?>" />

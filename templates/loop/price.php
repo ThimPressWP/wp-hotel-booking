@@ -48,24 +48,24 @@ if ( ! empty( $pricings ) ) {
 	?>
 
 	<div class="price">
-		<span class="title-price"><?php _e( 'Price from', 'wp-hotel-booking' ); ?></span>
+		<span class="title-price"><?php esc_html_e( 'Price from', 'wp-hotel-booking' ); ?></span>
 
 		<?php if ( $price_display === 'max' ) { ?>
-			<span class="price_value price_max"><?php echo hb_format_price( $max ); ?></span>
+			<span class="price_value price_max"><?php echo wp_kses_post( hb_format_price( $max ) ); ?></span>
 
 		<?php } elseif ( $price_display === 'min_to_max' && $min !== $max ) { ?>
 			<span class="price_value price_min_to_max">
-				<?php echo hb_format_price( $min ); ?> - <?php echo hb_format_price( $max ); ?>
+				<?php echo wp_kses_post( hb_format_price( $min ) ); ?> - <?php echo wp_kses_post( hb_format_price( $max ) ); ?>
 			</span>
 
 		<?php } else { ?>
-			<span class="price_value price_min"><?php echo hb_format_price( $min ); ?></span>
+			<span class="price_value price_min"><?php echo wp_kses_post( hb_format_price( $min ) ); ?></span>
 		<?php } ?>
 
-		<span class="unit"><?php _e( 'night', 'wp-hotel-booking' ); ?></span>
+		<span class="unit"><?php esc_html_e( 'night', 'wp-hotel-booking' ); ?></span>
 
 		<?php if( hb_price_including_tax() ) : ?>
-			<span class="tax-text"><?php _e( '(incl tax)', 'wp-hotel-booking' ); ?></span>
+			<span class="tax-text"><?php esc_html_e( '(incl tax)', 'wp-hotel-booking' ); ?></span>
 		<?php endif; ?>
 	</div>
 <?php } ?>

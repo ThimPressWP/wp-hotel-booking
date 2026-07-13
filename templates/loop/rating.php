@@ -25,7 +25,7 @@ $rating = $hb_room->average_rating();
 	<div class="rating">
 		<div itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating" class="star-rating"
 			title="<?php echo esc_html( sprintf( __( 'Rated %d out of 5', 'wp-hotel-booking' ), $rating ) ); ?>">
-			<span style="width:<?php echo ( ( $rating / 5 ) * 100 ); ?>%"></span>
+			<span style="width:<?php echo esc_attr( ( $rating / 5 ) * 100 ); ?>%"></span>
 		</div>
 	</div>
 <?php } ?>

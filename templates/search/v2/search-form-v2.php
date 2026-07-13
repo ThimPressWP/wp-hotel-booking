@@ -46,7 +46,7 @@ if ( $args && isset( $args['atts'] ) ) {
 				<div class="hb-form-field-input hb_input_field">
 					<input type="text" name="check_in_date" id="check_in_date_<?php echo esc_attr( $uniqid ); ?>"
 							class="hb_input_date_check" value="<?php echo esc_attr( $check_in_date ); ?>"
-							placeholder="<?php _e( 'Check-in Date', 'wp-hotel-booking' ); ?>"
+							placeholder="<?php esc_html_e( 'Check-in Date', 'wp-hotel-booking' ); ?>"
 							autocomplete="off"/>
 				</div>
 			</li>
@@ -56,7 +56,7 @@ if ( $args && isset( $args['atts'] ) ) {
 				<div class="hb-form-field-input hb_input_field">
 					<input type="text" name="check_out_date" id="check_out_date_<?php echo esc_attr( $uniqid ); ?>"
 							class="hb_input_date_check" value="<?php echo esc_attr( $check_out_date ); ?>"
-							placeholder="<?php _e( 'Check-out Date', 'wp-hotel-booking' ); ?>"
+							placeholder="<?php esc_html_e( 'Check-out Date', 'wp-hotel-booking' ); ?>"
 							autocomplete="off"/>
 				</div>
 			</li>
@@ -70,7 +70,7 @@ if ( $args && isset( $args['atts'] ) ) {
 							'name'              => 'adults_capacity',
 							'min'               => 1,
 							'max'               => 10,
-							'show_option_none'  => __( 'Adults', 'wp-hotel-booking' ),
+							'show_option_none'  => esc_html__( 'Adults', 'wp-hotel-booking' ),
 							'selected'          => $adults,
 							'option_none_value' => '',
 							'options'           => hb_get_capacity_of_rooms(),
@@ -89,7 +89,7 @@ if ( $args && isset( $args['atts'] ) ) {
 							'name'              => 'max_child',
 							'min'               => 1,
 							'max'               => hb_get_max_child_of_rooms(),
-							'show_option_none'  => __( 'Children', 'wp-hotel-booking' ),
+							'show_option_none'  => esc_html__( 'Children', 'wp-hotel-booking' ),
 							'option_none_value' => '',
 							'selected'          => $max_child,
 						)
@@ -98,7 +98,7 @@ if ( $args && isset( $args['atts'] ) ) {
 				</div>
 			</li>
 			<li class="hb-form-field">
-				<?php hb_render_label_shortcode( $atts, 'show_label', __( 'Number of rooms', 'wp-hotel-booking' ), 'true' ); ?>
+				<?php hb_render_label_shortcode( $atts, 'show_label', esc_html__( 'Number of rooms', 'wp-hotel-booking' ), 'true' ); ?>
 				<div class="hb-form-field-input">
 					<?php
 					hb_dropdown_numbers(
@@ -106,7 +106,7 @@ if ( $args && isset( $args['atts'] ) ) {
 							'name'              => 'number-of-rooms',
 							'min'               => 1,
 							'max'               => 20,
-							'show_option_none'  => __( 'Number of rooms', 'wp-hotel-booking' ),
+							'show_option_none'  => esc_html__( 'Number of rooms', 'wp-hotel-booking' ),
 							'option_none_value' => '',
 							'selected'          => $atts['room_qty'] ?: hb_get_request( 'room_qty', 1 ),
 						)
@@ -119,12 +119,12 @@ if ( $args && isset( $args['atts'] ) ) {
 		<?php wp_nonce_field( 'hb_search_nonce_action', 'nonce' ); ?>
 		<input type="hidden" name="hotel-booking" value="results"/>
 		<input type="hidden" name="widget-search"
-				value="<?php echo isset( $atts['widget_search'] ) ? $atts['widget_search'] : false; ?>"/>
+				value="<?php echo esc_attr( isset( $atts['widget_search'] ) ? $atts['widget_search'] : false ); ?>"/>
 		<input type="hidden" name="action" value="hotel_booking_parse_search_params"/>
 		<input type="hidden" name="paged" value="<?php echo absint( $atts['paged'] ?? 1 ); ?>"/>
 
 		<p class="hb-submit">
-			<button type="submit" class="wphb-button"><?php _e( 'Check Availability', 'wp-hotel-booking' ); ?></button>
+			<button type="submit" class="wphb-button"><?php esc_html_e( 'Check Availability', 'wp-hotel-booking' ); ?></button>
 		</p>
 	</form>
 

@@ -57,15 +57,15 @@ if ( ! isset( $steps ) ) {
 					<a class="button button-next button-primary" href="<?php echo esc_url_raw( $wizard->get_next_url() ); ?>">
 						<?php
 						if ( ! empty( $step['next_button'] ) ) {
-							echo $step['next_button'];
+							printf( '%s', $step['next_button'] );
 						} else {
-							_e( 'Continue', 'wp-hotel-booking' );
+							esc_html_e( 'Continue', 'wp-hotel-booking' );
 						}
 						?>
 					</a>
 				<?php } else { ?>
 					<a class="button button-finish">
-						<?php _e( 'Finish', 'wp-hotel-booking' ); ?>
+						<?php esc_html_e( 'Finish', 'wp-hotel-booking' ); ?>
 					</a>
 				<?php } ?>
 			</div>

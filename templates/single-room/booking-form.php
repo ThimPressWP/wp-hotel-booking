@@ -124,7 +124,7 @@ $total_price = $room->amount_singular + $extra_price;
 							<?php esc_html_e( 'Total: ', 'wp-hotel-booking' ); ?>
 						</span>
 						<span class="hb-total-price-value">
-							<?php echo esc_html( hb_format_price( $total_price, true, false ) ); ?>
+							<?php echo wp_kses_post( hb_format_price( $total_price, true, false ) ); ?>
 						</span>
 					</div>
 	                <div class="hb_view_price hb-room-content">
@@ -143,7 +143,7 @@ $total_price = $room->amount_singular + $extra_price;
 					<input type="hidden" name="nonce" value="<?php echo wp_create_nonce( 'hb_booking_nonce_action' ); ?>" />
 					<button type="submit" class="hb_button">
 						<span class="dashicons dashicons-update hide wphb-icon"></span>
-						<?php _e( 'Book room', 'wp-hotel-booking' ); ?>
+						<?php esc_html_e( 'Book room', 'wp-hotel-booking' ); ?>
 					</button>
 				</div>
 				<div class="wphb-single-room-loading-overlay hidden" ><div class="wphb-single-room-loading-spinner"></div></div>

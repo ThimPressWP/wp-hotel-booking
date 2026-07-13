@@ -26,7 +26,7 @@ global $hb_settings;
 
 <?php if ( $related->posts ) { ?>
 	<div class="hb_related_other_room has_slider">
-		<h3 class="title"><?php _e( 'Other Rooms', 'wp-hotel-booking' ); ?></h3>
+		<h3 class="title"><?php esc_html_e( 'Other Rooms', 'wp-hotel-booking' ); ?></h3>
 
 		<?php if ( count( $related->posts ) > 3 ) { ?>
 			<div class="navigation">
@@ -55,7 +55,7 @@ global $hb_settings;
 				thimpress_hotel_booking_carousel_related.owlCarousel({
 					navigation: false,
 					pagination: false,
-					items: <?php echo $hb_settings->get( 'related_carousel_items', 3 ); ?>,
+					items: <?php echo esc_js( $hb_settings->get( 'related_carousel_items', 3 ) ); ?>,
 					paginationSpeed: 600,
 					slideSpeed: 600,
 					autoPlay: true,

@@ -52,7 +52,7 @@ $cart_item = $cart->get_cart_item( $cart_id );
 							<?php } ?>
 							<?php // } ?>
 							<label>
-								<strong><?php echo $extra->price; ?></strong>
+								<strong><?php echo wp_kses_post( $extra->price ); ?></strong>
 								<small><?php printf( '/ %s', $extra->respondent_name ? $extra->respondent_name : __( 'Package', 'wp-hotel-booking' ) ); ?></small>
 							</label>
 						</div>

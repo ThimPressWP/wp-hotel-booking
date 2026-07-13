@@ -28,18 +28,18 @@ if ( ! $post || ! is_single( $post->ID ) || get_post_type( $post->ID ) !== 'hb_r
 
         <div class="hb-booking-room-form-head">
             <h2><?php printf( '%s', $post->post_title ); ?></h2>
-            <p class="description"><?php _e( 'Please set check-in date and check-out date before check available.', 'wp-hotel-booking' ); ?></p>
+            <p class="description"><?php esc_html_e( 'Please set check-in date and check-out date before check available.', 'wp-hotel-booking' ); ?></p>
         </div>
 
         <div class="hb-search-results-form-container">
             <div class="hb-booking-room-form-group">
                 <div class="hb-booking-room-form-field hb-form-field-input">
-                    <input type="text" name="check_in_date" value="{{ data.check_in_date }}" placeholder="<?php _e( 'Check-in Date', 'wp-hotel-booking' ); ?>" autocomplete="off"/>
+                    <input type="text" name="check_in_date" value="{{ data.check_in_date }}" placeholder="<?php esc_html_e( 'Check-in Date', 'wp-hotel-booking' ); ?>" autocomplete="off"/>
                 </div>
             </div>
             <div class="hb-booking-room-form-group">
                 <div class="hb-booking-room-form-field hb-form-field-input">
-                    <input type="text" name="check_out_date" value="{{ data.check_out_date }}" placeholder="<?php _e( 'Check-out Date', 'wp-hotel-booking' ); ?>" autocomplete="off"/>
+                    <input type="text" name="check_out_date" value="{{ data.check_out_date }}" placeholder="<?php esc_html_e( 'Check-out Date', 'wp-hotel-booking' ); ?>" autocomplete="off"/>
                 </div>
             </div>
             <div class="hb-booking-room-form-group">
@@ -47,7 +47,7 @@ if ( ! $post || ! is_single( $post->ID ) || get_post_type( $post->ID ) !== 'hb_r
                 <input type="hidden" name="room-id" value="<?php printf( '%s', $post->ID ); ?>" />
                 <input type="hidden" name="action" value="hotel_booking_single_check_room_available"/>
 				<?php wp_nonce_field( 'hb_booking_single_room_check_nonce_action', 'hb-booking-single-room-check-nonce-action' ); ?>
-                <button type="submit" class="hb_button"><?php _e( 'Check Available', 'wp-hotel-booking' ); ?></button>
+                <button type="submit" class="hb_button"><?php esc_html_e( 'Check Available', 'wp-hotel-booking' ); ?></button>
             </div>
         </div>
     </form>
@@ -57,10 +57,10 @@ if ( ! $post || ! is_single( $post->ID ) || get_post_type( $post->ID ) !== 'hb_r
 <!--Quanity select-->
 <script type="text/html" id="tmpl-hb-room-load-qty">
     <div class="hb-booking-room-form-group">
-        <label><?php _e( 'Quantity Available', 'wp-hotel-booking' ); ?></label>
+        <label><?php esc_html_e( 'Quantity Available', 'wp-hotel-booking' ); ?></label>
         <div class="hb-booking-room-form-field hb-form-field-input">
             <select name="hb-num-of-rooms" id="hotel_booking_room_qty" class="number_room_select">
-                <option value=""><?php _e( '--- Quantity ---', 'wp-hotel-booking' ); ?></option>
+                <option value=""><?php esc_html_e( '--- Quantity ---', 'wp-hotel-booking' ); ?></option>
                 <# for( var i = 1; i <= data.qty; i++ ) { #>
                 <option value="{{ i }}">{{ i }}</option>
                 <# } #>

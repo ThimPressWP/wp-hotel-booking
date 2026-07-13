@@ -18,7 +18,7 @@ $payment_gateways = hb_get_payment_gateways( array( 'enable' => true ) ); ?>
 
 <div class="hb-payment-form">
 	<div class="hb-col-padding hb-col-border">
-		<h4><?php _e( 'Payment Method', 'wp-hotel-booking' ); ?></h4>
+		<h4><?php esc_html_e( 'Payment Method', 'wp-hotel-booking' ); ?></h4>
 		<?php if ( ! empty( $payment_gateways ) && is_array( $payment_gateways ) ) { ?>
 			<ul class="hb-payment-methods">
 				<?php $i = 0; ?>
@@ -39,7 +39,7 @@ $payment_gateways = hb_get_payment_gateways( array( 'enable' => true ) ); ?>
 				<?php } ?>
 			</ul>
 		<?php } else { ?>
-			<span class="hb-no-payment-method"><?php _e( 'No payment method', 'wp-hotel-booking' ); ?></span>
+			<span class="hb-no-payment-method"><?php esc_html_e( 'No payment method', 'wp-hotel-booking' ); ?></span>
 		<?php } ?>
 	</div>
 </div>
