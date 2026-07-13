@@ -100,7 +100,7 @@ $uniqid         = uniqid();
 		<?php wp_nonce_field( 'hb_search_nonce_action', 'nonce' ); ?>
 		<input type="hidden" name="hotel-booking" value="results"/>
 		<input type="hidden" name="widget-search"
-				value="<?php echo isset( $atts['widget_search'] ) ? $atts['widget_search'] : false; ?>"/>
+				value="<?php echo (int) $atts['widget_search'] ?? false; ?>"/>
 		<input type="hidden" name="action" value="hotel_booking_parse_search_params"/>
 		<p class="hb-submit">
 			<button type="submit" class="wphb-button"><?php _e( 'Check Availability', 'wp-hotel-booking' ); ?></button>

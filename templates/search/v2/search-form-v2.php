@@ -119,7 +119,7 @@ if ( $args && isset( $args['atts'] ) ) {
 		<?php wp_nonce_field( 'hb_search_nonce_action', 'nonce' ); ?>
 		<input type="hidden" name="hotel-booking" value="results"/>
 		<input type="hidden" name="widget-search"
-				value="<?php echo isset( $atts['widget_search'] ) ? $atts['widget_search'] : false; ?>"/>
+				value="<?php echo (int) $atts['widget_search'] ?? false; ?>"/>
 		<input type="hidden" name="action" value="hotel_booking_parse_search_params"/>
 		<input type="hidden" name="paged" value="<?php echo absint( $atts['paged'] ?? 1 ); ?>"/>
 
