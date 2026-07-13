@@ -531,7 +531,7 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 				</ul>
 
 				<input type="hidden" name="hotel-booking" value="results">
-				<input type="hidden" name="widget-search" value="">
+				<input type="hidden" name="widget-search" value="0">
 				<input type="hidden" name="action" value="hotel_booking_parse_search_params">
 				<input type="hidden" name="paged" value="1">
 				<?php wp_nonce_field( 'hotel_booking_search', 'nonce' ); ?>
