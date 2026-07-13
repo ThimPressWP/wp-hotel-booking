@@ -3,6 +3,7 @@
 namespace Elementor;
 
 use Thim_EL_Kit\GroupControlTrait;
+use Thim_EL_Kit\Utilities\Elementor;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -10,13 +11,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Thim_Ekit_Widget_List_Results_Room extends Widget_Base {
 
 	use GroupControlTrait;
+
 	protected $current_permalink;
 
-    public function get_name() {
+	public function get_name() {
 		return 'list-results-room';
 	}
 
-    public function get_title() {
+	public function get_title() {
 		return esc_html__( 'List Results Room', 'wp-hotel-booking' );
 	}
 
@@ -28,7 +30,7 @@ class Thim_Ekit_Widget_List_Results_Room extends Widget_Base {
 		return array( \WPHB\Elementor::CATEGORY_ARCHIVE_ROOM );
 	}
 
-    public function get_keywords() {
+	public function get_keywords() {
 		return array( 'room', 'search', 'results' );
 	}
 
@@ -36,8 +38,7 @@ class Thim_Ekit_Widget_List_Results_Room extends Widget_Base {
 		return '';
 	}
 
-	protected function register_controls()
-    {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'section_options',
 			array(
@@ -82,7 +83,7 @@ class Thim_Ekit_Widget_List_Results_Room extends Widget_Base {
 		$this->register_style_layout();
 
 		$this->register_navigation_archive();
-		$this->register_style_pagination_archive('.hb-room-archive__pagination');
+		$this->register_style_pagination_archive( '.hb-room-archive__pagination' );
 	}
 
 	protected function register_style_layout() {
@@ -138,18 +139,17 @@ class Thim_Ekit_Widget_List_Results_Room extends Widget_Base {
 		$this->end_controls_section();
 	}
 
-	protected function render()
-    {
-		$settings        = $this->get_settings_for_display();
+	protected function render() {
+		$settings = $this->get_settings_for_display();
 		// $params = $_GET;
 		$response         = new \WPHB_REST_RESPONSE();
 		$response->status = 'success';
 
-		$datetime 		 = new \DateTime('NOW');
-		$tomorrow 		 = new \DateTime('tomorrow');
-		$format 		 = get_option('date_format');
-		$check_in_date   = hb_get_request( 'check_in_date', $datetime->format($format) );
-		$check_out_date  = hb_get_request( 'check_out_date', $tomorrow->format($format) );
+		$datetime        = new \DateTime( 'NOW' );
+		$tomorrow        = new \DateTime( 'tomorrow' );
+		$format          = get_option( 'date_format' );
+		$check_in_date   = hb_get_request( 'check_in_date', $datetime->format( $format ) );
+		$check_out_date  = hb_get_request( 'check_out_date', $tomorrow->format( $format ) );
 		$adults_capacity = hb_get_request( 'adults_capacity', hb_get_request( 'adults', 1 ) );
 		$max_child       = hb_get_request( 'max_child', 0 );
 		$paged           = hb_get_request( 'paged', 1 );
@@ -192,22 +192,23 @@ class Thim_Ekit_Widget_List_Results_Room extends Widget_Base {
 			return;
 		}
 		// $custom_process = get_option( 'tp_hotel_booking_custom_process' );
-		$rooms = $results['data'];
-		$class_item  = 'hb-room-archive__article'; ?>
+		$rooms      = $results['data'];
+		$class_item = 'hb-room-archive__article'; ?>
 
 		<div class="hb-room-archive">
 			<div class="hb-room-archive__inner hb-search-results detail__booking-rooms">
 			<?php
-				foreach ($rooms as $room) {
-					$post_object = get_post($room->ID);
-					setup_postdata($GLOBALS['post'] = &$post_object);
+			foreach ( $rooms as $room ) {
+				$post_object = get_post( $room->ID );
+				setup_postdata( $GLOBALS['post'] = &$post_object );
 
-					$this->current_permalink = get_permalink(); ?>
+				$this->current_permalink = get_permalink();
+				?>
 					<div class="hb-room clearfix">
-						<form name="hb-page-search-results" class="hb-page-search-room-results <?php echo $class_item ?> extra-option-loop" >
+						<form name="hb-page-search-results" class="hb-page-search-room-results <?php echo $class_item; ?> extra-option-loop" >
 						<?php do_action( 'hotel_booking_loop_before_item', $room->ID ); ?>
 							<?php
-								\Thim_EL_Kit\Utilities\Elementor::instance()->render_loop_item_content( $settings['template_id'] );
+							Elementor::instance()->render_loop_item_content( $settings['template_id'] );
 							?>
 							<?php wp_nonce_field( 'hb_booking_nonce_action', 'nonce' ); ?>
 							<input type="hidden" name="check_in_date"
@@ -241,9 +242,9 @@ class Thim_Ekit_Widget_List_Results_Room extends Widget_Base {
 			return;
 		}
 
-		$has_numbers   = in_array( $settings['pagination_type'], array( 'numbers', 'numbers_and_prev_next' ) );
+		$has_numbers = in_array( $settings['pagination_type'], array( 'numbers', 'numbers_and_prev_next' ) );
 
-		$only_prev_next = in_array( $settings['pagination_type'], array( 'prev_next') );
+		$only_prev_next = in_array( $settings['pagination_type'], array( 'prev_next' ) );
 
 		$load_more_type = $settings['pagination_type'];
 
@@ -254,16 +255,16 @@ class Thim_Ekit_Widget_List_Results_Room extends Widget_Base {
 		}
 
 		$current_page = $this->get_current_page();
-		$next_page = intval( $current_page ) + 1;
+		$next_page    = intval( $current_page ) + 1;
 
 		if ( $ajax_pagination ) {
 			$this->render_load_more_pagination( $settings, $load_more_type, $paged, $page_limit, $next_page );
 			return;
 		}
 
-		$links = array();
+		$links          = array();
 		$show_prev_next = false;
-		if($settings['pagination_type'] == 'numbers_and_prev_next'){
+		if ( $settings['pagination_type'] == 'numbers_and_prev_next' ) {
 			$show_prev_next = true;
 		}
 		if ( $has_numbers ) {
@@ -375,7 +376,5 @@ class Thim_Ekit_Widget_List_Results_Room extends Widget_Base {
 		}
 
 		return $url;
-
 	}
-
 }

@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WP Hotel Booking plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Hotel Booking 2.3.1-beta-2\n"
+"Project-Id-Version: WP Hotel Booking 2.3.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-hotel-booking\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-13T02:17:52+00:00\n"
+"POT-Creation-Date: 2026-07-13T06:45:24+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wp-hotel-booking\n"
@@ -560,6 +560,7 @@ msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items-template-js.php:50
 #: includes/admin/wphb-admin-functions.php:309
+#: templates/emails/booking-details.php:23
 msgid "Check out"
 msgstr ""
 
@@ -671,7 +672,7 @@ msgstr ""
 #: includes/admin/wphb-admin-functions.php:310
 #: includes/class-wphb-gdpr.php:108
 #: templates/account/bookings.php:38
-#: templates/cart/cart.php:596
+#: templates/cart/cart.php:589
 #: templates/checkout/thank-you.php:70
 #: templates/emails/booking-details.php:51
 #: templates/search/booking-room-details.php:41
@@ -714,7 +715,7 @@ msgid "Sub Total"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items.php:173
-#: templates/cart/cart.php:534
+#: templates/cart/cart.php:530
 #: templates/checkout/thank-you.php:136
 msgid "Tax"
 msgstr ""
@@ -726,7 +727,7 @@ msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items.php:199
 #: includes/admin/settings/class-wphb-admin-setting-general.php:179
-#: templates/cart/cart.php:612
+#: templates/cart/cart.php:605
 #: templates/checkout/thank-you.php:162
 #: templates/emails/booking-details.php:56
 msgid "Advance Payment"
@@ -1387,7 +1388,7 @@ msgid "The external link icon set"
 msgstr ""
 
 #: includes/admin/setup/class-wphb-setup-wizard.php:39
-msgid "<strong>WP Hotel Booking is ready to use.</strong>"
+msgid "WP Hotel Booking is ready to use."
 msgstr ""
 
 #: includes/admin/setup/class-wphb-setup-wizard.php:42
@@ -2319,14 +2320,14 @@ msgid "No coupon found in Trash"
 msgstr ""
 
 #: includes/coupons/class-wphb-coupon-hooks.php:94
-#: templates/cart/cart.php:574
+#: templates/cart/cart.php:567
 #: templates/checkout/checkout.php:318
 #, php-format
 msgid "Coupon applied: %s"
 msgstr ""
 
 #: includes/coupons/class-wphb-coupon-hooks.php:104
-#: templates/cart/cart.php:457
+#: templates/cart/cart.php:454
 #: templates/checkout/checkout.php:95
 msgid "Coupon"
 msgstr ""
@@ -2407,25 +2408,25 @@ msgid "Single Room"
 msgstr ""
 
 #: includes/elementor/widgets/archive-room/archive-room.php:45
-#: includes/elementor/widgets/archive-room/list-results-room.php:44
+#: includes/elementor/widgets/archive-room/list-results-room.php:45
 msgid "Options"
 msgstr ""
 
 #: includes/elementor/widgets/archive-room/archive-room.php:52
-#: includes/elementor/widgets/archive-room/list-results-room.php:51
+#: includes/elementor/widgets/archive-room/list-results-room.php:52
 #: includes/elementor/widgets/global/list-room.php:65
 msgid "Choose a template"
 msgstr ""
 
 #: includes/elementor/widgets/archive-room/archive-room.php:55
-#: includes/elementor/widgets/archive-room/list-results-room.php:54
+#: includes/elementor/widgets/archive-room/list-results-room.php:55
 #: includes/elementor/widgets/global/filter-room.php:150
 #: includes/elementor/widgets/global/list-room.php:68
 msgid "None"
 msgstr ""
 
 #: includes/elementor/widgets/archive-room/archive-room.php:62
-#: includes/elementor/widgets/archive-room/list-results-room.php:61
+#: includes/elementor/widgets/archive-room/list-results-room.php:62
 #: includes/elementor/widgets/global/list-room.php:96
 msgid "Columns"
 msgstr ""
@@ -2436,7 +2437,7 @@ msgid "Top Bar"
 msgstr ""
 
 #: includes/elementor/widgets/archive-room/archive-room.php:122
-#: includes/elementor/widgets/archive-room/list-results-room.php:92
+#: includes/elementor/widgets/archive-room/list-results-room.php:93
 #: includes/elementor/widgets/global/list-room.php:172
 #: includes/elementor/widgets/global/search-room.php:81
 #: includes/elementor/widgets/global/search-room.php:97
@@ -2444,13 +2445,13 @@ msgid "Layout"
 msgstr ""
 
 #: includes/elementor/widgets/archive-room/archive-room.php:130
-#: includes/elementor/widgets/archive-room/list-results-room.php:100
+#: includes/elementor/widgets/archive-room/list-results-room.php:101
 #: includes/elementor/widgets/global/list-room.php:183
 msgid "Columns Gap"
 msgstr ""
 
 #: includes/elementor/widgets/archive-room/archive-room.php:150
-#: includes/elementor/widgets/archive-room/list-results-room.php:120
+#: includes/elementor/widgets/archive-room/list-results-room.php:121
 #: includes/elementor/widgets/global/list-room.php:203
 msgid "Rows Gap"
 msgstr ""
@@ -2507,7 +2508,7 @@ msgstr ""
 msgid "Room order"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/list-results-room.php:20
+#: includes/elementor/widgets/archive-room/list-results-room.php:22
 msgid "List Results Room"
 msgstr ""
 
@@ -5929,47 +5930,47 @@ msgstr ""
 msgid "Extra Services:"
 msgstr ""
 
-#: templates/cart/cart.php:366
+#: templates/cart/cart.php:365
 msgid "Room quantity"
 msgstr ""
 
-#: templates/cart/cart.php:461
+#: templates/cart/cart.php:457
 #: templates/checkout/checkout.php:100
 #: templates/checkout/customer-existing.php:39
 #: templates/single-room/room-calendar-pricing.php:22
 msgid "Apply"
 msgstr ""
 
-#: templates/cart/cart.php:480
+#: templates/cart/cart.php:476
 msgid "Cart Total"
 msgstr ""
 
-#: templates/cart/cart.php:487
+#: templates/cart/cart.php:483
 #: templates/emails/booking-details.php:43
 msgid "Subtotal"
 msgstr ""
 
-#: templates/cart/cart.php:515
+#: templates/cart/cart.php:511
 msgid "Extra Services"
 msgstr ""
 
-#: templates/cart/cart.php:541
+#: templates/cart/cart.php:537
 msgid "included"
 msgstr ""
 
-#: templates/cart/cart.php:635
+#: templates/cart/cart.php:628
 msgid "Proceed to Checkout"
 msgstr ""
 
-#: templates/cart/cart.php:654
+#: templates/cart/cart.php:647
 msgid "Your cart is empty"
 msgstr ""
 
-#: templates/cart/cart.php:659
+#: templates/cart/cart.php:652
 msgid "Looks like you haven't added any rooms yet. Start exploring our rooms!"
 msgstr ""
 
-#: templates/cart/cart.php:668
+#: templates/cart/cart.php:661
 msgid "Browse Rooms"
 msgstr ""
 
@@ -6113,11 +6114,6 @@ msgstr ""
 
 #: templates/confirm.php:19
 msgid "Confirm"
-msgstr ""
-
-#: templates/emails/booking-details.php:23
-msgctxt "Email Template"
-msgid "Check out"
 msgstr ""
 
 #: templates/emails/booking-details.php:24
