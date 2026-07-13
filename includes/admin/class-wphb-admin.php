@@ -157,7 +157,7 @@ if ( ! class_exists( 'WPHB_Admin' ) ) {
 				echo '<div class="notice notice-warning">';
 				printf(
 					'<p>' . __( '<strong>Warning:</strong> Plugin <strong>WP Hotel Booking </strong> database needs to be updated to function properly. <a href="%s" target="_blank">Click</a> to go to update page. ', 'wp-hotel-booking' ) . '</p>',
-					admin_url( 'admin.php?page=wphb-tools&tab=wphb_update' )
+					esc_url( admin_url( 'admin.php?page=wphb-tools&tab=wphb_update' ) )
 				);
 				echo '</div>';
 			}

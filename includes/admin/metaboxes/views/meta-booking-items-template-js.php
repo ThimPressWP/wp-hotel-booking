@@ -28,7 +28,7 @@ defined( 'ABSPATH' ) || exit;
 
 					<# } else { #>
 
-						<?php _e( 'Add new item', 'wp-hotel-booking' ); ?>
+						<?php esc_html_e( 'Add new item', 'wp-hotel-booking' ); ?>
 
 					<# } #>
 				</h1>
@@ -54,7 +54,7 @@ defined( 'ABSPATH' ) || exit;
 				<div class="section">
 					<# if ( typeof data.qty !== 'undefined' ) { #>
 						<select name="qty">
-							<option value="0"><?php _e( 'Rooms', 'wp-hotel-booking' ); ?></option>
+							<option value="0"><?php esc_html_e( 'Rooms', 'wp-hotel-booking' ); ?></option>
 							<# for ( var i = 1; i <= data.qty; i++ ) { #>
 
 								<# if ( data.qty_selected == i ) { #>
@@ -72,7 +72,7 @@ defined( 'ABSPATH' ) || exit;
 			<# if ( typeof data.sub_items !== 'undefined' ) { #>
 
 				<div class="section_line">
-					<h4><?php _e( 'Extra Packages', 'wp-hotel-booking' ); ?></h4>
+					<h4><?php esc_html_e( 'Extra Packages', 'wp-hotel-booking' ); ?></h4>
 					<ul>
 						<# var sub_items_length = data.sub_items.length; #>
 						<# for ( var i = 0; i < sub_items_length; i++ ) { #>
@@ -91,7 +91,7 @@ defined( 'ABSPATH' ) || exit;
 								</div>
 								<# if ( item.respondent === 'number' ) { #>
 									<div class="section">
-										<?php _e( 'Rooms', 'wp-hotel-booking' ); ?>
+										<?php esc_html_e( 'Rooms', 'wp-hotel-booking' ); ?>
 										<input name="sub_items[{{ item.ID }}][qty]" type="number" step="1" min="0" value="{{ item.qty }}" class="hb-room-item-field" />
 									</div>
 								<# } else { #>
@@ -110,12 +110,12 @@ defined( 'ABSPATH' ) || exit;
 				<input type="hidden" name="order_id" value="{{ data.order_id }}" />
 				<input type="hidden" name="order_item_id" value="{{ data.order_item_id }}" />
 				<# if ( typeof data.post_type === 'undefined' || data.post_type === 'hb_room' ) { #>
-					<a href="#" class="button check_available{{ data.class }}"><?php _e( 'Check Available', 'wp-hotel-booking' ); ?></a>
+					<a href="#" class="button check_available{{ data.class }}"><?php esc_html_e( 'Check Available', 'wp-hotel-booking' ); ?></a>
 				<# } #>
 				<input type="hidden" name="order_item_type" value="{{ data.order_item_type }}" />
 				<input type="hidden" name="action" value="hotel_booking_admin_add_order_item" />
-				<button type="reset" class="button hb_modal_close"><?php _e( 'Close', 'wp-hotel-booking' ); ?></button>
-				<button type="submit" class="button button-primary hb_form_submit" disabled><?php _e( 'Add', 'wp-hotel-booking' ); ?></button>
+				<button type="reset" class="button hb_modal_close"><?php esc_html_e( 'Close', 'wp-hotel-booking' ); ?></button>
+				<button type="submit" class="button button-primary hb_form_submit" disabled><?php esc_html_e( 'Add', 'wp-hotel-booking' ); ?></button>
 			</div>
 		</form>
 	</div>
@@ -132,7 +132,7 @@ defined( 'ABSPATH' ) || exit;
 					<# if ( data.message ) { #>
 						{{{ data.message }}}
 					<# } else { #>
-						<?php _e( 'Do you want to do this?', 'wp-hotel-booking' ); ?>
+						<?php esc_html_e( 'Do you want to do this?', 'wp-hotel-booking' ); ?>
 					<# } #>
 				</h1>
 				<button class="hb_modal_close dashicons dashicons-no-alt"></button>
@@ -151,8 +151,8 @@ defined( 'ABSPATH' ) || exit;
 				<input type="hidden" name="action" value="{{ data.action }}">
 				<input type="hidden" name="coupon_id" value="{{ data.coupon_id }}" />
 				<?php wp_nonce_field( 'hotel-booking-confirm', 'hotel_booking_confirm' ); ?>
-				<button type="reset" class="button hb_modal_close"><?php _e( 'No', 'wp-hotel-booking' ); ?></button>
-				<button type="submit" class="button button-primary hb_form_submit"><?php _e( 'Yes', 'wp-hotel-booking' ); ?></button>
+				<button type="reset" class="button hb_modal_close"><?php esc_html_e( 'No', 'wp-hotel-booking' ); ?></button>
+				<button type="submit" class="button button-primary hb_form_submit"><?php esc_html_e( 'Yes', 'wp-hotel-booking' ); ?></button>
 			</div>
 		</form>
 	</div>
@@ -164,7 +164,7 @@ defined( 'ABSPATH' ) || exit;
 <script type="text/html" id="tmpl-hb-qty">
 	<# if ( typeof data.qty !== 'undefined' ) { #>
 		<select name="qty">
-			<option value="0"><?php _e( 'Rooms', 'wp-hotel-booking' ); ?></option>
+			<option value="0"><?php esc_html_e( 'Rooms', 'wp-hotel-booking' ); ?></option>
 			<# for ( var i = 1; i <= data.qty; i++ ) { #>
 
 				<# if ( data.qty_selected == i ) { #>
@@ -191,7 +191,7 @@ defined( 'ABSPATH' ) || exit;
 
 					<# } else { #>
 
-						<?php _e( 'Add new coupon', 'wp-hotel-booking' ); ?>
+						<?php esc_html_e( 'Add new coupon', 'wp-hotel-booking' ); ?>
 
 					<# } #>
 				</h1>

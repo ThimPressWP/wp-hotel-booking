@@ -36,10 +36,10 @@ class WPHB_Setup_Wizard {
 	public function admin_notices() {
 		if ( ! get_option( 'wphb_setup_wizard_completed', false ) ) { ?>
             <div id="notice-install" class="wphb-notice notice notice-info">
-                <p><?php _e( '<strong>WP Hotel Booking is ready to use.</strong>', 'wp-hotel-booking' ); ?></p>
+                <p><?php echo sprintf( '<strong>%s</strong>', esc_html__( 'WP Hotel Booking is ready to use.', 'wp-hotel-booking' ) ); ?></p>
                 <p>
                     <a class="button button-primary"
-                       href="<?php echo admin_url( 'index.php?page=wphb-setup' ); ?>"><?php _e( 'Quick Setup', 'wp-hotel-booking' ); ?></a>
+                       href="<?php echo esc_url( admin_url( 'index.php?page=wphb-setup' ) ); ?>"><?php esc_html_e( 'Quick Setup', 'wp-hotel-booking' ); ?></a>
                     <!-- <button class="button" data-dismiss-notice="skip-setup-wizard"><?php // _e( 'Skip', 'wp-hotel-booking' ); ?></button> -->
                 </p>
             </div>

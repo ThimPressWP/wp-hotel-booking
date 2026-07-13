@@ -41,30 +41,30 @@ foreach ( $rooms as $room ) {
 				<input type="checkbox" id="booking-item-checkall"/>
 			</th>
 			<th class="name left">
-				<?php _e( 'Item', 'wp-hotel-booking' ); ?>
+				<?php esc_html_e( 'Item', 'wp-hotel-booking' ); ?>
 			</th>
 			<th class="checkin_checkout center">
-				<?php _e( 'Checkin - Checkout', 'wp-hotel-booking' ); ?>
+				<?php esc_html_e( 'Checkin - Checkout', 'wp-hotel-booking' ); ?>
 			</th>
 			<th class="night center">
-				<?php _e( 'Night', 'wp-hotel-booking' ); ?>
+				<?php esc_html_e( 'Night', 'wp-hotel-booking' ); ?>
 			</th>
 			<th class="qty center">
-				<?php _e( 'Qty', 'wp-hotel-booking' ); ?>
+				<?php esc_html_e( 'Qty', 'wp-hotel-booking' ); ?>
 			</th>
 			<?php if ( $has_adult_qty ) : ?>
 			<th class="adult-qty center">
-				<?php _e( 'Adults', 'wp-hotel-booking' ); ?>
+				<?php esc_html_e( 'Adults', 'wp-hotel-booking' ); ?>
 			</th>
 			<th class="child-qty center">
-				<?php _e( 'Children', 'wp-hotel-booking' ); ?>
+				<?php esc_html_e( 'Children', 'wp-hotel-booking' ); ?>
 			</th>
 			<?php endif; ?>
 			<th class="total center">
-				<?php _e( 'Total', 'wp-hotel-booking' ); ?>
+				<?php esc_html_e( 'Total', 'wp-hotel-booking' ); ?>
 			</th>
 			<th class="total center actions">
-				<?php _e( 'Actions', 'wp-hotel-booking' ); ?>
+				<?php esc_html_e( 'Actions', 'wp-hotel-booking' ); ?>
 			</th>
 		</tr>
 		</thead>
@@ -123,26 +123,26 @@ foreach ( $rooms as $room ) {
 		<tr>
 			<th class="left" colspan="3">
 				<select id="actions">
-					<option><?php _e( 'Delete select item(s)', 'wp-hotel-booking' ); ?></option>
+					<option><?php esc_html_e( 'Delete select item(s)', 'wp-hotel-booking' ); ?></option>
 				</select>
 				<a href="#" class="button button-primary" id="action_sync"
-					data-order-id="<?php echo esc_attr( $hb_booking->id ); ?>"><?php _e( 'Sync', 'wp-hotel-booking' ); ?></a>
+					data-order-id="<?php echo esc_attr( $hb_booking->id ); ?>"><?php esc_html_e( 'Sync', 'wp-hotel-booking' ); ?></a>
 			</th>
 			<th class="right" colspan="4">
 				<?php if ( ! $hb_booking->coupon_id ) : ?>
 
 					<a href="#" class="button" id="add_coupon"
-						data-order-id="<?php echo esc_attr( $hb_booking->id ); ?>"><?php _e( 'Add Coupon', 'wp-hotel-booking' ); ?></a>
+						data-order-id="<?php echo esc_attr( $hb_booking->id ); ?>"><?php esc_html_e( 'Add Coupon', 'wp-hotel-booking' ); ?></a>
 
 				<?php else : ?>
 
 					<a href="#" class="button" id="remove_coupon"
 						data-order-id="<?php echo esc_attr( $hb_booking->id ); ?>"
-						data-coupon-id="<?php echo esc_attr( $hb_booking->coupon_id ); ?>"><?php _e( 'Remove Coupon', 'wp-hotel-booking' ); ?></a>
+						data-coupon-id="<?php echo esc_attr( $hb_booking->coupon_id ); ?>"><?php esc_html_e( 'Remove Coupon', 'wp-hotel-booking' ); ?></a>
 
 				<?php endif; ?>
 				<a href="#" class="button" id="add_room_item"
-					data-order-id="<?php echo esc_attr( $hb_booking->id ); ?>"><?php _e( 'Add Room Item', 'wp-hotel-booking' ); ?></a>
+					data-order-id="<?php echo esc_attr( $hb_booking->id ); ?>"><?php esc_html_e( 'Add Room Item', 'wp-hotel-booking' ); ?></a>
 			</th>
 		</tr>
 		</tfoot>

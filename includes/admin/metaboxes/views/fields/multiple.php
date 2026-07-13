@@ -58,7 +58,7 @@ if ( $field['attr'] ) {
 				<?php
 			} else {
 				?>
-				<option value="<?php echo esc_attr( $option['value'] ); ?>"<?php echo is_array( $value ) && in_array( $option['value'], $value ) ? ' selected' : ''; ?>><?php echo esc_html( $option['text'] ); ?></option>
+				<option value="<?php echo esc_attr( $option['value'] ); ?>"<?php echo is_array( $value ) && in_array( $option['value'], $value ) ? esc_attr( ' selected' ) : ''; ?>><?php echo esc_html( $option['text'] ); ?></option>
 			<?php } ?>
 
 			<?php

@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							</div>
 						</div>
 					</div>
-					<a class="dashicons dashicons-trash" title="<?php _e( 'Remove this image', 'wp-hotel-booking' ); ?>"></a>
+					<a class="dashicons dashicons-trash" title="<?php esc_html_e( 'Remove this image', 'wp-hotel-booking' ); ?>"></a>
 				</li>
 				<?php
 			endforeach;

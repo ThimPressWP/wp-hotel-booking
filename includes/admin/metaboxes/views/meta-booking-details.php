@@ -32,10 +32,10 @@ $booking = WPHB_Booking::instance( $post->ID );
 	<div id="booking_details_section">
 
 		<div class="section">
-			<h4><?php _e( 'General', 'wp-hotel-booking' ); ?></h4>
+			<h4><?php esc_html_e( 'General', 'wp-hotel-booking' ); ?></h4>
 			<ul>
 				<li>
-					<label><?php _e( 'Payment Method:', 'wp-hotel-booking' ); ?></label>
+					<label><?php esc_html_e( 'Payment Method:', 'wp-hotel-booking' ); ?></label>
 					<?php $methods = hb_get_payment_gateways(); ?>
 					<select name="_hb_method">
 						<?php if ( $booking->method && ! array_key_exists( $booking->method, $methods ) ) : ?>
@@ -48,7 +48,7 @@ $booking = WPHB_Booking::instance( $post->ID );
 					</select>
 				</li>
 				<li>
-					<label><?php _e( 'Booking Status:', 'wp-hotel-booking' ); ?></label>
+					<label><?php esc_html_e( 'Booking Status:', 'wp-hotel-booking' ); ?></label>
 					<select name="_hb_booking_status">
 						<?php $status = hb_get_booking_statuses(); ?>
 						<?php foreach ( $status as $st => $status ) : ?>
@@ -64,16 +64,16 @@ $booking = WPHB_Booking::instance( $post->ID );
 		<div class="section">
 
 			<h4>
-				<?php _e( 'Customer\'s Details', 'wp-hotel-booking' ); ?>
+				<?php esc_html_e( 'Customer\'s Details', 'wp-hotel-booking' ); ?>
 				<a href="#" class="edit" data-id="30"><i class="fa fa-pencil"></i></a>
 			</h4>
 			<div class="customer_details">
 				<div class="address details">
-					<strong><?php _e( 'Name', 'wp-hotel-booking' ); ?></strong>
+					<strong><?php esc_html_e( 'Name', 'wp-hotel-booking' ); ?></strong>
 					<br/>
 					<small><?php echo esc_html( hb_get_customer_fullname( $post->ID, true ) ); ?></small>
 					<br/>
-					<strong><?php _e( 'Address', 'wp-hotel-booking' ); ?></strong>
+					<strong><?php esc_html_e( 'Address', 'wp-hotel-booking' ); ?></strong>
 					<br/>
 					<small><?php echo esc_html( $booking->customer_address ); ?></small>
 					<br/>
@@ -86,11 +86,11 @@ $booking = WPHB_Booking::instance( $post->ID );
 					<small><?php echo esc_html( $booking->customer_country ); ?></small>
 					<br/>
 					<?php $customer_email = $booking->customer_email; ?>
-					<strong><?php _e( 'Email', 'wp-hotel-booking' ); ?></strong>
+					<strong><?php esc_html_e( 'Email', 'wp-hotel-booking' ); ?></strong>
 					<br/>
 					<a href="mailto:<?php echo esc_attr( $customer_email ); ?>"><?php echo esc_html( $customer_email ); ?></a>
 					<br/>
-					<strong><?php _e( 'Phone', 'wp-hotel-booking' ); ?></strong>
+					<strong><?php esc_html_e( 'Phone', 'wp-hotel-booking' ); ?></strong>
 					<br/>
 					<small><?php echo esc_html( $booking->customer_phone ); ?></small>
 				</div>

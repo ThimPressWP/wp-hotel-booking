@@ -16,6 +16,6 @@ defined( 'ABSPATH' ) || exit;
 ?>
 
 <div class="wrap" id="tp_hotel_booking_calendar_manager">
-	<h2><?php _e( 'Calendar Manager', 'wp-hotel-booking' ); ?></h2>
+	<h2><?php esc_html_e( 'Calendar Manager', 'wp-hotel-booking' ); ?></h2>
 	<div id="manager_booking"></div> 
 </div>

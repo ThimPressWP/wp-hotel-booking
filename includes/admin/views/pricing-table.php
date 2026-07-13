@@ -33,16 +33,16 @@ $date_order   = hb_start_of_week_order();
 ?>
 
 <div class="wrap" id="tp_hotel_booking_pricing">
-	<h2><?php _e( 'Pricing Plans', 'wp-hotel-booking' ); ?></h2>
+	<h2><?php esc_html_e( 'Pricing Plans', 'wp-hotel-booking' ); ?></h2>
 	<form method="post" name="pricing-table-form">
 		<p>
-			<strong><?php _e( 'Select name of room', 'wp-hotel-booking' ); ?></strong>
+			<strong><?php esc_html_e( 'Select name of room', 'wp-hotel-booking' ); ?></strong>
 			&nbsp;&nbsp;<?php echo hb_dropdown_rooms( array( 'selected' => $room_id ) ); ?>
 		</p>
 		<?php if ( $room_id ) : ?>
 			<div class="hb-pricing-table regular-price clearfix">
 				<h3 class="hb-pricing-table-title">
-					<span><?php _e( 'Regular price', 'wp-hotel-booking' ); ?></span>
+					<span><?php esc_html_e( 'Regular price', 'wp-hotel-booking' ); ?></span>
 					<input type="text" class="datepicker"
 							name="date-start[<?php echo sprintf( '%s', $regular_plan ? $regular_plan->ID : '__INDEX__' ); ?>]"
 							size="10" readonly="readonly"/>
@@ -57,11 +57,11 @@ $date_order   = hb_start_of_week_order();
 				</h3>
 				<div class="hb-pricing-controls">
 					<a href="" class="dashicons dashicons-edit" data-action="edit"
-						title="<?php _e( 'Edit', 'wp-hotel-booking' ); ?>"></a>
+						title="<?php esc_attr_e( 'Edit', 'wp-hotel-booking' ); ?>"></a>
 					<a href="" class="dashicons dashicons-admin-page" data-action="clone"
-						title="<?php _e( 'Clone', 'wp-hotel-booking' ); ?>"></a>
+						title="<?php esc_attr_e( 'Clone', 'wp-hotel-booking' ); ?>"></a>
 					<a href="" class="dashicons dashicons-trash" data-action="remove"
-						title="<?php _e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
+						title="<?php esc_attr_e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
 				</div>
 				<div class="hb-pricing-list">
 					<table>
@@ -94,7 +94,7 @@ $date_order   = hb_start_of_week_order();
 
 			<div class="clearfix"></div>
 			<h3 class="clearfix">
-				<?php _e( 'Other plan', 'wp-hotel-booking' ); ?>
+				<?php esc_html_e( 'Other plan', 'wp-hotel-booking' ); ?>
 				<span class="count"><?php printf( _n( '(%d plan)', '(%d plans)', $count_plants, 'wp-hotel-booking' ), $count_plants ); ?></span>
 			</h3>
 
@@ -159,13 +159,13 @@ $date_order   = hb_start_of_week_order();
 					<?php endforeach; ?>
 
 				<?php else : ?>
-					<p id="hb-no-plan-message"> <?php _e( 'No addition plans', 'wp-hotel-booking' ); ?></p>
+					<p id="hb-no-plan-message"> <?php esc_html_e( 'No addition plans', 'wp-hotel-booking' ); ?></p>
 				<?php endif; ?>
 
 			</div>
 			<p>
 				<input type="hidden" name="room_id" value="<?php echo esc_attr( $room_id ); ?>"/>
-				<button class="button button-primary"><?php _e( 'Update', 'wp-hotel-booking' ); ?></button>
+				<button class="button button-primary"><?php esc_html_e( 'Update', 'wp-hotel-booking' ); ?></button>
 			</p>
 			<?php wp_nonce_field( 'hb-update-pricing-plan', 'hb-update-pricing-plan-field' ); ?>
 			<!-- <p>
@@ -179,7 +179,7 @@ $date_order   = hb_start_of_week_order();
 <script type="text/html" id="tmpl-hb-pricing-table">
 	<div class="hb-pricing-table">
 		<h3 class="hb-pricing-table-title">
-			<span><?php _e( 'Date Range', 'wp-hotel-booking' ); ?></span>
+			<span><?php esc_html_e( 'Date Range', 'wp-hotel-booking' ); ?></span>
 			<input type="text" class="datepicker" name="date-start[__INDEX__]" size="10" readonly="readonly"/>
 			<input type="hidden" name="date-start-timestamp[__INDEX__]"/>
 			<input type="text" class="datepicker" name="date-end[__INDEX__]" size="10" readonly="readonly"/>
@@ -187,15 +187,15 @@ $date_order   = hb_start_of_week_order();
 		</h3>
 		<div class="hb-pricing-controls">
 			<a href="" class="dashicons dashicons-edit" data-action="edit"
-				title="<?php _e( 'Clone', 'wp-hotel-booking' ); ?>"></a>
+				title="<?php esc_attr_e( 'Clone', 'wp-hotel-booking' ); ?>"></a>
 
 			<# if( typeof data.clone !== 'undefined' && data.clone === true ) { #>
 			<a href="" class="dashicons dashicons-admin-page" data-action="clone"
-				title="<?php _e( 'Clone', 'wp-hotel-booking' ); ?>"></a>
+				title="<?php esc_attr_e( 'Clone', 'wp-hotel-booking' ); ?>"></a>
 			<# } #>
 
 			<a href="" class="dashicons dashicons-trash" data-action="remove"
-				title="<?php _e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
+				title="<?php esc_attr_e( 'Remove', 'wp-hotel-booking' ); ?>"></a>
 		</div>
 
 		<div class="hb-pricing-list">

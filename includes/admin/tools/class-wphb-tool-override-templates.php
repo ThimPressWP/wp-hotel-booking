@@ -66,7 +66,7 @@ if ( ! class_exists( 'WPHB_Admin_Tool_Override_Template' ) ) {
 				<?php if ( $templates ) { ?>
 					<tr>
 						<th class="template-file">
-							<?php _e( 'File', 'wp-hotel-booking' ); ?>
+							<?php esc_html_e( 'File', 'wp-hotel-booking' ); ?>
 							<p>
 								<a href="" class="template-filter current"
 									data-template=""><?php printf( __( 'All (%d)', 'wp-hotel-booking' ), $counts['all'] ); ?></a>
@@ -79,9 +79,9 @@ if ( ! class_exists( 'WPHB_Admin_Tool_Override_Template' ) ) {
 							</p>
 						</th>
 						<th class="template-version">
-							<?php _e( 'Template version', 'wp-hotel-booking' ); ?>
+							<?php esc_html_e( 'Template version', 'wp-hotel-booking' ); ?>
 						</th>
-						<th class="core-version"><?php _e( 'Plugin version', 'wp-hotel-booking' ); ?></th>
+						<th class="core-version"><?php esc_html_e( 'Plugin version', 'wp-hotel-booking' ); ?></th>
 					</tr>
 					<?php foreach ( $templates as $template ) { ?>
 						<?php
@@ -94,7 +94,7 @@ if ( ! class_exists( 'WPHB_Admin_Tool_Override_Template' ) ) {
 						?>
 
 						<tr data-template="<?php echo esc_attr( $template_folder ); ?>"
-							class="template-row <?php echo $template_class; ?>"
+							class="template-row <?php echo esc_attr($template_class ); ?>"
 							data-filter-<?php echo esc_attr( $template_class ); ?>="yes">
 							<td class="template-file"><code><?php echo esc_html( $template[0] ); ?></code></td>
 							<td class="template-version"><span><?php echo esc_html( $template[1] ); ?></span></td>
@@ -103,9 +103,9 @@ if ( ! class_exists( 'WPHB_Admin_Tool_Override_Template' ) ) {
 					<?php } ?>
 				<?php } ?>
 
-				<tr class="no-templates <?php echo $templates ? 'hide-if-js' : ''; ?>">
+				<tr class="no-templates <?php echo esc_attr($templates ? 'hide-if-js' : '' ); ?>">
 					<td colspan="3">
-						<p><?php _e( 'There is no template file has overwritten', 'wp-hotel-booking' ); ?></p>
+						<p><?php esc_html_e( 'There is no template file has overwritten', 'wp-hotel-booking' ); ?></p>
 					</td>
 				</tr>
 				</tbody>

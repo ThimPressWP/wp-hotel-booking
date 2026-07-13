@@ -31,7 +31,7 @@ if ( ! isset( $field ) ) {
 			<?php
 			if ( ! empty( $field['description'] ) ) {
 				?>
-				<p class="description"><?php echo $field['description']; ?></p>
+				<p class="description"><?php echo wp_kses_post( $field['description'] ); ?></p>
 				<?php
 			}
 			?>

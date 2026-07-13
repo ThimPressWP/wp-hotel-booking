@@ -58,7 +58,7 @@ if ( $field['attr'] ) {
 					<?php if ( $multiple == false ) : ?>
 			<option value="<?php echo esc_attr( $option['value'] ); ?>" <?php selected( ! empty( $value ) && $value == $option['value'] ? 1 : 0, 1 ); ?>><?php echo esc_html( $option['text'] ); ?></option>
 		<?php else : ?>
-			<option value="<?php echo esc_attr( $option['value'] ); ?>"<?php echo is_array( $value ) && in_array( $option['value'], $value ) ? ' selected' : ''; ?>><?php echo esc_html( $option['text'] ); ?></option>
+			<option value="<?php echo esc_attr( $option['value'] ); ?>"<?php echo is_array( $value ) && in_array( $option['value'], $value ) ? esc_attr( ' selected' ) : ''; ?>><?php echo esc_html( $option['text'] ); ?></option>
 		<?php endif; ?>
 			<?php
 		}

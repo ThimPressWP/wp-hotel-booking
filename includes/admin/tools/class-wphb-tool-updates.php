@@ -47,7 +47,7 @@ if ( ! class_exists( 'WPHB_Updates' ) ) {
 				<thead>
 				<tr>
 					<th colspan="3">
-						<h4><?php echo __( 'Info Update 2.0.0', 'wp-hotel-booking' ); ?></h4>
+						<h4><?php esc_html_e( 'Info Update 2.0.0', 'wp-hotel-booking' ); ?></h4>
 					</th>
 				</tr>
 				</thead>
@@ -56,21 +56,21 @@ if ( ! class_exists( 'WPHB_Updates' ) ) {
 					<tr>
 						<td>
 							<p>
-							<?php _e( '- Update field single rooms.', 'wp-hotel-booking' ); ?>
+							<?php esc_html_e( '- Update field single rooms.', 'wp-hotel-booking' ); ?>
 							</p>
 						</td>
 					</tr>
 					<tr class="template-row">	
 						<td class="template-file">
 							<button type="submit" class="button button-primary button-large _wphb_update_field">
-								<?php _e( 'Update', 'wp-hotel-booking' ); ?>
+								<?php esc_html_e( 'Update', 'wp-hotel-booking' ); ?>
 							</button>
 						</td>
 					</tr>
 				<?php } else { ?>
 					<tr>
 						<td colspan="3">
-							<p><?php _e( 'Database new version has been successfully updated ! ', 'wp-hotel-booking' ); ?></p>
+							<p><?php esc_html_e( 'Database new version has been successfully updated ! ', 'wp-hotel-booking' ); ?></p>
 						</td>
 					</tr>
 				<?php } ?>

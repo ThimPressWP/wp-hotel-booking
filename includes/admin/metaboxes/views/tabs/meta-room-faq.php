@@ -21,7 +21,7 @@ if ( empty( $room_id ) ) {
 $faqs = get_post_meta( $room_id, '_wphb_room_faq', true );
 ?>
 <div class="form-field _hb_room_faq_meta_box">
-	<label for="_wphb_faq_room"><?php _e( 'Room faqs', 'wp-hotel-booking' ); ?></label>
+	<label for="_wphb_faq_room"><?php esc_html_e( 'Room faqs', 'wp-hotel-booking' ); ?></label>
 	<div class="_hb_room_faq_meta_box__content">
 		<div class="_hb_room_faq_meta_box__fields">
 			<?php if ( ! empty( $faqs ) ) : ?>

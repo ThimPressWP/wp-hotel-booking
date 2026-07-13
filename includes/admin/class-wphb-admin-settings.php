@@ -106,9 +106,9 @@ class WPHB_Admin_Settings {
 						</th>
 						<td class="hb-form-field hb-form-field-<?php echo esc_attr( $field['type'] ); ?>">
 							<?php if ( isset( $field['options'] ) ) : ?>
-								<select name="<?php echo $field_id; ?><?php echo $field['type'] === 'multiselect' ? '[]' : ''; ?>"
-										id="<?php echo $field_id; ?>"
-									<?php echo ( $field['type'] === 'multiple' ) ? 'multiple="multiple"' : ''; ?>
+								<select name="<?php echo esc_attr( $field_id ); ?><?php echo esc_attr( $field['type'] === 'multiselect' ? '[]' : '' ); ?>"
+										id="<?php echo esc_attr( $field_id ); ?>"
+									<?php echo esc_attr( $field['type'] === 'multiple' ) ? 'multiple="multiple"' : ''; ?>
 								>
 									<?php foreach ( $field['options'] as $val => $text ) : ?>
 										<?php
@@ -306,22 +306,22 @@ class WPHB_Admin_Settings {
 									<?php
 									hb_dropdown_pages(
 										array(
-											'show_option_none' => __( '---Select page---', 'wp-hotel-booking' ),
+											'show_option_none'  => __( '---Select page---', 'wp-hotel-booking' ),
 											'option_none_value' => '',
-											'add_new_title' => __( '[ Add new page ]', 'wp-hotel-booking' ),
-											'add_new_value' => 'add_new_page',
-											'name'     => $field['id'],
-											'selected' => $selected,
+											'add_new_title'     => __( '[ Add new page ]', 'wp-hotel-booking' ),
+											'add_new_value'     => 'add_new_page',
+											'name'              => $field['id'],
+											'selected'          => $selected,
 										)
 									);
 									?>
 								<?php endif; ?>
 								<?php echo esc_html( _x( 'or', 'drop down pages', 'wp-hotel-booking' ) ); ?>
-								<button class="button button-quick-add-page" data-id="<?php echo $field['id']; ?>" type="button">
+								<button class="button button-quick-add-page" data-id="<?php echo esc_attr( $field['id'] ?? '' ); ?>" type="button">
 									<?php esc_html_e( 'Create new', 'wp-hotel-booking' ); ?>
 								</button>
 							</div>
-							<p class="quick-add-page-inline <?php echo $field['id']; ?> hide-if-js">
+							<p class="quick-add-page-inline <?php echo esc_attr( $field['id'] ?? '' ); ?> hide-if-js">
 								<input type="text" placeholder="<?php esc_attr_e( 'New page title', 'wp-hotel-booking' ); ?>"/>
 								<button class="button" type="button">
 									<?php esc_html_e( 'Ok [Enter]', 'wp-hotel-booking' ); ?>

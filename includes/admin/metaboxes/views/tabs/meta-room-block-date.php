@@ -20,7 +20,7 @@ if ( empty( $room_id ) ) {
 
 ?>
 <div class="wrap" id="tp_hotel_booking_block_date">
-	<h1><?php _e( 'Block Special Date', 'wp-hotel-booking' ); ?></h1>
+	<h1><?php esc_html_e( 'Block Special Date', 'wp-hotel-booking' ); ?></h1>
 	<div id="calender_block"></div>
-	<button class="button button-primary update_block"><?php _e( 'Update', 'wp-hotel-booking' ); ?></button>
+	<button class="button button-primary update_block"><?php esc_html_e( 'Update', 'wp-hotel-booking' ); ?></button>
 </div>
