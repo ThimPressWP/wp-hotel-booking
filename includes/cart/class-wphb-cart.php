@@ -129,23 +129,34 @@ class WPHB_Cart {
 		// load cart session object
 		if ( $this->sessions && $this->sessions->session ) {
 			foreach ( $this->sessions->session as $cart_id => $param ) {
-				// Security: the cart is loaded from a client-side cookie/session,
-				// so its contents cannot be trusted. Re-validate the line quantity
-				// here (not only on the add-to-cart path): a tampered cookie could
-				// inject a non-positive quantity to force the cart total to zero or
-				// below and bypass the payment step. Drop any such line.
-				$param_qty = null;
-				if ( is_array( $param ) && array_key_exists( 'quantity', $param ) ) {
-					$param_qty = $param['quantity'];
-				} elseif ( is_object( $param ) && isset( $param->quantity ) ) {
-					$param_qty = $param->quantity;
-				}
-
-				if ( null !== $param_qty && ( ! is_numeric( $param_qty ) || (int) $param_qty < 1 ) ) {
-					// Purge the invalid line from the persisted session/cookie too.
+				if ( ! is_array( $param ) && ! is_object( $param ) ) {
 					$this->sessions->set( $cart_id, null );
 					continue;
 				}
+
+				// Cart lines are restored from a client-controlled cookie. Require the
+				// complete server-generated schema before rebuilding prices or bookings.
+				$param         = (array) $param;
+				$required_keys = array( 'product_id', 'quantity', 'check_in_date', 'check_out_date' );
+				if ( array_diff( $required_keys, array_keys( $param ) )
+					|| ! is_numeric( $param['product_id'] )
+					|| ! get_post( absint( $param['product_id'] ) )
+					|| ! is_numeric( $param['quantity'] )
+					|| (int) $param['quantity'] < 1 ) {
+					$this->sessions->set( $cart_id, null );
+					continue;
+				}
+
+				$normalized_dates = hb_normalize_booking_date_range( $param['check_in_date'], $param['check_out_date'], hb_get_frontend_date_format() );
+				if ( is_wp_error( $normalized_dates ) ) {
+					$this->sessions->set( $cart_id, null );
+					continue;
+				}
+
+				$param['product_id']     = absint( $param['product_id'] );
+				$param['quantity']       = (int) $param['quantity'];
+				$param['check_in_date']  = $normalized_dates['check_in_date'];
+				$param['check_out_date'] = $normalized_dates['check_out_date'];
 
 				$cart_item = new stdClass();
 				if ( is_array( $param ) || is_object( $param ) ) {
