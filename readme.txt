@@ -87,6 +87,9 @@ Yes.
 
 == Changelog ==
 
+= 2.3.4 (2026-07-20) =
+~ Fixed: security from Levi report.
+
 = 2.3.3 (2026-07-16) =
 ~ Fixed: security.
 
