@@ -126,8 +126,6 @@ class Elementor {
 	}
 
 	public function add_elementor_widgets_dependencies() {
-		//daterangepicker
-		//wp_register_script( 'wphb-daterangepicker',  WPHB_PLUGIN_URL . '/includes/elementor/src/js/daterangepicker.min.js', array('jquery'), WPHB_VERSION );
 		//magnific popup
 		wp_register_script( 'wphb-light-gallery', WPHB_PLUGIN_URL . '/includes/elementor/src/js/lightgallery.min.js', array( 'jquery' ), WPHB_VERSION );
 		//flexslide
