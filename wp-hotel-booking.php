@@ -233,7 +233,7 @@ class WP_Hotel_Booking {
 			$this->admin_includes();
 		}
 
-		if ( ! is_admin() ) {
+		if ( ! is_admin() || ( defined( 'ELEMENTOR_VERSION' ) && isset( $_GET['action'] ) && $_GET['action'] === 'elementor' ) ) {
 			$this->frontend_includes();
 		}
 

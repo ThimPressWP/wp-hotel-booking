@@ -7,7 +7,7 @@ const replace = require( 'gulp-replace' );
 const zip = require( 'gulp-vinyl-zip' );
 const plumber = require( 'gulp-plumber' );
 const uglifycss = require( 'gulp-uglifycss' );
-const del = require( 'del' );
+const fs = require( 'fs' );
 const readFile = require( 'read-file' );
 const postcss = require( 'gulp-postcss' );
 const css_minify = require( 'postcss-minify' );
@@ -62,8 +62,11 @@ gulp.task( 'mincss', () => {
 /******************************************* Release *******************************************/
 
 // Clean folder to releases.
-gulp.task( 'cleanReleases', () => {
-	return del( './releases/**' );
+gulp.task( 'cleanReleases', ( done ) => {
+	if ( fs.existsSync( './releases' ) ) {
+		fs.rmSync( './releases', { recursive: true, force: true } );
+	}
+	done();
 } );
 
 const releasesFiles = [
