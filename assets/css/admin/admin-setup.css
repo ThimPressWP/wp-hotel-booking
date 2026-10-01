@@ -129,8 +129,6 @@
   content: "";
   height: 6px;
   width: 100%;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
   border-radius: 3px;
   background: #ffc106;
   left: 0;
@@ -158,8 +156,6 @@
   bottom: 0;
   background: #DDD;
   position: absolute;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
   border-radius: 3px;
 }
 .wphb-setup .wphb-setup-progress .active, .lp-update-database .wphb-setup-progress .active {

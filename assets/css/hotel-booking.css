@@ -459,7 +459,6 @@
 }
 
 .rooms .hb_room .summary .price {
-    -webkit-transition: all 0.3s;
     transition: all 0.3s;
 }
 
@@ -599,36 +598,23 @@
     top: 10px;
     bottom: 0;
     opacity: 0;
-    -webkit-transition: all 0.3s;
     transition: all 0.3s;
 }
 
 .single-hb_room .hb_room_gallery .camera_thumbs .camera_prevThumbs {
     left: 2px;
     transform: translate(10px, 0);
-    -webkit-transform: translate(10px, 0);
-    -moz-transform: translate(10px, 0);
-    -ms-transform: translate(10px, 0);
-    -o-transform: translate(10px, 0);
 }
 
 .single-hb_room .hb_room_gallery .camera_thumbs .camera_nextThumbs {
     right: 2px;
     transform: translate(-10px, 0);
-    -webkit-transform: translate(-10px, 0);
-    -moz-transform: translate(-10px, 0);
-    -ms-transform: translate(-10px, 0);
-    -o-transform: translate(-10px, 0);
 }
 
 .single-hb_room .hb_room_gallery .camera_thumbs:hover .camera_nextThumbs,
 .single-hb_room .hb_room_gallery .camera_thumbs:hover .camera_prevThumbs {
     opacity: 1;
     transform: translate(0, 0);
-    -webkit-transform: translate(0, 0);
-    -moz-transform: translate(0, 0);
-    -ms-transform: translate(0, 0);
-    -o-transform: translate(0, 0);
 }
 
 .single-hb_room .hb_room_gallery .camera_thumbs .camera_thumbs_cont {
@@ -664,10 +650,6 @@
     left: 6px;
     border: 2px solid transparent;
     z-index: -1;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    -ms-transition: all 0.3s;
     transition: all 0.3s;
 }
 
@@ -1310,7 +1292,6 @@
     width: 20px;
     height: 30px;
     opacity: 0.5;
-    -ms-transition: all 0.3s;
     transition: all 0.3s;
 }
 
@@ -1416,7 +1397,6 @@
     background: #fff;
     box-shadow: 0px 4px 15px 0px #E6DEDE;
     z-index: 0;
-    -webkit-transition: all 0.3s;
     transition: all 0.3s;
 }
 
@@ -1584,7 +1564,6 @@ input[type="submit"],
 .bg-video-play,
 .navigation .navbar-nav > li > span,
 .hb_search_room_item_detail_price_close {
-    -webkit-transition: all 0.3s;
     transition: all 0.3s;
 }
 
@@ -1592,31 +1571,16 @@ input[type="submit"],
 .hb_room_carousel_container .navigation span[class*="pe-"]:before,
 .hb_related_other_room .navigation span[class*="pe-"]:after,
 .hb_room_carousel_container .navigation span[class*="pe-"]:after {
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    -ms-transition: all 0.3s;
     transition: all 0.3s;
 }
 
 .thim-widget-icon-box .wrapper-box-icon.has_custom_image.box_shadow_icon .smicon-box .icon-images img {
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    -ms-transition: all 0.3s;
     transition: all 0.3s;
-    -webkit-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
     transform: scale(1, 1);
 }
 
 .thim-widget-icon-box .wrapper-box-icon.has_custom_image.box_shadow_icon .smicon-box:hover .icon-images img {
-    -webkit-transition: all 1s;
     transition: all 1s;
-    -webkit-transform: scale(1.15, 1.15);
-    -ms-transform: scale(1.15, 1.15);
-    -o-transform: scale(1.15, 1.15);
     transform: scale(1.15, 1.15);
 }
 
@@ -2005,10 +1969,6 @@ input[type="submit"],
         text-align: center;
         top: 50%;
         transform: translate(0, -50%);
-        -webkit-transform: translate(0, -50%);
-        -moz-transform: translate(0, -50%);
-        -ms-transform: translate(0, -50%);
-        -o-transform: translate(0, -50%);
         display: inline-block;
     }
 }
@@ -2504,28 +2464,9 @@ input[type="submit"],
 /* loading */
 @keyframes wphb-rotating {
     from {
-        -o-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        -moz-transform: rotate(0deg);
-        -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
     to {
-        -o-transform: rotate(-360deg);
-        -ms-transform: rotate(-360deg);
-        -moz-transform: rotate(-360deg);
-        -webkit-transform: rotate(-360deg);
-        transform: rotate(-360deg);
-    }
-}
-
-@-webkit-keyframes wphb-rotating {
-    from {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    to {
-        -webkit-transform: rotate(-360deg);
         transform: rotate(-360deg);
     }
 }
@@ -2537,8 +2478,6 @@ button.wphb_loading::before {
     content: "\f110";
     margin-right: 10px;
     font-size: 17px;
-    -webkit-animation: wphb-rotating 1s linear infinite;
-    -moz-animation: wphb-rotating 1s linear infinite;
     animation: wphb-rotating 1s linear infinite;
 }
 

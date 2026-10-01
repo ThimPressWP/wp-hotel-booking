@@ -29,8 +29,6 @@
 
 			.comment-text {
 				width: calc(#{"100% - 100px"});
-				width: -webkit-calc(#{"100% - 100px"});
-				width: -moz-calc(#{"100% - 100px"});
 				display: flex;
 				flex-direction: column;
 			}

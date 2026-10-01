@@ -114,10 +114,7 @@
             bottom: 30px;
             left: 50%;
             right: auto;
-            -webkit-transform: translateX(-50%);
-            -moz-transform: translateX(-50%);
-            -ms-transform: translateX(-50%);
-            -o-transform: translateX(-50%);
+            transform: translateX(-50%);
             max-width: 680px;
             overflow: unset;
 
