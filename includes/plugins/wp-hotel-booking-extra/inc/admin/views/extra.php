@@ -41,7 +41,7 @@ foreach ( $extra_types as $key => $value ) {
 					</div>
 					<div class="desc">
 						<h4><?php _e( 'Description', 'wp-hotel-booking' ); ?></h4>
-						<textarea name="<?php echo esc_attr( $field_name ); ?>[<?php echo esc_attr( $post->ID ); ?>][desc]"><?php printf( '%s', $post->post_content ); ?></textarea>
+						<textarea name="<?php echo esc_attr( $field_name ); ?>[<?php echo esc_attr( $post->ID ); ?>][desc]"><?php echo esc_textarea( $post->post_content ); ?></textarea>
 					</div>
 					<div class="price">
 						<h4><?php _e( 'Price', 'wp-hotel-booking' ); ?></h4>

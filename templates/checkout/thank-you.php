@@ -234,7 +234,7 @@ if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 
 			<div class="booking-notes">
 				<label for="_hb_customer_notes"><?php esc_html_e( 'Booking Notes:', 'wp-hotel-booking' ); ?></label>
-				<?php echo esc_html( $booking->post->post_content ); ?>
+				<?php echo nl2br( esc_html( $booking->post->post_content ) ); ?>
 			</div>
 
 			<?php

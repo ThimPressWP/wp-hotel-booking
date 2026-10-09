@@ -86,7 +86,11 @@ if ( ! function_exists( 'hb_create_booking' ) ) {
 
 		$booking                     = WPHB_Booking::instance( $args['booking_id'] );
 		$booking->post->post_title   = sprintf( __( 'Booking ', 'wp-hotel-booking' ) );
-		$booking->post->post_content = hb_get_request( 'addition_information' ) ? hb_get_request( 'addition_information' ) : __( 'Empty Booking Notes', 'wp-hotel-booking' );
+		$addition_info               = isset( $_REQUEST['addition_information'] ) ? sanitize_textarea_field( wp_unslash( $_REQUEST['addition_information'] ) ) : '';
+		if ( empty( $addition_info ) && ! empty( $booking_info['post_content'] ) ) {
+			$addition_info = sanitize_textarea_field( wp_unslash( $booking_info['post_content'] ) );
+		}
+		$booking->post->post_content = ! empty( $addition_info ) ? $addition_info : __( 'Empty Booking Notes', 'wp-hotel-booking' );
 		$booking->post->post_status  = 'hb-' . apply_filters( 'hb_default_order_status', 'pending' );
 
 		if ( $args['status'] ) {
@@ -407,7 +411,7 @@ if ( ! function_exists( 'hb_get_booking_id_by_key' ) ) {
 	function hb_get_booking_id_by_key( $booking_key ) {
 		global $wpdb;
 
-		$booking_id = $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM {$wpdb->prefix}postmeta WHERE meta_key = '_hb_booking_key' AND meta_value = %s", $booking_key ) );
+		$booking_id = $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_hb_booking_key' AND meta_value = %s", $booking_key ) );
 
 		return $booking_id;
 	}

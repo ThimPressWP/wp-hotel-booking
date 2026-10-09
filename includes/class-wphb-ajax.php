@@ -54,8 +54,8 @@ class WPHB_Ajax {
 			'add_coupon_to_order'      => false,
 			'remove_coupon_on_order'   => false,
 			'load_other_full_calendar' => false,
-			'dismiss_notice'           => true,
-			'create_pages'             => true,
+			'dismiss_notice'           => false,
+			'create_pages'             => false,
 		);
 
 		foreach ( $ajax_actions as $action => $priv ) {
@@ -124,9 +124,9 @@ class WPHB_Ajax {
 			'message' => '',
 		);
 
-		if ( ! current_user_can( 'edit_pages' ) || empty( $_POST['page_name'] ) ) {
+		if ( ( ! current_user_can( 'manage_options' ) && ! current_user_can( 'edit_pages' ) ) || empty( $_POST['page_name'] ) ) {
 			$response['message'] = __( 'Request invalid', 'wp-hotel-booking' );
-			wp_send_json( $response );
+			wp_send_json( $response, 403 );
 		}
 
 		if ( ! wp_verify_nonce( $_POST['nonce'] ?? '', 'hb_booking_nonce_action' ) ) {
@@ -304,6 +304,10 @@ class WPHB_Ajax {
 	 * Get all images for a room type
 	 */
 	static function load_room_type_galley() {
+		if ( ! check_ajax_referer( 'hb_booking_nonce_action', 'nonce', false ) && ! check_ajax_referer( 'hb_booking_nonce_action', '_nonce', false ) ) {
+			wp_send_json( array( 'status' => false, 'message' => __( 'Nonce is invalid', 'wp-hotel-booking' ) ), 403 );
+		}
+
 		self::require_booking_ajax_capability();
 
 		$term_id        = absint( hb_get_request( 'term_id' ) );
@@ -569,9 +573,7 @@ class WPHB_Ajax {
 			return;
 		}
 
-		if ( ! current_user_can( 'administrator' ) ) {
-			return;
-		}
+		self::require_booking_ajax_capability();
 
 		$user_name = sanitize_text_field( wp_unslash( $_POST['user_name'] ) );
 		global $wpdb;

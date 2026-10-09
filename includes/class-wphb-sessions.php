@@ -80,13 +80,71 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 		}
 
 		/**
+		 * Generate cryptographic HMAC-SHA256 signature for session payload.
+		 *
+		 * @param string $payload JSON encoded payload string.
+		 * @return string Hex-encoded HMAC signature.
+		 */
+		protected function generate_signature( $payload ) {
+			return hash_hmac( 'sha256', $this->prefix . '|' . $payload, wp_salt( 'auth' ) );
+		}
+
+		/**
+		 * Verify HMAC signature of session payload using timing-safe comparison.
+		 *
+		 * @param string $payload
+		 * @param string $signature
+		 * @return bool
+		 */
+		protected function verify_signature( $payload, $signature ) {
+			if ( empty( $payload ) || empty( $signature ) || ! is_string( $signature ) ) {
+				return false;
+			}
+
+			return hash_equals( $this->generate_signature( $payload ), $signature );
+		}
+
+		/**
 		 * @return array|mixed
 		 */
 		public function load() {
-			if ( isset( $_SESSION[ $this->prefix ] ) ) {
+			if ( isset( $_SESSION[ $this->prefix ] ) && is_array( $_SESSION[ $this->prefix ] ) ) {
 				return $_SESSION[ $this->prefix ];
 			} elseif ( $this->remember && isset( $_COOKIE[ $this->prefix ] ) ) {
-				return $_SESSION[ $this->prefix ] = json_decode( WPHB_Helpers::sanitize_params_submitted( $_COOKIE[ $this->prefix ] ), true );
+				$raw_cookie = wp_unslash( $_COOKIE[ $this->prefix ] );
+				if ( is_string( $raw_cookie ) && '' !== $raw_cookie ) {
+					// Check for signed cookie format: <base64_payload>.<hmac_signature>
+					if ( strpos( $raw_cookie, '.' ) !== false ) {
+						list( $encoded_payload, $signature ) = explode( '.', $raw_cookie, 2 );
+						$payload = base64_decode( $encoded_payload, true );
+
+						if ( false !== $payload && $this->verify_signature( $payload, $signature ) ) {
+							$data = json_decode( $payload, true );
+							if ( is_array( $data ) ) {
+								return $_SESSION[ $this->prefix ] = $data;
+							}
+						}
+
+						// Signature verification failed (cookie was tampered) - reject and purge
+						$this->remove();
+						return array();
+					}
+
+					// Backwards compatibility: gracefully load legacy unsigned JSON cookie
+					$legacy_data = json_decode( WPHB_Helpers::sanitize_params_submitted( $raw_cookie ), true );
+					if ( is_array( $legacy_data ) ) {
+						// Upgrade legacy cookie to signed format immediately if headers permit
+						if ( ! headers_sent() ) {
+							$payload      = wp_json_encode( $legacy_data );
+							$signature    = $this->generate_signature( $payload );
+							$signed_value = base64_encode( $payload ) . '.' . $signature;
+							@setcookie( $this->prefix, $signed_value, time() + $this->live_item, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
+							$_COOKIE[ $this->prefix ] = $signed_value;
+						}
+
+						return $_SESSION[ $this->prefix ] = $legacy_data;
+					}
+				}
 			} else {
 				// Only try transient if the session ID exists (sessions may be skipped for REST/CLI)
 				$session_id = session_id();
@@ -135,6 +193,9 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 			if ( ! $name ) {
 				return;
 			}
+			if ( ! is_array( $this->session ) && ! is_object( $this->session ) ) {
+				$this->session = array();
+			}
 			if ( ! $value ) {
 				if ( is_array( $this->session ) ) {
 					unset( $this->session[ $name ] );
@@ -142,7 +203,7 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 					unset( $this->session->{$name} );
 				}
 			} elseif ( is_array( $this->session ) ) {
-					$this->session[ $name ] = $value;
+				$this->session[ $name ] = $value;
 			} else {
 				$this->session->{$name} = $value;
 			}
@@ -158,9 +219,24 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 				$session_id = session_id();
 				if ( ! empty( $session_id ) ) {
 					$transient_prefix = $this->prefix . '_' . $session_id;
-					set_transient( $transient_prefix, $this->session, $this->live_item );
+					if ( empty( $this->session ) ) {
+						delete_transient( $transient_prefix );
+					} else {
+						set_transient( $transient_prefix, $this->session, $this->live_item );
+					}
 				}
-				@setcookie( $this->prefix, wp_json_encode( $this->session ), $time, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
+
+				if ( empty( $this->session ) ) {
+					unset( $_COOKIE[ $this->prefix ] );
+					@setcookie( $this->prefix, '', $time, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
+				} else {
+					$payload      = wp_json_encode( $this->session );
+					$signature    = $this->generate_signature( $payload );
+					$signed_value = base64_encode( $payload ) . '.' . $signature;
+
+					@setcookie( $this->prefix, $signed_value, $time, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
+					$_COOKIE[ $this->prefix ] = $signed_value;
+				}
 			}
 		}
 
@@ -175,11 +251,34 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 				return $default;
 			}
 
-			if ( isset( $this->session[ $name ] ) ) {
+			if ( is_array( $this->session ) && isset( $this->session[ $name ] ) ) {
 				return $this->session[ $name ];
 			}
 
+			if ( is_object( $this->session ) && isset( $this->session->{$name} ) ) {
+				return $this->session->{$name};
+			}
+
 			return $default;
+		}
+
+		/**
+		 * Clear all WP Hotel Booking sessions on user logout to prevent session leaks across shared devices.
+		 */
+		public static function destroy_all_sessions() {
+			$prefixes = array(
+				'hotel_booking_cart',
+				'booking_sessions',
+				'customer_sessions',
+			);
+			foreach ( $prefixes as $prefix ) {
+				if ( ! empty( self::$_instance[ $prefix ] ) ) {
+					self::$_instance[ $prefix ]->remove();
+				} else {
+					$session = new self( $prefix );
+					$session->remove();
+				}
+			}
 		}
 
 		/**
@@ -195,4 +294,7 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 			return self::$_instance[ $prefix ] = new self( $prefix );
 		}
 	}
+
+	add_action( 'wp_logout', array( 'WPHB_Sessions', 'destroy_all_sessions' ) );
 }
+

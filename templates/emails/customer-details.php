@@ -48,7 +48,7 @@ defined( 'ABSPATH' ) || exit();
 	</li>
 	<?php if ( $booking->post->post_content ) { ?>
 		<li><strong><?php echo esc_html__( 'Additional Information:', 'wp-hotel-booking' ); ?></strong>
-			<span><?php echo esc_html( $booking->post->post_content ); ?></span>
+			<span><?php echo nl2br( esc_html( $booking->post->post_content ) ); ?></span>
 		</li>
 	<?php } ?>
 </ul>

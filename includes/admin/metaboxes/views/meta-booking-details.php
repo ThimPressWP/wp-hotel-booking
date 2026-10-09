@@ -154,12 +154,12 @@ $booking = WPHB_Booking::instance( $post->ID );
 			</h4>
 			<div class="customer_details">
 				<div class="notes details">
-					<p><?php echo esc_html( $post->post_content ); ?></p>
+					<p><?php echo nl2br( esc_html( $post->post_content ) ); ?></p>
 				</div>
 				<div class="edit_details">
 					<textarea name="content"
 								placeholder="<?php esc_attr_e( 'Empty Booking Notes', 'wp-hotel-booking' ); ?>" rows="5"
-								cols="10"><?php echo esc_html( $booking->post->post_content ); ?></textarea>
+								cols="10"><?php echo esc_textarea( $booking->post->post_content ); ?></textarea>
 				</div>
 			</div>
 

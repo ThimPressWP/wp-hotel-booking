@@ -1816,15 +1816,15 @@ if ( ! function_exists( 'hb_search_rooms' ) ) {
 			}
 		}
 
-		if ( isset( $args['room_type'] ) && $args['room_type'] !== '' ) {
-			$roomTypes = explode( ',', $args['room_type'] );
-			$roomTypes = array_map( 'absint', $roomTypes );
-
-			$sql            .= " INNER JOIN $wpdb->term_relationships AS r_term ON rooms.ID = r_term.object_id";
-			$sql            .= " INNER JOIN $wpdb->term_taxonomy AS tx ON r_term.term_taxonomy_id = tx.term_taxonomy_id";
-			$term_ids_format = join( ',', $roomTypes );
-			$where          .= " AND tx.term_id IN ($term_ids_format)";
-			$where          .= $wpdb->prepare( ' AND tx.taxonomy = %s', 'hb_room_type' );
+		if ( ! empty( $args['room_type'] ) ) {
+			$roomTypes = array_filter( array_map( 'absint', explode( ',', $args['room_type'] ) ) );
+			if ( ! empty( $roomTypes ) ) {
+				$sql         .= " INNER JOIN $wpdb->term_relationships AS r_term ON rooms.ID = r_term.object_id";
+				$sql         .= " INNER JOIN $wpdb->term_taxonomy AS tx ON r_term.term_taxonomy_id = tx.term_taxonomy_id";
+				$placeholders = implode( ', ', array_fill( 0, count( $roomTypes ), '%d' ) );
+				$where       .= $wpdb->prepare( " AND tx.term_id IN ($placeholders)", $roomTypes );
+				$where       .= $wpdb->prepare( ' AND tx.taxonomy = %s', 'hb_room_type' );
+			}
 		}
 
 		if ( $args['sort_by'] === 'date-desc' ) {

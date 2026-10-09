@@ -222,29 +222,32 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 		 * @return string
 		 */
 		public function posts_join_paged( $join ) {
+			if ( ! $this->is_search( 'booking' ) ) {
+				return $join;
+			}
+
 			global $wpdb;
 			$table_name   = $wpdb->prefix . 'hotel_booking_order_items';
 			$table_exists = $wpdb->get_var( "SHOW TABLES LIKE '{$table_name}'" ) === $table_name;
-			
+
 			if ( ! $table_exists ) {
 				return $join;
 			}
 
-			$result = $wpdb->get_col( "SELECT order_item_id FROM $table_name WHERE `order_item_id` IS NOT NULL" );
-			if ( ! $this->is_search( 'booking' ) || ! $result ) {
+			$has_items = $wpdb->get_var( "SELECT 1 FROM $table_name LIMIT 1" );
+			if ( ! $has_items ) {
 				return $join;
 			}
-			if ( is_admin() && $this->is_search( 'booking' ) ) {
-				$join .= "
+
+			$join .= "
                 INNER JOIN {$wpdb->hotel_booking_order_items} AS ord_item ON ord_item.order_id = {$wpdb->posts}.ID
             ";
-			}
 
 			if ( is_admin() && hb_get_request( 'post_type' ) == 'hb_booking' ) {
 				$from   = hb_get_request( 'date-from-timestamp' );
 				$to     = hb_get_request( 'date-to-timestamp' );
 				$filter = hb_get_request( 'filter-type' );
-				if ( $from && $to & $filter ) {
+				if ( $from && $to && $filter ) {
 					switch ( $filter ) {
 						case 'booking-date':
 							break;

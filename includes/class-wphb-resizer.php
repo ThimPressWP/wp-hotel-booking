@@ -62,10 +62,6 @@ if ( ! class_exists( 'WPHB_Reizer' ) ) {
 		 */
 		public function __construct( $args = null ) {
 			self::$args = $args;
-
-			if ( ! self::$_attachments ) {
-				self::getAttachments();
-			}
 		}
 
 		/**
@@ -82,16 +78,16 @@ if ( ! class_exists( 'WPHB_Reizer' ) ) {
 		}
 
 		/**
-		 * @return array|null
+		 * Maintained for backward compatibility with 3rd-party callers without full table scan.
+		 *
+		 * @return array
 		 */
 		public static function getAttachments() {
-			global $wpdb;
-			$posts = $wpdb->get_results( "SELECT * FROM `{$wpdb->posts}` WHERE `post_type` = 'attachment' AND `guid` != ''" );
-
-			foreach ( $posts as $key => $post ) {
-				self::$_attachments[] = $post->guid;
+			if ( is_array( self::$_attachments ) ) {
+				return self::$_attachments;
 			}
 
+			self::$_attachments = array();
 			return self::$_attachments;
 		}
 

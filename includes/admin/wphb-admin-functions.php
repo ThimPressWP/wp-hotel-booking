@@ -254,26 +254,11 @@ if ( ! function_exists( 'hb_admin_i18n' ) ) {
 
 // add_action( 'admin_init', 'hb_add_meta_boxes', 50 );
 
-add_action( 'hb_booking_status_changed', 'hb_booking_status_completed_action', 10, 3 );
+// Deprecated: delegated to HB_Coupon::handle_booking_status_changed() in class-wphb-coupon.php
 if ( ! function_exists( 'hb_booking_status_completed_action' ) ) {
 	function hb_booking_status_completed_action( $booking_id, $old_status, $new_status ) {
-		if ( $coupons = get_post_meta( $booking_id, '_hb_coupon_id' ) ) {
-			if ( ! $coupons ) {
-				return;
-			}
-			foreach ( $coupons as $coupon ) {
-				$usage_count = get_post_meta( $coupon, '_hb_usage_count', true );
-				if ( strpos( $new_status, 'completed' ) == 0 ) {
-					++$usage_count;
-				} else {
-					if ( $usage_count > 0 ) {
-						--$usage_count;
-					} else {
-						$usage_count = 0;
-					}
-				}
-				update_post_meta( $coupon, '_hb_usage_count', $usage_count );
-			}
+		if ( class_exists( 'HB_Coupon' ) && method_exists( 'HB_Coupon', 'handle_booking_status_changed' ) ) {
+			HB_Coupon::handle_booking_status_changed( $booking_id, $old_status, $new_status );
 		}
 	}
 }

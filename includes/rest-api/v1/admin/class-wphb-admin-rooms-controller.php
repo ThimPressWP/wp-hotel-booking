@@ -57,7 +57,11 @@ class WPHB_REST_Admin_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 	 * @return boolean true|false
 	 */
 	public function can_manage_hotel( WP_REST_Request $request ): bool {
-		return current_user_can( 'administrator' ) || current_user_can( 'wphb_hotel_manager' );
+		return current_user_can( 'administrator' )
+			|| current_user_can( 'manage_options' )
+			|| current_user_can( 'wphb_hotel_manager' )
+			|| current_user_can( 'manage_hb_booking' )
+			|| current_user_can( 'edit_hb_bookings' );
 	}
 
 	/**

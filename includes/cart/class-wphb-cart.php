@@ -221,11 +221,10 @@ class WPHB_Cart {
 
 	// load booking
 	function load_booking() {
+		$this->booking_id = null;
 		// load customer session object
-		if ( $this->booking_sessions && $this->booking_sessions->session ) {
-			if ( isset( $this->booking_sessions->session->booking_id ) ) {
-				$this->booking_id = $this->booking_sessions->session->booking_id;
-			}
+		if ( $this->booking_sessions ) {
+			$this->booking_id = $this->booking_sessions->get( 'booking_id' );
 			$this->booking_id = apply_filters( 'hotel_booking_load_booking_from_session', $this->booking_id );
 		}
 	}
@@ -766,16 +765,16 @@ class WPHB_Cart {
 				'_hb_method_title'            => $payment_method->title,
 				'_hb_method_id'               => $payment_method->method_id,
 				// customer
-				'_hb_customer_title'          => hb_get_request( 'title' ),
-				'_hb_customer_first_name'     => hb_get_request( 'first_name' ),
-				'_hb_customer_last_name'      => hb_get_request( 'last_name' ),
-				'_hb_customer_address'        => hb_get_request( 'address' ),
-				'_hb_customer_city'           => hb_get_request( 'city' ),
-				'_hb_customer_state'          => hb_get_request( 'state' ),
-				'_hb_customer_postal_code'    => hb_get_request( 'postal_code' ),
-				'_hb_customer_country'        => hb_get_request( 'country' ),
-				'_hb_customer_phone'          => hb_get_request( 'phone' ),
-				'_hb_customer_email'          => hb_get_request( 'email' ),
+				'_hb_customer_title'          => sanitize_text_field( wp_unslash( $_REQUEST['title'] ?? '' ) ),
+				'_hb_customer_first_name'     => sanitize_text_field( wp_unslash( $_REQUEST['first_name'] ?? '' ) ),
+				'_hb_customer_last_name'      => sanitize_text_field( wp_unslash( $_REQUEST['last_name'] ?? '' ) ),
+				'_hb_customer_address'        => sanitize_text_field( wp_unslash( $_REQUEST['address'] ?? '' ) ),
+				'_hb_customer_city'           => sanitize_text_field( wp_unslash( $_REQUEST['city'] ?? '' ) ),
+				'_hb_customer_state'          => sanitize_text_field( wp_unslash( $_REQUEST['state'] ?? '' ) ),
+				'_hb_customer_postal_code'    => sanitize_text_field( wp_unslash( $_REQUEST['postal_code'] ?? '' ) ),
+				'_hb_customer_country'        => sanitize_text_field( wp_unslash( $_REQUEST['country'] ?? '' ) ),
+				'_hb_customer_phone'          => sanitize_text_field( wp_unslash( $_REQUEST['phone'] ?? '' ) ),
+				'_hb_customer_email'          => sanitize_email( wp_unslash( $_REQUEST['email'] ?? '' ) ),
 			)
 		);
 

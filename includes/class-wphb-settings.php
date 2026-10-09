@@ -235,7 +235,7 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 
 				if ( $options = $wpdb->get_results( $query ) ) {
 					foreach ( $options as $option ) {
-						$name                    = $this->_option_prefix . $option->option_name;
+						$name                    = $option->option_name;
 						$this->_options[ $name ] = maybe_unserialize( $option->option_value );
 					}
 				}

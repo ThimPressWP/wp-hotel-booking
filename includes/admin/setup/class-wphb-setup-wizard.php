@@ -53,6 +53,10 @@ class WPHB_Setup_Wizard {
 	public function create_pages() {
 		$respon = new stdClass();
 
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'Permission denied.', 'wp-hotel-booking' ), 403 );
+		}
+
 		if ( ! wp_verify_nonce( hb_get_request( 'wphb-setup-nonce' ), 'wphb-setup-step-pages' ) ) {
 			die();
 		}
