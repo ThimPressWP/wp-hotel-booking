@@ -171,7 +171,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 							'max'        => __( 'Max', 'wp-hotel-booking' ),
 							'min_to_max' => __( 'Min to Max', 'wp-hotel-booking' ),
 						),
-						'default' => 1,
+						'default' => 'min',
 					),
 					array(
 						'type'    => 'number',

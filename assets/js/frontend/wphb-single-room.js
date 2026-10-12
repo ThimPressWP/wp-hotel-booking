@@ -103,8 +103,9 @@ const wphbRoomInitDatePicker = () => {
 	let dateMinCheckOutCanBook;
 	const datesBlock = mapBookingTimestampsToDates( hotel_settings.block_dates );
 	const dateNow = new Date();
-	const dateTomorrow = new Date( dateNow.setDate( dateNow.getDate() + 1 + hotel_settings.min_booking_date ) );
 	const minBookingDateNumber = getMinBookingDays( hotel_settings.min_booking_date );
+	const dateTomorrow = new Date( dateNow.getTime() );
+	dateTomorrow.setDate( dateTomorrow.getDate() + minBookingDateNumber );
 
 	if ( datesBlock.length === 0 ) {
 		dateMinCheckInCanBook = dateNow;

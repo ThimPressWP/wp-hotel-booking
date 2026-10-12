@@ -164,7 +164,7 @@ abstract class WPHB_Admin_Setting_Page {
 					break;
 				default:
 					if ( ! isset( $_POST[ $id ] ) ) {
-						break;
+						continue 2;
 					}
 
 					$option_value = $_POST[ $id ];

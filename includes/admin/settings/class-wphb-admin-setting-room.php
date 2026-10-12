@@ -109,7 +109,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Room' ) ) {
 						'id'      => WPHB_Settings::instance()->get_field_name( 'reservation_hold' ),
 						'title'   => __( 'Reservation Hold', 'wp-hotel-booking' ),
 						'options' => array(
-							'completed ' => __( 'Completed ', 'wp-hotel-booking' ),
+							'completed'  => __( 'Completed', 'wp-hotel-booking' ),
 							'pending'    => __( 'Pending', 'wp-hotel-booking' ),
 							'processing' => __( 'Processing', 'wp-hotel-booking' ),
 						),

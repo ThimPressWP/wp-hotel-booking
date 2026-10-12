@@ -692,16 +692,17 @@ class WPHB_Cart {
 						$deposit_type = get_post_meta( $room_id, '_hb_deposit_type', true );
 						switch ( $deposit_type ) {
 							case 'fixed':
-								$total += get_post_meta( $room_id, '_hb_deposit_amount', true );
+								$quantity = ! empty( $cart_item->quantity ) ? intval( $cart_item->quantity ) : 1;
+								$total   += floatval( get_post_meta( $room_id, '_hb_deposit_amount', true ) ) * $quantity;
 								break;
 							case 'percent':
-								$total += ( $cart_item->amount * get_post_meta( $room_id, '_hb_deposit_amount', true ) ) / 100;
+								$total += ( $cart_item->amount * floatval( get_post_meta( $room_id, '_hb_deposit_amount', true ) ) ) / 100;
 								break;
 							default:
 								break;
 						}
 					} else {
-						if ( ! empty( hb_get_advance_payment() ) && ( $advance_payment = hb_get_advance_payment() ) < 100 ) {
+						if ( ! empty( hb_get_advance_payment() ) && ( $advance_payment = floatval( hb_get_advance_payment() ) ) <= 100 ) {
 							$total += $cart_item->amount * $advance_payment / 100;
 						}
 					}

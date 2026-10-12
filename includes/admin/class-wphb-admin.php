@@ -139,7 +139,7 @@ if ( ! class_exists( 'WPHB_Admin' ) ) {
 						'name'  => 'room_capacity_adult',
 						'label' => __( 'Max adults per room', 'wp-hotel-booking' ),
 						'type'  => 'number',
-						'std'   => ! empty( $max_adult ) ?: 1,
+						'std'   => ! empty( $max_adult ) ? $max_adult : 1,
 						'min'   => 1,
 					),
 				);

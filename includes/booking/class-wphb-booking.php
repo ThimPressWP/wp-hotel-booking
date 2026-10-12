@@ -274,7 +274,7 @@ class WPHB_Booking {
 			$settings         = WPHB_Settings::instance();
 			$reservation_hold = $settings->get( 'reservation_hold', 'completed' );
 
-			if ( $reservation_hold === $new_status ) {
+			if ( trim( (string) $reservation_hold ) === $new_status ) {
 				$payment_complete_date = get_post_meta( $this->post->ID, '_hb_booking_payment_completed', true );
 				if ( ! $payment_complete_date ) {
 					add_post_meta( $this->post->ID, '_hb_booking_payment_completed', current_time( 'mysql' ) );

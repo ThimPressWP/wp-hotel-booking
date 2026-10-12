@@ -218,7 +218,6 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 						'std'   => '100',
 						'desc'  => __( 'Number of available rooms for booking', 'wp-hotel-booking' ),
 						'min'   => 1,
-						'max'   => 100,
 					),
 					'room_origin_capacity'      => array(
 						'name'        => 'room_origin_capacity',

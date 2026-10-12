@@ -64,7 +64,7 @@ class WPHB_REST_Admin_Update_Controller extends WPHB_Abstract_REST_Controller {
 						$room_id = get_the_ID();
 						$term_id = get_post_meta( $room_id, '_hb_room_origin_capacity', true ) ? get_post_meta( $room_id, '_hb_room_origin_capacity', true ) : get_post_meta( $room_id, '_hb_room_capacity', true );
 						$value   = get_term_meta( $term_id, 'hb_max_number_of_adults', true );
-						update_post_meta( $room_id, '_hb_room_capacity_adult', ! empty( $value ) ?: 1 );
+						update_post_meta( $room_id, '_hb_room_capacity_adult', ! empty( $value ) ? $value : 1 );
 					}
 				endwhile;
 			endif;

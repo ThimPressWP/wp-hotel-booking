@@ -78,10 +78,10 @@ abstract class WPHB_Meta_Box {
 
 		if ( ! $meta_cache ) {
 			$meta_cache = update_meta_cache( $meta_type, array( $object_id ) );
-			$meta_cache = $meta_cache[ $object_id ];
+			$meta_cache = isset( $meta_cache[ $object_id ] ) ? $meta_cache[ $object_id ] : array();
 		}
 
-		return array_key_exists( $this->meta_key_prefix . $meta_key, $meta_cache );
+		return is_array( $meta_cache ) && array_key_exists( $this->meta_key_prefix . $meta_key, $meta_cache );
 	}
 
 	/**
