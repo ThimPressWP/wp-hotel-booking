@@ -94,7 +94,7 @@ const releasesFiles = [
 gulp.task( 'copyReleases', () => {
 	gulp.src( [ 'vendor/autoload.php' ] ).pipe( gulp.dest( './releases/wp-hotel-booking/vendor' ) );
 	gulp.src( [ 'vendor/composer/**' ] ).pipe( gulp.dest( './releases/wp-hotel-booking/vendor/composer' ) );
-	return gulp.src( releasesFiles ).pipe( gulp.dest( './releases/wp-hotel-booking/' ) );
+	return gulp.src( releasesFiles, { encoding: false } ).pipe( gulp.dest( './releases/wp-hotel-booking/' ) );
 } );
 
 // Update file Readme
@@ -120,7 +120,7 @@ gulp.task( 'zipReleases', () => {
 	const version = getCurrentVer();
 
 	return gulp
-		.src( './releases/wp-hotel-booking/**', { base: './releases/' } )
+		.src( './releases/wp-hotel-booking/**', { base: './releases/', encoding: false } )
 		.pipe( zip.dest( './releases/wp-hotel-booking.' + version + '.zip' ) );
 } );
 
