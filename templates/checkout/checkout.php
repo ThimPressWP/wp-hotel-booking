@@ -22,11 +22,7 @@ do_action( 'hotel_booking_before_checkout_form' );
 $rooms = $cart->get_rooms();
 ?>
 <div id="hotel-booking-payment" class="hb-checkout-modern">
-	<form name="hb-payment-form" id="hb-payment-form" method="post" action="
-	<?php
-	echo isset( $search_page ) ? $search_page : '';
-	?>
-	">
+	<form name="hb-payment-form" id="hb-payment-form" method="post" action="<?php echo isset( $search_page ) ? esc_url( $search_page ) : ''; ?>">
 		<div class="hb-checkout-wrapper">
 			<!-- Left Column: Billing Details & Additional Info -->
 			<div class="hb-checkout-left-column">
@@ -86,15 +82,7 @@ $rooms = $cart->get_rooms();
 							?>
 						<div class="hb_coupon">
 							<div colspan="9" class="hb-align-left">
-								<input type="text" name="hb-coupon-code" value="
-									<?php
-									echo esc_attr( $coupon );
-									?>
-										" placeholder="
-									<?php
-										esc_html_e( 'Coupon', 'wp-hotel-booking' );
-									?>
-										" />
+								<input type="text" name="hb-coupon-code" value="<?php echo esc_attr( $coupon ); ?>" placeholder="<?php esc_attr_e( 'Coupon', 'wp-hotel-booking' ); ?>" />
 								<button type="button" id="hb-apply-coupon">
 									<?php
 									esc_html_e( 'Apply', 'wp-hotel-booking' );
@@ -412,21 +400,9 @@ $rooms = $cart->get_rooms();
 
 					<input type="hidden" name="hotel-booking" value="place_order" />
 					<input type="hidden" name="action" value="hotel_booking_place_order" />
-					<input type="hidden" name="total_advance" value="
-						<?php
-						echo esc_attr( $cart->advance_payment ? $cart->advance_payment : $cart->total );
-						?>
-						" />
-					<input type="hidden" name="total_price" value="
-						<?php
-						echo esc_attr( $cart->total );
-						?>
-						" />
-					<input type="hidden" name="currency" value="
-						<?php
-						echo esc_attr( hb_get_currency() )
-						?>
-						">
+					<input type="hidden" name="total_advance" value="<?php echo esc_attr( $cart->advance_payment ? $cart->advance_payment : $cart->total ); ?>" />
+					<input type="hidden" name="total_price" value="<?php echo esc_attr( $cart->total ); ?>" />
+					<input type="hidden" name="currency" value="<?php echo esc_attr( hb_get_currency() ); ?>">
 
 					<!-- Terms & Conditions -->
 						<?php

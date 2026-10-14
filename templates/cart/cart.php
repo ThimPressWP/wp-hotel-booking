@@ -133,23 +133,10 @@ if ( $cart->cart_items_count != 0 ) :
 
 									// Calculate extra rows for rowspan
 									?>
-									<tr class="hb-cart-item" data-cart-id="
-											<?php
-											echo esc_attr( $cart_id );
-											?>
-									">
+									<tr class="hb-cart-item" data-cart-id="<?php echo esc_attr( $cart_id ); ?>">
 										<!-- Remove Button -->
 										<td class="hb-col-remove">
-											<a href="javascript:void(0)" class="hb-cart-item-remove hb_remove_cart_item"
-												data-cart-id="
-											<?php
-											echo esc_attr( $cart_id );
-											?>
-												" title="
-											<?php
-											esc_attr_e( 'Remove this item', 'wp-hotel-booking' );
-											?>
-												">
+											<a href="javascript:void(0)" class="hb-cart-item-remove hb_remove_cart_item" data-cart-id="<?php echo esc_attr( $cart_id ); ?>" title="<?php esc_attr_e( 'Remove this item', 'wp-hotel-booking' ); ?>">
 												<span>&times;</span>
 											</a>
 										</td>
@@ -159,31 +146,15 @@ if ( $cart->cart_items_count != 0 ) :
 											<?php
 											if ( $room_image ) :
 												?>
-												<a href="
-															<?php
-															echo esc_url( get_permalink( $room->ID ) );
-															?>
-												" class="hb-room-thumb">
-													<img src="
-															<?php
-															echo esc_url( $room_image );
-															?>
-													" alt="
-															<?php
-															echo esc_attr( $room->name );
-															?>
-													">
+												<a href="<?php echo esc_url( get_permalink( $room->ID ) ); ?>" class="hb-room-thumb">
+													<img src="<?php echo esc_url( $room_image ); ?>" alt="<?php echo esc_attr( $room->name ); ?>">
 												</a>
 												<?php
 											endif;
 											?>
 											<div class="hb-room-details">
 												<h6 class="hb-cart-item-title">
-													<a href="
-												<?php
-												echo esc_url( get_permalink( $room->ID ) );
-												?>
-													">
+													<a href="<?php echo esc_url( get_permalink( $room->ID ) ); ?>">
 														<?php
 														echo esc_html( $room->name );
 														?>
@@ -619,11 +590,7 @@ if ( $cart->cart_items_count != 0 ) :
 						// Hook after cart totals (for payment options, terms, etc.)
 						do_action( 'hotel_booking_after_cart_total', $cart );
 						?>
-						<a href="
-						<?php
-						echo esc_url( hb_get_checkout_url() );
-						?>
-						" class="hb-btn hb-btn-checkout ">
+						<a href="<?php echo esc_url( hb_get_checkout_url() ); ?>" class="hb-btn hb-btn-checkout ">
 							<?php
 							esc_html_e( 'Proceed to Checkout', 'wp-hotel-booking' );
 							?>
@@ -652,11 +619,7 @@ else :
 			esc_html_e( 'Looks like you haven\'t added any rooms yet. Start exploring our rooms!', 'wp-hotel-booking' );
 			?>
 		</p>
-		<a href="
-		<?php
-		echo esc_url( get_post_type_archive_link( 'hb_room' ) );
-		?>
-		" class="hb-btn hb-btn-primary">
+		<a href="<?php echo esc_url( get_post_type_archive_link( 'hb_room' ) ); ?>" class="hb-btn hb-btn-primary">
 			<?php
 			esc_html_e( 'Browse Rooms', 'wp-hotel-booking' );
 			?>

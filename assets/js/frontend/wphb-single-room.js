@@ -422,30 +422,21 @@ const decodeHtmlEntity = ( str ) => {
 };
 const wphbRoomAddToCart = ( formAddToCart ) => {
 	const elBtnSubmit = formAddToCart.querySelector( 'button[type=submit]' );
-	const elLoading = elBtnSubmit.querySelector( '.wphb-icon' );
+	const elLoading   = elBtnSubmit?.querySelector( '.wphb-icon' );
 
 	const showErrors = ( message ) => {
-		const elMesErrors = formAddToCart.querySelectorAll(
-			'.hotel_booking_room_errors'
-		);
-		if ( elMesErrors ) {
-			elMesErrors.forEach( ( el ) => {
-				el.remove();
-			} );
-		}
+		const target = formAddToCart.querySelector( '.hb-booking-room-form-head' )
+			|| formAddToCart.closest( '#hotel_booking_room_hidden, .wphb-room-tmpl-dates-available' )?.querySelector( '.hb-booking-room-form-head' )
+			|| formAddToCart;
 
-		formAddToCart
-			.querySelector( '.hb-booking-room-form-head' )
-			.insertAdjacentHTML(
-				'beforeend',
-				`<div class="hotel_booking_room_errors">${ message }</div>`
-			);
+		target.querySelectorAll( '.hotel_booking_room_errors' ).forEach( ( el ) => el.remove() );
 
-		setTimeout( () => {
-			formAddToCart
-				.querySelector( '.hotel_booking_room_errors' )
-				.remove();
-		}, 2500 );
+		const errEl = document.createElement( 'div' );
+		errEl.className = 'hotel_booking_room_errors';
+		errEl.innerHTML = message;
+		target === formAddToCart ? target.prepend( errEl ) : target.append( errEl );
+
+		setTimeout( () => errEl.remove(), 2500 );
 	};
 
 	// Send to sever
@@ -457,9 +448,9 @@ const wphbRoomAddToCart = ( formAddToCart ) => {
 		return;
 	}
 
-	elBtnSubmit.setAttribute( 'disabled', 'disabled' );
-	elLoading.classList.remove( 'hide' );
-	elLoading.classList.toggle( 'loading' );
+	elBtnSubmit?.setAttribute( 'disabled', 'disabled' );
+	elLoading?.classList.remove( 'hide' );
+	elLoading?.classList.add( 'loading' );
 
 	fetch( hotel_settings.ajax, option )
 		.then( ( response ) => response.json() )
@@ -467,17 +458,18 @@ const wphbRoomAddToCart = ( formAddToCart ) => {
 			const { status, message, data } = res;
 			if ( status === 'error' ) {
 				showErrors( message );
-				elBtnSubmit.removeAttribute( 'disabled' );
+				elBtnSubmit?.removeAttribute( 'disabled' );
 				return;
 			}
 			window.location.href = data.redirect;
 		} )
 		.catch( ( error ) => {
-			showErrors( error );
+			showErrors( error.message || error );
+			elBtnSubmit?.removeAttribute( 'disabled' );
 		} )
 		.finally( () => {
-			elLoading.classList.add( 'hide' );
-			elLoading.classList.toggle( 'loading' );
+			elLoading?.classList.add( 'hide' );
+			elLoading?.classList.remove( 'loading' );
 		} );
 };
 
