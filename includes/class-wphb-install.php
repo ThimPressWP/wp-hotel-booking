@@ -19,7 +19,7 @@ class WPHB_Install {
 	static $upgrade = array();
 
 	// install hook
-	static function install() {
+	static function install( $network_wide = false ) {
 
 		if ( ! defined( 'HB_INSTALLING' ) ) {
 			define( 'HB_INSTALLING', true );
@@ -46,7 +46,7 @@ class WPHB_Install {
 		);
 
 		foreach ( $tp_plugins as $plugin ) {
-			if ( is_multisite() ) {
+			if ( is_multisite() && $network_wide ) {
 				deactivate_plugins( $plugin, false, true );
 			} else {
 				deactivate_plugins( $plugin, false, false );
@@ -54,7 +54,7 @@ class WPHB_Install {
 		}
 
 		global $wpdb;
-		if ( is_multisite() ) {
+		if ( is_multisite() && $network_wide ) {
 			// store the current blog id
 			$current_blog = $wpdb->blogid;
 			// Get all blogs in the network and activate plugin on each one
@@ -121,7 +121,19 @@ class WPHB_Install {
 		// upgrade database
 		self::upgrade_database();
 
+		// create roles for this blog
+		self::create_roles();
+
 		update_option( 'hotel_booking_version', WPHB_VERSION );
+	}
+
+	static function create_roles() {
+		if ( ! class_exists( 'WPHB_Roles' ) ) {
+			WP_Hotel_Booking::instance()->_include( 'includes/class-wphb-roles.php' );
+		}
+		if ( class_exists( 'WPHB_Roles' ) ) {
+			new WPHB_Roles();
+		}
 	}
 
 	// upgrade database
@@ -334,24 +346,40 @@ class WPHB_Install {
 	}
 
 	// delete table when delete blog
-	static function delete_tables( $tables ) {
+	static function delete_tables( $tables, $blog_id = 0 ) {
 		global $wpdb;
-		$tables[] = $wpdb->prefix . 'hotel_booking_order_items';
-		$tables[] = $wpdb->prefix . 'hotel_booking_order_itemmeta';
-		$tables[] = $wpdb->prefix . 'hotel_booking_plans';
+		$prefix   = ( ! empty( $blog_id ) && method_exists( $wpdb, 'get_blog_prefix' ) ) ? $wpdb->get_blog_prefix( $blog_id ) : $wpdb->prefix;
+		$tables[] = $prefix . 'hotel_booking_order_items';
+		$tables[] = $prefix . 'hotel_booking_order_itemmeta';
+		$tables[] = $prefix . 'hotel_booking_plans';
 
-		return $tables;
+		return array_unique( $tables );
 	}
 
-	// create new table when create new blog multisite
-	static function create_new_blog( $new_site, $args ) {
-		$blog_id = $new_site->blog_id;
-		$plugin  = basename( WPHB_PLUGIN_PATH ) . '/' . basename( WPHB_PLUGIN_PATH ) . '.php';
+	// create new table and settings when create new blog multisite
+	static function create_new_blog( $new_site, $args = array() ) {
+		if ( is_object( $new_site ) ) {
+			$blog_id = ! empty( $new_site->blog_id ) ? (int) $new_site->blog_id : ( ! empty( $new_site->id ) ? (int) $new_site->id : 0 );
+		} elseif ( is_numeric( $new_site ) ) {
+			$blog_id = (int) $new_site;
+		} else {
+			$blog_id = 0;
+		}
+
+		if ( ! $blog_id ) {
+			return;
+		}
+
+		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+
+		$plugin = plugin_basename( WPHB_FILE );
 		if ( is_plugin_active_for_network( $plugin ) ) {
-			// switch to current blog
+			// switch to new blog
 			switch_to_blog( $blog_id );
 
-			self::create_tables( true );
+			self::do_install();
 
 			// restore
 			restore_current_blog();

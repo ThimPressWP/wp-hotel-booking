@@ -254,7 +254,8 @@ if ( ! function_exists( 'is_plugin_active' ) ) {
 }
 
 if ( is_multisite() ) {
-	if ( is_plugin_active( 'tp-hotel-booking/tp-hotel-booking.php' ) && ! get_site_option( 'wphb_notice_remove_hotel_booking' ) ) {
+	$tp_active = is_plugin_active( 'tp-hotel-booking/tp-hotel-booking.php' ) || ( function_exists( 'is_plugin_active_for_network' ) && is_plugin_active_for_network( 'tp-hotel-booking/tp-hotel-booking.php' ) );
+	if ( $tp_active && ! get_site_option( 'wphb_notice_remove_hotel_booking' ) ) {
 		add_action( 'network_admin_notices', 'hb_notice_remove_hotel_booking' );
 		add_action( 'admin_notices', 'hb_notice_remove_hotel_booking' );
 	}

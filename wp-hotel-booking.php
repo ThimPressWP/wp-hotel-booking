@@ -100,8 +100,9 @@ class WP_Hotel_Booking {
 
 		// create new blog in multisite
 		add_action( 'wp_initialize_site', array( $this, 'create_new_blog' ), 10, 2 );
+		add_action( 'wpmu_new_blog', array( $this, 'create_new_blog' ), 10, 6 );
 		// multisite delete table in multisite
-		add_filter( 'wpmu_drop_tables', array( $this, 'delete_blog_table' ) );
+		add_filter( 'wpmu_drop_tables', array( $this, 'delete_blog_table' ), 10, 2 );
 
 		add_action( 'admin_init', array( $this, 'deactivate_plugins_old' ) );
 
@@ -140,8 +141,8 @@ class WP_Hotel_Booking {
 	// }
 
 	// install hook
-	public function install() {
-		WPHB_Install::install();
+	public function install( $network_wide = false ) {
+		WPHB_Install::install( $network_wide );
 		$this->_include( 'includes/class-wphb-roles.php' );
 	}
 
@@ -151,13 +152,13 @@ class WP_Hotel_Booking {
 	}
 
 	// create new blog table
-	public function create_new_blog( $new_site, $args ) {
+	public function create_new_blog( $new_site, ...$args ) {
 		WPHB_Install::create_new_blog( $new_site, $args );
 	}
 
 	// delete table when delete blog, multisite
-	public function delete_blog_table( $tables ) {
-		return WPHB_Install::delete_tables( $tables );
+	public function delete_blog_table( $tables, $blog_id = 0 ) {
+		return WPHB_Install::delete_tables( $tables, $blog_id );
 	}
 
 	/**
