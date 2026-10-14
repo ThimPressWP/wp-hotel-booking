@@ -80,13 +80,26 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 		}
 
 		/**
+		 * Retrieve authentication salt safely, even if called before pluggable.php is loaded.
+		 *
+		 * @return string
+		 */
+		protected function get_salt() {
+			if ( function_exists( 'wp_salt' ) ) {
+				return wp_salt( 'auth' );
+			}
+
+			return ( defined( 'AUTH_KEY' ) ? AUTH_KEY : '' ) . ( defined( 'AUTH_SALT' ) ? AUTH_SALT : '' );
+		}
+
+		/**
 		 * Generate cryptographic HMAC-SHA256 signature for session payload.
 		 *
 		 * @param string $payload JSON encoded payload string.
 		 * @return string Hex-encoded HMAC signature.
 		 */
 		protected function generate_signature( $payload ) {
-			return hash_hmac( 'sha256', $this->prefix . '|' . $payload, wp_salt( 'auth' ) );
+			return hash_hmac( 'sha256', $this->prefix . '|' . $payload, $this->get_salt() );
 		}
 
 		/**

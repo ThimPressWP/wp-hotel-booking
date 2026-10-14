@@ -842,7 +842,3 @@ class WPHB_Cart {
 		return self::$instance[ $appfix ];
 	}
 }
-
-if ( ! is_admin() ) {
-	$GLOBALS['hb_cart'] = hb_get_cart();
-}
