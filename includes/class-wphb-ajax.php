@@ -450,6 +450,11 @@ class WPHB_Ajax {
 			$check_in_date  = $normalized_dates['check_in_date'];
 			$check_out_date = $normalized_dates['check_out_date'];
 
+			$min_nights_validation = hb_validate_minimum_booking_nights( $check_in_date, $check_out_date );
+			if ( is_wp_error( $min_nights_validation ) ) {
+				throw new Exception( $min_nights_validation->get_error_message() );
+			}
+
 			// Check to add extra
 			$hb_optional_quantity_selected = WPHB_Helpers::get_param( 'hb_optional_quantity_selected', [] );
 			$hb_optional_quantity          = WPHB_Helpers::get_param( 'hb_optional_quantity', [] );

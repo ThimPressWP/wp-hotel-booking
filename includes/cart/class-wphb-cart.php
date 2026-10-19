@@ -255,6 +255,13 @@ class WPHB_Cart {
 			return new WP_Error( 'hotel_booking_add_to_cart_error', __( 'Room quantity is invalid.', 'wp-hotel-booking' ) );
 		}
 
+		if ( ! empty( $params['check_in_date'] ) && ! empty( $params['check_out_date'] ) ) {
+			$min_nights_validation = hb_validate_minimum_booking_nights( $params['check_in_date'], $params['check_out_date'] );
+			if ( is_wp_error( $min_nights_validation ) ) {
+				return $min_nights_validation;
+			}
+		}
+
 		$cart_item_id = $this->generate_cart_id( $params );
 		if ( $qty === 0 ) {
 			return $this->remove_cart_item( $cart_item_id );

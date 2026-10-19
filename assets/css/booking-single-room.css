@@ -14,8 +14,17 @@
 	text-align: center;
 }
 
-.hotel_booking_room_errors{
-	color: #f00;
+.hotel_booking_room_errors {
+	color: #721c24;
+	background-color: #f8d7da;
+	border: 1px solid #f5c6cb;
+	border-radius: 4px;
+	padding: 10px 14px;
+	margin-bottom: 15px;
+	width: 100%;
+	font-size: 14px;
+	line-height: 1.4;
+	box-sizing: border-box;
 }
 #hotel_booking_room_hidden .mfp-close {
 	display: none;

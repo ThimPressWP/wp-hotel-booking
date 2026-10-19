@@ -82,10 +82,18 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 				}
 
 				if ( isset( $this->_options[ $name ] ) ) {
-					return $this->_options[ $name ];
+					$value = $this->_options[ $name ];
 				} else {
 					$this->_options[ $name ] = get_option( $name, $default );
 					$value = $this->_options[ $name ];
+				}
+
+				if ( $name === $this->_option_prefix . 'minimum_booking_day' ) {
+					if ( empty( $value ) || (int) $value < 1 ) {
+						$value = max( 1, (int) $default );
+					} else {
+						$value = (int) $value;
+					}
 				}
 			} catch ( Throwable $e ) {
 				error_log( __METHOD__ . " :$name: " . $e->getMessage() );
@@ -106,6 +114,10 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 			try {
 				if ( strpos( $name, 'tp_hotel_booking_' ) === false ) {
 					$name = $this->_option_prefix . $name;
+				}
+
+				if ( $name === $this->_option_prefix . 'minimum_booking_day' ) {
+					$value = max( 1, (int) $value );
 				}
 
 				if ( $name === 'tp_hotel_booking_offline-payment' && is_array( $value ) && isset( $value['instruction'] ) ) {
@@ -236,7 +248,11 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 				if ( $options = $wpdb->get_results( $query ) ) {
 					foreach ( $options as $option ) {
 						$name                    = $option->option_name;
-						$this->_options[ $name ] = maybe_unserialize( $option->option_value );
+						$val                     = maybe_unserialize( $option->option_value );
+						if ( $name === $this->_option_prefix . 'minimum_booking_day' ) {
+							$val = max( 1, (int) $val );
+						}
+						$this->_options[ $name ] = $val;
 					}
 				}
 			} catch ( Throwable $e ) {

@@ -5,14 +5,19 @@ if ( ! isset( $room ) ) {
 	return;
 }
 $room_id     = $room->ID;
-$block_id    = get_post_meta( $room_id, 'hb_blocked_id', true );
-$dates_block = get_post_meta( $block_id, 'hb_blocked_time' );
+$dates_block = function_exists( 'hb_get_room_blocked_dates' ) ? hb_get_room_blocked_dates( $room_id ) : array();
 $max_adult   = (int) get_post_meta( $room_id, '_hb_room_capacity_adult', true );
 $max_adult   = $max_adult > 0 ? $max_adult : 1;
 $max_child   = (int) get_post_meta( $room_id, '_hb_max_child_per_room', true );
 
-$check_in_date  = $room->get_data('check_in_date') ?? date( 'Y/m/d' );
-$check_out_date = $room->get_data( 'check_out_date' ) ?? date( 'Y/m/d', strtotime( '+1 day' ) );
+$minium_booking_night = (int) WPHB_Settings::instance()->get( 'minimum_booking_day', 1 );
+$minium_booking_night = max( 1, $minium_booking_night );
+
+$check_in_date  = $room->get_data( 'check_in_date' ) ?: date( 'Y/m/d' );
+$check_out_date = $room->get_data( 'check_out_date' ) ?: date( 'Y/m/d', strtotime( "+{$minium_booking_night} day" ) );
+if ( strtotime( $check_out_date ) <= strtotime( $check_in_date ) ) {
+	$check_out_date = date( 'Y/m/d', strtotime( $check_in_date . " +{$minium_booking_night} day" ) );
+}
 $adults         = hb_get_request( 'adults', 1 );
 $children       = hb_get_request( 'max_child', 0 );
 $room_qty       = $room->get_data( 'quantity' ) ?? 1;

@@ -495,7 +495,7 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 					echo implode( '', $html );
 					break;
 				case 'number_of_rooms':
-					$minium_booking_night = WPHB_Settings::instance()->get( 'minimum_booking_day', 1 );
+					$minium_booking_night = max( 1, (int) WPHB_Settings::instance()->get( 'minimum_booking_day', 1 ) );
 					$available_qty = hotel_booking_get_room_available(
 						$post->ID,
 						array(

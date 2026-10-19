@@ -12,8 +12,7 @@ if ( ! isset( $room ) ) {
 	return;
 }
 $room_id     = $room->ID;
-$block_id    = get_post_meta( $room_id, 'hb_blocked_id', true );
-$dates_block = get_post_meta( $block_id, 'hb_blocked_time' );
+$dates_block = function_exists( 'hb_get_room_blocked_dates' ) ? hb_get_room_blocked_dates( $room_id ) : array();
 $max_adult   = (int) get_post_meta( $room_id, '_hb_room_capacity_adult', true );
 $max_adult   = $max_adult > 0 ? $max_adult : 1;
 $max_child   = (int) get_post_meta( $room_id, '_hb_max_child_per_room', true );

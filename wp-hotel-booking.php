@@ -728,7 +728,7 @@ class WP_Hotel_Booking {
 		}
 		$upload_dir          = wp_upload_dir();
 		$upload_base_url     = $upload_dir['baseurl'];
-		$min_booking_date    = get_option( 'tp_hotel_booking_minimum_booking_day' ) ? get_option( 'tp_hotel_booking_minimum_booking_day' ) : 0;
+		$min_booking_date    = (int) hb_settings()->get( 'minimum_booking_day', 1 );
 		$cart_page_url       = ! empty( hb_settings()->get( 'cart_page_id' ) ) ? get_permalink( hb_settings()->get( 'cart_page_id' ) ) : '';
 		$checkout_page_url   = ! empty( hb_settings()->get( 'checkout_page_id' ) ) ? get_permalink( hb_settings()->get( 'checkout_page_id' ) ) : '';
 		$currency            = get_option( 'tp_hotel_booking_currency', 'USD' );
@@ -772,11 +772,8 @@ class WP_Hotel_Booking {
 				<?php
 				$room_id        = get_the_ID();
 				$selected_block = array();
-				if ( $room_id ) {
-					$calendar_id = get_post_meta( $room_id, 'hb_blocked_id', true );
-					if ( $calendar_id ) {
-						$selected_block = get_post_meta( $calendar_id, 'hb_blocked_time' );
-					}
+				if ( $room_id && function_exists( 'hb_get_room_blocked_dates' ) ) {
+					$selected_block = hb_get_room_blocked_dates( $room_id );
 				}
 				echo json_encode( $selected_block );
 				?>

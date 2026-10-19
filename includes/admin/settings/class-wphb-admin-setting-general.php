@@ -145,7 +145,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_General' ) ) {
 						'title'   => __( 'Minimum booking nights', 'wp-hotel-booking' ),
 						'default' => 1,
 						'min'     => 1,
-						'step'    => 'any',
+						'step'    => 1,
 					),
 					array(
 						'type'    => 'number',

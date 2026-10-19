@@ -952,6 +952,7 @@ if ( ! function_exists( 'hb_i18n' ) ) {
 			'empty_check_out_date'           => __( 'Please select check out date.', 'wp-hotel-booking' ),
 			'check_in_date_must_be_greater'  => __( 'Check in date must be greater than the current.', 'wp-hotel-booking' ),
 			'check_out_date_must_be_greater' => __( 'Check out date must be greater than the check in.', 'wp-hotel-booking' ),
+			'minimum_booking_nights'         => __( 'Minimum booking is %d nights.', 'wp-hotel-booking' ),
 			'enter_coupon_code'              => __( 'Please enter coupon code.', 'wp-hotel-booking' ),
 			'review_rating_required'         => __( 'Please select a rating.', 'wp-hotel-booking' ),
 			'review_content_required'        => __( 'Please enter a review.', 'wp-hotel-booking' ),
@@ -2908,6 +2909,41 @@ if ( ! function_exists( 'hb_normalize_booking_date_range' ) ) {
 	}
 }
 
+if ( ! function_exists( 'hb_validate_minimum_booking_nights' ) ) {
+	/**
+	 * Validate date range against global minimum booking nights.
+	 *
+	 * @param string $check_in_date Y/m/d format
+	 * @param string $check_out_date Y/m/d format
+	 * @return true|WP_Error
+	 */
+	function hb_validate_minimum_booking_nights( $check_in_date, $check_out_date ) {
+		$min_nights = (int) WPHB_Settings::instance()->get( 'minimum_booking_day', 1 );
+		if ( $min_nights <= 1 ) {
+			return true;
+		}
+
+		$check_in_dt  = DateTimeImmutable::createFromFormat( '!Y/m/d', $check_in_date, wp_timezone() );
+		$check_out_dt = DateTimeImmutable::createFromFormat( '!Y/m/d', $check_out_date, wp_timezone() );
+		if ( ! $check_in_dt || ! $check_out_dt ) {
+			return true;
+		}
+
+		$nights = (int) $check_in_dt->diff( $check_out_dt )->days;
+		if ( $nights < $min_nights ) {
+			return new WP_Error(
+				'minimum_booking_nights',
+				sprintf(
+					_n( 'Minimum booking is %d night.', 'Minimum booking is %d nights.', $min_nights, 'wp-hotel-booking' ),
+					$min_nights
+				)
+			);
+		}
+
+		return true;
+	}
+}
+
 if ( ! function_exists( 'hb_get_pages' ) ) {
 
 	function hb_get_pages() {
@@ -3169,5 +3205,152 @@ if ( ! function_exists( 'wp_hotel_booking_get_count_rating' ) ) {
 		);
 
 		return empty( $count ) ? 0 : $count;
+	}
+}
+
+if ( ! function_exists( 'hb_get_room_blocked_dates' ) ) {
+	/**
+	 * Get all blocked dates (timestamps) for a room, including manual calendar blocks
+	 * and dates where room capacity is fully booked by existing completed/processing orders.
+	 *
+	 * @param int|WP_Post|null $room_id
+	 * @return string[] Array of Unix timestamps (as strings) representing blocked dates.
+	 */
+	function hb_get_room_blocked_dates( $room_id = null ) {
+		if ( empty( $room_id ) ) {
+			$room_id = get_the_ID();
+		}
+		if ( $room_id instanceof WP_Post ) {
+			$room_id = $room_id->ID;
+		}
+		$room_id = absint( $room_id );
+		if ( ! $room_id ) {
+			return array();
+		}
+
+		$blocked_timestamps = array();
+
+		// 1. Manual blocks from hb_blocked post type
+		$calendar_id = get_post_meta( $room_id, 'hb_blocked_id', true );
+		if ( ! empty( $calendar_id ) ) {
+			$manual_blocks = get_post_meta( $calendar_id, 'hb_blocked_time' );
+			if ( is_array( $manual_blocks ) ) {
+				foreach ( $manual_blocks as $ts ) {
+					$normalized = strtotime( gmdate( 'Y-m-d', (int) $ts ) );
+					if ( $normalized ) {
+						$blocked_timestamps[] = (string) $normalized;
+					}
+				}
+			}
+		}
+
+		// 2. Booked dates from orders where room capacity is exhausted
+		$num_of_rooms = absint( get_post_meta( $room_id, '_hb_num_of_rooms', true ) );
+		if ( $num_of_rooms < 1 ) {
+			$num_of_rooms = 1;
+		}
+
+		$booked_qty_per_night = array();
+		$processed_order_ids  = array();
+
+		// 2a. From _hb_dates_booked post meta
+		$dates_booked_meta = get_post_meta( $room_id, '_hb_dates_booked', true );
+		if ( is_array( $dates_booked_meta ) && ! empty( $dates_booked_meta ) ) {
+			foreach ( $dates_booked_meta as $order_id => $data_order ) {
+				$order_id = absint( $order_id );
+				$status   = isset( $data_order['status'] ) ? (string) $data_order['status'] : '';
+				if ( ! in_array( $status, array( 'hb-completed', 'hb-processing', 'completed', 'processing' ), true ) ) {
+					continue;
+				}
+
+				// If post exists, verify post_status has not changed to cancelled/refunded
+				if ( $order_id ) {
+					$post_status = get_post_status( $order_id );
+					if ( $post_status && ! in_array( $post_status, array( 'hb-completed', 'hb-processing' ), true ) ) {
+						continue;
+					}
+					$processed_order_ids[] = $order_id;
+				}
+
+				$qty = isset( $data_order['quantity'] ) ? absint( $data_order['quantity'] ) : 1;
+				$qty = max( 1, $qty );
+
+				if ( isset( $data_order['dates_booked'] ) && is_array( $data_order['dates_booked'] ) ) {
+					// dates_booked contains timestamps from check-in to check-out inclusive.
+					// A guest occupies the nights from check-in up to (not including) check-out date.
+					$dates_count = count( $data_order['dates_booked'] );
+					$nights      = $dates_count > 1 ? array_slice( $data_order['dates_booked'], 0, -1 ) : $data_order['dates_booked'];
+
+					foreach ( $nights as $night_ts ) {
+						$night_key = strtotime( gmdate( 'Y-m-d', (int) $night_ts ) );
+						if ( $night_key ) {
+							$booked_qty_per_night[ $night_key ] = ( $booked_qty_per_night[ $night_key ] ?? 0 ) + $qty;
+						}
+					}
+				}
+			}
+		}
+
+		// 2b. From hotel_booking_order_items DB table (ensures active orders not in meta are also accounted for)
+		global $wpdb;
+		if ( isset( $wpdb->hotel_booking_order_items ) ) {
+			$items_table = $wpdb->hotel_booking_order_items;
+			$meta_table  = $wpdb->prefix . 'hotel_booking_order_itemmeta';
+
+			$order_rows = $wpdb->get_results( $wpdb->prepare(
+				"SELECT oi.order_id,
+				        MAX(CASE WHEN oim.meta_key = 'check_in_date' THEN oim.meta_value END) AS check_in_date,
+				        MAX(CASE WHEN oim.meta_key = 'check_out_date' THEN oim.meta_value END) AS check_out_date,
+				        MAX(CASE WHEN oim.meta_key = 'qty' THEN oim.meta_value END) AS qty
+				 FROM {$items_table} AS oi
+				 INNER JOIN {$meta_table} AS oim ON oi.order_item_id = oim.hotel_booking_order_item_id
+				 INNER JOIN {$wpdb->posts} AS p ON oi.order_id = p.ID
+				 WHERE oi.order_item_type = 'line_item'
+				   AND p.post_type = 'hb_booking'
+				   AND p.post_status IN ('hb-completed', 'hb-processing')
+				   AND oi.order_item_id IN (
+				       SELECT hotel_booking_order_item_id
+				       FROM {$meta_table}
+				       WHERE meta_key = 'product_id' AND meta_value = %d
+				   )
+				 GROUP BY oi.order_item_id, oi.order_id",
+				$room_id
+			) );
+
+			if ( ! empty( $order_rows ) ) {
+				foreach ( $order_rows as $row ) {
+					$order_id = absint( $row->order_id );
+					// Skip if already processed in Source 2a
+					if ( in_array( $order_id, $processed_order_ids, true ) ) {
+						continue;
+					}
+
+					$check_in_ts  = is_numeric( $row->check_in_date ) ? (int) $row->check_in_date : strtotime( $row->check_in_date );
+					$check_out_ts = is_numeric( $row->check_out_date ) ? (int) $row->check_out_date : strtotime( $row->check_out_date );
+					$qty          = max( 1, absint( $row->qty ) );
+
+					if ( $check_in_ts && $check_out_ts && $check_out_ts > $check_in_ts ) {
+						$cur = strtotime( gmdate( 'Y-m-d', $check_in_ts ) );
+						$end = strtotime( gmdate( 'Y-m-d', $check_out_ts ) );
+						while ( $cur < $end ) {
+							$booked_qty_per_night[ $cur ] = ( $booked_qty_per_night[ $cur ] ?? 0 ) + $qty;
+							$cur = strtotime( '+1 day', $cur );
+						}
+					}
+				}
+			}
+		}
+
+		// Add nights where booked quantity >= total room capacity
+		foreach ( $booked_qty_per_night as $night_ts => $booked_qty ) {
+			if ( $booked_qty >= $num_of_rooms ) {
+				$blocked_timestamps[] = (string) $night_ts;
+			}
+		}
+
+		$blocked_timestamps = array_values( array_unique( $blocked_timestamps ) );
+		sort( $blocked_timestamps, SORT_NUMERIC );
+
+		return apply_filters( 'hb_get_room_blocked_dates', $blocked_timestamps, $room_id );
 	}
 }

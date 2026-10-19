@@ -568,6 +568,8 @@ export const validateBookingDateRange = (
 		emptyCheckInMessage = 'Please select check in date.',
 		emptyCheckOutMessage = 'Please select check out date.',
 		invalidRangeMessage = 'Check out date must be greater than the check in.',
+		minBookingDays = 1,
+		minBookingDaysMessage = '',
 		toggleErrorClass = false,
 		normalizeFieldValues = false,
 	} = {}
@@ -643,6 +645,27 @@ export const validateBookingDateRange = (
 			checkInDate,
 			checkOutDate,
 		};
+	}
+
+	const minDays = getMinBookingDays( minBookingDays );
+	if ( minDays > 1 && checkInDateObject && checkOutDateObject ) {
+		const msDiff = checkOutDateObject.getTime() - checkInDateObject.getTime();
+		const dayDiff = Math.round( msDiff / ( 1000 * 60 * 60 * 24 ) );
+		if ( dayDiff < minDays ) {
+			if ( toggleErrorClass ) {
+				checkInField.classList.add( 'error' );
+				checkOutField.classList.add( 'error' );
+			}
+
+			return {
+				ok: false,
+				error: minBookingDaysMessage || `Minimum booking is ${ minDays } nights.`,
+				checkInField,
+				checkOutField,
+				checkInDate,
+				checkOutDate,
+			};
+		}
 	}
 
 	if ( normalizeFieldValues ) {

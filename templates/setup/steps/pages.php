@@ -17,7 +17,7 @@ if ( empty( $pages ) ) {
 <h2><?php esc_html_e( 'Pages Options', 'wp-hotel-booking' ); ?></h2>
 
 <p><?php esc_html_e( 'The pages will display content of Wp Hotel\'s necessary pages, such as: Rooms, Checkout, Cart', 'wp-hotel-booking' ); ?></p>
-<p><?php printf( esc_html__( 'If you are not sure, click <a href="%s" id="create-pages">here</a> to create pages automatically.', 'wp-hotel-booking' ), wp_nonce_url( admin_url( 'index.php?page=wphb-setup&step=pages&auto-create' ) ), 'setup-create-pages' ); ?></p>
+<p><?php printf( wp_kses( __( 'If you are not sure, click <a href="%s" id="create-pages">here</a> to create pages automatically.', 'wp-hotel-booking' ), array( 'a' => array( 'href' => array(), 'id' => array() ) ) ), esc_url( wp_nonce_url( admin_url( 'index.php?page=wphb-setup&step=pages&auto-create' ) ) ) ); ?></p>
 
 <table class="form-field">
 	<?php foreach ( $pages as $key => $page ) { ?>

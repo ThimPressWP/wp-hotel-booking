@@ -148,7 +148,20 @@ abstract class WPHB_Admin_Setting_Page {
 					$option_value = isset( $_POST[ $id ] ) ? 1 : 0;
 					break;
 				case 'number':
-					$option_value = isset( $_POST[ $id ] ) ? floatval( $_POST[ $id ] ) : 0;
+					if ( isset( $_POST[ $id ] ) && $_POST[ $id ] !== '' ) {
+						$option_value = floatval( $_POST[ $id ] );
+						if ( isset( $setting['min'] ) && is_numeric( $setting['min'] ) && $option_value < floatval( $setting['min'] ) ) {
+							$option_value = floatval( $setting['min'] );
+						}
+						if ( isset( $setting['max'] ) && is_numeric( $setting['max'] ) && $option_value > floatval( $setting['max'] ) ) {
+							$option_value = floatval( $setting['max'] );
+						}
+					} else {
+						$option_value = isset( $setting['default'] ) && $setting['default'] !== '' ? floatval( $setting['default'] ) : 0;
+						if ( isset( $setting['min'] ) && is_numeric( $setting['min'] ) && $option_value < floatval( $setting['min'] ) ) {
+							$option_value = floatval( $setting['min'] );
+						}
+					}
 					break;
 				case 'text':
 					$option_value = isset( $_POST[ $id ] ) ? sanitize_text_field( $_POST[ $id ] ) : $default;

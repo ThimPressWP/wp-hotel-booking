@@ -13,11 +13,15 @@
  * Prevent loading this file directly
  */
 defined( 'ABSPATH' ) || exit();
-$minium_booking_night = WPHB_Settings::instance()->get( 'minimum_booking_day', 1 );
+$minium_booking_night = (int) WPHB_Settings::instance()->get( 'minimum_booking_day', 1 );
+$minium_booking_night = max( 1, $minium_booking_night );
 // $minium_checkout_date = 1 + $minium_booking_night;
 
 $check_in_date  = hb_get_request( 'check_in_date', date( 'Y/m/d' ) );
 $check_out_date = hb_get_request( 'check_out_date', date( 'Y/m/d', strtotime( "+{$minium_booking_night} day" ) ) );
+if ( strtotime( $check_out_date ) <= strtotime( $check_in_date ) ) {
+	$check_out_date = date( 'Y/m/d', strtotime( $check_in_date . " +{$minium_booking_night} day" ) );
+}
 $adults         = hb_get_request( 'adults', 1 );
 $children       = hb_get_request( 'max_child', 0 );
 $room_qty       = hb_get_request( 'room_qty', 1 );

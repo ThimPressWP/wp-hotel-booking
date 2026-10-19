@@ -390,8 +390,9 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 			$first_month_pricing  = $this->get_room_pricing( $room_id, $first_month_date_str );
 			$second_month_pricing = $this->get_room_pricing( $room_id, $second_month_date_obj->format('m/d/Y') );
 
-			$response->status        = 'success';
-			$response->data->pricing = array_merge( $first_month_pricing, $second_month_pricing );
+			$response->status              = 'success';
+			$response->data->pricing       = array_merge( $first_month_pricing, $second_month_pricing );
+			$response->data->blocked_dates = function_exists( 'hb_get_room_blocked_dates' ) ? hb_get_room_blocked_dates( $room_id ) : array();
 		} catch (Exception $e) {
 			$response->message = $e->getMessage();
 		}
@@ -515,6 +516,11 @@ class WPHB_REST_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 			}
 			$check_in_date  = $normalized_dates['check_in_date'];
 			$check_out_date = $normalized_dates['check_out_date'];
+
+			$min_nights_validation = hb_validate_minimum_booking_nights( $check_in_date, $check_out_date );
+			if ( is_wp_error( $min_nights_validation ) ) {
+				throw new Exception( $min_nights_validation->get_error_message() );
+			}
 			if ( ! $room_id ) {
 				throw new Exception( esc_html__( 'roomId is required', 'wp-hotel-booking' ) );
 			}

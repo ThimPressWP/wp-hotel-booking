@@ -130,6 +130,15 @@ class WPHB_Room extends WPHB_Product_Room_Base {
 	}
 
 	/**
+	 * Get all blocked dates (timestamps) for the room.
+	 *
+	 * @return string[]
+	 */
+	public function get_all_blocked_dates() {
+		return hb_get_room_blocked_dates( $this->get_id() );
+	}
+
+	/**
 	 * Get unique instance of HB_Room
 	 *
 	 * @param $room

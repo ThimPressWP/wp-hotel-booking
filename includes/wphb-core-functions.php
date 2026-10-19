@@ -100,24 +100,28 @@ if ( ! function_exists( 'hotel_booking_get_room_available' ) ) {
 				}
 			}
 
-			$blocked_id = get_post_meta( $room_id, 'hb_blocked_id', true );
-			if ( ! empty( $blocked_id ) ) {
-				$dates_timestamp_blocked = get_post_meta( $blocked_id, 'hb_blocked_time', false );
-				if ( ! empty( $dates_timestamp_blocked ) ) {
-					$dates_str_blocked = [];
-					foreach ( $dates_timestamp_blocked as $date_timestamp_blocked ) {
-						$dates_str_blocked[] = gmdate( WPHB_Datetime::$format, $date_timestamp_blocked );
+			$all_blocked_timestamps = function_exists( 'hb_get_room_blocked_dates' ) ? hb_get_room_blocked_dates( $room_id ) : array();
+			if ( empty( $all_blocked_timestamps ) ) {
+				$blocked_id = get_post_meta( $room_id, 'hb_blocked_id', true );
+				if ( ! empty( $blocked_id ) ) {
+					$all_blocked_timestamps = get_post_meta( $blocked_id, 'hb_blocked_time', false );
+				}
+			}
+
+			if ( ! empty( $all_blocked_timestamps ) ) {
+				$dates_str_blocked = [];
+				foreach ( $all_blocked_timestamps as $date_timestamp_blocked ) {
+					$dates_str_blocked[] = gmdate( WPHB_Datetime::$format, (int) $date_timestamp_blocked );
+				}
+
+				$date_timestamp_check = $check_in_date_timestamp;
+				while ( $date_timestamp_check < $check_out_date_timestamp ) {
+					$date_check = gmdate( WPHB_Datetime::$format, $date_timestamp_check );
+					if ( in_array( $date_check, $dates_str_blocked, true ) ) {
+						throw new Exception( __( 'This room is not available!', 'wp-hotel-booking' ) );
 					}
 
-					$date_timestamp_check = $check_in_date_timestamp;
-					while ( $date_timestamp_check < $check_out_date_timestamp ) {
-						$date_check = gmdate( WPHB_Datetime::$format, $date_timestamp_check );
-						if ( in_array( $date_check, $dates_str_blocked ) ) {
-							throw new Exception( __( 'This room is not available!', 'wp-hotel-booking' ) );
-						}
-
-						$date_timestamp_check = strtotime( $date_check . ' +1 day' );
-					}
+					$date_timestamp_check = strtotime( $date_check . ' +1 day' );
 				}
 			}
 
