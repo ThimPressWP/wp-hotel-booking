@@ -2994,108 +2994,31 @@ if ( ! function_exists( 'hb_dropdown_pages' ) ) {
 	}
 }
 
-/**
- *
- */
-if ( ! function_exists( 'wp_hote_booking_blocked_days' ) ) {
+if ( ! function_exists( 'wp_hotel_booking_blocked_days' ) ) {
+	/**
+	 * Backward compatibility stub.
+	 *
+	 * @param int|null $post_id
+	 * @param bool     $strtotime
+	 * @return array
+	 */
 	function wp_hotel_booking_blocked_days( $post_id = null, $strtotime = false ) {
-		global $wpdb, $post;
-		$unavailable_days = array();
-		if ( ! $post || ! is_single( $post->ID ) || get_post_type( $post->ID ) !== 'hb_room' ) {
-			return $unavailable_days;
-		}
 		if ( empty( $post_id ) ) {
-			$post_id = $post->ID;
-		}
-		$title = $wpdb->prepare(
-			"
-				SELECT room.post_title
-				FROM $wpdb->posts AS room
-				WHERE
-					room.post_status = %s
-					AND room.post_type = %s
-					AND room.ID = room_meta.post_id
-				GROUP BY room.ID
-			",
-			'publish',
-			'hb_room'
-		);
-
-		$query = $wpdb->prepare(
-			"
-				SELECT calendar.ID as calendarID, blocked.meta_value AS selected, room_meta.post_id AS ID, ( $title ) AS post_title
-				FROM $wpdb->posts AS calendar
-				INNER JOIN $wpdb->postmeta AS blocked ON calendar.ID = blocked.post_id
-				INNER JOIN $wpdb->postmeta AS room_meta ON room_meta.meta_value = calendar.ID
-				WHERE
-					calendar.post_type = %s
-					AND calendar.post_status = %s
-					AND blocked.meta_key = %s
-					AND room_meta.meta_key = %s
-					AND room_meta.post_id = %s
-				ORDER BY calendarID
-			",
-			'hb_blocked',
-			'publish',
-			'hb_blocked_time',
-			'hb_blocked_id',
-			$post_id
-		);
-
-		$results = $wpdb->get_results( $query, OBJECT );
-		// compare the order booking date with the unavailable days
-		$room_booked = WPHB_Room::instance( $post_id )->get_dates_available();
-
-		if ( ! empty( $room_booked ) ) {
-			$block_id = get_post_meta( $post_id, 'hb_blocked_id', true );
-			if ( empty( $block_id ) ) {
-				$block_id = wp_insert_post(
-					array(
-						'post_type'    => 'hb_blocked',
-						'post_status'  => 'publish',
-						'post_title'   => __( 'Block item', 'wp-hotel-booking' ),
-						'post_content' => __( 'Block item', 'wp-hotel-booking' ),
-					)
-				);
-				if ( ! is_wp_error( $block_id ) ) {
-					add_post_meta( $post_id, 'hb_blocked_id', $block_id );
-				}
-			}
-			$block_time = get_post_meta( $block_id, 'hb_blocked_time', false );
-			foreach ( $room_booked as $date => $count ) {
-				if ( $count <= 0 ) {
-					$data             = new stdClass();
-					$data->ID         = $post_id;
-					$data->calendarID = $block_id;
-					$data->selected   = $date;
-					$data->post_title = get_the_title( $post_id );
-					$results[]        = $data;
-					if ( ! in_array( $date, $block_time ) ) {
-						add_post_meta( $block_id, 'hb_blocked_time', $date );
-					}
-				}
-			}
+			$post_id = get_the_ID();
 		}
 
-		// end compare
+		$blocked_timestamps = function_exists( 'hb_get_room_blocked_dates' ) ? hb_get_room_blocked_dates( $post_id ) : array();
 
-		if ( is_array( $results ) && count( $results ) > 0 ) {
-			foreach ( $results as $calendar ) {
-				if ( ! $strtotime ) {
-					if ( ! array_key_exists( $calendar->selected, $unavailable_days ) ) {
-						$unavailable_days[] = date_i18n( 'Y-m-d', $calendar->selected );
-					}
-				} else {
-					if ( ! array_key_exists( $calendar->selected, $unavailable_days ) ) {
-						$unavailable_days[] = $calendar->selected;
-					}
-				}
-			}
+		if ( $strtotime ) {
+			return $blocked_timestamps;
 		}
 
-		apply_filters( 'wp_hotel_booking_blocked_days', $unavailable_days, $post_id );
+		$unavailable_days = array();
+		foreach ( $blocked_timestamps as $ts ) {
+			$unavailable_days[] = gmdate( 'Y-m-d', (int) $ts );
+		}
 
-		return $unavailable_days;
+		return apply_filters( 'wp_hotel_booking_blocked_days', $unavailable_days, $post_id );
 	}
 }
 
