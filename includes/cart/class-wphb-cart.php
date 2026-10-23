@@ -572,11 +572,11 @@ class WPHB_Cart {
 
 		// refresh cart_items_count
 		$this->cart_items_count = count( $this->cart_contents );
-//
-//		// refresh customer
+
+		// refresh customer
 		$this->load_customer();
-//
-//		// refresh booking
+
+		// refresh booking
 		$this->load_booking();
 	}
 
