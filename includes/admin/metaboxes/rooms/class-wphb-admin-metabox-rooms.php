@@ -139,7 +139,7 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 						'std'             => '',
 						'editor'          => true,
 						'editor_settings' => array(
-							'editor_height' => 5,
+							'editor_height' => 350,
 							'editor_class'  => 'wphb_width_editor',
 						),
 						'wrapper_class'   => '_wphb_rule_room_ele',

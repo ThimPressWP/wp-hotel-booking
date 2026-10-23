@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-19T09:17:53+00:00\n"
+"POT-Creation-Date: 2026-10-23T07:05:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wp-hotel-booking\n"
@@ -672,7 +672,7 @@ msgstr ""
 #: includes/admin/wphb-admin-functions.php:295
 #: includes/class-wphb-gdpr.php:108
 #: templates/account/bookings.php:38
-#: templates/cart/cart.php:560
+#: templates/cart/cart.php:558
 #: templates/checkout/thank-you.php:70
 #: templates/emails/booking-details.php:51
 #: templates/search/booking-room-details.php:41
@@ -715,7 +715,7 @@ msgid "Sub Total"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items.php:173
-#: templates/cart/cart.php:501
+#: templates/cart/cart.php:499
 #: templates/checkout/thank-you.php:136
 msgid "Tax"
 msgstr ""
@@ -727,7 +727,7 @@ msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items.php:199
 #: includes/admin/settings/class-wphb-admin-setting-general.php:179
-#: templates/cart/cart.php:576
+#: templates/cart/cart.php:574
 #: templates/checkout/thank-you.php:162
 #: templates/emails/booking-details.php:56
 msgid "Advance Payment"
@@ -1220,17 +1220,17 @@ msgid "Pages options for system."
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:44
-#: includes/wphb-functions.php:3132
+#: includes/wphb-functions.php:3055
 msgid "Rooms Page"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:54
-#: includes/wphb-functions.php:3144
+#: includes/wphb-functions.php:3067
 msgid "Checkout Page"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:59
-#: includes/wphb-functions.php:3150
+#: includes/wphb-functions.php:3073
 msgid "Cart Page"
 msgstr ""
 
@@ -1239,7 +1239,7 @@ msgid "Redirect to page after book"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:69
-#: includes/wphb-functions.php:3160
+#: includes/wphb-functions.php:3083
 msgid "Account Page"
 msgstr ""
 
@@ -1248,7 +1248,7 @@ msgid "Terms And Conditions Page"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:79
-#: includes/wphb-functions.php:3172
+#: includes/wphb-functions.php:3095
 msgid "Thank You Page"
 msgstr ""
 
@@ -2344,14 +2344,14 @@ msgid "No coupon found in Trash"
 msgstr ""
 
 #: includes/coupons/class-wphb-coupon-hooks.php:94
-#: templates/cart/cart.php:538
-#: templates/checkout/checkout.php:306
+#: templates/cart/cart.php:536
+#: templates/checkout/checkout.php:326
 #, php-format
 msgid "Coupon applied: %s"
 msgstr ""
 
 #: includes/coupons/class-wphb-coupon-hooks.php:104
-#: templates/cart/cart.php:425
+#: templates/cart/cart.php:423
 #: templates/checkout/checkout.php:85
 msgid "Coupon"
 msgstr ""
@@ -3646,8 +3646,6 @@ msgstr ""
 
 #: includes/rest-api/v1/admin/class-wphb-admin-rooms-controller.php:120
 #: includes/rest-api/v1/admin/class-wphb-admin-rooms-controller.php:121
-#: includes/wphb-functions.php:3056
-#: includes/wphb-functions.php:3057
 msgid "Block item"
 msgstr ""
 
@@ -5870,11 +5868,11 @@ msgstr[1] ""
 msgid "Select a page&hellip;"
 msgstr ""
 
-#: includes/wphb-functions.php:3156
+#: includes/wphb-functions.php:3079
 msgid " Redirect to page after book"
 msgstr ""
 
-#: includes/wphb-functions.php:3166
+#: includes/wphb-functions.php:3089
 msgid "Terms Page"
 msgstr ""
 
@@ -5962,51 +5960,58 @@ msgstr ""
 msgid "Children: %d"
 msgstr ""
 
-#: templates/cart/cart.php:264
+#: templates/cart/cart.php:273
 msgid "Extra Services:"
 msgstr ""
 
-#: templates/cart/cart.php:336
+#: templates/cart/cart.php:302
+#, php-format
+msgid "%d night"
+msgid_plural "%d nights"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/cart/cart.php:337
 msgid "Room quantity"
 msgstr ""
 
-#: templates/cart/cart.php:428
+#: templates/cart/cart.php:426
 #: templates/checkout/checkout.php:88
 #: templates/checkout/customer-existing.php:39
 #: templates/single-room/room-calendar-pricing.php:31
 msgid "Apply"
 msgstr ""
 
-#: templates/cart/cart.php:447
+#: templates/cart/cart.php:445
 msgid "Cart Total"
 msgstr ""
 
-#: templates/cart/cart.php:454
+#: templates/cart/cart.php:452
 #: templates/emails/booking-details.php:43
 msgid "Subtotal"
 msgstr ""
 
-#: templates/cart/cart.php:482
+#: templates/cart/cart.php:480
 msgid "Extra Services"
 msgstr ""
 
-#: templates/cart/cart.php:508
+#: templates/cart/cart.php:506
 msgid "included"
 msgstr ""
 
-#: templates/cart/cart.php:595
+#: templates/cart/cart.php:593
 msgid "Proceed to Checkout"
 msgstr ""
 
-#: templates/cart/cart.php:614
+#: templates/cart/cart.php:612
 msgid "Your cart is empty"
 msgstr ""
 
-#: templates/cart/cart.php:619
+#: templates/cart/cart.php:617
 msgid "Looks like you haven't added any rooms yet. Start exploring our rooms!"
 msgstr ""
 
-#: templates/cart/cart.php:624
+#: templates/cart/cart.php:622
 msgid "Browse Rooms"
 msgstr ""
 
@@ -6015,7 +6020,7 @@ msgstr ""
 msgid "Your cart is empty!"
 msgstr ""
 
-#: templates/checkout/checkout.php:392
+#: templates/checkout/checkout.php:412
 #, php-format
 msgid "You have to <strong><a href=\"%1$s\">login</a></strong> or <strong><a href=\"%2$s\">register</a></strong> to checkout."
 msgstr ""

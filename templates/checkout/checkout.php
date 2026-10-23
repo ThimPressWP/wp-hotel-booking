@@ -39,7 +39,7 @@ $rooms = $cart->get_rooms();
 						printf(
 							__(
 								'You have to <strong><a href="%1$s">login</a></strong> or <strong><a href="%2$s">register</a></strong> to checkout.',
-								'sailing'
+								'wp-hotel-booking'
 							),
 							esc_url( wp_login_url( hb_get_checkout_url() ) ),
 							esc_url( wp_registration_url() )
@@ -63,11 +63,11 @@ $rooms = $cart->get_rooms();
 								stroke-linejoin="round" />
 						</svg>
 						<?php
-							esc_html_e( 'Have a coupon?', 'sailing' );
+							esc_html_e( 'Have a coupon?', 'wp-hotel-booking' );
 						?>
 						<a href="#" class="thim-hb-show-coupon-form">
 							<?php
-							esc_html_e( 'Click here to enter your code', 'sailing' );
+							esc_html_e( 'Click here to enter your code', 'wp-hotel-booking' );
 							?>
 						</a>
 					</div>
@@ -116,7 +116,7 @@ $rooms = $cart->get_rooms();
 				<div class="hb-order-summary">
 					<h3 class="hb-order-summary-title">
 						<?php
-						esc_html_e( 'Your order', 'sailing' );
+						esc_html_e( 'Your order', 'wp-hotel-booking' );
 						?>
 					</h3>
 
@@ -125,12 +125,12 @@ $rooms = $cart->get_rooms();
 						<div class="hb-order-summary-header">
 							<span class="hb-order-product-label">
 								<?php
-								esc_html_e( 'Product', 'sailing' );
+								esc_html_e( 'Product', 'wp-hotel-booking' );
 								?>
 							</span>
 							<span class="hb-order-subtotal-label">
 								<?php
-								esc_html_e( 'Subtotal', 'sailing' );
+								esc_html_e( 'Subtotal', 'wp-hotel-booking' );
 								?>
 							</span>
 						</div>
@@ -170,7 +170,7 @@ $rooms = $cart->get_rooms();
 									<p class="hb-order-item-date">
 										<span class="hb-meta-label">
 											<?php
-												_e( 'Date:', 'sailing' );
+												_e( 'Date:', 'wp-hotel-booking' );
 											?>
 										</span>
 										<?php
@@ -185,15 +185,15 @@ $rooms = $cart->get_rooms();
 									<p class="hb-order-item-guests">
 										<span class="hb-meta-label">
 											<?php
-												_e( 'Details:', 'sailing' );
+												_e( 'Details:', 'wp-hotel-booking' );
 											?>
 										</span>
 										<?php
-												echo esc_html( sprintf( __( 'Room: %d', 'sailing' ), $num_of_rooms ) );
+												echo esc_html( sprintf( __( 'Room: %d', 'wp-hotel-booking' ), $num_of_rooms ) );
 										?>
 										;
 										<?php
-												echo esc_html( sprintf( __( 'Adults: %d', 'sailing' ), $adult_qty ) );
+												echo esc_html( sprintf( __( 'Adults: %d', 'wp-hotel-booking' ), $adult_qty ) );
 										?>
 										<?php
 										if ( $child_qty > 0 ) :
@@ -201,7 +201,7 @@ $rooms = $cart->get_rooms();
 										;
 											<?php
 											echo esc_html(
-												sprintf( __( 'Children: %d', 'sailing' ), $child_qty )
+												sprintf( __( 'Children: %d', 'wp-hotel-booking' ), $child_qty )
 											);
 											?>
 											<?php
@@ -211,6 +211,7 @@ $rooms = $cart->get_rooms();
 
 									<!-- Extra Services -->
 									<?php
+									$extra_packages_total = 0;
 									if ( defined( 'WPHB_EXTRA_FILE' ) && $cart_extra ) :
 										?>
 										<?php
@@ -220,15 +221,26 @@ $rooms = $cart->get_rooms();
 										if ( $cart_contents ) {
 											foreach ( $cart_contents as $cart_item_id => $cart_item ) {
 												if ( isset( $cart_item->parent_id ) && $cart_item->parent_id === $cart_id ) {
-													$extra            = HB_Extra_Package::instance(
-														$cart_item->product_id
+													$extra            = $cart_item->product_data ?? HB_Extra_Package::instance(
+														$cart_item->product_id,
+														array(
+															'check_in_date'  => $check_in_date,
+															'check_out_date' => $check_out_date,
+															'quantity'       => $cart_item->quantity,
+														)
 													);
+													$extra_total_price = isset( $cart_item->amount_exclude_tax ) ? $cart_item->amount_exclude_tax : $extra->amount_exclude_tax();
+													$extra_packages_total += floatval( $extra_total_price );
+
 													$extra_packages[] = array(
-														'package_title' => $extra->title,
-														'package_price' => hb_format_price(
+														'package_title'    => $extra->title,
+														'package_price'    => hb_format_price(
 															$extra->amount_singular_exclude_tax
 														),
 														'package_quantity' => $cart_item->quantity,
+														'package_total'    => hb_format_price( $extra_total_price ),
+														'package_nights'   => ( isset( $extra->respondent ) && $extra->respondent === 'number' ) ? $nights_count : 1,
+														'package_respondent' => $extra->respondent ?? '',
 													);
 												}
 											}
@@ -239,7 +251,7 @@ $rooms = $cart->get_rooms();
 									<div class="hb-order-extra-services">
 										<span class="hb-meta-label">
 											<?php
-												esc_html_e( 'Extra services:', 'sailing' );
+												esc_html_e( 'Extra services:', 'wp-hotel-booking' );
 											?>
 										</span>
 										<ul class="hb-extra-services-list">
@@ -264,6 +276,14 @@ $rooms = $cart->get_rooms();
 														$extra_package['package_quantity']
 													);
 												?>
+												<?php if ( ! empty( $extra_package['package_nights'] ) && $extra_package['package_nights'] > 1 ) : ?>
+													× <?php echo esc_html( sprintf( _n( '%d night', '%d nights', $extra_package['package_nights'], 'wp-hotel-booking' ), $extra_package['package_nights'] ) ); ?>
+												<?php endif; ?>:
+												<?php
+													echo esc_html(
+														$extra_package['package_total']
+													);
+												?>
 												)
 											</li>
 												<?php
@@ -281,7 +301,7 @@ $rooms = $cart->get_rooms();
 							</div>
 							<div class="hb-order-item-price">
 								<?php
-										echo wp_kses_post( hb_format_price( $room->total ) );
+										echo wp_kses_post( hb_format_price( $room->total + $extra_packages_total ) );
 								?>
 							</div>
 						</div>
@@ -324,7 +344,7 @@ $rooms = $cart->get_rooms();
 						<div class="hb-order-summary-row hb-order-subtotal">
 							<span class="hb-order-label">
 								<?php
-								esc_html_e( 'Sub total', 'sailing' );
+								esc_html_e( 'Sub total', 'wp-hotel-booking' );
 								?>
 							</span>
 							<span class="hb-order-value hb_sub_total_value">
@@ -341,14 +361,14 @@ $rooms = $cart->get_rooms();
 						<div class="hb-order-summary-row hb-order-tax">
 							<span class="hb-order-label">
 								<?php
-									esc_html_e( 'Tax', 'sailing' );
+									esc_html_e( 'Tax', 'wp-hotel-booking' );
 								?>
 								<?php
 								if ( $tax < 0 ) :
 									?>
 								<small>(
 									<?php
-									esc_html_e( 'included', 'sailing' );
+									esc_html_e( 'included', 'wp-hotel-booking' );
 									?>
 									)</small>
 									<?php
@@ -374,7 +394,7 @@ $rooms = $cart->get_rooms();
 						<div class="hb-order-summary-row hb-order-total">
 							<span class="hb-order-label">
 								<?php
-								esc_html_e( 'Total', 'sailing' );
+								esc_html_e( 'Total', 'wp-hotel-booking' );
 								?>
 							</span>
 							<span class="hb-order-value hb_grand_total_value">
@@ -413,7 +433,7 @@ $rooms = $cart->get_rooms();
 							<input type="checkbox" name="tos" value="1" />
 							<?php
 									printf(
-										esc_html__( 'I agree with ', 'sailing' ) . '<a href="%s" target="_blank">%s</a>',
+										esc_html__( 'I agree with ', 'wp-hotel-booking' ) . '<a href="%s" target="_blank">%s</a>',
 										esc_url( get_permalink( $tos_page_id ) ),
 										esc_html( get_the_title( $tos_page_id ) )
 									);
@@ -428,7 +448,7 @@ $rooms = $cart->get_rooms();
 					<div class="hb-order-place">
 						<button type="submit" class="hb-btn hb-btn-place-order">
 							<?php
-							esc_html_e( 'Place order', 'sailing' );
+							esc_html_e( 'Place order', 'wp-hotel-booking' );
 							?>
 						</button>
 					</div>

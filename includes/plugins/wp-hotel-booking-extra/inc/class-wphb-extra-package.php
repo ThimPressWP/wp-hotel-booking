@@ -181,6 +181,24 @@ if ( ! class_exists( 'HB_Extra_Package' ) ) {
 			return $return;
 		}
 
+		/**
+		 * Magic __isset
+		 *
+		 * @param string $key
+		 * @return bool
+		 */
+		public function __isset( $key ) {
+			if ( property_exists( $this, $key ) ) {
+				return isset( $this->{$key} );
+			}
+
+			if ( ! $this->_post ) {
+				return false;
+			}
+
+			return $this->__get( $key ) !== null;
+		}
+
 		function get_data( $key = null ) {
 			if ( ! $key ) {
 				return;
