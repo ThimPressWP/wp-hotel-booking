@@ -175,6 +175,20 @@ abstract class WPHB_Admin_Setting_Page {
 					WPHB_Settings::instance()->set( $id . '_width', $option_width );
 					WPHB_Settings::instance()->set( $id . '_height', $option_height );
 					break;
+				case 'select':
+				case 'multiselect':
+				case 'select_page':
+					if ( isset( $_POST[ $id ] ) ) {
+						$option_value = WPHB_Helpers::sanitize_params_submitted( $_POST[ $id ] );
+					} else {
+						$option_value = ( $type === 'multiselect' || ( isset( $setting['type'] ) && $setting['type'] === 'multiselect' ) ) ? array() : ( isset( $setting['default'] ) ? $setting['default'] : '' );
+					}
+					$option_value = apply_filters( "wphb_admin_setting_save/{$type}", $option_value, $id, $setting );
+					break;
+				case 'radio':
+					$option_value = isset( $_POST[ $id ] ) ? sanitize_text_field( $_POST[ $id ] ) : ( isset( $setting['default'] ) ? $setting['default'] : '' );
+					$option_value = apply_filters( "wphb_admin_setting_save/{$type}", $option_value, $id, $setting );
+					break;
 				default:
 					if ( ! isset( $_POST[ $id ] ) ) {
 						continue 2;

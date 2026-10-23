@@ -82,25 +82,14 @@ class WPHB_Cart {
 			case 'cart_contents':
 				$return = $this->get_cart_contents();
 				break;
-
 			case 'cart_total_include_tax':
 				$return = $this->cart_total_include_tax();
 				break;
-
 			case 'cart_total_exclude_tax':
 				$return = $this->cart_total_exclude_tax();
 				break;
-
 			case 'cart_items_count':
 				$return = count( $this->get_cart_contents() );
-				break;
-
-			// old
-			case 'total_rooms':
-				$return = $this->get_total_rooms();
-				break;
-			case 'total_nights':
-				$return = $this->get_total_nights();
 				break;
 			case 'sub_total':
 				$return = $this->get_sub_total();
@@ -111,7 +100,13 @@ class WPHB_Cart {
 			case 'advance_payment':
 				$return = $this->get_advance_payment();
 				break;
-			// end old
+			case 'booking_sessions':
+				$return = $this->booking_sessions;
+				break;
+			case 'customer_sessions':
+				$return = $this->customer_sessions;
+				break;
+
 			default:
 				$return = apply_filters( 'hotel_booking_cart_get_magic', '', $key );
 				break;
@@ -455,11 +450,27 @@ class WPHB_Cart {
 			$this->booking_sessions = $this->booking_sessions->remove();
 		}
 
+		if ( $this->customer_sessions ) {
+			$this->customer_sessions = $this->customer_sessions->remove();
+		}
+
 		$this->set_customer( 'coupon', null );
 
 		do_action( 'hotel_booking_empty_cart' );
 		// refresh cart contents
 		$this->refresh();
+	}
+
+	/**
+	 * Completely reset cart, customer, booking sessions and runtime state (e.g. on user logout).
+	 */
+	public function reset_all_sessions() {
+		$this->empty_cart();
+
+		$this->customer_id    = null;
+		$this->customer_email = null;
+		$this->coupon         = null;
+		$this->booking_id     = null;
 	}
 
 	// generate cart item id

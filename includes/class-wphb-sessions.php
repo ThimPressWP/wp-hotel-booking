@@ -279,18 +279,22 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 		 * Clear all WP Hotel Booking sessions on user logout to prevent session leaks across shared devices.
 		 */
 		public static function destroy_all_sessions() {
-			$prefixes = array(
-				'hotel_booking_cart',
-				'booking_sessions',
-				'customer_sessions',
-			);
-			foreach ( $prefixes as $prefix ) {
-				if ( ! empty( self::$_instance[ $prefix ] ) ) {
-					self::$_instance[ $prefix ]->remove();
-				} else {
-					$session = new self( $prefix );
-					$session->remove();
+			// 1. Delegate to active Cart instance to wipe sessions, cookies, transients and runtime memory
+			if ( function_exists( 'hb_get_cart' ) ) {
+				$cart = hb_get_cart();
+				if ( $cart && method_exists( $cart, 'reset_all_sessions' ) ) {
+					$cart->reset_all_sessions();
 				}
+			}
+
+			// 2. Wipe any cached session instances in memory
+			if ( ! empty( self::$_instance ) && is_array( self::$_instance ) ) {
+				foreach ( self::$_instance as $session ) {
+					if ( $session instanceof self ) {
+						$session->remove();
+					}
+				}
+				self::$_instance = array();
 			}
 		}
 
