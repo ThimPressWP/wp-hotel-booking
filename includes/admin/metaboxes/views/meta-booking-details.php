@@ -17,18 +17,24 @@ global $post;
 $booking = WPHB_Booking::instance( $post->ID );
 ?>
 
-<style type="text/css">
-	#normal-sortables,
-	#hb-booking-details .ui-sortable-handle {
-		display: none;
-	}
-</style>
 <div id="booking_details">
 	<?php wp_nonce_field( 'hotel-booking-metabox-booking-details', 'hotel_booking_metabox_booking_details_nonce' ); ?>
-	<h2 class="hb_meta_title">
-		<?php echo esc_html( sprintf( esc_html__( 'Book ID %s', 'wp-hotel-booking' ), hb_format_order_number( $post->ID ) ) ); ?>
-	</h2>
-	<p class="description"><?php printf( esc_html__( 'Booked on %s', 'wp-hotel-booking' ), esc_html( $post->post_date ) ); ?></p>
+	<?php
+	$statuses     = hb_get_booking_statuses();
+	$current_stat = $statuses[ $post->post_status ] ?? $post->post_status;
+	?>
+	<div class="booking_details_header">
+		<div class="booking_details_title">
+			<h2 class="hb_meta_title">
+				<?php echo esc_html( sprintf( esc_html__( 'Book ID #%s', 'wp-hotel-booking' ), hb_format_order_number( $post->ID ) ) ); ?>
+			</h2>
+			<span class="hb-status-badge status-<?php echo esc_attr( $post->post_status ); ?>">
+				<?php echo esc_html( $current_stat ); ?>
+			</span>
+		</div>
+		<p class="description"><?php printf( esc_html__( 'Booked on %s', 'wp-hotel-booking' ), esc_html( $post->post_date ) ); ?></p>
+	</div>
+
 	<div id="booking_details_section">
 
 		<div class="section">
@@ -43,7 +49,7 @@ $booking = WPHB_Booking::instance( $post->ID );
 									selected><?php echo $booking->method_title; ?></option>
 						<?php endif; ?>
 						<?php foreach ( $methods as $id => $method ) : ?>
-							<option value="<?php echo esc_attr( $id ); ?>" <?php selected( $booking->method, $id ); ?>><?php printf( '%s(%s)', $method->title, $method->description ); ?></option>
+							<option value="<?php echo esc_attr( $id ); ?>" <?php selected( $booking->method, $id ); ?>><?php printf( '%s (%s)', $method->title, $method->description ); ?></option>
 						<?php endforeach; ?>
 					</select>
 				</li>
@@ -51,10 +57,8 @@ $booking = WPHB_Booking::instance( $post->ID );
 					<label><?php esc_html_e( 'Booking Status:', 'wp-hotel-booking' ); ?></label>
 					<select name="_hb_booking_status">
 						<?php $status = hb_get_booking_statuses(); ?>
-						<?php foreach ( $status as $st => $status ) : ?>
-
-							<option value="<?php echo esc_attr( $st ); ?>" <?php selected( $post->post_status, $st ); ?>><?php printf( '%s', $status ); ?></option>
-
+						<?php foreach ( $status as $st => $status_label ) : ?>
+							<option value="<?php echo esc_attr( $st ); ?>" <?php selected( $post->post_status, $st ); ?>><?php echo esc_html( $status_label ); ?></option>
 						<?php endforeach; ?>
 					</select>
 				</li>
@@ -64,35 +68,56 @@ $booking = WPHB_Booking::instance( $post->ID );
 		<div class="section">
 
 			<h4>
-				<?php esc_html_e( 'Customer\'s Details', 'wp-hotel-booking' ); ?>
-				<a href="#" class="edit" data-id="30"><i class="fa fa-pencil"></i></a>
+				<span><?php esc_html_e( 'Customer\'s Details', 'wp-hotel-booking' ); ?></span>
+				<a href="#" class="edit" data-id="30"><?php esc_html_e( 'Edit', 'wp-hotel-booking' ); ?></a>
 			</h4>
 			<div class="customer_details">
 				<div class="address details">
-					<strong><?php esc_html_e( 'Name', 'wp-hotel-booking' ); ?></strong>
-					<br/>
-					<small><?php echo esc_html( hb_get_customer_fullname( $post->ID, true ) ); ?></small>
-					<br/>
-					<strong><?php esc_html_e( 'Address', 'wp-hotel-booking' ); ?></strong>
-					<br/>
-					<small><?php echo esc_html( $booking->customer_address ); ?></small>
-					<br/>
-					<small><?php echo esc_html( $booking->customer_city ); ?></small>
-					<br/>
-					<small><?php echo esc_html( $booking->customer_state ); ?></small>
-					<br/>
-					<small><?php echo esc_html( $booking->customer_postal_code ); ?></small>
-					<br/>
-					<small><?php echo esc_html( $booking->customer_country ); ?></small>
-					<br/>
-					<?php $customer_email = $booking->customer_email; ?>
-					<strong><?php esc_html_e( 'Email', 'wp-hotel-booking' ); ?></strong>
-					<br/>
-					<a href="mailto:<?php echo esc_attr( $customer_email ); ?>"><?php echo esc_html( $customer_email ); ?></a>
-					<br/>
-					<strong><?php esc_html_e( 'Phone', 'wp-hotel-booking' ); ?></strong>
-					<br/>
-					<small><?php echo esc_html( $booking->customer_phone ); ?></small>
+					<?php
+					$full_name = hb_get_customer_fullname( $post->ID, true );
+					$address_parts = array_filter(
+						array(
+							$booking->customer_address,
+							$booking->customer_city,
+							$booking->customer_state,
+							$booking->customer_postal_code,
+							$booking->customer_country,
+						)
+					);
+					$customer_email = $booking->customer_email;
+					$customer_phone = $booking->customer_phone;
+					?>
+					<div class="customer-row">
+						<span class="customer-label"><?php esc_html_e( 'Name', 'wp-hotel-booking' ); ?></span>
+						<div class="customer-value customer-name"><?php echo esc_html( $full_name ? $full_name : '—' ); ?></div>
+					</div>
+
+					<div class="customer-row">
+						<span class="customer-label"><?php esc_html_e( 'Address', 'wp-hotel-booking' ); ?></span>
+						<div class="customer-value"><?php echo esc_html( ! empty( $address_parts ) ? implode( ', ', $address_parts ) : '—' ); ?></div>
+					</div>
+
+					<div class="customer-row">
+						<span class="customer-label"><?php esc_html_e( 'Email', 'wp-hotel-booking' ); ?></span>
+						<div class="customer-value">
+							<?php if ( $customer_email ) : ?>
+								<a href="mailto:<?php echo esc_attr( $customer_email ); ?>"><?php echo esc_html( $customer_email ); ?></a>
+							<?php else : ?>
+								—
+							<?php endif; ?>
+						</div>
+					</div>
+
+					<div class="customer-row">
+						<span class="customer-label"><?php esc_html_e( 'Phone', 'wp-hotel-booking' ); ?></span>
+						<div class="customer-value">
+							<?php if ( $customer_phone ) : ?>
+								<a href="tel:<?php echo esc_attr( $customer_phone ); ?>"><?php echo esc_html( $customer_phone ); ?></a>
+							<?php else : ?>
+								—
+							<?php endif; ?>
+						</div>
+					</div>
 				</div>
 				<div class="edit_details">
 					<div class="edit_col">
@@ -124,7 +149,7 @@ $booking = WPHB_Booking::instance( $post->ID );
 								placeholder="<?php esc_attr_e( 'State', 'wp-hotel-booking' ); ?>"/>
 						<input type="text" name="_hb_customer_postal_code" id="_hb_customer_postal_code"
 								value="<?php echo esc_attr( $booking->customer_postal_code ); ?>"
-								placeholder="<?php esc_attr_e( 'Postl code', 'wp-hotel-booking' ); ?>"/>
+								placeholder="<?php esc_attr_e( 'Postal code', 'wp-hotel-booking' ); ?>"/>
 						<input type="email" placeholder="<?php esc_attr_e( 'Email address', 'wp-hotel-booking' ); ?>"
 								name="_hb_customer_email" value="<?php echo esc_attr( $booking->customer_email ); ?>"/>
 						<input type="text" name="_hb_customer_phone"
@@ -149,12 +174,16 @@ $booking = WPHB_Booking::instance( $post->ID );
 		<div class="section">
 
 			<h4>
-				<?php _e( 'Customer\'s Notes', 'wp-hotel-booking' ); ?>
-				<a href="#" class="edit" data-id="30"><i class="fa fa-pencil"></i></a>
+				<span><?php esc_html_e( 'Customer\'s Notes', 'wp-hotel-booking' ); ?></span>
+				<a href="#" class="edit" data-id="30"><?php esc_html_e( 'Edit', 'wp-hotel-booking' ); ?></a>
 			</h4>
 			<div class="customer_details">
 				<div class="notes details">
-					<p><?php echo nl2br( esc_html( $post->post_content ) ); ?></p>
+					<?php if ( ! empty( $post->post_content ) ) : ?>
+						<p><?php echo nl2br( esc_html( $post->post_content ) ); ?></p>
+					<?php else : ?>
+						<p class="empty-notes" style="color: #8c8f94; font-style: italic;"><?php esc_html_e( 'No notes provided by customer.', 'wp-hotel-booking' ); ?></p>
+					<?php endif; ?>
 				</div>
 				<div class="edit_details">
 					<textarea name="content"

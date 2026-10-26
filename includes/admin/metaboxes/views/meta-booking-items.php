@@ -82,7 +82,13 @@ foreach ( $rooms as $room ) {
 					<a href="<?php echo esc_url( get_edit_post_link( $room_id ) ); ?>"><?php echo esc_html( get_the_title( $room_id ) ); ?></a>
 				</td>
 				<td class="checkin_checkout center">
-					<?php printf( '%s - %s', wp_kses_post( date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_in_date', true ) ) ), wp_kses_post( date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_out_date', true ) ) ) ); ?>
+					<?php
+					$checkin_str  = date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_in_date', true ) );
+					$checkout_str = date_i18n( hb_get_date_format(), hb_get_order_item_meta( $room->order_item_id, 'check_out_date', true ) );
+					?>
+					<span class="stay-date"><?php echo esc_html( $checkin_str ); ?></span>
+					<span class="stay-separator">&rarr;</span>
+					<span class="stay-date"><?php echo esc_html( $checkout_str ); ?></span>
 				</td>
 				<td class="night center">
 					<?php echo wp_kses_post( hb_count_nights_two_dates( hb_get_order_item_meta( $room->order_item_id, 'check_out_date', true ), hb_get_order_item_meta( $room->order_item_id, 'check_in_date', true ) ) ); ?>
@@ -104,12 +110,14 @@ foreach ( $rooms as $room ) {
 				<td class="actions">
 					<a href="#" class="edit" data-order-id="<?php echo esc_attr( $hb_booking->id ); ?>"
 						data-order-item-id="<?php echo esc_attr( $room->order_item_id ); ?>"
-						data-order-item-type="line_item">
+						data-order-item-type="line_item"
+						title="<?php esc_attr_e( 'Edit item', 'wp-hotel-booking' ); ?>">
 						<i class="fa fa-pencil"></i>
 					</a>
 					<a href="#" class="remove" data-order-id="<?php echo esc_attr( $hb_booking->id ); ?>"
 						data-order-item-id="<?php echo esc_attr( $room->order_item_id ); ?>"
-						data-order-item-type="line_item">
+						data-order-item-type="line_item"
+						title="<?php esc_attr_e( 'Delete item', 'wp-hotel-booking' ); ?>">
 						<i class="fa fa-times-circle"></i>
 					</a>
 				</td>
@@ -151,36 +159,36 @@ foreach ( $rooms as $room ) {
 	<table class="booking_item_table_cost">
 		<tbody>
 		<?php if ( $hb_booking->coupon_id ) : ?>
-			<tr class="coupon">
-				<td class="center">
-					<?php printf( __( 'Coupon(<a href="%1$s">%2$s</a>)', 'wp-hotel-booking' ), esc_url( get_edit_post_link( $hb_booking->coupon_id ) ), esc_html( $hb_booking->coupon_code ) ); ?>
+			<tr class="coupon row-coupon">
+				<td class="cost-label">
+					<?php printf( __( 'Coupon (<a href="%1$s">%2$s</a>)', 'wp-hotel-booking' ), esc_url( get_edit_post_link( $hb_booking->coupon_id ) ), esc_html( $hb_booking->coupon_code ) ); ?>
 				</td>
-				<td class="coupon_discount">
+				<td class="coupon_discount cost-value">
 					<?php printf( '-%s', wp_kses_post( hb_format_price( $hb_booking->coupon_value, hb_get_currency_symbol( $hb_booking->currency ) ) ) ); ?>
 				</td>
 			</tr>
 		<?php endif; ?>
-		<tr>
-			<td class="center">
+		<tr class="row-subtotal">
+			<td class="cost-label">
 				<?php esc_html_e( 'Sub Total', 'wp-hotel-booking' ); ?>
 			</td>
-			<td class="subtotal">
+			<td class="subtotal cost-value">
 				<?php echo wp_kses_post( hb_format_price( hb_booking_subtotal( $hb_booking->id ), hb_get_currency_symbol( $hb_booking->currency ) ) ); ?>
 			</td>
 		</tr>
-		<tr>
-			<td class="center">
+		<tr class="row-tax">
+			<td class="cost-label">
 				<?php esc_html_e( 'Tax', 'wp-hotel-booking' ); ?>
 			</td>
-			<td class="tax">
+			<td class="tax cost-value">
 				<?php echo wp_kses_post( apply_filters( 'hotel_booking_admin_book_details', hb_format_price( hb_booking_tax_total( $hb_booking->id ), hb_get_currency_symbol( $hb_booking->currency ) ), $hb_booking ) ); ?>
 			</td>
 		</tr>
-		<tr>
-			<td class="center">
+		<tr class="row-grand-total">
+			<td class="cost-label">
 				<?php esc_html_e( 'Grand Total', 'wp-hotel-booking' ); ?>
 			</td>
-			<td class="grand_total">
+			<td class="grand_total cost-value">
 				<?php echo wp_kses_post( hb_format_price( hb_booking_total( $hb_booking->id ), hb_get_currency_symbol( $hb_booking->currency ) ) ); ?>
 			</td>
 		</tr>
@@ -192,17 +200,29 @@ foreach ( $rooms as $room ) {
 			$advance_settings = $hb_settings->get( 'advance_payment', 50 );
 		}
 
-		if ( floatval( hb_booking_total( $hb_booking->id ) ) !== floatval( $advance_payment ) ) {
+		$grand_total = floatval( hb_booking_total( $hb_booking->id ) );
+		$advance_val = floatval( $advance_payment );
+
+		if ( $advance_val > 0 && $grand_total !== $advance_val ) {
+			$balance_due = max( 0, $grand_total - $advance_val );
 			?>
-		<tr>
-			<td class="center">
+		<tr class="row-advance-payment">
+			<td class="cost-label">
 				<?php esc_html_e( 'Advance Payment', 'wp-hotel-booking' ); ?>
 			</td>
-			<td class="grand_total">
+			<td class="cost-value">
 				<?php echo wp_kses_post( hb_format_price( $advance_payment, hb_get_currency_symbol( $hb_booking->currency ) ) ); ?>
 			</td>
-
-			<?php } ?>
+		</tr>
+		<tr class="row-balance-due">
+			<td class="cost-label">
+				<strong><?php esc_html_e( 'Balance Due (On Arrival)', 'wp-hotel-booking' ); ?></strong>
+			</td>
+			<td class="cost-value">
+				<strong><?php echo wp_kses_post( hb_format_price( $balance_due, hb_get_currency_symbol( $hb_booking->currency ) ) ); ?></strong>
+			</td>
+		</tr>
+		<?php } ?>
 		</tbody>
 	</table>
 
