@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WP Hotel Booking plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Hotel Booking 2.3.5-beta2\n"
+"Project-Id-Version: WP Hotel Booking 2.3.5-candidate1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-hotel-booking\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-26T07:28:37+00:00\n"
+"POT-Creation-Date: 2026-10-27T09:32:19+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wp-hotel-booking\n"
@@ -141,7 +141,7 @@ msgid "Coupon Settings"
 msgstr ""
 
 #: includes/admin/metaboxes/rooms/class-wphb-admin-metabox-coupons.php:31
-#: includes/elementor/widgets/single-room/room-booking.php:157
+#: includes/elementor/widgets/single-room/room-booking.php:130
 #: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:43
 #: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:68
 #: includes/plugins/wp-hotel-booking-extra/inc/admin/views/extra.php:102
@@ -594,7 +594,6 @@ msgid "Extra Packages"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items-template-js.php:113
-#: includes/elementor/widgets/single-room/room-booking.php:173
 #: templates/single-room/search/check-dates-available.php:63
 #: templates/single-room/search/search-available.php:50
 msgid "Check Available"
@@ -616,12 +615,14 @@ msgid "Do you want to do this?"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items-template-js.php:154
+#: includes/elementor/widgets/single-room/room-booking.php:1203
 #: includes/widgets/class-hb-widget-room-carousel.php:83
 #: includes/widgets/class-hb-widget-room-carousel.php:92
 msgid "No"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items-template-js.php:155
+#: includes/elementor/widgets/single-room/room-booking.php:1202
 #: includes/widgets/class-hb-widget-room-carousel.php:81
 #: includes/widgets/class-hb-widget-room-carousel.php:89
 msgid "Yes"
@@ -791,7 +792,7 @@ msgstr ""
 #: includes/elementor/widgets/global/list-room.php:124
 #: includes/elementor/widgets/global/search-room.php:280
 #: includes/elementor/widgets/loop-item/loop-room-price.php:152
-#: includes/elementor/widgets/single-room/room-booking.php:147
+#: includes/elementor/widgets/single-room/room-booking.php:120
 #: includes/elementor/widgets/single-room/room-facilities.php:63
 #: includes/elementor/widgets/single-room/room-review.php:50
 #: includes/elementor/widgets/single-room/room-review.php:107
@@ -2429,6 +2430,13 @@ msgstr ""
 #: includes/elementor/widgets/global/search-room.php:307
 #: includes/elementor/widgets/global/search-room.php:369
 #: includes/elementor/widgets/global/search-room.php:494
+#: includes/elementor/widgets/single-room/room-booking.php:234
+#: includes/elementor/widgets/single-room/room-booking.php:346
+#: includes/elementor/widgets/single-room/room-booking.php:594
+#: includes/elementor/widgets/single-room/room-booking.php:890
+#: includes/elementor/widgets/single-room/room-booking.php:963
+#: includes/elementor/widgets/single-room/room-booking.php:1150
+#: includes/elementor/widgets/single-room/room-booking.php:1215
 msgid "Margin"
 msgstr ""
 
@@ -2436,6 +2444,15 @@ msgstr ""
 #: includes/elementor/widgets/global/filter-room-selected.php:184
 #: includes/elementor/widgets/global/filter-room.php:653
 #: includes/elementor/widgets/global/search-room.php:409
+#: includes/elementor/widgets/single-room/room-booking.php:559
+#: includes/elementor/widgets/single-room/room-booking.php:579
+#: includes/elementor/widgets/single-room/room-booking.php:689
+#: includes/elementor/widgets/single-room/room-booking.php:718
+#: includes/elementor/widgets/single-room/room-booking.php:797
+#: includes/elementor/widgets/single-room/room-booking.php:1048
+#: includes/elementor/widgets/single-room/room-booking.php:1077
+#: includes/elementor/widgets/single-room/room-booking.php:1115
+#: includes/elementor/widgets/single-room/room-booking.php:1135
 #: includes/elementor/widgets/single-room/room-content.php:74
 msgid "Color"
 msgstr ""
@@ -2448,6 +2465,10 @@ msgstr ""
 #: includes/elementor/widgets/global/search-room.php:430
 #: includes/elementor/widgets/loop-item/loop-room-price.php:177
 #: includes/elementor/widgets/loop-item/loop-room-price.php:234
+#: includes/elementor/widgets/single-room/room-booking.php:222
+#: includes/elementor/widgets/single-room/room-booking.php:647
+#: includes/elementor/widgets/single-room/room-booking.php:839
+#: includes/elementor/widgets/single-room/room-booking.php:951
 msgid "Padding"
 msgstr ""
 
@@ -2567,7 +2588,6 @@ msgid "Error: No rooms available!."
 msgstr ""
 
 #: includes/elementor/widgets/global/check-avaibility.php:15
-#: includes/elementor/widgets/single-room/room-booking.php:66
 #: templates/search/search-form.php:37
 #: templates/search/search-form.php:106
 #: templates/search/v2/search-form-v2.php:41
@@ -2611,6 +2631,7 @@ msgstr ""
 
 #: includes/elementor/widgets/global/filter-room-selected.php:115
 #: includes/elementor/widgets/global/search-room.php:239
+#: includes/elementor/widgets/single-room/room-booking.php:1013
 msgid "Space Between"
 msgstr ""
 
@@ -2797,10 +2818,12 @@ msgstr ""
 
 #: includes/elementor/widgets/global/filter-room.php:371
 #: includes/elementor/widgets/global/search-room.php:216
+#: includes/elementor/widgets/single-room/room-booking.php:163
 msgid "Display"
 msgstr ""
 
 #: includes/elementor/widgets/global/filter-room.php:379
+#: includes/elementor/widgets/single-room/room-booking.php:171
 msgid "Flex"
 msgstr ""
 
@@ -2812,6 +2835,11 @@ msgstr ""
 #: includes/elementor/widgets/global/filter-room.php:427
 #: includes/elementor/widgets/global/filter-room.php:561
 #: includes/elementor/widgets/global/search-room.php:381
+#: includes/elementor/widgets/single-room/room-booking.php:202
+#: includes/elementor/widgets/single-room/room-booking.php:395
+#: includes/elementor/widgets/single-room/room-booking.php:635
+#: includes/elementor/widgets/single-room/room-booking.php:827
+#: includes/elementor/widgets/single-room/room-booking.php:931
 #: includes/elementor/widgets/single-room/room-thumb.php:130
 msgid "Border Radius"
 msgstr ""
@@ -2831,6 +2859,7 @@ msgstr ""
 #: includes/elementor/widgets/global/filter-room.php:510
 #: includes/elementor/widgets/global/filter-room.php:761
 #: includes/elementor/widgets/global/search-room.php:453
+#: includes/elementor/widgets/single-room/room-booking.php:779
 msgid "Width"
 msgstr ""
 
@@ -2843,27 +2872,32 @@ msgstr ""
 
 #: includes/elementor/widgets/global/filter-room.php:593
 #: includes/elementor/widgets/loop-item/loop-room-price.php:205
-#: includes/elementor/widgets/single-room/room-booking.php:110
+#: includes/elementor/widgets/single-room/room-booking.php:83
+#: includes/elementor/widgets/single-room/room-booking.php:1171
 #: includes/elementor/widgets/single-room/room-content.php:45
 msgid "Alignment"
 msgstr ""
 
 #: includes/elementor/widgets/global/filter-room.php:597
 #: includes/elementor/widgets/loop-item/loop-room-price.php:209
-#: includes/elementor/widgets/single-room/room-booking.php:114
+#: includes/elementor/widgets/single-room/room-booking.php:87
+#: includes/elementor/widgets/single-room/room-booking.php:1001
 msgid "Start"
 msgstr ""
 
 #: includes/elementor/widgets/global/filter-room.php:601
 #: includes/elementor/widgets/loop-item/loop-room-price.php:213
-#: includes/elementor/widgets/single-room/room-booking.php:118
+#: includes/elementor/widgets/single-room/room-booking.php:91
+#: includes/elementor/widgets/single-room/room-booking.php:1005
+#: includes/elementor/widgets/single-room/room-booking.php:1179
 #: includes/elementor/widgets/single-room/room-content.php:53
 msgid "Center"
 msgstr ""
 
 #: includes/elementor/widgets/global/filter-room.php:605
 #: includes/elementor/widgets/loop-item/loop-room-price.php:217
-#: includes/elementor/widgets/single-room/room-booking.php:122
+#: includes/elementor/widgets/single-room/room-booking.php:95
+#: includes/elementor/widgets/single-room/room-booking.php:1009
 msgid "End"
 msgstr ""
 
@@ -2922,7 +2956,7 @@ msgstr ""
 
 #: includes/elementor/widgets/global/list-room.php:52
 #: includes/elementor/widgets/loop-item/loop-room-rating.php:54
-#: includes/elementor/widgets/single-room/room-booking.php:50
+#: includes/elementor/widgets/single-room/room-booking.php:55
 #: includes/elementor/widgets/single-room/room-thumb.php:56
 msgid "Select Layout"
 msgstr ""
@@ -3010,7 +3044,6 @@ msgstr ""
 #: includes/elementor/widgets/global/search-room.php:115
 #: includes/elementor/widgets/global/search-room.php:127
 #: includes/elementor/widgets/global/search-room.php:140
-#: includes/elementor/widgets/single-room/room-booking.php:65
 msgid "Add your text here"
 msgstr ""
 
@@ -3023,6 +3056,8 @@ msgid "Search"
 msgstr ""
 
 #: includes/elementor/widgets/global/search-room.php:222
+#: includes/elementor/widgets/single-room/room-booking.php:167
+#: includes/elementor/widgets/single-room/room-booking.php:979
 msgid "Block"
 msgstr ""
 
@@ -3031,7 +3066,7 @@ msgid "Inline"
 msgstr ""
 
 #: includes/elementor/widgets/global/search-room.php:334
-#: includes/elementor/widgets/single-room/room-booking.php:180
+#: includes/elementor/widgets/single-room/room-booking.php:358
 msgid "Input"
 msgstr ""
 
@@ -3040,13 +3075,13 @@ msgid "Field List"
 msgstr ""
 
 #: includes/elementor/widgets/global/search-room.php:446
-#: includes/elementor/widgets/single-room/room-booking.php:84
-#: includes/elementor/widgets/single-room/room-booking.php:190
+#: includes/elementor/widgets/single-room/room-booking.php:1162
 #: includes/elementor/widgets/single-room/room-review.php:133
 msgid "Button"
 msgstr ""
 
 #: includes/elementor/widgets/global/search-room.php:470
+#: includes/elementor/widgets/single-room/room-booking.php:375
 msgid "Height"
 msgstr ""
 
@@ -3221,29 +3256,205 @@ msgstr ""
 msgid "Star an number"
 msgstr ""
 
-#: includes/elementor/widgets/single-room/room-booking.php:25
+#: includes/elementor/widgets/single-room/room-booking.php:30
 msgid "Room Booking"
 msgstr ""
 
-#: includes/elementor/widgets/single-room/room-booking.php:43
+#: includes/elementor/widgets/single-room/room-booking.php:48
 msgid "Booking"
 msgstr ""
 
-#: includes/elementor/widgets/single-room/room-booking.php:55
+#: includes/elementor/widgets/single-room/room-booking.php:59
 msgid "Form"
 msgstr ""
 
-#: includes/elementor/widgets/single-room/room-booking.php:63
-msgid "Text Booking"
+#: includes/elementor/widgets/single-room/room-booking.php:75
+msgid "Form Header"
 msgstr ""
 
-#: includes/elementor/widgets/single-room/room-booking.php:102
-msgid "From Head"
-msgstr ""
-
-#: includes/elementor/widgets/single-room/room-booking.php:136
+#: includes/elementor/widgets/single-room/room-booking.php:109
 #: includes/elementor/widgets/single-room/room-review.php:96
 msgid "Radius Item"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:146
+msgid "Form Content"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:155
+msgid "Form Container"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:247
+msgid "Fields & Labels"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:256
+msgid "Field Spacing (Bottom Margin)"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:275
+msgid "Label Typography"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:283
+msgid "Label Color"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:294
+msgid "Label Margin"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:307
+msgid "Max Quantity Text"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:324
+#: includes/elementor/widgets/single-room/room-booking.php:416
+#: includes/elementor/widgets/single-room/room-booking.php:478
+msgid "Text Color"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:335
+msgid "Number Highlight Color"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:409
+#: includes/elementor/widgets/single-room/room-booking.php:552
+#: includes/elementor/widgets/single-room/room-booking.php:1108
+msgid "Normal"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:427
+msgid "Placeholder Color"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:439
+#: includes/elementor/widgets/single-room/room-booking.php:489
+#: includes/elementor/widgets/single-room/room-booking.php:616
+#: includes/elementor/widgets/single-room/room-booking.php:808
+#: includes/elementor/widgets/single-room/room-booking.php:912
+msgid "Background Color"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:450
+#: includes/elementor/widgets/single-room/room-booking.php:500
+msgid "Border Color"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:471
+msgid "Focus"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:524
+#: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-search-room.php:31
+#: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-single-search-room.php:27
+#: templates/single-room/search/extra-check-dates-room.php:27
+msgid "Optional Extras"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:534
+msgid "Toggle / Title"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:572
+#: includes/elementor/widgets/single-room/room-booking.php:1128
+msgid "Hover"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:607
+msgid "Extra Item"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:659
+msgid "Margin / Spacing"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:672
+msgid "Item Title"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:701
+msgid "Item Description"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:730
+msgid "Item Price"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:747
+msgid "Price Color"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:758
+msgid "Unit Color"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:770
+msgid "Quantity Input"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:852
+msgid "Checkbox"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:861
+msgid "Size"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:879
+msgid "Accent Color"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:903
+msgid "Total Price"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:975
+msgid "Total Display"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:983
+msgid "Flex (Inline)"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:997
+msgid "Justify Content"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:1031
+msgid "Total Label"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:1060
+msgid "Total Amount"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:1089
+msgid "View Details Link"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:1175
+#: includes/elementor/widgets/single-room/room-content.php:49
+msgid "Left"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:1183
+#: includes/elementor/widgets/single-room/room-content.php:57
+msgid "Right"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:1187
+#: includes/elementor/widgets/single-room/room-content.php:61
+msgid "Justified"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:1200
+msgid "Full Width"
+msgstr ""
+
+#: includes/elementor/widgets/single-room/room-booking.php:1230
+msgid "Previous Step Button"
 msgstr ""
 
 #: includes/elementor/widgets/single-room/room-calendar-pricing.php:21
@@ -3256,18 +3467,6 @@ msgstr ""
 
 #: includes/elementor/widgets/single-room/room-content.php:37
 msgid "Style"
-msgstr ""
-
-#: includes/elementor/widgets/single-room/room-content.php:49
-msgid "Left"
-msgstr ""
-
-#: includes/elementor/widgets/single-room/room-content.php:57
-msgid "Right"
-msgstr ""
-
-#: includes/elementor/widgets/single-room/room-content.php:61
-msgid "Justified"
 msgstr ""
 
 #: includes/elementor/widgets/single-room/room-facilities.php:23
@@ -3608,12 +3807,6 @@ msgstr ""
 #: includes/plugins/wp-hotel-booking-extra/inc/wphb-extra-functions.php:187
 #: includes/wphb-core-functions.php:305
 msgid "Number"
-msgstr ""
-
-#: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-search-room.php:31
-#: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-single-search-room.php:27
-#: templates/single-room/search/extra-check-dates-room.php:27
-msgid "Optional Extras"
 msgstr ""
 
 #: includes/plugins/wp-hotel-booking-extra/templates/loop/extra-single-search-room.php:77
