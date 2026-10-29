@@ -156,7 +156,7 @@ if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 					$advance_settings = $hb_settings->get( 'advance_payment', 50 );
 				}
 
-				if ( floatval( hb_booking_total( $booking->id ) ) !== floatval( $advance_payment ) ) {
+				if ( floatval( $advance_payment ) > 0 && floatval( hb_booking_total( $booking->id ) ) !== floatval( $advance_payment ) ) {
 					?>
 					<tr>
 						<td colspan="6"><?php esc_html_e( 'Advance Payment', 'wp-hotel-booking' ); ?></td>

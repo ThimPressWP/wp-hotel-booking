@@ -443,15 +443,15 @@ class WPHB_Cart {
 
 		if ( $this->sessions ) {
 			// reset all sessions
-			$this->sessions = $this->sessions->remove();
+			$this->sessions->remove();
 		}
 
 		if ( $this->booking_sessions ) {
-			$this->booking_sessions = $this->booking_sessions->remove();
+			$this->booking_sessions->remove();
 		}
 
 		if ( $this->customer_sessions ) {
-			$this->customer_sessions = $this->customer_sessions->remove();
+			$this->customer_sessions->remove();
 		}
 
 		$this->set_customer( 'coupon', null );
@@ -519,7 +519,7 @@ class WPHB_Cart {
 
 	// set customer object
 	function set_customer( $name = null, $val = null ) {
-		if ( ! $name ) {
+		if ( ! $name || ! $this->customer_sessions ) {
 			return;
 		}
 		// set session cart
@@ -533,7 +533,7 @@ class WPHB_Cart {
 
 	// set customer object
 	function set_booking( $name = null, $val = null ) {
-		if ( ! $name || ! $val ) {
+		if ( ! $name || ! $val || ! $this->booking_sessions ) {
 			return;
 		}
 		// set session cart
@@ -702,25 +702,21 @@ class WPHB_Cart {
 
 				if ( $post_type == 'hb_room' ) {
 					if ( $enable ) {
-						if ( get_post_type( $cart_item->product_id ) != 'hb_room' ) {
-							$parent  = $this->get_cart_item( $cart_item->parent_id );
-							$room_id = $parent->product_id;
-						}
 						// check deposit type room
-						$deposit_type = get_post_meta( $room_id, '_hb_deposit_type', true );
+						$deposit_type   = get_post_meta( $room_id, '_hb_deposit_type', true );
+						$deposit_amount = max( 0, floatval( get_post_meta( $room_id, '_hb_deposit_amount', true ) ) );
 						switch ( $deposit_type ) {
 							case 'fixed':
-								$quantity = ! empty( $cart_item->quantity ) ? intval( $cart_item->quantity ) : 1;
-								$total   += floatval( get_post_meta( $room_id, '_hb_deposit_amount', true ) ) * $quantity;
+								$total += $deposit_amount;
 								break;
 							case 'percent':
-								$total += ( $cart_item->amount * floatval( get_post_meta( $room_id, '_hb_deposit_amount', true ) ) ) / 100;
+								$total += ( $cart_item->amount * $deposit_amount ) / 100;
 								break;
 							default:
 								break;
 						}
 					} else {
-						if ( ! empty( hb_get_advance_payment() ) && ( $advance_payment = floatval( hb_get_advance_payment() ) ) <= 100 ) {
+						if ( ! empty( hb_get_advance_payment() ) && ( $advance_payment = floatval( hb_get_advance_payment() ) ) > 0 && $advance_payment <= 100 ) {
 							$total += $cart_item->amount * $advance_payment / 100;
 						}
 					}
@@ -728,7 +724,12 @@ class WPHB_Cart {
 			}
 		}
 
-		return $total;
+		$cart_total = max( 0, (float) $this->get_total() );
+		if ( $total > $cart_total ) {
+			$total = $cart_total;
+		}
+
+		return max( 0, $total );
 	}
 
 	// total > 0
@@ -843,7 +844,8 @@ class WPHB_Cart {
 	 */
 	function hb_get_cart_total( $pre_paid = false ) {
 		if ( $pre_paid ) {
-			$total = $this->get_advance_payment();
+			$advance_payment = $this->get_advance_payment();
+			$total           = $advance_payment > 0 ? $advance_payment : $this->total;
 		} else {
 			$total = $this->total;
 		}

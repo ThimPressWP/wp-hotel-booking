@@ -911,7 +911,7 @@ if ( ! function_exists( 'hb_create_empty_post' ) ) {
 
 		if ( $posts ) {
 			foreach ( get_object_vars( $posts[0] ) as $key => $value ) {
-				if ( ! in_array( $key, $args ) ) {
+				if ( ! array_key_exists( $key, (array) $args ) ) {
 					$posts[0]->{$key} = null;
 				} else {
 					$posts[0]->{$key} = $args[ $key ];

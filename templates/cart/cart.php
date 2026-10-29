@@ -386,7 +386,7 @@ if ( $cart->cart_items_count != 0 ) :
 													// Fixed deposit
 													$deposit_value = floatval( $deposit_amount );
 												}
-												$room_subtotal -= $deposit_value;
+												$room_subtotal = max( 0, $room_subtotal - $deposit_value );
 											}
 											?>
 											<span class="hb-price-amount">

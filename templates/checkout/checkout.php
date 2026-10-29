@@ -403,6 +403,37 @@ $rooms = $cart->get_rooms();
 								?>
 							</span>
 						</div>
+
+						<!-- Advance Payment -->
+						<?php
+						$advance_payment = $cart->advance_payment;
+						if ( floatval( $advance_payment ) > 0 ) :
+							?>
+						<div class="hb-order-summary-row hb-order-advance hb_advance_payment">
+							<span class="hb-order-label">
+								<?php
+								esc_html_e( 'Advance Payment', 'wp-hotel-booking' );
+								?>
+							</span>
+							<span class="hb-order-value hb_advance_payment_value">
+								<?php
+								echo wp_kses_post( hb_format_price( $advance_payment ) );
+								?>
+							</span>
+						</div>
+							<?php if ( floatval( $advance_payment ) < floatval( $cart->total ) ) : ?>
+						<div class="hb-order-pay-all hb_payment_all">
+							<label>
+								<input type="checkbox" name="pay_all" value="1" />
+								<?php
+								esc_html_e( 'I want to pay all', 'wp-hotel-booking' );
+								?>
+							</label>
+						</div>
+							<?php endif; ?>
+							<?php
+						endif;
+						?>
 					</div>
 
 					<!-- Payment Methods -->
