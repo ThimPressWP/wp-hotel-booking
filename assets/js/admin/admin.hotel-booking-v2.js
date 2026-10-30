@@ -176,7 +176,7 @@ const roomBlockDate = () => {
 			} );
 
 			const {status , message } = response;
-			if ( 'success' === status ) {
+			if ( 'success' === status && message ) {
                 alert( message );
 			}
             removeMonth = false;

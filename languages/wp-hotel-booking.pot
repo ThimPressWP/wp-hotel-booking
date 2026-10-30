@@ -3875,6 +3875,10 @@ msgstr ""
 msgid "Block success"
 msgstr ""
 
+#: includes/rest-api/v1/admin/class-wphb-admin-rooms-controller.php:152
+msgid "Unblock success"
+msgstr ""
+
 #: includes/rest-api/v1/admin/class-wphb-admin-rooms-controller.php:184
 msgid "Error: Timer invalid."
 msgstr ""

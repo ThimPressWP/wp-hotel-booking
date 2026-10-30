@@ -3,7 +3,7 @@ Contributors: thimpress, leehld, phamtungpth, thoakim
 Donate link: https://thimpress.com/
 Tags: hotel booking, reservation, booking system, room management, accommodation
 Tested up to: 7.0.1
-Stable tag: 2.3.3
+Stable tag: 2.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,17 @@ Yes.
 7. System settings
 
 == Changelog ==
+
+= 2.3.5 (2026-10-30) =
+~ Added: Comprehensive form styling controls for Single Room Booking Elementor widget.
+~ Security: Enhance cart session integrity, booking authorization, and input sanitization.
+~ Fixed: Sync booked dates to availability calendar and enforce minimum booking nights.
+~ Fixed: Advance payment display on checkout and coupon discount calculations.
+~ Fixed: Display extra options price in cart and checkout templates.
+~ Fixed: Cart session handling on logout and multisite network activation.
+~ Fixed: Hotel Booking shortcode error display in Elementor editor preview.
+~ Tweak: Improve items UI in admin booking order management.
+~ Performance: Optimize database queries and settings cache, remove unused assets.
 
 = 2.3.4 (2026-07-20) =
 ~ Fixed: security from Levi report.

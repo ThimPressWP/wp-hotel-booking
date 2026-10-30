@@ -495,19 +495,11 @@ if ( ! class_exists( 'WPHB_Post_Types' ) ) {
 					echo implode( '', $html );
 					break;
 				case 'number_of_rooms':
-					$minium_booking_night = max( 1, (int) WPHB_Settings::instance()->get( 'minimum_booking_day', 1 ) );
-					$available_qty = hotel_booking_get_room_available(
-						$post->ID,
-						array(
-							'check_in_date'  => date( 'Y/m/d' ),
-							'check_out_date' => date( 'Y/m/d', strtotime( "+{$minium_booking_night} day" ) ),
-						)
-					);
-					$error_message = is_wp_error( $available_qty ) ? $available_qty->get_error_message() : '';
-					$available_qty = is_wp_error( $available_qty ) ? 0 : $available_qty;
+					$room_obj      = WPHB_Room::instance( $post->ID );
+					$available_qty = $room_obj ? $room_obj->get_num_of_rooms() : (int) get_post_meta( $post->ID, '_hb_num_of_rooms', true );
 					echo sprintf( '<p>%d</p>', $available_qty );
-					if ( $error_message ) {
-						echo sprintf( '<p>%s</p>', $error_message );
+					if ( $available_qty <= 0 ) {
+						echo sprintf( '<p>%s</p>', esc_html__( 'This room is not available!', 'wp-hotel-booking' ) );
 					}
 					break;
 			}

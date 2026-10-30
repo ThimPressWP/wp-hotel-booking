@@ -148,6 +148,8 @@ class WPHB_REST_Admin_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 						add_post_meta( $block_id, 'hb_blocked_time', $block );
 					}
 					$response->message = esc_html__( 'Block success', 'wp-hotel-booking' );
+				} else {
+					$response->message = esc_html__( 'Unblock success', 'wp-hotel-booking' );
 				}
 			}
 

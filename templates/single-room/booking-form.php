@@ -29,10 +29,15 @@ $available_qty = hotel_booking_get_room_available(
 		'check_out_date' => $check_out_date,
 	)
 );
-$error_message = '';
+$error_message         = '';
+$is_user_selected_date = ! empty( $_REQUEST['check_in_date'] );
 if ( is_wp_error( $available_qty ) ) {
-	$error_message = $available_qty->get_error_message();
-	$available_qty = 0;
+	if ( $is_user_selected_date || $room->get_num_of_rooms() <= 0 ) {
+		$error_message = $available_qty->get_error_message();
+		$available_qty = 0;
+	} else {
+		$available_qty = $room->get_num_of_rooms();
+	}
 }
 $room_extra  = HB_Room_Extra::instance( $room_id );
 $extra_items = $room_extra->get_extra();
