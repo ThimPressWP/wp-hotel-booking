@@ -125,7 +125,7 @@ class WPHB_Booking {
 
 		$this->sub_total = $wpdb->get_var( $query );
 		if ( $with_coupon ) {
-			$this->sub_total = $this->sub_total - $this->coupon_value;
+			$this->sub_total = max( 0, $this->sub_total - $this->coupon_value );
 		}
 
 		return $this->sub_total;
@@ -155,7 +155,7 @@ class WPHB_Booking {
 		if ( $with_coupon ) {
 			$subtotal_without_coupon = $this->sub_total( false );
 			if ( $subtotal_without_coupon > 0 ) {
-				$this->tax_total = ( ( $subtotal_without_coupon - $this->coupon_value ) * $this->tax_total ) / $subtotal_without_coupon;
+				$this->tax_total = ( max( 0, $subtotal_without_coupon - $this->coupon_value ) * $this->tax_total ) / $subtotal_without_coupon;
 			}
 		}
 

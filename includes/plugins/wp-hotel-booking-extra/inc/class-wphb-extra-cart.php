@@ -681,9 +681,9 @@ if ( ! class_exists( 'HB_Extra_Cart' ) ) {
 				return self::$_instance[ $cart_id ];
 			}
 
-			return new self();
+			return self::$_instance[ $cart_id ] = new self( $cart_id );
 		}
 	}
 }
 
-new HB_Extra_Cart();
+HB_Extra_Cart::instance();

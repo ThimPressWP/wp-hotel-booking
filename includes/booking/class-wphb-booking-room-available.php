@@ -148,7 +148,8 @@ class WPHB_Room_Booking_Available {
 				$date_booked_qty = array();
 				foreach ( $date_booked as $order_id => $data_order ) {
 					if ( isset( $data_order['dates_booked'] ) ) {
-						foreach ( $data_order['dates_booked'] as $key => $date ) {
+						$nights = count( $data_order['dates_booked'] ) > 1 ? array_slice( $data_order['dates_booked'], 0, -1, true ) : $data_order['dates_booked'];
+						foreach ( $nights as $key => $date ) {
 							$date_booked_qty[ $date ] = $date_booked_qty[ $date ] ?? 0;
 							if ( $date < $current_date ) {
 								unset( $date_booked[ $order_id ]['dates_booked'][ $key ] );

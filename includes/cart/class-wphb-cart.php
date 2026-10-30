@@ -196,7 +196,8 @@ class WPHB_Cart {
 	// load customer
 	function load_customer() {
 		// load customer session object
-		$session = (array) $this->customer_sessions->session;
+		$session      = (array) $this->customer_sessions->session;
+		$this->coupon = null;
 		if ( $this->customer_sessions && $this->customer_sessions->session ) {
 			if ( isset( $session['customer_id'] ) ) {
 				$this->customer_id = $session['customer_id'];

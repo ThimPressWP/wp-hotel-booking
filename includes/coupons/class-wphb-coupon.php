@@ -114,6 +114,10 @@ if ( ! class_exists( 'HB_Coupon' ) ) {
 		 * @return float|int
 		 */
 		public function apply_sub_total_discount( $sub_total ) {
+			if ( empty( $this->post->ID ) || (int) WPHB_Cart::instance()->coupon !== (int) $this->post->ID ) {
+				return $sub_total;
+			}
+
 			$discount = $this->get_discount_value( $sub_total );
 
 			return $discount < $sub_total ? $sub_total - $discount : 0;
