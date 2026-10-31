@@ -14,21 +14,6 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-if ( ! session_id() ) {
-	// Skip session for REST API requests - major performance improvement
-	$skip_session = defined( 'REST_REQUEST' ) && REST_REQUEST;
-
-	// Skip for CLI/WP-CLI requests
-	$skip_session = $skip_session || php_sapi_name() === 'cli' || defined( 'WP_CLI' );
-
-	// Skip for cron requests
-	$skip_session = $skip_session || ( defined( 'DOING_CRON' ) && DOING_CRON );
-
-	if ( ! $skip_session ) {
-		@session_start( array( 'read_and_close' => true ) );
-	}
-}
-
 if ( ! class_exists( 'WPHB_Sessions' ) ) {
 	/**
 	 * Class WPHB_Sessions
@@ -69,6 +54,8 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 			if ( ! $prefix ) {
 				return;
 			}
+
+			self::start_session();
 
 			$this->prefix   = $prefix;
 			$this->remember = $remember;
@@ -276,6 +263,46 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 		}
 
 		/**
+		 * Start PHP session safely without session-locking or blocking REST/Admin.
+		 */
+		public static function start_session() {
+			if ( session_id() ) {
+				return;
+			}
+
+			// 1. Skip for CLI or Cron
+			if ( php_sapi_name() === 'cli' || defined( 'WP_CLI' ) || wp_doing_cron() ) {
+				return;
+			}
+
+			// 2. Skip for Admin dashboard (allow only Hotel Booking AJAX requests)
+			if ( is_admin() ) {
+				if ( ! wp_doing_ajax() ) {
+					return;
+				}
+				$action = isset( $_REQUEST['action'] ) ? sanitize_key( $_REQUEST['action'] ) : '';
+				if ( false === strpos( $action, 'hotel_booking' ) && false === strpos( $action, 'hb_' ) ) {
+					return;
+				}
+			}
+
+			// 3. Skip for REST API requests (support early detection before REST_REQUEST constant is defined)
+			$is_rest = ( defined( 'REST_REQUEST' ) && REST_REQUEST )
+				|| ( isset( $_GET['rest_route'] ) && strpos( trim( $_GET['rest_route'] ), '/' ) === 0 )
+				|| ( isset( $_SERVER['REQUEST_URI'] ) && false !== strpos( $_SERVER['REQUEST_URI'], '/wp-json/' ) );
+
+			if ( $is_rest ) {
+				return;
+			}
+
+			// 4. Start session and immediately release write-lock to prevent concurrency bottlenecks
+			if ( ! headers_sent() ) {
+				@session_start( array( 'read_and_close' => true ) );
+				session_write_close();
+			}
+		}
+
+		/**
 		 * Clear all WP Hotel Booking sessions on user logout to prevent session leaks across shared devices.
 		 */
 		public static function destroy_all_sessions() {
@@ -313,5 +340,5 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 	}
 
 	add_action( 'wp_logout', array( 'WPHB_Sessions', 'destroy_all_sessions' ) );
+	add_action( 'plugins_loaded', array( 'WPHB_Sessions', 'start_session' ), 1 );
 }
-
