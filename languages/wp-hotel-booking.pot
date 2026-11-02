@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WP Hotel Booking plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Hotel Booking 2.3.5-c1\n"
+"Project-Id-Version: WP Hotel Booking 2.3.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-hotel-booking\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-02T02:38:49+00:00\n"
+"POT-Creation-Date: 2026-11-02T06:41:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wp-hotel-booking\n"
@@ -452,7 +452,7 @@ msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-details.php:29
 #, php-format
-msgid "Book ID #%s"
+msgid "Book ID %s"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-details.php:35
@@ -3218,7 +3218,7 @@ msgid "Custom Text Before"
 msgstr ""
 
 #: includes/elementor/widgets/loop-item/loop-room-price.php:68
-#: templates/loop/price.php:51
+#: templates/loop/price.php:62
 msgid "Price from"
 msgstr ""
 
@@ -6456,11 +6456,11 @@ msgstr ""
 msgid "Additional Information:"
 msgstr ""
 
-#: templates/loop/price.php:65
+#: templates/loop/price.php:76
 msgid "night"
 msgstr ""
 
-#: templates/loop/price.php:68
+#: templates/loop/price.php:79
 msgid "(incl tax)"
 msgstr ""
 
@@ -6488,12 +6488,12 @@ msgid "Max Children:"
 msgstr ""
 
 #: templates/search/loop.php:57
-#: templates/search/v2/loop-v2/room-info/room-meta/price.php:28
+#: templates/search/v2/loop-v2/room-info/room-meta/price.php:29
 msgid "Price:"
 msgstr ""
 
 #: templates/search/loop.php:62
-#: templates/search/v2/loop-v2/room-info/room-meta/price.php:33
+#: templates/search/v2/loop-v2/room-info/room-meta/price.php:34
 msgid "(View price breakdown)"
 msgstr ""
 

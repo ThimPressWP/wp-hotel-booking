@@ -2,7 +2,7 @@
 Contributors: thimpress, leehld, phamtungpth, thoakim
 Donate link: https://thimpress.com/
 Tags: hotel booking, reservation, booking system, room management, accommodation
-Tested up to: 7.0.1
+Tested up to: 7.1
 Stable tag: 2.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -87,7 +87,7 @@ Yes.
 
 == Changelog ==
 
-= 2.3.5 (2026-10-30) =
+= 2.3.5 (2026-11-02) =
 ~ Added: Comprehensive form styling controls for Single Room Booking Elementor widget.
 ~ Security: Enhance cart session integrity, booking authorization, and input sanitization.
 ~ Fixed: Sync booked dates to availability calendar and enforce minimum booking nights.
