@@ -97,6 +97,7 @@ Yes.
 ~ Fixed: Hotel Booking shortcode error display in Elementor editor preview.
 ~ Tweak: Improve items UI in admin booking order management.
 ~ Performance: Optimize database queries and settings cache, remove unused assets.
+~ Performance: Prevent PHP session locking delays, skip session on admin dashboard and REST API requests.
 
 = 2.3.4 (2026-07-20) =
 ~ Fixed: security from Levi report.

@@ -352,7 +352,7 @@ class WPHB_Ajax {
 	}
 
 	static function apply_coupon() {
-		! session_id() && session_start( array( 'read_and_close' => true ) );
+		WPHB_Sessions::start_session();
 		$code = hb_get_request( 'code' );
 		if ( empty( hb_get_request( 'nonce', false ) )
 			|| ! wp_verify_nonce( hb_get_request( 'nonce' ), 'hb_booking_nonce_action' ) ) {
@@ -394,7 +394,7 @@ class WPHB_Ajax {
 			);
 		}
 
-		! session_id() && session_start( array( 'read_and_close' => true ) );
+		WPHB_Sessions::start_session();
 		// delete_transient( 'hb_user_coupon_' . session_id() );
 		WP_Hotel_Booking::instance()->cart->set_customer( 'coupon', null );
 		hb_add_message( __( 'Coupon code removed', 'wp-hotel-booking' ) );
