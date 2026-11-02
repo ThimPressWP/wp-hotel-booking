@@ -1,7 +1,5 @@
 const path = require( 'path' );
-const entries = require( 'webpack-glob-entries' );
 const defaultConfig = require( '@wordpress/scripts/config/webpack.config.js' );
-const { BundleAnalyzerPlugin } = require( 'webpack-bundle-analyzer' );
 const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extraction-webpack-plugin' );
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -23,7 +21,8 @@ module.exports = {
 		path: path.resolve( __dirname, './assets/dist/js' ),
 	},
 	plugins: [
-		process.env.WP_BUNDLE_ANALYZER && new BundleAnalyzerPlugin(),
+		process.env.WP_BUNDLE_ANALYZER &&
+			new ( require( 'webpack-bundle-analyzer' ).BundleAnalyzerPlugin )(),
 
 		// WP_NO_EXTERNALS global variable controls whether scripts' assets get
 		// generated, and the default externals set.
