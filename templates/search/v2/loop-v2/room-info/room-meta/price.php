@@ -2,12 +2,13 @@
 if ( ! isset( $room ) ) {
 	return;
 }
-$price_display = apply_filters( 'hotel_booking_loop_room_price_display_style', WPHB_Settings::instance()->get( 'price_display' ) );
+$price_display        = apply_filters( 'hotel_booking_loop_room_price_display_style', WPHB_Settings::instance()->get( 'price_display' ) );
 $booking_room_details = $room->get_booking_room_details();
 $pricings             = [];
 if ( ! empty( $booking_room_details ) ) {
 	foreach ( $booking_room_details as $day_on_week => $day ) {
-		$pricings[] = $day['price'];
+		$count      = ! empty( $day['count'] ) ? (int) $day['count'] : 1;
+		$pricings[] = $day['price'] / $count;
 	}
 }
 if ( empty( $pricings ) ) {
@@ -17,7 +18,7 @@ if ( empty( $pricings ) ) {
 	$max = max( $pricings );
 	if ( $price_display === 'max' ) {
 		$price = hb_format_price( $max );
-	} elseif ( $price_display === 'min_to_max' ) {
+	} elseif ( $price_display === 'min_to_max' && $min !== $max ) {
 		$price = hb_format_price( $min ) . ' - ' . hb_format_price( $max );
 	} else {
 		$price = hb_format_price( $min );

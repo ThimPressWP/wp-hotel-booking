@@ -6,7 +6,7 @@
  *
  * @author  ThimPress, leehld
  * @package WP-Hotel-Booking/Templates
- * @version 1.6
+ * @version 2.3.5
  */
 
 /**
@@ -19,29 +19,40 @@ global $hb_settings;
  * @var $hb_settings WPHB_Settings
  */
 $price_display  = apply_filters( 'hotel_booking_loop_room_price_display_style', $hb_settings->get( 'price_display' ) );
-$datetime 		= new \DateTime('NOW');
-$tomorrow 		= new \DateTime('tomorrow');
-$format 		= get_option('date_format');
-$check_in_date  = hb_get_request( 'check_in_date', $datetime->format($format));
-$check_out_date = hb_get_request( 'check_out_date', $tomorrow->format($format));
+$check_in_date  = hb_get_request( 'check_in_date' );
+$check_out_date = hb_get_request( 'check_out_date' );
+$pricings       = [];
 
-$room = \WPHB_Room::instance(
-    get_the_ID(),
-    array(
-        'check_in_date'  => $check_in_date,
-        'check_out_date' => $check_out_date,
-    )
-);
-if ( ! $room ) {
-	return;
-}
-$booking_room_details = $room->get_booking_room_details();
-$pricings             = [];
-if ( ! empty( $booking_room_details ) ) {
-	foreach ( $booking_room_details as $day_on_week => $day ) {
-		$pricings[] = $day['price'];
+if ( $check_in_date && $check_out_date ) {
+	$room = \WPHB_Room::instance(
+		get_the_ID(),
+		array(
+			'check_in_date'  => $check_in_date,
+			'check_out_date' => $check_out_date,
+		)
+	);
+	if ( ! $room ) {
+		return;
+	}
+	$booking_room_details = $room->get_booking_room_details();
+	if ( ! empty( $booking_room_details ) ) {
+		foreach ( $booking_room_details as $day_on_week => $day ) {
+			$count      = ! empty( $day['count'] ) ? (int) $day['count'] : 1;
+			$pricings[] = $day['price'] / $count;
+		}
+	}
+} else {
+	$plan_prices = hb_room_get_selected_plan( get_the_ID() );
+	$prices      = $plan_prices && isset( $plan_prices->prices ) ? $plan_prices->prices : array();
+	if ( ! empty( $prices ) ) {
+		$min_price  = is_numeric( min( $prices ) ) ? (float) min( $prices ) : 0;
+		$max_price  = is_numeric( max( $prices ) ) ? (float) max( $prices ) : 0;
+		$tax_rate   = hb_price_including_tax() ? hb_get_tax_settings() : 0;
+		$pricings[] = $min_price + ( $min_price * $tax_rate );
+		$pricings[] = $max_price + ( $max_price * $tax_rate );
 	}
 }
+
 if ( ! empty( $pricings ) ) {
 	$min = min( $pricings );
 	$max = max( $pricings );

@@ -275,36 +275,45 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
 
     protected function render()
     {
-	    $hb_settings = WPHB_Settings::instance();
-        $datetime 		 = new \DateTime('NOW');
-        $tomorrow 		 = new \DateTime('tomorrow');
-        $format 		 = get_option('date_format');
-		$check_in_date  = hb_get_request( 'check_in_date', $datetime->format($format));
-		$check_out_date = hb_get_request( 'check_out_date', $tomorrow->format($format));
-
-        $room = \WPHB_Room::instance(
-            get_the_ID(),
-            array(
-                'check_in_date'  => $check_in_date,
-                'check_out_date' => $check_out_date,
-            )
-        );
-
-        $settings        = $this->get_settings_for_display(); ?>
+	    $hb_settings    = WPHB_Settings::instance();
+	    $check_in_date  = hb_get_request( 'check_in_date' );
+	    $check_out_date = hb_get_request( 'check_out_date' );
+	    $settings       = $this->get_settings_for_display(); ?>
 
         <div class="hb-room-single__price">
 		    <?php if ( $settings['layout'] == 'regular' ) {
 			    $price_display = apply_filters( 'hotel_booking_loop_room_price_display_style', $hb_settings->get( 'price_display' ) );
 			    $text_before   = $settings['text_before'] ?? '';
 			    $text_after    = $settings['text_unit'] ?? '';
+			    $pricings      = [];
 
-			    $booking_room_details = $room->get_booking_room_details();
-			    $pricings             = [];
-			    if ( ! empty( $booking_room_details ) ) {
-			    	foreach ( $booking_room_details as $day_on_week => $day ) {
-			    		$pricings[] = $day['price'];
-			    	}
+			    if ( $check_in_date && $check_out_date ) {
+				    $room = \WPHB_Room::instance(
+					    get_the_ID(),
+					    array(
+						    'check_in_date'  => $check_in_date,
+						    'check_out_date' => $check_out_date,
+					    )
+				    );
+				    $booking_room_details = $room ? $room->get_booking_room_details() : [];
+				    if ( ! empty( $booking_room_details ) ) {
+					    foreach ( $booking_room_details as $day_on_week => $day ) {
+						    $count      = ! empty( $day['count'] ) ? (int) $day['count'] : 1;
+						    $pricings[] = $day['price'] / $count;
+					    }
+				    }
+			    } else {
+				    $plan_prices = hb_room_get_selected_plan( get_the_ID() );
+				    $prices      = $plan_prices && isset( $plan_prices->prices ) ? $plan_prices->prices : [];
+				    if ( ! empty( $prices ) ) {
+					    $min_price  = is_numeric( min( $prices ) ) ? (float) min( $prices ) : 0;
+					    $max_price  = is_numeric( max( $prices ) ) ? (float) max( $prices ) : 0;
+					    $tax_rate   = hb_price_including_tax() ? hb_get_tax_settings() : 0;
+					    $pricings[] = $min_price + ( $min_price * $tax_rate );
+					    $pricings[] = $max_price + ( $max_price * $tax_rate );
+				    }
 			    }
+
 			    if ( ! empty( $pricings ) ) {
 				    $min = min( $pricings );
 				    $max = max( $pricings );
@@ -330,6 +339,20 @@ class Thim_Ekit_Widget_Loop_Room_Price extends Widget_Base
 		    } elseif ( $settings['layout'] == 'pricing_plans' ) {
 			    echo hb_get_template( 'loop/pricing_plan.php' );
 		    } else {
+			    if ( ! $check_in_date || ! $check_out_date ) {
+				    $datetime       = new \DateTime( 'NOW' );
+				    $tomorrow       = new \DateTime( 'tomorrow' );
+				    $format         = get_option( 'date_format' );
+				    $check_in_date  = $datetime->format( $format );
+				    $check_out_date = $tomorrow->format( $format );
+			    }
+			    $room = \WPHB_Room::instance(
+				    get_the_ID(),
+				    array(
+					    'check_in_date'  => $check_in_date,
+					    'check_out_date' => $check_out_date,
+				    )
+			    );
 			    $text_price_breakdown = isset( $settings['text_price_breakdown'] ) ? $settings['text_price_breakdown'] : ''; ?>
                 <div class="hb_view_price hb-room-content">
                     <a href="" class="hb-view-booking-room-details"><?php echo esc_html( $text_price_breakdown ); ?></a>

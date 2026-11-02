@@ -26,7 +26,7 @@ $booking = WPHB_Booking::instance( $post->ID );
 	<div class="booking_details_header">
 		<div class="booking_details_title">
 			<h2 class="hb_meta_title">
-				<?php echo esc_html( sprintf( esc_html__( 'Book ID #%s', 'wp-hotel-booking' ), hb_format_order_number( $post->ID ) ) ); ?>
+				<?php echo esc_html( sprintf( esc_html__( 'Book ID %s', 'wp-hotel-booking' ), hb_format_order_number( $post->ID ) ) ); ?>
 			</h2>
 			<span class="hb-status-badge status-<?php echo esc_attr( $post->post_status ); ?>">
 				<?php echo esc_html( $current_stat ); ?>
