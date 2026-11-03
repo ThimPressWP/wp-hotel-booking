@@ -1212,6 +1212,18 @@ body.single-hb_room {
     }
 
     .flatpickr-calendar {
+        width: max-content !important;
+        max-width: 100%;
+
+        .flatpickr-days {
+            width: auto !important;
+        }
+
+        .flatpickr-weekdays,
+        .flatpickr-days {
+            gap: 0;
+        }
+
         .flatpickr-innerContainer {
             overflow: visible;
 
@@ -1408,14 +1420,6 @@ body.single-hb_room {
     .flatpickr-calendar,
     .dayContainer+.dayContainer {
         box-shadow: unset !important;
-    }
-
-    .flatpickr-weekdays {
-        gap: 30px;
-    }
-
-    .flatpickr-days {
-        gap: 10px;
     }
 }
 

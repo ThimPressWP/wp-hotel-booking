@@ -141,3 +141,17 @@
 		width: 100%;
 	}
 }
+
+.wphb-room-calendar-pricing-wrap .flatpickr-calendar {
+	width: max-content !important;
+	max-width: 100%;
+}
+
+.wphb-room-calendar-pricing-wrap .flatpickr-calendar .flatpickr-days {
+	width: auto !important;
+}
+
+.wphb-room-calendar-pricing-wrap .flatpickr-calendar .flatpickr-weekdays,
+.wphb-room-calendar-pricing-wrap .flatpickr-calendar .flatpickr-days {
+	gap: 0;
+}
