@@ -37,7 +37,7 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'content_section',
 			array(
-				'label' => esc_html__( 'Content', 'textdomain' ),
+				'label' => esc_html__( 'Content', 'wp-hotel-booking' ),
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
 			)
 		);
@@ -45,9 +45,9 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->add_control(
 			'form_title',
 			array(
-				'label'       => esc_html__( 'Form Title', 'textdomain' ),
+				'label'       => esc_html__( 'Form Title', 'wp-hotel-booking' ),
 				'type'        => \Elementor\Controls_Manager::TEXT,
-				'default'     => esc_html__( 'Check Availability', 'textdomain' ),
+				'default'     => esc_html__( 'Check Availability', 'wp-hotel-booking' ),
 				'label_block' => true,
 			)
 		);
@@ -55,18 +55,18 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->add_control(
 			'button_title',
 			array(
-				'label'   => esc_html__( 'Button Text', 'textdomain' ),
+				'label'   => esc_html__( 'Button Text', 'wp-hotel-booking' ),
 				'type'    => \Elementor\Controls_Manager::TEXT,
-				'default' => esc_html__( 'Search', 'textdomain' ),
+				'default' => esc_html__( 'Search', 'wp-hotel-booking' ),
 			)
 		);
 
 		$this->add_control(
 			'form_action',
 			array(
-				'label'       => esc_html__( 'Form Action URL', 'textdomain' ),
+				'label'       => esc_html__( 'Form Action URL', 'wp-hotel-booking' ),
 				'type'        => \Elementor\Controls_Manager::URL,
-				'placeholder' => esc_html__( 'https://your-site.com/results', 'textdomain' ),
+				'placeholder' => esc_html__( 'https://your-site.com/results', 'wp-hotel-booking' ),
 				'default'     => array(
 					'url' => '',
 				),
@@ -76,10 +76,10 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->add_control(
 			'show_toggle',
 			array(
-				'label'        => esc_html__( 'Enable Toggle', 'textdomain' ),
+				'label'        => esc_html__( 'Enable Toggle', 'wp-hotel-booking' ),
 				'type'         => \Elementor\Controls_Manager::SWITCHER,
-				'label_on'     => esc_html__( 'Yes', 'textdomain' ),
-				'label_off'    => esc_html__( 'No', 'textdomain' ),
+				'label_on'     => esc_html__( 'Yes', 'wp-hotel-booking' ),
+				'label_off'    => esc_html__( 'No', 'wp-hotel-booking' ),
 				'return_value' => 'yes',
 				'default'      => 'yes',
 			)
@@ -88,9 +88,9 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->add_control(
 			'toggle_button_text',
 			array(
-				'label'     => esc_html__( 'Toggle Button Text', 'textdomain' ),
+				'label'     => esc_html__( 'Toggle Button Text', 'wp-hotel-booking' ),
 				'type'      => \Elementor\Controls_Manager::TEXT,
-				'default'   => esc_html__( 'Search Rooms', 'textdomain' ),
+				'default'   => esc_html__( 'Search Rooms', 'wp-hotel-booking' ),
 				'condition' => array(
 					'show_toggle' => 'yes',
 				),
@@ -100,9 +100,9 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->add_control(
 			'toggle_close_text',
 			array(
-				'label'     => esc_html__( 'Toggle Close Text', 'textdomain' ),
+				'label'     => esc_html__( 'Toggle Close Text', 'wp-hotel-booking' ),
 				'type'      => \Elementor\Controls_Manager::TEXT,
-				'default'   => esc_html__( 'Close', 'textdomain' ),
+				'default'   => esc_html__( 'Close', 'wp-hotel-booking' ),
 				'condition' => array(
 					'show_toggle' => 'yes',
 				),
@@ -115,7 +115,7 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'fields_section',
 			array(
-				'label' => esc_html__( 'Form Fields', 'textdomain' ),
+				'label' => esc_html__( 'Form Fields', 'wp-hotel-booking' ),
 				'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
 			)
 		);
@@ -123,7 +123,7 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->add_control(
 			'show_check_in',
 			array(
-				'label'   => esc_html__( 'Show Check-in Date', 'textdomain' ),
+				'label'   => esc_html__( 'Show Check-in Date', 'wp-hotel-booking' ),
 				'type'    => \Elementor\Controls_Manager::SWITCHER,
 				'default' => 'yes',
 			)
@@ -132,7 +132,7 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->add_control(
 			'show_check_out',
 			array(
-				'label'   => esc_html__( 'Show Check-out Date', 'textdomain' ),
+				'label'   => esc_html__( 'Show Check-out Date', 'wp-hotel-booking' ),
 				'type'    => \Elementor\Controls_Manager::SWITCHER,
 				'default' => 'yes',
 			)
@@ -141,7 +141,7 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->add_control(
 			'show_adults',
 			array(
-				'label'   => esc_html__( 'Show Adults', 'textdomain' ),
+				'label'   => esc_html__( 'Show Adults', 'wp-hotel-booking' ),
 				'type'    => \Elementor\Controls_Manager::SWITCHER,
 				'default' => 'yes',
 			)
@@ -150,7 +150,7 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->add_control(
 			'show_children',
 			array(
-				'label'   => esc_html__( 'Show Children', 'textdomain' ),
+				'label'   => esc_html__( 'Show Children', 'wp-hotel-booking' ),
 				'type'    => \Elementor\Controls_Manager::SWITCHER,
 				'default' => 'yes',
 			)
@@ -159,7 +159,7 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->add_control(
 			'show_rooms',
 			array(
-				'label'   => esc_html__( 'Show Number of Rooms', 'textdomain' ),
+				'label'   => esc_html__( 'Show Number of Rooms', 'wp-hotel-booking' ),
 				'type'    => \Elementor\Controls_Manager::SWITCHER,
 				'default' => 'yes',
 			)
@@ -171,7 +171,7 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'toggle_button_style',
 			array(
-				'label'     => esc_html__( 'Toggle Button', 'textdomain' ),
+				'label'     => esc_html__( 'Toggle Button', 'wp-hotel-booking' ),
 				'tab'       => \Elementor\Controls_Manager::TAB_STYLE,
 				'condition' => array(
 					'show_toggle' => 'yes',
@@ -182,12 +182,12 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->add_responsive_control(
 			'toggle_button_display',
 			array(
-				'label'          => esc_html__( 'Display', 'textdomain' ),
+				'label'          => esc_html__( 'Display', 'wp-hotel-booking' ),
 				'type'           => \Elementor\Controls_Manager::SELECT,
 				'options'        => array(
-					'none'         => esc_html__( 'None', 'textdomain' ),
-					'block'        => esc_html__( 'Block', 'textdomain' ),
-					'inline-block' => esc_html__( 'Inline Block', 'textdomain' ),
+					'none'         => esc_html__( 'None', 'wp-hotel-booking' ),
+					'block'        => esc_html__( 'Block', 'wp-hotel-booking' ),
+					'inline-block' => esc_html__( 'Inline Block', 'wp-hotel-booking' ),
 				),
 				'default'        => 'none',
 				'tablet_default' => 'block',
@@ -209,7 +209,7 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->add_control(
 			'toggle_button_bg_color',
 			array(
-				'label'     => esc_html__( 'Background Color', 'textdomain' ),
+				'label'     => esc_html__( 'Background Color', 'wp-hotel-booking' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} .hb-toggle-button' => 'background-color: {{VALUE}};',
@@ -220,7 +220,7 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->add_control(
 			'toggle_button_text_color',
 			array(
-				'label'     => esc_html__( 'Text Color', 'textdomain' ),
+				'label'     => esc_html__( 'Text Color', 'wp-hotel-booking' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} .hb-toggle-button' => 'color: {{VALUE}};',
@@ -231,7 +231,7 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->add_responsive_control(
 			'toggle_button_padding',
 			array(
-				'label'      => esc_html__( 'Padding', 'textdomain' ),
+				'label'      => esc_html__( 'Padding', 'wp-hotel-booking' ),
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', '%', 'em' ),
 				'selectors'  => array(
@@ -251,7 +251,7 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->add_control(
 			'toggle_button_border_radius',
 			array(
-				'label'      => esc_html__( 'Border Radius', 'textdomain' ),
+				'label'      => esc_html__( 'Border Radius', 'wp-hotel-booking' ),
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', '%' ),
 				'selectors'  => array(
@@ -266,7 +266,7 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'form_container_style',
 			array(
-				'label' => esc_html__( 'Form Container', 'textdomain' ),
+				'label' => esc_html__( 'Form Container', 'wp-hotel-booking' ),
 				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
 			)
 		);
@@ -274,11 +274,11 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->add_responsive_control(
 			'form_display',
 			array(
-				'label'          => esc_html__( 'Form Display (Desktop)', 'textdomain' ),
+				'label'          => esc_html__( 'Form Display (Desktop)', 'wp-hotel-booking' ),
 				'type'           => \Elementor\Controls_Manager::SELECT,
 				'options'        => array(
-					'block' => esc_html__( 'Block', 'textdomain' ),
-					'flex'  => esc_html__( 'Inline (Flex)', 'textdomain' ),
+					'block' => esc_html__( 'Block', 'wp-hotel-booking' ),
+					'flex'  => esc_html__( 'Inline (Flex)', 'wp-hotel-booking' ),
 				),
 				'default'        => 'flex',
 				'tablet_default' => 'block',
@@ -292,7 +292,7 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->add_responsive_control(
 			'form_gap',
 			array(
-				'label'      => esc_html__( 'Gap Between Fields', 'textdomain' ),
+				'label'      => esc_html__( 'Gap Between Fields', 'wp-hotel-booking' ),
 				'type'       => \Elementor\Controls_Manager::SLIDER,
 				'size_units' => array( 'px', 'em' ),
 				'range'      => array(
@@ -310,7 +310,7 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->add_control(
 			'form_bg_color',
 			array(
-				'label'     => esc_html__( 'Background Color', 'textdomain' ),
+				'label'     => esc_html__( 'Background Color', 'wp-hotel-booking' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} .hb-search-form' => 'background-color: {{VALUE}};',
@@ -321,7 +321,7 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->add_responsive_control(
 			'form_padding',
 			array(
-				'label'      => esc_html__( 'Padding', 'textdomain' ),
+				'label'      => esc_html__( 'Padding', 'wp-hotel-booking' ),
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', '%', 'em' ),
 				'selectors'  => array(
@@ -336,7 +336,7 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->start_controls_section(
 			'submit_button_style',
 			array(
-				'label' => esc_html__( 'Submit Button', 'textdomain' ),
+				'label' => esc_html__( 'Submit Button', 'wp-hotel-booking' ),
 				'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
 			)
 		);
@@ -354,14 +354,14 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->start_controls_tab(
 			'submit_button_normal',
 			array(
-				'label' => esc_html__( 'Normal', 'textdomain' ),
+				'label' => esc_html__( 'Normal', 'wp-hotel-booking' ),
 			)
 		);
 
 		$this->add_control(
 			'submit_button_bg_color',
 			array(
-				'label'     => esc_html__( 'Background Color', 'textdomain' ),
+				'label'     => esc_html__( 'Background Color', 'wp-hotel-booking' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} .wphb-button' => 'background-color: {{VALUE}};',
@@ -372,7 +372,7 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->add_control(
 			'submit_button_text_color',
 			array(
-				'label'     => esc_html__( 'Text Color', 'textdomain' ),
+				'label'     => esc_html__( 'Text Color', 'wp-hotel-booking' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} .wphb-button' => 'color: {{VALUE}};',
@@ -385,14 +385,14 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->start_controls_tab(
 			'submit_button_hover',
 			array(
-				'label' => esc_html__( 'Hover', 'textdomain' ),
+				'label' => esc_html__( 'Hover', 'wp-hotel-booking' ),
 			)
 		);
 
 		$this->add_control(
 			'submit_button_bg_color_hover',
 			array(
-				'label'     => esc_html__( 'Background Color', 'textdomain' ),
+				'label'     => esc_html__( 'Background Color', 'wp-hotel-booking' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} .wphb-button:hover' => 'background-color: {{VALUE}};',
@@ -403,7 +403,7 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->add_control(
 			'submit_button_text_color_hover',
 			array(
-				'label'     => esc_html__( 'Text Color', 'textdomain' ),
+				'label'     => esc_html__( 'Text Color', 'wp-hotel-booking' ),
 				'type'      => \Elementor\Controls_Manager::COLOR,
 				'selectors' => array(
 					'{{WRAPPER}} .wphb-button:hover' => 'color: {{VALUE}};',
@@ -418,7 +418,7 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->add_responsive_control(
 			'submit_button_padding',
 			array(
-				'label'      => esc_html__( 'Padding', 'textdomain' ),
+				'label'      => esc_html__( 'Padding', 'wp-hotel-booking' ),
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', 'em' ),
 				'selectors'  => array(
@@ -439,7 +439,7 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 		$this->add_control(
 			'submit_button_border_radius',
 			array(
-				'label'      => esc_html__( 'Border Radius', 'textdomain' ),
+				'label'      => esc_html__( 'Border Radius', 'wp-hotel-booking' ),
 				'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', '%' ),
 				'selectors'  => array(
@@ -471,28 +471,28 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 				<ul class="hb-form-table">
 					<?php if ( $settings['show_check_in'] === 'yes' ) : ?>
 						<li class="hb-form-field">
-							<label><?php echo esc_html__( 'Check-in Date', 'textdomain' ); ?></label>
+							<label><?php echo esc_html__( 'Check-in Date', 'wp-hotel-booking' ); ?></label>
 							<div class="hb-form-field-input hb_input_field">
-								<input type="text" name="check_in_date" id="check_in_date_<?php echo esc_attr( $unique_id ); ?>" class="hb_input_date_check flatpickr-input" value="" placeholder="<?php echo esc_attr__( 'Check-in Date', 'textdomain' ); ?>" autocomplete="off" readonly="readonly">
+								<input type="text" name="check_in_date" id="check_in_date_<?php echo esc_attr( $unique_id ); ?>" class="hb_input_date_check flatpickr-input" value="" placeholder="<?php echo esc_attr__( 'Check-in Date', 'wp-hotel-booking' ); ?>" autocomplete="off" readonly="readonly">
 							</div>
 						</li>
 					<?php endif; ?>
 
 					<?php if ( $settings['show_check_out'] === 'yes' ) : ?>
 						<li class="hb-form-field">
-							<label><?php echo esc_html__( 'Check-out Date', 'textdomain' ); ?></label>
+							<label><?php echo esc_html__( 'Check-out Date', 'wp-hotel-booking' ); ?></label>
 							<div class="hb-form-field-input hb_input_field">
-								<input type="text" name="check_out_date" id="check_out_date_<?php echo esc_attr( $unique_id ); ?>" class="hb_input_date_check flatpickr-input" value="" placeholder="<?php echo esc_attr__( 'Check-out Date', 'textdomain' ); ?>" autocomplete="off" readonly="readonly">
+								<input type="text" name="check_out_date" id="check_out_date_<?php echo esc_attr( $unique_id ); ?>" class="hb_input_date_check flatpickr-input" value="" placeholder="<?php echo esc_attr__( 'Check-out Date', 'wp-hotel-booking' ); ?>" autocomplete="off" readonly="readonly">
 							</div>
 						</li>
 					<?php endif; ?>
 
 					<?php if ( $settings['show_adults'] === 'yes' ) : ?>
 						<li class="hb-form-field">
-							<label><?php echo esc_html__( 'Adults', 'textdomain' ); ?></label>
+							<label><?php echo esc_html__( 'Adults', 'wp-hotel-booking' ); ?></label>
 							<div class="hb-form-field-input">
 								<select name="adults_capacity">
-									<option value=""><?php echo esc_html__( 'Adults', 'textdomain' ); ?></option>
+									<option value=""><?php echo esc_html__( 'Adults', 'wp-hotel-booking' ); ?></option>
 									<?php for ( $i = 1; $i <= 10; $i++ ) : ?>
 										<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
 									<?php endfor; ?>
@@ -503,10 +503,10 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 
 					<?php if ( $settings['show_children'] === 'yes' ) : ?>
 						<li class="hb-form-field">
-							<label><?php echo esc_html__( 'Children', 'textdomain' ); ?></label>
+							<label><?php echo esc_html__( 'Children', 'wp-hotel-booking' ); ?></label>
 							<div class="hb-form-field-input">
 								<select name="max_child">
-									<option value=""><?php echo esc_html__( 'Children', 'textdomain' ); ?></option>
+									<option value=""><?php echo esc_html__( 'Children', 'wp-hotel-booking' ); ?></option>
 									<?php for ( $i = 1; $i <= 4; $i++ ) : ?>
 										<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
 									<?php endfor; ?>
@@ -517,10 +517,10 @@ class Thim_Ekit_Widget_Check_Avaibility extends \Elementor\Widget_Base {
 
 					<?php if ( $settings['show_rooms'] === 'yes' ) : ?>
 						<li class="hb-form-field">
-							<label><?php echo esc_html__( 'Number of rooms', 'textdomain' ); ?></label>
+							<label><?php echo esc_html__( 'Number of rooms', 'wp-hotel-booking' ); ?></label>
 							<div class="hb-form-field-input">
 								<select name="number-of-rooms">
-									<option value=""><?php echo esc_html__( 'Number of rooms', 'textdomain' ); ?></option>
+									<option value=""><?php echo esc_html__( 'Number of rooms', 'wp-hotel-booking' ); ?></option>
 									<?php for ( $i = 1; $i <= 20; $i++ ) : ?>
 										<option value="<?php echo $i; ?>" <?php selected( $i, 1 ); ?>><?php echo $i; ?></option>
 									<?php endfor; ?>

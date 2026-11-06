@@ -28,11 +28,13 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 			parent::__construct();
 		}
 
-		public function get_settings() {
-			$section  = 'email-options';
+		public function get_settings( $section = '' ) {
 			$sections = $this->get_sections();
-			if ( isset( $_REQUEST['section'] ) && array_key_exists( $_REQUEST['section'], $sections ) ) {
-				$section = sanitize_text_field( $_REQUEST['section'] );
+			if ( empty( $section ) ) {
+				$section = 'email-options';
+				if ( isset( $_REQUEST['section'] ) && array_key_exists( $_REQUEST['section'], $sections ) ) {
+					$section = sanitize_text_field( $_REQUEST['section'] );
+				}
 			}
 
 			$settings = array(
@@ -221,6 +223,50 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 			);
 
 			return apply_filters( 'hotel_booking_admin_setting_sections_' . $this->id, $sections );
+		}
+
+		public function output() {
+			$sections        = $this->get_sections();
+			$current_section = null;
+			if ( isset( $_REQUEST['section'] ) && isset( $_REQUEST['tab'] ) && $_REQUEST['tab'] === $this->id && array_key_exists( $_REQUEST['section'], $sections ) ) {
+				$current_section = sanitize_text_field( $_REQUEST['section'] );
+			}
+			if ( ! $current_section ) {
+				$section_keys    = array_keys( $sections );
+				$current_section = reset( $section_keys );
+			}
+
+			foreach ( $sections as $sec_id => $sec_title ) {
+				$is_active = ( $current_section === $sec_id );
+				echo '<div class="wphb-settings-section-panel' . ( $is_active ? ' is-active' : '' ) . '" data-tab="' . esc_attr( $this->id ) . '" data-section="' . esc_attr( $sec_id ) . '">';
+				$settings = $this->get_settings( $sec_id );
+				WPHB_Admin_Settings::render_fields( $settings );
+				echo '</div>';
+			}
+		}
+
+		public function save( $tab = '' ) {
+			$nonce = WPHB_Helpers::get_param( 'wphb_meta_box_settings_nonce', '' );
+			if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'wphb_update_meta_box_settings' ) ) {
+				return;
+			}
+
+			if ( ! current_user_can( 'manage_hb_booking' ) && ! current_user_can( 'manage_options' ) ) {
+				return;
+			}
+
+			if ( $this->id != $tab && 'emails' != $tab ) {
+				return;
+			}
+
+			if ( ! empty( $_POST['wphb_save_all_tabs'] ) ) {
+				$sections = $this->get_sections();
+				foreach ( array_keys( $sections ) as $sec_id ) {
+					$this->save_settings_fields( $this->get_settings( $sec_id ) );
+				}
+			} else {
+				parent::save( $tab );
+			}
 		}
 	}
 

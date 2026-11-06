@@ -36,10 +36,11 @@ class AdminExternalLinkIconSetting {
 				'remove_button_title'  => __( 'Remove', 'wp-hotel-booking' ),
 			);
 			wp_localize_script( 'wphb-icon-external-link-upload', 'wphbIconExternalLinkSettings', $localize );
-			$field_title   = $this->field_title( $field );
-			$field_content = $this->field_content( $field );
-			$sections      = array(
-				'wrap'     => '<tr valign="top">',
+			$field_title     = $this->field_title( $field );
+			$field_content   = $this->field_content( $field );
+			$search_keywords = strtolower( trim( ( $field['title'] ?? '' ) . ' ' . ( $field['desc'] ?? '' ) . ' ' . ( $field['id'] ?? '' ) ) );
+			$sections        = array(
+				'wrap'     => '<tr valign="top" class="wphb-setting-row wphb-setting-row--custom_html" data-search-text="' . esc_attr( $search_keywords ) . '">',
 				'title'    => $field_title,
 				'content'  => $field_content,
 				'wrap_end' => '</tr>',
@@ -52,7 +53,7 @@ class AdminExternalLinkIconSetting {
 	}
 
 	public function field_title( $field ) {
-		return sprintf( '<th scope="row"><label>%s</label</th>', esc_html( $field['title'] ) );
+		return sprintf( '<th scope="row"><label>%s</label></th>', esc_html( $field['title'] ) );
 	}
 
 	public function field_content( $field ) {
@@ -78,7 +79,7 @@ class AdminExternalLinkIconSetting {
 			'sample_row'  => $this->sample_row(),
 			'fields'      => $fields_html,
 			'table_end'   => '</table>',
-			'input_field' => sprintf( '<input type="hidden" id="%1$s" name="%1$s" value="%2$s" />', $field['id'], $setting ),
+			'input_field' => sprintf( '<input type="hidden" id="%1$s" name="%1$s" value="%2$s" />', esc_attr( $field['id'] ), esc_attr( (string) $setting ) ),
 			'wrap_end'    => '</td>',
 		);
 		return Template::combine_components( $section );
@@ -97,13 +98,13 @@ class AdminExternalLinkIconSetting {
 	            <td><input type="text" name="url" value="%6$s" /></td>
 	            <td><button class="delete-external-link button" type="button">%7$s</button></td>
 			</tr>',
-			$field_id,
+			esc_attr( $field_id ),
 			esc_url( $icon_url ),
-			__( 'Choose logo', 'wp-hotel-booking' ),
-			$link['icon_id'],
-			$link['title'],
-			$link['external_link'],
-			__( 'Delete', 'wp-hotel-booking' )
+			esc_attr__( 'Choose logo', 'wp-hotel-booking' ),
+			esc_attr( $link['icon_id'] ?? '' ),
+			esc_attr( $link['title'] ?? '' ),
+			esc_url( $link['external_link'] ?? '' ),
+			esc_html__( 'Delete', 'wp-hotel-booking' )
 		);
 	}
 

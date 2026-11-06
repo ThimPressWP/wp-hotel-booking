@@ -122,16 +122,17 @@ if ( ! class_exists( 'WPHB_Settings' ) ) {
 
 				if ( $name === 'tp_hotel_booking_offline-payment' && is_array( $value ) && isset( $value['instruction'] ) ) {
 					if ( isset( $_POST['tp_hotel_booking_offline-payment']['instruction'] ) ) {
-						$value['instruction'] = wp_kses_post( $_POST['tp_hotel_booking_offline-payment']['instruction'] );
+						$value['instruction'] = wp_kses_post( wp_unslash( $_POST['tp_hotel_booking_offline-payment']['instruction'] ) );
 					}
 				}
 
 				// update option
 				update_option( $name, $value );
-				$this->_options = [];
-				$this->_load_options();
+				$this->_options[ $name ] = $value;
 
-				add_action( 'admin_notices', array( $this, 'notice_success' ) );
+				if ( ! has_action( 'admin_notices', array( $this, 'notice_success' ) ) ) {
+					add_action( 'admin_notices', array( $this, 'notice_success' ) );
+				}
 			} catch ( Throwable $e ) {
 				error_log( __METHOD__ . " :$name: " . $e->getMessage() );
 			}

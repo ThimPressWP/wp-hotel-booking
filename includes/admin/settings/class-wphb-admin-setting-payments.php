@@ -69,29 +69,56 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Payments' ) ) {
 		}
 
 		public function output() {
+			$sections        = $this->get_sections();
 			$current_section = null;
 
-			if ( isset( $_REQUEST['section'] ) ) {
+			if ( isset( $_REQUEST['section'] ) && isset( $_REQUEST['tab'] ) && $_REQUEST['tab'] === $this->id && array_key_exists( $_REQUEST['section'], $sections ) ) {
 				$current_section = sanitize_text_field( $_REQUEST['section'] );
 			}
 
+			if ( ! $current_section ) {
+				$section_keys    = array_keys( $sections );
+				$current_section = reset( $section_keys );
+			}
+
 			$payments = hb_get_payment_gateways();
-			if ( $current_section && $current_section !== 'general' ) {
-				/**
-				 * @var WPHB_Payment_Gateway_Base $payment
-				 */
+
+			// Render 'general' sub-section
+			$is_general_active = ( $current_section === 'general' );
+			echo '<div class="wphb-settings-section-panel' . ( $is_general_active ? ' is-active' : '' ) . '" data-tab="' . esc_attr( $this->id ) . '" data-section="general">';
+			parent::output();
+			echo '</div>';
+
+			// Render each payment gateway sub-section
+			if ( ! empty( $payments ) && is_array( $payments ) ) {
 				foreach ( $payments as $payment ) {
-					if ( $payment->slug === $current_section ) {
-						$payment->admin_settings();
-						echo sprintf(
-							'<input type="hidden" name="wphb_save_section_fields_setting" value="%s" />',
-							esc_attr( $payment->key_save_settings )
-						);
-						break;
+					$slug      = $payment->slug;
+					$is_active = ( $current_section === $slug );
+					echo '<div class="wphb-settings-section-panel' . ( $is_active ? ' is-active' : '' ) . '" data-tab="' . esc_attr( $this->id ) . '" data-section="' . esc_attr( $slug ) . '" data-gateway-panel="' . esc_attr( $slug ) . '">';
+					echo '<div class="wphb-settings-card">';
+					echo '<div class="wphb-settings-card__header">';
+					echo '<div class="wphb-settings-card__header-main">';
+					echo '<h3 class="wphb-settings-card__title">' . esc_html( $payment->title ) . '</h3>';
+					if ( ! empty( $payment->description ) ) {
+						echo '<p class="description wphb-settings-card__desc">' . esc_html( $payment->description ) . '</p>';
 					}
+					echo '</div>';
+					$gw_settings = WPHB_Settings::instance()->get( $slug );
+					$is_enabled  = is_array( $gw_settings ) && isset( $gw_settings['enable'] )
+						? ( 'on' === $gw_settings['enable'] || 1 == $gw_settings['enable'] )
+						: ( method_exists( $payment, 'is_enable' ) && $payment->is_enable() );
+					echo '<span class="wphb-gateway-badge ' . ( $is_enabled ? 'is-enabled' : 'is-disabled' ) . '" data-gateway-badge="' . esc_attr( $slug ) . '">' . esc_html( $is_enabled ? __( 'Active', 'wp-hotel-booking' ) : __( 'Inactive', 'wp-hotel-booking' ) ) . '</span>';
+					echo '</div>';
+					echo '<div class="wphb-settings-card__body">';
+					$payment->admin_settings();
+					echo sprintf(
+						'<input type="hidden" name="wphb_save_section_fields_settings[]" value="%s" />',
+						esc_attr( $payment->key_save_settings )
+					);
+					echo '</div>';
+					echo '</div>';
+					echo '</div>';
 				}
-			} else {
-				parent::output();
 			}
 		}
 

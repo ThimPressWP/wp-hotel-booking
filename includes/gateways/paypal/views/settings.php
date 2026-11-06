@@ -33,44 +33,53 @@ $paypal_webhook_listener_url = esc_url( rest_url( 'wphb/v1/paypal/webhook' ) );
 
 $field_name = $settings->get_field_name( 'paypal' );
 ?>
-<table class="form-table">
-	<tr>
-		<th><?php _e( 'Enable', 'wp-hotel-booking' ); ?></th>
-		<td>
+<table class="form-table wphb-settings-table">
+	<tr class="wphb-setting-row">
+		<th scope="row"><?php _e( 'Enable', 'wp-hotel-booking' ); ?></th>
+		<td class="hb-form-field hb-form-field-checkbox">
 			<input type="hidden" name="<?php echo esc_attr( $field_name ); ?>[enable]" value="off" />
-			<input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>[enable]" <?php checked( $paypal['enable'] == 'on' ? 1 : 0, 1 ); ?> value="on" />
+			<label class="wphb-toggle-switch">
+				<input type="checkbox" class="wphb-gateway-enable-toggle" data-gateway="paypal" name="<?php echo esc_attr( $field_name ); ?>[enable]" <?php checked( $paypal['enable'] == 'on' ? 1 : 0, 1 ); ?> value="on" />
+				<span class="wphb-toggle-slider"></span>
+			</label>
 		</td>
 	</tr>
-	<tr>
-		<th><?php _e( 'Paypal email', 'wp-hotel-booking' ); ?></th>
-		<td>
+	<tr class="wphb-setting-row">
+		<th scope="row"><?php _e( 'Paypal email', 'wp-hotel-booking' ); ?></th>
+		<td class="hb-form-field hb-form-field-email">
 			<input type="email" class="regular-text" name="<?php echo esc_attr( $field_name ); ?>[email]" value="<?php echo esc_attr( $paypal['email'] ); ?>" />
 		</td>
 	</tr>
-	<tr>
-		<th><?php _e( 'Sandbox Mode', 'wp-hotel-booking' ); ?></th>
-		<td>
+	<tr class="wphb-setting-row">
+		<th scope="row"><?php _e( 'Sandbox Mode', 'wp-hotel-booking' ); ?></th>
+		<td class="hb-form-field hb-form-field-checkbox">
 			<input type="hidden" name="<?php echo esc_attr( $field_name ); ?>[sandbox]" value="off" />
-			<input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>[sandbox]" <?php checked( $paypal['sandbox'] == 'on' ? 1 : 0, 1 ); ?> value="on" />
+			<label class="wphb-toggle-switch">
+				<input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>[sandbox]" <?php checked( $paypal['sandbox'] == 'on' ? 1 : 0, 1 ); ?> value="on" />
+				<span class="wphb-toggle-slider"></span>
+			</label>
 		</td>
 	</tr>
-	<tr>
-		<th><?php _e( 'Paypal sandbox email', 'wp-hotel-booking' ); ?></th>
-		<td>
+	<tr class="wphb-setting-row">
+		<th scope="row"><?php _e( 'Paypal sandbox email', 'wp-hotel-booking' ); ?></th>
+		<td class="hb-form-field hb-form-field-email">
 			<input type="email" class="regular-text" name="<?php echo esc_attr( $field_name ); ?>[sandbox_email]" value="<?php echo esc_attr( $paypal['sandbox_email'] ); ?>" />
 		</td>
 	</tr>
-	<tr>
-		<th><?php _e( 'Use PayPal REST API', 'wp-hotel-booking' ); ?></th>
-		<td>
+	<tr class="wphb-setting-row">
+		<th scope="row"><?php _e( 'Use PayPal REST API', 'wp-hotel-booking' ); ?></th>
+		<td class="hb-form-field hb-form-field-checkbox">
 			<input type="hidden" name="<?php echo esc_attr( $field_name ); ?>[use_paypal_rest]" value="off" />
-			<input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>[use_paypal_rest]" <?php checked( $paypal['use_paypal_rest'] == 'on' ? 1 : 0, 1 ); ?> value="on" />
-			<span class="description"><?php esc_html_e( 'Recommendations! The old standard will not be supported in 2024/01/31.', 'wp-hotel-booking' ); ?></span>
+			<label class="wphb-toggle-switch">
+				<input type="checkbox" name="<?php echo esc_attr( $field_name ); ?>[use_paypal_rest]" <?php checked( $paypal['use_paypal_rest'] == 'on' ? 1 : 0, 1 ); ?> value="on" />
+				<span class="wphb-toggle-slider"></span>
+			</label>
+			<p class="description"><?php esc_html_e( 'Recommendations! The old standard will not be supported in 2024/01/31.', 'wp-hotel-booking' ); ?></p>
 		</td>
 	</tr>
-	<tr>
-		<th><?php _e( 'Client ID', 'wp-hotel-booking' ); ?></th>
-		<td>
+	<tr class="wphb-setting-row">
+		<th scope="row"><?php _e( 'Client ID', 'wp-hotel-booking' ); ?></th>
+		<td class="hb-form-field hb-form-field-text">
 			<input type="text" class="regular-text" name="<?php echo esc_attr( $field_name ); ?>[app_client_id]" value="<?php echo esc_attr( $paypal['app_client_id'] ); ?>" />
 			<p class="description">
 			<?php
@@ -82,9 +91,9 @@ $field_name = $settings->get_field_name( 'paypal' );
 			</p>
 		</td>
 	</tr>
-	<tr>
-		<th><?php _e( 'Client Secret', 'wp-hotel-booking' ); ?></th>
-		<td>
+	<tr class="wphb-setting-row">
+		<th scope="row"><?php _e( 'Client Secret', 'wp-hotel-booking' ); ?></th>
+		<td class="hb-form-field hb-form-field-text">
 			<input type="text" class="regular-text" name="<?php echo esc_attr( $field_name ); ?>[app_client_secret]" value="<?php echo esc_attr( $paypal['app_client_secret'] ); ?>" />
 			<p class="description">
 			<?php
@@ -96,9 +105,9 @@ $field_name = $settings->get_field_name( 'paypal' );
 			</p>
 		</td>
 	</tr>
-	<tr>
-		<th><?php _e( 'Webhook ID', 'wp-hotel-booking' ); ?></th>
-		<td>
+	<tr class="wphb-setting-row">
+		<th scope="row"><?php _e( 'Webhook ID', 'wp-hotel-booking' ); ?></th>
+		<td class="hb-form-field hb-form-field-text">
 			<input type="text" class="regular-text" name="<?php echo esc_attr( $field_name ); ?>[webhook_id]" value="<?php echo esc_attr( $paypal['webhook_id'] ); ?>" />
 			<p class="description">
 				<?php esc_html_e( 'Used with PayPal REST API to verify payment notifications (webhooks). In the PayPal Developer Dashboard, add a webhook pointing to the listener URL below, subscribe to the "PAYMENT.CAPTURE.*" events, then paste the generated Webhook ID here.', 'wp-hotel-booking' ); ?>

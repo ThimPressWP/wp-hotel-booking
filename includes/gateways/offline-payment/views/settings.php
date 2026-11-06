@@ -27,20 +27,25 @@ $payment  = wp_parse_args(
 
 $field_name = $settings->get_field_name( 'offline-payment' );
 ?>
-<table class="form-table">
-	<tr>
-		<th><?php _e( 'Enable', 'wp-hotel-booking' ); ?></th>
-		<td>
+<table class="form-table wphb-settings-table">
+	<tr class="wphb-setting-row">
+		<th scope="row"><?php _e( 'Enable', 'wp-hotel-booking' ); ?></th>
+		<td class="hb-form-field hb-form-field-checkbox">
 			<input type="hidden" name="<?php echo esc_attr( $field_name ); ?>[enable]" value="off"/>
-			<input type="checkbox"
-					name="<?php echo esc_attr( $field_name ); ?>[enable]" <?php checked( $payment['enable'] == 'on' ? 1 : 0, 1 ); ?>
-					value="on"/>
+			<label class="wphb-toggle-switch">
+				<input type="checkbox"
+						class="wphb-gateway-enable-toggle"
+						data-gateway="offline-payment"
+						name="<?php echo esc_attr( $field_name ); ?>[enable]" <?php checked( $payment['enable'] == 'on' ? 1 : 0, 1 ); ?>
+						value="on"/>
+				<span class="wphb-toggle-slider"></span>
+			</label>
 			<p class="description"><?php _e( 'Enable checkout booking via Offline payment', 'wp-hotel-booking' ); ?></p>
 		</td>
 	</tr>
-	<tr>
-		<th><?php _e( 'Instruction', 'wp-hotel-booking' ); ?></th>
-		<td>
+	<tr class="wphb-setting-row">
+		<th scope="row"><?php _e( 'Instruction', 'wp-hotel-booking' ); ?></th>
+		<td class="hb-form-field hb-form-field-textarea">
 
 			<input type="hidden" name="<?php echo esc_attr( $field_name ); ?>[instruction]"/>
 			<?php
