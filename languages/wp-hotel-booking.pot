@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WP Hotel Booking plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Hotel Booking 2.3.5\n"
+"Project-Id-Version: WP Hotel Booking 2.4.0-beta1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-hotel-booking\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-02T06:41:22+00:00\n"
+"POT-Creation-Date: 2026-11-06T08:39:42+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wp-hotel-booking\n"
@@ -18,6 +18,7 @@ msgstr ""
 #: wp-hotel-booking.php
 #: includes/admin/class-wphb-admin-menu.php:36
 #: includes/admin/class-wphb-admin-menu.php:37
+#: includes/admin/class-wphb-admin-settings.php:510
 msgid "WP Hotel Booking"
 msgstr ""
 
@@ -58,59 +59,120 @@ msgstr ""
 msgid "Tools"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:309
+#: includes/admin/class-wphb-admin-setting-page.php:116
+msgid "Enabled"
+msgstr ""
+
+#: includes/admin/class-wphb-admin-setting-page.php:116
+msgid "Disabled"
+msgstr ""
+
+#: includes/admin/class-wphb-admin-settings.php:59
+msgid "Security check failed. Please refresh the page and try again."
+msgstr ""
+
+#: includes/admin/class-wphb-admin-settings.php:68
+msgid "You do not have permission to save settings."
+msgstr ""
+
+#: includes/admin/class-wphb-admin-settings.php:91
+msgid "Settings saved successfully."
+msgstr ""
+
+#: includes/admin/class-wphb-admin-settings.php:354
+msgid "W"
+msgstr ""
+
+#: includes/admin/class-wphb-admin-settings.php:369
+msgid "H"
+msgstr ""
+
+#: includes/admin/class-wphb-admin-settings.php:431
 #: includes/wphb-functions.php:2973
 #: templates/setup/steps/pages.php:35
 msgid "---Select page---"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:311
+#: includes/admin/class-wphb-admin-settings.php:433
 #: includes/wphb-functions.php:2975
 #: templates/setup/steps/pages.php:37
 msgid "[ Add new page ]"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:319
+#: includes/admin/class-wphb-admin-settings.php:441
 #: templates/setup/steps/pages.php:44
 msgctxt "drop down pages"
 msgid "or"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:321
+#: includes/admin/class-wphb-admin-settings.php:444
 #: templates/setup/steps/pages.php:46
 msgid "Create new"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:325
+#: includes/admin/class-wphb-admin-settings.php:448
 #: templates/setup/steps/pages.php:50
 msgid "New page title"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:327
+#: includes/admin/class-wphb-admin-settings.php:450
 #: templates/setup/steps/pages.php:52
 msgid "Ok [Enter]"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:329
+#: includes/admin/class-wphb-admin-settings.php:452
 #: templates/setup/steps/pages.php:54
 msgid "Cancel [ESC]"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:333
+#: includes/admin/class-wphb-admin-settings.php:458
 #: templates/setup/steps/pages.php:58
 msgid "Edit page"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:336
+#: includes/admin/class-wphb-admin-settings.php:464
 #: templates/setup/steps/pages.php:61
 msgid "View page"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:388
-#: includes/admin/metaboxes/views/meta-booking-actions.php:28
-#: includes/admin/metaboxes/views/tabs/meta-room-block-date.php:25
-#: includes/admin/views/pricing-table.php:168
-msgid "Update"
+#: includes/admin/class-wphb-admin-settings.php:498
+msgid "WP Hotel Booking Settings"
+msgstr ""
+
+#: includes/admin/class-wphb-admin-settings.php:524
+#: includes/elementor/widgets/global/check-avaibility.php:60
+#: includes/elementor/widgets/global/search-room.php:175
+msgid "Search"
+msgstr ""
+
+#: includes/admin/class-wphb-admin-settings.php:527
+msgid "Clear search"
+msgstr ""
+
+#: includes/admin/class-wphb-admin-settings.php:534
+msgid "Unsaved changes"
+msgstr ""
+
+#: includes/admin/class-wphb-admin-settings.php:539
+#: includes/admin/class-wphb-admin-settings.php:540
+#: includes/admin/class-wphb-admin-settings.php:603
+msgid "Save Settings"
+msgstr ""
+
+#: includes/admin/class-wphb-admin-settings.php:539
+msgid "Saving..."
+msgstr ""
+
+#: includes/admin/class-wphb-admin-settings.php:539
+msgid "Saved!"
+msgstr ""
+
+#: includes/admin/class-wphb-admin-settings.php:549
+msgid "Settings Sections"
+msgstr ""
+
+#: includes/admin/class-wphb-admin-settings.php:577
+msgid "Reset filter"
 msgstr ""
 
 #: includes/admin/class-wphb-admin.php:140
@@ -210,6 +272,7 @@ msgid "Extra Settings"
 msgstr ""
 
 #: includes/admin/metaboxes/rooms/class-wphb-admin-metabox-extra-options.php:33
+#: includes/booking/wphb-booking-hooks.php:825
 #: includes/class-wphb-post-types.php:436
 #: includes/elementor/widgets/global/filter-room-selected.php:347
 #: includes/elementor/widgets/global/filter-room.php:67
@@ -277,7 +340,7 @@ msgstr ""
 #: includes/admin/metaboxes/rooms/class-wphb-admin-metabox-rooms.php:37
 #: includes/admin/metaboxes/views/meta-booking-details.php:41
 #: includes/admin/settings/class-wphb-admin-setting-general.php:26
-#: includes/admin/settings/class-wphb-admin-setting-payments.php:100
+#: includes/admin/settings/class-wphb-admin-setting-payments.php:127
 #: includes/elementor/widgets/global/search-room.php:58
 #: includes/elementor/widgets/global/search-room.php:208
 #: includes/elementor/widgets/loop-item/loop-room-add-to-cart.php:42
@@ -385,7 +448,7 @@ msgstr ""
 
 #: includes/admin/metaboxes/rooms/class-wphb-admin-metabox-rooms.php:262
 #: templates/checkout/addition-information.php:19
-#: templates/emails/booking-details.php:65
+#: templates/emails/booking-details.php:110
 #: templates/single-room/details.php:50
 msgid "Additional Information"
 msgstr ""
@@ -444,6 +507,12 @@ msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-actions.php:23
 msgid "Move to Trash"
+msgstr ""
+
+#: includes/admin/metaboxes/views/meta-booking-actions.php:28
+#: includes/admin/metaboxes/views/tabs/meta-room-block-date.php:25
+#: includes/admin/views/pricing-table.php:168
+msgid "Update"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-actions.php:28
@@ -568,12 +637,14 @@ msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items-template-js.php:48
 #: includes/admin/wphb-admin-functions.php:293
+#: includes/booking/wphb-booking-hooks.php:822
 #: templates/emails/booking-details.php:22
 msgid "Check in"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items-template-js.php:50
 #: includes/admin/wphb-admin-functions.php:294
+#: includes/booking/wphb-booking-hooks.php:823
 #: templates/emails/booking-details.php:23
 msgid "Check out"
 msgstr ""
@@ -602,6 +673,7 @@ msgstr ""
 #: includes/admin/metaboxes/views/meta-booking-items-template-js.php:117
 #: includes/admin/metaboxes/views/meta-booking-items-template-js.php:230
 #: includes/admin/metaboxes/views/tabs/meta-room-pricing.php:165
+#: includes/elementor/widgets/global/check-avaibility.php:105
 msgid "Close"
 msgstr ""
 
@@ -615,6 +687,7 @@ msgid "Do you want to do this?"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items-template-js.php:154
+#: includes/elementor/widgets/global/check-avaibility.php:82
 #: includes/elementor/widgets/single-room/room-booking.php:1203
 #: includes/widgets/class-hb-widget-room-carousel.php:83
 #: includes/widgets/class-hb-widget-room-carousel.php:92
@@ -622,6 +695,7 @@ msgid "No"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items-template-js.php:155
+#: includes/elementor/widgets/global/check-avaibility.php:81
 #: includes/elementor/widgets/single-room/room-booking.php:1202
 #: includes/widgets/class-hb-widget-room-carousel.php:81
 #: includes/widgets/class-hb-widget-room-carousel.php:89
@@ -656,6 +730,8 @@ msgid "Qty"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items.php:57
+#: includes/elementor/widgets/global/check-avaibility.php:492
+#: includes/elementor/widgets/global/check-avaibility.php:495
 #: includes/elementor/widgets/global/search-room.php:71
 #: includes/elementor/widgets/global/search-room.php:610
 #: includes/TemplateHooks/ArchiveRoomTemplate.php:222
@@ -669,6 +745,8 @@ msgid "Adults"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items.php:60
+#: includes/elementor/widgets/global/check-avaibility.php:506
+#: includes/elementor/widgets/global/check-avaibility.php:509
 #: includes/elementor/widgets/global/search-room.php:72
 #: includes/elementor/widgets/global/search-room.php:679
 #: includes/TemplateHooks/ArchiveRoomTemplate.php:227
@@ -685,12 +763,13 @@ msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items.php:64
 #: includes/admin/wphb-admin-functions.php:295
+#: includes/booking/wphb-booking-hooks.php:845
 #: includes/class-wphb-gdpr.php:108
 #: templates/account/bookings.php:38
 #: templates/cart/cart.php:555
 #: templates/checkout/checkout.php:397
 #: templates/checkout/thank-you.php:70
-#: templates/emails/booking-details.php:51
+#: templates/emails/booking-details.php:68
 #: templates/search/booking-room-details.php:41
 #: templates/single-room/booking-room-price-details.php:82
 msgid "Total"
@@ -752,10 +831,10 @@ msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items.php:211
 #: includes/admin/settings/class-wphb-admin-setting-general.php:180
+#: includes/booking/wphb-booking-hooks.php:850
 #: templates/cart/cart.php:571
 #: templates/checkout/checkout.php:415
 #: templates/checkout/thank-you.php:162
-#: templates/emails/booking-details.php:56
 msgid "Advance Payment"
 msgstr ""
 
@@ -781,7 +860,7 @@ msgstr ""
 #: includes/elementor/widgets/global/search-room.php:150
 #: includes/elementor/widgets/single-room/room-faqs.php:53
 #: includes/elementor/widgets/single-room/room-preview.php:58
-#: includes/TemplateHooks/Admin/AdminExternalLinkIconSetting.php:62
+#: includes/TemplateHooks/Admin/AdminExternalLinkIconSetting.php:63
 msgid "Icon"
 msgstr ""
 
@@ -797,19 +876,20 @@ msgstr ""
 #: includes/elementor/widgets/single-room/room-facilities.php:63
 #: includes/elementor/widgets/single-room/room-review.php:50
 #: includes/elementor/widgets/single-room/room-review.php:107
-#: includes/TemplateHooks/Admin/AdminExternalLinkIconSetting.php:63
+#: includes/TemplateHooks/Admin/AdminExternalLinkIconSetting.php:64
 #: templates/checkout/customer-new.php:27
 msgid "Title"
 msgstr ""
 
 #: includes/admin/metaboxes/views/tabs/meta-room-external-link.php:43
-#: includes/TemplateHooks/Admin/AdminExternalLinkIconSetting.php:64
+#: includes/TemplateHooks/Admin/AdminExternalLinkIconSetting.php:65
 msgid "Url"
 msgstr ""
 
 #: includes/admin/metaboxes/views/tabs/meta-room-external-link.php:61
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:87
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:156
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:109
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:178
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:228
 #: includes/gateways/offline-payment/views/settings.php:32
 #: includes/gateways/paypal/views/settings.php:38
 msgid "Enable"
@@ -852,6 +932,7 @@ msgstr ""
 
 #: includes/admin/metaboxes/views/tabs/meta-room-faq.php:35
 #: includes/admin/metaboxes/views/tabs/meta-room-faq.php:56
+#: includes/elementor/widgets/global/check-avaibility.php:40
 #: includes/elementor/widgets/single-room/room-infos.php:46
 #: includes/elementor/widgets/single-room/room-review.php:77
 #: includes/elementor/widgets/single-room/room-rules.php:46
@@ -960,119 +1041,240 @@ msgstr ""
 msgid "Emails"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:42
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:46
 msgid "Email Sender"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:43
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:47
 msgid "The name and email address of the sender displays in email"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:49
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:53
 msgid "From name"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:57
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:61
 msgid "From Email"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:65
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:69
 msgid "Email subject"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:66
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:67
-#: includes/booking/wphb-booking-hooks.php:284
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:70
+msgid "Subject for customer booking confirmation email. Available placeholders: {site_title}, {booking_number}, {booking_date}"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:71
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:72
+#: includes/booking/wphb-booking-hooks.php:484
+#: includes/booking/wphb-booking-hooks.php:704
 msgid "Reservation"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:80
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:219
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:83
+msgid "Email Live Preview"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:84
+msgid "Select an email template status and sample booking data to preview the full HTML email layout in real time."
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:102
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:291
 msgid "Complete Booking"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:81
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:103
 msgid "New booking emails are sent to chosen recipient(s) when a booking is completed."
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:94
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:163
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:116
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:235
 msgid "Recipient(s)"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:95
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:164
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:173
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:117
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:236
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:245
 #, php-format
 msgid "Enter recipients (comma separated) for this email. Defaults to %s."
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:103
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:172
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:125
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:186
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:244
 msgid "Subject"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:104
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:126
 msgid "Enter the subject of this email."
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:112
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:181
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:134
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:195
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:253
 msgid "Email Heading"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:113
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:135
 msgid "The main heading displays in the top of email. Default heading: Completed booking"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:121
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:190
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:143
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:204
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:262
 msgid "Email Heading Description"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:122
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:123
-#: includes/booking/wphb-booking-hooks.php:234
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:144
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:145
+#: includes/booking/wphb-booking-hooks.php:437
+#: includes/booking/wphb-booking-hooks.php:714
+#: includes/booking/wphb-booking-hooks.php:748
 msgid "The customer has completed the transaction"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:129
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:198
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:151
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:270
 msgid "Email Format"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:132
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:201
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:154
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:273
 msgid "Plain Text"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:133
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:202
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:155
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:274
 msgid "HTML"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:149
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:220
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:171
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:292
+msgid "Processing Booking"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:172
+msgid "Confirmation email sent to the customer when a booking changes to Processing (e.g. a deposit/advance payment was paid online). Disabled by default."
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:179
+msgid "Send the booking confirmation email to the customer when the booking status becomes Processing. The email is sent only once per booking."
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:187
+msgid "Available placeholders: {site_title}, {booking_number}, {booking_date}"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:196
+msgid "The main heading displays in the top of email."
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:197
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:198
+#: includes/booking/wphb-booking-hooks.php:371
+#: includes/booking/wphb-booking-hooks.php:761
+msgid "Your booking is confirmed"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:205
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:206
+#: includes/booking/wphb-booking-hooks.php:372
+#: includes/booking/wphb-booking-hooks.php:766
+msgid "We have received your deposit. The remaining balance is payable on arrival."
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:221
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:293
 msgid "Cancel Booking"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:150
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:222
 msgid "Cancel booking emails are sent to chosen recipient(s) when booking has been marked cancelled."
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:182
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:254
 msgid "The main heading displays in the top of email. Default heading: Cancelled booking"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:191
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:192
-#: includes/booking/wphb-booking-hooks.php:342
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:263
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:264
+#: includes/booking/wphb-booking-hooks.php:542
+#: includes/booking/wphb-booking-hooks.php:731
 #: templates/emails/customer-cancelled.php:22
 msgid "Booking has been marked cancelled"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:218
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:290
 msgid "Email Options"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:374
+msgid "Live Preview"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:392
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:453
+#: includes/booking/wphb-booking-hooks.php:911
+#: includes/booking/wphb-booking-hooks.php:984
+msgid "Customer - Completed booking"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:393
+#: includes/booking/wphb-booking-hooks.php:912
+#: includes/booking/wphb-booking-hooks.php:985
+msgid "Customer - Processing booking"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:394
+#: includes/booking/wphb-booking-hooks.php:913
+#: includes/booking/wphb-booking-hooks.php:986
+msgid "Customer - Cancelled booking"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:395
+#: includes/booking/wphb-booking-hooks.php:914
+#: includes/booking/wphb-booking-hooks.php:987
+msgid "Admin - New booking completed"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:402
+msgid "Desktop view"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:405
+msgid "Mobile view"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:412
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:445
+msgid "Send a test email"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:452
+msgid "Email Template:"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:458
+msgid "Send to"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:464
+msgid "A sample email will be dispatched. Subject:"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:473
+#: templates/single-room/room-calendar-pricing.php:30
+msgid "Cancel"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:476
+msgid "Send Email"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:604
+msgid "Please enter a valid recipient email address."
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-general.php:36
@@ -1314,7 +1516,16 @@ msgstr ""
 msgid "Enable the option to allow guests checkout."
 msgstr ""
 
+#: includes/admin/settings/class-wphb-admin-setting-payments.php:110
+msgid "Active"
+msgstr ""
+
+#: includes/admin/settings/class-wphb-admin-setting-payments.php:110
+msgid "Inactive"
+msgstr ""
+
 #: includes/admin/settings/class-wphb-admin-setting-room.php:26
+#: includes/booking/wphb-booking-hooks.php:821
 #: templates/cart/cart.php:53
 #: templates/emails/booking-details.php:21
 msgid "Room"
@@ -1430,6 +1641,8 @@ msgid "Quick Setup"
 msgstr ""
 
 #: includes/admin/setup/class-wphb-setup-wizard.php:57
+#: includes/booking/wphb-booking-hooks.php:949
+#: includes/booking/wphb-booking-hooks.php:970
 msgid "Permission denied."
 msgstr ""
 
@@ -1601,6 +1814,7 @@ msgid "Booking is not found."
 msgstr ""
 
 #: includes/booking/wphb-booking-functions.php:430
+#: includes/booking/wphb-booking-hooks.php:865
 msgid "Cancelled"
 msgstr ""
 
@@ -1628,18 +1842,121 @@ msgstr ""
 msgid "You have a new booking room"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:233
+#: includes/booking/wphb-booking-hooks.php:436
 msgid "New Booking Completed"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:341
+#: includes/booking/wphb-booking-hooks.php:541
+#: includes/booking/wphb-booking-hooks.php:726
 #: templates/emails/customer-cancelled.php:21
 msgid "Cancelled booking"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:448
+#: includes/booking/wphb-booking-hooks.php:648
 msgctxt "Admin menu name"
 msgid "Bookings"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:709
+#: includes/booking/wphb-booking-hooks.php:743
+msgid "Completed Payment"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:816
+msgid "Booking #SAMPLE-1001"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:824
+#: templates/emails/booking-details.php:24
+msgid "#"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:830
+msgid "Deluxe Suite Room"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:837
+#: templates/cart/cart.php:449
+#: templates/checkout/checkout.php:133
+#: templates/emails/booking-details.php:43
+msgid "Subtotal"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:841
+#: templates/emails/booking-details.php:64
+msgid "Payment method"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:842
+msgid "Stripe Payment"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:854
+#: templates/emails/booking-details.php:100
+msgid "Remaining Balance (Due on arrival)"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:859
+msgid "Payment Status"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:860
+msgid "Paid in Full (100%)"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:864
+msgid "Booking Status"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:871
+#: templates/emails/customer-details.php:18
+msgid "Customer details"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:873
+#: templates/emails/customer-details.php:20
+msgid "Customer Name:"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:874
+#: templates/emails/customer-details.php:23
+msgid "Email address:"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:875
+#: templates/checkout/thank-you.php:224
+#: templates/emails/customer-details.php:26
+msgid "Phone:"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:878
+#: templates/emails/customer-details.php:35
+msgid "Billing address"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:880
+#: templates/checkout/thank-you.php:197
+#: templates/emails/customer-details.php:37
+msgid "Address:"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:883
+#: templates/checkout/thank-you.php:213
+#: templates/emails/customer-details.php:56
+msgid "Postal Code:"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:977
+msgid "Invalid recipient email address."
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:994
+#, php-format
+msgid "Sample test email (%s) was successfully sent to %s."
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:1003
+msgid "wp_mail() returned false. Please verify your SMTP settings in WP Mail SMTP or Aruba SMTP."
 msgstr ""
 
 #: includes/cart/class-wphb-cart.php:241
@@ -2328,7 +2645,7 @@ msgstr ""
 msgid "Booking Editor"
 msgstr ""
 
-#: includes/class-wphb-settings.php:148
+#: includes/class-wphb-settings.php:149
 msgid "Settings saved."
 msgstr ""
 
@@ -2464,6 +2781,9 @@ msgid "Color"
 msgstr ""
 
 #: includes/elementor/modules/group-control-global-el.php:69
+#: includes/elementor/widgets/global/check-avaibility.php:234
+#: includes/elementor/widgets/global/check-avaibility.php:324
+#: includes/elementor/widgets/global/check-avaibility.php:421
 #: includes/elementor/widgets/global/filter-room.php:403
 #: includes/elementor/widgets/global/filter-room.php:537
 #: includes/elementor/widgets/global/filter-room.php:813
@@ -2496,6 +2816,7 @@ msgstr ""
 
 #: includes/elementor/widgets/archive-room/archive-room.php:55
 #: includes/elementor/widgets/archive-room/list-results-room.php:55
+#: includes/elementor/widgets/global/check-avaibility.php:188
 #: includes/elementor/widgets/global/filter-room.php:150
 #: includes/elementor/widgets/global/list-room.php:68
 msgid "None"
@@ -2594,11 +2915,197 @@ msgid "Error: No rooms available!."
 msgstr ""
 
 #: includes/elementor/widgets/global/check-avaibility.php:15
+#: includes/elementor/widgets/global/check-avaibility.php:50
 #: templates/search/search-form.php:37
 #: templates/search/search-form.php:106
 #: templates/search/v2/search-form-v2.php:41
 #: templates/search/v2/search-form-v2.php:127
 msgid "Check Availability"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:48
+msgid "Form Title"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:58
+msgid "Button Text"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:67
+msgid "Form Action URL"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:69
+msgid "https://your-site.com/results"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:79
+msgid "Enable Toggle"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:91
+msgid "Toggle Button Text"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:93
+msgid "Search Rooms"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:103
+msgid "Toggle Close Text"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:118
+msgid "Form Fields"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:126
+msgid "Show Check-in Date"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:135
+msgid "Show Check-out Date"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:144
+msgid "Show Adults"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:153
+msgid "Show Children"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:162
+msgid "Show Number of Rooms"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:174
+msgid "Toggle Button"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:185
+#: includes/elementor/widgets/global/filter-room.php:371
+#: includes/elementor/widgets/global/search-room.php:216
+#: includes/elementor/widgets/single-room/room-booking.php:163
+msgid "Display"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:189
+#: includes/elementor/widgets/global/check-avaibility.php:280
+#: includes/elementor/widgets/global/search-room.php:222
+#: includes/elementor/widgets/single-room/room-booking.php:167
+#: includes/elementor/widgets/single-room/room-booking.php:979
+msgid "Block"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:190
+msgid "Inline Block"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:212
+#: includes/elementor/widgets/global/check-avaibility.php:313
+#: includes/elementor/widgets/global/check-avaibility.php:364
+#: includes/elementor/widgets/global/check-avaibility.php:395
+#: includes/elementor/widgets/single-room/room-booking.php:439
+#: includes/elementor/widgets/single-room/room-booking.php:489
+#: includes/elementor/widgets/single-room/room-booking.php:616
+#: includes/elementor/widgets/single-room/room-booking.php:808
+#: includes/elementor/widgets/single-room/room-booking.php:912
+msgid "Background Color"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:223
+#: includes/elementor/widgets/global/check-avaibility.php:375
+#: includes/elementor/widgets/global/check-avaibility.php:406
+#: includes/elementor/widgets/single-room/room-booking.php:324
+#: includes/elementor/widgets/single-room/room-booking.php:416
+#: includes/elementor/widgets/single-room/room-booking.php:478
+msgid "Text Color"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:254
+#: includes/elementor/widgets/global/check-avaibility.php:442
+#: includes/elementor/widgets/global/filter-room.php:427
+#: includes/elementor/widgets/global/filter-room.php:561
+#: includes/elementor/widgets/global/search-room.php:381
+#: includes/elementor/widgets/single-room/room-booking.php:202
+#: includes/elementor/widgets/single-room/room-booking.php:395
+#: includes/elementor/widgets/single-room/room-booking.php:635
+#: includes/elementor/widgets/single-room/room-booking.php:827
+#: includes/elementor/widgets/single-room/room-booking.php:931
+#: includes/elementor/widgets/single-room/room-thumb.php:130
+msgid "Border Radius"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:269
+#: includes/elementor/widgets/single-room/room-booking.php:155
+msgid "Form Container"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:277
+msgid "Form Display (Desktop)"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:281
+msgid "Inline (Flex)"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:295
+msgid "Gap Between Fields"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:339
+msgid "Submit Button"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:357
+#: includes/elementor/widgets/single-room/room-booking.php:409
+#: includes/elementor/widgets/single-room/room-booking.php:552
+#: includes/elementor/widgets/single-room/room-booking.php:1108
+msgid "Normal"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:388
+#: includes/elementor/widgets/single-room/room-booking.php:572
+#: includes/elementor/widgets/single-room/room-booking.php:1128
+msgid "Hover"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:474
+#: includes/elementor/widgets/global/check-avaibility.php:476
+#: includes/elementor/widgets/global/search-room.php:558
+#: includes/TemplateHooks/ArchiveRoomTemplate.php:219
+#: templates/search/search-form.php:44
+#: templates/search/search-form.php:48
+#: templates/search/v2/search-form-v2.php:45
+#: templates/search/v2/search-form-v2.php:49
+#: templates/single-room/booking-form.php:86
+#: templates/single-room/booking-form.php:88
+#: templates/single-room/search/check-dates-available.php:32
+#: templates/single-room/search/search-available.php:37
+msgid "Check-in Date"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:483
+#: includes/elementor/widgets/global/check-avaibility.php:485
+#: includes/elementor/widgets/global/search-room.php:559
+#: includes/TemplateHooks/ArchiveRoomTemplate.php:220
+#: templates/search/search-form.php:54
+#: templates/search/search-form.php:58
+#: templates/search/v2/search-form-v2.php:55
+#: templates/search/v2/search-form-v2.php:59
+#: templates/single-room/booking-form.php:93
+#: templates/single-room/booking-form.php:95
+#: templates/single-room/search/check-dates-available.php:38
+#: templates/single-room/search/search-available.php:42
+msgid "Check-out Date"
+msgstr ""
+
+#: includes/elementor/widgets/global/check-avaibility.php:520
+#: includes/elementor/widgets/global/check-avaibility.php:523
+#: templates/search/v2/search-form-v2.php:101
+#: templates/search/v2/search-form-v2.php:109
+msgid "Number of rooms"
 msgstr ""
 
 #: includes/elementor/widgets/global/filter-room-selected.php:20
@@ -2822,12 +3329,6 @@ msgstr ""
 msgid "Field"
 msgstr ""
 
-#: includes/elementor/widgets/global/filter-room.php:371
-#: includes/elementor/widgets/global/search-room.php:216
-#: includes/elementor/widgets/single-room/room-booking.php:163
-msgid "Display"
-msgstr ""
-
 #: includes/elementor/widgets/global/filter-room.php:379
 #: includes/elementor/widgets/single-room/room-booking.php:171
 msgid "Flex"
@@ -2836,18 +3337,6 @@ msgstr ""
 #: includes/elementor/widgets/global/filter-room.php:395
 #: includes/elementor/widgets/global/search-room.php:422
 msgid "Border"
-msgstr ""
-
-#: includes/elementor/widgets/global/filter-room.php:427
-#: includes/elementor/widgets/global/filter-room.php:561
-#: includes/elementor/widgets/global/search-room.php:381
-#: includes/elementor/widgets/single-room/room-booking.php:202
-#: includes/elementor/widgets/single-room/room-booking.php:395
-#: includes/elementor/widgets/single-room/room-booking.php:635
-#: includes/elementor/widgets/single-room/room-booking.php:827
-#: includes/elementor/widgets/single-room/room-booking.php:931
-#: includes/elementor/widgets/single-room/room-thumb.php:130
-msgid "Border Radius"
 msgstr ""
 
 #: includes/elementor/widgets/global/filter-room.php:453
@@ -3057,16 +3546,6 @@ msgstr ""
 msgid "Check out text"
 msgstr ""
 
-#: includes/elementor/widgets/global/search-room.php:175
-msgid "Search"
-msgstr ""
-
-#: includes/elementor/widgets/global/search-room.php:222
-#: includes/elementor/widgets/single-room/room-booking.php:167
-#: includes/elementor/widgets/single-room/room-booking.php:979
-msgid "Block"
-msgstr ""
-
 #: includes/elementor/widgets/global/search-room.php:226
 msgid "Inline"
 msgstr ""
@@ -3089,32 +3568,6 @@ msgstr ""
 #: includes/elementor/widgets/global/search-room.php:470
 #: includes/elementor/widgets/single-room/room-booking.php:375
 msgid "Height"
-msgstr ""
-
-#: includes/elementor/widgets/global/search-room.php:558
-#: includes/TemplateHooks/ArchiveRoomTemplate.php:219
-#: templates/search/search-form.php:44
-#: templates/search/search-form.php:48
-#: templates/search/v2/search-form-v2.php:45
-#: templates/search/v2/search-form-v2.php:49
-#: templates/single-room/booking-form.php:86
-#: templates/single-room/booking-form.php:88
-#: templates/single-room/search/check-dates-available.php:32
-#: templates/single-room/search/search-available.php:37
-msgid "Check-in Date"
-msgstr ""
-
-#: includes/elementor/widgets/global/search-room.php:559
-#: includes/TemplateHooks/ArchiveRoomTemplate.php:220
-#: templates/search/search-form.php:54
-#: templates/search/search-form.php:58
-#: templates/search/v2/search-form-v2.php:55
-#: templates/search/v2/search-form-v2.php:59
-#: templates/single-room/booking-form.php:93
-#: templates/single-room/booking-form.php:95
-#: templates/single-room/search/check-dates-available.php:38
-#: templates/single-room/search/search-available.php:42
-msgid "Check-out Date"
 msgstr ""
 
 #: includes/elementor/widgets/loop-item/loop-room-add-to-cart.php:25
@@ -3287,10 +3740,6 @@ msgstr ""
 msgid "Form Content"
 msgstr ""
 
-#: includes/elementor/widgets/single-room/room-booking.php:155
-msgid "Form Container"
-msgstr ""
-
 #: includes/elementor/widgets/single-room/room-booking.php:247
 msgid "Fields & Labels"
 msgstr ""
@@ -3315,32 +3764,12 @@ msgstr ""
 msgid "Max Quantity Text"
 msgstr ""
 
-#: includes/elementor/widgets/single-room/room-booking.php:324
-#: includes/elementor/widgets/single-room/room-booking.php:416
-#: includes/elementor/widgets/single-room/room-booking.php:478
-msgid "Text Color"
-msgstr ""
-
 #: includes/elementor/widgets/single-room/room-booking.php:335
 msgid "Number Highlight Color"
 msgstr ""
 
-#: includes/elementor/widgets/single-room/room-booking.php:409
-#: includes/elementor/widgets/single-room/room-booking.php:552
-#: includes/elementor/widgets/single-room/room-booking.php:1108
-msgid "Normal"
-msgstr ""
-
 #: includes/elementor/widgets/single-room/room-booking.php:427
 msgid "Placeholder Color"
-msgstr ""
-
-#: includes/elementor/widgets/single-room/room-booking.php:439
-#: includes/elementor/widgets/single-room/room-booking.php:489
-#: includes/elementor/widgets/single-room/room-booking.php:616
-#: includes/elementor/widgets/single-room/room-booking.php:808
-#: includes/elementor/widgets/single-room/room-booking.php:912
-msgid "Background Color"
 msgstr ""
 
 #: includes/elementor/widgets/single-room/room-booking.php:450
@@ -3361,11 +3790,6 @@ msgstr ""
 
 #: includes/elementor/widgets/single-room/room-booking.php:534
 msgid "Toggle / Title"
-msgstr ""
-
-#: includes/elementor/widgets/single-room/room-booking.php:572
-#: includes/elementor/widgets/single-room/room-booking.php:1128
-msgid "Hover"
 msgstr ""
 
 #: includes/elementor/widgets/single-room/room-booking.php:607
@@ -3601,7 +4025,6 @@ msgid "Gallery Button"
 msgstr ""
 
 #: includes/gateways/offline-payment/class-wphb-payment-gateway-offline-payment.php:29
-#: templates/emails/booking-details.php:48
 msgid "Offline Payment"
 msgstr ""
 
@@ -3617,15 +4040,15 @@ msgstr ""
 msgid " Pay on Arrival"
 msgstr ""
 
-#: includes/gateways/offline-payment/views/settings.php:38
+#: includes/gateways/offline-payment/views/settings.php:43
 msgid "Enable checkout booking via Offline payment"
 msgstr ""
 
-#: includes/gateways/offline-payment/views/settings.php:42
+#: includes/gateways/offline-payment/views/settings.php:47
 msgid "Instruction"
 msgstr ""
 
-#: includes/gateways/offline-payment/views/settings.php:56
+#: includes/gateways/offline-payment/views/settings.php:61
 msgid "Information for bank transfer via Offline payment, eg: Bank account"
 msgstr ""
 
@@ -3666,43 +4089,43 @@ msgstr ""
 msgid "Invalid Paypal checkout url"
 msgstr ""
 
-#: includes/gateways/paypal/views/settings.php:45
+#: includes/gateways/paypal/views/settings.php:48
 msgid "Paypal email"
 msgstr ""
 
-#: includes/gateways/paypal/views/settings.php:51
+#: includes/gateways/paypal/views/settings.php:54
 msgid "Sandbox Mode"
 msgstr ""
 
-#: includes/gateways/paypal/views/settings.php:58
+#: includes/gateways/paypal/views/settings.php:64
 msgid "Paypal sandbox email"
 msgstr ""
 
-#: includes/gateways/paypal/views/settings.php:64
+#: includes/gateways/paypal/views/settings.php:70
 msgid "Use PayPal REST API"
 msgstr ""
 
-#: includes/gateways/paypal/views/settings.php:68
+#: includes/gateways/paypal/views/settings.php:77
 msgid "Recommendations! The old standard will not be supported in 2024/01/31."
 msgstr ""
 
-#: includes/gateways/paypal/views/settings.php:72
+#: includes/gateways/paypal/views/settings.php:81
 msgid "Client ID"
 msgstr ""
 
-#: includes/gateways/paypal/views/settings.php:86
+#: includes/gateways/paypal/views/settings.php:95
 msgid "Client Secret"
 msgstr ""
 
-#: includes/gateways/paypal/views/settings.php:100
+#: includes/gateways/paypal/views/settings.php:109
 msgid "Webhook ID"
 msgstr ""
 
-#: includes/gateways/paypal/views/settings.php:104
+#: includes/gateways/paypal/views/settings.php:113
 msgid "Used with PayPal REST API to verify payment notifications (webhooks). In the PayPal Developer Dashboard, add a webhook pointing to the listener URL below, subscribe to the \"PAYMENT.CAPTURE.*\" events, then paste the generated Webhook ID here."
 msgstr ""
 
-#: includes/gateways/paypal/views/settings.php:106
+#: includes/gateways/paypal/views/settings.php:115
 msgid "Listener URL:"
 msgstr ""
 
@@ -3998,25 +4421,25 @@ msgstr ""
 msgid "Add to Gallery"
 msgstr ""
 
-#: includes/TemplateHooks/Admin/AdminExternalLinkIconSetting.php:75
+#: includes/TemplateHooks/Admin/AdminExternalLinkIconSetting.php:76
 msgid "Add Link"
 msgstr ""
 
-#: includes/TemplateHooks/Admin/AdminExternalLinkIconSetting.php:102
-#: includes/TemplateHooks/Admin/AdminExternalLinkIconSetting.php:115
+#: includes/TemplateHooks/Admin/AdminExternalLinkIconSetting.php:103
+#: includes/TemplateHooks/Admin/AdminExternalLinkIconSetting.php:116
 msgid "Choose logo"
 msgstr ""
 
-#: includes/TemplateHooks/Admin/AdminExternalLinkIconSetting.php:106
-#: includes/TemplateHooks/Admin/AdminExternalLinkIconSetting.php:121
+#: includes/TemplateHooks/Admin/AdminExternalLinkIconSetting.php:107
+#: includes/TemplateHooks/Admin/AdminExternalLinkIconSetting.php:122
 msgid "Delete"
 msgstr ""
 
-#: includes/TemplateHooks/Admin/AdminExternalLinkIconSetting.php:119
+#: includes/TemplateHooks/Admin/AdminExternalLinkIconSetting.php:120
 msgid "Enter title"
 msgstr ""
 
-#: includes/TemplateHooks/Admin/AdminExternalLinkIconSetting.php:120
+#: includes/TemplateHooks/Admin/AdminExternalLinkIconSetting.php:121
 msgid "Enter Url"
 msgstr ""
 
@@ -6218,12 +6641,6 @@ msgstr ""
 msgid "Cart Total"
 msgstr ""
 
-#: templates/cart/cart.php:449
-#: templates/checkout/checkout.php:133
-#: templates/emails/booking-details.php:43
-msgid "Subtotal"
-msgstr ""
-
 #: templates/cart/cart.php:477
 msgid "Extra Services"
 msgstr ""
@@ -6372,11 +6789,6 @@ msgstr ""
 msgid "Last Name:"
 msgstr ""
 
-#: templates/checkout/thank-you.php:197
-#: templates/emails/customer-details.php:37
-msgid "Address:"
-msgstr ""
-
 #: templates/checkout/thank-you.php:202
 msgid "City:"
 msgstr ""
@@ -6385,18 +6797,8 @@ msgstr ""
 msgid "State:"
 msgstr ""
 
-#: templates/checkout/thank-you.php:213
-#: templates/emails/customer-details.php:46
-msgid "Postal Code:"
-msgstr ""
-
 #: templates/checkout/thank-you.php:219
 msgid "Country:"
-msgstr ""
-
-#: templates/checkout/thank-you.php:224
-#: templates/emails/customer-details.php:26
-msgid "Phone:"
 msgstr ""
 
 #: templates/checkout/thank-you.php:229
@@ -6420,12 +6822,21 @@ msgstr ""
 msgid "Confirm"
 msgstr ""
 
-#: templates/emails/booking-details.php:24
-msgid "#"
+#: templates/emails/booking-details.php:60
+#: templates/emails/customer-details.php:50
+msgid "N/A"
 msgstr ""
 
-#: templates/emails/booking-details.php:47
-msgid "Payment method"
+#: templates/emails/booking-details.php:84
+msgid "Advance Payment (To pay)"
+msgstr ""
+
+#: templates/emails/booking-details.php:86
+msgid "Advance Payment (Paid)"
+msgstr ""
+
+#: templates/emails/booking-details.php:94
+msgid "Awaiting payment confirmation"
 msgstr ""
 
 #: templates/emails/customer-booking.php:21
@@ -6436,23 +6847,7 @@ msgstr ""
 msgid "Thank you for making reservation at our hotel. We will try our best to bring the best service. Good luck and see you soon!"
 msgstr ""
 
-#: templates/emails/customer-details.php:18
-msgid "Customer details"
-msgstr ""
-
-#: templates/emails/customer-details.php:20
-msgid "Customer Name:"
-msgstr ""
-
-#: templates/emails/customer-details.php:23
-msgid "Email address:"
-msgstr ""
-
-#: templates/emails/customer-details.php:35
-msgid "Billing address"
-msgstr ""
-
-#: templates/emails/customer-details.php:50
+#: templates/emails/customer-details.php:61
 msgid "Additional Information:"
 msgstr ""
 
@@ -6536,11 +6931,6 @@ msgstr ""
 
 #: templates/search/v2/search-filter/types.php:26
 msgid "Room Types"
-msgstr ""
-
-#: templates/search/v2/search-form-v2.php:101
-#: templates/search/v2/search-form-v2.php:109
-msgid "Number of rooms"
 msgstr ""
 
 #: templates/search/v2/sort-by.php:29
@@ -6733,10 +7123,6 @@ msgstr ""
 msgid "Your comment is awaiting approval"
 msgstr ""
 
-#: templates/single-room/room-calendar-pricing.php:30
-msgid "Cancel"
-msgstr ""
-
 #: templates/single-room/search/add-to-cart.php:25
 msgid "Select number of room"
 msgstr ""
@@ -6771,16 +7157,16 @@ msgstr ""
 msgid "--- Quantity ---"
 msgstr ""
 
-#: wp-hotel-booking.php:629
+#: wp-hotel-booking.php:639
 #, php-format
 msgid "The image number is greater than %s"
 msgstr ""
 
-#: wp-hotel-booking.php:630
+#: wp-hotel-booking.php:640
 msgid "The image file type is invalid"
 msgstr ""
 
-#: wp-hotel-booking.php:631
+#: wp-hotel-booking.php:641
 #, php-format
 msgid "The maximum file size is %s KB"
 msgstr ""

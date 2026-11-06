@@ -6,7 +6,7 @@
  *
  * @author  ThimPress, leehld
  * @package WP-Hotel-Booking/Templates
- * @version 1.6
+ * @version 2.3.5
  */
 
 /**
@@ -36,16 +36,27 @@ defined( 'ABSPATH' ) || exit();
 <ul>
 	<li><strong><?php echo esc_html__( 'Address:', 'wp-hotel-booking' ); ?></strong>
 		<span>
-			<?php echo esc_html( $booking->customer_address ); ?><br>
-			<?php echo esc_html( $booking->customer_city ); ?><br>
-			<?php echo esc_html( $booking->customer_state ); ?><br>
-			<?php echo esc_html( $booking->customer_country ); ?><br>
+			<?php
+			$countries     = function_exists( 'hb_get_countries' ) ? hb_get_countries() : array();
+			$country_name  = ( $booking->customer_country && isset( $countries[ $booking->customer_country ] ) ) ? $countries[ $booking->customer_country ] : $booking->customer_country;
+			$address_lines = array_filter(
+				array(
+					$booking->customer_address,
+					$booking->customer_city,
+					$booking->customer_state,
+					$country_name,
+				)
+			);
+			echo ! empty( $address_lines ) ? implode( '<br>', array_map( 'esc_html', $address_lines ) ) : esc_html__( 'N/A', 'wp-hotel-booking' );
+			?>
 		</span>
 	</li>
-	<li>
-		<strong><?php echo esc_html__( 'Postal Code:', 'wp-hotel-booking' ); ?></strong>
-		<span><?php echo esc_html( $booking->customer_postal_code ); ?></span>
-	</li>
+	<?php if ( $booking->customer_postal_code ) : ?>
+		<li>
+			<strong><?php echo esc_html__( 'Postal Code:', 'wp-hotel-booking' ); ?></strong>
+			<span><?php echo esc_html( $booking->customer_postal_code ); ?></span>
+		</li>
+	<?php endif; ?>
 	<?php if ( $booking->post->post_content ) { ?>
 		<li><strong><?php echo esc_html__( 'Additional Information:', 'wp-hotel-booking' ); ?></strong>
 			<span><?php echo nl2br( esc_html( $booking->post->post_content ) ); ?></span>

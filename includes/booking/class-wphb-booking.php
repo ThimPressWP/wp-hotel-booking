@@ -98,6 +98,16 @@ class WPHB_Booking {
 		}
 	}
 
+	function __isset( $key ) {
+		if ( isset( $this->{$key} ) ) {
+			return true;
+		}
+
+		$val = $this->__get( $key );
+
+		return ( null !== $val && '' !== $val );
+	}
+
 	public function total( $with_coupon = true ) {
 		if ( ! $this->id ) {
 			return;

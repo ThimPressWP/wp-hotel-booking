@@ -6,7 +6,7 @@
  *
  * @author  ThimPress, leehld
  * @package WP-Hotel-Booking/Templates
- * @version 1.6
+ * @version 2.3.5
  */
 
 /**
@@ -43,19 +43,64 @@ defined( 'ABSPATH' ) || exit(); ?>
 		<td colspan="4"><b><?php esc_html_e( 'Subtotal', 'wp-hotel-booking' ); ?></b></td>
 		<td><?php printf( '%s', hb_format_price( $booking->sub_total(), hb_get_currency_symbol( $booking->currency ) ) ); ?></td>
 	</tr>
+	<?php
+	$payment_method_title = $booking->method_title;
+	if ( empty( $payment_method_title ) ) {
+		$method_slug = $booking->method;
+		if ( ! empty( $method_slug ) ) {
+			$gateways = hb_get_payment_gateways();
+			if ( isset( $gateways[ $method_slug ] ) && ! empty( $gateways[ $method_slug ]->title ) ) {
+				$payment_method_title = $gateways[ $method_slug ]->title;
+			} else {
+				$payment_method_title = ucfirst( str_replace( array( '-', '_' ), ' ', $method_slug ) );
+			}
+		}
+	}
+	if ( empty( $payment_method_title ) ) {
+		$payment_method_title = __( 'N/A', 'wp-hotel-booking' );
+	}
+	?>
 	<tr>
 		<td colspan="4"><b><?php esc_html_e( 'Payment method', 'wp-hotel-booking' ); ?></b></td>
-		<td><?php echo ! empty( $booking->method_title ) ? esc_html( $booking->method_title ) : __( 'Offline Payment', 'wp-hotel-booking' ); ?></td>
+		<td><?php echo esc_html( $payment_method_title ); ?></td>
 	</tr>
 	<tr>
 		<td colspan="4"><b><?php esc_html_e( 'Total', 'wp-hotel-booking' ); ?></b></td>
 		<td><?php printf( '%s', hb_format_price( $booking->total(), hb_get_currency_symbol( $booking->currency ) ) ); ?></td>
 	</tr>
-	<?php if ( $advance_payment = $booking->advance_payment ) { ?>
+	<?php
+	$advance_payment = floatval( $booking->advance_payment );
+	$total           = floatval( $booking->total() );
+	if ( $advance_payment > 0 && $advance_payment < $total ) {
+		$remaining_balance = $total - $advance_payment;
+		$status            = method_exists( $booking, 'get_status' ) ? $booking->get_status() : ( $booking->status ?? '' );
+		$is_pending        = ( 'pending' === $status );
+		?>
 		<tr>
-			<td colspan="4"><b><?php esc_html_e( 'Advance Payment', 'wp-hotel-booking' ); ?></b></td>
-			<td><?php printf( '%s', hb_format_price( $advance_payment, hb_get_currency_symbol( $booking->currency ) ) ); ?></td>
+			<td colspan="4">
+				<b>
+					<?php
+					if ( $is_pending ) {
+						esc_html_e( 'Advance Payment (To pay)', 'wp-hotel-booking' );
+					} else {
+						esc_html_e( 'Advance Payment (Paid)', 'wp-hotel-booking' );
+					}
+					?>
+				</b>
+			</td>
+			<td>
+				<?php printf( '%s', hb_format_price( $advance_payment, hb_get_currency_symbol( $booking->currency ) ) ); ?>
+				<?php if ( $is_pending ) : ?>
+					<br><small style="color: #d32f2f;"><?php esc_html_e( 'Awaiting payment confirmation', 'wp-hotel-booking' ); ?></small>
+				<?php endif; ?>
+			</td>
 		</tr>
+		<?php if ( $remaining_balance > 0 ) { ?>
+		<tr>
+			<td colspan="4"><b><?php esc_html_e( 'Remaining Balance (Due on arrival)', 'wp-hotel-booking' ); ?></b></td>
+			<td><strong style="color: #2e7d32;"><?php printf( '%s', hb_format_price( $remaining_balance, hb_get_currency_symbol( $booking->currency ) ) ); ?></strong></td>
+		</tr>
+		<?php } ?>
 	<?php } ?>
 
 </table>

@@ -6,7 +6,7 @@
  *
  * @author  ThimPress, leehld
  * @package WP-Hotel-Booking/Templates
- * @version 1.6
+ * @version 2.3.5
  */
 
 /**
@@ -44,9 +44,10 @@ defined( 'ABSPATH' ) || exit();
 		}
 
 		table.body {
-			max-width: 500px;
+			width: 100%;
+			max-width: 600px;
 			margin: 0 auto;
-			background-color: #f6f6f6
+			background-color: #f6f6f6;
 		}
 
 		h1, h2, h3, h4, h5, h6 {

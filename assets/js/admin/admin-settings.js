@@ -216,22 +216,32 @@
 			saveButtons.forEach( ( btn ) => btn.classList.remove( 'is-dirty' ) );
 		};
 
+		const isIgnoredTarget = ( target ) => {
+			if ( ! target ) {
+				return false;
+			}
+			return target === searchInput || Boolean( target.closest && target.closest( '.wphb-live-preview-wrapper, #wphb-test-email-modal-overlay, [data-wphb-ignore-dirty]' ) );
+		};
+
 		form.addEventListener( 'input', ( e ) => {
-			if ( e.target === searchInput ) {
+			if ( isIgnoredTarget( e.target ) ) {
 				return;
 			}
 			markDirty();
 		} );
 
 		form.addEventListener( 'change', ( e ) => {
-			if ( e.target === searchInput ) {
+			if ( isIgnoredTarget( e.target ) ) {
 				return;
 			}
 			markDirty();
 		} );
 
 		if ( typeof window.jQuery !== 'undefined' ) {
-			window.jQuery( form ).on( 'change select2:select select2:unselect', 'select', () => {
+			window.jQuery( form ).on( 'change select2:select select2:unselect', 'select', ( e ) => {
+				if ( isIgnoredTarget( e.target ) ) {
+					return;
+				}
 				markDirty();
 			} );
 		}
