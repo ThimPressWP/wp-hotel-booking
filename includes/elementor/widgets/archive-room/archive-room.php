@@ -210,6 +210,13 @@ class Thim_Ekit_Widget_Archive_Room extends Widget_Base {
     public function render(){
 
 		$paged = get_query_var( 'paged', hb_get_request( 'paged', 1, 'int' ) );
+
+		if ( is_tax( 'hb_room_type' ) ) {
+			$room_type = get_queried_object_id();
+		} else {
+			$room_type = hb_get_request( 'room_type', '' );
+		}
+
 		$atts  = array(
 			'check_in_date'  => hb_get_request( 'check_in_date', date( 'Y/m/d' ) ),
 			'check_out_date' => hb_get_request( 'check_out_date', date( 'Y/m/d', strtotime( '+1 day' ) ) ),
@@ -220,7 +227,7 @@ class Thim_Ekit_Widget_Archive_Room extends Widget_Base {
 			'min_price'      => hb_get_request( 'min_price', '' ),
 			'max_price'      => hb_get_request( 'max_price', '' ),
 			'rating'         => hb_get_request( 'rating', '' ),
-			'room_type'      => hb_get_request( 'room_type', '' ),
+			'room_type'      => $room_type,
 			'sort_by'        => hb_get_request( 'sort_by', 'date-desc' ),
 		);
 
