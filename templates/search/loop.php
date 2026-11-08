@@ -6,7 +6,7 @@
  *
  * @author  ThimPress, leehld
  * @package WP-Hotel-Booking/Templates
- * @version 1.6
+ * @version 2.3.5
  */
 
 /**
@@ -31,6 +31,7 @@ $featured        = $gallery ? array_shift( $gallery ) : false;
 				<?php if ( $featured ) : ?>
 					<a class="hb-room-gallery"
 						data-lightbox="hb-room-gallery[<?php echo esc_attr( $room->post->ID ); ?>]"
+						data-elementor-open-lightbox="no"
 						data-title="<?php echo esc_attr( $featured['alt'] ); ?>"
 						href="<?php echo esc_url( $featured['src'] ); ?>">
 						<?php $room->getImage( 'catalog' ); ?>

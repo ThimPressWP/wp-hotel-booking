@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-06T08:39:42+00:00\n"
+"POT-Creation-Date: 2026-11-08T14:27:25+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wp-hotel-booking\n"
@@ -2861,47 +2861,47 @@ msgstr ""
 msgid "Gap"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:236
+#: includes/elementor/widgets/archive-room/archive-room.php:243
 msgid "No room found !"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:297
+#: includes/elementor/widgets/archive-room/archive-room.php:304
 msgid "Showing only one result"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:307
+#: includes/elementor/widgets/archive-room/archive-room.php:314
 #, php-format
 msgid "Showing last post of %s results"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:312
+#: includes/elementor/widgets/archive-room/archive-room.php:319
 #, php-format
 msgid "Showing %s - %s of %s results"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:331
+#: includes/elementor/widgets/archive-room/archive-room.php:338
 #: templates/search/v2/sort-by.php:7
 msgid "Default (Newest)"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:332
+#: includes/elementor/widgets/archive-room/archive-room.php:339
 #: templates/search/v2/sort-by.php:8
 #: templates/single-room-reviews.php:176
 #: templates/single-room-reviews.php:207
 msgid "Oldest"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:333
+#: includes/elementor/widgets/archive-room/archive-room.php:340
 #: templates/search/v2/sort-by.php:9
 msgid "A to Z"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:334
+#: includes/elementor/widgets/archive-room/archive-room.php:341
 #: templates/search/v2/sort-by.php:10
 msgid "Z to A"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/archive-room.php:345
+#: includes/elementor/widgets/archive-room/archive-room.php:352
 msgid "Room order"
 msgstr ""
 
@@ -2909,7 +2909,7 @@ msgstr ""
 msgid "List Results Room"
 msgstr ""
 
-#: includes/elementor/widgets/archive-room/list-results-room.php:191
+#: includes/elementor/widgets/archive-room/list-results-room.php:197
 #: includes/rest-api/v1/frontend/class-wphb-rooms-controller.php:138
 msgid "Error: No rooms available!."
 msgstr ""
@@ -3522,7 +3522,7 @@ msgstr ""
 #: includes/products/class-wphb-product-room.php:185
 #: includes/wphb-functions.php:479
 #: includes/wphb-functions.php:866
-#: templates/search/loop.php:74
+#: templates/search/loop.php:75
 #: templates/search/v2/loop-v2/room-info/room-meta/quantity.php:14
 msgid "Select"
 msgstr ""
@@ -3579,7 +3579,7 @@ msgid "Text"
 msgstr ""
 
 #: includes/elementor/widgets/loop-item/loop-room-add-to-cart.php:51
-#: templates/search/loop.php:84
+#: templates/search/loop.php:85
 #: templates/search/v2/loop-v2/room-info/room-meta/add-to-cart.php:8
 msgid "Select this room"
 msgstr ""
@@ -4250,7 +4250,7 @@ msgstr ""
 #: includes/plugins/wp-hotel-booking-extra/templates/shortcodes/mini_cart_layout.php:29
 #: templates/cart/mini_cart_layout.php:26
 #: templates/loop/mini-cart-loop.php:37
-#: templates/search/loop.php:67
+#: templates/search/loop.php:68
 #: templates/search/v2/loop-v2/room-info/room-meta/quantity.php:7
 msgid "Quantity: "
 msgstr ""
@@ -6872,22 +6872,22 @@ msgstr ""
 msgid "tax incl."
 msgstr ""
 
-#: templates/search/loop.php:49
+#: templates/search/loop.php:50
 #: templates/search/v2/loop-v2/room-info/room-meta/capacity.php:7
 msgid "Capacity:"
 msgstr ""
 
-#: templates/search/loop.php:53
+#: templates/search/loop.php:54
 #: templates/search/v2/loop-v2/room-info/room-meta/max-child.php:7
 msgid "Max Children:"
 msgstr ""
 
-#: templates/search/loop.php:57
+#: templates/search/loop.php:58
 #: templates/search/v2/loop-v2/room-info/room-meta/price.php:29
 msgid "Price:"
 msgstr ""
 
-#: templates/search/loop.php:62
+#: templates/search/loop.php:63
 #: templates/search/v2/loop-v2/room-info/room-meta/price.php:34
 msgid "(View price breakdown)"
 msgstr ""
@@ -7157,16 +7157,16 @@ msgstr ""
 msgid "--- Quantity ---"
 msgstr ""
 
-#: wp-hotel-booking.php:639
+#: wp-hotel-booking.php:644
 #, php-format
 msgid "The image number is greater than %s"
 msgstr ""
 
-#: wp-hotel-booking.php:640
+#: wp-hotel-booking.php:645
 msgid "The image file type is invalid"
 msgstr ""
 
-#: wp-hotel-booking.php:641
+#: wp-hotel-booking.php:646
 #, php-format
 msgid "The maximum file size is %s KB"
 msgstr ""

@@ -233,7 +233,7 @@ class Thim_Ekit_Widget_Room_Thumb extends Thim_Ekit_Widget_Product_Image {
                     $images = '';
                 }
 
-                echo '<li class="hb-gallery-item' . $class . '"><a href="' . esc_url( $full_url ) . '" class="gallery-img-item">' . $images . '</a></li>';
+                echo '<li class="hb-gallery-item' . $class . '"><a href="' . esc_url( $full_url ) . '" class="gallery-img-item" data-elementor-open-lightbox="no">' . $images . '</a></li>';
             
                 if ( count( $galleries ) > 1 && $key == 0 ) {
                     echo '</ul><ul class="hb-gallery-thumbnails d-flex">';

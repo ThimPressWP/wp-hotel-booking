@@ -18,6 +18,7 @@ $room_id = $room->post->ID;
 		<?php if ( $featured ) : ?>
 			<a class="hb-room-gallery"
 				data-lightbox="hb-room-gallery[<?php echo esc_attr( $room_id ); ?>]"
+				data-elementor-open-lightbox="no"
 				data-title="<?php echo esc_attr( $featured['alt'] ); ?>"
 				href="<?php echo esc_url( get_the_permalink( $room_id ) ); ?>">
 				<?php $room->getImage( 'catalog' ); ?>
@@ -25,6 +26,7 @@ $room_id = $room->post->ID;
 		<?php else : ?>
 			<a class="hb-room-gallery"
 				data-lightbox="hb-room-gallery[<?php echo esc_attr( $room_id ); ?>]"
+				data-elementor-open-lightbox="no"
 				data-title="<?php echo esc_attr( $room->post->post_name ); ?>"
 				href="<?php echo esc_url( get_the_permalink( $room_id ) ); ?>">
 				<?php echo get_the_post_thumbnail( $room_id, array( $w, $h ) ); ?>

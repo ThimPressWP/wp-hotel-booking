@@ -589,6 +589,11 @@ class WP_Hotel_Booking {
 			wp_enqueue_style( 'wp-admin-hotel-booking-fullcalendar' );
 			wp_enqueue_script( 'wp-admin-hotel-booking-fullcalendar' );
 
+			/* calendar v2 */
+			wp_enqueue_script( 'wp-admin-hotel-booking-calendar-v2' );
+			wp_enqueue_style( 'wp-admin-hotel-booking-calendar-v2' );
+			wp_enqueue_script( 'wp-admin-hotel-booking-v2' );
+
 		} else {
 			wp_enqueue_style( 'wphb-ui-slider' );
 			wp_enqueue_style( 'wp-hotel-booking' );
@@ -657,11 +662,6 @@ class WP_Hotel_Booking {
 		// select2
 		wp_enqueue_script( 'wp-admin-hotel-booking-select2' );
 		// wp_enqueue_script( 'colorpicker' );
-
-		/* calendar v2 */
-		wp_enqueue_script( 'wp-admin-hotel-booking-calendar-v2' );
-		wp_enqueue_style( 'wp-admin-hotel-booking-calendar-v2' );
-		wp_enqueue_script( 'wp-admin-hotel-booking-v2' );
 	}
 
 	/**

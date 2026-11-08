@@ -6,7 +6,7 @@
  *
  * @author  ThimPress, leehld
  * @package WP-Hotel-Booking/Templates
- * @version 1.6
+ * @version 2.3.5
  */
 
 /**
@@ -28,6 +28,7 @@ $gallery = $room->gallery; ?>
 				<a class="hb-room-gallery"
 					data-fancybox-group="hb-room-gallery-<?php echo esc_attr( $room->post->ID ); ?>"
 					data-lightbox="hb-room-gallery[<?php echo esc_attr( $room->post->ID ); ?>]"
+					data-elementor-open-lightbox="no"
 					data-title="<?php echo esc_attr( $image['alt'] ); ?>" href="<?php echo esc_url( $image['src'] ); ?>">
 					<img src="<?php echo esc_url( $image['thumb'] ); ?>" alt="<?php echo esc_attr( $image['alt'] ); ?>"
 						data-id="<?php echo esc_attr( $image['id'] ); ?>"/>
