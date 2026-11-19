@@ -3,7 +3,7 @@ Contributors: thimpress, leehld, phamtungpth, thoakim
 Donate link: https://thimpress.com/
 Tags: hotel booking, reservation, booking system, room management, accommodation
 Tested up to: 7.1
-Stable tag: 2.3.5
+Stable tag: 2.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,15 @@ Yes.
 7. System settings
 
 == Changelog ==
+
+= 2.4.0 (2026-11-19) =
+~ Added: Redesigned admin settings UI.
+~ Added: Processing Booking email workflow in Email Settings.
+~ Fixed: Security prevent stored XSS
+~ Fixed: Saving customer metadata after booking status changes and payment method fallback in WPHB_Booking.
+~ Fixed: Room type taxonomy archive support in Elementor Archive Room and List Results Room widgets.
+~ Fixed: Elementor lightbox conflict on room galleries and thumbnails.
+~ Performance: Optimize admin script loading and cart session item validation.
 
 = 2.3.5 (2026-11-02) =
 ~ Added: Comprehensive form styling controls for Single Room Booking Elementor widget.
