@@ -346,11 +346,14 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 		 * @param array $field
 		 */
 		public function render_email_live_preview_field( $field ) {
-			$nonce            = wp_create_nonce( 'wphb_email_preview_nonce' );
 			$settings         = function_exists( 'hb_settings' ) ? hb_settings() : null;
-			$from_name        = ( $settings && $settings->get( 'email_general_from_name' ) ) ? $settings->get( 'email_general_from_name' ) : get_option( 'blogname' );
-			$from_email       = ( $settings && $settings->get( 'email_general_from_email' ) ) ? $settings->get( 'email_general_from_email' ) : get_option( 'admin_email' );
+			$site_name        = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
+			$admin_email      = get_option( 'admin_email' );
+			$from_name        = ( $settings && $settings->get( 'email_general_from_name' ) ) ? $settings->get( 'email_general_from_name' ) : $site_name;
+			$from_email       = ( $settings && $settings->get( 'email_general_from_email' ) ) ? $settings->get( 'email_general_from_email' ) : $admin_email;
 			$initial_content  = function_exists( 'hb_get_sample_demo_email_content' ) ? hb_get_sample_demo_email_content( 'completed' ) : '';
+			$test_email_nonce = wp_create_nonce( 'wphb_unified_test_email_nonce' );
+
 			$preview_base_url = add_query_arg(
 				array(
 					'action' => 'wphb_render_email_preview',
@@ -359,15 +362,12 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 				admin_url( 'admin-ajax.php' )
 			);
 
-			$proc_data = function_exists( 'hb_get_email_settings_by_status' ) ? hb_get_email_settings_by_status( 'processing' ) : array( 'subject' => '' );
-			$comp_data = function_exists( 'hb_get_email_settings_by_status' ) ? hb_get_email_settings_by_status( 'completed' ) : array( 'subject' => '' );
-			$canc_data = function_exists( 'hb_get_email_settings_by_status' ) ? hb_get_email_settings_by_status( 'cancelled' ) : array( 'subject' => '' );
-			$admn_data = function_exists( 'hb_get_email_settings_by_status' ) ? hb_get_email_settings_by_status( 'admin_new' ) : array( 'subject' => '' );
-
-			$proc_subj = $proc_data['subject'];
-			$comp_subj = $comp_data['subject'];
-			$canc_subj = $canc_data['subject'];
-			$admn_subj = $admn_data['subject'];
+			$subjects = array();
+			foreach ( array( 'completed', 'processing', 'cancelled', 'admin_new' ) as $status_key ) {
+				$status_data            = function_exists( 'hb_get_email_settings_by_status' ) ? hb_get_email_settings_by_status( $status_key ) : array();
+				$subjects[ $status_key ] = ! empty( $status_data['subject'] ) ? $status_data['subject'] : '';
+			}
+			$default_subject = $subjects['completed'];
 			?>
 			<tr valign="top" class="wphb-setting-row wphb-setting-row--email-live-preview">
 				<th scope="row">
@@ -417,7 +417,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 						<!-- Simulated Email Header (matching screenshot) -->
 						<div class="wphb-preview-email-header" style="padding: 20px 24px 16px; background: #ffffff; border-bottom: 1px solid #f1f5f9;">
 							<h2 id="wphb_preview_header_subject" style="margin: 0 0 12px 0; font-size: 21px; font-weight: 700; color: #0f172a; line-height: 1.35; letter-spacing: -0.01em;">
-								<?php echo esc_html( $comp_subj ); ?>
+								<?php echo esc_html( $default_subject ); ?>
 							</h2>
 							<div style="display: flex; align-items: center; gap: 10px;">
 								<div style="width: 34px; height: 34px; border-radius: 50%; background: #ede9fe; color: #7c3aed; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
@@ -462,7 +462,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 
 								<p style="margin: 0; font-size: 12px; color: #64748b; line-height: 1.45;">
 									<?php esc_html_e( 'A sample email will be dispatched. Subject:', 'wp-hotel-booking' ); ?>
-									<code id="wphb-modal-subject-preview" style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 11px;">[Test] <?php echo esc_html( $comp_subj ); ?></code>
+									<code id="wphb-modal-subject-preview" style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 11px;">[Test] <?php echo esc_html( $default_subject ); ?></code>
 								</p>
 
 								<div id="wphb-modal-alert" style="margin-top: 14px; font-size: 13px; padding: 10px 14px; border-radius: 6px; display: none;"></div>
@@ -483,14 +483,9 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 					<script type="text/javascript">
 					jQuery(document).ready(function($) {
 						var previewBase = '<?php echo esc_js( admin_url( 'admin-ajax.php' ) ); ?>';
-						var siteName = '<?php echo esc_js( $site_name ); ?>';
-
-						var subjectsMap = {
-							'processing': <?php echo json_encode( $proc_subj ); ?>,
-							'completed': <?php echo json_encode( $comp_subj ); ?>,
-							'cancelled': <?php echo json_encode( $canc_subj ); ?>,
-							'admin_new': <?php echo json_encode( $admn_subj ); ?>
-						};
+						var subjectsMap = <?php echo wp_json_encode( $subjects ); ?>;
+						var defaultFromName = <?php echo wp_json_encode( $from_name ); ?>;
+						var defaultFromEmail = <?php echo wp_json_encode( $from_email ); ?>;
 
 						function updatePreview() {
 							var status = $('#wphb_preview_select_status').val();
@@ -524,6 +519,16 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 						$('#wphb_preview_select_status').on('change', function(e) {
 							e.stopPropagation();
 							updatePreview();
+						});
+
+						// Real-time sync for sender name and email from settings form
+						$('#tp_hotel_booking_email_general_from_name').on('input change', function() {
+							var val = $(this).val();
+							$('#wphb_preview_header_from_name').text(val ? val : defaultFromName);
+						});
+						$('#tp_hotel_booking_email_general_from_email').on('input change', function() {
+							var val = $(this).val();
+							$('#wphb_preview_header_from_email').text('<' + (val ? val : defaultFromEmail) + '>');
 						});
 
 						// Isolate preview toolbar and modal from triggering admin settings dirty check
@@ -615,7 +620,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 								dataType: 'json',
 								data: {
 									action: 'wphb_send_unified_test_email',
-									nonce: '<?php echo esc_js( wp_create_nonce( 'wphb_unified_test_email_nonce' ) ); ?>',
+									nonce: '<?php echo esc_js( $test_email_nonce ); ?>',
 									status: status,
 									recipient: recipient
 								},
