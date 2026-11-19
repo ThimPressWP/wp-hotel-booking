@@ -112,39 +112,21 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 				return $_SESSION[ $this->prefix ];
 			} elseif ( $this->remember && isset( $_COOKIE[ $this->prefix ] ) ) {
 				$raw_cookie = wp_unslash( $_COOKIE[ $this->prefix ] );
-				if ( is_string( $raw_cookie ) && '' !== $raw_cookie ) {
-					// Check for signed cookie format: <base64_payload>.<hmac_signature>
-					if ( strpos( $raw_cookie, '.' ) !== false ) {
-						list( $encoded_payload, $signature ) = explode( '.', $raw_cookie, 2 );
-						$payload = base64_decode( $encoded_payload, true );
+				if ( is_string( $raw_cookie ) && strpos( $raw_cookie, '.' ) !== false ) {
+					list( $encoded_payload, $signature ) = explode( '.', $raw_cookie, 2 );
+					$payload                             = base64_decode( $encoded_payload, true );
 
-						if ( false !== $payload && $this->verify_signature( $payload, $signature ) ) {
-							$data = json_decode( $payload, true );
-							if ( is_array( $data ) ) {
-								return $_SESSION[ $this->prefix ] = $data;
-							}
+					if ( false !== $payload && $this->verify_signature( $payload, $signature ) ) {
+						$data = json_decode( $payload, true );
+						if ( is_array( $data ) ) {
+							return $_SESSION[ $this->prefix ] = WPHB_Helpers::sanitize_params_submitted( $data );
 						}
-
-						// Signature verification failed (cookie was tampered) - reject and purge
-						$this->remove();
-						return array();
-					}
-
-					// Backwards compatibility: gracefully load legacy unsigned JSON cookie
-					$legacy_data = json_decode( WPHB_Helpers::sanitize_params_submitted( $raw_cookie ), true );
-					if ( is_array( $legacy_data ) ) {
-						// Upgrade legacy cookie to signed format immediately if headers permit
-						if ( ! headers_sent() ) {
-							$payload      = wp_json_encode( $legacy_data );
-							$signature    = $this->generate_signature( $payload );
-							$signed_value = base64_encode( $payload ) . '.' . $signature;
-							@setcookie( $this->prefix, $signed_value, time() + $this->live_item, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
-							$_COOKIE[ $this->prefix ] = $signed_value;
-						}
-
-						return $_SESSION[ $this->prefix ] = $legacy_data;
 					}
 				}
+
+				// Reject unsigned, malformed, or tampered cookies and purge them.
+				$this->remove();
+				return array();
 			} else {
 				// Only try transient if the session ID exists (sessions may be skipped for REST/CLI)
 				$session_id = session_id();
@@ -170,7 +152,9 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 
 			if ( $this->remember && isset( $_COOKIE[ $this->prefix ] ) ) {
 				unset( $_COOKIE[ $this->prefix ] );
-				setcookie( $this->prefix, '', time() - $this->live_item, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
+				if ( ! headers_sent() ) {
+					setcookie( $this->prefix, '', time() - $this->live_item, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
+				}
 			}
 
 			// Only delete transient if session ID exists

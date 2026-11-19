@@ -116,6 +116,101 @@ class WPHB_Cart {
 	}
 
 	/**
+	 * Validate and sanitize a single cart item restored from session/cookie storage.
+	 *
+	 * @param mixed  $raw_param
+	 * @param array  $allowed_keys_map
+	 * @param array  $required_keys
+	 * @param array  $allowed_parent_post_types
+	 * @param array  $allowed_sub_post_types
+	 * @param string $date_format
+	 *
+	 * @return array|null Sanitized cart item params, or null if invalid.
+	 */
+	private function sanitize_cart_item_params(
+		$raw_param,
+		array $allowed_keys_map,
+		array $required_keys,
+		array $allowed_parent_post_types,
+		array $allowed_sub_post_types,
+		string $date_format
+	) {
+		if ( ! is_array( $raw_param ) && ! is_object( $raw_param ) ) {
+			return null;
+		}
+
+		$param        = array_intersect_key( (array) $raw_param, $allowed_keys_map );
+		$product_id   = ( isset( $param['product_id'] ) && is_numeric( $param['product_id'] ) ) ? absint( $param['product_id'] ) : 0;
+		$product_post = $product_id ? get_post( $product_id ) : null;
+		if ( array_diff( $required_keys, array_keys( $param ) )
+			|| ! $product_post
+			|| ! is_numeric( $param['quantity'] )
+			|| (int) $param['quantity'] < 1 ) {
+			return null;
+		}
+
+		$has_parent = isset( $param['parent_id'] ) && is_scalar( $param['parent_id'] ) && '' !== (string) $param['parent_id'];
+		if ( $has_parent ) {
+			if ( ! in_array( $product_post->post_type, $allowed_sub_post_types, true ) ) {
+				return null;
+			}
+			$param['parent_id'] = sanitize_text_field( (string) $param['parent_id'] );
+		} else {
+			unset( $param['parent_id'] );
+			if ( ! in_array( $product_post->post_type, $allowed_parent_post_types, true ) ) {
+				return null;
+			}
+		}
+
+		$normalized_dates = hb_normalize_booking_date_range( $param['check_in_date'], $param['check_out_date'], $date_format );
+		if ( is_wp_error( $normalized_dates ) ) {
+			return null;
+		}
+
+		$param['product_id']     = $product_id;
+		$param['quantity']       = (int) $param['quantity'];
+		$param['check_in_date']  = $normalized_dates['check_in_date'];
+		$param['check_out_date'] = $normalized_dates['check_out_date'];
+
+		if ( isset( $param['adult_qty'] ) ) {
+			$param['adult_qty'] = absint( $param['adult_qty'] );
+		}
+		if ( isset( $param['child_qty'] ) ) {
+			$param['child_qty'] = absint( $param['child_qty'] );
+		}
+		if ( isset( $param['hb_optional_quantity'] ) ) {
+			if ( is_array( $param['hb_optional_quantity'] ) ) {
+				$sanitized_opt_qty = array();
+				foreach ( $param['hb_optional_quantity'] as $opt_id => $opt_qty ) {
+					$opt_id = absint( $opt_id );
+					if ( $opt_id ) {
+						$sanitized_opt_qty[ $opt_id ] = absint( $opt_qty );
+					}
+				}
+				$param['hb_optional_quantity'] = $sanitized_opt_qty;
+			} else {
+				unset( $param['hb_optional_quantity'] );
+			}
+		}
+		if ( isset( $param['hb_optional_quantity_selected'] ) ) {
+			if ( is_array( $param['hb_optional_quantity_selected'] ) ) {
+				$sanitized_opt_selected = array();
+				foreach ( $param['hb_optional_quantity_selected'] as $opt_id => $opt_val ) {
+					$opt_id = absint( $opt_id );
+					if ( $opt_id && is_scalar( $opt_val ) ) {
+						$sanitized_opt_selected[ $opt_id ] = sanitize_key( (string) $opt_val );
+					}
+				}
+				$param['hb_optional_quantity_selected'] = $sanitized_opt_selected;
+			} else {
+				unset( $param['hb_optional_quantity_selected'] );
+			}
+		}
+
+		return $param;
+	}
+
+	/**
 	 * Get cart contents.
 	 *
 	 * @return array
@@ -123,70 +218,73 @@ class WPHB_Cart {
 	function get_cart_contents() {
 		// load cart session object
 		if ( $this->sessions && $this->sessions->session ) {
+			$allowed_keys_map          = array_flip(
+				array(
+					'product_id',
+					'quantity',
+					'check_in_date',
+					'check_out_date',
+					'parent_id',
+					'adult_qty',
+					'child_qty',
+					'hb_optional_quantity',
+					'hb_optional_quantity_selected',
+				)
+			);
+			$required_keys             = array( 'product_id', 'quantity', 'check_in_date', 'check_out_date' );
+			$allowed_parent_post_types = (array) apply_filters( 'hotel_booking_cart_allowed_parent_post_types', array( 'hb_room' ) );
+			$allowed_sub_post_types    = (array) apply_filters( 'hotel_booking_cart_allowed_sub_item_post_types', array( 'hb_extra_room' ) );
+			$date_format               = (string) hb_get_frontend_date_format();
+
 			foreach ( $this->sessions->session as $cart_id => $param ) {
-				if ( ! is_array( $param ) && ! is_object( $param ) ) {
+				// Cart lines are restored from session/cookie storage. Require the
+				// complete server-generated schema and strictly whitelist keys before
+				// rebuilding prices or bookings.
+				$param = $this->sanitize_cart_item_params(
+					$param,
+					$allowed_keys_map,
+					$required_keys,
+					$allowed_parent_post_types,
+					$allowed_sub_post_types,
+					$date_format
+				);
+				if ( null === $param ) {
 					$this->sessions->set( $cart_id, null );
 					continue;
 				}
-
-				// Cart lines are restored from a client-controlled cookie. Require the
-				// complete server-generated schema before rebuilding prices or bookings.
-				$param         = (array) $param;
-				$required_keys = array( 'product_id', 'quantity', 'check_in_date', 'check_out_date' );
-				if ( array_diff( $required_keys, array_keys( $param ) )
-					|| ! is_numeric( $param['product_id'] )
-					|| ! get_post( absint( $param['product_id'] ) )
-					|| ! is_numeric( $param['quantity'] )
-					|| (int) $param['quantity'] < 1 ) {
-					$this->sessions->set( $cart_id, null );
-					continue;
-				}
-
-				$normalized_dates = hb_normalize_booking_date_range( $param['check_in_date'], $param['check_out_date'], hb_get_frontend_date_format() );
-				if ( is_wp_error( $normalized_dates ) ) {
-					$this->sessions->set( $cart_id, null );
-					continue;
-				}
-
-				$param['product_id']     = absint( $param['product_id'] );
-				$param['quantity']       = (int) $param['quantity'];
-				$param['check_in_date']  = $normalized_dates['check_in_date'];
-				$param['check_out_date'] = $normalized_dates['check_out_date'];
 
 				$cart_item = new stdClass();
-				if ( is_array( $param ) || is_object( $param ) ) {
-					foreach ( $param as $k => $v ) {
-						$cart_item->{$k} = $v;
-					}
-					if ( $cart_item->product_id ) {
-						// product class
-						$product = hotel_booking_get_product_class( $cart_item->product_id, (array) $param );
-						// set product data
-						$cart_item->product_data = $product;
-						// amount item include tax
-						$cart_item->amount_include_tax = apply_filters( 'hotel_booking_cart_item_amount_incl_tax', $product->amount_include_tax(), $cart_id, $cart_item, $product );
-
-						// amount item exclude tax
-						$cart_item->amount_exclude_tax = apply_filters( 'hotel_booking_cart_item_amount_excl_tax', $product->amount_exclude_tax(), $cart_id, $cart_item, $product );
-
-						// amount item exclude tax
-						$cart_item->amount = apply_filters( 'hotel_booking_cart_item_total_amount', $product->amount( true ), $cart_id, $cart_item, $product );
-
-						// amount tax
-						$cart_item->amount_tax = $cart_item->amount_include_tax - $cart_item->amount_exclude_tax;
-
-						// singular include tax
-						$cart_item->amount_singular_include_tax = apply_filters( 'hotel_booking_cart_item_amount_singular_incl_tax', $product->amount_singular_include_tax(), $cart_id, $cart_item, $product );
-
-						// singular exclude tax
-						$cart_item->amount_singular_exclude_tax = apply_filters( 'hotel_booking_cart_item_amount_singular_incl_tax', $product->amount_singular_exclude_tax(), $cart_id, $cart_item, $product );
-
-						// singular
-						$cart_item->amount_singular = apply_filters( 'hotel_booking_cart_item_amount_singular', $product->amount_singular( true ), $cart_id, $cart_item, $product );
-					}
-
-					$this->cart_contents[ $cart_id ] = $cart_item;
+				foreach ( $param as $k => $v ) {
+					$cart_item->{$k} = $v;
 				}
+				if ( $cart_item->product_id ) {
+					// product class
+					$product = hotel_booking_get_product_class( $cart_item->product_id, $param );
+					// set product data
+					$cart_item->product_data = $product;
+					// amount item include tax
+					$cart_item->amount_include_tax = apply_filters( 'hotel_booking_cart_item_amount_incl_tax', $product->amount_include_tax(), $cart_id, $cart_item, $product );
+
+					// amount item exclude tax
+					$cart_item->amount_exclude_tax = apply_filters( 'hotel_booking_cart_item_amount_excl_tax', $product->amount_exclude_tax(), $cart_id, $cart_item, $product );
+
+					// amount item exclude tax
+					$cart_item->amount = apply_filters( 'hotel_booking_cart_item_total_amount', $product->amount( true ), $cart_id, $cart_item, $product );
+
+					// amount tax
+					$cart_item->amount_tax = $cart_item->amount_include_tax - $cart_item->amount_exclude_tax;
+
+					// singular include tax
+					$cart_item->amount_singular_include_tax = apply_filters( 'hotel_booking_cart_item_amount_singular_incl_tax', $product->amount_singular_include_tax(), $cart_id, $cart_item, $product );
+
+					// singular exclude tax
+					$cart_item->amount_singular_exclude_tax = apply_filters( 'hotel_booking_cart_item_amount_singular_incl_tax', $product->amount_singular_exclude_tax(), $cart_id, $cart_item, $product );
+
+					// singular
+					$cart_item->amount_singular = apply_filters( 'hotel_booking_cart_item_amount_singular', $product->amount_singular( true ), $cart_id, $cart_item, $product );
+				}
+
+				$this->cart_contents[ $cart_id ] = $cart_item;
 			}
 		}
 
@@ -817,7 +915,7 @@ class WPHB_Cart {
 				'hb_generate_transaction_object_room',
 				array(
 					'parent_id'      => isset( $product->parent_id ) ? $product->parent_id : null,
-					'product_id'     => $product->ID,
+					'product_id'     => absint( $product->ID ),
 					'qty'            => $product->get_data( 'quantity' ),
 					'adult_qty'      => $adult_qty,
 					'child_qty'      => $child_qty,

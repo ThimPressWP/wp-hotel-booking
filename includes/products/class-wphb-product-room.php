@@ -114,7 +114,8 @@ class WPHB_Product_Room_Base extends WPHB_Product_Abstract {
 		$return = '';
 		switch ( $key ) {
 			case 'ID':
-				$return = $this->get_data( 'id' ) ? $this->get_data( 'id' ) : $this->post->ID;
+				$external_id = absint( $this->get_data( 'id' ) );
+				$return      = $external_id ? $external_id : ( isset( $this->post->ID ) ? absint( $this->post->ID ) : 0 );
 				break;
 			case 'room_type':
 				// $return = intval( get_post_meta( $this->post->ID, '_hb_room_type', true ) );
