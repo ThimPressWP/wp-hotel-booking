@@ -86,7 +86,7 @@ if ( $booking_id && get_post_type( $booking_id ) == 'hb_booking' ) {
 							<?php printf( '%d', hb_count_nights_two_dates( hb_get_order_item_meta( $room->order_item_id, 'check_out_date', true ), hb_get_order_item_meta( $room->order_item_id, 'check_in_date', true ) ) ); ?>
 						</td>
 						<td>
-							<?php printf( '%s', hb_get_order_item_meta( $room->order_item_id, 'qty', true ) ); ?>
+							<?php echo esc_html( hb_get_order_item_meta( $room->order_item_id, 'qty', true ) ); ?>
 						</td>
 						<?php if ( $has_adult_qty ) : ?>
 						<td>

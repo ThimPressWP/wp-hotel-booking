@@ -124,18 +124,21 @@ if ( ! class_exists( 'WPHB_Sessions' ) ) {
 					}
 				}
 
-				// Reject unsigned, malformed, or tampered cookies and purge them.
-				$this->remove();
-				return array();
-			} else {
-				// Only try transient if the session ID exists (sessions may be skipped for REST/CLI)
-				$session_id = session_id();
-				if ( ! empty( $session_id ) ) {
-					$transient_prefix = $this->prefix . '_' . $session_id;
-					$transient        = get_transient( $transient_prefix );
-					if ( ! empty( $transient ) && is_array( $transient ) ) {
-						return $transient;
-					}
+				// Reject unsigned, malformed, or tampered cookies. Only expire the
+				// cookie: the server-side transient is trusted and may still hold
+				unset( $_COOKIE[ $this->prefix ] );
+				if ( ! headers_sent() ) {
+					setcookie( $this->prefix, '', time() - $this->live_item, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), true );
+				}
+			}
+
+			// Only try transient if the session ID exists (sessions may be skipped for REST/CLI)
+			$session_id = session_id();
+			if ( ! empty( $session_id ) ) {
+				$transient_prefix = $this->prefix . '_' . $session_id;
+				$transient        = get_transient( $transient_prefix );
+				if ( ! empty( $transient ) && is_array( $transient ) ) {
+					return $transient;
 				}
 			}
 

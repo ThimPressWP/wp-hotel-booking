@@ -286,6 +286,14 @@ class WPHB_Cart {
 
 				$this->cart_contents[ $cart_id ] = $cart_item;
 			}
+
+			// Drop sub-items whose parent line is missing
+			foreach ( $this->cart_contents as $cart_id => $cart_item ) {
+				if ( isset( $cart_item->parent_id ) && ! isset( $this->cart_contents[ $cart_item->parent_id ] ) ) {
+					unset( $this->cart_contents[ $cart_id ] );
+					$this->sessions->set( $cart_id, null );
+				}
+			}
 		}
 
 		return apply_filters( 'hotel_booking_load_cart_from_session', $this->cart_contents );

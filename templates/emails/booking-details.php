@@ -6,7 +6,7 @@
  *
  * @author  ThimPress, leehld
  * @package WP-Hotel-Booking/Templates
- * @version 2.3.5
+ * @version 2.4.0
  */
 
 /**
@@ -29,10 +29,10 @@ defined( 'ABSPATH' ) || exit(); ?>
 
 	<?php foreach ( $items as $k => $item ) { ?>
 		<tr>
-			<td><?php printf( '%s', $item->order_item_name ); ?></td>
+			<td><?php echo esc_html( $item->order_item_name ); ?></td>
 			<td><?php printf( '%s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $item->order_item_id, 'check_in_date', true ) ) ); ?></td>
 			<td><?php printf( '%s', date_i18n( hb_get_date_format(), hb_get_order_item_meta( $item->order_item_id, 'check_out_date', true ) ) ); ?></td>
-			<td><?php printf( '%s', hb_get_order_item_meta( $item->order_item_id, 'qty', true ) ); ?></td>
+			<td><?php echo esc_html( hb_get_order_item_meta( $item->order_item_id, 'qty', true ) ); ?></td>
 			<td><?php printf( '%s', hb_format_price( hb_get_order_item_meta( $item->order_item_id, 'subtotal', true ), hb_get_currency_symbol( $booking->currency ) ) ); ?></td>
 		</tr>
 
