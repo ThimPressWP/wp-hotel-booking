@@ -3,7 +3,7 @@ Contributors: thimpress, leehld, phamtungpth, thoakim
 Donate link: https://thimpress.com/
 Tags: hotel booking, reservation, booking system, room management, accommodation
 Tested up to: 7.1
-Stable tag: 2.4.0
+Stable tag: 2.3.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -87,7 +87,7 @@ Yes.
 
 == Changelog ==
 
-= 2.4.0 (2026-11-19) =
+= 2.3.6 (2026-11-23) =
 * Added: Redesigned admin settings UI.
 * Added: Processing Booking email workflow in Email Settings.
 * Fixed: Security prevent stored XSS
