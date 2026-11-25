@@ -9,15 +9,16 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-25T06:49:21+00:00\n"
+"POT-Creation-Date: 2026-11-25T07:20:55+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wp-hotel-booking\n"
 
 #. Plugin Name of the plugin
 #: wp-hotel-booking.php
-#: includes/admin/class-wphb-admin-menu.php:36
-#: includes/admin/class-wphb-admin-menu.php:37
+#: includes/admin/class-wphb-admin-menu.php:64
+#: includes/admin/class-wphb-admin-menu.php:65
+#: includes/admin/class-wphb-admin-settings.php:508
 #: includes/admin/class-wphb-admin-settings.php:510
 msgid "WP Hotel Booking"
 msgstr ""
@@ -42,20 +43,20 @@ msgstr ""
 msgid "http://thimpress.com"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-menu.php:57
-#: includes/admin/class-wphb-admin-menu.php:58
+#: includes/admin/class-wphb-admin-menu.php:85
+#: includes/admin/class-wphb-admin-menu.php:86
 #: includes/elementor/widgets/global/list-room.php:45
 msgid "Settings"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-menu.php:65
-#: includes/admin/class-wphb-admin-menu.php:66
+#: includes/admin/class-wphb-admin-menu.php:93
+#: includes/admin/class-wphb-admin-menu.php:94
 #: includes/admin/views/calendar-manager.php:19
 msgid "Calendar Manager"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-menu.php:79
-#: includes/admin/class-wphb-admin-menu.php:80
+#: includes/admin/class-wphb-admin-menu.php:107
+#: includes/admin/class-wphb-admin-menu.php:108
 msgid "Tools"
 msgstr ""
 

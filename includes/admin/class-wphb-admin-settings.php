@@ -505,7 +505,7 @@ class WPHB_Admin_Settings {
 				<div class="wphb-settings-sticky-bar" id="wphb-settings-sticky-bar">
 					<div class="wphb-settings-sticky-bar__left">
 						<div class="wphb-settings-brand">
-							<span class="dashicons dashicons-calendar-alt wphb-settings-brand__icon"></span>
+							<img src="<?php echo esc_url( WPHB_PLUGIN_URL . '/assets/images/icon-logo.png' ); ?>" alt="<?php esc_attr_e( 'WP Hotel Booking', 'wp-hotel-booking' ); ?>" width="33" height="33" />
 							<div class="wphb-settings-brand__text">
 								<span class="wphb-settings-brand__name"><?php esc_html_e( 'WP Hotel Booking', 'wp-hotel-booking' ); ?></span>
 								<span class="wphb-settings-brand__sep">/</span>

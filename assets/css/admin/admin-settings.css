@@ -10,7 +10,6 @@
 	--wphb-success-soft: #ecfdf5;
 	--wphb-warning: #f59e0b;
 	--wphb-warning-soft: #fffbeb;
-	--wphb-danger: #ef4444;
 	--wphb-surface: #ffffff;
 	--wphb-bg-subtle: #f8fafc;
 	--wphb-border: #e2e8f0;
@@ -60,19 +59,6 @@
 	display: flex;
 	align-items: center;
 	gap: 12px;
-}
-
-.wphb-settings-brand__icon {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	width: 38px;
-	height: 38px;
-	font-size: 20px;
-	background: var(--wphb-primary-soft);
-	color: var(--wphb-primary);
-	border-radius: var(--wphb-radius-md);
-	flex-shrink: 0;
 }
 
 .wphb-settings-brand__text {
@@ -248,13 +234,6 @@
 	border-color: var(--wphb-success);
 }
 
-.wphb-btn-save__icon {
-	font-size: 17px;
-	width: 17px;
-	height: 17px;
-	line-height: 1;
-}
-
 .wphb-btn-save__spinner {
 	display: none;
 	width: 14px;
@@ -263,10 +242,6 @@
 	border-top-color: #ffffff;
 	border-radius: 50%;
 	animation: wphb-spin 0.65s linear infinite;
-}
-
-.wphb-btn-save.is-saving .wphb-btn-save__icon {
-	display: none;
 }
 
 .wphb-btn-save.is-saving .wphb-btn-save__spinner {
@@ -494,8 +469,6 @@
 	color: #ffffff !important;
 	background: var(--wphb-primary) !important;
 	font-weight: 600;
-	padding: 8px 18px !important;
-	border-radius: var(--wphb-radius-md) !important;
 	box-shadow: 0 1px 3px rgba(34, 113, 177, 0.25);
 }
 
@@ -1019,7 +992,7 @@
 
 /* ==========================================================================
    7. Responsive Breakpoints
-   ========================================================================== */
+========================================================================== */
 @media screen and (max-width: 960px) {
 	.wphb-settings-workspace {
 		grid-template-columns: 1fr;
@@ -1067,4 +1040,3 @@
 		padding-top: 0;
 	}
 }
-

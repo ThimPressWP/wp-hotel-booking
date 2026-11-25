@@ -19,21 +19,11 @@
 	clear: both;
 }
 
-form[name="hb-admin-settings-form"] select,
-form[name="hb-admin-settings-form"] input[type="text"] {
-	width: 25em;
-}
 form[name="hb-admin-settings-form"] button.select2-selection__clear{
 	margin-right: 18px;
     border: unset;
     background: none;
     top: 3px;
-} 
-
-form[name="hb-admin-settings-form"] ul.hb-admin-sub-tab{
-	display: block;
-	width: 100%;
-	margin-bottom: 20px;
 }
 
 .hb-form-field {
@@ -55,10 +45,6 @@ form[name="hb-admin-settings-form"] ul.hb-admin-sub-tab{
 
 .hb-form-field .hb-form-field-input {
 	margin-left: 25%;
-}
-
-.hb-form-field .hb-form-field-input-inner {
-	margin-left: 20px;
 }
 
 .hb-form-field .hb-form-field-input textarea {
@@ -159,25 +145,6 @@ th.column-room_type {
 	box-shadow: none;
 }
 
-.hb-payment-gateways .subsubsub .current {
-	font-weight: bold;
-}
-
-.hb-sub-tab-content {
-	opacity: 0;
-	float: left;
-	width: 100%;
-	margin-right: -100%;
-	overflow: hidden;
-	clear: both;
-	display: none;
-}
-
-.hb-sub-tab-content.current {
-	opacity: 1;
-	display: block;
-}
-
 .post-type-hb_room .column-date {
 	display: none;
 }
@@ -219,19 +186,6 @@ th.column-room_type {
 	text-align: right;
 }
 
-#adminmenu .toplevel_page_hb_booking_details {
-	_display: none;
-}
-
-.customer-information {
-	width: 50%;
-}
-
-.customer-information tr {
-	width: 500px;
-	border: 1px solid black;
-}
-
 .post-type-hb_customer .column-bookings {
 	width: 150px;
 }
@@ -243,43 +197,6 @@ th.column-room_type {
 .post-type-hb_customer #post-body-content,
 .post-type-hb_booking #post-body-content {
 	display: none;
-}
-
-/**/
-.hb-booking-table,
-.hb-booking-rooms {
-	border: 1px solid #DDD;
-	border-collapse: collapse;
-	max-width: 800px;
-	background-color: #FFF;
-	font-size: 14px;
-	width: 50%;
-	margin-bottom: 20px;
-}
-
-.hb-booking-table td,
-.hb-booking-table th,
-.hb-booking-rooms td,
-.hb-booking-rooms th {
-	border: 1px solid #DDD;
-	padding: 10px;
-}
-
-.hb-booking-table thead th,
-.hb-booking-rooms thead th {
-	background-color: #F5F5F5;
-}
-
-.hb-booking-table thead h3,
-.hb-booking-rooms thead h3 {
-	text-align: left;
-	margin: 0;
-	padding: 0;
-}
-
-.hb-booking-table tbody th {
-	text-align: left;
-	width: 30%;
 }
 
 .tablenav.top select[name="filter-type"] {
@@ -298,16 +215,6 @@ th.column-room_type {
 
 .negative-price {
 	color: #FF0000;
-}
-
-.hb-table-width30 {
-	width: 30%;
-	float: left;
-	clear: left;
-}
-
-.hb-table-width70 {
-	width: 70%;
 }
 
 .hb_table_center {
@@ -550,7 +457,6 @@ th.column-room_type {
 	width: 100%;
 	min-height: 400px;
 	height: auto;
-	float: left;
 }
 
 #tp-hotel-booking-report-main h3.chart_title {
@@ -635,12 +541,6 @@ th.column-room_type {
 	padding-left: 15px;
 }
 
-.tp_hotel_booking_tabs_settings {
-	/*width: 20%;
-	max-width: 300px;
-	float: left;*/
-}
-
 .tp_hotel_booking_tabs_settings li {
 	display: inline-block;
 }
@@ -658,18 +558,12 @@ th.column-room_type {
 .tp_hotel_booking_tabs_settings li a.active,
 .tp_hotel_booking_tabs_settings li a:hover {
 	background-color: #32373c;
-	/*padding-left: 30px;*/
 	color: rgba(240, 245, 250, .7);
-}
-
-.tp_hotel_booking_settings_content {
-	/*padding-left: 20%;*/
 }
 
 .tp_hotel_booking_setting_fields {
 	overflow: hidden;
 	display: none;
-	/*padding: 0 20px;*/
 }
 
 .tp_hotel_booking_setting_fields.active {
@@ -1503,4 +1397,15 @@ th.column-room_type {
 /* admin menu icon */
 #adminmenu #toplevel_page_tp_hotel_booking .wp-menu-image img {
 	width: 21px;
+}
+#adminmenu #menu-posts-hb_room .dashicons-admin-home::before {
+	content: "";
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	padding: 0;
+	margin: 7px 0;
+	background-color: currentColor;
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8'/%3E%3Cpath d='M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4'/%3E%3Cpath d='M12 4v6'/%3E%3Cpath d='M2 18h20'/%3E%3C/svg%3E") center / 19px 19px no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8'/%3E%3Cpath d='M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4'/%3E%3Cpath d='M12 4v6'/%3E%3Cpath d='M2 18h20'/%3E%3C/svg%3E") center / 19px 19px no-repeat;
 }

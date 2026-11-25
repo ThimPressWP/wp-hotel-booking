@@ -26,6 +26,34 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 		public function __construct() {
 			add_action( 'admin_menu', array( $this, 'register' ) );
 			add_action( 'admin_bar_menu', array( $this, 'admin_bar_menus' ), 50 );
+
+			// Enable custom admin menu ordering to keep Rooms directly below WP Hotel Booking.
+			add_filter( 'custom_menu_order', '__return_true' );
+			add_filter( 'menu_order', array( $this, 'menu_order' ), 99 );
+		}
+
+		/**
+		 * Keep Rooms menu directly below WP Hotel Booking menu.
+		 *
+		 * @param array $menu_order
+		 *
+		 * @return array
+		 */
+		public function menu_order( $menu_order ) {
+			if ( ! is_array( $menu_order ) ) {
+				return $menu_order;
+			}
+
+			$hb_pos   = array_search( 'tp_hotel_booking', $menu_order, true );
+			$room_pos = array_search( 'edit.php?post_type=hb_room', $menu_order, true );
+
+			if ( false !== $hb_pos && false !== $room_pos && $room_pos !== $hb_pos + 1 ) {
+				array_splice( $menu_order, $room_pos, 1 );
+				$hb_pos = array_search( 'tp_hotel_booking', $menu_order, true );
+				array_splice( $menu_order, $hb_pos + 1, 0, 'edit.php?post_type=hb_room' );
+			}
+
+			return $menu_order;
 		}
 
 		/**
