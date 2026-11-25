@@ -70,7 +70,7 @@ class SingleRoomExternalLinkTemplate {
 				if ( ! isset( $external_links[ $field_id ] ) || ! $external_links[ $field_id ]['enabled'] ) {
 					continue;
 				}
-				$default_icon_url = WPHB_PLUGIN_URL . '/assets/images/icon-128x128.png';
+				$default_icon_url = WPHB_PLUGIN_URL . '/assets/images/icon-logo.png';
 
 				$icon_id             = $field['icon_id'] ? $field['icon_id'] : 0;
 				$title               = $field['title'] ?: __( 'Wp hotel booking', 'wp-hotel-booking' );

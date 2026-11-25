@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-23T02:42:00+00:00\n"
+"POT-Creation-Date: 2026-11-25T06:49:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wp-hotel-booking\n"
@@ -88,13 +88,13 @@ msgid "H"
 msgstr ""
 
 #: includes/admin/class-wphb-admin-settings.php:431
-#: includes/wphb-functions.php:2973
+#: includes/wphb-functions.php:3013
 #: templates/setup/steps/pages.php:35
 msgid "---Select page---"
 msgstr ""
 
 #: includes/admin/class-wphb-admin-settings.php:433
-#: includes/wphb-functions.php:2975
+#: includes/wphb-functions.php:3015
 #: templates/setup/steps/pages.php:37
 msgid "[ Add new page ]"
 msgstr ""
@@ -1456,17 +1456,17 @@ msgid "Pages options for system."
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:44
-#: includes/wphb-functions.php:3055
+#: includes/wphb-functions.php:3095
 msgid "Rooms Page"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:54
-#: includes/wphb-functions.php:3067
+#: includes/wphb-functions.php:3107
 msgid "Checkout Page"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:59
-#: includes/wphb-functions.php:3073
+#: includes/wphb-functions.php:3113
 msgid "Cart Page"
 msgstr ""
 
@@ -1475,7 +1475,7 @@ msgid "Redirect to page after book"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:69
-#: includes/wphb-functions.php:3083
+#: includes/wphb-functions.php:3123
 msgid "Account Page"
 msgstr ""
 
@@ -1484,7 +1484,7 @@ msgid "Terms And Conditions Page"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:79
-#: includes/wphb-functions.php:3095
+#: includes/wphb-functions.php:3135
 msgid "Thank You Page"
 msgstr ""
 
@@ -6488,38 +6488,38 @@ msgstr ""
 msgid "%1$s"
 msgstr ""
 
-#: includes/wphb-functions.php:2887
+#: includes/wphb-functions.php:2927
 msgid "Check in date is invalid."
 msgstr ""
 
-#: includes/wphb-functions.php:2892
+#: includes/wphb-functions.php:2932
 msgid "Check out date is invalid."
 msgstr ""
 
-#: includes/wphb-functions.php:2898
+#: includes/wphb-functions.php:2938
 msgid "Date range is invalid."
 msgstr ""
 
-#: includes/wphb-functions.php:2902
+#: includes/wphb-functions.php:2942
 msgid "Check out date must be greater than check in date."
 msgstr ""
 
-#: includes/wphb-functions.php:2937
+#: includes/wphb-functions.php:2977
 #, php-format
 msgid "Minimum booking is %d night."
 msgid_plural "Minimum booking is %d nights."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/wphb-functions.php:2986
+#: includes/wphb-functions.php:3026
 msgid "Select a page&hellip;"
 msgstr ""
 
-#: includes/wphb-functions.php:3079
+#: includes/wphb-functions.php:3119
 msgid " Redirect to page after book"
 msgstr ""
 
-#: includes/wphb-functions.php:3089
+#: includes/wphb-functions.php:3129
 msgid "Terms Page"
 msgstr ""
 

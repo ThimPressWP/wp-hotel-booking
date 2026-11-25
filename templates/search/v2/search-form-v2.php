@@ -70,7 +70,7 @@ if ( $args && isset( $args['atts'] ) ) {
 							'name'              => 'adults_capacity',
 							'min'               => 1,
 							'max'               => 10,
-							'show_option_none'  => esc_html__( 'Adults', 'wp-hotel-booking' ),
+							'show_option_none'  => __( 'Adults', 'wp-hotel-booking' ),
 							'selected'          => $adults,
 							'option_none_value' => '',
 							'options'           => hb_get_capacity_of_rooms(),
@@ -89,7 +89,7 @@ if ( $args && isset( $args['atts'] ) ) {
 							'name'              => 'max_child',
 							'min'               => 1,
 							'max'               => hb_get_max_child_of_rooms(),
-							'show_option_none'  => esc_html__( 'Children', 'wp-hotel-booking' ),
+							'show_option_none'  => __( 'Children', 'wp-hotel-booking' ),
 							'option_none_value' => '',
 							'selected'          => $max_child,
 						)
@@ -98,7 +98,7 @@ if ( $args && isset( $args['atts'] ) ) {
 				</div>
 			</li>
 			<li class="hb-form-field">
-				<?php hb_render_label_shortcode( $atts, 'show_label', esc_html__( 'Number of rooms', 'wp-hotel-booking' ), 'true' ); ?>
+				<?php hb_render_label_shortcode( $atts, 'show_label', __( 'Number of rooms', 'wp-hotel-booking' ), 'true' ); ?>
 				<div class="hb-form-field-input">
 					<?php
 					hb_dropdown_numbers(
@@ -106,7 +106,7 @@ if ( $args && isset( $args['atts'] ) ) {
 							'name'              => 'number-of-rooms',
 							'min'               => 1,
 							'max'               => 20,
-							'show_option_none'  => esc_html__( 'Number of rooms', 'wp-hotel-booking' ),
+							'show_option_none'  => __( 'Number of rooms', 'wp-hotel-booking' ),
 							'option_none_value' => '',
 							'selected'          => $atts['room_qty'] ?: hb_get_request( 'room_qty', 1 ),
 						)

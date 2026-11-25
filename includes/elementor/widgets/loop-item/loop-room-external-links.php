@@ -584,7 +584,7 @@ class Thim_Ekit_Widget_Loop_Room_External_Links extends Widget_Base {
 		$global_settings          = ! empty( $hb_extenal_link_settings ) ? json_decode( $hb_extenal_link_settings, true ) : array();
 
 		// Default icon URL
-		$default_icon_url = WPHB_PLUGIN_URL . '/assets/images/icon-128x128.png';
+		$default_icon_url = WPHB_PLUGIN_URL . '/assets/images/icon-logo.png';
 
 		$merged_data = array();
 
@@ -721,7 +721,7 @@ class Thim_Ekit_Widget_Loop_Room_External_Links extends Widget_Base {
 						target="_blank" 
 						<# if (relAttributes) { #>rel="{{ relAttributes }}"<# } #>
 						title="Preview">
-						<img src="<?php echo esc_url( WPHB_PLUGIN_URL . '/assets/images/icon-128x128.png' ); ?>"
+						<img src="<?php echo esc_url( WPHB_PLUGIN_URL . '/assets/images/icon-logo.png' ); ?>"
 							alt="Preview" 
 							width="{{ imageWidth }}" 
 							height="{{ imageHeight }}">

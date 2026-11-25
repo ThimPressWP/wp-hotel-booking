@@ -314,41 +314,11 @@ th.column-room_type {
 	text-align: center;
 }
 
-/*gallerry settings meta box*/
-/*
-#gallery_settings{
-    background-color: #F5F5F5;
-    position: relative;
-    border: 1px solid #DDD;
-}*/
 #gallery_settings .hb-form-field-input {
 	margin-left: 0;
 	width: 100%;
 }
 
-/*
-#gallery_settings:before{
-    content: '';
-    border: 10px solid #DDD;
-    display: inline-block;
-    border-top-color: transparent;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    position: absolute;
-    top: -20px;
-    left: 35px;
-}
-#gallery_settings:after{
-    content: '';
-    border: 9px solid #F5F5F5;
-    display: inline-block;
-    border-top-color: transparent;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    position: absolute;
-    top: -18px;
-    left: 36px;
-}*/
 #gallery_settings ul {
 	margin: 5px;
 	padding: 0;
@@ -1514,8 +1484,6 @@ th.column-room_type {
 }
 /* end admin block room*/
 
-
-
 /* admin deposit room */
 #room_settings #deposit_room {
 	position: relative;
@@ -1532,4 +1500,7 @@ th.column-room_type {
 	left: 0;
 }
 
-/* end admin deposit room*/
+/* admin menu icon */
+#adminmenu #toplevel_page_tp_hotel_booking .wp-menu-image img {
+	width: 21px;
+}

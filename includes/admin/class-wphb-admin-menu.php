@@ -38,7 +38,7 @@ if ( ! class_exists( 'WPHB_Admin_Menu' ) ) {
 				'edit_hb_bookings',
 				'tp_hotel_booking',
 				'',
-				'dashicons-calendar',
+				WPHB_PLUGIN_URL . '/assets/images/icon-logo.png', // 'dashicons-calendar',
 				'3.99'
 			);
 

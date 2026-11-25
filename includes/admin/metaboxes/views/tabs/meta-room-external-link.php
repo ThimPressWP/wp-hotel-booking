@@ -20,7 +20,7 @@ if ( empty( $post ) || ( isset( $post ) && ( $post->post_status !== 'publish' ||
 $hb_extenal_link_settings = WPHB_Settings::instance()->get( 'external_link_settings' );
 
 $setting_fields   = ! empty( $hb_extenal_link_settings ) ? json_decode( $hb_extenal_link_settings, true ) : array();
-$default_icon_url = WPHB_PLUGIN_URL . '/assets/images/icon-128x128.png';
+$default_icon_url = WPHB_PLUGIN_URL . '/assets/images/icon-logo.png';
 
 $room_external_link_settings     = get_post_meta( $post->ID, '_hb_room_external_link', true );
 $room_external_link_settings_arr = ! empty( $room_external_link_settings ) ? json_decode( $room_external_link_settings, true ) : array();

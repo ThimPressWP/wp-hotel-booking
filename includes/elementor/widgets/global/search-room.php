@@ -625,7 +625,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 							'name'              => 'adults_capacity',
 							'min'               => 1,
 							'max'               => 10,
-							'show_option_none'  => esc_html( $label_adults ),
+							'show_option_none'  => $label_adults,
 							'selected'          => $adults,
 							'option_none_value' => 0,
 							'options'           => hb_get_capacity_of_rooms()
@@ -694,7 +694,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 							'name'              => 'max_child',
 							'min'               => 1,
 							'max'               => hb_get_max_child_of_rooms(),
-							'show_option_none'  => esc_html( $label_child ),
+							'show_option_none'  => $label_child,
 							'option_none_value' => 0,
 							'selected'          => $max_child,
 						)
@@ -761,7 +761,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 							'name'              => 'number-of-rooms',
 							'min'               => 1,
 							'max'               => 10,
-							'show_option_none'  => esc_html( $label ),
+							'show_option_none'  => $label,
 							'option_none_value' => 0,
 							'selected'          => $quantity,
 						)

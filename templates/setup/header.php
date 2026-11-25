@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
 <div id="content">
 	<div class="logo">
 		<a href="javascript:void(0)">
-			<?php $logoUrl = WPHB_PLUGIN_URL . '/assets/images/icon-128x128.png'; ?>
+			<?php $logoUrl = WPHB_PLUGIN_URL . '/assets/images/icon-logo.png'; ?>
 			<img src="<?php echo esc_url_raw( $logoUrl ); ?>">
 		</a>
 	</div>
