@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WP Hotel Booking plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Hotel Booking 2.3.6\n"
+"Project-Id-Version: WP Hotel Booking 2.3.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-hotel-booking\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-25T07:20:55+00:00\n"
+"POT-Creation-Date: 2026-11-25T07:38:56+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wp-hotel-booking\n"
@@ -6977,7 +6977,7 @@ msgid "View Documentation"
 msgstr ""
 
 #: templates/setup/steps/pages.php:19
-msgid "The pages will display content of Wp Hotel's necessary pages, such as: Rooms, Checkout, Cart"
+msgid "The pages will display content of WP Hotel's necessary pages, such as: Rooms, Checkout, Cart"
 msgstr ""
 
 #: templates/setup/steps/pages.php:20
@@ -6994,11 +6994,11 @@ msgid "Welcome to WP Hotel Booking"
 msgstr ""
 
 #: templates/setup/steps/welcome.php:13
-msgid "Thanks for choosing wp-hotel-booking to sell your online courses!"
+msgid "Thank you for choosing WP Hotel Booking to manage your Hotel and Room reservations!"
 msgstr ""
 
 #: templates/setup/steps/welcome.php:15
-msgid "The following wizard will help you configure your WP Hotel site and get you started quickly."
+msgid "The following wizard will help you configure your hotel booking site and get you started quickly."
 msgstr ""
 
 #: templates/single-room-reviews.php:50

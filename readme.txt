@@ -3,7 +3,7 @@ Contributors: thimpress, leehld, phamtungpth, thoakim
 Donate link: https://thimpress.com/
 Tags: hotel booking, reservation, booking system, room management, accommodation
 Tested up to: 7.1
-Stable tag: 2.3.6
+Stable tag: 2.3.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,10 @@ Yes.
 7. System settings
 
 == Changelog ==
+
+= 2.3.7 (2026-11-25) =
+* Fixed: Security prevent stored XSS in Room Elementor widgets
+* Tweak: Update WP Hotel Booking and Rooms admin menu icons.
 
 = 2.3.6 (2026-11-23) =
 * Added: Redesigned admin settings UI.
