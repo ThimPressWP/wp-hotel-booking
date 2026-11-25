@@ -407,14 +407,14 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 								$meta_value = WPHB_Helpers::sanitize_params_submitted( $meta_value );
 							}
 							if ( $keyPost == '_hb_wphb_rule_room' ) {
-								$meta_value = sanitize_post_field( '_hb_wphb_rule_room', $_POST[ $keyPost ], $post_id );
+								$meta_value = WPHB_Helpers::sanitize_params_submitted( $_POST[ $keyPost ], 'html' );
 							}
 							if ( isset( $field['condition_html'] ) ) {
-								$meta_value = $_POST[ $keyPost ];
+								$meta_value = WPHB_Helpers::sanitize_params_submitted( $_POST[ $keyPost ], 'html' );
 							}
 
 							if ( $keyPost == '_hb_room_preview_url' ) {
-								$meta_value = $_POST[ $keyPost ];
+								$meta_value = hb_sanitize_video_preview( wp_unslash( $_POST[ $keyPost ] ) );
 							}
 
 							$meta_value = apply_filters( 'hb_meta_box_update_meta_value', $meta_value, $field['name'], $post_id );

@@ -6,7 +6,7 @@
  *
  * @author  ThimPress, leehld
  * @package WP-Hotel-Booking/Templates
- * @version 1.6
+ * @version 2.3.6
  */
 
 /**
@@ -20,7 +20,7 @@ if ( empty( $infos ) ) {
 ?>
 <div class="_hb_room_infos">
 	<?php
-		$infos = apply_filters( 'the_content', $infos );
+		$infos = apply_filters( 'the_content', wp_kses_post( $infos ) );
 		echo str_replace( ']]>', ']]&gt;', $infos );
 	?>
 </div>

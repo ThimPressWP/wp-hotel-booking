@@ -6,7 +6,7 @@
  *
  * @author  ThimPress, leehld
  * @package WP-Hotel-Booking/Templates
- * @version 1.6.1
+ * @version 2.3.6
  */
 
 /**
@@ -36,7 +36,7 @@ $camera_gallery = apply_filters( 'wp_hotel_booking_ft_camera_gallery', false );
 		<?php if ( $galleries ) { ?>
 			<?php
 			if ( $hb_room->is_preview ) :
-				$preview = get_post_meta( $hb_room->ID, '_hb_room_preview_url', true );
+				$preview = hb_sanitize_video_preview( get_post_meta( $hb_room->ID, '_hb_room_preview_url', true ) );
 				?>
 				<span class="room-preview" data-preview="<?php echo ! empty( $preview ) ? esc_attr( $preview ) : ''; ?>">
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM188.3 147.1c7.6-4.2 16.8-4.1 24.3 .5l144 88c7.1 4.4 11.5 12.1 11.5 20.5s-4.4 16.1-11.5 20.5l-144 88c-7.4 4.5-16.7 4.7-24.3 .5s-12.3-12.2-12.3-20.9l0-176c0-8.7 4.7-16.7 12.3-20.9z"/></svg>
@@ -102,13 +102,13 @@ $camera_gallery = apply_filters( 'wp_hotel_booking_ft_camera_gallery', false );
 			<?php
 				$video_html = '';
 
-			if ( strpos( $url, '<iframe' ) !== false ) {
-				// If the URL contains an iframe, output the iframe
-				$video_html .= $url;
+			if ( stripos( $url, '<iframe' ) !== false ) {
+				// If the URL contains an iframe, output the sanitized iframe
+				$video_html .= hb_sanitize_video_preview( $url );
 			} elseif ( preg_match( '/\.(mp4|webm|ogg)$/', $url ) ) {
 				// If the URL is a direct video link
 				$video_html .= '<video width="600" controls>
-					<source src="' . htmlspecialchars( $url ) . '" type="video/mp4">
+					<source src="' . esc_url( $url ) . '" type="video/mp4">
 					Your browser does not support the video tag.
 					</video>';
 			} elseif ( strpos( $url, 'youtube.com' ) !== false || strpos( $url, 'vimeo.com' ) !== false ) {
@@ -129,7 +129,7 @@ $camera_gallery = apply_filters( 'wp_hotel_booking_ft_camera_gallery', false );
 				}
 
 				if ( $embedUrl ) {
-					$video_html .= '<iframe width="100%" height="373" src="' . htmlspecialchars( $embedUrl ) . '" frameborder="0" allowfullscreen></iframe>';
+					$video_html .= '<iframe width="100%" height="373" src="' . esc_url( $embedUrl ) . '" frameborder="0" allowfullscreen></iframe>';
 				}
 			} else {
 				$video_html .= 'Unable to display the video. The URL is not valid.';

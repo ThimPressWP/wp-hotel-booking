@@ -1180,9 +1180,9 @@ if ( ! function_exists( 'hb_dropdown_numbers' ) ) {
 		extract( $args );
 
 		$id     = ! empty( $id ) ? $id : '';
-		$output = '<select name="' . $name . '" ' . ( $id ? 'id="' . $id . '"' : '' ) . '' . ( $class ? ' class="' . $class . '"' : '' ) . '>';
+		$output = '<select name="' . esc_attr( $name ) . '" ' . ( $id ? 'id="' . esc_attr( $id ) . '"' : '' ) . '' . ( $class ? ' class="' . esc_attr( $class ) . '"' : '' ) . '>';
 		if ( $show_option_none ) {
-			$output .= '<option value="' . $option_none_value . '">' . $show_option_none . '</option>';
+			$output .= '<option value="' . esc_attr( $option_none_value ) . '">' . esc_html( $show_option_none ) . '</option>';
 		}
 		if ( empty( $options ) ) {
 
@@ -2506,7 +2506,47 @@ if ( ! function_exists( 'hb_render_label_shortcode' ) ) {
 			return;
 		}
 
-		echo '<label>' . sprintf( __( '%1$s', 'wp-hotel-booking' ), $text ) . '</label>';
+		echo '<label>' . esc_html( sprintf( __( '%1$s', 'wp-hotel-booking' ), $text ) ) . '</label>';
+	}
+}
+
+if ( ! function_exists( 'hb_sanitize_video_preview' ) ) {
+	/**
+	 * Sanitize room video preview field (allows safe HTTP/HTTPS iframe embed or URL).
+	 *
+	 * @param mixed $value Raw preview URL or iframe HTML.
+	 * @return string
+	 */
+	function hb_sanitize_video_preview( $value ) {
+		if ( ! is_string( $value ) ) {
+			return '';
+		}
+
+		$value = trim( $value );
+		if ( '' === $value ) {
+			return '';
+		}
+
+		if ( stripos( $value, '<iframe' ) !== false ) {
+			$allowed_html = array(
+				'iframe' => array(
+					'src'             => true,
+					'width'           => true,
+					'height'          => true,
+					'frameborder'     => true,
+					'allow'           => true,
+					'allowfullscreen' => true,
+					'title'           => true,
+					'referrerpolicy'  => true,
+					'loading'         => true,
+					'class'           => true,
+				),
+			);
+
+			return wp_kses( $value, $allowed_html, array( 'http', 'https' ) );
+		}
+
+		return esc_url_raw( $value, array( 'http', 'https' ) );
 	}
 }
 

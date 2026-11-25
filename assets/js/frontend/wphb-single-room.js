@@ -19,6 +19,95 @@ import {
 } from './flatpickr-locale-utils.js';
 
 let modalCheckDates;
+
+const normalizePreviewVideoUrl = ( rawUrl ) => {
+	const trimmed = ( rawUrl || '' ).trim();
+	if ( ! /^(https?:)?\/\//i.test( trimmed ) ) {
+		return '';
+	}
+
+	try {
+		const urlObj = new URL( trimmed, window.location.origin );
+		if ( urlObj.protocol !== 'http:' && urlObj.protocol !== 'https:' ) {
+			return '';
+		}
+
+		if (
+			/(^|\.)youtube\.com$/i.test( urlObj.hostname ) &&
+			urlObj.pathname === '/watch'
+		) {
+			const videoId = urlObj.searchParams.get( 'v' );
+			if ( videoId && /^[\w-]+$/.test( videoId ) ) {
+				return `https://www.youtube.com/embed/${ videoId }`;
+			}
+		} else if ( /^youtu\.be$/i.test( urlObj.hostname ) ) {
+			const videoId = urlObj.pathname.slice( 1 );
+			if ( videoId && /^[\w-]+$/.test( videoId ) ) {
+				return `https://www.youtube.com/embed/${ videoId }`;
+			}
+		} else if ( /(^|\.)vimeo\.com$/i.test( urlObj.hostname ) ) {
+			const match = urlObj.pathname.match( /^\/(\d+)/ );
+			if ( match ) {
+				return `https://player.vimeo.com/video/${ match[ 1 ] }`;
+			}
+		}
+
+		return urlObj.href;
+	} catch ( err ) {
+		return '';
+	}
+};
+
+const createSafePreviewIframe = ( rawPreview, defaultHeight ) => {
+	const trimmed = ( rawPreview || '' ).trim();
+	if ( ! trimmed ) {
+		return null;
+	}
+
+	let src = '';
+	let width = '100%';
+	let height = `${ defaultHeight }px`;
+	const safeAttrs = {};
+
+	if ( /<iframe/i.test( trimmed ) ) {
+		const parsed = new window.DOMParser().parseFromString(
+			trimmed,
+			'text/html'
+		);
+		const parsedIframe = parsed.querySelector( 'iframe' );
+		if ( ! parsedIframe ) {
+			return null;
+		}
+		src = normalizePreviewVideoUrl( parsedIframe.getAttribute( 'src' ) );
+		width = parsedIframe.getAttribute( 'width' ) || width;
+		height = parsedIframe.getAttribute( 'height' ) || height;
+		[ 'allow', 'title', 'referrerpolicy' ].forEach( ( attr ) => {
+			const val = parsedIframe.getAttribute( attr );
+			if ( val ) {
+				safeAttrs[ attr ] = val;
+			}
+		} );
+	} else {
+		src = normalizePreviewVideoUrl( trimmed );
+	}
+
+	if ( ! src ) {
+		return null;
+	}
+
+	const iframeEl = document.createElement( 'iframe' );
+	iframeEl.className = 'wphb-iframe-preview';
+	iframeEl.src = src;
+	iframeEl.width = width;
+	iframeEl.height = height;
+	iframeEl.setAttribute( 'frameborder', '0' );
+	iframeEl.setAttribute( 'allowfullscreen', '' );
+	Object.entries( safeAttrs ).forEach( ( [ key, val ] ) => {
+		iframeEl.setAttribute( key, val );
+	} );
+
+	return iframeEl;
+};
 const className = {
 	'elBtnsCalendarPricing': '.wphb-room-calendar-pricing-buttons',
 }
@@ -726,23 +815,24 @@ document.addEventListener( 'click', function ( e ) {
 	} else if ( target.closest( '.room-preview' ) ) {
 		e.preventDefault();
 		const elRoomPreview = target.closest( '.room-preview' );
-		let iframe = elRoomPreview.dataset.preview;
-		const regexSearchInIframe = /.*<iframe/;
-		const windowHeight = window.innerHeight / 2;
+		const iframeEl = createSafePreviewIframe(
+			elRoomPreview.dataset.preview,
+			window.innerHeight / 2
+		);
 
-		// Check link youtube
-		const regexYoutube = /.*youtube.com/;
-		if ( regexYoutube.test( iframe ) ) {
-			iframe = iframe.replace( 'watch?v=', 'embed/' );
+		if ( ! iframeEl ) {
+			return;
 		}
 
-		if ( ! regexSearchInIframe.test( iframe ) ) {
-			iframe = `<iframe class="wphb-iframe-preview" src="${ iframe }" 
-			width="100%" height="${ windowHeight }px" frameborder="0" allowfullscreen></iframe>`;
+		if ( ! modalPreview ) {
+			modalPreview = new tingle.modal( {
+				onClose() {
+					this.setContent( '' );
+				},
+			} );
 		}
 
-		modalPreview = new tingle.modal();
-		modalPreview.setContent( iframe );
+		modalPreview.setContent( iframeEl );
 		modalPreview.open();
 	} else if ( target.classList.contains( 'hb-btn-cancel' ) ) {
 		if ( undefined !== roomCalendarPricing ) {

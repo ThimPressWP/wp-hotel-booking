@@ -189,7 +189,7 @@ class Thim_Ekit_Widget_Filter_Room extends Thim_Ekit_Widget_Filter_Room_Selected
 						'meta_field' => 'rating',
 					],
 				],
-				'title_field' => '<span style="text-transform: capitalize;">{{{ meta_field.replace("_", " ") }}}</span>',
+				'title_field' => '<span style="text-transform: capitalize;">{{ meta_field.replace("_", " ") }}</span>',
 			]
         );
 

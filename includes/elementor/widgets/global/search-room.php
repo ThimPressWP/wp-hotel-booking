@@ -189,7 +189,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 						'meta_field' => 'submit',
 					],
 				],
-				'title_field' => '<span style="text-transform: capitalize;">{{{ meta_field.replace("_", " ") }}}</span>',
+				'title_field' => '<span style="text-transform: capitalize;">{{ meta_field.replace("_", " ") }}</span>',
 			]
         );
 
@@ -511,7 +511,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 		if ( $settings['data'] ) {
 			?>
             <div class="hotel-booking-search-el">
-				<form <?php echo is_page( $page_search ) ? 'id="hb-form-search-page" ' : ''; ?> name="hb-search-form" action="<?php echo hb_get_url(); ?>" class="hb-search-form-<?php echo esc_attr($uniqid); ?>">
+				<form <?php echo is_page( $page_search ) ? 'id="hb-form-search-page" ' : ''; ?> name="hb-search-form" action="<?php echo esc_url( hb_get_url() ); ?>" class="hb-search-form-<?php echo esc_attr($uniqid); ?>">
 					<ul class="hb-form-table">
 					<?php
 					foreach ( $settings['data'] as $data ) {
@@ -555,8 +555,8 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 		$date_tomorrow  = new WPHB_Datetime( strtotime( $date_now->get_raw_date() . ' +1 day' ) );
 		$check_in_date  = WPHB_Helpers::get_param( 'check_in_date', $date_now->format( $format ) );
 		$check_out_date = WPHB_Helpers::get_param( 'check_out_date', $date_tomorrow->format( $format ) );
-		$label_check_in  = $settings['label_field_date'] ?? esc_html__('Check-in Date', 'wp-hotel-booking');
-		$label_check_out = $settings['label_field_check_out'] ?? esc_html__('Check-out Date', 'wp-hotel-booking');
+		$label_check_in  = $settings['label_field_date'] ?? __( 'Check-in Date', 'wp-hotel-booking' );
+		$label_check_out = $settings['label_field_check_out'] ?? __( 'Check-out Date', 'wp-hotel-booking' );
 
 		if ($settings['layout_date'] == 'single') {
 			?>
@@ -568,7 +568,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 					<?php if ( $settings['icons_field'] ) {
 						Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );
 					} ?>
-					<input type="text" name="check_in_date" id="check_in_date_<?php echo esc_attr($uniqid); ?>" class="hb_input_date_check" value="<?php echo esc_attr($check_in_date); ?>" placeholder="<?php echo $label_check_in; ?>" autocomplete="off" />
+					<input type="text" name="check_in_date" id="check_in_date_<?php echo esc_attr($uniqid); ?>" class="hb_input_date_check" value="<?php echo esc_attr($check_in_date); ?>" placeholder="<?php echo esc_attr( $label_check_in ); ?>" autocomplete="off" />
 				</div>
 			</li>
 
@@ -580,7 +580,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 					<?php if ( $settings['icons_field'] ) {
 						Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );
 					} ?>
-					<input type="text" name="check_out_date" id="check_out_date_<?php echo esc_attr($uniqid); ?>" class="hb_input_date_check" value="<?php echo esc_attr($check_out_date); ?>" placeholder="<?php echo $label_check_out; ?>" autocomplete="off" />
+					<input type="text" name="check_out_date" id="check_out_date_<?php echo esc_attr($uniqid); ?>" class="hb_input_date_check" value="<?php echo esc_attr($check_out_date); ?>" placeholder="<?php echo esc_attr( $label_check_out ); ?>" autocomplete="off" />
 				</div>
 			</li>
 			<?php
@@ -592,7 +592,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );
 				} ?>
 				<?php if ( $label_check_in != '' ) :?>
-					<div class="label"><?php echo $label_check_in; ?></div>
+					<div class="label"><?php echo esc_html( $label_check_in ); ?></div>
 				<?php endif; ?>
 				<div class="hb-form-field-input hb_input_field">
 					<input type="text" name="check_in_date" id="check_in_date_<?php echo  esc_attr($uniqid) ?>" class="check-date" value="<?php echo esc_attr($check_in_date) ?>" readonly />
@@ -607,7 +607,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 
 	protected function hb_render_adults($settings, $classes) {
 		$adults         = hb_get_request( 'adults_capacity', hb_get_request( 'adults', 1 ) );
-		$label_adults   = !empty($settings['label_field']) ? $settings['label_field'] : esc_html__('Adults', 'wp-hotel-booking');
+		$label_adults   = ! empty( $settings['label_field'] ) ? $settings['label_field'] : __( 'Adults', 'wp-hotel-booking' );
 
 		if ( $settings['layout_guest'] == 'select') {
 		?>
@@ -625,7 +625,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 							'name'              => 'adults_capacity',
 							'min'               => 1,
 							'max'               => 10,
-							'show_option_none'  => $label_adults,
+							'show_option_none'  => esc_html( $label_adults ),
 							'selected'          => $adults,
 							'option_none_value' => 0,
 							'options'           => hb_get_capacity_of_rooms()
@@ -642,14 +642,14 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );
 				} ?>
 				<?php if ( $label_adults != '' ) :?>
-					<div class="label"><?php echo $label_adults; ?></div>
+					<div class="label"><?php echo esc_html( $label_adults ); ?></div>
 				<?php endif; ?>
 				<div id="adults" class="hb-form-field-input hb_input_field">
 					<input type="text" class="adults-input" value="<?php echo esc_attr($adults) ?>" readonly />
-					<span><?php echo $label_adults; ?></span>
+					<span><?php echo esc_html( $label_adults ); ?></span>
 				</div>
 				<div class="hb-form-field-list nav-adults">
-					<span class="name"><?php echo $label_adults; ?></span>
+					<span class="name"><?php echo esc_html( $label_adults ); ?></span>
 					<div class="number-box">
 						<span class="number-icons goDown"><i class="fa fa-minus"></i></span>
 						<span class="hb-adults-field adults-number">
@@ -676,7 +676,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 
 	protected function hb_render_children($settings, $classes) {
 		$max_child      = hb_get_request('max_child', '0');
-		$label_child   	= !empty($settings['label_field']) ? $settings['label_field'] : esc_html__('Children', 'wp-hotel-booking');
+		$label_child   	= ! empty( $settings['label_field'] ) ? $settings['label_field'] : __( 'Children', 'wp-hotel-booking' );
 
 		if ( $settings['layout_guest'] == 'select') {
 			?>
@@ -685,7 +685,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );
 				} ?>
 				<?php if ( $label_child != '' ) :?>
-					<div class="label"><?php echo $label_child; ?></div>
+					<div class="label"><?php echo esc_html( $label_child ); ?></div>
 				<?php endif; ?>
 				<div class="hb-form-field-input">
 					<?php
@@ -694,7 +694,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 							'name'              => 'max_child',
 							'min'               => 1,
 							'max'               => hb_get_max_child_of_rooms(),
-							'show_option_none'  => $label_child,
+							'show_option_none'  => esc_html( $label_child ),
 							'option_none_value' => 0,
 							'selected'          => $max_child,
 						)
@@ -710,14 +710,14 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );
 				} ?>
 				<?php if ( $label_child != '' ) :?>
-					<div class="label"><?php echo $label_child; ?></div>
+					<div class="label"><?php echo esc_html( $label_child ); ?></div>
 				<?php endif; ?>
 				<div id="child" class="hb-form-field-input hb_input_field">
 					<input type="text" class="child-input" value="<?php echo esc_attr($max_child) ?>" readonly />
-					<span><?php echo $label_child; ?></span>
+					<span><?php echo esc_html( $label_child ); ?></span>
 				</div>
 				<div class="hb-form-field-list nav-children">
-					<span class="name"><?php echo $label_child; ?></span>
+					<span class="name"><?php echo esc_html( $label_child ); ?></span>
 					<div class="number-box">
 						<span class="number-icons goDown"><i class="fa fa-minus"></i></span>
 						<span class="hb-children-field children-number">
@@ -743,7 +743,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 
 	protected function hb_render_rooms($settings, $classes) {
 		$quantity = hb_get_request( 'room_qty', 1, 'int' );
-		$label    = !empty($settings['label_field']) ? $settings['label_field'] : esc_html__('Rooms', 'wp-hotel-booking');
+		$label    = ! empty( $settings['label_field'] ) ? $settings['label_field'] : __( 'Rooms', 'wp-hotel-booking' );
 
 		if ( $settings['layout_guest'] == 'select') {
 			?>
@@ -752,7 +752,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );
 				} ?>
 				<?php if ( $label != '' ) :?>
-					<div class="label"><?php echo $label; ?></div>
+					<div class="label"><?php echo esc_html( $label ); ?></div>
 				<?php endif; ?>
 				<div class="hb-form-field-input">
 					<?php
@@ -761,7 +761,7 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 							'name'              => 'number-of-rooms',
 							'min'               => 1,
 							'max'               => 10,
-							'show_option_none'  => $label,
+							'show_option_none'  => esc_html( $label ),
 							'option_none_value' => 0,
 							'selected'          => $quantity,
 						)
@@ -777,14 +777,14 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true', 'class' => 'icon-custom' ) );
 				} ?>
 				<?php if ( $label != '' ) :?>
-				<div class="label"><?php echo $label; ?></div>
+				<div class="label"><?php echo esc_html( $label ); ?></div>
 				<?php endif; ?>
 				<div id="number-of-rooms" class="hb-form-field-input hb_input_field">
 					<input type="text" class="number-of-rooms-input" value="<?php echo esc_attr($quantity); ?>" readonly />
-					<span><?php echo $label; ?></span>
+					<span><?php echo esc_html( $label ); ?></span>
 				</div>
 				<div class="hb-form-field-list nav-number-of-rooms">
-					<span class="name"><?php echo $label; ?></span>
+					<span class="name"><?php echo esc_html( $label ); ?></span>
 
 					<div class="number-box">
 						<span class="number-icons goDown"><i class="fa fa-minus"></i></span>
@@ -817,8 +817,8 @@ class Thim_Ekit_Widget_Search_Room extends Widget_Base {
 				<?php if ( $settings['icons_field'] ) {
 					Icons_Manager::render_icon( $settings['icons_field'], array( 'aria-hidden' => 'true' ) );
 				} ?>
-				<?php if ( $settings['label_field'] != '' ) :?>
-					<span class="submit-text"> <?php echo $settings['label_field']; ?> </span>
+				<?php if ( ( $settings['label_field'] ?? '' ) !== '' ) : ?>
+					<span class="submit-text"> <?php echo esc_html( $settings['label_field'] ); ?> </span>
 				<?php endif; ?>
 			</button>
 		</li>

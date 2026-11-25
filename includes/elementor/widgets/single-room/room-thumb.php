@@ -233,13 +233,13 @@ class Thim_Ekit_Widget_Room_Thumb extends Thim_Ekit_Widget_Product_Image {
                     $images = '';
                 }
 
-                echo '<li class="hb-gallery-item' . $class . '"><a href="' . esc_url( $full_url ) . '" class="gallery-img-item" data-elementor-open-lightbox="no">' . $images . '</a></li>';
+                echo '<li class="hb-gallery-item' . esc_attr( $class ) . '"><a href="' . esc_url( $full_url ) . '" class="gallery-img-item" data-elementor-open-lightbox="no">' . $images . '</a></li>';
             
                 if ( count( $galleries ) > 1 && $key == 0 ) {
                     echo '</ul><ul class="hb-gallery-thumbnails d-flex">';
                 }
             }
-            echo '<span class="button-gallery dynamic-gal" data-dynamicPath='. json_encode($gMoreImages).'>' . $html_icon . ' ' . esc_html__( 'Gallery', 'wp-hotel-booking' ) . '</span>';
+            echo '<span class="button-gallery dynamic-gal" data-dynamicPath="' . esc_attr( wp_json_encode( $gMoreImages ) ) . '">' . $html_icon . ' ' . esc_html__( 'Gallery', 'wp-hotel-booking' ) . '</span>';
         echo '</ul>';
     }
 
@@ -252,7 +252,7 @@ class Thim_Ekit_Widget_Room_Thumb extends Thim_Ekit_Widget_Product_Image {
                     $image_url = wp_get_attachment_image_url( $image_id, 'full' );
                     ?>
                     <li>
-                        <img src="<?php echo esc_url_raw( $image_url ); ?>"/>
+                        <img src="<?php echo esc_url( $image_url ); ?>"/>
                     </li>
                 <?php } ?>
             </ul>
@@ -265,7 +265,7 @@ class Thim_Ekit_Widget_Room_Thumb extends Thim_Ekit_Widget_Product_Image {
                     $thumbnail_url = wp_get_attachment_image_url( $image_id, 'thumbnail' );
                     ?>
                     <li>
-                        <img src="<?php echo esc_url_raw( $thumbnail_url ); ?>"/>
+                        <img src="<?php echo esc_url( $thumbnail_url ); ?>"/>
                     </li>
                     <?php
                 }
@@ -286,7 +286,7 @@ class Thim_Ekit_Widget_Room_Thumb extends Thim_Ekit_Widget_Product_Image {
                     $thumbnail_url = wp_get_attachment_image_url( $image_id, 'full' );
                     ?>
                     <li>
-                        <img src="<?php echo esc_url_raw( $thumbnail_url ); ?>"/>
+                        <img src="<?php echo esc_url( $thumbnail_url ); ?>"/>
                     </li>
                     <?php
                 }

@@ -75,7 +75,7 @@ class Thim_Ekit_Widget_Room_Preview extends Widget_Base
         $settings        = $this->get_settings_for_display(); ?>
         <div id="hb_room_images"> 
         <?php if ( $hb_room->is_preview ) :
-			$preview = get_post_meta( $hb_room->ID, '_hb_room_preview_url', true );
+			$preview = hb_sanitize_video_preview( get_post_meta( $hb_room->ID, '_hb_room_preview_url', true ) );
 			?>
 			<span class="room-preview" data-preview="<?php echo ! empty( $preview ) ? esc_attr( $preview ) : ''; ?>">
                 <?php Icons_Manager::render_icon( $settings['icon_preview'],['aria-hidden' => 'true']); ?>

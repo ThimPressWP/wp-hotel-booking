@@ -6,7 +6,7 @@
  *
  * @author  ThimPress, leehld
  * @package WP-Hotel-Booking/Templates
- * @version 1.6
+ * @version 2.3.6
  */
 
 /**
@@ -21,7 +21,7 @@ if ( empty( $rules ) ) {
 <div class="_hb_room_rules">
 	<div class="_hb_room_rules__detail">
 	<?php
-		$rules = apply_filters( 'the_content', $rules );
+		$rules = apply_filters( 'the_content', wp_kses_post( $rules ) );
 		echo str_replace( ']]>', ']]&gt;', $rules );
 	?>
 	</div>

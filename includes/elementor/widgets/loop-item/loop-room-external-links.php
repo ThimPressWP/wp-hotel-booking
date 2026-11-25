@@ -712,7 +712,7 @@ class Thim_Ekit_Widget_Loop_Room_External_Links extends Widget_Base {
 		
 		<div class="external-ota-platform-container loop-room-external-links">
 			<# if (settings.title) { #>
-				<p class="external-ota-platform-title">{{{ settings.title }}}</p>
+				<p class="external-ota-platform-title">{{ settings.title }}</p>
 			<# } #>
 			
 			<ul class="wphb-partner-links e-external-links">
@@ -721,7 +721,7 @@ class Thim_Ekit_Widget_Loop_Room_External_Links extends Widget_Base {
 						target="_blank" 
 						<# if (relAttributes) { #>rel="{{ relAttributes }}"<# } #>
 						title="Preview">
-						<img src="<?php echo WPHB_PLUGIN_URL . '/assets/images/icon-128x128.png'; ?>" 
+						<img src="<?php echo esc_url( WPHB_PLUGIN_URL . '/assets/images/icon-128x128.png' ); ?>"
 							alt="Preview" 
 							width="{{ imageWidth }}" 
 							height="{{ imageHeight }}">

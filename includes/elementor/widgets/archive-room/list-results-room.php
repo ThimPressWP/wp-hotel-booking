@@ -211,7 +211,7 @@ class Thim_Ekit_Widget_List_Results_Room extends Widget_Base {
 				$this->current_permalink = get_permalink();
 				?>
 					<div class="hb-room clearfix">
-						<form name="hb-page-search-results" class="hb-page-search-room-results <?php echo $class_item; ?> extra-option-loop" >
+						<form name="hb-page-search-results" class="hb-page-search-room-results <?php echo esc_attr( $class_item ); ?> extra-option-loop" >
 						<?php do_action( 'hotel_booking_loop_before_item', $room->ID ); ?>
 							<?php
 							Elementor::instance()->render_loop_item_content( $settings['template_id'] );
@@ -279,8 +279,8 @@ class Thim_Ekit_Widget_List_Results_Room extends Widget_Base {
 				'current'            => $paged,
 				'total'              => $page_limit,
 				'prev_next'          => $show_prev_next,
-				'prev_text'          => $settings['pagination_prev_label'],
-				'next_text'          => $settings['pagination_next_label'],
+				'prev_text'          => wp_kses_post( $settings['pagination_prev_label'] ),
+				'next_text'          => wp_kses_post( $settings['pagination_next_label'] ),
 				'show_all'           => 'yes' !== $settings['pagination_numbers_shorten'],
 				'before_page_number' => '<span class="elementor-screen-only">' . esc_html__( 'Page', 'thim-elementor-kit' ) . '</span>',
 			);
@@ -328,17 +328,17 @@ class Thim_Ekit_Widget_List_Results_Room extends Widget_Base {
 				$next_page = 1;
 			}
 
-			$return['prev'] = sprintf( $link_template, 'prev', $this->get_wp_link_page( $next_page ), $settings['pagination_prev_label'] );
+			$return['prev'] = sprintf( $link_template, 'prev', esc_url( $this->get_wp_link_page( $next_page ) ), wp_kses_post( $settings['pagination_prev_label'] ) );
 		} else {
-			$return['prev'] = sprintf( $disabled_template, 'prev', $settings['pagination_prev_label'] );
+			$return['prev'] = sprintf( $disabled_template, 'prev', wp_kses_post( $settings['pagination_prev_label'] ) );
 		}
 
 		$next_page = intval( $paged ) + 1;
 
 		if ( $next_page <= $page_limit ) {
-			$return['next'] = sprintf( $link_template, 'next', $this->get_wp_link_page( $next_page ), $settings['pagination_next_label'] );
+			$return['next'] = sprintf( $link_template, 'next', esc_url( $this->get_wp_link_page( $next_page ) ), wp_kses_post( $settings['pagination_next_label'] ) );
 		} else {
-			$return['next'] = sprintf( $disabled_template, 'next', $settings['pagination_next_label'] );
+			$return['next'] = sprintf( $disabled_template, 'next', wp_kses_post( $settings['pagination_next_label'] ) );
 		}
 
 		return $return;
