@@ -118,11 +118,6 @@ if ( ! function_exists( 'hb_customer_place_order_email' ) ) {
 
 		$format  = $settings->get( 'email_new_booking_format', 'html' );
 		$headers = 'Content-Type: ' . ( $format == 'html' ? 'text/html' : 'text/plain' ) . "\r\n";
-		// set mail from email
-		add_filter( 'wp_mail_from', 'hb_wp_mail_from' );
-		// set mail from name
-		add_filter( 'wp_mail_from_name', 'hb_wp_mail_from_name' );
-		add_filter( 'wp_mail_content_type', 'hb_set_html_content_type' );
 
 		// customer place order email
 		$customer_email_subject      = __( 'Booking pending', 'wp-hotel-booking' );
@@ -140,6 +135,12 @@ if ( ! function_exists( 'hb_customer_place_order_email' ) ) {
 
 		if ( ! $customer_body ) {
 			return;
+		}
+
+		add_filter( 'wp_mail_from', 'hb_wp_mail_from' );
+		add_filter( 'wp_mail_from_name', 'hb_wp_mail_from_name' );
+		if ( 'html' === $format ) {
+			add_filter( 'wp_mail_content_type', 'hb_set_html_content_type' );
 		}
 
 		$customer_send = wp_mail( $booking->customer_email, $customer_email_subject, $customer_body, $headers );
@@ -176,10 +177,17 @@ if ( ! function_exists( 'hb_customer_place_order_email' ) ) {
 		);
 
 		if ( ! $body ) {
+			remove_filter( 'wp_mail_content_type', 'hb_set_html_content_type' );
+			remove_filter( 'wp_mail_from', 'hb_wp_mail_from' );
+			remove_filter( 'wp_mail_from_name', 'hb_wp_mail_from_name' );
 			return;
 		}
 
 		$admin_send = wp_mail( $admin_email, $subject, $body, $headers );
+
+		remove_filter( 'wp_mail_content_type', 'hb_set_html_content_type' );
+		remove_filter( 'wp_mail_from', 'hb_wp_mail_from' );
+		remove_filter( 'wp_mail_from_name', 'hb_wp_mail_from_name' );
 
 		return ( $customer_send && $admin_send );
 	}
@@ -471,7 +479,17 @@ if ( ! function_exists( 'hb_completed_booking_email' ) ) {
 		}
 
 		$headers = 'Content-Type: ' . ( $format == 'html' ? 'text/html' : 'text/plain' ) . "\r\n";
-		$send    = wp_mail( $to, $subject, $body, $headers );
+		add_filter( 'wp_mail_from', 'hb_wp_mail_from' );
+		add_filter( 'wp_mail_from_name', 'hb_wp_mail_from_name' );
+		if ( 'html' === $format ) {
+			add_filter( 'wp_mail_content_type', 'hb_set_html_content_type' );
+		}
+
+		$send = wp_mail( $to, $subject, $body, $headers );
+
+		remove_filter( 'wp_mail_content_type', 'hb_set_html_content_type' );
+		remove_filter( 'wp_mail_from', 'hb_wp_mail_from' );
+		remove_filter( 'wp_mail_from_name', 'hb_wp_mail_from_name' );
 
 		return $send;
 	}
@@ -488,11 +506,6 @@ if ( ! function_exists( 'hb_new_customer_booking_email' ) ) {
 		$email_subject = hb_settings()->get( 'email_general_subject', __( 'Reservation', 'wp-hotel-booking' ) );
 
 		$headers[] = 'Content-Type: text/html; charset=UTF-8';
-		// set mail from email
-		add_filter( 'wp_mail_from', 'hb_wp_mail_from' );
-		// set mail from name
-		add_filter( 'wp_mail_from_name', 'hb_wp_mail_from_name' );
-		add_filter( 'wp_mail_content_type', 'hb_set_html_content_type' );
 
 		$email_content = hb_get_template_content(
 			'emails/customer-booking.php',
@@ -517,10 +530,17 @@ if ( ! function_exists( 'hb_new_customer_booking_email' ) ) {
 
 		$email_subject = str_replace( $find, $replace, $email_subject );
 
-		$to   = ( $recipient && is_email( $recipient ) ) ? $recipient : $booking->customer_email;
+		$to = ( $recipient && is_email( $recipient ) ) ? $recipient : $booking->customer_email;
+
+		add_filter( 'wp_mail_from', 'hb_wp_mail_from' );
+		add_filter( 'wp_mail_from_name', 'hb_wp_mail_from_name' );
+		add_filter( 'wp_mail_content_type', 'hb_set_html_content_type' );
+
 		$send = wp_mail( $to, $email_subject, stripslashes( $email_content ), $headers );
 
 		remove_filter( 'wp_mail_content_type', 'hb_set_html_content_type' );
+		remove_filter( 'wp_mail_from', 'hb_wp_mail_from' );
+		remove_filter( 'wp_mail_from_name', 'hb_wp_mail_from_name' );
 
 		return (bool) $send;
 	}
@@ -577,7 +597,17 @@ if ( ! function_exists( 'hb_cancel_booking_email' ) ) {
 		}
 
 		$headers = 'Content-Type: ' . ( $format == 'html' ? 'text/html' : 'text/plain' ) . "\r\n";
-		$send    = wp_mail( $to, $subject, $body, $headers );
+		add_filter( 'wp_mail_from', 'hb_wp_mail_from' );
+		add_filter( 'wp_mail_from_name', 'hb_wp_mail_from_name' );
+		if ( 'html' === $format ) {
+			add_filter( 'wp_mail_content_type', 'hb_set_html_content_type' );
+		}
+
+		$send = wp_mail( $to, $subject, $body, $headers );
+
+		remove_filter( 'wp_mail_content_type', 'hb_set_html_content_type' );
+		remove_filter( 'wp_mail_from', 'hb_wp_mail_from' );
+		remove_filter( 'wp_mail_from_name', 'hb_wp_mail_from_name' );
 		// if ( $fo = fopen( WPHB_PLUGIN_PATH . '/new-booking.html', 'w+' ) ) {
 		// fwrite( $fo, $body );
 		// fclose($fo);
@@ -623,11 +653,6 @@ if ( ! function_exists( 'hb_cancel_customer_booking_email' ) ) {
 		$email_heading_desc = str_replace( $find, $replace, $email_heading_desc );
 
 		$headers[] = 'Content-Type: text/html; charset=UTF-8';
-		// set mail from email
-		add_filter( 'wp_mail_from', 'hb_wp_mail_from' );
-		// set mail from name
-		add_filter( 'wp_mail_from_name', 'hb_wp_mail_from_name' );
-		add_filter( 'wp_mail_content_type', 'hb_set_html_content_type' );
 
 		$email_content = hb_get_template_content(
 			'emails/customer-cancelled.php',
@@ -639,13 +664,20 @@ if ( ! function_exists( 'hb_cancel_customer_booking_email' ) ) {
 			)
 		);
 
-		$to   = ( $recipient && is_email( $recipient ) ) ? $recipient : $booking->customer_email;
+		$to = ( $recipient && is_email( $recipient ) ) ? $recipient : $booking->customer_email;
+
+		add_filter( 'wp_mail_from', 'hb_wp_mail_from' );
+		add_filter( 'wp_mail_from_name', 'hb_wp_mail_from_name' );
+		add_filter( 'wp_mail_content_type', 'hb_set_html_content_type' );
+
 		$send = wp_mail( $to, $subject, stripslashes( $email_content ), $headers );
 		// if ( $fo = fopen( WPHB_PLUGIN_PATH . '/customer-booking.html', 'w+' ) ) {
 		// fwrite( $fo, $email_content );
 		// fclose($fo);
 		// }
 		remove_filter( 'wp_mail_content_type', 'hb_set_html_content_type' );
+		remove_filter( 'wp_mail_from', 'hb_wp_mail_from' );
+		remove_filter( 'wp_mail_from_name', 'hb_wp_mail_from_name' );
 
 		return (bool) $send;
 	}
