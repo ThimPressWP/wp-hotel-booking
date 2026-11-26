@@ -26,8 +26,10 @@ class WPHB_Helpers {
 	 * @since  1.9.10
 	 * @version 1.0.1
 	 */
-	public static function sanitize_params_submitted( $value, string $type_content = 'text' ) {
-		$value = wp_unslash( $value );
+	public static function sanitize_params_submitted( $value, string $type_content = 'text', bool $unslash = true ) {
+		if ( $unslash ) {
+			$value = wp_unslash( $value );
+		}
 
 		if ( is_string( $value ) ) {
 			switch ( $type_content ) {
@@ -56,7 +58,7 @@ class WPHB_Helpers {
 		} elseif ( is_array( $value ) ) {
 			foreach ( $value as $k => $v ) {
 				unset( $value[ $k ] );
-				$value[ sanitize_text_field( $k ) ] = self::sanitize_params_submitted( $v, $type_content );
+				$value[ sanitize_text_field( (string) $k ) ] = self::sanitize_params_submitted( $v, $type_content, false );
 			}
 		}
 

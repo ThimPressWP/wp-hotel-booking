@@ -6,7 +6,7 @@
  *
  * @author  ThimPress, leehld
  * @package WP-Hotel-Booking/Templates
- * @version 1.6
+ * @version 2.3.7
  */
 
 /**
@@ -103,7 +103,7 @@ defined( 'ABSPATH' ) || exit;
 					hb_dropdown_countries(
 						array(
 							'name'             => 'country',
-							'show_option_none' => esc_html__( 'Country', 'wp-hotel-booking' ),
+							'show_option_none' => __( 'Country', 'wp-hotel-booking' ),
 							'selected'         => $customer->country,
 							'required'         => true,
 						)

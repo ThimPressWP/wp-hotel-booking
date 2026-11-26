@@ -6,7 +6,7 @@
  *
  * @author  ThimPress, leehld
  * @package WP-Hotel-Booking/Templates
- * @version 2.3.6
+ * @version 2.3.7
  */
 
 /**

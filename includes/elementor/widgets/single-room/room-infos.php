@@ -67,7 +67,7 @@ class Thim_Ekit_Widget_Room_Infos extends Widget_Base
         if (!empty($infos)) {
             ?>
             <div class="hb-room-single__additional-information">
-                <?php echo wp_kses_post( $room->get_addition_information() ); ?>
+                <?php echo hb_kses_post_with_iframe( $room->get_addition_information() ); ?>
             </div>
             <?php
         }

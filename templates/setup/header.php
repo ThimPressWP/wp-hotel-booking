@@ -2,8 +2,8 @@
 /**
  * Template for displaying header of setup wizard.
  *
- * @author  ThimPres
- * @version 2.0.0
+ * @author  ThimPress
+ * @version 2.3.7
  */
 
 defined( 'ABSPATH' ) || exit;

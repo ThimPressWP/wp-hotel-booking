@@ -32,9 +32,9 @@ if ( empty( $pages ) ) {
 					$id       = $page['id'];
 					hb_dropdown_pages(
 						array(
-							'show_option_none'  => esc_html__( '---Select page---', 'wp-hotel-booking' ),
+							'show_option_none'  => __( '---Select page---', 'wp-hotel-booking' ),
 							'option_none_value' => '',
-							'add_new_title'     => esc_html__( '[ Add new page ]', 'wp-hotel-booking' ),
+							'add_new_title'     => __( '[ Add new page ]', 'wp-hotel-booking' ),
 							'add_new_value'     => 'add_new_page',
 							'name'              => 'settings[pages][' . $key . ']',
 							'selected'          => $selected,

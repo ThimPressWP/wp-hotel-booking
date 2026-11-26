@@ -877,13 +877,13 @@ if ( ! function_exists( 'hb_dropdown_titles' ) ) {
 		$option_none_value = '';
 		extract( $args );
 		$titles = hb_get_common_titles();
-		$output = '<select name="' . $name . '" ' . ( $required ? 'required' : '' ) . '>';
+		$output = '<select name="' . esc_attr( $name ) . '" ' . ( $required ? 'required' : '' ) . '>';
 		if ( $show_option_none ) {
-			$output .= sprintf( '<option value="%s">%s</option>', $option_none_value, $show_option_none );
+			$output .= sprintf( '<option value="%s">%s</option>', esc_attr( $option_none_value ), esc_html( $show_option_none ) );
 		}
 		if ( $titles ) {
 			foreach ( $titles as $slug => $title ) {
-				$output .= sprintf( '<option value="%s"%s>%s</option>', $slug, $slug == $selected ? ' selected="selected"' : '', $title );
+				$output .= sprintf( '<option value="%s"%s>%s</option>', esc_attr( $slug ), $slug == $selected ? ' selected="selected"' : '', esc_html( $title ) );
 			}
 		}
 		$output .= '</select>';
@@ -2404,7 +2404,7 @@ if ( ! function_exists( 'hb_dropdown_countries' ) ) {
 				'required'          => false,
 			)
 		);
-		echo '<select name="' . $args['name'] . '"' . ( ( $args['required'] ) ? 'required' : '' ) . '>';
+		echo '<select name="' . esc_attr( $args['name'] ) . '"' . ( ( $args['required'] ) ? 'required' : '' ) . '>';
 		if ( $args['show_option_none'] ) {
 			echo '<option value="' . esc_attr( $args['option_none_value'] ) . '">' . esc_html( $args['show_option_none'] ) . '</option>';
 		}
@@ -2510,11 +2510,106 @@ if ( ! function_exists( 'hb_render_label_shortcode' ) ) {
 	}
 }
 
+if ( ! function_exists( 'hb_get_allowed_iframe_html' ) ) {
+	/**
+	 * Return allowed attributes for safe iframe embeds.
+	 *
+	 * @return array
+	 */
+	function hb_get_allowed_iframe_html() {
+		return array(
+			'iframe' => array(
+				'id'              => true,
+				'class'           => true,
+				'src'             => true,
+				'width'           => true,
+				'height'          => true,
+				'style'           => true,
+				'frameborder'     => true,
+				'allow'           => true,
+				'allowfullscreen' => true,
+				'title'           => true,
+				'referrerpolicy'  => true,
+				'loading'         => true,
+			),
+		);
+	}
+}
+
+if ( ! function_exists( 'hb_filter_safe_iframe_src' ) ) {
+	/**
+	 * Ensure every `<iframe>` tag in kses-filtered HTML uses an explicit HTTP(S) or protocol-relative URL.
+	 *
+	 * @param string $html Filtered HTML string.
+	 * @return string
+	 */
+	function hb_filter_safe_iframe_src( $html ) {
+		if ( ! is_string( $html ) || '' === $html || stripos( $html, '<iframe' ) === false ) {
+			return $html;
+		}
+
+		if ( ! class_exists( 'WP_HTML_Tag_Processor' ) ) {
+			return $html;
+		}
+
+		$processor = new WP_HTML_Tag_Processor( $html );
+		while ( $processor->next_tag( 'iframe' ) ) {
+			$src = $processor->get_attribute( 'src' );
+			$src = is_string( $src ) ? trim( $src ) : '';
+			if (
+				'' === $src ||
+				! preg_match( '#^(https?:)?//#i', $src ) ||
+				'' === esc_url_raw( $src, array( 'http', 'https' ) )
+			) {
+				$processor->remove_attribute( 'src' );
+			}
+		}
+
+		return $processor->get_updated_html();
+	}
+}
+
+if ( ! function_exists( 'hb_kses_post_with_iframe' ) ) {
+	/**
+	 * Sanitize post HTML while preserving safe HTTP(S) iframe embeds (e.g. Google Maps, YouTube, Vimeo).
+	 *
+	 * Expects unslashed data (same contract as `wp_kses_post()`).
+	 *
+	 * @param mixed $content Raw unslashed HTML content.
+	 * @return string
+	 */
+	function hb_kses_post_with_iframe( $content ) {
+		if ( ! is_scalar( $content ) ) {
+			return '';
+		}
+
+		$content = (string) $content;
+		if ( '' === $content ) {
+			return '';
+		}
+
+		// Fast path: delegate directly to WordPress core when no iframe is present.
+		if ( stripos( $content, '<iframe' ) === false ) {
+			return wp_kses_post( $content );
+		}
+
+		$allowed_html           = wp_kses_allowed_html( 'post' );
+		$iframe_defaults        = hb_get_allowed_iframe_html()['iframe'];
+		$allowed_html['iframe'] = isset( $allowed_html['iframe'] ) && is_array( $allowed_html['iframe'] )
+			? array_merge( $iframe_defaults, $allowed_html['iframe'] )
+			: $iframe_defaults;
+
+		$sanitized = wp_kses( $content, $allowed_html );
+
+		return hb_filter_safe_iframe_src( $sanitized );
+	}
+}
+
 if ( ! function_exists( 'hb_sanitize_video_preview' ) ) {
 	/**
 	 * Sanitize room video preview field (allows safe HTTP/HTTPS iframe embed or URL).
 	 *
-	 * @param mixed $value Raw preview URL or iframe HTML.
+	 * @param mixed $value Raw unslashed preview URL or iframe HTML.
 	 * @return string
 	 */
 	function hb_sanitize_video_preview( $value ) {
@@ -2528,22 +2623,13 @@ if ( ! function_exists( 'hb_sanitize_video_preview' ) ) {
 		}
 
 		if ( stripos( $value, '<iframe' ) !== false ) {
-			$allowed_html = array(
-				'iframe' => array(
-					'src'             => true,
-					'width'           => true,
-					'height'          => true,
-					'frameborder'     => true,
-					'allow'           => true,
-					'allowfullscreen' => true,
-					'title'           => true,
-					'referrerpolicy'  => true,
-					'loading'         => true,
-					'class'           => true,
-				),
-			);
+			$sanitized = wp_kses( $value, hb_get_allowed_iframe_html(), array( 'http', 'https' ) );
 
-			return wp_kses( $value, $allowed_html, array( 'http', 'https' ) );
+			return hb_filter_safe_iframe_src( $sanitized );
+		}
+
+		if ( ! preg_match( '#^(https?:)?//#i', $value ) ) {
+			return '';
 		}
 
 		return esc_url_raw( $value, array( 'http', 'https' ) );
@@ -3023,9 +3109,9 @@ if ( ! function_exists( 'hb_dropdown_pages' ) ) {
 		$pages = hb_get_pages();
 
 		$html   = array();
-		$html[] = '<select id ="' . esc_attr( $args['name'] ) . '" name="' . esc_attr( $args['name'] ) . '" data-selected ="' . esc_attr( $args['selected'] ) . '" data-placeholder="' . __( 'Select a page&hellip;', 'wp-hotel-booking' ) . '">';
-		$html[] = '<option value="' . $args['option_none_value'] . '">' . esc_html( $args['show_option_none'] ) . '</option>';
-		$html[] = '<option value="' . $args['add_new_value'] . '">' . esc_html( $args['add_new_title'] ) . '</option>';
+		$html[] = '<select id ="' . esc_attr( $args['name'] ) . '" name="' . esc_attr( $args['name'] ) . '" data-selected ="' . esc_attr( $args['selected'] ) . '" data-placeholder="' . esc_attr__( 'Select a page&hellip;', 'wp-hotel-booking' ) . '">';
+		$html[] = '<option value="' . esc_attr( $args['option_none_value'] ) . '">' . esc_html( $args['show_option_none'] ) . '</option>';
+		$html[] = '<option value="' . esc_attr( $args['add_new_value'] ) . '">' . esc_html( $args['add_new_title'] ) . '</option>';
 		foreach ( $pages as $page ) {
 			$html[] = '<option value="' . esc_attr( $page->ID ) . '"' . selected( $args['selected'], $page->ID, false ) . '>' . esc_html( $page->post_title ) . '</option>';
 		}

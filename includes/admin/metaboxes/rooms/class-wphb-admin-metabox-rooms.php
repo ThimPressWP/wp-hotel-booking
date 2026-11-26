@@ -398,27 +398,20 @@ if ( ! class_exists( 'WPHB_Meta_Box_Room' ) ) {
 							continue;
 						}
 						if ( array_key_exists( $this->meta_key_prefix . $field['name'], (array) $_POST ) ) {
-							$keyPost    = $this->meta_key_prefix . $field['name'];
-							$meta_value = WPHB_Helpers::sanitize_params_submitted( $_POST[ $keyPost ] );
+							$keyPost = $this->meta_key_prefix . $field['name'];
 
-							if ( in_array( $keyPost, $fieldTypeHtmlArr ) ) {
-								$meta_value = WPHB_Helpers::sanitize_params_submitted( $meta_value, 'html' );
+							if ( $keyPost === '_hb_room_preview_url' ) {
+								$raw_value  = is_string( $_POST[ $keyPost ] ) ? wp_unslash( $_POST[ $keyPost ] ) : '';
+								$meta_value = hb_sanitize_video_preview( $raw_value );
+							} elseif ( $keyPost === '_hb_wphb_rule_room' || isset( $field['condition_html'] ) || in_array( $keyPost, $fieldTypeHtmlArr, true ) ) {
+								$raw_value  = is_string( $_POST[ $keyPost ] ) ? wp_unslash( $_POST[ $keyPost ] ) : '';
+								$meta_value = current_user_can( 'unfiltered_html' ) ? $raw_value : hb_kses_post_with_iframe( $raw_value );
 							} else {
-								$meta_value = WPHB_Helpers::sanitize_params_submitted( $meta_value );
-							}
-							if ( $keyPost == '_hb_wphb_rule_room' ) {
-								$meta_value = WPHB_Helpers::sanitize_params_submitted( $_POST[ $keyPost ], 'html' );
-							}
-							if ( isset( $field['condition_html'] ) ) {
-								$meta_value = WPHB_Helpers::sanitize_params_submitted( $_POST[ $keyPost ], 'html' );
-							}
-
-							if ( $keyPost == '_hb_room_preview_url' ) {
-								$meta_value = hb_sanitize_video_preview( wp_unslash( $_POST[ $keyPost ] ) );
+								$meta_value = WPHB_Helpers::sanitize_params_submitted( $_POST[ $keyPost ] );
 							}
 
 							$meta_value = apply_filters( 'hb_meta_box_update_meta_value', $meta_value, $field['name'], $post_id );
-							update_post_meta( $post_id, $this->meta_key_prefix . $field['name'], $meta_value );
+							update_post_meta( $post_id, $this->meta_key_prefix . $field['name'], wp_slash( $meta_value ) );
 						} else {
 							update_post_meta( $post_id, $this->meta_key_prefix . $field['name'], '' );
 						}
