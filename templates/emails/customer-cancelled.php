@@ -6,7 +6,7 @@
  *
  * @author  ThimPress, leehld
  * @package WP-Hotel-Booking/Templates
- * @version 1.9
+ * @version 2.3.7
  */
 
 /**
@@ -14,12 +14,15 @@
  */
 defined( 'ABSPATH' ) || exit();
 
+$email_heading      = ! empty( $email_heading ) ? $email_heading : __( 'Cancelled booking', 'wp-hotel-booking' );
+$email_heading_desc = ! empty( $email_heading_desc ) ? $email_heading_desc : __( 'Booking has been marked cancelled', 'wp-hotel-booking' );
+
 // email heading
 hb_get_template(
 	'emails/email-header.php',
 	array(
-		'email_heading'      => __( 'Cancelled booking', 'wp-hotel-booking' ),
-		'email_heading_desc' => __( 'Booking has been marked cancelled', 'wp-hotel-booking' ),
+		'email_heading'      => $email_heading,
+		'email_heading_desc' => $email_heading_desc,
 	)
 );
 

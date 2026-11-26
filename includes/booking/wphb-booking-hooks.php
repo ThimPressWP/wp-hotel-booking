@@ -382,8 +382,10 @@ if ( ! function_exists( 'hb_customer_processing_booking_email' ) ) {
 			'booking-number' => $booking->get_booking_number(),
 			'site-title'     => wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ),
 		);
-		$subject     = str_replace( $find, $replace, $subject );
-		$subject     = apply_filters( 'hb_customer_processing_booking_email_subject', $subject, $booking, $to );
+		$subject      = str_replace( $find, $replace, $subject );
+		$subject      = apply_filters( 'hb_customer_processing_booking_email_subject', $subject, $booking, $to );
+		$heading      = str_replace( $find, $replace, $heading );
+		$heading_desc = str_replace( $find, $replace, $heading_desc );
 
 		$email_content = hb_get_template_content(
 			'emails/booking-accepted.php',
@@ -450,7 +452,9 @@ if ( ! function_exists( 'hb_completed_booking_email' ) ) {
 			'site-title'     => wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ),
 		);
 
-		$subject = str_replace( $find, $replace, $subject );
+		$subject            = str_replace( $find, $replace, $subject );
+		$email_heading      = str_replace( $find, $replace, $email_heading );
+		$email_heading_desc = str_replace( $find, $replace, $email_heading_desc );
 
 		$body = hb_get_template_content(
 			'emails/admin/admin-new-booking.php',
@@ -554,7 +558,9 @@ if ( ! function_exists( 'hb_cancel_booking_email' ) ) {
 			'site-title'     => wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ),
 		);
 
-		$subject = str_replace( $find, $replace, $subject );
+		$subject            = str_replace( $find, $replace, $subject );
+		$email_heading      = str_replace( $find, $replace, $email_heading );
+		$email_heading_desc = str_replace( $find, $replace, $email_heading_desc );
 
 		$body = hb_get_template_content(
 			'emails/admin/admin-cancel-booking.php',
@@ -587,9 +593,20 @@ if ( ! function_exists( 'hb_cancel_customer_booking_email' ) ) {
 			return false;
 		}
 
-		$booking = WPHB_Booking::instance( $booking_id );
-		$subject = hb_settings()->get( 'email_cancel_booking_subject', 'Cancelled Reservation' );
-		$find    = array(
+		$settings           = hb_settings();
+		$booking            = WPHB_Booking::instance( $booking_id );
+		$subject            = $settings->get( 'email_cancel_booking_subject', 'Cancelled Reservation' );
+		$email_heading      = $settings->get( 'email_cancel_booking_heading' );
+		$email_heading_desc = $settings->get( 'email_cancel_booking_heading_desc' );
+
+		if ( empty( $email_heading ) ) {
+			$email_heading = __( 'Cancelled booking', 'wp-hotel-booking' );
+		}
+		if ( empty( $email_heading_desc ) ) {
+			$email_heading_desc = __( 'Booking has been marked cancelled', 'wp-hotel-booking' );
+		}
+
+		$find        = array(
 			'booking-date'   => '{booking_date}',
 			'booking-number' => '{booking_number}',
 			'site-title'     => '{site_title}',
@@ -601,7 +618,9 @@ if ( ! function_exists( 'hb_cancel_customer_booking_email' ) ) {
 			'site-title'     => wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ),
 		);
 
-		$subject = str_replace( $find, $replace, $subject );
+		$subject            = str_replace( $find, $replace, $subject );
+		$email_heading      = str_replace( $find, $replace, $email_heading );
+		$email_heading_desc = str_replace( $find, $replace, $email_heading_desc );
 
 		$headers[] = 'Content-Type: text/html; charset=UTF-8';
 		// set mail from email
@@ -613,8 +632,10 @@ if ( ! function_exists( 'hb_cancel_customer_booking_email' ) ) {
 		$email_content = hb_get_template_content(
 			'emails/customer-cancelled.php',
 			array(
-				'booking' => $booking,
-				'options' => hb_settings(),
+				'booking'            => $booking,
+				'options'            => $settings,
+				'email_heading'      => $email_heading,
+				'email_heading_desc' => $email_heading_desc,
 			)
 		);
 
@@ -698,21 +719,11 @@ if ( ! function_exists( 'hb_get_email_settings_by_status' ) ) {
 			case 'completed':
 				$subject = $settings->get( 'email_general_subject' );
 				if ( empty( $subject ) ) {
-					$subject = $settings->get( 'email_new_booking_subject' );
-				}
-				if ( empty( $subject ) ) {
 					$subject = __( 'Reservation', 'wp-hotel-booking' );
 				}
 
-				$heading = $settings->get( 'email_new_booking_heading' );
-				if ( empty( $heading ) ) {
-					$heading = __( 'Completed Payment', 'wp-hotel-booking' );
-				}
-
-				$heading_desc = $settings->get( 'email_new_booking_heading_desc' );
-				if ( empty( $heading_desc ) ) {
-					$heading_desc = __( 'The customer has completed the transaction', 'wp-hotel-booking' );
-				}
+				$heading      = __( 'Thanks for your booking', 'wp-hotel-booking' );
+				$heading_desc = __( 'Thank you for making reservation at our hotel. We will try our best to bring the best service. Good luck and see you soon!', 'wp-hotel-booking' );
 				break;
 
 			case 'cancelled':
@@ -952,6 +963,7 @@ if ( ! function_exists( 'hb_ajax_render_email_preview' ) ) {
 		$status  = isset( $_REQUEST['status'] ) ? sanitize_key( $_REQUEST['status'] ) : 'processing';
 		$content = hb_get_sample_demo_email_content( $status );
 
+		nocache_headers();
 		header( 'Content-Type: text/html; charset=UTF-8' );
 		echo stripslashes( $content );
 		exit;

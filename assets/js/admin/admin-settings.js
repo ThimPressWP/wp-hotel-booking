@@ -518,6 +518,12 @@
 
 						showToast( ( response.data && response.data.message ) ? response.data.message : 'Settings saved successfully.', false );
 
+						document.dispatchEvent(
+							new CustomEvent( 'wphb:settings-saved', {
+								detail: response.data || {},
+							} )
+						);
+
 						setTimeout( () => {
 							saveButtons.forEach( ( btn ) => {
 								btn.classList.remove( 'is-saved' );

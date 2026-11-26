@@ -242,7 +242,7 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 						'type'        => 'text',
 						'id'          => 'tp_hotel_booking_email_cancel_booking_subject',
 						'title'       => __( 'Subject', 'wp-hotel-booking' ),
-						'desc'        => sprintf( __( 'Enter recipients (comma separated) for this email. Defaults to %s.', 'wp-hotel-booking' ), get_option( 'admin_email' ) ),
+						'desc'        => __( 'Enter the subject of this email. Available placeholders: {site_title}, {booking_number}, {booking_date}', 'wp-hotel-booking' ),
 						'default'     => '[{site_title}] Cancelled Reservation ({booking_number}) - {booking_date}',
 						'placeholder' => '[{site_title}] Cancelled Reservation  ({booking_number}) - {booking_date}',
 					),
@@ -490,27 +490,30 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 						function updatePreview() {
 							var status = $('#wphb_preview_select_status').val();
 
-							if (subjectsMap[status]) {
+							if (typeof subjectsMap[status] !== 'undefined') {
 								$('#wphb_preview_header_subject').text(subjectsMap[status]);
+								$('#wphb-modal-subject-preview').text('[Test] ' + subjectsMap[status]);
 							}
 
 							$.ajax({
 								url: ajaxurl,
 								type: 'GET',
+								cache: false,
 								data: {
 									action: 'wphb_render_email_preview',
-									status: status
+									status: status,
+									_t: Date.now()
 								},
 								success: function(html) {
 									if (html && html.trim() !== '0' && html.trim() !== '-1') {
 										$('#wphb_email_live_preview_iframe').attr('srcdoc', html);
 									} else {
-										var url = previewBase + '?action=wphb_render_email_preview&status=' + encodeURIComponent(status);
+										var url = previewBase + '?action=wphb_render_email_preview&status=' + encodeURIComponent(status) + '&_t=' + Date.now();
 										$('#wphb_email_live_preview_iframe').removeAttr('srcdoc').attr('src', url);
 									}
 								},
 								error: function() {
-									var url = previewBase + '?action=wphb_render_email_preview&status=' + encodeURIComponent(status);
+									var url = previewBase + '?action=wphb_render_email_preview&status=' + encodeURIComponent(status) + '&_t=' + Date.now();
 									$('#wphb_email_live_preview_iframe').removeAttr('srcdoc').attr('src', url);
 								}
 							});
@@ -518,6 +521,27 @@ if ( ! class_exists( 'WPHB_Admin_Setting_Emails' ) ) {
 
 						$('#wphb_preview_select_status').on('change', function(e) {
 							e.stopPropagation();
+							updatePreview();
+						});
+
+						// Refresh Live Preview & subjects map automatically after AJAX Save Settings
+						document.addEventListener('wphb:settings-saved', function(e) {
+							var data = (e && e.detail && e.detail.email_preview) ? e.detail.email_preview : null;
+							if (data) {
+								if (data.subjects) {
+									subjectsMap = data.subjects;
+								}
+								if (typeof data.from_name !== 'undefined') {
+									defaultFromName = data.from_name;
+									var currentFromName = $('#tp_hotel_booking_email_general_from_name').val();
+									$('#wphb_preview_header_from_name').text(currentFromName ? currentFromName : defaultFromName);
+								}
+								if (typeof data.from_email !== 'undefined') {
+									defaultFromEmail = data.from_email;
+									var currentFromEmail = $('#tp_hotel_booking_email_general_from_email').val();
+									$('#wphb_preview_header_from_email').text('<' + (currentFromEmail ? currentFromEmail : defaultFromEmail) + '>');
+								}
+							}
 							updatePreview();
 						});
 

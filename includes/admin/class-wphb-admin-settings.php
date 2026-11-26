@@ -86,9 +86,29 @@ class WPHB_Admin_Settings {
 
 		do_action( 'wphb_admin_settings_saved', $_POST );
 
+		$email_preview = array();
+		if ( function_exists( 'hb_get_email_settings_by_status' ) ) {
+			$settings         = hb_settings();
+			$site_name        = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
+			$admin_email      = get_option( 'admin_email' );
+			$preview_subjects = array();
+
+			foreach ( array( 'completed', 'processing', 'cancelled', 'admin_new' ) as $status_key ) {
+				$status_data                     = hb_get_email_settings_by_status( $status_key );
+				$preview_subjects[ $status_key ] = ! empty( $status_data['subject'] ) ? $status_data['subject'] : '';
+			}
+
+			$email_preview = array(
+				'subjects'   => $preview_subjects,
+				'from_name'  => $settings->get( 'email_general_from_name' ) ? $settings->get( 'email_general_from_name' ) : $site_name,
+				'from_email' => $settings->get( 'email_general_from_email' ) ? $settings->get( 'email_general_from_email' ) : $admin_email,
+			);
+		}
+
 		wp_send_json_success(
 			array(
-				'message' => __( 'Settings saved successfully.', 'wp-hotel-booking' ),
+				'message'       => __( 'Settings saved successfully.', 'wp-hotel-booking' ),
+				'email_preview' => $email_preview,
 			)
 		);
 	}
