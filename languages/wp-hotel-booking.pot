@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-26T07:16:01+00:00\n"
+"POT-Creation-Date: 2026-11-26T07:39:06+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wp-hotel-booking\n"
@@ -780,57 +780,57 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:114
+#: includes/admin/metaboxes/views/meta-booking-items.php:125
 msgid "Edit item"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:120
+#: includes/admin/metaboxes/views/meta-booking-items.php:131
 msgid "Delete item"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:134
+#: includes/admin/metaboxes/views/meta-booking-items.php:145
 msgid "Delete select item(s)"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:137
+#: includes/admin/metaboxes/views/meta-booking-items.php:148
 msgid "Sync"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:143
+#: includes/admin/metaboxes/views/meta-booking-items.php:154
 msgid "Add Coupon"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:149
+#: includes/admin/metaboxes/views/meta-booking-items.php:160
 msgid "Remove Coupon"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:153
+#: includes/admin/metaboxes/views/meta-booking-items.php:164
 msgid "Add Room Item"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:164
+#: includes/admin/metaboxes/views/meta-booking-items.php:175
 #, php-format
 msgid "Coupon (<a href=\"%1$s\">%2$s</a>)"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:173
+#: includes/admin/metaboxes/views/meta-booking-items.php:184
 #: templates/checkout/thank-you.php:130
 msgid "Sub Total"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:181
+#: includes/admin/metaboxes/views/meta-booking-items.php:192
 #: templates/cart/cart.php:496
 #: templates/checkout/checkout.php:364
 #: templates/checkout/thank-you.php:136
 msgid "Tax"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:189
+#: includes/admin/metaboxes/views/meta-booking-items.php:200
 #: templates/checkout/thank-you.php:142
 msgid "Grand Total"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:211
+#: includes/admin/metaboxes/views/meta-booking-items.php:222
 #: includes/admin/settings/class-wphb-admin-setting-general.php:180
 #: includes/booking/wphb-booking-hooks.php:893
 #: templates/cart/cart.php:571
@@ -839,7 +839,7 @@ msgstr ""
 msgid "Advance Payment"
 msgstr ""
 
-#: includes/admin/metaboxes/views/meta-booking-items.php:219
+#: includes/admin/metaboxes/views/meta-booking-items.php:230
 msgid "Balance Due (On Arrival)"
 msgstr ""
 

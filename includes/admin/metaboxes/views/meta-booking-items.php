@@ -72,14 +72,25 @@ foreach ( $rooms as $room ) {
 		<?php foreach ( $rooms as $k => $room ) : ?>
 			<?php do_action( 'hotel_booking_before_room_item', $room, $hb_booking ); ?>
 
-			<?php $room_id = apply_filters( 'hotel-booking-order-room-id', hb_get_order_item_meta( $room->order_item_id, 'product_id', true ) ); ?>
+			<?php
+			$room_id        = absint( apply_filters( 'hotel-booking-order-room-id', hb_get_order_item_meta( $room->order_item_id, 'product_id', true ) ) );
+			$room_title     = $room_id ? get_the_title( $room_id ) : '';
+			if ( '' === $room_title ) {
+				$room_title = $room->order_item_name;
+			}
+			$room_edit_link = $room_id ? get_edit_post_link( $room_id ) : '';
+			?>
 
 			<tr>
 				<td class="center">
 					<input type="checkbox" name="book_item[]" value="<?php echo esc_attr( $room->order_item_id ); ?>"/>
 				</td>
 				<td class="name left">
-					<a href="<?php echo esc_url( get_edit_post_link( $room_id ) ); ?>"><?php echo esc_html( get_the_title( $room_id ) ); ?></a>
+					<?php if ( $room_edit_link ) : ?>
+						<a href="<?php echo esc_url( $room_edit_link ); ?>"><?php echo esc_html( $room_title ); ?></a>
+					<?php else : ?>
+						<?php echo esc_html( $room_title ); ?>
+					<?php endif; ?>
 				</td>
 				<td class="checkin_checkout center">
 					<?php

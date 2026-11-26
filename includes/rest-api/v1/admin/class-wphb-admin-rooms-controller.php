@@ -199,13 +199,19 @@ class WPHB_REST_Admin_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 					if ( ! empty( $order ) ) {
 						$rooms = hb_get_order_items( get_the_ID() );
 						foreach ( $rooms as $room ) {
-							$data_item = hb_get_order_item_meta( $room->order_item_id );
-							$status    = get_post_status( $room->ID ?? 0 );
+							$data_item  = hb_get_order_item_meta( $room->order_item_id );
+							$status     = get_post_status( $room->ID ?? 0 );
+							$room_id    = absint( apply_filters( 'hotel-booking-order-room-id', $data_item['product_id'][0] ?? 0 ) );
+							$room_title = $room_id ? get_the_title( $room_id ) : '';
+							if ( '' === $room_title ) {
+								$room_title = $room->order_item_name;
+							}
+							$room_title = html_entity_decode( (string) $room_title, ENT_QUOTES, 'UTF-8' );
 							// if ( $data_item['check_in_date'][0] < strtotime($start) || $data_item['check_out_date'][0] > strtotime($end) ) {
 							//  continue;
 							// }
 							$data[] = array(
-								'title'           => $room->order_item_name,
+								'title'           => $room_title,
 								'start'           => date( 'Y-m-d', ( $data_item['check_in_date'][0] ) ),
 								'end'             => date( 'Y-m-d', ( $data_item['check_out_date'][0] + ( 24 * 60 * 60 ) ) ),
 								'data_item'       => $data_item,
@@ -216,7 +222,7 @@ class WPHB_REST_Admin_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 									'id'               => $order->ID,
 									'link_edit'        => get_edit_post_link( $order->ID, 'raw' ),
 									'order_date'       => gmdate( $format_time, strtotime( $order->post_date ) ),
-									'title'            => $room->order_item_name,
+									'title'            => $room_title,
 									'total'            => hb_format_price( hb_get_order_item_meta( $room->order_item_id, 'total', true ), hb_get_currency_symbol( get_option( 'tp_hotel_booking_currency', 'USD' ) ) ),
 									'start_date_popup' => gmdate( $format_time, $data_item['check_in_date'][0] ),
 									'end_date_popup'   => gmdate( $format_time, $data_item['check_out_date'][0] ),
