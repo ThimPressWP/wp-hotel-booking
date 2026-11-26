@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-25T07:38:56+00:00\n"
+"POT-Creation-Date: 2026-11-26T07:16:01+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wp-hotel-booking\n"
@@ -18,8 +18,8 @@ msgstr ""
 #: wp-hotel-booking.php
 #: includes/admin/class-wphb-admin-menu.php:64
 #: includes/admin/class-wphb-admin-menu.php:65
-#: includes/admin/class-wphb-admin-settings.php:508
-#: includes/admin/class-wphb-admin-settings.php:510
+#: includes/admin/class-wphb-admin-settings.php:528
+#: includes/admin/class-wphb-admin-settings.php:530
 msgid "WP Hotel Booking"
 msgstr ""
 
@@ -51,7 +51,7 @@ msgstr ""
 
 #: includes/admin/class-wphb-admin-menu.php:93
 #: includes/admin/class-wphb-admin-menu.php:94
-#: includes/admin/views/calendar-manager.php:19
+#: includes/admin/views/calendar-manager.php:22
 msgid "Calendar Manager"
 msgstr ""
 
@@ -76,103 +76,103 @@ msgstr ""
 msgid "You do not have permission to save settings."
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:91
+#: includes/admin/class-wphb-admin-settings.php:110
 msgid "Settings saved successfully."
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:354
+#: includes/admin/class-wphb-admin-settings.php:374
 msgid "W"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:369
+#: includes/admin/class-wphb-admin-settings.php:389
 msgid "H"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:431
-#: includes/wphb-functions.php:3013
+#: includes/admin/class-wphb-admin-settings.php:451
+#: includes/wphb-functions.php:3099
 #: templates/setup/steps/pages.php:35
 msgid "---Select page---"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:433
-#: includes/wphb-functions.php:3015
+#: includes/admin/class-wphb-admin-settings.php:453
+#: includes/wphb-functions.php:3101
 #: templates/setup/steps/pages.php:37
 msgid "[ Add new page ]"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:441
+#: includes/admin/class-wphb-admin-settings.php:461
 #: templates/setup/steps/pages.php:44
 msgctxt "drop down pages"
 msgid "or"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:444
+#: includes/admin/class-wphb-admin-settings.php:464
 #: templates/setup/steps/pages.php:46
 msgid "Create new"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:448
+#: includes/admin/class-wphb-admin-settings.php:468
 #: templates/setup/steps/pages.php:50
 msgid "New page title"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:450
+#: includes/admin/class-wphb-admin-settings.php:470
 #: templates/setup/steps/pages.php:52
 msgid "Ok [Enter]"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:452
+#: includes/admin/class-wphb-admin-settings.php:472
 #: templates/setup/steps/pages.php:54
 msgid "Cancel [ESC]"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:458
+#: includes/admin/class-wphb-admin-settings.php:478
 #: templates/setup/steps/pages.php:58
 msgid "Edit page"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:464
+#: includes/admin/class-wphb-admin-settings.php:484
 #: templates/setup/steps/pages.php:61
 msgid "View page"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:498
+#: includes/admin/class-wphb-admin-settings.php:518
 msgid "WP Hotel Booking Settings"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:524
+#: includes/admin/class-wphb-admin-settings.php:544
 #: includes/elementor/widgets/global/check-avaibility.php:60
 #: includes/elementor/widgets/global/search-room.php:175
 msgid "Search"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:527
+#: includes/admin/class-wphb-admin-settings.php:547
 msgid "Clear search"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:534
+#: includes/admin/class-wphb-admin-settings.php:554
 msgid "Unsaved changes"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:539
-#: includes/admin/class-wphb-admin-settings.php:540
-#: includes/admin/class-wphb-admin-settings.php:603
+#: includes/admin/class-wphb-admin-settings.php:559
+#: includes/admin/class-wphb-admin-settings.php:560
+#: includes/admin/class-wphb-admin-settings.php:623
 msgid "Save Settings"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:539
+#: includes/admin/class-wphb-admin-settings.php:559
 msgid "Saving..."
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:539
+#: includes/admin/class-wphb-admin-settings.php:559
 msgid "Saved!"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:549
+#: includes/admin/class-wphb-admin-settings.php:569
 msgid "Settings Sections"
 msgstr ""
 
-#: includes/admin/class-wphb-admin-settings.php:577
+#: includes/admin/class-wphb-admin-settings.php:597
 msgid "Reset filter"
 msgstr ""
 
@@ -273,7 +273,7 @@ msgid "Extra Settings"
 msgstr ""
 
 #: includes/admin/metaboxes/rooms/class-wphb-admin-metabox-extra-options.php:33
-#: includes/booking/wphb-booking-hooks.php:825
+#: includes/booking/wphb-booking-hooks.php:868
 #: includes/class-wphb-post-types.php:436
 #: includes/elementor/widgets/global/filter-room-selected.php:347
 #: includes/elementor/widgets/global/filter-room.php:67
@@ -638,14 +638,14 @@ msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items-template-js.php:48
 #: includes/admin/wphb-admin-functions.php:293
-#: includes/booking/wphb-booking-hooks.php:822
+#: includes/booking/wphb-booking-hooks.php:865
 #: templates/emails/booking-details.php:22
 msgid "Check in"
 msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items-template-js.php:50
 #: includes/admin/wphb-admin-functions.php:294
-#: includes/booking/wphb-booking-hooks.php:823
+#: includes/booking/wphb-booking-hooks.php:866
 #: templates/emails/booking-details.php:23
 msgid "Check out"
 msgstr ""
@@ -764,7 +764,7 @@ msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items.php:64
 #: includes/admin/wphb-admin-functions.php:295
-#: includes/booking/wphb-booking-hooks.php:845
+#: includes/booking/wphb-booking-hooks.php:888
 #: includes/class-wphb-gdpr.php:108
 #: templates/account/bookings.php:38
 #: templates/cart/cart.php:555
@@ -832,7 +832,7 @@ msgstr ""
 
 #: includes/admin/metaboxes/views/meta-booking-items.php:211
 #: includes/admin/settings/class-wphb-admin-setting-general.php:180
-#: includes/booking/wphb-booking-hooks.php:850
+#: includes/booking/wphb-booking-hooks.php:893
 #: templates/cart/cart.php:571
 #: templates/checkout/checkout.php:415
 #: templates/checkout/thank-you.php:162
@@ -1068,8 +1068,8 @@ msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:71
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:72
-#: includes/booking/wphb-booking-hooks.php:484
-#: includes/booking/wphb-booking-hooks.php:704
+#: includes/booking/wphb-booking-hooks.php:506
+#: includes/booking/wphb-booking-hooks.php:754
 msgid "Reservation"
 msgstr ""
 
@@ -1097,7 +1097,6 @@ msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:117
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:236
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:245
 #, php-format
 msgid "Enter recipients (comma separated) for this email. Defaults to %s."
 msgstr ""
@@ -1130,9 +1129,8 @@ msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:144
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:145
-#: includes/booking/wphb-booking-hooks.php:437
-#: includes/booking/wphb-booking-hooks.php:714
-#: includes/booking/wphb-booking-hooks.php:748
+#: includes/booking/wphb-booking-hooks.php:447
+#: includes/booking/wphb-booking-hooks.php:791
 msgid "The customer has completed the transaction"
 msgstr ""
 
@@ -1174,15 +1172,15 @@ msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:197
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:198
-#: includes/booking/wphb-booking-hooks.php:371
-#: includes/booking/wphb-booking-hooks.php:761
+#: includes/booking/wphb-booking-hooks.php:379
+#: includes/booking/wphb-booking-hooks.php:804
 msgid "Your booking is confirmed"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:205
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:206
-#: includes/booking/wphb-booking-hooks.php:372
-#: includes/booking/wphb-booking-hooks.php:766
+#: includes/booking/wphb-booking-hooks.php:380
+#: includes/booking/wphb-booking-hooks.php:809
 msgid "We have received your deposit. The remaining balance is payable on arrival."
 msgstr ""
 
@@ -1195,15 +1193,20 @@ msgstr ""
 msgid "Cancel booking emails are sent to chosen recipient(s) when booking has been marked cancelled."
 msgstr ""
 
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:245
+msgid "Enter the subject of this email. Available placeholders: {site_title}, {booking_number}, {booking_date}"
+msgstr ""
+
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:254
 msgid "The main heading displays in the top of email. Default heading: Cancelled booking"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:263
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:264
-#: includes/booking/wphb-booking-hooks.php:542
-#: includes/booking/wphb-booking-hooks.php:731
-#: templates/emails/customer-cancelled.php:22
+#: includes/booking/wphb-booking-hooks.php:566
+#: includes/booking/wphb-booking-hooks.php:636
+#: includes/booking/wphb-booking-hooks.php:774
+#: templates/emails/customer-cancelled.php:18
 msgid "Booking has been marked cancelled"
 msgstr ""
 
@@ -1217,26 +1220,26 @@ msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:392
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:453
-#: includes/booking/wphb-booking-hooks.php:911
-#: includes/booking/wphb-booking-hooks.php:984
+#: includes/booking/wphb-booking-hooks.php:954
+#: includes/booking/wphb-booking-hooks.php:1028
 msgid "Customer - Completed booking"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:393
-#: includes/booking/wphb-booking-hooks.php:912
-#: includes/booking/wphb-booking-hooks.php:985
+#: includes/booking/wphb-booking-hooks.php:955
+#: includes/booking/wphb-booking-hooks.php:1029
 msgid "Customer - Processing booking"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:394
-#: includes/booking/wphb-booking-hooks.php:913
-#: includes/booking/wphb-booking-hooks.php:986
+#: includes/booking/wphb-booking-hooks.php:956
+#: includes/booking/wphb-booking-hooks.php:1030
 msgid "Customer - Cancelled booking"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-emails.php:395
-#: includes/booking/wphb-booking-hooks.php:914
-#: includes/booking/wphb-booking-hooks.php:987
+#: includes/booking/wphb-booking-hooks.php:957
+#: includes/booking/wphb-booking-hooks.php:1031
 msgid "Admin - New booking completed"
 msgstr ""
 
@@ -1274,7 +1277,7 @@ msgstr ""
 msgid "Send Email"
 msgstr ""
 
-#: includes/admin/settings/class-wphb-admin-setting-emails.php:609
+#: includes/admin/settings/class-wphb-admin-setting-emails.php:633
 msgid "Please enter a valid recipient email address."
 msgstr ""
 
@@ -1457,17 +1460,17 @@ msgid "Pages options for system."
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:44
-#: includes/wphb-functions.php:3095
+#: includes/wphb-functions.php:3181
 msgid "Rooms Page"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:54
-#: includes/wphb-functions.php:3107
+#: includes/wphb-functions.php:3193
 msgid "Checkout Page"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:59
-#: includes/wphb-functions.php:3113
+#: includes/wphb-functions.php:3199
 msgid "Cart Page"
 msgstr ""
 
@@ -1476,7 +1479,7 @@ msgid "Redirect to page after book"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:69
-#: includes/wphb-functions.php:3123
+#: includes/wphb-functions.php:3209
 msgid "Account Page"
 msgstr ""
 
@@ -1485,7 +1488,7 @@ msgid "Terms And Conditions Page"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-pages.php:79
-#: includes/wphb-functions.php:3135
+#: includes/wphb-functions.php:3221
 msgid "Thank You Page"
 msgstr ""
 
@@ -1526,7 +1529,7 @@ msgid "Inactive"
 msgstr ""
 
 #: includes/admin/settings/class-wphb-admin-setting-room.php:26
-#: includes/booking/wphb-booking-hooks.php:821
+#: includes/booking/wphb-booking-hooks.php:864
 #: templates/cart/cart.php:53
 #: templates/emails/booking-details.php:21
 msgid "Room"
@@ -1642,8 +1645,8 @@ msgid "Quick Setup"
 msgstr ""
 
 #: includes/admin/setup/class-wphb-setup-wizard.php:57
-#: includes/booking/wphb-booking-hooks.php:949
-#: includes/booking/wphb-booking-hooks.php:970
+#: includes/booking/wphb-booking-hooks.php:992
+#: includes/booking/wphb-booking-hooks.php:1014
 msgid "Permission denied."
 msgstr ""
 
@@ -1669,6 +1672,10 @@ msgstr ""
 
 #: includes/admin/setup/class-wphb-setup-wizard.php:328
 msgid "PayPal"
+msgstr ""
+
+#: includes/admin/views/calendar-manager.php:23
+msgid "Overview of all room bookings. Click on a booking to see its details."
 msgstr ""
 
 #: includes/admin/views/pricing-table.php:36
@@ -1815,148 +1822,158 @@ msgid "Booking is not found."
 msgstr ""
 
 #: includes/booking/wphb-booking-functions.php:430
-#: includes/booking/wphb-booking-hooks.php:865
+#: includes/booking/wphb-booking-hooks.php:908
 msgid "Cancelled"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:128
+#: includes/booking/wphb-booking-hooks.php:123
 msgid "Booking pending"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:129
+#: includes/booking/wphb-booking-hooks.php:124
 msgid "Your booking is pending"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:130
+#: includes/booking/wphb-booking-hooks.php:125
 msgid "Your booking is pending until the payment is completed"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:149
+#: includes/booking/wphb-booking-hooks.php:150
 msgid "[{site_title}] New customer booking ({booking_number}) - {booking_date}"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:150
+#: includes/booking/wphb-booking-hooks.php:151
 msgid "New customer booking"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:151
+#: includes/booking/wphb-booking-hooks.php:152
 msgid "You have a new booking room"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:436
+#: includes/booking/wphb-booking-hooks.php:446
 msgid "New Booking Completed"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:541
-#: includes/booking/wphb-booking-hooks.php:726
-#: templates/emails/customer-cancelled.php:21
+#: includes/booking/wphb-booking-hooks.php:565
+#: includes/booking/wphb-booking-hooks.php:633
+#: includes/booking/wphb-booking-hooks.php:769
+#: templates/emails/customer-cancelled.php:17
 msgid "Cancelled booking"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:648
+#: includes/booking/wphb-booking-hooks.php:701
 msgctxt "Admin menu name"
 msgid "Bookings"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:709
-#: includes/booking/wphb-booking-hooks.php:743
+#: includes/booking/wphb-booking-hooks.php:757
+#: templates/emails/customer-booking.php:21
+msgid "Thanks for your booking"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:758
+#: templates/emails/customer-booking.php:22
+msgid "Thank you for making reservation at our hotel. We will try our best to bring the best service. Good luck and see you soon!"
+msgstr ""
+
+#: includes/booking/wphb-booking-hooks.php:786
 msgid "Completed Payment"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:816
+#: includes/booking/wphb-booking-hooks.php:859
 msgid "Booking #SAMPLE-1001"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:824
+#: includes/booking/wphb-booking-hooks.php:867
 #: templates/emails/booking-details.php:24
 msgid "#"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:830
+#: includes/booking/wphb-booking-hooks.php:873
 msgid "Deluxe Suite Room"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:837
+#: includes/booking/wphb-booking-hooks.php:880
 #: templates/cart/cart.php:449
 #: templates/checkout/checkout.php:133
 #: templates/emails/booking-details.php:43
 msgid "Subtotal"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:841
+#: includes/booking/wphb-booking-hooks.php:884
 #: templates/emails/booking-details.php:64
 msgid "Payment method"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:842
+#: includes/booking/wphb-booking-hooks.php:885
 msgid "Stripe Payment"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:854
+#: includes/booking/wphb-booking-hooks.php:897
 #: templates/emails/booking-details.php:100
 msgid "Remaining Balance (Due on arrival)"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:859
+#: includes/booking/wphb-booking-hooks.php:902
 msgid "Payment Status"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:860
+#: includes/booking/wphb-booking-hooks.php:903
 msgid "Paid in Full (100%)"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:864
+#: includes/booking/wphb-booking-hooks.php:907
 msgid "Booking Status"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:871
+#: includes/booking/wphb-booking-hooks.php:914
 #: templates/emails/customer-details.php:18
 msgid "Customer details"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:873
+#: includes/booking/wphb-booking-hooks.php:916
 #: templates/emails/customer-details.php:20
 msgid "Customer Name:"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:874
+#: includes/booking/wphb-booking-hooks.php:917
 #: templates/emails/customer-details.php:23
 msgid "Email address:"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:875
+#: includes/booking/wphb-booking-hooks.php:918
 #: templates/checkout/thank-you.php:224
 #: templates/emails/customer-details.php:26
 msgid "Phone:"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:878
+#: includes/booking/wphb-booking-hooks.php:921
 #: templates/emails/customer-details.php:35
 msgid "Billing address"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:880
+#: includes/booking/wphb-booking-hooks.php:923
 #: templates/checkout/thank-you.php:197
 #: templates/emails/customer-details.php:37
 msgid "Address:"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:883
+#: includes/booking/wphb-booking-hooks.php:926
 #: templates/checkout/thank-you.php:213
 #: templates/emails/customer-details.php:56
 msgid "Postal Code:"
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:977
+#: includes/booking/wphb-booking-hooks.php:1021
 msgid "Invalid recipient email address."
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:994
+#: includes/booking/wphb-booking-hooks.php:1038
 #, php-format
 msgid "Sample test email (%s) was successfully sent to %s."
 msgstr ""
 
-#: includes/booking/wphb-booking-hooks.php:1003
+#: includes/booking/wphb-booking-hooks.php:1047
 msgid "wp_mail() returned false. Please verify your SMTP settings in WP Mail SMTP or Aruba SMTP."
 msgstr ""
 
@@ -6489,38 +6506,38 @@ msgstr ""
 msgid "%1$s"
 msgstr ""
 
-#: includes/wphb-functions.php:2927
+#: includes/wphb-functions.php:3013
 msgid "Check in date is invalid."
 msgstr ""
 
-#: includes/wphb-functions.php:2932
+#: includes/wphb-functions.php:3018
 msgid "Check out date is invalid."
 msgstr ""
 
-#: includes/wphb-functions.php:2938
+#: includes/wphb-functions.php:3024
 msgid "Date range is invalid."
 msgstr ""
 
-#: includes/wphb-functions.php:2942
+#: includes/wphb-functions.php:3028
 msgid "Check out date must be greater than check in date."
 msgstr ""
 
-#: includes/wphb-functions.php:2977
+#: includes/wphb-functions.php:3063
 #, php-format
 msgid "Minimum booking is %d night."
 msgid_plural "Minimum booking is %d nights."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/wphb-functions.php:3026
+#: includes/wphb-functions.php:3112
 msgid "Select a page&hellip;"
 msgstr ""
 
-#: includes/wphb-functions.php:3119
+#: includes/wphb-functions.php:3205
 msgid " Redirect to page after book"
 msgstr ""
 
-#: includes/wphb-functions.php:3129
+#: includes/wphb-functions.php:3215
 msgid "Terms Page"
 msgstr ""
 
@@ -6838,14 +6855,6 @@ msgstr ""
 
 #: templates/emails/booking-details.php:94
 msgid "Awaiting payment confirmation"
-msgstr ""
-
-#: templates/emails/customer-booking.php:21
-msgid "Thanks for your booking"
-msgstr ""
-
-#: templates/emails/customer-booking.php:22
-msgid "Thank you for making reservation at our hotel. We will try our best to bring the best service. Good luck and see you soon!"
 msgstr ""
 
 #: templates/emails/customer-details.php:61

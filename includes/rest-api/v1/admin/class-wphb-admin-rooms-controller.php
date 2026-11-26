@@ -209,11 +209,12 @@ class WPHB_REST_Admin_Rooms_Controller extends WPHB_Abstract_REST_Controller {
 								'start'           => date( 'Y-m-d', ( $data_item['check_in_date'][0] ) ),
 								'end'             => date( 'Y-m-d', ( $data_item['check_out_date'][0] + ( 24 * 60 * 60 ) ) ),
 								'data_item'       => $data_item,
+								'status'          => $status,
 								'backgroundColor' => array_key_exists( $status, $color_status ) ? $color_status[ $status ] : '#2eb0d1',
 								'borderColor'     => array_key_exists( $status, $color_status ) ? $color_status[ $status ] : '#2eb0d1',
 								'data_order'      => array(
 									'id'               => $order->ID,
-									'link_edit'        => get_edit_post_link( $order->ID ),
+									'link_edit'        => get_edit_post_link( $order->ID, 'raw' ),
 									'order_date'       => gmdate( $format_time, strtotime( $order->post_date ) ),
 									'title'            => $room->order_item_name,
 									'total'            => hb_format_price( hb_get_order_item_meta( $room->order_item_id, 'total', true ), hb_get_currency_symbol( get_option( 'tp_hotel_booking_currency', 'USD' ) ) ),

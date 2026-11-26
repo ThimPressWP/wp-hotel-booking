@@ -394,124 +394,174 @@ const roomBlockDate = () => {
  * @returns A function that returns a function.
  */
 const CalendarManager = () => {
+    const eleBooking = document.getElementById( 'manager_booking' );
+    if ( eleBooking == null || typeof FullCalendar === 'undefined' ) return;
+
+    const DAY_MS = 24 * 60 * 60 * 1000;
+    const statusLabels = {
+        'hb-processing': 'Processing',
+        'hb-completed': 'Completed',
+        'hb-pending': 'Pending',
+        'hb-cancelled': 'Cancelled',
+    };
+
+    const escapeHtml = ( str ) => String( str ?? '' ).replace( /[&<>"']/g, ( c ) => ( {
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+    }[ c ] ) );
+
+    // Decode HTML entities (e.g. currency symbols) then escape again for safe output.
+    const decodeEntities = ( str ) => {
+        const doc = new DOMParser().parseFromString( String( str ?? '' ), 'text/html' );
+        return doc.documentElement.textContent || '';
+    };
+
+    const toYmd = ( date ) => {
+        const d = new Date( date );
+        return d.getFullYear() + '-' + ( '0' + ( d.getMonth() + 1 ) ).slice( -2 ) + '-' + ( '0' + d.getDate() ).slice( -2 );
+    };
+
     const getBookings = async ( info ) => {
-        const start = new Date( info.start );
-        const timeStart = (start.getFullYear() + '-' + ('0' + (start.getMonth() + 1 )).slice(-2) + '-' + ('0' + start.getDate()).slice(-2));
-        const end = new Date( info.end );
-        const timeEnd = (end.getFullYear() + '-' + ('0' + (end.getMonth() + 1 )).slice(-2) + '-' + ('0' + end.getDate()).slice(-2));
+        try {
+            const response = await wp.apiFetch( {
+                path: 'wphb/v1/admin/rooms/manager-bookings?startDay=' + toYmd( info.start ) + '&endDay=' + toYmd( info.end ),
+                method: 'GET',
+            } );
+            const { status, data } = response;
+            return 'success' === status && Array.isArray( data ) ? data : [];
+        } catch ( error ) {
+            alert( error.message && error.message );
+            return [];
+        }
+    };
 
-		try {
-			const response = await wp.apiFetch( {
-				path: 'wphb/v1/admin/rooms/manager-bookings?startDay=' + timeStart + '&endDay=' + timeEnd,
-				method: 'GET',
-			} );
+    const getStatus = ( event ) => event.extendedProps?.status || 'hb-completed';
 
-			const {status , data } = response;
-			if ( 'success' === status ) {
-                return data;
-			} else {
-                return [];
-            }
-		} catch ( error ) {
-			alert( error.message && error.message );
-		}
-    }
-    const eleBooking = document.getElementById('manager_booking');
-    if( eleBooking == null ) return;
-	const calendarBooking = new FullCalendar.Calendar(eleBooking, {
+    const getNights = ( event ) => {
+        if ( ! event.start || ! event.end ) return 0;
+        // The end date is sent as check-out + 1 day (exclusive end for the calendar).
+        return Math.max( Math.round( ( event.end - event.start ) / DAY_MS ) - 1, 0 );
+    };
 
-		height: 700,
-		events: function(info, successCallback, failureCallback) {
-            const bookings = getBookings( info );
+    /* ---------- Booking detail modal ---------- */
+    const onKeydown = ( e ) => {
+        if ( 'Escape' === e.key ) closeModal();
+    };
 
-            (async () => {
-                successCallback( await bookings )
-            })()
-        },
-        dayMaxEvents: true,
-        eventDidMount: function(info) {
+    const closeModal = () => {
+        const modal = document.getElementById( 'wphb-cm-modal' );
+        if ( modal ) modal.remove();
+        document.body.classList.remove( 'wphb-cm-modal-open' );
+        document.removeEventListener( 'keydown', onKeydown );
+    };
 
-            info.el.addEventListener('click',function(e){
-                const parent = this.closest('body.wp-hotel-booking_page_tp_hotel_booking_calender_manager');
-                if( parent == null ) return;
-                if( parent.classList.contains('active') ) {
-                    return;
-                }
-                parent.classList.add('active');
-                parent.insertAdjacentHTML("afterbegin", htmlShow( info ));
-                const popup = document.getElementById("popup-events");
-                if ( popup == null ) return;
-                popup.style.display = 'block';
-                clickOutside( popup , parent);
-                closePopup( parent );
+    const openModal = ( event ) => {
+        closeModal();
 
-            });
+        const order = event.extendedProps?.data_order || {};
+        const status = getStatus( event );
+        const statusLabel = statusLabels[ status ] || status.replace( 'hb-', '' );
+        const nights = getNights( event );
+        const nightsText = nights > 0 ? nights + ( nights > 1 ? ' nights' : ' night' ) : '';
+        const link = escapeHtml( order.link_edit );
 
-            const htmlShow = (info) => {
-                const html =
-                '<div id="popup-events">' +
-                    '<div id="popup-container">' +
-                        '<div class="popup">' +
-                            '<div class="popup-header">' +
-                                '<h2>Booking Info</h2>' +
-                                '<div class="close-popup">X</div>' +
+        const html =
+            '<div id="wphb-cm-modal" class="wphb-cm-modal" role="dialog" aria-modal="true" aria-labelledby="wphb-cm-modal-title">' +
+                '<div class="wphb-cm-modal__dialog wphb-cm-status--' + escapeHtml( status ) + '">' +
+                    '<div class="wphb-cm-modal__header">' +
+                        '<div class="wphb-cm-modal__heading">' +
+                            '<span class="wphb-cm-badge">' + escapeHtml( statusLabel ) + '</span>' +
+                            '<h2 id="wphb-cm-modal-title">' + escapeHtml( order.title || event.title ) + '</h2>' +
+                        '</div>' +
+                        '<button type="button" class="wphb-cm-modal__close" aria-label="Close">' +
+                            '<span class="dashicons dashicons-no-alt"></span>' +
+                        '</button>' +
+                    '</div>' +
+                    '<div class="wphb-cm-modal__body">' +
+                        '<div class="wphb-cm-stay">' +
+                            '<div class="wphb-cm-stay__item">' +
+                                '<span class="wphb-cm-label">Check-in</span>' +
+                                '<strong>' + escapeHtml( order.start_date_popup ) + '</strong>' +
                             '</div>' +
-                            '<div class="info">' +
-                                '<div class="info_detail">' +
-                                    '<div class="info_detail_left">' +
-                                        '<span id="heading">Order Created Date: </span><br>' +
-                                        '<span id="details">'+ info.event.extendedProps?.data_order?.order_date +'</span>' +
-                                    '</div>'+
-                                    '<div class="info_detail_right">' +
-                                        '<span id="heading">Order No.</span><br>' +
-                                        '<span id="details"><a href="'+info.event.extendedProps?.data_order?.link_edit +'" target="_blank">' +
-                                        '#' + info.event.extendedProps?.data_order?.id +'</a></span>' +
-                                    '</div>'+
-                                    '<div class="info_detail_left">' +
-                                        '<span id="heading">Check in date: </span><br>' +
-                                        '<span id="details">'+ info.event.extendedProps?.data_order?.start_date_popup  +'</span>' +
-                                    '</div>'+
-                                    '<div class="info_detail_right">' +
-                                        '<span id="heading">Check out date: </span><br>' +
-                                        '<span id="details">'+ info.event.extendedProps?.data_order?.end_date_popup +'</span>' +
-                                    '</div>'+
-                                '</div>'+
-                                '<div class="pricing">' +
-                                    '<div class="pricing_detail">' +
-                                        '<div class="pricing_detail_left">' +
-                                            '<span id="name">'+ info.event.extendedProps?.data_order?.title +'</span>' +
-                                        '</div>'+
-                                        '<div class="pricing_detail_right">' +
-                                            '<span id="price">'+ info.event.extendedProps?.data_order?.total +'</span>' +
-                                        '</div>'+
-                                    '</div>'+
-                                '</div>'+
+                            '<div class="wphb-cm-stay__arrow">' +
+                                '<span class="dashicons dashicons-arrow-right-alt"></span>' +
+                                ( nightsText ? '<small>' + nightsText + '</small>' : '' ) +
+                            '</div>' +
+                            '<div class="wphb-cm-stay__item">' +
+                                '<span class="wphb-cm-label">Check-out</span>' +
+                                '<strong>' + escapeHtml( order.end_date_popup ) + '</strong>' +
                             '</div>' +
                         '</div>' +
+                        '<dl class="wphb-cm-meta">' +
+                            '<div><dt>Booking No.</dt>' +
+                                '<dd>' + ( link
+                                    ? '<a href="' + link + '" target="_blank" rel="noopener noreferrer">#' + escapeHtml( order.id ) + '</a>'
+                                    : '#' + escapeHtml( order.id ) ) + '</dd></div>' +
+                            '<div><dt>Created</dt>' +
+                                '<dd>' + escapeHtml( order.order_date ) + '</dd></div>' +
+                        '</dl>' +
+                        '<div class="wphb-cm-total">' +
+                            '<span>Total</span>' +
+                            '<strong>' + escapeHtml( decodeEntities( order.total ) ) + '</strong>' +
+                        '</div>' +
                     '</div>' +
-                '</div>';
-                return html;
-            }
-            const clickOutside = ( popup , parent) => {
-                document.addEventListener('click', function(e) {
-                    if( e.target.id == 'popup-container' ) {
-                        popup.style.display = 'none';
-                        parent.classList.remove('active');
-                    }
-                });
-            }
+                    ( link
+                        ? '<div class="wphb-cm-modal__footer">' +
+                            '<a class="button button-primary" href="' + link + '" target="_blank" rel="noopener noreferrer">View booking</a>' +
+                          '</div>'
+                        : '' ) +
+                '</div>' +
+            '</div>';
 
-            const closePopup = ( parent ) => {
-                const btn = document.querySelector('#popup-events .close-popup');
-                if ( btn == null ) return;
-                btn.addEventListener('click', function(e) {
-                    const popup = document.getElementById("popup-events");
-                    popup.style.display = 'none';
-                    parent.classList.remove('active');
-                });
+        document.body.insertAdjacentHTML( 'beforeend', html );
+        document.body.classList.add( 'wphb-cm-modal-open' );
+
+        const modal = document.getElementById( 'wphb-cm-modal' );
+        modal.addEventListener( 'click', ( e ) => {
+            if ( e.target === modal || e.target.closest( '.wphb-cm-modal__close' ) ) {
+                closeModal();
             }
+        } );
+        document.addEventListener( 'keydown', onKeydown );
+        modal.querySelector( '.wphb-cm-modal__close' ).focus();
+    };
+
+    /* ---------- Calendar ---------- */
+    const calendarBooking = new FullCalendar.Calendar( eleBooking, {
+        height: 'auto',
+        headerToolbar: {
+            left: 'title',
+            center: '',
+            right: 'today prev,next dayGridMonth,listMonth',
         },
-	});
+        buttonText: {
+            today: 'Today',
+            month: 'Month',
+            list: 'List',
+        },
+        noEventsContent: 'No bookings in this period.',
+        dayMaxEvents: 3,
+        eventDisplay: 'block',
+        displayEventTime: false,
+        events: ( info, successCallback, failureCallback ) => {
+            getBookings( info ).then( successCallback ).catch( failureCallback );
+        },
+        loading: ( isLoading ) => {
+            eleBooking.classList.toggle( 'is-loading', isLoading );
+        },
+        eventDidMount: ( info ) => {
+            const order = info.event.extendedProps?.data_order || {};
+            const parts = [
+                info.event.title,
+                ( order.start_date_popup || '' ) + ' → ' + ( order.end_date_popup || '' ),
+                statusLabels[ getStatus( info.event ) ] || '',
+            ];
+            info.el.setAttribute( 'title', parts.filter( Boolean ).join( '\n' ) );
+        },
+        eventClick: ( info ) => {
+            info.jsEvent.preventDefault();
+            openModal( info.event );
+        },
+    } );
     calendarBooking.render();
 }
 

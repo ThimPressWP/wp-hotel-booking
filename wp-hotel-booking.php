@@ -433,7 +433,7 @@ class WP_Hotel_Booking {
 		wp_register_style( 'wp-hotel-booking-review-gallery', $this->plugin_url( "assets/css/review-gallery{$min}.css" ), [], $version );
 		wp_register_style( 'wp-admin-hotel-booking', $this->plugin_url( "assets/css/admin/admin.tp-hotel-booking{$min}.css" ), [], $version );
 		wp_register_style( 'wphb-admin-settings', $this->plugin_url( "assets/css/admin/admin-settings{$min}.css" ), [], $version );
-		wp_register_style( 'wp-admin-single-room-v2', $this->plugin_url( "assets/css/admin/admin-single-room{$min}.css" ) );
+		wp_register_style( 'wp-admin-single-room-v2', $this->plugin_url( "assets/css/admin/admin-single-room{$min}.css" ), [], $version );
 		wp_register_style( 'wp-admin-review-image', $this->plugin_url( "assets/css/admin/review-image{$min}.css" ), [], $v_rand );
 		wp_register_style( 'wp-admin-hotel-booking-fullcalendar', $this->plugin_url( 'assets/css/fullcalendar.min.css' ) );
 		wp_register_style( 'wp-hotel-booking', $this->plugin_url( 'assets/css/hotel-booking.css' ), [], WPHB_VERSION );
