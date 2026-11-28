@@ -208,11 +208,11 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 			'user-agent'  => 'HotelBooking',
 		);
 		$response = wp_safe_remote_post( $paypal_api_url, $params );
-		if ( is_wp_error( $response ) ) {
-			return;
+		$body     = is_wp_error( $response ) ? '' : wp_remote_retrieve_body( $response );
+		if ( 200 !== wp_remote_retrieve_response_code( $response ) || ! in_array( $body, array( 'VERIFIED', 'INVALID' ), true ) ) {
+			status_header( 503 );
+			exit;
 		}
-
-		$body = wp_remote_retrieve_body( $response );
 
 		if ( 'VERIFIED' === $body ) {
 			if ( ! empty( $request['txn_type'] ) ) {
@@ -430,7 +430,7 @@ class WPHB_Payment_Gateway_Paypal extends WPHB_Payment_Gateway_Base {
 	 * @return bool True when the IPN matches the booking and PayPal settings.
 	 */
 	protected function validate_paypal_standard_ipn( $booking, $request ) {
-		if ( 'paypal-standard' !== $booking->get_post_meta( '_hb_method', '', true ) ) {
+		if ( ! in_array( $booking->get_post_meta( '_hb_method', '', true ), array( 'paypal', 'paypal-standard' ), true ) ) {
 			return false;
 		}
 

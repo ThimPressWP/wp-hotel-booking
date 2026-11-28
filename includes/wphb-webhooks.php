@@ -70,7 +70,7 @@ if ( ! function_exists( 'hb_process_web_hooks' ) ) {
 			if ( ! empty( $_REQUEST[ $param ] ) ) {
 				$web_hooks_processed           = true;
 				$request_scheme                = is_ssl() ? 'https://' : 'http://';
-				$requested_web_hook_url        = untrailingslashit( $request_scheme . esc_url_raw( $_SERVER['HTTP_HOST'] ?? '' ) ) . esc_url_raw( $_SERVER['REQUEST_URI'] ?? '' );
+				$requested_web_hook_url        = untrailingslashit( $request_scheme . sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ?? '' ) ) ) . esc_url_raw( $_SERVER['REQUEST_URI'] ?? '' );
 				$parsed_requested_web_hook_url = wp_parse_url( $requested_web_hook_url );
 				$required_web_hook_url         = add_query_arg( $param, '1', trailingslashit( get_site_url() ) ); // add the slash to make sure we match
 				$parsed_required_web_hook_url  = wp_parse_url( $required_web_hook_url );
